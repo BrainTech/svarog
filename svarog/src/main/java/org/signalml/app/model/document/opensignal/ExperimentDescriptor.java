@@ -1,5 +1,10 @@
 package org.signalml.app.model.document.opensignal;
 
+import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
+import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.tag.StyledTagSet;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import multiplexer.jmx.client.JmxClient;
@@ -16,6 +21,17 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	
 	private String multiplexerAddress;
 	private int multiplexerPort;
+	private JmxClient jmxClient;
+	
+	private Float backupFrequency;
+	private MonitorRecordingDescriptor monitorRecordingDescriptor;
+	
+	private StyledTagSet tagStyles;
+	
+	public ExperimentDescriptor() {
+        setBackupFrequency(10.0F);
+        this.signalParameters = new SignalParameters();
+	}
 
 	public String getName() {
 		return name;
@@ -58,6 +74,38 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	}
 	public void setMultiplexerPort(int multiplexerPort) {
 		this.multiplexerPort = multiplexerPort;
+	}
+
+	public Float getBackupFrequency() {
+		return backupFrequency;
+	}
+
+	public void setBackupFrequency(Float backupFrequency) {
+		this.backupFrequency = backupFrequency;
+	}
+
+	public JmxClient getJmxClient() {
+		return jmxClient;
+	}
+
+	public void setJmxClient(JmxClient jmxClient) {
+		this.jmxClient = jmxClient;
+	}
+
+	public StyledTagSet getTagStyles() {
+		return tagStyles;
+	}
+
+	public void setTagStyles(StyledTagSet tagStyles) {
+		this.tagStyles = tagStyles;
+	}
+
+	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
+		return monitorRecordingDescriptor;
+	}
+
+	public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
+		this.monitorRecordingDescriptor = monitorRecordingDescriptor;
 	}
 	
 	/**

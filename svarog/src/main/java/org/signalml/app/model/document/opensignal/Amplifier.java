@@ -1,5 +1,6 @@
 package org.signalml.app.model.document.opensignal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
@@ -10,6 +11,8 @@ public class Amplifier {
 	private int samplesPerPacket;
 	private List<Float> samplingFrequencies;
 	private List<AmplifierChannel> channels;
+
+	private double amplifierNull;
 
 	public String getName() {
 		return name;
@@ -42,6 +45,23 @@ public class Amplifier {
 
 	public void setSamplesPerPacket(int samplesPerPacket) {
 		this.samplesPerPacket = samplesPerPacket;
+	}
+	
+	public String[] getSelectedChannelsLabels() {
+		List<String> channelLabels = new ArrayList<String>();
+		for (AmplifierChannel channel: getChannels()) {
+			if (channel.isSelected())
+				channelLabels.add(channel.getLabel());
+		}
+		return channelLabels.toArray(new String[0]);
+	}
+
+	public double getAmplifierNull() {
+		return amplifierNull;
+	}
+
+	public void setAmplifierNull(double amplifierNull) {
+		this.amplifierNull = amplifierNull;
 	}
 
 }

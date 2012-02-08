@@ -11,7 +11,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.Amplifier;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.plugin.export.SignalMLException;
@@ -90,29 +90,31 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 	 * @param descriptor
 	 *            the descriptor to be changed
 	 */
-	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
-		descriptor.setSamplingFrequency(Float
+	public void fillModelFromPanel(ExperimentDescriptor descriptor) {
+		SignalParameters signalParameters = descriptor.getSignalParameters();
+		
+		signalParameters.setSamplingFrequency(Float
 				.parseFloat(getSamplingFrequencyComboBox().getSelectedItem()
 						.toString()));
 		int channelCount = getChannelCountSpinner().getValue();
-		descriptor.setChannelCount(channelCount);
-		descriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
-		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
-		descriptor.setPageSize(getPageSizeSpinner().getValue());
+		signalParameters.setChannelCount(channelCount);
+		signalParameters.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
+		signalParameters.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
+		signalParameters.setPageSize(getPageSizeSpinner().getValue());
 
-		try {
+		/*try {
 			// all channels are selected channels
-			descriptor.setSelectedChannelList(descriptor.getChannelLabels());
+			//descriptor.setSelectedChannelList(descriptor.getChannelLabels());
 		} catch (Exception ex) {
 			Logger.getLogger(SignalParametersPanelForOpenBCI.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		}*/
 
 		// getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
 	}
 
 	@Override
 	protected void fillCurrentModelFromPanel() throws SignalMLException {
-		fillModelFromPanel((OpenMonitorDescriptor) currentModel);
+		fillModelFromPanel((ExperimentDescriptor) currentModel);
 	}
 
 }

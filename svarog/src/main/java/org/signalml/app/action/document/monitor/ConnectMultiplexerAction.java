@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.WorkerResult;
 import org.signalml.app.worker.monitor.MultiplexerConnectWorker;
@@ -24,7 +24,7 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
 
         private static final long serialVersionUID = 1L;
         protected ViewerElementManager elementManager;
-        private OpenMonitorDescriptor openMonitorDescriptor;
+        private ExperimentDescriptor experimentDescriptor;
         private JTextField multiplexerAddressField;
         private JTextField multiplexerPortField;
         private Integer timeoutMilis;
@@ -41,12 +41,12 @@ public class ConnectMultiplexerAction extends AbstractAction implements Property
                 this.putValue(NAME, _("Connect"));
         }
 
-        public OpenMonitorDescriptor getOpenMonitorDescriptor() {
-                return openMonitorDescriptor;
+        public ExperimentDescriptor getExperimentDescriptor() {
+                return experimentDescriptor;
         }
 
-        public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
-                this.openMonitorDescriptor = openMonitorDescriptor;
+        public void setExperimentDescriptor(ExperimentDescriptor experimentDescriptor) {
+                this.experimentDescriptor = experimentDescriptor;
         }
 
         public JTextField getMultiplexerAddressField() {

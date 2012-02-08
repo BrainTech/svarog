@@ -19,6 +19,13 @@ public class SignalParameters {
 	private Float maximumValue;
 	private Float minimumValue;
 
+	public SignalParameters() {
+		sampleType = RawSignalSampleType.DOUBLE;
+        byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
+        samplingFrequency = 128.0F;
+        pageSize = 20.0F;
+	}
+	
 	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}

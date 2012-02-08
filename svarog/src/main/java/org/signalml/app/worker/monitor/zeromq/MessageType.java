@@ -8,7 +8,8 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 public enum MessageType {
 
 	LIST_EXPERIMENTS,
-	RUNNING_EXPERIMENTS;
+	RUNNING_EXPERIMENTS,
+	JOIN_EXPERIMENT;
 	
 	@Override
 	public String toString() {

@@ -21,7 +21,8 @@ import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
 
 /**
  * The panel for choosing setting a connection to an openBCI system and
@@ -32,9 +33,9 @@ import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 	/**
-	 * The current OpenMonitorDescriptor.
+	 * The current ExperimentDescriptor.
 	 */
-	private OpenMonitorDescriptor currentModel;
+	private ExperimentDescriptor currentModel;
 
 	private ChooseExperimentPanel chooseExperimentPanel;
 	private ChannelSelectPanel channelSelectPanel;
@@ -87,7 +88,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 * @param descriptor
 	 *            descriptor to be used to filled this panel
 	 */
-	public void fillPanelFromModel(OpenMonitorDescriptor descriptor) {
+	public void fillPanelFromModel(ExperimentDescriptor descriptor) {
 
 		currentModel = descriptor;
 		//signalParametersPanel.fillPanelFromModel(currentModel);
@@ -99,18 +100,20 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	/**
 	 * Fills the given descriptor using the data set in the components
 	 * contained in this panel.
-	 * @param openMonitorDescriptor the descriptor to be filled
+	 * @param ExperimentDescriptor the descriptor to be filled
 	 */
-	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
-		signalParametersPanel.fillModelFromPanel(descriptor);
+	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
+
+		signalParametersPanel.fillModelFromPanel(currentModel);
 		//getMultiplexerConnectionPanel().fillModelFromPanel(descriptor);
 
-		descriptor.setJmxClient(viewerElementManager.getJmxClient());
-		descriptor.setTagClient(viewerElementManager.getTagClient());
-                descriptor.setSignalSource(SignalSource.OPENBCI);
-		descriptor.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
+		currentModel.setJmxClient(viewerElementManager.getJmxClient());
+		//descriptor.setSignalSource(SignalSource.OPENBCI);
+		currentModel.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 
-		getTagPresetSelectionPanel().fillModelFromPanel(descriptor);
+		getTagPresetSelectionPanel().fillModelFromPanel(currentModel);
+		
+		openSignalDescriptor.setExperimentDescriptor(currentModel);
 	}
 
 	/**
@@ -133,6 +136,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
 			channelSelectPanel.fillPanelFromModel(experiment);
 			signalParametersPanel.fillPanelFromModel(experiment);
+			
+			this.currentModel = experiment;
 
 			PropertyChangeEvent event = new PropertyChangeEvent(this, ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY, null, experiment);
 			propertyChangeSupport.firePropertyChange(event);

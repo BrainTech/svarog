@@ -19,7 +19,7 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
 import org.signalml.app.view.document.opensignal.file.FileSignalSourcePanel;
 import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
@@ -145,7 +145,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
 			this.stateChanged(null);
 		}
-		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenMonitorDescriptor());
+		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getExperimentDescriptor());
 
 		clearPreviousConnections();
 	}
@@ -178,8 +178,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 			fileSignalSourcePanel.fillModelFromPanel(openFileSignalDescriptor);
 		}
 		else if (signalSource.isOpenBCI()) {
-			OpenMonitorDescriptor openMonitorDescriptor = openSignalDescriptor.getOpenMonitorDescriptor();
-			openBCISignalSourcePanel.fillModelFromPanel(openMonitorDescriptor);
+			openBCISignalSourcePanel.fillModelFromPanel(openSignalDescriptor);
 		}
 	}
 

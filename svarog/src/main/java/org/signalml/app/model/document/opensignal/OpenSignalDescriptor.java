@@ -32,7 +32,7 @@ public class OpenSignalDescriptor {
 	/**
 	 * Descriptor of the openBCI signal to be opened.
 	 */
-	private OpenMonitorDescriptor openMonitorDescriptor;
+	private ExperimentDescriptor experimentDescriptor;
 
 	/**
 	 * Montage to be applied to the signal directly after opening.
@@ -43,7 +43,7 @@ public class OpenSignalDescriptor {
 		signalSource = SignalSource.FILE;
 
 		openFileSignalDescriptor = new OpenFileSignalDescriptor();
-		openMonitorDescriptor = new OpenMonitorDescriptor();
+		experimentDescriptor = new ExperimentDescriptor();
 
 		montage = SignalConfigurer.createMontage(openFileSignalDescriptor.getRawSignalDescriptor().getChannelCount());
 	}
@@ -92,17 +92,17 @@ public class OpenSignalDescriptor {
 	 * Returns the signal to be opened using an existing openBCI system.
 	 * @return the signal to be opened using an existing openBCI system
 	 */
-	public OpenMonitorDescriptor getOpenMonitorDescriptor() {
-		return openMonitorDescriptor;
+	public ExperimentDescriptor getExperimentDescriptor() {
+		return experimentDescriptor;
 	}
 
 	/**
 	 * Sets the signal to be opened using an existing openBCI system.
-	 * @param openMonitorDescriptor the signal to be opened using an existing
+	 * @param experimentDescriptor the signal to be opened using an existing
 	 * openBCI system.
 	 */
-	public void setOpenMonitorDescriptor(OpenMonitorDescriptor openMonitorDescriptor) {
-		this.openMonitorDescriptor = openMonitorDescriptor;
+	public void setExperimentDescriptor(ExperimentDescriptor experimentDescriptor) {
+		this.experimentDescriptor = experimentDescriptor;
 	}
 
 	/**

@@ -7,15 +7,26 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.ExecutionException;
+
+import javax.swing.SwingWorker.StateValue;
+
+import multiplexer.jmx.client.JmxClient;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.document.opensignal.OpenSignalAndSetMontageDialog;
+import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
+import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import org.zeromq.ZMQ;
 
 /**
  * An action performed when the user chooses an option to open signal allowing
@@ -25,7 +36,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  *
  * @author Piotr Szachewicz
  */
-public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
+public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,6 +50,9 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 	 * A dialog opened after performing this action.
 	 */
 	private OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog;
+	
+	private OpenDocumentDescriptor openDocumentDescriptor;
+	private ConnectToExperimentWorker worker;
 
 	/**
 	 * Constructor.
@@ -57,7 +71,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
-		OpenDocumentDescriptor openDocumentDescriptor = new OpenDocumentDescriptor();
+		openDocumentDescriptor = new OpenDocumentDescriptor();
 		openDocumentDescriptor.setMakeActive(true);
 		openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
 
@@ -66,7 +80,15 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 			return;
 		}
 
-		documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+		if (openDocumentDescriptor.getOpenSignalDescriptor().getSignalSource() == SignalSource.OPENBCI) {
+			ExperimentDescriptor experimentDescriptor = openDocumentDescriptor.getOpenSignalDescriptor().getExperimentDescriptor();
+			worker = new ConnectToExperimentWorker(experimentDescriptor);
+			worker.addPropertyChangeListener(this);
+			worker.execute();
+		}
+		else {
+			documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+		}
 
 	}
 
@@ -83,6 +105,26 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction {
 		if (openSignalAndSetMontageDialog == null)
 			throw new NullPointerException();
 		this.openSignalAndSetMontageDialog = openSignalAndSetMontageDialog;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+//		System.out.println("df");
+		if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
+			JmxClient jmxClient;
+			try {
+				jmxClient = worker.get();
+				openDocumentDescriptor.getOpenSignalDescriptor().getExperimentDescriptor().setJmxClient(jmxClient);
+				documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 
 }

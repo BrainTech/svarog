@@ -13,7 +13,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
@@ -51,7 +52,7 @@ public class SignalRecorderWorker {
         /**
          * Object describing the signal.
          */
-	private OpenMonitorDescriptor monitorDescriptor;
+	private ExperimentDescriptor monitorDescriptor;
 
         /**
          * How many samples have been received.
@@ -95,7 +96,7 @@ public class SignalRecorderWorker {
          * @param monitorDescriptor object describing the signal        
          * @throws FileNotFoundException when output stream cannot be initialized
          */
-	public SignalRecorderWorker(String dataPath, OpenMonitorDescriptor monitorDescriptor) throws FileNotFoundException {
+	public SignalRecorderWorker(String dataPath, ExperimentDescriptor monitorDescriptor) throws FileNotFoundException {
 
                 String metadataPath;
                 if (dataPath.endsWith(".raw")) {
@@ -189,7 +190,7 @@ public class SignalRecorderWorker {
                 if (chunkCount == 0)
                         return;
                 
-                int sampleSize = monitorDescriptor.getSampleType().getByteWidth();
+                int sampleSize = monitorDescriptor.getSignalParameters().getSampleType().getByteWidth();
                 int chunkSize = sampleList.get(0).length * sampleSize;
 
                 byte[] toSave = new byte[chunkSize * chunkCount];
@@ -219,9 +220,9 @@ public class SignalRecorderWorker {
          */
 	private byte[] processChunk(double[] chunk) {
 
-		byte[] byteBuffer = new byte[chunk.length * monitorDescriptor.getSampleType().getByteWidth()];
+		byte[] byteBuffer = new byte[chunk.length * monitorDescriptor.getSignalParameters().getSampleType().getByteWidth()];
 
-		ByteBuffer bBuffer = ByteBuffer.wrap(byteBuffer).order(monitorDescriptor.getByteOrder().getByteOrder());		
+		ByteBuffer bBuffer = ByteBuffer.wrap(byteBuffer).order(monitorDescriptor.getSignalParameters().getByteOrder().getByteOrder());		
 		DoubleBuffer buf = bBuffer.asDoubleBuffer();
 
 		buf.clear();
@@ -245,15 +246,16 @@ public class SignalRecorderWorker {
 		RawSignalDescriptor rsd = new RawSignalDescriptor();
 		rsd.setExportFileName(dataFilePath);
 		rsd.setBlocksPerPage(1);
-		rsd.setByteOrder(monitorDescriptor.getByteOrder());
-		rsd.setCalibrationGain(monitorDescriptor.getSelectedChannelsCalibrationGain());
-		rsd.setCalibrationOffset(monitorDescriptor.getSelectedChannelsCalibrationOffset());
-		rsd.setChannelCount(monitorDescriptor.getSelectedChannelsCount());
-		rsd.setChannelLabels(monitorDescriptor.getSelectedChannelsLabels());
-		rsd.setPageSize(monitorDescriptor.getPageSize());
+		SignalParameters signalParameters = monitorDescriptor.getSignalParameters();
+		rsd.setByteOrder(signalParameters.getByteOrder());
+		rsd.setCalibrationGain(signalParameters.getCalibrationGain());
+		rsd.setCalibrationOffset(signalParameters.getCalibrationOffset());
+		rsd.setChannelCount(signalParameters.getChannelCount());
+		rsd.setChannelLabels(monitorDescriptor.getAmplifier().getSelectedChannelsLabels());
+		rsd.setPageSize(signalParameters.getPageSize());
 		rsd.setSampleCount(savedSampleCount);
-		rsd.setSampleType(monitorDescriptor.getSampleType());
-		rsd.setSamplingFrequency(monitorDescriptor.getSamplingFrequency());
+		rsd.setSampleType(signalParameters.getSampleType());
+		rsd.setSamplingFrequency(signalParameters.getSamplingFrequency());
 		rsd.setSourceSignalType(SourceSignalType.RAW);
 		rsd.setFirstSampleTimestamp(firstSampleTimestamp);
                 rsd.setIsBackup(isBackup);

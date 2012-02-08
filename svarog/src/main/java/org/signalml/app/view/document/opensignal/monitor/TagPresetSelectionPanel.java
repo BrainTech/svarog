@@ -8,7 +8,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.domain.tag.StyledTagSet;
 
@@ -57,11 +57,11 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 	}
 
 	/**
-	 * Sets the appropriate tag style preset in the OpenMonitorDescriptor
+	 * Sets the appropriate tag style preset in the ExperimentDescriptor
 	 * depending on the selected preset
 	 * @param descriptor the model to be filled
 	 */
-	public void fillModelFromPanel(OpenMonitorDescriptor descriptor) {
+	public void fillModelFromPanel(ExperimentDescriptor descriptor) {
 		StyledTagSet selectedStylesPreset = (StyledTagSet) getPresetComboBox().getSelectedItem();
 		descriptor.setTagStyles(selectedStylesPreset);
 	}

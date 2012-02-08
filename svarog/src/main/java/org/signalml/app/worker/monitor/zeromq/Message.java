@@ -1,5 +1,6 @@
 package org.signalml.app.worker.monitor.zeromq;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -61,17 +62,12 @@ public class Message {
 	}
 	
 	public String toJSON() {
-		ObjectMapper mapper = new ObjectMapper(); 
-		Map<String,Object> msgData = new HashMap<String,Object>();
 		
-		msgData.put("sender", "");
-		msgData.put("sender_ip", "");
-		msgData.put("receiver", "");
-		msgData.put("type", "list_experiments");
+		ObjectMapper mapper = new ObjectMapper();
 		
-		Writer listExpRequest = new StringWriter();
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
-			mapper.writeValue(listExpRequest, msgData);
+			mapper.writeValue(os, this);
 		} catch (JsonGenerationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -82,8 +78,10 @@ public class Message {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		String str = os.toString();
 		
-		return listExpRequest.toString();
+		return str;
 	}
 	
 	public void fromJSON(String json) {

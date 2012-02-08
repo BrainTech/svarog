@@ -47,7 +47,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 		String response = ObciTester.getListExperimentsResponse();
 		ExperimentDescriptorJSonReader reader = new ExperimentDescriptorJSonReader();
 		List<ExperimentDescriptor> result = reader.parseExperiments(response);
-		
+
 		return result;
 	}
 	

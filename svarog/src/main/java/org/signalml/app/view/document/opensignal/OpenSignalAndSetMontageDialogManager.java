@@ -103,14 +103,10 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 			
 			OpenBCISignalSourcePanel panel = (OpenBCISignalSourcePanel) signalSourcePanel.getCurrentSignalSourcePanel();
 			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
-			
-			List<String> channelLabels = new ArrayList<String>();
-			for (AmplifierChannel channel: experiment.getAmplifier().getChannels()) {
-				if (channel.isSelected())
-					channelLabels.add(channel.getLabel());
-			}
-			numberOfChannelsChangedTo(channelLabels.size());
-			channelLabelsChangedTo(channelLabels.toArray(new String[0]));
+
+			String[] channelLabels = experiment.getAmplifier().getSelectedChannelsLabels();
+			numberOfChannelsChangedTo(channelLabels.length);
+			channelLabelsChangedTo(channelLabels);
 		}
 	}
 

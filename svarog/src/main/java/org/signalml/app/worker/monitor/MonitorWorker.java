@@ -10,7 +10,7 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
@@ -34,7 +34,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
 	private final JmxClient client;
-	private final OpenMonitorDescriptor monitorDescriptor;
+	private final ExperimentDescriptor monitorDescriptor;
 	private final RoundBufferMultichannelSampleSource sampleSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
@@ -58,7 +58,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	private TagStylesGenerator stylesGenerator;
 
-	public MonitorWorker(JmxClient client, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
+	public MonitorWorker(JmxClient client, ExperimentDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		this.client = client;
 		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
@@ -66,7 +66,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
 		//with a real value?
-		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getSignalParameters().getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
 
 		logger.setLevel((Level) Level.INFO);
 	}
@@ -112,13 +112,12 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 * to parse its contents.
 	 * @param sampleMsgString the content of the message
 	 */
-	private void parseMessageWithSamples(ByteString sampleMsgString) {
+	protected void parseMessageWithSamples(ByteString sampleMsgString) {
 		logger.debug("Worker: reading chunk!");
 		
-		final int plotCount = monitorDescriptor.getSelectedChannelList().length;
-		final int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-		final double[] gain = monitorDescriptor.getGain();
-		final double[] offset = monitorDescriptor.getOffset();
+		int plotCount = monitorDescriptor.getAmplifier().getSelectedChannelsLabels().length;
+		float[] gain = monitorDescriptor.getSignalParameters().getCalibrationGain();
+		float[] offset = monitorDescriptor.getSignalParameters().getCalibrationOffset();
 
 		final SampleVector sampleVector;
 		try {
@@ -136,9 +135,8 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			double[] condChunk = new double[plotCount];
 			double[] selectedChunk = new double[plotCount];
 			for (int i = 0; i < plotCount; i++) {
-				int n = selectedChannels[i];
-				condChunk[i] = gain[n] * sample.getChannels(n) + offset[n];
-				selectedChunk[i] = sample.getChannels(n);
+				condChunk[i] = gain[i] * sample.getChannels(i) + offset[i];
+				selectedChunk[i] = sample.getChannels(i);
 			}
 
 			double samplesTimestamp = samples.get(0).getTimestamp();
@@ -191,11 +189,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				tag.addAttributeToTag(v.getKey(), v.getValue());
 			}
 		}
-
-		int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-		if(isChannelSelected(tag.getChannel(), selectedChannels)) {
-			publish(tag);
-		}
+		publish(tag);
 	}
 
 	private boolean isChannelSelected(final int channel, final int selectedChannels[]) {
@@ -241,11 +235,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				tagSet.unlock();
 
 				//record tag
-				int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
-					if (tagRecorderWorker != null) {
-						tagRecorderWorker.offerTag(tag);
-					}
+
+				if (tagRecorderWorker != null) {
+					tagRecorderWorker.offerTag(tag);
 				}
 
 				firePropertyChange("newTag", null, (MonitorTag) o);

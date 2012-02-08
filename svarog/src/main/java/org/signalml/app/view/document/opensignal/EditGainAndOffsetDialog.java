@@ -13,7 +13,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
 import org.signalml.app.view.document.monitor.ChannelDefinitionsTable;
@@ -41,7 +42,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         }
 
         /**
-         * Dialog can be filled from {@link OpenMonitorDescriptor}, {@link RawSignalDescriptor}
+         * Dialog can be filled from {@link ExperimentDescriptor}, {@link RawSignalDescriptor}
          * or {@link AmplifierConnectionDescriptor}.
          *
          * @param clazz checked model
@@ -50,7 +51,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         @Override
         public boolean supportsModelClass(Class<?> clazz) {
 
-                boolean isBCIConnection = OpenMonitorDescriptor.class.isAssignableFrom(clazz);
+                boolean isBCIConnection = ExperimentDescriptor.class.isAssignableFrom(clazz);
                 boolean isFile = RawSignalDescriptor.class.isAssignableFrom(clazz);
 
                 return isBCIConnection || isFile;
@@ -64,8 +65,8 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         @Override
         public void fillDialogFromModel(Object model) {
 
-                if (model instanceof OpenMonitorDescriptor) {
-                        fillDialogForOpenBCIConnection((OpenMonitorDescriptor) model);
+                if (model instanceof ExperimentDescriptor) {
+                        fillDialogForOpenBCIConnection((ExperimentDescriptor) model);
                 } else if (model instanceof RawSignalDescriptor) {
                         fillDialogForFileOpening((RawSignalDescriptor) model);
                 }
@@ -79,8 +80,8 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         @Override
         public void fillModelFromDialog(Object model) {
 
-        		if (model instanceof OpenMonitorDescriptor) {
-                        fillModelForOpenBCIConnection((OpenMonitorDescriptor) model);
+        		if (model instanceof ExperimentDescriptor) {
+                        fillModelForOpenBCIConnection((ExperimentDescriptor) model);
                 } else if (model instanceof RawSignalDescriptor) {
                         fillModelForFileOpening((RawSignalDescriptor) model);
                 }
@@ -91,17 +92,19 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
          *
          * @param descriptor the descriptor
          */
-        private void fillDialogForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
+        private void fillDialogForOpenBCIConnection(ExperimentDescriptor descriptor) {
+        	
+        	SignalParameters signalParameters = descriptor.getSignalParameters();
 
                 setAllGainAndOffsetEditable(true);
                 List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-                for (int i = 0; i < descriptor.getChannelCount(); i++) {
+                for (int i = 0; i < signalParameters.getChannelCount(); i++) {
 
                         definitions.add(new ChannelDefinition(
                                 i,
-                                descriptor.getCalibrationGain()[i],
-                                descriptor.getCalibrationOffset()[i],
-                                descriptor.getChannelLabels()[i]));
+                                signalParameters.getCalibrationGain()[i],
+                                signalParameters.getCalibrationOffset()[i],
+                                descriptor.getAmplifier().getSelectedChannelsLabels()[i]));
                 }
 
                 getDefinitionsTable().setData(definitions);
@@ -134,10 +137,10 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
          *
          * @param descriptor the descriptor
          */
-        private void fillModelForOpenBCIConnection(OpenMonitorDescriptor descriptor) {
+        private void fillModelForOpenBCIConnection(ExperimentDescriptor descriptor) {
 
-                descriptor.setCalibrationGain(getGainArray());
-                descriptor.setCalibrationOffset(getOffsetArray());
+                descriptor.getSignalParameters().setCalibrationGain(getGainArray());
+                descriptor.getSignalParameters().setCalibrationOffset(getOffsetArray());
         }
 
         /**

@@ -62,7 +62,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 
-			boolean ok = startMonitorRecordingDialog.showDialog(monitorSignalDocument.getOpenMonitorDescriptor(), true);
+			boolean ok = startMonitorRecordingDialog.showDialog(monitorSignalDocument.getExperimentDescriptor(), true);
 				if (!ok) {
 				return;
 			}

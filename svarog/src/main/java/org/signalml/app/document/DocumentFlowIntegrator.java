@@ -26,7 +26,7 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalParameterDescriptor;
@@ -812,10 +812,10 @@ public class DocumentFlowIntegrator {
 
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
-		OpenMonitorDescriptor monitorOptions = null;
+		ExperimentDescriptor monitorOptions = null;
 
 		if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
-			monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
+			monitorOptions = descriptor.getOpenSignalDescriptor().getExperimentDescriptor();
 		}
 		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 

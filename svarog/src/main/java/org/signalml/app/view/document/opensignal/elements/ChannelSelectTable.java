@@ -12,7 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.
@@ -73,7 +73,7 @@ public class ChannelSelectTable extends JTable {
 
 		AmplifierChannels channels = new AmplifierChannels(
                         descriptor.getAmplifierInstance().getDefinition().getChannelNumbers(),
-                        descriptor.getOpenMonitorDescriptor().getChannelLabels());
+                        descriptor.getExperimentDescriptor().getChannelLabels());
 
 		ChannelSelectTableModel model = new ChannelSelectTableModel();
 		model.setChannels(channels);
@@ -87,17 +87,17 @@ public class ChannelSelectTable extends JTable {
 	 * @param descriptor the descriptor to be filled
 	 */
 	/*public void fillModelFromTable(AmplifierConnectionDescriptor descriptor) {
-		OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();
+		ExperimentDescriptor ExperimentDescriptor = descriptor.getExperimentDescriptor();
 		AmplifierChannels amplifierChannels = getAmplifierChannels();
 
 		//setting all channels labels
 		String[] labels = amplifierChannels.getAllChannelsLabels();
-		openMonitorDescriptor.setChannelLabels(labels);
+		ExperimentDescriptor.setChannelLabels(labels);
 
 		//setting selected channels labels
 		String[] selectedLabels = amplifierChannels.getSelectedChannelsLabels();
 		try {
-			openMonitorDescriptor.setSelectedChannelList(selectedLabels);
+			ExperimentDescriptor.setSelectedChannelList(selectedLabels);
 		} catch (Exception ex) {
 		}
 

@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.validation.BindException;
 
@@ -138,14 +138,14 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
 
         /**
          * Fills the model with the data from this panel (user input).
-         * @param openMonitorDescriptor the model to be filled.
+         * @param experimentDescriptor the model to be filled.
          */
-        public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
+        public void fillModelFromPanel(ExperimentDescriptor experimentDescriptor) {
                 if (isRecordingEnabled()) {
-                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
-                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
+                        experimentDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
+                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(experimentDescriptor);
                 } else {
-                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
+                        experimentDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
                 }
         }
 

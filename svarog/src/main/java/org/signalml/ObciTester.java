@@ -1,6 +1,7 @@
 package org.signalml;
 
 import java.io.BufferedReader;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -84,7 +85,7 @@ public class ObciTester {
 			e.printStackTrace();
 		}*/
 
-		String s = null;
+		/*String s = null;
 
 		try {
 			s = getListExperimentsResponse();
@@ -97,7 +98,30 @@ public class ObciTester {
 		List<ExperimentDescriptor> exp = reader.parseExperiments(s);
 
 		// System.out.println("ble" + s);
-		System.out.println("read file");
+		System.out.println("read file");*/
+		
+		String connectTo = "tcp://127.0.0.1:52620";
+
+        ZMQ.Context ctx = ZMQ.context (1);
+        ZMQ.Socket s = ctx.socket (ZMQ.REQ);
+
+        //  Add your socket options here.
+        //  For example ZMQ_RATE, ZMQ_RECOVERY_IVL and ZMQ_MCAST_LOOP for PGM.
+
+        System.out.println("Connecting");
+        s.connect (connectTo);
+        s.connect ("tcp://127.0.0.1:51620");
+        System.out.println("Sending!");
+
+        byte data [] =  "{\"sender_ip\": \"\", \"type\": \"join_experiment\", \"sender\": \"\", \"receiver\": \"\", \"peer_id\": \"mplifier\", \"peer_type\": \"obci_peer\", \"path\": \"drivers/eeg/amplifier_virtual.py\"}".getBytes();
+       // byte data [] =  "{\"sender_ip\": \"\", \"type\": \"list_experiments\", \"sender\": \"\", \"receiver\": \"\"}".getBytes();
+
+        System.out.println("sent: " + new String(data));
+        s.send (data, 0);
+        System.out.println("Receiving");
+        data = s.recv (0);
+
+        System.out.println("Received reply: " + new String(data));
 
 	}
 
