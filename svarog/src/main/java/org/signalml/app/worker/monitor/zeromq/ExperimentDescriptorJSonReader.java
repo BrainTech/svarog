@@ -39,21 +39,6 @@ public class ExperimentDescriptorJSonReader {
 		
 		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>) map.get("experiment_list");
 		
-		/* = null;
-		try {
-			list = mapper.readValue(new File("/home/kret/listexp"), 
-					new TypeReference<List<LinkedHashMap<String, Object>>>() {});
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
 		List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 		for (LinkedHashMap<String, Object> exp: list) {
 			ExperimentDescriptor descriptor = parseSingleExperiment(exp);
@@ -117,6 +102,7 @@ public class ExperimentDescriptorJSonReader {
 		
 		signalParameters.setChannelCount(i);
 		
+		//active channels
 		String activeChannels = (String) amplifierParams.get("active_channels");
 		
 		StringTokenizer tokenizer = new StringTokenizer(activeChannels, ";");
@@ -133,6 +119,17 @@ public class ExperimentDescriptorJSonReader {
 		    			  channel.setSelected(true);
 		    	  }
 		      }
+		}
+		
+		//channel names
+		String channelNames = (String) amplifierParams.get("channel_names");
+		tokenizer = new StringTokenizer(channelNames, ";");
+		List<AmplifierChannel> selectedChannels = amplifier.getSelectedChannels();
+		i = 0;
+		while(tokenizer.hasMoreTokens()) {
+			String channelName = tokenizer.nextToken();
+			selectedChannels.get(i).setLabel(channelName);
+			i++;
 		}
 
 		experiment.setAmplifier(amplifier);
