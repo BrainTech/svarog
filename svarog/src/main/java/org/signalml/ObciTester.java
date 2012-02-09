@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.ServerSocket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.worker.monitor.zeromq.ExperimentDescriptorJSonReader;
+import org.signalml.app.worker.monitor.zeromq.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.zeromq.ListExperimentsResponse;
 import org.signalml.app.worker.monitor.zeromq.Message;
 import org.signalml.app.worker.monitor.zeromq.MessageType;
@@ -42,11 +44,35 @@ public class ObciTester {
 	
 	
 	public static void main(String[] args) {
-		    return;
-		    //System.DateTime dtDateTime = new DateTime(1970,1,1,0,0,0,0);
-		    //dtDateTime = dtDateTime.AddSeconds(Math.Round(javaTimeStamp / 1000)).ToLocalTime();
-		    //return dtDateTime;
+		    
+		ZMQ.Context context = ZMQ.context(1);
+		ZMQ.Socket socketPull = context.socket(ZMQ.PULL);
+		
+		int myPort = 54123;
+		try {
+			myPort = findFreePort();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String myAddress = "tcp://127.0.0.1:" + myPort;
+		socketPull.bind(myAddress);
+		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest(myAddress);
+
+		ZMQ.Socket socketSend = context.socket(ZMQ.REQ);
+		socketSend.connect("tcp://127.0.0.1:54654");
+		socketSend.send(request.toJSON().getBytes(), 0);
+		
+		System.out.println("sent: " + request.toJSON());
+		socketSend.close();
+		
+		byte[] responseBytes = socketPull.recv(0);
+		String response = new String(responseBytes);
+		
+		System.out.println("response: " + response);
 			
+		ExperimentDescriptorJSonReader reader = new ExperimentDescriptorJSonReader();
+		List<ExperimentDescriptor> experiments = reader.parseExperiments(response);
 		
 		/*ZMQ.Context ctx = ZMQ.context (1);
 		ZMQ.Socket socket = ctx.socket(ZMQ.REQ);
@@ -151,6 +177,13 @@ public class ObciTester {
 		reader.close();
 
 		return fileData.toString();
+	}
+
+	public static int findFreePort() throws IOException {
+		ServerSocket server = new ServerSocket(0);
+		int port = server.getLocalPort();
+		server.close();
+		return port;
 	}
 
 }

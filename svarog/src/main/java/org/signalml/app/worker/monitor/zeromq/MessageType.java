@@ -10,8 +10,9 @@ public enum MessageType {
 	LIST_EXPERIMENTS,
 	RUNNING_EXPERIMENTS,
 	JOIN_EXPERIMENT,
-	LEAVE_EXPERIMENT;
-	
+	LEAVE_EXPERIMENT,
+	FIND_EEG_EXPERIMENTS;
+
 	@Override
 	public String toString() {
 		return this.name().toLowerCase();

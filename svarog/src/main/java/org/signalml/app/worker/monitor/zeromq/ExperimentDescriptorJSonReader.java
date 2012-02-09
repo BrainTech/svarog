@@ -22,7 +22,24 @@ public class ExperimentDescriptorJSonReader {
 	public List<ExperimentDescriptor> parseExperiments(String s) {
 		
 		ObjectMapper mapper = new ObjectMapper();
-		List<LinkedHashMap<String, Object>> list = null;
+		
+		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
+		try {
+			map = mapper.readValue(s.getBytes(), new TypeReference<LinkedHashMap<String, Object>>(){});
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>) map.get("experiment_list");
+		
+		/* = null;
 		try {
 			list = mapper.readValue(new File("/home/kret/listexp"), 
 					new TypeReference<List<LinkedHashMap<String, Object>>>() {});
@@ -35,7 +52,7 @@ public class ExperimentDescriptorJSonReader {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 		for (LinkedHashMap<String, Object> exp: list) {
