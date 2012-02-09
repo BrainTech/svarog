@@ -38,6 +38,8 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 * The index of the column which shows the channel label.
 	 */
 	public static final int LABEL_COLUMN = 2;
+	
+	private boolean editable;
 
 	public ChannelSelectTableModel() {
 	}
@@ -82,7 +84,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 			default: return null;
 		}
 	}
-
+	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		if (columnIndex == 0)
@@ -93,8 +95,9 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 0 || columnIndex == 2)
-			return true;
+		if (columnIndex == 0 || columnIndex == 2) {
+			return isEditable();
+		}
 		else
 			return false;
 	}
@@ -129,5 +132,13 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 			channel.setSelected(selected);
 		}
 		fireTableDataChanged();
+	}
+
+	public boolean isEditable() {
+		return editable;
+	}
+
+	public void setEditable(boolean editable) {
+		this.editable = editable;
 	}
 }

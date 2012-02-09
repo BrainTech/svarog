@@ -17,6 +17,7 @@ import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
+import org.signalml.app.worker.monitor.DisconnectFromExperimentWorker;
 import org.signalml.app.worker.monitor.MonitorWorker;
 import org.signalml.app.worker.monitor.SignalRecorderWorker;
 import org.signalml.app.worker.monitor.TagRecorder;
@@ -197,6 +198,11 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		tagSet.stopTagsRemoving();
 		
 		//disconnect from Jmx
+		DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(monitorOptions);
+		worker.execute();
+		
+		while(!worker.isDone())
+			;
 		
 		//close document
 		super.closeDocument();

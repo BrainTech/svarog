@@ -5,7 +5,7 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
-public class JoinExperimentsRequest extends Message {
+public class JoinOrLeaveExperimentsRequest extends Message {
 
 	@JsonProperty("peer_id")
 	private String peerId;
@@ -16,9 +16,8 @@ public class JoinExperimentsRequest extends Message {
 	@JsonProperty("path")
 	private String path;
 
-	public JoinExperimentsRequest(ExperimentDescriptor experiment) {
+	public JoinOrLeaveExperimentsRequest(ExperimentDescriptor experiment) {
 		super(MessageType.JOIN_EXPERIMENT);
-		this.peerId = "svarog" + (new Date().getMinutes()) + "" + (new Date().getSeconds());
 		this.peerType = "obci_peer";
 		this.path = experiment.getPath();
 	}

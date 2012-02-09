@@ -1,6 +1,7 @@
 package org.signalml.app.worker.monitor;
 
 import java.net.InetSocketAddress;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.StringTokenizer;
 
@@ -12,7 +13,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.worker.monitor.zeromq.JoinExperimentsRequest;
+import org.signalml.app.worker.monitor.zeromq.JoinOrLeaveExperimentsRequest;
+import org.signalml.app.worker.monitor.zeromq.MessageType;
 import org.signalml.multiplexer.protocol.SvarogConstants;
 import org.zeromq.ZMQ;
 
@@ -34,7 +36,12 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	protected JmxClient doInBackground() throws Exception {
 
 		//wysłanie join_experiment do eksperymentu
-		JoinExperimentsRequest request = new JoinExperimentsRequest(experimentDescriptor);
+		JoinOrLeaveExperimentsRequest request = new JoinOrLeaveExperimentsRequest(experimentDescriptor);
+		request.setType(MessageType.JOIN_EXPERIMENT);
+		String myPeerId = "svarog" + (new Date().getMinutes()) + "" + (new Date().getSeconds());
+		experimentDescriptor.setPeerId(myPeerId);
+		request.setPeerId(myPeerId);
+
 		String requestString = request.toJSON().toString();
 
 		String experimentAddress = experimentDescriptor.getExperimentAddress();

@@ -164,12 +164,12 @@ public class ChannelSelectPanel extends JPanel {
 	 * @param descriptor
 	 */
 	public void fillPanelFromModel(ExperimentDescriptor descriptor) {
-		if (descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING) {
-			setEnabledAll(false);
-		} else {
-			setEnabledAll(true);
-		}
-		getChannelSelectTable().fillTableFromModel(descriptor);
+		boolean panelEditable = !(descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING);
+
+		selectAllButton.setEnabled(panelEditable);
+		clearSelectionButton.setEnabled(panelEditable);
+
+		getChannelSelectTable().fillTableFromModel(descriptor);	
 	}
 
 }

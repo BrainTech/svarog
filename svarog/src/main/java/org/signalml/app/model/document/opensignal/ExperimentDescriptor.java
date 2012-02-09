@@ -28,6 +28,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private MonitorRecordingDescriptor monitorRecordingDescriptor;
 	
 	private StyledTagSet tagStyles;
+	private String peerId;
 	
 	public ExperimentDescriptor() {
         setBackupFrequency(10.0F);
@@ -115,6 +116,14 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getPeerId() {
+		return peerId;
+	}
+
+	public void setPeerId(String peerId) {
+		this.peerId = peerId;
 	}
 	
 	/**

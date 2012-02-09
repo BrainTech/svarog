@@ -13,6 +13,7 @@ import javax.swing.table.TableColumn;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentStatus;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.
@@ -121,6 +122,11 @@ public class ChannelSelectTable extends JTable {
 
 		ChannelSelectTableModel model = new ChannelSelectTableModel();
 		model.setChannels(descriptor.getAmplifier().getChannels());
+		
+		if (descriptor.getStatus() == ExperimentStatus.RUNNING)
+			model.setEditable(false);
+		else
+			model.setEditable(true);
 
 		setModel(model);
 		setColumnsPreferredSizes();

@@ -9,7 +9,8 @@ public enum MessageType {
 
 	LIST_EXPERIMENTS,
 	RUNNING_EXPERIMENTS,
-	JOIN_EXPERIMENT;
+	JOIN_EXPERIMENT,
+	LEAVE_EXPERIMENT;
 	
 	@Override
 	public String toString() {
