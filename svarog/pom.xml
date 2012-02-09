@@ -503,9 +503,9 @@
    			<version>1.9.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.zmq</groupId>
+			<groupId>org.zeromq</groupId>
 			<artifactId>jzmq</artifactId>
-			<version>2.0.6-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
             
             
