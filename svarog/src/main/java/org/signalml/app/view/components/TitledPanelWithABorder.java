@@ -17,6 +17,10 @@ public class TitledPanelWithABorder extends JPanel {
 
 	public TitledPanelWithABorder() {
 	}
+	
+	public TitledPanelWithABorder(String title) {
+		this.setTitledBorder(title);
+	}
 
 	public void setTitledBorder(String title) {
 		CompoundBorder border = new CompoundBorder(

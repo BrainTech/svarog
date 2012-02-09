@@ -3,6 +3,7 @@ package org.signalml.app.view.document.monitor.signalchecking;
 import java.util.HashMap;
 import org.apache.commons.math.complex.Complex;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.model.montage.ElectrodeType;
 import org.signalml.math.fft.FourierTransform;
 
 /**
@@ -13,20 +14,18 @@ import org.signalml.math.fft.FourierTransform;
  */
 public class FFTDiagnosis extends GenericAmplifierDiagnosis {
 
-        /**
-         * Frequency of each element in the result of fft.
-         */
-        double[] frequencies;
-
+		/**
+	     * {@link #samplesTestedFactor} parameter key.
+	     */
+	    public static final String ELECTRODE_TYPE = "ElectrodeType";
+	
         /**
          * Constructor.
          * @param monitorSignalDocument {@link GenericAmplifierDiagnosis#monitorSignalDocument}
          * @param parameters {@link GenericAmplifierDiagnosis#parameters}
          */
         public FFTDiagnosis(MonitorSignalDocument monitorSignalDocument, HashMap<String, Object> parameters) {
-
                 super(monitorSignalDocument, parameters);
-                frequencies = calculateFrequencies(getSamplesToTest(), getMonitorSignalDocument().getSamplingFrequency());
         }
 
         /**
@@ -41,18 +40,9 @@ public class FFTDiagnosis extends GenericAmplifierDiagnosis {
 
                 HashMap<String, ChannelState> channels = new HashMap<String, ChannelState>();
 
-                // Currently returns random values
                 for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
-                        java.util.Random rand = new java.util.Random();
-                        boolean channelValid = true;
-                        AdditionalChannelData data = new AdditionalChannelData(rand.nextInt(40000) + 60000, rand.nextInt(5000) - 10000, rand.nextInt(40000) + 30000, rand.nextInt(100000), SignalCheckingMethod.FFT);
-                        channels.put(getLabel(i), new ChannelState(channelValid, data));
+                        channels.put(getLabel(i), checkChannel(i));
                 }
-
-                //for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
-                //        channels.put(getLabel(i), checkChannel(i));
-                //}
-
                 return channels;
         }
 
@@ -64,39 +54,23 @@ public class FFTDiagnosis extends GenericAmplifierDiagnosis {
         private ChannelState checkChannel(int channelNo) {
 
                 double[] samples = getSamplesForAChannel(channelNo);
-                Complex[] fft = calculateFFT(samples);
+                FourierTransform fourierTransform = new FourierTransform();
+                Complex[] fft = fourierTransform.forwardFFT(samples); 
 
-                // ...
+                double frequency = 50.0;
+                //(f = n * Fs / N) => (n = f * N / Fs)
+                int fftIndex = (int) (frequency * fft.length / getMonitorSignalDocument().getSamplingFrequency());
                 
-                return null;
-        }
-
-        /**
-         * Calculates frequency of each element of array returned by {@link FourierTransform#forwardFFTComplex(org.apache.commons.math.complex.Complex[])}
-         * @param N number of samples
-         * @param samplingFrequency sampling frequency
-         * @return array containing frequencies
-         */
-        private double[] calculateFrequencies(int N, double samplingFrequency) {
-
-                double step = samplingFrequency / N;
-                double[] result = new double[N];
-                for (int i = 0; i < (N + 1) / 2; i++) {
-                        result[i] = step * i;
-                }
-                for (int i = (N + 1) / 2; i < N; i++) {
-                        result[i] = -(step * (N - i));
-                }
-                return result;
-        }
-
-        /**
-         * Calculates FFT for chosen samples
-         * @param samples samples
-         * @return FFT
-         */
-        private Complex[] calculateFFT(double[] samples) {
-		FourierTransform fourierTransform = new FourierTransform();
-		return fourierTransform.forwardFFT(samples);
+                double amplitude = fft[fftIndex].abs();
+                double impedance = 2 * amplitude * 10e-6 / 10e-7;
+                
+                ElectrodeType electrodeType = (ElectrodeType) getParameters().get(ELECTRODE_TYPE);
+                int max = electrodeType.getMax();
+                int min = electrodeType.getMin();
+                int limit = electrodeType.getLimit();
+                AdditionalChannelData additionalChannelData = new AdditionalChannelData(max, min, limit, impedance, SignalCheckingMethod.FFT);
+                ChannelState state = new ChannelState(true, additionalChannelData);
+                
+                return state;
         }
 }

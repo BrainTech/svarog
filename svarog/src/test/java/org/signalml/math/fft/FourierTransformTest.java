@@ -84,5 +84,19 @@ public class FourierTransformTest {
 		expected = new double[] {1, 2, 3, 4};
 		assertArrayEquals(expected, paddedSignal, 1e-5);
 	}
+	
+	@Test
+	public void testGetFrequencies() {
+		double[] signal = new double[8];
+		double[] expectedFrequencies = new double[] {0, 18.05, 36.1, 54.15};
+		double[] actualFrequencies = FourierTransform.getFrequencies(signal, 144.4);
+
+		assertArrayEquals(expectedFrequencies, actualFrequencies, 1e-5);
+
+		signal = new double[11]; //should be padded to N=16
+		expectedFrequencies = new double[] {0, 9.025, 18.05, 27.075, 36.1, 45.125, 54.15, 63.175};
+		actualFrequencies = FourierTransform.getFrequencies(signal, 144.4);
+		assertArrayEquals(expectedFrequencies, actualFrequencies, 1e-5);
+	}
 
 }

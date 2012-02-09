@@ -54,6 +54,7 @@ public class FourierTransform {
 		double[] windowedSignal = windowFunction.applyWindow(signal);
 		double[] paddedSignal = padWithZeroIfNecessary(windowedSignal);
 		return transformer.transform(paddedSignal);
+
 	}
 
 	/**
@@ -101,4 +102,34 @@ public class FourierTransform {
 			return signal;
 		}
 	}
+
+	/**
+	 * Returns frequencies for elements returned by the {@link FourierTransform#forwardFFT(double[])}.
+	 * @param signal
+	 * @param samplingFrequency
+	 * @return
+	 */
+	public static double[] getFrequencies(double[] signal, double samplingFrequency) {
+		int size = getPowerOfTwoSize(signal.length);
+
+		// the other half of frequencies are the same (mirrored)
+		double[] frequencies = new double[size / 2];
+
+		for (int i = 0; i < frequencies.length; i++) {
+			frequencies[i] = i * samplingFrequency / size;
+		}
+
+		return frequencies;
+		
+		/*/double step = samplingFrequency / N;
+        double[] result = new double[N];
+        for (int i = 0; i < (N + 1) / 2; i++) {
+                result[i] = step * i;
+        }
+        for (int i = (N + 1) / 2; i < N; i++) {
+                result[i] = -(step * (N - i));
+        }
+        return result;*/
+	}
+
 }
