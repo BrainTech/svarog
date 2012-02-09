@@ -47,11 +47,19 @@ public class Amplifier {
 		this.samplesPerPacket = samplesPerPacket;
 	}
 	
+	public List<AmplifierChannel> getSelectedChannels() {
+		List<AmplifierChannel> selectedChannels = new ArrayList<AmplifierChannel>();
+		for (AmplifierChannel channel: this.getChannels()) {
+			if (channel.isSelected())
+				selectedChannels.add(channel);
+		}
+		return selectedChannels;
+	}
+	
 	public String[] getSelectedChannelsLabels() {
 		List<String> channelLabels = new ArrayList<String>();
-		for (AmplifierChannel channel: getChannels()) {
-			if (channel.isSelected())
-				channelLabels.add(channel.getLabel());
+		for (AmplifierChannel channel: getSelectedChannels()) {
+			channelLabels.add(channel.getLabel());
 		}
 		return channelLabels.toArray(new String[0]);
 	}

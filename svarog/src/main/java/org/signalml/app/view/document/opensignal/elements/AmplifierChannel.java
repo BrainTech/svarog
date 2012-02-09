@@ -29,6 +29,9 @@ public class AmplifierChannel {
 	 * The label representing this channel.
 	 */
 	private String label;
+	
+	private float calibrationGain;
+	private float calibrationOffset;
 
 	/**
 	 * Constructor.
@@ -78,6 +81,22 @@ public class AmplifierChannel {
 	 */
 	public void setSelected(Boolean selected) {
 		this.selected = selected;
+	}
+
+	public float getCalibrationGain() {
+		return calibrationGain;
+	}
+
+	public void setCalibrationGain(float calibrationGain) {
+		this.calibrationGain = calibrationGain;
+	}
+
+	public float getCalibrationOffset() {
+		return calibrationOffset;
+	}
+
+	public void setCalibrationOffset(float calibrationOffset) {
+		this.calibrationOffset = calibrationOffset;
 	}
 
 }

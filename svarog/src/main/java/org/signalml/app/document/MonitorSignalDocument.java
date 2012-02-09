@@ -195,7 +195,9 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			monitorWorker = null;
 		}
 		tagSet.stopTagsRemoving();
-
+		
+		//disconnect from Jmx
+		
 		//close document
 		super.closeDocument();
 

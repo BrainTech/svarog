@@ -18,6 +18,7 @@ import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
 import org.signalml.app.view.document.monitor.ChannelDefinitionsTable;
+import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
@@ -94,20 +95,18 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
          */
         private void fillDialogForOpenBCIConnection(ExperimentDescriptor descriptor) {
         	
-        	SignalParameters signalParameters = descriptor.getSignalParameters();
-
-                setAllGainAndOffsetEditable(true);
-                List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
-                for (int i = 0; i < signalParameters.getChannelCount(); i++) {
-
-                        definitions.add(new ChannelDefinition(
-                                i,
-                                signalParameters.getCalibrationGain()[i],
-                                signalParameters.getCalibrationOffset()[i],
-                                descriptor.getAmplifier().getSelectedChannelsLabels()[i]));
-                }
-
-                getDefinitionsTable().setData(definitions);
+        	int i = 0;
+        	List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+        	for (AmplifierChannel channel: descriptor.getAmplifier().getSelectedChannels()) {
+        		definitions.add(new ChannelDefinition(
+	        		i,
+	        		channel.getCalibrationGain(),
+	        		channel.getCalibrationOffset(),
+	        		channel.getLabel()));
+        		i++;
+        	}
+        	
+        	getDefinitionsTable().setData(definitions);
         }
 
         /**
@@ -139,8 +138,15 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
          */
         private void fillModelForOpenBCIConnection(ExperimentDescriptor descriptor) {
 
-                descriptor.getSignalParameters().setCalibrationGain(getGainArray());
-                descriptor.getSignalParameters().setCalibrationOffset(getOffsetArray());
+        	float[] gains = getGainArray();
+        	float[] offsets = getOffsetArray();
+        	
+        	int i = 0;
+        	for (AmplifierChannel channel: descriptor.getAmplifier().getSelectedChannels()) {
+        		channel.setCalibrationGain(gains[i]);
+        		channel.setCalibrationOffset(offsets[i]);
+        		i++;
+        	}
         }
 
         /**

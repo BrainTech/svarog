@@ -3,6 +3,7 @@ package org.signalml.app.worker.monitor.zeromq;
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
 public class JoinExperimentsRequest extends Message {
 
@@ -15,11 +16,11 @@ public class JoinExperimentsRequest extends Message {
 	@JsonProperty("path")
 	private String path;
 
-	public JoinExperimentsRequest() {
+	public JoinExperimentsRequest(ExperimentDescriptor experiment) {
 		super(MessageType.JOIN_EXPERIMENT);
 		this.peerId = "svarog" + (new Date().getMinutes()) + "" + (new Date().getSeconds());
 		this.peerType = "obci_peer";
-		this.path = "drivers/eeg/amplifier_virtual.py";
+		this.path = experiment.getPath();
 	}
 
 	public String getPeerId() {

@@ -59,6 +59,11 @@ public class ExperimentDescriptorJSonReader {
 		String statusName = (String) experimentStatus.get("status_name");
 		experiment.setStatus(ExperimentStatus.valueOf(statusName.toUpperCase()));
 		
+		//amplifier_peer_info
+		LinkedHashMap<String, Object> amplifierPeerInfo = (LinkedHashMap<String, Object>) map.get("amplifier_peer_info");
+		String path = (String) amplifierPeerInfo.get("path");
+		experiment.setPath(path);
+		
 		//amplifier
 		LinkedHashMap<String, Object> amplifierParams = (LinkedHashMap<String, Object>) map.get("amplifier_params");
 		Amplifier amplifier = new Amplifier();
@@ -84,6 +89,10 @@ public class ExperimentDescriptorJSonReader {
 		for (Object item: channelsInfo) {
 			LinkedHashMap<String, Object> channelInfo = (LinkedHashMap<String, Object>) item;
 			AmplifierChannel channel = new AmplifierChannel(i, (String) channelInfo.get("name"));
+			double gain = (Double) channelInfo.get("gain");
+			double offset = (Double) channelInfo.get("offset");
+			channel.setCalibrationGain((float)gain);
+			channel.setCalibrationOffset((float)offset);
 			channel.setSelected(false);
 			amplifier.getChannels().add(channel);
 			i++;
@@ -95,14 +104,17 @@ public class ExperimentDescriptorJSonReader {
 		
 		StringTokenizer tokenizer = new StringTokenizer(activeChannels, ";");
 		while(tokenizer.hasMoreTokens()) {
-		      String channelNumberStr = tokenizer.nextToken();
+		      String channelName = tokenizer.nextToken();
 
 		      try {
-		    	  int channelNumber = Integer.parseInt(channelNumberStr);
+		    	  int channelNumber = Integer.parseInt(channelName);
 		    	  amplifier.getChannels().get(channelNumber).setSelected(true);
 		      }
 		      catch (NumberFormatException ex) {
-		    	  continue;
+		    	  for (AmplifierChannel channel: amplifier.getChannels()) {
+		    		  if (channel.getLabel().equalsIgnoreCase(channelName))
+		    			  channel.setSelected(true);
+		    	  }
 		      }
 		}
 

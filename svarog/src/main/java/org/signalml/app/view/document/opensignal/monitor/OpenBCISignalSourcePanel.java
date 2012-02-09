@@ -139,8 +139,7 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 			
 			this.currentModel = experiment;
 
-			PropertyChangeEvent event = new PropertyChangeEvent(this, ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY, null, experiment);
-			propertyChangeSupport.firePropertyChange(event);
+			fireExperimentSelected();
 		}
 		
 		if ("metadataRetrieved".equals(propertyName)) {
@@ -154,6 +153,11 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		}
 		else
 			forwardPropertyChange(evt);
+	}
+	
+	public void fireExperimentSelected() {
+		PropertyChangeEvent event = new PropertyChangeEvent(this, ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY, null, chooseExperimentPanel.getSelectedExperiment());
+		propertyChangeSupport.firePropertyChange(event);
 	}
 
 	@Override

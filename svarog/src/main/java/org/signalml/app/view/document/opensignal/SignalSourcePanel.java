@@ -211,6 +211,10 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 
 		EegSystem eegSystem = signalSourcePanel.getEegSystemSelectionPanel().getSelectedEegSystem();
 		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, eegSystem);
+		
+		if (newSignalSource == SignalSource.OPENBCI) {
+			openBCISignalSourcePanel.fireExperimentSelected();
+		}
 	}
 
 }

@@ -1,5 +1,6 @@
 package org.signalml.app.view.document.opensignal.monitor;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,6 +15,7 @@ import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
+import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -50,6 +52,8 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 
 		if (descriptor == null) {
 			getSamplingFrequencyComboBox().setEnabled(false);
+			getEditGainAndOffsetButton().setEnabled(false);
+			return;
 		} else if (descriptor.getStatus() == ExperimentStatus.RUNNING) {
 			SignalParameters signalParameters = descriptor.getSignalParameters();
 
@@ -69,18 +73,11 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 			getChannelCountSpinner().setEnabled(false);
 			getChannelCountSpinner().setValue(
 					amplifier.getChannels().size());
-
-			// getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
 		}
+		
+		getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
+		getEditGainAndOffsetButton().setEnabled(true);
 
-		/*
-		 * String[] channelLabels = descriptor.getChannelLabels(); if
-		 * (channelLabels != null) {
-		 * firePropertyChange(AbstractSignalParametersPanel
-		 * .CHANNEL_LABELS_PROPERTY, null, channelLabels); }
-		 */
-
-		// getEditGainAndOffsetDialog().fillDialogFromModel(descriptor);
 		currentModel = descriptor;
 	}
 
@@ -101,6 +98,22 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 		signalParameters.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
 		signalParameters.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
 		signalParameters.setPageSize(getPageSizeSpinner().getValue());
+		
+		List<AmplifierChannel> channels = descriptor.getAmplifier().getSelectedChannels();
+		
+		float[] gain = new float[channels.size()];
+		float[] offset = new float[channels.size()];
+		
+		int i = 0;
+		for (AmplifierChannel channel: channels) {
+			gain[i] = channel.getCalibrationGain();
+			offset[i] = channel.getCalibrationOffset();
+			i++;
+		}
+		signalParameters.setCalibrationGain(gain);
+		signalParameters.setCalibrationOffset(offset);
+		
+		signalParameters.setChannelCount(channels.size());
 
 		/*try {
 			// all channels are selected channels

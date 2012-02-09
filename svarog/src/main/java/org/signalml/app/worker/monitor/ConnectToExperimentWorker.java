@@ -1,10 +1,7 @@
 package org.signalml.app.worker.monitor;
 
-import java.io.File;
-
 import java.net.InetSocketAddress;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.SwingWorker;
@@ -36,21 +33,12 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	@Override
 	protected JmxClient doInBackground() throws Exception {
 
-		// TODO - zapytanie openBCI o adres eksperymentu
-		// z experimentDescriptor pobrane są i wysłane
-		//   - id eksperymentu
-		//   - numery kanałów
-		//   - nazwy kanałów
-		//   - częstotl. próbkowania
-		//
-		
 		//wysłanie join_experiment do eksperymentu
-		JoinExperimentsRequest request = new JoinExperimentsRequest();
+		JoinExperimentsRequest request = new JoinExperimentsRequest(experimentDescriptor);
 		String requestString = request.toJSON().toString();
-		//requestString =  "{\"sender_ip\": \"\", \"type\": \"join_experiment\", \"sender\": \"\", \"receiver\": \"\", \"peer_id\": \"mplifier\", \"peer_type\": \"obci_peer\", \"path\": \"drivers/eeg/amplifier_virtual.py\"}";
-		
+
 		String experimentAddress = experimentDescriptor.getExperimentAddress();
-		
+
 		System.out.println("msg sent to: " + experimentAddress + " data: " + requestString);
 		
 		ZMQ.Context context = ZMQ.context(1);

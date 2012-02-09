@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,7 +39,15 @@ import org.zeromq.ZMQ;
 
 public class ObciTester {
 
+	
+	
 	public static void main(String[] args) {
+		    return;
+		    //System.DateTime dtDateTime = new DateTime(1970,1,1,0,0,0,0);
+		    //dtDateTime = dtDateTime.AddSeconds(Math.Round(javaTimeStamp / 1000)).ToLocalTime();
+		    //return dtDateTime;
+			
+		
 		/*ZMQ.Context ctx = ZMQ.context (1);
 		ZMQ.Socket socket = ctx.socket(ZMQ.REQ);
 		System.out.println("blee2");
@@ -100,7 +111,7 @@ public class ObciTester {
 		// System.out.println("ble" + s);
 		System.out.println("read file");*/
 		
-		String connectTo = "tcp://127.0.0.1:52620";
+		/*String connectTo = "tcp://127.0.0.1:52620";
 
         ZMQ.Context ctx = ZMQ.context (1);
         ZMQ.Socket s = ctx.socket (ZMQ.REQ);
@@ -122,7 +133,7 @@ public class ObciTester {
         data = s.recv (0);
 
         System.out.println("Received reply: " + new String(data));
-
+*/
 	}
 
 	public static String getListExperimentsResponse() throws IOException {

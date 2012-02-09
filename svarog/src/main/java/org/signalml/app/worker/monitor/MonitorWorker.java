@@ -1,5 +1,6 @@
 package org.signalml.app.worker.monitor;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.SwingWorker;
@@ -106,7 +107,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 		return null;
 	}
-	
+		
 	/**
 	 * If the message contains samples, this function can be used
 	 * to parse its contents.
@@ -119,32 +120,36 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		float[] gain = monitorDescriptor.getSignalParameters().getCalibrationGain();
 		float[] offset = monitorDescriptor.getSignalParameters().getCalibrationOffset();
 
-		final SampleVector sampleVector;
+		SampleVector sampleVector;
 		try {
 			sampleVector = SampleVector.parseFrom(sampleMsgString);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
-		final List<Sample> samples = sampleVector.getSamplesList();
+		List<Sample> samples = sampleVector.getSamplesList();
 
 		for (int k=0; k<sampleVector.getSamplesCount();k++) {
 			Sample sample = sampleVector.getSamples(k);
 
 			// Transform chunk using gain and offset
 			double[] condChunk = new double[plotCount];
-			double[] selectedChunk = new double[plotCount];
+			//double[] selectedChunk = new double[plotCount];
 			for (int i = 0; i < plotCount; i++) {
-				condChunk[i] = gain[i] * sample.getChannels(i) + offset[i];
-				selectedChunk[i] = sample.getChannels(i);
+				double value = sample.getChannels(i);
+				condChunk[i] = gain[i] * value + offset[i];
+				//System.out.print(condChunk[i] + ", ");
 			}
-
+			
 			double samplesTimestamp = samples.get(0).getTimestamp();
+			//System.out.println("  -- " + samplesTimestamp);
 			NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
 
 			publish(newSamplesPackage);
 		}
 	}
+	
+	
 	
 	/**
 	 * If the given message contains tags, this method can be used

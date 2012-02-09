@@ -14,6 +14,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
 	private String id;
 	private String name;
+	private String path;
 	private Amplifier amplifier;
 	private ExperimentStatus status;
 	
@@ -106,6 +107,14 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
 	public void setMonitorRecordingDescriptor(MonitorRecordingDescriptor monitorRecordingDescriptor) {
 		this.monitorRecordingDescriptor = monitorRecordingDescriptor;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	/**

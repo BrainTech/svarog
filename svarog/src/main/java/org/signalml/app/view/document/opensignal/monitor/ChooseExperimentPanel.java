@@ -33,7 +33,7 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 	private ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 	private JButton refreshButton;
-	private JButton connectButton;
+	private JButton startExperimentButton;
 
 	public ChooseExperimentPanel(ApplicationConfiguration applicationConfiguration) {
 		this.applicationConfiguration = applicationConfiguration;
@@ -48,7 +48,7 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		chooseExperimentTable = new ChooseExperimentTable(chooseExperimentTableModel);
 		chooseExperimentTable.getSelectionModel().addListSelectionListener(this);
 		refreshButton = new JButton(new RefreshButtonAction());
-		connectButton = new JButton(_("Connect"));
+		startExperimentButton = new JButton(_("Start experiment"));
 		
 		setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(chooseExperimentTable);
@@ -57,7 +57,7 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.add(refreshButton);
-		buttonsPanel.add(connectButton);
+		//buttonsPanel.add(startExperimentButton);
 		
 		add(buttonsPanel, BorderLayout.SOUTH);
 	}

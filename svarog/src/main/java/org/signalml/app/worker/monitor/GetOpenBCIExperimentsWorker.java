@@ -1,6 +1,7 @@
 package org.signalml.app.worker.monitor;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.swing.SwingWorker;

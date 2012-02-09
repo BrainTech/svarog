@@ -100,13 +100,15 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 		}
 		else if (propertyName.equals(ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY)) {
 			enableTabsAndOKButtonAsNeeded();
-			
+
 			OpenBCISignalSourcePanel panel = (OpenBCISignalSourcePanel) signalSourcePanel.getCurrentSignalSourcePanel();
 			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
 
-			String[] channelLabels = experiment.getAmplifier().getSelectedChannelsLabels();
-			numberOfChannelsChangedTo(channelLabels.length);
-			channelLabelsChangedTo(channelLabels);
+			if (experiment != null) {
+				String[] channelLabels = experiment.getAmplifier().getSelectedChannelsLabels();
+				numberOfChannelsChangedTo(channelLabels.length);
+				channelLabelsChangedTo(channelLabels);
+			}
 		}
 	}
 
