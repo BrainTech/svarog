@@ -1185,4 +1185,12 @@ public class SvarogApplication implements java.lang.Runnable {
 	private void setViewerElementManager(ViewerElementManager m) {
 		this.viewerElementManager = m;
 	}
+
+	/**
+	 * Returns the {@link ApplicationConfiguration} of this application.
+	 * @return
+	 */
+	public static ApplicationConfiguration getApplicationConfiguration() {
+		return getSharedInstance().getApplicationConfiguration();
+	}
 }
