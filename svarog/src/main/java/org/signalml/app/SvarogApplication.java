@@ -1191,6 +1191,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	 * @return
 	 */
 	public static ApplicationConfiguration getApplicationConfiguration() {
-		return getSharedInstance().getApplicationConfiguration();
+		return getSharedInstance().applicationConfig;
 	}
 }

@@ -1,4 +1,4 @@
-package org.signalml.app.worker.monitor.zeromq;
+package org.signalml.app.worker.monitor.messages;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 

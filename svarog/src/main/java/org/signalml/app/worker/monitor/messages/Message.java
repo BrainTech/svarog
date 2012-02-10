@@ -1,4 +1,4 @@
-package org.signalml.app.worker.monitor.zeromq;
+package org.signalml.app.worker.monitor.messages;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,7 +22,6 @@ public class Message {
 	private String receiver ="";
 	
 	public Message() {
-		
 	}
 	
 	public Message(MessageType type) {
@@ -80,26 +79,7 @@ public class Message {
 		}
 
 		String str = os.toString();
-		
 		return str;
 	}
-	
-	public void fromJSON(String json) {
-		ObjectMapper mapper = new ObjectMapper();
-        Map<String,Object> responseData = new HashMap<String,Object>();
-        try {
-			Map readValue = mapper.readValue(json, Map.class);
-			
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+
 }

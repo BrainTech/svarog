@@ -1,4 +1,4 @@
-package org.signalml.app.worker.monitor.zeromq;
+package org.signalml.app.worker.monitor.messages.parsing;
 
 import java.io.File;
 import java.io.IOException;
@@ -72,7 +72,7 @@ public class ExperimentDescriptorJSonReader {
 		amplifier.setName((String) amplifierParams.get("amplifier_name"));
 		amplifier.setSamplesPerPacket(Integer.parseInt((String) amplifierParams.get("samples_per_packet")));
 		
-		List<Integer> samplingFrequencies = (List<Integer>) amplifierParams.get("sampling_rates");
+		List<Integer> samplingFrequencies = (List<Integer>) amplifierParams.get("sampling_rates"); 
 		amplifier.setSamplingFrequencies(new ArrayList<Float>());
 		
 		for (Integer sf: samplingFrequencies) {

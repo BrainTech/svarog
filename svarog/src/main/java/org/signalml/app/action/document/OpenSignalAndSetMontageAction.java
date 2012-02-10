@@ -109,13 +109,15 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction implem
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-//		System.out.println("df");
 		if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
 			JmxClient jmxClient;
 			try {
 				jmxClient = worker.get();
-				openDocumentDescriptor.getOpenSignalDescriptor().getExperimentDescriptor().setJmxClient(jmxClient);
-				documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+				
+				if (jmxClient != null) {
+					openDocumentDescriptor.getOpenSignalDescriptor().getExperimentDescriptor().setJmxClient(jmxClient);
+					documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

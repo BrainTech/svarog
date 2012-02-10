@@ -1,23 +1,25 @@
 package org.signalml.app.worker.monitor;
 
-import java.net.InetSocketAddress;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
+import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.StringTokenizer;
 
 import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.JmxClient;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.JsonProcessingException;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.worker.monitor.zeromq.JoinOrLeaveExperimentsRequest;
-import org.signalml.app.worker.monitor.zeromq.MessageType;
+import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
+import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.RequestOKResponse;
+import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.multiplexer.protocol.SvarogConstants;
-import org.zeromq.ZMQ;
 
 public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 
@@ -25,9 +27,11 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	public static final int TRYOUT_COUNT = 10;
 
 	private ExperimentDescriptor experimentDescriptor;
+	
+	private String multiplexerAddress;
+	private int multiplexerPort;
 
 	private InetSocketAddress multiplexerSocket;
-	private JmxClient client;
 
 	public ConnectToExperimentWorker(ExperimentDescriptor experimentDescriptor) {
 		this.experimentDescriptor = experimentDescriptor;
@@ -35,40 +39,33 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	
 	@Override
 	protected JmxClient doInBackground() throws Exception {
+		sendJoinExperimentRequest();
+		return connectToMultiplexer();
+	}
+	
+	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException { 
+		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
 
-		//wysłanie join_experiment do eksperymentu
-		JoinOrLeaveExperimentsRequest request = new JoinOrLeaveExperimentsRequest(experimentDescriptor);
-		request.setType(MessageType.JOIN_EXPERIMENT);
-		String myPeerId = "svarog" + (new Date().getMinutes()) + "" + (new Date().getSeconds());
-		experimentDescriptor.setPeerId(myPeerId);
-		request.setPeerId(myPeerId);
+		String responseString = Helper.sendRequest(request, experimentDescriptor.getExperimentAddress());
 
-		String requestString = request.toJSON().toString();
-
-		String experimentAddress = experimentDescriptor.getExperimentAddress();
-
-		System.out.println("msg sent to: " + experimentAddress + " data: " + requestString);
-
-		ZMQ.Context context = ZMQ.context(1);
-		ZMQ.Socket socket = context.socket(ZMQ.REQ);
-		socket.connect(experimentAddress);
+		if (responseString == null) {
+			ErrorsDialog.showError(_("Experiment is not responding!"));
+			return false;
+		}
 		
-		socket.send(requestString.getBytes(), 0);
-		byte[] responseBytes = socket.recv(0);
-		String response = new String(responseBytes);
+		MessageParser.checkIfResponseIsOK(responseString, MessageType.REQUEST_OK_RESPONSE);
+		RequestOKResponse response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
 		
-		ObjectMapper mapper = new ObjectMapper();
-		LinkedHashMap<String, Object> list = mapper.readValue(response.getBytes(), new TypeReference<LinkedHashMap<String, Object>>() {});
-		
-		list = (LinkedHashMap<String, Object>) list.get("params");
-		String mxAddr = (String) list.get("mx_addr");
-		
+		String mxAddr = (String) response.getParams().get("mx_addr");
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
-		
-		String multiplexerAddress = tokenizer.nextToken();
-		int multiplexerPort = Integer.parseInt(tokenizer.nextToken());
-		
-		System.out.println("Got response: " + response);
+		multiplexerAddress = tokenizer.nextToken();
+		multiplexerPort = Integer.parseInt(tokenizer.nextToken());
+
+		return true;
+	}
+	
+	protected JmxClient connectToMultiplexer() {
+		JmxClient client;
 		
 		multiplexerSocket = new InetSocketAddress(multiplexerAddress, multiplexerPort);
         client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);

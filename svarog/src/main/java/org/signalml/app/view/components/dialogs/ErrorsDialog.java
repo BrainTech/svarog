@@ -221,7 +221,7 @@ public class ErrorsDialog extends AbstractDialog  {
 	 * @param message the error
 	 */
 	public static void showError(String message) {
-		JOptionPane.showMessageDialog(null, message, message, JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**

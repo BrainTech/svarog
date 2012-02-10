@@ -24,7 +24,10 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 	}
 
 	public void setExperiments(List<ExperimentDescriptor> experiments) {
-		this.experiments = experiments;
+		if (experiments == null)
+			this.experiments.clear();
+		else
+			this.experiments = experiments;
 		fireTableDataChanged();
 	}
 

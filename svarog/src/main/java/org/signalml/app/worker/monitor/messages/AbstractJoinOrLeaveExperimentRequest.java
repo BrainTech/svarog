@@ -1,11 +1,11 @@
-package org.signalml.app.worker.monitor.zeromq;
+package org.signalml.app.worker.monitor.messages;
 
 import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
-public class JoinOrLeaveExperimentsRequest extends Message {
+public abstract class AbstractJoinOrLeaveExperimentRequest extends Message {
 
 	@JsonProperty("peer_id")
 	private String peerId;
@@ -16,8 +16,8 @@ public class JoinOrLeaveExperimentsRequest extends Message {
 	@JsonProperty("path")
 	private String path;
 
-	public JoinOrLeaveExperimentsRequest(ExperimentDescriptor experiment) {
-		super(MessageType.JOIN_EXPERIMENT);
+	public AbstractJoinOrLeaveExperimentRequest(MessageType type, ExperimentDescriptor experiment) {
+		super(type);
 		this.peerType = "obci_peer";
 		this.path = experiment.getPath();
 	}

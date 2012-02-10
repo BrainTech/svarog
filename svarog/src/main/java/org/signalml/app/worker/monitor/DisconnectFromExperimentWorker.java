@@ -5,8 +5,10 @@ import javax.swing.SwingWorker;
 import multiplexer.jmx.client.JmxClient;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.worker.monitor.zeromq.JoinOrLeaveExperimentsRequest;
-import org.signalml.app.worker.monitor.zeromq.MessageType;
+import org.signalml.app.worker.monitor.messages.AbstractJoinOrLeaveExperimentRequest;
+import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;
+import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.zeromq.ZMQ;
 
 public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
@@ -36,21 +38,11 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		experimentDescriptor.setJmxClient(null);
 	}
 
-	private void sendLeaveExperimentRequest() {
-		ZMQ.Context context = ZMQ.context(1);
-		ZMQ.Socket socket = context.socket(ZMQ.REQ);
-		socket.connect(experimentDescriptor.getExperimentAddress());
-		
-		JoinOrLeaveExperimentsRequest request = new JoinOrLeaveExperimentsRequest(experimentDescriptor);
-		request.setType(MessageType.LEAVE_EXPERIMENT);
-		request.setPeerId(experimentDescriptor.getPeerId());
-		
-		String requestString = request.toJSON();
-		socket.send(requestString.getBytes(), 0);
-		
-		byte[] responseBytes = socket.recv(0);
-		String response = new String(responseBytes);
-		System.out.println("got response = " + response);
+	private void sendLeaveExperimentRequest() {		
+		LeaveExperimentRequest request = new LeaveExperimentRequest(experimentDescriptor);
+		String response = Helper.sendRequest(request, experimentDescriptor.getExperimentAddress());
+
+		MessageParser.checkIfResponseIsOK(response, MessageType.REQUEST_OK_RESPONSE);
 	}
 
 }

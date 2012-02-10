@@ -1,4 +1,4 @@
-package org.signalml.app.worker.monitor.zeromq;
+package org.signalml.app.worker.monitor.messages.parsing;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
+import org.signalml.app.worker.monitor.messages.MessageType;
 
 public class MessageTypeSerializer extends JsonSerializer<MessageType> {
 

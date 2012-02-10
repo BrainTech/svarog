@@ -79,7 +79,7 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		public void actionPerformed(ActionEvent e) {
 
 			busyDialogWorker = new BusyDialogWorker(ChooseExperimentPanel.this);
-			worker = new GetOpenBCIExperimentsWorker(applicationConfiguration);
+			worker = new GetOpenBCIExperimentsWorker();
 			busyDialogWorker.execute();
 
 			worker.addPropertyChangeListener(this);
