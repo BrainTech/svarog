@@ -98,12 +98,12 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 		signalParameters.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
 		signalParameters.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
 		signalParameters.setPageSize(getPageSizeSpinner().getValue());
-		
+
 		List<AmplifierChannel> channels = descriptor.getAmplifier().getSelectedChannels();
-		
+
 		float[] gain = new float[channels.size()];
 		float[] offset = new float[channels.size()];
-		
+
 		int i = 0;
 		for (AmplifierChannel channel: channels) {
 			gain[i] = channel.getCalibrationGain();
@@ -112,19 +112,10 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 		}
 		signalParameters.setCalibrationGain(gain);
 		signalParameters.setCalibrationOffset(offset);
-		
+
 		signalParameters.setChannelCount(channels.size());
-
-		/*try {
-			// all channels are selected channels
-			//descriptor.setSelectedChannelList(descriptor.getChannelLabels());
-		} catch (Exception ex) {
-			Logger.getLogger(SignalParametersPanelForOpenBCI.class.getName()).log(Level.SEVERE, null, ex);
-		}*/
-
-		// getEditGainAndOffsetDialog().fillModelFromDialog(descriptor);
 	}
-
+	
 	@Override
 	protected void fillCurrentModelFromPanel() throws SignalMLException {
 		fillModelFromPanel((ExperimentDescriptor) currentModel);

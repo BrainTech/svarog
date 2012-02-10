@@ -51,7 +51,7 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction implem
 	 */
 	private OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog;
 	
-	private OpenDocumentDescriptor openDocumentDescriptor;
+	private OpenDocumentDescriptor openDocumentDescriptor = new OpenDocumentDescriptor();
 	private ConnectToExperimentWorker worker;
 
 	/**
@@ -71,7 +71,6 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction implem
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 
-		openDocumentDescriptor = new OpenDocumentDescriptor();
 		openDocumentDescriptor.setMakeActive(true);
 		openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
 

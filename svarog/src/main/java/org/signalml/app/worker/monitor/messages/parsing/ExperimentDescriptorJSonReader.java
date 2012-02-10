@@ -1,6 +1,5 @@
 package org.signalml.app.worker.monitor.messages.parsing;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
