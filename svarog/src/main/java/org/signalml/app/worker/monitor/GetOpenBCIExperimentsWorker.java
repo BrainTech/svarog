@@ -2,8 +2,14 @@ package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
+import java.net.SocketException;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.SwingWorker;
@@ -16,6 +22,9 @@ import org.signalml.app.worker.monitor.messages.parsing.ExperimentDescriptorJSon
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
+
+import org.ini4j.InvalidFileFormatException;
+import org.ini4j.Wini;
 
 public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDescriptor>, Void>{
 
@@ -31,7 +40,14 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 		ZMQ.Poller poller = context.poller();
 		poller.register(socketPull, Poller.POLLIN);
 
-		String myAddress = getPullAddress();
+		String myAddress;
+		try {
+			myAddress = getPullAddress();
+		} catch (IOException e) {
+			ErrorsDialog.showError(_("Could not read ~/.obci/main_config.ini file!"));
+			return null;
+		}
+		
 		socketPull.bind(myAddress);
 		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest(myAddress);
 
@@ -63,14 +79,47 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 			return null;
 	}
 
-	protected String getPullAddress() throws IOException {
-		ServerSocket server = new ServerSocket(0);
-		int port = server.getLocalPort();
-		server.close();
+ 	protected String getPullAddress() throws IOException {
+ 		ServerSocket server = new ServerSocket(0);
+ 		int port = server.getLocalPort();
+ 		server.close();
+ 		
+ 		String localAddress = GetOpenBCIExperimentsWorker.getMyIPAddress();
+ 		String pullAddress = localAddress + ":" + port;
+ 		return pullAddress;
+ 	}
+	
+	public static String getMyIPAddress() throws InvalidFileFormatException, IOException {
+		File homeDir = new File(System.getProperty("user.home"));
+		File obciSettingsDir = new File(homeDir, ".obci");
 		
-		//tymczasowo nasłuchujemy na interfejsie lo
-		String pullAddress = Helper.getAddressString("127.0.0.1", port); 
-		return pullAddress;
+		File mainConfigFile = new File(obciSettingsDir, "main_config.ini");
+		Wini mainConfig = new Wini(mainConfigFile);
+
+		String ifname = mainConfig.get("server", "ifname");
+		
+		if (ifname == null)
+			return null;
+
+		String address = "";
+
+		try {
+			NetworkInterface networkInterface = NetworkInterface.getByName(ifname);
+			Enumeration<InetAddress> networkAddressess = networkInterface.getInetAddresses();
+			// find ipv4 address
+			for (InetAddress inetAddress : Collections.list(networkAddressess)) {
+				String test = inetAddress.toString();
+
+				if (test.split(":").length == 1) {
+					address = "tcp:/" + test;
+					break;
+				}
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		}
+
+		return address;
 	}
 
 }

@@ -1,6 +1,7 @@
 package org.signalml.app.worker.monitor;
 
 import org.omg.CORBA.TIMEOUT;
+
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.worker.monitor.messages.Message;
@@ -8,7 +9,6 @@ import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
-import org.zeromq.ZMQ.Socket;
 
 public class Helper {
 	
