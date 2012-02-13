@@ -439,8 +439,8 @@ public class SignalSelectionPanel extends JPanel {
 
 		} else if (signalSelectionTypePanel.getChannelRadio().isSelected()) {
 
-			float startTime = (Float) channelSignalSelectionPanel.getStartTimeSpinner().getValue();
-			float length = (Float) channelSignalSelectionPanel.getLengthSpinner().getValue();
+			double startTime = (Double) channelSignalSelectionPanel.getStartTimeSpinner().getValue();
+			double length = (Double) channelSignalSelectionPanel.getLengthSpinner().getValue();
 
 			selection = new SignalSelection(SignalSelectionType.CHANNEL);
 			selection.setPosition(startTime);
