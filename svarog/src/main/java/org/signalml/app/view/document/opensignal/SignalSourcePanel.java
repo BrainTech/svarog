@@ -217,4 +217,12 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 		}
 	}
 
+	/**
+	 * Returns the EEG system selected in the currently selected signal panel.
+	 * @return the selected EEG system
+	 */
+	public EegSystem getSelectedEegSystem() {
+		return this.getCurrentSignalSourcePanel().getEegSystemSelectionPanel().getSelectedEegSystem();
+	}
+
 }

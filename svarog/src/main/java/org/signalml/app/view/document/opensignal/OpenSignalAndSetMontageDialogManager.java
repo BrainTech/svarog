@@ -109,6 +109,9 @@ public class OpenSignalAndSetMontageDialogManager implements PropertyChangeListe
 				numberOfChannelsChangedTo(channelLabels.length);
 				channelLabelsChangedTo(channelLabels);
 			}
+
+			EegSystem selectedEegSystem = openSignalAndSetMontageDialog.getSignalSourcePanel().getSelectedEegSystem();
+			eegSystemChangedTo(selectedEegSystem);
 		}
 	}
 
