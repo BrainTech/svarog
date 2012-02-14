@@ -91,10 +91,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	public void fillPanelFromModel(ExperimentDescriptor descriptor) {
 
 		currentModel = descriptor;
-		//signalParametersPanel.fillPanelFromModel(currentModel);
-		getEegSystemSelectionPanel().setEegSystem(
-				getEegSystemSelectionPanel().getSelectedEegSystem());
-
+		getEegSystemSelectionPanel().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
+		chooseExperimentPanel.clearSelection();
 	}
 
 	/**
@@ -105,10 +103,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
 
 		signalParametersPanel.fillModelFromPanel(currentModel);
-		//getMultiplexerConnectionPanel().fillModelFromPanel(descriptor);
 
 		currentModel.setJmxClient(viewerElementManager.getJmxClient());
-		//descriptor.setSignalSource(SignalSource.OPENBCI);
 		currentModel.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 
 		getTagPresetSelectionPanel().fillModelFromPanel(currentModel);
@@ -134,10 +130,12 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 
 		if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
 			ExperimentDescriptor experiment = (ExperimentDescriptor) evt.getNewValue();
-			channelSelectPanel.fillPanelFromModel(experiment);
-			signalParametersPanel.fillPanelFromModel(experiment);
+			this.currentModel = experiment == null ? null : new ExperimentDescriptor(experiment);
 			
-			this.currentModel = experiment;
+			channelSelectPanel.fillPanelFromModel(currentModel);
+			signalParametersPanel.fillPanelFromModel(currentModel);
+
+			 
 
 			fireExperimentSelected();
 		}

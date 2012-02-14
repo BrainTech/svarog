@@ -30,6 +30,21 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private StyledTagSet tagStyles;
 	private String peerId;
 	
+	public ExperimentDescriptor(ExperimentDescriptor other) {
+		this();
+
+		this.id = other.id;
+		this.name = other.name;
+		this.path = other.path;
+		this.amplifier = new Amplifier(other.getAmplifier());
+		this.status = other.status;
+		this.experimentAddress = other.experimentAddress;
+
+		this.backupFrequency = other.backupFrequency;
+
+		//other fields should be filled after sending "join_experiment" request
+	}
+	
 	public ExperimentDescriptor() {
         setBackupFrequency(10.0F);
         this.signalParameters = new SignalParameters();

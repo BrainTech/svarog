@@ -32,6 +32,14 @@ public class AmplifierChannel {
 	
 	private float calibrationGain;
 	private float calibrationOffset;
+	
+	public AmplifierChannel(AmplifierChannel channel) {
+		this.selected = channel.selected;
+		this.number = channel.number;
+		this.label = channel.label;
+		this.calibrationGain = channel.calibrationGain;
+		this.calibrationOffset = channel.calibrationOffset;
+	}
 
 	/**
 	 * Constructor.

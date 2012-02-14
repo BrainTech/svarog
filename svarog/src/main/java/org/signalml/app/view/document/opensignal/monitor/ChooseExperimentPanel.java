@@ -120,5 +120,9 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		return selectedExperiment;
 	}
 	
+	public void clearSelection() {
+		chooseExperimentTable.clearSelection();
+	}
+	
 }
 

@@ -13,6 +13,24 @@ public class Amplifier {
 	private List<AmplifierChannel> channels;
 
 	private double amplifierNull;
+	
+	public Amplifier(Amplifier amp) {
+		this.name = amp.name;
+		this.samplesPerPacket = amp.samplesPerPacket;
+		
+		this.samplingFrequencies = new ArrayList<Float>();
+		for (Float samplingFrequency: amp.getSamplingFrequencies())
+			this.samplingFrequencies.add(samplingFrequency);
+		
+		this.channels = new ArrayList<AmplifierChannel>();
+		for (AmplifierChannel channel: amp.getChannels())
+			this.channels.add(new AmplifierChannel(channel));
+		
+		this.amplifierNull = amp.amplifierNull;
+	}
+	
+	public Amplifier() {
+	}
 
 	public String getName() {
 		return name;
