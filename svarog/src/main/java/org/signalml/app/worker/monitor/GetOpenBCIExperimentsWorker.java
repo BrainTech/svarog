@@ -5,16 +5,21 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.SwingWorker;
 
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.util.NetworkUtils;
 import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
@@ -43,10 +48,13 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 		String myAddress;
 		try {
 			myAddress = getPullAddress();
-		} catch (IOException e) {
-			ErrorsDialog.showError(_("Could not read ~/.obci/main_config.ini file!"));
+		} catch (Exception e) {
+			ErrorsDialog.showError(e.toString());
 			return null;
 		}
+		
+		if (myAddress == null)
+			ErrorsDialog.showError(_("Could not find my IP address!"));
 		
 		socketPull.bind(myAddress);
 		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest(myAddress);
@@ -79,47 +87,34 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 			return null;
 	}
 
- 	protected String getPullAddress() throws IOException {
- 		ServerSocket server = new ServerSocket(0);
- 		int port = server.getLocalPort();
- 		server.close();
- 		
- 		String localAddress = GetOpenBCIExperimentsWorker.getMyIPAddress();
- 		String pullAddress = localAddress + ":" + port;
- 		return pullAddress;
- 	}
-	
-	public static String getMyIPAddress() throws InvalidFileFormatException, IOException {
-		File homeDir = new File(System.getProperty("user.home"));
-		File obciSettingsDir = new File(homeDir, ".obci");
-		
-		File mainConfigFile = new File(obciSettingsDir, "main_config.ini");
-		Wini mainConfig = new Wini(mainConfigFile);
+	protected String getPullAddress() throws Exception {
+		int port = NetworkUtils.getFreePortNumber();
 
-		String ifname = mainConfig.get("server", "ifname");
-		
-		if (ifname == null)
+		InetAddress inetAddress = getMyIPAddress();
+		if (inetAddress == null)
 			return null;
 
-		String address = "";
+		return Helper.getAddressString(inetAddress.getHostAddress(), port);
+	}
 
-		try {
-			NetworkInterface networkInterface = NetworkInterface.getByName(ifname);
-			Enumeration<InetAddress> networkAddressess = networkInterface.getInetAddresses();
-			// find ipv4 address
-			for (InetAddress inetAddress : Collections.list(networkAddressess)) {
-				String test = inetAddress.toString();
+	protected InetAddress getMyIPAddress() throws UnknownHostException, SocketException {
+		String openbciServerAddressString = SvarogApplication.getApplicationConfiguration().getOpenBCIDaemonAddress();
+		InetAddress openBCIServerAddress = InetAddress.getByName(openbciServerAddressString);
 
-				if (test.split(":").length == 1) {
-					address = "tcp:/" + test;
-					break;
+		Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+		for (NetworkInterface networkInterface : Collections.list(networkInterfaces)) {
+			for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+				int prefixLength = interfaceAddress.getNetworkPrefixLength();
+				InetAddress address = interfaceAddress.getAddress();
+
+				if (NetworkUtils.isAddressIPv4(address)) {
+					if (NetworkUtils.areAddressesInTheSameSubnet(address, openBCIServerAddress, prefixLength))
+						return address;
 				}
-			}
-		} catch (SocketException e) {
-			e.printStackTrace();
-		}
 
-		return address;
+			}
+		}
+		return null;
 	}
 
 }
