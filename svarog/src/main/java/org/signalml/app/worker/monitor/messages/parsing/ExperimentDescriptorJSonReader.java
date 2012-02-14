@@ -89,7 +89,7 @@ public class ExperimentDescriptorJSonReader {
 		int i = 0;
 		for (Object item: channelsInfo) {
 			LinkedHashMap<String, Object> channelInfo = (LinkedHashMap<String, Object>) item;
-			AmplifierChannel channel = new AmplifierChannel(i, (String) channelInfo.get("name"));
+			AmplifierChannel channel = new AmplifierChannel(i+1, (String) channelInfo.get("name"));
 			double gain = (Double) channelInfo.get("gain");
 			double offset = (Double) channelInfo.get("offset");
 			channel.setCalibrationGain((float)gain);

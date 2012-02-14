@@ -99,7 +99,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
         	List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
         	for (AmplifierChannel channel: descriptor.getAmplifier().getSelectedChannels()) {
         		definitions.add(new ChannelDefinition(
-	        		i,
+	        		i+1,
 	        		channel.getCalibrationGain(),
 	        		channel.getCalibrationOffset(),
 	        		channel.getLabel()));
