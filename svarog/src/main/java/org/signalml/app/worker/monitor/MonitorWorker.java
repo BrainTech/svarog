@@ -167,11 +167,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			return;
 		}
 
-		// Create MonitorTag Object, define its style and attributes
-
-		// String channels = tagMsg.getChannels();
 		// TODO: By now we ignore field channels and assume that tag if for all channels
-
 		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 
                         TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
@@ -195,15 +191,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			}
 		}
 		publish(tag);
-	}
-
-	private boolean isChannelSelected(final int channel, final int selectedChannels[]) {
-		if (channel == -1)
-			return true;
-		for (int selected : selectedChannels)
-			if (channel == selected)
-				return true;
-		return false;
 	}
 
 	@Override

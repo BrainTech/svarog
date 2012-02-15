@@ -85,16 +85,6 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 			spd.setChannelCountEditable(true);
 		}
 
-		if (mss.isCalibrationCapable()) {
-			spd.setCalibrationGain(mss.getSingleCalibrationGain());
-			spd.setCalibrationOffset(mss.getSingleCalibrationOffset());
-			spd.setCalibrationEditable(true);
-		} else {
-			spd.setCalibrationGain(null);
-			spd.setCalibrationOffset(null);
-			spd.setCalibrationEditable(false);
-		}
-
 		boolean ok = signalParametersDialog.showDialog(spd,true);
 		if (!ok) {
 			return;
@@ -110,11 +100,6 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		}
 		if (mss.isChannelCountCapable() && spd.isChannelCountEditable()) {
 			mss.setChannelCount(spd.getChannelCount());
-		}
-
-		if (mss.isCalibrationCapable()) {
-			mss.setCalibrationGain(spd.getCalibrationGain());
-			mss.setCalibrationOffset(spd.getCalibrationOffset());
 		}
 
 		signalView.clearSignalSelection();

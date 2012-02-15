@@ -412,5 +412,4 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		return monitorOptions;
 	}
 
-
 }

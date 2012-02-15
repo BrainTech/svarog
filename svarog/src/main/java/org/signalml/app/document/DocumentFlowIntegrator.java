@@ -1661,7 +1661,6 @@ public class DocumentFlowIntegrator {
 		if (signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
 
 			// additional configuration required
-
 			boolean ok = signalParametersDialog.showDialog(spd, true);
 			if (!ok) {
 				return false;
