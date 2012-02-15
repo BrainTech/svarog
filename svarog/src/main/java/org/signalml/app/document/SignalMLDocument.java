@@ -35,7 +35,6 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public class SignalMLDocument extends AbstractFileSignal {
 
-	
 	/**
 	 * the {@link SignalMLCodecReader reader} of signal from the file
 	 */
@@ -163,4 +162,3 @@ public class SignalMLDocument extends AbstractFileSignal {
 	}
 
 }
-

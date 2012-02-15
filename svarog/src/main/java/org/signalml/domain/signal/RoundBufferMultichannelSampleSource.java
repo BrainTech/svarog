@@ -14,7 +14,6 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
 
-
 public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource, ChangeableMultichannelSampleSource {
 
 	protected int nextInsertPos;
@@ -22,6 +21,18 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	protected DocumentView documentView;
 	protected float samplingFrequency;
 	protected Object[] labels;
+	
+	/**
+	 * The calibration gain for the signal - the value by which each sample
+	 * value is multiplied.
+	 */
+	private float[] calibrationGain;
+
+	/**
+	 * The calibration offset for the signal - the value which is added
+	 * to each sample value.
+	 */
+	private float[] calibrationOffset;
 
 	/**
 	 * Semaphore preventing simultaneous read/write/newSamplesCount operations.
@@ -149,8 +160,14 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 			}
 		}
 		for (int i = 0; i < count; i++) {
-			target[arrayOffset+i] = tmp[signalOffset + i];
+			target[arrayOffset+i] = calibrateSample(tmp[signalOffset + i], channel); 
 		}
+	}
+	
+	protected double calibrateSample(double inputSampleValue, int channelIndex) {
+		if (calibrationGain != null && calibrationOffset != null)
+			return calibrationGain[channelIndex] * inputSampleValue + calibrationOffset[channelIndex];
+		return inputSampleValue;
 	}
 
 	@Override
@@ -233,12 +250,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 	@Override
 	public float[] getCalibrationGain() {
-		float[] calibration = new float[getChannelCount()];
-
-		for (int i = 0; i < calibration.length; i++)
-			calibration[i] = 1F;
-
-		return calibration;
+		return calibrationGain;
 	}
 
 	@Override
@@ -248,7 +260,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 	@Override
 	public void setCalibrationGain(float[] calibration) {
-		throw new UnsupportedOperationException("Not supported.");
+		this.calibrationGain = calibration;
 	}
 
 	@Override
@@ -282,12 +294,12 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	 */
 	@Override
 	public float[] getCalibrationOffset() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		return calibrationOffset;
 	}
 
 	@Override
 	public void setCalibrationOffset(float[] calibrationOffset) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		this.calibrationOffset = calibrationOffset;
 	}
 
 	@Override

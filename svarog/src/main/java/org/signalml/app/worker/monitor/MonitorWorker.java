@@ -35,7 +35,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
 	private final JmxClient client;
-	private final ExperimentDescriptor monitorDescriptor;
 	private final RoundBufferMultichannelSampleSource sampleSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
@@ -61,7 +60,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 	public MonitorWorker(JmxClient client, ExperimentDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		this.client = client;
-		this.monitorDescriptor = monitorDescriptor;
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
 
@@ -115,10 +113,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	protected void parseMessageWithSamples(ByteString sampleMsgString) {
 		logger.debug("Worker: reading chunk!");
-		
-		int plotCount = monitorDescriptor.getAmplifier().getSelectedChannelsLabels().length;
-		float[] gain = monitorDescriptor.getSignalParameters().getCalibrationGain();
-		float[] offset = monitorDescriptor.getSignalParameters().getCalibrationOffset();
 
 		SampleVector sampleVector;
 		try {
@@ -132,18 +126,14 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		for (int k=0; k<sampleVector.getSamplesCount();k++) {
 			Sample sample = sampleVector.getSamples(k);
 
-			// Transform chunk using gain and offset
-			double[] condChunk = new double[plotCount];
-			//double[] selectedChunk = new double[plotCount];
-			for (int i = 0; i < plotCount; i++) {
-				double value = sample.getChannels(i);
-				condChunk[i] = gain[i] * value + offset[i];
-				//System.out.print(condChunk[i] + ", ");
+			double[] newSamplesArray = new double[sample.getChannelsCount()];
+			for (int i = 0; i < newSamplesArray.length; i++) {
+				newSamplesArray[i] = sample.getChannels(i);
 			}
 			
 			double samplesTimestamp = samples.get(0).getTimestamp();
 			//System.out.println("  -- " + samplesTimestamp);
-			NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
+			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
 
 			publish(newSamplesPackage);
 		}

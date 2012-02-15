@@ -51,7 +51,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Describes the parameters of the monitor connected to this {@link MonitorSignalDocument}.
 	 */
-	private ExperimentDescriptor monitorOptions;
+	private ExperimentDescriptor descriptor;
 
 	/**
 	 * This worker is responsible for receiving the monitor signal and tags.
@@ -78,15 +78,19 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
          */
 	private boolean saved = true;
 
-	public MonitorSignalDocument(ExperimentDescriptor monitorOptions) {
+	public MonitorSignalDocument(ExperimentDescriptor descriptor) {
 
 		super();
-		this.monitorOptions = monitorOptions;
-		float freq = monitorOptions.getSignalParameters().getSamplingFrequency();
-		double ps = monitorOptions.getSignalParameters().getPageSize();
+		this.descriptor = descriptor;
+		float freq = descriptor.getSignalParameters().getSamplingFrequency();
+		double ps = descriptor.getSignalParameters().getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
-		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSignalParameters().getChannelCount(), sampleCount);
-		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getAmplifier().getSelectedChannelsLabels());
+		sampleSource = new RoundBufferMultichannelSampleSource(descriptor.getSignalParameters().getChannelCount(), sampleCount);
+		
+		sampleSource.setCalibrationGain(descriptor.getSignalParameters().getCalibrationGain());
+		sampleSource.setCalibrationOffset(descriptor.getSignalParameters().getCalibrationOffset());
+		
+		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(descriptor.getAmplifier().getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 		((RoundBufferMultichannelSampleSource) sampleSource).setSamplingFrequency(freq);
 	}
@@ -95,30 +99,12 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		this.name = name;
 	}
 
-	public float getMinValue() {
-		return monitorOptions.getSignalParameters().getMinimumValue();
+	public float[] getGain() {
+		return descriptor.getSignalParameters().getCalibrationGain();
 	}
 
-	public float getMaxValue() {
-		return monitorOptions.getSignalParameters().getMaximumValue();
-	}
-
-	public double[] getGain() {
-		SignalParameters signalParameters = monitorOptions.getSignalParameters();
-		double[] result = new double[signalParameters.getChannelCount()];
-		float[] fg = signalParameters.getCalibrationGain();
-		for (int i = 0; i < signalParameters.getChannelCount(); i++)
-			result[i] = fg[i];
-		return result;
-	}
-
-	public double[] getOffset() {
-		SignalParameters signalParameters = monitorOptions.getSignalParameters();
-		double[] result = new double[signalParameters.getChannelCount()];
-		float[] fg = signalParameters.getCalibrationOffset();
-		for (int i = 0; i < signalParameters.getChannelCount(); i++)
-			result[i] = fg[i];
-		return result;
+	public float[] getOffset() {
+		return descriptor.getSignalParameters().getCalibrationOffset();
 	}
 
 	/**
@@ -126,7 +112,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * @return an integer value representing amplifier's channel value for non-connected channel
 	 */
 	public double getAmplifierNull() {
-		return monitorOptions.getAmplifier().getAmplifierNull();
+		return descriptor.getAmplifier().getAmplifierNull();
 	}
 
 	@Override
@@ -154,20 +140,20 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		setSaved(true);
 
-		if (monitorOptions.getJmxClient() == null) {
+		if (descriptor.getJmxClient() == null) {
 			throw new IOException();
 		}
 
 		logger.info("Start initializing monitor data.");
-		tagSet = new StyledMonitorTagSet(monitorOptions.getSignalParameters().getPageSize(), 5, 
-						 monitorOptions.getSignalParameters().getSamplingFrequency());
-		if (monitorOptions.getTagStyles() != null) {
-			tagSet.copyStylesFrom(monitorOptions.getTagStyles());
+		tagSet = new StyledMonitorTagSet(descriptor.getSignalParameters().getPageSize(), 5, 
+						 descriptor.getSignalParameters().getSamplingFrequency());
+		if (descriptor.getTagStyles() != null) {
+			tagSet.copyStylesFrom(descriptor.getTagStyles());
 		}
 
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
-		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
+		monitorWorker = new MonitorWorker(descriptor.getJmxClient(), descriptor, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
 
 		monitorWorker.execute();
 		logger.info("Monitor executed.");
@@ -198,7 +184,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		tagSet.stopTagsRemoving();
 		
 		//disconnect from Jmx
-		DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(monitorOptions);
+		DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(descriptor);
 		worker.execute();
 		
 		while(!worker.isDone())
@@ -335,12 +321,12 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	public void startMonitorRecording() throws FileNotFoundException {
 
-		MonitorRecordingDescriptor monitorRecordingDescriptor = monitorOptions.getMonitorRecordingDescriptor();
+		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
 		boolean tagsRecordingEnabled = monitorRecordingDescriptor.isTagsRecordingEnabled();
 
 		// starting signal recorder
 		String dataPath = monitorRecordingDescriptor.getSignalRecordingFilePath();
-		signalRecorderWorker = new SignalRecorderWorker(dataPath, monitorOptions);
+		signalRecorderWorker = new SignalRecorderWorker(dataPath, descriptor);
 
 		// if tags recording is enabled: starting tag recorder and connecting it
 		// to signal recorder
@@ -409,7 +395,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * MonitorSignalDocument}.
 	 */
 	public ExperimentDescriptor getExperimentDescriptor() {
-		return monitorOptions;
+		return descriptor;
 	}
 
 }

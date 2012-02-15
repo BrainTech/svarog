@@ -34,7 +34,7 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
         /**
          * Array containing information about channel's offset.
          */
-        private double[] offset;
+        private float[] offset;
 
         /**
          * An array of values (one for each channel) used to check if a sample from
@@ -63,7 +63,7 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
                 maxAmpC = new double[getChannelCount()];
                 offset = getMonitorSignalDocument().getOffset();
                 double ampNull = getMonitorSignalDocument().getAmplifierNull();
-                double[] gain = getMonitorSignalDocument().getGain();
+                float[] gain = getMonitorSignalDocument().getGain();
 
                 for (int i = 0; i < getChannelCount(); i++)
                         maxAmpC[i] = testTolerance * Math.abs(ampNull) * Math.abs(gain[i]);
