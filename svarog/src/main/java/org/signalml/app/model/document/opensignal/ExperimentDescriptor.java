@@ -25,7 +25,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private JmxClient jmxClient;
 	
 	private Float backupFrequency;
-	private MonitorRecordingDescriptor monitorRecordingDescriptor;
+	private MonitorRecordingDescriptor monitorRecordingDescriptor = new MonitorRecordingDescriptor();
 	
 	private StyledTagSet tagStyles;
 	private String peerId;
