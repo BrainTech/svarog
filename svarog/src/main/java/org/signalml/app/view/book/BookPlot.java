@@ -147,12 +147,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	private StandardBookAtom outlinedAtom;
 
-	private int segmentLength;
-
-	private int naturalMinFrequency;
-
-	private int naturalMaxFrequency;
-
 	private int pointMinPosition;
 
 	private int pointMaxPosition;
@@ -607,14 +601,10 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		mapPixelPerSecond = ((double)(width-1)) / (maxPosition-minPosition);
 		mapPixelPerHz = ((double)(height-1)) / (maxFrequency-minFrequency);
 
-		segmentLength = segment.getSegmentLength();
-		naturalMinFrequency = (int) Math.round((minFrequency / samplingFrequency) * segmentLength);
-		naturalMaxFrequency = (int) Math.round((maxFrequency / samplingFrequency) * segmentLength);
 		pointMinPosition = (int) Math.round(minPosition * samplingFrequency);
 		pointMaxPosition = (int) Math.round(maxPosition * samplingFrequency);
 
 		mapPixelPerPoint = ((double)(width-1)) / (pointMaxPosition-pointMinPosition);
-		mapPixelPerNaturalFreq = ((double)(height-1)) / (naturalMaxFrequency-naturalMinFrequency);
 
 		calculated = true;
 
@@ -1390,10 +1380,9 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			return null;
 		}
 
-		int frequency = atom.getFrequency();
-		if (frequency < naturalMinFrequency || frequency > naturalMaxFrequency) {
+		float frequency = atom.getHzFrequency();
+		if (frequency < minFrequency || frequency > maxFrequency)
 			return null;
-		}
 
 		int position = atom.getPosition();
 		if (position < pointMinPosition || position > pointMaxPosition) {
@@ -1401,7 +1390,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		}
 
 		int x = mapRectangle.x + ((int) Math.round((position-pointMinPosition) * mapPixelPerPoint));
-		int y = mapRectangle.y + ((mapRectangle.height-1) - (int) Math.round((frequency-naturalMinFrequency) * mapPixelPerNaturalFreq));
+		int y = mapRectangle.y + ((mapRectangle.height-1) - (int) Math.round((atom.getHzFrequency() - minFrequency) * mapPixelPerHz));
 
 		return new Point(x, y);
 
