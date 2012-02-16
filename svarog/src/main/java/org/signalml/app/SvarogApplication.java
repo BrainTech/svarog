@@ -1187,8 +1187,8 @@ public class SvarogApplication implements java.lang.Runnable {
 	}
 
 	/**
-	 * Returns the {@link ApplicationConfiguration} of this application.
-	 * @return
+	 * Returns the {@link ApplicationConfiguration} used for Svarog.
+	 * @return the {@link ApplicationConfiguration} used.
 	 */
 	public static ApplicationConfiguration getApplicationConfiguration() {
 		return getSharedInstance().applicationConfig;
