@@ -13,8 +13,8 @@ import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.TaskStatusDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.method.Method;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
@@ -89,7 +89,7 @@ public class RunMethodAction extends AbstractSignalMLAction {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Failed to configure method", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 		}

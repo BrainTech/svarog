@@ -16,7 +16,7 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.MRUDFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MRUDEntry;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 
 /** OpenMRUDAction
@@ -53,15 +53,15 @@ public class OpenMRUDAction extends AbstractFocusableSignalMLAction<MRUDFocusSel
 			documentFlowIntegrator.openMRUDEntry(entry);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to open mrud", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to open mrud - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;			
 		} catch (ConnectException ex) {
 			logger.error("Failed to open mrud - connection exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;		 
 		}
 

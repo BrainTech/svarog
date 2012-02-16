@@ -17,8 +17,8 @@ import java.io.Writer;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.document.ExportSamplesAction;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.util.Util;
 
@@ -79,7 +79,7 @@ public abstract class ExportSamplesToFileAction extends ExportSamplesAction {
 				writer.append(samplesAsString);
 			} catch (IOException ex) {
 				logger.error("Failed to save to file - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			} finally {
 				if (writer != null) {

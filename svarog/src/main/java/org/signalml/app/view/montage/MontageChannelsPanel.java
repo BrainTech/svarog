@@ -34,7 +34,7 @@ import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
 import org.signalml.domain.montage.Montage;
@@ -837,7 +837,7 @@ public class MontageChannelsPanel extends JPanel {
 				
 			} catch (MontageException ex) {
 				logger.error("Failed to add source channel", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 
@@ -881,11 +881,11 @@ public class MontageChannelsPanel extends JPanel {
 			IChannelFunction function = montage.getSourceChannelAt(selectedChannelIndex).getFunction();
 
 			if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
-				ErrorsDialog.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
+				Dialogs.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
 				return;
 			}
 			if (montage.isSourceChannelInUse(selectedChannelIndex)) {
-				ErrorsDialog.showError(_("This source channel is used in the target montage and cannot be removed."));
+				Dialogs.showError(_("This source channel is used in the target montage and cannot be removed."));
 				return;
 			}
 
@@ -921,8 +921,8 @@ public class MontageChannelsPanel extends JPanel {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ev) {
-			if (ErrorsDialog.showWarningYesNoDialog(_("Do you really want to clear the montage?"))
-			    == ErrorsDialog.DIALOG_OPTIONS.YES)
+			if (Dialogs.showWarningYesNoDialog(_("Do you really want to clear the montage?"))
+			    == Dialogs.DIALOG_OPTIONS.YES)
 				montage.reset();
 		}
 

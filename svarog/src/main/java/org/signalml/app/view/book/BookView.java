@@ -71,8 +71,8 @@ import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
 import org.signalml.app.view.book.popup.BookZoomPopupDialog;
 import org.signalml.app.view.components.TitledSliderPanel;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.WignerMapScaleType;
@@ -143,7 +143,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	private Map<ButtonModel,BookTool> toolMap = new HashMap<ButtonModel,BookTool>();
 
-	private ErrorsDialog errorsDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private ViewerFileChooser fileChooser;
 
@@ -492,14 +491,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public void setActionFocusManager(ActionFocusManager actionFocusManager) {
 		this.actionFocusManager = actionFocusManager;
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {

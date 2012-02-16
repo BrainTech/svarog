@@ -42,7 +42,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.components.CompactButton;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.montage.Montage;
 
 /** EditMontageReferencePanel
@@ -480,7 +480,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 			try {
 				montage.setReference(arrow.getTargetChannel(), arrow.getSourceChannel(), weightTextField.getText());
 			} catch (NumberFormatException ex) {
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				weightTextField.setText(montage.getReference(arrow.getTargetChannel(), arrow.getSourceChannel()));
 				weightTextField.selectAll();
 				weightTextField.requestFocusInWindow();

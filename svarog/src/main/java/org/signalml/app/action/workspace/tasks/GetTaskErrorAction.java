@@ -10,7 +10,8 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TaskFocusSelector;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskResult;
 
@@ -26,8 +27,6 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(GetTaskErrorAction.class);
-
-	private ErrorsDialog errorsDialog;
 
 	public GetTaskErrorAction(TaskFocusSelector taskFocusSelector) {
 		super(taskFocusSelector);
@@ -60,12 +59,8 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 			logger.warn("No exception to get");
 			return;
 		}
-
-		if (exception instanceof Errors) {
-			errorsDialog.showErrors((Errors) exception);
-		} else {
-			errorsDialog.showException(exception);
-		}
+		
+		Dialogs.showExceptionDialog(exception);
 
 	}
 
@@ -76,14 +71,6 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 			enabled = targetTask.getStatus().isError();
 		}
 		setEnabled(enabled);
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 }

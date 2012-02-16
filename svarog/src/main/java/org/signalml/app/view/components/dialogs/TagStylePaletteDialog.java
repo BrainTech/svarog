@@ -5,6 +5,7 @@
 package org.signalml.app.view.components.dialogs;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -39,6 +40,8 @@ import org.signalml.app.model.tag.TagStyleTreeModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.TagStylePropertiesPanel;
 import org.signalml.app.view.components.TagStyleTree;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.SignalMLException;
@@ -787,9 +790,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 				}
 			}
 
-			ErrorsDialog errorsDialog = new ErrorsDialog(this, true);
-			MessageSourceResolvable messageSourceResolvable = new DefaultMessageSourceResolvable(new String[]{"tagStylePalette.preset.stylesCouldNotBeDeleted"}, new Object[]{styles});
-			errorsDialog.showDialog(messageSourceResolvable, true);
+			Dialogs.showError(_R("Styles {0} could not be deleted!", styles));
 		}
 
 		currentStyle = null;

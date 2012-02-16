@@ -44,6 +44,7 @@ import org.signalml.app.action.workspace.tasks.SuspendTaskAction;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.method.Method;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
@@ -88,11 +89,6 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * the {@link Task task} to which this dialog is attached
 	 */
 	private Task task;
-
-	/**
-	 * the {@link ErrorsDialog dialog} in which the errors are displayed
-	 */
-	private ErrorsDialog errorsDialog;
 
 	/**
 	 * the {@link CloseAction action} which closes this dialog
@@ -308,7 +304,6 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 		getTaskResultAction.setMethodManager(methodManager);
 
 		getTaskErrorAction = new GetTaskErrorAction(this);
-		getTaskErrorAction.setErrorsDialog(errorsDialog);
 
 		if (method instanceof TrackableMethod) {
 			trackable = true;
@@ -657,24 +652,6 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 */
 	public void setMethodManager(ApplicationMethodManager methodManager) {
 		this.methodManager = methodManager;
-	}
-
-	/**
-	 * Returns the {@link ErrorsDialog dialog} which displays the list of
-	 * errors.
-	 * @return the dialog which displays the list of errors
-	 */
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	/**
-	 * Sets the {@link ErrorsDialog dialog} which displays the list of
-	 * errors.
-	 * @param errorsDialog the dialog which displays the list of errors
-	 */
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 	/**

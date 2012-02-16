@@ -28,8 +28,9 @@ import org.signalml.app.model.montage.MontageGeneratorListModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.ResolvableComboBox;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
-import org.signalml.app.view.components.dialogs.validation.ValidationErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -82,7 +83,7 @@ public class MontageGeneratorPanel extends JPanel {
 	private MontageGeneratorListModel montageGeneratorListModel;
 	
 	/**
-	 * the {@link ErrorsDialog dialog} with errors which is shown when:
+	 * the dialog with errors which is shown when:
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 * {@link Montage montage} using a {@link #getGeneratorComboBox() selected}
@@ -94,7 +95,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * the {@link ShowErrorsAction action} which displays the.
-	 * {@link ErrorsDialog errors dialog} if the current {@link #getMontage()
+	 * errors dialog if the current {@link #getMontage()
 	 * montage} can not be used to generate the {@link Montage montage} using a
 	 * currently {@link #getGeneratorComboBox() selected}
 	 * {@link MontageGenerator generator}
@@ -218,11 +219,11 @@ public class MontageGeneratorPanel extends JPanel {
 	}
 
 	/**
-	 * Gets the {@link ErrorsDialog dialog} with errors which is shown when:
+	 * Gets the validation dialog with errors which is shown when:
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 * 
-	 * @return the {@link ErrorsDialog dialog} with errors which is shown when:
+	 * @return the {@link ExceptionDialog dialog} with errors which is shown when:
 	 *         <ul>
 	 *         <li>the {@link #getMontage() montage} can not be used to generate
 	 *         the
@@ -232,12 +233,12 @@ public class MontageGeneratorPanel extends JPanel {
 	}
 
 	/**
-	 * Sets the {@link ErrorsDialog dialog} with errors which is shown when:
+	 * Sets the dialog with errors which is shown when:
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 * 
 	 * @param errorsDialog
-	 *            the new {@link ErrorsDialog dialog} with errors which is shown
+	 *            the new validation errors dialog with errors which is shown
 	 *            when:
 	 *            <ul>
 	 *            <li>the {@link #getMontage() montage} can not be used to
@@ -393,7 +394,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <ol>
 	 * <li>{@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 	 * Checks} if the current montage can be used with the provided generator.
-	 * If not {@link ErrorsDialog#showErrors(Errors) shows} the errors.</li>
+	 * If not shows the errors.</li>
 	 * <li>{@link MontageGenerator#createMontage(Montage) creates} the montage
 	 * on the basis of the current montage,</li>
 	 * </ol>
@@ -420,7 +421,7 @@ public class MontageGeneratorPanel extends JPanel {
 			generator.createMontage(montage);
 		} catch (MontageException ex) {
 			logger.error("Montage generation failed", ex);
-			ErrorsDialog.showImmediateExceptionDialog(this, ex);
+			Dialogs.showExceptionDialog(this, ex);
 			quietSetSelectedGenerator(null);
 			return;
 		}
@@ -461,7 +462,7 @@ public class MontageGeneratorPanel extends JPanel {
 	/**
 	 * Action which displays the.
 	 * 
-	 * {@link ErrorsDialog errors dialog} if the current {@link #getMontage()
+	 * {@link ExceptionDialog errors dialog} if the current {@link #getMontage()
 	 * montage} can not be used to generate a {@link Montage montage} using a
 	 * currently {@link #getGeneratorComboBox() selected}
 	 * {@link MontageGenerator generator}.
@@ -481,8 +482,8 @@ public class MontageGeneratorPanel extends JPanel {
 		}
 
 		/**
-		 * When the action is performed {@link ErrorsDialog#showErrors(Errors)
-		 * shows} the errors that appeared during the {@link
+		 * When the action is performed shows
+		 * the errors that appeared during the {@link
 		 * MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 		 * validation} of the {@link MontageGeneratorPanel#getGeneratorComboBox()
 		 * selected} {@link Montage}.

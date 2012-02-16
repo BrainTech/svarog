@@ -39,7 +39,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.AnyChangeDocumentAdapter;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.app.view.workspace.ViewerFileChooser;
@@ -109,12 +109,12 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 							document = new TagDocument(tagFile);
 						} catch (SignalMLException ex) {
 							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
-							ErrorsDialog.showImmediateExceptionDialog(TagBasedFilterDialog.this, ex);
+							Dialogs.showExceptionDialog(TagBasedFilterDialog.this, ex);
 							setCurrentTagDocument(null);
 							return;
 						} catch (IOException ex) {
 							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
-							ErrorsDialog.showImmediateExceptionDialog(TagBasedFilterDialog.this, ex);
+							Dialogs.showExceptionDialog(TagBasedFilterDialog.this, ex);
 							setCurrentTagDocument(null);
 							return;
 						}

@@ -11,7 +11,7 @@ import java.awt.Window;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageEvent;
 import org.signalml.domain.montage.MontageException;
@@ -153,7 +153,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 			try {
 				montage.setMontageChannelLabelAt(rowIndex, (String) value);
 			} catch (MontageException ex) {
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				fireTableDataChanged();
 				return;
 			}

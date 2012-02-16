@@ -14,7 +14,7 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.DocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MutableDocument;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 
@@ -52,11 +52,11 @@ public class SaveDocumentAsAction extends AbstractFocusableSignalMLAction<Docume
 			documentFlowIntegrator.saveDocument(document, true);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to save focused document as", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to save focused document as - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 

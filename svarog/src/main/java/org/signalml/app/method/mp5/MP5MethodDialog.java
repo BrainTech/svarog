@@ -48,9 +48,9 @@ import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.SignalSpacePanel;
 import org.signalml.app.view.components.dialogs.AbstractSignalSpaceAwarePresetDialog;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
@@ -736,7 +736,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 					validateDialog(currentModel,errors);
 				} catch (SignalMLException ex) {
 					logger.error("Dialog validation threw an exception", ex);
-					ErrorsDialog.showImmediateExceptionDialog(MP5MethodDialog.this, ex);
+					Dialogs.showExceptionDialog(MP5MethodDialog.this, ex);
 					return;
 				}
 
@@ -850,7 +850,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				copyChain = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
 			} catch (SignalMLException ex) {
 				logger.error("Failed to create signal chain", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 
@@ -887,7 +887,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 					// ignore
 				} catch (ExecutionException ex) {
 					logger.error("Worker failed to save signal", ex.getCause());
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+					Dialogs.showExceptionDialog((Window) null, ex.getCause());
 					return;
 				}
 
@@ -926,7 +926,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 					mp5ConfigCreator.writeMp5Config(configFormatter, configFile);
 				} catch (IOException ex) {
 					logger.error("Failed to save config", ex);
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+					Dialogs.showExceptionDialog((Window) null, ex);
 					return;
 				}
 

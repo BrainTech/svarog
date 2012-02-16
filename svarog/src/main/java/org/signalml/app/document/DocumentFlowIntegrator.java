@@ -30,10 +30,11 @@ import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
 import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalParameterDescriptor;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.document.opensignal.FileOpenSignalMethod;
 import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.app.view.signal.SignalView;
@@ -166,8 +167,8 @@ public class DocumentFlowIntegrator {
 
 	/**
 	 * Tries to {@link #openDocument(OpenDocumentDescriptor) open} a
-	 * {@link Document document}. If this operation fails the
-	 * {@link ErrorsDialog dialog} with the description of an error is shown.
+	 * {@link Document document}. If this operation fails
+	 * a dialog with the description of an error is shown.
 	 * @param descriptor the descriptor of a document to open
 	 * @param window the window that should be parent to errors dialog
 	 * @return true if the operation is successful, false otherwise
@@ -178,23 +179,23 @@ public class DocumentFlowIntegrator {
 			return true;
 		} catch (SignalMLException ex) {
 			logger.error("Failed to open document", ex);
-			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			Dialogs.showExceptionDialog(window, ex);
 			return false;
 		} catch (IOException ex) {
 			logger.error("Failed to open document - I/O exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			Dialogs.showExceptionDialog(window, ex);
 			return false;
 		} catch (ConnectException ex) {
 			logger.error("Failed to open document - connection exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog(window, ex);
+			Dialogs.showExceptionDialog(window, ex);
 			return false;
 		}
 	}
 
 	/**
 	 * Tries to {@link #openDocument(OpenDocumentDescriptor) open} a
-	 * {@link Document document}. If this operation fails the
-	 * {@link ErrorsDialog dialog} with the description of an error is shown.
+	 * {@link Document document}. If this operation fails a
+	 * dialog with the description of an error is shown.
 	 * @param descriptor the descriptor of a document to open
 	 * @return true if the operation is successful, false otherwise
 	 */
@@ -272,11 +273,11 @@ public class DocumentFlowIntegrator {
 			return true;
 		} catch (SignalMLException ex) {
 			logger.error("Failed to close document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return false;
 		} catch (IOException ex) {
 			logger.error("Failed to close document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return false;
 		}
 	}
@@ -707,7 +708,7 @@ public class DocumentFlowIntegrator {
 				logger.info("OpenSignalMLDocumentWorker interrupted", ex);
 			} catch (ExecutionException ex) {
 				logger.error("Exception during worker exectution", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return null;
 			}
 
@@ -891,7 +892,7 @@ public class DocumentFlowIntegrator {
 					logger.info("Worker interrupted", ex);
 				} catch (ExecutionException ex) {
 					logger.error("Exception during worker exectution", ex);
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+					Dialogs.showExceptionDialog((Window) null, ex);
 					return null;
 				}
 
@@ -980,7 +981,7 @@ public class DocumentFlowIntegrator {
 					// ignore
 				} catch (ExecutionException ex) {
 					logger.error("Exception during worker exectution", ex);
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+					Dialogs.showExceptionDialog((Window) null, ex);
 					return null;
 				}
 

@@ -25,7 +25,7 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.View;
 import org.signalml.app.view.components.ViewerDocumentTabbedPaneTabComponent;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
@@ -134,7 +134,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 			documentViewPanel = view.createDocumentViewPanel(document);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to create signal view", ex);
-			ErrorsDialog.showImmediateExceptionDialog(this, ex);
+			Dialogs.showExceptionDialog(this, ex);
 			return;
 		}
 

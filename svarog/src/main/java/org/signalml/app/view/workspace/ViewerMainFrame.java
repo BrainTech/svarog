@@ -51,8 +51,8 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SnapToPageRunnable;
 import org.signalml.app.view.View;
 import org.signalml.app.view.components.LockableJSplitPane;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.exception.SanityCheckException;
@@ -321,11 +321,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			}
 		} catch (SignalMLException ex) {
 			logger.error("Failed to check close documents", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to check close documentst - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 
@@ -435,11 +435,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			documentFlowIntegrator.closeAllDocuments();
 		} catch (SignalMLException ex) {
 			logger.error("Failed to close documents", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to close documentst - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 		

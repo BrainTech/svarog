@@ -42,7 +42,7 @@ import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.view.DateTableCellRenderer;
 import org.signalml.app.view.ProgressTableCellRenderer;
 import org.signalml.app.view.TaskStatusCellRenderer;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
@@ -67,7 +67,6 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 	private ActionFocusManager actionFocusManager;
 	private ApplicationTaskManager taskManager;
 	private ApplicationMethodManager methodManager;
-	private ErrorsDialog errorsDialog;
 
 	private ShowTaskDialogAction showTaskDialogAction;
 	private AbortTaskAction abortTaskAction;
@@ -333,14 +332,6 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 		this.methodManager = methodManager;
 	}
 
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
-	}
-
 	public ShowTaskDialogAction getShowTaskDialogAction() {
 		if (showTaskDialogAction == null) {
 			showTaskDialogAction = new ShowTaskDialogAction(this);
@@ -383,7 +374,6 @@ public class ViewerTaskTable extends JTable implements TaskFocusSelector {
 	public GetTaskErrorAction getGetTaskErrorAction() {
 		if (getTaskErrorAction == null) {
 			getTaskErrorAction = new GetTaskErrorAction(this);
-			getTaskErrorAction.setErrorsDialog(errorsDialog);
 		}
 		return getTaskErrorAction;
 	}

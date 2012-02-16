@@ -23,10 +23,10 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.ExportSignalDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
@@ -143,7 +143,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			signalChain = masterPlot.getSignalChain().createLevelCopyChain(signalSpace.getSignalSourceLevel());
 		} catch (SignalMLException ex) {
 			logger.error("Failed to create subchain", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 
@@ -249,7 +249,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				// ignore
 			} catch (ExecutionException ex) {
 				logger.error("Worker failed to save", ex.getCause());
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 
@@ -314,7 +314,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			// ignore
 		} catch (ExecutionException ex) {
 			logger.error("Worker failed to save", ex.getCause());
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return false;
 		}
 		return true;
@@ -407,7 +407,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				descriptorWriter.writeDocument(rawDescriptor, exportFiles.getXmlFile());
 			} catch (IOException ex) {
 				logger.error("Worker failed to save xml", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return false;
 			}
 			return true;

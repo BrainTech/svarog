@@ -48,7 +48,7 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.model.components.ChannelsPlotOptionsModel;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagAttributesRenderer;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.app.view.tag.TagRenderer;
@@ -1708,7 +1708,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			} catch (MontageMismatchException ex) {
 				logger.error("Failed to set montage", ex);
-				ErrorsDialog.showImmediateExceptionDialog(this, ex);
+				Dialogs.showExceptionDialog(this, ex);
 				return;
 			}
 			if (view.getSignalSelection(this) != null) {

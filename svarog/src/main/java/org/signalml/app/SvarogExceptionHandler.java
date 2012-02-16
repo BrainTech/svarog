@@ -3,7 +3,7 @@ package org.signalml.app;
 import java.awt.Window;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 
 /**
  * Svarog exception handler.
@@ -51,7 +51,7 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
     }
 
     private void displayUserMessage(Throwable t) {
-        ErrorsDialog.showImmediateExceptionDialog((Window) null, t);
+        Dialogs.showExceptionDialog((Window) null, t);
     }
 
     protected void handleAWT(Throwable t) {

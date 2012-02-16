@@ -1,4 +1,4 @@
-package org.signalml.app.view.components.dialogs.validation;
+package org.signalml.app.view.components.dialogs.errors;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -20,22 +20,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
-/**
- * Dialog for showing {@link ValidationErrors}.
- * 
- * @author Piotr Szachewicz
- */
-public class ValidationErrorsDialog extends AbstractDialog {
-	/**
-	 * An enum containing possible user responses in a dialog.
-	 */
-	public static enum DIALOG_OPTIONS { YES, NO };
-	
+public abstract class AbstractErrorsDialog extends AbstractDialog {
 	/**
 	 * The preferred size of the scroll pane which contains the errors jlist.
 	 */
@@ -44,7 +33,7 @@ public class ValidationErrorsDialog extends AbstractDialog {
 	/**
 	 * the list on which errors are displayed
 	 */
-	private JList errorList = null;
+	protected JList errorList = null;
 
 	/**
 	 * the code to obtain the title for this dialog from the source of messages;
@@ -58,7 +47,7 @@ public class ValidationErrorsDialog extends AbstractDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ValidationErrorsDialog(Window w, boolean isModal) {
+	public AbstractErrorsDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
@@ -70,7 +59,7 @@ public class ValidationErrorsDialog extends AbstractDialog {
 	 * @param titleCode  the code to obtain the title for this dialog from the
 	 * source of messages; if the code is {@code null} the default title is used
 	 */
-	public ValidationErrorsDialog(Window w, boolean isModal, String titleCode) {
+	public AbstractErrorsDialog(Window w, boolean isModal, String titleCode) {
 		super(w, isModal);
 		this.titleCode = titleCode;
 	}
@@ -85,7 +74,7 @@ public class ValidationErrorsDialog extends AbstractDialog {
 	protected void initialize() {
 
 		if (titleCode == null) {
-			setTitle(_("Errors in data"));
+			setTitle(_("Error!"));
 		} else {
 			setTitle(titleCode);
 		}
@@ -168,28 +157,8 @@ public class ValidationErrorsDialog extends AbstractDialog {
 		return false;
 	}
 
-	/**
-	 * Depending on the type of the {@code model}:
-	 * <ul>
-	 * <li>for {@link Errors}:<ul>
-	 * <li>obtains the list of errors and converts it to an array,</li>
-	 * <li>using this array creates the {@link ErrorListModel model} for the
-	 * list of errors and sets it,</li></ul></li>
-	 * <li>for {@link MessageSourceResolvable}:
-	 * <ul>
-	 * <li>creates the array containing one element - this model,</li>
-	 * <li>using this array creates the {@link ErrorListModel model} for the
-	 * list of errors and sets it.</li></ul></li>
-	 * </ul>
-	 */
 	@Override
-	protected void fillDialogFromModel(Object model) throws SignalMLException {
-		
-		if (model instanceof ValidationErrors) {
-			ValidationErrors errors = (ValidationErrors) model;
-			errorList.setModel(errors);
-		}
-	}
+	protected abstract void fillDialogFromModel(Object model) throws SignalMLException;
 
 	/**
 	 * Does nothing as it is a read only dialog.
@@ -199,13 +168,7 @@ public class ValidationErrorsDialog extends AbstractDialog {
 		// read only dialog
 	}
 
-	/**
-	 * The model for this dialog must be either of type {@link Errors} or
-	 * {@link MessageSourceResolvable}.
-	 */
 	@Override
-	public boolean supportsModelClass(Class<?> clazz) {
-		return ValidationErrors.class.isAssignableFrom(clazz);
-	}
+	public abstract boolean supportsModelClass(Class<?> clazz);
 
 }

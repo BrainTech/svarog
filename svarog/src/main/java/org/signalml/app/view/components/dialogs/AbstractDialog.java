@@ -30,7 +30,9 @@ import javax.swing.border.EmptyBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.validation.ValidationErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;
@@ -445,7 +447,7 @@ public abstract class AbstractDialog extends JDialog {
 			fillDialogFromModel(model);
 		} catch (SignalMLException ex) {
 			logger.error("Exception when filling the dialog from the model", ex);
-			ErrorsDialog.showImmediateExceptionDialog(this, ex);
+			Dialogs.showExceptionDialog(this, ex);
 			return false;
 		}
 		currentModel = model;
@@ -497,7 +499,7 @@ public abstract class AbstractDialog extends JDialog {
 				validateDialog(currentModel, errors);
 			} catch (SignalMLException ex) {
 				logger.error("Dialog validation threw an exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractDialog.this, ex);
 				currentModel = null;
 				closedWithOk = false;
 				setVisible(false);
@@ -532,7 +534,7 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Shows the {@link ErrorsDialog dialog} with given validation errors.
+	 * Shows the validation errors dialog with given validation errors.
 	 * @param errors the errors to be displayed
 	 */
 	protected void showValidationErrors(ValidationErrors errors) {
@@ -622,7 +624,7 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the {@link ErrorsDialog errors dialog}.
+	 * Returns the validation errors dialog.
 	 * If it doesn't exist it is created.
 	 * @return the errors dialog
 	 */
@@ -768,7 +770,7 @@ public abstract class AbstractDialog extends JDialog {
 				fillModelFromDialog(currentModel);
 			} catch (SignalMLException ex) {
 				logger.error("Exception when filling the model from the dialog", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractDialog.this, ex);
 				currentModel = null;
 				closedWithOk = false;
 				setVisible(false);
