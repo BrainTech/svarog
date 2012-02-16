@@ -27,7 +27,7 @@ public class EegElectrodesPresetManager extends AbstractMultifileRestoreablePres
 
 	@Override
 	public String[] getDefaultFileNames() {
-		return new String[] { "eeg10_20_cap19.xml", "eeg10_20_cap19_children.xml", "eeg10_20_cap25.xml", "eeg10_10_cap33.xml", "eeg10_10_cap47.xml"};
+		return new String[] { "eeg10_20_cap19.xml", "eeg10_20_cap25.xml", "eeg10_10_cap33.xml", "eeg10_10_cap47.xml"};
 	}
 
 	@Override
