@@ -45,13 +45,7 @@ public class TagPresetSelectionPanel extends AbstractSignalMLPanel {
 	 */
 	protected void initialize() {
 
-		setLayout(new BorderLayout(10, 10));
-
-		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("Select tag styles preset for monitor")),
-			new EmptyBorder(3, 3, 3, 3));
-		setBorder(border);
-
+		setTitledBorder(_("Select tag styles preset for monitor"));
 		this.add(getPresetComboBox());
 
 	}

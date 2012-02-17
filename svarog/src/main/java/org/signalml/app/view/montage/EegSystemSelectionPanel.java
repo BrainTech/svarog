@@ -1,22 +1,22 @@
 package org.signalml.app.view.montage;
 
-import java.awt.BorderLayout;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
+import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * A panel containing a {@link JComboBox} for selecting which {@link EegSystem}
@@ -56,12 +56,9 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 
 	@Override
 	protected void initialize() {
-		setLayout(new BorderLayout());
+		
 		setTitledBorder(_("Select EEG system"));
-
-		JLabel comboBoxLabel = new JLabel(_("Current EEG system"));
-		add(comboBoxLabel, BorderLayout.WEST);
-		add(getPresetComboBox(), BorderLayout.EAST);
+		add(getPresetComboBox());
 
 	}
 

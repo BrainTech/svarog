@@ -61,9 +61,9 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 		
 		chooseExperimentPanel = new ChooseExperimentPanel(viewerElementManager.getApplicationConfig());
 		chooseExperimentPanel.addPropertyChangeListener(this);
-		leftColumnPanel.add(chooseExperimentPanel, BorderLayout.NORTH);
+		leftColumnPanel.add(chooseExperimentPanel, BorderLayout.CENTER);
 		
-		leftColumnPanel.add(getSignalParametersPanel(), BorderLayout.CENTER);
+		leftColumnPanel.add(getSignalParametersPanel(), BorderLayout.SOUTH);
 		
 		return leftColumnPanel;
 	}
