@@ -2,22 +2,10 @@ package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
-import java.net.ServerSocket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.swing.SwingWorker;
 
-import org.signalml.app.SvarogApplication;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.util.NetworkUtils;
 import org.signalml.app.view.components.dialogs.ErrorsDialog;
@@ -28,14 +16,19 @@ import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Poller;
 
-import org.ini4j.InvalidFileFormatException;
-import org.ini4j.Wini;
-
 public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDescriptor>, Void>{
 
 	@Override
 	protected List<ExperimentDescriptor> doInBackground() throws Exception {
 
+		try {
+			if (!Helper.wasOpenbciConfigFileLoaded())
+				Helper.loadOpenbciConfigFile();
+		} catch (Exception ex) {
+			ErrorsDialog.showError("Could not read ~/.obci/main_config.ini file correctly");
+			return null;
+		}
+		
 		if (!Helper.isObciServerResponding()) {
 			return null; 
 		}
@@ -89,32 +82,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 
 	protected String getPullAddress() throws Exception {
 		int port = NetworkUtils.getFreePortNumber();
-
-		InetAddress inetAddress = getMyIPAddress();
-		if (inetAddress == null)
-			return null;
-
-		return Helper.getAddressString(inetAddress.getHostAddress(), port);
-	}
-
-	protected InetAddress getMyIPAddress() throws UnknownHostException, SocketException {
-		String openbciServerAddressString = SvarogApplication.getApplicationConfiguration().getOpenBCIDaemonAddress();
-		InetAddress openBCIServerAddress = InetAddress.getByName(openbciServerAddressString);
-
-		Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-		for (NetworkInterface networkInterface : Collections.list(networkInterfaces)) {
-			for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
-				int prefixLength = interfaceAddress.getNetworkPrefixLength();
-				InetAddress address = interfaceAddress.getAddress();
-
-				if (NetworkUtils.isAddressIPv4(address)) {
-					if (NetworkUtils.areAddressesInTheSameSubnet(address, openBCIServerAddress, prefixLength))
-						return address;
-				}
-
-			}
-		}
-		return null;
+		return Helper.getAddressString(Helper.getOpenbciIpAddress(), port);
 	}
 
 }

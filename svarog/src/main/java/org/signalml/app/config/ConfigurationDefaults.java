@@ -160,8 +160,6 @@ public class ConfigurationDefaults {
 		
 		config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
 
-		config.setOpenBCIDaemonAddress( getString("openBCI.daemon.address"));
-		config.setOpenBCIDaemonPort( getInt("openBCI.daemon.port") );
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 	}
 

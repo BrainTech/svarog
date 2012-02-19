@@ -522,22 +522,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.reconstructionHeight = reconstructionHeight;
 	}
 
-	public String getOpenBCIDaemonAddress() {
-		return openBCIDaemonAddress;
-	}
-
-	public void setOpenBCIDaemonAddress(String openBCIDaemonAddress) {
-		this.openBCIDaemonAddress = openBCIDaemonAddress;
-	}
-
-	public int getOpenBCIDaemonPort() {
-		return openBCIDaemonPort;
-	}
-
-	public void setOpenBCIDaemonPort(int openBCIDaemonPort) {
-		this.openBCIDaemonPort = openBCIDaemonPort;
-	}
-
 	public float getMonitorPageSize() {
 		return monitorPageSize;
 	}
