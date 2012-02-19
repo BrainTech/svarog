@@ -17,7 +17,7 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.components.dialogs.DialogResultListener;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.MethodIteratorData;
@@ -109,7 +109,7 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 				consumer.consumeIterationResult(subjectMethod, iteratorData, iteratorResult);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to consume result", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 
@@ -134,7 +134,7 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 				consumerResult = consumer.consumeResult(method, targetTask.getData(), result.getResult());
 			} catch (SignalMLException ex) {
 				logger.error("Failed to consume result", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 

@@ -43,7 +43,7 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericParameter;
@@ -513,7 +513,7 @@ public class IterationSetupDialog extends AbstractDialog  {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Failed to configure base data", ex);
-				ErrorsDialog.showImmediateExceptionDialog(IterationSetupDialog.this, ex);
+				Dialogs.showExceptionDialog(IterationSetupDialog.this, ex);
 				return;
 			}
 

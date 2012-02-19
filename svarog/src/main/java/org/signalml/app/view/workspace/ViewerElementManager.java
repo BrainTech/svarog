@@ -113,7 +113,6 @@ import org.signalml.app.view.components.dialogs.DynamicCompilationWarningDialog;
 import org.signalml.app.view.components.dialogs.EEGLabExportDialog;
 import org.signalml.app.view.components.dialogs.EditTagAnnotationDialog;
 import org.signalml.app.view.components.dialogs.EditTagDescriptionDialog;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.ExportSignalDialog;
 import org.signalml.app.view.components.dialogs.HelpDialog;
 import org.signalml.app.view.components.dialogs.NewTagDialog;
@@ -123,6 +122,7 @@ import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.components.dialogs.SignalSelectionDialog;
 import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
 import org.signalml.app.view.components.dialogs.TagStylePresetDialog;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
@@ -261,7 +261,6 @@ public class ViewerElementManager {
 	/* Dialogs */
         private EEGLabExportDialog eeglabExportDialog;
         private CheckSignalDialog checkSignalDialog;
-	private ErrorsDialog errorsDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private RegisterCodecDialog registerCodecDialog;
@@ -1089,7 +1088,6 @@ public class ViewerElementManager {
 			taskTable.setActionFocusManager(getActionFocusManager());
 			taskTable.setTaskManager(getTaskManager());
 			taskTable.setMethodManager(getMethodManager());
-			taskTable.setErrorsDialog(getErrorsDialog());
 
 			taskTable.setAbortAllTasksAction(getAbortAllTasksAction());
 			taskTable.setSuspendAllTasksAction(getSuspendAllTasksAction());
@@ -1137,13 +1135,6 @@ public class ViewerElementManager {
 			documentTabbedPane.initialize();
 		}
 		return documentTabbedPane;
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		if (errorsDialog == null) {
-			errorsDialog = new ErrorsDialog(getDialogParent(), true);
-		}
-		return errorsDialog;
 	}
 
 	public PleaseWaitDialog getPleaseWaitDialog() {
@@ -1810,7 +1801,6 @@ public class ViewerElementManager {
 			for (int i=0; i<unavailableMethodCount; i++) {
 
 				unavailableMethodAction = new UnavailableMethodAction(methodManager.getUnavailableMethodAt(i));
-				unavailableMethodAction.setErrorsDialog(getErrorsDialog());
 				runMethodActions.add(unavailableMethodAction);
 
 			}
@@ -1872,7 +1862,6 @@ public class ViewerElementManager {
 			signalView.setActionFocusManager(getActionFocusManager());
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
 			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
-			signalView.setErrorsDialog(getErrorsDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
@@ -1894,7 +1883,6 @@ public class ViewerElementManager {
 			BookView bookView;
 			bookView = new BookView((BookDocument) document);
 			bookView.setActionFocusManager(getActionFocusManager());
-			bookView.setErrorsDialog(getErrorsDialog());
 			bookView.setApplicationConfig(getApplicationConfig());
 			bookView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			bookView.setFileChooser(getFileChooser());
@@ -1922,7 +1910,6 @@ public class ViewerElementManager {
 		localMethodManager.setTableToTextExporter(getTableToTextExporter());
 
 		ApplicationTaskManager localTaskManager = getTaskManager();
-		localTaskManager.setErrorsDialog(getErrorsDialog());
 		localTaskManager.setPleaseWaitDialog(getPleaseWaitDialog());
 
 		DynamicCompilationContext.getSharedInstance().getCompiler().setWarning(getDynamicCompilationWarningDialog());

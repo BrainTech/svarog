@@ -38,6 +38,7 @@ import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.AnyChangeDocumentAdapter;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
@@ -609,7 +610,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				preset = getPreset();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to get preset", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 			if (preset == null) {
@@ -622,7 +623,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			Preset existingPreset = presetManager.getDefaultPreset();
 			if (existingPreset != null) {
 				final String msg = _("The default preset will be permanently overwritten. Are you sure?");
-				if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO)
+				if (Dialogs.showWarningYesNoDialog(msg) == Dialogs.DIALOG_OPTIONS.NO)
 					return;
 			}
 
@@ -681,7 +682,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 
@@ -771,7 +772,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				preset = getPreset();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to get preset", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 			if (preset == null) {
@@ -789,7 +790,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
 				final String msg = _("Preset already exists, do you really want to overwrite this preset?");
-				if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO) {
+				if (Dialogs.showWarningYesNoDialog(msg) == Dialogs.DIALOG_OPTIONS.NO) {
 					return;
 				}
 			}
@@ -860,7 +861,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 
@@ -960,7 +961,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				preset = getPreset();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to get preset", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 			if (preset == null) {
@@ -995,7 +996,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				presetManager.writeToFile(file, preset);
 			} catch (IOException ex) {
 				logger.error("Exception when writing file", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 
@@ -1051,7 +1052,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				preset = presetManager.readFromFile(file);
 			} catch (IOException ex) {
 				logger.error("Exception when reading file", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 
@@ -1059,7 +1060,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 				setPreset(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractPresetDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractPresetDialog.this, ex);
 				return;
 			}
 
@@ -1071,7 +1072,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			Preset existingPreset = presetManager.getPresetByName(newName);
 			if (existingPreset != null) {
 				final String msg = _("Preset already exists, do you really want to overwrite this preset?");
-				if (ErrorsDialog.showWarningYesNoDialog(msg) == ErrorsDialog.DIALOG_OPTIONS.NO) {
+				if (Dialogs.showWarningYesNoDialog(msg) == Dialogs.DIALOG_OPTIONS.NO) {
 					return;
 				}
 			}

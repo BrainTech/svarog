@@ -9,7 +9,7 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.tag.EEGLabTagExporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
@@ -37,7 +37,7 @@ public class ExportEEGLabTagAction extends AbstractExportTagAction {
 			exporter.exportEEGLabTags(tagSet, file);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to export tags", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 	}

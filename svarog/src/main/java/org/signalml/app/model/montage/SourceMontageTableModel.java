@@ -11,7 +11,7 @@ import java.awt.Window;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
@@ -195,7 +195,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			try {
 				montage.setSourceChannelLabelAt(rowIndex, (String) value);
 			} catch (MontageException ex) {
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				fireTableCellUpdated(rowIndex, columnIndex);
 				return;
 			}
@@ -206,7 +206,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			try {
 				montage.setSourceChannelFunctionAt(rowIndex, (IChannelFunction) value);
 			} catch (MontageException ex) {
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				fireTableCellUpdated(rowIndex, columnIndex);
 				return;
 			}

@@ -13,9 +13,9 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.method.ApplicationMethodManager;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.TaskStatusDialog;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.method.CleanupMethod;
 import org.signalml.method.Method;
 import org.signalml.task.DefaultTaskManager;
@@ -34,7 +34,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<Task,TaskStatusDialog>();
 	private Map<Task,TaskEventProxy> proxyMap = new HashMap<Task, TaskEventProxy>();
 	private ApplicationMethodManager methodManager;
-	private ErrorsDialog errorsDialog;
 
 	private PleaseWaitDialog pleaseWaitDialog;
 
@@ -68,7 +67,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 		TaskStatusDialog dialog = new TaskStatusDialog(task, mode);
 		dialog.setTaskManager(this);
 		dialog.setMethodManager(methodManager);
-		dialog.setErrorsDialog(errorsDialog);
 
 		return dialog;
 
@@ -184,14 +182,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 
 	public void setStatusDialogParent(Window statusDialogParent) {
 		this.statusDialogParent = statusDialogParent;
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 	public PleaseWaitDialog getPleaseWaitDialog() {

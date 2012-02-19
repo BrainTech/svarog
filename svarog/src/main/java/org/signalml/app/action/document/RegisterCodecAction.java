@@ -22,10 +22,10 @@ import org.jfree.util.Log;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
 import org.signalml.app.util.XmlFileFilter;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.RegisterCodecDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.document.CreateCodecReaderWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
@@ -177,7 +177,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 			// ignore
 		} catch (ExecutionException ex) {
 			logger.error("Exception during worker exectution", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 

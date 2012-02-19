@@ -9,7 +9,8 @@ import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.method.UnavailableMethodDescriptor;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** UnavailableMethodAction
@@ -24,7 +25,6 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 	protected static final Logger logger = Logger.getLogger(UnavailableMethodAction.class);
 
 	private UnavailableMethodDescriptor descriptor;
-	private ErrorsDialog errorsDialog;
 
 	public UnavailableMethodAction(UnavailableMethodDescriptor descriptor) {
 		this.descriptor = descriptor;
@@ -50,17 +50,8 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 	public void actionPerformed(ActionEvent ev) {
 
 		logger.debug("Unavailable method");
+		Dialogs.showExceptionDialog(descriptor.getException());
 
-		errorsDialog.showException(descriptor.getException());
-
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 }

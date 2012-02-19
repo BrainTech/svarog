@@ -17,8 +17,8 @@ import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.iterate.IterationSetupDescriptor;
 import org.signalml.app.method.iterate.IterationSetupDialog;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.TaskStatusDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.MethodIteratorData;
@@ -115,7 +115,7 @@ public class IterateMethodAction extends AbstractSignalMLAction {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Failed to configure method", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 		}

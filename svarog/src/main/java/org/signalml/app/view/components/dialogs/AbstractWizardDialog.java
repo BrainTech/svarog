@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 
 import org.springframework.validation.BindException;
@@ -305,7 +306,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 					validateDialogStep(currentStep,getCurrentModel(),errors);
 				} catch (SignalMLException ex) {
 					logger.error("Dialog validation threw an exception", ex);
-					ErrorsDialog.showImmediateExceptionDialog(AbstractWizardDialog.this, ex);
+					Dialogs.showExceptionDialog(AbstractWizardDialog.this, ex);
 					setCurrentModel(null);
 					setClosedWithOk(false);
 					setVisible(false);
@@ -325,7 +326,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Dialog transition threw an exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(AbstractWizardDialog.this, ex);
+				Dialogs.showExceptionDialog(AbstractWizardDialog.this, ex);
 				setCurrentModel(null);
 				setClosedWithOk(false);
 				setVisible(false);

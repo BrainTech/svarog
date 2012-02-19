@@ -149,6 +149,8 @@ public class NewTagDialog extends AbstractDialog  {
 		} else {
 			throw new SanityCheckException("Unknown mode [" + mode + "]");
 		}
+		
+		newTagPanel.getPresetRadio().setEnabled(styledTagSetPresetManager.getPresetCount() > 0);
 
 		File file = descriptor.getFile();
 		if (file != null && file.exists()) {
@@ -220,6 +222,10 @@ public class NewTagDialog extends AbstractDialog  {
 			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "file", false, false, false, false, true);
 
+		}
+		else if (newTagPanel.getPresetRadio().isSelected()) {
+			if (newTagPanel.getPresetComboBox().getSelectedItem() == null)
+				errors.addError(_("Please select a preset!"));
 		}
 
 		pagingParametersPanel.validatePanel(errors);

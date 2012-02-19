@@ -4,6 +4,8 @@
 
 package org.signalml.domain.montage;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.system.ChannelFunction;
 import java.beans.PropertyChangeListener;
@@ -103,7 +105,7 @@ public class SourceMontage {
 				addSourceChannel("L" + (i+1), signalConfigurer.genericChannel());
 			}
 		} catch (MontageException ex) {
-			throw new SanityCheckException("Failed to build default source montage", ex);
+			throw new SanityCheckException(_("Failed to build default source montage"), ex);
 		}
 
 	}
@@ -132,7 +134,7 @@ public class SourceMontage {
 			try {
 				addSourceChannel(label, ChannelFunction.UNKNOWN);
 			} catch (MontageException ex) {
-				throw new SanityCheckException("addSourceChannel still failed");
+				throw new SanityCheckException(_("addSourceChannel still failed"));
 			}
 		}
 
@@ -398,10 +400,10 @@ public class SourceMontage {
 	public String setSourceChannelLabelAt(int index, String label) throws MontageException {
 
 		if (label == null || label.isEmpty()) {
-			throw new MontageException("error.sourceChannelLabelEmpty");
+			throw new MontageException(_("Source channel label cannot be empty!"));
 		}
 		if (Util.hasSpecialChars(label)) {
-			throw new MontageException("error.sourceChannelLabelBadChars");
+			throw new MontageException(_("Source channel labels contains bad characters!"));
 		}
 
 		SourceChannel channel = sourceChannels.get(index);
@@ -412,7 +414,7 @@ public class SourceMontage {
 
 			SourceChannel namedChannel = map.get(label);
 			if (namedChannel != null && namedChannel != channel) {
-				throw new MontageException("error.sourceChannelLabelDuplicate");
+				throw new MontageException(_("Source channel label cannot be duplicated!"));
 			}
 			channel.setLabel(label);
 			map.remove(oldLabel);
@@ -446,10 +448,10 @@ public class SourceMontage {
 
 			LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(function);
 			if (function.isUnique() && !list.isEmpty()) {
-				throw new MontageException("error.sourceChannelFunctionDuplicate");
+				throw new MontageException(_("Channels with this function cannot be duplicated."));
 			}
 			if (!oldFunction.isMutable()) {
-				throw new MontageException("error.sourceChannelFunctionImmutable");
+				throw new MontageException(_("Channel with this function are immutable - their function cannot be changed"));
 			}
 			LinkedList<SourceChannel> oldList = getSourceChannelsByFunctionList(oldFunction);
 			oldList.remove(channel);
@@ -494,12 +496,12 @@ public class SourceMontage {
 
 		HashMap<String, SourceChannel> map = getSourceChannelsByLabel();
 		if (map.containsKey(label)) {
-			throw new MontageException("error.sourceChannelLabelDuplicate");
+			throw new MontageException(_("Source channels labels cannot be duplicated!"));
 		}
 
 		LinkedList<SourceChannel> list = getSourceChannelsByFunctionList(nonNullChannel);
 		if (nonNullChannel.isUnique() && !list.isEmpty()) {
-			throw new MontageException("error.sourceChannelFunctionDuplicate");
+			throw new MontageException(_R("The function {0} cannot be duplicated!", nonNullChannel.getName()));
 		}
 
 		SourceChannel channel = new SourceChannel(sourceChannels.size(), label, nonNullChannel);

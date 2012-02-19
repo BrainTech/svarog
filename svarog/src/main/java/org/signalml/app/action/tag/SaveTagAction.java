@@ -15,7 +15,7 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 
 /** SaveTagAction
@@ -54,11 +54,11 @@ public class SaveTagAction extends AbstractFocusableSignalMLAction<TagDocumentFo
 			documentFlowIntegrator.saveDocument(tagDocument, false);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to save tag", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to save tag - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 

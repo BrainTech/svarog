@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -46,11 +46,11 @@ public class SaveAllDocumentsAction extends AbstractSignalMLAction {
 			documentFlowIntegrator.saveAllDocuments();
 		} catch (SignalMLException ex) {
 			logger.error("Failed to save all documents", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to save all documents - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 

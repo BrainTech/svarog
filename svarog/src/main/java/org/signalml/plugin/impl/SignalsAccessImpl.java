@@ -29,9 +29,9 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.model.signal.SignalParameterDescriptor;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
@@ -901,7 +901,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 			signalChain = masterPlot.getSignalChain().createLevelCopyChain(signalSpace.getSignalSourceLevel());
 		} catch (SignalMLException ex) {
 			logger.error("Failed to create subchain", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 		
@@ -928,7 +928,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 				// ignore
 			} catch (ExecutionException ex) {
 				logger.error("Worker failed to save", ex.getCause());
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+				Dialogs.showExceptionDialog((Window) null, ex.getCause());
 				return;
 			}
 

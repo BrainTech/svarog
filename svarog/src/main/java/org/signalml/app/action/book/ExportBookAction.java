@@ -17,9 +17,9 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.FileBackedDocument;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.document.ExportBookWorker;
 import org.signalml.domain.book.StandardBook;
@@ -107,7 +107,7 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 			// ignore
 		} catch (ExecutionException ex) {
 			logger.error("Worker failed to save", ex.getCause());
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 

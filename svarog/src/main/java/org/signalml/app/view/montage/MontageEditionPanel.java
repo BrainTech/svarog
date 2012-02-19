@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 
 import org.signalml.app.view.components.AbstractSignalMLPanel;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
-import org.signalml.app.view.components.dialogs.validation.ValidationErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 
@@ -96,9 +96,11 @@ public class MontageEditionPanel extends AbstractSignalMLPanel {
 	}
 
 	/**
-	 * Sets the {@link ErrorsDialog} to be used by this panel to inform
-	 * the user about errors.
-	 * @param errorsDialog the {@link ErrorsDialog} to be used
+	 * Sets the {@link ErrorsDialog} to be used by this panel to inform the user
+	 * about errors.
+	 * 
+	 * @param errorsDialog
+	 *            the {@link ErrorsDialog} to be used
 	 */
 	public void setErrorsDialog(ValidationErrorsDialog errorsDialog) {
 		generatorPanel.setErrorsDialog(errorsDialog);

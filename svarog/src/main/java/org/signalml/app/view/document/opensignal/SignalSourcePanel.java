@@ -200,6 +200,8 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 			File selectedFile = fileSignalSourcePanel.getFileChooserPanel().getSelectedFile();
 			if (selectedFile == null)
 				errors.addError(_("Please select a file"));
+			else if (!selectedFile.exists())
+				errors.addError(_("File doesn't exist!"));
 		}
 	}
 

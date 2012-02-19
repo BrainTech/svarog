@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.HelpDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -44,7 +44,7 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 				helpDialog.setPage(null);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set help page", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 			helpDialog.toFront();

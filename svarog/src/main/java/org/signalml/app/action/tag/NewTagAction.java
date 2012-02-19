@@ -20,8 +20,8 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor.NewTagTypeMode;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.NewTagDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -90,11 +90,11 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 			}
 		} catch (SignalMLException ex) {
 			logger.error("Failed to create document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		} catch (IOException ex) {
 			logger.error("Failed to create document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
 

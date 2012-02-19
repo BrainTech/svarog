@@ -100,11 +100,12 @@ import org.signalml.app.view.components.LockableJSplitPane;
 import org.signalml.app.view.components.TitledSliderPanel;
 import org.signalml.app.view.components.dialogs.EditTagAnnotationDialog;
 import org.signalml.app.view.components.dialogs.EditTagDescriptionDialog;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.NewTagDialog;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.components.dialogs.SignalSelectionDialog;
 import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
@@ -218,7 +219,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private Map<ButtonModel,SignalTool> toolMap = new HashMap<ButtonModel,SignalTool>();
 
-	private ErrorsDialog errorsDialog;
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
 	private ViewerFileChooser fileChooser;
@@ -534,7 +534,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			plot = createSignalPlot(masterPlot);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to create signal plot", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) getTopLevelAncestor(), ex);
+			Dialogs.showExceptionDialog((Window) getTopLevelAncestor(), ex);
 			return null;
 		}
 
@@ -1293,14 +1293,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public ZoomSignalTool getZoomSignalTool() {
 		return zoomSignalTool;
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {
