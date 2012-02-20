@@ -221,6 +221,7 @@
 						<configuration>
 							<target>
 								<exec executable="${git.git}"
+								      failifexecutionfails="false"
 								      outputproperty="git-describe.output"
 								      resultproperty="git-describe.result">
 									<arg value="describe" />
