@@ -30,7 +30,7 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>copy-xml</id>
 						<phase>package</phase>
 						<configuration>
 							<target>
@@ -41,13 +41,7 @@
 							<goal>run</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
 					<execution>
 						<id>compile</id>
 						<phase>compile</phase>
