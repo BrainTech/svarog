@@ -1,6 +1,7 @@
 package org.signalml.app.worker.monitor;
 
-import java.util.Calendar;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.util.List;
 
 import javax.swing.SwingWorker;
@@ -13,6 +14,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -31,7 +33,7 @@ import com.google.protobuf.ByteString;
  */
 public class MonitorWorker extends SwingWorker<Void, Object> {
 
-	public static final int TIMEOUT_MILIS = 50;
+	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
 	private final JmxClient client;
@@ -78,8 +80,12 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		while (!isCancelled()) {
 			try {
 				IncomingMessageData msgData = client.receive(TIMEOUT_MILIS);
-				if (msgData == null) /* timeout */
-					continue;
+				if (msgData == null) {
+					// timeout
+					client.shutdown();
+					Dialogs.showError(_("Multiplexer disconnected!"));
+					break;
+				}
 				else
 					sampleMsg = msgData.getMessage();
 			} catch (InterruptedException e) {
