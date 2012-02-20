@@ -103,12 +103,8 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
 
 		signalParametersPanel.fillModelFromPanel(currentModel);
-
-		currentModel.setJmxClient(viewerElementManager.getJmxClient());
 		currentModel.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
-
 		getTagPresetSelectionPanel().fillModelFromPanel(currentModel);
-		
 		openSignalDescriptor.setExperimentDescriptor(currentModel);
 	}
 

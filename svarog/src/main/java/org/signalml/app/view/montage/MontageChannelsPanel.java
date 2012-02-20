@@ -36,7 +36,6 @@ import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
@@ -890,11 +889,11 @@ public class MontageChannelsPanel extends JPanel {
 					IChannelFunction function = montage.getSourceChannelAt(i).getFunction();
 
 					if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
-						ErrorsDialog.showError(_("Can only remove ONE and ZERO channels from source montage!"));
+						Dialogs.showError(_("Can only remove ONE and ZERO channels from source montage!"));
 						return;
 					}
 					if (montage.isSourceChannelInUse(i)) {
-						ErrorsDialog.showError(_("This source channel is used in the target montage and cannot be removed."));
+						Dialogs.showError(_("This source channel is used in the target montage and cannot be removed."));
 						return;
 					}
 					channelsToBeRemoved.add(i);

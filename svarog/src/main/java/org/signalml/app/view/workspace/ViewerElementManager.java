@@ -398,8 +398,6 @@ public class ViewerElementManager {
 
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
-	private JmxClient jmxClient;
-	private JmxClient tagClient;
 
 	public SignalMLOperationMode getMode() {
 		return mode;
@@ -1833,22 +1831,6 @@ public class ViewerElementManager {
 			tableToTextExporter = new TableToTextExporter();
 		}
 		return tableToTextExporter;
-	}
-
-	public JmxClient getJmxClient() {
-		return jmxClient;
-	}
-
-	public void setJmxClient(JmxClient jmxClient) {
-		this.jmxClient = jmxClient;
-	}
-
-	public JmxClient getTagClient() {
-		return tagClient;
-	}
-
-	public void setTagClient(JmxClient tagClient) {
-		this.tagClient = tagClient;
 	}
 
 	public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {

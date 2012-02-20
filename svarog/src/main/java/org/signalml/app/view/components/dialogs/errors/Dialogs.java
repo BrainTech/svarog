@@ -7,6 +7,7 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 public class Dialogs {
 
@@ -43,8 +44,12 @@ public class Dialogs {
 	 * Shows a simple dialog with OK button showing the specified error message.
 	 * @param message the error
 	 */
-	public static void showError(String message) {
-		JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+	public static void showError(final String message) {
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+		    }
+		  });
 	}
 
 	/**
@@ -57,6 +62,7 @@ public class Dialogs {
 	public static void showExceptionDialog(final JComponent c, final Throwable t) {
 
 		Window w = null;
+
 		if (c != null) {
 			Container cont = c.getTopLevelAncestor();
 			if (cont instanceof Window) {
@@ -73,7 +79,11 @@ public class Dialogs {
 	 * @param t the exception to be displayed
 	 */
 	public static void showExceptionDialog(final Window w, final Throwable t) {
-		JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+		    }
+		  });
 	}
 	
 	/**
@@ -83,6 +93,10 @@ public class Dialogs {
 	 * @param t the exception to be displayed
 	 */
 	public static void showExceptionDialog(final Throwable t) {
-		JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+		    }
+		  });
 	}
 }

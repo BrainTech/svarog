@@ -95,13 +95,6 @@ public class MontageEditionPanel extends AbstractSignalMLPanel {
 		matrixReferenceEditorPanel.setMontage(montage);
 	}
 
-	/**
-	 * Sets the {@link ErrorsDialog} to be used by this panel to inform the user
-	 * about errors.
-	 * 
-	 * @param errorsDialog
-	 *            the {@link ErrorsDialog} to be used
-	 */
 	public void setErrorsDialog(ValidationErrorsDialog errorsDialog) {
 		generatorPanel.setErrorsDialog(errorsDialog);
 	}

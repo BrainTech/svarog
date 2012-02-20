@@ -41,7 +41,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 	private void sendLeaveExperimentRequest() {		
 		LeaveExperimentRequest request = new LeaveExperimentRequest(experimentDescriptor);
 		String response = Helper.sendRequest(request, experimentDescriptor.getExperimentAddress());
-
+		
 		MessageParser.checkIfResponseIsOK(response, MessageType.REQUEST_OK_RESPONSE);
 	}
 

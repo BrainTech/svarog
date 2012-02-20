@@ -8,7 +8,7 @@ import javax.swing.SwingWorker;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.util.NetworkUtils;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.parsing.ExperimentDescriptorJSonReader;
@@ -25,7 +25,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 			if (!Helper.wasOpenbciConfigFileLoaded())
 				Helper.loadOpenbciConfigFile();
 		} catch (Exception ex) {
-			ErrorsDialog.showError("Could not read ~/.obci/main_config.ini file correctly");
+			Dialogs.showError("Could not read ~/.obci/main_config.ini file correctly");
 			return null;
 		}
 		
@@ -42,12 +42,12 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 		try {
 			myAddress = getPullAddress();
 		} catch (Exception e) {
-			ErrorsDialog.showError(e.toString());
+			Dialogs.showError(e.toString());
 			return null;
 		}
 		
 		if (myAddress == null)
-			ErrorsDialog.showError(_("Could not find my IP address!"));
+			Dialogs.showError(_("Could not find my IP address!"));
 		
 		socketPull.bind(myAddress);
 		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest(myAddress);
@@ -66,7 +66,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 			System.out.println("response: " + response);
 		}
 		else {
-			ErrorsDialog.showError(_("OpenBCI server is not responding!"));
+			Dialogs.showError(_("OpenBCI server is not responding!"));
 			return null;
 		}
 		socketSend.close();

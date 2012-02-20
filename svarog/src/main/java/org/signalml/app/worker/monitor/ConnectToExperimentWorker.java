@@ -14,7 +14,7 @@ import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonProcessingException;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
@@ -50,7 +50,7 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 		String responseString = Helper.sendRequest(request, experimentDescriptor.getExperimentAddress());
 
 		if (responseString == null) {
-			ErrorsDialog.showError(_("Experiment is not responding!"));
+			Dialogs.showError(_("Experiment is not responding!"));
 			return false;
 		}
 

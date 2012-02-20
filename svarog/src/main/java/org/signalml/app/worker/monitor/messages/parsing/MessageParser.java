@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.signalml.app.view.components.dialogs.ErrorsDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.messages.Message;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
@@ -34,7 +34,7 @@ public class MessageParser {
 	
 	public static boolean checkIfResponseIsOK(String response, MessageType awaitedMessageType) {
 		if (response == null) {
-			ErrorsDialog.showError(_("Server is not responding!"));
+			Dialogs.showError(_("Server is not responding!"));
 			return false;
 		}
 		
@@ -44,11 +44,11 @@ public class MessageParser {
 		}
 		else if (type == MessageType.REQUEST_ERROR_RESPONSE) {
 			RequestErrorResponse msg = (RequestErrorResponse) MessageParser.parseMessageFromJSON(response, type);
-			ErrorsDialog.showError("Got request error from server (code: " + msg.getErrorCode() + ")");
+			Dialogs.showError("Got request error from server (code: " + msg.getErrorCode() + ")");
 			return false;
 		}
 		else {
-			ErrorsDialog.showError(_("Got unknown response from the server: ") + response);
+			Dialogs.showError(_("Got unknown response from the server: ") + response);
 			return false;
 		}
 	}
