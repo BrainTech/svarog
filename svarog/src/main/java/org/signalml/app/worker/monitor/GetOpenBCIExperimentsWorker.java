@@ -63,6 +63,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorker<List<ExperimentDesc
 		if (poller.poll(Helper.getTimeOutLength()) > 0) {
 			byte[] responseBytes = socketPull.recv(0);
 			response = new String(responseBytes);
+			System.out.println("response: " + response);
 		}
 		else {
 			ErrorsDialog.showError(_("OpenBCI server is not responding!"));
