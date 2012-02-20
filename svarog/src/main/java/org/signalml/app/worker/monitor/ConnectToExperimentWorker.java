@@ -39,8 +39,9 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	
 	@Override
 	protected JmxClient doInBackground() throws Exception {
-		sendJoinExperimentRequest();
-		return connectToMultiplexer();
+		if (sendJoinExperimentRequest())
+			return connectToMultiplexer();
+		return null;
 	}
 	
 	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException { 
@@ -52,8 +53,11 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 			ErrorsDialog.showError(_("Experiment is not responding!"));
 			return false;
 		}
+
+		if (!MessageParser.checkIfResponseIsOK(responseString, MessageType.REQUEST_OK_RESPONSE)) {
+			return false;
+		}
 		
-		MessageParser.checkIfResponseIsOK(responseString, MessageType.REQUEST_OK_RESPONSE);
 		RequestOKResponse response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
 		
 		String mxAddr = (String) response.getParams().get("mx_addr");
