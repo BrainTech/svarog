@@ -42,7 +42,7 @@ public class NewArtifactAlgorithmWorker implements Runnable {
 			NewArtifactAlgorithmData data =
 				new NewArtifactAlgorithmData(this.workerData.constants,
 							     this.workerData.artifactData.getParameters(),
-							     this.workerData.artifactData.getKeyChannelMap(),
+							     this.workerData.artifactData.getChannelMap(), //FIXME: figure out difference between getChannelMap and getKeyChannelMap
 							     buffer);
 
 			this.resultWriter.write(algorithm.computeHead(data));

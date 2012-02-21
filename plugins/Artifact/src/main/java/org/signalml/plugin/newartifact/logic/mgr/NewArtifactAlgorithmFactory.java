@@ -1,6 +1,6 @@
 package org.signalml.plugin.newartifact.logic.mgr;
 
-import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.newartifact.data.NewArtifactComputationType;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 import org.signalml.plugin.newartifact.logic.algorithm.BlinkingArtifactAlgorithm;
@@ -23,7 +23,7 @@ public class NewArtifactAlgorithmFactory {
 		this.constants = constants;
 	}
 
-	public INewArtifactAlgorithm createAlgorithm() throws SignalMLException {
+	public INewArtifactAlgorithm createAlgorithm() throws PluginException {
 		switch (this.producedAlgorithmType) {
 		case GALV:
 			return new BreathingArtifactAlgorithm(constants);
@@ -40,7 +40,7 @@ public class NewArtifactAlgorithmFactory {
 		case UNKNOWN:
 			return new UnknownArtifactAlgorithm(constants);
 		default:
-			throw new SignalMLException();
+			throw new PluginException("Unknown algorithm");
 		}
 	}
 }

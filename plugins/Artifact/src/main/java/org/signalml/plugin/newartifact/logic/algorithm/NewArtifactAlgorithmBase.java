@@ -24,4 +24,15 @@ public abstract class NewArtifactAlgorithmBase implements INewArtifactAlgorithm 
 		}
 		return result;
 	}
+	
+	protected int getChannelNumber(NewArtifactAlgorithmData data,
+			String channelName) throws NewArtifactAlgorithmDataException {
+		Integer channelNumber = data.channels.get(channelName);
+		if (channelNumber == null) {
+			throw new NewArtifactAlgorithmDataException("Unknown channel name " + channelName);
+		}
+		return channelNumber.intValue();
+	}
+
+	
 }

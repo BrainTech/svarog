@@ -27,7 +27,7 @@ public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 	}
 
 	@Override
-	public double[][] compute(NewArtifactAlgorithmData data) {
+	public double[][] compute(NewArtifactAlgorithmData data) throws NewArtifactAlgorithmDataException {
 		double corr1, corr2;
 
 		for (int k = 0; k < data.constants.getBlockCapacity(); ++k) {
@@ -69,10 +69,9 @@ public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 	}
 
 	private double[] shortDiff(NewArtifactAlgorithmData data, int block, String channelName1,
-				   String channelName2) {
-		int channel1, channel2;
-		channel1 = data.channels.get(channelName1).intValue();
-		channel2 = data.channels.get(channelName2).intValue();
+				   String channelName2) throws NewArtifactAlgorithmDataException {
+		int channel1 = this.getChannelNumber(data, channelName1); 
+		int channel2 = this.getChannelNumber(data, channelName2);
 
 		if (channel1 < 0 || channel2 < 0) {
 			return null;

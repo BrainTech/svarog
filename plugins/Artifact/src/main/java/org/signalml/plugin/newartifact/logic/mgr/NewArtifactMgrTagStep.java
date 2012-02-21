@@ -24,7 +24,6 @@ import org.signalml.plugin.io.PluginTagWriter;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.newartifact.data.NewArtifactComputationType;
-import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepResult;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
@@ -36,7 +35,7 @@ import org.signalml.plugin.newartifact.logic.tag.NewArtifactTagCreatorRoutine;
 import org.signalml.plugin.newartifact.logic.tag.NewArtifactTagMerger;
 
 public class NewArtifactMgrTagStep extends
-	AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
+		AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
 
 	private final ExecutorCompletionService<NewArtifactTagResult> executorService;
 	private final Map<NewArtifactComputationType, NewArtifactTagCreatorRoutine> taggerRoutines;
@@ -49,7 +48,7 @@ public class NewArtifactMgrTagStep extends
 		this.taggerRoutines = new HashMap<NewArtifactComputationType, NewArtifactTagCreatorRoutine>();
 		this.futureTasks = new LinkedList<Future<NewArtifactTagResult>>();
 		this.executorService = new ExecutorCompletionService<NewArtifactTagResult>(
-			Executors.newCachedThreadPool(data.threadFactory));
+				Executors.newCachedThreadPool(data.threadFactory));
 
 		this.readers = null;
 	}
@@ -71,9 +70,9 @@ public class NewArtifactMgrTagStep extends
 
 	@Override
 	public PluginComputationMgrStepResult doRun(
-		PluginComputationMgrStepResult prevStepResult)
-	throws PluginToolAbortException, ComputationException,
-		PluginToolInterruptedException {
+			PluginComputationMgrStepResult prevStepResult)
+			throws PluginToolAbortException, ComputationException,
+			PluginToolInterruptedException {
 
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
 
@@ -105,7 +104,7 @@ public class NewArtifactMgrTagStep extends
 					merger.addTag(result);
 
 					NewArtifactComputationType taggerType = futureMap
-										.get(future);
+							.get(future);
 					if (taggerType != null) {
 						tracker.advance((int) this.readers.get(taggerType)
 								.getDataSize()
@@ -150,7 +149,7 @@ public class NewArtifactMgrTagStep extends
 		NewArtifactTagCreatorFactory factory = new NewArtifactTagCreatorFactory();
 
 		Collection<Integer> channelsList = this.data.artifactData
-						   .getEegChannels();
+				.getEegChannels();
 		int eegChannels[] = new int[channelsList.size()];
 		int i = 0;
 		for (int channel : channelsList) {
@@ -161,39 +160,39 @@ public class NewArtifactMgrTagStep extends
 		for (NewArtifactComputationType taggerType : NewArtifactComputationType
 				.values()) {
 			if (!NewArtifactParameterHelper.IsParameterEnabled(taggerType,
-					this.data.artifactData.getParameters())) {
+					this.data.artifactData)) {
 				continue;
 			}
 
 			INewArtifactDataReader reader = this.readers.get(taggerType);
 			IPluginTagWriter writer = this.createTagWriterForTagger(taggerType,
-						  this.data);
+					this.data);
 
 			if (reader != null && writer != null) {
 				this.taggerRoutines
-				.put(taggerType,
-				     new NewArtifactTagCreatorRoutine(
-					     new NewArtifactTagRoutineData(
-						     this.data.constants,
-						     this.data.artifactData
-						     .getParameters(),
-						     eegChannels,
-						     this.getExcludedChannelsForTagger(
-							     taggerType, this.data)),
-					     reader, factory
-					     .createTagger(taggerType),
-					     writer));
+						.put(taggerType,
+								new NewArtifactTagCreatorRoutine(
+										new NewArtifactTagRoutineData(
+												this.data.constants,
+												this.data.artifactData
+														.getParameters(),
+												eegChannels,
+												this.getExcludedChannelsForTagger(
+														taggerType, this.data)),
+										reader, factory
+												.createTagger(taggerType),
+										writer));
 			}
 		}
 
 	}
 
 	private NewArtifactMgrStepResult mergeTags(NewArtifactTagMerger merger)
-	throws ComputationException {
+			throws ComputationException {
 		File targetFile = new File(
-			this.data.pathConstructor.getPathToWorkDir(),
-			this.data.artifactData.getPatientName()
-			+ this.data.pathConstructor.getTagFileExtension());
+				this.data.pathConstructor.getPathToWorkDir(),
+				this.data.artifactData.getPatientName()
+						+ this.data.pathConstructor.getTagFileExtension());
 		PluginTagWriter writer = new PluginTagWriter(targetFile,
 				new PluginTagWriterConfig());
 		try {
@@ -213,14 +212,12 @@ public class NewArtifactMgrTagStep extends
 		if (this.readers == null) {
 			this.readers = new HashMap<NewArtifactComputationType, INewArtifactDataReader>();
 
-			NewArtifactParameters parameters = this.data.artifactData
-							   .getParameters();
 			for (NewArtifactComputationType taggerType : NewArtifactComputationType
 					.values()) {
 				if (NewArtifactParameterHelper.IsParameterEnabled(taggerType,
-						parameters)) {
+						this.data.artifactData)) {
 					INewArtifactDataReader reader = this
-									.createDataReaderForTagger(taggerType, this.data);
+							.createDataReaderForTagger(taggerType, this.data);
 					if (reader != null) {
 						this.readers.put(taggerType, reader);
 					}
@@ -230,20 +227,20 @@ public class NewArtifactMgrTagStep extends
 	}
 
 	private IPluginTagWriter createTagWriterForTagger(
-		NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
+			NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
 		switch (taggerType) {
 		case MUSCLE_PLUS_POWER:
 			return null;
 		default:
 			return new PluginTagWriter(new File(
-							   data.pathConstructor.getPathToWorkDir(),
-							   this.getResultFileNameForAlgorithm(taggerType)[0]),
-						   new PluginTagWriterConfig());
+					data.pathConstructor.getPathToWorkDir(),
+					this.getResultFileNameForAlgorithm(taggerType)[0]),
+					new PluginTagWriterConfig());
 		}
 	}
 
 	private INewArtifactDataReader createDataReaderForTagger(
-		NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
+			NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
 		int channelCount = this.data.constants.channelCount;
 		switch (taggerType) {
 		case MUSCLE_PLUS_POWER:
@@ -252,16 +249,16 @@ public class NewArtifactMgrTagStep extends
 			channelCount = 2;
 		default:
 			return new NewArtifactDataReader(
-				       new File(
-					       data.pathConstructor.getPathToWorkDir(),
-					       data.pathConstructor
-					       .getIntermediateFileNamesForAlgorithm(taggerType)[0]),
-				       channelCount);
+					new File(
+							data.pathConstructor.getPathToWorkDir(),
+							data.pathConstructor
+									.getIntermediateFileNamesForAlgorithm(taggerType)[0]),
+					channelCount);
 		}
 	}
 
 	private int[] getExcludedChannelsForTagger(
-		NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
+			NewArtifactComputationType taggerType, NewArtifactMgrStepData data) {
 		int idx;
 		switch (taggerType) {
 		case GALV:
@@ -293,7 +290,7 @@ public class NewArtifactMgrTagStep extends
 	}
 
 	private String[] getResultFileNameForAlgorithm(
-		NewArtifactComputationType taggerType) {
+			NewArtifactComputationType taggerType) {
 		String result[] = this.doGetResultFileNameForAlgorithm(taggerType);
 		if (result == null) {
 			return result;
@@ -301,13 +298,13 @@ public class NewArtifactMgrTagStep extends
 
 		for (int i = 0; i < result.length; ++i) {
 			result[i] = result[i]
-				    + this.data.pathConstructor.getTagFileExtension();
+					+ this.data.pathConstructor.getTagFileExtension();
 		}
 		return result;
 	}
 
 	private String[] doGetResultFileNameForAlgorithm(
-		NewArtifactComputationType taggerType) {
+			NewArtifactComputationType taggerType) {
 		switch (taggerType) {
 		case GALV:
 			return new String[] { "galw_4s" };

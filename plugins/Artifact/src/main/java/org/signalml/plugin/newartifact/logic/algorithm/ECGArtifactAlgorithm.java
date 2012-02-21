@@ -28,7 +28,7 @@ public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
 	}
 
 	@Override
-	public double[][] compute(NewArtifactAlgorithmData data) {
+	public double[][] compute(NewArtifactAlgorithmData data) throws NewArtifactAlgorithmDataException {
 		double buffer[] = this.resultBuffer[0];
 		double signal[][] = data.signal;
 
@@ -36,7 +36,13 @@ public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
 
 		int tailLength = data.constants.getPaddingLength();
 		int blockLength = data.constants.getBlockLength();
-		double ecgChannel[] = Arrays.copyOfRange(signal[data.channels.get("ECG").intValue()],
+		
+		int ecgChannelNumber = this.getChannelNumber(data, "ECG");
+		if (ecgChannelNumber < 0 || ecgChannelNumber >= signal.length) {
+			return this.zeros(1, this.constants.channelCount);
+		}
+		
+		double ecgChannel[] = Arrays.copyOfRange(signal[ecgChannelNumber],
 				      tailLength, tailLength + blockLength);
 		for (int i = 0; i < data.constants.channelCount; ++i) {
 			double channelData[] = Arrays.copyOfRange(signal[i], tailLength, tailLength + blockLength);
