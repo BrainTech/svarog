@@ -115,7 +115,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 			presetManager.setProfileDir(methodManager.getProfileDir());
 			try {
 				presetManager.setStreamer((XStream) PluginResourceRepository
-							  .GetResource("streamer"));
+							  .GetResource("streamer", NewArtifactPlugin.class));
 			} catch (PluginException e) {
 				logger.error("Can't get proper streamer", e);
 				return presetManager;

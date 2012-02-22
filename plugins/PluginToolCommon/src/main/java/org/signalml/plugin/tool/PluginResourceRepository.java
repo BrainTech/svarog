@@ -1,13 +1,7 @@
 package org.signalml.plugin.tool;
 
-import java.io.IOException;
-import java.security.CodeSource;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.Plugin;
@@ -45,6 +39,8 @@ public class PluginResourceRepository {
 		}
 	}
 
+	/*
+	@Deprecated
 	public static Object GetResource(String resourceName)
 			throws PluginException {
 		Class<? extends Plugin> pluginClass = FindContextPluginClass();
@@ -135,4 +131,5 @@ public class PluginResourceRepository {
 
 		return null;
 	}
+	*/
 }
