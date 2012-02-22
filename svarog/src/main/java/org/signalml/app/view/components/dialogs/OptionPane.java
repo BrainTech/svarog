@@ -270,59 +270,6 @@ public class OptionPane extends JOptionPane {
 	}
 
 	/**
-	 * Shows the information that the artifact project already exits and asks
-	 * the user what to do. 
-	 * @param parent the window parent to this one
-	 * @return
-	 * <ul>
-	 * <li>{@code OK_OPTION} if the user chose to create the project,</li>
-	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
-	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
-	 */
-	public static int showArtifactProjectDoesntExist(Component parent) {
-		if (!initialized) {
-			initialize();
-		}
-
-		int res = showOptionDialog(
-		                  parent,
-		                  _("artifactMethod.situation.artifactProjectDoesntExist"),
-		                  createString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {createString,cancelString},
-		                  createString
-		          );
-
-		switch (res) {
-		case 0 :
-			return OK_OPTION;
-		case 1 :
-		case CLOSED_OPTION :
-		default :
-			return CANCEL_OPTION;
-		}
-
-	}
-
-	/**
-	 * Informs that the artifact project exists and asks the user whether to
-	 * reuse it or to replace it.
-	 * @param parent the window parent to this one
-	 * @param name the name of the project
-	 * @return
-	 * <ul>
-	 * <li>{@code YES_OPTION} if the user chose to reuse the project,</li>
-	 * <li>{@code N0_OPTION} if the user chose to replace the project,</li>
-	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
-	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
-	 */
-	public static int showArtifactProjectExists(Component parent, String name) {
-		return showReuseReplaceOption(parent, "artifactMethod.situation.artifactProjectExists", new Object[] { name });
-	}
-
-	/**
 	 * Informs that the stager project exists and asks the user whether to
 	 * reuse it or to replace it.
 	 * @param parent the window parent to this one

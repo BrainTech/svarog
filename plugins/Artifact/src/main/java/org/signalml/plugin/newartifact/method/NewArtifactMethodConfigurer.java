@@ -26,6 +26,7 @@ import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
 import org.signalml.plugin.method.PluginMethodManager;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
@@ -162,7 +163,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 				return false;
 			}
 
-			int ans = OptionPane.showArtifactProjectExists(dialogParent, name);
+			int ans = OptionPane.showReuseReplaceOption(dialogParent, NewArtifactPlugin.i18n()._R("Project [{0}] exists. Reuse or replace?", name), null);
 			if (ans == OptionPane.CANCEL_OPTION) {
 				return false;
 			} else if (ans == OptionPane.NO_OPTION) {
