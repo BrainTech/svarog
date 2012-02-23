@@ -1,12 +1,11 @@
 package org.signalml.plugin.newartifact;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import java.awt.event.ActionEvent;
 
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.method.PluginMethodManager;
-import org.signalml.plugin.newartifact.NewArtifactPlugin;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 public class NewArtifactPluginAction extends AbstractSignalMLAction {
 

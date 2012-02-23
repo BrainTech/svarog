@@ -8,17 +8,15 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.signalml.app.document.SignalDocument;
+import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.method.AbstractData;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import org.signalml.domain.montage.SourceChannel;
-import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * ArtifactApplicationData
