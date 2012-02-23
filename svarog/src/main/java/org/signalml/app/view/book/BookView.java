@@ -72,7 +72,6 @@ import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
 import org.signalml.app.view.book.popup.BookZoomPopupDialog;
 import org.signalml.app.view.components.TitledSliderPanel;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.WignerMapScaleType;
@@ -658,6 +657,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			});
 
 		}
+
 		return paletteComboBox;
 	}
 

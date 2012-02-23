@@ -25,6 +25,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
@@ -788,6 +790,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			if (scaleRectangle != null) {
 				repaint(scaleRectangle);
 			}
+			view.getPaletteComboBox().setSelectedItem(palette);
 		}
 	}
 
@@ -802,6 +805,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			if (mapRectangle != null) {
 				repaint(mapRectangle);
 			}
+			view.getScaleComboBox().setSelectedItem(type);
 		}
 	}
 
