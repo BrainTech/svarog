@@ -82,7 +82,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the description of an error.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 */
 	public static void showError(Component parent, String message) {
@@ -105,7 +105,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the description of an error.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 * @param arguments the codes of arguments used to obtain the message from
 	 * the source of messages
@@ -152,7 +152,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the specified message.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 */
 	public static void showMessage(Component parent, String message) {
@@ -197,7 +197,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the description of an exception.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 * @param ex the exception which description should be displayed; used to
 	 * obtain the message that should be displayed
@@ -481,7 +481,7 @@ public class OptionPane extends JOptionPane {
 	/**
 	 * Asks the user if the specified task should be continued.
 	 * @param parent the window parent to this one
-	 * @param messageCode the code used to obtain the message describing the
+	 * @param message the code used to obtain the message describing the
 	 * task from the source of messages
 	 * @return
 	 * <ul>
@@ -489,7 +489,7 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
-	public static int showProceedOption(Component parent, String messageCode) {
+	public static int showProceedOption(Component parent, String message) {
 		if (!initialized) {
 			initialize();
 		}
@@ -498,7 +498,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 				  parent,
-				  messageCode,
+				  message,
 				  proceedString + "?",
 				  JOptionPane.OK_OPTION,
 				  JOptionPane.QUESTION_MESSAGE,
@@ -521,7 +521,7 @@ public class OptionPane extends JOptionPane {
 	/**
 	 * Asks the user if the specified task should be continued.
 	 * @param parent the window parent to this one
-	 * @param messageCode the code used to obtain the message describing the
+	 * @param message the code used to obtain the message describing the
 	 * task from the source of messages
 	 * @param args the codes of arguments used to obtain the message from
 	 * the source of messages
@@ -531,7 +531,7 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
-	public static int showProceedOption(Component parent, String messageCode, Object[] args) {
+	public static int showProceedOption(Component parent, String message, Object[] args) {
 		if (!initialized) {
 			initialize();
 		}
@@ -540,7 +540,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 				  parent,
-				  render(messageCode, args),
+				  render(message, args),
 				  proceedString + "?",
 				  JOptionPane.OK_OPTION,
 				  JOptionPane.QUESTION_MESSAGE,
@@ -564,7 +564,7 @@ public class OptionPane extends JOptionPane {
 	 * Informs that the object exists and asks the user whether to reuse it or
 	 * to replace it.
 	 * @param parent the window parent to this one
-	 * @param messageCode the code used to obtain the message for the dialog
+	 * @param message the code used to obtain the message for the dialog
 	 * from the source of messages
 	 * @param args the codes of arguments used to obtain the message from
 	 * the source of messages
@@ -586,7 +586,7 @@ public class OptionPane extends JOptionPane {
 
 		int res = showOptionDialog(
 				  parent,
-				  render(messageCode, args),
+				  render(message, args),
 				  reuseString + "?",
 				  JOptionPane.OK_OPTION,
 				  JOptionPane.QUESTION_MESSAGE,
