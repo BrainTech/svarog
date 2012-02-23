@@ -102,7 +102,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	}
 
 	public int getFrequency() {
-		return (int)(this.frequency);
+		return (int) (this.frequency * getBaseLength() / 2.0);
 	}
 
 	public float getModulus() {
@@ -216,7 +216,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 
 	@Override
 	public float getHzFrequency() {
-		return frequency*getSamplingFrequency()/getBaseLength();
+		return getFrequency()*getSamplingFrequency()/getBaseLength();
 	}
 
 	@Override

@@ -183,5 +183,6 @@ public class BookAtom implements StandardBookAtom {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }
 

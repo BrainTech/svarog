@@ -131,4 +131,5 @@ public class NewAtom implements StandardBookAtom {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }

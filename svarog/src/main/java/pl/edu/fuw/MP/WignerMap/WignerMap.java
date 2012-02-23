@@ -12,11 +12,10 @@ public class WignerMap {
 	private static final double EPS=1.0e-13;
 	private static final double PI2M=2.0*Math.PI;
 	private double minT,maxT,minF,maxF,ATime,BTime,AFreq,BFreq;
-	private double minVal=0.0,maxVal=0.0,SamplingFreq=1.0;
+	private double minVal=0.0,maxVal=0.0;
 	private double  reconst[][]=null;
 	private double ReconstSignal[]=null;
 	private double signal[]=null;
-	private double FreqMin=0.0,FreqMax=1.0;
 	private boolean mask[]=null;
 	private int Count=0;
 
@@ -214,10 +213,8 @@ public class WignerMap {
 		}
 
 		minVal=maxVal=0.0;
-		SamplingFreq=book.getSamplingFrequency();
 		int BookSize=book.getAtomCount();
 
-		SetWignerParameters();
 		for (k=0 ; k<BookSize ; k++) {
 			StandardBookAtom atom=book.getAtomAt(k);
 			AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getFrequency());
@@ -240,24 +237,6 @@ public class WignerMap {
 
 	public double []getReconstruction() {
 		return ReconstSignal;
-	}
-
-	private void SetWignerParameters() {
-		//minT=0; maxT=DimBase-1;
-		minF=(int)(0.5+FreqMin*(DimBase-1)/SamplingFreq);
-		maxF=(int)(0.5+FreqMax*(DimBase-1)/SamplingFreq);
-		ATime=(maxT-minT)/(SizeX-1);
-		BTime=minT;
-		AFreq=(maxF-minF)/(SizeY-1);
-		BFreq=minF;
-	}
-
-	public void SetTrueSize(double StartFreq,double StopFreq) {
-		if (StartFreq>=StopFreq) {
-			return;
-		}
-		FreqMin=StartFreq;
-		FreqMax=StopFreq;
 	}
 
 	public WignerMap(int Sx,int Sy,int minTT,int maxTT,int minFF,int maxFF) {

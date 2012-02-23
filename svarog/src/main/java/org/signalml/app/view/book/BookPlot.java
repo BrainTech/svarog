@@ -1282,7 +1282,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 				sb.append("<tr><td>")
 				.append(_("Frequency"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
-				.append(toolTipFormat.format(nearestAtom.getFrequency()))
+				.append(toolTipFormat.format(nearestAtom.getHzFrequency()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")

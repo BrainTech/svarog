@@ -241,7 +241,6 @@ public abstract class AbstractWignerMapProvider {
 		int pointMaxPosition = (int) Math.round(maxPosition * samplingFrequency);
 
 		WignerMap wignerMap = new WignerMap(width, height, pointMinPosition, pointMaxPosition, naturalMinFrequency, naturalMaxFrequency);
-		wignerMap.SetTrueSize(minFrequency, maxFrequency);
 		wignerMap.setBook(segment);
 
 		double[][] normMap = wignerMap.getWignerMap();
