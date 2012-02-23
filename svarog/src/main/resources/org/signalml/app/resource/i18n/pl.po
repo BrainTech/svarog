@@ -4092,11 +4092,11 @@ msgstr ""
 
 #: org/signalml/app/view/dialog/OptionPane.java:239
 msgid "This document is already open. Reload?"
-msgstr ""
+msgstr "Ten dokument jest już otwarty. Załadować ponownie?"
 
 #: org/signalml/app/view/dialog/OptionPane.java:781
 msgid "This file already exists. Overwrite?"
-msgstr ""
+msgstr "Ten plik już istnieje. Nadpisać?"
 
 #: org/signalml/app/view/element/PagingParametersPanel.java:190
 #: org/signalml/app/view/element/PagingParametersPanel.java:198
