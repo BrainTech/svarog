@@ -82,7 +82,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the description of an error.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 */
 	public static void showError(Component parent, String message) {
@@ -90,14 +90,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -105,7 +105,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the description of an error.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 * @param arguments the codes of arguments used to obtain the message from
 	 * the source of messages
@@ -115,14 +115,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _R(message, arguments),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_R(message, arguments),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -137,14 +137,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -152,7 +152,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the specified message.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 */
 	public static void showMessage(Component parent, String message) {
@@ -160,14 +160,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        messageString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.INFORMATION_MESSAGE,
-		        IconUtils.getInfoIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			messageString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.INFORMATION_MESSAGE,
+			IconUtils.getInfoIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -182,14 +182,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        messageString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.INFORMATION_MESSAGE,
-		        IconUtils.getInfoIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			messageString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.INFORMATION_MESSAGE,
+			IconUtils.getInfoIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -197,7 +197,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the dialog with the description of an exception.
 	 * The dialog has only OK option.
 	 * @param parent the window parent to this one
-	 * @param message the code of the message that should be displayed in the
+	 * @param message the message that should be displayed in the
 	 * source of messages
 	 * @param ex the exception which description should be displayed; used to
 	 * obtain the message that should be displayed
@@ -207,14 +207,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        render(message, ex.getMessage()),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			render(message, ex.getMessage()),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -234,15 +234,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("This document is already open. Reload?"),
-		                  reloadString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {reloadString,cancelString},
-		                  reloadString
-		          );
+				  parent,
+				  _("This document is already open. Reload?"),
+				  reloadString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {reloadString,cancelString},
+				  reloadString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -266,7 +266,8 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showTaskRunning(Component parent) {
-		return showProceedOption(parent, "situation.tasksWillBeAborted");
+		return showProceedOption(parent,
+			_("Some running tasks will have to be aborted."));
 	}
 
 	/**
@@ -335,7 +336,8 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showStagerProjectExists(Component parent, String name) {
-		return showReuseReplaceOption(parent, "stagerMethod.situation.stagerProjectExists", new Object[] { name });
+		return showReuseReplaceOption(parent,
+			_("Project [{0}] exists. Reuse or replace?"), name);
 	}
 
 	/**
@@ -361,15 +363,15 @@ public class OptionPane extends JOptionPane {
 		String message = _R("Directory [{0}] not found. Create?", path);
 
 		int res = showOptionDialog(
-		                  parent,
-		                  message,
-		                  createString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {createString,cancelString},
-		                  createString
-		          );
+				  parent,
+				  message,
+				  createString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {createString,cancelString},
+				  createString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -414,15 +416,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  message,
-		                  saveString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {saveString,discardString,cancelString},
-		                  saveString
-		          );
+				  parent,
+				  message,
+				  saveString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {saveString,discardString,cancelString},
+				  saveString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -455,15 +457,15 @@ public class OptionPane extends JOptionPane {
 		String normalizeString = _("Normalize");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
-		                  normalizeString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {normalizeString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
+				  normalizeString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {normalizeString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -479,7 +481,7 @@ public class OptionPane extends JOptionPane {
 	/**
 	 * Asks the user if the specified task should be continued.
 	 * @param parent the window parent to this one
-	 * @param messageCode the code used to obtain the message describing the
+	 * @param message the code used to obtain the message describing the
 	 * task from the source of messages
 	 * @return
 	 * <ul>
@@ -487,7 +489,7 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
-	public static int showProceedOption(Component parent, String messageCode) {
+	public static int showProceedOption(Component parent, String message) {
 		if (!initialized) {
 			initialize();
 		}
@@ -495,15 +497,15 @@ public class OptionPane extends JOptionPane {
 		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  messageCode,
-		                  proceedString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {proceedString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  message,
+				  proceedString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {proceedString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -519,7 +521,7 @@ public class OptionPane extends JOptionPane {
 	/**
 	 * Asks the user if the specified task should be continued.
 	 * @param parent the window parent to this one
-	 * @param messageCode the code used to obtain the message describing the
+	 * @param message the code used to obtain the message describing the
 	 * task from the source of messages
 	 * @param args the codes of arguments used to obtain the message from
 	 * the source of messages
@@ -529,7 +531,7 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
-	public static int showProceedOption(Component parent, String messageCode, Object[] args) {
+	public static int showProceedOption(Component parent, String message, Object[] args) {
 		if (!initialized) {
 			initialize();
 		}
@@ -537,15 +539,15 @@ public class OptionPane extends JOptionPane {
 		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  render(messageCode, args),
-		                  proceedString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {proceedString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  render(message, args),
+				  proceedString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {proceedString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -562,7 +564,7 @@ public class OptionPane extends JOptionPane {
 	 * Informs that the object exists and asks the user whether to reuse it or
 	 * to replace it.
 	 * @param parent the window parent to this one
-	 * @param messageCode the code used to obtain the message for the dialog
+	 * @param message the code used to obtain the message for the dialog
 	 * from the source of messages
 	 * @param args the codes of arguments used to obtain the message from
 	 * the source of messages
@@ -573,24 +575,25 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CLOSED_OPTION} if the user chose to cancel the operation,</li>
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
-	public static int showReuseReplaceOption(Component parent, String messageCode, Object[] args) {
+	public static int showReuseReplaceOption(Component parent, String message,
+						 Object... args) {
 		if (!initialized) {
 			initialize();
 		}
 
-		String reuseString = _("Reuse");
-		String replaceString = _("Replace");
+		final String reuseString = _("Reuse");
+		final String replaceString = _("Replace");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  render(messageCode, args),
-		                  reuseString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {reuseString,replaceString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  render(message, args),
+				  reuseString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {reuseString,replaceString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -625,15 +628,15 @@ public class OptionPane extends JOptionPane {
 		String abortString = _("Abort (will be lost)");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Some running tasks can be suspended and saved."),
-		                  suspendString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {suspendString,abortString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  _("Some running tasks can be suspended and saved."),
+				  suspendString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {suspendString,abortString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -659,7 +662,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showRawConfigWillBeLost(Component parent) {
-		return showProceedOption(parent, "situation.rawConfigWillBeLost");
+		return showProceedOption(parent,
+			_("Changes to the raw config will be lost.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -673,7 +678,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showAbortAllTasks(Component parent) {
-		return showProceedOption(parent, "situation.abortAllTasks");
+		return showProceedOption(parent,
+			_("All running tasks will be aborted.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -687,7 +694,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showSuspendAllTasks(Component parent) {
-		return showProceedOption(parent, "situation.suspendAllTasks");
+		return showProceedOption(parent,
+			_("All running suspendable tasks will be suspended.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -701,7 +710,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showResumeAllTasks(Component parent) {
-		return showProceedOption(parent, "situation.resumeAllTasks");
+		return showProceedOption(parent,
+			_("All suspended tasks will be resumed.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -715,7 +726,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showRemoveAllTasks(Component parent) {
-		return showProceedOption(parent, "situation.removeAllTasks");
+		return showProceedOption(parent,
+			_("All non running tasks will be removed.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -743,7 +756,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showRemoveAllAbortedTasks(Component parent) {
-		return showProceedOption(parent, "situation.removeAllAbortedTasks");
+		return showProceedOption(parent,
+			_("All aborted tasks will be removed.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -757,7 +772,9 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showRemoveAllFailedTasks(Component parent) {
-		return showProceedOption(parent, "situation.removeAllFailedTasks");
+		return showProceedOption(parent,
+			_("All failed tasks will be removed.")
+			+ " " + _("Are you sure?"));
 	}
 
 	/**
@@ -854,14 +871,14 @@ public class OptionPane extends JOptionPane {
 		String dontResumeString = _("Don't resume");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Suspended tasks had been restored. Do you wish to resume them?"),
-		                  overwriteString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {resumeString,dontResumeString},
-		                  resumeString
+				  parent,
+				  _("Suspended tasks have been restored. Do you wish to resume them?"),
+				  overwriteString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {resumeString,dontResumeString},
+				  resumeString
 		          );
 
 		switch (res) {

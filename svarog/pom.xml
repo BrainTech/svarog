@@ -221,6 +221,7 @@
 						<configuration>
 							<target>
 								<exec executable="${git.git}"
+								      failifexecutionfails="false"
 								      outputproperty="git-describe.output"
 								      resultproperty="git-describe.result">
 									<arg value="describe" />
@@ -327,11 +328,23 @@
 			<plugin>
 				<groupId>org.xnap.commons</groupId>
 				<artifactId>maven-gettext-plugin</artifactId>
+				<version>1.2.3</version>
 
 				<configuration>
 					<poDirectory>${project.build.i18n.resources}</poDirectory>
 					<targetBundle>org.signalml.app</targetBundle>
 				</configuration>
+
+				<executions>
+					<execution>
+						<id>gettext-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>dist</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

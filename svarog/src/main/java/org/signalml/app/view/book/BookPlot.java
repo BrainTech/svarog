@@ -25,6 +25,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
@@ -146,6 +148,12 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	private StandardBookAtom cachedToolTipAtom;
 
 	private StandardBookAtom outlinedAtom;
+
+	private int segmentLength;
+
+	private int naturalMinFrequency;
+
+	private int naturalMaxFrequency;
 
 	private int pointMinPosition;
 
@@ -601,10 +609,14 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		mapPixelPerSecond = ((double)(width-1)) / (maxPosition-minPosition);
 		mapPixelPerHz = ((double)(height-1)) / (maxFrequency-minFrequency);
 
+		segmentLength = segment.getSegmentLength();
+		naturalMinFrequency = (int) Math.round((minFrequency / samplingFrequency) * segmentLength);
+		naturalMaxFrequency = (int) Math.round((maxFrequency / samplingFrequency) * segmentLength);
 		pointMinPosition = (int) Math.round(minPosition * samplingFrequency);
 		pointMaxPosition = (int) Math.round(maxPosition * samplingFrequency);
 
 		mapPixelPerPoint = ((double)(width-1)) / (pointMaxPosition-pointMinPosition);
+		mapPixelPerNaturalFreq = ((double)(height-1)) / (naturalMaxFrequency-naturalMinFrequency);
 
 		calculated = true;
 
@@ -778,6 +790,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			if (scaleRectangle != null) {
 				repaint(scaleRectangle);
 			}
+			view.getPaletteComboBox().setSelectedItem(palette);
 		}
 	}
 
@@ -792,6 +805,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			if (mapRectangle != null) {
 				repaint(mapRectangle);
 			}
+			view.getScaleComboBox().setSelectedItem(type);
 		}
 	}
 
@@ -1272,7 +1286,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 				sb.append("<tr><td>")
 				.append(_("Frequency"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
-				.append(toolTipFormat.format(nearestAtom.getFrequency()))
+				.append(toolTipFormat.format(nearestAtom.getHzFrequency()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
@@ -1380,9 +1394,10 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			return null;
 		}
 
-		float frequency = atom.getHzFrequency();
-		if (frequency < minFrequency || frequency > maxFrequency)
+		int frequency = atom.getNaturalFrequency();
+		if (frequency < naturalMinFrequency || frequency > naturalMaxFrequency) {
 			return null;
+		}
 
 		int position = atom.getPosition();
 		if (position < pointMinPosition || position > pointMaxPosition) {
@@ -1390,7 +1405,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		}
 
 		int x = mapRectangle.x + ((int) Math.round((position-pointMinPosition) * mapPixelPerPoint));
-		int y = mapRectangle.y + ((mapRectangle.height-1) - (int) Math.round((atom.getHzFrequency() - minFrequency) * mapPixelPerHz));
+		int y = mapRectangle.y + ((mapRectangle.height-1) - (int) Math.round((frequency-naturalMinFrequency) * mapPixelPerNaturalFreq));
 
 		return new Point(x, y);
 

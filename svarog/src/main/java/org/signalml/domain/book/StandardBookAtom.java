@@ -84,7 +84,13 @@ public interface StandardBookAtom {
 	 *
 	 *
 	 */
-	int getFrequency();
+	int getNaturalFrequency();
+	
+	/**
+	 * The frequency which was read from the book file
+	 * (not always equal to the natural frequency).
+	 */
+	float getFrequency();
 
 	/** Frequency in Hz.
 	 *

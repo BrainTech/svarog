@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: svarog\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-11-14 18:24+0100\n"
-"PO-Revision-Date: 2011-11-14 18:24+0100\n"
+"PO-Revision-Date: 2012-02-23 10:22+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -804,9 +804,8 @@ msgid "Close active tag"
 msgstr ""
 
 #: org/signalml/app/action/CloseDocumentAction.java:31
-#, fuzzy
 msgid "Close the active document"
-msgstr "zachowywanie dokumentu"
+msgstr ""
 
 #: org/signalml/app/action/CloseWindowAction.java:29
 msgid "Close the window and exit the aplication"
@@ -830,9 +829,8 @@ msgid "Compact page tags"
 msgstr ""
 
 #: org/signalml/app/action/CompareTagsAction.java:39
-#, fuzzy
 msgid "Compare tags"
-msgstr "otwieranie taga"
+msgstr "Porównanie tagów"
 
 #: org/signalml/app/action/CompareTagsAction.java:41
 msgid "Compare tags (2 or more must be open)"
@@ -3328,9 +3326,8 @@ msgid "Select or add a style"
 msgstr ""
 
 #: org/signalml/app/action/PreciseSelectionAction.java:33
-#, fuzzy
 msgid "Select precisely"
-msgstr "Zaznacz wszystko"
+msgstr ""
 
 #: org/signalml/app/view/dialog/AbstractPresetDialog.java:1253
 msgid "Select preset"
@@ -3462,9 +3459,8 @@ msgid "Show as percent"
 msgstr ""
 
 #: org/signalml/app/action/ShowAtomTableAction.java:33
-#, fuzzy
 msgid "Show atom table"
-msgstr "otwieranie taga"
+msgstr ""
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:229
 msgid "Show atom tool tips"
@@ -3496,9 +3492,8 @@ msgid "Show dialog"
 msgstr ""
 
 #: org/signalml/app/action/ActivateDocumentAction.java:36
-#, fuzzy
 msgid "Show document"
-msgstr "zachowywanie dokumentu"
+msgstr ""
 
 #: org/signalml/app/view/element/EmbeddedFileChooserFavorites.java:154
 msgid "Show favorites"
@@ -3531,9 +3526,8 @@ msgid "Show original signal"
 msgstr ""
 
 #: org/signalml/app/action/ActivateSignalPageAction.java:31
-#, fuzzy
 msgid "Show page"
-msgstr "otwieranie taga"
+msgstr ""
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:243
 msgid "Show page boundaries (only if not too dense)"
@@ -3561,9 +3555,8 @@ msgid "Show status bar"
 msgstr ""
 
 #: org/signalml/app/action/ActivateTagAction.java:32
-#, fuzzy
 msgid "Show tag"
-msgstr "otwieranie taga"
+msgstr ""
 
 #: org/signalml/app/action/ActivateTagAction.java:34
 msgid "Show tag in viewer"
@@ -3582,23 +3575,20 @@ msgid "Show tool tips when mouse hovers over an atom"
 msgstr ""
 
 #: org/signalml/app/view/ViewerElementManager.java:967
-#, fuzzy
 msgid "Shows open books"
-msgstr "otwieranie książki"
+msgstr ""
 
 #: org/signalml/app/view/ViewerElementManager.java:966
 msgid "Shows open monitors"
 msgstr ""
 
 #: org/signalml/app/view/ViewerElementManager.java:965
-#, fuzzy
 msgid "Shows open signals"
-msgstr "otwieranie sygnału"
+msgstr ""
 
 #: org/signalml/app/view/ViewerElementManager.java:964
-#, fuzzy
 msgid "Shows open tags"
-msgstr "otwieranie taga"
+msgstr ""
 
 #: org/signalml/app/view/ViewerElementManager.java:1000
 msgid "Shows properties of selected objects"
@@ -4092,11 +4082,11 @@ msgstr ""
 
 #: org/signalml/app/view/dialog/OptionPane.java:239
 msgid "This document is already open. Reload?"
-msgstr ""
+msgstr "Ten dokument jest już otwarty. Załadować ponownie?"
 
 #: org/signalml/app/view/dialog/OptionPane.java:781
 msgid "This file already exists. Overwrite?"
-msgstr ""
+msgstr "Ten plik już istnieje. Nadpisać?"
 
 #: org/signalml/app/view/element/PagingParametersPanel.java:190
 #: org/signalml/app/view/element/PagingParametersPanel.java:198

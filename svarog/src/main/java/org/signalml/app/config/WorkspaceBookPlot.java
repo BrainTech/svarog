@@ -5,6 +5,8 @@
 package org.signalml.app.config;
 
 import org.signalml.app.view.book.BookPlot;
+import org.signalml.app.view.book.GrayscaleMapPalette;
+import org.signalml.app.view.book.RainbowMapPalette;
 import org.signalml.app.view.book.WignerMapPalette;
 import org.signalml.domain.book.WignerMapScaleType;
 
@@ -62,6 +64,11 @@ public class WorkspaceBookPlot {
 	public void configurePlot(BookPlot plot) {
 
 		if (palette != null) {
+			if (palette instanceof RainbowMapPalette)
+				palette = RainbowMapPalette.getInstance();
+			else
+				palette = GrayscaleMapPalette.getInstance();
+
 			plot.setPalette(palette);
 		}
 		if (scaleType != null) {
