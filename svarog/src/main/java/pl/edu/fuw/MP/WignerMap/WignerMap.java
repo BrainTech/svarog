@@ -7,17 +7,16 @@ public class WignerMap {
 	public double Map[][]=null, NormMap[][]=null;
 	private double TimeAxis[]=null;
 	private double FreqAxis[]=null;
-	public int widthPixels,heightPixels;
+	public int SizeX,SizeY;
 	private int Start,Stop,DimBase;
 	private static final double EPS=1.0e-13;
 	private static final double PI2M=2.0*Math.PI;
-	private double minT,maxT,ATime,BTime,AFreq,BFreq;
-	private double minNaturalFrequency,maxNaturalFrequency;
-	private double minVal=0.0,maxVal=0.0;
-	private double reconst[][]=null;
+	private double minT,maxT,minF,maxF,ATime,BTime,AFreq,BFreq;
+	private double minVal=0.0,maxVal=0.0,SamplingFreq=1.0;
+	private double  reconst[][]=null;
 	private double ReconstSignal[]=null;
 	private double signal[]=null;
-	private double minFrequencyHz=0.0, maxFrequencyHz=1.0;
+	private double FreqMin=0.0,FreqMax=1.0;
 	private boolean mask[]=null;
 	private int Count=0;
 
@@ -43,7 +42,7 @@ public class WignerMap {
 		if (Map==null) {
 			return 0.0F;
 		}
-		if (x>=0 && x<widthPixels && y>=0 && y<heightPixels) {
+		if (x>=0 && x<SizeX && y>=0 && y<SizeY) {
 			if (Math.abs(minVal-maxVal)<=EPS) {
 				return 0.0F;
 			}
@@ -75,7 +74,7 @@ public class WignerMap {
 		}
 	}
 
-	private void reconstructSignal(StandardBookSegment book,double signal[]) {
+	private void RSignal(StandardBookSegment book,double signal[]) {
 		double tmpsig[]=new double[DimBase+1],sum,maxSig,minSig;
 		int i,k,itmp;
 		double Exp[]=new double[DimBase],Cos[]=new double[DimBase];
@@ -208,13 +207,14 @@ public class WignerMap {
 		int i,j,k;
 
 		DimBase=book.getSegmentLength();
-		for (i=0 ; i<widthPixels ; i++) {
-			for (j=0,ref=Map[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++) {
+			for (j=0,ref=Map[i] ; j<SizeY ; j++) {
 				ref[j]=0.0F;
 			}
 		}
 
 		minVal=maxVal=0.0;
+		SamplingFreq=book.getSamplingFrequency();
 		int BookSize=book.getAtomCount();
 
 		SetWignerParameters();
@@ -225,7 +225,7 @@ public class WignerMap {
 
 		signal=new double[DimBase];
 		if (rec) {
-			reconstructSignal(book, signal);
+			RSignal(book, signal);
 		} else {
 			for (i=0 ; i<DimBase ; i++) {
 				signal[i]=0.0F;
@@ -244,37 +244,44 @@ public class WignerMap {
 
 	private void SetWignerParameters() {
 		//minT=0; maxT=DimBase-1;
-		minNaturalFrequency= minFrequencyHz * 2.0 / DimBase;
-		maxNaturalFrequency= maxFrequencyHz * 2.0 / DimBase;
-		
-		ATime=(maxT-minT)/(widthPixels-1);
+		minF=(int)(0.5+FreqMin*(DimBase-1)/SamplingFreq);
+		maxF=(int)(0.5+FreqMax*(DimBase-1)/SamplingFreq);
+		ATime=(maxT-minT)/(SizeX-1);
 		BTime=minT;
-		AFreq=(maxNaturalFrequency-minNaturalFrequency)/(heightPixels-1);
-		BFreq=minNaturalFrequency;
+		AFreq=(maxF-minF)/(SizeY-1);
+		BFreq=minF;
 	}
 
-	public WignerMap(int widthPixels,int heightPixels,int minTT,int maxTT, double minFrequencyHz, double maxFrequencyHz) {
-		this.widthPixels=widthPixels;
-		this.heightPixels=heightPixels;
+	public void SetTrueSize(double StartFreq,double StopFreq) {
+		if (StartFreq>=StopFreq) {
+			return;
+		}
+		FreqMin=StartFreq;
+		FreqMax=StopFreq;
+	}
+
+	public WignerMap(int Sx,int Sy,int minTT,int maxTT,int minFF,int maxFF) {
+		SizeX=Sx;
+		SizeY=Sy;
 		minT=minTT;
 		maxT=maxTT;
-		this.minFrequencyHz=minFrequencyHz;
-		this.maxFrequencyHz=maxFrequencyHz;
+		minF=minFF;
+		maxF=maxFF;
 
 		Map=null;
 		NormMap=null;
 		TimeAxis=null;
 		FreqAxis=null;
 		System.gc();
-		Map=new double[widthPixels][heightPixels];
-		NormMap=new double[widthPixels][heightPixels];
-		TimeAxis=new double[widthPixels];
-		FreqAxis=new double[heightPixels];
+		Map=new double[SizeX][SizeY];
+		NormMap=new double[SizeX][SizeY];
+		TimeAxis=new double[SizeX];
+		FreqAxis=new double[SizeY];
 
-		ATime=(maxT-minT)/(widthPixels-1);
+		ATime=(maxT-minT)/(SizeX-1);
 		BTime=minT;
-		AFreq=(maxNaturalFrequency-minNaturalFrequency)/(heightPixels-1);
-		BFreq=minNaturalFrequency;
+		AFreq=(maxF-minF)/(SizeY-1);
+		BFreq=minF;
 	}
 
 	public final void setSigmaScale(double Dyst[]) {
@@ -283,8 +290,8 @@ public class WignerMap {
 		int i,j;
 
 		maxVal=minVal=Map[0][0]*Dyst[(int)(Scale*(Map[0][0]-minVal))];
-		for (i=0 ; i<widthPixels ; i++)
-			for (j=0,ref=Map[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++)
+			for (j=0,ref=Map[i] ; j<SizeY ; j++) {
 				ftmp=(ref[j]*=Dyst[(int)(Scale*(ref[j]-OldMinVal))]);
 				if (maxVal<ftmp) maxVal=ftmp;
 				if (minVal>ftmp) minVal=ftmp;
@@ -300,8 +307,8 @@ public class WignerMap {
 		double ftmp,ref[];
 		int i,j;
 
-		for (i=0 ; i<widthPixels ; i++)
-			for (j=0,ref=Map[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++)
+			for (j=0,ref=Map[i] ; j<SizeY ; j++) {
 				ftmp=ref[j]=(double)(1.0/(1.0+Math.exp(-alpha*ref[j]+trans)));
 				if (maxVal<ftmp) maxVal=ftmp;
 				if (minVal>ftmp) minVal=ftmp;
@@ -315,8 +322,8 @@ public class WignerMap {
 		double ftmp,ref[];
 		int i,j;
 
-		for (i=0 ; i<widthPixels ; i++)
-			for (j=0,ref=Map[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++)
+			for (j=0,ref=Map[i] ; j<SizeY ; j++) {
 				ftmp=ref[j]=(double)Math.sqrt(ref[j]);
 				if (maxVal<ftmp) maxVal=ftmp;
 				if (minVal>ftmp) minVal=ftmp;
@@ -329,8 +336,8 @@ public class WignerMap {
 		double ftmp,ref[];
 		int i,j;
 
-		for (i=0 ; i<widthPixels ; i++)
-			for (j=0,ref=Map[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++)
+			for (j=0,ref=Map[i] ; j<SizeY ; j++) {
 				ftmp=ref[j]=(double)Math.log(1.0F+ref[j]);
 				if (maxVal<ftmp) maxVal=ftmp;
 				if (minVal>ftmp) minVal=ftmp;
@@ -342,8 +349,8 @@ public class WignerMap {
 		double ftmp,ref1[],ref2[];
 		int i,j;
 
-		for (i=0 ; i<widthPixels ; i++)
-			for (j=0,ref1=Map[i],ref2=NormMap[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++)
+			for (j=0,ref1=Map[i],ref2=NormMap[i] ; j<SizeY ; j++) {
 				ftmp=ref1[j]=ref2[j];
 				if (maxVal<ftmp) maxVal=ftmp;
 				if (minVal>ftmp) minVal=ftmp;
@@ -363,8 +370,8 @@ public class WignerMap {
 		double ftmp,ref1[],ref2[];
 		int i,j;
 
-		for (i=0 ; i<widthPixels ; i++)
-			for (j=0,ref1=NormMap[i],ref2=Map[i] ; j<heightPixels ; j++) {
+		for (i=0 ; i<SizeX ; i++)
+			for (j=0,ref1=NormMap[i],ref2=Map[i] ; j<SizeY ; j++) {
 				ftmp=ref1[j]=ref2[j];
 				if (ftmp>maxVal) maxVal=ftmp;
 				if (ftmp<minVal) minVal=ftmp;
@@ -402,19 +409,19 @@ public class WignerMap {
 			freq=(int) Math.round(((((double)ffreq)-BFreq)/AFreq));
 
 			if (scale==DimBase) {
-				if (freq<0 || freq>=heightPixels) {
+				if (freq<0 || freq>=SizeY) {
 					return;
 				}
 				modulus=SQR(modulus);
-				for (i=0 ; i<widthPixels ; i++) {
+				for (i=0 ; i<SizeX ; i++) {
 					Map[i][freq]+=modulus;
 				}
 				return;
 			}
 
-			SetExp(TimeAxis,alphaTime,trans,modulus,widthPixels-1);
+			SetExp(TimeAxis,alphaTime,trans,modulus,SizeX-1);
 			int TimeStart=Start,TimeStop=Stop;
-			SetExp(FreqAxis,alphaFreq,freq,modulus,heightPixels-1);
+			SetExp(FreqAxis,alphaFreq,freq,modulus,SizeY-1);
 			int FreqStart=Start,FreqStop=Stop;
 			double dtmp;
 
@@ -427,11 +434,11 @@ public class WignerMap {
 				}
 		} else {
 			trans=(int)((trans-BTime)/ATime);
-			if (trans<0 || trans>=widthPixels) {
+			if (trans<0 || trans>=SizeX) {
 				return;
 			}
 			modulus=SQR(modulus);
-			for (i=0,ref=Map[trans] ; i<heightPixels ; i++) {
+			for (i=0,ref=Map[trans] ; i<SizeY ; i++) {
 				ref[i]+=modulus;
 			}
 		}

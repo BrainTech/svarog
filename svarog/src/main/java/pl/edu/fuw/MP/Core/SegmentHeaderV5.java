@@ -91,9 +91,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 				atom.Read(stream);
 
 				pos+=atom.Size();
-
 				atoms.add(atom);
-				
 			}
 			Utils.log("end: "+pos);
 		}
