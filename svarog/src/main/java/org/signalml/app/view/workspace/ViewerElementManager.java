@@ -747,7 +747,12 @@ public class ViewerElementManager {
 			JMenu exportSubmenu = new JMenu(_("Export"));
 			exportSubmenu.setMnemonic(KeyEvent.VK_E);
 			exportSubmenu.add(getExportSignalAction());
-			exportSubmenu.add(getExportBookAction());
+			/*
+			 * export book doesn't work - so its commented out for now.
+			 * (it exports books, but they cannot be read afterwards
+			 * - the export is incorrect)
+			 */
+			//exportSubmenu.add(getExportBookAction());
 			exportSubmenu.add(getEEGLabExportAction());
 
 			fileMenu = new JMenu(_("File"));
