@@ -21,6 +21,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.opensignal.ChooseExperimentTableModel;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.BusyDialogWorker;
 import org.signalml.app.worker.monitor.GetOpenBCIExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
@@ -92,14 +93,11 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 				if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
 					List<ExperimentDescriptor> experiments = worker.get();
 					chooseExperimentTableModel.setExperiments(experiments);
-					busyDialogWorker.cancel();
 				}
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ExecutionException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+			} catch (Exception e) {
+				Dialogs.showExceptionDialog(ChooseExperimentPanel.this, e);
+			} finally {
+				busyDialogWorker.cancel();
 			}
 		}
 
