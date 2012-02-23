@@ -2,7 +2,11 @@ package org.signalml.plugin.newartifact.logic.algorithm;
 
 import java.util.Arrays;
 
+import org.signalm.plugin.domain.montage.PluginChannel;
+import org.signalm.plugin.domain.montage.PluginChannelAccessHelper;
+import org.signalml.plugin.exception.PluginAlgorithmDataException;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
+import org.signalml.plugin.newartifact.exception.NewArtifactPluginException;
 
 
 public abstract class NewArtifactAlgorithmBase implements INewArtifactAlgorithm {
@@ -25,13 +29,21 @@ public abstract class NewArtifactAlgorithmBase implements INewArtifactAlgorithm 
 		return result;
 	}
 	
-	protected int getChannelNumber(NewArtifactAlgorithmData data,
-			String channelName) throws NewArtifactAlgorithmDataException {
-		Integer channelNumber = data.channels.get(channelName);
-		if (channelNumber == null) {
-			throw new NewArtifactAlgorithmDataException("Unknown channel name " + channelName);
+	protected int getChannelNumber(NewArtifactAlgorithmData data, PluginChannel channel) throws NewArtifactPluginException {
+		try {
+			return PluginChannelAccessHelper.GetChannelNumber(data.channels, channel, data.signal);
+		} catch (PluginAlgorithmDataException e) {
+			throw new NewArtifactPluginException(e);
 		}
-		return channelNumber.intValue();
+	}
+	
+	protected double[] getChannelData(NewArtifactAlgorithmData data,
+			PluginChannel channelName) throws NewArtifactPluginException {
+		try {
+			return PluginChannelAccessHelper.GetChannelSignal(data.channels, channelName, data.signal);
+		} catch (PluginAlgorithmDataException e) {
+			throw new NewArtifactPluginException(e);
+		}
 	}
 
 	
