@@ -90,14 +90,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -115,14 +115,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _R(message, arguments),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_R(message, arguments),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -137,14 +137,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -160,14 +160,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        messageString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.INFORMATION_MESSAGE,
-		        IconUtils.getInfoIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			messageString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.INFORMATION_MESSAGE,
+			IconUtils.getInfoIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -182,14 +182,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        message,
-		        messageString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.INFORMATION_MESSAGE,
-		        IconUtils.getInfoIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			messageString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.INFORMATION_MESSAGE,
+			IconUtils.getInfoIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -207,14 +207,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        render(message, ex.getMessage()),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			render(message, ex.getMessage()),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -234,15 +234,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("This document is already open. Reload?"),
-		                  reloadString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {reloadString,cancelString},
-		                  reloadString
-		          );
+				  parent,
+				  _("This document is already open. Reload?"),
+				  reloadString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {reloadString,cancelString},
+				  reloadString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -363,15 +363,15 @@ public class OptionPane extends JOptionPane {
 		String message = _R("Directory [{0}] not found. Create?", path);
 
 		int res = showOptionDialog(
-		                  parent,
-		                  message,
-		                  createString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {createString,cancelString},
-		                  createString
-		          );
+				  parent,
+				  message,
+				  createString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {createString,cancelString},
+				  createString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -416,15 +416,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  message,
-		                  saveString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {saveString,discardString,cancelString},
-		                  saveString
-		          );
+				  parent,
+				  message,
+				  saveString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {saveString,discardString,cancelString},
+				  saveString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -457,15 +457,15 @@ public class OptionPane extends JOptionPane {
 		String normalizeString = _("Normalize");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
-		                  normalizeString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {normalizeString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
+				  normalizeString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {normalizeString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -497,15 +497,15 @@ public class OptionPane extends JOptionPane {
 		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  messageCode,
-		                  proceedString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {proceedString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  messageCode,
+				  proceedString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {proceedString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -539,15 +539,15 @@ public class OptionPane extends JOptionPane {
 		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  render(messageCode, args),
-		                  proceedString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {proceedString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  render(messageCode, args),
+				  proceedString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {proceedString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -585,15 +585,15 @@ public class OptionPane extends JOptionPane {
 		final String replaceString = _("Replace");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  render(messageCode, args),
-		                  reuseString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {reuseString,replaceString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  render(messageCode, args),
+				  reuseString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {reuseString,replaceString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -628,15 +628,15 @@ public class OptionPane extends JOptionPane {
 		String abortString = _("Abort (will be lost)");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Some running tasks can be suspended and saved."),
-		                  suspendString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {suspendString,abortString,cancelString},
-		                  cancelString
-		          );
+				  parent,
+				  _("Some running tasks can be suspended and saved."),
+				  suspendString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {suspendString,abortString,cancelString},
+				  cancelString
+			  );
 
 		switch (res) {
 		case 0 :
@@ -871,14 +871,14 @@ public class OptionPane extends JOptionPane {
 		String dontResumeString = _("Don't resume");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Suspended tasks had been restored. Do you wish to resume them?"),
-		                  overwriteString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {resumeString,dontResumeString},
-		                  resumeString
+				  parent,
+				  _("Suspended tasks have been restored. Do you wish to resume them?"),
+				  overwriteString + "?",
+				  JOptionPane.OK_OPTION,
+				  JOptionPane.QUESTION_MESSAGE,
+				  IconUtils.getQuestionIcon(),
+				  new Object[] {resumeString,dontResumeString},
+				  resumeString
 		          );
 
 		switch (res) {
