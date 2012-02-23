@@ -115,8 +115,12 @@ public class BookAtom implements StandardBookAtom {
 		return amplitude;
 	}
 
-	public int getFrequency() {
+	public int getNaturalFrequency() {
 		return (int)this.frequency;
+	}
+	
+	public float getFrequency() {
+		return this.frequency;
 	}
 
 	public float getModulus() {

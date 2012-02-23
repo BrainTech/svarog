@@ -107,7 +107,7 @@ public class WignerMap {
 						  -1.0 : 1.0)*/ (dtmp=atom.getModulus());
 				ptr[itmp]=(double)dtmp;
 			} else if (atom.getType()==StandardBookAtom.SINCOSWAVE_IDENTITY) {
-				double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
+				double freq=Math.PI*2*atom.getNaturalFrequency()/atom.getBaseLength(),
 				       phase=atom.getPhase()-freq*atom.getPosition();
 
 				for (i=0,sum=0.0 ; i<DimBase ; i++) {
@@ -120,7 +120,7 @@ public class WignerMap {
 					ptr[i]=(double)dtmp;
 				}
 			} else {
-				double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
+				double freq=Math.PI*2*atom.getNaturalFrequency()/atom.getBaseLength(),
 				       phase=atom.getPhase()-freq*atom.getPosition();
 				int start=0,stop=DimBase-1;
 
@@ -217,7 +217,7 @@ public class WignerMap {
 
 		for (k=0 ; k<BookSize ; k++) {
 			StandardBookAtom atom=book.getAtomAt(k);
-			AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getFrequency());
+			AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getNaturalFrequency());
 		}
 
 		signal=new double[DimBase];

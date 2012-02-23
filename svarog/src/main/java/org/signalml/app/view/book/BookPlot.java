@@ -1390,7 +1390,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			return null;
 		}
 
-		int frequency = atom.getFrequency();
+		int frequency = atom.getNaturalFrequency();
 		if (frequency < naturalMinFrequency || frequency > naturalMaxFrequency) {
 			return null;
 		}
