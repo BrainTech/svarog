@@ -22,7 +22,7 @@ import org.ini4j.Wini;
 
 public class Helper {
 	
-	public static final int RECEIVE_TIMEOUT_MS = 2000;
+	public static final int RECEIVE_TIMEOUT_MS = 6000;
 	
 	private static String openbciInterfaceName = null;
 	private static String openbciIpAddress = null;
