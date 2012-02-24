@@ -19,7 +19,9 @@ public class BusyDialog extends JDialog {
 		setLocationRelativeTo(parentContainer);
 		setModal(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		setSize(200, 100);
+		setSize(200, 70);
+		this.setUndecorated(true);
+		this.setResizable(false);
 
 		label = new JLabel(_("Please wait"));
 		progressBar = new JProgressBar();

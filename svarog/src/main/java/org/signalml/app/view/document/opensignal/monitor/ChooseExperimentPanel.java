@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -17,27 +16,24 @@ import javax.swing.SwingWorker.StateValue;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import org.signalml.app.config.ApplicationConfiguration;
+import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ChooseExperimentTableModel;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.worker.BusyDialogWorker;
 import org.signalml.app.worker.monitor.GetOpenBCIExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 public class ChooseExperimentPanel extends AbstractSignalMLPanel implements ListSelectionListener {
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
+	private static Logger logger = Logger.getLogger(ChooseExperimentPanel.class);
 	
-	private ApplicationConfiguration applicationConfiguration;
 	private ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 	private JButton refreshButton;
-	private JButton startExperimentButton;
 
-	public ChooseExperimentPanel(ApplicationConfiguration applicationConfiguration) {
-		this.applicationConfiguration = applicationConfiguration;
+	public ChooseExperimentPanel() {
 		initialize();
 	}
 	
@@ -49,7 +45,6 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		chooseExperimentTable = new ChooseExperimentTable(chooseExperimentTableModel);
 		chooseExperimentTable.getSelectionModel().addListSelectionListener(this);
 		refreshButton = new JButton(new RefreshButtonAction());
-		startExperimentButton = new JButton(_("Start experiment"));
 		
 		setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(chooseExperimentTable);
@@ -68,9 +63,8 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 	}
 
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
-		
 		private GetOpenBCIExperimentsWorker worker;
-		private BusyDialogWorker busyDialogWorker;
+		private boolean executing = false;
 		
 		public RefreshButtonAction() {
 			this.setText(_("Refresh"));
@@ -79,25 +73,37 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			busyDialogWorker = new BusyDialogWorker(ChooseExperimentPanel.this);
-			worker = new GetOpenBCIExperimentsWorker();
-			busyDialogWorker.execute();
+			synchronized(this) {
+				//only one action can be executed at once.
+				if(executing)
+					return;
+				executing = true;
+				setEnabled(false);
+			}
 
+			System.out.println("Refreshing the list of experiments");
+
+			worker = new GetOpenBCIExperimentsWorker(ChooseExperimentPanel.this);
 			worker.addPropertyChangeListener(this);
 			worker.execute();
 		}
 
 		@Override
 		public void propertyChange(PropertyChangeEvent evt) {
-			try {
-				if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
+
+			if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
+				try {
+					System.out.println("Refreshing experiments done");
 					List<ExperimentDescriptor> experiments = worker.get();
 					chooseExperimentTableModel.setExperiments(experiments);
+				} catch (Exception e) {
+					System.out.println("exception");
+					e.printStackTrace();
+					Dialogs.showExceptionDialog(ChooseExperimentPanel.this, e);
+				} finally {
+					executing = false;
+					setEnabled(true);
 				}
-			} catch (Exception e) {
-				Dialogs.showExceptionDialog(ChooseExperimentPanel.this, e);
-			} finally {
-				busyDialogWorker.cancel();
 			}
 		}
 
