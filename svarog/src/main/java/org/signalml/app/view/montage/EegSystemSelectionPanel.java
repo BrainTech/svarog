@@ -81,11 +81,15 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 					if (montage != null) {
 						montage.setEegSystem(getSelectedEegSystem());
 					}
-					firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
+					fireEegSystemChangedProperty();
 				}
 			});
 		}
 		return presetComboBox;
+	}
+	
+	public void fireEegSystemChangedProperty() {
+		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
 	}
 
 	/**

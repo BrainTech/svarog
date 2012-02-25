@@ -7,6 +7,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
@@ -16,17 +21,21 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
 import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.RegisterCodecDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /**
  * Contains {@link SignalMLOptionsPanel} and serves
@@ -37,6 +46,8 @@ import org.signalml.codec.SignalMLCodecSelector;
  */
 public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 
+	public static String LOAD_METADATA_ACTION_PROPERTY = "loadMetadataActionProperty";
+	
         /**
          * The element manager.
          */
@@ -64,6 +75,9 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
         /**
          * The text field with the size of the page of signal in seconds.
          */
+        
+        private JButton loadMetadataButton;
+        
         private FloatSpinner pageSizeSpinner;
         /**
          * The text field with the number of blocks that fit into one page of
@@ -109,15 +123,18 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 
                 JLabel pageSizeLabel = new JLabel(_("Page size: "));
                 JLabel blocksPerPageLabel = new JLabel(_("Number of blocks per page: "));
-
+                
                 constraints.gridx = 0; constraints.gridy = 0; constraints.weightx = 0;
-                parametersPanel.add(pageSizeLabel, constraints);
-                constraints.gridx = 1; constraints.gridy = 0; constraints.weightx = 1;
-                parametersPanel.add(getPageSizeSpinner(), constraints);
+                parametersPanel.add(getLoadMetadataButton());
 
                 constraints.gridx = 0; constraints.gridy = 1; constraints.weightx = 0;
-                parametersPanel.add(blocksPerPageLabel, constraints);
+                parametersPanel.add(pageSizeLabel, constraints);
                 constraints.gridx = 1; constraints.gridy = 1; constraints.weightx = 1;
+                parametersPanel.add(getPageSizeSpinner(), constraints);
+
+                constraints.gridx = 0; constraints.gridy = 2; constraints.weightx = 0;
+                parametersPanel.add(blocksPerPageLabel, constraints);
+                constraints.gridx = 1; constraints.gridy = 2; constraints.weightx = 1;
                 parametersPanel.add(getBlocksPerPageSpinner(), constraints);
 
                 pagingPanel.add(parametersPanel, BorderLayout.PAGE_START);
@@ -185,6 +202,17 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
                 return registerCodecDialog;
         }
 
+        protected JButton getLoadMetadataButton() {
+        	if (loadMetadataButton == null) {
+        		loadMetadataButton = new JButton(new LoadMetadataAction());
+        	}
+        	return loadMetadataButton;
+        }
+        
+        protected void fireLoadMetadataButtonPressedProperty() {
+        	firePropertyChange(LOAD_METADATA_ACTION_PROPERTY, null, null);
+        }
+        
         /**
          * Returns the page size spinner.
          * @return the page size spinner
@@ -239,4 +267,18 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 		model.getParameters().setPageSize(getPageSizeSpinner().getValue());
                 model.getParameters().setBlocksPerPage(getBlocksPerPageSpinner().getValue());
         }
+
+	private class LoadMetadataAction extends AbstractSignalMLAction {
+
+		public LoadMetadataAction() {
+			super();
+			setText(_("Load metadata"));
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/script_load.png"));
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			fireLoadMetadataButtonPressedProperty();
+		}
+	}
 }
