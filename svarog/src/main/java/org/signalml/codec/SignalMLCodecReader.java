@@ -341,7 +341,9 @@ public class SignalMLCodecReader {
 	public float getChannelSample(long offset, int chn) throws SignalMLCodecException {
 		if (delegate != null) {
 			try {
-				return delegate.getChannelSample(offset,chn);
+				//samples are written to file as integer numbers (shorts),
+				//so they have to be divided to recover the float precision
+				return delegate.getChannelSample(offset,chn) / 100.0F;
 			} catch (Exception e) {
 				throw new SignalMLCodecException(e);
 			}
