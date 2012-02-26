@@ -74,7 +74,8 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		public void actionPerformed(ActionEvent e) {
 
 			synchronized(this) {
-				//only one action can be executed at once.
+				//only one action should be executed at once.
+				chooseExperimentTableModel.setExperiments(null);
 				if(executing)
 					return;
 				executing = true;
