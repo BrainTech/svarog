@@ -25,7 +25,23 @@ public class SignalParameters {
         samplingFrequency = 128.0F;
         pageSize = 20.0F;
 	}
-	
+
+	public SignalParameters(SignalParameters signalParameters) {
+		sampleType = signalParameters.sampleType;;
+		byteOrder = signalParameters.byteOrder;
+
+		samplingFrequency = signalParameters.samplingFrequency;
+		channelCount = signalParameters.channelCount;
+		calibrationGain = signalParameters.calibrationGain == null ? null : signalParameters.calibrationGain.clone();
+		calibrationOffset = signalParameters.calibrationOffset == null ? null : signalParameters.calibrationOffset.clone();
+
+		pageSize = signalParameters.pageSize;
+		blocksPerPage = signalParameters.blocksPerPage;
+
+		maximumValue = signalParameters.maximumValue;
+		minimumValue = signalParameters.minimumValue;
+	}
+
 	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}

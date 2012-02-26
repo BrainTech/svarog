@@ -39,6 +39,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 		this.amplifier = new Amplifier(other.getAmplifier());
 		this.status = other.status;
 		this.experimentAddress = other.experimentAddress;
+		this.signalParameters = new SignalParameters(other.signalParameters);
 
 		this.backupFrequency = other.backupFrequency;
 
