@@ -138,6 +138,10 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	// to offset trzeba przesunąć odpowiednio względem bieżącego punktu wstawiania
 	@Override
 	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+		getSamples(channel, target, signalOffset, count, arrayOffset, true);
+	}
+
+	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset, boolean calibrate) {
 		double[] tmp = new double[sampleCount];
 		if (full) {
 			for (int i = 0; i < sampleCount; i++) {
@@ -159,8 +163,15 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 				}
 			}
 		}
-		for (int i = 0; i < count; i++) {
-			target[arrayOffset+i] = calibrateSample(tmp[signalOffset + i], channel); 
+
+		//calibration
+		if (calibrate) {
+			for (int i = 0; i < count; i++)
+				target[arrayOffset+i] = calibrateSample(tmp[signalOffset + i], channel);
+		}
+		else {
+			for (int i = 0; i < count; i++)
+				target[arrayOffset+i] = tmp[signalOffset + i];
 		}
 	}
 	

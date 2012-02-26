@@ -114,7 +114,7 @@ public abstract class GenericAmplifierDiagnosis {
          */
         protected double[] getSamplesForAChannel(int channelNo) {
                 double[] samples = new double[getSamplesToTest()];
-                getRoundBuffer().getSamples(channelNo, samples, getRoundBuffer().getSampleCount(channelNo) - getSamplesToTest(), getSamplesToTest(), 0);
+                getRoundBuffer().getSamples(channelNo, samples, getRoundBuffer().getSampleCount(channelNo) - getSamplesToTest(), getSamplesToTest(), 0, false);
                 return samples;
         }
 

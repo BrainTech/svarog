@@ -69,6 +69,7 @@ public class ExperimentDescriptorJSonReader {
 		LinkedHashMap<String, Object> amplifierParams = (LinkedHashMap<String, Object>) map.get("amplifier_params");
 		Amplifier amplifier = new Amplifier();
 		amplifier.setName((String) amplifierParams.get("amplifier_name"));
+		amplifier.setAmplifierNull(Double.parseDouble((String) amplifierParams.get("amplifier_null")));
 		amplifier.setSamplesPerPacket(Integer.parseInt((String) amplifierParams.get("samples_per_packet")));
 		
 		List<Integer> samplingFrequencies = (List<Integer>) amplifierParams.get("sampling_rates"); 

@@ -103,8 +103,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 			VisualReferenceChannel channel;
 			sourceChannels.ensureCapacity(cnt);
 			channelLists.ensureCapacity(cnt);
-			IChannelFunction function;
-			ChannelType functionType;
 
 			for (i=0; i<cnt; i++) {
 				SourceChannel sourceChannel = montage.getSourceChannelAt(i);

@@ -120,7 +120,14 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                         while (it.hasNext()) {
 
                                 channel = it.next();
-                                paintKnownChannel(channel, g, validData.get(channel.getLabel()), additionalData.get(channel.getLabel()));
+                                String channelLabel = channel.getLabel();
+                                Boolean valid = validData.get(channelLabel);
+                                if (valid != null) {
+                                	//ZERO and ONE channels are not in the validData
+                                	//and should not be analyzed.
+                                	List<AdditionalChannelData> data = additionalData.get(channel.getLabel());
+                                	paintKnownChannel(channel, g, valid, data);
+                                }
                         }
                 }
         }
