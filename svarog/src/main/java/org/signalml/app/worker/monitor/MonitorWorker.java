@@ -80,7 +80,12 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		while (!isCancelled()) {
 			try {
 				IncomingMessageData msgData = client.receive(TIMEOUT_MILIS);
-				if (msgData == null) {
+
+				if (isCancelled()) {
+					//it might have been cancelled while waiting on the client.receive()
+					return null;
+				}
+				else if (msgData == null) {
 					// timeout
 					client.shutdown();
 					Dialogs.showError(_("Multiplexer disconnected!"));
