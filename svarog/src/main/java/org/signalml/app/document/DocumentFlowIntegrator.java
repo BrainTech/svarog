@@ -1659,7 +1659,7 @@ public class DocumentFlowIntegrator {
 			spd.setSamplingFrequencyEditable(true);
 		}
 
-		if (signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
+		if (!signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
 
 			// additional configuration required
 
