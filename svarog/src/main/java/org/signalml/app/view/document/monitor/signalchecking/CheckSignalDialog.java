@@ -49,7 +49,7 @@ public class CheckSignalDialog extends AbstractDialog  {
          * Minimum windows size.
          */
         private static final int WINDOW_HEIGHT = 750;
-        private static final int WINDOW_WIDTH = 900;
+        private static final int WINDOW_WIDTH = 950;
 
         /**
          * The current montage.
@@ -122,26 +122,22 @@ public class CheckSignalDialog extends AbstractDialog  {
 
 		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3, 3, 3, 3)));
 		editorPanel.add(editorScrollPane, BorderLayout.CENTER);
-		
-		/* FFT Diagnosis is not needed for now - delete this
-		 * after receiving confirmation that it will not be
-		 * needed in the future.
-		 *
-		 * JPanel parametersPanel = new TitledPanelWithABorder(_("Electrode type"));
+
+		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrode type"));
 		electrodeTypeComboBox = new JComboBox(ElectrodeType.values());
 		electrodeTypeComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				HashMap<String,Object> parameters = validationRules.getMethods().get(SignalCheckingMethod.FFT);
+				HashMap<String,Object> parameters = validationRules.getMethods().get(SignalCheckingMethod.DC);
 				ElectrodeType electrodeType = (ElectrodeType) electrodeTypeComboBox.getSelectedItem();
-				parameters.put(FFTDiagnosis.ELECTRODE_TYPE, electrodeType);
+				parameters.put(DCDiagnosis.ELECTRODE_TYPE, electrodeType);
 				timerClass.actionPerformed(null);
 			}
 		});
-		parametersPanel.add(electrodeTypeComboBox);*/
+		parametersPanel.add(electrodeTypeComboBox);
 
 		interfacePanel.add(editorPanel, BorderLayout.CENTER);
-		//interfacePanel.add(parametersPanel, BorderLayout.EAST);
+		interfacePanel.add(parametersPanel, BorderLayout.EAST);
 		return interfacePanel;
 
 	}
@@ -220,6 +216,7 @@ public class CheckSignalDialog extends AbstractDialog  {
                 
                 HashMap<String, Object> dcNullParameters = new HashMap<String, Object>();
                 dcNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
+                dcNullParameters.put(DCDiagnosis.ELECTRODE_TYPE, electrodeTypeComboBox.getSelectedItem());
                 methodList.put(SignalCheckingMethod.DC, dcNullParameters);
 
                 /*HashMap<String, Object> fftNullParameters = new HashMap<String, Object>();

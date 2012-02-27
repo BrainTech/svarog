@@ -2,6 +2,7 @@ package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.util.HashMap;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.model.montage.ElectrodeType;
 
 /**
  * A {@link GenericAmplifierDiagnosis} class that checks whether average
@@ -16,10 +17,9 @@ import org.signalml.app.document.MonitorSignalDocument;
  * @author Tomasz Sawicki
  */
 public class DCDiagnosis extends GenericAmplifierDiagnosis {
-        
-        private double minimum = 0.0;
-        private double maximum = 10000;
-        private double limit = 5000;
+
+    public static final String ELECTRODE_TYPE = "ElectrodeType";
+    private ElectrodeType electrodeType;
 
         /**
          * Constructor.
@@ -43,13 +43,14 @@ public class DCDiagnosis extends GenericAmplifierDiagnosis {
                 if (!areEnoughSamples()) {
                         return null;
                 }
+                electrodeType = (ElectrodeType) getParameters().get(ELECTRODE_TYPE);
 
                 HashMap<String, ChannelState> channels = new HashMap<String, ChannelState>();
 
                 for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
                         double average = getAverageForChannel(i);
                         
-                        AdditionalChannelData additionalChannelData = new AdditionalChannelData(maximum, minimum, limit, average, SignalCheckingMethod.DC);
+                        AdditionalChannelData additionalChannelData = new AdditionalChannelData(electrodeType.getMax(), electrodeType.getMin(), electrodeType.getLimit(), average, SignalCheckingMethod.DC);
                         ChannelState channelState = new ChannelState(true, additionalChannelData);
                         channels.put(getLabel(i), channelState);
                 }
