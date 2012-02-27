@@ -35,15 +35,15 @@
   <property id='nr_of_samples' evaltype='int32' type='ascii' width='8' index='1..{number_of_channels}' offset='256+216*{number_of_channels}+8*({index}-1)'/>
   <property id='reserved2' type='ascii' width='32' index='1..{number_of_channels}' offset='256+224*{number_of_channels}+32*({index}-1)'/>
   
-  <sampling_frequency index='1..{number_of_channels}' evaltype='float' eval='{nr_of_samples}[{index}-1]/{duration_of_data_record}'/>
+  <sampling_frequency index='1..{number_of_channels}' evaltype='float' eval='Float.valueOf({nr_of_samples}[{index}-1])/{duration_of_data_record}'/>
   <number_of_channels type='ascii' width='4' offset='252' evaltype='int32'/>
   
   <calibration_gain evaltype='float' 
-                    eval='1.0F/({physical_maximum}[{index}]-{physical_minimum}[{index}])' 
+                    eval='1.0F/(Float.valueOf({physical_maximum}[{index}])-Float.valueOf({physical_minimum}[{index}]))' 
                     index='1..{number_of_channels}' />
   
   <calibration_offset evaltype='float'
-                      eval='{physical_minimum}[{index}]-{digital_minimum}[{index}]*{calibration_gain}[{index}]'
+                      eval='Float.valueOf({physical_minimum}[{index}])-Float.valueOf({digital_minimum}[{index}])*{calibration_gain}[{index}]'
                       index='1..{number_of_channels}' />
   
 </parameters> 
