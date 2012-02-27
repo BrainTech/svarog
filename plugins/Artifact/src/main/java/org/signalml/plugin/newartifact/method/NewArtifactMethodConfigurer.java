@@ -21,10 +21,12 @@ import org.signalml.method.Method;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.SvarogMethodConfigurer;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
 import org.signalml.plugin.method.PluginMethodManager;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
@@ -36,16 +38,17 @@ import com.thoughtworks.xstream.XStream;
 
 /**
  * ArtifactMethodConfigurer
- *
- *
+ * 
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
-	PresetEquippedMethodConfigurer {
+		SvarogMethodConfigurer, // FIXME
+		PresetEquippedMethodConfigurer {
 
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethodConfigurer.class);
+			.getLogger(NewArtifactMethodConfigurer.class);
 
 	private FileChooser fileChooser;
 	private NewArtifactMethodDialog dialog;
@@ -58,13 +61,17 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 	@Override
 	public void initialize(PluginMethodManager manager) {
-		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
+		this.dialogParent = manager.getSvarogAccess().getGUIAccess()
+				.getDialogParent();
 
 		this.createPresetManager(manager);
-		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
-		this.dialog = new NewArtifactMethodDialog(this.presetManager, this.dialogParent);
+		this.fileChooser = manager.getSvarogAccess().getGUIAccess()
+				.getFileChooser();
+		this.dialog = new NewArtifactMethodDialog(this.presetManager,
+				this.dialogParent);
 		// TODO remove this nasty cast
-		this.dialog.setApplicationConfig((ApplicationConfiguration) manager.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
+		this.dialog.setApplicationConfig((ApplicationConfiguration) manager
+				.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
 		this.firstRunFlag = true;
 	}
 
@@ -73,18 +80,19 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 			MethodPresetManager presetManager;
 			try {
 				presetManager = new MethodPresetManager(
-					((PluginConfigForMethod) PluginResourceRepository
-					 .GetResource("config")).getMethodConfig()
-					.getMethodName(),
-					NewArtifactParameters.class);
+						((PluginConfigForMethod) PluginResourceRepository.GetResource(
+								"config", NewArtifactPlugin.class))
+								.getMethodConfig().getMethodName(),
+						NewArtifactParameters.class);
 			} catch (PluginException e) {
 				logger.error("Failed to get method name", e);
 				return;
 			}
-			presetManager.setProfileDir(manager.getSvarogAccess().getConfigAccess().getProfileDirectory());
+			presetManager.setProfileDir(manager.getSvarogAccess()
+					.getConfigAccess().getProfileDirectory());
 			try {
 				presetManager.setStreamer((XStream) PluginResourceRepository
-							  .GetResource("streamer"));
+						.GetResource("streamer", NewArtifactPlugin.class));
 			} catch (PluginException e) {
 				manager.handleException(e);
 				logger.error("Can't get proper streamer");
@@ -97,8 +105,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 					logger.debug("Seems like artifact preset configuration doesn't exist");
 				} else {
 					logger.error(
-						"Failed to read artifact presets - presets lost",
-						ex);
+							"Failed to read artifact presets - presets lost",
+							ex);
 				}
 			}
 			this.presetManager = presetManager;
@@ -115,7 +123,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 	@Override
 	public boolean configure(Method method, Object methodDataObj)
-	throws SignalMLException {
+			throws SignalMLException {
 
 		NewArtifactApplicationData data = (NewArtifactApplicationData) methodDataObj;
 
@@ -136,9 +144,9 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 			if (!projectDirectory.isDirectory()) {
 				logger.warn("A file in artifact working directory is conflicting with project ["
-					    + projectDirectory.getAbsolutePath() + "]");
+						+ projectDirectory.getAbsolutePath() + "]");
 				OptionPane.showError(dialogParent,
-						     "error.artifact.failedToCreateProjectDirectory");
+						"error.artifact.failedToCreateProjectDirectory");
 				return false;
 			}
 
@@ -153,14 +161,18 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 			if (lockFiles.length > 0) {
 				logger.warn("Failed to use directory ["
-					    + projectDirectory.getAbsolutePath() + "]");
+						+ projectDirectory.getAbsolutePath() + "]");
 				OptionPane.showError(dialogParent,
-						     "error.artifact.projectDirectoryLocked",
-						     new Object[] { projectDirectory.getAbsolutePath() });
+						"error.artifact.projectDirectoryLocked",
+						new Object[] { projectDirectory.getAbsolutePath() });
 				return false;
 			}
 
-			int ans = OptionPane.showArtifactProjectExists(dialogParent, name);
+			int ans = OptionPane.showReuseReplaceOption(
+					dialogParent,
+					NewArtifactPlugin.i18n()._R(
+							"Project [{0}] exists. Reuse or replace?", name),
+					null);
 			if (ans == OptionPane.CANCEL_OPTION) {
 				return false;
 			} else if (ans == OptionPane.NO_OPTION) {
@@ -171,9 +183,9 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 					deleteOk = f.delete();
 					if (!deleteOk) {
 						logger.warn("Failed to delete file ["
-							    + f.getAbsolutePath() + "]");
+								+ f.getAbsolutePath() + "]");
 						OptionPane.showError(dialogParent,
-								     "error.artifact.failedToClearProjectDirectory");
+								"error.artifact.failedToClearProjectDirectory");
 						return false;
 					}
 				}
@@ -185,7 +197,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 			boolean createOk = projectDirectory.mkdirs();
 			if (!createOk) {
 				OptionPane.showError(dialogParent,
-						     "error.artifact.failedToCreateProjectDirectory");
+						"error.artifact.failedToCreateProjectDirectory");
 				return false;
 			}
 
@@ -198,8 +210,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		if (projectFile.exists()) {
 			try {
 				XMLUtils.objectFromFile(data, projectFile,
-							(XStream) PluginResourceRepository
-							.GetResource("streamer"));
+						(XStream) PluginResourceRepository.GetResource(
+								"streamer", NewArtifactPlugin.class));
 				existingProject = data.isExistingProject();
 			} catch (IOException ex) {
 				logger.error("Failed to read project", ex);
@@ -218,7 +230,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 		try {
 			XMLUtils.objectToFile(data, projectFile,
-					      (XStream) PluginResourceRepository.GetResource("streamer"));
+					(XStream) PluginResourceRepository.GetResource("streamer",
+							NewArtifactPlugin.class));
 		} catch (IOException ex) {
 			logger.error("Failed to write project", ex);
 			throw new SignalMLException(ex);
@@ -239,7 +252,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		if (this.presetManager != null) {
 			try {
 				artifactConfig = (NewArtifactConfiguration) this.presetManager
-						 .getPresetByName(NewArtifactConfiguration.NAME);
+						.getPresetByName(NewArtifactConfiguration.NAME);
 			} catch (ClassCastException e) {
 				logger.warn("Incorrect artifact config type", e);
 
@@ -256,7 +269,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 			if (workingDirectoryPath != null) {
 
 				workingDirectory = (new File(workingDirectoryPath))
-						   .getAbsoluteFile();
+						.getAbsoluteFile();
 
 				if (workingDirectory.exists()) {
 					if (workingDirectory.isDirectory()

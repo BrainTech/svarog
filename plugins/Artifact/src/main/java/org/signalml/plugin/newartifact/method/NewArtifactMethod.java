@@ -18,6 +18,7 @@ import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.method.PluginAbstractMethod;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 import org.signalml.plugin.newartifact.data.NewArtifactData;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
@@ -190,7 +191,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	public String getName() {
 		try {
 			return ((PluginConfigForMethod) PluginResourceRepository
-				.GetResource("config")).getMethodConfig().getMethodName();
+				.GetResource("config", NewArtifactPlugin.class)).getMethodConfig().getMethodName();
 		} catch (PluginException e) {
 			return "";
 		}

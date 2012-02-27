@@ -65,11 +65,10 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 		SourceMontage montage = descriptor.getMontage();
 
 		int channelCount = montage.getSourceChannelCount();
-		int i, e;
 		int[][] exclusion = descriptor.getExclusion();
 		currentExclusion = new int[artifactTypes.length][channelCount];
-		for (i = 0; i < artifactTypes.length; i++) {
-			for (e = 0; e < channelCount; e++) {
+		for (int i = 0; i < Math.min(artifactTypes.length, exclusion.length); i++) {
+			for (int e = 0; e < Math.min(channelCount, exclusion[i].length); e++) {
 				currentExclusion[i][e] = exclusion[i][e];
 			}
 		}
@@ -86,10 +85,9 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 		SourceMontage montage = descriptor.getMontage();
 
 		int channelCount = montage.getSourceChannelCount();
-		int i, e;
 		int[][] exclusion = descriptor.getExclusion();
-		for (i = 0; i < artifactTypes.length; i++) {
-			for (e = 0; e < channelCount; e++) {
+		for (int i = 0; i < Math.min(artifactTypes.length, exclusion.length); i++) {
+			for (int e = 0; e < Math.min(channelCount, exclusion[i].length); e++) {
 				exclusion[i][e] = currentExclusion[i][e];
 			}
 		}

@@ -13,7 +13,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 							 Integer.MAX_VALUE) / 20));
 
 	private SignalMLCodecReader delegate;
-	private float calibration;
 	private short buffer[];
 	private int offset;
 

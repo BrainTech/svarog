@@ -4,6 +4,8 @@
 
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -27,21 +29,15 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.plugin.data.PluginConfigForMethod;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactExclusionDescriptor;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
-import org.signalml.plugin.tool.PluginResourceRepository;
-import org.signalml.plugin.newartifact.NewArtifactPlugin;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.Errors;
 
 /**
  * ArtifactMethodDialog
@@ -158,8 +154,8 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		int[][] exclusion = data.getExcludedChannels();
 		if (exclusion != null) {
 			int i, e;
-			for (i = 0; i < artifactTypes.length; i++) {
-				for (e = 0; e < channelCount; e++) {
+			for (i = 0; i < Math.min(artifactTypes.length, exclusion.length); i++) {
+				for (e = 0; e < Math.min(channelCount, exclusion[i].length); e++) {
 					currentExclusion[i][e] = exclusion[i][e];
 				}
 			}
