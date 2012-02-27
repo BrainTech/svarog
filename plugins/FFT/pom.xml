@@ -29,7 +29,7 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>copy-xml</id>
 						<phase>package</phase>
 						<configuration>
 							<target>
