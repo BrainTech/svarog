@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.EmbeddedFileChooser;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.domain.montage.system.EegSystemName;
@@ -142,10 +143,9 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
 			parentSignalParametersPanel.fireEegSystemChanged(eegSystemName);
 
-		} catch (IOException ex) {
+		} catch (Exception ex) {
 			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SignalMLException ex) {
-			Logger.getLogger(ReadXMLManifestAction.class.getName()).log(Level.SEVERE, null, ex);
+			Dialogs.showError(_("Could not read manifest from file. Did you select a correct XML manifest file?"));
 		}
 
 	}
