@@ -4,24 +4,33 @@
 
 package org.signalml.app.view.document.opensignal.file;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JPanel;
 import org.signalml.app.config.ApplicationConfiguration;
 
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal.AbstractSignalSourcePanel;
 import org.signalml.app.view.document.opensignal.SignalSource;
+import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
+import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * The panel for choosing a file and setting parameters using which the signal
@@ -117,14 +126,14 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		FileOpenSignalMethod method = fileOpenMethodPanel.getSelectedOpenSignalMethod();
 		if (method.isRaw()) {
 
-                        RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
+			RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
 			rawSignalParametersPanel.fillModelFromPanel(rawSignalDescriptor);
 
 		} else if (method.isSignalML()) {
 
-                       descriptor.setMethod(FileOpenSignalMethod.SIGNALML);
-                       getSignalMLSignalParametersPanel().fillModelFromPanel(descriptor);
-                }
+			descriptor.setMethod(FileOpenSignalMethod.SIGNALML);
+			getSignalMLSignalParametersPanel().fillModelFromPanel(descriptor);
+		}
 
 		File selectedFile = fileChooserPanel.getSelectedFile();
 		if(selectedFile.exists())
@@ -198,6 +207,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	public SignalParametersPanelForSignalMLSignalFile getSignalMLSignalParametersPanel() {
 		if (signalMLSignalParametersPanel == null) {
 			signalMLSignalParametersPanel = new SignalParametersPanelForSignalMLSignalFile( getViewerElementManager());
+			signalMLSignalParametersPanel.addPropertyChangeListener(this);
 		}
 		return signalMLSignalParametersPanel;
 	}
@@ -206,7 +216,10 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	public void propertyChange(PropertyChangeEvent evt) {
 		String propertyName = evt.getPropertyName();
 
-		if (propertyName.equals(FileOpenMethodPanel.FILE_OPEN_METHOD_PROPERTY_CHANGED)) {
+		if (propertyName.equals(SignalParametersPanelForSignalMLSignalFile.LOAD_METADATA_ACTION_PROPERTY)) {
+			loadSignalMLMetadata();
+		}
+		else if (propertyName.equals(FileOpenMethodPanel.FILE_OPEN_METHOD_PROPERTY_CHANGED)) {
 			FileOpenSignalMethod method = (FileOpenSignalMethod) evt.getNewValue();
 
 			CardLayout cl = (CardLayout)(cardPanelForSignalParameters.getLayout());
@@ -220,6 +233,47 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 				getEegSystemSelectionPanel().setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 		} else
 			forwardPropertyChange(evt);
+	}
+
+	protected void loadSignalMLMetadata() {
+		SignalMLCodec codec = (SignalMLCodec) signalMLSignalParametersPanel.getSignalMLOptionsPanel().getSignalMLDriverComboBox().getSelectedItem();
+		File file = getFileChooserPanel().getSelectedFile();
+
+		if (codec == null) {
+			Dialogs.showError(_("Please select a codec first!"));
+			return;
+		}
+		if (file == null) {
+			Dialogs.showError(_("Please select a signalML file first!"));
+			return;
+		}
+
+		OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(codec, file);
+		worker.execute();
+
+		SignalMLDocument signalMLDocument = null;
+		try {
+			signalMLDocument = worker.get();
+
+			int channelCount = signalMLDocument.getChannelCount();
+			float samplingFrequency = signalMLDocument.getSamplingFrequency();
+
+			String[] channelLabels = new String[channelCount];
+			for (int i = 0; i < channelCount; i++) {
+				channelLabels[i] = signalMLDocument.getSampleSource().getLabel(i);
+			}
+
+			this.fireNumberOfChannelsChangedProperty(channelCount);
+
+			this.propertyChangeSupport.firePropertyChange(AbstractSignalParametersPanel.CHANNEL_LABELS_PROPERTY, null, channelLabels);
+			this.propertyChangeSupport.firePropertyChange(AbstractSignalParametersPanel.SAMPLING_FREQUENCY_PROPERTY, null, samplingFrequency);
+			getEegSystemSelectionPanel().fireEegSystemChangedProperty();
+
+			signalMLDocument.closeDocument();
+		} catch (Exception e) {
+			Dialogs.showError(_("There was an error while loading the file - did you select a correct SignalML file?"));
+			e.printStackTrace();
+		}
 	}
 
 	@Override

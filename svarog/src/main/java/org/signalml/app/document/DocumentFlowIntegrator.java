@@ -686,8 +686,9 @@ public class DocumentFlowIntegrator {
 			logger.debug("Opening as signal with SignalML");
 			final SignalMLCodec codec = signalOptions.getCodec();
 			if (codec == null) {
+				Dialogs.showError(_("SignalML Codec not found!"));
 				logger.error("No codec");
-				throw new NullPointerException();
+				return null;
 			}
 
 			OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(descriptor, pleaseWaitDialog);

@@ -57,8 +57,6 @@ public class SignalParametersPanelForRawSignalFile extends AbstractSignalParamet
 		return super.createFieldsPanelElements(fieldsPanel, constraints, row);
 	}
 
-
-
 	/**
 	 * Returns the action called when the user chooses an option to
 	 * read signal parameters from an XML manifest file.
