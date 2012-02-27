@@ -373,6 +373,29 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 			} else {
 				resampler.resample(this, channel, target, signalOffset, count, arrayOffset, samplingFrequency, channelSampling[channel]);
 			}
+
+			if (this.calibrationCapable) {
+				float gain;
+				try {
+					gain = this.reader.get_calibration(channel);
+				} catch(SignalMLCodecException e) {
+					logger.error("get_calibration(channel) failed", e);
+					try {
+						gain = this.reader.get_calibration();
+					} catch(SignalMLCodecException e2) {
+						logger.error("get_calibration() failed", e2);
+						throw new RuntimeException(e);
+					}
+				}
+				float offset = this.getCalibrationOffset()[channel];
+				logger.debug(String.format("[%d] gain=%f offset=%f", channel, gain, offset));
+				for(int i=0; i<count; i++) {
+					/* gain sense is reversed. This should be *= gain, but
+					 * signalml 1.0 makes it hard to reverse it in the spec. */
+					target[arrayOffset + i] /= gain;
+					target[arrayOffset + i] += offset;
+				}
+			}
 		}
 	}
 
