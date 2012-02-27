@@ -113,7 +113,10 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 			fileChooser = new EmbeddedFileChooser(applicationConfig);
 		fileChooser.setCurrentDirectory(directory);
 		fileChooser.setSelectedFile(fileSuggestion);
-		fileChooser.showOpenDialog(parentSignalParametersPanel);
+		int buttonPressed = fileChooser.showOpenDialog(parentSignalParametersPanel);
+		if (buttonPressed != JFileChooser.APPROVE_OPTION)
+			return;
+
 		File xmlFile = fileChooser.getSelectedFile();
 
 		if (xmlFile == null) {
