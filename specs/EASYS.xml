@@ -9,7 +9,7 @@
   <constraint test='{magic}.equals("EASREC")'/>
   <number_of_channels type='byte' offset='16' cached='true'/>
   <sampling_frequency evaltype='float' type='int16' offset='18' units='Hz'/>
-  <calibration_gain type='byte' offset='25' units='microVolts'/>
+  <calibration_gain evaltype='float' type='byte' offset='25' units='microVolts'/>
   
   <property id='data_offset' type='int16' offset='28' cached='true'/>
   <property id='ext_hdr' type='uint16' offset='30' cached='true'/>
