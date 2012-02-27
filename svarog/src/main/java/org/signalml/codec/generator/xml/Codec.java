@@ -41,8 +41,11 @@
 package org.signalml.codec.generator.xml;
 
 import org.w3c.dom.Node;
+import org.apache.log4j.Logger;
 
 public class Codec extends CodecCore {
+	protected static final Logger log = Logger.getLogger(Codec.class);
+
 	private static final String TAG_CODE="meta_format/parameters/code[language=java]";
 	private static final String TAG_NAME="meta_format/header/format";
 	private static final String TAG_DESC="meta_format/header/text_info";
@@ -60,6 +63,7 @@ public class Codec extends CodecCore {
 
 	public Codec(String filename) throws XMLCodecException {
 		super(filename);
+		log.info(String.format("Codec: '%s'", filename));
 	}
 
 	private String genClassName() throws XMLCodecException {
@@ -563,25 +567,25 @@ public class Codec extends CodecCore {
 		try {
 			buf.append(genMethodWithCheck(TAG_MAXCHN ,"number_of_channels"));
 		} catch (XMLCodecException e) {
-			;
+			log.error("'number_of_channels' failed", e);
 		}
 
 		try {
 			buf.append(genMethodWithCheck(TAG_SAMP,   "sampling_frequency"));
 		} catch (XMLCodecException e) {
-			;
+			log.error("'sampling_frequency' failed", e);
 		}
 
 		try {
 			buf.append(genMethodWithCheck(TAG_CALIB,  "calibration"));
 		} catch (XMLCodecException e) {
-			;
+			log.error("'calibration' failed", e);
 		}
 
 		try {
 			buf.append(genMethodWithCheck(TAG_CHANS,  "channel_names"));
 		} catch (XMLCodecException e) {
-			;
+			log.error("'channel_names' failed", e);
 		}
 
 		return buf.toString();
