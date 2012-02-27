@@ -5,7 +5,7 @@ package org.signalml.app.view.document.opensignal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import java.awt.CardLayout;
+import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -19,7 +19,6 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
 import org.signalml.app.view.document.opensignal.file.FileSignalSourcePanel;
 import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
@@ -83,7 +82,8 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 		fileSignalSourcePanel.addPropertyChangeListener(this);
 		openBCISignalSourcePanel.addPropertyChangeListener(this);
 
-		this.add(tabbedPane);
+		this.setLayout(new BorderLayout());
+		this.add(tabbedPane, BorderLayout.CENTER);
 	}
 
 	@Override
@@ -106,16 +106,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 		else if (propertyName.equals(AbstractMonitorSourcePanel.OPENBCI_CONNECTED_PROPERTY)) {
 			firePropertyChange(propertyName, evt.getOldValue(), evt.getNewValue());
 		}
-	}
-
-	/**
-	 * Changes a panel visible to a panel for setting options for the given
-	 * signal source.
-	 * @param signalSource the current signal source
-	 */
-	protected void showPanelForSignalSource(SignalSource signalSource) {
-		CardLayout cardLayout = (CardLayout) (this.getLayout());
-		cardLayout.show(this, signalSource.toString());
 	}
 
 	/**

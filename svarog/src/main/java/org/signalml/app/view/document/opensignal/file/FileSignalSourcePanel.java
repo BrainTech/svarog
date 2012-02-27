@@ -82,7 +82,6 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 		JPanel leftColumnPanel = new JPanel();
 		leftColumnPanel.setLayout(new BorderLayout());
 		leftColumnPanel.add(getFileChooserPanel());
-
 		return leftColumnPanel;
 	}
 
@@ -106,7 +105,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 
 		FileOpenSignalMethod method = openFileSignalDescriptor.getMethod();
 
-		fileOpenMethodPanel.setSelectedOpenSignalMethod(method);
+		getFileOpenMethodPanel().setSelectedOpenSignalMethod(method);
 		if (method.isRaw()) {
 			rawSignalParametersPanel.fillPanelFromModel(openFileSignalDescriptor.getRawSignalDescriptor());
 		} else if (method.isSignalML()) {
