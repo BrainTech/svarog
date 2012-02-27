@@ -39,11 +39,11 @@
   <number_of_channels type='ascii' width='4' offset='252' evaltype='int32'/>
   
   <calibration_gain evaltype='float' 
-                    eval='1.0F/(Float.valueOf({physical_maximum}[{index}])-Float.valueOf({physical_minimum}[{index}]))' 
+                    eval='1.0F/(Float.valueOf({physical_maximum}[{index}-1])-Float.valueOf({physical_minimum}[{index}-1]))' 
                     index='1..{number_of_channels}' />
   
   <calibration_offset evaltype='float'
-                      eval='Float.valueOf({physical_minimum}[{index}])-Float.valueOf({digital_minimum}[{index}])*{calibration_gain}[{index}]'
+                      eval='Float.valueOf({physical_minimum}[{index}-1])-Float.valueOf({digital_minimum}[{index}-1])*{calibration_gain}[{index}-1]'
                       index='1..{number_of_channels}' />
   
 </parameters> 
