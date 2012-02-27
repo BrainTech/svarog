@@ -310,6 +310,14 @@ public class SignalMLCodecReader {
 		return getBoolean(getValue("is_calibration"));
 	}
 
+	public float get_calibration(int channel) throws SignalMLCodecException {
+		return getFloat(getValue("get_calibration"), channel);
+	}
+
+	public float get_calibration() throws SignalMLCodecException {
+		return getFloat(getValue("get_calibration"));
+	}
+
 	public void set_sampling_frequency(float freq) throws SignalMLCodecException {
 		setValue("set_sampling_frequency", freq);
 	}
