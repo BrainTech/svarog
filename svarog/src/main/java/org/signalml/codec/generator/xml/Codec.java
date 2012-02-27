@@ -51,7 +51,7 @@ public class Codec extends CodecCore {
 	private static final String TAG_DESC="meta_format/header/text_info";
 	private static final String TAG_MAXCHN="meta_format/parameters/number_of_channels";
 	private static final String TAG_SAMP="meta_format/parameters/sampling_frequency";
-	private static final String TAG_CALIB="meta_format/parameters/calibration";
+	private static final String TAG_CALIB="meta_format/parameters/calibration_gain";
 	private static final String TAG_CHANS="meta_format/parameters/channel_names";
 	private static final String TAG_PROPERTY="meta_format/parameters/property";
 	private static final String TAG_CONSTRAINT="meta_format/parameters/constraint";
