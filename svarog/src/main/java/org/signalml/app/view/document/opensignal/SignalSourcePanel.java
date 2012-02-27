@@ -70,8 +70,6 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 	 * Creates the GUI components for this panel.
 	 */
 	private void createInterface() {
-		CardLayout cardLayout = new CardLayout();
-		this.setLayout(cardLayout);
 
 		fileSignalSourcePanel = new FileSignalSourcePanel(viewerElementManager);
 		openBCISignalSourcePanel = new OpenBCISignalSourcePanel(viewerElementManager);
