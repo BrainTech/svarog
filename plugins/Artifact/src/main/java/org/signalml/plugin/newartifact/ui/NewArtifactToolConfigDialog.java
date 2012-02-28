@@ -4,6 +4,8 @@
 
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import java.awt.Window;
 import java.io.File;
 
@@ -11,16 +13,10 @@ import javax.swing.JComponent;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.plugin.data.PluginConfigForMethod;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.FileChooser;
-import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
-import org.signalml.plugin.tool.PluginResourceRepository;
 import org.signalml.plugin.newartifact.NewArtifactPlugin;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-
-import org.springframework.validation.Errors;
+import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 
 /**
  * ArtifactToolConfigDialog
