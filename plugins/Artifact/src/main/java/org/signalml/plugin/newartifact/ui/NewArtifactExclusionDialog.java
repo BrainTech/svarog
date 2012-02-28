@@ -4,6 +4,8 @@
 
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import java.awt.Window;
 
 import javax.swing.JComponent;
@@ -11,9 +13,8 @@ import javax.swing.JComponent;
 import org.signalml.app.util.IconUtils;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.newartifact.method.ArtifactType;
 import org.signalml.plugin.newartifact.data.NewArtifactExclusionDescriptor;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import org.signalml.plugin.newartifact.data.NewArtifactType;
 
 /**
  * ArtifactExclusionDialog
@@ -29,7 +30,7 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 	private NewArtifactExclusionPanel artifactExclusionPanel;
 
 	private int[][] currentExclusion;
-	private ArtifactType[] artifactTypes = ArtifactType.values();
+	private NewArtifactType[] artifactTypes = NewArtifactType.values();
 
 	public NewArtifactExclusionDialog() {
 		super();

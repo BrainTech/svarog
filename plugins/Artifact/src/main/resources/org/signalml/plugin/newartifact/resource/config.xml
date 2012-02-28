@@ -10,9 +10,6 @@
 		<constructor-arg type="java.lang.Class">
 			<value>org.signalml.plugin.newartifact.NewArtifactPlugin</value>
 		</constructor-arg>
-		<property name="messageSourceName">
-			<value>messageSourceAccessor</value>
-		</property>
 		<property name="methodConfig" ref="artifactMethodConfig">
 		</property>
 	</bean>
