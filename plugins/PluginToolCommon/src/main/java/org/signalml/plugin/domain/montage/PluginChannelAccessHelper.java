@@ -1,4 +1,4 @@
-package org.signalm.plugin.domain.montage;
+package org.signalml.plugin.domain.montage;
 
 import java.util.Map;
 

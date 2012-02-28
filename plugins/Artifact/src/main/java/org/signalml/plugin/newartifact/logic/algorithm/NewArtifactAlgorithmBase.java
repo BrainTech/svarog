@@ -2,8 +2,8 @@ package org.signalml.plugin.newartifact.logic.algorithm;
 
 import java.util.Arrays;
 
-import org.signalm.plugin.domain.montage.PluginChannel;
-import org.signalm.plugin.domain.montage.PluginChannelAccessHelper;
+import org.signalml.plugin.domain.montage.PluginChannel;
+import org.signalml.plugin.domain.montage.PluginChannelAccessHelper;
 import org.signalml.plugin.exception.PluginAlgorithmDataException;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 import org.signalml.plugin.newartifact.exception.NewArtifactPluginException;
