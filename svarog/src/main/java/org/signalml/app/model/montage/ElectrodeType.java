@@ -2,8 +2,8 @@ package org.signalml.app.model.montage;
 
 public enum ElectrodeType {
 
-	STANDARD_IMPEDANCE("Standard", 0, 10000, 15000),
-	HIGH_IMPEDANCE("High impedance", 100, 100000, 150000);
+	STANDARD_SIGNAL_VALUES("Standard", 0, 10000, 15000),
+	HIGH_SIGNAL_VALUES("High signal values", 100, 100000, 150000);
 	
 	private String name;
 	private int min;

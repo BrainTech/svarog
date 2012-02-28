@@ -123,7 +123,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3, 3, 3, 3)));
 		editorPanel.add(editorScrollPane, BorderLayout.CENTER);
 
-		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrode type"));
+		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrodes type"));
 		electrodeTypeComboBox = new JComboBox(ElectrodeType.values());
 		electrodeTypeComboBox.addActionListener(new ActionListener() {
 			@Override
