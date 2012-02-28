@@ -99,6 +99,8 @@ public class OpenSignalAndSetMontageDialog extends SignalMontageDialog {
 			super.fillDialogFromModel(montage);
 		}
 		else if (model instanceof OpenDocumentDescriptor) {
+			if (getCurrentMontage() != null)
+				getCurrentMontage().clearFilters();
 			OpenDocumentDescriptor openDocumentDescriptor = (OpenDocumentDescriptor) model;
 			signalSourcePanel.fillPanelFromModel(openDocumentDescriptor);
 		}
