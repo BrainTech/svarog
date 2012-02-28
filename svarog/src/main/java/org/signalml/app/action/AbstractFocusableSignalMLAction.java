@@ -7,6 +7,10 @@ package org.signalml.app.action;
 import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusSelector;
+import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.TagDocument;
+import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** AbstractFocusableSignalMLAction
@@ -47,6 +51,14 @@ public abstract class AbstractFocusableSignalMLAction<T extends ActionFocusSelec
 	@Override
 	public void actionFocusChanged(ActionFocusEvent e) {
 		setEnabledAsNeeded();
+	}
+
+	protected boolean isSignalDocumentOfflineSignalDocument(SignalDocument signalDocument) {
+		return signalDocument != null && !(signalDocument instanceof MonitorSignalDocument);
+	}
+
+	protected boolean isTagDocumentAMonitorTagDocument(TagDocument tagDocument) {
+		return tagDocument != null && tagDocument.getTagSet() instanceof StyledMonitorTagSet;
 	}
 
 }
