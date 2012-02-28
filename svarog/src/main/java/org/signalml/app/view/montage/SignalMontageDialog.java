@@ -30,11 +30,14 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -227,7 +230,30 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	public void setPreset(Preset preset) throws SignalMLException {
+
+		Montage montagePreset = (Montage) preset;
+		int presetChannelsCount = getNormalChannelsCount(montagePreset);
+		int thisChannelsCount = getNormalChannelsCount(getCurrentMontage());
+
+		if (presetChannelsCount != thisChannelsCount) {
+			Dialogs.showError(_("Preset is incompatible with this montage - bad channels count in the preset montage!"));
+			logger.error("Preset incompatible: current montage 'normal' channel count = " +
+					+ thisChannelsCount + " preset channel count = " + presetChannelsCount);
+			return;
+		}
+
 		fillDialogFromModel(preset);
+	}
+
+	private int getNormalChannelsCount(Montage montage) {
+		int normalChannelsCount = 0;
+
+		for (int i = 0; i < montage.getSourceChannelCount(); i++) {
+			IChannelFunction channelFunction = montage.getSourceChannelFunctionAt(i);
+			if (channelFunction != ChannelFunction.ZERO && channelFunction != ChannelFunction.ONE)
+				normalChannelsCount++;
+		}
+		return normalChannelsCount;
 	}
 
 	@Override
