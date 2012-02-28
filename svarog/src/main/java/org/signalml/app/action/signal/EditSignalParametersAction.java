@@ -68,13 +68,6 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		OriginalMultichannelSampleSource mss = signalDocument.getSampleSource();
 
 		spd.setSamplingFrequency(mss.getSamplingFrequency());
-		if (mss.isSamplingFrequencyCapable()) {
-			spd.setSamplingFrequency(mss.getSamplingFrequency());
-			spd.setSamplingFrequencyEditable(false);
-		} else {
-			spd.setSamplingFrequency(null);
-			spd.setSamplingFrequencyEditable(true);
-		}
 
 		spd.setChannelCount(mss.getChannelCount());
 		if (mss.isChannelCountCapable()) {

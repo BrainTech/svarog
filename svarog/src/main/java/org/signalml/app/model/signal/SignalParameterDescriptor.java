@@ -27,7 +27,6 @@ public class SignalParameterDescriptor extends PagingParameterDescriptor {
 	 */
 	private Float calibrationOffset = null;
 
-	private boolean samplingFrequencyEditable = true;
 	private boolean channelCountEditable = false;
 	private boolean calibrationEditable = true;
 
@@ -77,14 +76,6 @@ public class SignalParameterDescriptor extends PagingParameterDescriptor {
 	 */
 	public void setCalibrationOffset(Float calibrationOffset) {
 		this.calibrationOffset = calibrationOffset;
-	}
-
-	public boolean isSamplingFrequencyEditable() {
-		return samplingFrequencyEditable;
-	}
-
-	public void setSamplingFrequencyEditable(boolean samplingFrequencyEnabled) {
-		this.samplingFrequencyEditable = samplingFrequencyEnabled;
 	}
 
 	public boolean isChannelCountEditable() {

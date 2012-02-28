@@ -128,6 +128,7 @@ public class RequiredSignalParametersPanel extends JPanel {
 		if (samplingFrequencyField == null) {
 			samplingFrequencyField = new JTextField();
 			samplingFrequencyField.setPreferredSize(new Dimension(200,25));
+			samplingFrequencyField.setEditable(false);
 		}
 		return samplingFrequencyField;
 	}
@@ -172,14 +173,6 @@ public class RequiredSignalParametersPanel extends JPanel {
 			getChannelCountField().setText("");
 		}
 
-		if (spd.isSamplingFrequencyEditable()) {
-			getSamplingFrequencyField().setEditable(true);
-			getSamplingFrequencyField().setToolTipText(null);
-		} else {
-			getSamplingFrequencyField().setEditable(false);
-			getSamplingFrequencyField().setToolTipText(_("This parameter may not be changed for this signal file"));
-		}
-
 		if (spd.isChannelCountEditable()) {
 			getChannelCountField().setEditable(true);
 			getChannelCountField().setToolTipText(null);
@@ -203,9 +196,6 @@ public class RequiredSignalParametersPanel extends JPanel {
 	 */
 	public void fillModelFromPanel(SignalParameterDescriptor spd) throws SignalMLException {
 		try {
-			if (spd.isSamplingFrequencyEditable()) {
-				spd.setSamplingFrequency(new Float(getSamplingFrequencyField().getText()));
-			}
 			if (spd.isChannelCountEditable()) {
 				spd.setChannelCount(new Integer(getChannelCountField().getText()));
 			}
@@ -223,16 +213,6 @@ public class RequiredSignalParametersPanel extends JPanel {
 	 * @throws SignalMLException never thrown
 	 */
 	public void validatePanel(SignalParameterDescriptor spd, ValidationErrors errors) throws SignalMLException {
-		if (spd.isSamplingFrequencyEditable()) {
-			try {
-				float samplingFrequency = Float.parseFloat(getSamplingFrequencyField().getText());
-				if (samplingFrequency <= 0) {
-					errors.addError(_("Sampling frequency must be positive"));
-				}
-			} catch (NumberFormatException ex) {
-				errors.addError(_("Invalid numeric value"));
-			}
-		}
 		if (spd.isChannelCountEditable()) {
 			try {
 				int channelCount = Integer.parseInt(getChannelCountField().getText());

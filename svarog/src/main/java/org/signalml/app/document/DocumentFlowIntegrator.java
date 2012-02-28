@@ -1651,24 +1651,12 @@ public class DocumentFlowIntegrator {
 			spd.setChannelCountEditable(true);
 		}
 
-		if (signalMLDocument.isSamplingFrequencyCapable()) {
-			spd.setSamplingFrequency(signalMLDocument.getSamplingFrequency());
-			spd.setSamplingFrequencyEditable(false);
-		} else {
-			spd.setSamplingFrequency(null);
-			spd.setSamplingFrequencyEditable(true);
-		}
-
 		if (signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
 
 			// additional configuration required
 			boolean ok = signalParametersDialog.showDialog(spd, true);
 			if (!ok) {
 				return false;
-			}
-
-			if (spd.isSamplingFrequencyEditable()) {
-				signalMLDocument.setSamplingFrequency(spd.getSamplingFrequency());
 			}
 			if (spd.isChannelCountEditable()) {
 				signalMLDocument.setChannelCount(spd.getChannelCount());
