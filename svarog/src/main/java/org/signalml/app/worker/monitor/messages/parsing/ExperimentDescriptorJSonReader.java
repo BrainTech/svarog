@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -17,6 +18,8 @@ import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 
 public class ExperimentDescriptorJSonReader {
+
+	protected static final Logger logger = Logger.getLogger(ExperimentDescriptorJSonReader.class);
 
 	public List<ExperimentDescriptor> parseExperiments(String s) {
 		
@@ -40,8 +43,12 @@ public class ExperimentDescriptorJSonReader {
 		
 		List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 		for (LinkedHashMap<String, Object> exp: list) {
-			ExperimentDescriptor descriptor = parseSingleExperiment(exp);
-			experiments.add(descriptor);
+			try {
+				ExperimentDescriptor descriptor = parseSingleExperiment(exp);
+				experiments.add(descriptor);
+			} catch(Exception e) {
+				logger.error("There was an error parsing an experiment.");
+			}
 		}
 		
 		return experiments;
