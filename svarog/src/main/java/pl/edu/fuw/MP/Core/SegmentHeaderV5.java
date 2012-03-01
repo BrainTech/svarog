@@ -37,10 +37,16 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 		          +" SIZE: "+size+ " POS: "+stream.getFilePointer());
 
 		switch (type) {
-		default:
-		case COMMENT_SEGMENT_IDENTITY:
-			stream.skipBytes(size);
-			break;
+			default:
+			case COMMENT_SEGMENT_IDENTITY:
+				stream.skipBytes(size);
+				break;
+
+			case ATOMS_SEGMENT_IDENTITY:
+			case SIGNAL_SEGMENT_IDENTITY:
+				channelNumber=stream.readShort();
+				stream.skipBytes(size-2);
+				break;
 		case OFFSET_SEGMENT_IDENTITY:
 		{
 			offsetNumber=stream.readShort();
@@ -96,6 +102,19 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 			Utils.log("end: "+pos);
 		}
 		break;
+
+		case SIGNAL_SEGMENT_IDENTITY:
+			channelNumber=stream.readShort();
+
+			len=(size-2)/4;
+
+			Utils.log("SIGNAL_SEGMENT_IDENTITY: "+len);
+
+			signal=new float[len];
+			for (int i=0 ; i<len ; i++) {
+				signal[i]=stream.readFloat();
+			}
+			break;
 
 		case COMMENT_SEGMENT_IDENTITY:
 		{
