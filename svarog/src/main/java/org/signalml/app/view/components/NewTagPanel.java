@@ -265,8 +265,6 @@ public class NewTagPanel extends JPanel {
 			}
 			fileChooser.setPreferredSize(new Dimension(500,350));
 
-			fileChooser.setInvokeDefaultButtonOnApprove(true);
-
 		}
 		return fileChooser;
 	}

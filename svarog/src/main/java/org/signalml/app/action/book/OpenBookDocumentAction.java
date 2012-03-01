@@ -17,6 +17,7 @@ import multiplexer.jmx.client.ConnectException;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.view.components.SignalMLFileChooser;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -87,7 +88,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	 */
 	protected JFileChooser getFileChooser() {
 		if (fileChooser == null) {
-			fileChooser = new JFileChooser();
+			fileChooser = new SignalMLFileChooser();
 
 			FileFilter[] fileFilters = ManagedDocumentType.BOOK.getFileFilters();
 

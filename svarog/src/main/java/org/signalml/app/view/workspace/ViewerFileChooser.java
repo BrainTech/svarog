@@ -310,7 +310,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	protected synchronized void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
-		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, applicationConfig);
+		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this);
 		this.setAccessory(f);
 	}
 

@@ -218,8 +218,6 @@ public class NewTagDialog extends AbstractDialog  {
 		if (newTagPanel.getFromFileRadio().isSelected()) {
 
 			EmbeddedFileChooser fileChooser = newTagPanel.getFileChooser();
-
-			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "file", false, false, false, false, true);
 
 		}

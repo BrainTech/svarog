@@ -203,9 +203,6 @@ public class ProfilePathTypePanel extends JPanel {
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			fileChooser.setFileFilter(new DirectoryFileFilter(_("Directories")));
 			fileChooser.setPreferredSize(new Dimension(500,350));
-
-			fileChooser.setInvokeDefaultButtonOnApprove(true);
-
 		}
 		return fileChooser;
 	}

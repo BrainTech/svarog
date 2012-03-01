@@ -18,6 +18,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 
@@ -94,9 +95,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	 * @param fc parent file chooser
 	 * @param applicationConfiguration an object providing application configuration stored in files
 	 */
- 	public EmbeddedFileChooserFavorites(JFileChooser fc, ApplicationConfiguration applicationConfiguration) {
+ 	public EmbeddedFileChooserFavorites(JFileChooser fc) {
  		this.fc = fc;
- 		this.applicationConfiguration = applicationConfiguration;
+ 		this.applicationConfiguration = SvarogApplication.getApplicationConfiguration();
  		this.createGui();
  		this.showHide();
  	}

@@ -14,6 +14,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.EmbeddedFileChooser;
+import org.signalml.app.view.components.SignalMLFileChooser;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -107,11 +108,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 			directory = signalFileChooser.getCurrentDirectory();
 		}
 
-		JFileChooser fileChooser;		
-		if(applicationConfig == null)
-			fileChooser = new JFileChooser();
-		else		
-			fileChooser = new EmbeddedFileChooser(applicationConfig);
+		JFileChooser fileChooser = new SignalMLFileChooser();
 		fileChooser.setCurrentDirectory(directory);
 		fileChooser.setSelectedFile(fileSuggestion);
 		int buttonPressed = fileChooser.showOpenDialog(parentSignalParametersPanel);
@@ -124,7 +121,7 @@ public class ReadXMLManifestAction extends AbstractSignalMLAction {
 			return;
 		}
 		if (xmlFile.exists() && applicationConfig != null)
-			((EmbeddedFileChooser)fileChooser).lastDirectoryChanged(xmlFile.getParentFile().getPath());
+			((SignalMLFileChooser)fileChooser).lastDirectoryChanged(xmlFile.getParentFile().getPath());
 		if (reader == null) {
 			reader = new RawSignalDescriptorReader();
 		}

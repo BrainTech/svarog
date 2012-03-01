@@ -148,7 +148,7 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	public FileChooserPanel getFileChooserPanel() {
 		if (fileChooserPanel == null) {
-			fileChooserPanel = new FileChooserPanel( ManagedDocumentType.SIGNAL, getApplicationConfiguration());
+			fileChooserPanel = new FileChooserPanel( ManagedDocumentType.SIGNAL);
 
 			String lastFileChooserPath = getApplicationConfiguration().getLastFileChooserPath();
 			getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));

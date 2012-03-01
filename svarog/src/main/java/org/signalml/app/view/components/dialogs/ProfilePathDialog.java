@@ -154,8 +154,6 @@ public class ProfilePathDialog extends AbstractDialog  {
 	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		if (!panel.getDefaultRadio().isSelected()) {
 			EmbeddedFileChooser fileChooser = panel.getFileChooser();
-
-			fileChooser.forceApproveSelection();
 			File f = fileChooser.getSelectedFile();
 
 			if (f == null) {
