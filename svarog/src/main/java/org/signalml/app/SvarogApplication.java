@@ -118,7 +118,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private Locale locale = null;
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 	private File profileDir = null;
-	private ApplicationConfiguration applicationConfig = null;
+	private ApplicationConfiguration applicationConfig = new ApplicationConfiguration();
 	private DefaultSignalMLCodecManager signalMLCodecManager = null;
 	private DefaultDocumentManager documentManager = null;
 	private DefaultMRUDRegistry mrudRegistry = null;
@@ -660,7 +660,6 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		splash(_("Restoring configuration"), false);
 
-		applicationConfig = new ApplicationConfiguration();
 		applicationConfig.setProfileDir(profileDir);
 		applicationConfig.setStreamer(streamer);
 		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
