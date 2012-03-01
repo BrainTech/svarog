@@ -1,7 +1,9 @@
 package org.signalml.plugin.newartifact.logic.algorithm;
 
 
+import org.signalm.plugin.domain.montage.PluginChannel;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
+import org.signalml.plugin.newartifact.exception.NewArtifactPluginException;
 import org.signalml.plugin.newartifact.logic.stat.Stat;
 
 public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
@@ -27,14 +29,14 @@ public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 	}
 
 	@Override
-	public double[][] compute(NewArtifactAlgorithmData data) {
+	public double[][] compute(NewArtifactAlgorithmData data) throws NewArtifactPluginException {
 		double corr1, corr2;
 
 		for (int k = 0; k < data.constants.getBlockCapacity(); ++k) {
-			double d1[] = this.shortDiff(data, k, "Fp1", "F3");
-			double d2[] = this.shortDiff(data, k, "F3", "C3");
-			double d3[] = this.shortDiff(data, k, "Fp2", "F4");
-			double d4[] = this.shortDiff(data, k, "F4", "C4");
+			double d1[] = this.shortDiff(data, k, PluginChannel.Fp1, PluginChannel.F3);
+			double d2[] = this.shortDiff(data, k, PluginChannel.F3, PluginChannel.C3);
+			double d3[] = this.shortDiff(data, k, PluginChannel.Fp2, PluginChannel.F4);
+			double d4[] = this.shortDiff(data, k, PluginChannel.F4, PluginChannel.C4);
 
 			double r1 = this.getRange(d1);
 			double r2 = this.getRange(d2);
@@ -68,23 +70,17 @@ public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 		return max - min;
 	}
 
-	private double[] shortDiff(NewArtifactAlgorithmData data, int block, String channelName1,
-				   String channelName2) {
-		int channel1, channel2;
-		channel1 = data.channels.get(channelName1).intValue();
-		channel2 = data.channels.get(channelName2).intValue();
-
-		if (channel1 < 0 || channel2 < 0) {
-			return null;
-		}
+	private double[] shortDiff(NewArtifactAlgorithmData data, int block,
+				   PluginChannel channel1,
+				   PluginChannel channel2) throws NewArtifactPluginException  {
+		final double channelData1[] = this.getChannelData(data, channel1);
+		final double channelData2[] = this.getChannelData(data, channel2);
 
 		final NewArtifactConstants constants = data.constants;
 
-		int start = block * constants.getSmallBlockLength() + constants.getPaddingLength()
+		final int start = block * constants.getSmallBlockLength() + constants.getPaddingLength()
 			    - constants.getSmallPaddingLength();
-
-		final double channelData1[] = data.signal[channel1];
-		final double channelData2[] = data.signal[channel2];
+		
 		double diff[] = new double[data.constants.getSmallBlockLengthWithPadding()];
 		for (int i = start, j = 0; i < start + constants.getSmallBlockLengthWithPadding(); ++i, ++j) {
 			diff[j] = channelData1[i] - channelData2[i];

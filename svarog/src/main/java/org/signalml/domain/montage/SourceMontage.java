@@ -132,7 +132,12 @@ public class SourceMontage {
 			}
 
 			try {
-				addSourceChannel(label, ChannelFunction.UNKNOWN);
+				IChannelFunction channelFunction = ChannelFunction.UNKNOWN;
+
+				if (document.getMontage() != null)
+					channelFunction = document.getMontage().getSourceChannelAt(i).getFunction();
+
+				addSourceChannel(label, channelFunction);
 			} catch (MontageException ex) {
 				throw new SanityCheckException(_("addSourceChannel still failed"));
 			}

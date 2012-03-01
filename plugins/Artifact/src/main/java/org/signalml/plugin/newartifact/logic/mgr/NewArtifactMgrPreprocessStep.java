@@ -452,7 +452,7 @@ public class NewArtifactMgrPreprocessStep extends
 		NewArtifactComputationType algorithmType)
 	throws ComputationException {
 		if (!NewArtifactParameterHelper.IsParameterEnabled(algorithmType,
-				this.data.artifactData.getParameters())) {
+				this.data.artifactData)) {
 			return null;
 		}
 

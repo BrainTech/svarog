@@ -194,7 +194,7 @@ public class BookLibraryV5 implements BookLibraryInterface {
 
 	private void readBook(RandomAccessFile stream) throws IOException {
 		segment=new SegmentHeaderV5(this);
-		segment.Read(stream);
+		segment.read(stream);
 	}
 
 	private CPair[] getOffset(int segNo) {
@@ -250,7 +250,7 @@ public class BookLibraryV5 implements BookLibraryInterface {
 
 			for (; ; k++) {
 				long off=stream.getFilePointer();
-				segHead.SkipSegment(stream);
+				segHead.skipSegment(stream);
 
 				BookLibraryV5IndexElement element=new BookLibraryV5IndexElement();
 

@@ -118,7 +118,8 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 	public void fillPanelFromParameters(MP5Parameters parameters) {
 
-		getAlgorithmComboBox().setSelectedItem(parameters.getAlgorithm());
+		if (getAlgorithmComboBox().isEnabled())
+			getAlgorithmComboBox().setSelectedItem(parameters.getAlgorithm());
 		lastAlgorithm = null;
 
 	}
