@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.events;
 
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
@@ -11,7 +11,7 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
  * (their addition, removal or change).
  * @author Marcin Szumski
  */
-public interface SvarogTagEvent extends SvarogEvent {
+public interface PluginTagEvent extends PluginEvent {
 	
 	/**
 	 * Returns the {@link ExportedTagDocument document} in which the changed

@@ -1,16 +1,16 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogCodecEvent;
+import org.signalml.plugin.export.change.events.PluginCodecEvent;
 
 /**
- * Implementation of {@link SvarogCodecEvent}.
+ * Implementation of {@link PluginCodecEvent}.
  * Contains the format name of the codec.
  * @author Marcin Szumski
  */
-public class CodecEventImpl implements SvarogCodecEvent {
+public class PluginCodecEventImpl implements PluginCodecEvent {
 
 	/**
 	 * the format name of the codec associated with this event
@@ -22,7 +22,7 @@ public class CodecEventImpl implements SvarogCodecEvent {
 	 * event.
 	 * @param codecFormatName the format name to set
 	 */
-	public CodecEventImpl(String codecFormatName) {
+	public PluginCodecEventImpl(String codecFormatName) {
 		formatName = codecFormatName;
 	}
 	

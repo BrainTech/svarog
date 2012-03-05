@@ -16,16 +16,18 @@ import org.signalml.domain.tag.TagListener;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
-import org.signalml.plugin.export.change.SvarogTagEvent;
-import org.signalml.plugin.export.change.SvarogTagListener;
-import org.signalml.plugin.export.change.SvarogTagStyleEvent;
-import org.signalml.plugin.export.change.SvarogTagStyleListener;
+import org.signalml.plugin.export.change.events.PluginTagEvent;
+import org.signalml.plugin.export.change.events.PluginTagStyleEvent;
+import org.signalml.plugin.export.change.listeners.PluginTagListener;
+import org.signalml.plugin.export.change.listeners.PluginTagStyleListener;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.impl.AbstractAccess;
 import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.plugin.impl.change.events.PluginTagEventImpl;
+import org.signalml.plugin.impl.change.events.PluginTagStyleEventImpl;
 
 /**
  * A part of the implementation of {@link SvarogAccessChangeSupport}.
@@ -35,53 +37,53 @@ import org.signalml.plugin.impl.PluginAccessClass;
  * For every type of a change holds the list of plug-ins listening for it
  * and informs them when this change occurs.
  * <p>
- * This is used both as a super-type for {@link ChangeSupportImpl} and to listen
+ * This is used both as a super-type for {@link SvarogAccessChangeSupportImpl} and to listen
  * for changes associated with a single {@link TagDocument tag}/{@link
  * SignalDocument signal} document.
  * 
  * @author Marcin Szumski
  */
-public class ChangeSupportDocumentImpl extends AbstractAccess implements TagListener, TagStyleListener {
+public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implements TagListener, TagStyleListener {
 
-	protected static final Logger logger = Logger.getLogger(ChangeSupportImpl.class);
+	protected static final Logger logger = Logger.getLogger(SvarogAccessChangeSupportImpl.class);
 	
 	/**
-	 * {@link SvarogTagListener listeners} on {@link ExportedTag tag} changes
+	 * {@link PluginTagListener listeners} on {@link ExportedTag tag} changes
 	 * (addition, removal, change)
 	 */
-	protected ArrayList<SvarogTagListener> tagListeners = new ArrayList<SvarogTagListener>();
+	protected ArrayList<PluginTagListener> tagListeners = new ArrayList<PluginTagListener>();
 	
 	/**
-	 * {@link SvarogTagStyleListener listener} on {@link ExportedTagStyle
+	 * {@link PluginTagStyleListener listener} on {@link ExportedTagStyle
 	 * tag style} changes (addition, removal, change)
 	 */
-	protected ArrayList<SvarogTagStyleListener> tagStyleListeners = new ArrayList<SvarogTagStyleListener>();
+	protected ArrayList<PluginTagStyleListener> tagStyleListeners = new ArrayList<PluginTagStyleListener>();
 	
-	protected ChangeSupportDocumentImpl() { }
+	protected SvarogAccessChangeSupportDocumentImpl() { }
 
 	/**
-	 * Adds a {@link SvarogTagListener} to the list of tag listeners.
+	 * Adds a {@link PluginTagListener} to the list of tag listeners.
 	 * @param listener the listener to add
 	 */
-	public void addTagListener(SvarogTagListener listener){
+	public void addTagListener(PluginTagListener listener){
 		tagListeners.add(listener);
 	}
 	
 	/**
-	 * Adds a {@link SvarogTagStyleListener} to the list of tag listeners.
+	 * Adds a {@link PluginTagStyleListener} to the list of tag listeners.
 	 * @param listener the listener to add
 	 */
-	public void addTagStyleListener(SvarogTagStyleListener listener){
+	public void addTagStyleListener(PluginTagStyleListener listener){
 		tagStyleListeners.add(listener);
 	}
 	
 	/**
-	 * Creates a {@link SvarogTagEvent} from given {@link TagEvent}.
+	 * Creates a {@link PluginTagEvent} from given {@link TagEvent}.
 	 * Sets the tag and document in which the tag is located.
 	 * @param e the TagEvent to be used
 	 * @return created SvarogTagEvent
 	 */
-	protected SvarogTagEvent createTagEvent(TagEvent e){
+	protected PluginTagEvent createTagEvent(TagEvent e){
 		Tag tag = e.getTag();
 		TagDocument document = null;
 		if (e.getSource() instanceof StyledTagSet){
@@ -89,16 +91,16 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 			TagTreeModel treeModel = getViewerElementManager().getTagTreeModel();
 			document = treeModel.getDocumentFromSet(tagSet);
 		}
-		TagEventImpl tagEvent = new TagEventImpl(tag, document);
+		PluginTagEventImpl tagEvent = new PluginTagEventImpl(tag, document);
 		return tagEvent;
 	}
 	
 	/**
-	 * Informs given {@link SvarogTagListener listener} that the tag was added.
-	 * @param event the {@link SvarogTagEvent event} describing the change
+	 * Informs given {@link PluginTagListener listener} that the tag was added.
+	 * @param event the {@link PluginTagEvent event} describing the change
 	 * @param listener the listener to be informed
 	 */
-	protected void singleTagAdded(SvarogTagEvent event, SvarogTagListener listener){
+	protected void singleTagAdded(PluginTagEvent event, PluginTagListener listener){
 		try {
 			listener.tagAdded(event);
 		} catch (Exception ex) {
@@ -114,8 +116,8 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	@Override
 	public void tagAdded(TagEvent e) {
 		try {
-			SvarogTagEvent event = createTagEvent(e);
-			for (SvarogTagListener listener: tagListeners){
+			PluginTagEvent event = createTagEvent(e);
+			for (PluginTagListener listener: tagListeners){
 				singleTagAdded(event, listener);
 			}
 		} catch (Exception ex) {
@@ -125,11 +127,11 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	}
 	
 	/**
-	 * Informs given {@link SvarogTagListener listener} that the tag was removed.
-	 * @param event the {@link SvarogTagEvent event} describing the change
+	 * Informs given {@link PluginTagListener listener} that the tag was removed.
+	 * @param event the {@link PluginTagEvent event} describing the change
 	 * @param listener the listener to be informed
 	 */
-	protected void singleTagRemoved(SvarogTagEvent event, SvarogTagListener listener){
+	protected void singleTagRemoved(PluginTagEvent event, PluginTagListener listener){
 		try {
 			listener.tagRemoved(event);
 		} catch (Exception ex) {
@@ -145,8 +147,8 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	@Override
 	public void tagRemoved(TagEvent e) {
 		try {
-			SvarogTagEvent event = createTagEvent(e);
-			for (SvarogTagListener listener: tagListeners){
+			PluginTagEvent event = createTagEvent(e);
+			for (PluginTagListener listener: tagListeners){
 				singleTagRemoved(event, listener);
 			}
 		} catch (Exception ex) {
@@ -156,11 +158,11 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	}
 	
 	/**
-	 * Informs given {@link SvarogTagListener listener} that the tag was changed.
-	 * @param event the {@link SvarogTagEvent event} describing the change
+	 * Informs given {@link PluginTagListener listener} that the tag was changed.
+	 * @param event the {@link PluginTagEvent event} describing the change
 	 * @param listener the listener to be informed
 	 */
-	protected void singleTagChanged(SvarogTagEvent event, SvarogTagListener listener){
+	protected void singleTagChanged(PluginTagEvent event, PluginTagListener listener){
 		try {
 			listener.tagChanged(event);
 		} catch (Exception ex) {
@@ -176,8 +178,8 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	@Override
 	public void tagChanged(TagEvent e) {
 		try {
-			SvarogTagEvent event = createTagEvent(e);
-			for (SvarogTagListener listener: tagListeners){
+			PluginTagEvent event = createTagEvent(e);
+			for (PluginTagListener listener: tagListeners){
 				singleTagChanged(event, listener);
 			}
 		} catch (Exception ex) {
@@ -187,14 +189,14 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	}
 
 	/**
-	 * Creates a {@link SvarogTagStyleEvent} from given {@link TagStyleEvent}.
+	 * Creates a {@link PluginTagStyleEvent} from given {@link TagStyleEvent}.
 	 * Sets the style.
 	 * @param e the TagStyleEvent to be used
 	 * @return created SvarogTagStyleEvent
 	 */
-	protected SvarogTagStyleEvent createTagStyleEvent(TagStyleEvent e){
+	protected PluginTagStyleEvent createTagStyleEvent(TagStyleEvent e){
 		TagStyle style = e.getTagStyle();
-		TagStyleEventImpl tagStyleEvent = new TagStyleEventImpl(style);
+		PluginTagStyleEventImpl tagStyleEvent = new PluginTagStyleEventImpl(style);
 		return tagStyleEvent;
 	}
 	
@@ -205,8 +207,8 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	@Override
 	public void tagStyleAdded(TagStyleEvent e) {
 		try {
-			SvarogTagStyleEvent event = createTagStyleEvent(e);
-			for (SvarogTagStyleListener listener: tagStyleListeners){
+			PluginTagStyleEvent event = createTagStyleEvent(e);
+			for (PluginTagStyleListener listener: tagStyleListeners){
 				try {
 					listener.tagStyleAdded(event);
 				} catch (Exception ex) {
@@ -227,8 +229,8 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	@Override
 	public void tagStyleRemoved(TagStyleEvent e) {
 		try {
-			SvarogTagStyleEvent event = createTagStyleEvent(e);
-			for (SvarogTagStyleListener listener: tagStyleListeners){
+			PluginTagStyleEvent event = createTagStyleEvent(e);
+			for (PluginTagStyleListener listener: tagStyleListeners){
 				try {
 					listener.tagStyleRemoved(event);
 				} catch (Exception ex) {
@@ -249,8 +251,8 @@ public class ChangeSupportDocumentImpl extends AbstractAccess implements TagList
 	@Override
 	public void tagStyleChanged(TagStyleEvent e) {
 		try {
-			SvarogTagStyleEvent event = createTagStyleEvent(e);
-			for (SvarogTagStyleListener listener: tagStyleListeners){
+			PluginTagStyleEvent event = createTagStyleEvent(e);
+			for (PluginTagStyleListener listener: tagStyleListeners){
 				try {
 					listener.tagStyleChanged(event);
 				} catch (Exception ex) {

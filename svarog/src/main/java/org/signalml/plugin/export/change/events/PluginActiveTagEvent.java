@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.events;
 
 import org.signalml.plugin.export.signal.ExportedTag;
 
@@ -10,7 +10,7 @@ import org.signalml.plugin.export.signal.ExportedTag;
  * {@link ExportedTag tag}.
  * @author Marcin Szumski
  */
-public interface SvarogActiveTagEvent extends SvarogEvent {
+public interface PluginActiveTagEvent extends PluginEvent {
 	
 	/**
 	 * Returns a currently active {@link ExportedTag tag} (new active tag).

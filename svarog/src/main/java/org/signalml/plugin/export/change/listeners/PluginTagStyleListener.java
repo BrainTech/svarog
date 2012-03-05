@@ -1,8 +1,10 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
 
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.change.events.PluginTagStyleEvent;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 
 /**
@@ -11,23 +13,23 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
-public interface SvarogTagStyleListener extends SvarogListener {
+public interface PluginTagStyleListener extends PluginListener {
 
 	/**
 	 * Invoked when a {@link ExportedTagStyle tag style} is added to the set.
 	 * @param e the tag style event
 	 */
-	void tagStyleAdded(SvarogTagStyleEvent e);
+	void tagStyleAdded(PluginTagStyleEvent e);
 	
 	/**
 	 * Invoked when a {@link ExportedTagStyle tag style} is removed from the set.
 	 * @param e the tag style event
 	 */
-	void tagStyleRemoved(SvarogTagStyleEvent e);
+	void tagStyleRemoved(PluginTagStyleEvent e);
 	
 	/**
 	 * Invoked when a {@link ExportedTagStyle tag style} is changed.
 	 * @param e the tag style event
 	 */
-	void tagStyleChanged(SvarogTagStyleEvent e);
+	void tagStyleChanged(PluginTagStyleEvent e);
 }

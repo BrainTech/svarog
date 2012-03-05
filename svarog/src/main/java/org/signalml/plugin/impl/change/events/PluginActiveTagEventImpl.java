@@ -1,17 +1,17 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogActiveTagEvent;
+import org.signalml.plugin.export.change.events.PluginActiveTagEvent;
 import org.signalml.plugin.export.signal.ExportedTag;
 
 /**
- * Implementation of {@link SvarogActiveTagEvent}.
+ * Implementation of {@link PluginActiveTagEvent}.
  * Contains the old and new value of the active {@link ExportedTag tag}.
  * @author Marcin Szumski
  */
-public class ActiveTagEventImpl implements SvarogActiveTagEvent {
+public class PluginActiveTagEventImpl implements PluginActiveTagEvent {
 
 	/**
 	 * the old value of the active {@link ExportedTag tag}
@@ -28,7 +28,7 @@ public class ActiveTagEventImpl implements SvarogActiveTagEvent {
 	 * @param tag the old value of the active tag
 	 * @param oldTag the new value of the active tag
 	 */
-	public ActiveTagEventImpl(ExportedTag tag, ExportedTag oldTag) {
+	public PluginActiveTagEventImpl(ExportedTag tag, ExportedTag oldTag) {
 		this.tag = tag;
 		this.oldTag = oldTag;
 	}

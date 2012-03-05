@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.events;
 
 import org.signalml.plugin.export.signal.Document;
 
@@ -11,7 +11,7 @@ import org.signalml.plugin.export.signal.Document;
  * Allows to return old and new active document.
  * @author Marcin Szumski
  */
-public interface SvarogActiveDocumentEvent extends SvarogDocumentEvent{
+public interface PluginActiveDocumentEvent extends PluginDocumentEvent{
 	
 	/**
 	 * Returns an old active {@link Document} (the document that WAS active). 

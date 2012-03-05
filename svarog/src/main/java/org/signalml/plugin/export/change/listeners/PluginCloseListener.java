@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
+
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 
 /**
  * Interface for a listener on close of Svarog.
@@ -9,7 +11,7 @@ package org.signalml.plugin.export.change;
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
-public interface SvarogCloseListener extends SvarogListener {
+public interface PluginCloseListener extends PluginListener {
 	
 	/**
 	 * Gives notification that Svarog is closing.

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.events;
 
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
@@ -14,8 +14,8 @@ import org.signalml.plugin.export.view.DocumentView;
  * from document.
  * @author Marcin Szumski
  */
-public interface SvarogDocumentViewEvent extends SvarogDocumentEvent {
-	
+public interface PluginDocumentViewEvent extends PluginDocumentEvent {
+
 	/**
 	 * Returns a {@link DocumentView view} associated with this event.
 	 * It is the old view (the view before the change).

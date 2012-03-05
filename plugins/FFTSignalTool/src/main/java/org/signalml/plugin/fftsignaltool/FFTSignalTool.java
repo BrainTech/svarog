@@ -9,7 +9,14 @@ import org.apache.log4j.Logger;
 
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
-import org.signalml.plugin.export.change.SvarogCloseListener;
+import org.signalml.plugin.export.change.events.PluginActiveDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginActiveTagEvent;
+import org.signalml.plugin.export.change.events.PluginDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginDocumentViewEvent;
+import org.signalml.plugin.export.change.events.PluginTagEvent;
+import org.signalml.plugin.export.change.listeners.PluginCloseListener;
+import org.signalml.plugin.export.change.listeners.PluginDocumentListener;
+import org.signalml.plugin.export.change.listeners.PluginTagListenerWithActive;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.fft.FFT;
@@ -31,7 +38,7 @@ import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListene
  * 
  * @author Marcin Szumski
  */
-public class FFTSignalTool implements Plugin, SvarogCloseListener {
+public class FFTSignalTool implements Plugin, PluginCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
 	private static FFTSignalToolI18nDelegate i18nDelegate;
 
@@ -91,7 +98,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
-		
+
 		signalFFTSettings = new SignalFFTSettings();
 		settingsFile = new File(configAccess.getProfileDirectory(), "signalFFTSettings.xml");
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
@@ -148,4 +155,5 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public static FFTSignalToolI18nDelegate i18n() {
 		return i18nDelegate;
 	}
+
 }

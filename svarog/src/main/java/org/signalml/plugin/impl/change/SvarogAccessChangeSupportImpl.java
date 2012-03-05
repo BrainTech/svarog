@@ -27,16 +27,16 @@ import org.signalml.codec.SignalMLCodecManagerListener;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagEvent;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
-import org.signalml.plugin.export.change.SvarogCloseListener;
-import org.signalml.plugin.export.change.SvarogCodecEvent;
-import org.signalml.plugin.export.change.SvarogCodecListener;
-import org.signalml.plugin.export.change.SvarogDocumentEvent;
-import org.signalml.plugin.export.change.SvarogDocumentListener;
-import org.signalml.plugin.export.change.SvarogTagDocumentListener;
-import org.signalml.plugin.export.change.SvarogTagEvent;
-import org.signalml.plugin.export.change.SvarogTagListener;
-import org.signalml.plugin.export.change.SvarogTagListenerWithAcitve;
-import org.signalml.plugin.export.change.SvarogTagStyleListener;
+import org.signalml.plugin.export.change.events.PluginCodecEvent;
+import org.signalml.plugin.export.change.events.PluginDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginTagEvent;
+import org.signalml.plugin.export.change.listeners.PluginCloseListener;
+import org.signalml.plugin.export.change.listeners.PluginCodecListener;
+import org.signalml.plugin.export.change.listeners.PluginDocumentListener;
+import org.signalml.plugin.export.change.listeners.PluginTagDocumentListener;
+import org.signalml.plugin.export.change.listeners.PluginTagListener;
+import org.signalml.plugin.export.change.listeners.PluginTagListenerWithActive;
+import org.signalml.plugin.export.change.listeners.PluginTagStyleListener;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedTag;
@@ -44,6 +44,12 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.plugin.impl.change.events.PluginActiveDocumentEventImpl;
+import org.signalml.plugin.impl.change.events.PluginActiveTagEventImpl;
+import org.signalml.plugin.impl.change.events.PluginCodecEventImpl;
+import org.signalml.plugin.impl.change.events.PluginDocumentEventImpl;
+import org.signalml.plugin.impl.change.events.PluginDocumentViewEventImpl;
+import org.signalml.plugin.impl.change.events.PluginTagDocumentEventImpl;
 
 
 /**
@@ -59,7 +65,7 @@ import org.signalml.plugin.impl.PluginAccessClass;
  * to be able to pass the old and new value of the active elements to listeners.
  * <p>
  * For every tag and {@link SignalDocument signal document} holds the
- * {@link ChangeSupportDocumentImpl document change support}. 
+ * {@link SvarogAccessChangeSupportDocumentImpl document change support}. 
  * <p>
  * To listen on every change:
  * <ul>
@@ -87,7 +93,7 @@ import org.signalml.plugin.impl.PluginAccessClass;
  * <li>{@link Document#addPropertyChangeListener(PropertyChangeListener)
  * registers} listening for {@link DocumentView} changes</li>
  * <li>if it is signal or tag document creates a
- * {@link ChangeSupportDocumentImpl document change support} and registers
+ * {@link SvarogAccessChangeSupportDocumentImpl document change support} and registers
  * it to listen for tag and tag style changes associated with this document</li>
  * </ul></li>
  * <li>when a document view for a document
@@ -98,7 +104,7 @@ import org.signalml.plugin.impl.PluginAccessClass;
  * 
  * @author Marcin Szumski
  */
-public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements SvarogAccessChangeSupport, ActionFocusListener, DocumentManagerListener, SignalMLCodecManagerListener, PropertyChangeListener{
+public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocumentImpl implements SvarogAccessChangeSupport, ActionFocusListener, DocumentManagerListener, SignalMLCodecManagerListener, PropertyChangeListener{
 	
 	/**
 	 * the currently active document
@@ -110,43 +116,43 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	private TagDocument activeTagDocument = null;
 	
 	/**
-	 * {@link SvarogCloseListener listeners} on close of Svarog
+	 * {@link PluginCloseListener listeners} on close of Svarog
 	 */
-	private ArrayList<SvarogCloseListener> closeListeners = new ArrayList<SvarogCloseListener>();
+	private ArrayList<PluginCloseListener> closeListeners = new ArrayList<PluginCloseListener>();
 	
 	/**
-	 * {@link SvarogCodecListener listeners} on codec changes (addition
+	 * {@link PluginCodecListener listeners} on codec changes (addition
 	 * and removal)
 	 */
-	private ArrayList<SvarogCodecListener> codecListeners = new ArrayList<SvarogCodecListener>();
+	private ArrayList<PluginCodecListener> codecListeners = new ArrayList<PluginCodecListener>();
 	
 	/**
-	 * {@link SvarogDocumentListener listeners} on changes associated
+	 * {@link PluginDocumentListener listeners} on changes associated
 	 * with a {@link Document}
 	 */
-	private ArrayList<SvarogDocumentListener> documentListeners = new ArrayList<SvarogDocumentListener>();
+	private ArrayList<PluginDocumentListener> documentListeners = new ArrayList<PluginDocumentListener>();
 	
 	/**
-	 * {@link SvarogTagDocumentListener listeners} on changes of
+	 * {@link PluginTagDocumentListener listeners} on changes of
 	 * an active {@link TagDocument}
 	 */
-	private ArrayList<SvarogTagDocumentListener> tagDocumentListeners = new ArrayList<SvarogTagDocumentListener>();
+	private ArrayList<PluginTagDocumentListener> tagDocumentListeners = new ArrayList<PluginTagDocumentListener>();
 	
 	/**
-	 * {@link SvarogTagListenerWithAcitve listeners} on {@link ExportedTag tag}
+	 * {@link PluginTagListenerWithActive listeners} on {@link ExportedTag tag}
 	 * changes (addition, removal, change) including changes of an active tag
 	 */
-	protected ArrayList<SvarogTagListenerWithAcitve> tagListenersWithActive = new ArrayList<SvarogTagListenerWithAcitve>();
+	protected ArrayList<PluginTagListenerWithActive> tagListenersWithActive = new ArrayList<PluginTagListenerWithActive>();
 	
 	/**
-	 * HashMap associating signal documents with {@link ChangeSupportDocumentImpl listeners} for them
+	 * HashMap associating signal documents with {@link SvarogAccessChangeSupportDocumentImpl listeners} for them
 	 */
-	private HashMap<ExportedSignalDocument, ChangeSupportDocumentImpl> listenersOnSignalDocument = new HashMap<ExportedSignalDocument, ChangeSupportDocumentImpl>();
+	private HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnSignalDocument = new HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl>();
 	
 	/**
-	 * HashMap associating tag documents with {@link ChangeSupportDocumentImpl listeners} for them
+	 * HashMap associating tag documents with {@link SvarogAccessChangeSupportDocumentImpl listeners} for them
 	 */
-	private HashMap<ExportedTagDocument, ChangeSupportDocumentImpl> listenersOnTagDocument = new HashMap<ExportedTagDocument, ChangeSupportDocumentImpl>();
+	private HashMap<ExportedTagDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnTagDocument = new HashMap<ExportedTagDocument, SvarogAccessChangeSupportDocumentImpl>();
 	
 	
 	
@@ -155,11 +161,11 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 */
 	private HashMap<SignalView, Tag> activeTags = new HashMap<SignalView, Tag>();
 	
-	private ChangeSupportImpl() { }
+	private SvarogAccessChangeSupportImpl() { }
 
-	private static final ChangeSupportImpl _instance = new ChangeSupportImpl();
+	private static final SvarogAccessChangeSupportImpl _instance = new SvarogAccessChangeSupportImpl();
 
-	public static ChangeSupportImpl getInstance() {
+	public static SvarogAccessChangeSupportImpl getInstance() {
 		return _instance;
 	}
     
@@ -179,9 +185,9 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 			if (focusManager != null){
 				Document currentActiveDocument = focusManager.getActiveDocument();
 				if (currentActiveDocument != activeDocument){
-					ActiveDocumentEventImpl event = new ActiveDocumentEventImpl(currentActiveDocument, activeDocument);
+					PluginActiveDocumentEventImpl event = new PluginActiveDocumentEventImpl(currentActiveDocument, activeDocument);
 					activeDocument = currentActiveDocument;
-					for (SvarogDocumentListener listener : documentListeners){
+					for (PluginDocumentListener listener : documentListeners){
 						try {
 							listener.activeDocumentChanged(event);
 						} catch (Exception ex) {
@@ -192,9 +198,9 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 				} else {
 					TagDocument currentActiveTagDocument = focusManager.getActiveTagDocument();
 					if (currentActiveTagDocument != activeTagDocument){
-						TagDocumentEventImpl event = new TagDocumentEventImpl(currentActiveTagDocument, activeTagDocument);
+						PluginTagDocumentEventImpl event = new PluginTagDocumentEventImpl(currentActiveTagDocument, activeTagDocument);
 						activeTagDocument = currentActiveTagDocument;
-						for (SvarogTagDocumentListener listener : tagDocumentListeners){
+						for (PluginTagDocumentListener listener : tagDocumentListeners){
 							try {
 								listener.activeTagDocumentChanged(event);
 							} catch (Exception ex) {
@@ -215,8 +221,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 					else newActiveTag = null;
 					ExportedTag oldActiveTag = activeTags.get(signalView);
 					if (oldActiveTag != newActiveTag){
-						ActiveTagEventImpl event = new ActiveTagEventImpl(newActiveTag, oldActiveTag);
-						for (SvarogTagListenerWithAcitve listener : tagListenersWithActive){
+						PluginActiveTagEventImpl event = new PluginActiveTagEventImpl(newActiveTag, oldActiveTag);
+						for (PluginTagListenerWithActive listener : tagListenersWithActive){
 							try {
 								listener.activeTagChanged(event);
 							} catch (Exception ex) {
@@ -240,7 +246,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @param tagDocument the tag document
 	 * @param listener the listener to be added
 	 */
-	private void addListenersForTagDocument(TagDocument tagDocument, ChangeSupportDocumentImpl listener){
+	private void addListenersForTagDocument(TagDocument tagDocument, SvarogAccessChangeSupportDocumentImpl listener){
 		if (listenersOnTagDocument.get(tagDocument) != null) return;
 		StyledTagSet tagSet = tagDocument.getTagSet();
 		SignalDocument parent = tagDocument.getParent();
@@ -254,7 +260,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 		tagSet.addTagListener(listener);
 		tagSet.addTagStyleListener(this);
 		tagSet.addTagStyleListener(listener);
-		ChangeSupportDocumentImpl parentListener = listenersOnSignalDocument.get(parent);
+		SvarogAccessChangeSupportDocumentImpl parentListener = listenersOnSignalDocument.get(parent);
 		if (parentListener != null){
 			tagSet.removeTagListener(parentListener);
 			tagSet.removeTagStyleListener(parentListener);
@@ -268,7 +274,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	/**
 	 * Adds listeners on tag changes for a given document.
 	 * If document is of type {@link TagDocument} calls 
-	 * {@link #addListenersForTagDocument(TagDocument, ChangeSupportDocumentImpl)} once,
+	 * {@link #addListenersForTagDocument(TagDocument, SvarogAccessChangeSupportDocumentImpl)} once,
 	 * if document is of type {@link SignalDocument} adds listeners for all
 	 * dependent tag documents.
 	 * @param e an event associated with a change
@@ -288,7 +294,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 		
 		
 		if (document instanceof TagDocument || document instanceof SignalDocument){
-			ChangeSupportDocumentImpl tagDocumentListener = new ChangeSupportDocumentImpl();
+			SvarogAccessChangeSupportDocumentImpl tagDocumentListener = new SvarogAccessChangeSupportDocumentImpl();
 			tagDocumentListener.setViewerElementManager(getViewerElementManager());
 			
 			if (document instanceof TagDocument){
@@ -316,15 +322,15 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	}
 	
 	/**
-	 * Creates a {@link SvarogDocumentEvent} from given
+	 * Creates a {@link PluginDocumentEvent} from given
 	 * {@link DocumentManagerEvent}.
 	 * Sets the document.
 	 * @param e the DocumentManagerEvent to be used
 	 * @return created SvarogDocumentEvent
 	 */
-	private SvarogDocumentEvent createDocumentEvent(DocumentManagerEvent e){
+	private PluginDocumentEvent createDocumentEvent(DocumentManagerEvent e){
 		Document document = e.getDocument();
-		DocumentEventImpl event = new DocumentEventImpl(document);
+		PluginDocumentEventImpl event = new PluginDocumentEventImpl(document);
 		return event;
 	}
 	
@@ -337,8 +343,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	public void documentAdded(DocumentManagerEvent e) {
 		try {
 			addListenersForDocument(e);
-			SvarogDocumentEvent event = createDocumentEvent(e);
-			for (SvarogDocumentListener listener : documentListeners){
+			PluginDocumentEvent event = createDocumentEvent(e);
+			for (PluginDocumentListener listener : documentListeners){
 				try {
 					listener.documentAdded(event);
 				} catch (Exception ex) {
@@ -360,8 +366,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	@Override
 	public void documentRemoved(DocumentManagerEvent e) {
 		try {
-			SvarogDocumentEvent event = createDocumentEvent(e);
-			for (SvarogDocumentListener listener : documentListeners){
+			PluginDocumentEvent event = createDocumentEvent(e);
+			for (PluginDocumentListener listener : documentListeners){
 				try {
 					listener.documentRemoved(event);
 				} catch (Exception ex) {
@@ -384,18 +390,18 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	}
 
 	/**
-	 * Creates a {@link SvarogCodecEvent} from given
+	 * Creates a {@link PluginCodecEvent} from given
 	 * {@link SignalMLCodecManagerEvent}.
 	 * Sets the format name of the codec.
 	 * @param ev the SignalMLCodecManagerEvent to be used
 	 * @return created SvarogCodecEvent
 	 */
-	private SvarogCodecEvent createCodecEvent(SignalMLCodecManagerEvent ev){
+	private PluginCodecEvent createCodecEvent(SignalMLCodecManagerEvent ev){
 		SignalMLCodec codec = ev.getCodec();
 		String formatName = null;
 		if (codec == null) throw new RuntimeException("no codec in the SignalMLCodecManagerEvent");
 		formatName = codec.getFormatName();
-		CodecEventImpl event = new CodecEventImpl(formatName);
+		PluginCodecEventImpl event = new PluginCodecEventImpl(formatName);
 		return event;
 	}
 	
@@ -407,8 +413,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	@Override
 	public void codecAdded(SignalMLCodecManagerEvent ev) {
 		try {
-			SvarogCodecEvent event = createCodecEvent(ev);	
-			for (SvarogCodecListener listener : codecListeners){
+			PluginCodecEvent event = createCodecEvent(ev);	
+			for (PluginCodecListener listener : codecListeners){
 				try {
 					listener.codecAdded(event);
 				} catch (Exception ex) {
@@ -429,8 +435,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	@Override
 	public void codecRemoved(SignalMLCodecManagerEvent ev) {
 		try {
-			SvarogCodecEvent event = createCodecEvent(ev);
-			for (SvarogCodecListener listener : codecListeners){
+			PluginCodecEvent event = createCodecEvent(ev);
+			for (PluginCodecListener listener : codecListeners){
 				try {
 					listener.codecRemoved(event);
 				} catch (Exception ex) {
@@ -490,8 +496,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 					DocumentView oldView = (DocumentView) evt.getOldValue();
 					DocumentView newView = (DocumentView) evt.getNewValue();
 					registerFocusListener(newView);
-					DocumentViewEventImpl event = new DocumentViewEventImpl(document, oldView);
-					for (SvarogDocumentListener listener : documentListeners){
+					PluginDocumentViewEventImpl event = new PluginDocumentViewEventImpl(document, oldView);
+					for (PluginDocumentListener listener : documentListeners){
 						try {
 							listener.documentViewChanged(event);
 						} catch (Exception ex) {
@@ -511,8 +517,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	@Override
 	public void tagAdded(TagEvent e) {
 		try {
-			SvarogTagEvent event = createTagEvent(e);
-			for (SvarogTagListener listener: tagListenersWithActive){
+			PluginTagEvent event = createTagEvent(e);
+			for (PluginTagListener listener: tagListenersWithActive){
 				singleTagAdded(event, listener);
 			}
 		} catch (Exception ex) {
@@ -524,8 +530,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	@Override
 	public void tagRemoved(TagEvent e) {
 		try {
-			SvarogTagEvent event = createTagEvent(e);
-			for (SvarogTagListener listener: tagListenersWithActive){
+			PluginTagEvent event = createTagEvent(e);
+			for (PluginTagListener listener: tagListenersWithActive){
 				singleTagRemoved(event, listener);
 			}
 		} catch (Exception ex) {
@@ -537,8 +543,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	@Override
 	public void tagChanged(TagEvent e) {
 		try {
-			SvarogTagEvent event = createTagEvent(e);
-			for (SvarogTagListener listener: tagListenersWithActive){
+			PluginTagEvent event = createTagEvent(e);
+			for (PluginTagListener listener: tagListenersWithActive){
 				singleTagChanged(event, listener);
 			}
 		} catch (Exception ex) {
@@ -568,10 +574,10 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 		
 		SignalMLCodecManager codecManager = manager.getCodecManager();
 		if (codecManager != null) codecManager.addSignalMLCodecManagerListener(this);
-		for (ChangeSupportDocumentImpl listener : listenersOnSignalDocument.values()){
+		for (SvarogAccessChangeSupportDocumentImpl listener : listenersOnSignalDocument.values()){
 			listener.setViewerElementManager(manager);
 		}
-		for (ChangeSupportDocumentImpl listener : listenersOnTagDocument.values()){
+		for (SvarogAccessChangeSupportDocumentImpl listener : listenersOnTagDocument.values()){
 			listener.setViewerElementManager(manager);
 		}
 	}
@@ -580,7 +586,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addCloseListener(org.signalml.plugin.export.change.SvarogCloseListener)
 	 */
 	@Override
-	public void addCloseListener(SvarogCloseListener closeListener) {
+	public void addCloseListener(PluginCloseListener closeListener) {
 		closeListeners.add(closeListener);
 		
 	}
@@ -589,7 +595,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addDocumentListener(org.signalml.plugin.export.change.SvarogDocumentListener)
 	 */
 	@Override
-	public void addDocumentListener(SvarogDocumentListener documentListener) {
+	public void addDocumentListener(PluginDocumentListener documentListener) {
 		documentListeners.add(documentListener);
 		
 	}
@@ -598,7 +604,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addTagDocumentListener(org.signalml.plugin.export.change.SvarogTagDocumentListener)
 	 */
 	@Override
-	public void addTagDocumentListener(SvarogTagDocumentListener tagDocumentListener) {
+	public void addTagDocumentListener(PluginTagDocumentListener tagDocumentListener) {
 		tagDocumentListeners.add(tagDocumentListener);
 		
 	}
@@ -607,7 +613,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addTagListener(org.signalml.plugin.export.change.SvarogTagListenerWithAcitve)
 	 */
 	@Override
-	public void addTagListener(SvarogTagListenerWithAcitve tagListener) {
+	public void addTagListener(PluginTagListenerWithActive tagListener) {
 		tagListenersWithActive.add(tagListener);
 		
 	}
@@ -616,8 +622,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addTagListenerForTagDocument(org.signalml.plugin.export.change.SvarogTagListener, org.signalml.plugin.export.signal.ExportedTagDocument)
 	 */
 	@Override
-	public void addTagListenerForTagDocument(SvarogTagListener tagListener,	ExportedTagDocument document) {
-		ChangeSupportDocumentImpl listener = listenersOnTagDocument.get(document);
+	public void addTagListenerForTagDocument(PluginTagListener tagListener,	ExportedTagDocument document) {
+		SvarogAccessChangeSupportDocumentImpl listener = listenersOnTagDocument.get(document);
 		if (listener == null) throw new IllegalArgumentException("no such tag document");
 		listener.addTagListener(tagListener);
 		
@@ -627,8 +633,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addTagListenerForSignalDocument(org.signalml.plugin.export.change.SvarogTagListener, org.signalml.plugin.export.signal.ExportedSignalDocument)
 	 */
 	@Override
-	public void addTagListenerForSignalDocument(SvarogTagListener tagListener, ExportedSignalDocument document) {
-		ChangeSupportDocumentImpl listener = listenersOnSignalDocument.get(document);
+	public void addTagListenerForSignalDocument(PluginTagListener tagListener, ExportedSignalDocument document) {
+		SvarogAccessChangeSupportDocumentImpl listener = listenersOnSignalDocument.get(document);
 		if (listener == null) throw new IllegalArgumentException("no such signal document");
 		listener.addTagListener(tagListener);
 		
@@ -638,8 +644,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addTagStyleListenerForTagDocument(org.signalml.plugin.export.change.SvarogTagStyleListener, org.signalml.plugin.export.signal.ExportedTagDocument)
 	 */
 	@Override
-	public void addTagStyleListenerForTagDocument(SvarogTagStyleListener tagStyleListener, ExportedTagDocument document) {
-		ChangeSupportDocumentImpl listener = listenersOnTagDocument.get(document);
+	public void addTagStyleListenerForTagDocument(PluginTagStyleListener tagStyleListener, ExportedTagDocument document) {
+		SvarogAccessChangeSupportDocumentImpl listener = listenersOnTagDocument.get(document);
 		if (listener == null) throw new IllegalArgumentException("no such tag document");
 		listener.addTagStyleListener(tagStyleListener);
 		
@@ -649,8 +655,8 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addTagStyleListenerForSignalDocument(org.signalml.plugin.export.change.SvarogTagStyleListener, org.signalml.plugin.export.signal.ExportedSignalDocument)
 	 */
 	@Override
-	public void addTagStyleListenerForSignalDocument(SvarogTagStyleListener tagStyleListener, ExportedSignalDocument document) {
-		ChangeSupportDocumentImpl listener = listenersOnSignalDocument.get(document);
+	public void addTagStyleListenerForSignalDocument(PluginTagStyleListener tagStyleListener, ExportedSignalDocument document) {
+		SvarogAccessChangeSupportDocumentImpl listener = listenersOnSignalDocument.get(document);
 		if (listener == null) throw new IllegalArgumentException("no such signal document");
 		listener.addTagStyleListener(tagStyleListener);
 		
@@ -660,7 +666,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * Informs listeners that application is closing
 	 */
 	public void onClose(){
-		for (SvarogCloseListener listener : closeListeners)
+		for (PluginCloseListener listener : closeListeners)
 			try{
 				listener.applicationClosing();
 			} catch (Exception e) {
@@ -673,7 +679,7 @@ public class ChangeSupportImpl extends ChangeSupportDocumentImpl implements Svar
 	 * @see org.signalml.plugin.export.change.SvarogAccessChangeSupport#addCodecListener(org.signalml.plugin.export.change.SvarogCodecListener)
 	 */
 	@Override
-	public void addCodecListener(SvarogCodecListener codecListener) {
+	public void addCodecListener(PluginCodecListener codecListener) {
 		codecListeners.add(codecListener);
 		
 	}

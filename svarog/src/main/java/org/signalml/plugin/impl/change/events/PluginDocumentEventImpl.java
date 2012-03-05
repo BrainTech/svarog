@@ -1,17 +1,17 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginDocumentEvent;
 import org.signalml.plugin.export.signal.Document;
 
 /**
- * Implementation of {@link SvarogDocumentEvent}.
+ * Implementation of {@link PluginDocumentEvent}.
  * Contains a {@link Document}.
  * @author Marcin Szumski
  */
-public class DocumentEventImpl implements SvarogDocumentEvent {
+public class PluginDocumentEventImpl implements PluginDocumentEvent {
 
 	/**
 	 * the {@link Document} associated with this event 
@@ -22,7 +22,7 @@ public class DocumentEventImpl implements SvarogDocumentEvent {
 	 * Constructor. Sets the {@link Document}.
 	 * @param document the document to set
 	 */
-	public DocumentEventImpl(Document document){
+	public PluginDocumentEventImpl(Document document){
 		this.document = document;
 	}
 	

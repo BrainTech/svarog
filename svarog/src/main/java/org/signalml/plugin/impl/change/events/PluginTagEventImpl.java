@@ -1,19 +1,19 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogTagEvent;
+import org.signalml.plugin.export.change.events.PluginTagEvent;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 
 /**
- * Implementation of {@link SvarogTagEvent}.
+ * Implementation of {@link PluginTagEvent}.
  * Contains the {@link ExportedTag tag} and a
  * {@link ExportedTagDocument document} in which the tag is/was located.
  * @author Marcin Szumski
  */
-public class TagEventImpl implements SvarogTagEvent {
+public class PluginTagEventImpl implements PluginTagEvent {
 
 	/**
 	 * the document in which the {@link #tag tag} is/was located
@@ -30,7 +30,7 @@ public class TagEventImpl implements SvarogTagEvent {
 	 * @param tag the tag to set
 	 * @param document the document in which the tag is located
 	 */
-	public TagEventImpl(ExportedTag tag, ExportedTagDocument document){
+	public PluginTagEventImpl(ExportedTag tag, ExportedTagDocument document){
 		this.tag = tag;
 		this.document = document;
 	}

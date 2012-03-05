@@ -1,8 +1,10 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
 
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.change.events.PluginTagDocumentEvent;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 
 /**
@@ -11,11 +13,11 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
-public interface SvarogTagDocumentListener extends SvarogListener {
+public interface PluginTagDocumentListener extends PluginListener {
 	
 	/**
 	 * Invoked when active {@link ExportedTagDocument} changes.
 	 * @param e the tag document event
 	 */
-	void activeTagDocumentChanged(SvarogTagDocumentEvent e);
+	void activeTagDocumentChanged(PluginTagDocumentEvent e);
 }
