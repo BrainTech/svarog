@@ -1,18 +1,18 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogTagDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginTagDocumentEvent;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 
 /**
- * Implementation of {@link SvarogTagDocumentEvent}.
+ * Implementation of {@link PluginTagDocumentEvent}.
  * Contains new and old value of the active {@link ExportedTagDocument
  * tag document}.
  * @author Marcin Szumski
  */
-public class TagDocumentEventImpl implements SvarogTagDocumentEvent {
+public class PluginTagDocumentEventImpl implements PluginTagDocumentEvent {
 
 	/**
 	 * the new value of the active {@link ExportedTagDocument tag document}
@@ -29,7 +29,7 @@ public class TagDocumentEventImpl implements SvarogTagDocumentEvent {
 	 * @param document the new value of the active tag document
 	 * @param oldDocument the old value of the active tag document
 	 */
-	public TagDocumentEventImpl(ExportedTagDocument document, ExportedTagDocument oldDocument){
+	public PluginTagDocumentEventImpl(ExportedTagDocument document, ExportedTagDocument oldDocument){
 		this.document = document;
 		this.oldDocument = oldDocument;
 	}

@@ -1,7 +1,10 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
+
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.change.events.PluginCodecEvent;
 
 /**
  * Interface for a listener on codec changes (addition and removal).
@@ -9,17 +12,17 @@ package org.signalml.plugin.export.change;
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
-public interface SvarogCodecListener extends SvarogListener {
+public interface PluginCodecListener extends PluginListener {
 	
 	/**
 	 * Gives notification that codec was added.
 	 * @param e the codec event
 	 */
-	void codecAdded(SvarogCodecEvent e);
+	void codecAdded(PluginCodecEvent e);
 	
 	/**
 	 * Gives notification that codec was removed.
 	 * @param e the codec event
 	 */
-	void codecRemoved(SvarogCodecEvent e);
+	void codecRemoved(PluginCodecEvent e);
 }

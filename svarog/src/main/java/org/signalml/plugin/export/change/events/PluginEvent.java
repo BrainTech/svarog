@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.events;
 
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.ExportedTag;
@@ -15,6 +15,6 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
  * associated with that change.
  * @author Marcin Szumski
  */
-public interface SvarogEvent {
+public interface PluginEvent {
 
 }

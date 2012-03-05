@@ -1,7 +1,9 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
+
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 
 /**
  * Super-interface for all listeners in the plug-in interface.
@@ -9,6 +11,6 @@ package org.signalml.plugin.export.change;
  * 
  * @author Marcin Szumski
  */
-public interface SvarogListener {
+public interface PluginListener {
 
 }

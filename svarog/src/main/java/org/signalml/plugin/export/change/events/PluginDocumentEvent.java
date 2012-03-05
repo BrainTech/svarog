@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.events;
 
 import org.signalml.plugin.export.signal.Document;
 
@@ -10,7 +10,7 @@ import org.signalml.plugin.export.signal.Document;
  * Allows to return a document associated with this change.
  * @author Marcin Szumski
  */
-public interface SvarogDocumentEvent extends SvarogEvent {
+public interface PluginDocumentEvent extends PluginEvent {
 
 	/**
 	 * Returns a {@link Document} associated with this event.

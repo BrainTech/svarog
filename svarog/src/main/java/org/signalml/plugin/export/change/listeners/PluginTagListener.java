@@ -1,8 +1,10 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
 
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.change.events.PluginTagEvent;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
@@ -12,29 +14,29 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
  * removal, change).
  * Can be added only to listen on changes concerning with a selected document
  * ({@link ExportedTagDocument tag} or {@link ExportedSignalDocument signal}).
- * To listen on all changes {@link SvarogTagListenerWithAcitve} is required.
+ * To listen on all changes {@link PluginTagListenerWithActive} is required.
  * 
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
-public interface SvarogTagListener extends SvarogListener {
+public interface PluginTagListener extends PluginListener {
 
 	/**
 	 * Invoked when the {@link ExportedTag tag} is added to the set.
 	 * @param e the tag event
 	 */
-	void tagAdded(SvarogTagEvent e);
+	void tagAdded(PluginTagEvent e);
 
 	/**
 	 * Invoked when the {@link ExportedTag tag} is removed form the set.
 	 * @param e the tag event
 	 */
-	void tagRemoved(SvarogTagEvent e);
+	void tagRemoved(PluginTagEvent e);
 
 	/**
 	 * Invoked when the {@link ExportedTag tag} is changed.
 	 * @param e the tag event
 	 */
-	void tagChanged(SvarogTagEvent e);
+	void tagChanged(PluginTagEvent e);
 
 }

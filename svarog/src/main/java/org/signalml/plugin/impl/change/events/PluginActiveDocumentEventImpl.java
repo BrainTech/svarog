@@ -1,17 +1,17 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogActiveDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginActiveDocumentEvent;
 import org.signalml.plugin.export.signal.Document;
 
 /**
- * Implementation of the {@link SvarogActiveDocumentEvent}.
+ * Implementation of the {@link PluginActiveDocumentEvent}.
  * Contains the old and the new value of the active {@link Document}.
  * @author Marcin Szumski
  */
-public class ActiveDocumentEventImpl extends DocumentEventImpl implements SvarogActiveDocumentEvent {
+public class PluginActiveDocumentEventImpl extends PluginDocumentEventImpl implements PluginActiveDocumentEvent {
 
 	/**
 	 * the old value of the active {@link Document}
@@ -24,7 +24,7 @@ public class ActiveDocumentEventImpl extends DocumentEventImpl implements Svarog
 	 * @param newDocument the new and the new value of the active document
 	 * @param oldDocument the old and the new value of the active document
 	 */
-	public ActiveDocumentEventImpl(Document newDocument, Document oldDocument) {
+	public PluginActiveDocumentEventImpl(Document newDocument, Document oldDocument) {
 		super(newDocument);
 		this.oldDocument = oldDocument;
 	}

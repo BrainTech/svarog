@@ -1,17 +1,17 @@
 /**
  * 
  */
-package org.signalml.plugin.impl.change;
+package org.signalml.plugin.impl.change.events;
 
-import org.signalml.plugin.export.change.SvarogTagStyleEvent;
+import org.signalml.plugin.export.change.events.PluginTagStyleEvent;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 
 /**
- * Implementation of {@link SvarogTagStyleEvent}.
+ * Implementation of {@link PluginTagStyleEvent}.
  * Contains the {@link ExportedTagStyle tag style}.
  * @author Marcin Szumski
  */
-public class TagStyleEventImpl implements SvarogTagStyleEvent {
+public class PluginTagStyleEventImpl implements PluginTagStyleEvent {
 
 	/**
 	 * the tag style associated with this event
@@ -23,7 +23,7 @@ public class TagStyleEventImpl implements SvarogTagStyleEvent {
 	 * @param style the {@link ExportedTagStyle tag style} to be associated
 	 * with this event
 	 */
-	public TagStyleEventImpl(ExportedTagStyle style){
+	public PluginTagStyleEventImpl(ExportedTagStyle style){
 		this.style = style;
 	}
 	

@@ -1,8 +1,12 @@
 /**
  * 
  */
-package org.signalml.plugin.export.change;
+package org.signalml.plugin.export.change.listeners;
 
+import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
+import org.signalml.plugin.export.change.events.PluginActiveDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginDocumentViewEvent;
 import org.signalml.plugin.export.signal.Document;
 
 /**
@@ -17,30 +21,30 @@ import org.signalml.plugin.export.signal.Document;
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */
-public interface SvarogDocumentListener extends SvarogListener {
+public interface PluginDocumentListener extends PluginListener {
 
 	/**
 	 * Invoked when a document is added.
 	 * @param e the document event
 	 */
-	void documentAdded(SvarogDocumentEvent e);
+	void documentAdded(PluginDocumentEvent e);
 	
 	/**
 	 * Invoked when a document is removed.
 	 * @param e the document event
 	 */
-	void documentRemoved(SvarogDocumentEvent e);
+	void documentRemoved(PluginDocumentEvent e);
 	
 	/**
 	 * Invoked when an active document changes.
 	 * @param e the active document event
 	 */
-	void activeDocumentChanged(SvarogActiveDocumentEvent e);
+	void activeDocumentChanged(PluginActiveDocumentEvent e);
 	
 	/**
 	 * Invoked when a view for a document is changed.
 	 * @param e the document event
 	 */
-	void documentViewChanged(SvarogDocumentViewEvent e);
+	void documentViewChanged(PluginDocumentViewEvent e);
 
 }
