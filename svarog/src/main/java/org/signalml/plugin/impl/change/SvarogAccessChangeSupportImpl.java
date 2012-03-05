@@ -683,4 +683,11 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 		codecListeners.add(codecListener);
 		
 	}
+
+	public void setViewerElementManager(ViewerElementManager manager) {
+		super.setViewerElementManager(manager);
+
+		if (manager != null)
+			manager.getDocumentManager().addDocumentManagerListener(this);
+	}
 }
