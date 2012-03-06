@@ -23,11 +23,9 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
-
-import org.springframework.validation.Errors;
 
 /** MP5ExecutablePanel
  *
@@ -41,11 +39,11 @@ public class MP5ExecutablePanel extends JPanel {
 	private JTextField executableTextField;
 	private JButton chooseExecutableButton;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private File mp5Executable;
 
-	public MP5ExecutablePanel(ViewerFileChooser fileChooser) {
+	public MP5ExecutablePanel(FileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();

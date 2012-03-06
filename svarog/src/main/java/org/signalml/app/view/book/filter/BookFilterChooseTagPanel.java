@@ -22,10 +22,9 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
+import org.signalml.plugin.export.view.FileChooser;
 
-import org.springframework.validation.Errors;
 
 /** BookFilterChooseTagPanel
  *
@@ -39,11 +38,11 @@ public class BookFilterChooseTagPanel extends JPanel {
 	private JTextField tagTextField;
 	private JButton chooseTagButton;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private File tagFile;
 
-	public BookFilterChooseTagPanel(ViewerFileChooser fileChooser) {
+	public BookFilterChooseTagPanel(FileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();
