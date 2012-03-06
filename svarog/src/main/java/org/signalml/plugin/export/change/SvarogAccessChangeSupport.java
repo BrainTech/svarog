@@ -7,6 +7,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.change.listeners.PluginCodecListener;
 import org.signalml.plugin.export.change.listeners.PluginDocumentListener;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.change.listeners.PluginTagDocumentListener;
 import org.signalml.plugin.export.change.listeners.PluginTagListener;
 import org.signalml.plugin.export.change.listeners.PluginTagListenerWithActive;
@@ -121,4 +122,6 @@ public interface SvarogAccessChangeSupport {
 	 * @param document the document for which the listener is added
 	 */
 	void addTagStyleListenerForSignalDocument(PluginTagStyleListener tagStyleListener, ExportedSignalDocument document);
+
+	void addSignalChangeListener(PluginSignalChangeListener signalListener);
 }

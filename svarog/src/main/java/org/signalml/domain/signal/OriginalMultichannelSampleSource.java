@@ -5,6 +5,7 @@
 package org.signalml.domain.signal;
 
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 
 /**
  * This interface represents the source of samples for the multichannel signal
@@ -16,10 +17,17 @@ import org.signalml.plugin.export.SignalMLException;
 public interface OriginalMultichannelSampleSource extends MultichannelSampleSource {
 
 	/**
-         * Returns if the implementation is capable of returning a calibration
-         * @return true if the implementation is capable of returning a
-         * calibration, false otherwise
-         */
+	 * Adds a listener for signal changes (e.g. new samples).
+	 * @param listener
+	 */
+	void addSignalChangeListener(PluginSignalChangeListener listener);
+
+	/**
+	 * Returns if the implementation is capable of returning a calibration
+	 *
+	 * @return true if the implementation is capable of returning a calibration,
+	 *         false otherwise
+	 */
 	boolean isCalibrationCapable();
 
 	/**

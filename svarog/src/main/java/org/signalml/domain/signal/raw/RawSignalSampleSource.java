@@ -19,6 +19,7 @@ import org.signalml.domain.signal.AbstractMultichannelSampleSource;
 import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 
 /**
  * This class represents the source of samples for the raw signal.
@@ -503,6 +504,11 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 	 */
 	public void setFirstSampleTimestamp(double value) {
 		this.firstSampleTimestamp = value;
+	}
+
+	@Override
+	public void addSignalChangeListener(PluginSignalChangeListener listener) {
+		//this sample source doesn't support signalchangelisteners.
 	}
 
 }

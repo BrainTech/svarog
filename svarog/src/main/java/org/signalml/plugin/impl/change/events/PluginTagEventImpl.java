@@ -23,7 +23,7 @@ public class PluginTagEventImpl implements PluginTagEvent {
 	 * the {@link ExportedTag tag} associated with this event
 	 */
 	protected ExportedTag tag;
-	
+
 	/**
 	 * Constructor. Sets the {@link ExportedTag tag} and
 	 * {@link ExportedTagDocument document} in which the tag is located.
@@ -34,7 +34,7 @@ public class PluginTagEventImpl implements PluginTagEvent {
 		this.tag = tag;
 		this.document = document;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.change.TagEvent#getDocument()
 	 */
