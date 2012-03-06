@@ -30,7 +30,7 @@ public class SignalFilterSwitchAction extends AbstractFocusableSignalMLAction<Si
 		super(signalDocumentFocusSelector);
 		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
-		setToolTip(_("Switch fitering on/off"));
+		setToolTip(_("Switch filtering on/off"));
 	}
 
 	@Override

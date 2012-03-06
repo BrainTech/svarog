@@ -961,11 +961,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(getEditSignalMontageAction());
 		mainToolBar.add(getApplyDefaultMontageAction());
 		mainToolBar.add(plotOptionsButton);
+
 		JToggleButton filterSwitchButton = new JToggleButton(getFilterSwitchAction());
 		filterSwitchButton.setHideActionText(true);
 		filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
+		filterSwitchButton.setSelected(document.getMontage().isFiltered());
 		mainToolBar.add(filterSwitchButton);
-
 
 	}
 
