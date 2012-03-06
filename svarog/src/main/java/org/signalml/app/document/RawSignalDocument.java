@@ -10,8 +10,10 @@ import java.util.List;
 
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.codec.SignalMLCodec;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
+import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -80,6 +82,25 @@ public class RawSignalDocument extends AbstractFileSignal {
 	@Override
 	public String getFormatName() {
 		return "InternalInterleavedRAW";
+	}
+
+	/**
+	 * Returns the {@link RawSignalSampleType type} of samples.
+	 *
+	 * @return the type of samples
+	 */
+	public RawSignalSampleType getSampleType() {
+		return descriptor.getSampleType();
+	}
+
+	/**
+	 * Returns the {@link RawSignalByteOrder order} of bytes in the file with
+	 * the signal.
+	 *
+	 * @return the order of bytes in the file with the signal.
+	 */
+	public RawSignalByteOrder getByteOrder() {
+		return descriptor.getByteOrder();
 	}
 
 	@Override
