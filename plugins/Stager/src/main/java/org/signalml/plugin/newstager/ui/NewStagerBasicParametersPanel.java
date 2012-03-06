@@ -1,0 +1,274 @@
+/* NewStagerBasicParametersPanel.java created 2008-02-14
+ * 
+ */
+package org.signalml.plugin.newstager.ui;
+
+import static org.signalml.plugin.newstager.NewStagerPlugin._;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.util.SwingUtils;
+import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.plugin.newstager.data.NewStagerConstants;
+import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.ui.components.AutoSpinnerPanel;
+
+/**
+ * NewStagerBasicParametersPanel
+ * 
+ * 
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ *         Sp. z o.o.
+ */
+public class NewStagerBasicParametersPanel extends JPanel {
+
+	private static final long serialVersionUID = 1L;
+
+	private AbstractDialog owner;
+
+	private ResolvableComboBox rulesComboBox;
+
+	private AutoSpinnerPanel deltaMinAmplitudePanel;
+	private AutoSpinnerPanel alphaMinAmplitudePanel;
+	private AutoSpinnerPanel spindleMinAmplitudePanel;
+
+	private JCheckBox primaryHypnogramCheckBox;
+
+	//TODO!
+	/*
+	EnableAction amplitudePanelsEnable = new EnableAction() {
+		public void setEnabled(boolean enabled) {
+			getDeltaMinAmplitudePanel().setEnabled(enabled);
+			getAlphaMinAmplitudePanel().setEnabled(enabled);
+			getSpindleMinAmplitudePanel().setEnabled(enabled);
+		};
+	};
+	*/
+
+	public NewStagerBasicParametersPanel(AbstractDialog owner) {
+		super();
+		this.owner = owner;
+		initialize();
+	}
+
+	private void initialize() {
+
+		setLayout(new BorderLayout());
+
+		CompoundBorder border = new CompoundBorder(new TitledBorder(
+				_("Key parameters")), new EmptyBorder(3, 3, 3, 3));
+		setBorder(border);
+
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setAutoCreateContainerGaps(false);
+		layout.setAutoCreateGaps(true);
+
+		JLabel rulesLabel = new JLabel(_("Scoring criteria"));
+		JLabel deltaMinAmplitudeLabel = new JLabel(
+				_("Amplitude threshold for delta waves [uV]"));
+		JLabel alphaMinAmplitudeLabel = new JLabel(
+				_("Amplitude threshold for alpha waves [uV]"));
+		JLabel spindleMinAmplitudeLabel = new JLabel(
+				_("Amplitude threshold for sleep spindles [uV]"));
+		JLabel primaryHypnogramLabel = new JLabel(
+				_("Show primary hypnogram and markers of waveforms in result"));
+		primaryHypnogramLabel.setMinimumSize(new Dimension(25, 35));
+		primaryHypnogramLabel.setVerticalAlignment(JLabel.CENTER);
+
+		Component glue1 = Box.createHorizontalGlue();
+		Component glue2 = Box.createHorizontalGlue();
+		Component glue3 = Box.createHorizontalGlue();
+		Component glue4 = Box.createHorizontalGlue();
+		Component glue5 = Box.createHorizontalGlue();
+
+		CompactButton rulesHelpButton = SwingUtils.createFieldHelpButton(owner,
+				NewStagerMethodDialog.HELP_RULES);
+		CompactButton deltaMinAmplitudeHelpButton = SwingUtils
+				.createFieldHelpButton(owner,
+						NewStagerMethodDialog.HELP_DELTA_MIN_AMPLITUDE);
+		CompactButton alphaMinAmplitudeHelpButton = SwingUtils
+				.createFieldHelpButton(owner,
+						NewStagerMethodDialog.HELP_ALPHA_MIN_AMPLITUDE);
+		CompactButton spindleMinAmplitudeHelpButton = SwingUtils
+				.createFieldHelpButton(owner,
+						NewStagerMethodDialog.HELP_SPINDLE_MIN_AMPLITUDE);
+		CompactButton primaryHypnogramHelpButton = SwingUtils
+				.createFieldHelpButton(owner,
+						NewStagerMethodDialog.HELP_PRIMARY_HYPNOGRAM);
+
+		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
+
+		hGroup.addGroup(layout.createParallelGroup().addComponent(rulesLabel)
+				.addComponent(deltaMinAmplitudeLabel)
+				.addComponent(alphaMinAmplitudeLabel)
+				.addComponent(spindleMinAmplitudeLabel)
+				.addComponent(primaryHypnogramLabel));
+
+		hGroup.addGroup(layout.createParallelGroup().addComponent(glue1)
+				.addComponent(glue2).addComponent(glue3).addComponent(glue4)
+				.addComponent(glue5));
+
+		hGroup.addGroup(layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getRulesComboBox())
+				.addComponent(getDeltaMinAmplitudePanel())
+				.addComponent(getAlphaMinAmplitudePanel())
+				.addComponent(getSpindleMinAmplitudePanel())
+				.addComponent(getPrimaryHypnogramCheckBox()));
+
+		hGroup.addGroup(layout.createParallelGroup()
+				.addComponent(rulesHelpButton)
+				.addComponent(deltaMinAmplitudeHelpButton)
+				.addComponent(alphaMinAmplitudeHelpButton)
+				.addComponent(spindleMinAmplitudeHelpButton)
+				.addComponent(primaryHypnogramHelpButton));
+
+		layout.setHorizontalGroup(hGroup);
+
+		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
+
+		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(rulesLabel).addComponent(glue1)
+				.addComponent(getRulesComboBox()).addComponent(rulesHelpButton));
+
+		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(deltaMinAmplitudeLabel).addComponent(glue2)
+				.addComponent(getDeltaMinAmplitudePanel())
+				.addComponent(deltaMinAmplitudeHelpButton));
+
+		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(alphaMinAmplitudeLabel).addComponent(glue3)
+				.addComponent(getAlphaMinAmplitudePanel())
+				.addComponent(alphaMinAmplitudeHelpButton));
+
+		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(spindleMinAmplitudeLabel).addComponent(glue4)
+				.addComponent(getSpindleMinAmplitudePanel())
+				.addComponent(spindleMinAmplitudeHelpButton));
+
+		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
+				.addComponent(primaryHypnogramLabel).addComponent(glue5)
+				.addComponent(getPrimaryHypnogramCheckBox())
+				.addComponent(primaryHypnogramHelpButton));
+
+		layout.setVerticalGroup(vGroup);
+
+	}
+
+	public ResolvableComboBox getRulesComboBox() {
+		if (rulesComboBox == null) {
+			rulesComboBox = new ResolvableComboBox();
+
+			//TODO!
+			//rulesComboBox.setModel(new DefaultComboBoxModel(SleepStagingRules.values()));
+		}
+		return rulesComboBox;
+	}
+
+	public AutoSpinnerPanel getDeltaMinAmplitudePanel() {
+		if (deltaMinAmplitudePanel == null) {
+			deltaMinAmplitudePanel = new AutoSpinnerPanel(
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MAX_AMPLITUDE,
+					NewStagerConstants.INCR_AMPLITUDE, false);
+		}
+		return deltaMinAmplitudePanel;
+	}
+
+	public AutoSpinnerPanel getAlphaMinAmplitudePanel() {
+		if (alphaMinAmplitudePanel == null) {
+			alphaMinAmplitudePanel = new AutoSpinnerPanel(
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MAX_AMPLITUDE,
+					NewStagerConstants.INCR_AMPLITUDE, false);
+		}
+		return alphaMinAmplitudePanel;
+	}
+
+	public AutoSpinnerPanel getSpindleMinAmplitudePanel() {
+		if (spindleMinAmplitudePanel == null) {
+			spindleMinAmplitudePanel = new AutoSpinnerPanel(
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MAX_AMPLITUDE,
+					NewStagerConstants.INCR_AMPLITUDE, false);
+		}
+		return spindleMinAmplitudePanel;
+	}
+
+	public JCheckBox getPrimaryHypnogramCheckBox() {
+		if (primaryHypnogramCheckBox == null) {
+			primaryHypnogramCheckBox = new JCheckBox();
+			primaryHypnogramCheckBox.setPreferredSize(new Dimension(25, 25));
+		}
+		return primaryHypnogramCheckBox;
+	}
+
+	public void fillPanelFromParameters(NewStagerParameters parameters) {
+		//TODO!
+		/*
+		getRulesComboBox().setSelectedItem(parameters.getRules());
+
+		getDeltaMinAmplitudePanel().setValueWithAuto(
+				parameters.getDeltaAmplitude().getMinWithUnlimited());
+		getAlphaMinAmplitudePanel().setValueWithAuto(
+				parameters.getAlphaAmplitude().getMinWithUnlimited());
+		getSpindleMinAmplitudePanel().setValueWithAuto(
+				parameters.getSpindleAmplitude().getMinWithUnlimited());
+
+		getPrimaryHypnogramCheckBox().setSelected(
+				parameters.isPrimaryHypnogram());
+		 */
+	}
+
+	public void fillParametersFromPanel(NewStagerParameters parameters) {
+		//TODO!
+		/*
+		parameters.setRules((SleepStagingRules) getRulesComboBox()
+				.getSelectedItem());
+
+		parameters.getDeltaAmplitude().setMinWithUnlimited(
+				getDeltaMinAmplitudePanel().getValueWithAuto());
+		parameters.getAlphaAmplitude().setMinWithUnlimited(
+				getAlphaMinAmplitudePanel().getValueWithAuto());
+		parameters.getSpindleAmplitude().setMinWithUnlimited(
+				getSpindleMinAmplitudePanel().getValueWithAuto());
+
+		parameters.setPrimaryHypnogram(getPrimaryHypnogramCheckBox()
+				.isSelected());
+		*/
+	}
+
+	public void validatePanel(ValidationErrors errors) {
+		// nothing to do
+	}
+
+	/**
+	 * @return the amplitudePanelsEnable
+	 */
+	//TODO!
+	/*
+	public EnableAction getAmplitudePanelsEnable() {
+		return amplitudePanelsEnable;
+	}
+	*/
+
+}
