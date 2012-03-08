@@ -36,6 +36,7 @@ import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
+import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.SignalChecksumWorker;
@@ -1209,6 +1210,7 @@ public class DocumentFlowIntegrator {
 			if (!signalView.isComparingTags()) {
 				parent.setActiveTag(document);
 			}
+			signalView.repaint();
 		}
 
 	}
@@ -1456,9 +1458,12 @@ public class DocumentFlowIntegrator {
 	 */
 	private void onTagDocumentRemoved(TagDocument document) {
 
+		SignalDocument parent = document.getParent();
+		SignalView signalView = (SignalView) parent.getDocumentView();
+		signalView.repaint();
+
 		// this removes from tag list
 		document.setParent(null);
-
 	}
 
 	/**
