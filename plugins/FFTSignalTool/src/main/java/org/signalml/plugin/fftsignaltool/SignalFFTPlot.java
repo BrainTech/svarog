@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.Calendar;
 
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
@@ -202,6 +203,11 @@ public class SignalFFTPlot extends JComponent {
 	private String error;
 
 	/**
+	 * The last time FFT was recalculated. (Useful for online signals).
+	 */
+	private Calendar lastFFTRecalculationTime;
+
+	/**
 	 * Constructor. Sets the source of messages, title font and border.
 	 */
 	public SignalFFTPlot() {
@@ -225,6 +231,7 @@ public class SignalFFTPlot extends JComponent {
 			return;
 		}
 		calculated = true;
+		lastFFTRecalculationTime = Calendar.getInstance();
 
 		error = null;
 
@@ -584,8 +591,7 @@ public class SignalFFTPlot extends JComponent {
 		this.plot = plot;
 		this.focusPoint = focusPoint;
 		this.channel = channel;
-		calculated = false;
-		repaint();
+		recalculateAndRepaint();
 	}
 
 	/**
@@ -597,6 +603,10 @@ public class SignalFFTPlot extends JComponent {
 	public void setParameters(Point focusPoint, int channel) {
 		this.focusPoint = focusPoint;
 		this.channel = channel;
+		recalculateAndRepaint();
+	}
+
+	public void recalculateAndRepaint() {
 		calculated = false;
 		repaint();
 	}
@@ -853,6 +863,14 @@ public class SignalFFTPlot extends JComponent {
 	 */
 	public void setSvarogAccess(SvarogAccess access) {
 		signalAccess = access.getSignalAccess();
+	}
+
+	/**
+	 * Returns the last time FFT was recalculated.
+	 * @return the last time FFT was recalculated
+	 */
+	public Calendar getLastFFTRecalculationTime() {
+		return lastFFTRecalculationTime;
 	}
 
 }

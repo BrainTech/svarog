@@ -1,22 +1,16 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
-import org.signalml.plugin.export.change.events.PluginActiveDocumentEvent;
-import org.signalml.plugin.export.change.events.PluginActiveTagEvent;
-import org.signalml.plugin.export.change.events.PluginDocumentEvent;
-import org.signalml.plugin.export.change.events.PluginDocumentViewEvent;
-import org.signalml.plugin.export.change.events.PluginTagEvent;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
-import org.signalml.plugin.export.change.listeners.PluginDocumentListener;
-import org.signalml.plugin.export.change.listeners.PluginTagListenerWithActive;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.fft.FFT;
@@ -136,7 +130,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	public static String _(String msgKey) {
 		return i18nDelegate._(msgKey);
 	}
-	
+
 	/**
 	 * I18n shortcut.
 	 * 
@@ -147,7 +141,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	public static String _R(String msgKey, Object ... arguments) {
 		return i18nDelegate._R(msgKey, arguments);
 	}
-	
+
 	/**
 	 * Svarog i18n delegate getter.
 	 * @return the shared delegate instance

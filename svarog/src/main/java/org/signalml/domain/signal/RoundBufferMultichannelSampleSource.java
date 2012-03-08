@@ -6,15 +6,26 @@ package org.signalml.domain.signal;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 
-import org.signalml.plugin.export.view.DocumentView;
+import javax.swing.event.EventListenerList;
+
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
+import org.signalml.plugin.export.signal.ExportedSignalDocument;
+import org.signalml.plugin.export.view.DocumentView;
+import org.signalml.plugin.impl.change.events.PluginSignalChangeEventImpl;
 
 public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource, ChangeableMultichannelSampleSource {
+
+	/**
+	 * The list containing objects listening for change in this sample source.
+	 */
+	private EventListenerList listenerList = new EventListenerList();
 
 	protected int nextInsertPos;
 	protected boolean full;
@@ -104,6 +115,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		incrNextInsertPos();
 		newSamplesCount++;
 
+		fireNewSamplesAddedEvent();
 	}
 
 	@Override
@@ -114,6 +126,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)
 				i.next().repaint();
 		}
+		fireNewSamplesAddedEvent();
 
 	}
 
@@ -126,7 +139,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)
 				i.next().repaint();
 		}
-
+		fireNewSamplesAddedEvent();
 	}
 
 	// przy zwykłych źródłach sygnału sampleCount jest znany z góry, a tu nie;
@@ -321,6 +334,27 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	@Override
 	public float getSingleCalibrationOffset() {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	@Override
+	public void addSignalChangeListener(PluginSignalChangeListener listener) {
+		listenerList.add(PluginSignalChangeListener.class, listener);
+	}
+
+	protected void fireNewSamplesAddedEvent() {
+		Object[] listeners = listenerList.getListenerList();
+		PluginSignalChangeEvent e = null;
+		for (int i = listeners.length-2; i>=0; i-=2) {
+			if (listeners[i]==PluginSignalChangeListener.class) {
+				if (e == null) {
+					ExportedSignalDocument document = null;
+					if (getDocumentView() != null)
+						document = (ExportedSignalDocument) getDocumentView().getDocument();
+					e = new PluginSignalChangeEventImpl(document);
+				}
+				((PluginSignalChangeListener)listeners[i+1]).newSamplesAdded(e);
+			}
+		}
 	}
 
 }

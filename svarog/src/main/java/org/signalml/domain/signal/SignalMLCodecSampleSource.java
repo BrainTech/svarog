@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.util.Util;
 
 /**
@@ -558,6 +559,11 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 	@Override
 	public float getSingleCalibrationOffset() {
 		return 0.0F;
+	}
+
+	@Override
+	public void addSignalChangeListener(PluginSignalChangeListener listener) {
+		//this sample source doesn't support signalchangelisteners.
 	}
 
 }

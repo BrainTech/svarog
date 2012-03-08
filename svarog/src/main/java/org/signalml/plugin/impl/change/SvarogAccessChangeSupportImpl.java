@@ -29,10 +29,12 @@ import org.signalml.domain.tag.TagEvent;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.change.events.PluginCodecEvent;
 import org.signalml.plugin.export.change.events.PluginDocumentEvent;
+import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
 import org.signalml.plugin.export.change.events.PluginTagEvent;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.change.listeners.PluginCodecListener;
 import org.signalml.plugin.export.change.listeners.PluginDocumentListener;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.change.listeners.PluginTagDocumentListener;
 import org.signalml.plugin.export.change.listeners.PluginTagListener;
 import org.signalml.plugin.export.change.listeners.PluginTagListenerWithActive;
@@ -104,7 +106,7 @@ import org.signalml.plugin.impl.change.events.PluginTagDocumentEventImpl;
  * 
  * @author Marcin Szumski
  */
-public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocumentImpl implements SvarogAccessChangeSupport, ActionFocusListener, DocumentManagerListener, SignalMLCodecManagerListener, PropertyChangeListener{
+public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocumentImpl implements SvarogAccessChangeSupport, ActionFocusListener, DocumentManagerListener, SignalMLCodecManagerListener, PropertyChangeListener, PluginSignalChangeListener {
 	
 	/**
 	 * the currently active document
@@ -145,6 +147,11 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 	protected ArrayList<PluginTagListenerWithActive> tagListenersWithActive = new ArrayList<PluginTagListenerWithActive>();
 	
 	/**
+	 * {@link PluginSignalChangeListener listeners} on signal changes.
+	 */
+	protected ArrayList<PluginSignalChangeListener> signalListeners = new ArrayList<PluginSignalChangeListener>();
+	
+	/**
 	 * HashMap associating signal documents with {@link SvarogAccessChangeSupportDocumentImpl listeners} for them
 	 */
 	private HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnSignalDocument = new HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl>();
@@ -161,7 +168,8 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 	 */
 	private HashMap<SignalView, Tag> activeTags = new HashMap<SignalView, Tag>();
 	
-	private SvarogAccessChangeSupportImpl() { }
+	private SvarogAccessChangeSupportImpl() {
+	}
 
 	private static final SvarogAccessChangeSupportImpl _instance = new SvarogAccessChangeSupportImpl();
 
@@ -316,6 +324,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 						tagSet.addTagStyleListener(tagDocumentListener);
 					}
 				}
+				signalDocument.getSampleSource().addSignalChangeListener(this);
 			}
 
 		}
@@ -684,10 +693,42 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 		
 	}
 
-	public void setViewerElementManager(ViewerElementManager manager) {
-		super.setViewerElementManager(manager);
+	public void setViewerElementManager(ViewerElementManager viewerElementManager) {
 
-		if (manager != null)
-			manager.getDocumentManager().addDocumentManagerListener(this);
+		super.setViewerElementManager(viewerElementManager);
+		ViewerElementManager manager = getViewerElementManager();
+		ActionFocusManager focusManager = manager.getActionFocusManager();
+		if (focusManager != null) {
+			focusManager.addActionFocusListener(this);
+			activeDocument = focusManager.getActiveDocument();
+			activeTagDocument = focusManager.getActiveTagDocument();
+		}
+
+		DocumentManager documentManager = manager.getDocumentManager();
+		if (documentManager != null)
+			documentManager.addDocumentManagerListener(this);
+
+		SignalMLCodecManager codecManager = manager.getCodecManager();
+		if (codecManager != null)
+			codecManager.addSignalMLCodecManagerListener(this);
+		for (SvarogAccessChangeSupportDocumentImpl listener : listenersOnSignalDocument.values()) {
+			listener.setViewerElementManager(manager);
+		}
+		for (SvarogAccessChangeSupportDocumentImpl listener : listenersOnTagDocument.values()) {
+			listener.setViewerElementManager(manager);
+		}
+
+	}
+
+	@Override
+	public void addSignalChangeListener(PluginSignalChangeListener signalListener) {
+		signalListeners.add(signalListener);
+	}
+
+	@Override
+	public void newSamplesAdded(PluginSignalChangeEvent e) {
+		if (e.getDocument() == activeDocument)
+			for (PluginSignalChangeListener listener : signalListeners)
+				listener.newSamplesAdded(e);
 	}
 }
