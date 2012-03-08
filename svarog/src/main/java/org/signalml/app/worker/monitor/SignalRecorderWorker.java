@@ -293,5 +293,4 @@ public class SignalRecorderWorker {
                 this.tagRecorder = tagRecorder;
         }
 
-
 }

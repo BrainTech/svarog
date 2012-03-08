@@ -5,6 +5,7 @@
 package org.signalml.app.view.signal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.BorderLayout;
@@ -106,6 +107,7 @@ import org.signalml.app.view.components.dialogs.SignalSelectionDialog;
 import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.document.monitor.MonitorRecordingDurationPanel;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
@@ -246,6 +248,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 * recording.
 	 */
 	private StopMonitorRecordingAction stopMonitorRecordingAction;
+	private MonitorRecordingDurationPanel monitorRecordingDurationPanel;
 
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
@@ -935,6 +938,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(getCloseTagAction());
 
 		mainToolBar.add(Box.createHorizontalGlue());
+		mainToolBar.add(getMonitorRecordingDurationPanel());
 		mainToolBar.add(getStartMonitorRecordingAction());
 		mainToolBar.add(getStopMonitorRecordingAction());
 
@@ -1219,6 +1223,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			stopMonitorRecordingAction = new StopMonitorRecordingAction( getActionFocusManager());
 		}
 		return stopMonitorRecordingAction;
+	}
+
+	public MonitorRecordingDurationPanel getMonitorRecordingDurationPanel() {
+		if (monitorRecordingDurationPanel == null) {
+			monitorRecordingDurationPanel = new MonitorRecordingDurationPanel(document);
+		}
+		return monitorRecordingDurationPanel;
 	}
 
 	public EditSignalParametersAction getEditSignalParametersAction() {
