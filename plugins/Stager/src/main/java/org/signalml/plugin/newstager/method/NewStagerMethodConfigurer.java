@@ -10,12 +10,12 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;
+import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.AbstractPluginDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
@@ -90,7 +90,7 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 
 		NewStagerApplicationData data = (NewStagerApplicationData) methodDataObj;
 
-		SignalDocument signalDocument = null; //TODO! data.getSignalDocument();
+		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		String name = signalDocument.getName();
 		int dotIdx = name.lastIndexOf('.');
 		if (dotIdx >= 0) {
