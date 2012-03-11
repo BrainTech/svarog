@@ -81,8 +81,6 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 	public void calculate() throws SignalMLException {
 
-			int i;
-
 		Map<String, Integer> keyChannelMap = getKeyChannelMap();
 		ArrayList<Integer> eegChannels = getEegChannels();
 		Map<String, Integer> channelMap = getChannelMap();
@@ -93,7 +91,7 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 		int cnt = montage.getSourceChannelCount();
 		SourceChannel channel;
-		for (i = 0; i < cnt; i++) {
+		for (int i = 0; i < cnt; i++) {
 			channelMap.put(montage.getSourceChannelLabelAt(i), i);
 
 			channel = montage.getSourceChannelAt(i);
