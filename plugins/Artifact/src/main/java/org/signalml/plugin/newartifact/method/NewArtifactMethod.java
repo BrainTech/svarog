@@ -1,5 +1,7 @@
 package org.signalml.plugin.newartifact.method;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,8 +30,6 @@ import org.signalml.plugin.newartifact.data.NewIterableSensitivity;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrData;
 import org.signalml.plugin.newartifact.logic.mgr.NewArtifactComputationMgr;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-
 import org.springframework.validation.Errors;
 
 public class NewArtifactMethod extends PluginAbstractMethod implements
@@ -37,7 +37,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 
 	private static final String UID = "a3530db2-cfa5-4eed-be1f-dafc81ee4225";
 
-	private static final int[] VERSION = new int[] { 0, 9 };
+	private static final int[] VERSION = new int[] { 1, 0 };
 
 	private final int BLOCK_LENGTH_IN_SECONDS = 4;
 	private final int SMALL_BLOCK_LENGTH_IN_SECONDS = 1;
