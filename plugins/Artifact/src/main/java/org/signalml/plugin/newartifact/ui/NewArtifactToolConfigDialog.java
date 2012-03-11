@@ -1,4 +1,4 @@
-/* ArtifactToolConfigDialog.java created 2008-02-08
+/* NewArtifactToolConfigDialog.java created 2008-02-08
  *
  */
 
@@ -14,18 +14,19 @@ import javax.swing.JComponent;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractPluginDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 
 /**
- * ArtifactToolConfigDialog
- *
- *
+ * NewArtifactToolConfigDialog
+ * 
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view.AbstractPluginDialog  {
+public class NewArtifactToolConfigDialog extends AbstractPluginDialog {
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,36 +57,31 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 
 	public NewArtifactToolConfigPanel getConfigPanel() {
 		if (configPanel == null) {
-			configPanel = new NewArtifactToolConfigPanel(
-					fileChooser);
+			configPanel = new NewArtifactToolConfigPanel(fileChooser);
 		}
 		return configPanel;
 	}
 
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-
 		getConfigPanel().fillPanelFromModel((NewArtifactConfiguration) model);
-
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-
 		getConfigPanel().fillModelFromPanel((NewArtifactConfiguration) model);
-
 	}
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-	throws SignalMLException {
+			throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		getConfigPanel().validatePanel(errors);
 
 		if (!errors.hasErrors()) {
 			File file = getConfigPanel().getWorkingDirectoryPanel()
-				    .getDirectory();
+					.getDirectory();
 			if (file == null || !file.exists() || !file.canWrite()) {
 				errors.addError(_("Working directory not set or unusable"));
 			}
