@@ -16,10 +16,12 @@ import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;
+import org.signalml.plugin.export.view.AbstractPluginDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.method.IPluginMethodConfigurer;
 import org.signalml.plugin.method.PluginMethodManager;
+import org.signalml.plugin.method.helper.PluginMethodWorkingDirConfigurer;
 import org.signalml.plugin.newstager.data.NewStagerApplicationData;
 import org.signalml.plugin.newstager.data.NewStagerConfiguration;
 import org.signalml.plugin.newstager.ui.NewStagerMethodDialog;
@@ -47,13 +49,13 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 	private ApplicationConfiguration applicationConfig;
 	private NewStagerToolConfigDialog configDialog;
 
+	private PluginMethodWorkingDirConfigurer workDirConfigurer;
+	
 	@Override
 	public void initialize(PluginMethodManager manager) {
 		SvarogAccessGUI guiAccess = manager.getSvarogAccess().getGUIAccess();
 		
 		this.dialogParent = guiAccess.getDialogParent();
-		
-		//TODO! this.createPresetManager(manager);
 		
 		this.fileChooser = guiAccess.getFileChooser();
 		
@@ -64,57 +66,27 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 
 		dialog.setApplicationConfig(applicationConfig);
 
-		
-	}
-
-	public NewStagerToolConfigDialog getConfigDialog() {
-		if (configDialog == null) {
-			configDialog = new NewStagerToolConfigDialog(dialogParent, true);
-			configDialog.setFileChooser(fileChooser);
-		}
-		return configDialog;
+		this.workDirConfigurer = new PluginMethodWorkingDirConfigurer(this.presetManager, new NewStagerConfiguration(), new PluginMethodWorkingDirConfigurer.PluginWorkingDirDialogGetter() {
+			
+			@Override
+			public AbstractPluginDialog getDialog() {
+				if (configDialog == null) {
+					configDialog = new NewStagerToolConfigDialog(dialogParent, true);
+					configDialog.setFileChooser(fileChooser);
+				}
+				return configDialog;
+			}
+		});
 	}
 
 	@Override
 	public boolean configure(Method method, Object methodDataObj)
 			throws SignalMLException {
 
-		boolean workingDirectoryOk = false;
-		String workingDirectoryPath;
-		File workingDirectory = null;
-
-		//TODO!
-		NewStagerConfiguration stagerConfig = null;//applicationConfig.getStagerConfig();
-
-		do {
-
-			workingDirectoryPath = stagerConfig.getWorkingDirectoryPath();
-			if (workingDirectoryPath != null) {
-
-				workingDirectory = (new File(workingDirectoryPath))
-						.getAbsoluteFile();
-
-				if (workingDirectory.exists()) {
-					if (workingDirectory.isDirectory()
-							&& workingDirectory.canRead()
-							&& workingDirectory.canWrite()) {
-						workingDirectoryOk = true;
-					}
-				}
-
-			}
-
-			if (!workingDirectoryOk) {
-
-				stagerConfig.setWorkingDirectoryPath(null);
-				boolean ok = getConfigDialog().showDialog(stagerConfig, true);
-				if (!ok) {
-					return false;
-				}
-
-			}
-
-		} while (!workingDirectoryOk);
+		File workingDirectory = this.workDirConfigurer.configureWorkDir();
+		if (workingDirectory == null) {
+			return false;
+		}
 
 		NewStagerApplicationData data = (NewStagerApplicationData) methodDataObj;
 

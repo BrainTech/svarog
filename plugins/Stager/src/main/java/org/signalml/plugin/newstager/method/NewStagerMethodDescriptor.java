@@ -124,6 +124,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 				presetManager.setStreamer((XStream) PluginResourceRepository
 						.GetResource("streamer", NewStagerPlugin.class));
 			} catch (PluginException e) {
+				this.methodManager.handleException(e);
 				logger.error("Can't get proper streamer", e);
 				return presetManager;
 			}
