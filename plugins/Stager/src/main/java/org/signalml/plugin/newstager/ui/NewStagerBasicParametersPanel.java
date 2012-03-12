@@ -8,9 +8,10 @@ import static org.signalml.plugin.newstager.NewStagerPlugin._;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.Box;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
@@ -50,21 +51,23 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	private JCheckBox primaryHypnogramCheckBox;
 
-	//TODO!
-	/*
-	EnableAction amplitudePanelsEnable = new EnableAction() {
-		public void setEnabled(boolean enabled) {
-			getDeltaMinAmplitudePanel().setEnabled(enabled);
-			getAlphaMinAmplitudePanel().setEnabled(enabled);
-			getSpindleMinAmplitudePanel().setEnabled(enabled);
-		};
-	};
-	*/
-
-	public NewStagerBasicParametersPanel(AbstractDialog owner) {
+	public NewStagerBasicParametersPanel(AbstractDialog owner, NewStagerAdvancedConfigObservable advancedConfigObservable) {
 		super();
 		this.owner = owner;
 		initialize();
+		
+		final NewStagerAdvancedConfigObservable observable = advancedConfigObservable; 
+		advancedConfigObservable.addObserver(new Observer() {
+			
+			@Override
+			public void update(Observable o, Object arg) {
+				boolean flag = observable.getEnabled();
+				
+				getDeltaMinAmplitudePanel().setEnabled(flag);
+				getAlphaMinAmplitudePanel().setEnabled(flag);
+				getSpindleMinAmplitudePanel().setEnabled(flag);
+			}
+		});
 	}
 
 	private void initialize() {
@@ -175,8 +178,9 @@ public class NewStagerBasicParametersPanel extends JPanel {
 		if (rulesComboBox == null) {
 			rulesComboBox = new ResolvableComboBox();
 
-			//TODO!
-			//rulesComboBox.setModel(new DefaultComboBoxModel(SleepStagingRules.values()));
+			// TODO!
+			// rulesComboBox.setModel(new
+			// DefaultComboBoxModel(SleepStagingRules.values()));
 		}
 		return rulesComboBox;
 	}
@@ -223,52 +227,42 @@ public class NewStagerBasicParametersPanel extends JPanel {
 	}
 
 	public void fillPanelFromParameters(NewStagerParameters parameters) {
-		//TODO!
+		// TODO!
 		/*
-		getRulesComboBox().setSelectedItem(parameters.getRules());
-
-		getDeltaMinAmplitudePanel().setValueWithAuto(
-				parameters.getDeltaAmplitude().getMinWithUnlimited());
-		getAlphaMinAmplitudePanel().setValueWithAuto(
-				parameters.getAlphaAmplitude().getMinWithUnlimited());
-		getSpindleMinAmplitudePanel().setValueWithAuto(
-				parameters.getSpindleAmplitude().getMinWithUnlimited());
-
-		getPrimaryHypnogramCheckBox().setSelected(
-				parameters.isPrimaryHypnogram());
+		 * getRulesComboBox().setSelectedItem(parameters.getRules());
+		 * 
+		 * getDeltaMinAmplitudePanel().setValueWithAuto(
+		 * parameters.getDeltaAmplitude().getMinWithUnlimited());
+		 * getAlphaMinAmplitudePanel().setValueWithAuto(
+		 * parameters.getAlphaAmplitude().getMinWithUnlimited());
+		 * getSpindleMinAmplitudePanel().setValueWithAuto(
+		 * parameters.getSpindleAmplitude().getMinWithUnlimited());
+		 * 
+		 * getPrimaryHypnogramCheckBox().setSelected(
+		 * parameters.isPrimaryHypnogram());
 		 */
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
-		//TODO!
+		// TODO!
 		/*
-		parameters.setRules((SleepStagingRules) getRulesComboBox()
-				.getSelectedItem());
-
-		parameters.getDeltaAmplitude().setMinWithUnlimited(
-				getDeltaMinAmplitudePanel().getValueWithAuto());
-		parameters.getAlphaAmplitude().setMinWithUnlimited(
-				getAlphaMinAmplitudePanel().getValueWithAuto());
-		parameters.getSpindleAmplitude().setMinWithUnlimited(
-				getSpindleMinAmplitudePanel().getValueWithAuto());
-
-		parameters.setPrimaryHypnogram(getPrimaryHypnogramCheckBox()
-				.isSelected());
-		*/
+		 * parameters.setRules((SleepStagingRules) getRulesComboBox()
+		 * .getSelectedItem());
+		 * 
+		 * parameters.getDeltaAmplitude().setMinWithUnlimited(
+		 * getDeltaMinAmplitudePanel().getValueWithAuto());
+		 * parameters.getAlphaAmplitude().setMinWithUnlimited(
+		 * getAlphaMinAmplitudePanel().getValueWithAuto());
+		 * parameters.getSpindleAmplitude().setMinWithUnlimited(
+		 * getSpindleMinAmplitudePanel().getValueWithAuto());
+		 * 
+		 * parameters.setPrimaryHypnogram(getPrimaryHypnogramCheckBox()
+		 * .isSelected());
+		 */
 	}
 
 	public void validatePanel(ValidationErrors errors) {
 		// nothing to do
 	}
-
-	/**
-	 * @return the amplitudePanelsEnable
-	 */
-	//TODO!
-	/*
-	public EnableAction getAmplitudePanelsEnable() {
-		return amplitudePanelsEnable;
-	}
-	*/
 
 }

@@ -4,6 +4,7 @@
 package org.signalml.plugin.newstager.ui;
 
 import java.awt.BorderLayout;
+import java.util.EventListenerProxy;
 
 import javax.swing.Box;
 import javax.swing.JDialog;
@@ -30,16 +31,21 @@ public class NewStagerBasicConfigPanel extends JPanel {
 
 	private AbstractDialog owner;
 	private FileChooser fileChooser;
-
+	
 	private NewStagerBookPanel bookPanel;
 	private NewStagerBasicParametersPanel parametersPanel;
 	private NewStagerEnableAdvancedConfigPanel enableAdvancedConfigPanel;
 
+	private NewStagerAdvancedConfigObservable advancedConfigObservable;
+	
 	public NewStagerBasicConfigPanel(FileChooser fileChooser,
 			AbstractDialog owner) {
 		super();
 		this.fileChooser = fileChooser;
 		this.owner = owner;
+		
+		this.advancedConfigObservable = new NewStagerAdvancedConfigObservable();
+		
 		initialize();
 	}
 
@@ -72,14 +78,14 @@ public class NewStagerBasicConfigPanel extends JPanel {
 
 	public NewStagerBasicParametersPanel getParametersPanel() {
 		if (parametersPanel == null) {
-			parametersPanel = new NewStagerBasicParametersPanel(owner);
+			parametersPanel = new NewStagerBasicParametersPanel(owner, this.advancedConfigObservable);
 		}
 		return parametersPanel;
 	}
 
 	public NewStagerEnableAdvancedConfigPanel getEnableAdvancedConfigPanel() {
 		if (enableAdvancedConfigPanel == null) {
-			enableAdvancedConfigPanel = null;//TODO!//new NewStagerEnableAdvancedConfigPanel(getParametersPanel().getAmplitudePanelsEnable());
+			enableAdvancedConfigPanel = new NewStagerEnableAdvancedConfigPanel(owner, this.advancedConfigObservable);
 		}
 		return enableAdvancedConfigPanel;
 	}

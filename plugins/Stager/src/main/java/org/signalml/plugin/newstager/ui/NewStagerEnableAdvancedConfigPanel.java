@@ -17,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 
 /**
@@ -32,12 +33,13 @@ public class NewStagerEnableAdvancedConfigPanel extends JPanel {
 
 	private JCheckBox enableAdvancedCheckBox;
 
-	//TODO!
-	//private EnableAction invertedEnableAction;
+	private NewStagerAdvancedConfigObservable advancedConfigEnabledObservable;
 
-	public NewStagerEnableAdvancedConfigPanel(/*EnableAction invertedEnableAction*/) {
+	public NewStagerEnableAdvancedConfigPanel(
+			AbstractDialog owner,
+			NewStagerAdvancedConfigObservable advancedConfigEnabledObservable) {
 		super();
-		//this.invertedEnableAction = invertedEnableAction;
+		this.advancedConfigEnabledObservable = advancedConfigEnabledObservable;
 		initialize();
 	}
 
@@ -62,11 +64,10 @@ public class NewStagerEnableAdvancedConfigPanel extends JPanel {
 			enableAdvancedCheckBox.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					//TODO!
-					/*if (invertedEnableAction != null) {
-						invertedEnableAction.setEnabled(!enableAdvancedCheckBox
-								.isSelected());
-					}*/
+
+					if (advancedConfigEnabledObservable != null) {
+						advancedConfigEnabledObservable.setEnabled(!enableAdvancedCheckBox.isSelected());
+					}
 				}
 			});
 		}
@@ -74,13 +75,13 @@ public class NewStagerEnableAdvancedConfigPanel extends JPanel {
 	}
 
 	public void fillPanelFromParameters(NewStagerParameters parameters) {
-		//TODO!
-		//getEnableAdvancedCheckBox().setSelected(parameters.isAdvancedConfig());
+		// TODO!
+		// getEnableAdvancedCheckBox().setSelected(parameters.isAdvancedConfig());
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
-		//TODO!
-		//parameters.setAdvancedConfig(getEnableAdvancedCheckBox().isSelected());
+		// TODO!
+		// parameters.setAdvancedConfig(getEnableAdvancedCheckBox().isSelected());
 	}
 
 	public void validatePanel(ValidationErrors errors) {
