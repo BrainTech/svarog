@@ -264,6 +264,14 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 
 		}
 
+		//selects currently added arrow.
+		for (VisualReferenceArrow arrow: this.arrows) {
+			if (arrow.getSourceChannel() == sourceIndex && montageIndex == arrow.getTargetChannel()) {
+				setActiveArrow(arrow);
+				break;
+			}
+		}
+
 	}
 
 	// montageIndex is a montage index in this mode
