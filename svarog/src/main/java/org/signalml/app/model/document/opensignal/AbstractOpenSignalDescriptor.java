@@ -4,7 +4,7 @@ import org.signalml.domain.montage.system.EegSystem;
 
 public abstract class AbstractOpenSignalDescriptor {
 
-	protected SignalParameters signalParameters;
+	protected SignalParameters signalParameters = new SignalParameters();
 	protected EegSystem eegSystem;
 	
 	public EegSystem getEegSystem() {

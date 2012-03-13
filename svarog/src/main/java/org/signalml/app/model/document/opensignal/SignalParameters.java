@@ -4,9 +4,6 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 
 public class SignalParameters {
-
-	private RawSignalSampleType sampleType;
-	private RawSignalByteOrder byteOrder;
 	
 	private float samplingFrequency;
 	private int channelCount;
@@ -20,16 +17,11 @@ public class SignalParameters {
 	private Float minimumValue;
 
 	public SignalParameters() {
-		sampleType = RawSignalSampleType.DOUBLE;
-        byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
         samplingFrequency = 128.0F;
         pageSize = 20.0F;
 	}
 
 	public SignalParameters(SignalParameters signalParameters) {
-		sampleType = signalParameters.sampleType;;
-		byteOrder = signalParameters.byteOrder;
-
 		samplingFrequency = signalParameters.samplingFrequency;
 		channelCount = signalParameters.channelCount;
 		calibrationGain = signalParameters.calibrationGain == null ? null : signalParameters.calibrationGain.clone();
@@ -40,19 +32,6 @@ public class SignalParameters {
 
 		maximumValue = signalParameters.maximumValue;
 		minimumValue = signalParameters.minimumValue;
-	}
-
-	public RawSignalSampleType getSampleType() {
-		return sampleType;
-	}
-	public void setSampleType(RawSignalSampleType sampleType) {
-		this.sampleType = sampleType;
-	}
-	public RawSignalByteOrder getByteOrder() {
-		return byteOrder;
-	}
-	public void setByteOrder(RawSignalByteOrder byteOrder) {
-		this.byteOrder = byteOrder;
 	}
 	public float getSamplingFrequency() {
 		return samplingFrequency;

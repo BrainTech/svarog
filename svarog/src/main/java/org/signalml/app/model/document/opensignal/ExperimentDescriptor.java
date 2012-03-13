@@ -48,7 +48,6 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	
 	public ExperimentDescriptor() {
         setBackupFrequency(10.0F);
-        this.signalParameters = new SignalParameters();
 	}
 
 	public String getName() {

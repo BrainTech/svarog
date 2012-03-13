@@ -95,8 +95,6 @@ public class SignalParametersPanelForOpenBCI extends AbstractSignalParametersPan
 						.toString()));
 		int channelCount = getChannelCountSpinner().getValue();
 		signalParameters.setChannelCount(channelCount);
-		signalParameters.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
-		signalParameters.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
 		signalParameters.setPageSize(getPageSizeSpinner().getValue());
 
 		List<AmplifierChannel> channels = descriptor.getAmplifier().getSelectedChannels();
