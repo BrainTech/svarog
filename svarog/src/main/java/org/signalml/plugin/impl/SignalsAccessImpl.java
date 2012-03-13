@@ -26,7 +26,7 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.dialogs.OptionPane;
@@ -628,8 +628,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		if (!file.canRead()) throw new IOException("can not access file");
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
-		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
-		osd.setMethod(FileOpenSignalMethod.RAW);
+
 		RawSignalDescriptor descriptor = new RawSignalDescriptor();
 		descriptor.setSamplingFrequency(samplingFrequency);
 		descriptor.setChannelCount(channelCount);
@@ -638,7 +637,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		descriptor.setCalibrationGain(calibration);
 		descriptor.setPageSize(pageSize);
 		descriptor.setBlocksPerPage(blocksPerPage);
-		osd.setRawSignalDescriptor(descriptor);
+		ofd.setOpenSignalDescriptor(descriptor);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
 			throw new SignalMLException("failed to open document");
@@ -754,16 +753,16 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
-		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
-		osd.setMethod(FileOpenSignalMethod.SIGNALML);
-		SignalParameters spd = osd.getSignalmlDescriptor().getSignalParameters();
+		SignalMLDescriptor signalMLDescriptor = (SignalMLDescriptor) ofd.getOpenSignalDescriptor();
+		SignalParameters spd = signalMLDescriptor.getSignalParameters(); 
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (file == null) throw new NullPointerException("file can not be null");
 		if (!file.exists()) throw new IOException("file doesn't exist");
 		if (!file.canRead()) throw new IOException("can not access file");
 		SignalMLCodec codec = codecManager.getCodecForFormat(codecFormatName);
 		if (codec == null) throw new IllegalArgumentException("codec of this name doesn't exist");
-		osd.getSignalmlDescriptor().setCodec(codec);
+		
+		signalMLDescriptor.setCodec(codec);
 		if (spd.isBlocksPerPageEditable()){
 			spd.setBlocksPerPage(blocksPerPage);
 		}

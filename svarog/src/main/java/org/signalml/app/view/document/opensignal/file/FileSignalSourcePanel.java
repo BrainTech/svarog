@@ -17,7 +17,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
@@ -96,18 +96,17 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 * Fills the given descriptor using the data set in the components contained
 	 * in this panel.
 	 * 
-	 * @param openFileSignalDescriptor
+	 * @param openDocumentDescriptor
 	 *            the descriptor to be filled
 	 */
-	public void fillPanelFromModel(OpenFileSignalDescriptor openFileSignalDescriptor) {
+	public void fillPanelFromModel(OpenDocumentDescriptor openDocumentDescriptor) {
 
-		FileOpenSignalMethod method = openFileSignalDescriptor.getMethod();
-
-		getFileOpenMethodPanel().setSelectedOpenSignalMethod(method);
-		if (method.isRaw()) {
-			rawSignalParametersPanel.fillPanelFromModel(openFileSignalDescriptor.getRawSignalDescriptor());
-		} else if (method.isSignalML()) {
-			getSignalMLSignalParametersPanel().fillPanelFromModel(openFileSignalDescriptor);
+		AbstractOpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
+		
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			rawSignalParametersPanel.fillPanelFromModel((RawSignalDescriptor) openSignalDescriptor);
+		} else if (openSignalDescriptor instanceof SignalMLDescriptor) {
+			getSignalMLSignalParametersPanel().fillPanelFromModel((SignalMLDescriptor) openSignalDescriptor);
 		}
 		
 		String lastFileChooserPath = this.getViewerElementManager().getApplicationConfig().getLastFileChooserPath();
@@ -121,16 +120,15 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 */
 	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
 
-		OpenFileSignalDescriptor descriptor = openDocumentDescriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		FileOpenSignalMethod method = fileOpenMethodPanel.getSelectedOpenSignalMethod();
 		if (method.isRaw()) {
-			descriptor.setMethod(FileOpenSignalMethod.RAW);
-			RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
+			RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
 			rawSignalParametersPanel.fillModelFromPanel(rawSignalDescriptor);
+			openDocumentDescriptor.setOpenSignalDescriptor(rawSignalDescriptor);
 		} else if (method.isSignalML()) {
-			descriptor.setMethod(FileOpenSignalMethod.SIGNALML);
-			SignalMLDescriptor signalmlDescriptor = descriptor.getSignalmlDescriptor();
+			SignalMLDescriptor signalmlDescriptor = new SignalMLDescriptor();
 			getSignalMLSignalParametersPanel().fillModelFromPanel(signalmlDescriptor);
+			openDocumentDescriptor.setOpenSignalDescriptor(signalmlDescriptor);
 		}
 
 		File selectedFile = fileChooserPanel.getSelectedFile();

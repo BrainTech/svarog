@@ -74,7 +74,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 			spd.setChannelCount(mss.getChannelCount());
 			spd.setChannelCountEditable(false);
 		} else {
-			spd.setChannelCount(null);
+			spd.setChannelCount(0);
 			spd.setChannelCountEditable(true);
 		}
 

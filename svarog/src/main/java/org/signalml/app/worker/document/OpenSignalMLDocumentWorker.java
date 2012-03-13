@@ -10,6 +10,7 @@ import javax.swing.SwingWorker;
 
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;
@@ -27,7 +28,8 @@ public class OpenSignalMLDocumentWorker extends SwingWorker<SignalMLDocument, Vo
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	public OpenSignalMLDocumentWorker(OpenDocumentDescriptor descriptor, PleaseWaitDialog pleaseWaitDialog) {
-		this.codec = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getSignalmlDescriptor().getCodec();
+		SignalMLDescriptor signalmDescriptor = (SignalMLDescriptor) descriptor.getOpenSignalDescriptor();
+		this.codec = signalmDescriptor.getCodec();
 		this.pleaseWaitDialog = pleaseWaitDialog;
 		this.file = descriptor.getFile();
 	}

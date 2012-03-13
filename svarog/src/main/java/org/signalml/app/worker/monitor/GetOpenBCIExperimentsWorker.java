@@ -3,6 +3,7 @@ package org.signalml.app.worker.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Container;
+import java.net.SocketException;
 import java.util.List;
 
 import javax.swing.SwingWorker;
@@ -34,6 +35,13 @@ public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<
 				Helper.loadOpenbciConfigFile();
 		} catch (Exception ex) {
 			Dialogs.showError("Could not read ~/.obci/main_config.ini file correctly");
+			return null;
+		}
+		
+		try {
+			Helper.findOpenbciIpAddress();
+		} catch (SocketException ex) {
+			Dialogs.showExceptionDialog(ex);
 			return null;
 		}
 		

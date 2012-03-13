@@ -6,23 +6,14 @@ package org.signalml.app.view.document.opensignal.monitor;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.view.components.MonitorRecordingPanel;
-import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
-import org.signalml.app.view.document.opensignal.SignalSource;
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
 
-import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
+import org.signalml.app.view.document.opensignal.SignalSource;
+import org.signalml.app.view.workspace.ViewerElementManager;
 
 /**
  * The panel for choosing setting a connection to an openBCI system and
@@ -100,12 +91,12 @@ public class OpenBCISignalSourcePanel extends AbstractMonitorSourcePanel {
 	 * contained in this panel.
 	 * @param ExperimentDescriptor the descriptor to be filled
 	 */
-	public void fillModelFromPanel(OpenSignalDescriptor openSignalDescriptor) {
+	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
 
 		signalParametersPanel.fillModelFromPanel(currentModel);
 		currentModel.setEegSystem(getEegSystemSelectionPanel().getSelectedEegSystem());
 		getTagPresetSelectionPanel().fillModelFromPanel(currentModel);
-		openSignalDescriptor.setExperimentDescriptor(currentModel);
+		openDocumentDescriptor.setOpenSignalDescriptor(currentModel);
 	}
 
 	/**

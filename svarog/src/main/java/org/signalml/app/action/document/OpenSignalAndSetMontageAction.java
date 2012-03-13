@@ -17,16 +17,12 @@ import multiplexer.jmx.client.JmxClient;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.document.opensignal.OpenSignalAndSetMontageDialog;
-import org.signalml.app.view.document.opensignal.SignalSource;
-import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
-import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.zeromq.ZMQ;
 
 /**
  * An action performed when the user chooses an option to open signal allowing
@@ -81,8 +77,9 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction implem
 			return;
 		}
 
-		if (openDocumentDescriptor.getOpenSignalDescriptor().getSignalSource() == SignalSource.OPENBCI) {
-			ExperimentDescriptor experimentDescriptor = openDocumentDescriptor.getOpenSignalDescriptor().getExperimentDescriptor();
+		AbstractOpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
 			worker = new ConnectToExperimentWorker(experimentDescriptor);
 			worker.addPropertyChangeListener(this);
 			worker.execute();
@@ -116,7 +113,8 @@ public class OpenSignalAndSetMontageAction extends AbstractSignalMLAction implem
 				jmxClient = worker.get();
 				
 				if (jmxClient != null) {
-					openDocumentDescriptor.getOpenSignalDescriptor().getExperimentDescriptor().setJmxClient(jmxClient);
+					ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openDocumentDescriptor.getOpenSignalDescriptor();
+					experimentDescriptor.setJmxClient(jmxClient);
 					documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
 				}
 			} catch (InterruptedException e) {

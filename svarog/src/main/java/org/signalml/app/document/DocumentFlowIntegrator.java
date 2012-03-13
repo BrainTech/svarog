@@ -25,7 +25,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
@@ -37,7 +37,6 @@ import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.opensignal.SignalSource;
 import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
-import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.SignalChecksumWorker;
@@ -572,23 +571,20 @@ public class DocumentFlowIntegrator {
 
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 
-			OpenFileSignalDescriptor openFileSignalDescriptor = odd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-				openFileSignalDescriptor.setMethod(FileOpenSignalMethod.SIGNALML);
 				SignalMLCodec codec = codecManager.getCodecByUID(smlEntry.getCodecUID());
 				if (codec == null) {
 					logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
 					throw new MissingCodecException("error.mrudMissingCodecException");
 				}
 
-				SignalMLDescriptor signalmlDescriptor = openFileSignalDescriptor.getSignalmlDescriptor();
+				SignalMLDescriptor signalmlDescriptor = new SignalMLDescriptor();
 				signalmlDescriptor.setCodec(codec);
+				odd.setOpenSignalDescriptor(signalmlDescriptor);
 
-				odd.getOpenSignalDescriptor().setSignalSource(SignalSource.FILE);
 				SignalParameters spd = signalmlDescriptor.getSignalParameters();
-
 				spd.setPageSize(smlEntry.getPageSize());
 				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
 				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
@@ -599,8 +595,7 @@ public class DocumentFlowIntegrator {
 			else if (mrud instanceof RawSignalMRUDEntry) {
 
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
-				openFileSignalDescriptor.setMethod(FileOpenSignalMethod.RAW);
-				openFileSignalDescriptor.setRawSignalDescriptor(rawEntry.getDescriptor());
+				odd.setOpenSignalDescriptor(rawEntry.getDescriptor());
 
 			} else {
 				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
@@ -677,17 +672,17 @@ public class DocumentFlowIntegrator {
 			return null;
 		}
 
-		OpenFileSignalDescriptor signalOptions = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
-		FileOpenSignalMethod method = signalOptions.getMethod();
-		if (method == null) {
+		AbstractOpenSignalDescriptor openSignalDescriptor = descriptor.getOpenSignalDescriptor();
+		if (openSignalDescriptor == null) {
 			logger.error("No method");
 			throw new NullPointerException();
 		}
 
-		if (method.equals(FileOpenSignalMethod.SIGNALML)) {
+		if (openSignalDescriptor instanceof SignalMLDescriptor) {
 
+			SignalMLDescriptor signalMLDescriptor = (SignalMLDescriptor) openSignalDescriptor;
 			logger.debug("Opening as signal with SignalML");
-			final SignalMLCodec codec = signalOptions.getSignalmlDescriptor().getCodec();
+			final SignalMLCodec codec = signalMLDescriptor.getCodec();
 			if (codec == null) {
 				Dialogs.showError(_("SignalML Codec not found!"));
 				logger.error("No codec");
@@ -715,7 +710,7 @@ public class DocumentFlowIntegrator {
 				return null;
 			}
 
-			SignalParameters spd = signalOptions.getSignalmlDescriptor().getSignalParameters();
+			SignalParameters spd = signalMLDescriptor.getSignalParameters();
 			if (spd.getPageSize() != null) {
 				signalMLDocument.setPageSize(spd.getPageSize());
 			}
@@ -764,11 +759,11 @@ public class DocumentFlowIntegrator {
 
 			return signalMLDocument;
 
-		} else if (method.equals(FileOpenSignalMethod.RAW)) {
+		} else if (openSignalDescriptor instanceof RawSignalDescriptor) {
 
 			logger.debug("Opening as raw signal");
 
-			RawSignalDescriptor rawDescriptor = signalOptions.getRawSignalDescriptor();
+			RawSignalDescriptor rawDescriptor = (RawSignalDescriptor) openSignalDescriptor;
 			if (rawDescriptor == null) {
 				logger.error("No descriptor");
 				throw new NullPointerException();
@@ -808,19 +803,16 @@ public class DocumentFlowIntegrator {
 
 		} else {
 			// other methods are not supported now
-			logger.error("Unsupported method [" + method + "]");
+			logger.error("Unsupported method [" + openSignalDescriptor.getClass().toString() + "]");
 			throw new SignalMLException("error.invalidValue");
 		}
-					
+
 	}
 
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
-		ExperimentDescriptor monitorOptions = null;
-
-		if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
-			monitorOptions = descriptor.getOpenSignalDescriptor().getExperimentDescriptor();
-		}
+		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
+		
 		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
@@ -1654,7 +1646,7 @@ public class DocumentFlowIntegrator {
 			spd.setChannelCount(signalMLDocument.getChannelCount());
 			spd.setChannelCountEditable(false);
 		} else {
-			spd.setChannelCount(null);
+			spd.setChannelCount(0);
 			spd.setChannelCountEditable(true);	
 		}
 

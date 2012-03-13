@@ -42,11 +42,15 @@ public class Helper {
 		File mainConfigFile = new File(obciSettingsDir, "main_config.ini");
 		
 		Wini config = new Wini(mainConfigFile);
-		
+
 		openbciInterfaceName = config.get("server", "ifname");
 		openbciPort = Integer.parseInt(config.get("server", "port"));
-		
+	}
+	
+	public static void findOpenbciIpAddress() throws SocketException {
 		NetworkInterface netint = NetworkInterface.getByName(openbciInterfaceName);
+		if (netint == null)
+			throw new SocketException("The " + openbciInterfaceName + " interface is not connected!");
 		Enumeration<InetAddress> addrs = netint.getInetAddresses();
 
 		for (InetAddress inetAddress : Collections.list(addrs)) {

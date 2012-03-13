@@ -5,10 +5,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -21,8 +19,6 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.document.SignalMLDocument;
-import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
 import org.signalml.app.util.IconUtils;
@@ -31,7 +27,6 @@ import org.signalml.app.view.components.IntegerSpinner;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.RegisterCodecDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
-import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;
@@ -249,12 +244,11 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 	/**
 	 * Fills this panel from a model.
 	 * 
-	 * @param model
+	 * @param signalmlDescriptor
 	 *            model to fill this panel from
 	 */
-	public void fillPanelFromModel(OpenFileSignalDescriptor model) {
+	public void fillPanelFromModel(SignalMLDescriptor signalmlDescriptor) {
 
-		SignalMLDescriptor signalmlDescriptor = model.getSignalmlDescriptor();
 		getSignalMLOptionsPanel().getSignalMLDriverComboBox().getModel().setSelectedItem(signalmlDescriptor.getCodec());
 		getPageSizeSpinner().setValue(signalmlDescriptor.getSignalParameters().getPageSize());
 		getBlocksPerPageSpinner().setValue(signalmlDescriptor.getSignalParameters().getBlocksPerPage());

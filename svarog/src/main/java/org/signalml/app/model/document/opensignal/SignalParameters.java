@@ -7,7 +7,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 public class SignalParameters extends PagingParameterDescriptor {
 	
 	private float samplingFrequency;
-	private Integer channelCount;
+	private int channelCount;
 	private float[] calibrationGain;
 	private float[] calibrationOffset;
 	
@@ -42,7 +42,7 @@ public class SignalParameters extends PagingParameterDescriptor {
 	public int getChannelCount() {
 		return channelCount;
 	}
-	public void setChannelCount(Integer channelCount) {
+	public void setChannelCount(int channelCount) {
 		this.channelCount = channelCount;
 	}
 	public float[] getCalibrationGain() {

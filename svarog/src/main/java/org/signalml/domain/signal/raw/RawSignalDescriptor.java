@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Arrays;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 
@@ -478,6 +479,15 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 		public void setFirstSampleTimestamp(double value) {
 		this.firstSampleTimestamp = value;
+	}
+		
+	@Override
+	public void setMontage(Montage montage) {
+		super.setMontage(montage);
+
+		EegSystem eegSystem = montage.getEegSystem();
+		if (eegSystem != null)
+			setEegSystemName(eegSystem.getEegSystemName());
 	}
 
 }

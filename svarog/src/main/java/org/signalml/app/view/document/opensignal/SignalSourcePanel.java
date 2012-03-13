@@ -18,8 +18,8 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
-import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.document.opensignal.file.FileSignalSourcePanel;
 import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
 import org.signalml.app.view.document.opensignal.monitor.ChooseExperimentPanel;
@@ -121,19 +121,17 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 	 * @param openDocumentDescriptor descriptor to be used
 	 */
 	public void fillPanelFromModel(OpenDocumentDescriptor openDocumentDescriptor) {
-		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
+		AbstractOpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
 
-		SignalSource signalSource = openSignalDescriptor.getSignalSource();
-		if (signalSource == SignalSource.FILE)
-			tabbedPane.setSelectedComponent(fileSignalSourcePanel);
-		else
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			tabbedPane.setSelectedComponent(openBCISignalSourcePanel);
-
-		if (openSignalDescriptor.getOpenFileSignalDescriptor() != null) {
-			fileSignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getOpenFileSignalDescriptor());
+			openBCISignalSourcePanel.fillPanelFromModel((ExperimentDescriptor) openSignalDescriptor);
+		}
+		else {
+			tabbedPane.setSelectedComponent(fileSignalSourcePanel);
+			fileSignalSourcePanel.fillPanelFromModel(openDocumentDescriptor);
 			this.stateChanged(null);
 		}
-		openBCISignalSourcePanel.fillPanelFromModel(openSignalDescriptor.getExperimentDescriptor());
 
 		clearPreviousConnections();
 	}
@@ -151,10 +149,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 	 * @param openDocumentDescriptor the descriptor to be filled
 	 */
 	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
-		OpenSignalDescriptor openSignalDescriptor = openDocumentDescriptor.getOpenSignalDescriptor();
-
 		SignalSource signalSource = getSelectedSignalSource();
-		openSignalDescriptor.setSignalSource(signalSource);
 
 		if (signalSource.isFile())
 			openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
@@ -165,7 +160,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 			fileSignalSourcePanel.fillModelFromPanel(openDocumentDescriptor);
 		}
 		else if (signalSource.isOpenBCI()) {
-			openBCISignalSourcePanel.fillModelFromPanel(openSignalDescriptor);
+			openBCISignalSourcePanel.fillModelFromPanel(openDocumentDescriptor);
 		}
 	}
 
