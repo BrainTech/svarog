@@ -10,27 +10,25 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.util.concurrent.ExecutionException;
 
 import javax.swing.JPanel;
-import org.signalml.app.config.ApplicationConfiguration;
 
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalMLDocument;
+import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
-
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal.AbstractSignalSourcePanel;
 import org.signalml.app.view.document.opensignal.SignalSource;
-import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.plugin.export.SignalMLException;
 
 /**
  * The panel for choosing a file and setting parameters using which the signal
@@ -121,23 +119,24 @@ public class FileSignalSourcePanel extends AbstractSignalSourcePanel {
 	 * given descriptor.
 	 * @param descriptor descriptor to be used to filled this panel
 	 */
-	public void fillModelFromPanel(OpenFileSignalDescriptor descriptor) {
+	public void fillModelFromPanel(OpenDocumentDescriptor openDocumentDescriptor) {
+
+		OpenFileSignalDescriptor descriptor = openDocumentDescriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		FileOpenSignalMethod method = fileOpenMethodPanel.getSelectedOpenSignalMethod();
 		if (method.isRaw()) {
-
+			descriptor.setMethod(FileOpenSignalMethod.RAW);
 			RawSignalDescriptor rawSignalDescriptor = descriptor.getRawSignalDescriptor();
 			rawSignalParametersPanel.fillModelFromPanel(rawSignalDescriptor);
-
 		} else if (method.isSignalML()) {
-
 			descriptor.setMethod(FileOpenSignalMethod.SIGNALML);
-			getSignalMLSignalParametersPanel().fillModelFromPanel(descriptor);
+			SignalMLDescriptor signalmlDescriptor = descriptor.getSignalmlDescriptor();
+			getSignalMLSignalParametersPanel().fillModelFromPanel(signalmlDescriptor);
 		}
 
 		File selectedFile = fileChooserPanel.getSelectedFile();
 		if(selectedFile.exists())
 			this.viewerElementManager.getApplicationConfig().setLastFileChooserPath(selectedFile.getParentFile().getPath());
-		descriptor.setFile(selectedFile);
+		openDocumentDescriptor.setFile(selectedFile);
 
 		getApplicationConfiguration().setLastFileChooserPath(getFileChooserPanel().getFileChooser().getCurrentDirectory().getAbsolutePath());
 	}

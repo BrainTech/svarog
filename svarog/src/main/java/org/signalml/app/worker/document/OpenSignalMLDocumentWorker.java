@@ -29,7 +29,7 @@ public class OpenSignalMLDocumentWorker extends SwingWorker<SignalMLDocument, Vo
 	public OpenSignalMLDocumentWorker(OpenDocumentDescriptor descriptor, PleaseWaitDialog pleaseWaitDialog) {
 		this.codec = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getSignalmlDescriptor().getCodec();
 		this.pleaseWaitDialog = pleaseWaitDialog;
-		this.file = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile();
+		this.file = descriptor.getFile();
 	}
 	
 	public OpenSignalMLDocumentWorker(SignalMLCodec codec, File file) {

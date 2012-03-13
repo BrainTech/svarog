@@ -266,12 +266,10 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
 	 * @param model
 	 *            model to fill from this panel
 	 */
-	public void fillModelFromPanel(OpenFileSignalDescriptor model) {
-
-		SignalMLDescriptor signalmlDescriptor = model.getSignalmlDescriptor();
-		signalmlDescriptor.setCodec(getSelectedCodec());
-		signalmlDescriptor.getSignalParameters().setPageSize(getPageSizeSpinner().getValue());
-		signalmlDescriptor.getSignalParameters().setBlocksPerPage(getBlocksPerPageSpinner().getValue());
+	public void fillModelFromPanel(SignalMLDescriptor model) {
+		model.setCodec(getSelectedCodec());
+		model.getSignalParameters().setPageSize(getPageSizeSpinner().getValue());
+		model.getSignalParameters().setBlocksPerPage(getBlocksPerPageSpinner().getValue());
 	}
 
 	private class LoadMetadataAction extends AbstractSignalMLAction {

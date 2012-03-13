@@ -162,8 +162,7 @@ public class SignalSourcePanel extends JPanel implements PropertyChangeListener,
 			openDocumentDescriptor.setType(ManagedDocumentType.MONITOR);
 
 		if (signalSource.isFile()) {
-			OpenFileSignalDescriptor openFileSignalDescriptor = openSignalDescriptor.getOpenFileSignalDescriptor();
-			fileSignalSourcePanel.fillModelFromPanel(openFileSignalDescriptor);
+			fileSignalSourcePanel.fillModelFromPanel(openDocumentDescriptor);
 		}
 		else if (signalSource.isOpenBCI()) {
 			openBCISignalSourcePanel.fillModelFromPanel(openSignalDescriptor);

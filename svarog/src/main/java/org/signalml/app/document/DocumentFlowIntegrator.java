@@ -573,7 +573,6 @@ public class DocumentFlowIntegrator {
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 
 			OpenFileSignalDescriptor openFileSignalDescriptor = odd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
-			openFileSignalDescriptor.setFile(mrud.getFile());
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
@@ -670,7 +669,7 @@ public class DocumentFlowIntegrator {
 	 */
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
-		File file = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile();
+		File file = descriptor.getFile();
 		Montage montage = descriptor.getOpenSignalDescriptor().getMontage();
 
 		boolean fileOk = checkOpenedFile(file);
