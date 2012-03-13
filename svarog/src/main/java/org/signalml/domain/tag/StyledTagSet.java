@@ -5,6 +5,7 @@
 package org.signalml.domain.tag;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,7 +18,6 @@ import javax.swing.KeyStroke;
 import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelection;
@@ -30,6 +30,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import java.util.HashSet;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
@@ -121,7 +122,7 @@ public class StyledTagSet implements Serializable, Preset {
          * styles.
          */
 	public StyledTagSet() {
-		this(null, null, SignalParameterDescriptor.DEFAULT_PAGE_SIZE, SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		this(null, null, SignalParameters.DEFAULT_PAGE_SIZE, SignalParameters.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
         /**
@@ -141,7 +142,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @param styles {@link TagStyle tag styles} to be added to the created object
          */
 	public StyledTagSet(TagStyles styles) {
-		this(styles, null, SignalParameterDescriptor.DEFAULT_PAGE_SIZE, SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		this(styles, null, SignalParameters.DEFAULT_PAGE_SIZE, SignalParameters.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
         /**
@@ -164,7 +165,7 @@ public class StyledTagSet implements Serializable, Preset {
          * @param tags tagged selections to be added to the created object
          */
 	public StyledTagSet(TagStyles styles, TreeSet<Tag> tags) {
-		this(styles, tags, SignalParameterDescriptor.DEFAULT_PAGE_SIZE, SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		this(styles, tags, SignalParameters.DEFAULT_PAGE_SIZE, SignalParameters.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
         /**

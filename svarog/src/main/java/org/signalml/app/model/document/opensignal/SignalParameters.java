@@ -1,24 +1,24 @@
 package org.signalml.app.model.document.opensignal;
 
+import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 
-public class SignalParameters {
+public class SignalParameters extends PagingParameterDescriptor {
 	
 	private float samplingFrequency;
-	private int channelCount;
+	private Integer channelCount;
 	private float[] calibrationGain;
 	private float[] calibrationOffset;
 	
-	private float pageSize;
-	private int blocksPerPage;
-	
 	private Float maximumValue;
 	private Float minimumValue;
+	
+	private boolean channelCountEditable = false;
+	private boolean calibrationEditable = true;
 
 	public SignalParameters() {
         samplingFrequency = 128.0F;
-        pageSize = 20.0F;
 	}
 
 	public SignalParameters(SignalParameters signalParameters) {
@@ -27,8 +27,8 @@ public class SignalParameters {
 		calibrationGain = signalParameters.calibrationGain == null ? null : signalParameters.calibrationGain.clone();
 		calibrationOffset = signalParameters.calibrationOffset == null ? null : signalParameters.calibrationOffset.clone();
 
-		pageSize = signalParameters.pageSize;
-		blocksPerPage = signalParameters.blocksPerPage;
+		setPageSize(signalParameters.getPageSize());
+		setBlocksPerPage(signalParameters.getBlocksPerPage());
 
 		maximumValue = signalParameters.maximumValue;
 		minimumValue = signalParameters.minimumValue;
@@ -42,7 +42,7 @@ public class SignalParameters {
 	public int getChannelCount() {
 		return channelCount;
 	}
-	public void setChannelCount(int channelCount) {
+	public void setChannelCount(Integer channelCount) {
 		this.channelCount = channelCount;
 	}
 	public float[] getCalibrationGain() {
@@ -57,18 +57,6 @@ public class SignalParameters {
 	public void setCalibrationOffset(float[] calibrationOffset) {
 		this.calibrationOffset = calibrationOffset;
 	}
-	public float getPageSize() {
-		return pageSize;
-	}
-	public void setPageSize(float pageSize) {
-		this.pageSize = pageSize;
-	}
-	public int getBlocksPerPage() {
-		return blocksPerPage;
-	}
-	public void setBlocksPerPage(int blocksPerPage) {
-		this.blocksPerPage = blocksPerPage;
-	}
 	public Float getMaximumValue() {
 		return maximumValue;
 	}
@@ -81,5 +69,22 @@ public class SignalParameters {
 	public void setMinimumValue(Float minimumValue) {
 		this.minimumValue = minimumValue;
 	}
+	
+	public boolean isChannelCountEditable() {
+		return channelCountEditable;
+	}
+
+	public void setChannelCountEditable(boolean channelCountEnabled) {
+		this.channelCountEditable = channelCountEnabled;
+	}
+
+	public boolean isCalibrationEditable() {
+		return calibrationEditable;
+	}
+
+	public void setCalibrationEditable(boolean calibrationEnabled) {
+		this.calibrationEditable = calibrationEnabled;
+	}
+
 
 }

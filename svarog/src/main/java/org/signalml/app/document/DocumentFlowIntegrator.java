@@ -28,8 +28,8 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
@@ -585,13 +585,13 @@ public class DocumentFlowIntegrator {
 				openFileSignalDescriptor.setCodec(codec);
 
 				odd.getOpenSignalDescriptor().setSignalSource(SignalSource.FILE);
-				SignalParameterDescriptor spd = openFileSignalDescriptor.getParameters();
+				SignalParameters spd = openFileSignalDescriptor.getParameters();
 
 				spd.setPageSize(smlEntry.getPageSize());
 				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
 				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
 				spd.setChannelCount(smlEntry.getChannelCount());
-				spd.setCalibrationGain(smlEntry.getCalibrationGain());
+				spd.setCalibrationGain(new float[] {smlEntry.getCalibrationGain()});
 
 			}
 			else if (mrud instanceof RawSignalMRUDEntry) {
@@ -713,7 +713,7 @@ public class DocumentFlowIntegrator {
 				return null;
 			}
 
-			SignalParameterDescriptor spd = signalOptions.getParameters();
+			SignalParameters spd = signalOptions.getParameters();
 			if (spd.getPageSize() != null) {
 				signalMLDocument.setPageSize(spd.getPageSize());
 			}
@@ -746,7 +746,7 @@ public class DocumentFlowIntegrator {
 				mrud.setBlocksPerPage(spd.getBlocksPerPage());
 				mrud.setSamplingFrequency(spd.getSamplingFrequency());
 				mrud.setChannelCount(spd.getChannelCount());
-				mrud.setCalibrationGain(spd.getCalibrationGain());
+				mrud.setCalibrationGain(spd.getCalibrationGain() == null ? null : spd.getCalibrationGain()[0]);
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
 
@@ -1622,7 +1622,7 @@ public class DocumentFlowIntegrator {
 	}
 
 	/**
-	 * Fills the {@link SignalParameterDescriptor descriptor} with the data
+	 * Fills the {@link SignalParameters descriptor} with the data
 	 * from the given {@link SignalMLDocument document}:
 	 * <ul>
 	 * <li>boolean if the calibration is supported,</li>
@@ -1639,7 +1639,7 @@ public class DocumentFlowIntegrator {
 	 * or there was no need to show that dialog,<br>
 	 * {@code false} if the dialog was closed with CANCEL
 	 */
-	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameterDescriptor spd) {
+	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameters spd) {
 
 		spd.setCalibrationGain(null);
 		if (signalMLDocument.isCalibrationCapable()) {
@@ -1653,7 +1653,7 @@ public class DocumentFlowIntegrator {
 			spd.setChannelCountEditable(false);
 		} else {
 			spd.setChannelCount(null);
-			spd.setChannelCountEditable(true);
+			spd.setChannelCountEditable(true);	
 		}
 
 		if (!signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
@@ -1667,7 +1667,7 @@ public class DocumentFlowIntegrator {
 				signalMLDocument.setChannelCount(spd.getChannelCount());
 			}
 			if (spd.isCalibrationEditable()) {
-				signalMLDocument.setCalibration(spd.getCalibrationGain());
+				signalMLDocument.setCalibration(spd.getCalibrationGain()[0]);
 			}
 
 		}

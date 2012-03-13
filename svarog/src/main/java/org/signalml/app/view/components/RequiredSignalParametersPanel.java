@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -147,7 +147,7 @@ public class RequiredSignalParametersPanel extends JPanel {
 	}
 
 	/**
-	 * Using the given {@link SignalParameterDescriptor model} sets:
+	 * Using the given {@link SignalParameters model} sets:
 	 * <ul>
 	 * <li>the sampling frequency,</li>
 	 * <li>the number of channels,</li>
@@ -157,7 +157,7 @@ public class RequiredSignalParametersPanel extends JPanel {
 	 * @param spd the model for this panel
 	 * @throws SignalMLException never thrown
 	 */
-	public void fillPanelFromModel(SignalParameterDescriptor spd) throws SignalMLException {
+	public void fillPanelFromModel(SignalParameters spd) throws SignalMLException {
 
 		Float samplingFrequency = spd.getSamplingFrequency();
 		if (samplingFrequency != null) {
@@ -184,7 +184,7 @@ public class RequiredSignalParametersPanel extends JPanel {
 	}
 
 	/**
-	 * Stores the user input in the {@link SignalParameterDescriptor model},
+	 * Stores the user input in the {@link SignalParameters model},
 	 * namely:
 	 * <ul>
 	 * <li>the sampling frequency,</li>
@@ -194,7 +194,7 @@ public class RequiredSignalParametersPanel extends JPanel {
 	 * @throws SignalMLException if the value the text fields has an invalid
 	 * format
 	 */
-	public void fillModelFromPanel(SignalParameterDescriptor spd) throws SignalMLException {
+	public void fillModelFromPanel(SignalParameters spd) throws SignalMLException {
 		try {
 			if (spd.isChannelCountEditable()) {
 				spd.setChannelCount(new Integer(getChannelCountField().getText()));
@@ -208,11 +208,11 @@ public class RequiredSignalParametersPanel extends JPanel {
 	 * Validates this panel.
 	 * This panel is valid if all numbers in text fields have valid format and
 	 * are positive.
-	 * @param spd the {@link SignalParameterDescriptor model} for this panel
+	 * @param spd the {@link SignalParameters model} for this panel
 	 * @param errors the object in which errors are stored
 	 * @throws SignalMLException never thrown
 	 */
-	public void validatePanel(SignalParameterDescriptor spd, ValidationErrors errors) throws SignalMLException {
+	public void validatePanel(SignalParameters spd, ValidationErrors errors) throws SignalMLException {
 		if (spd.isChannelCountEditable()) {
 			try {
 				int channelCount = Integer.parseInt(getChannelCountField().getText());

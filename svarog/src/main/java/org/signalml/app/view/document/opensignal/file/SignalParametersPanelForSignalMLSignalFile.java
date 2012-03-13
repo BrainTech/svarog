@@ -24,7 +24,6 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;

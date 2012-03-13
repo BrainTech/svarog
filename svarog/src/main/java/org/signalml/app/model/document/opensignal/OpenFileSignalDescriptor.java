@@ -6,7 +6,6 @@ package org.signalml.app.model.document.opensignal;
 
 import java.io.File;
 
-import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.montage.system.EegSystem;
@@ -33,7 +32,7 @@ public class OpenFileSignalDescriptor {
 
 	// for signalML signals
 	private SignalMLCodec codec;
-	private SignalParameterDescriptor parameters = new SignalParameterDescriptor();
+	private SignalParameters parameters = new SignalParameters();
 
 	// for raw signals
 	private RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
@@ -68,11 +67,11 @@ public class OpenFileSignalDescriptor {
 		this.codec = codec;
 	}
 
-	public SignalParameterDescriptor getParameters() {
+	public SignalParameters getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(SignalParameterDescriptor parameters) {
+	public void setParameters(SignalParameters parameters) {
 		this.parameters = parameters;
 	}
 

@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
@@ -52,7 +52,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 
-		SignalParameterDescriptor spd = new SignalParameterDescriptor();
+		SignalParameters spd = new SignalParameters();
 
 		spd.setPageSize(signalDocument.getPageSize());
 		spd.setBlocksPerPage(signalDocument.getBlocksPerPage());

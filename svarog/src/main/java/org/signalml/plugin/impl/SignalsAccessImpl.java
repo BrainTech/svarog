@@ -27,8 +27,8 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
@@ -756,7 +756,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		ofd.setType(ManagedDocumentType.SIGNAL);
 		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		osd.setMethod(FileOpenSignalMethod.SIGNALML);
-		SignalParameterDescriptor spd = osd.getParameters();
+		SignalParameters spd = osd.getParameters();
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (file == null) throw new NullPointerException("file can not be null");
 		if (!file.exists()) throw new IOException("file doesn't exist");
