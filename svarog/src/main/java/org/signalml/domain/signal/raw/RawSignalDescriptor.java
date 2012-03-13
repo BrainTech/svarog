@@ -70,9 +70,9 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
          */
 	private int sampleCount;
 
-        /**
-         * the {@link RawSignalSampleType type} of the samples
-         */
+	/**
+	 * the {@link RawSignalSampleType type} of the samples
+	 */
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
 

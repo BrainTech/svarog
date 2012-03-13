@@ -23,6 +23,7 @@ import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.FloatSpinner;
@@ -245,27 +246,33 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
                 return (SignalMLCodec) getSignalMLOptionsPanel().getSignalMLDriverComboBox().getModel().getSelectedItem();
         }
 
-        /**
-         * Fills this panel from a model.
-         * @param model model to fill this panel from
-         */
-        public void fillPanelFromModel(OpenFileSignalDescriptor model) {
+	/**
+	 * Fills this panel from a model.
+	 * 
+	 * @param model
+	 *            model to fill this panel from
+	 */
+	public void fillPanelFromModel(OpenFileSignalDescriptor model) {
 
-                getSignalMLOptionsPanel().getSignalMLDriverComboBox().getModel().setSelectedItem(model.getCodec());
-                getPageSizeSpinner().setValue(model.getParameters().getPageSize());
-                getBlocksPerPageSpinner().setValue(model.getParameters().getBlocksPerPage());
-        }
+		SignalMLDescriptor signalmlDescriptor = model.getSignalmlDescriptor();
+		getSignalMLOptionsPanel().getSignalMLDriverComboBox().getModel().setSelectedItem(signalmlDescriptor.getCodec());
+		getPageSizeSpinner().setValue(signalmlDescriptor.getSignalParameters().getPageSize());
+		getBlocksPerPageSpinner().setValue(signalmlDescriptor.getSignalParameters().getBlocksPerPage());
+	}
 
-        /**
-         * Fills a model from this panel.
-         * @param model model to fill from this panel
-         */
-        public void fillModelFromPanel(OpenFileSignalDescriptor model) {
+	/**
+	 * Fills a model from this panel.
+	 * 
+	 * @param model
+	 *            model to fill from this panel
+	 */
+	public void fillModelFromPanel(OpenFileSignalDescriptor model) {
 
-                model.setCodec(getSelectedCodec());
-		model.getParameters().setPageSize(getPageSizeSpinner().getValue());
-                model.getParameters().setBlocksPerPage(getBlocksPerPageSpinner().getValue());
-        }
+		SignalMLDescriptor signalmlDescriptor = model.getSignalmlDescriptor();
+		signalmlDescriptor.setCodec(getSelectedCodec());
+		signalmlDescriptor.getSignalParameters().setPageSize(getPageSizeSpinner().getValue());
+		signalmlDescriptor.getSignalParameters().setBlocksPerPage(getBlocksPerPageSpinner().getValue());
+	}
 
 	private class LoadMetadataAction extends AbstractSignalMLAction {
 

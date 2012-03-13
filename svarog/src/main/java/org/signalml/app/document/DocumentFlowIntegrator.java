@@ -28,6 +28,7 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenFileSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.view.components.dialogs.OptionPane;
@@ -582,10 +583,12 @@ public class DocumentFlowIntegrator {
 					logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
 					throw new MissingCodecException("error.mrudMissingCodecException");
 				}
-				openFileSignalDescriptor.setCodec(codec);
+
+				SignalMLDescriptor signalmlDescriptor = openFileSignalDescriptor.getSignalmlDescriptor();
+				signalmlDescriptor.setCodec(codec);
 
 				odd.getOpenSignalDescriptor().setSignalSource(SignalSource.FILE);
-				SignalParameters spd = openFileSignalDescriptor.getParameters();
+				SignalParameters spd = signalmlDescriptor.getSignalParameters();
 
 				spd.setPageSize(smlEntry.getPageSize());
 				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
@@ -685,7 +688,7 @@ public class DocumentFlowIntegrator {
 		if (method.equals(FileOpenSignalMethod.SIGNALML)) {
 
 			logger.debug("Opening as signal with SignalML");
-			final SignalMLCodec codec = signalOptions.getCodec();
+			final SignalMLCodec codec = signalOptions.getSignalmlDescriptor().getCodec();
 			if (codec == null) {
 				Dialogs.showError(_("SignalML Codec not found!"));
 				logger.error("No codec");
@@ -713,7 +716,7 @@ public class DocumentFlowIntegrator {
 				return null;
 			}
 
-			SignalParameters spd = signalOptions.getParameters();
+			SignalParameters spd = signalOptions.getSignalmlDescriptor().getSignalParameters();
 			if (spd.getPageSize() != null) {
 				signalMLDocument.setPageSize(spd.getPageSize());
 			}

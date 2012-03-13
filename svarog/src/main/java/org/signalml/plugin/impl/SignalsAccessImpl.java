@@ -756,14 +756,14 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		ofd.setType(ManagedDocumentType.SIGNAL);
 		OpenFileSignalDescriptor osd = ofd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
 		osd.setMethod(FileOpenSignalMethod.SIGNALML);
-		SignalParameters spd = osd.getParameters();
+		SignalParameters spd = osd.getSignalmlDescriptor().getSignalParameters();
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (file == null) throw new NullPointerException("file can not be null");
 		if (!file.exists()) throw new IOException("file doesn't exist");
 		if (!file.canRead()) throw new IOException("can not access file");
 		SignalMLCodec codec = codecManager.getCodecForFormat(codecFormatName);
 		if (codec == null) throw new IllegalArgumentException("codec of this name doesn't exist");
-		osd.setCodec(codec);
+		osd.getSignalmlDescriptor().setCodec(codec);
 		if (spd.isBlocksPerPageEditable()){
 			spd.setBlocksPerPage(blocksPerPage);
 		}

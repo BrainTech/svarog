@@ -31,8 +31,7 @@ public class OpenFileSignalDescriptor {
 	private FileOpenSignalMethod method;
 
 	// for signalML signals
-	private SignalMLCodec codec;
-	private SignalParameters parameters = new SignalParameters();
+	private SignalMLDescriptor signalmlDescriptor = new SignalMLDescriptor();
 
 	// for raw signals
 	private RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
@@ -59,28 +58,20 @@ public class OpenFileSignalDescriptor {
 		this.method = method;
 	}
 
-	public SignalMLCodec getCodec() {
-		return codec;
-	}
-
-	public void setCodec(SignalMLCodec codec) {
-		this.codec = codec;
-	}
-
-	public SignalParameters getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(SignalParameters parameters) {
-		this.parameters = parameters;
-	}
-
 	public RawSignalDescriptor getRawSignalDescriptor() {
 		return rawSignalDescriptor;
 	}
 
 	public void setRawSignalDescriptor(RawSignalDescriptor rawSignalDescriptor) {
 		this.rawSignalDescriptor = rawSignalDescriptor;
+	}
+
+	public SignalMLDescriptor getSignalmlDescriptor() {
+		return signalmlDescriptor;
+	}
+
+	public void setSignalmlDescriptor(SignalMLDescriptor signalmlDescriptor) {
+		this.signalmlDescriptor = signalmlDescriptor;
 	}
 
 	/**
