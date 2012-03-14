@@ -6,6 +6,11 @@ package org.signalml.plugin.newstager.method;
 
 import static org.signalml.plugin.newstager.NewStagerPlugin._;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.signalml.app.document.BookDocument;
+import org.signalml.domain.book.StandardBook;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
@@ -13,10 +18,14 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.method.PluginAbstractMethod;
 import org.signalml.plugin.newstager.NewStagerPlugin;
+import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerData;
 import org.signalml.plugin.newstager.data.NewStagerResult;
+import org.signalml.plugin.newstager.data.logic.NewStagerMgrData;
+import org.signalml.plugin.newstager.logic.mgr.NewStagerComputationMgr;
 import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.validation.Errors;
 
@@ -36,22 +45,37 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 	@Override
 	public Object doComputation(Object data, MethodExecutionTracker tracker)
 			throws ComputationException {
-		// TODO Auto-generated method stub
-		return null;
+		NewStagerData stagerData;
+		try {
+			stagerData = (NewStagerData) data;
+		} catch (ClassCastException e) {
+			throw new ComputationException(e);
+		}
+		
+		
+		NewStagerComputationMgr mgr = new NewStagerComputationMgr();
+		
+		try {
+			return mgr.compute(new NewStagerMgrData(stagerData, this.getStagerConstants(stagerData)), tracker);
+		} catch (SignalMLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+
 	@Override
 	public Object digestIterationResult(int iteration, Object result) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public IterableParameter[] getIterableParameters(Object data) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public void validate(Object dataObj, Errors errors) {
 		super.validate(dataObj, errors);
@@ -104,14 +128,35 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 
 	@Override
 	public String getTickerLabel(int ticker) {
-
 		if (ticker == 0) {
-			return _("stagerMethod.stepTicker");
+			return _("Preparing");
 		} else if (ticker == 1) {
-			return _("stagerMethod.progressTicker");
+			return _("Preparing");
 		} else {
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}
-
 	}
+	
+	
+	private NewStagerConstants getStagerConstants(NewStagerData stagerData) throws SignalMLException {
+		BookDocument doc;
+		try {
+			doc = new BookDocument(new File(stagerData.getParameters().getBookFilePath()));
+			doc.openDocument();
+		} catch (IOException e) {
+			throw new SignalMLException(e);
+		}
+		StandardBook book = doc.getBook();
+		
+		return new NewStagerConstants(book.getSamplingFrequency(),
+					(int) book.getCalibration(),
+					NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
+					NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
+					NewStagerConstants.DEFAULT_AMPLITUDE_A,
+					NewStagerConstants.DEFAULT_AMPLITUDE_B,
+					NewStagerConstants.DEFAULT_ALPHA_OFFSET,
+					NewStagerConstants.DEFAULT_DELTA_OFFSET,
+					NewStagerConstants.DEFAULT_SPINDLE_OFFSET);
+	}
+
 }
