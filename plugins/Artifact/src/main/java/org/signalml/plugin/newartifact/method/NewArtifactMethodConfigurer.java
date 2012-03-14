@@ -33,6 +33,7 @@ import org.signalml.plugin.newartifact.ui.NewArtifactToolConfigDialog;
 import org.signalml.plugin.tool.PluginResourceRepository;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamException;
 
 /**
  * ArtifactMethodConfigurer
@@ -177,9 +178,10 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 						(XStream) PluginResourceRepository.GetResource(
 								"streamer", NewArtifactPlugin.class));
 				existingProject = data.isExistingProject();
+			} catch (XStreamException ex) {
+				logger.warn("Incompatible project data", ex);
 			} catch (IOException ex) {
-				logger.error("Failed to read project", ex);
-				throw new SignalMLException(ex);
+				logger.warn("Failed to read project", ex);
 			}
 		}
 
