@@ -21,27 +21,24 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.FileBackedDocument;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.InputSignalPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.SourceMontageDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.AbstractPluginPresetDialog;
 import org.signalml.plugin.newstager.NewStagerPlugin;
 import org.signalml.plugin.newstager.data.NewStagerApplicationData;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.Errors;
 
 /**
  * StagerMethodDialog
@@ -195,7 +192,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 		NewStagerApplicationData data = (NewStagerApplicationData) model;
 
-		SignalDocument signalDocument = null;		//TODO!//data.getSignalDocument();
+		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		String path = "?";
 		if (signalDocument instanceof FileBackedDocument) {
 			path = ((FileBackedDocument) signalDocument).getBackingFile()
