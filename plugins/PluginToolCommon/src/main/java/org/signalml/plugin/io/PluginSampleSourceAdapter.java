@@ -1,4 +1,4 @@
-package org.signalml.plugin.newartifact.data;
+package org.signalml.plugin.io;
 
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
@@ -10,16 +10,15 @@ import org.signalml.domain.signal.SignalMLCodecSampleSource;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.signal.ChannelSamples;
-import org.signalml.plugin.io.FastMultichannelSampleSource;
 
-public class NewArtifactPluginSampleSource implements MultichannelSampleSource {
+public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 
 	private SvarogAccessSignal signalAccess;
 	private ExportedSignalDocument signalDocument;
 
 	private MultichannelSampleSource delegate;
 
-	public NewArtifactPluginSampleSource(SvarogAccessSignal signalAccess,
+	public PluginSampleSourceAdapter(SvarogAccessSignal signalAccess,
 					     ExportedSignalDocument signalDocument) {
 		this.signalAccess = signalAccess;
 		this.signalDocument = signalDocument;
