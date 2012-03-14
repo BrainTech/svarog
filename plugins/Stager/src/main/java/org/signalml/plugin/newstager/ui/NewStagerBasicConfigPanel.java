@@ -4,19 +4,14 @@
 package org.signalml.plugin.newstager.ui;
 
 import java.awt.BorderLayout;
-import java.util.EventListenerProxy;
 
 import javax.swing.Box;
-import javax.swing.JDialog;
 import javax.swing.JPanel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
-import org.signalml.app.view.workspace.ViewerFileChooser;
-import org.signalml.plugin.export.view.AbstractPluginDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
-import org.springframework.validation.Errors;
 
 /**
  * StagerBasicConfigPanel

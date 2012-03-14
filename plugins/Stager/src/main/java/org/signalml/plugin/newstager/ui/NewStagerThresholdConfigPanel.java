@@ -29,8 +29,6 @@ import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.ui.components.AutoSpinnerWithSliderPanel;
 import org.signalml.plugin.newstager.ui.components.SpinnerWithSliderPanel;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /**
  * NewStagerThresholdConfigPanel

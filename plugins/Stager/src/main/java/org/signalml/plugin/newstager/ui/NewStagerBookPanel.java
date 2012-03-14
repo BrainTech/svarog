@@ -22,11 +22,8 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /**
  * StagerBookPanel
