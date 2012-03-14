@@ -96,9 +96,10 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 	public Result compute(Data data, MethodExecutionTracker tracker)
 	throws ComputationException {
+		this.data = data;
+		this.tracker = tracker;
+		
 		try {
-			this.data = data;
-			this.tracker = tracker;
 			return this.doCompute();
 		} catch (PluginToolAbortException e) {
 			return null;
