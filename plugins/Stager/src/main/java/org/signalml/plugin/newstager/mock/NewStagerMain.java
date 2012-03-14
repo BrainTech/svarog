@@ -138,6 +138,7 @@ public class NewStagerMain {
 			NewStagerData stagerData = new NewStagerData();
 			stagerData.setSampleSource(source);
 			stagerData.setProjectPath(PATH);
+			
 			HashMap<String, Integer> channelMap = new HashMap<String, Integer>();
 
 			
@@ -188,6 +189,10 @@ public class NewStagerMain {
 			
 			NewStagerParameterThresholds thresholds = new NewStagerParameterThresholds(25, 40, 300, 50, alphaThreshold, deltaThreshold, spindleThreshold, thetaThreshold, KCThreshold);
 			
+			stagerData.setParameters(new NewStagerParameters(bookFilePath, b.getSegmentCount(),
+					true, true, true, thresholds));
+			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d, 0.75d, 0.5d, -0.85d, -0.7d));
+			
 			mgr.compute(
 					new NewStagerMgrData(stagerData, new NewStagerConstants(b
 							.getSamplingFrequency(), (int) b.getCalibration(),
@@ -197,10 +202,7 @@ public class NewStagerMain {
 							NewStagerConstants.DEFAULT_AMPLITUDE_B,
 							NewStagerConstants.DEFAULT_ALPHA_OFFSET,
 							NewStagerConstants.DEFAULT_DELTA_OFFSET,
-							NewStagerConstants.DEFAULT_SPINDLE_OFFSET),
-							new NewStagerParameters(bookFilePath, b.getSegmentCount(),
-									true, true, true, thresholds),
-							new NewStagerFixedParameters(1.0d, 0.75d, 0.5d, -0.85d, -0.7d)),
+							NewStagerConstants.DEFAULT_SPINDLE_OFFSET)),
 					new Tracker());
 			
 		} catch (Exception e) {

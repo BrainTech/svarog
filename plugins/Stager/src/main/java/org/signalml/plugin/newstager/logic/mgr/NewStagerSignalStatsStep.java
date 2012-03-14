@@ -59,7 +59,7 @@ public class NewStagerSignalStatsStep extends
 			return null;
 		}
 
-		NewStagerParameters parameters = this.computeNewParamters();
+		NewStagerParameters parameters = this.computeNewParameters();
 
 		return new NewStagerSignalStatsResult(
 				this.getSignalStatCoeffs(parameters), parameters,
@@ -162,7 +162,8 @@ public class NewStagerSignalStatsStep extends
 				new NewStagerSignalReaderWorkerData(source, synchronizer));
 		Runnable statWorker = new NewStagerStatWorker(
 				new NewStagerStatWorkerData(synchronizer, completion,
-						this.data.constants, this.data.parameters,
+						this.data.constants,
+						this.data.stagerData.getParameters(),
 						this.data.stagerData.getChannelMap()));
 
 		this.workers.add(readerWorker);
@@ -173,8 +174,9 @@ public class NewStagerSignalStatsStep extends
 		this.workers.terminateAll();
 	}
 
-	private NewStagerParameters computeNewParamters() {
-		NewStagerParameters oldParameters = this.data.parameters;
+	private NewStagerParameters computeNewParameters() {
+		NewStagerParameters oldParameters = this.data.stagerData
+				.getParameters();
 		if (!this.statResultReadyFlag.get()) {
 			return oldParameters;
 		}
@@ -197,11 +199,11 @@ public class NewStagerSignalStatsStep extends
 						thresholds.montageToneEMGThreshold,
 						this.convertThreshold(thresholds.alphaThreshold, coeff,
 								constants.alphaOffset), this.convertThreshold(
-								thresholds.deltaThreshold, coeff, constants.deltaOffset),
-						this.convertThreshold(thresholds.spindleThreshold,
-								coeff, constants.spindleOffset),
-						thresholds.thetaThreshold,
-						thresholds.kCThreshold));
+								thresholds.deltaThreshold, coeff,
+								constants.deltaOffset), this.convertThreshold(
+								thresholds.spindleThreshold, coeff,
+								constants.spindleOffset),
+						thresholds.thetaThreshold, thresholds.kCThreshold));
 	}
 
 	private NewStagerFASPThreshold convertThreshold(
@@ -218,7 +220,7 @@ public class NewStagerSignalStatsStep extends
 	}
 
 	private Double computeMontageToneEMGThreshold() {
-		Double oldThreshold = this.data.parameters.thresholds.toneEMG;
+		Double oldThreshold = this.data.stagerData.getParameters().thresholds.toneEMG;
 		if (oldThreshold == null) {
 			double t[] = this.statResult.muscle;
 			double mean = 0.0d;

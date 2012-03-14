@@ -18,13 +18,13 @@ public class NewStagerData extends AbstractData {
 	private String signalPath;
 
 	private NewStagerParameters parameters;
-	//private NewStagerFixedParameters fixedParameters;
+	private NewStagerFixedParameters fixedParameters;
 
 	private MultichannelSampleSource sampleSource;
 
 	public NewStagerData() {
-		//this.parameters = new NewStagerParameters();
-		//this.fixedParameters = new NewStagerFixedParameters();
+		this.parameters = new NewStagerParameters();
+		this.fixedParameters = new NewStagerFixedParameters();
 	}
 
 	public void validate(Errors errors) {
@@ -57,7 +57,6 @@ public class NewStagerData extends AbstractData {
 		this.parameters = parameters;
 	}
 
-	/*
 	public NewStagerFixedParameters getFixedParameters() {
 		return fixedParameters;
 	}
@@ -65,7 +64,6 @@ public class NewStagerData extends AbstractData {
 	public void setFixedParameters(NewStagerFixedParameters fixedParameters) {
 		this.fixedParameters = fixedParameters;
 	}
-	*/
 
 	public MultichannelSampleSource getSampleSource() {
 		return sampleSource;

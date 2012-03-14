@@ -57,7 +57,7 @@ public class NewStagerBookProcessStep extends
 	protected void doInitialize() {
 		NewStagerBookReaderWorker bookReaderWorker = new NewStagerBookReaderWorker(
 				new NewStagerBookReaderWorkerData(
-						this.data.parameters.getBookFilePath(),
+						this.data.stagerData.getParameters().getBookFilePath(),
 						this.bookDataProvider));
 		this.workers.submit(bookReaderWorker);
 	}
@@ -148,7 +148,7 @@ public class NewStagerBookProcessStep extends
 							completion, this.data.constants,
 							this.data.stagerData.getChannelMap(),
 							this.signalStatResult.newParameters,
-							this.data.fixedParameters,
+							this.data.stagerData.getFixedParameters(),
 							this.signalStatResult.muscle,
 							this.signalStatResult.signalStatCoeffs)));
 		}

@@ -59,7 +59,6 @@ public class NewStagerComputationMgr extends
 
 		NewStagerMgrStepData data = new NewStagerMgrStepData(
 				this.data.stagerData, this.data.constants,
-				this.data.parameters, this.data.fixedParameters,
 				new Tracker(tracker),
 				this.getThreadFactory());
 

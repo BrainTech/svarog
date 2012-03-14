@@ -82,10 +82,9 @@ public class NewStagerTagWriteStep extends
 			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap)
 			throws IOException, SignalMLException {
 
-		NewStagerTagWriter writer = new NewStagerTagWriter(
-				this.data.stagerData, this.data.parameters);
+		NewStagerTagWriter writer = new NewStagerTagWriter(this.data.stagerData);
 
-		if (this.data.parameters.primaryHypnogramFlag) {
+		if (this.data.stagerData.getParameters().primaryHypnogramFlag) {
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_ALPHA,
 					EnumSet.of(NewStagerTagCollectionType.HYPNO_ALPHA), tagMap);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_DELTA,

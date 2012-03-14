@@ -16,19 +16,15 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.io.PluginTagWriter;
 import org.signalml.plugin.newstager.data.NewStagerData;
-import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 import org.signalml.util.Util;
 
 public class NewStagerTagWriter {
 
 	private final NewStagerData stagerData;
-	private final NewStagerParameters parameters;
 
-	public NewStagerTagWriter(final NewStagerData stagerData,
-			final NewStagerParameters parameters) {
+	public NewStagerTagWriter(final NewStagerData stagerData) {
 		this.stagerData = stagerData;
-		this.parameters = parameters;
 	}
 
 	public void writeTags(NewStagerTagCollectionType tagType,
@@ -57,7 +53,7 @@ public class NewStagerTagWriter {
 
 	private File getTagFileName(NewStagerTagCollectionType key) {
 		String path = this.stagerData.getProjectPath();
-		String bookPath = this.parameters.getBookFilePath();
+		String bookPath = this.stagerData.getParameters().getBookFilePath();
 		String bookName = Util.getFileNameWithoutExtension(new File(bookPath));
 		String ext = "test.tag";
 
