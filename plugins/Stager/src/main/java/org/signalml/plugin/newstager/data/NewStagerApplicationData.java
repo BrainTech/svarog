@@ -1,4 +1,4 @@
-/* StagerApplicationData.java created 2008-02-08
+/* NewStagerApplicationData.java created 2008-02-08
  * 
  */
 
@@ -8,24 +8,17 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.view.signal.SignalPlot;
-import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalProcessingChain;
-import org.signalml.domain.signal.space.ChannelSpaceType;
-import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
-import org.signalml.domain.signal.space.SignalSpace;
-import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.io.PluginSampleSourceAdapter;
 
 /**
- * StagerApplicationData
+ * NewStagerApplicationData
  * 
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
@@ -114,25 +107,11 @@ public class NewStagerApplicationData extends NewStagerData {
 			}
 		}
 
-		SignalView signalView = (SignalView) signalDocument.getDocumentView();
-		SignalPlot plot = signalView.getMasterPlot();
 
-		SignalProcessingChain signalChain = plot.getSignalChain();
-		SignalProcessingChain copyChain = signalChain.createRawLevelCopyChain();
+		setSampleSource(new PluginSampleSourceAdapter(signalAccess,
+				signalDocument));
 
-		SignalSpace signalSpace = new SignalSpace();
-		signalSpace.setChannelSpaceType(ChannelSpaceType.WHOLE_SIGNAL);
-		signalSpace.setTimeSpaceType(TimeSpaceType.WHOLE_SIGNAL);
-		signalSpace.setWholeSignalCompletePagesOnly(false);
-
-		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory
-				.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory
-				.getContinuousSampleSource(copyChain, signalSpace, null,
-						plot.getPageSize(), plot.getBlockSize());
-
-		setSampleSource(sampleSource);
-
+		setPageSize((int) signalDocument.getPageSize());
 	}
 
 }
