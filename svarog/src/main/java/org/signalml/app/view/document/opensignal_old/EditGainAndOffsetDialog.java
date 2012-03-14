@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal_old;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -18,7 +18,7 @@ import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
 import org.signalml.app.view.document.monitor.ChannelDefinitionsTable;
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
+import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**

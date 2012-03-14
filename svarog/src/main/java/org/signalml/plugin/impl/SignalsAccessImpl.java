@@ -32,7 +32,7 @@ import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.document.opensignal.file.FileOpenSignalMethod;
+import org.signalml.app.view.document.opensignal_old.file.FileOpenSignalMethod;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;

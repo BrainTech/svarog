@@ -1,7 +1,7 @@
 /* AbstractSignalSourcePanel.java created 2011-03-06
  *
  */
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal_old;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;

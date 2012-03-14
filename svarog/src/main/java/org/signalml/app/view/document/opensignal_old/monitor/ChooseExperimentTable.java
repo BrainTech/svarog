@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal.monitor;
+package org.signalml.app.view.document.opensignal_old.monitor;
 
 import java.awt.Dimension;
 

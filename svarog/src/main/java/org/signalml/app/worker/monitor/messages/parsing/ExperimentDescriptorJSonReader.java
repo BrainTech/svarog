@@ -15,7 +15,7 @@ import org.signalml.app.model.document.opensignal.Amplifier;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.SignalParameters;
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
+import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
 
 public class ExperimentDescriptorJSonReader {
 

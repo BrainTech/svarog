@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal_old;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 

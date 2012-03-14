@@ -30,6 +30,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetComboBoxModel;
@@ -77,11 +78,6 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * the {@link ViewerFileChooser file chooser}
 	 */
 	protected ViewerFileChooser fileChooser;
-	
-	/**
-	 * the {@link ApplicationConfiguration configuration} of Svarog
-	 */
-	protected ApplicationConfiguration applicationConfig;
 
 	/**
 	 * the model for {@link #presetComboBox}
@@ -448,15 +444,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * @return the configuration of Svarog
 	 */
 	public ApplicationConfiguration getApplicationConfig() {
-		return applicationConfig;
-	}
-
-	/**
-	 * Sets the {@link ApplicationConfiguration configuration} of Svarog. 
-	 * @param applicationConfig the configuration of Svarog
-	 */
-	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
-		this.applicationConfig = applicationConfig;
+		return SvarogApplication.getApplicationConfiguration();
 	}
 
 	/**
@@ -629,7 +617,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			presetManager.setDefaultPreset(preset);
 
-			if (applicationConfig.isSaveConfigOnEveryChange()) {
+			if (getApplicationConfig().isSaveConfigOnEveryChange()) {
 				try {
 					presetManager.writeToPersistence(null);
 				} catch (IOException ex) {
@@ -724,7 +712,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			presetManager.setDefaultPreset(null);
 
-			if (applicationConfig.isSaveConfigOnEveryChange()) {
+			if (getApplicationConfig().isSaveConfigOnEveryChange()) {
 				try {
 					presetManager.writeToPersistence(null);
 				} catch (IOException ex) {
@@ -800,7 +788,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 			presetManager.setPreset(preset);
 			presetComboBoxModel.setSelectedItem(preset);
 
-			if (applicationConfig.isSaveConfigOnEveryChange()) {
+			if (getApplicationConfig().isSaveConfigOnEveryChange()) {
 				try {
 					presetManager.writeToPersistence(null);
 				} catch (IOException ex) {
@@ -913,7 +901,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			presetManager.removePresetByName(name);
 
-			if (applicationConfig.isSaveConfigOnEveryChange()) {
+			if (getApplicationConfig().isSaveConfigOnEveryChange()) {
 				try {
 					presetManager.writeToPersistence(null);
 				} catch (IOException ex) {
@@ -1081,7 +1069,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			presetManager.setPreset(preset);
 
-			if (applicationConfig.isSaveConfigOnEveryChange()) {
+			if (getApplicationConfig().isSaveConfigOnEveryChange()) {
 				try {
 					presetManager.writeToPersistence(null);
 				} catch (IOException ex) {

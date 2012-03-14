@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal.elements;
+package org.signalml.app.view.document.opensignal_old.elements;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

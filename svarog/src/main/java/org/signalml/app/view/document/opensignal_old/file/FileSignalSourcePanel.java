@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal.file;
+package org.signalml.app.view.document.opensignal_old.file;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -21,9 +21,9 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
-import org.signalml.app.view.document.opensignal.AbstractSignalSourcePanel;
-import org.signalml.app.view.document.opensignal.SignalSource;
+import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
+import org.signalml.app.view.document.opensignal_old.AbstractSignalSourcePanel;
+import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
 import org.signalml.codec.SignalMLCodec;

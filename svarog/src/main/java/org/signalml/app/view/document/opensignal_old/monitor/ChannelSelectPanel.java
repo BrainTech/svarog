@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal.monitor;
+package org.signalml.app.view.document.opensignal_old.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.view.document.opensignal.elements.ChannelSelectTable;
+import org.signalml.app.view.document.opensignal_old.elements.ChannelSelectTable;
 
 /**
  * This class represents a panel for selecting channels which will be monitored.

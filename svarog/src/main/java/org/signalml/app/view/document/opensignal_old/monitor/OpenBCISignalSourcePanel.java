@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal.monitor;
+package org.signalml.app.view.document.opensignal_old.monitor;
 
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.view.document.opensignal.SignalSource;
+import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.workspace.ViewerElementManager;
 
 /**

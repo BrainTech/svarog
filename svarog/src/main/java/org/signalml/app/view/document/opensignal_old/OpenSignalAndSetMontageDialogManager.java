@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal_old;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -15,10 +15,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
-import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
-import org.signalml.app.view.document.opensignal.monitor.ChooseExperimentPanel;
-import org.signalml.app.view.document.opensignal.monitor.OpenBCISignalSourcePanel;
+import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
+import org.signalml.app.view.document.opensignal_old.monitor.AbstractMonitorSourcePanel;
+import org.signalml.app.view.document.opensignal_old.monitor.ChooseExperimentPanel;
+import org.signalml.app.view.document.opensignal_old.monitor.OpenBCISignalSourcePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.EegSystem;

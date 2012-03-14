@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal.monitor;
+package org.signalml.app.view.document.opensignal_old.monitor;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -14,8 +14,8 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
-import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
-import org.signalml.app.view.document.opensignal.elements.AmplifierChannel;
+import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
+import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

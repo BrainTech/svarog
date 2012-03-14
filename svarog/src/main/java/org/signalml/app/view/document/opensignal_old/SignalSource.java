@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal_old;
 
 import org.springframework.context.MessageSourceResolvable;
 

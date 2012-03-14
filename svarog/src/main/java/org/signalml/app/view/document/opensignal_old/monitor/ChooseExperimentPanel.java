@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal.monitor;
+package org.signalml.app.view.document.opensignal_old.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 

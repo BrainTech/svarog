@@ -20,7 +20,7 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.view.document.opensignal.OpenSignalAndSetMontageDialog;
+import org.signalml.app.view.document.opensignal_old.OpenSignalAndSetMontageDialog;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

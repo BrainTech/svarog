@@ -1,7 +1,7 @@
 /* SignalSourcePanel.java created 2011-03-06
  *
  */
-package org.signalml.app.view.document.opensignal;
+package org.signalml.app.view.document.opensignal_old;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -20,10 +20,10 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.view.document.opensignal.file.FileSignalSourcePanel;
-import org.signalml.app.view.document.opensignal.monitor.AbstractMonitorSourcePanel;
-import org.signalml.app.view.document.opensignal.monitor.ChooseExperimentPanel;
-import org.signalml.app.view.document.opensignal.monitor.OpenBCISignalSourcePanel;
+import org.signalml.app.view.document.opensignal_old.file.FileSignalSourcePanel;
+import org.signalml.app.view.document.opensignal_old.monitor.AbstractMonitorSourcePanel;
+import org.signalml.app.view.document.opensignal_old.monitor.ChooseExperimentPanel;
+import org.signalml.app.view.document.opensignal_old.monitor.OpenBCISignalSourcePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 

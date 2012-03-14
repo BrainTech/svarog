@@ -61,7 +61,7 @@ public class FileChooserPanel extends JPanel {
 	 * Creates the GUI for this panel.
 	 */
 	private void createInterface() {
-		setBorder(BorderFactory.createTitledBorder(_("Choose a file")));
+		//setBorder(BorderFactory.createTitledBorder(_("Choose a file")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(getFileChooser());
 	}
