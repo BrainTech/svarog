@@ -12,10 +12,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.Box;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -24,10 +28,10 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.CompactButton;
-import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.newstager.ui.components.AutoSpinnerPanel;
 
 /**
@@ -43,7 +47,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	private AbstractDialog owner;
 
-	private ResolvableComboBox rulesComboBox;
+	private JComboBox<NewStagerRules> rulesComboBox;
 
 	private AutoSpinnerPanel deltaMinAmplitudePanel;
 	private AutoSpinnerPanel alphaMinAmplitudePanel;
@@ -51,18 +55,19 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	private JCheckBox primaryHypnogramCheckBox;
 
-	public NewStagerBasicParametersPanel(AbstractDialog owner, NewStagerAdvancedConfigObservable advancedConfigObservable) {
+	public NewStagerBasicParametersPanel(AbstractDialog owner,
+			NewStagerAdvancedConfigObservable advancedConfigObservable) {
 		super();
 		this.owner = owner;
 		initialize();
-		
-		final NewStagerAdvancedConfigObservable observable = advancedConfigObservable; 
+
+		final NewStagerAdvancedConfigObservable observable = advancedConfigObservable;
 		advancedConfigObservable.addObserver(new Observer() {
-			
+
 			@Override
 			public void update(Observable o, Object arg) {
 				boolean flag = observable.getEnabled();
-				
+
 				getDeltaMinAmplitudePanel().setEnabled(flag);
 				getAlphaMinAmplitudePanel().setEnabled(flag);
 				getSpindleMinAmplitudePanel().setEnabled(flag);
@@ -174,13 +179,38 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	}
 
-	public ResolvableComboBox getRulesComboBox() {
+	public JComboBox<NewStagerRules> getRulesComboBox() {
 		if (rulesComboBox == null) {
-			rulesComboBox = new ResolvableComboBox();
+			rulesComboBox = new JComboBox<NewStagerRules>();
+			
+			rulesComboBox.setRenderer(new DefaultListCellRenderer() {
+				private static final long serialVersionUID = 1L;
+				
+				@Override
+				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+					try {
+						NewStagerRules rulesValue = (NewStagerRules) value;
+						switch (rulesValue) {
+							case RK:
+								value = _("Rechtshaffen and Kales (R&K 1967) rules");
+								break;
+							case AASM:
+								value = _("AASM (2007) rules");
+								break;
+							default:
+								;
+						}
+					} catch (ClassCastException e) {
+						//do nothing
+					}
 
-			// TODO!
-			// rulesComboBox.setModel(new
-			// DefaultComboBoxModel(SleepStagingRules.values()));
+					return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+				}
+			
+			});
+
+			rulesComboBox.setModel(new DefaultComboBoxModel<NewStagerRules>(
+					NewStagerRules.values()));
 		}
 		return rulesComboBox;
 	}
