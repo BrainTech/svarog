@@ -5,11 +5,13 @@
 package org.signalml.app.view.document.opensignal_old.elements;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
 
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
@@ -110,6 +112,21 @@ public class ChannelSelectTable extends JTable {
 	 */
 	public void setAllSelected(boolean selected) {
 		getChannelSelectTableModel().setAllSelected(selected);
+	}
+	
+	public void fillTableFromModel(String[] channelLabels) {
+		TableModel model2 = this.getModel();
+		
+		ChannelSelectTableModel model = new ChannelSelectTableModel();
+		List<AmplifierChannel> amplifierChannels = new ArrayList<AmplifierChannel>();
+		
+		for (int i = 0; i < channelLabels.length; i++) {
+			amplifierChannels.add(new AmplifierChannel(i+1, channelLabels[i]));
+		}
+		model.setChannels(amplifierChannels);
+		model.setEditable(false);
+		setModel(model);
+		setColumnsPreferredSizes();
 	}
 
 	public void fillTableFromModel(ExperimentDescriptor descriptor) {

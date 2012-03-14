@@ -36,11 +36,13 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		OpenDocumentDescriptor openDocumentDescriptor = new OpenDocumentDescriptor();
-		
+
 		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor); 
 		if (!ok) {
 			return;
 		}
+
+		documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
 	}
 
 }

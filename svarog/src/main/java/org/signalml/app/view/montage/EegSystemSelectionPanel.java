@@ -12,11 +12,13 @@ import javax.swing.JComboBox;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
  * A panel containing a {@link JComboBox} for selecting which {@link EegSystem}
@@ -152,6 +154,16 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetAt(0);
 			presetComboBoxModel.setSelectedItem(eegSystem);
 			montage.setEegSystem(eegSystem);
+		}
+	}
+	
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
+			
+			if (eegSystemName != null)
+				setEegSystemByName(eegSystemName);
 		}
 	}
 }

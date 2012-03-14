@@ -21,7 +21,7 @@ public class OpenDocumentDescriptor {
 
 	private File file;
 	private ManagedDocumentType type;
-	private boolean makeActive;
+	private boolean makeActive = true;
 
 	/**
 	 * Descriptor determining a signal to be opened.

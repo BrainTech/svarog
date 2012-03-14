@@ -22,11 +22,16 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;
 import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal_old.EditGainAndOffsetDialog;
+import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 
 /**
@@ -362,6 +367,45 @@ public class SignalParametersPanel extends JPanel {
 
 	public float getSamplingFrequency() {
 		return Float.parseFloat(getSamplingFrequencyComboBox().getSelectedItem().toString());
+	}
+	
+	public void preparePanelForSignalSource(SignalSource signalSource) {
+		channelCountSpinner.setEnabled(false);
+		byteOrderComboBox.setEnabled(signalSource.isFile());
+		sampleTypeComboBox.setEnabled(signalSource.isFile());
+	}
+	
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+			getByteOrderComboBox().setSelectedItem(rawSignalDescriptor.getByteOrder());
+			getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
+			getSamplingFrequencyComboBox().setEditable(true);
+		}
+		else {
+			getSamplingFrequencyComboBox().setEditable(false);
+		}
+		
+		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
+		
+		getSamplingFrequencyComboBox().setSelectedItem(signalParameters.getSamplingFrequency());
+		getChannelCountSpinner().setValue(signalParameters.getChannelCount());
+		getPageSizeSpinner().setValue(signalParameters.getPageSize());
+		getBlocksPerPageSpinner().setValue(signalParameters.getBlocksPerPage());
+	}
+
+	public void fillModelFromPanel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+			rawSignalDescriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
+			rawSignalDescriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());;
+		}
+
+		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
+		signalParameters.setSamplingFrequency(getSamplingFrequency());
+		signalParameters.setChannelCount(getChannelCount());
+		signalParameters.setPageSize(getPageSizeSpinner().getValue());
+		signalParameters.setBlocksPerPage(getBlocksPerPageSpinner().getValue());
 	}
 
 }

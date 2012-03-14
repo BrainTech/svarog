@@ -65,7 +65,6 @@ public abstract class AbstractSignalMLPanel extends JPanel implements PropertyCh
 	 * @param enabled true or false
 	 */
 	public void setEnabledAll(boolean enabled) {
-
 		setEnabledToChildren(this, enabled);
 	}
 

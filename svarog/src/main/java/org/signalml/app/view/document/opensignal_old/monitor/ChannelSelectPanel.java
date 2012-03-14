@@ -17,9 +17,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.hamcrest.Description;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentStatus;
+import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.document.opensignal_old.elements.ChannelSelectTable;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
  * This class represents a panel for selecting channels which will be monitored.
@@ -62,7 +66,7 @@ public class ChannelSelectPanel extends JPanel {
                 add(new JScrollPane(getChannelSelectTable()), BorderLayout.CENTER);
 
                 CompoundBorder border = new CompoundBorder(
-                        new TitledBorder(_("Select channels to be monitored")),
+                        new TitledBorder(_("Available channels")),
                         new EmptyBorder(3, 3, 3, 3));
                 setBorder(border);
 
@@ -163,13 +167,28 @@ public class ChannelSelectPanel extends JPanel {
 	 * 
 	 * @param descriptor
 	 */
-	public void fillPanelFromModel(ExperimentDescriptor descriptor) {
-		boolean panelEditable = !(descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING);
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 
-		selectAllButton.setEnabled(panelEditable);
-		clearSelectionButton.setEnabled(panelEditable);
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+			String[] channelLabels = rawSignalDescriptor.getChannelLabels();
+			getChannelSelectTable().fillTableFromModel(channelLabels);
+		}
+		else if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor descriptor = (ExperimentDescriptor) openSignalDescriptor;
+		
+			boolean panelEditable = !(descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING);
 
-		getChannelSelectTable().fillTableFromModel(descriptor);	
+			selectAllButton.setEnabled(panelEditable);
+			clearSelectionButton.setEnabled(panelEditable);
+			getChannelSelectTable().fillTableFromModel(descriptor);
+		}
+
+	}
+	
+	public void preparePanelForSignalSource(SignalSource signalSource) {
+		getSelectAllButton().setEnabled(signalSource.isOpenBCI());
+		getClearSelectionButton().setEnabled(signalSource.isOpenBCI());
 	}
 
 }

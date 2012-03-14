@@ -84,11 +84,6 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	private EegSystemName eegSystemName;
 
         /**
-         * an array of labels of signal channels
-         */
-	private String[] channelLabels;
-
-        /**
          * the position (in seconds) of the marker in the described
          * signal
          */
@@ -410,22 +405,6 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 	public void setEegSystemName(EegSystemName eegSystemName) {
 		this.eegSystemName = eegSystemName;
-	}
-
-        /**
-         * Returns an array of labels of signal channels
-         * @return an array of labels of signal channels
-         */
-	public String[] getChannelLabels() {
-		return channelLabels;
-	}
-
-        /**
-         * Sets an array of labels of signal channels
-         * @param channelLabels an array of labels of signal channels
-         */
-	public void setChannelLabels(String[] channelLabels) {
-		this.channelLabels = channelLabels;
 	}
 
         /**

@@ -3,16 +3,23 @@ package org.signalml.app.view.document.opensignal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import java.io.File;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
+import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
+import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.document.opensignal_old.monitor.ChannelSelectPanel;
 import org.signalml.app.view.document.opensignal_old.monitor.ChooseExperimentPanel;
 import org.signalml.app.view.document.opensignal_old.monitor.TagPresetSelectionPanel;
@@ -20,21 +27,18 @@ import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 
-public class OpenSignalWizardStepOnePanel extends JPanel {
-	
+public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListener, PropertyChangeListener {
+
+	private SignalSourceTabbedPane signalSourceTabbedPane;
 	private ViewerElementManager viewerElementManager;
-	
-	/**
-	 * The panel for choosing a file to be opened.
-	 */
-	private FileChooserPanel fileChooserPanel;
-	private ChooseExperimentPanel chooseExperimentPanel;
 
 	private SignalParametersPanel signalParametersPanel;
 	private ChannelSelectPanel channelSelectPanel;
 	
 	private EegSystemSelectionPanel eegSystemSelectionPanel;
 	private TagPresetSelectionPanel tagPresetSelectionPanel;
+	
+	private AbstractOpenSignalDescriptor openSignalDescriptor;
 
 	public OpenSignalWizardStepOnePanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
@@ -42,17 +46,14 @@ public class OpenSignalWizardStepOnePanel extends JPanel {
 		this.setLayout(new GridLayout(1, 2));
 		this.add(createLeftPanel());
 		this.add(createRightPanel());
+		
+		prepareChannelsForSignalSource();
 	}
 	
 	protected JPanel createLeftPanel() {
 		JPanel leftPanel = new JPanel(new BorderLayout());
-		
-		JTabbedPane signalSourceTabbedPane = new JTabbedPane();
-		signalSourceTabbedPane.addTab(_("FILE"), getFileChooserPanel());
-		chooseExperimentPanel = new ChooseExperimentPanel();
-		signalSourceTabbedPane.addTab(_("MONITOR"), chooseExperimentPanel);
-		leftPanel.add(signalSourceTabbedPane, BorderLayout.NORTH);
-		
+
+		leftPanel.add(getSignalSourceTabbedPane(), BorderLayout.NORTH);
 		signalParametersPanel = new SignalParametersPanel();
 		leftPanel.add(signalParametersPanel, BorderLayout.CENTER);
 		
@@ -72,20 +73,6 @@ public class OpenSignalWizardStepOnePanel extends JPanel {
 		rightPanel.add(southPanel, BorderLayout.SOUTH);
 		
 		return rightPanel;
-	}
-	
-	/**
-	 * Returns the panel for choosing which signal file should be opened.
-	 * @return the panel for choosing which signal file should be opened
-	 */
-	public FileChooserPanel getFileChooserPanel() {
-		if (fileChooserPanel == null) {
-			fileChooserPanel = new FileChooserPanel( ManagedDocumentType.SIGNAL);
-			
-			String lastFileChooserPath = SvarogApplication.getApplicationConfiguration().getLastFileChooserPath();
-			getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
-		}
-		return fileChooserPanel;
 	}
 	
 	/**
@@ -110,5 +97,45 @@ public class OpenSignalWizardStepOnePanel extends JPanel {
 			eegSystemSelectionPanel = new EegSystemSelectionPanel(viewerElementManager.getEegSystemsPresetManager());
 		}
 		return eegSystemSelectionPanel;
+	}
+	
+	protected SignalSourceTabbedPane getSignalSourceTabbedPane() {
+		if (signalSourceTabbedPane == null) {
+			signalSourceTabbedPane = new SignalSourceTabbedPane();
+			signalSourceTabbedPane.addChangeListener(this);
+			signalSourceTabbedPane.addPropertyChangeListener(this);
+		}
+		return signalSourceTabbedPane;
+	}
+
+	@Override
+	public void stateChanged(ChangeEvent event) {
+		if (event.getSource() == signalSourceTabbedPane) {
+			prepareChannelsForSignalSource();
+		}
+	}
+	
+	protected void prepareChannelsForSignalSource() {
+		SignalSource selectedSignalSource = signalSourceTabbedPane.getSelectedSignalSource();
+		signalParametersPanel.preparePanelForSignalSource(selectedSignalSource);
+		channelSelectPanel.preparePanelForSignalSource(selectedSignalSource);
+		tagPresetSelectionPanel.setEnabledAll(selectedSignalSource.isOpenBCI());
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (SignalSourceTabbedPane.OPEN_SIGNAL_DESCRIPTOR_PROPERTY.equals(evt.getPropertyName())) {
+			openSignalDescriptor = (AbstractOpenSignalDescriptor) evt.getNewValue();
+			
+			signalParametersPanel.fillPanelFromModel(openSignalDescriptor);
+			channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
+			eegSystemSelectionPanel.fillPanelFromModel(openSignalDescriptor);
+		}
+	}
+
+	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
+		if (openSignalDescriptor != null)
+			signalParametersPanel.fillModelFromPanel(openSignalDescriptor);
+		return openSignalDescriptor;
 	}
 }

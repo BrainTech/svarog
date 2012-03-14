@@ -16,15 +16,19 @@ import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.SignalDocument;
+import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.plugin.export.SignalMLException;
 
 public class SignalMontagePanel extends JPanel {
 
@@ -214,5 +218,63 @@ public class SignalMontagePanel extends JPanel {
 	 */
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
+	}
+
+	public void fillPanelFromModel(Object model) throws SignalMLException {
+
+		if (model instanceof Montage) {
+			this.currentMontage = new Montage((Montage) model);
+			setMontageToPanels(currentMontage);
+		} else {
+			final MontageDescriptor descriptor = (MontageDescriptor) model;
+			final Montage montage = descriptor.getMontage();
+			final SignalDocument signalDocument = descriptor.getSignalDocument();
+			final boolean signalBound = (signalDocument != null);
+			if (montage == null)
+				this.currentMontage = new Montage(signalBound ?
+								  new SourceMontage(signalDocument) : new SourceMontage());
+			else
+				this.currentMontage = new Montage(montage);
+			this.signalDocument = signalDocument;
+
+			//getOkButton().setVisible(signalBound);
+			//getRootPane().setDefaultButton(signalBound ? getOkButton() : getCancelButton());
+
+			montageEditionPanel.setSignalBound(signalBound);
+			filtersPanel.setSignalBound(signalBound);
+
+			filtersPanel.setCurrentSamplingFrequency(signalBound ?
+								 signalDocument.getSamplingFrequency() : 128.0F);
+		}
+
+		if (signalDocument != null && !this.currentMontage.isCompatible(signalDocument))
+			this.currentMontage.adapt(signalDocument);
+
+		setMontageToPanels(this.currentMontage);
+		//setChanged(false);
+	}
+	
+	private void setMontageToPanels(Montage montage) {
+		if (montage != null && montage.getEegSystemName() != null) {
+			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
+			montage.setEegSystem(system);
+		}
+
+		montageEditionPanel.setMontageToPanels(montage);
+		filtersPanel.setMontage(montage);
+		miscellaneousPanel.setMontage(montage);
+	}
+	
+	public void fillModelFromPanel(Object model) throws SignalMLException {
+		if (model instanceof Montage) {
+			MontageDescriptor descriptor = (MontageDescriptor) model;
+
+			// montage was edited immediately for the most part
+			descriptor.setMontage(currentMontage);
+		}
+		else if (model instanceof OpenDocumentDescriptor) {
+			OpenDocumentDescriptor openDocumentDescriptor = (OpenDocumentDescriptor) model;
+			openDocumentDescriptor.getOpenSignalDescriptor().setMontage(getCurrentMontage());
+		}
 	}
 }
