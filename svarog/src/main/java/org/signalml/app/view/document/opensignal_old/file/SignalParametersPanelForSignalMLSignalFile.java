@@ -151,7 +151,6 @@ public class SignalParametersPanelForSignalMLSignalFile extends JPanel {
                         registerCodecAction.setCodecManager(codecManager);
                         registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
                         registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());
-                        registerCodecAction.setApplicationConfig(applicationConfig);
                         registerCodecAction.initializeAll();
 
                         registerCodecAction.setSelector(new SignalMLCodecSelector() {

@@ -324,7 +324,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 
 		// note the "save on every change" checkbox has no immediate effect on behaviour of codec manager
 		if (mode == SignalMLOperationMode.APPLICATION) {
-			registerCodecAction.setApplicationConfig(config);
 			removeCodecAction.setApplicationConfig(config);
 
 			toolsConfigPanel.fillPanelFromModel(config);

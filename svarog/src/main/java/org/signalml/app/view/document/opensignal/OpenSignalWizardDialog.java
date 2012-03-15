@@ -1,27 +1,24 @@
 package org.signalml.app.view.document.opensignal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.io.File;
 
 import javax.swing.JComponent;
-
 import javax.swing.JPanel;
 
-import org.signalml.app.action.selector.SignalPageFocusSelector;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
-import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.dialogs.AbstractWizardDialog;
 import org.signalml.app.view.montage.SignalMontagePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 
 public class OpenSignalWizardDialog extends AbstractWizardDialog {
@@ -125,6 +122,11 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 		openDocumentDescriptor.setOpenSignalDescriptor(openSignalDescriptor);
 		
+	}
+	
+	@Override
+	public boolean isFinishAllowedOnStep(int step) {
+		return step == 1; 
 	}
 
 }

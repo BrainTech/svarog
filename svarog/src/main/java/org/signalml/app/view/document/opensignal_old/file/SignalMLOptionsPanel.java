@@ -88,7 +88,7 @@ public class SignalMLOptionsPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel driverLabel = new JLabel(_("Select codec"));
+		JLabel driverLabel = new JLabel(_("Codecs"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 

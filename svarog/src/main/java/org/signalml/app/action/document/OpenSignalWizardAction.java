@@ -50,7 +50,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	public void actionPerformed(ActionEvent arg0) {
 		openDocumentDescriptor = new OpenDocumentDescriptor();
 
-		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor); 
+		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor, true); 
 		if (!ok) {
 			return;
 		}

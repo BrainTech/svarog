@@ -14,11 +14,19 @@ import javax.swing.JTabbedPane;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.document.opensignal_old.monitor.ChooseExperimentPanel;
+import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
+import org.signalml.codec.SignalMLCodec;
+import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
@@ -28,6 +36,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
 	
+	private ViewerElementManager viewerElementManager;
 	/**
 	 * The panel for choosing a file to be opened.
 	 */
@@ -36,7 +45,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 	
-	public SignalSourceTabbedPane() {
+	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
+		this.viewerElementManager = viewerElementManager;
 		addTab(_("FILE"), getFileChooserPanel());
 		addTab(_("MONITOR"), getChooseExperimentPanel());
 	}
@@ -93,7 +103,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			return;
 		
 		String extension = Util.getFileExtension(file, false);
-		System.out.println(extension);
 		if (extension == null)
 			return;
 
@@ -108,11 +117,71 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 				e.printStackTrace();
 			}
 		}
+		else {
+			String formatName = null;
+			if (extension.equalsIgnoreCase("edf")) {
+				formatName = "EDF";
+			}
+			else if (extension.equalsIgnoreCase("d")) {
+				formatName = "EASYS";
+			}
+			SignalMLCodecManager codecManager = viewerElementManager.getCodecManager();
+			SignalMLCodec codec = codecManager.getCodecForFormat(formatName);
+			
+			if (codec == null) {
+				Dialogs.showError(_("No SignalML codec was found to open this file!"));
+				fireOpenSignalDescriptorChanged();
+				return;
+			}
+			
+			readSignalMLMetadata(file, codec);
+		}
 		fireOpenSignalDescriptorChanged();
 	}
 	
 	protected void fireOpenSignalDescriptorChanged() {
 		firePropertyChange(OPEN_SIGNAL_DESCRIPTOR_PROPERTY, null, openSignalDescriptor);
+	}
+	
+	protected void readSignalMLMetadata(File signalFile, SignalMLCodec codec) {
+		File file = getFileChooserPanel().getSelectedFile();
+
+		if (codec == null) {
+			Dialogs.showError(_("Please select a codec first!"));
+			return;
+		}
+		if (file == null) {
+			Dialogs.showError(_("Please select a signalML file first!"));
+			return;
+		}
+
+		OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(codec, file);
+		worker.execute();
+
+		SignalMLDocument signalMLDocument = null;
+		try {
+			signalMLDocument = worker.get();
+
+			int channelCount = signalMLDocument.getChannelCount();
+			float samplingFrequency = signalMLDocument.getSamplingFrequency();
+
+			String[] channelLabels = new String[channelCount];
+			for (int i = 0; i < channelCount; i++) {
+				channelLabels[i] = signalMLDocument.getSampleSource().getLabel(i);
+			}
+			
+			openSignalDescriptor = new SignalMLDescriptor();
+			SignalMLDescriptor signalMLDescriptor = (SignalMLDescriptor) openSignalDescriptor;
+			signalMLDescriptor.setCodec(codec);
+			signalMLDescriptor.setChannelLabels(channelLabels);
+			signalMLDescriptor.getSignalParameters().setChannelCount(channelCount);
+			signalMLDescriptor.getSignalParameters().setSamplingFrequency(samplingFrequency);
+
+			signalMLDocument.closeDocument();
+		} catch (Exception e) {
+			Dialogs.showError(_("There was an error while loading the file - did you select a correct SignalML file?"));
+			e.printStackTrace();
+		}
 	}
 
 	protected void readRawFileMetadata(File signalFile) throws IOException, SignalMLException {

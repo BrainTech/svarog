@@ -1,15 +1,19 @@
 package org.signalml.app.view.document.opensignal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.view.document.opensignal.elements.ManageSignalMLCodecsButtonPanel;
+import org.signalml.app.view.document.opensignal.elements.ManageSignalMLCodecsDialog;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
 import org.signalml.app.view.document.opensignal_old.SignalSource;
@@ -29,6 +33,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	
 	private EegSystemSelectionPanel eegSystemSelectionPanel;
 	private TagPresetSelectionPanel tagPresetSelectionPanel;
+	private ManageSignalMLCodecsButtonPanel manageSignalMLCodecsButtonPanel;
 	
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 
@@ -58,9 +63,12 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		channelSelectPanel = new ChannelSelectPanel();
 		rightPanel.add(channelSelectPanel, BorderLayout.CENTER);
 		
-		JPanel southPanel = new JPanel(new BorderLayout());
-		southPanel.add(getTagPresetSelectionPanel(), BorderLayout.NORTH);
-		southPanel.add(getEegSystemSelectionPanel(), BorderLayout.SOUTH);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+		
+		southPanel.add(getTagPresetSelectionPanel());
+		southPanel.add(getEegSystemSelectionPanel());
+		southPanel.add(getManageSignalMLCodecsButtonPanel());
 		
 		rightPanel.add(southPanel, BorderLayout.SOUTH);
 		
@@ -74,7 +82,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	 */
 	public TagPresetSelectionPanel getTagPresetSelectionPanel() {
 		if (tagPresetSelectionPanel == null) {
-			tagPresetSelectionPanel = new TagPresetSelectionPanel( viewerElementManager.getStyledTagSetPresetManager());
+			tagPresetSelectionPanel = new TagPresetSelectionPanel(viewerElementManager.getStyledTagSetPresetManager());
 		}
 		return tagPresetSelectionPanel;
 	}
@@ -91,9 +99,15 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		return eegSystemSelectionPanel;
 	}
 	
+	protected ManageSignalMLCodecsButtonPanel getManageSignalMLCodecsButtonPanel() {
+		if (manageSignalMLCodecsButtonPanel == null)
+			manageSignalMLCodecsButtonPanel = new ManageSignalMLCodecsButtonPanel(viewerElementManager);
+		return manageSignalMLCodecsButtonPanel;
+	}
+	
 	protected SignalSourceTabbedPane getSignalSourceTabbedPane() {
 		if (signalSourceTabbedPane == null) {
-			signalSourceTabbedPane = new SignalSourceTabbedPane();
+			signalSourceTabbedPane = new SignalSourceTabbedPane(viewerElementManager);
 			signalSourceTabbedPane.addChangeListener(this);
 			signalSourceTabbedPane.addPropertyChangeListener(this);
 		}

@@ -19,6 +19,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.apache.log4j.Logger;
 import org.jfree.util.Log;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
 import org.signalml.app.util.XmlFileFilter;
@@ -49,7 +50,6 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	private RegisterCodecDialog registerCodecDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private SignalMLCodecSelector selector;
-	private ApplicationConfiguration applicationConfig;
 
 	public RegisterCodecAction() {
 		super();
@@ -201,7 +201,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 			selector.setSelectedCodec(codec);
 		}
 
-		if (applicationConfig.isSaveConfigOnEveryChange()) {
+		if (getApplicationConfig().isSaveConfigOnEveryChange()) {
 			try {
 				codecManager.writeToPersistence(null);
 			} catch (IOException ex) {
@@ -244,11 +244,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	}
 
 	public ApplicationConfiguration getApplicationConfig() {
-		return applicationConfig;
-	}
-
-	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
-		this.applicationConfig = applicationConfig;
+		return SvarogApplication.getApplicationConfiguration();
 	}
 
 }

@@ -13,7 +13,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
@@ -51,11 +53,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
          */
         @Override
         public boolean supportsModelClass(Class<?> clazz) {
-
-                boolean isBCIConnection = ExperimentDescriptor.class.isAssignableFrom(clazz);
-                boolean isFile = RawSignalDescriptor.class.isAssignableFrom(clazz);
-
-                return isBCIConnection || isFile;
+        	return AbstractOpenSignalDescriptor.class.isAssignableFrom(clazz);
         }
 
         /**

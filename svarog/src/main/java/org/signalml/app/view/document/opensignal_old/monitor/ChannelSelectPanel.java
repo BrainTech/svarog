@@ -168,12 +168,7 @@ public class ChannelSelectPanel extends JPanel {
 	 */
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 
-		if (openSignalDescriptor instanceof RawSignalDescriptor) {
-			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
-			String[] channelLabels = rawSignalDescriptor.getChannelLabels();
-			getChannelSelectTable().fillTableFromModel(channelLabels);
-		}
-		else if (openSignalDescriptor instanceof ExperimentDescriptor) {
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor descriptor = (ExperimentDescriptor) openSignalDescriptor;
 
 			boolean panelEditable = !(descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING);
@@ -181,6 +176,12 @@ public class ChannelSelectPanel extends JPanel {
 			selectAllButton.setEnabled(panelEditable);
 			clearSelectionButton.setEnabled(panelEditable);
 			getChannelSelectTable().fillTableFromModel(descriptor);
+		}
+		else { //RAW or SignalML
+			String[] channelLabels = new String[0];
+			if (openSignalDescriptor != null)
+				channelLabels = openSignalDescriptor.getChannelLabels();
+			getChannelSelectTable().fillTableFromModel(channelLabels);
 		}
 
 	}
