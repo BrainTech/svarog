@@ -2,6 +2,7 @@ package org.signalml.plugin.method.logic;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
@@ -14,7 +15,8 @@ import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
-	protected static final Logger log = Logger.getLogger(PluginComputationMgr.class);
+	protected static final Logger log = Logger
+			.getLogger(PluginComputationMgr.class);
 
 	protected class CheckedThreadGroup extends ThreadGroup {
 
@@ -26,7 +28,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 		public CheckedThreadGroup() {
 			super(Thread.currentThread().getThreadGroup(),
-			      "PluginComputationGroup");
+					"PluginComputationGroup");
 
 			this.parentThread = Thread.currentThread();
 
@@ -95,10 +97,10 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	private CheckedThreadGroup threadGroup;
 
 	public Result compute(Data data, MethodExecutionTracker tracker)
-	throws ComputationException {
+			throws ComputationException {
 		this.data = data;
 		this.tracker = tracker;
-		
+
 		try {
 			return this.doCompute();
 		} catch (PluginToolAbortException e) {
@@ -128,19 +130,20 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	}
 
 	protected Result doCompute() throws ComputationException,
-		PluginToolInterruptedException, PluginToolAbortException {
+			PluginToolInterruptedException, PluginToolAbortException {
 
 		this.stepResults = new HashMap<IPluginComputationMgrStep, PluginComputationMgrStepResult>();
 
 		Collection<IPluginComputationMgrStep> steps = this.prepareStepChain();
 
-		int ticks = 0;
+		Map<IPluginComputationMgrStep, Integer> tickMap = new LinkedHashMap<IPluginComputationMgrStep, Integer>(
+				steps.size());
 		for (IPluginComputationMgrStep step : steps) {
 			step.initialize();
-			ticks += step.getStepNumberEstimate();
+			tickMap.put(step, step.getStepNumberEstimate());
 		}
 
-		this.initializeRun(steps, ticks);
+		this.initializeRun(tickMap);
 
 		PluginComputationMgrStepResult stepResult = null;
 		for (IPluginComputationMgrStep step : steps) {
@@ -153,7 +156,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 	protected abstract Collection<IPluginComputationMgrStep> prepareStepChain();
 
-	protected void initializeRun(Collection<IPluginComputationMgrStep> steps, int ticks) {
+	protected void initializeRun(Map<IPluginComputationMgrStep, Integer> stepTicks) {
 
 	}
 
@@ -164,7 +167,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 			Throwable cause = this.threadGroup.getCause();
 			if (cause != null) {
 				log.error("Error in worker thread "
-					  + this.threadGroup.getCausingThread().getId());
+						+ this.threadGroup.getCausingThread().getId());
 				throw new ComputationException(cause);
 			}
 		}

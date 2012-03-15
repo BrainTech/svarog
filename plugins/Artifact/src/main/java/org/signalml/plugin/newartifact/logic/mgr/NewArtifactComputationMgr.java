@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.signalml.method.MethodExecutionTracker;
@@ -19,7 +20,7 @@ import org.signalml.plugin.newartifact.method.NewArtifactMethod;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
 
-public class NewArtifactComputationMgr extends
+public class NewArtifactComputationMgr<v> extends
 	PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
 	protected static final Logger logger = Logger
 					       .getLogger(NewArtifactMethod.class);
@@ -119,8 +120,12 @@ public class NewArtifactComputationMgr extends
 	}
 
 	@Override
-	protected void initializeRun(Collection<IPluginComputationMgrStep> steps,
-				     int ticks) {
+	protected void initializeRun(Map<IPluginComputationMgrStep, Integer> tickMap) {
+		int ticks = 0;
+		for (Map.Entry<IPluginComputationMgrStep, Integer> v : tickMap.entrySet()) {
+			ticks += v.getValue();
+		}
+		
 		this.tracker.setTickerLimit(0, ticks);
 	}
 
