@@ -113,14 +113,18 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 		AbstractOpenSignalDescriptor openSignalDescriptor = getStepOnePanel().getOpenSignalDescriptor();
 
-		if (!(openSignalDescriptor instanceof ExperimentDescriptor)) {
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			openDocumentDescriptor.setType(ManagedDocumentType.MONITOR);
+		}
+		else {
+			openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
 			File file = getStepOnePanel().getSignalSourceTabbedPane().getFileChooserPanel().getSelectedFile();
 			openDocumentDescriptor.setFile(file);
 		}
 		openSignalDescriptor.setMontage(getSignalMontagePanel().getCurrentMontage());
 
 		openDocumentDescriptor.setOpenSignalDescriptor(openSignalDescriptor);
-		openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
+		
 	}
 
 }

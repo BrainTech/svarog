@@ -11,7 +11,7 @@ public abstract class AbstractOpenSignalDescriptor {
 	/**
 	 * an array of labels of signal channels
 	 */
-	private String[] channelLabels;
+	private String[] channelLabels;	
 
 	/**
 	 * Montage to be applied to the signal directly after opening.

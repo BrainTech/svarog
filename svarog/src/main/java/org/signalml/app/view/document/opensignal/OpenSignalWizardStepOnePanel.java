@@ -1,27 +1,19 @@
 package org.signalml.app.view.document.opensignal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import java.io.File;
-
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.signalml.app.SvarogApplication;
-import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
 import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.document.opensignal_old.monitor.ChannelSelectPanel;
-import org.signalml.app.view.document.opensignal_old.monitor.ChooseExperimentPanel;
 import org.signalml.app.view.document.opensignal_old.monitor.TagPresetSelectionPanel;
 import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
@@ -112,9 +104,10 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	public void stateChanged(ChangeEvent event) {
 		if (event.getSource() == signalSourceTabbedPane) {
 			prepareChannelsForSignalSource();
+			fillPanelFromModel(signalSourceTabbedPane.getOpenSignalDescriptor());
 		}
 	}
-	
+
 	protected void prepareChannelsForSignalSource() {
 		SignalSource selectedSignalSource = signalSourceTabbedPane.getSelectedSignalSource();
 		signalParametersPanel.preparePanelForSignalSource(selectedSignalSource);
@@ -126,11 +119,14 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (SignalSourceTabbedPane.OPEN_SIGNAL_DESCRIPTOR_PROPERTY.equals(evt.getPropertyName())) {
 			openSignalDescriptor = (AbstractOpenSignalDescriptor) evt.getNewValue();
-			
-			signalParametersPanel.fillPanelFromModel(openSignalDescriptor);
-			channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
-			eegSystemSelectionPanel.fillPanelFromModel(openSignalDescriptor);
+			fillPanelFromModel(openSignalDescriptor);
 		}
+	}
+	
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		signalParametersPanel.fillPanelFromModel(openSignalDescriptor);
+		channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
+		eegSystemSelectionPanel.fillPanelFromModel(openSignalDescriptor);
 	}
 
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {

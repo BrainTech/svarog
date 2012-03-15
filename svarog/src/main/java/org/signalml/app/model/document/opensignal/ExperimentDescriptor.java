@@ -141,6 +141,11 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 		this.peerId = peerId;
 	}
 	
+	@Override
+	public String[] getChannelLabels() {
+		return amplifier.getSelectedChannelsLabels();
+	}
+	
 	/**
 	 * Multiplexer client to get signal from it.
 	 * może nie powinno tego tu być, tylko gdzie indziej.

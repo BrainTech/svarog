@@ -62,6 +62,25 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		this.firePropertyChange(EXPERIMENT_SELECTED_PROPERTY, null, experiment);
 	}
 
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		fireExperimentSelected(getSelectedExperiment());
+	}
+	
+	public ExperimentDescriptor getSelectedExperiment() {
+		int selectedRow = chooseExperimentTable.getSelectedRow();
+		ExperimentDescriptor selectedExperiment;
+		if (selectedRow == -1)
+			selectedExperiment = null;
+		else
+			selectedExperiment = chooseExperimentTableModel.getExperiments().get(selectedRow);
+		return selectedExperiment;
+	}
+	
+	public void clearSelection() {
+		chooseExperimentTable.clearSelection();
+	}
+
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
 		private GetOpenBCIExperimentsWorker worker;
 		private boolean executing = false;
@@ -109,25 +128,5 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 		}
 
 	}
-
-	@Override
-	public void valueChanged(ListSelectionEvent e) {
-		fireExperimentSelected(getSelectedExperiment());
-	}
-	
-	public ExperimentDescriptor getSelectedExperiment() {
-		int selectedRow = chooseExperimentTable.getSelectedRow();
-		ExperimentDescriptor selectedExperiment;
-		if (selectedRow == -1)
-			selectedExperiment = null;
-		else
-			selectedExperiment = chooseExperimentTableModel.getExperiments().get(selectedRow);
-		return selectedExperiment;
-	}
-	
-	public void clearSelection() {
-		chooseExperimentTable.clearSelection();
-	}
-	
 }
 

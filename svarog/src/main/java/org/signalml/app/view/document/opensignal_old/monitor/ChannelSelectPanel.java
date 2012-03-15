@@ -7,9 +7,9 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
@@ -175,7 +175,7 @@ public class ChannelSelectPanel extends JPanel {
 		}
 		else if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor descriptor = (ExperimentDescriptor) openSignalDescriptor;
-		
+
 			boolean panelEditable = !(descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING);
 
 			selectAllButton.setEnabled(panelEditable);
@@ -184,7 +184,7 @@ public class ChannelSelectPanel extends JPanel {
 		}
 
 	}
-	
+
 	public void preparePanelForSignalSource(SignalSource signalSource) {
 		getSelectAllButton().setEnabled(signalSource.isOpenBCI());
 		getClearSelectionButton().setEnabled(signalSource.isOpenBCI());

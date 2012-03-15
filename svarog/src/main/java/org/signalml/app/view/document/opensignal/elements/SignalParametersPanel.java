@@ -9,11 +9,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
+import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
@@ -22,7 +25,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.signalml.app.action.document.OpenSignalAction;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.Amplifier;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.SignalParameters;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;
@@ -30,9 +37,11 @@ import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
 import org.signalml.app.view.document.opensignal_old.EditGainAndOffsetDialog;
 import org.signalml.app.view.document.opensignal_old.SignalSource;
+import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Panel allowing to present and edit signal parameters.
@@ -43,11 +52,11 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 public class SignalParametersPanel extends JPanel {
 
 	public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
-    public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
-    public static String CHANNEL_LABELS_PROPERTY = "channelLabelsPropertyChanged";
-    public static String EEG_SYSTEM_PROPERTY = "eegSystemPropertyChanged";
+	public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
+	public static String CHANNEL_LABELS_PROPERTY = "channelLabelsPropertyChanged";
+	public static String EEG_SYSTEM_PROPERTY = "eegSystemPropertyChanged";
 
-	protected Object currentModel;
+	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
 	private JComboBox samplingFrequencyComboBox;
 	private IntegerSpinner channelCountSpinner;
@@ -94,7 +103,8 @@ public class SignalParametersPanel extends JPanel {
 	 *         operations
 	 */
 
-	protected int createFieldsPanelElements(JPanel fieldsPanel, GridBagConstraints constraints, int startingRow) {
+	protected int createFieldsPanelElements(JPanel fieldsPanel,
+			GridBagConstraints constraints, int startingRow) {
 		JLabel samplingFrequencyLabel = new JLabel(_("Sampling frequency: "));
 		JLabel channelCountLabel = new JLabel(_("Channel count: "));
 		JLabel byteOrderLabel = new JLabel(_("Byte order: "));
@@ -144,7 +154,8 @@ public class SignalParametersPanel extends JPanel {
 
 	protected JPanel createFieldsPanel() {
 
-		setBorder(new CompoundBorder(new TitledBorder(_("Signal parameters")), new EmptyBorder(3, 3, 3, 3)));
+		setBorder(new CompoundBorder(new TitledBorder(_("Signal parameters")),
+				new EmptyBorder(3, 3, 3, 3)));
 
 		setLayout(new BorderLayout(0, 10));
 
@@ -183,7 +194,8 @@ public class SignalParametersPanel extends JPanel {
 	 * @param gridwidth
 	 *            {@link GridBagConstraints#gridwidth}
 	 */
-	protected void fillConstraints(GridBagConstraints constraints, int gridx, int gridy, int weightx, int weighty, int gridwidth) {
+	protected void fillConstraints(GridBagConstraints constraints, int gridx,
+			int gridy, int weightx, int weighty, int gridwidth) {
 
 		constraints.gridx = gridx;
 		constraints.gridy = gridy;
@@ -208,12 +220,16 @@ public class SignalParametersPanel extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 
-					String selectedItemString = samplingFrequencyComboBox.getSelectedItem().toString();
+					String selectedItemString = samplingFrequencyComboBox
+							.getSelectedItem().toString();
 
 					if (!selectedItemString.isEmpty()) {
-						float currentSamplingFrequency = Float.parseFloat(selectedItemString);
+						float currentSamplingFrequency = Float
+								.parseFloat(selectedItemString);
 						if (currentSamplingFrequency != previousSamplingFrequency) {
-							fireSamplingFrequencyChanged(previousSamplingFrequency, currentSamplingFrequency);
+							fireSamplingFrequencyChanged(
+									previousSamplingFrequency,
+									currentSamplingFrequency);
 							previousSamplingFrequency = currentSamplingFrequency;
 						}
 					}
@@ -231,8 +247,10 @@ public class SignalParametersPanel extends JPanel {
 	 * @param currentSamplingFrequency
 	 *            the new sampling frequency
 	 */
-	protected void fireSamplingFrequencyChanged(double previousSamplingFrequency, double currentSamplingFrequency) {
-		firePropertyChange(SAMPLING_FREQUENCY_PROPERTY, previousSamplingFrequency, currentSamplingFrequency);
+	protected void fireSamplingFrequencyChanged(
+			double previousSamplingFrequency, double currentSamplingFrequency) {
+		firePropertyChange(SAMPLING_FREQUENCY_PROPERTY,
+				previousSamplingFrequency, currentSamplingFrequency);
 	}
 
 	/**
@@ -243,7 +261,8 @@ public class SignalParametersPanel extends JPanel {
 	protected IntegerSpinner getChannelCountSpinner() {
 
 		if (channelCountSpinner == null) {
-			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 50, 1));
+			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4,
+					1, 50, 1));
 			channelCountSpinner.addChangeListener(new ChangeListener() {
 
 				@Override
@@ -276,7 +295,8 @@ public class SignalParametersPanel extends JPanel {
 
 		if (byteOrderComboBox == null) {
 			byteOrderComboBox = new ResolvableComboBox();
-			byteOrderComboBox.setModel(new DefaultComboBoxModel(RawSignalByteOrder.values()));
+			byteOrderComboBox.setModel(new DefaultComboBoxModel(
+					RawSignalByteOrder.values()));
 		}
 		return byteOrderComboBox;
 	}
@@ -290,7 +310,8 @@ public class SignalParametersPanel extends JPanel {
 
 		if (sampleTypeComboBox == null) {
 			sampleTypeComboBox = new ResolvableComboBox();
-			sampleTypeComboBox.setModel(new DefaultComboBoxModel(RawSignalSampleType.values()));
+			sampleTypeComboBox.setModel(new DefaultComboBoxModel(
+					RawSignalSampleType.values()));
 		}
 		return sampleTypeComboBox;
 	}
@@ -303,7 +324,8 @@ public class SignalParametersPanel extends JPanel {
 	protected FloatSpinner getPageSizeSpinner() {
 
 		if (pageSizeSpinner == null) {
-			pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F, 0.1F, 100000.0F, 0.1F));
+			pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F,
+					0.1F, 100000.0F, 0.1F));
 		}
 		return pageSizeSpinner;
 	}
@@ -316,7 +338,8 @@ public class SignalParametersPanel extends JPanel {
 	protected IntegerSpinner getBlocksPerPageSpinner() {
 
 		if (blocksPerPageSpinner == null) {
-			blocksPerPageSpinner = new IntegerSpinner(new SpinnerNumberModel(4, 1, 200, 1));
+			blocksPerPageSpinner = new IntegerSpinner(new SpinnerNumberModel(4,
+					1, 200, 1));
 		}
 		return blocksPerPageSpinner;
 	}
@@ -329,20 +352,15 @@ public class SignalParametersPanel extends JPanel {
 	protected JButton getEditGainAndOffsetButton() {
 
 		if (editGainAndOffsetButton == null) {
-			editGainAndOffsetButton = new JButton();
-			
-			/*new AbstractAction() {
+			editGainAndOffsetButton = new JButton(new AbstractAction() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-						fillCurrentModelFromPanel();
-						getEditGainAndOffsetDialog().showDialog(currentModel, true);
-					} catch (SignalMLException ex) {
-						JOptionPane.showMessageDialog(null, ex.getMessage(), _("Error!"), JOptionPane.ERROR_MESSAGE);
-					}
+				public void actionPerformed(ActionEvent arg0) {
+					fillSignalParametersGainAndOffset(openSignalDescriptor);
+					getEditGainAndOffsetDialog().showDialog(openSignalDescriptor, true);
 				}
-			});*/
+			});
+
 			editGainAndOffsetButton.setText(_("Edit gain and offset"));
 		}
 		return editGainAndOffsetButton;
@@ -366,29 +384,47 @@ public class SignalParametersPanel extends JPanel {
 	}
 
 	public float getSamplingFrequency() {
-		return Float.parseFloat(getSamplingFrequencyComboBox().getSelectedItem().toString());
+		return Float.parseFloat(getSamplingFrequencyComboBox()
+				.getSelectedItem().toString());
 	}
-	
+
 	public void preparePanelForSignalSource(SignalSource signalSource) {
 		channelCountSpinner.setEnabled(false);
 		byteOrderComboBox.setEnabled(signalSource.isFile());
 		sampleTypeComboBox.setEnabled(signalSource.isFile());
 	}
-	
-	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
-		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+
+	public void fillPanelFromModel(
+			AbstractOpenSignalDescriptor openSignalDescriptor) {
+		this.openSignalDescriptor = openSignalDescriptor;
+		boolean isRawFile = openSignalDescriptor instanceof RawSignalDescriptor;
+
+		getByteOrderComboBox().setEnabled(isRawFile);
+		getSampleTypeComboBox().setEnabled(isRawFile);
+		getSamplingFrequencyComboBox().setEditable(true);
+
+		if (openSignalDescriptor == null) {
+			return;
+		}
+
+		if (isRawFile) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
-			getByteOrderComboBox().setSelectedItem(rawSignalDescriptor.getByteOrder());
-			getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
-			getSamplingFrequencyComboBox().setEditable(true);
+			getByteOrderComboBox().setSelectedItem(
+					rawSignalDescriptor.getByteOrder());
+			getSampleTypeComboBox().setSelectedItem(
+					rawSignalDescriptor.getSampleType());
+			getSamplingFrequencyComboBox().setEnabled(true);
+		} else if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			getSamplingFrequencyComboBox().setEnabled(false);
+		} else {
+			// getSamplingFrequencyComboBox().setEditable(false);
 		}
-		else {
-			getSamplingFrequencyComboBox().setEditable(false);
-		}
-		
-		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
-		
-		getSamplingFrequencyComboBox().setSelectedItem(signalParameters.getSamplingFrequency());
+
+		SignalParameters signalParameters = openSignalDescriptor
+				.getSignalParameters();
+
+		getSamplingFrequencyComboBox().setSelectedItem(
+				signalParameters.getSamplingFrequency());
 		getChannelCountSpinner().setValue(signalParameters.getChannelCount());
 		getPageSizeSpinner().setValue(signalParameters.getPageSize());
 		getBlocksPerPageSpinner().setValue(signalParameters.getBlocksPerPage());
@@ -398,7 +434,7 @@ public class SignalParametersPanel extends JPanel {
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
 			rawSignalDescriptor.setByteOrder((RawSignalByteOrder) getByteOrderComboBox().getSelectedItem());
-			rawSignalDescriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());;
+			rawSignalDescriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
 		}
 
 		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
@@ -406,6 +442,33 @@ public class SignalParametersPanel extends JPanel {
 		signalParameters.setChannelCount(getChannelCount());
 		signalParameters.setPageSize(getPageSizeSpinner().getValue());
 		signalParameters.setBlocksPerPage(getBlocksPerPageSpinner().getValue());
+		
+		fillSignalParametersGainAndOffset(openSignalDescriptor);
+
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			signalParameters.setChannelCount(experimentDescriptor
+					.getAmplifier().getSelectedChannels().size());
+		}
 	}
 
+	protected void fillSignalParametersGainAndOffset(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			List<AmplifierChannel> channels = experimentDescriptor
+					.getAmplifier().getSelectedChannels();
+
+			float[] gain = new float[channels.size()];
+			float[] offset = new float[channels.size()];
+
+			int i = 0;
+			for (AmplifierChannel channel : channels) {
+				gain[i] = channel.getCalibrationGain();
+				offset[i] = channel.getCalibrationOffset();
+				i++;
+			}
+			experimentDescriptor.getSignalParameters().setCalibrationGain(gain);
+			experimentDescriptor.getSignalParameters().setCalibrationOffset(offset);
+		}
+	}
 }

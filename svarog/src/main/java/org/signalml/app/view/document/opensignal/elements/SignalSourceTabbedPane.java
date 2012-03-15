@@ -15,6 +15,7 @@ import javax.swing.JTabbedPane;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.document.opensignal_old.SignalSource;
 import org.signalml.app.view.document.opensignal_old.monitor.ChooseExperimentPanel;
@@ -36,10 +37,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 	
 	public SignalSourceTabbedPane() {
-		chooseExperimentPanel = new ChooseExperimentPanel();
-		
 		addTab(_("FILE"), getFileChooserPanel());
-		addTab(_("MONITOR"), chooseExperimentPanel);
+		addTab(_("MONITOR"), getChooseExperimentPanel());
 	}
 	
 	/**
@@ -57,6 +56,14 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		return fileChooserPanel;
 	}
 	
+	protected ChooseExperimentPanel getChooseExperimentPanel() {
+		if (chooseExperimentPanel == null) {
+			chooseExperimentPanel = new ChooseExperimentPanel();
+			chooseExperimentPanel.addPropertyChangeListener(this);
+		}
+		return chooseExperimentPanel;
+	}
+	
 	public SignalSource getSelectedSignalSource() {
 		if (getSelectedComponent() == getFileChooserPanel())
 			return SignalSource.FILE;
@@ -65,30 +72,47 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
-		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(event.getPropertyName())) {
-			File file = fileChooserPanel.getSelectedFile();
-			
-			if (file == null)
-				return;
-			
-			String extension = Util.getFileExtension(file, false);
-			System.out.println(extension);
-			if (extension == null)
-				return;
-
-			if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
-				try {
-					readRawFileMetadata(file);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SignalMLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			firePropertyChange(OPEN_SIGNAL_DESCRIPTOR_PROPERTY, null, openSignalDescriptor);
+		String propertyName = event.getPropertyName();
+		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)) {
+			updatedSelectedFile();
 		}
+		else if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
+			updateSelectedExperiment();
+		}
+	}
+	
+	protected void updateSelectedExperiment() {
+		openSignalDescriptor = chooseExperimentPanel.getSelectedExperiment();
+		fireOpenSignalDescriptorChanged();
+	}
+	
+	protected void updatedSelectedFile() {
+		File file = fileChooserPanel.getSelectedFile();
+		
+		if (file == null)
+			return;
+		
+		String extension = Util.getFileExtension(file, false);
+		System.out.println(extension);
+		if (extension == null)
+			return;
+
+		if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
+			try {
+				readRawFileMetadata(file);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SignalMLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		fireOpenSignalDescriptorChanged();
+	}
+	
+	protected void fireOpenSignalDescriptorChanged() {
+		firePropertyChange(OPEN_SIGNAL_DESCRIPTOR_PROPERTY, null, openSignalDescriptor);
 	}
 
 	protected void readRawFileMetadata(File signalFile) throws IOException, SignalMLException {
@@ -104,6 +128,18 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
 		return openSignalDescriptor;
+	}
+	
+	@Override
+	protected void fireStateChanged() {
+		if (this.getSelectedComponent() == fileChooserPanel) {
+			updatedSelectedFile();
+		}
+		else {
+			updateSelectedExperiment();
+		}
+		
+		super.fireStateChanged();
 	}
 
 }
