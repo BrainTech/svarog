@@ -1,6 +1,6 @@
 <plugin>
 	<name>Sleep Staging</name>
-	<version>0.1</version>
+	<version>0.9</version>
 	<jar-file>Stager.jar</jar-file>
 	<starting-class>org.signalml.plugin.newstager.NewStagerPlugin</starting-class>
 	<dependencies>
