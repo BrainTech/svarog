@@ -10,10 +10,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 import org.apache.log4j.Logger;
 
@@ -393,14 +393,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 * @see org.signalml.plugin.export.signal.ExportedTagDocument#getSetOfTags()
 	 */
 	@Override
-	public Set<ExportedTag> getSetOfTags() {
-		Set<Tag> tagSet = getTagSet().getTags();
-
-		Set<ExportedTag> exportedTagSet = new TreeSet<ExportedTag>();
-		for (Tag tag : tagSet){
-			exportedTagSet.add(tag);
-		}
-		return exportedTagSet;
+	public SortedSet<ExportedTag> getSetOfTags() {
+		return new TreeSet<ExportedTag>(getTagSet().getTags());
 	}
 
 	/* (non-Javadoc)
