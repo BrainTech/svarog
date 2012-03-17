@@ -1,9 +1,8 @@
 package org.signalml.plugin.newstager.data;
 
-public class NewStagerSignalStatsResult extends NewStagerResult { //TODO this should not extend NewStagerResult
+import org.signalml.plugin.newstager.data.logic.NewStagerComputationMgrStepResult;
 
-	private static final long serialVersionUID = -3346713217515671076L;
-	
+public class NewStagerSignalStatsResult extends NewStagerComputationMgrStepResult {
 	
 	public final NewStagerSleepStats signalStatCoeffs;
 	public final NewStagerParameters newParameters;

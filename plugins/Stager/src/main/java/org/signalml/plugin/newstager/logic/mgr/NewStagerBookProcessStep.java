@@ -12,7 +12,6 @@ import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.PluginWorkerSet;
 import org.signalml.plugin.newstager.data.NewStagerBookInfo;
 import org.signalml.plugin.newstager.data.NewStagerBookReaderWorkerData;
-import org.signalml.plugin.newstager.data.NewStagerResult;
 import org.signalml.plugin.newstager.data.NewStagerSignalStatsResult;
 import org.signalml.plugin.newstager.data.logic.INewStagerWorkerCompletion;
 import org.signalml.plugin.newstager.data.logic.NewStagerBookProcessorResult;
@@ -63,7 +62,7 @@ public class NewStagerBookProcessStep extends
 	}
 
 	@Override
-	protected NewStagerResult prepareStepResult() {
+	protected NewStagerBookProcessorStepResult prepareStepResult() {
 		if (this.partialResults == null || this.signalStatResult == null) {
 			return null;
 		}

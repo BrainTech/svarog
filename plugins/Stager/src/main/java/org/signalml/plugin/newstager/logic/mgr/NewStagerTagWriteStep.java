@@ -1,5 +1,6 @@
 package org.signalml.plugin.newstager.logic.mgr;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Comparator;
@@ -23,10 +24,10 @@ import org.signalml.plugin.exception.PluginToolInterruptedException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.newstager.data.NewStagerBookInfo;
-import org.signalml.plugin.newstager.data.NewStagerResult;
 import org.signalml.plugin.newstager.data.logic.NewStagerBookProcessorResult;
 import org.signalml.plugin.newstager.data.logic.NewStagerBookProcessorStepResult;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrStepData;
+import org.signalml.plugin.newstager.data.logic.NewStagerTagWriteStepResult;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagCreatorData;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollection;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
@@ -35,8 +36,11 @@ import org.signalml.plugin.newstager.logic.book.tag.NewStagerBookAtomTagCreator;
 public class NewStagerTagWriteStep extends
 		AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
 
+	private File primaryTagFile;
+
 	public NewStagerTagWriteStep(NewStagerMgrStepData data) {
 		super(data);
+		this.primaryTagFile = null;
 	}
 
 	@Override
@@ -46,9 +50,13 @@ public class NewStagerTagWriteStep extends
 	}
 
 	@Override
-	protected NewStagerResult prepareStepResult() {
-		// TODO Auto-generated method stub
-		return null;
+	protected NewStagerTagWriteStepResult prepareStepResult() {
+		if (this.primaryTagFile == null) {
+			return null;
+		}
+
+		return new NewStagerTagWriteStepResult(
+				this.primaryTagFile.getAbsolutePath());
 	}
 
 	@Override
@@ -96,9 +104,9 @@ public class NewStagerTagWriteStep extends
 
 		writer.writeTags(NewStagerTagCollectionType.SLEEP_PAGES,
 				this.getSleepStages(), tagMap);
-		
-		
-		writer.writeTags(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_PAGES,
+
+		this.primaryTagFile = writer.writeTags(
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_PAGES,
 				this.getConsolidatedSleepStages(), tagMap);
 	}
 
@@ -110,9 +118,10 @@ public class NewStagerTagWriteStep extends
 				NewStagerTagCollectionType.SLEEP_STAGE_R,
 				NewStagerTagCollectionType.SLEEP_STAGE_W);
 	}
-	
+
 	private EnumSet<NewStagerTagCollectionType> getConsolidatedSleepStages() {
-		return EnumSet.of(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_1,
+		return EnumSet.of(
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_1,
 				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_2,
 				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_3,
 				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4,
@@ -150,7 +159,8 @@ public class NewStagerTagWriteStep extends
 			}
 		}
 
-		this.consolidateTags(map, allSleepPageTags, stepTagResult.bookInfo, stepTagResult.montage);
+		this.consolidateTags(map, allSleepPageTags, stepTagResult.bookInfo,
+				stepTagResult.montage);
 
 		return map;
 	}
@@ -158,8 +168,7 @@ public class NewStagerTagWriteStep extends
 	private void consolidateTags(
 			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> map,
 			SortedSet<IPluginTagDef> allSleepPageTags,
-			NewStagerBookInfo bookInfo,
-			boolean montage[]) {
+			NewStagerBookInfo bookInfo, boolean montage[]) {
 
 		if (allSleepPageTags.size() == 0) {
 			return;
@@ -179,14 +188,14 @@ public class NewStagerTagWriteStep extends
 			}
 		}
 
-		for (NewStagerTagCollectionType tagType : this.getConsolidatedSleepStages()) {
+		for (NewStagerTagCollectionType tagType : this
+				.getConsolidatedSleepStages()) {
 			map.put(tagType, new LinkedList<IPluginTagDef>());
 		}
-		
+
 		NewStagerBookAtomTagCreator tagCreator = new NewStagerBookAtomTagCreator(
 				new NewStagerBookAtomTagCreatorData(this.data.constants,
 						bookInfo));
-
 
 		Iterator<IPluginTagDef> it = allSleepPageTags.iterator();
 		if (!it.hasNext()) {
@@ -194,15 +203,16 @@ public class NewStagerTagWriteStep extends
 		}
 
 		IPluginTagDef prevTag = it.next();
-		map.get(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M).add(tagCreator.createPageTag(prevTag.getOffset()));
+		map.get(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M).add(
+				tagCreator.createPageTag(prevTag.getOffset()));
 
 		if (!it.hasNext()) {
 			return;
 		}
-		
+
 		IPluginTagDef nextTag = it.next();
 		NewStagerTagCollectionType prevKey = reverseMap.get(prevTag);
-		
+
 		int i = 0;
 		while (it.hasNext()) {
 			++i;
@@ -246,8 +256,9 @@ public class NewStagerTagWriteStep extends
 					}
 				}
 
-				map.get(tagTypeToCreate).add(tagCreator.createPageTag(tag.getOffset()
-							/ tag.getLength()));
+				map.get(tagTypeToCreate).add(
+						tagCreator.createPageTag(tag.getOffset()
+								/ tag.getLength()));
 			}
 
 			prevKey = key;

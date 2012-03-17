@@ -7,14 +7,12 @@ package org.signalml.plugin.newstager.data;
 import java.io.File;
 import java.io.Serializable;
 
-import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
-
 /**
  * NewStagerResult
  * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class NewStagerResult extends PluginComputationMgrStepResult implements Serializable {
+public class NewStagerResult implements Serializable {
 
 	/**
 	 * 

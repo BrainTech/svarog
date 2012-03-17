@@ -3,13 +3,9 @@ package org.signalml.plugin.newstager.data.logic;
 import java.util.Collection;
 
 import org.signalml.plugin.newstager.data.NewStagerBookInfo;
-import org.signalml.plugin.newstager.data.NewStagerResult;
 
-public class NewStagerBookProcessorStepResult extends NewStagerResult {
+public class NewStagerBookProcessorStepResult extends NewStagerComputationMgrStepResult {
 
-	private static final long serialVersionUID = -6450518358699779057L;
-	
-	
 	public final NewStagerBookInfo bookInfo;
 	public final Collection<NewStagerBookProcessorResult> tagResults;
 	public final boolean montage[];
