@@ -15,6 +15,7 @@ import org.signalml.plugin.newstager.data.NewStagerFASPThreshold;
 import org.signalml.plugin.newstager.data.NewStagerFixedParameters;
 import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrData;
 import org.signalml.plugin.newstager.logic.mgr.NewStagerComputationMgr;
 import org.springframework.context.MessageSourceResolvable;
@@ -189,13 +190,15 @@ public class NewStagerMain {
 			
 			NewStagerParameterThresholds thresholds = new NewStagerParameterThresholds(25, 40, 300, 50, alphaThreshold, deltaThreshold, spindleThreshold, thetaThreshold, KCThreshold);
 			
-			stagerData.setParameters(new NewStagerParameters(bookFilePath, b.getSegmentCount(),
+			stagerData.setParameters(new NewStagerParameters(bookFilePath,
+					NewStagerRules.RK,
 					true, true, true, thresholds));
 			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d, 0.75d, 0.5d, -0.85d, -0.7d));
 			
 			mgr.compute(
 					new NewStagerMgrData(stagerData, new NewStagerConstants(b
 							.getSamplingFrequency(), (int) b.getCalibration(),
+							b.getSegmentCount(),
 							NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
 							NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
 							NewStagerConstants.DEFAULT_AMPLITUDE_A,

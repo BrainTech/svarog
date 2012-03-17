@@ -39,7 +39,7 @@ public class NewStagerStatWorker implements Runnable {
 			}
 			
 			double zeroedBuffer[][] = new double[channelCount][sampleCount];
-			while (count < this.data.parameters.segmentCount) {
+			while (count < this.data.constants.segmentCount) {
 				stagerStat.compute(zeroedBuffer);
 				++count;
 			}

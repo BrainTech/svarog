@@ -30,6 +30,7 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
+import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.newstager.ui.components.AutoSpinnerPanel;
@@ -182,31 +183,34 @@ public class NewStagerBasicParametersPanel extends JPanel {
 	public JComboBox<NewStagerRules> getRulesComboBox() {
 		if (rulesComboBox == null) {
 			rulesComboBox = new JComboBox<NewStagerRules>();
-			
+
 			rulesComboBox.setRenderer(new DefaultListCellRenderer() {
 				private static final long serialVersionUID = 1L;
-				
+
 				@Override
-				public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+				public Component getListCellRendererComponent(JList<?> list,
+						Object value, int index, boolean isSelected,
+						boolean cellHasFocus) {
 					try {
 						NewStagerRules rulesValue = (NewStagerRules) value;
 						switch (rulesValue) {
-							case RK:
-								value = _("Rechtshaffen and Kales (R&K 1967) rules");
-								break;
-							case AASM:
-								value = _("AASM (2007) rules");
-								break;
-							default:
-								;
+						case RK:
+							value = _("Rechtshaffen and Kales (R&K 1967) rules");
+							break;
+						case AASM:
+							value = _("AASM (2007) rules");
+							break;
+						default:
+							;
 						}
 					} catch (ClassCastException e) {
-						//do nothing
+						// do nothing
 					}
 
-					return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+					return super.getListCellRendererComponent(list, value,
+							index, isSelected, cellHasFocus);
 				}
-			
+
 			});
 
 			rulesComboBox.setModel(new DefaultComboBoxModel<NewStagerRules>(
@@ -257,38 +261,39 @@ public class NewStagerBasicParametersPanel extends JPanel {
 	}
 
 	public void fillPanelFromParameters(NewStagerParameters parameters) {
-		// TODO!
-		/*
-		 * getRulesComboBox().setSelectedItem(parameters.getRules());
-		 * 
-		 * getDeltaMinAmplitudePanel().setValueWithAuto(
-		 * parameters.getDeltaAmplitude().getMinWithUnlimited());
-		 * getAlphaMinAmplitudePanel().setValueWithAuto(
-		 * parameters.getAlphaAmplitude().getMinWithUnlimited());
-		 * getSpindleMinAmplitudePanel().setValueWithAuto(
-		 * parameters.getSpindleAmplitude().getMinWithUnlimited());
-		 * 
-		 * getPrimaryHypnogramCheckBox().setSelected(
-		 * parameters.isPrimaryHypnogram());
-		 */
+		getRulesComboBox().setSelectedItem(parameters.rules);
+
+		NewStagerParameterThresholds thresholds = parameters.thresholds;
+
+		getDeltaMinAmplitudePanel().setValueWithAuto(
+				thresholds.deltaThreshold.amplitude.getMinWithUnlimited());
+		getAlphaMinAmplitudePanel().setValueWithAuto(
+				thresholds.alphaThreshold.amplitude.getMinWithUnlimited());
+		getSpindleMinAmplitudePanel().setValueWithAuto(
+				thresholds.spindleThreshold.amplitude.getMinWithUnlimited());
+
+		getPrimaryHypnogramCheckBox().setSelected(
+				parameters.primaryHypnogramFlag);
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
-		// TODO!
-		/*
-		 * parameters.setRules((SleepStagingRules) getRulesComboBox()
-		 * .getSelectedItem());
-		 * 
-		 * parameters.getDeltaAmplitude().setMinWithUnlimited(
-		 * getDeltaMinAmplitudePanel().getValueWithAuto());
-		 * parameters.getAlphaAmplitude().setMinWithUnlimited(
-		 * getAlphaMinAmplitudePanel().getValueWithAuto());
-		 * parameters.getSpindleAmplitude().setMinWithUnlimited(
-		 * getSpindleMinAmplitudePanel().getValueWithAuto());
-		 * 
-		 * parameters.setPrimaryHypnogram(getPrimaryHypnogramCheckBox()
-		 * .isSelected());
-		 */
+		parameters.rules = (NewStagerRules) getRulesComboBox()
+				.getSelectedItem();
+
+		NewStagerParameterThresholds thresholds = parameters.thresholds;
+
+		thresholds.deltaThreshold.amplitude
+				.setMinWithUnlimited(getDeltaMinAmplitudePanel()
+						.getValueWithAuto());
+		thresholds.alphaThreshold.amplitude
+				.setMinWithUnlimited(getAlphaMinAmplitudePanel()
+						.getValueWithAuto());
+		thresholds.spindleThreshold.amplitude
+				.setMinWithUnlimited(getSpindleMinAmplitudePanel()
+						.getValueWithAuto());
+
+		parameters.primaryHypnogramFlag = getPrimaryHypnogramCheckBox()
+				.isSelected();
 	}
 
 	public void validatePanel(ValidationErrors errors) {

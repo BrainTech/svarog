@@ -1,12 +1,22 @@
 package org.signalml.plugin.newstager.data;
 
+import java.io.Serializable;
+
 import org.signalml.util.MinMaxRange;
 
-public class NewStagerFASPThreshold {
+public class NewStagerFASPThreshold implements Serializable {
+
+	private static final long serialVersionUID = 9119452884250336626L;
+
 	public final MinMaxRange amplitude;
 	public final MinMaxRange frequency;
 	public final MinMaxRange scale;
 	public final MinMaxRange phase;
+
+	public NewStagerFASPThreshold() {
+		this(CreateMinMax(null, null), CreateMinMax(null, null), CreateMinMax(
+				null, null), CreateMinMax(null, null));
+	}
 
 	public NewStagerFASPThreshold(MinMaxRange amplitude, MinMaxRange frequency,
 			MinMaxRange scale, MinMaxRange phase) {

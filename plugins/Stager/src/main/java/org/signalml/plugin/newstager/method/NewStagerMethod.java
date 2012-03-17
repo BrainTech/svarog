@@ -150,6 +150,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		
 		return new NewStagerConstants(book.getSamplingFrequency(),
 					(int) book.getCalibration(),
+					book.getSegmentCount(),
 					NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
 					NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
 					NewStagerConstants.DEFAULT_AMPLITUDE_A,

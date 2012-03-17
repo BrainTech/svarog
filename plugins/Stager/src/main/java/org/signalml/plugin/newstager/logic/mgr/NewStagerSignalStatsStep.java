@@ -26,6 +26,7 @@ import org.signalml.plugin.newstager.data.logic.NewStagerStatAlgorithmResult;
 import org.signalml.plugin.newstager.io.INewStagerStatsSynchronizer;
 import org.signalml.plugin.newstager.io.NewStagerSignalReaderWorker;
 import org.signalml.plugin.newstager.logic.artifact.NewStagerStatWorker;
+import org.signalml.plugin.signal.PluginSignalHelper;
 import org.signalml.util.MinMaxRange;
 
 public class NewStagerSignalStatsStep extends
@@ -48,9 +49,9 @@ public class NewStagerSignalStatsStep extends
 
 	@Override
 	public int getStepNumberEstimate() {
-
-		// TODO Auto-generated method stub
-		return 0;
+		return PluginSignalHelper.GetBlockCount(
+				       this.data.stagerData.getSampleSource(),
+				       this.data.constants.getBlockLength()) + 1;
 	}
 
 	@Override
@@ -79,6 +80,7 @@ public class NewStagerSignalStatsStep extends
 		while (!this.statResultReadyFlag.get()) {
 			try {
 				Thread.sleep(1000);
+				this.data.tracker.advance(this, 1);
 			} catch (InterruptedException e) {
 				throw new PluginToolInterruptedException(e);
 			}
@@ -188,7 +190,7 @@ public class NewStagerSignalStatsStep extends
 				+ constants.amplitudeB;
 
 		return new NewStagerParameters(oldParameters.getBookFilePath(),
-				oldParameters.segmentCount,
+				oldParameters.rules,
 				oldParameters.analyseEMGChannelFlag,
 				oldParameters.analyseEEGChannelsFlag,
 				oldParameters.primaryHypnogramFlag,
