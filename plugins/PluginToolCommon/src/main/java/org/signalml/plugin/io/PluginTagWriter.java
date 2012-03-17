@@ -54,7 +54,10 @@ public class PluginTagWriter implements IPluginTagWriter {
 					throw new SanityCheckException("Inconsistent stretchFactor " + tagGroup + " (should be: " + stretchFactor + " )");
 				}
 			}
-
+		}
+		
+		if (stretchFactor == -1) {
+			stretchFactor = 1;
 		}
 
 		StyledTagSet tagSet = new StyledTagSet(styles, documentTags, pageSize,
