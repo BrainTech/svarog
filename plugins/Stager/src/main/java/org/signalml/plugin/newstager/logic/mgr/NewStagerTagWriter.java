@@ -27,7 +27,7 @@ public class NewStagerTagWriter {
 		this.stagerData = stagerData;
 	}
 
-	public void writeTags(NewStagerTagCollectionType tagType,
+	public File writeTags(NewStagerTagCollectionType tagType,
 			EnumSet<NewStagerTagCollectionType> stages,
 			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap) throws IOException, SignalMLException {
 
@@ -46,9 +46,12 @@ public class NewStagerTagWriter {
 			}
 		}
 
+		File resultFile = this.getTagFileName(tagType);
 		PluginTagWriter pluginTagWriter = new PluginTagWriter(
-				this.getTagFileName(tagType), new PluginTagWriterConfig());
+				resultFile, new PluginTagWriterConfig());
 		pluginTagWriter.writeTags(sleepTags);
+		
+		return resultFile;
 	}
 
 	private File getTagFileName(NewStagerTagCollectionType key) {
