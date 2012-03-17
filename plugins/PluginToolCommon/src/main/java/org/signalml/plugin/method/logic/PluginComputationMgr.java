@@ -15,7 +15,7 @@ import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
-	protected static final Logger log = Logger
+	protected static final Logger logger = Logger
 			.getLogger(PluginComputationMgr.class);
 
 	protected class CheckedThreadGroup extends ThreadGroup {
@@ -39,7 +39,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 		@Override
 		public void uncaughtException(Thread t, Throwable e) {
-			log.debug("uncaughtException: " + t + ", " + e);
+			logger.debug("uncaughtException: " + t + ", " + e);
 
 			synchronized (this) {
 				if (this.isShutdownStarted) {
@@ -156,7 +156,8 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 	protected abstract Collection<IPluginComputationMgrStep> prepareStepChain();
 
-	protected void initializeRun(Map<IPluginComputationMgrStep, Integer> stepTicks) {
+	protected void initializeRun(
+			Map<IPluginComputationMgrStep, Integer> stepTicks) {
 
 	}
 
@@ -166,7 +167,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 		if (this.threadGroup != null) {
 			Throwable cause = this.threadGroup.getCause();
 			if (cause != null) {
-				log.error("Error in worker thread "
+				logger.error("Error in worker thread "
 						+ this.threadGroup.getCausingThread().getId());
 				throw new ComputationException(cause);
 			}

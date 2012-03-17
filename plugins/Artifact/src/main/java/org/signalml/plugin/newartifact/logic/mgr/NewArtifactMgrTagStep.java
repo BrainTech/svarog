@@ -106,8 +106,8 @@ public class NewArtifactMgrTagStep extends
 					NewArtifactComputationType taggerType = futureMap
 							.get(future);
 					if (taggerType != null) {
-						tracker.advance((int) this.readers.get(taggerType)
-								.getDataSize()
+						tracker.advance(this, (int) this.readers
+								.get(taggerType).getDataSize()
 								/ this.data.constants.getBlockLength());
 					}
 				}

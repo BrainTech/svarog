@@ -20,7 +20,7 @@ import org.signalml.plugin.newartifact.method.NewArtifactMethod;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
 
-public class NewArtifactComputationMgr<v> extends
+public class NewArtifactComputationMgr extends
 	PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
 	protected static final Logger logger = Logger
 					       .getLogger(NewArtifactMethod.class);
@@ -43,9 +43,9 @@ public class NewArtifactComputationMgr<v> extends
 		}
 
 		@Override
-		public void advance(int step) {
+		public void advance(IPluginComputationMgrStep step, int tick) {
 			synchronized (this.tracker) {
-				this.tracker.tick(this.index, step);
+				this.tracker.tick(this.index, tick);
 			}
 		}
 
