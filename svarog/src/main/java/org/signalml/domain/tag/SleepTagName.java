@@ -5,11 +5,13 @@
 package org.signalml.domain.tag;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
-import org.signalml.app.document.TagDocument;
-import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
 
 /**
  * This is an abstract class with only static methods and attributes.
@@ -182,78 +184,35 @@ public abstract class SleepTagName {
          * @return true if a given tag is a valid tag for RK sleep description,
          * false otherwise
          */
-	public static boolean isValidRKSleepTag(TagDocument tag) {
-
-		StyledTagSet tagSet = tag.getTagSet();
-
-		TagStyle style;
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_WAKE);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_1);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_2);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_3);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_4);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_REM);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, RK_MT);
-		if (style == null) {
-			return false;
-		}
-
-		return true;
-
+	public static boolean isValidRKSleepTag(ExportedTagDocument tag) {
+		return checkStyles(tag.getTagStyles(), RK_WAKE, RK_1, RK_2, RK_3,
+				RK_4, RK_REM, RK_MT);
 	}
 
-        /**
+		/**
          * Returns whether a given tag is a valid tag for AAMS sleep description.
          * @param tag the tag which validity is to be checked
          * @return true if a given tag is a valid tag for AAMS sleep description,
          * false otherwise
          */
-	public static boolean isValidAASMSleepTag(TagDocument tag) {
-
-		StyledTagSet tagSet = tag.getTagSet();
-
-		TagStyle style;
-		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_WAKE);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_N1);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_N2);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_N3);
-		if (style == null) {
-			return false;
-		}
-		style = tagSet.getStyle(SignalSelectionType.PAGE, AASM_REM);
-		if (style == null) {
-			return false;
-		}
-
-		return true;
-
+	public static boolean isValidAASMSleepTag(ExportedTagDocument tag) {
+		return checkStyles(tag.getTagStyles(), AASM_WAKE, AASM_N1, AASM_N2, AASM_N3,
+				AASM_REM);
 	}
 
+    private static boolean checkStyles(Set<ExportedTagStyle> stylesSet,
+			String... styleNames) {
+    	
+    	Set<String> styleNamesSet = new HashSet<String>(Arrays.asList(styleNames));
+    	for (ExportedTagStyle style : stylesSet) {
+    		String styleName = style.getName();
+    		if (style.getType().isPage() && styleNamesSet.contains(styleName)) {
+    			styleNamesSet.remove(styleName);
+    		}
+    	}
+    	
+    	return styleNamesSet.isEmpty();
+	}
+
+	
 }
