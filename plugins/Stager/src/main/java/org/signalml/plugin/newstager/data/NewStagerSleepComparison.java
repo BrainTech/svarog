@@ -6,10 +6,14 @@ package org.signalml.plugin.newstager.data;
 
 import java.beans.IntrospectionException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 
 import org.apache.log4j.Logger;
@@ -19,6 +23,9 @@ import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.plugin.export.signal.ExportedTag;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
@@ -35,7 +42,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 			.getLogger(NewStagerSleepComparison.class);
 
 	private NewStagerSleepStatistic statistic;
-	private TagDocument tag;
+	private ExportedTagDocument tag;
 	private TagDocument expertTag;
 	private TagDocument artifactTag;
 
@@ -45,7 +52,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 	private int[][] styleOverlay;
 	private int[] rowSums; // T(i,:)
 	private int[] columnSums; // T(:,i)
-	private ArrayList<TagStyle> styles;
+	private ArrayList<ExportedTagStyle> styles;
 	private HashMap<String, Integer> styleNameMap;
 
 	private int styleCount;
@@ -57,52 +64,46 @@ public class NewStagerSleepComparison implements PropertyProvider {
 	private int total;
 
 	public NewStagerSleepComparison(NewStagerSleepStatistic statistic,
-			TagDocument tagDocument, TagDocument expertTag,
+			ExportedTagDocument tagDocument, TagDocument expertTag,
 			TagDocument artifactTag) {
 		this.statistic = statistic;
 		this.tag = tagDocument;
 		this.expertTag = expertTag;
 		this.artifactTag = artifactTag;
 
-		StyledTagSet tagSet = tagDocument.getTagSet();
+		Set<ExportedTagStyle> tagStylesSet = tagDocument.getTagStyles();
 		StyledTagSet expertTagSet = expertTag.getTagSet();
 		StyledTagSet artifactTagSet = null;
 		if (artifactTag != null) {
 			artifactTagSet = artifactTag.getTagSet();
 		}
 
-		styles = new ArrayList<TagStyle>();
+		styles = new ArrayList<ExportedTagStyle>();
 
 		if (SleepTagName.isValidRKSleepTag(tagDocument)) {
-
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_WAKE));
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_1));
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_2));
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_3));
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_4));
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_REM));
-			styles.add(tagSet.getStyle(null, SleepTagName.RK_MT));
+			styles.addAll(this.getSleepStyles(tagStylesSet,
+					SleepTagName.RK_WAKE, SleepTagName.RK_1, SleepTagName.RK_2,
+					SleepTagName.RK_3, SleepTagName.RK_4, SleepTagName.RK_REM,
+					SleepTagName.RK_MT));
 
 		} else if (SleepTagName.isValidAASMSleepTag(tagDocument)) {
-
-			styles.add(tagSet.getStyle(null, SleepTagName.AASM_WAKE));
-			styles.add(tagSet.getStyle(null, SleepTagName.AASM_N1));
-			styles.add(tagSet.getStyle(null, SleepTagName.AASM_N2));
-			styles.add(tagSet.getStyle(null, SleepTagName.AASM_N3));
-			styles.add(tagSet.getStyle(null, SleepTagName.AASM_REM));
+			styles.addAll(this.getSleepStyles(tagStylesSet,
+					SleepTagName.AASM_WAKE, SleepTagName.AASM_N1,
+					SleepTagName.AASM_N2, SleepTagName.AASM_N3,
+					SleepTagName.AASM_REM));
 
 		} else {
 			throw new SanityCheckException("Unsupported stage tag type");
 		}
 
-		Tag tag = null;
+		ExportedTag tag = null;
 		int index = 0;
-		TagStyle style = null;
+		ExportedTagStyle style = null;
 		double position = 0;
 		int i;
 
-		SortedSet<Tag> tags = tagSet.getTags();
-		Iterator<Tag> it = tags.iterator();
+		SortedSet<ExportedTag> tags = tagDocument.getSetOfTags();
+		Iterator<ExportedTag> it = tags.iterator();
 		SortedSet<Tag> expertTags;
 		Iterator<Tag> expertIt;
 		Tag expert = null;
@@ -262,23 +263,19 @@ public class NewStagerSleepComparison implements PropertyProvider {
 		return statistic;
 	}
 
-	public TagDocument getTag() {
-		return tag;
-	}
-
-	public TagDocument getExpertTag() {
-		return expertTag;
-	}
-
-	public TagDocument getArtifactTag() {
-		return artifactTag;
-	}
+	/*
+	 * public ExportedTagDocument getTag() { return tag; }
+	 * 
+	 * public TagDocument getExpertTag() { return expertTag; }
+	 * 
+	 * public TagDocument getArtifactTag() { return artifactTag; }
+	 */
 
 	public int getStyleCount() {
 		return styleCount;
 	}
 
-	public TagStyle getStyleAt(int index) {
+	public ExportedTagStyle getStyleAt(int index) {
 		return styles.get(index);
 	}
 
@@ -417,6 +414,22 @@ public class NewStagerSleepComparison implements PropertyProvider {
 
 		return list;
 
+	}
+
+	private Collection<ExportedTagStyle> getSleepStyles(
+			Set<ExportedTagStyle> tagStylesSet, String... styleNames) {
+		Set<ExportedTagStyle> result = new HashSet<ExportedTagStyle>();
+
+		Set<String> styleNamesSet = new HashSet<String>(
+				Arrays.asList(styleNames));
+		for (ExportedTagStyle style : tagStylesSet) {
+			String styleName = style.getName();
+			if (styleNamesSet.contains(styleName)) {
+				result.add(style);
+			}
+		}
+
+		return result;
 	}
 
 }

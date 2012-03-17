@@ -41,6 +41,7 @@ import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.view.AbstractPluginDialog;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newstager.NewStagerPlugin;
@@ -418,7 +419,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 				return;
 			}
 
-			TagDocument tag = currentDescriptor.getPrimaryTag();
+			ExportedTagDocument tag = currentDescriptor.getPrimaryTag();
 			if (SleepTagName.isValidRKSleepTag(tag)) {
 
 				if (!SleepTagName.isValidRKSleepTag(expertStageTag)) {

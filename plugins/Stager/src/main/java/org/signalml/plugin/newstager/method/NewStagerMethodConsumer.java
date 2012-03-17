@@ -8,28 +8,21 @@ import java.awt.Window;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.io.InvalidClassException;
 import java.util.ArrayList;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.apache.log4j.Logger;
-import org.signalml.app.document.DocumentFlowIntegrator;
-import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.method.ApplicationMethodManager;
-import org.signalml.app.method.InitializingMethodResultConsumer;
-import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.SampleSourceUtils;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.FileChooser;
+import org.signalml.plugin.export.signal.ExportedSignalDocument;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.method.IPluginMethodResultConsumer;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.newstager.data.NewStagerApplicationData;
@@ -49,12 +42,9 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 	protected static final Logger logger = Logger
 			.getLogger(NewStagerMethodConsumer.class);
 
-	private DocumentFlowIntegrator documentFlowIntegrator;
 	private Window dialogParent;
 
 	private NewStagerResultDialog resultDialog;
-
-	private LegacyTagImporter legacyTagImporter;
 
 	private PluginMethodManager manager;
 
@@ -69,8 +59,6 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 
 		this.resultDialog.setFileChooser(this.manager.getSvarogAccess()
 				.getGUIAccess().getFileChooser());
-
-		this.legacyTagImporter = new LegacyTagImporter();
 	}
 
 	@Override
@@ -88,8 +76,10 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		NewStagerResultTargetDescriptor descriptor = new NewStagerResultTargetDescriptor();
 
 		descriptor.setStagerResult(result);
+		SvarogAccessSignal signalAccess = this.manager.getSvarogAccess()
+						  .getSignalAccess();
 
-		SignalDocument signalDocument = null; //TODO! data.getSignalDocument();
+		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		boolean signalAvailable;
 		if (signalDocument == null || signalDocument.isClosed()) {
 			logger.warn("Document unavailable or has been closed");
@@ -108,42 +98,39 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 
 		descriptor.setSegmentCount(segmentCount);
 		descriptor.setSegmentLength(segmentLength);
-
+		
 		final File primaryTagFile = result.getTagFile();
 		if (primaryTagFile == null || !primaryTagFile.exists()) {
 			throw new SignalMLException("No result tag");
 		}
 
-		StyledTagSet primaryTagSet = null;
+		ExportedTagDocument primaryTag = null;
 		try {
-			primaryTagSet = legacyTagImporter.importLegacyTags(primaryTagFile,
-					sampleSource.getSamplingFrequency());
-		} catch (SignalMLException ex) {
-			logger.error("Failed to read primary result tag", ex);
-			Dialogs.showExceptionDialog(dialogParent, ex);
+			primaryTag = new TagDocument(primaryTagFile);
+		} catch (IOException e) {
+			logger.error("Invalid tag file");
 			return false;
 		}
-		TagDocument primaryTag = new TagDocument(primaryTagSet);
 
 		descriptor.setPrimaryTag(primaryTag);
 
 		File workingDirectory = new File(data.getProjectPath(),
-				data.getPatientName());
+						 data.getPatientName());
 		File[] additionalTagFiles = workingDirectory
-				.listFiles(new FileFilter() {
+		.listFiles(new FileFilter() {
 
-					@Override
-					public boolean accept(File pathname) {
-						if (pathname.equals(primaryTagFile)) {
-							return false;
-						}
-						String fileExtension = Util.getFileExtension(pathname,
-								false);
-						return (fileExtension != null && "tag"
-								.equalsIgnoreCase(fileExtension));
-					}
+			@Override
+			public boolean accept(File pathname) {
+				if (pathname.equals(primaryTagFile)) {
+					return false;
+				}
+				String fileExtension = Util.getFileExtension(pathname,
+						       false);
+				return (fileExtension != null && "tag"
+					.equalsIgnoreCase(fileExtension));
+			}
 
-				});
+		});
 		ArrayList<File> additionalTags = new ArrayList<File>();
 		for (File f : additionalTagFiles) {
 			additionalTags.add(f);
@@ -179,69 +166,54 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		}
 
 		if (signalAvailable && descriptor.isPrimaryOpenInWindow()) {
-
-			OpenDocumentDescriptor odd = new OpenDocumentDescriptor();
-			odd.setFile(primaryTag.getBackingFile());
-			odd.setMakeActive(true);
-			odd.setType(ManagedDocumentType.TAG);
-			odd.getTagOptions().setParent(signalDocument);
-			odd.getTagOptions().setExistingDocument(primaryTag);
-
 			try {
-				documentFlowIntegrator.openDocument(odd);
-			} catch (SignalMLException ex) {
-				logger.error("Failed to open document", ex);
+				signalAccess.openTagDocument(primaryTag.getBackingFile(),
+							     signalDocument, true);
+			} catch (InvalidClassException ex) {
 				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			} catch (IOException ex) {
-				logger.error("Failed to open document - i/o exception", ex);
-				Dialogs.showExceptionDialog(dialogParent, ex);
-				return false;
-			} catch (ConnectException ex) {
-				logger.error("Failed to open document - connection exception",
-						ex);
 				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			}
-
 		}
 
 		ArrayList<File> chosenAdditionalTags = descriptor
-				.getChosenAdditionalTags();
+						       .getChosenAdditionalTags();
 		if (!chosenAdditionalTags.isEmpty()) {
 
 			boolean additionalOpenInWindow = descriptor
-					.isAdditionalOpenInWindow();
+							 .isAdditionalOpenInWindow();
 			boolean additionalSaveToFile = descriptor.isAdditionalSaveToFile();
 
 			if (additionalOpenInWindow || additionalSaveToFile) {
-
-				StyledTagSet additionalTagSet = null;
-				TagDocument additionalTag = null;
-				File saveFile;
-				boolean hasFile = false;
-
 				for (File file : chosenAdditionalTags) {
-
-					try {
-						additionalTagSet = legacyTagImporter.importLegacyTags(
-								file, sampleSource.getSamplingFrequency());
-					} catch (SignalMLException ex) {
-						logger.error("Failed to read additional result tag", ex);
-						Dialogs.showExceptionDialog(dialogParent, ex);
-						return false;
-					}
-					additionalTag = new TagDocument(additionalTagSet);
+					StyledTagSet additionalTagSet = null;
+					File saveFile;
+					boolean hasFile = false;
+					TagDocument additionalTag = null;
 
 					if (additionalSaveToFile) {
+
+						TagDocument d;
+						try {
+							d = new TagDocument(file);
+							d.openDocument();
+						} catch (IOException ex) {
+							Dialogs.showExceptionDialog(
+								dialogParent, ex);
+							return false;
+						}
+
+						additionalTagSet = d.getTagSet();
+						additionalTag = new TagDocument(additionalTagSet);
+						d.closeDocument();
 
 						hasFile = false;
 
 						do {
-
 							saveFile = this.manager.getSvarogAccess()
-									.getGUIAccess().getFileChooser()
-									.chooseSaveTag(dialogParent);
+									.getGUIAccess().getFileChooser().chooseSaveTag(dialogParent);
 							if (saveFile == null) {
 								// file choice canceled
 								break;
@@ -252,7 +224,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 							// file exists warning
 							if (saveFile.exists()) {
 								int res = OptionPane
-										.showFileAlreadyExists(dialogParent);
+									  .showFileAlreadyExists(dialogParent);
 								if (res != OptionPane.OK_OPTION) {
 									hasFile = false;
 								}
@@ -261,19 +233,20 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 						} while (!hasFile);
 
 						if (hasFile) {
-
 							additionalTag.setBackingFile(saveFile);
 							try {
 								additionalTag.saveDocument();
 							} catch (SignalMLException ex) {
 								logger.error("Failed to save document", ex);
-								Dialogs.showExceptionDialog(dialogParent, ex);
+								Dialogs.showExceptionDialog(
+									dialogParent, ex);
 								return false;
 							} catch (IOException ex) {
 								logger.error(
-										"Failed to save document - i/o exception",
-										ex);
-								Dialogs.showExceptionDialog(dialogParent, ex);
+									"Failed to save document - i/o exception",
+									ex);
+								Dialogs.showExceptionDialog(
+									dialogParent, ex);
 								return false;
 							}
 
@@ -282,44 +255,31 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 					}
 
 					if (additionalOpenInWindow) {
-
-						OpenDocumentDescriptor odd = new OpenDocumentDescriptor();
-						odd.setFile(additionalTag.getBackingFile());
-						odd.setMakeActive(false);
-						odd.setType(ManagedDocumentType.TAG);
-						odd.getTagOptions().setParent(signalDocument);
-						odd.getTagOptions().setExistingDocument(additionalTag);
-
-						try {
-							documentFlowIntegrator.openDocument(odd);
-						} catch (SignalMLException ex) {
-							logger.error("Failed to open document", ex);
-							Dialogs.showExceptionDialog(dialogParent, ex);
-							return false;
-						} catch (IOException ex) {
-							logger.error(
-									"Failed to open document - i/o exception",
-									ex);
-							Dialogs.showExceptionDialog(dialogParent, ex);
-							return false;
-						} catch (ConnectException ex) {
-							logger.error(
-									"Failed to open document - connection exception",
-									ex);
-							Dialogs.showExceptionDialog(dialogParent, ex);
-							return false;
+						File tagFile = null;
+						if (additionalTag != null) {
+							tagFile = additionalTag.getBackingFile();
+						}
+						if (tagFile == null) {
+							tagFile = file;
 						}
 
+						try {
+							signalAccess.openTagDocument(file, signalDocument,
+										     false);
+						} catch (InvalidClassException ex) {
+							Dialogs.showExceptionDialog(
+								dialogParent, ex);
+							return false;
+						} catch (IOException ex) {
+							Dialogs.showExceptionDialog(
+								dialogParent, ex);
+							return false;
+						}
 					}
-
 				}
-
 			}
-
 		}
 
 		return true;
-
 	}
-
 }

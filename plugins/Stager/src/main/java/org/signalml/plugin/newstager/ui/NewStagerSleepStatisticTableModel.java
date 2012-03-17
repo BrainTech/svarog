@@ -12,7 +12,7 @@ import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.exception.SanityCheckException;
-import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.newstager.data.NewStagerSleepStatistic;
 
 /**
@@ -62,7 +62,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 
 			int index;
 			int addCnt = 0;
-			TagStyle style;
+			ExportedTagStyle style;
 
 			double segmentLength = statistic.getSegmentLength();
 			double tst = statistic.getTotalSleepTime();

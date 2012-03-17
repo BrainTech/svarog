@@ -7,7 +7,7 @@ package org.signalml.plugin.newstager.ui;
 import java.io.File;
 import java.util.ArrayList;
 
-import org.signalml.app.document.TagDocument;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.newstager.data.NewStagerResult;
 
 /** NewStagerResultTargetDescriptor
@@ -22,7 +22,7 @@ public class NewStagerResultTargetDescriptor {
 	private int segmentCount;
 	private float segmentLength;
 	
-	private TagDocument primaryTag;
+	private ExportedTagDocument primaryTag;
 	
 	private NewStagerResult stagerResult;
 
@@ -63,11 +63,11 @@ public class NewStagerResultTargetDescriptor {
 		this.segmentLength = segmentLength;
 	}
 
-	public TagDocument getPrimaryTag() {
+	public ExportedTagDocument getPrimaryTag() {
 		return primaryTag;
 	}	
 	
-	public void setPrimaryTag(TagDocument primaryTag) {
+	public void setPrimaryTag(ExportedTagDocument primaryTag) {
 		this.primaryTag = primaryTag;
 	}
 

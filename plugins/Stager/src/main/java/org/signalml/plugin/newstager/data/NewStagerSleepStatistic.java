@@ -7,17 +7,16 @@ package org.signalml.plugin.newstager.data;
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.SortedSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.domain.tag.SleepTagName;
-import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStatistic;
-import org.signalml.plugin.export.signal.Tag;
-import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.ExportedTag;
+import org.signalml.plugin.export.signal.ExportedTagDocument;
+import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.util.Util;
 
 /**
@@ -52,7 +51,7 @@ public class NewStagerSleepStatistic extends TagStatistic implements
 	protected int slowSegments;
 
 	public NewStagerSleepStatistic(NewStagerResult stagerResult,
-			TagDocument tagDocument, int segmentCount, float segmentLength) {
+			ExportedTagDocument tagDocument, int segmentCount, float segmentLength) {
 		super();
 
 		deltaThr = (float) stagerResult.getDeltaThr();
@@ -63,9 +62,8 @@ public class NewStagerSleepStatistic extends TagStatistic implements
 		this.segmentCount = segmentCount;
 		this.segmentLength = segmentLength;
 
-		StyledTagSet tagSet = tagDocument.getTagSet();
-		List<TagStyle> pageStyleList = tagSet.getPageStylesNoMarkers();
-		TagStyle[] styles = new TagStyle[pageStyleList.size()];
+		Set<ExportedTagStyle> pageStyleList = tagDocument.getTagStyles();
+		ExportedTagStyle[] styles = new ExportedTagStyle[pageStyleList.size()];
 		pageStyleList.toArray(styles);
 
 		init(styles, segmentLength * segmentCount);
@@ -77,8 +75,7 @@ public class NewStagerSleepStatistic extends TagStatistic implements
 		firstSlowWaveTime = -1;
 		lastSleepTime = -1;
 
-		SortedSet<Tag> tags = tagSet.getTags();
-		TagStyle style;
+		ExportedTagStyle style;
 		String name;
 		int index;
 		Integer idx;
@@ -86,7 +83,7 @@ public class NewStagerSleepStatistic extends TagStatistic implements
 		double endPosition;
 		double length;
 		float wakeInsidePropperSleepTimeCandidate = 0;
-		for (Tag tag : tags) {
+		for (ExportedTag tag : tagDocument.getSetOfTags()) {
 
 			style = tag.getStyle();
 
