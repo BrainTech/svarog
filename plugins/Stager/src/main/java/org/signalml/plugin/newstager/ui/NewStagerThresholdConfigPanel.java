@@ -26,6 +26,7 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
+import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.ui.components.AutoSpinnerWithSliderPanel;
 import org.signalml.plugin.newstager.ui.components.SpinnerWithSliderPanel;
@@ -64,9 +65,8 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		CompoundBorder border = new CompoundBorder(
-				new TitledBorder(_("Thresholds")),
-				new EmptyBorder(3, 3, 3, 3));
+		CompoundBorder border = new CompoundBorder(new TitledBorder(
+				_("Thresholds")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		add(getThresholdsPanel(), BorderLayout.NORTH);
@@ -94,9 +94,12 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 			JLabel emgToneThresholdLabel = new JLabel(_("EMG tone"));
 			JLabel mtEegThresholdLabel = new JLabel(_("MT artifacts in EEG"));
 			JLabel mtEmgThresholdLabel = new JLabel(_("MT artifacts in EMG"));
-			JLabel mtToneEmgThresholdLabel = new JLabel(_("MT artifacts in tone EMG"));
-			JLabel remEogDeflectionThresholdLabel = new JLabel(_("EOG deflection for rapid eye movement [%]"));
-			JLabel semEogDeflectionThresholdLabel = new JLabel(_("EOG deflection for slow eye movement [%]"));
+			JLabel mtToneEmgThresholdLabel = new JLabel(
+					_("MT artifacts in tone EMG"));
+			JLabel remEogDeflectionThresholdLabel = new JLabel(
+					_("EOG deflection for rapid eye movement [%]"));
+			JLabel semEogDeflectionThresholdLabel = new JLabel(
+					_("EOG deflection for slow eye movement [%]"));
 
 			Component glue1 = Box.createHorizontalGlue();
 			Component glue2 = Box.createHorizontalGlue();
@@ -317,44 +320,51 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	}
 
 	public void fillPanelFromParameters(NewStagerParameters parameters) {
-		//TODO!
-		/*
-		getEmgToneThresholdPanel().setValue(parameters.getEmgToneThreshold());
-		getMtEegThresholdPanel().setValue(parameters.getMtEegThreshold());
-		getMtEegThresholdEnabledCheckBox().setSelected(
-				parameters.isMtEegThresholdEnabled());
-		getMtEmgThresholdPanel().setValue(parameters.getMtEmgThreshold());
+
+		NewStagerParameterThresholds thresholds = parameters.thresholds;
+
+		getEmgToneThresholdPanel().setValue(thresholds.toneEMG);
+		getMtEegThresholdPanel().setValue(thresholds.montageEEGThreshold);
+		getMtEmgThresholdPanel().setValue(thresholds.montageEMGThreshold);
 		getMtToneEmgThresholdPanel().setValue(
-				parameters.getMtToneEmgThreshold());
+				thresholds.montageToneEMGThreshold);
+
+		getMtEegThresholdEnabledCheckBox().setSelected(
+				parameters.analyseEEGChannelsFlag);
 		getMtArtifactsThresholdEnabledCheckBox().setSelected(
-				parameters.isMtArtifactsThresholdEnabled());
-		getRemEogDeflectionThresholdPanel().setValue(
-				parameters.getRemEogDeflectionThreshold());
-		getSemEogDeflectionThresholdPanel().setValue(
-				parameters.getSemEogDeflectionThreshold());
-		*/
+				parameters.analyseEMGChannelFlag);
+
+		// TODO!
+		/*
+		 * getRemEogDeflectionThresholdPanel().setValue(
+		 * parameters.getRemEogDeflectionThreshold());
+		 * getSemEogDeflectionThresholdPanel().setValue(
+		 * parameters.getSemEogDeflectionThreshold());
+		 */
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
-		//TODO!
+
+		NewStagerParameterThresholds thresholds = parameters.thresholds;
+
+		thresholds.toneEMG = getEmgToneThresholdPanel().getValue();
+		thresholds.montageEEGThreshold = getMtEegThresholdPanel().getValue();
+		thresholds.montageEMGThreshold = getMtEmgThresholdPanel().getValue();
+		thresholds.montageToneEMGThreshold = getMtToneEmgThresholdPanel()
+				.getValue();
+
+		parameters.analyseEEGChannelsFlag = getMtEegThresholdEnabledCheckBox()
+				.isSelected();
+		parameters.analyseEMGChannelFlag = getMtArtifactsThresholdEnabledCheckBox()
+				.isSelected();
+
 		/*
-		parameters.setEmgToneThreshold(getEmgToneThresholdPanel().getValue());
-		parameters.setMtEegThreshold(getMtEegThresholdPanel().getValue());
-		parameters.setMtEegThresholdEnabled(getMtEegThresholdEnabledCheckBox()
-				.isSelected());
-		parameters.setMtEmgThreshold(getMtEmgThresholdPanel().getValue());
-		parameters.setMtToneEmgThreshold(getMtToneEmgThresholdPanel()
-				.getValue());
-		parameters
-				.setMtArtifactsThresholdEnabled(getMtArtifactsThresholdEnabledCheckBox()
-						.isSelected());
-		parameters
-				.setRemEogDeflectionThreshold(getRemEogDeflectionThresholdPanel()
-						.getValue());
-		parameters
-				.setSemEogDeflectionThreshold(getSemEogDeflectionThresholdPanel()
-						.getValue());
-		*/
+		 * TODO! parameters
+		 * .setRemEogDeflectionThreshold(getRemEogDeflectionThresholdPanel()
+		 * .getValue()); parameters
+		 * .setSemEogDeflectionThreshold(getSemEogDeflectionThresholdPanel()
+		 * .getValue());
+		 */
 	}
 
 	public void validatePanel(ValidationErrors errors) {

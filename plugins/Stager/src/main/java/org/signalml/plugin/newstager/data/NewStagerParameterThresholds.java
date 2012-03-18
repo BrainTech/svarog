@@ -7,10 +7,10 @@ public class NewStagerParameterThresholds implements Serializable {
 	private static final long serialVersionUID = -5779920969012386681L;
 	
 	
-	public final double toneEMG;
-	public final double montageEEGThreshold;
-	public final double montageEMGThreshold;
-	public final Double montageToneEMGThreshold;
+	public double toneEMG;
+	public double montageEEGThreshold;
+	public double montageEMGThreshold;
+	public double montageToneEMGThreshold;
 	public final NewStagerFASPThreshold alphaThreshold;
 	public final NewStagerFASPThreshold deltaThreshold;
 	public final NewStagerFASPThreshold spindleThreshold;
