@@ -101,6 +101,7 @@ public class ChannelSelectPanel extends JPanel {
                                         setAllSelected(true);
                                 }
                         });
+                        selectAllButton.setEnabled(false);
                 }
                 return selectAllButton;
         }
@@ -119,6 +120,7 @@ public class ChannelSelectPanel extends JPanel {
                                         setAllSelected(false);
                                 }
                         });
+                        clearSelectionButton.setEnabled(false);
                 }
                 return clearSelectionButton;
         }
@@ -169,11 +171,6 @@ public class ChannelSelectPanel extends JPanel {
 
 		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor descriptor = (ExperimentDescriptor) openSignalDescriptor;
-
-			boolean panelEditable = !(descriptor == null || descriptor.getAmplifier() == null || descriptor.getStatus() == ExperimentStatus.RUNNING);
-
-			selectAllButton.setEnabled(panelEditable);
-			clearSelectionButton.setEnabled(panelEditable);
 			getChannelSelectTable().fillTableFromModel(descriptor);
 		}
 		else { //RAW or SignalML
@@ -186,8 +183,8 @@ public class ChannelSelectPanel extends JPanel {
 	}
 
 	public void preparePanelForSignalSource(SignalSource signalSource) {
-		getSelectAllButton().setEnabled(signalSource.isOpenBCI());
-		getClearSelectionButton().setEnabled(signalSource.isOpenBCI());
+		//getSelectAllButton().setEnabled(signalSource.isOpenBCI());
+		//getClearSelectionButton().setEnabled(signalSource.isOpenBCI());
 	}
 
 }

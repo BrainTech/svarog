@@ -144,8 +144,11 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	}
 
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
-		if (openSignalDescriptor != null)
+		if (openSignalDescriptor != null) {
 			signalParametersPanel.fillModelFromPanel(openSignalDescriptor);
+			tagPresetSelectionPanel.fillModelFromPanel(openSignalDescriptor);
+		}
+
 		return openSignalDescriptor;
 	}
 }

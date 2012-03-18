@@ -26,6 +26,7 @@ import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
@@ -45,9 +46,6 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 public class SignalParametersPanel extends JPanel {
 
 	public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
-	public static String SAMPLING_FREQUENCY_PROPERTY = "samplingFrequencyChanged";
-	public static String CHANNEL_LABELS_PROPERTY = "channelLabelsPropertyChanged";
-	public static String EEG_SYSTEM_PROPERTY = "eegSystemPropertyChanged";
 
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
@@ -206,44 +204,8 @@ public class SignalParametersPanel extends JPanel {
 
 		if (samplingFrequencyComboBox == null) {
 			samplingFrequencyComboBox = new JComboBox();
-			samplingFrequencyComboBox.addActionListener(new ActionListener() {
-
-				private float previousSamplingFrequency = -1;
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-
-					String selectedItemString = samplingFrequencyComboBox
-							.getSelectedItem().toString();
-
-					if (!selectedItemString.isEmpty()) {
-						float currentSamplingFrequency = Float
-								.parseFloat(selectedItemString);
-						if (currentSamplingFrequency != previousSamplingFrequency) {
-							fireSamplingFrequencyChanged(
-									previousSamplingFrequency,
-									currentSamplingFrequency);
-							previousSamplingFrequency = currentSamplingFrequency;
-						}
-					}
-				}
-			});
 		}
 		return samplingFrequencyComboBox;
-	}
-
-	/**
-	 * Notifies all listeners that the sampling frequency has changed.
-	 * 
-	 * @param previousSamplingFrequency
-	 *            the old sampling frequency
-	 * @param currentSamplingFrequency
-	 *            the new sampling frequency
-	 */
-	protected void fireSamplingFrequencyChanged(
-			double previousSamplingFrequency, double currentSamplingFrequency) {
-		firePropertyChange(SAMPLING_FREQUENCY_PROPERTY,
-				previousSamplingFrequency, currentSamplingFrequency);
 	}
 
 	/**
@@ -355,6 +317,7 @@ public class SignalParametersPanel extends JPanel {
 			});
 
 			editGainAndOffsetButton.setText(_("Edit gain and offset"));
+			editGainAndOffsetButton.setEnabled(false);
 		}
 		return editGainAndOffsetButton;
 	}
@@ -383,41 +346,35 @@ public class SignalParametersPanel extends JPanel {
 
 	public void preparePanelForSignalSource(SignalSource signalSource) {
 		channelCountSpinner.setEnabled(false);
-		byteOrderComboBox.setEnabled(signalSource.isFile());
-		sampleTypeComboBox.setEnabled(signalSource.isFile());
+		getByteOrderComboBox().setEnabled(false);
+		getSampleTypeComboBox().setEnabled(false);
+		getSamplingFrequencyComboBox().setEnabled(false);
+		getSamplingFrequencyComboBox().setEditable(true);
 	}
 
-	public void fillPanelFromModel(
-			AbstractOpenSignalDescriptor openSignalDescriptor) {
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		this.openSignalDescriptor = openSignalDescriptor;
 		boolean isRawFile = openSignalDescriptor instanceof RawSignalDescriptor;
 
-		getByteOrderComboBox().setEnabled(isRawFile);
-		getSampleTypeComboBox().setEnabled(isRawFile);
-		getSamplingFrequencyComboBox().setEditable(true);
-
 		if (openSignalDescriptor == null) {
+			getSamplingFrequencyComboBox().setSelectedIndex(-1);
+			getChannelCountSpinner().setValue(0);
+			getEditGainAndOffsetButton().setEnabled(false);
 			return;
 		}
+		getEditGainAndOffsetButton().setEnabled(true);
 
 		if (isRawFile) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
-			getByteOrderComboBox().setSelectedItem(
-					rawSignalDescriptor.getByteOrder());
-			getSampleTypeComboBox().setSelectedItem(
-					rawSignalDescriptor.getSampleType());
-			getSamplingFrequencyComboBox().setEnabled(true);
-		} else if (openSignalDescriptor instanceof ExperimentDescriptor) {
-			getSamplingFrequencyComboBox().setEnabled(false);
-		} else {
-			// getSamplingFrequencyComboBox().setEditable(false);
+			getByteOrderComboBox().setSelectedItem(rawSignalDescriptor.getByteOrder());
+			getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
 		}
+		else if (openSignalDescriptor instanceof SignalMLDescriptor)
+			getEditGainAndOffsetButton().setEnabled(false);
 
-		SignalParameters signalParameters = openSignalDescriptor
-				.getSignalParameters();
+		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 
-		getSamplingFrequencyComboBox().setSelectedItem(
-				signalParameters.getSamplingFrequency());
+		getSamplingFrequencyComboBox().setSelectedItem(signalParameters.getSamplingFrequency());
 		getChannelCountSpinner().setValue(signalParameters.getChannelCount());
 		getPageSizeSpinner().setValue(signalParameters.getPageSize());
 		getBlocksPerPageSpinner().setValue(signalParameters.getBlocksPerPage());

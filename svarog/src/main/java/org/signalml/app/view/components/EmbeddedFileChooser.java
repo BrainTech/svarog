@@ -19,4 +19,5 @@ public class EmbeddedFileChooser extends SignalMLFileChooser {
 		super();
 		setControlButtonsAreShown(false);
 	}
+
 }

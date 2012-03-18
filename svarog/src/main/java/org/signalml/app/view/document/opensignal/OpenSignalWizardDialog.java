@@ -14,6 +14,7 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.components.dialogs.AbstractWizardDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.SignalMontagePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.Montage;
@@ -47,6 +48,11 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 		
 		if (toStep == 1 && fromStep == 0) {
 			AbstractOpenSignalDescriptor openSignalDescriptor = getStepOnePanel().getOpenSignalDescriptor();
+
+			if (openSignalDescriptor == null) {
+				Dialogs.showError(_("Please select a proper file or monitor signal source!"));
+				return false;
+			}
 
 			SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 			Montage createdMontage = SignalConfigurer.createMontage(signalParameters.getChannelCount());

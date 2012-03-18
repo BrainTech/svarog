@@ -81,7 +81,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		String propertyName = event.getPropertyName();
-		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)) {
+		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)
+				||JFileChooser.DIRECTORY_CHANGED_PROPERTY.equals(propertyName)) {
 			updatedSelectedFile();
 		}
 		else if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
@@ -93,16 +94,16 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		openSignalDescriptor = chooseExperimentPanel.getSelectedExperiment();
 		fireOpenSignalDescriptorChanged();
 	}
-	
+
 	protected void updatedSelectedFile() {
 		File file = fileChooserPanel.getSelectedFile();
-		
-		if (file == null)
-			return;
-		
 		String extension = Util.getFileExtension(file, false);
-		if (extension == null)
+
+		if (file == null || extension == null) {
+			openSignalDescriptor = null;
+			fireOpenSignalDescriptorChanged();
 			return;
+		}
 
 		if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
 			try {
@@ -129,6 +130,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			if (codec == null) {
 				Dialogs.showError(_("No SignalML codec was found to open this file!"));
 				fireOpenSignalDescriptorChanged();
+				fileChooserPanel.getFileChooser().setSelectedFile(null);
 				return;
 			}
 			
@@ -143,15 +145,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	
 	protected void readSignalMLMetadata(File signalFile, SignalMLCodec codec) {
 		File file = getFileChooserPanel().getSelectedFile();
-
-		if (codec == null) {
-			Dialogs.showError(_("Please select a codec first!"));
-			return;
-		}
-		if (file == null) {
-			Dialogs.showError(_("Please select a signalML file first!"));
-			return;
-		}
 
 		OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(codec, file);
 		worker.execute();
@@ -175,6 +168,10 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			xmlManifestFile = Util.changeOrAddFileExtension(signalFile, "svarog.info");
 		
 		RawSignalDescriptorReader reader = new RawSignalDescriptorReader();
+		openSignalDescriptor = null;
+		if (!xmlManifestFile.exists())
+			return;
+
 		openSignalDescriptor = reader.readDocument(xmlManifestFile);
 	}
 
