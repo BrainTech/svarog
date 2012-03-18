@@ -112,7 +112,7 @@ class Tracker implements MethodExecutionTracker {
 
 public class NewStagerMain {
 
-	private static String codecSourceFile = "../../../specs/EASYS.xml";
+	private static String codecSourceFile = "../../specs/EASYS.xml";
 	//private static String bookFilePath = "../../../../book_20sec_a1.3_smp.b";
 	private static String bookFilePath = "E:/book_20sec_a1.3_smp.b";
 	private static String sourceSignalFilePath = "E:/inb14.d";
