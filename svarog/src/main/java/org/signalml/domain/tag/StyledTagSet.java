@@ -30,7 +30,7 @@ import com.thoughtworks.xstream.annotations.XStreamConverter;
 import java.util.HashSet;
 import java.util.List;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 

@@ -1,11 +1,11 @@
-package org.signalml.app.view.document.opensignal_old.monitor;
+package org.signalml.app.view.document.opensignal.elements;
 
 import java.awt.Dimension;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 
-import org.signalml.app.model.document.opensignal.ChooseExperimentTableModel;
+import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
 
 public class ChooseExperimentTable extends JTable {
 

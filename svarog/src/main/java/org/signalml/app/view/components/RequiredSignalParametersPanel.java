@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

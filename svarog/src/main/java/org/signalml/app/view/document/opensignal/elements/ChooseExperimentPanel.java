@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal_old.monitor;
+package org.signalml.app.view.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -17,8 +17,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.document.opensignal.ChooseExperimentTableModel;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.GetOpenBCIExperimentsWorker;

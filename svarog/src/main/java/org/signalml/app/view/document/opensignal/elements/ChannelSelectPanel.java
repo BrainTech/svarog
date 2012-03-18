@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal_old.monitor;
+package org.signalml.app.view.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -19,9 +19,8 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.view.document.opensignal_old.SignalSource;
-import org.signalml.app.view.document.opensignal_old.elements.ChannelSelectTable;
+import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
+import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**

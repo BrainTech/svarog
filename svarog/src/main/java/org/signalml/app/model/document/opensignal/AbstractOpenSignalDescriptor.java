@@ -1,5 +1,6 @@
 package org.signalml.app.model.document.opensignal;
 
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 

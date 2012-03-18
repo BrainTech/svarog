@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.plugin.export.view.DocumentView;

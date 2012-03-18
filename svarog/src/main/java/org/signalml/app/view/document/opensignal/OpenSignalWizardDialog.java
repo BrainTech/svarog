@@ -12,7 +12,7 @@ import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.components.dialogs.AbstractWizardDialog;
 import org.signalml.app.view.montage.SignalMontagePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;

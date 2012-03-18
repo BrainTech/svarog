@@ -12,13 +12,13 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.elements.SignalSource;
+import org.signalml.app.view.document.opensignal.elements.ChannelSelectPanel;
 import org.signalml.app.view.document.opensignal.elements.ManageSignalMLCodecsButtonPanel;
 import org.signalml.app.view.document.opensignal.elements.ManageSignalMLCodecsDialog;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
-import org.signalml.app.view.document.opensignal_old.SignalSource;
-import org.signalml.app.view.document.opensignal_old.monitor.ChannelSelectPanel;
-import org.signalml.app.view.document.opensignal_old.monitor.TagPresetSelectionPanel;
+import org.signalml.app.view.document.opensignal.elements.TagPresetSelectionPanel;
 import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;

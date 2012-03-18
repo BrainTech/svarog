@@ -13,7 +13,7 @@ import javax.swing.JComponent;
 import org.omg.CORBA.Request;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.PagingParametersPanel;

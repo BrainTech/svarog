@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.model.document.opensignal;
+package org.signalml.app.model.document;
 
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;

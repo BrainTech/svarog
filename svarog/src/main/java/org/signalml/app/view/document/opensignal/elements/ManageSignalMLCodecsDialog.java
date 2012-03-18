@@ -6,7 +6,6 @@ import javax.swing.JComponent;
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
-import org.signalml.app.view.document.opensignal_old.file.SignalMLOptionsPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;

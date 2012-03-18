@@ -15,7 +15,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

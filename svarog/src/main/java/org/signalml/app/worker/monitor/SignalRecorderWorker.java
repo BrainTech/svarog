@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.Level;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;

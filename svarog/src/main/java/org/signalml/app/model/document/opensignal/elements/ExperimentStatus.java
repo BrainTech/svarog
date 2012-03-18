@@ -1,4 +1,4 @@
-package org.signalml.app.model.document.opensignal;
+package org.signalml.app.model.document.opensignal.elements;
 
 public enum ExperimentStatus {
 

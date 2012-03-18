@@ -9,7 +9,6 @@ import java.io.File;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.book.OpenBookDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /** OpenDocumentDescriptor

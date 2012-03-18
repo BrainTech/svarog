@@ -36,7 +36,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	public OpenSignalWizardAction(DocumentFlowIntegrator documentFlowIntegrator) {
 		super();
 		this.documentFlowIntegrator = documentFlowIntegrator;
-		setText(_("Open signal wizard"));
+		setText(_("Open signal"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open signal and set montage for it"));
 		setMnemonic(KeyEvent.VK_O);

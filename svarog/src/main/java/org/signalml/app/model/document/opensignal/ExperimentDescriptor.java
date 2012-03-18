@@ -1,5 +1,8 @@
 package org.signalml.app.model.document.opensignal;
 
+import org.signalml.app.model.document.opensignal.elements.Amplifier;
+import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;

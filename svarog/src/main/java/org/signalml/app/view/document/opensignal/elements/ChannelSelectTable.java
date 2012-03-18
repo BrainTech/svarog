@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal_old.elements;
+package org.signalml.app.view.document.opensignal.elements;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -14,8 +14,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentStatus;
+import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
+import org.signalml.app.model.document.opensignal.elements.ChannelSelectTableModel;
+import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.

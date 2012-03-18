@@ -1,4 +1,4 @@
-package org.signalml.app.model.document.opensignal;
+package org.signalml.app.model.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
 public class ChooseExperimentTableModel extends AbstractTableModel {
 

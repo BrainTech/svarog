@@ -26,8 +26,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
-import multiplexer.jmx.client.JmxClient;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.RunMethodAction;
@@ -37,7 +35,6 @@ import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.document.EEGLabExportAction;
-import org.signalml.app.action.document.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.document.OpenSignalWizardAction;
 import org.signalml.app.action.document.SaveAllDocumentsAction;
 import org.signalml.app.action.document.SaveDocumentAction;
@@ -77,12 +74,14 @@ import org.signalml.app.action.workspace.tasks.RemoveAllTasksAction;
 import org.signalml.app.action.workspace.tasks.ResumeAllTasksAction;
 import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.config.preset.BookFilterPresetManager;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.config.preset.BookFilterPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentDetector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -123,17 +122,21 @@ import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.components.dialogs.SignalSelectionDialog;
 import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
 import org.signalml.app.view.components.dialogs.TagStylePresetDialog;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
+import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
+import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
+import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
-import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
+import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.compilation.DynamicCompilationContext;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.plugin.export.SignalMLException;
@@ -144,14 +147,6 @@ import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.util.SvarogConstants;
 
 import com.thoughtworks.xstream.XStream;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
-import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
-import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
-import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
-import org.signalml.app.view.document.opensignal_old.OpenSignalAndSetMontageDialog;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
 
 /** ViewerElementManager
@@ -269,7 +264,6 @@ public class ViewerElementManager {
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
-	private OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog;
 	private OpenSignalWizardDialog openSignalWizardDialog;
 	private SignalSelectionDialog signalSelectionDialog;
 	private NewTagDialog newTagDialog;
@@ -343,7 +337,6 @@ public class ViewerElementManager {
 
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
-	private OpenSignalAndSetMontageAction openSignalAndSetMontageAction;
 	private OpenSignalWizardAction openSignalWizardAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
 	private PreciseSelectionAction preciseSelectionAction;
@@ -742,7 +735,6 @@ public class ViewerElementManager {
 			fileMenu = new JMenu(_("File"));
 			fileMenu.setMnemonic(KeyEvent.VK_F);
 
-			fileMenu.add(getOpenSignalAndSetMontageAction());
 			fileMenu.add(getOpenSignalWizardAction());
 			fileMenu.add(getOpenBookDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
@@ -912,7 +904,7 @@ public class ViewerElementManager {
 
 			mainToolBar.setFloatable(false);
 
-			mainToolBar.add(getOpenSignalAndSetMontageAction());
+			mainToolBar.add(getOpenSignalWizardAction());
 			mainToolBar.add(getSaveActiveDocumentAction());
 			mainToolBar.add(getSaveActiveDocumentAsAction());
 			mainToolBar.add(getSaveAllDocumentsAction());
@@ -1201,16 +1193,6 @@ public class ViewerElementManager {
 		return signalMontageDialog;
 	}
 
-	public OpenSignalAndSetMontageDialog getOpenSignalAndSetMontageDialog() {
-		if (openSignalAndSetMontageDialog == null) {
-			openSignalAndSetMontageDialog = new OpenSignalAndSetMontageDialog(this, getDialogParent(), true);
-			openSignalAndSetMontageDialog.setFileChooser(getFileChooser());
-			openSignalAndSetMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
-			openSignalAndSetMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
-		}
-		return openSignalAndSetMontageDialog;
-	}
-	
 	public OpenSignalWizardDialog getOpenSignalWizardDialog() {
 		if (openSignalWizardDialog == null) {
 			openSignalWizardDialog = new OpenSignalWizardDialog(this, getDialogParent(), true);
@@ -1647,14 +1629,6 @@ public class ViewerElementManager {
 		}
 		return editSignalMontageAction;
 	}
-
-	public OpenSignalAndSetMontageAction getOpenSignalAndSetMontageAction() {
-		if (openSignalAndSetMontageAction == null) {
-			openSignalAndSetMontageAction = new OpenSignalAndSetMontageAction(getDocumentFlowIntegrator());
-			openSignalAndSetMontageAction.setOpenSignalAndSetMontageDialog(getOpenSignalAndSetMontageDialog());
-		}
-		return openSignalAndSetMontageAction;
-	}
 	
 	public OpenSignalWizardAction getOpenSignalWizardAction() {
 		if (openSignalWizardAction == null) {
@@ -1922,7 +1896,7 @@ public class ViewerElementManager {
 		getCloseWindowAction().setAccelerator("ctrl X");
 		getHelpContentsAction().setAccelerator("F1");
 		getViewModeAction().setAccelerator("F11");
-		getOpenSignalAndSetMontageAction().setAccelerator("ctrl O");
+		getOpenSignalWizardAction().setAccelerator("ctrl O");
 		getCloseActiveDocumentAction().setAccelerator("ctrl F4");
 		getOpenTagAction().setAccelerator("alt O");
 		getCloseTagAction().setAccelerator("ctrl alt F4");

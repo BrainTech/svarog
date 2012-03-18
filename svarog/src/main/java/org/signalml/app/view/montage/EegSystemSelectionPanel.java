@@ -14,7 +14,6 @@ import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
-import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
@@ -28,6 +27,8 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
  */
 public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 
+	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
+	
 	/**
 	 * The current montage.
 	 */
@@ -93,7 +94,7 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	}
 	
 	public void fireEegSystemChangedProperty() {
-		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
+		firePropertyChange(EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
 	}
 
 	/**
@@ -139,7 +140,7 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	 */
 	public void setEegSystem(EegSystem eegSystem) {
 		presetComboBoxModel.setSelectedItem(eegSystem);
-		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
+		fireEegSystemChangedProperty();
 	}
 
 	/**

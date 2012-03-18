@@ -1,9 +1,7 @@
-package org.signalml.app.model.document.opensignal;
+package org.signalml.app.model.document.opensignal.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
 
 public class Amplifier {
 	

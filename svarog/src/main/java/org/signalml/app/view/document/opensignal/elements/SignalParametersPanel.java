@@ -16,7 +16,6 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
@@ -25,23 +24,17 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.signalml.app.action.document.OpenSignalAction;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.model.document.opensignal.Amplifier;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentStatus;
-import org.signalml.app.model.document.opensignal.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;
 import org.signalml.app.view.components.ResolvableComboBox;
-import org.signalml.app.view.document.opensignal_old.AbstractSignalParametersPanel;
-import org.signalml.app.view.document.opensignal_old.EditGainAndOffsetDialog;
-import org.signalml.app.view.document.opensignal_old.SignalSource;
-import org.signalml.app.view.document.opensignal_old.elements.AmplifierChannel;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
-import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Panel allowing to present and edit signal parameters.

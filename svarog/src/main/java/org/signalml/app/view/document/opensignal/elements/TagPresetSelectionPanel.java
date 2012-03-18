@@ -1,4 +1,4 @@
-package org.signalml.app.view.document.opensignal_old.monitor;
+package org.signalml.app.view.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
 import org.signalml.app.view.components.AbstractSignalMLPanel;
 import org.signalml.domain.tag.StyledTagSet;
 

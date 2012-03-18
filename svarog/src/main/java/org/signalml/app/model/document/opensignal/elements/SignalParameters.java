@@ -1,4 +1,4 @@
-package org.signalml.app.model.document.opensignal;
+package org.signalml.app.model.document.opensignal.elements;
 
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;

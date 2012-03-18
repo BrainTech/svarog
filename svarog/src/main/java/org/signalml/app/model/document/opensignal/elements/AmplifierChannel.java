@@ -1,8 +1,4 @@
-/* AmplifierChannel.java created 2011-03-23
- *
- */
-
-package org.signalml.app.view.document.opensignal_old.elements;
+package org.signalml.app.model.document.opensignal.elements;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.view.document.opensignal_old.elements;
+package org.signalml.app.model.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
+
 
 /**
  * The table model for the ChannelSelectTable.
