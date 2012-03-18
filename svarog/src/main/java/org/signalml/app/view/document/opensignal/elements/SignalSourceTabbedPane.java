@@ -159,22 +159,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		SignalMLDocument signalMLDocument = null;
 		try {
 			signalMLDocument = worker.get();
-
-			int channelCount = signalMLDocument.getChannelCount();
-			float samplingFrequency = signalMLDocument.getSamplingFrequency();
-
-			String[] channelLabels = new String[channelCount];
-			for (int i = 0; i < channelCount; i++) {
-				channelLabels[i] = signalMLDocument.getSampleSource().getLabel(i);
-			}
-			
-			openSignalDescriptor = new SignalMLDescriptor();
-			SignalMLDescriptor signalMLDescriptor = (SignalMLDescriptor) openSignalDescriptor;
-			signalMLDescriptor.setCodec(codec);
-			signalMLDescriptor.setChannelLabels(channelLabels);
-			signalMLDescriptor.getSignalParameters().setChannelCount(channelCount);
-			signalMLDescriptor.getSignalParameters().setSamplingFrequency(samplingFrequency);
-
+			openSignalDescriptor = new SignalMLDescriptor(signalMLDocument);
 			signalMLDocument.closeDocument();
 		} catch (Exception e) {
 			Dialogs.showError(_("There was an error while loading the file - did you select a correct SignalML file?"));

@@ -26,6 +26,7 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.SignalMLMRUDEntry;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.util.SnapToPageRunnable;
 import org.signalml.app.view.components.LockableJSplitPane;
 import org.signalml.app.view.signal.SignalPlot;
@@ -80,14 +81,9 @@ public class WorkspaceSignal extends WorkspaceDocument {
 
 			SignalMLDocument signalMLDocument = (SignalMLDocument) document;
 
-			SignalMLCodec codec = signalMLDocument.getReader().getCodec();
-			SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), ((FileBackedDocument) document).getBackingFile().getAbsolutePath(), codec.getSourceUID(), codec.getFormatName());
+			SignalMLDescriptor descriptor = new SignalMLDescriptor(signalMLDocument);
+			SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), ((FileBackedDocument) document).getBackingFile().getAbsolutePath(), descriptor);
 			mrud.setLastTimeOpened(new Date());
-			mrud.setPageSize(signalMLDocument.getPageSize());
-			mrud.setBlocksPerPage(signalMLDocument.getBlocksPerPage());
-			mrud.setSamplingFrequency(signalMLDocument.getSamplingFrequency());
-			mrud.setChannelCount(signalMLDocument.getChannelCount());
-			mrud.setCalibrationGain(signalMLDocument.getCalibration());
 
 			mrudEntry = mrud;
 

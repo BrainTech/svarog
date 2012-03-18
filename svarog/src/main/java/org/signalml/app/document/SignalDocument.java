@@ -154,6 +154,8 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 */
 	Montage getMontage();
 	
+	boolean isMontageCreated();
+	
 	/**
 	 * Sets the {@link Montage} montage for the signal in this document.
 	 * @param montage montage for the signal in this document

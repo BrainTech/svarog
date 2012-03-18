@@ -57,6 +57,7 @@ import org.signalml.app.method.example.ExampleMethodDescriptor;
 import org.signalml.app.method.mp5.MP5ApplicationData;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5MethodDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.MatlabUtil;
@@ -641,6 +642,7 @@ public class SvarogApplication implements java.lang.Runnable {
 					     SignalMLCodecDescriptor.class,
 					     MRUDConfiguration.class,
 					     MRUDEntry.class,
+					     SignalMLDescriptor.class,
 					     SignalMLMRUDEntry.class,
 					     RawSignalMRUDEntry.class,
 					     RawSignalDescriptor.class,

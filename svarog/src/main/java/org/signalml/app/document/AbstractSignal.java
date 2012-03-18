@@ -266,6 +266,13 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 		}
 		return montage;
 	}
+	
+	@Override
+	public boolean isMontageCreated() {
+		if (montage == null) 
+			return false;
+		return true;
+	}
 
 	protected Montage createDefaultMontage() {
 		return SignalConfigurer.createMontage(this);

@@ -574,23 +574,16 @@ public class DocumentFlowIntegrator {
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-				SignalMLCodec codec = codecManager.getCodecByUID(smlEntry.getCodecUID());
+				SignalMLDescriptor signalmlDescriptor = smlEntry.getDescriptor();
+				
+				SignalMLCodec codec = codecManager.getCodecByUID(signalmlDescriptor.getCodecUID());
+				
 				if (codec == null) {
-					logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
+					logger.warn("Mrud codec not found for uid [" + signalmlDescriptor.getCodecUID() + "]");
 					throw new MissingCodecException("error.mrudMissingCodecException");
 				}
-
-				SignalMLDescriptor signalmlDescriptor = new SignalMLDescriptor();
 				signalmlDescriptor.setCodec(codec);
 				odd.setOpenSignalDescriptor(signalmlDescriptor);
-
-				SignalParameters spd = signalmlDescriptor.getSignalParameters();
-				spd.setPageSize(smlEntry.getPageSize());
-				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
-				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
-				spd.setChannelCount(smlEntry.getChannelCount());
-				spd.setCalibrationGain(new float[] {smlEntry.getCalibrationGain()});
-
 			}
 			else if (mrud instanceof RawSignalMRUDEntry) {
 
@@ -737,13 +730,8 @@ public class DocumentFlowIntegrator {
 			}
 
 			if (mrudRegistry != null) {
-				SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), file.getAbsolutePath(), codec.getSourceUID(), codec.getFormatName());
+				SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), file.getAbsolutePath(), signalMLDescriptor);
 				mrud.setLastTimeOpened(new Date());
-				mrud.setPageSize(spd.getPageSize());
-				mrud.setBlocksPerPage(spd.getBlocksPerPage());
-				mrud.setSamplingFrequency(spd.getSamplingFrequency());
-				mrud.setChannelCount(spd.getChannelCount());
-				mrud.setCalibrationGain(spd.getCalibrationGain() == null ? null : spd.getCalibrationGain()[0]);
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
 

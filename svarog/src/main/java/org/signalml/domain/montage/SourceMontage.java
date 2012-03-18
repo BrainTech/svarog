@@ -134,7 +134,7 @@ public class SourceMontage {
 			try {
 				IChannelFunction channelFunction = ChannelFunction.UNKNOWN;
 
-				if (document.getMontage() != null)
+				if (document.isMontageCreated())
 					channelFunction = document.getMontage().getSourceChannelAt(i).getFunction();
 
 				addSourceChannel(label, channelFunction);
@@ -143,7 +143,7 @@ public class SourceMontage {
 			}
 		}
 
-		if (document.getMontage() != null)
+		if (document.isMontageCreated())
 			this.setEegSystem(document.getMontage().getEegSystem());
 
 	}
