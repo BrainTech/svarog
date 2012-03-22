@@ -3,6 +3,7 @@ package org.signalml.app.model.document.opensignal;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 public abstract class AbstractOpenSignalDescriptor {
 
@@ -18,6 +19,8 @@ public abstract class AbstractOpenSignalDescriptor {
 	 * Montage to be applied to the signal directly after opening.
 	 */
 	private Montage montage;
+	
+	private boolean correctlyRead = false;
 
 	public EegSystem getEegSystem() {
 		return eegSystem;
@@ -73,4 +76,11 @@ public abstract class AbstractOpenSignalDescriptor {
 		this.channelLabels = channelLabels;
 	}
 
+	public void setCorrectlyRead(boolean correctlyRead) {
+		this.correctlyRead = correctlyRead;
+	}
+	
+	public boolean isCorrectlyRead() {
+		return correctlyRead;
+	}
 }

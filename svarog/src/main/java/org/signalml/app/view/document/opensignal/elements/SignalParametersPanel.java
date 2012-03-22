@@ -76,6 +76,8 @@ public class SignalParametersPanel extends JPanel {
 
 		add(fieldsPanel, BorderLayout.NORTH);
 		add(buttonPanel, BorderLayout.SOUTH);
+		
+		setEnabledToAll(false);
 	}
 
 	/**
@@ -204,6 +206,7 @@ public class SignalParametersPanel extends JPanel {
 
 		if (samplingFrequencyComboBox == null) {
 			samplingFrequencyComboBox = new JComboBox();
+			samplingFrequencyComboBox.setEditable(true);
 		}
 		return samplingFrequencyComboBox;
 	}
@@ -344,34 +347,52 @@ public class SignalParametersPanel extends JPanel {
 				.getSelectedItem().toString());
 	}
 
-	public void preparePanelForSignalSource(SignalSource signalSource) {
-		channelCountSpinner.setEnabled(false);
-		getByteOrderComboBox().setEnabled(false);
-		getSampleTypeComboBox().setEnabled(false);
-		getSamplingFrequencyComboBox().setEnabled(false);
-		getSamplingFrequencyComboBox().setEditable(true);
-	}
-
-	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
-		this.openSignalDescriptor = openSignalDescriptor;
-		boolean isRawFile = openSignalDescriptor instanceof RawSignalDescriptor;
+	protected void setEnabledAsNeeded(AbstractOpenSignalDescriptor openSignalDescriptor) {
 
 		if (openSignalDescriptor == null) {
 			getSamplingFrequencyComboBox().setSelectedIndex(-1);
 			getChannelCountSpinner().setValue(0);
+			setEnabledToAll(false);
 			getEditGainAndOffsetButton().setEnabled(false);
 			return;
 		}
-		getEditGainAndOffsetButton().setEnabled(true);
 
-		if (isRawFile) {
-			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
-			getByteOrderComboBox().setSelectedItem(rawSignalDescriptor.getByteOrder());
-			getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			setEnabledToAll(true);
+			getEditGainAndOffsetButton().setEnabled(true);
 		}
-		else if (openSignalDescriptor instanceof SignalMLDescriptor)
-			getEditGainAndOffsetButton().setEnabled(false);
+		else {
+			setEnabledToAll(false);
+			if (openSignalDescriptor instanceof SignalMLDescriptor)
+				getEditGainAndOffsetButton().setEnabled(false);
+			else
+				getEditGainAndOffsetButton().setEnabled(true);
+		}
 
+	}
+
+	protected void setEnabledToAll(boolean enabled) {
+		getSamplingFrequencyComboBox().setEnabled(enabled);
+		getChannelCountSpinner().setEnabled(enabled);
+		getByteOrderComboBox().setEnabled(enabled);
+		getSampleTypeComboBox().setEnabled(enabled);
+	}
+
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		this.openSignalDescriptor = openSignalDescriptor;
+
+		setEnabledAsNeeded(openSignalDescriptor);
+		if (openSignalDescriptor == null)
+			return;
+
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+
+			if (rawSignalDescriptor.getByteOrder() != null)
+				getByteOrderComboBox().setSelectedItem(rawSignalDescriptor.getByteOrder());
+			if (rawSignalDescriptor.getSampleType() != null)
+				getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
+		}
 		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 
 		getSamplingFrequencyComboBox().setSelectedItem(signalParameters.getSamplingFrequency());

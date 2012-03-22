@@ -108,12 +108,11 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
 			try {
 				readRawFileMetadata(file);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
-			} catch (SignalMLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Dialogs.showError(_("There was an error while reading the XML manifest. Please input the signal parameters manually."));
+				openSignalDescriptor = new RawSignalDescriptor();
+				openSignalDescriptor.setCorrectlyRead(false);
 			}
 		}
 		else {
@@ -124,6 +123,9 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			else if (extension.equalsIgnoreCase("d")) {
 				formatName = "EASYS";
 			}
+			else
+				return;
+
 			SignalMLCodecManager codecManager = viewerElementManager.getCodecManager();
 			SignalMLCodec codec = codecManager.getCodecForFormat(formatName);
 			
@@ -153,6 +155,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		try {
 			signalMLDocument = worker.get();
 			openSignalDescriptor = new SignalMLDescriptor(signalMLDocument);
+			openSignalDescriptor.setCorrectlyRead(true);
 			signalMLDocument.closeDocument();
 		} catch (Exception e) {
 			Dialogs.showError(_("There was an error while loading the file - did you select a correct SignalML file?"));
@@ -169,10 +172,23 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		
 		RawSignalDescriptorReader reader = new RawSignalDescriptorReader();
 		openSignalDescriptor = null;
-		if (!xmlManifestFile.exists())
-			return;
+		if (!xmlManifestFile.exists()) {
+			if (Dialogs.DIALOG_OPTIONS.YES == Dialogs.showWarningYesNoDialog(_("XML manifest not found - would you like to choose the XML file manualy?"))) {
+				JFileChooser fileChooser = new JFileChooser(signalFile);
+				fileChooser.showOpenDialog(null);
+				xmlManifestFile =  fileChooser.getSelectedFile();
+				if(xmlManifestFile == null)
+					return;
+			}
+			else {
+				openSignalDescriptor = new RawSignalDescriptor();
+				openSignalDescriptor.setCorrectlyRead(false);
+				return;
+			}
+		}
 
 		openSignalDescriptor = reader.readDocument(xmlManifestFile);
+		openSignalDescriptor.setCorrectlyRead(true);
 	}
 
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {

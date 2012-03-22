@@ -25,9 +25,9 @@ import org.signalml.plugin.export.SignalMLException;
 public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 	private static final long serialVersionUID = -6697344610944631342L;
-	
+
 	private ViewerElementManager viewerElementManager;
-	
+
 	private OpenSignalWizardStepOnePanel stepOnePanel;
 	private SignalMontagePanel stepTwoPanel;
 
@@ -41,7 +41,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 	public int getStepCount() {
 		return 2;
 	}
-	
+
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model)
 			throws SignalMLException {
@@ -86,14 +86,14 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 		}
 
 	}
-	
+
 	protected OpenSignalWizardStepOnePanel getStepOnePanel() {
 		if (stepOnePanel == null) {
 			stepOnePanel = new OpenSignalWizardStepOnePanel(viewerElementManager);
 		}
 		return stepOnePanel;
 	}
-	
+
 	protected SignalMontagePanel getSignalMontagePanel() {
 		if (stepTwoPanel == null) {
 			stepTwoPanel = new SignalMontagePanel(viewerElementManager);
@@ -129,7 +129,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 		openDocumentDescriptor.setOpenSignalDescriptor(openSignalDescriptor);
 		
 	}
-	
+
 	@Override
 	public boolean isFinishAllowedOnStep(int step) {
 		return step == 1; 

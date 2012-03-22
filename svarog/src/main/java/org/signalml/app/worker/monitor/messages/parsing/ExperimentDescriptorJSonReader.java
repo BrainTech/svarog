@@ -45,6 +45,7 @@ public class ExperimentDescriptorJSonReader {
 		for (LinkedHashMap<String, Object> exp: list) {
 			try {
 				ExperimentDescriptor descriptor = parseSingleExperiment(exp);
+				descriptor.setCorrectlyRead(true);
 				experiments.add(descriptor);
 			} catch(Exception e) {
 				logger.error("There was an error parsing an experiment.");

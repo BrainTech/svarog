@@ -52,6 +52,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 		leftPanel.add(getSignalSourceTabbedPane(), BorderLayout.NORTH);
 		signalParametersPanel = new SignalParametersPanel();
+		signalParametersPanel.addPropertyChangeListener(this);
 		leftPanel.add(signalParametersPanel, BorderLayout.CENTER);
 		
 		return leftPanel;
@@ -124,7 +125,6 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 	protected void prepareChannelsForSignalSource() {
 		SignalSource selectedSignalSource = signalSourceTabbedPane.getSelectedSignalSource();
-		signalParametersPanel.preparePanelForSignalSource(selectedSignalSource);
 		channelSelectPanel.preparePanelForSignalSource(selectedSignalSource);
 		tagPresetSelectionPanel.setEnabledAll(selectedSignalSource.isOpenBCI());
 	}
@@ -134,6 +134,39 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		if (SignalSourceTabbedPane.OPEN_SIGNAL_DESCRIPTOR_PROPERTY.equals(evt.getPropertyName())) {
 			openSignalDescriptor = (AbstractOpenSignalDescriptor) evt.getNewValue();
 			fillPanelFromModel(openSignalDescriptor);
+		}
+		else if (SignalParametersPanel.NUMBER_OF_CHANNELS_PROPERTY.equals(evt.getPropertyName())) {
+			Integer channelCount = (Integer) evt.getNewValue();
+
+			if (!openSignalDescriptor.isCorrectlyRead()
+					|| channelCount != openSignalDescriptor.getSignalParameters().getChannelCount()) {
+				
+				int i = 0;
+				String[] channelLabels = new String[channelCount];
+				float[] calibrationGain = new float[channelCount];
+				float[] calibrationOffset = new float[channelCount];
+
+				if (openSignalDescriptor.getChannelLabels() != null) {
+					int min = Math.min(openSignalDescriptor.getChannelLabels().length, channelCount);
+					for (i = 0; i < min; i++) {
+						channelLabels[i] = openSignalDescriptor.getChannelLabels()[i];
+						calibrationGain[i] = openSignalDescriptor.getSignalParameters().getCalibrationGain()[i];
+						calibrationOffset[i] = openSignalDescriptor.getSignalParameters().getCalibrationOffset()[i];
+					}
+				}
+
+				for (; i < channelCount; i++) {
+					channelLabels[i] = "L" + i;
+					calibrationGain[i] = 1.0F;
+					calibrationOffset[i] = 0.0F;
+				}
+				openSignalDescriptor.setChannelLabels(channelLabels);
+				openSignalDescriptor.getSignalParameters().setCalibrationGain(calibrationGain);
+				openSignalDescriptor.getSignalParameters().setCalibrationOffset(calibrationOffset);
+
+				openSignalDescriptor.getSignalParameters().setChannelCount(channelCount);
+				channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
+			}
 		}
 	}
 	
@@ -146,6 +179,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
 		if (openSignalDescriptor != null) {
 			signalParametersPanel.fillModelFromPanel(openSignalDescriptor);
+			channelSelectPanel.fillModelFromPanel(openSignalDescriptor);
 			tagPresetSelectionPanel.fillModelFromPanel(openSignalDescriptor);
 		}
 

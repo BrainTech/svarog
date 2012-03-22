@@ -181,6 +181,11 @@ public class ChannelSelectPanel extends JPanel {
 		}
 
 	}
+	
+	public void fillModelFromPanel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		String[] channelLabels = getChannelSelectTable().getChannelLabels();
+		openSignalDescriptor.setChannelLabels(channelLabels);
+	}
 
 	public void preparePanelForSignalSource(SignalSource signalSource) {
 		//getSelectAllButton().setEnabled(signalSource.isOpenBCI());

@@ -19,6 +19,7 @@ public class SignalParameters extends PagingParameterDescriptor {
 
 	public SignalParameters() {
         samplingFrequency = 128.0F;
+        channelCount = 1;
 	}
 
 	public SignalParameters(SignalParameters signalParameters) {

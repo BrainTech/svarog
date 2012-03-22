@@ -142,4 +142,14 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
+	
+	public String[] getChannelLabels() {
+		String[] channelLabels = new String[channels.size()];
+		int i = 0;
+		for (AmplifierChannel channel: channels) {
+			channelLabels[i++] = channel.getLabel();
+		}
+		return channelLabels;
+	}
+
 }

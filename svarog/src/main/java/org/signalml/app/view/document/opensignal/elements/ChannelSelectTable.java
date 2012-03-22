@@ -64,50 +64,6 @@ public class ChannelSelectTable extends JTable {
 	}
 
 	/**
-	 * Fills this table with the given descriptor.
-	 * @param descriptor the descriptor to be used
-	 */
-	/*public void fillTableFromModel(AmplifierConnectionDescriptor descriptor) {
-
-		if (descriptor == null || descriptor.getAmplifierInstance() == null) {
-                        setModel(new ChannelSelectTableModel());
-                        setColumnsPreferredSizes();
-                        return;
-                }
-
-		AmplifierChannels channels = new AmplifierChannels(
-                        descriptor.getAmplifierInstance().getDefinition().getChannelNumbers(),
-                        descriptor.getExperimentDescriptor().getChannelLabels());
-
-		ChannelSelectTableModel model = new ChannelSelectTableModel();
-		model.setChannels(channels);
-
-		setModel(model);
-		setColumnsPreferredSizes();
-	}*/
-
-	/**
-	 * Fills the given model with the data contained in this table.
-	 * @param descriptor the descriptor to be filled
-	 */
-	/*public void fillModelFromTable(AmplifierConnectionDescriptor descriptor) {
-		ExperimentDescriptor ExperimentDescriptor = descriptor.getExperimentDescriptor();
-		AmplifierChannels amplifierChannels = getAmplifierChannels();
-
-		//setting all channels labels
-		String[] labels = amplifierChannels.getAllChannelsLabels();
-		ExperimentDescriptor.setChannelLabels(labels);
-
-		//setting selected channels labels
-		String[] selectedLabels = amplifierChannels.getSelectedChannelsLabels();
-		try {
-			ExperimentDescriptor.setSelectedChannelList(selectedLabels);
-		} catch (Exception ex) {
-		}
-
-	}*/
-
-	/**
 	 * Sets all channels in the table to be selected/unselected.
 	 * @param selected the new status of each channel in this table
 	 */
@@ -116,14 +72,15 @@ public class ChannelSelectTable extends JTable {
 	}
 	
 	public void fillTableFromModel(String[] channelLabels) {
-		TableModel model2 = this.getModel();
-		
 		ChannelSelectTableModel model = new ChannelSelectTableModel();
 		List<AmplifierChannel> amplifierChannels = new ArrayList<AmplifierChannel>();
 		
-		for (int i = 0; i < channelLabels.length; i++) {
-			amplifierChannels.add(new AmplifierChannel(i+1, channelLabels[i]));
+		if (channelLabels != null) {
+			for (int i = 0; i < channelLabels.length; i++) {
+				amplifierChannels.add(new AmplifierChannel(i+1, channelLabels[i]));
+			}
 		}
+
 		model.setChannels(amplifierChannels);
 		model.setEditable(false);
 		setModel(model);
@@ -148,6 +105,11 @@ public class ChannelSelectTable extends JTable {
 
 		setModel(model);
 		setColumnsPreferredSizes();
+	}
+
+	public String[] getChannelLabels() {
+		ChannelSelectTableModel model = (ChannelSelectTableModel) this.getModel();
+		return model.getChannelLabels();
 	}
 
 }
