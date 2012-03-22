@@ -168,20 +168,9 @@ public class ChannelSelectPanel extends JPanel {
 	 * @param descriptor
 	 */
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
-
-		if (openSignalDescriptor instanceof ExperimentDescriptor) {
-			ExperimentDescriptor descriptor = (ExperimentDescriptor) openSignalDescriptor;
-			getChannelSelectTable().fillTableFromModel(descriptor);
-		}
-		else { //RAW or SignalML
-			String[] channelLabels = new String[0];
-			if (openSignalDescriptor != null)
-				channelLabels = openSignalDescriptor.getChannelLabels();
-			getChannelSelectTable().fillTableFromModel(channelLabels);
-		}
-
+			getChannelSelectTable().fillTableFromModel(openSignalDescriptor);
 	}
-	
+
 	public void fillModelFromPanel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		String[] channelLabels = getChannelSelectTable().getChannelLabels();
 		openSignalDescriptor.setChannelLabels(channelLabels);

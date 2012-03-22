@@ -11,6 +11,9 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+
 
 /**
  * The table model for the ChannelSelectTable.
@@ -28,21 +31,45 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	 * The index of the column which shows whether a channel is selected
 	 * or not.
 	 */
-	public static final int SELECTED_COLUMN = 0;
+	public static final int SELECTED_COLUMN = 2;
 
 	/**
 	 * The index of the column which shows the channel number.
 	 */
-	public static final int NUMBER_COLUMN = 1;
+	public static final int NUMBER_COLUMN = 0;
 
 	/**
 	 * The index of the column which shows the channel label.
 	 */
-	public static final int LABEL_COLUMN = 2;
-	
+	public static final int LABEL_COLUMN = 1;
+
 	private boolean editable;
 
+	/**
+	 * True if the "SELECTED" column should be visible.
+	 */
+	private boolean showSelectedColumn = false;
+
 	public ChannelSelectTableModel() {
+	}
+
+	public ChannelSelectTableModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor == null)
+			return;
+
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			setChannels(experimentDescriptor.getAmplifier().getChannels());
+			showSelectedColumn = true;
+		}
+		else {
+			int i = 1;
+			for (String channelLabel: openSignalDescriptor.getChannelLabels()) {
+				channels.add(new AmplifierChannel(i, channelLabel));
+				i++;
+			}
+			showSelectedColumn = false;
+		}
 	}
 
 	/**
@@ -71,7 +98,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 3;
+		return showSelectedColumn ? 3 : 2;
 	}
 
 	@Override
@@ -88,7 +115,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		if (columnIndex == 0)
+		if (columnIndex == 2)
 			return Boolean.class;
 		else
 			return super.getColumnClass(columnIndex);

@@ -10,13 +10,18 @@ import java.util.List;
 
 import javax.swing.JTable;
 
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ChannelSelectTableModel;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
+import org.signalml.app.view.components.GrayTableCellRenderer;
+import org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.
@@ -71,37 +76,8 @@ public class ChannelSelectTable extends JTable {
 		getChannelSelectTableModel().setAllSelected(selected);
 	}
 	
-	public void fillTableFromModel(String[] channelLabels) {
-		ChannelSelectTableModel model = new ChannelSelectTableModel();
-		List<AmplifierChannel> amplifierChannels = new ArrayList<AmplifierChannel>();
-		
-		if (channelLabels != null) {
-			for (int i = 0; i < channelLabels.length; i++) {
-				amplifierChannels.add(new AmplifierChannel(i+1, channelLabels[i]));
-			}
-		}
-
-		model.setChannels(amplifierChannels);
-		model.setEditable(false);
-		setModel(model);
-		setColumnsPreferredSizes();
-	}
-
-	public void fillTableFromModel(ExperimentDescriptor descriptor) {
-
-		if (descriptor == null || descriptor.getAmplifier() == null) {
-			setModel(new ChannelSelectTableModel());
-			setColumnsPreferredSizes();
-			return;
-		}
-
-		ChannelSelectTableModel model = new ChannelSelectTableModel();
-		model.setChannels(descriptor.getAmplifier().getChannels());
-		
-		if (descriptor.getStatus() == ExperimentStatus.RUNNING)
-			model.setEditable(false);
-		else
-			model.setEditable(true);
+	public void fillTableFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		ChannelSelectTableModel model = new ChannelSelectTableModel(openSignalDescriptor);
 
 		setModel(model);
 		setColumnsPreferredSizes();
