@@ -57,7 +57,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 			SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 			Montage createdMontage = SignalConfigurer.createMontage(signalParameters.getChannelCount());
 			
-			EegSystem selectedEegSystem = getStepOnePanel().getEegSystemSelectionPanel().getSelectedEegSystem();
+			EegSystem selectedEegSystem = getStepOnePanel().getOtherSettingsPanel().getSelectedEegSystem();
 			createdMontage.setEegSystem(selectedEegSystem);
 			
 			String[] channelLabels = openSignalDescriptor.getChannelLabels();

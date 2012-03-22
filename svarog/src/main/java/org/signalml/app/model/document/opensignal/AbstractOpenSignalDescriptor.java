@@ -19,7 +19,7 @@ public abstract class AbstractOpenSignalDescriptor {
 	 * Montage to be applied to the signal directly after opening.
 	 */
 	private Montage montage;
-	
+
 	private boolean correctlyRead = false;
 
 	public EegSystem getEegSystem() {

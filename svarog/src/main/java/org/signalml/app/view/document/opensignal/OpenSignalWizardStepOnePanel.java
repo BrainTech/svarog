@@ -1,12 +1,10 @@
 package org.signalml.app.view.document.opensignal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -14,14 +12,10 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.view.document.opensignal.elements.ChannelSelectPanel;
-import org.signalml.app.view.document.opensignal.elements.ManageSignalMLCodecsButtonPanel;
-import org.signalml.app.view.document.opensignal.elements.ManageSignalMLCodecsDialog;
+import org.signalml.app.view.document.opensignal.elements.OtherSettingsPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
-import org.signalml.app.view.document.opensignal.elements.TagPresetSelectionPanel;
-import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
-import org.signalml.domain.montage.system.EegSystem;
 
 public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListener, PropertyChangeListener {
 
@@ -31,10 +25,8 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	private SignalParametersPanel signalParametersPanel;
 	private ChannelSelectPanel channelSelectPanel;
 	
-	private EegSystemSelectionPanel eegSystemSelectionPanel;
-	private TagPresetSelectionPanel tagPresetSelectionPanel;
-	private ManageSignalMLCodecsButtonPanel manageSignalMLCodecsButtonPanel;
-	
+	private OtherSettingsPanel otherSettingsPanel;
+
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 
 	public OpenSignalWizardStepOnePanel(ViewerElementManager viewerElementManager) {
@@ -44,9 +36,9 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		this.add(createLeftPanel());
 		this.add(createRightPanel());
 		
-		prepareChannelsForSignalSource();
+		preparePanelsForSignalSource();
 	}
-	
+
 	protected JPanel createLeftPanel() {
 		JPanel leftPanel = new JPanel(new BorderLayout());
 
@@ -57,55 +49,23 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		
 		return leftPanel;
 	}
-	
+
 	protected JPanel createRightPanel() {
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		
 		channelSelectPanel = new ChannelSelectPanel();
 		rightPanel.add(channelSelectPanel, BorderLayout.CENTER);
-		
-		JPanel southPanel = new JPanel();
-		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
-		
-		southPanel.add(getTagPresetSelectionPanel());
-		southPanel.add(getEegSystemSelectionPanel());
-		southPanel.add(getManageSignalMLCodecsButtonPanel());
-		
-		rightPanel.add(southPanel, BorderLayout.SOUTH);
+		rightPanel.add(getOtherSettingsPanel(), BorderLayout.SOUTH);
 		
 		return rightPanel;
 	}
-	
-	/**
-	 * Returns the panel for selecting tag style preset to be used by the
-	 * monitor to be opened.
-	 * @return panel for selecting tag style preset
-	 */
-	public TagPresetSelectionPanel getTagPresetSelectionPanel() {
-		if (tagPresetSelectionPanel == null) {
-			tagPresetSelectionPanel = new TagPresetSelectionPanel(viewerElementManager.getStyledTagSetPresetManager());
-		}
-		return tagPresetSelectionPanel;
+
+	public OtherSettingsPanel getOtherSettingsPanel() {
+		if (otherSettingsPanel == null)
+			otherSettingsPanel = new OtherSettingsPanel(viewerElementManager);
+		return otherSettingsPanel;
 	}
-	
-	/**
-	 * Returns the panel for selecting the currently used {@link EegSystem
-	 * EEG system}.
-	 * @return the EEG system selection panel
-	 */
-	protected EegSystemSelectionPanel getEegSystemSelectionPanel() {
-		if (eegSystemSelectionPanel == null) {
-			eegSystemSelectionPanel = new EegSystemSelectionPanel(viewerElementManager.getEegSystemsPresetManager());
-		}
-		return eegSystemSelectionPanel;
-	}
-	
-	protected ManageSignalMLCodecsButtonPanel getManageSignalMLCodecsButtonPanel() {
-		if (manageSignalMLCodecsButtonPanel == null)
-			manageSignalMLCodecsButtonPanel = new ManageSignalMLCodecsButtonPanel(viewerElementManager);
-		return manageSignalMLCodecsButtonPanel;
-	}
-	
+
 	protected SignalSourceTabbedPane getSignalSourceTabbedPane() {
 		if (signalSourceTabbedPane == null) {
 			signalSourceTabbedPane = new SignalSourceTabbedPane(viewerElementManager);
@@ -118,15 +78,15 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	@Override
 	public void stateChanged(ChangeEvent event) {
 		if (event.getSource() == signalSourceTabbedPane) {
-			prepareChannelsForSignalSource();
+			preparePanelsForSignalSource();
 			fillPanelFromModel(signalSourceTabbedPane.getOpenSignalDescriptor());
 		}
 	}
 
-	protected void prepareChannelsForSignalSource() {
+	protected void preparePanelsForSignalSource() {
 		SignalSource selectedSignalSource = signalSourceTabbedPane.getSelectedSignalSource();
 		channelSelectPanel.preparePanelForSignalSource(selectedSignalSource);
-		tagPresetSelectionPanel.setEnabledAll(selectedSignalSource.isOpenBCI());
+		getOtherSettingsPanel().preparePanelForSignalSource(selectedSignalSource);
 	}
 
 	@Override
@@ -173,14 +133,14 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		signalParametersPanel.fillPanelFromModel(openSignalDescriptor);
 		channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
-		eegSystemSelectionPanel.fillPanelFromModel(openSignalDescriptor);
+		otherSettingsPanel.fillPanelFromModel(openSignalDescriptor);
 	}
 
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
 		if (openSignalDescriptor != null) {
 			signalParametersPanel.fillModelFromPanel(openSignalDescriptor);
 			channelSelectPanel.fillModelFromPanel(openSignalDescriptor);
-			tagPresetSelectionPanel.fillModelFromPanel(openSignalDescriptor);
+			otherSettingsPanel.fillModelFromPanel(openSignalDescriptor);
 		}
 
 		return openSignalDescriptor;
