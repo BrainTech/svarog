@@ -100,10 +100,10 @@ public class SignalRecorderWorker {
         /**
          * Default constructor.
          * @param dataPath path to output file
-         * @param monitorDescriptor object describing the signal        
+         * @param experimentDescriptor object describing the signal        
          * @throws FileNotFoundException when output stream cannot be initialized
          */
-	public SignalRecorderWorker(String dataPath, ExperimentDescriptor monitorDescriptor) throws FileNotFoundException {
+	public SignalRecorderWorker(String dataPath, ExperimentDescriptor experimentDescriptor) throws FileNotFoundException {
 
                 String metadataPath;
                 if (dataPath.endsWith(".raw")) {
@@ -117,9 +117,9 @@ public class SignalRecorderWorker {
                 this.metadataFilePath = metadataPath;
                
 		this.sampleList = new ArrayList<double[]>();		
-		this.monitorDescriptor = monitorDescriptor;
+		this.monitorDescriptor = experimentDescriptor;
 
-                this.backupFrequencyInMiliseconds = monitorDescriptor.getBackupFrequency() * 1000;
+                this.backupFrequencyInMiliseconds = experimentDescriptor.getBackupFrequency() * 1000;
                 this.lastOffer = System.currentTimeMillis();
                 this.timeElapsed = 0;
                 

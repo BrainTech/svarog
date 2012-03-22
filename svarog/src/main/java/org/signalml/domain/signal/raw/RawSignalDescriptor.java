@@ -469,4 +469,13 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 			setEegSystemName(eegSystem.getEegSystemName());
 	}
 
+	@Override
+	public void setEegSystem(EegSystem eegSystem) {
+		super.setEegSystem(eegSystem);
+		if (eegSystem != null)
+			this.setEegSystemName(eegSystem.getEegSystemName());
+		else
+			this.setEegSystemName(null);
+	}
+
 }

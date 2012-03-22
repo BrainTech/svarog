@@ -233,6 +233,7 @@ public class OtherSettingsPanel extends AbstractSignalMLPanel {
 			StyledTagSet selectedStylesPreset = (StyledTagSet) getTagPresetComboBox().getSelectedItem();
 			experimentDescriptor.setTagStyles(selectedStylesPreset);
 		}
+		descriptor.setEegSystem(getSelectedEegSystem());
 	}
 
 	public void preparePanelForSignalSource(SignalSource selectedSignalSource) {

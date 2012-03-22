@@ -46,7 +46,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		addTab(_("FILE"), getFileChooserPanel());
-		addTab(_("MONITOR"), getChooseExperimentPanel());
+		addTab(_("ONLINE"), getChooseExperimentPanel());
 	}
 	
 	/**

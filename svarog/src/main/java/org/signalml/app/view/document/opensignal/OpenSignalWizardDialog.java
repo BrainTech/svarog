@@ -45,7 +45,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model)
 			throws SignalMLException {
-		
+
 		if (toStep == 1 && fromStep == 0) {
 			AbstractOpenSignalDescriptor openSignalDescriptor = getStepOnePanel().getOpenSignalDescriptor();
 
@@ -56,10 +56,10 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 			SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 			Montage createdMontage = SignalConfigurer.createMontage(signalParameters.getChannelCount());
-			
+
 			EegSystem selectedEegSystem = getStepOnePanel().getOtherSettingsPanel().getSelectedEegSystem();
 			createdMontage.setEegSystem(selectedEegSystem);
-			
+
 			String[] channelLabels = openSignalDescriptor.getChannelLabels();
 			for (int i = 0; i < channelLabels.length; i++) {
 				createdMontage.setSourceChannelLabelAt(i, channelLabels[i]);
@@ -127,7 +127,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 		openSignalDescriptor.setMontage(getSignalMontagePanel().getCurrentMontage());
 
 		openDocumentDescriptor.setOpenSignalDescriptor(openSignalDescriptor);
-		
+
 	}
 
 	@Override
