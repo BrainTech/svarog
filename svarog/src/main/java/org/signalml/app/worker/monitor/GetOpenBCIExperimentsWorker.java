@@ -3,6 +3,7 @@ package org.signalml.app.worker.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Container;
+import java.net.ConnectException;
 import java.net.SocketException;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.Netstring;
 import org.signalml.app.worker.monitor.messages.parsing.ExperimentDescriptorJSonReader;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.zeromq.ZMQ;
@@ -31,62 +33,29 @@ public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<
 		showBusyDialog();
 
 		try {
-			if (!Helper.wasOpenbciConfigFileLoaded())
-				Helper.loadOpenbciConfigFile();
+			if (!TCPHelper.wasOpenbciConfigFileLoaded())
+				TCPHelper.loadOpenbciConfigFile();
 		} catch (Exception ex) {
 			Dialogs.showError("Could not read ~/.obci/main_config.ini file correctly");
 			return null;
 		}
 		
 		try {
-			Helper.findOpenbciIpAddress();
+			TCPHelper.findOpenbciIpAddress();
 		} catch (SocketException ex) {
 			Dialogs.showExceptionDialog(ex);
 			return null;
 		}
-		
-		if (!Helper.isObciServerResponding()) {
-			return null; 
-		}
-		
-		ZMQ.Context context = ZMQ.context(1);
-		ZMQ.Socket socketPull = context.socket(ZMQ.PULL);
-		ZMQ.Poller poller = context.poller();
-		poller.register(socketPull, Poller.POLLIN);
 
-		String myAddress;
-		try {
-			myAddress = getPullAddress();
-		} catch (Exception e) {
-			Dialogs.showError(e.toString());
-			return null;
-		}
-		
-		if (myAddress == null)
-			Dialogs.showError(_("Could not find my IP address!"));
-		
-		socketPull.bind(myAddress);
-		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest(myAddress);
-
-		ZMQ.Socket socketSend = context.socket(ZMQ.REQ);
-		socketSend.connect(Helper.getObciServerAddressString());
-		socketSend.send(request.toJSON().getBytes(), 0);
-		
-		System.out.println("sent: " + request.toJSON());
-		socketSend.close();
-		
+		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest();
 		String response;
-		if (poller.poll(Helper.getTimeOutLength()) > 0) {
-			byte[] responseBytes = socketPull.recv(0);
-			response = new String(responseBytes);
-			System.out.println("response: " + response);
-		}
-		else {
-			Dialogs.showError(_("OpenBCI server is not responding!"));
+
+		try {
+			response = TCPHelper.sendRequest(request, TCPHelper.getOpenBCIIpAddress(), TCPHelper.getOpenbciPort());
+		} catch (ConnectException ex) {
+			Dialogs.showError(_("OpenBCI server is not running!"));
 			return null;
 		}
-		socketSend.close();
-		socketPull.close();
 
 		if (MessageParser.checkIfResponseIsOK(response, MessageType.EEG_EXPERIMENTS_RESPONSE)) {
 			ExperimentDescriptorJSonReader reader = new ExperimentDescriptorJSonReader();

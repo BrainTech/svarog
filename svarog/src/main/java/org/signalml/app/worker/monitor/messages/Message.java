@@ -60,7 +60,7 @@ public class Message {
 		this.receiver = receiver;
 	}
 	
-	public String toJSON() {
+	public String toString() {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -78,8 +78,7 @@ public class Message {
 			e.printStackTrace();
 		}
 
-		String str = os.toString();
-		return str;
+		return os.toString();
 	}
 
 }

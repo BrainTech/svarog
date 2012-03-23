@@ -84,8 +84,8 @@ public class Helper {
 		poller.register(socket, Poller.POLLIN);
 		
 		socket.connect(destinationAddress);
-		socket.send(request.toJSON().getBytes(), 0);
-		System.out.println("sent " + request.toJSON());
+		socket.send(request.toString().getBytes(), 0);
+		System.out.println("sent " + request.toString());
 
 		if (poller.poll(getTimeOutLength()) > 0) {
 			byte[] responseBytes = socket.recv(0);

@@ -9,6 +9,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.type.TypeReference;
+import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.app.worker.monitor.messages.parsing.MessageTypeDeserializer;
 import org.signalml.app.worker.monitor.messages.parsing.MessageTypeSerializer;
 
@@ -55,6 +56,7 @@ public enum MessageType {
 	}
 	
 	public static MessageType parseMessageTypeFromResponse(String response) {
+
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			HashMap<String,Object> map = mapper.readValue(response.getBytes(), new TypeReference<HashMap<String, Object>>(){});

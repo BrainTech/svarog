@@ -10,9 +10,9 @@ public class FindEEGExperimentsRequest extends Message {
 	@JsonProperty("checked_srvs")
 	private String checkedSrvs;
 
-	public FindEEGExperimentsRequest(String clientPushAddress) {
+	public FindEEGExperimentsRequest() {
 		super(MessageType.FIND_EEG_EXPERIMENTS_REQUEST);
-		this.clientPushAddress = clientPushAddress;
+		this.clientPushAddress = "";
 		this.checkedSrvs = "";
 	}
 
