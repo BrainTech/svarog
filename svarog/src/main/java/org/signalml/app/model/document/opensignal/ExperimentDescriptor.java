@@ -21,7 +21,8 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private Amplifier amplifier;
 	private ExperimentStatus status;
 	
-	private String experimentAddress;
+	private String experimentIPAddress;
+	private int experimentPort;
 	
 	private String multiplexerAddress;
 	private int multiplexerPort;
@@ -41,7 +42,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 		this.path = other.path;
 		this.amplifier = new Amplifier(other.getAmplifier());
 		this.status = other.status;
-		this.experimentAddress = other.experimentAddress;
+		this.experimentIPAddress = other.experimentIPAddress;
 		this.signalParameters = new SignalParameters(other.signalParameters);
 
 		this.backupFrequency = other.backupFrequency;
@@ -77,11 +78,17 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getExperimentAddress() {
-		return experimentAddress;
+	public String getExperimentIPAddress() {
+		return experimentIPAddress;
 	}
-	public void setExperimentAddress(String experimentAddress) {
-		this.experimentAddress = experimentAddress;
+	public void setExperimentIPAddress(String experimentAddress) {
+		this.experimentIPAddress = experimentAddress;
+	}
+	public int getExperimentPort() {
+		return experimentPort;
+	}
+	public void setExperimentPort(int experimentPort) {
+		this.experimentPort = experimentPort;
 	}
 	public String getMultiplexerAddress() {
 		return multiplexerAddress;

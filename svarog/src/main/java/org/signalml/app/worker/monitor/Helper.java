@@ -1,56 +1,65 @@
 package org.signalml.app.worker.monitor;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.Socket;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.Collections;
 import java.util.Enumeration;
 
-import org.signalml.app.SvarogApplication;
-import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.util.NetworkUtils;
-import org.signalml.app.worker.monitor.messages.Message;
-import org.signalml.app.worker.monitor.messages.MessageType;
-import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
-import org.zeromq.ZMQ;
-import org.zeromq.ZMQ.Poller;
-
+import org.apache.log4j.Logger;
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
+import org.signalml.app.util.NetworkUtils;
+import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.Netstring;
 
 public class Helper {
-	
+
+	protected static Logger logger = Logger.getLogger(Helper.class);
+
 	public static final int RECEIVE_TIMEOUT_MS = 6000;
-	
 	private static String openbciInterfaceName = null;
 	private static String openbciIpAddress = null;
 	private static int openbciPort;
-	
-	public static String getOpenbciIpAddress() {
+
+	public static String getOpenBCIIpAddress() {
 		return openbciIpAddress;
 	}
-	
+
+	public static int getOpenbciPort() {
+		return openbciPort;
+	}
+
 	public static boolean wasOpenbciConfigFileLoaded() {
 		return (openbciIpAddress != null);
 	}
-	
-	public static void loadOpenbciConfigFile() throws InvalidFileFormatException, IOException {
+
+	public static void loadOpenbciConfigFile()
+			throws InvalidFileFormatException, IOException {
 		File homeDir = new File(System.getProperty("user.home"));
 		File obciSettingsDir = new File(homeDir, ".obci");
 		File mainConfigFile = new File(obciSettingsDir, "main_config.ini");
-		
+
 		Wini config = new Wini(mainConfigFile);
 
 		openbciInterfaceName = config.get("server", "ifname");
-		openbciPort = Integer.parseInt(config.get("server", "port"));
+		openbciPort = Integer.parseInt(config.get("server", "tcp_proxy_port"));
+
 	}
-	
+
 	public static void findOpenbciIpAddress() throws SocketException {
-		NetworkInterface netint = NetworkInterface.getByName(openbciInterfaceName);
+		NetworkInterface netint = NetworkInterface
+				.getByName(openbciInterfaceName);
 		if (netint == null)
-			throw new SocketException("The " + openbciInterfaceName + " interface is not connected!");
+			throw new SocketException("The " + openbciInterfaceName
+					+ " interface is not connected!");
 		Enumeration<InetAddress> addrs = netint.getInetAddresses();
 
 		for (InetAddress inetAddress : Collections.list(addrs)) {
@@ -61,65 +70,28 @@ public class Helper {
 		}
 	}
 
-	public static String getObciServerAddressString() {
-		return getAddressString(openbciIpAddress, openbciPort);
-	}
-	
-	public static String getAddressString(String ipAddress, int port) {		
-		StringBuffer stringBuffer = new StringBuffer();
-		stringBuffer.append("tcp://");
-		stringBuffer.append(ipAddress);
-		stringBuffer.append(":");
-		stringBuffer.append(port);
-		
-		return stringBuffer.toString();
-	}
-	
-	public static String sendRequest(Message request, String destinationAddress) {
+	public static String sendRequest(Message request, String destinationIP,
+			int destinationPort) throws SocketTimeoutException, IOException {
+		Socket socket = new Socket(destinationIP, destinationPort);
+		socket.setSoTimeout(RECEIVE_TIMEOUT_MS);
 
-		ZMQ.Context context = ZMQ.context(1);
-		ZMQ.Socket socket = context.socket(ZMQ.REQ);
-		
-		ZMQ.Poller poller = context.poller();
-		poller.register(socket, Poller.POLLIN);
-		
-		socket.connect(destinationAddress);
-		socket.send(request.toString().getBytes(), 0);
-		System.out.println("sent " + request.toString());
+		PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+		Netstring netstring = new Netstring(request);
+		logger.debug("Sending message " + netstring + " to " + destinationIP
+				+ ":" + destinationPort);
+		writer.println(netstring);
 
-		if (poller.poll(getTimeOutLength()) > 0) {
-			byte[] responseBytes = socket.recv(0);
-			String response = new String(responseBytes);
-			System.out.println("response: " + response);
-			socket.close();
-			return response;
-		}
-		else {
-			System.out.println("No response - timeout!!");
-			socket.close();
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				socket.getInputStream()));
+
+		String response = in.readLine();
+		if (response == null)
 			return null;
-		}
-	}
-	
-	public static boolean isObciServerResponding() throws InvalidFileFormatException, IOException {
-		Message request = new Message(MessageType.PING);
-		String response = Helper.sendRequest(request, Helper.getObciServerAddressString());
-		
-		boolean responseOK = MessageParser.checkIfResponseIsOK(response, MessageType.PONG);
-		return responseOK;
-	}
-	
-	/**
-	 * Returns the receive timeout for ZMQ sockets.
-	 * 'Since ZeroMQ 3.0, the timeout parameter is in milliseconds,
-	 * but prior to this the unit was microseconds' - that is
-	 * why this method is needed. 
-	 * @return receive timeout
-	 */
-	static int getTimeOutLength() {
-		if (ZMQ.getFullVersion() < 30000)
-			return RECEIVE_TIMEOUT_MS * 1000;
-		return RECEIVE_TIMEOUT_MS;
-	}
 
+		Netstring responseNetstring = new Netstring();
+		responseNetstring.parseNetstring(response);
+		logger.debug("Got response: " + responseNetstring);
+
+		return responseNetstring.getData();
+	}
 }

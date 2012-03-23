@@ -1,15 +1,16 @@
 package org.signalml.app.worker.monitor;
 
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+
 import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.JmxClient;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.worker.monitor.messages.AbstractJoinOrLeaveExperimentRequest;
 import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
-import org.zeromq.ZMQ;
 
 public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 
@@ -38,11 +39,17 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		experimentDescriptor.setJmxClient(null);
 	}
 
-	private void sendLeaveExperimentRequest() {		
+	private void sendLeaveExperimentRequest() {
 		LeaveExperimentRequest request = new LeaveExperimentRequest(experimentDescriptor);
-		String response = Helper.sendRequest(request, experimentDescriptor.getExperimentAddress());
-		
-		MessageParser.checkIfResponseIsOK(response, MessageType.REQUEST_OK_RESPONSE);
+
+		try {
+			String response = Helper.sendRequest(request, experimentDescriptor.getExperimentIPAddress(), experimentDescriptor.getExperimentPort());
+			MessageParser.checkIfResponseIsOK(response, MessageType.REQUEST_OK_RESPONSE);
+		} catch (SocketTimeoutException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

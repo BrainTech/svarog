@@ -3,7 +3,9 @@ package org.signalml.app.worker.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
 import java.util.StringTokenizer;
 
 import javax.swing.SwingWorker;
@@ -47,10 +49,16 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException { 
 		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
 
-		String responseString = Helper.sendRequest(request, experimentDescriptor.getExperimentAddress());
-
-		if (responseString == null) {
-			Dialogs.showError(_("Experiment is not responding!"));
+		String responseString = null;
+		try {
+			responseString = Helper.sendRequest(request, experimentDescriptor.getExperimentIPAddress(), experimentDescriptor.getExperimentPort());
+		} catch(SocketTimeoutException ex) {
+			ex.printStackTrace();
+			Dialogs.showError(_("Socket timeout exceeded!"));
+			return false;
+		} catch(ConnectException ex) {
+			ex.printStackTrace();
+			Dialogs.showError(_("Could not connect to the experiment!"));
 			return false;
 		}
 

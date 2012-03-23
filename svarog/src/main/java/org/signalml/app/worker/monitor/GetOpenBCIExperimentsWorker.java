@@ -7,19 +7,13 @@ import java.net.ConnectException;
 import java.net.SocketException;
 import java.util.List;
 
-import javax.swing.SwingWorker;
-
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.util.NetworkUtils;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
-import org.signalml.app.worker.monitor.messages.Netstring;
 import org.signalml.app.worker.monitor.messages.parsing.ExperimentDescriptorJSonReader;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
-import org.zeromq.ZMQ;
-import org.zeromq.ZMQ.Poller;
 
 public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<ExperimentDescriptor>, Void>{
 
@@ -33,15 +27,15 @@ public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<
 		showBusyDialog();
 
 		try {
-			if (!TCPHelper.wasOpenbciConfigFileLoaded())
-				TCPHelper.loadOpenbciConfigFile();
+			if (!Helper.wasOpenbciConfigFileLoaded())
+				Helper.loadOpenbciConfigFile();
 		} catch (Exception ex) {
 			Dialogs.showError("Could not read ~/.obci/main_config.ini file correctly");
 			return null;
 		}
 		
 		try {
-			TCPHelper.findOpenbciIpAddress();
+			Helper.findOpenbciIpAddress();
 		} catch (SocketException ex) {
 			Dialogs.showExceptionDialog(ex);
 			return null;
@@ -51,7 +45,7 @@ public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<
 		String response;
 
 		try {
-			response = TCPHelper.sendRequest(request, TCPHelper.getOpenBCIIpAddress(), TCPHelper.getOpenbciPort());
+			response = Helper.sendRequest(request, Helper.getOpenBCIIpAddress(), Helper.getOpenbciPort());
 		} catch (ConnectException ex) {
 			Dialogs.showError(_("OpenBCI server is not running!"));
 			return null;
@@ -64,11 +58,6 @@ public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<
 		}
 		else
 			return null;
-	}
-
-	protected String getPullAddress() throws Exception {
-		int port = NetworkUtils.getFreePortNumber();
-		return Helper.getAddressString(Helper.getOpenbciIpAddress(), port);
 	}
 
 }

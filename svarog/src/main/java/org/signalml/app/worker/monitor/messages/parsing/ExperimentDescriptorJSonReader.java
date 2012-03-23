@@ -141,9 +141,11 @@ public class ExperimentDescriptorJSonReader {
 		}
 
 		experiment.setAmplifier(amplifier);
-
-		experiment.setExperimentAddress((String) map.get("rep_addr"));
 		
+		List<Object> tcpAddress = (List<Object>) map.get("tcp_addr");
+		experiment.setExperimentIPAddress((String) tcpAddress.get(0));
+		experiment.setExperimentPort((Integer) tcpAddress.get(1));
+
 		return experiment;
 	}
 	
