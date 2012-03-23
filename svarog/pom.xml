@@ -517,12 +517,6 @@
    			<artifactId>jackson-mapper-asl</artifactId>
    			<version>1.9.3</version>
 		</dependency>
-		<dependency>
-			<groupId>org.zeromq</groupId>
-			<artifactId>jzmq</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-            
             
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>
