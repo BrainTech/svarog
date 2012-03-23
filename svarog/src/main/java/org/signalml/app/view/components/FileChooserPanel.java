@@ -61,7 +61,6 @@ public class FileChooserPanel extends JPanel {
 	 * Creates the GUI for this panel.
 	 */
 	private void createInterface() {
-		//setBorder(BorderFactory.createTitledBorder(_("Choose a file")));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(getFileChooser());
 	}
@@ -102,7 +101,8 @@ public class FileChooserPanel extends JPanel {
 			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-			fileChooser.setPreferredSize(new Dimension(500,350));
+			fileChooser.setPreferredSize(new Dimension(500,280));
+			fileChooser.setMinimumSize(new Dimension(500, 150));
 
 			// remove escape key binding to allow for dialog closing
 			KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);

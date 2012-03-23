@@ -42,10 +42,10 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	protected JPanel createLeftPanel() {
 		JPanel leftPanel = new JPanel(new BorderLayout());
 
-		leftPanel.add(getSignalSourceTabbedPane(), BorderLayout.NORTH);
+		leftPanel.add(getSignalSourceTabbedPane(), BorderLayout.CENTER);
 		signalParametersPanel = new SignalParametersPanel();
 		signalParametersPanel.addPropertyChangeListener(this);
-		leftPanel.add(signalParametersPanel, BorderLayout.CENTER);
+		leftPanel.add(signalParametersPanel, BorderLayout.SOUTH);
 		
 		return leftPanel;
 	}
