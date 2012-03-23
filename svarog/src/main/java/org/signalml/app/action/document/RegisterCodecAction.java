@@ -101,7 +101,6 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 				List<String> codecsNameList = new LinkedList<String>();
 
 				codecsNameList.add("EASYS.xml");
-				codecsNameList.add("RAW.xml");
 				codecsNameList.add("EDF.xml");
 
 				URL url = null;
