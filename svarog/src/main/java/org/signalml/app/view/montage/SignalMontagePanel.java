@@ -16,6 +16,7 @@ import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.SignalDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
@@ -29,6 +30,7 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.util.Util;
 
 public class SignalMontagePanel extends JPanel {
 
@@ -55,8 +57,6 @@ public class SignalMontagePanel extends JPanel {
 
 	private SignalDocument signalDocument;
 	private Montage currentMontage;
-
-	private URL contextHelpURL = null;
 
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 
@@ -251,10 +251,9 @@ public class SignalMontagePanel extends JPanel {
 			this.currentMontage.adapt(signalDocument);
 
 		setMontageToPanels(this.currentMontage);
-		//setChanged(false);
 	}
 	
-	private void setMontageToPanels(Montage montage) {
+	public void setMontageToPanels(Montage montage) {
 		if (montage != null && montage.getEegSystemName() != null) {
 			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
 			montage.setEegSystem(system);
@@ -266,7 +265,7 @@ public class SignalMontagePanel extends JPanel {
 	}
 	
 	public void fillModelFromPanel(Object model) throws SignalMLException {
-		if (model instanceof Montage) {
+		if (model instanceof MontageDescriptor) {
 			MontageDescriptor descriptor = (MontageDescriptor) model;
 
 			// montage was edited immediately for the most part
@@ -275,6 +274,19 @@ public class SignalMontagePanel extends JPanel {
 		else if (model instanceof OpenDocumentDescriptor) {
 			OpenDocumentDescriptor openDocumentDescriptor = (OpenDocumentDescriptor) model;
 			openDocumentDescriptor.getOpenSignalDescriptor().setMontage(getCurrentMontage());
+		}
+	}
+	
+	public void validate(Object model, ValidationErrors errors) throws SignalMLException {
+		// validate montage table
+		if (currentMontage.getMontageChannelCount() == 0) {
+			errors.addError(_("The montage is empty. Please add some target channels"));
+		}
+		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
+		if (description != null && !description.isEmpty()) {
+			if (Util.hasSpecialChars(description)) {
+				errors.addError(_("Description must not contain control characters"));
+			}
 		}
 	}
 }

@@ -1187,8 +1187,6 @@ public class ViewerElementManager {
 		if (signalMontageDialog == null) {
 			signalMontageDialog = new SignalMontageDialog(this, getDialogParent(), true);
 			signalMontageDialog.setFileChooser(getFileChooser());
-			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
-			signalMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
 		}
 		return signalMontageDialog;
 	}
