@@ -270,11 +270,6 @@ public class BookFilterTablePanel extends JPanel {
 			filter.setEnabled(true);
 
 			int index = chain.addFilter(filter);
-
-			if (container != null) {
-				container.invalidateChanged();
-			}
-
 			getTableModel().onInsert(index);
 
 		}
@@ -308,11 +303,6 @@ public class BookFilterTablePanel extends JPanel {
 			filter.setEnabled(true);
 
 			int index = chain.addFilter(filter);
-
-			if (container != null) {
-				container.invalidateChanged();
-			}
-
 			getTableModel().onInsert(index);
 
 		}
@@ -346,11 +336,6 @@ public class BookFilterTablePanel extends JPanel {
 			filter.setEnabled(true);
 
 			int index = chain.addFilter(filter);
-
-			if (container != null) {
-				container.invalidateChanged();
-			}
-
 			getTableModel().onInsert(index);
 
 		}
@@ -404,11 +389,6 @@ public class BookFilterTablePanel extends JPanel {
 			} else {
 				throw new SanityCheckException("Unsupported filter type [" + filter.getClass().getName() + "]");
 			}
-
-			if (container != null) {
-				container.invalidateChanged();
-			}
-
 			getTableModel().onUpdate(selectedRow);
 
 		}
@@ -437,11 +417,6 @@ public class BookFilterTablePanel extends JPanel {
 			}
 
 			chain.removeFilterAt(selectedRow);
-
-			if (container != null) {
-				container.invalidateChanged();
-			}
-
 			getTableModel().onDelete(selectedRow);
 
 		}

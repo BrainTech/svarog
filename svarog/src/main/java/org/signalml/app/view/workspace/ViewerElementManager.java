@@ -1451,6 +1451,7 @@ public class ViewerElementManager {
 		if (openBookDocumentAction == null) {
 			openBookDocumentAction = new OpenBookDocumentAction();
 			openBookDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+			openBookDocumentAction.setFileChooser(getFileChooser());
 		}
 		return openBookDocumentAction;
 	}

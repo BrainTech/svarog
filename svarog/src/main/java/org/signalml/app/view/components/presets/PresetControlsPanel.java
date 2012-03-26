@@ -4,13 +4,10 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -22,7 +19,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.KeyStroke;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -41,17 +37,28 @@ import org.signalml.app.view.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
-
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
+/**
+ * This panel contains all controls that are used to load and
+ * save presets. It is used by the AbstractPresetDialog and
+ * AbstractPresetPanel.
+ *
+ * @author Piotr Szachewicz
+ */
 public class PresetControlsPanel extends AbstractPanel {
 
 	static final long serialVersionUID = 1L;
-	
-	private AbstractPresetPanel presetPanel;
+
+	/**
+	 * The dialog/panel which is controlled by this preset control panel
+	 * (e.g. the presets selected in this PresetControlsPanel affects
+	 * the presetPanel). 
+	 */
+	private PresetableView presetPanel;
 
 	/**
 	 * the {@link PresetManager manager} of {@link Preset presets}
@@ -151,21 +158,26 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * the button for {@link #loadFileAction}
 	 */
 	private JButton loadFileButton;
-
-	/**
-	 * boolean if the fields of this dialog have been changed
-	 */
-	private boolean changed = false;
+	
+	private boolean showLoadSaveRemoveDefaultPresetButton;
 
 	/**
 	 * Constructor. Sets message source and the {@link PresetManager preset
 	 * manager}.
 	 * @param presetManager the preset manager to set
 	 */
-	public PresetControlsPanel(AbstractPresetPanel presetPanel, PresetManager presetManager) {
+	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager) {
 		super();
 		this.presetPanel = presetPanel;
 		this.presetManager = presetManager;
+		createInterface();
+	}
+	
+	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager, boolean showLoadSaveRemoveDefaultPresetButton) {
+		super();
+		this.presetPanel = presetPanel;
+		this.presetManager = presetManager;
+		this.showLoadSaveRemoveDefaultPresetButton = showLoadSaveRemoveDefaultPresetButton;
 		createInterface();
 	}
 
@@ -198,30 +210,19 @@ public class PresetControlsPanel extends AbstractPanel {
 		add(Box.createHorizontalStrut(6));
 		add(Box.createHorizontalGlue());
 
-		boolean extraSpacerNeeded = false;
-
-		if (showLoadDefaultButton()) {
+		if (getShowLoadSaveRemoveDefaultPresetButton()) {
 			loadDefaultPresetButton = new JButton(loadDefaultPresetAction);
 			add(loadDefaultPresetButton);
 			add(Box.createHorizontalStrut(3));
-			extraSpacerNeeded = true;
-		}
 
-		if (showSaveDefaultButton()) {
 			saveDefaultPresetButton = new JButton(saveDefaultPresetAction);
 			add(saveDefaultPresetButton);
 			add(Box.createHorizontalStrut(3));
-			extraSpacerNeeded = true;
-		}
 
-		if (showRemoveDefaultButton()) {
 			removeDefaultPresetButton = new JButton(removeDefaultPresetAction);
 			add(removeDefaultPresetButton);
 			add(Box.createHorizontalStrut(3));
-			extraSpacerNeeded = true;
-		}
-
-		if (extraSpacerNeeded) {
+			
 			add(Box.createHorizontalStrut(3));
 			add(Box.createHorizontalGlue());
 		}
@@ -247,28 +248,8 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * @return {@code true} if this dialog should show the button to load the
 	 * default preset, {@code false} otherwise
 	 */
-	protected boolean showLoadDefaultButton() {
-		return false;
-	}
-
-	/**
-	 * Returns if this dialog should show the button to save the default
-	 * {@link Preset preset}.
-	 * @return {@code true} if this dialog should show the button to save the
-	 * default preset, {@code false} otherwise
-	 */
-	protected boolean showSaveDefaultButton() {
-		return false;
-	}
-
-	/**
-	 * Returns if this dialog should show the button to remove the default
-	 * {@link Preset preset}.
-	 * @return {@code true} if this dialog should show the button to remove the
-	 * default preset, {@code false} otherwise
-	 */
-	protected boolean showRemoveDefaultButton() {
-		return false;
+	protected boolean getShowLoadSaveRemoveDefaultPresetButton() {
+		return showLoadSaveRemoveDefaultPresetButton;
 	}
 
 	/**
@@ -286,7 +267,7 @@ public class PresetControlsPanel extends AbstractPanel {
 		return presetComboBox;
 	}
 
-	protected void resetPresetComboBoxSelection() {
+	public void resetPresetComboBoxSelection() {
 		getPresetComboBox().setSelectedIndex(0);
 	}
 
@@ -351,40 +332,15 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * @throws SignalMLException TODO never thrown in implementations
 	 */
 	private void setPresetToMainPanel(Preset preset) throws SignalMLException {
-		if (!presetPanel.setPreset(preset)) {
+		if (presetPanel.isPresetCompatible(preset))
+			presetPanel.setPreset(preset);
+		else
 			resetPresetComboBoxSelection();
-		}
-	}
-
-	/**
-	 * Returns if the fields of this dialog have changed.
-	 * @return {@code true} if the fields of this dialog have changed,
-	 * {@code false} otherwise
-	 */
-	public boolean isChanged() {
-		return changed;
-	}
-
-	/**
-	 * Sets that the fields of this dialog have changed.
-	 */
-	public void invalidateChanged() {
-		this.changed = true;
-	}
-
-	/**
-	 * Sets if the fields of this dialog have changed.
-	 * @param changed {@code true} if the fields of this dialog have changed,
-	 * {@code false} otherwise
-	 */
-	protected void setChanged(boolean changed) {
-		this.changed = changed;
 	}
 
 	protected void resetPanel() {
 		getPresetComboBox().setSelectedIndex(0);
 		getPresetComboBox().repaint();
-		changed = false;
 		setEnableds();
 	}
 
@@ -854,7 +810,7 @@ public class PresetControlsPanel extends AbstractPanel {
 			File file = null;
 			do {
 
-				file = fileChooser.chooseSavePresetFile(PresetControlsPanel.this);
+				file = fileChooser.chooseSavePresetFile(PresetControlsPanel.this.getParentWindow());
 				if (file == null) {
 					return;
 				}
@@ -862,7 +818,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				hasFile = true;
 
 				if (file.exists()) {
-					int res = OptionPane.showFileAlreadyExists(PresetControlsPanel.this);
+					int res = OptionPane.showFileAlreadyExists(PresetControlsPanel.this.getParentWindow());
 					if (res != OptionPane.OK_OPTION) {
 						hasFile = false;
 					}
@@ -874,7 +830,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				presetManager.writeToFile(file, preset);
 			} catch (IOException ex) {
 				logger.error("Exception when writing file", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(PresetControlsPanel.this.getParentWindow(), ex);
 				return;
 			}
 
@@ -920,7 +876,7 @@ public class PresetControlsPanel extends AbstractPanel {
 		 */
 		public void actionPerformed(ActionEvent ev) {
 
-			File file = fileChooser.chooseLoadPresetFile(PresetControlsPanel.this);
+			File file = fileChooser.chooseLoadPresetFile(PresetControlsPanel.this.getParentWindow());
 			if (file == null) {
 				return;
 			}
@@ -930,7 +886,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				preset = presetManager.readFromFile(file);
 			} catch (IOException ex) {
 				logger.error("Exception when reading file", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(PresetControlsPanel.this.getParentWindow(), ex);
 				return;
 			}
 
@@ -938,7 +894,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				setPresetToMainPanel(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(PresetControlsPanel.this.getParentWindow(), ex);
 				return;
 			}
 

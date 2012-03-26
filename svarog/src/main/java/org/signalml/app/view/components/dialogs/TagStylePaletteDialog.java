@@ -48,6 +48,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 
@@ -228,6 +229,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	protected void initialize() {
 		setTitle(_("Tag style palette"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/palette.png"));
+		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 
 		tagStyleTree.addTreeSelectionListener(new TreeSelectionListener() {

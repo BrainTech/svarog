@@ -23,6 +23,7 @@ import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.app.view.components.presets.AbstractPresetPanel;
+import org.signalml.app.view.components.presets.PresetControlsPanel;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
@@ -118,6 +119,13 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 		interfacePanel.add(tabbedPane);
 
 		return interfacePanel;
+	}
+	
+	@Override
+	protected PresetControlsPanel getPresetControlsPanel() {
+		if (presetControlsPanel == null)
+			presetControlsPanel = new PresetControlsPanel(this, presetManager, true);
+		return presetControlsPanel;
 	}
 	
 	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
@@ -297,10 +305,14 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 
 		return preset;
 	}
+	
+	@Override
+	public void setPreset(Preset preset) throws SignalMLException {
+		fillPanelFromModel(preset);
+	}
 
 	@Override
-	public boolean setPreset(Preset preset) throws SignalMLException {
-
+	public boolean isPresetCompatible(Preset preset) {
 		Montage montagePreset = (Montage) preset;
 		int presetChannelsCount = getNormalChannelsCount(montagePreset);
 		int thisChannelsCount = getNormalChannelsCount(getCurrentMontage());
@@ -311,8 +323,6 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 					+ thisChannelsCount + " preset channel count = " + presetChannelsCount);
 			return false;
 		}
-
-		fillPanelFromModel(preset);
 		return true;
 	}
 	

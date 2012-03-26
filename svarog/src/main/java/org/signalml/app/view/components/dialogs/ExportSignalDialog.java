@@ -224,7 +224,6 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	public void setPreset(Preset preset, boolean includeSpace) throws SignalMLException {
 
 		SignalExportDescriptor descriptor = (SignalExportDescriptor) preset;
-
 		fillDialogFromModel(descriptor, includeSpace);
 
 	}
