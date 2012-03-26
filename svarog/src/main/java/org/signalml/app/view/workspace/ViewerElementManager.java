@@ -35,7 +35,6 @@ import org.signalml.app.action.book.ExportBookAction;
 import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
-import org.signalml.app.action.document.EEGLabExportAction;
 import org.signalml.app.action.document.OpenSignalAndSetMontageAction;
 import org.signalml.app.action.document.SaveAllDocumentsAction;
 import org.signalml.app.action.document.SaveDocumentAction;
@@ -112,7 +111,6 @@ import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.components.LockableJSplitPane;
 import org.signalml.app.view.components.dialogs.ApplicationPreferencesDialog;
 import org.signalml.app.view.components.dialogs.DynamicCompilationWarningDialog;
-import org.signalml.app.view.components.dialogs.EEGLabExportDialog;
 import org.signalml.app.view.components.dialogs.EditTagAnnotationDialog;
 import org.signalml.app.view.components.dialogs.EditTagDescriptionDialog;
 import org.signalml.app.view.components.dialogs.ExportSignalDialog;
@@ -267,7 +265,6 @@ public class ViewerElementManager {
 	/* Dialogs */
         private AmplifierDefinitionConfigDialog amplifierDefinitionConfigDialog;
         private OpenBCIModuleConfigDialog openBCIModuleConfigDialog;
-        private EEGLabExportDialog eeglabExportDialog;
         private CheckSignalDialog checkSignalDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
@@ -311,7 +308,6 @@ public class ViewerElementManager {
 	/* Actions */
         private AmplifierDefinitionConfigAction amplifierDefinitionConfigAction;
         private OpenBCIModuleConfigAction openBCIModuleConfigAction;
-        private EEGLabExportAction eeglabExportAction;
         private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
@@ -744,16 +740,12 @@ public class ViewerElementManager {
 
 	public JMenu getFileMenu() {
 		if (fileMenu == null) {
-			JMenu exportSubmenu = new JMenu(_("Export"));
-			exportSubmenu.setMnemonic(KeyEvent.VK_E);
-			exportSubmenu.add(getExportSignalAction());
 			/*
 			 * export book doesn't work - so its commented out for now.
 			 * (it exports books, but they cannot be read afterwards
 			 * - the export is incorrect)
 			 */
 			//exportSubmenu.add(getExportBookAction());
-			exportSubmenu.add(getEEGLabExportAction());
 
 			fileMenu = new JMenu(_("File"));
 			fileMenu.setMnemonic(KeyEvent.VK_F);
@@ -767,7 +759,7 @@ public class ViewerElementManager {
 
 			fileMenu.addSeparator();
 
-			fileMenu.add(exportSubmenu);
+			fileMenu.add(getExportSignalAction());
 
 			if (mode == SignalMLOperationMode.APPLICATION) {
 				fileMenu.addSeparator();
@@ -1337,13 +1329,6 @@ public class ViewerElementManager {
 		return exportSignalDialog;
 	}
 
-        public EEGLabExportDialog getEEGLabExportDialog() {
-                if (eeglabExportDialog == null) {
-                        eeglabExportDialog = new EEGLabExportDialog(getDialogParent(), true);
-                }
-                return eeglabExportDialog;
-        }
-
         public AmplifierDefinitionConfigDialog getAmplifierDefinitionConfigDialog() {
                 if (amplifierDefinitionConfigDialog == null) {
                         amplifierDefinitionConfigDialog = new AmplifierDefinitionConfigDialog(getAmplifierDefinitionPresetManager(), getDialogParent(), true, this);
@@ -1780,14 +1765,6 @@ public class ViewerElementManager {
                         openBCIModuleConfigAction.setConfigDialog(getOpenBCIModuleConfigDialog());
                 }
                 return openBCIModuleConfigAction;
-        }
-
-        public EEGLabExportAction getEEGLabExportAction() {
-                if (eeglabExportAction == null) {
-                        eeglabExportAction = new EEGLabExportAction(getActionFocusManager());
-                        eeglabExportAction.setEEGLabExportDialog(getEEGLabExportDialog());
-                }
-                return eeglabExportAction;
         }
 
 	public AbortAllTasksAction getAbortAllTasksAction() {
