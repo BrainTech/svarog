@@ -37,6 +37,7 @@ import org.signalml.app.worker.ScanSignalWorker;
 import org.signalml.app.worker.document.ExportSignalWorker;
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -170,7 +171,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	 * files
 	 */
 	protected ExportFiles chooseFiles(SignalExportDescriptor signalExportDescriptor) {
-
+		
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		File fileSuggestion = null;
 		if (signalDocument instanceof FileBackedDocument) {
@@ -178,27 +179,39 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			if (originalFile != null) {
 				originalFile = new File(originalFile.getName());
 				String extension = Util.getFileExtension(originalFile, false);
-				if (extension == null || ! "bin".equals(extension)) {
+ 				if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW 
+				    && !"bin".equals(extension)) {
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "bin");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab 
+					   && !"mat".equals(extension)) {
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "mat");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII 
+						   && !"ascii".equals(extension)){
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "ascii");
 				}
 			}
 		}
-
 		File file;
 		File xmlFile = null;
 		boolean hasFile = false;
 		do {
-			file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion);
+			if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW)
+				file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion);
+			else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab)
+				file = fileChooser.chooseExportEEGLabSignalFile(optionPaneParent, fileSuggestion);
+			else
+				file = fileChooser.chooseExportASCIISignalFile(optionPaneParent, fileSuggestion);
 			if (file == null) {
 				return null;
 			}
 			String ext = Util.getFileExtension(file,false);
-			if (ext == null) {
+			if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW && ext == null) {
 				file = new File(file.getAbsolutePath() + ".bin");
-			}
-
-			hasFile = true;
-
+				hasFile = true;
+			} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab && (ext == null || !"mat".equals(ext))) {
+				file = new File(Util.changeOrAddFileExtension(file, "mat").getAbsolutePath());
+				hasFile = true;
+			
 			if (file.exists()) {
 				int res = OptionPane.showFileAlreadyExists(optionPaneParent, file.getName());
 				if (res != OptionPane.OK_OPTION) {
@@ -216,7 +229,11 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 					}
 				}
 			}
-
+			} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII && ext == null ){
+				file = new File(Util.changeOrAddFileExtension(file, "ascii").getAbsolutePath());
+				hasFile = true;
+			} else
+				hasFile = true;
 		} while (!hasFile);
 
 		return new ExportFiles(file, xmlFile);
@@ -300,7 +317,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	public boolean saveSignal(MultichannelSampleSource sampleSource, File signalFile, SignalExportDescriptor signalExportDescriptor) {
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 
-		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, signalFile, signalExportDescriptor, pleaseWaitDialog);
+		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, signalFile, signalExportDescriptor, pleaseWaitDialog, getActionFocusSelector().getActiveSignalDocument());
 
 		worker.execute();
 

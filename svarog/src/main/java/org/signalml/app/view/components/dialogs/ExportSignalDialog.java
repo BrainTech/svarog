@@ -16,7 +16,7 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.ExportSignalOptionsPanel;
+import org.signalml.app.view.components.ExportFormatPanel;
 import org.signalml.app.view.components.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -51,7 +51,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * the {@link ExportSignalOptionsPanel panel} to select the format in
 	 * which the signal will be stored
 	 */
-	private ExportSignalOptionsPanel optionsPanel;
+	private ExportFormatPanel formatPanel;
 
 	/**
 	 * Constructor. Sets message source, {@link PresetManager preset
@@ -96,7 +96,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		interfacePanel.add(getSignalSpacePanel(), BorderLayout.CENTER);
-		interfacePanel.add(getOptionsPanel(), BorderLayout.SOUTH);
+		interfacePanel.add(getFormatPanel(), BorderLayout.SOUTH);
 
 		return interfacePanel;
 
@@ -117,17 +117,14 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	}
 
 	/**
-	 * Returns the {@link ExportSignalOptionsPanel panel} to select the format
-	 * in which the signal will be stored.
-	 * If the panel doesn't exist it is created
-	 * @return the panel to select the format in which the signal will be
-	 * stored
+	 * Returns the {@link ExportFormatPanel panel} to select the format
+	 * in which the signal will be stored
 	 */
-	public ExportSignalOptionsPanel getOptionsPanel() {
-		if (optionsPanel == null) {
-			optionsPanel = new ExportSignalOptionsPanel();
+	public ExportFormatPanel getFormatPanel() {
+		if (formatPanel == null) {
+			formatPanel = new ExportFormatPanel();
 		}
-		return optionsPanel;
+		return formatPanel;
 	}
 
 	/**
@@ -161,7 +158,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 			getSignalSpacePanel().fillPanelFromModel(descriptor.getSignalSpace());
 		}
 
-		getOptionsPanel().fillPanelFromModel(descriptor);
+		getFormatPanel().fillPanelFromModel(descriptor);
 
 	}
 
@@ -179,7 +176,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 		SignalExportDescriptor descriptor = (SignalExportDescriptor) model;
 
 		getSignalSpacePanel().fillModelFromPanel(descriptor.getSignalSpace());
-		getOptionsPanel().fillModelFromPanel(descriptor);
+		getFormatPanel().fillModelFromPanel(descriptor);
 
 	}
 
@@ -195,7 +192,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 		super.validateDialog(model, errors);
 
 		getSignalSpacePanel().validatePanel(errors);
-		getOptionsPanel().validatePanel(errors);
+		getFormatPanel().validatePanel(errors);
 
 	}
 
