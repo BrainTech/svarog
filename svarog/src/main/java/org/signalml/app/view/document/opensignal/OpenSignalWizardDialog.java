@@ -68,6 +68,8 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 			getSignalMontagePanel().fillPanelFromModel(createdMontage);
 			getSignalMontagePanel().setSamplingFrequency(signalParameters.getSamplingFrequency());
+			
+			getSignalMontagePanel().resetPreset();
 		}
 		
 		return super.onStepChange(toStep, fromStep, model);

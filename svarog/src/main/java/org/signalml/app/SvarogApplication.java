@@ -734,8 +734,25 @@ public class SvarogApplication implements java.lang.Runnable {
 		taskManager.setMethodManager(methodManager);
 
 		splash(_("Initializing presets"), true);
+		
+		eegSystemsPresetManager = new EegSystemsPresetManager();
+		eegSystemsPresetManager.setProfileDir(profileDir);
 
-		montagePresetManager = new MontagePresetManager();
+		try {
+			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
+		} catch (Exception ex) {
+			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
+		}
+
+		try {
+			eegSystemsPresetManager.readFromPersistence(null);
+		} catch (FileNotFoundException ex) {
+			logger.debug("EEG systems configuration not found!");
+		} catch (Exception ex) {
+			logger.error("Failed to read eeg systems configuration", ex);
+		}
+
+		montagePresetManager = new MontagePresetManager(eegSystemsPresetManager);
 		montagePresetManager.setProfileDir(profileDir);
 
 		try {
@@ -822,23 +839,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.debug("Styled tag set preset config not found - will use defaults");
 		} catch (Exception ex) {
 			logger.error("Failed to read styled tag set configuration - will use defaults", ex);
-		}
-
-		eegSystemsPresetManager = new EegSystemsPresetManager();
-		eegSystemsPresetManager.setProfileDir(profileDir);
-
-		try {
-			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
-		} catch (Exception ex) {
-			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
-		}
-
-		try {
-			eegSystemsPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("EEG systems configuration not found!");
-		} catch (Exception ex) {
-			logger.error("Failed to read eeg systems configuration", ex);
 		}
 
 		splash(null, true);

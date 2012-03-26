@@ -19,12 +19,12 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
-import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.GetOpenBCIExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
-public class ChooseExperimentPanel extends AbstractSignalMLPanel implements ListSelectionListener {
+public class ChooseExperimentPanel extends AbstractPanel implements ListSelectionListener {
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
 	private static Logger logger = Logger.getLogger(ChooseExperimentPanel.class);
@@ -34,11 +34,10 @@ public class ChooseExperimentPanel extends AbstractSignalMLPanel implements List
 	private JButton refreshButton;
 
 	public ChooseExperimentPanel() {
-		initialize();
+		createInterface();
 	}
-	
-	@Override
-	protected void initialize() {
+
+	protected void createInterface() {
 		setTitledBorder(_("Choose experiment"));
 		
 		chooseExperimentTableModel = new ChooseExperimentTableModel();

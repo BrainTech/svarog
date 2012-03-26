@@ -13,13 +13,16 @@ import javax.swing.JTabbedPane;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.montage.MontageDescriptor;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
+import org.signalml.app.view.components.presets.AbstractPresetPanel;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
@@ -28,11 +31,13 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
-public class SignalMontagePanel extends JPanel {
+public class SignalMontagePanel extends AbstractPresetPanel {
 
 	/**
 	 * This dialog is used when edititing
@@ -72,27 +77,32 @@ public class SignalMontagePanel extends JPanel {
 	 */
 	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
 	/**
-	 * The preset manager which manges the available {@link EegSystem EEG systems}.
+	 * The preset manager which manages the available {@link EegSystem EEG systems}.
 	 */
 	private EegSystemsPresetManager eegSystemsPresetManager;
-	
-	
-	//TODO - wywalić to
+
 	private ValidationErrorsDialog errorsDialog;
-	private ViewerFileChooser fileChooser;
 
 	public SignalMontagePanel(ViewerElementManager viewerElementManager) {
+		super(viewerElementManager.getMontagePresetManager());
 		this.predefinedTimeDomainSampleFilterPresetManager = viewerElementManager.getPredefinedTimeDomainFiltersPresetManager();
 		this.eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
-		createInterface();
+		this.timeDomainSampleFilterPresetManager = viewerElementManager.getTimeDomainSampleFilterPresetManager();
+		this.fftFilterPresetManager = viewerElementManager.getFftFilterPresetManager();
+		setFileChooser(viewerElementManager.getFileChooser());
+		
+		this.setLayout(new BorderLayout());
+		this.add(createInterface(), BorderLayout.CENTER);
+		this.add(getPresetControlsPanel(), BorderLayout.SOUTH);
 	}
 	
-	protected void createInterface() {
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(800, 500));
+	protected JPanel createInterface() {
+		JPanel interfacePanel = new JPanel();
+		interfacePanel.setLayout(new BorderLayout());
+		interfacePanel.setPreferredSize(new Dimension(800, 500));
 
-		JPanel interfacePanel = new JPanel(new BorderLayout());
-
+		tabbedPane = new JTabbedPane();
+		
 		filtersPanel = new MontageFiltersPanel(predefinedTimeDomainSampleFilterPresetManager);
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
 		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
@@ -101,15 +111,13 @@ public class SignalMontagePanel extends JPanel {
 
 		miscellaneousPanel = new MontageMiscellaneousPanel();
 
-		tabbedPane = new JTabbedPane();
-
 		tabbedPane.addTab(_("Montage"), montageEditionPanel);
 		tabbedPane.addTab(_("Filters"), filtersPanel);
 		tabbedPane.addTab(_("Miscellaneous"), miscellaneousPanel);
+		
+		interfacePanel.add(tabbedPane);
 
-		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
-
-		this.add(interfacePanel);
+		return interfacePanel;
 	}
 	
 	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
@@ -141,7 +149,7 @@ public class SignalMontagePanel extends JPanel {
 
 	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
-			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(fftFilterPresetManager, null, true); //TODO this -dialog
+			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(fftFilterPresetManager, this.getParentWindow(), true);
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
@@ -154,7 +162,7 @@ public class SignalMontagePanel extends JPanel {
 	 */
 	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(timeDomainSampleFilterPresetManager, null, true); //TODO: null
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(timeDomainSampleFilterPresetManager, this.getParentWindow(), true);
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editTimeDomainSampleFilterDialog;
@@ -199,25 +207,9 @@ public class SignalMontagePanel extends JPanel {
 	 */
 	protected synchronized ValidationErrorsDialog getErrorsDialog() {
 		if (errorsDialog == null) {
-			errorsDialog = new ValidationErrorsDialog(null, true); //TODO: null!!
+			errorsDialog = new ValidationErrorsDialog(this.getParentWindow(), true);
 		}
 		return errorsDialog;
-	}
-	
-	/**
-	 * Returns the {@link ViewerFileChooser file chooser}.
-	 * @return the file chooser
-	 */
-	public ViewerFileChooser getFileChooser() {
-		return fileChooser;
-	}
-
-	/**
-	 * Sets the {@link ViewerFileChooser file chooser}.
-	 * @param fileChooser the file chooser to set
-	 */
-	public void setFileChooser(ViewerFileChooser fileChooser) {
-		this.fileChooser = fileChooser;
 	}
 
 	public void fillPanelFromModel(Object model) throws SignalMLException {
@@ -289,4 +281,50 @@ public class SignalMontagePanel extends JPanel {
 			}
 		}
 	}
+
+	@Override
+	public Preset getPreset() throws SignalMLException {
+		Montage preset = new Montage(getCurrentMontage());
+
+		ValidationErrors errors = new ValidationErrors();
+		validate(preset, errors);
+
+		if (errors.hasErrors()) {
+			getErrorsDialog().showDialog(errors, true);
+
+			return null;
+		}
+
+		return preset;
+	}
+
+	@Override
+	public boolean setPreset(Preset preset) throws SignalMLException {
+
+		Montage montagePreset = (Montage) preset;
+		int presetChannelsCount = getNormalChannelsCount(montagePreset);
+		int thisChannelsCount = getNormalChannelsCount(getCurrentMontage());
+
+		if (presetChannelsCount != thisChannelsCount) {
+			Dialogs.showError(_("Preset is incompatible with this montage - bad channels count in the preset montage!"));
+			logger.error("Preset incompatible: current montage 'normal' channel count = " +
+					+ thisChannelsCount + " preset channel count = " + presetChannelsCount);
+			return false;
+		}
+
+		fillPanelFromModel(preset);
+		return true;
+	}
+	
+	private int getNormalChannelsCount(Montage montage) {
+		int normalChannelsCount = 0;
+
+		for (int i = 0; i < montage.getSourceChannelCount(); i++) {
+			IChannelFunction channelFunction = montage.getSourceChannelFunctionAt(i);
+			if (channelFunction != ChannelFunction.ZERO && channelFunction != ChannelFunction.ONE)
+				normalChannelsCount++;
+		}
+		return normalChannelsCount;
+	}
+
 }

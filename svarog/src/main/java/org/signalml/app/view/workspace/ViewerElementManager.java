@@ -179,7 +179,7 @@ public class ViewerElementManager {
 	private BookFilterPresetManager bookFilterPresetManager;
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
-        private OpenBCIModulePresetManager openBCIModulePresetManager;
+	private OpenBCIModulePresetManager openBCIModulePresetManager;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -1186,7 +1186,6 @@ public class ViewerElementManager {
 	public SignalMontageDialog getSignalMontageDialog() {
 		if (signalMontageDialog == null) {
 			signalMontageDialog = new SignalMontageDialog(this, getDialogParent(), true);
-			signalMontageDialog.setFileChooser(getFileChooser());
 		}
 		return signalMontageDialog;
 	}

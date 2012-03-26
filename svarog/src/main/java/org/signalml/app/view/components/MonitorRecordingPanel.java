@@ -33,7 +33,7 @@ import org.springframework.validation.BindException;
  *
  * @author Piotr Szachewicz
  */
-public class MonitorRecordingPanel extends AbstractSignalMLPanel {
+public class MonitorRecordingPanel extends AbstractPanel {
 
         /**
          * A panel for choosing signal and tags recording target files for this
@@ -55,14 +55,13 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          */
         public MonitorRecordingPanel() {
                 super();
-                initialize();
+                createInterface();
         }
 
         /**
          * Initializes all components.
          */
-	@Override
-	protected void initialize() {
+	protected void createInterface() {
 
                 setLayout(new BorderLayout(10, 10));
 

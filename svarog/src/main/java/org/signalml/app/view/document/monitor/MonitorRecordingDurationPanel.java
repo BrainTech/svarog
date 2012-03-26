@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.plugin.export.signal.Document;
 
 /**
@@ -23,7 +23,7 @@ import org.signalml.plugin.export.signal.Document;
  *
  * @author Piotr Szachewicz
  */
-public class MonitorRecordingDurationPanel extends AbstractSignalMLPanel {
+public class MonitorRecordingDurationPanel extends AbstractPanel {
 
 	/**
 	 * The document for which this panel is displayed.
@@ -57,11 +57,10 @@ public class MonitorRecordingDurationPanel extends AbstractSignalMLPanel {
 		this.document = (MonitorSignalDocument) document;
 		document.addPropertyChangeListener(this);
 
-		initialize();
+		createInterface();
 	}
 
-	@Override
-	protected void initialize() {
+	protected void createInterface() {
 		durationLabel = new JLabel();
 		this.add(durationLabel, BorderLayout.EAST);
 	}

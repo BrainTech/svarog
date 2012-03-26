@@ -13,7 +13,7 @@ import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
@@ -25,7 +25,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
  *
  * @author Piotr Szachewicz
  */
-public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
+public class EegSystemSelectionPanel extends AbstractPanel {
 
 	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
 	
@@ -54,16 +54,15 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	public EegSystemSelectionPanel(EegSystemsPresetManager eegSystemsPresetManager, PropertyChangeListener listener) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
 		addPropertyChangeListener(listener);
-		initialize();
+		createInterface();
 	}
 	
 	public EegSystemSelectionPanel(EegSystemsPresetManager eegSystemsPresetManager) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
-		initialize();
+		createInterface();
 	}
 
-	@Override
-	protected void initialize() {
+	protected void createInterface() {
 		
 		//setTitledBorder(_("Select EEG system"));
 		add(getPresetComboBox());

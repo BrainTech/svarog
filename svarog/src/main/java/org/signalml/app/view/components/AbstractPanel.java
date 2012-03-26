@@ -16,6 +16,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
+
 /**
  * All panels in Svarog should extend this panel. Contains an instance of
  * SvarogI18n and methods for enabling/disabling all components
@@ -23,7 +26,9 @@ import javax.swing.border.TitledBorder;
  * 
  * @author Piotr Szachewicz
  */
-public abstract class AbstractSignalMLPanel extends JPanel implements PropertyChangeListener {
+public abstract class AbstractPanel extends JPanel implements PropertyChangeListener {
+
+	protected transient final Logger logger = Logger.getLogger(getClass());
 
 	/**
 	 * PropertyChangeSupport to fire property changes when needed.
@@ -35,7 +40,7 @@ public abstract class AbstractSignalMLPanel extends JPanel implements PropertyCh
 	 * @param messageSource message Source capable of returning localized
 	 * messages
 	 */
-	public AbstractSignalMLPanel() {
+	public AbstractPanel() {
 		super();
 		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
@@ -52,11 +57,6 @@ public abstract class AbstractSignalMLPanel extends JPanel implements PropertyCh
 
 		return (Window) container;
 	}
-
-	/**
-	 * A method for initializing GUI components for this panel.
-	 */
-	protected abstract void initialize();
 
 	/**
 	 * Sets enabled to this panel and all it's children.

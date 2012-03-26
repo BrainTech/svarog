@@ -37,7 +37,7 @@ public class MessageParser {
 			Dialogs.showError(_("Server is not responding!"));
 			return false;
 		}
-		
+
 		MessageType type = MessageType.parseMessageTypeFromResponse(response);
 		if (type == awaitedMessageType) {
 			return true;

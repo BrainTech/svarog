@@ -18,7 +18,7 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
-import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
@@ -27,7 +27,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
-public class OtherSettingsPanel extends AbstractSignalMLPanel {
+public class OtherSettingsPanel extends AbstractPanel {
 
 	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
 	
@@ -58,11 +58,10 @@ public class OtherSettingsPanel extends AbstractSignalMLPanel {
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
-		initialize();
+		createInterface();
 	}
-	
-	@Override
-	protected void initialize() {
+
+	protected void createInterface() {
 		setTitledBorder(_("Other settings"));
 		
 		GroupLayout layout = new GroupLayout(this);
