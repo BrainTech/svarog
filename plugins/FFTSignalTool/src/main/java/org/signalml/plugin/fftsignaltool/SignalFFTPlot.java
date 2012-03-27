@@ -36,6 +36,7 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.fft.export.FourierTransform;
 import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.util.FormatUtils;
 import org.signalml.util.Util;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
@@ -330,10 +331,10 @@ public class SignalFFTPlot extends JComponent {
 		float maxTime = (float) ((lastSample * timeZoomFactor) / pixelPerSecond);
 
 		StringBuilder minTimeSb = new StringBuilder(20);
-		Util.addTime(minTime, minTimeSb);
+		FormatUtils.addTime(minTime, minTimeSb);
 
 		StringBuilder maxTimeSb = new StringBuilder(20);
-		Util.addTime(maxTime, maxTimeSb);
+		FormatUtils.addTime(maxTime, maxTimeSb);
 
 		String title = _R("FFT over {0} points {1} - {2} ({3})",
 				  windowWidth, minTimeSb.toString(),

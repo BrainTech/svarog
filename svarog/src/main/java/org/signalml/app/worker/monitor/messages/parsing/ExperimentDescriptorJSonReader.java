@@ -48,7 +48,7 @@ public class ExperimentDescriptorJSonReader {
 				descriptor.setCorrectlyRead(true);
 				experiments.add(descriptor);
 			} catch(Exception e) {
-				logger.error("There was an error parsing an experiment.");
+				logger.error("There was an error parsing an experiment: " + e.getCause());
 			}
 		}
 		

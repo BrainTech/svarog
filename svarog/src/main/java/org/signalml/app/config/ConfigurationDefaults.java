@@ -161,6 +161,8 @@ public class ConfigurationDefaults {
 		config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
 
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
+		config.setOpenbciIPAddress(getString("monitor.openbciIPAddress"));
+		config.setOpenbciPort(getInt("monitor.openbciPort"));
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {

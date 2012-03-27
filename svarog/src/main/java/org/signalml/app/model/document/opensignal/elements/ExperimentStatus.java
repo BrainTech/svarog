@@ -3,6 +3,7 @@ package org.signalml.app.model.document.opensignal.elements;
 public enum ExperimentStatus {
 
 	NEW("New"),
+	LAUNCHING("Launching"),
 	RUNNING("Running");
 	
 	private String displayName;

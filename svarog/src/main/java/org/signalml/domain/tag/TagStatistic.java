@@ -11,7 +11,7 @@ import java.util.HashMap;
 import org.signalml.app.model.components.WriterExportableTable;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.util.Util;
+import org.signalml.util.FormatUtils;
 
 /**
  * This class contains for each {@link TagStyle style} the total length of
@@ -101,7 +101,7 @@ public class TagStatistic implements WriterExportableTable {
          * string
          */
 	public String getTotalLengthPretty() {
-		return Util.getPrettyTimeString(totalLength);
+		return FormatUtils.getPrettyTimeString(totalLength);
 	}
 
         /**

@@ -1,6 +1,3 @@
-/* AbstractSignalMLPanel.java created 2011-04-20
- *
- */
 package org.signalml.app.view.components;
 
 import java.awt.Component;
@@ -26,7 +23,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
  * 
  * @author Piotr Szachewicz
  */
-public abstract class AbstractPanel extends JPanel implements PropertyChangeListener {
+public class AbstractPanel extends JPanel implements PropertyChangeListener {
 
 	protected transient final Logger logger = Logger.getLogger(getClass());
 
@@ -91,12 +88,16 @@ public abstract class AbstractPanel extends JPanel implements PropertyChangeList
 	 * @param label the title to be shown on the border
 	 */
 	protected void setTitledBorder(String label) {
+		setTitledBorder(this, label);
+	}
+	
+	protected void setTitledBorder(JPanel panel, String label) {
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder(label),
 		        new EmptyBorder(3,3,3,3)
 		);
 
-		setBorder(cb);
+		panel.setBorder(cb);
 	}
 
 	@Override

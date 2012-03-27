@@ -523,12 +523,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.ini4j</groupId>
-			<artifactId>ini4j</artifactId>
-			<version>0.5.2</version>
-		</dependency>
-            
 	</dependencies>
 
 	<scm>

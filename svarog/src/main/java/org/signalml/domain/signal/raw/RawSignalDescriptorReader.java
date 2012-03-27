@@ -18,7 +18,7 @@ import org.signalml.app.util.SingleNameSpaceContext;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.Util;
+import org.signalml.util.FormatUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -155,7 +155,7 @@ public class RawSignalDescriptorReader {
 			if (exportDate != null && !exportDate.isEmpty()) {
 
 				try {
-					descriptor.setExportDate(Util.parseTime(exportDate));
+					descriptor.setExportDate(FormatUtils.parseTime(exportDate));
 				} catch (ParseException ex) {
 					logger.error("Bad export date", ex);
 					throw new SignalMLException("error.invalidRawSignalXML");

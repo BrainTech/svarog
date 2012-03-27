@@ -1,11 +1,16 @@
 package org.signalml.app.worker.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.Container;
 import java.net.ConnectException;
 import java.net.SocketException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Formatter;
 import java.util.List;
+
+import javax.swing.text.NumberFormatter;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
@@ -14,6 +19,7 @@ import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.parsing.ExperimentDescriptorJSonReader;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
+import org.signalml.util.FormatUtils;
 
 public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<ExperimentDescriptor>, Void>{
 
@@ -26,28 +32,17 @@ public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<
 
 		showBusyDialog();
 
-		try {
-			if (!Helper.wasOpenbciConfigFileLoaded())
-				Helper.loadOpenbciConfigFile();
-		} catch (Exception ex) {
-			Dialogs.showError("Could not read ~/.obci/main_config.ini file correctly");
-			return null;
-		}
-		
-		try {
-			Helper.findOpenbciIpAddress();
-		} catch (SocketException ex) {
-			Dialogs.showExceptionDialog(ex);
-			return null;
-		}
-
 		FindEEGExperimentsRequest request = new FindEEGExperimentsRequest();
 		String response;
 
+		String openbciIpAddress = Helper.getOpenBCIIpAddress();
+		int openbciPort = Helper.getOpenbciPort();
 		try {
-			response = Helper.sendRequest(request, Helper.getOpenBCIIpAddress(), Helper.getOpenbciPort());
+			response = Helper.sendRequest(request, openbciIpAddress, openbciPort);
 		} catch (ConnectException ex) {
-			Dialogs.showError(_("OpenBCI server is not running!"));
+			String openbciPortFormatted = FormatUtils.formatNoGrouping(openbciPort);
+			String errorMsg = _R("OpenBCI daemon at {0}:{1} is not running! Please check if the IP address is correct.", openbciIpAddress, openbciPortFormatted);
+			Dialogs.showError(errorMsg);
 			return null;
 		}
 

@@ -95,8 +95,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private float backupFrequency;
 
-	private String openBCIDaemonAddress;
-	private int openBCIDaemonPort;
+	private String openbciIPAddress;
+	private int openbciPort;
 
 	private float monitorPageSize;
 
@@ -576,4 +576,21 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	public void setLastPresetPath(String lastPresetPath) {
 		this.lastPresetPath = lastPresetPath;
 	}
+
+	public String getOpenbciIPAddress() {
+		return openbciIPAddress;
+	}
+
+	public void setOpenbciIPAddress(String openbciIPAddress) {
+		this.openbciIPAddress = openbciIPAddress;
+	}
+
+	public int getOpenbciPort() {
+		return openbciPort;
+	}
+
+	public void setOpenbciPort(int openbciPort) {
+		this.openbciPort = openbciPort;
+	}
+
 }
