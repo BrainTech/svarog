@@ -52,6 +52,8 @@ public class Helper {
 		responseNetstring.parseNetstring(response);
 		logger.debug("Got response: " + responseNetstring);
 
+		socket.close();
+
 		return responseNetstring.getData();
 	}
 }
