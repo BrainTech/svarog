@@ -107,7 +107,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	public static final String HELP_DICTIONARY_TYPE				= "org/signalml/help/mp5.html#dictionaryType";
 	public static final String HELP_DICTIONARY_REINIT_TYPE		= "org/signalml/help/mp5.html#dictionaryReinitType";
 	public static final String HELP_SCALE_TO_PERIOD_FACTOR  	= "org/signalml/help/mp5.html#scaleToPeriodFactor";
-	public static final String HELP_PERIOD_DENSITY			  	= "org/signalml/help/mp5.html#periodDensity";
 	public static final String HELP_BOOK_WITH_SIGNAL			= "org/signalml/help/mp5.html#bookWithSignal";
 	public static final String HELP_ADDITIONAL_CONFIG			= "org/signalml/help/mp5.html#additionalConfig";
 	public static final String HELP_RAW_CONFIG					= "org/signalml/help/mp5.html#rawConfig";

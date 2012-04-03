@@ -28,8 +28,6 @@ import org.signalml.method.mp5.MP5DictionaryReinitType;
 import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;
 
-import org.springframework.validation.Errors;
-
 /** MP5AdvancedDecompositionConfigPanel
  *
  *
@@ -43,7 +41,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	private ResolvableComboBox dictionaryTypeComboBox;
 	private ResolvableComboBox dictionaryReinitTypeComboBox;
 	private JSpinner scaleToPeriodFactorSpinner;
-	private JSpinner periodDensitySpinner;
 
 	public MP5AdvancedDecompositionConfigPanel(AbstractDialog owner) {
 		super();
@@ -68,17 +65,14 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		JLabel dictionaryTypeLabel = new JLabel(_("Dictionary type"));
 		JLabel dictionaryReinitTypeLabel = new JLabel(_("Reinit dictionary"));
 		JLabel scaleToPeriodFactorLabel = new JLabel(_("Max scale / period"));
-		JLabel periodDensityLabel = new JLabel(_("Period density"));
 
 		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
 		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
 		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
-		CompactButton periodDensityHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_PERIOD_DENSITY);
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
-		Component glue4 = Box.createHorizontalGlue();
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -87,7 +81,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		        .addComponent(dictionaryTypeLabel)
 		        .addComponent(dictionaryReinitTypeLabel)
 		        .addComponent(scaleToPeriodFactorLabel)
-		        .addComponent(periodDensityLabel)
 		);
 
 		hGroup.addGroup(
@@ -95,7 +88,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		        .addComponent(glue1)
 		        .addComponent(glue2)
 		        .addComponent(glue3)
-		        .addComponent(glue4)
 		);
 
 		hGroup.addGroup(
@@ -103,7 +95,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		        .addComponent(getDictionaryTypeComboBox())
 		        .addComponent(getDictionaryReinitTypeComboBox())
 		        .addComponent(getScaleToPeriodFactorSpinner())
-		        .addComponent(getPeriodDensitySpinner())
 		);
 
 		hGroup.addGroup(
@@ -111,7 +102,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		        .addComponent(dictionaryTypeHelpButton)
 		        .addComponent(dictionaryReinitTypeHelpButton)
 		        .addComponent(scaleToPeriodFactorHelpButton)
-		        .addComponent(periodDensityHelpButton)
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -142,14 +132,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 				.addComponent(scaleToPeriodFactorHelpButton)
 			);
 
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(periodDensityLabel)
-				.addComponent(glue4)
-				.addComponent(getPeriodDensitySpinner())
-				.addComponent(periodDensityHelpButton)
-			);
-		
 		layout.setVerticalGroup(vGroup);				
 								
 	}
@@ -192,23 +174,6 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 			scaleToPeriodFactorSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return scaleToPeriodFactorSpinner;
-	}
-
-	public JSpinner getPeriodDensitySpinner() {
-		if (periodDensitySpinner == null) {
-			periodDensitySpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                MP5Parameters.MIN_PERIOD_DENSITY,
-			                MP5Parameters.MIN_PERIOD_DENSITY,
-			                MP5Parameters.MAX_PERIOD_DENSITY,
-			                1
-			        )
-			);
-			periodDensitySpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
-			periodDensitySpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
-			periodDensitySpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
-		}
-		return periodDensitySpinner;
 	}
 
 	public void fillPanelFromParameters(MP5Parameters parameters) {
