@@ -26,6 +26,7 @@ import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.space.SignalSourceLevel;
@@ -653,6 +654,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		signalParameters.setSamplingFrequency(source.getSamplingFrequency());
 		signalParameters.setChannelCount(source.getChannelCount());
 		signalParameters.setCalibrationGain(source.getCalibrationGain());
+		signalParameters.setChannelCount(source.getChannelCount());
 		
 		if (source instanceof SignalMLCodecSampleSource) {
 
@@ -674,6 +676,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
 			
 			rawDescriptor.setSignalParameters(signalParameters);
+			rawDescriptor.setSampleCount(rawSource.getSampleCount());
+			rawDescriptor.setSampleType(rawSource.getSampleType());
+			rawDescriptor.setByteOrder(rawSource.getByteOrder());
 
 			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, RawSignalDocument.class, rawSource.getFile().getAbsolutePath(), rawDescriptor);
 			mrud.setLastTimeOpened(new Date());
