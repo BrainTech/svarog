@@ -653,9 +653,8 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		signalParameters.setBlocksPerPage(-1);
 		signalParameters.setSamplingFrequency(source.getSamplingFrequency());
 		signalParameters.setChannelCount(source.getChannelCount());
-		signalParameters.setCalibrationGain(source.getCalibrationGain());
 		signalParameters.setChannelCount(source.getChannelCount());
-		
+
 		if (source instanceof SignalMLCodecSampleSource) {
 
 			SignalMLCodecSampleSource codecSource = (SignalMLCodecSampleSource) source;
@@ -674,7 +673,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 			RawSignalSampleSource rawSource = (RawSignalSampleSource) source;
 			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
-			
+
+			signalParameters.setCalibrationGain(source.getCalibrationGain());
+			signalParameters.setCalibrationOffset(source.getCalibrationOffset());
 			rawDescriptor.setSignalParameters(signalParameters);
 			rawDescriptor.setSampleCount(rawSource.getSampleCount());
 			rawDescriptor.setSampleType(rawSource.getSampleType());
