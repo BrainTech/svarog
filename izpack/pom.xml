@@ -169,7 +169,7 @@
 				<executions>
 					<execution>
 						<id>launch4j</id>
-						<phase>verify</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>launch4j</goal>
 						</goals>
