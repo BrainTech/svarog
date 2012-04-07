@@ -342,9 +342,6 @@ public class SignalFFTPlot extends JComponent {
 			// FIXME: check
 			double rangeStart = powerSpectrum[0][LEFT_CUTOFF];
 			double rangeEnd = channelSamples.getSamplingFrequency() / 2.0D;
-			double rangeSize = rangeEnd - rangeStart;
-
-			double oldRangeStart = rangeStart;
 
 			if (fftSettings.getVisibleRangeStart() > rangeStart) {
 				rangeStart = fftSettings.getVisibleRangeStart();
@@ -363,18 +360,6 @@ public class SignalFFTPlot extends JComponent {
 
 			if (rangeEnd < rangeStart + 1) {
 				rangeEnd = rangeStart + 1;
-			}
-
-			if (fftSettings.isScaleToView()) {
-
-				double sampleDist = endIndex - startIndex;
-
-				int shift = (int) (((rangeEnd - oldRangeStart) / rangeSize) * sampleDist);
-				endIndex = startIndex + shift;
-
-				shift = (int) (((rangeStart - oldRangeStart) / rangeSize) * sampleDist);
-				startIndex += shift;
-
 			}
 
 			xAxis.setRange(rangeStart, rangeEnd);

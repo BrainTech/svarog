@@ -103,10 +103,6 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 * the maximum number of labels on the X (frequencies) axis
 	 */
 	private int maxLabelCount = Integer.MAX_VALUE;
-	/**
-	 * boolean which tells if the power range should be scaled to data
-	 */
-	private boolean scaleToView = false;
 
 	private boolean autoScaleYAxis = false;
 	
@@ -391,25 +387,6 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	public void setMaxLabelCount(int maxLabelCount) {
 		this.maxLabelCount = maxLabelCount;
 	}
-
-	/**
-	 * Returns if the power range should be scaled to data.
-	 * @return {@code true} if the power range should be scaled to data,
-	 * {@code false} otherwise
-	 */
-	public boolean isScaleToView() {
-		return scaleToView;
-	}
-
-	/**
-	 * Sets if the power range should be scaled to data.
-	 * @param scaleToView {@code true} if the power range should be scaled to
-	 * data, {@code false} otherwise
-	 */
-	public void setScaleToView(boolean scaleToView) {
-		this.scaleToView = scaleToView;
-	}
-	
 	
 	/**
 	 * Opens an XML file and returns the document element.
@@ -614,8 +591,6 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 					setLogarithmic(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("powerAxisLabelsVisible"))
 					setPowerAxisLabelsVisible(readBooleanNode(nodeTmp));
-				if (nodeTmp.getNodeName().equals("scaleToView"))
-					setScaleToView(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("spline"))
 					setSpline(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("titleVisible"))
@@ -667,7 +642,6 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 			addBooleanNode(doc, root, "frequencyAxisLabelsVisible", isFrequencyAxisLabelsVisible());
 			addBooleanNode(doc, root, "logarithmic", isLogarithmic());
 			addBooleanNode(doc, root, "powerAxisLabelsVisible", isPowerAxisLabelsVisible());
-			addBooleanNode(doc, root, "scaleToView", isScaleToView());
 			addBooleanNode(doc, root, "spline", isSpline());
 			addBooleanNode(doc, root, "titleVisible", isTitleVisible());
 			addBooleanNode(doc, root, "autoScaleY", isAutoScaleYAxis());

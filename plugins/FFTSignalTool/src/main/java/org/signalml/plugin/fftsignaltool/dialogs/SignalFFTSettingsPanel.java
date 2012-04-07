@@ -31,8 +31,6 @@ import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 
-import org.springframework.validation.Errors;
-
 /**
  * Panel which allows to select the parameters of the FFT. Contains 6
  * sub-panels:
@@ -182,10 +180,6 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * on the X axis
 	 */
 	private JTextField maxLabelCountTextField;
-	/**
-	 * TODO
-	 */
-	private JCheckBox scaleToFFTViewCheckBox;
 	
 	private JRadioButton autoScaleYAxisRadioButton;
 
@@ -337,13 +331,12 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 		});
 
-		JPanel fftViewPanel = new JPanel(new GridLayout(3, 2, 3, 3));
+		JPanel fftViewPanel = new JPanel(new GridLayout(3, 2, 1, 3));
 		{
 			border = new CompoundBorder(
 					new TitledBorder(_("FFT view")),
 					new EmptyBorder(3, 3, 3, 3));
 			fftViewPanel.setBorder(border);
-
 			JLabel label = new JLabel(
 					_("Show fq range [Hz]"));
 			fftViewPanel.add(label);
@@ -384,22 +377,14 @@ public class SignalFFTSettingsPanel extends JPanel {
 			rangePanel.add(visibleRangeEndTextField);
 			fftViewPanel.add(rangePanel);
 
-			JPanel countPanel = new JPanel();
-
 			label = new JLabel(
 					_("X-axis label count"));
-			countPanel.add(label);
+			fftViewPanel.add(label);
 
 			maxLabelCountTextField = new JTextField();
 			maxLabelCountTextField.setColumns(5);
 			maxLabelCountTextField.setInputVerifier(intInputVerifier);
-			countPanel.add(maxLabelCountTextField);
-			fftViewPanel.add(countPanel);
-			
-			scaleToFFTViewCheckBox = new JCheckBox(
-					_("Scale Y-axis to view"));
-			fftViewPanel.add(scaleToFFTViewCheckBox);
-
+			fftViewPanel.add(maxLabelCountTextField);
 			autoScaleYAxisButtonGroup = new ButtonGroup();
 			
 			autoScaleYAxisRadioButton = new JRadioButton(
@@ -409,6 +394,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			autoScaleYAxisButtonGroup.add(autoScaleYAxisRadioButton);
 			autoScaleYAxisButtonGroup.add(fixedYAxisRadioButton);
 			fixedYAxisRadioButton.setSelected(true);
+			
 			fftViewPanel.add(autoScaleYAxisRadioButton);
 			
 			InputVerifier doubleInputVerifier = new InputVerifier() {
@@ -593,7 +579,6 @@ public class SignalFFTSettingsPanel extends JPanel {
 			maxLabelCountTextField.setText("");
 		}
 
-		scaleToFFTViewCheckBox.setSelected(settings.isScaleToView());
 		autoScaleYAxisRadioButton.setSelected(settings.isAutoScaleYAxis());
 		customMaxYAxis.setText(""+settings.getMaxPowerAxis());
 		customMinYAxis.setText(""+settings.getMinPowerAxis());
@@ -705,7 +690,6 @@ public class SignalFFTSettingsPanel extends JPanel {
 		} else {
 			settings.setMaxLabelCount(Integer.MAX_VALUE);
 		}
-		settings.setScaleToView(scaleToFFTViewCheckBox.isSelected());
 		settings.setAutoScaleYAxis(autoScaleYAxisRadioButton.isSelected());
 		settings.setMaxPowerAxis(Double.parseDouble(customMaxYAxis.getText()));
 		settings.setMinPowerAxis(Double.parseDouble(customMinYAxis.getText()));
