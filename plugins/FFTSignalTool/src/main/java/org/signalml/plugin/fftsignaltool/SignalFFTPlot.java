@@ -382,12 +382,17 @@ public class SignalFFTPlot extends JComponent {
 
 		double max = 0;
 		double min = Double.MAX_VALUE;
-		for (int i = startIndex; i < endIndex; i++) {
-			max = Math.max(max, powerSpectrum[1][i]);
-			min = Math.min(min, powerSpectrum[1][i]);
+		if (fftSettings.isAutoScaleYAxis()){
+			for (int i = startIndex; i < endIndex; i++) {
+				max = Math.max(max, powerSpectrum[1][i]);
+				min = Math.min(min, powerSpectrum[1][i]);
+			}
+			max *= 1.15; // scale up by 15% as per ZFB request (related to spline
+							// overshooting points).
+		} else {
+			max = fftSettings.getMaxPowerAxis();
+			min = fftSettings.getMinPowerAxis();
 		}
-		max *= 1.15; // scale up by 15% as per ZFB request (related to spline
-						// overshooting points).
 
 		if (logarithmic) {
 			logYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
@@ -395,7 +400,9 @@ public class SignalFFTPlot extends JComponent {
 			powerSpectrumPlot.setRangeAxis(logYAxis);
 		} else {
 			normalYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
-			normalYAxis.setRange(0, max);
+			if (fftSettings.isAutoScaleYAxis())
+				min = 0;
+			normalYAxis.setRange(min, max);
 			powerSpectrumPlot.setRangeAxis(normalYAxis);
 		}
 

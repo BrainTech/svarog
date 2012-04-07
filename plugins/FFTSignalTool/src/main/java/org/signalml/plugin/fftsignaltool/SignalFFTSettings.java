@@ -108,6 +108,36 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 */
 	private boolean scaleToView = false;
 
+	private boolean autoScaleYAxis = false;
+	
+	private double minPowerAxis = 0.0;
+	
+	private double maxPowerAxis = 200.00;
+	
+	public boolean isAutoScaleYAxis() {
+		return autoScaleYAxis;
+	}
+
+	public void setAutoScaleYAxis(boolean autoScaleYAxis) {
+		this.autoScaleYAxis = autoScaleYAxis;
+	}
+
+	public double getMinPowerAxis() {
+		return minPowerAxis;
+	}
+
+	public void setMinPowerAxis(double minPowerAxis) {
+		this.minPowerAxis = minPowerAxis;
+	}
+
+	public double getMaxPowerAxis() {
+		return maxPowerAxis;
+	}
+
+	public void setMaxPowerAxis(double maxPowerAxis) {
+		this.maxPowerAxis = maxPowerAxis;
+	}
+
 	/**
 	 * Constructor. Sets the default values of the parameters.
 	 */
@@ -604,6 +634,12 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 					setPlotSize(readDimensionNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("windowType"))
 					setWindowType(readWindowTypeNode(nodeTmp));
+				if (nodeTmp.getNodeName().equals("minYAxis"))
+					setMinPowerAxis(readDoubleNode(nodeTmp));
+				if (nodeTmp.getNodeName().equals("maxYAxis"))
+					setMaxPowerAxis(readDoubleNode(nodeTmp));
+				if (nodeTmp.getNodeName().equals("autoScaleY"))
+					setAutoScaleYAxis(readBooleanNode(nodeTmp));
 				
 			}
 		} catch (ParserConfigurationException e) {
@@ -634,11 +670,14 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 			addBooleanNode(doc, root, "scaleToView", isScaleToView());
 			addBooleanNode(doc, root, "spline", isSpline());
 			addBooleanNode(doc, root, "titleVisible", isTitleVisible());
+			addBooleanNode(doc, root, "autoScaleY", isAutoScaleYAxis());
 			addIntNode(doc, root, "maxLabelCount", getMaxLabelCount());
 			addIntNode(doc, root, "visibleRangeEnd", getVisibleRangeEnd());
 			addIntNode(doc, root, "visibleRangeStart", getVisibleRangeStart());
 			addIntNode(doc, root, "windowWidth", getWindowWidth());
 			addDoubleNode(doc, root, "windowParameter", getWindowParameter());
+			addDoubleNode(doc, root, "minYAxis", getMinPowerAxis());
+			addDoubleNode(doc, root, "maxYAxis", getMaxPowerAxis());
 			addDimensionNode(doc, root, "plotSize", getPlotSize());
 			addWindowTypeNode(doc, root, "windowType", getWindowType());
 			saveToXMLFile(xmlFile, doc);
