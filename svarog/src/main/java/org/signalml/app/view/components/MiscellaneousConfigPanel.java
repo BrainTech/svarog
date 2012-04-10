@@ -22,10 +22,7 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.view.components.dialogs.DynamicCompilationWarningDialog;
-import org.springframework.validation.Errors;
 
 /**
  * Panel with various options of (tooltips, "view mode", warning dialogs):
@@ -72,12 +69,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * starts
 	 */
 	private JCheckBox restoreWorkspaceCheckBox;
-	
-	/**
-	 * the check-box if the {@link DynamicCompilationWarningDialog} should be
-	 * shown when a dynamic compilation is needed (unchecked)
-	 */
-	private JCheckBox dontShowCompilationWarningCheckBox;
 
 	/**
 	 * the check-box if the main tool bar should (unchecked) be displayed in
@@ -176,9 +167,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			generalPanel.add(getSaveConfigOnEveryChangeCheckBox());
 			generalPanel.add(getRestoreWorkspaceCheckBox());
 		}
-		if (mode == SignalMLOperationMode.APPLICATION) {
-			generalPanel.add(getDontShowCompilationWarningCheckBox());
-		}
 
 		JPanel toolTipPanel = new JPanel();
 		toolTipPanel.setLayout(new BoxLayout(toolTipPanel, BoxLayout.X_AXIS));
@@ -256,20 +244,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			restoreWorkspaceCheckBox = new JCheckBox(_("Restore the workspace when the application loads"));
 		}
 		return restoreWorkspaceCheckBox;
-	}
-
-	/**
-	 * Returns the check-box if the {@link DynamicCompilationWarningDialog}
-	 * should be shown when a dynamic compilation is needed (unchecked).
-	 * If the check-box doesn't exist, it is created.
-	 * @return the check-box if the {@code DynamicCompilationWarningDialog}
-	 * should be shown when a dynamic compilation is needed (unchecked)
-	 */
-	public JCheckBox getDontShowCompilationWarningCheckBox() {
-		if (dontShowCompilationWarningCheckBox == null) {
-			dontShowCompilationWarningCheckBox = new JCheckBox(_("Do not show dynamic compilation warnings"));
-		}
-		return dontShowCompilationWarningCheckBox;
 	}
 
 	/**
@@ -383,9 +357,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			getSaveConfigOnEveryChangeCheckBox().setSelected(applicationConfig.isSaveConfigOnEveryChange());
 			getRestoreWorkspaceCheckBox().setSelected(applicationConfig.isRestoreWorkspace());
 		}
-		if (mode == SignalMLOperationMode.APPLICATION) {
-			getDontShowCompilationWarningCheckBox().setSelected(applicationConfig.isDontShowDynamicCompilationWarning());
-		}
 
 		getViewModeHidesMainToolBarCheckBox().setSelected(applicationConfig.isViewModeHidesBottomPanel());
 		if (mode == SignalMLOperationMode.APPLICATION) {
@@ -410,9 +381,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			applicationConfig.setSaveConfigOnEveryChange(getSaveConfigOnEveryChangeCheckBox().isSelected());
 			applicationConfig.setRestoreWorkspace(getRestoreWorkspaceCheckBox().isSelected());
-		}
-		if (mode == SignalMLOperationMode.APPLICATION) {
-			applicationConfig.setDontShowDynamicCompilationWarning(getDontShowCompilationWarningCheckBox().isSelected());
 		}
 
 		applicationConfig.setViewModeHidesMainToolBar(getViewModeHidesMainToolBarCheckBox().isSelected());

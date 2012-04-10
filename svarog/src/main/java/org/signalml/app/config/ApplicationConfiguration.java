@@ -23,8 +23,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("application")
 public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
-	private boolean dontShowDynamicCompilationWarning;
-
 	private String[] favouriteDirs;
 	private String[] lastDirs;
 	
@@ -400,14 +398,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setMaxTimeScale(double maxTimeScale) {
 		this.maxTimeScale = maxTimeScale;
-	}
-
-	public boolean isDontShowDynamicCompilationWarning() {
-		return dontShowDynamicCompilationWarning;
-	}
-
-	public void setDontShowDynamicCompilationWarning(boolean dontShowDynamicCompilationWarning) {
-		this.dontShowDynamicCompilationWarning = dontShowDynamicCompilationWarning;
 	}
 
 	public String getLastLibraryPath() {

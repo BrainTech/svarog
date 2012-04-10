@@ -5,7 +5,6 @@
 package org.signalml.app.view.workspace;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.BorderLayout;
@@ -109,7 +108,6 @@ import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.components.LockableJSplitPane;
 import org.signalml.app.view.components.dialogs.ApplicationPreferencesDialog;
-import org.signalml.app.view.components.dialogs.DynamicCompilationWarningDialog;
 import org.signalml.app.view.components.dialogs.EEGLabExportDialog;
 import org.signalml.app.view.components.dialogs.EditTagAnnotationDialog;
 import org.signalml.app.view.components.dialogs.EditTagDescriptionDialog;
@@ -134,7 +132,6 @@ import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.codec.SignalMLCodecManager;
-import org.signalml.compilation.DynamicCompilationContext;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.method.Method;
@@ -294,7 +291,6 @@ public class ViewerElementManager {
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
-	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;
 	private AtomTableDialog atomTableDialog;
 	private BookFilterDialog bookFilterDialog;
 
@@ -1347,18 +1343,6 @@ public class ViewerElementManager {
 		return mp5LocalExecutorDialog;
 	}
 
-	public DynamicCompilationWarningDialog getDynamicCompilationWarningDialog() {
-		if (dynamicCompilationWarningDialog == null) {
-			dynamicCompilationWarningDialog = new DynamicCompilationWarningDialog(getDialogParent(), true);
-			if (mode == SignalMLOperationMode.APPLICATION) {
-				dynamicCompilationWarningDialog.setApplicationConfig(getApplicationConfig());
-			} else {
-				dynamicCompilationWarningDialog.setPreferences(getPreferences());
-			}
-		}
-		return dynamicCompilationWarningDialog;
-	}
-
 	public AtomTableDialog getAtomTableDialog() {
 		if (atomTableDialog == null) {
 			atomTableDialog = new AtomTableDialog(getDialogParent(), true);
@@ -1883,8 +1867,6 @@ public class ViewerElementManager {
 
 		ApplicationTaskManager localTaskManager = getTaskManager();
 		localTaskManager.setPleaseWaitDialog(getPleaseWaitDialog());
-
-		DynamicCompilationContext.getSharedInstance().getCompiler().setWarning(getDynamicCompilationWarningDialog());
 
 	}
 
