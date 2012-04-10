@@ -112,16 +112,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	    this.mainPanel = new JPanel();
 	    this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
 	    this.mainPanel.add(getFavoritesGui());
-	    this.mainPanel.add(new JLabel(" "));
-	    this.mainPanel.add(new JLabel(" "));
 	    this.mainPanel.add(getHistoryGui());
 	    
 	    add(this.mainPanel);
-	    
-	    //add fake label so that components are 'stacked' to the top
-	    JLabel packer = new JLabel(" ");
-	    packer.setPreferredSize(new Dimension(10, 500));
-	    add(packer);  
  	}
  	
  	@Override
