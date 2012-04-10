@@ -115,7 +115,7 @@ public class SignalZoomSettingsPanel extends JPanel {
 		);
 		factorPanel.setBorder(border);
 
-		Dimension radioSize = new Dimension(50,20);
+		Dimension radioSize = new Dimension(80,20);
 
 		zoomFactorRadioButtons = new JRadioButton[possibleZoomFactors.length];
 		int i;
