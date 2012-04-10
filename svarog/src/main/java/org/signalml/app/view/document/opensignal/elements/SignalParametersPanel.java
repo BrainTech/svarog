@@ -7,13 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,10 +21,7 @@ import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
-import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;
 import org.signalml.app.view.components.ResolvableComboBox;
@@ -55,8 +47,6 @@ public class SignalParametersPanel extends JPanel {
 	private ResolvableComboBox sampleTypeComboBox;
 	private FloatSpinner pageSizeSpinner;
 	private IntegerSpinner blocksPerPageSpinner;
-	private JButton editGainAndOffsetButton;
-	private EditGainAndOffsetDialog editGainAndOffsetDialog;
 
 	/**
 	 * Default constructor. Creates the interface.
@@ -71,11 +61,22 @@ public class SignalParametersPanel extends JPanel {
 	 * Creates the interface.
 	 */
 	private void createInterface() {
-		JPanel buttonPanel = createButtonPanel();
-		JPanel fieldsPanel = createFieldsPanel();
 
-		add(fieldsPanel, BorderLayout.NORTH);
-		add(buttonPanel, BorderLayout.SOUTH);
+		setBorder(new CompoundBorder(new TitledBorder(_("Signal parameters")),
+				new EmptyBorder(3, 3, 3, 3)));
+
+		setLayout(new BorderLayout(0, 10));
+
+		JPanel fieldsPanel = new JPanel(new GridBagLayout());
+
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.anchor = GridBagConstraints.CENTER;
+		constraints.fill = GridBagConstraints.HORIZONTAL;
+		constraints.insets = new Insets(8, 8, 8, 8);
+
+		this.createFieldsPanelElements(fieldsPanel, constraints, 0);
+
+		add(fieldsPanel);
 		
 		setEnabledToAll(false);
 	}
@@ -143,32 +144,6 @@ public class SignalParametersPanel extends JPanel {
 		row++;
 		return row;
 
-	}
-
-	protected JPanel createFieldsPanel() {
-
-		setBorder(new CompoundBorder(new TitledBorder(_("Signal parameters")),
-				new EmptyBorder(3, 3, 3, 3)));
-
-		setLayout(new BorderLayout(0, 10));
-
-		JPanel fieldsPanel = new JPanel(new GridBagLayout());
-
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.insets = new Insets(8, 8, 8, 8);
-
-		this.createFieldsPanelElements(fieldsPanel, constraints, 0);
-
-		return fieldsPanel;
-
-	}
-
-	protected JPanel createButtonPanel() {
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(getEditGainAndOffsetButton());
-		return buttonPanel;
 	}
 
 	/**
@@ -302,41 +277,6 @@ public class SignalParametersPanel extends JPanel {
 		return blocksPerPageSpinner;
 	}
 
-	/**
-	 * Returns the edit gain and offset button.
-	 * 
-	 * @return the edit gain and offset button
-	 */
-	protected JButton getEditGainAndOffsetButton() {
-
-		if (editGainAndOffsetButton == null) {
-			editGainAndOffsetButton = new JButton(new AbstractAction() {
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					fillSignalParametersGainAndOffset(openSignalDescriptor);
-					getEditGainAndOffsetDialog().showDialog(openSignalDescriptor, true);
-				}
-			});
-
-			editGainAndOffsetButton.setText(_("Edit gain and offset"));
-			editGainAndOffsetButton.setEnabled(false);
-		}
-		return editGainAndOffsetButton;
-	}
-
-	/**
-	 * Returns the edit gain and offset dialog
-	 * 
-	 * @return the edit gain and offset dialog
-	 */
-	protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
-
-		if (editGainAndOffsetDialog == null) {
-			editGainAndOffsetDialog = new EditGainAndOffsetDialog(null, true);
-		}
-		return editGainAndOffsetDialog;
-	}
 
 	public int getChannelCount() {
 		return getChannelCountSpinner().getValue();
@@ -353,20 +293,14 @@ public class SignalParametersPanel extends JPanel {
 			getSamplingFrequencyComboBox().setSelectedIndex(-1);
 			getChannelCountSpinner().setValue(0);
 			setEnabledToAll(false);
-			getEditGainAndOffsetButton().setEnabled(false);
 			return;
 		}
 
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			setEnabledToAll(true);
-			getEditGainAndOffsetButton().setEnabled(true);
 		}
 		else {
 			setEnabledToAll(false);
-			if (openSignalDescriptor instanceof SignalMLDescriptor)
-				getEditGainAndOffsetButton().setEnabled(false);
-			else
-				getEditGainAndOffsetButton().setEnabled(true);
 		}
 
 	}
@@ -413,8 +347,6 @@ public class SignalParametersPanel extends JPanel {
 		signalParameters.setChannelCount(getChannelCount());
 		signalParameters.setPageSize(getPageSizeSpinner().getValue());
 		signalParameters.setBlocksPerPage(getBlocksPerPageSpinner().getValue());
-		
-		fillSignalParametersGainAndOffset(openSignalDescriptor);
 
 		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
@@ -423,23 +355,4 @@ public class SignalParametersPanel extends JPanel {
 		}
 	}
 
-	protected void fillSignalParametersGainAndOffset(AbstractOpenSignalDescriptor openSignalDescriptor) {
-		if (openSignalDescriptor instanceof ExperimentDescriptor) {
-			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
-			List<AmplifierChannel> channels = experimentDescriptor
-					.getAmplifier().getSelectedChannels();
-
-			float[] gain = new float[channels.size()];
-			float[] offset = new float[channels.size()];
-
-			int i = 0;
-			for (AmplifierChannel channel : channels) {
-				gain[i] = channel.getCalibrationGain();
-				offset[i] = channel.getCalibrationOffset();
-				i++;
-			}
-			experimentDescriptor.getSignalParameters().setCalibrationGain(gain);
-			experimentDescriptor.getSignalParameters().setCalibrationOffset(offset);
-		}
-	}
 }

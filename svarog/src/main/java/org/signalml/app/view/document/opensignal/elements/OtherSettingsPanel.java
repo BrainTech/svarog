@@ -4,9 +4,11 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,6 +18,8 @@ import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
+import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
 import org.signalml.app.view.components.AbstractPanel;
@@ -32,6 +36,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
 	
 	private ViewerElementManager viewerElementManager;
+	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
 	private JButton manageCodecsButton;
 	private ManageSignalMLCodecsDialog manageSignalMLCodecsDialog;
@@ -55,6 +60,9 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 */
 	private PresetComboBoxModel eegSystemsPresetComboBoxModel;
 
+	private JButton editGainAndOffsetButton;
+	private EditGainAndOffsetDialog editGainAndOffsetDialog;
+	
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
@@ -69,6 +77,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
+		JLabel editGainAndOffsetLabel = new JLabel(_("Gain & offset"));
 		JLabel eegSystemsLabel = new JLabel(_("EEG system"));
 		JLabel signalMLCodecsLabel = new JLabel(_("SignalML codecs"));
 
@@ -76,6 +85,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
+		        .addComponent(editGainAndOffsetLabel)
 		        .addComponent(tagStylesLabel)
 		        .addComponent(eegSystemsLabel)
 		        .addComponent(signalMLCodecsLabel)
@@ -83,6 +93,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
+		        .addComponent(getEditGainAndOffsetButton())
 		        .addComponent(getTagPresetComboBox())
 		        .addComponent(getEegSystemsPresetComboBox())
 		        .addComponent(getManageCodecsButton())
@@ -92,6 +103,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(editGainAndOffsetLabel)
+				.addComponent(getEditGainAndOffsetButton())
+			);
+		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(tagStylesLabel)
@@ -180,6 +197,42 @@ public class OtherSettingsPanel extends AbstractPanel {
 		}
 		return eegSystemsPresetComboBoxModel;
 	}
+	
+	/**
+	 * Returns the edit gain and offset button.
+	 * 
+	 * @return the edit gain and offset button
+	 */
+	protected JButton getEditGainAndOffsetButton() {
+
+		if (editGainAndOffsetButton == null) {
+			editGainAndOffsetButton = new JButton(new AbstractAction() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					fillSignalParametersGainAndOffset(openSignalDescriptor);
+					getEditGainAndOffsetDialog().showDialog(openSignalDescriptor, true);
+				}
+			});
+
+			editGainAndOffsetButton.setText(_("Edit gain and offset"));
+			editGainAndOffsetButton.setEnabled(false);
+		}
+		return editGainAndOffsetButton;
+	}
+
+	/**
+	 * Returns the edit gain and offset dialog
+	 * 
+	 * @return the edit gain and offset dialog
+	 */
+	protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
+
+		if (editGainAndOffsetDialog == null) {
+			editGainAndOffsetDialog = new EditGainAndOffsetDialog(null, true);
+		}
+		return editGainAndOffsetDialog;
+	}
 
 	/**
 	 * Returns the EEG system selected using this panel.
@@ -207,8 +260,8 @@ public class OtherSettingsPanel extends AbstractPanel {
 	}
 
 	/**
-	 * Sets the EEG system which should be selected in this panel.
 	 * 
+	 * Sets the EEG system which should be selected in this panel.
 	 * @param name
 	 *            the EEG system to be selected
 	 */
@@ -217,6 +270,8 @@ public class OtherSettingsPanel extends AbstractPanel {
 	}
 
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		this.openSignalDescriptor = openSignalDescriptor;
+		setEnabledAsNeeded(openSignalDescriptor);
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
 			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
@@ -233,12 +288,53 @@ public class OtherSettingsPanel extends AbstractPanel {
 			experimentDescriptor.setTagStyles(selectedStylesPreset);
 		}
 		descriptor.setEegSystem(getSelectedEegSystem());
+		fillSignalParametersGainAndOffset(openSignalDescriptor);
+	}
+
+	protected void fillSignalParametersGainAndOffset(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			List<AmplifierChannel> channels = experimentDescriptor
+					.getAmplifier().getSelectedChannels();
+
+			float[] gain = new float[channels.size()];
+			float[] offset = new float[channels.size()];
+
+			int i = 0;
+			for (AmplifierChannel channel : channels) {
+				gain[i] = channel.getCalibrationGain();
+				offset[i] = channel.getCalibrationOffset();
+				i++;
+			}
+			experimentDescriptor.getSignalParameters().setCalibrationGain(gain);
+			experimentDescriptor.getSignalParameters().setCalibrationOffset(offset);
+		}
 	}
 
 	public void preparePanelForSignalSource(SignalSource selectedSignalSource) {
 		boolean isMonitor = selectedSignalSource.isOpenBCI();
 		getTagPresetComboBox().setVisible(isMonitor);
 		tagStylesLabel.setVisible(isMonitor);
+	}
+	
+
+	protected void setEnabledAsNeeded(AbstractOpenSignalDescriptor openSignalDescriptor) {
+
+		if (openSignalDescriptor == null) {
+			getEditGainAndOffsetButton().setEnabled(false);
+			return;
+		}
+
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			getEditGainAndOffsetButton().setEnabled(true);
+		}
+		else {
+			if (openSignalDescriptor instanceof SignalMLDescriptor)
+				getEditGainAndOffsetButton().setEnabled(false);
+			else
+				getEditGainAndOffsetButton().setEnabled(true);
+		}
+
 	}
 
 }
