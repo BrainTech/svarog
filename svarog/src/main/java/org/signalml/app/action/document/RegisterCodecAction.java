@@ -54,6 +54,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	public RegisterCodecAction() {
 		super();
 		setText(_("Register new codec"));
+		codecManager = SvarogApplication.getSharedInstance().getSignalMLCodecManager();
 	}
 
 	@Override
@@ -208,14 +209,6 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 			}
 		}
 
-	}
-
-	public SignalMLCodecManager getCodecManager() {
-		return codecManager;
-	}
-
-	public void setCodecManager(SignalMLCodecManager codecManager) {
-		this.codecManager = codecManager;
 	}
 
 	public RegisterCodecDialog getRegisterCodecDialog() {

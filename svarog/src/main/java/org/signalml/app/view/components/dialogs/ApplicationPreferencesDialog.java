@@ -200,7 +200,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 			};
 
 			registerCodecAction = new RegisterCodecAction();
-			registerCodecAction.setCodecManager(codecManager);
 			registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
 			registerCodecAction.setSelector(selector);
 			registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());

@@ -13,6 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.action.document.RegisterCodecAction;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
@@ -43,8 +46,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private JButton editGainAndOffsetButton;
 	private EditGainAndOffsetDialog editGainAndOffsetDialog;
 
-	private JButton manageCodecsButton;
-	private ManageSignalMLCodecsDialog manageSignalMLCodecsDialog;
+	private JButton registerSignalMLCodecButton;
 	
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
@@ -101,7 +103,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		        layout.createParallelGroup()
 		        .addComponent(getTagPresetComboBox())
 		        .addComponent(getFileTypeComboBox())
-		        .addComponent(getManageCodecsButton())
+		        .addComponent(getRegisterSignalMLCodecButton())
 		        .addComponent(getEegSystemsPresetComboBox())
 		        .addComponent(getEditGainAndOffsetButton())
 		);
@@ -125,7 +127,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(signalMLCodecsLabel)
-				.addComponent(getManageCodecsButton())
+				.addComponent(getRegisterSignalMLCodecButton())
 			);
 		
 		vGroup.addGroup(
@@ -144,18 +146,17 @@ public class OtherSettingsPanel extends AbstractPanel {
 		
 	}
 
-	public JButton getManageCodecsButton() {
-		if (manageCodecsButton == null) {
-			manageCodecsButton = new JButton(new AbstractSignalMLAction() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					getManageSignalMLCodecsDialog().showDialog(
-							viewerElementManager, true);
-				}
-			});
-			manageCodecsButton.setText(_("Manage SignalML codecs"));
+	public JButton getRegisterSignalMLCodecButton() {
+		if (registerSignalMLCodecButton == null) {
+			RegisterCodecAction registerCodecAction = new RegisterCodecAction();
+	        registerCodecAction.setRegisterCodecDialog(viewerElementManager.getRegisterCodecDialog());
+	        registerCodecAction.setPleaseWaitDialog(viewerElementManager.getPleaseWaitDialog());
+	        registerCodecAction.initializeAll();
+
+			registerSignalMLCodecButton = new JButton(registerCodecAction);
+			registerSignalMLCodecButton.setText(_("Register SignalML codec"));
 		}
-		return manageCodecsButton;
+		return registerSignalMLCodecButton;
 	}
 	
 	public JComboBox getFileTypeComboBox() {
@@ -165,14 +166,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 			fileTypeComboBox.setSelectedItem(FileOpenSignalMethod.AUTODETECT);
 		}
 		return fileTypeComboBox;
-	}
-
-	protected ManageSignalMLCodecsDialog getManageSignalMLCodecsDialog() {
-		if (manageSignalMLCodecsDialog == null) {
-			manageSignalMLCodecsDialog = new ManageSignalMLCodecsDialog(
-					viewerElementManager);
-		}
-		return manageSignalMLCodecsDialog;
 	}
 
 	/**
@@ -339,7 +332,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		tagStylesLabel.setVisible(isMonitor);
 
 		signalMLCodecsLabel.setVisible(!isMonitor);
-		getManageCodecsButton().setVisible(!isMonitor);
+		getRegisterSignalMLCodecButton().setVisible(!isMonitor);
 		
 		fileTypeLabel.setVisible(!isMonitor);
 		fileTypeComboBox.setVisible(!isMonitor);
