@@ -1,15 +1,16 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
-import org.signalml.plugin.export.change.SvarogCloseListener;
+import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.fft.FFT;
@@ -31,7 +32,7 @@ import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListene
  * 
  * @author Marcin Szumski
  */
-public class FFTSignalTool implements Plugin, SvarogCloseListener {
+public class FFTSignalTool implements Plugin, PluginCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
 	private static FFTSignalToolI18nDelegate i18nDelegate;
 
@@ -91,7 +92,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
-		
+
 		signalFFTSettings = new SignalFFTSettings();
 		settingsFile = new File(configAccess.getProfileDirectory(), "signalFFTSettings.xml");
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
@@ -129,7 +130,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public static String _(String msgKey) {
 		return i18nDelegate._(msgKey);
 	}
-	
+
 	/**
 	 * I18n shortcut.
 	 * 
@@ -140,7 +141,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public static String _R(String msgKey, Object ... arguments) {
 		return i18nDelegate._R(msgKey, arguments);
 	}
-	
+
 	/**
 	 * Svarog i18n delegate getter.
 	 * @return the shared delegate instance
@@ -148,4 +149,5 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public static FFTSignalToolI18nDelegate i18n() {
 		return i18nDelegate;
 	}
+
 }

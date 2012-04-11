@@ -32,11 +32,6 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
         private double testTolerance;
 
         /**
-         * Array containing information about channel's offset.
-         */
-        private double[] offset;
-
-        /**
          * An array of values (one for each channel) used to check if a sample from
          * that channel is valid. If |sample - offset| is less than maxAmpC then the sample is valid.
          */
@@ -61,12 +56,10 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
                 testTolerance = Double.parseDouble(getParameters().get(TEST_TOLERANCE).toString());
                                 
                 maxAmpC = new double[getChannelCount()];
-                offset = getMonitorSignalDocument().getOffset();
                 double ampNull = getMonitorSignalDocument().getAmplifierNull();
-                double[] gain = getMonitorSignalDocument().getGain();
 
                 for (int i = 0; i < getChannelCount(); i++)
-                        maxAmpC[i] = testTolerance * Math.abs(ampNull) * Math.abs(gain[i]);
+                        maxAmpC[i] = testTolerance * Math.abs(ampNull);
 
         }
 
@@ -118,7 +111,6 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
          * @return true if the sample is valid, false if it's not
          */
         private boolean sampleValid(double sample, int channel) {
-                
-                return Math.abs(sample - offset[channel]) < maxAmpC[channel];
+                return Math.abs(sample) < maxAmpC[channel];
         }
 }

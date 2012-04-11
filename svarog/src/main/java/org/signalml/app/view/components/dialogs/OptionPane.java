@@ -1335,6 +1335,22 @@ public class OptionPane extends JOptionPane {
 		);
 	}
 
+	public static void showThisToolWorksOnlyForNonMonitorSignals(Component parent) {
+		if (!initialized) {
+			initialize();
+		}
+		showOptionDialog(
+		        parent,
+		        _("This tool works only for non-monitor signals."),
+		        warningString,
+		        JOptionPane.OK_OPTION,
+		        JOptionPane.WARNING_MESSAGE,
+		        IconUtils.getWarningIcon(),
+		        new Object[] {okString},
+		        okString
+		);
+	}
+
 	/**
 	 * Shows the information that there is no active book and the user should
 	 * choose the tab with the book before performing the operation.

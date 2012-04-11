@@ -10,7 +10,7 @@ import java.awt.Window;
 import javax.swing.JComponent;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -59,7 +59,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog  {
 	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return OpenMonitorDescriptor.class.isAssignableFrom(clazz);
+		return ExperimentDescriptor.class.isAssignableFrom(clazz);
 	}
 
 	/**

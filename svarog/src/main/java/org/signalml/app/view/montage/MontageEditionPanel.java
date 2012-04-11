@@ -3,7 +3,7 @@ package org.signalml.app.view.montage;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 
-import org.signalml.app.view.components.AbstractSignalMLPanel;
+import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
@@ -19,7 +19,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  *
  * @author Piotr Szachewicz
  */
-public class MontageEditionPanel extends AbstractSignalMLPanel {
+public class MontageEditionPanel extends AbstractPanel {
 
 	/**
 	 * A panel for selecting a {@link IMontageGenerator} to be applied.
@@ -50,11 +50,10 @@ public class MontageEditionPanel extends AbstractSignalMLPanel {
 	 * Constructor.
 	 */
 	public MontageEditionPanel() {
-		initialize();
+		createInterface();
 	}
 
-	@Override
-	protected void initialize() {
+	protected void createInterface() {
 
 		generatorPanel = new MontageGeneratorPanel();
 
@@ -95,13 +94,6 @@ public class MontageEditionPanel extends AbstractSignalMLPanel {
 		matrixReferenceEditorPanel.setMontage(montage);
 	}
 
-	/**
-	 * Sets the {@link ErrorsDialog} to be used by this panel to inform the user
-	 * about errors.
-	 * 
-	 * @param errorsDialog
-	 *            the {@link ErrorsDialog} to be used
-	 */
 	public void setErrorsDialog(ValidationErrorsDialog errorsDialog) {
 		generatorPanel.setErrorsDialog(errorsDialog);
 	}

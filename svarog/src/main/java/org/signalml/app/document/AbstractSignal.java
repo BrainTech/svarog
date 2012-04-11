@@ -5,6 +5,7 @@
 package org.signalml.app.document;
 
 import java.beans.IntrospectionException;
+
 import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,7 +15,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
@@ -63,12 +64,12 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	/**
 	 * the length of the page in seconds
 	 */
-	protected float pageSize = SignalParameterDescriptor.DEFAULT_PAGE_SIZE;
+	protected float pageSize = SignalParameters.DEFAULT_PAGE_SIZE;
 	
 	/**
 	 * the number of blocks in a page
 	 */
-	protected int blocksPerPage = SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;
+	protected int blocksPerPage = SignalParameters.DEFAULT_BLOCKS_PER_PAGE;
 	
 	/**
 	 * the length of a block in seconds
@@ -264,6 +265,13 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 			montage = createDefaultMontage();
 		}
 		return montage;
+	}
+	
+	@Override
+	public boolean isMontageCreated() {
+		if (montage == null) 
+			return false;
+		return true;
 	}
 
 	protected Montage createDefaultMontage() {

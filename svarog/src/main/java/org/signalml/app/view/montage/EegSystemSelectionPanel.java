@@ -1,22 +1,23 @@
 package org.signalml.app.view.montage;
 
-import java.awt.BorderLayout;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
-import org.signalml.app.view.components.AbstractSignalMLPanel;
-import org.signalml.app.view.document.opensignal.AbstractSignalParametersPanel;
+import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
  * A panel containing a {@link JComboBox} for selecting which {@link EegSystem}
@@ -24,8 +25,10 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  *
  * @author Piotr Szachewicz
  */
-public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
+public class EegSystemSelectionPanel extends AbstractPanel {
 
+	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
+	
 	/**
 	 * The current montage.
 	 */
@@ -51,17 +54,18 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	public EegSystemSelectionPanel(EegSystemsPresetManager eegSystemsPresetManager, PropertyChangeListener listener) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
 		addPropertyChangeListener(listener);
-		initialize();
+		createInterface();
+	}
+	
+	public EegSystemSelectionPanel(EegSystemsPresetManager eegSystemsPresetManager) {
+		this.eegSystemsPresetManager = eegSystemsPresetManager;
+		createInterface();
 	}
 
-	@Override
-	protected void initialize() {
-		setLayout(new BorderLayout());
-		setTitledBorder(_("Select EEG system"));
-
-		JLabel comboBoxLabel = new JLabel(_("Current EEG system"));
-		add(comboBoxLabel, BorderLayout.WEST);
-		add(getPresetComboBox(), BorderLayout.EAST);
+	protected void createInterface() {
+		
+		//setTitledBorder(_("Select EEG system"));
+		add(getPresetComboBox());
 
 	}
 
@@ -89,7 +93,7 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	}
 	
 	public void fireEegSystemChangedProperty() {
-		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
+		firePropertyChange(EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
 	}
 
 	/**
@@ -135,21 +139,16 @@ public class EegSystemSelectionPanel extends AbstractSignalMLPanel {
 	 */
 	public void setEegSystem(EegSystem eegSystem) {
 		presetComboBoxModel.setSelectedItem(eegSystem);
-		firePropertyChange(AbstractSignalParametersPanel.EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
+		fireEegSystemChangedProperty();
 	}
 
-	/**
-	 * Sets the current {@link Montage}.
-	 * @param montage the current Montage
-	 */
-	public void setMontage(Montage montage) {
-		this.montage = montage;
-		if (montage != null && montage.getEegSystem() != null) {
-			presetComboBoxModel.setSelectedItem(montage.getEegSystem());
-		} else if (montage != null) {
-			EegSystem eegSystem = (EegSystem) eegSystemsPresetManager.getPresetAt(0);
-			presetComboBoxModel.setSelectedItem(eegSystem);
-			montage.setEegSystem(eegSystem);
+	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
+			
+			if (eegSystemName != null)
+				setEegSystemByName(eegSystemName);
 		}
 	}
 }

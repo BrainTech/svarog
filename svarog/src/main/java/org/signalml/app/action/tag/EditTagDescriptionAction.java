@@ -55,7 +55,8 @@ public class EditTagDescriptionAction extends AbstractFocusableSignalMLAction<Ta
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveTagDocument() != null);
+		TagDocument tagDocument = getActionFocusSelector().getActiveTagDocument();
+		setEnabled(tagDocument != null && !isTagDocumentAMonitorTagDocument(tagDocument));
 	}
 
 	public EditTagDescriptionDialog getEditTagDescriptionDialog() {

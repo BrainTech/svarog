@@ -18,11 +18,15 @@ import org.signalml.app.document.RawSignalDocument;
 import org.signalml.app.document.RawSignalMRUDEntry;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.SignalMLMRUDEntry;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.space.SignalSourceLevel;
@@ -113,9 +117,10 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		if (mrud instanceof SignalMLMRUDEntry) {
 
 			SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-			SignalMLCodec codec = SvarogApplication.getSharedInstance().getSignalMLCodecManager().getCodecByUID(smlEntry.getCodecUID());
+			String codecUID = smlEntry.getDescriptor().getCodecUID();
+			SignalMLCodec codec = SvarogApplication.getSharedInstance().getSignalMLCodecManager().getCodecByUID(codecUID);
 			if (codec == null) {
-				logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
+				logger.warn("Mrud codec not found for uid [" + codecUID + "]");
 				throw new MissingCodecException("error.mrudMissingCodecException");
 			}
 
@@ -124,14 +129,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 			source = new SignalMLCodecSampleSource(reader);
 
+			SignalParameters signalParameters = smlEntry.getDescriptor().getSignalParameters();
 			if (source.isCalibrationCapable()) {
-				source.setCalibrationGain(smlEntry.getCalibrationGain());
+				source.setCalibrationGain(signalParameters.getCalibrationGain());
 			}
 			if (!source.isSamplingFrequencyCapable()) {
-				source.setSamplingFrequency(smlEntry.getSamplingFrequency());
+				source.setSamplingFrequency(signalParameters.getSamplingFrequency());
 			}
 			if (!source.isChannelCountCapable()) {
-				source.setChannelCount(smlEntry.getChannelCount());
+				source.setChannelCount(signalParameters.getChannelCount());
 			}
 
 		}
@@ -642,19 +648,23 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		}
 		descriptor.setSourceBuffered(sourceBuffer != null);
 
+		SignalParameters signalParameters = new SignalParameters();
+		signalParameters.setPageSize(-1F);
+		signalParameters.setBlocksPerPage(-1);
+		signalParameters.setSamplingFrequency(source.getSamplingFrequency());
+		signalParameters.setChannelCount(source.getChannelCount());
+		signalParameters.setChannelCount(source.getChannelCount());
+
 		if (source instanceof SignalMLCodecSampleSource) {
 
 			SignalMLCodecSampleSource codecSource = (SignalMLCodecSampleSource) source;
 			SignalMLCodecReader reader = codecSource.getReader();
-			SignalMLCodec codec = reader.getCodec();
+			
+			SignalMLDescriptor signalMLDescriptor = new SignalMLDescriptor();
+			signalMLDescriptor.setSignalParameters(signalParameters);
 
-			SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, SignalMLDocument.class, reader.getCurrentFilename(), codec.getSourceUID(), codec.getFormatName());
+			SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, SignalMLDocument.class, reader.getCurrentFilename(), signalMLDescriptor);
 			mrud.setLastTimeOpened(new Date());
-			mrud.setPageSize(-1F);
-			mrud.setBlocksPerPage(-1);
-			mrud.setSamplingFrequency(codecSource.getSamplingFrequency());
-			mrud.setChannelCount(codecSource.getChannelCount());
-			mrud.setCalibrationGain(codecSource.getSingleCalibrationGain());
 
 			descriptor.setDocument(mrud);
 
@@ -664,10 +674,10 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			RawSignalSampleSource rawSource = (RawSignalSampleSource) source;
 			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
 
-			rawDescriptor.setSamplingFrequency(rawSource.getSamplingFrequency());
+			signalParameters.setCalibrationGain(source.getCalibrationGain());
+			signalParameters.setCalibrationOffset(source.getCalibrationOffset());
+			rawDescriptor.setSignalParameters(signalParameters);
 			rawDescriptor.setSampleCount(rawSource.getSampleCount());
-			rawDescriptor.setChannelCount(rawSource.getChannelCount());
-			rawDescriptor.setCalibrationGain(rawSource.getCalibrationGain());
 			rawDescriptor.setSampleType(rawSource.getSampleType());
 			rawDescriptor.setByteOrder(rawSource.getByteOrder());
 
@@ -681,6 +691,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			throw new SanityCheckException("Unsupported sample source type: " + source.getClass().getName());
 
 		}
+
 
 		return descriptor;
 

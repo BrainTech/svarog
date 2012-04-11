@@ -5,13 +5,13 @@
 package org.signalml.codec;
 
 import java.io.File;
+
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.codec.generator.xml.Codec;
 import org.signalml.codec.generator.xml.XMLCodecException;
 import org.signalml.compilation.CompilationException;
-import org.signalml.compilation.CompilationRefusedException;
 import org.signalml.compilation.DynamicCompilationContext;
 import org.signalml.compilation.DynamicCompiler;
 import org.signalml.compilation.JavaCodeProvider;
@@ -135,9 +135,6 @@ public class XMLSignalMLCodec extends AbstractSignalMLCodec {
 
 					}
 					                      );
-				} catch (CompilationRefusedException ex) {
-					logger.info("Compilation refused by user");
-					throw new SignalMLCodecException(ex.getMessage());
 				} catch (CompilationException ex) {
 					logger.error("Compilation failed", ex);
 					throw new SignalMLCodecException("error.codecCompilationFailed",ex);

@@ -13,6 +13,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.Calendar;
 
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
@@ -35,6 +36,7 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.fft.export.FourierTransform;
 import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.util.FormatUtils;
 import org.signalml.util.Util;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
@@ -202,6 +204,11 @@ public class SignalFFTPlot extends JComponent {
 	private String error;
 
 	/**
+	 * The last time FFT was recalculated. (Useful for online signals).
+	 */
+	private Calendar lastFFTRecalculationTime;
+
+	/**
 	 * Constructor. Sets the source of messages, title font and border.
 	 */
 	public SignalFFTPlot() {
@@ -225,6 +232,7 @@ public class SignalFFTPlot extends JComponent {
 			return;
 		}
 		calculated = true;
+		lastFFTRecalculationTime = Calendar.getInstance();
 
 		error = null;
 
@@ -323,10 +331,10 @@ public class SignalFFTPlot extends JComponent {
 		float maxTime = (float) ((lastSample * timeZoomFactor) / pixelPerSecond);
 
 		StringBuilder minTimeSb = new StringBuilder(20);
-		Util.addTime(minTime, minTimeSb);
+		FormatUtils.addTime(minTime, minTimeSb);
 
 		StringBuilder maxTimeSb = new StringBuilder(20);
-		Util.addTime(maxTime, maxTimeSb);
+		FormatUtils.addTime(maxTime, maxTimeSb);
 
 		String title = _R("FFT over {0} points {1} - {2} ({3})",
 				  windowWidth, minTimeSb.toString(),
@@ -584,8 +592,7 @@ public class SignalFFTPlot extends JComponent {
 		this.plot = plot;
 		this.focusPoint = focusPoint;
 		this.channel = channel;
-		calculated = false;
-		repaint();
+		recalculateAndRepaint();
 	}
 
 	/**
@@ -597,6 +604,10 @@ public class SignalFFTPlot extends JComponent {
 	public void setParameters(Point focusPoint, int channel) {
 		this.focusPoint = focusPoint;
 		this.channel = channel;
+		recalculateAndRepaint();
+	}
+
+	public void recalculateAndRepaint() {
 		calculated = false;
 		repaint();
 	}
@@ -853,6 +864,14 @@ public class SignalFFTPlot extends JComponent {
 	 */
 	public void setSvarogAccess(SvarogAccess access) {
 		signalAccess = access.getSignalAccess();
+	}
+
+	/**
+	 * Returns the last time FFT was recalculated.
+	 * @return the last time FFT was recalculated
+	 */
+	public Calendar getLastFFTRecalculationTime() {
+		return lastFFTRecalculationTime;
 	}
 
 }

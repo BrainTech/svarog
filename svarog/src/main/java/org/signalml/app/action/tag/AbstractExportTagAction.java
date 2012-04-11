@@ -83,7 +83,8 @@ public abstract class AbstractExportTagAction extends AbstractFocusableSignalMLA
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveTagDocument() != null);
+		TagDocument tagDocument = getActionFocusSelector().getActiveTagDocument();
+		setEnabled(tagDocument != null && !isTagDocumentAMonitorTagDocument(tagDocument));
 	}
 
 	public ViewerFileChooser getFileChooser() {

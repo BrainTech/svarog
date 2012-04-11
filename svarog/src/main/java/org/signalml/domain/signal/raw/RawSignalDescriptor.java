@@ -8,6 +8,9 @@ import java.util.Date;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Arrays;
+
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 
@@ -21,7 +24,7 @@ import org.signalml.domain.montage.system.EegSystemName;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("rawdescriptor")
-public class RawSignalDescriptor {
+public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 
         /**
          * This enumerator tells if the signal is stored as raw or described
@@ -64,61 +67,21 @@ public class RawSignalDescriptor {
 	private String sourceSignalMLSourceUID;
 
         /**
-         * the number of samples per second
-         */
-	private float samplingFrequency;
-        /**
-         * the number of channels in the signal
-         */
-	private int channelCount;
-        /**
          * the number of samples in a single channel
          */
 	private int sampleCount;
 
 	/**
-	 * The calibration gain for the signal - the value by which each sample
-	 * value is multiplied.
+	 * the {@link RawSignalSampleType type} of the samples
 	 */
-	private float[] calibrationGain;
-
-	/**
-	 * The calibration offset for the signal - the value which is added
-	 * to each sample value.
-	 */
-	private float[] calibrationOffset;
-	private Float minimumValue;
-	private Float maximumValue;
-
-        /**
-         * the {@link RawSignalSampleType type} of the samples
-         */
 	private RawSignalSampleType sampleType;
-        /**
-         * the {@link RawSignalByteOrder order} of bytes in the file with
-         * the signal
-         */
 	private RawSignalByteOrder byteOrder;
-
-        /**
-         * the length of the page in seconds
-         */
-	private float pageSize;
-        /**
-         * the number of blocks in one page
-         */
-	private int blocksPerPage;
 
 	/**
 	 * The name of the {@link EegSystem EEG system} that is used
 	 * for this signal.
 	 */
 	private EegSystemName eegSystemName;
-
-        /**
-         * an array of labels of signal channels
-         */
-	private String[] channelLabels;
 
         /**
          * the position (in seconds) of the marker in the described
@@ -251,7 +214,7 @@ public class RawSignalDescriptor {
          * @return the number of samples per second
          */
 	public float getSamplingFrequency() {
-		return samplingFrequency;
+		return signalParameters.getSamplingFrequency();
 	}
 
         /**
@@ -259,7 +222,7 @@ public class RawSignalDescriptor {
          * @param samplingFrequency the number of samples per second
          */
 	public void setSamplingFrequency(float samplingFrequency) {
-		this.samplingFrequency = samplingFrequency;
+		signalParameters.setSamplingFrequency(samplingFrequency);
 	}
 
         /**
@@ -267,7 +230,7 @@ public class RawSignalDescriptor {
          * @return the number of channels in the signal
          */
 	public int getChannelCount() {
-		return channelCount;
+		return signalParameters.getChannelCount();
 	}
 
         /**
@@ -275,7 +238,7 @@ public class RawSignalDescriptor {
          * @param channelCount the number of channels in the signal
          */
 	public void setChannelCount(int channelCount) {
-		this.channelCount = channelCount;
+		signalParameters.setChannelCount(channelCount);
 	}
 
         /**
@@ -295,10 +258,11 @@ public class RawSignalDescriptor {
 	}
 	
 	public float[] getCalibrationGain() {
-		return calibrationGain;
+		return signalParameters.getCalibrationGain();
 	}
 
 	public void setCalibrationGain(float calibration) {
+		float[] calibrationGain = signalParameters.getCalibrationGain();
 		if (calibrationGain == null || getChannelCount() != calibrationGain.length) {
 			if (getChannelCount() > 0)
 				calibrationGain = new float[getChannelCount()];
@@ -306,29 +270,32 @@ public class RawSignalDescriptor {
 				calibrationGain = new float[1];
 		}
 		Arrays.fill(calibrationGain, calibration);
+		signalParameters.setCalibrationGain(calibrationGain);
 	}
 
 	public void setCalibrationGain(float[] calibrationGain) {
-		this.calibrationGain = calibrationGain;
+		signalParameters.setCalibrationGain(calibrationGain);
 	}
 
 	public float[] getCalibrationOffset() {
-		return calibrationOffset;
+		return signalParameters.getCalibrationOffset();
 	}
 
 	/**
 	 * Sets a value of calibration offset for this signal (same for every
 	 * channel.
-	 * @param calibrationOffset new value of calibration offset for
+	 * @param offset new value of calibration offset for
 	 * all channels in the signal
 	 */
-	public void setCalibrationOffset(float calibrationOffset) {
-		if (this.calibrationOffset == null || getChannelCount() != this.calibrationOffset.length)
+	public void setCalibrationOffset(float offset) {
+		float[] calibrationOffset = signalParameters.getCalibrationOffset();
+		if (calibrationOffset == null || getChannelCount() != calibrationOffset.length)
 			if (getChannelCount() > 0)
-				this.calibrationOffset = new float[getChannelCount()];
+				calibrationOffset = new float[getChannelCount()];
 			else
-				this.calibrationOffset = new float[1];
-		Arrays.fill(this.calibrationOffset, calibrationOffset);
+				calibrationOffset = new float[1];
+		Arrays.fill(calibrationOffset, offset);
+		signalParameters.setCalibrationGain(calibrationOffset);
 	}
 
 	/**
@@ -336,23 +303,23 @@ public class RawSignalDescriptor {
 	 * @param calibrationOffset new value of calibration offset
 	 */
 	public void setCalibrationOffset(float[] calibrationOffset) {
-		this.calibrationOffset = calibrationOffset;
+		signalParameters.setCalibrationOffset(calibrationOffset);
 	}
 
 	public Float getMinimumValue() {
-		return minimumValue;
+		return signalParameters.getMinimumValue();
 	}
 
 	public void setMinimumValue(Float minimumValue) {
-		this.minimumValue = minimumValue;
+		signalParameters.setMinimumValue(minimumValue);
 	}
 
 	public Float getMaximumValue() {
-		return maximumValue;
+		return signalParameters.getMaximumValue();
 	}
 
 	public void setMaximumValue(Float maximumValue) {
-		this.maximumValue = maximumValue;
+		signalParameters.setMaximumValue(maximumValue);
 	}
 
         /**
@@ -396,7 +363,7 @@ public class RawSignalDescriptor {
          * @return the length of the page in seconds
          */
 	public float getPageSize() {
-		return pageSize;
+		return signalParameters.getPageSize();
 	}
 
         /**
@@ -404,7 +371,7 @@ public class RawSignalDescriptor {
          * @param pageSize the length of the page in seconds
          */
 	public void setPageSize(float pageSize) {
-		this.pageSize = pageSize;
+		signalParameters.setPageSize(pageSize);
 	}
 
         /**
@@ -412,7 +379,7 @@ public class RawSignalDescriptor {
          * @return the number of blocks in one page
          */
 	public int getBlocksPerPage() {
-		return blocksPerPage;
+		return signalParameters.getBlocksPerPage();
 	}
 
         /**
@@ -420,7 +387,7 @@ public class RawSignalDescriptor {
          * @param blocksPerPage the number of blocks in one page
          */
 	public void setBlocksPerPage(int blocksPerPage) {
-		this.blocksPerPage = blocksPerPage;
+		signalParameters.setBlocksPerPage(blocksPerPage);
 	}
 
 	/**
@@ -438,22 +405,6 @@ public class RawSignalDescriptor {
 	 */
 	public void setEegSystemName(EegSystemName eegSystemName) {
 		this.eegSystemName = eegSystemName;
-	}
-
-        /**
-         * Returns an array of labels of signal channels
-         * @return an array of labels of signal channels
-         */
-	public String[] getChannelLabels() {
-		return channelLabels;
-	}
-
-        /**
-         * Sets an array of labels of signal channels
-         * @param channelLabels an array of labels of signal channels
-         */
-	public void setChannelLabels(String[] channelLabels) {
-		this.channelLabels = channelLabels;
 	}
 
         /**
@@ -507,6 +458,24 @@ public class RawSignalDescriptor {
 	 */
 		public void setFirstSampleTimestamp(double value) {
 		this.firstSampleTimestamp = value;
+	}
+		
+	@Override
+	public void setMontage(Montage montage) {
+		super.setMontage(montage);
+
+		EegSystem eegSystem = montage.getEegSystem();
+		if (eegSystem != null)
+			setEegSystemName(eegSystem.getEegSystemName());
+	}
+
+	@Override
+	public void setEegSystem(EegSystem eegSystem) {
+		super.setEegSystem(eegSystem);
+		if (eegSystem != null)
+			this.setEegSystemName(eegSystem.getEegSystemName());
+		else
+			this.setEegSystemName(null);
 	}
 
 }

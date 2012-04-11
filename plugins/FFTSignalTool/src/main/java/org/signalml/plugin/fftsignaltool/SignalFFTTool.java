@@ -1,16 +1,19 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.awt.Component;
+
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.io.InvalidClassException;
+import java.util.Calendar;
 
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
@@ -18,6 +21,8 @@ import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.fft.export.FourierTransform;
+import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}
@@ -30,7 +35,15 @@ import org.signalml.plugin.fft.export.FourierTransform;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o., Marcin Szumski
  */
-public class SignalFFTTool extends AbstractSignalTool {
+public class SignalFFTTool extends AbstractSignalTool implements PluginSignalChangeListener {
+
+	protected static final Logger logger = Logger
+			.getLogger(SignalFFTPlot.class);
+
+	/**
+	 * How often should FFT be recalculated. This is useful for online signals.
+	 */
+	private static long MILLISECONDS_BETWEEN_FFT_RECALCULATIONS = 1000;
 
 	/**
 	 * the {@link ExportedSignalPlot signal plot} for which this FFT tool is
@@ -62,7 +75,6 @@ public class SignalFFTTool extends AbstractSignalTool {
 	public SignalFFTTool(ExportedSignalView signalView) {
 		super(signalView);
 		fftPlot = new SignalFFTPlot();
-		// fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
 	}
 
@@ -275,7 +287,24 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 */
 	public void setSvarogAccess(SvarogAccess access) {
 		svarogAccess = access;
+		svarogAccess.getChangeSupport().addSignalChangeListener(this);
 		fftPlot.setSvarogAccess(access);
+	}
+
+	@Override
+	public void newSamplesAdded(PluginSignalChangeEvent e) {
+		if (isEngaged()) {
+			Calendar now = Calendar.getInstance();
+			Calendar lastFFTRecalculationTime = fftPlot.getLastFFTRecalculationTime();
+			if (lastFFTRecalculationTime == null)
+				return;
+
+			long differenceInMillis = now.getTimeInMillis() - lastFFTRecalculationTime.getTimeInMillis();
+
+			if (differenceInMillis > MILLISECONDS_BETWEEN_FFT_RECALCULATIONS) {
+				fftPlot.recalculateAndRepaint();
+			}
+		}
 	}
 
 }

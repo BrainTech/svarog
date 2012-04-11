@@ -49,7 +49,7 @@ public class CheckSignalDialog extends AbstractDialog  {
          * Minimum windows size.
          */
         private static final int WINDOW_HEIGHT = 750;
-        private static final int WINDOW_WIDTH = 900;
+        private static final int WINDOW_WIDTH = 950;
 
         /**
          * The current montage.
@@ -122,15 +122,15 @@ public class CheckSignalDialog extends AbstractDialog  {
 
 		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3, 3, 3, 3)));
 		editorPanel.add(editorScrollPane, BorderLayout.CENTER);
-		
-		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrode type"));
+
+		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrodes type"));
 		electrodeTypeComboBox = new JComboBox(ElectrodeType.values());
 		electrodeTypeComboBox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				HashMap<String,Object> parameters = validationRules.getMethods().get(SignalCheckingMethod.FFT);
+				HashMap<String,Object> parameters = validationRules.getMethods().get(SignalCheckingMethod.DC);
 				ElectrodeType electrodeType = (ElectrodeType) electrodeTypeComboBox.getSelectedItem();
-				parameters.put(FFTDiagnosis.ELECTRODE_TYPE, electrodeType);
+				parameters.put(DCDiagnosis.ELECTRODE_TYPE, electrodeType);
 				timerClass.actionPerformed(null);
 			}
 		});
@@ -207,23 +207,22 @@ public class CheckSignalDialog extends AbstractDialog  {
                 // the rules from signal or something
 
                 EnumMap<SignalCheckingMethod, HashMap<String, Object>> methodList =
-                        new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
+                		new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
 
-                /* disabling other validation rules
-                 * 
-                 * HashMap<String, Object> ampNullParameters = new HashMap<String, Object>();
-                ampNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
-                ampNullParameters.put(AmplifierNullDiagnosis.TEST_TOLERANCE, 0.99);                
+                HashMap<String, Object> ampNullParameters = new HashMap<String, Object>();
+                ampNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
+                ampNullParameters.put(AmplifierNullDiagnosis.TEST_TOLERANCE, 0.99);
                 methodList.put(SignalCheckingMethod.AMPNULL, ampNullParameters);
                 
                 HashMap<String, Object> dcNullParameters = new HashMap<String, Object>();
-                dcNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
-                methodList.put(SignalCheckingMethod.DC, dcNullParameters);*/
+                dcNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
+                dcNullParameters.put(DCDiagnosis.ELECTRODE_TYPE, electrodeTypeComboBox.getSelectedItem());
+                methodList.put(SignalCheckingMethod.DC, dcNullParameters);
 
-                HashMap<String, Object> fftNullParameters = new HashMap<String, Object>();
+                /*HashMap<String, Object> fftNullParameters = new HashMap<String, Object>();
                 fftNullParameters.put(FFTDiagnosis.ELECTRODE_TYPE, electrodeTypeComboBox.getSelectedItem());
                 fftNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);
-                methodList.put(SignalCheckingMethod.FFT, fftNullParameters);
+                methodList.put(SignalCheckingMethod.FFT, fftNullParameters);*/
 
                 return new AmplifierValidationRules("TMSI-porti7", methodList, 3000);
         }

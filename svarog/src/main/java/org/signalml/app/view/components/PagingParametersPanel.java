@@ -35,7 +35,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class PagingParametersPanel extends AbstractSignalMLPanel {
+public class PagingParametersPanel extends AbstractPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,7 +57,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 */
 	public PagingParametersPanel() {
 		super();
-		initialize();
+		createInterface();
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 * This group positions elements in rows.</li>
 	 * </ul>
 	 */
-	protected void initialize() {
+	protected void createInterface() {
 
 		CompoundBorder cb = new CompoundBorder(
 		        new TitledBorder(_("Page & block parameters")),

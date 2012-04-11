@@ -120,7 +120,14 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                         while (it.hasNext()) {
 
                                 channel = it.next();
-                                paintKnownChannel(channel, g, validData.get(channel.getLabel()), additionalData.get(channel.getLabel()));
+                                String channelLabel = channel.getLabel();
+                                Boolean valid = validData.get(channelLabel);
+                                if (valid != null) {
+                                	//ZERO and ONE channels are not in the validData
+                                	//and should not be analyzed.
+                                	List<AdditionalChannelData> data = additionalData.get(channel.getLabel());
+                                	paintKnownChannel(channel, g, valid, data);
+                                }
                         }
                 }
         }
@@ -261,16 +268,22 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
                 g.drawString(toWrite, textX, textY);
         }
 
-        /**
-         * Formats given double.
-         * @param input input value
-         * @return input as {@link String}
-         */
-        private String formatDouble(double input) {
+	/**
+	 * Formats given double.
+	 *
+	 * @param input input value
+	 * @return input as {@link String}
+	 */
+	private String formatDouble(double input) {
 
-                NumberFormat formatter = new DecimalFormat("00E0");
-                return formatter.format(input);
-        }
+		NumberFormat formatter;
+		if (input < 1e6)
+			formatter = new DecimalFormat("00.00");
+		else
+			formatter = new DecimalFormat("0E00");
+
+		return formatter.format(input);
+	}
 
         /**
          * Whether the state is known - all diagnosis objects returned non-null value.

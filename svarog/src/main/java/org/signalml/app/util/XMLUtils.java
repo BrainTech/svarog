@@ -44,8 +44,6 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import org.codehaus.janino.Java.AnonymousClassDeclaration;
 import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
-import org.signalml.app.worker.amplifiers.AmplifierDefinition;
-import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModule;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
@@ -104,19 +102,6 @@ public abstract class XMLUtils {
 		        FFTSampleFilter.class
 		);
 	}
-
-	/**
-	 * Configures the given {@link XStream XStreamer} for {@link AmplifierDefinition}
-	 * streaming.
-	 * @param streamer a streamer to be configured
-	 */
-        public static void configureStreamerForAmplifierDefinition(XStream streamer) {
-                Annotations.configureAliases(
-                        streamer,
-                        AmplifierDefinitionPresetManager.class,
-                        AmplifierDefinition.class
-                );
-        }
 
 	/**
 	 * Configures the given {@link XStream XStreamer} for {@link OpenBCIModule}

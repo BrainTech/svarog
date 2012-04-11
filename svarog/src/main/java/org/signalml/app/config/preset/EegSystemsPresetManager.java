@@ -108,5 +108,14 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	public Class<?> getPresetClass() {
 		throw new UnsupportedOperationException("This opperation is not supported by this preset manager.");
 	}
+	
+	public EegSystem getEegSystem(EegSystemName eegSystemName) {
+		for (Preset preset: presets) {
+			EegSystem eegSystem = (EegSystem) preset;
+			if (eegSystem.getEegSystemName().equals(eegSystemName))
+				return eegSystem;
+		}
+		return null;
+	}
 
 }

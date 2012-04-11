@@ -81,7 +81,7 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	@Override
 	public void setEnabledAsNeeded() {
 
-                SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		setEnabled((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument));
 	}
 

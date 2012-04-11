@@ -14,7 +14,7 @@ import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.export.resources.SvarogAccessResources;
-import org.signalml.plugin.impl.change.ChangeSupportImpl;
+import org.signalml.plugin.impl.change.SvarogAccessChangeSupportImpl;
 import org.signalml.plugin.loader.PluginHead;
 
 /**
@@ -24,7 +24,7 @@ import org.signalml.plugin.loader.PluginHead;
  * Passes the information that the {@link #setInitializationPhaseEnd
  * initialization phase} has finished to the {@link GUIAccessImpl GUI access}
  * and the information that the application is {@link #onClose() closing}
- * to {@link ChangeSupportImpl change support}. 
+ * to {@link SvarogAccessChangeSupportImpl change support}. 
  * 
  * @author Marcin Szumski
  * @author Stanislaw Findeisen (Eisenbits)
@@ -63,13 +63,12 @@ public class PluginAccessClass implements SvarogAccess {
 	/**
 	 * access to listen on changes in Svarog
 	 */
-	private static final ChangeSupportImpl changeSupport = ChangeSupportImpl.getInstance();
+	private static final SvarogAccessChangeSupportImpl changeSupport = SvarogAccessChangeSupportImpl.getInstance();
 
 	/**
 	 * The plugin map.
 	 */
-	private static HashMap<Object, PluginHead> pluginMap
-		= new HashMap<Object, PluginHead>();
+	private static HashMap<Object, PluginHead> pluginMap = new HashMap<Object, PluginHead>();
 	
 	/**
 	 * Constructor. Creates child accesses.
@@ -158,7 +157,7 @@ public class PluginAccessClass implements SvarogAccess {
 	}
 	
 	/**
-	 * Calls {@link ChangeSupportImpl#onClose()}.
+	 * Calls {@link SvarogAccessChangeSupportImpl#onClose()}.
 	 */
 	public static void onClose(){
 		changeSupport.onClose();

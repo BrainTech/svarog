@@ -22,8 +22,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
-import org.signalml.app.model.monitor.AmplifierConnectionDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.validation.BindException;
 
@@ -34,7 +33,7 @@ import org.springframework.validation.BindException;
  *
  * @author Piotr Szachewicz
  */
-public class MonitorRecordingPanel extends AbstractSignalMLPanel {
+public class MonitorRecordingPanel extends AbstractPanel {
 
         /**
          * A panel for choosing signal and tags recording target files for this
@@ -56,14 +55,13 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
          */
         public MonitorRecordingPanel() {
                 super();
-                initialize();
+                createInterface();
         }
 
         /**
          * Initializes all components.
          */
-	@Override
-	protected void initialize() {
+	protected void createInterface() {
 
                 setLayout(new BorderLayout(10, 10));
 
@@ -139,36 +137,14 @@ public class MonitorRecordingPanel extends AbstractSignalMLPanel {
 
         /**
          * Fills the model with the data from this panel (user input).
-         * @param openMonitorDescriptor the model to be filled.
+         * @param experimentDescriptor the model to be filled.
          */
-        public void fillModelFromPanel(OpenMonitorDescriptor openMonitorDescriptor) {
+        public void fillModelFromPanel(ExperimentDescriptor experimentDescriptor) {
                 if (isRecordingEnabled()) {
-                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
-                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
+                        experimentDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
+                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(experimentDescriptor);
                 } else {
-                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
-                }
-        }
-
-        /**
-         * Fills a {@link AmplifierConnectionDescriptor}.
-         * @param amplifierConnectionDescriptor the model to be filled.
-         * @throws SignalMLException when input data is invalid
-         */
-        public void fillModelFromPanel(AmplifierConnectionDescriptor descriptor) throws SignalMLException {
-
-        		ValidationErrors errors = new ValidationErrors();
-                validatePanel(this, errors);
-                if (errors.hasErrors())
-                        throw new SignalMLException(_("Invalid data entered"));
-
-
-                OpenMonitorDescriptor openMonitorDescriptor = descriptor.getOpenMonitorDescriptor();
-                if (isRecordingEnabled()) {
-                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(true);
-                        getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(openMonitorDescriptor);
-                } else {
-                        openMonitorDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
+                        experimentDescriptor.getMonitorRecordingDescriptor().setRecordingEnabled(false);
                 }
         }
 

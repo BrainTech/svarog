@@ -9,7 +9,9 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -38,12 +40,11 @@ import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.system.ChannelType;
-import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.MontageChannel;
-import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * The panel which allows to:
@@ -469,7 +470,7 @@ public class MontageChannelsPanel extends JPanel {
 	public SourceMontageTable getSourceMontageTable() {
 		if (sourceMontageTable == null) {
 			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel());
-			sourceMontageTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			sourceMontageTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 			sourceMontageTable.setPopupMenuProvider(new SourceMontageTablePopupProvider());
 
 			sourceMontageTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -873,23 +874,39 @@ public class MontageChannelsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 
-			int selectedChannelIndex = getSourceMontageTable().getSelectedRow();
-			if (selectedChannelIndex == -1) {
+			ListSelectionModel selectionModel = getSourceMontageTable().getSelectionModel();
+
+			if (selectionModel.isSelectionEmpty())
 				return;
+
+			int firstRow = selectionModel.getMinSelectionIndex();
+			int lastRow = selectionModel.getMaxSelectionIndex();
+
+			List<Integer> channelsToBeRemoved = new ArrayList<Integer>();
+			// checking if it is ok to remove rows
+			for (int i = firstRow; i <= lastRow; i++) {
+				if (selectionModel.isSelectedIndex(i)) {
+					IChannelFunction function = montage.getSourceChannelAt(i).getFunction();
+
+					if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
+						Dialogs.showError(_("Can only remove ONE and ZERO channels from source montage!"));
+						return;
+					}
+					if (montage.isSourceChannelInUse(i)) {
+						Dialogs.showError(_("This source channel is used in the target montage and cannot be removed."));
+						return;
+					}
+					channelsToBeRemoved.add(i);
+				}
 			}
 
-			IChannelFunction function = montage.getSourceChannelAt(selectedChannelIndex).getFunction();
-
-			if (function != ChannelFunction.ONE && function != ChannelFunction.ZERO) {
-				Dialogs.showError("error.sourceMontageTable.canOnlyRemoveZerosAndOnesChannels");
-				return;
+			// remove
+			int numberOfRemovedChannels = 0;
+			for (int channelIndex : channelsToBeRemoved) {
+				montage.removeSourceChannel(channelIndex - numberOfRemovedChannels);
+				numberOfRemovedChannels++;
+				//the channel numbers change after deleting channels that are before them
 			}
-			if (montage.isSourceChannelInUse(selectedChannelIndex)) {
-				Dialogs.showError(_("This source channel is used in the target montage and cannot be removed."));
-				return;
-			}
-
-			montage.removeSourceChannel(selectedChannelIndex);
 
 		}
 

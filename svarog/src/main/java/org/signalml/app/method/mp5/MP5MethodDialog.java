@@ -163,7 +163,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
-		setApplicationConfig(manager.getApplicationConfig());
 		setFileChooser(manager.getFileChooser());
 		executorManager = manager.getMp5ExecutorManager();
 		dialogParent = manager.getDialogParent();

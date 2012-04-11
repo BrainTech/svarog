@@ -11,12 +11,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileFilter;
+
 import multiplexer.jmx.client.ConnectException;
+
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -37,7 +38,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	/**
 	 * A component used to choose a book file to be opened.
 	 */
-	private JFileChooser fileChooser;
+	private ViewerFileChooser fileChooser;
 
 	/**
 	 * Creates this action.
@@ -56,8 +57,8 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 		String lastFileChooserPath = documentFlowIntegrator.getApplicationConfig().getLastFileChooserPath();
 		getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
 		
-		getFileChooser().showOpenDialog(null);
-		File selectedFile = getFileChooser().getSelectedFile();
+		File selectedFile = getFileChooser().chooseOpenBook(null);
+		//File selectedFile = getFileChooser().getSelectedFile();
 
 		if (selectedFile == null) {
 			return;
@@ -80,24 +81,16 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 			Logger.getLogger(OpenBookDocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
+	
+	public void setFileChooser(ViewerFileChooser fileChooser) {
+		this.fileChooser = fileChooser;
+	}
 
 	/**
 	 * Returns the file chooser used in this action.
 	 * @return the file chooser to be used.
 	 */
-	protected JFileChooser getFileChooser() {
-		if (fileChooser == null) {
-			fileChooser = new JFileChooser();
-
-			FileFilter[] fileFilters = ManagedDocumentType.BOOK.getFileFilters();
-
-			for (FileFilter filter : fileFilters) {
-				fileChooser.addChoosableFileFilter(filter);
-			}
-			if (fileFilters.length > 0) {
-				fileChooser.setFileFilter(fileFilters[0]);
-			}
-		}
+	protected ViewerFileChooser getFileChooser() {
 		return fileChooser;
 	}
 

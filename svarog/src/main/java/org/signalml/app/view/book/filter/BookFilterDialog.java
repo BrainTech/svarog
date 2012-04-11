@@ -75,11 +75,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	protected boolean isTrackingChanges() {
-		return true;
-	}
-
-	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
 			try {
@@ -153,7 +148,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 						boolean selected = getFilteringEnabledCheckBox().isSelected();
 						if (selected != currentChain.isFilteringEnabled()) {
 							currentChain.setFilteringEnabled(selected);
-							setChanged(true);
 						}
 					}
 				}
@@ -186,7 +180,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 						if (currentChain.isAlternative()) {
 							currentChain.setAlternative(false);
-							setChanged(true);
 						}
 
 					}
@@ -215,7 +208,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 						if (!currentChain.isAlternative()) {
 							currentChain.setAlternative(true);
-							setChanged(true);
 						}
 
 					}

@@ -5,6 +5,7 @@
 package org.signalml.plugin.newartifact.method;
 
 import java.awt.Window;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
@@ -70,8 +71,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		this.dialog = new NewArtifactMethodDialog(this.presetManager,
 				this.dialogParent);
 		// TODO remove this nasty cast
-		this.dialog.setApplicationConfig((ApplicationConfiguration) manager
-				.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
+		/*this.dialog.setApplicationConfig((ApplicationConfiguration) manager
+				.getSvarogAccess().getConfigAccess().getSvarogConfiguration());*/
 		this.firstRunFlag = true;
 	}
 

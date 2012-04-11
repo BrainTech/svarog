@@ -2,13 +2,13 @@ package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.util.HashMap;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.model.montage.ElectrodeType;
 
 /**
  * A {@link GenericAmplifierDiagnosis} class that checks whether average
  * signal value is greater than some constant value.
  * <ul>
  * Parameters that must be passed (keys):
- * <li>{@link #LIMIT_VALUES}</li>
  * <li>parameters inherited from {@link GenericAmplifierDiagnosis}:
  * <ul><li>{@link GenericAmplifierDiagnosis#SAMPLES_TESTED_FACTOR}</li></ul>
  * </ul>
@@ -18,14 +18,8 @@ import org.signalml.app.document.MonitorSignalDocument;
  */
 public class DCDiagnosis extends GenericAmplifierDiagnosis {
 
-        /**
-         * {@link #limitValues} parameter key.
-         */
-        public static final String LIMIT_VALUES = "LimitValues";
-        /**
-         * Limit values for each channel. Must be passed as a parameter.
-         */
-        private double[] limitValues;
+    public static final String ELECTRODE_TYPE = "ElectrodeType";
+    private ElectrodeType electrodeType;
 
         /**
          * Constructor.
@@ -34,9 +28,6 @@ public class DCDiagnosis extends GenericAmplifierDiagnosis {
          */
         public DCDiagnosis(MonitorSignalDocument monitorSignalDocument, HashMap<String, Object> parameters) {
                 super(monitorSignalDocument, parameters);
-                //limitValues = (double[]) getParameters().get(LIMIT_VALUES);
-                limitValues = new double[getChannelCount()];
-                for (double a : limitValues) a = 3;
         }
 
         /**
@@ -52,23 +43,16 @@ public class DCDiagnosis extends GenericAmplifierDiagnosis {
                 if (!areEnoughSamples()) {
                         return null;
                 }
+                electrodeType = (ElectrodeType) getParameters().get(ELECTRODE_TYPE);
 
                 HashMap<String, ChannelState> channels = new HashMap<String, ChannelState>();
 
-                /*for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
-                        //double average = getAverageForChannel(i);
-                        //boolean valid = average > limitValues[i];
-                        //double max = 5/4 * limitValues[i]; // TODO CHANGE THIS
-                        //ChannelState state = new ChannelState(valid, new AdditionalChannelData((int)max, (int)limitValues[i], (int)average, SignalCheckingMethod.DC));
-                        //channels.put(getLabel(i), state);
-                }*/
-
-                // Currently returns random values
                 for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
-                        java.util.Random rand = new java.util.Random();
-                        boolean channelValid = true;
-                        AdditionalChannelData data = new AdditionalChannelData(rand.nextInt(40000) + 60000, rand.nextInt(5000) - 10000, rand.nextInt(40000) + 30000, rand.nextInt(100000), SignalCheckingMethod.FFT);
-                        channels.put(getLabel(i), new ChannelState(channelValid, data));
+                        double average = getAverageForChannel(i);
+                        
+                        AdditionalChannelData additionalChannelData = new AdditionalChannelData(electrodeType.getMax(), electrodeType.getMin(), electrodeType.getLimit(), average, SignalCheckingMethod.DC);
+                        ChannelState channelState = new ChannelState(true, additionalChannelData);
+                        channels.put(getLabel(i), channelState);
                 }
 
                 return channels;
@@ -82,9 +66,10 @@ public class DCDiagnosis extends GenericAmplifierDiagnosis {
         private double getAverageForChannel(int channelNo) {
 
                 double[] samples = getSamplesForAChannel(channelNo);
+                double sum = 0;
                 for (int i = 1; i < samples.length; i++) {
-                        samples[0] += samples[i];
+                        sum += Math.abs(samples[i]);
                 }
-                return samples[0] / samples.length;
+                return sum / samples.length;
         }
 }

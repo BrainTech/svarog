@@ -47,7 +47,7 @@ import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
-import org.signalml.util.Util;
+import org.signalml.util.FormatUtils;
 
 /** ViewerStatusBar
  *
@@ -391,9 +391,9 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 		StringBuilder sb = new StringBuilder();
 
-		Util.addTime(minTime, sb);
+		FormatUtils.addTime(minTime, sb);
 		sb.append(" - ");
-		Util.addTime(maxTime, sb);
+		FormatUtils.addTime(maxTime, sb);
 
 		sb.append(" (").append(sampleAbbrevString).append(": ").append(minSample).append('-').append(maxSample).append(')');
 		sb.append(" (").append(pageAbbrevString).append(": ").append(minPage).append('-').append(maxPage).append(')');
@@ -493,9 +493,9 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 		double time = signalSelection.getPosition();
 		double endTime = time + signalSelection.getLength();
 
-		Util.addTime(time, sb);
+		FormatUtils.addTime(time, sb);
 		sb.append(" - ");
-		Util.addTime(endTime, sb);
+		FormatUtils.addTime(endTime, sb);
 
 		sb.append(" (").append(pageAbbrevString).append(": ");
 		sb.append(signalSelection.getStartSegment(plot.getPageSize())+1).append('-');
@@ -508,9 +508,9 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 		double time = signalSelection.getPosition();
 		double endTime = time + signalSelection.getLength();
 
-		Util.addTime(time, sb);
+		FormatUtils.addTime(time, sb);
 		sb.append(" - ");
-		Util.addTime(endTime, sb);
+		FormatUtils.addTime(endTime, sb);
 
 		sb.append(" (").append(blockAbbrevString).append(": ");
 		sb.append(signalSelection.getStartSegment(plot.getBlockSize())+1).append('-');
@@ -523,9 +523,9 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 		double time = signalSelection.getPosition();
 		double endTime = time + signalSelection.getLength();
 
-		Util.addTime(time, sb);
+		FormatUtils.addTime(time, sb);
 		sb.append(" - ");
-		Util.addTime(endTime, sb);
+		FormatUtils.addTime(endTime, sb);
 
 		Montage montage = plot.getLocalMontage();
 		if (montage == null) {
@@ -544,9 +544,9 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 		double time = tag.getPosition();
 		double endTime = time + tag.getLength();
 
-		Util.addTime(time, sb);
+		FormatUtils.addTime(time, sb);
 		sb.append(" - ");
-		Util.addTime(endTime, sb);
+		FormatUtils.addTime(endTime, sb);
 
 		Montage montage = plot.getLocalMontage();
 		if (montage == null) {

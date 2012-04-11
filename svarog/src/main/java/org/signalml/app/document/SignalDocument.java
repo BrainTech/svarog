@@ -14,6 +14,7 @@ import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 
@@ -152,6 +153,8 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * @return the montage for the signal in this document
 	 */
 	Montage getMontage();
+	
+	boolean isMontageCreated();
 	
 	/**
 	 * Sets the {@link Montage} montage for the signal in this document.

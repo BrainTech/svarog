@@ -156,8 +156,6 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		if (step == 0) {
 
 			EmbeddedFileChooser fileChooser = getStepOnePanel().getFileChooser();
-
-			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "sourceFile", false, false, false, false, true);
 
 			if (!errors.hasErrors()) {

@@ -30,7 +30,7 @@ public class BookFilterSwitchAction extends AbstractFocusableSignalMLAction<Book
 		super(bookDocumentFocusSelector);
 		setText(_("Filtering"));
 		setIconPath("org/signalml/app/icon/filter.png");
-		setToolTip(_("Switch fitering on/off"));
+		setToolTip(_("Switch filtering on/off"));
 	}
 
 	@Override

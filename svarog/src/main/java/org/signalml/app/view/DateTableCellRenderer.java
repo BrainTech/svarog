@@ -8,7 +8,7 @@ import java.util.Date;
 
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.signalml.util.Util;
+import org.signalml.util.FormatUtils;
 
 /** DateTableCellRenderer
  *
@@ -21,7 +21,7 @@ public class DateTableCellRenderer extends DefaultTableCellRenderer {
 
 	@Override
 	protected void setValue(Object value) {
-		setText(Util.formatTime((Date) value));
+		setText(FormatUtils.formatTime((Date) value));
 	}
 
 }

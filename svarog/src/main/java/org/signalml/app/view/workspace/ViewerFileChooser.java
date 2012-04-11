@@ -6,6 +6,7 @@ package org.signalml.app.view.workspace;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Vector;
@@ -16,6 +17,7 @@ import org.apache.log4j.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.html.Option;
 
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
@@ -38,6 +40,11 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	protected static final Logger logger = Logger.getLogger(ViewerFileChooser.class);
 
 	private ApplicationConfiguration applicationConfig;
+	
+	public ViewerFileChooser() {
+		super();
+		this.setPreferredSize(new Dimension(500, 380));
+	}
 
 	public void initialize() {
 		FileFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
@@ -67,6 +74,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		OptionSet.readXMLManifest.setFilters(xml);
 		OptionSet.exportSignal.setFilters(binary);
 		OptionSet.exportBook.setFilters(book);
+		OptionSet.openBook.setFilters(book);
 		OptionSet.savePreset.setFilters(xml);
 		OptionSet.loadPreset.setFilters(xml);
 
@@ -234,6 +242,10 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	public synchronized File chooseExportTag(Component parent) {
 		return chooseFile(parent, OptionSet.exportTag);
 	}
+	
+	public synchronized File chooseOpenBook(Component parent) {
+		return chooseFile(parent, OptionSet.openBook);
+	}
 
 	public synchronized File chooseReadXMLManifest(File directory, File fileSuggestion, Component parent) {
 		return chooseFile(parent, OptionSet.readXMLManifest,
@@ -310,7 +322,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	protected synchronized void setApplicationConfig(ApplicationConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
-		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this, applicationConfig);
+		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this);
 		this.setAccessory(f);
 	}
 
@@ -412,6 +424,8 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			  null, _("Import")),
 		exportTag(Operation.save, _("Export legacy tag"),
 			  null, _("Export")),
+		openBook(Operation.open, _("Choose a book file"),
+		      null, _("Choose")),
 		savePreset(Operation.save, _("Save preset to file"),
 			   "LastPresetPath", _("Save")),
 		loadPreset(Operation.open, _("Load preset from file"),

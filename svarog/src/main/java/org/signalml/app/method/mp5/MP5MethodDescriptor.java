@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -107,6 +108,11 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 			OptionPane.showNoActiveSignal(methodManager.getDialogParent());
 			return null;
 		}
+		if (document instanceof MonitorSignalDocument) {
+			OptionPane.showThisToolWorksOnlyForNonMonitorSignals(methodManager.getDialogParent());
+			return null;
+		}
+
 		SignalDocument signalDocument = (SignalDocument) document;
 
 		MP5ApplicationData data = new MP5ApplicationData();

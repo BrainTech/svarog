@@ -15,6 +15,7 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
@@ -106,7 +107,7 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
+		setEnabled(isSignalDocumentOfflineSignalDocument(getActionFocusSelector().getActiveSignalDocument()));
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {

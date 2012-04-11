@@ -71,6 +71,8 @@ public class SaveTagAsAction extends AbstractFocusableSignalMLAction<TagDocument
 		if (tagDocument != null) {
 			enabled = true;
 		}
+		if (isTagDocumentAMonitorTagDocument(tagDocument))
+			enabled = false;
 		setEnabled(enabled);
 	}
 

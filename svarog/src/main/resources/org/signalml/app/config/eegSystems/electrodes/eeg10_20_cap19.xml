@@ -64,7 +64,7 @@
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>T7</label>
+					<label>T3</label>
 					<polarPosition>
 						<theta>90</theta>
 						<phi>-2</phi>
@@ -96,7 +96,7 @@
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>T8</label>
+					<label>T4</label>
 					<polarPosition>
 						<theta>-90</theta>
 						<phi>-2</phi>
@@ -104,7 +104,7 @@
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>P7</label>
+					<label>T5</label>
 					<polarPosition>
 						<theta>126</theta>
 						<phi>-2</phi>
@@ -136,7 +136,7 @@
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>P8</label>
+					<label>T6</label>
 					<polarPosition>
 						<theta>-126</theta>
 						<phi>-2</phi>
@@ -157,6 +157,22 @@
 						<theta>-162</theta>
 						<phi>-2</phi>
 						<radius>1</radius>
+					</polarPosition>
+				</eegElectrode>
+				<eegElectrode>
+					<label>A1</label>
+					<polarPosition>
+						<theta>100</theta>
+						<phi>0</phi>
+						<radius>1.2</radius>
+					</polarPosition>
+				</eegElectrode>
+				<eegElectrode>
+					<label>A2</label>
+					<polarPosition>
+						<theta>-100</theta>
+						<phi>0</phi>
+						<radius>1.2</radius>
 					</polarPosition>
 				</eegElectrode>
 			</electrodes>

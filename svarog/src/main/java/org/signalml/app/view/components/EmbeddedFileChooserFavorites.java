@@ -18,6 +18,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 
@@ -94,9 +95,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	 * @param fc parent file chooser
 	 * @param applicationConfiguration an object providing application configuration stored in files
 	 */
- 	public EmbeddedFileChooserFavorites(JFileChooser fc, ApplicationConfiguration applicationConfiguration) {
+ 	public EmbeddedFileChooserFavorites(JFileChooser fc) {
  		this.fc = fc;
- 		this.applicationConfiguration = applicationConfiguration;
+ 		this.applicationConfiguration = SvarogApplication.getApplicationConfiguration();
  		this.createGui();
  		this.showHide();
  	}
@@ -111,16 +112,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements
 	    this.mainPanel = new JPanel();
 	    this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
 	    this.mainPanel.add(getFavoritesGui());
-	    this.mainPanel.add(new JLabel(" "));
-	    this.mainPanel.add(new JLabel(" "));
 	    this.mainPanel.add(getHistoryGui());
 	    
 	    add(this.mainPanel);
-	    
-	    //add fake label so that components are 'stacked' to the top
-	    JLabel packer = new JLabel(" ");
-	    packer.setPreferredSize(new Dimension(10, 500));
-	    add(packer);  
  	}
  	
  	@Override

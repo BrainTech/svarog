@@ -4,6 +4,7 @@
 package org.signalml.app;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -56,6 +57,7 @@ import org.signalml.app.method.example.ExampleMethodDescriptor;
 import org.signalml.app.method.mp5.MP5ApplicationData;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5MethodDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.MatlabUtil;
@@ -94,7 +96,6 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
 import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
@@ -118,7 +119,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private Locale locale = null;
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 	private File profileDir = null;
-	private ApplicationConfiguration applicationConfig = null;
+	private ApplicationConfiguration applicationConfig = new ApplicationConfiguration();
 	private DefaultSignalMLCodecManager signalMLCodecManager = null;
 	private DefaultDocumentManager documentManager = null;
 	private DefaultMRUDRegistry mrudRegistry = null;
@@ -130,7 +131,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private BookFilterPresetManager bookFilterPresetManager = null;
 	private SignalExportPresetManager signalExportPresetManager = null;
 	private FFTSampleFilterPresetManager fftFilterPresetManager = null;
-	private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager = null;
 	private OpenBCIModulePresetManager openBCIModulePresetManager = null;
 
 	/**
@@ -642,6 +642,7 @@ public class SvarogApplication implements java.lang.Runnable {
 					     SignalMLCodecDescriptor.class,
 					     MRUDConfiguration.class,
 					     MRUDEntry.class,
+					     SignalMLDescriptor.class,
 					     SignalMLMRUDEntry.class,
 					     RawSignalMRUDEntry.class,
 					     RawSignalDescriptor.class,
@@ -661,7 +662,6 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		splash(_("Restoring configuration"), false);
 
-		applicationConfig = new ApplicationConfiguration();
 		applicationConfig.setProfileDir(profileDir);
 		applicationConfig.setStreamer(streamer);
 		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
@@ -734,8 +734,25 @@ public class SvarogApplication implements java.lang.Runnable {
 		taskManager.setMethodManager(methodManager);
 
 		splash(_("Initializing presets"), true);
+		
+		eegSystemsPresetManager = new EegSystemsPresetManager();
+		eegSystemsPresetManager.setProfileDir(profileDir);
 
-		montagePresetManager = new MontagePresetManager();
+		try {
+			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
+		} catch (Exception ex) {
+			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
+		}
+
+		try {
+			eegSystemsPresetManager.readFromPersistence(null);
+		} catch (FileNotFoundException ex) {
+			logger.debug("EEG systems configuration not found!");
+		} catch (Exception ex) {
+			logger.error("Failed to read eeg systems configuration", ex);
+		}
+
+		montagePresetManager = new MontagePresetManager(eegSystemsPresetManager);
 		montagePresetManager.setProfileDir(profileDir);
 
 		try {
@@ -781,17 +798,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
 
-		amplifierDefinitionPresetManager = new AmplifierDefinitionPresetManager();
-		amplifierDefinitionPresetManager.setProfileDir(profileDir);
-
-		try {
-			amplifierDefinitionPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Amplifier definition preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read amplifier definition configuration - will use defaults", ex);
-		}
-
 		openBCIModulePresetManager = new OpenBCIModulePresetManager();
 		openBCIModulePresetManager.setProfileDir(profileDir);
 
@@ -833,23 +839,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.debug("Styled tag set preset config not found - will use defaults");
 		} catch (Exception ex) {
 			logger.error("Failed to read styled tag set configuration - will use defaults", ex);
-		}
-
-		eegSystemsPresetManager = new EegSystemsPresetManager();
-		eegSystemsPresetManager.setProfileDir(profileDir);
-
-		try {
-			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
-		} catch (Exception ex) {
-			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
-		}
-
-		try {
-			eegSystemsPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("EEG systems configuration not found!");
-		} catch (Exception ex) {
-			logger.error("Failed to read eeg systems configuration", ex);
 		}
 
 		splash(null, true);
@@ -995,7 +984,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
-		elementManager.setAmplifierDefinitionPresetManager(amplifierDefinitionPresetManager);
 		elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
@@ -1106,12 +1094,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			fftFilterPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write FFT sample filter configuration", ex);
-		}
-
-		try {
-			amplifierDefinitionPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write amplifier definition configuration", ex);
 		}
 
 		try {

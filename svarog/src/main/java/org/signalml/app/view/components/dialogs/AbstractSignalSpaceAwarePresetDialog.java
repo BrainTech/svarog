@@ -12,6 +12,8 @@ import java.awt.Window;
 
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
@@ -35,7 +37,6 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 */
 	private JCheckBox includeSpaceCheckBox;
 
-
 	/**
 	 * Constructor. Sets message source, {@link PresetManager preset
 	 * manager}, parent window and if this dialog blocks top-level windows.
@@ -44,7 +45,7 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
 	public AbstractSignalSpaceAwarePresetDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+		super(presetManager, w, isModal);	
 	}
 
 	/**
@@ -56,25 +57,24 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 		super(presetManager);
 	}
 
-	/**
-	 * {@link AbstractPresetDialog#createPresetPane() Creates} preset pane
-	 * and adds the {@link #getIncludeSpaceCheckBox() check-box} to it.
-	 */
 	@Override
-	protected JPanel createPresetPane() {
+	protected JPanel createControlPane() {
+		buttonPane = createButtonPane();
 
-		JPanel parentPane = super.createPresetPane();
+		JPanel controlPane = new JPanel(new BorderLayout());
+		controlPane.setBorder(new EmptyBorder(3,0,0,0));
 
-		JPanel presetPane = new JPanel(new BorderLayout());
+		JPanel presetPanel = new JPanel(new BorderLayout());
+		presetPanel.add(getPresetControlsPanel(), BorderLayout.CENTER);
+		presetPanel.add(getIncludeSpaceCheckBox(), BorderLayout.SOUTH);
+		Border previousBorder = getPresetControlsPanel().getBorder();
+		getPresetControlsPanel().setBorder(null);
+		presetPanel.setBorder(previousBorder);
 
-		presetPane.add(parentPane, BorderLayout.CENTER);
-		presetPane.add(getIncludeSpaceCheckBox(), BorderLayout.SOUTH);
+		controlPane.add(presetPanel, BorderLayout.CENTER);
+		controlPane.add(buttonPane, BorderLayout.SOUTH);
 
-		presetPane.setBorder(parentPane.getBorder());
-		parentPane.setBorder(null);
-
-		return presetPane;
-
+		return controlPane;
 	}
 
 	/**

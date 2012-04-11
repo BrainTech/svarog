@@ -23,8 +23,6 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("application")
 public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
-	private boolean dontShowDynamicCompilationWarning;
-
 	private String[] favouriteDirs;
 	private String[] lastDirs;
 	
@@ -93,24 +91,10 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
-        private float backupFrequency;
+	private float backupFrequency;
 
-	/**
-	 * Default value for the multiplexer address. If the user changes
-	 * multiplexer address value in the Open monitor dialog, it can be
-	 * reset to defaults stored in this variable.
-	 */
-	private String defaultMultiplexerAddress = "3";
-
-	/**
-	 * Default value for the multiplexer port. If the user changes
-	 * multiplexer port value in the Open monitor dialog, it can be
-	 * reset to defaults stored in this variable.
-	 */
-	private int defaultMultiplexerPort = 4;
-
-	private String multiplexerAddress;
-	private int multiplexerPort;
+	private String openbciIPAddress;
+	private int openbciPort;
 
 	private float monitorPageSize;
 
@@ -416,14 +400,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.maxTimeScale = maxTimeScale;
 	}
 
-	public boolean isDontShowDynamicCompilationWarning() {
-		return dontShowDynamicCompilationWarning;
-	}
-
-	public void setDontShowDynamicCompilationWarning(boolean dontShowDynamicCompilationWarning) {
-		this.dontShowDynamicCompilationWarning = dontShowDynamicCompilationWarning;
-	}
-
 	public String getLastLibraryPath() {
 		return lastLibraryPath;
 	}
@@ -536,75 +512,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.reconstructionHeight = reconstructionHeight;
 	}
 
-	public void setMultiplexerAddress(String multiplexerAddress) {
-		this.multiplexerAddress = multiplexerAddress;
-	}
-
-	public String getMultiplexerAddress() {
-		return multiplexerAddress;
-	}
-
-	public void setMultiplexerPort(int multiplexerPort) {
-		this.multiplexerPort = multiplexerPort;
-	}
-
-	public int getMultiplexerPort() {
-		return multiplexerPort;
-	}
-
-	/**
-	 * Returns the default value of the multiplexer address.
-	 * @return a string containing default multiplexer address.
-	 */
-	public String getDefaultMultiplexerAddress() {
-		return defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Sets the value of the defalut multiplexer address.
-	 * @param defaultMultiplexerAddress new value for default multiplexer
-	 * address.
-	 */
-	public void setDefaultMultiplexerAddress(String defaultMultiplexerAddress) {
-		this.defaultMultiplexerAddress = defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Sets the value of the default multiplexer port.
-	 * @param defaultMultiplexerPort new value for default multiplexer port.
-	 */
-	public void setDefaultMultiplexerPort(int defaultMultiplexerPort) {
-		this.defaultMultiplexerPort = defaultMultiplexerPort;
-	}
-
-	/**
-	 * Returns the default value of the multiplexer port.
-	 * @return default multiplexer port number
-	 */
-	public int getDefaultMultiplexerPort() {
-		return defaultMultiplexerPort;
-	}
-
-	/**
-	 * Resets the current value of the multiplexer address to defaults.
-	 * This method can be useful when the user changes the current
-	 * multiplexer address in the Open monitor dialog and wants to get back
-	 * the default value.
-	 */
-	public void resetMultiplexerAddressToDefaults() {
-		this.multiplexerAddress = this.defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Resets the current value of the multiplexer port to defaults.
-	 * This method can be useful when the user changes the current
-	 * multiplexer address in the Open monitor dialog and wants to get back
-	 * the default value.
-	 */
-	public void resetMultiplexerPortToDefaults() {
-		this.multiplexerPort = this.defaultMultiplexerPort;
-	}
-
 	public float getMonitorPageSize() {
 		return monitorPageSize;
 	}
@@ -659,4 +566,21 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	public void setLastPresetPath(String lastPresetPath) {
 		this.lastPresetPath = lastPresetPath;
 	}
+
+	public String getOpenbciIPAddress() {
+		return openbciIPAddress;
+	}
+
+	public void setOpenbciIPAddress(String openbciIPAddress) {
+		this.openbciIPAddress = openbciIPAddress;
+	}
+
+	public int getOpenbciPort() {
+		return openbciPort;
+	}
+
+	public void setOpenbciPort(int openbciPort) {
+		this.openbciPort = openbciPort;
+	}
+
 }
