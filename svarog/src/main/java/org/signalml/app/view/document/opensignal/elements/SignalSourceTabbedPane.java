@@ -1,9 +1,12 @@
 package org.signalml.app.view.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -11,6 +14,7 @@ import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
+import javax.swing.event.DocumentEvent.EventType;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
@@ -18,6 +22,7 @@ import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
+import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.view.components.FileChooserPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
@@ -30,7 +35,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
-public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener {
+public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
 	
@@ -40,15 +45,16 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	 */
 	private FileChooserPanel fileChooserPanel;
 	private ChooseExperimentPanel chooseExperimentPanel;
-	
+
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
-	
+	private Object fileTypeMethod = FileOpenSignalMethod.AUTODETECT;
+
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		addTab(_("FILE"), getFileChooserPanel());
 		addTab(_("ONLINE"), getChooseExperimentPanel());
 	}
-	
+
 	/**
 	 * Returns the panel for choosing which signal file should be opened.
 	 * @return the panel for choosing which signal file should be opened
@@ -105,15 +111,25 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			return;
 		}
 
+		if (fileTypeMethod == FileOpenSignalMethod.AUTODETECT)
+			autodetectFileTypeAndReadMetadata(file);
+		else if (fileTypeMethod == FileOpenSignalMethod.RAW)
+			readRawFileMetadata(file);
+		else if (fileTypeMethod instanceof SignalMLCodec){
+			SignalMLCodec codec = (SignalMLCodec) fileTypeMethod;
+			readSignalMLMetadata(file, codec);
+		}
+		else {
+			openSignalDescriptor = null;
+		}
+		
+		fireOpenSignalDescriptorChanged();
+	}
+	
+	protected void autodetectFileTypeAndReadMetadata(File file) {
+		String extension = Util.getFileExtension(file, false);
 		if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
-			try {
-				readRawFileMetadata(file);
-			} catch (Exception e) {
-				e.printStackTrace();
-				Dialogs.showError(_("There was an error while reading the XML manifest. Please input the signal parameters manually."));
-				openSignalDescriptor = new RawSignalDescriptor();
-				openSignalDescriptor.setCorrectlyRead(false);
-			}
+			readRawFileMetadata(file);
 		}
 		else {
 			String formatName = null;
@@ -138,7 +154,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			
 			readSignalMLMetadata(file, codec);
 		}
-		fireOpenSignalDescriptorChanged();
 	}
 	
 	protected void fireOpenSignalDescriptorChanged() {
@@ -158,12 +173,12 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor.setCorrectlyRead(true);
 			signalMLDocument.closeDocument();
 		} catch (Exception e) {
-			Dialogs.showError(_("There was an error while loading the file - did you select a correct SignalML file?"));
+			Dialogs.showError(_R("There was an error while loading the file - did you select a correct SignalML file?"));
 			e.printStackTrace();
 		}
 	}
 
-	protected void readRawFileMetadata(File signalFile) throws IOException, SignalMLException {
+	protected void readRawFileMetadata(File signalFile) {
 
 		File xmlManifestFile = Util.changeOrAddFileExtension(signalFile, "xml");
 
@@ -187,8 +202,15 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			}
 		}
 
-		openSignalDescriptor = reader.readDocument(xmlManifestFile);
-		openSignalDescriptor.setCorrectlyRead(true);
+		try {
+			openSignalDescriptor = reader.readDocument(xmlManifestFile);
+			openSignalDescriptor.setCorrectlyRead(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			Dialogs.showError(_("There was an error while reading the XML manifest. Please input the signal parameters manually."));
+			openSignalDescriptor = new RawSignalDescriptor();
+			openSignalDescriptor.setCorrectlyRead(false);
+		}
 	}
 
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
@@ -205,6 +227,17 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		}
 		
 		super.fireStateChanged();
+	}
+
+	/**
+	 * Invoked when the selected file type changed. 
+	 * @param
+	 */
+	@Override
+	public void itemStateChanged(ItemEvent event) {
+		if (event.getStateChange() == ItemEvent.SELECTED) {
+			fileTypeMethod = event.getItem();
+		}
 	}
 
 }

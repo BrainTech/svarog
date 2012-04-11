@@ -20,6 +20,8 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
+import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
+import org.signalml.app.model.document.opensignal.elements.FileTypeComboBoxModel;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
 import org.signalml.app.view.components.AbstractPanel;
@@ -34,14 +36,19 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 public class OtherSettingsPanel extends AbstractPanel {
 
 	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
-	
+
 	private ViewerElementManager viewerElementManager;
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
+
+	private JButton editGainAndOffsetButton;
+	private EditGainAndOffsetDialog editGainAndOffsetDialog;
 
 	private JButton manageCodecsButton;
 	private ManageSignalMLCodecsDialog manageSignalMLCodecsDialog;
 	
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
+	private JLabel fileTypeLabel = new JLabel(_("File type"));
+	private JLabel signalMLCodecsLabel = new JLabel(_("SignalML codecs"));
 	/**
 	 * {@link JComboBox} that displays the list of available presets.
 	 */
@@ -60,8 +67,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 */
 	private PresetComboBoxModel eegSystemsPresetComboBoxModel;
 
-	private JButton editGainAndOffsetButton;
-	private EditGainAndOffsetDialog editGainAndOffsetDialog;
+	private JComboBox fileTypeComboBox;
 	
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
@@ -79,42 +85,49 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 		JLabel editGainAndOffsetLabel = new JLabel(_("Gain & offset"));
 		JLabel eegSystemsLabel = new JLabel(_("EEG system"));
-		JLabel signalMLCodecsLabel = new JLabel(_("SignalML codecs"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
-		        .addComponent(editGainAndOffsetLabel)
 		        .addComponent(tagStylesLabel)
-		        .addComponent(eegSystemsLabel)
+		        .addComponent(fileTypeLabel)
 		        .addComponent(signalMLCodecsLabel)
+		        .addComponent(eegSystemsLabel)
+		        .addComponent(editGainAndOffsetLabel)
 		);
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
-		        .addComponent(getEditGainAndOffsetButton())
 		        .addComponent(getTagPresetComboBox())
-		        .addComponent(getEegSystemsPresetComboBox())
+		        .addComponent(getFileTypeComboBox())
 		        .addComponent(getManageCodecsButton())
+		        .addComponent(getEegSystemsPresetComboBox())
+		        .addComponent(getEditGainAndOffsetButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(editGainAndOffsetLabel)
-				.addComponent(getEditGainAndOffsetButton())
-			);
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(tagStylesLabel)
 				.addComponent(getTagPresetComboBox())
 			);
-
+		
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(fileTypeLabel)
+				.addComponent(getFileTypeComboBox())
+			);
+		
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(signalMLCodecsLabel)
+				.addComponent(getManageCodecsButton())
+			);
+		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(eegSystemsLabel)
@@ -123,8 +136,8 @@ public class OtherSettingsPanel extends AbstractPanel {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(signalMLCodecsLabel)
-				.addComponent(getManageCodecsButton())
+				.addComponent(editGainAndOffsetLabel)
+				.addComponent(getEditGainAndOffsetButton())
 			);
 
 		layout.setVerticalGroup(vGroup);
@@ -143,6 +156,15 @@ public class OtherSettingsPanel extends AbstractPanel {
 			manageCodecsButton.setText(_("Manage SignalML codecs"));
 		}
 		return manageCodecsButton;
+	}
+	
+	public JComboBox getFileTypeComboBox() {
+		if (fileTypeComboBox == null) {
+			FileTypeComboBoxModel model = new FileTypeComboBoxModel();
+			fileTypeComboBox = new JComboBox(model);
+			fileTypeComboBox.setSelectedItem(FileOpenSignalMethod.AUTODETECT);
+		}
+		return fileTypeComboBox;
 	}
 
 	protected ManageSignalMLCodecsDialog getManageSignalMLCodecsDialog() {
@@ -315,8 +337,13 @@ public class OtherSettingsPanel extends AbstractPanel {
 		boolean isMonitor = selectedSignalSource.isOpenBCI();
 		getTagPresetComboBox().setVisible(isMonitor);
 		tagStylesLabel.setVisible(isMonitor);
+
+		signalMLCodecsLabel.setVisible(!isMonitor);
+		getManageCodecsButton().setVisible(!isMonitor);
+		
+		fileTypeLabel.setVisible(!isMonitor);
+		fileTypeComboBox.setVisible(!isMonitor);
 	}
-	
 
 	protected void setEnabledAsNeeded(AbstractOpenSignalDescriptor openSignalDescriptor) {
 

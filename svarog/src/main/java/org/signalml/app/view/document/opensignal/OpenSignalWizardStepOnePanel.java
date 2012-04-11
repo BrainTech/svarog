@@ -71,6 +71,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 			signalSourceTabbedPane = new SignalSourceTabbedPane(viewerElementManager);
 			signalSourceTabbedPane.addChangeListener(this);
 			signalSourceTabbedPane.addPropertyChangeListener(this);
+			getOtherSettingsPanel().getFileTypeComboBox().addItemListener(signalSourceTabbedPane);
 		}
 		return signalSourceTabbedPane;
 	}
