@@ -2,20 +2,21 @@ package org.signalml.app.view.document.opensignal.elements;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
+import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
-import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
@@ -34,7 +35,6 @@ import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 public class OtherSettingsPanel extends AbstractPanel {
 
@@ -50,7 +50,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 	
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
-	private JLabel signalMLCodecsLabel = new JLabel(_("SignalML codecs"));
 	/**
 	 * {@link JComboBox} that displays the list of available presets.
 	 */
@@ -79,13 +78,20 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	protected void createInterface() {
 		setTitledBorder(_("Other settings"));
-		
-		GroupLayout layout = new GroupLayout(this);
-		setLayout(layout);
+		setLayout(new BorderLayout());
+
+		add(createComboBoxesPanel(), BorderLayout.CENTER);
+		add(createButtonsPanel(), BorderLayout.SOUTH);
+	}
+
+	protected JPanel createComboBoxesPanel() {
+		JPanel comboBoxesPanel = new JPanel();
+
+		GroupLayout layout = new GroupLayout(comboBoxesPanel);
+		comboBoxesPanel.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel editGainAndOffsetLabel = new JLabel(_("Gain & offset"));
 		JLabel eegSystemsLabel = new JLabel(_("EEG system"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
@@ -94,18 +100,14 @@ public class OtherSettingsPanel extends AbstractPanel {
 		        layout.createParallelGroup()
 		        .addComponent(tagStylesLabel)
 		        .addComponent(fileTypeLabel)
-		        .addComponent(signalMLCodecsLabel)
 		        .addComponent(eegSystemsLabel)
-		        .addComponent(editGainAndOffsetLabel)
 		);
 
 		hGroup.addGroup(
 		        layout.createParallelGroup()
 		        .addComponent(getTagPresetComboBox())
 		        .addComponent(getFileTypeComboBox())
-		        .addComponent(getRegisterSignalMLCodecButton())
 		        .addComponent(getEegSystemsPresetComboBox())
-		        .addComponent(getEditGainAndOffsetButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -126,24 +128,22 @@ public class OtherSettingsPanel extends AbstractPanel {
 		
 		vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(signalMLCodecsLabel)
-				.addComponent(getRegisterSignalMLCodecButton())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(eegSystemsLabel)
 				.addComponent(getEegSystemsPresetComboBox())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(editGainAndOffsetLabel)
-				.addComponent(getEditGainAndOffsetButton())
 			);
 
 		layout.setVerticalGroup(vGroup);
 		
+		return comboBoxesPanel;
+	}
+
+	protected JPanel createButtonsPanel() {
+		JPanel buttonsPanel = new JPanel(new FlowLayout());
+
+		buttonsPanel.add(getEditGainAndOffsetButton());
+		buttonsPanel.add(getRegisterSignalMLCodecButton());
+
+		return buttonsPanel;
 	}
 
 	public JButton getRegisterSignalMLCodecButton() {
@@ -331,7 +331,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 		getTagPresetComboBox().setVisible(isMonitor);
 		tagStylesLabel.setVisible(isMonitor);
 
-		signalMLCodecsLabel.setVisible(!isMonitor);
 		getRegisterSignalMLCodecButton().setVisible(!isMonitor);
 		
 		fileTypeLabel.setVisible(!isMonitor);
