@@ -76,7 +76,7 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	/*
 	 * indicates whether the panel is hidden or not. By default hidden
 	 */
-	private int hidden=1;
+	private boolean hidden = true;
 
 	/*
 	 * an icon for 'show' mode of {@code favoritesButton} button
@@ -149,8 +149,8 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 * Changes state of the panel - hides it when shown, shows when hidden.
 	 */
 	public void showHide() {
-		this.hidden = (this.hidden + 1) % 2;
-		if (this.hidden == 1) {
+		this.hidden ^= true;
+		if (this.hidden) {
 			this.favoritesButton.setIcon(this.hideFavoritesIcon);
 			this.favoritesButton.setToolTipText(_("Hide favorites"));
 			this.mainPanel.show();
