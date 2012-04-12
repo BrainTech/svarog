@@ -3,24 +3,19 @@ package org.signalml.app.view.document.opensignal.elements;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
-import javax.swing.event.DocumentEvent.EventType;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
@@ -32,13 +27,12 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
-import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
-	
+
 	private ViewerElementManager viewerElementManager;
 	/**
 	 * The panel for choosing a file to be opened.
@@ -87,15 +81,18 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		String propertyName = event.getPropertyName();
-		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)
-				||JFileChooser.DIRECTORY_CHANGED_PROPERTY.equals(propertyName)) {
+		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)) {
 			updatedSelectedFile();
+		}
+		else if (JFileChooser.DIRECTORY_CHANGED_PROPERTY.equals(propertyName)) {
+			openSignalDescriptor = null;
+			fireOpenSignalDescriptorChanged();
 		}
 		else if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
 			updateSelectedExperiment();
 		}
 	}
-	
+
 	protected void updateSelectedExperiment() {
 		openSignalDescriptor = chooseExperimentPanel.getSelectedExperiment();
 		fireOpenSignalDescriptorChanged();
