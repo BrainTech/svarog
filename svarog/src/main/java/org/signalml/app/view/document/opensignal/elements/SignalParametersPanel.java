@@ -3,7 +3,6 @@ package org.signalml.app.view.document.opensignal.elements;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -333,6 +332,8 @@ public class SignalParametersPanel extends JPanel {
 		getChannelCountSpinner().setValue(signalParameters.getChannelCount());
 		getPageSizeSpinner().setValue(signalParameters.getPageSize());
 		getBlocksPerPageSpinner().setValue(signalParameters.getBlocksPerPage());
+
+		fireNumberOfChannelsChanged(signalParameters.getChannelCount());
 	}
 
 	public void fillModelFromPanel(AbstractOpenSignalDescriptor openSignalDescriptor) {
