@@ -28,7 +28,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -116,15 +117,21 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 * Builds all GUI components.
 	 */
 	protected void createGui() {
-		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		GridBagLayout layout = new GridBagLayout();
+		GridBagConstraints c = new GridBagConstraints();
+		setLayout(layout);
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.anchor = GridBagConstraints.NORTHEAST;
 
-		add(this.getFavouriesButtonGui());
+		add(this.getFavouritesButtonGui(), c);
 
 		this.mainPanel = new Box(BoxLayout.PAGE_AXIS);
 		this.mainPanel.add(getFavoritesGui());
 		this.mainPanel.add(getHistoryGui());
+		add(this.mainPanel, c);
 
-		add(this.mainPanel);
+		c.weighty = 1;
+		add(Box.createVerticalGlue(), c);
 	}
 
 	@Override
@@ -283,7 +290,7 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 *
 	 * @returns panel containing favorites button
 	 */
-	protected JPanel getFavouriesButtonGui() {
+	protected JPanel getFavouritesButtonGui() {
 		JButton b = new JButton("");
 		b.setBorder(BorderFactory.
 			    createEmptyBorder(0, 0, 0, 0));

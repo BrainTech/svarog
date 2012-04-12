@@ -37,7 +37,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
  */
 public class SignalParametersPanel extends JPanel {
 
-	public static String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
+	public static final String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
 
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
