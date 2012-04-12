@@ -8,6 +8,8 @@ import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -66,7 +68,7 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 * favorites and history components panel
 	 */
 
-	private JPanel mainPanel;
+	private JComponent mainPanel;
 
 	/*
 	 * button to show and hide Favorites
@@ -114,12 +116,11 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 * Builds all GUI components.
 	 */
 	protected void createGui() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		JPanel b = this.getFavouriesButtonGui();
-		add(b);
+		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-		this.mainPanel = new JPanel();
-		this.mainPanel.setLayout(new BoxLayout(this.mainPanel, BoxLayout.Y_AXIS));
+		add(this.getFavouriesButtonGui());
+
+		this.mainPanel = new Box(BoxLayout.PAGE_AXIS);
 		this.mainPanel.add(getFavoritesGui());
 		this.mainPanel.add(getHistoryGui());
 
@@ -319,16 +320,11 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 *
 	 * @returns panel containing favorites GUI
 	 */
-	protected JPanel getFavoritesGui() {
+	protected JComponent getFavoritesGui() {
 
 		//layout settings
- 		JPanel p = new JPanel();
- 		p.setBorder(new CompoundBorder(new TitledBorder(_("Favorites")),
-					       new EmptyBorder(3, 3, 3, 3)));
- 		p.setLayout(new BorderLayout(0, 10));
-
- 		JPanel fieldsPanel = new JPanel();
-		fieldsPanel.setLayout(new GridLayout(0, 1));
+		Box fieldsPanel = new Box(BoxLayout.PAGE_AXIS);
+		fieldsPanel.setBorder(new TitledBorder(_("Favorites")));
 
 		//buttons preparing
 		JComboBox locationsButton = this.getDropDownList();
@@ -358,39 +354,27 @@ public class EmbeddedFileChooserFavorites extends JPanel
 				}
 			});
 
- 		//layout filling
- 		JPanel p2 = new JPanel();
- 		p2.setLayout(new BorderLayout());
-		JLabel locationsLabel = new JLabel(_("Choose location"));
-		p2.add(locationsLabel, BorderLayout.WEST);
-		p2.add(new JLabel(" "), BorderLayout.CENTER);
-
-		JPanel p3 = new JPanel(new FlowLayout());
-		p3.add(addFavsButton);
-		p3.add(removeFavsButton);
-		p2.add(p3, BorderLayout.EAST);
+		//layout filling
+		JPanel p2 = new JPanel();
+		p2.add(new JLabel(_("Choose location")));
+		p2.add(addFavsButton);
+		p2.add(removeFavsButton);
 
 		fieldsPanel.add(p2);
 		fieldsPanel.add(this.favoritesCombo);
 
-		p.add(fieldsPanel);
-		return p;
+		return fieldsPanel;
 	}
- 	/*
- 	 * Builds and returns history GUI
+
+	/*
+	 * Builds and returns history GUI
 	 *
- 	 * @returns panel containing history GUI
- 	 */
-
- 	protected JPanel getHistoryGui() {
- 		//layout settings
- 		JPanel p = new JPanel();
- 		p.setBorder(new CompoundBorder(new TitledBorder(_("History")),
-					       new EmptyBorder(3, 3, 3, 3)));
- 		p.setLayout(new BorderLayout(0, 10));
-
- 		JPanel fieldsPanel = new JPanel();
- 		fieldsPanel.setLayout(new GridLayout(0,1));//new BoxLayout(fieldsPanel, BoxLayout.PAGE_AXIS));
+	 * @returns panel containing history GUI
+	 */
+	protected JComponent getHistoryGui() {
+		//layout settings
+		Box fieldsPanel = new Box(BoxLayout.PAGE_AXIS);
+		fieldsPanel.setBorder(new TitledBorder(_("History")));
 
 		//buttons prepating
 		this.dirsCombo = this.getDropDownList();
@@ -401,9 +385,8 @@ public class EmbeddedFileChooserFavorites extends JPanel
 		fieldsPanel.add(locationsLabel);
 		fieldsPanel.add(this.dirsCombo);
 
- 		p.add(fieldsPanel);
- 		return p;
- 	}
+		return fieldsPanel;
+	}
 
 
 	/*
