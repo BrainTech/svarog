@@ -3,6 +3,9 @@ package org.signalml.app.view.components;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -252,24 +255,12 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	public void lastDirectoryChanged(String dir) {
 		log.debug("lastDirectoryChanged: " + dir);
 	 	String[] dirs = this.applicationConfiguration.getLastDirs();
-	 	String[] new_dirs;
-	 	if (dirs == null) {
-	 		new_dirs = new String[1];
-	 		new_dirs[0] = dir;
-	 	} else {
-	 		if (dirs.length < NUM_OF_LAST_DIRECTORIES) {
-	 			new_dirs = new String[dirs.length+1];
-	 			for (int i = 0; i < dirs.length; i++)
-	 				new_dirs[i+1] = dirs[i];
-	 			new_dirs[0] = dir;
-	 		} else {
-	 			new_dirs = new String[dirs.length];
-	 			for (int i = 0; i < dirs.length-1; i++)
-	 				new_dirs[i+1] = dirs[i];
-	 			new_dirs[0] = dir;
-	 		}
-	 	}
-		this.updateLastDirectories(new_dirs);
+		LinkedList<String> list = new LinkedList<String>(Arrays.asList(dirs));
+		list.remove(dir);
+		list.addFirst(dir);
+		if(list.size() > NUM_OF_LAST_DIRECTORIES)
+			list.removeLast();
+		this.updateLastDirectories(list.toArray(new String[0]));
 	}
 
 	/*
