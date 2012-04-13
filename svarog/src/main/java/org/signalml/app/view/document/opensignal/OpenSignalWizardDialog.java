@@ -140,4 +140,11 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 		return step == 1; 
 	}
 
+	@Override
+	protected void onDialogCloseWithOK() {
+		log.debug("onDialogCloseWithOK");
+		super.onDialogCloseWithOK();
+
+		this.getStepOnePanel().onDialogCloseWithOK();
+	}
 }

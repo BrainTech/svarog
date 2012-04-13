@@ -243,4 +243,9 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		}
 	}
 
+	public void onDialogCloseWithOK() {
+		log.debug("onDialogCloseWithOK");
+		if(getSelectedSignalSource() == SignalSource.FILE)
+			getFileChooserPanel().getFileChooser().lastDirectoryChanged();
+	}
 }

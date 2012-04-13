@@ -149,4 +149,9 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 		return openSignalDescriptor;
 	}
+
+	protected void onDialogCloseWithOK() {
+		log.debug("onDialogCloseWithOK");
+		getSignalSourceTabbedPane().onDialogCloseWithOK();
+	}
 }
