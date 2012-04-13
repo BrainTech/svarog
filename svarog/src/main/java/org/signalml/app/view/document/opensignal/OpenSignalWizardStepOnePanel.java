@@ -17,25 +17,28 @@ import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
 import org.signalml.app.view.workspace.ViewerElementManager;
 
+import org.apache.log4j.Logger;
+
 public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListener, PropertyChangeListener {
+	protected static final Logger log = Logger.getLogger(OpenSignalWizardStepOnePanel.class);
 
 	private SignalSourceTabbedPane signalSourceTabbedPane;
 	private ViewerElementManager viewerElementManager;
 
 	private SignalParametersPanel signalParametersPanel;
 	private ChannelSelectPanel channelSelectPanel;
-	
+
 	private OtherSettingsPanel otherSettingsPanel;
 
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 
 	public OpenSignalWizardStepOnePanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
-		
+
 		this.setLayout(new GridLayout(1, 2));
 		this.add(createLeftPanel());
 		this.add(createRightPanel());
-		
+
 		preparePanelsForSignalSource();
 	}
 
@@ -46,17 +49,17 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		signalParametersPanel = new SignalParametersPanel();
 		signalParametersPanel.addPropertyChangeListener(this);
 		leftPanel.add(signalParametersPanel, BorderLayout.SOUTH);
-		
+
 		return leftPanel;
 	}
 
 	protected JPanel createRightPanel() {
 		JPanel rightPanel = new JPanel(new BorderLayout());
-		
+
 		channelSelectPanel = new ChannelSelectPanel();
 		rightPanel.add(channelSelectPanel, BorderLayout.CENTER);
 		rightPanel.add(getOtherSettingsPanel(), BorderLayout.SOUTH);
-		
+
 		return rightPanel;
 	}
 
@@ -101,7 +104,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 			if (!openSignalDescriptor.isCorrectlyRead()
 					|| channelCount != openSignalDescriptor.getSignalParameters().getChannelCount()) {
-				
+
 				int i = 0;
 				String[] channelLabels = new String[channelCount];
 				float[] calibrationGain = new float[channelCount];
@@ -130,7 +133,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 			}
 		}
 	}
-	
+
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		signalParametersPanel.fillPanelFromModel(openSignalDescriptor);
 		channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
@@ -145,5 +148,10 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		}
 
 		return openSignalDescriptor;
+	}
+
+	protected void onDialogCloseWithOK() {
+		log.debug("onDialogCloseWithOK");
+		getSignalSourceTabbedPane().onDialogCloseWithOK();
 	}
 }

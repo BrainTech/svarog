@@ -29,9 +29,11 @@ public class SignalMLFileChooser extends JFileChooser {
 		this.setAccessory(f);
 	}
 
-	public void lastDirectoryChanged(String dir) {
-		if (getAccessory() != null)
+	public void lastDirectoryChanged() {
+		if (getAccessory() != null) {
+			String dir = getSelectedFile().getParent();
 			getAccessory().lastDirectoryChanged(dir);
+		}
 	}
 
 	/**
