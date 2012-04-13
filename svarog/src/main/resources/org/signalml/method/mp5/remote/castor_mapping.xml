@@ -4,172 +4,172 @@
 
 <mapping>
 
-	<class name="org.signalml.method.mp5.remote.TestConnectionRequest">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="TestConnectionRequest"/>
-	    
-	    <field name="credentials" type="org.signalml.method.mp5.remote.Credentials">
-	    	<bind-xml name="credentials" node="element" />
-	    </field>
-	    
-	    <field name="helloString" type="java.lang.String">
-	    	<bind-xml name="hello-string" node="element" />
-	    </field>
-	
-	</class>
-	
-	<class name="org.signalml.method.mp5.remote.TestConnectionResponse">
-	
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="TestConnectionResponse"/>
-	
-	    <field name="responseString" type="java.lang.String">
-	    	<bind-xml name="response-string" node="element" />
-	    </field>		
-	
-	</class>
+    <class name="org.signalml.method.mp5.remote.TestConnectionRequest">
 
-	<class name="org.signalml.method.mp5.remote.DecompositionRequest">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionRequest"/>
-	    
-	    <field name="credentials" type="org.signalml.method.mp5.remote.Credentials">
-	    	<bind-xml name="credentials" node="element" />
-	    </field>
-	    
-	    <field name="uid" type="java.lang.String">
-	    	<bind-xml name="uid" node="element" />
-	    </field>
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="TestConnectionRequest"/>
 
-	    <field name="signal" type="java.lang.String">
-	    	<bind-xml name="signal" node="element" />
-	    </field>
+        <field name="credentials" type="org.signalml.method.mp5.remote.Credentials">
+            <bind-xml name="credentials" node="element" />
+        </field>
 
-	    <field name="config" type="java.lang.String">
-	    	<bind-xml name="config" node="element" />
-	    </field>
-	
-	</class>
+        <field name="helloString" type="java.lang.String">
+            <bind-xml name="hello-string" node="element" />
+        </field>
 
-	<class name="org.signalml.method.mp5.remote.DecompositionResponse">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionResponse"/>
-	    
-	    <field name="book" type="java.lang.String">
-	    	<bind-xml name="book" node="element" />
-	    </field>
-	
-	</class>
-	
-	<class name="org.signalml.method.mp5.remote.DecompositionProgressRequest">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionProgressRequest"/>
-	    	    
-	    <field name="uid" type="java.lang.String">
-	    	<bind-xml name="uid" node="element" />
-	    </field>
-	
-	</class>
+    </class>
 
-	<class name="org.signalml.method.mp5.remote.DecompositionProgressResponse">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionProgressResponse"/>
-	    
-	    <field name="status" type="java.lang.String">
-	    	<bind-xml name="status" node="element" />
-	    </field>
+    <class name="org.signalml.method.mp5.remote.TestConnectionResponse">
 
-	    <field name="messageCode" type="java.lang.String">
-	    	<bind-xml name="message-code" node="element" />
-	    </field>
-	    	    
-		<field name="messageArguments" collection="arraylist" type="java.lang.String" >
-			<bind-xml name="message-argument" node="element" />
-		</field>
-	    
-		<field name="tickerLimits" collection="arraylist" type="java.lang.Integer">
-			<bind-xml name="ticker-limit" node="element" />
-		</field>
-		
-		<field name="tickers" collection="arraylist" type="java.lang.Integer">
-			<bind-xml name="ticker" node="element" />
-		</field>
-			    	    
-	</class>
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="TestConnectionResponse"/>
 
-	<class name="org.signalml.method.mp5.remote.DecompositionAbortRequest">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionAbortRequest"/>
-	    	    
-	    <field name="uid" type="java.lang.String">
-	    	<bind-xml name="uid" node="element" />
-	    </field>
-	
-	</class>
+        <field name="responseString" type="java.lang.String">
+            <bind-xml name="response-string" node="element" />
+        </field>
 
-	<class name="org.signalml.method.mp5.remote.DecompositionAbortResponse">
-	    
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionAbortResponse"/>
-	    
-	</class>
-	
-	<class name="org.signalml.method.mp5.remote.Credentials">
+    </class>
 
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="credentials"/>
-	
-		<field name="passwordCredentials" type="org.signalml.method.mp5.remote.PasswordCredentials">
-	    	<bind-xml name="password" node="element" />		
-		</field>
-		
-		<field name="sharedSecretCredentials" type="org.signalml.method.mp5.remote.SharedSecretCredentials">
-	    	<bind-xml name="shared-secret" node="element" />				
-		</field>
-		
-	</class>
-	
-	<class name="org.signalml.method.mp5.remote.PasswordCredentials">
+    <class name="org.signalml.method.mp5.remote.DecompositionRequest">
 
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="password"/>
-	
-	    <field name="userName" type="java.lang.String">
-	    	<bind-xml name="username" node="element" />
-	    </field>		
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionRequest"/>
 
-	    <field name="password" type="java.lang.String">
-	    	<bind-xml name="password" node="element" />
-	    </field>		
-	
-	</class>
+        <field name="credentials" type="org.signalml.method.mp5.remote.Credentials">
+            <bind-xml name="credentials" node="element" />
+        </field>
 
-	<class name="org.signalml.method.mp5.remote.SharedSecretCredentials">
-	
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="shared-secret"/>
-	
-	    <field name="userName" type="java.lang.String">
-	    	<bind-xml name="username" node="element" />
-	    </field>		
+        <field name="uid" type="java.lang.String">
+            <bind-xml name="uid" node="element" />
+        </field>
 
-	    <field name="loginTime" type="java.util.Date">
-	    	<bind-xml name="login-time" node="element" />
-	    </field>		
+        <field name="signal" type="java.lang.String">
+            <bind-xml name="signal" node="element" />
+        </field>
 
-	    <field name="token" type="java.lang.String">
-	    	<bind-xml name="token" node="element" />
-	    </field>		
-	
-	</class>
+        <field name="config" type="java.lang.String">
+            <bind-xml name="config" node="element" />
+        </field>
 
-	<class name="org.signalml.method.mp5.remote.ResolvableFault">
+    </class>
 
-	    <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="ResolvableFault"/>
-	    
-	    <field name="messageCode" type="java.lang.String">
-	    	<bind-xml name="message-code" node="element" />
-	    </field>
+    <class name="org.signalml.method.mp5.remote.DecompositionResponse">
 
-		<field name="messageArguments" collection="arraylist" type="java.lang.String" >
-			<bind-xml name="message-argument" node="element" />
-		</field>
-	
-	</class>
-	
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionResponse"/>
+
+        <field name="book" type="java.lang.String">
+            <bind-xml name="book" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.DecompositionProgressRequest">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionProgressRequest"/>
+
+        <field name="uid" type="java.lang.String">
+            <bind-xml name="uid" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.DecompositionProgressResponse">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionProgressResponse"/>
+
+        <field name="status" type="java.lang.String">
+            <bind-xml name="status" node="element" />
+        </field>
+
+        <field name="messageCode" type="java.lang.String">
+            <bind-xml name="message-code" node="element" />
+        </field>
+
+        <field name="messageArguments" collection="arraylist" type="java.lang.String" >
+            <bind-xml name="message-argument" node="element" />
+        </field>
+
+        <field name="tickerLimits" collection="arraylist" type="java.lang.Integer">
+            <bind-xml name="ticker-limit" node="element" />
+        </field>
+
+        <field name="tickers" collection="arraylist" type="java.lang.Integer">
+            <bind-xml name="ticker" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.DecompositionAbortRequest">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionAbortRequest"/>
+
+        <field name="uid" type="java.lang.String">
+            <bind-xml name="uid" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.DecompositionAbortResponse">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="DecompositionAbortResponse"/>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.Credentials">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="credentials"/>
+
+        <field name="passwordCredentials" type="org.signalml.method.mp5.remote.PasswordCredentials">
+            <bind-xml name="password" node="element" />
+        </field>
+
+        <field name="sharedSecretCredentials" type="org.signalml.method.mp5.remote.SharedSecretCredentials">
+            <bind-xml name="shared-secret" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.PasswordCredentials">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="password"/>
+
+        <field name="userName" type="java.lang.String">
+            <bind-xml name="username" node="element" />
+        </field>
+
+        <field name="password" type="java.lang.String">
+            <bind-xml name="password" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.SharedSecretCredentials">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="shared-secret"/>
+
+        <field name="userName" type="java.lang.String">
+            <bind-xml name="username" node="element" />
+        </field>
+
+        <field name="loginTime" type="java.util.Date">
+            <bind-xml name="login-time" node="element" />
+        </field>
+
+        <field name="token" type="java.lang.String">
+            <bind-xml name="token" node="element" />
+        </field>
+
+    </class>
+
+    <class name="org.signalml.method.mp5.remote.ResolvableFault">
+
+        <map-to ns-uri="http://org.signalml/signalmlws" ns-prefix="smlws" xml="ResolvableFault"/>
+
+        <field name="messageCode" type="java.lang.String">
+            <bind-xml name="message-code" node="element" />
+        </field>
+
+        <field name="messageArguments" collection="arraylist" type="java.lang.String" >
+            <bind-xml name="message-argument" node="element" />
+        </field>
+
+    </class>
+
 </mapping>

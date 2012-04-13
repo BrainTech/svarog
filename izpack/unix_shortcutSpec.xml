@@ -3,13 +3,13 @@
 <shortcuts>
 
   <skipIfNotSupported/>
-  
+
   <programGroup defaultName="SignalML" location="applications"/>
-                
+
   <shortcut
-  	type="Application"
-  	encoding="UTF-8"
-  	terminal="false"
+      type="Application"
+      encoding="UTF-8"
+      terminal="false"
     name="Svarog"
     target="$INSTALL_PATH${FILE_SEPARATOR}svarog.sh"
     commandLine=""
@@ -24,25 +24,25 @@
     startMenu="no"
     startup="no">
   </shortcut>
-  
+
    <shortcut
      type="Application"
-  	 encoding="UTF-8"
-  	 terminal="false"
+       encoding="UTF-8"
+       terminal="false"
      name="Uninstall Svarog"
      programGroup="yes"
      desktop="no"
      applications="no"
      startMenu="no"
      startup="no"
-     target="$JAVA_HOME${FILE_SEPARATOR}bin${FILE_SEPARATOR}java"     
+     target="$JAVA_HOME${FILE_SEPARATOR}bin${FILE_SEPARATOR}java"
      commandLine="-jar &quot;$INSTALL_PATH${FILE_SEPARATOR}Uninstaller${FILE_SEPARATOR}ninstaller.jar&quot;"
      iconFile="trashcan_full"
-     iconIndex="0" 
+     iconIndex="0"
      description="This uninstalls Svarog"
-   	 TryExec="java -jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
+        TryExec="java -jar &quot;$INSTALL_PATH/Uninstaller/uninstaller.jar&quot;"
      >
-     
+
    </shortcut>
-  
+
 </shortcuts>

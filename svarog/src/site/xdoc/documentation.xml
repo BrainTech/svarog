@@ -12,32 +12,32 @@
 
     <section name="Documentation">
 
-		<p>
-			Unfortunately not much documentation is available at this moment.
-		</p>
+        <p>
+            Unfortunately not much documentation is available at this moment.
+        </p>
 
-		<subsection name="Application documentation">
+        <subsection name="Application documentation">
 
-			<p>
-				The application itself should be reasonably easy to use without documentation.
-			</p>
-			
-			<p>
-				There is some information in <a href="http://signalml.org/wiki/">the wiki</a>, but 
-				it's not much at this moment.
-			</p>
+            <p>
+                The application itself should be reasonably easy to use without documentation.
+            </p>
 
-		</subsection>		
-		
-		<subsection name="Code documentation">
-		
-			<p>
-				<a href="apidocs/index.html">API docs</a> 
-				are available, but actual documentation inside is rather scarce.
-			</p>
+            <p>
+                There is some information in <a href="http://signalml.org/wiki/">the wiki</a>, but
+                it's not much at this moment.
+            </p>
 
-		</subsection>
-			
+        </subsection>
+
+        <subsection name="Code documentation">
+
+            <p>
+                <a href="apidocs/index.html">API docs</a>
+                are available, but actual documentation inside is rather scarce.
+            </p>
+
+        </subsection>
+
     </section>
 
   </body>

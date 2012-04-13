@@ -1,562 +1,562 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.signalml</groupId>
-	<artifactId>svarog</artifactId>
-	<packaging>jar</packaging>
-	<version>0.5.0-SNAPSHOT</version>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.signalml</groupId>
+    <artifactId>svarog</artifactId>
+    <packaging>jar</packaging>
+    <version>0.5.0-SNAPSHOT</version>
 
-	<name>Svarog</name>
-	<parent>
-		<groupId>org.signalml</groupId>
-		<artifactId>svarog-top</artifactId>
-		<version>0.5.0-SNAPSHOT</version>
-	</parent>
+    <name>Svarog</name>
+    <parent>
+        <groupId>org.signalml</groupId>
+        <artifactId>svarog-top</artifactId>
+        <version>0.5.0-SNAPSHOT</version>
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
-		<project.build.i18n.resources>src/main/resources/org/signalml/app/resource/i18n/</project.build.i18n.resources>
-		<maven.test.failure.ignore>true</maven.test.failure.ignore>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.i18n.resources>src/main/resources/org/signalml/app/resource/i18n/</project.build.i18n.resources>
+        <maven.test.failure.ignore>true</maven.test.failure.ignore>
 
-		<protobuf.protoc>protoc</protobuf.protoc>
-		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
-		<protobuf.proto_file>variables.proto</protobuf.proto_file>
-		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
-		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
-		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
+        <protobuf.protoc>protoc</protobuf.protoc>
+        <protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
+        <protobuf.proto_file>variables.proto</protobuf.proto_file>
+        <protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
+        <generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
+        <generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
 
-		<git.git>git</git.git>
+        <git.git>git</git.git>
 
-		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
-		<springframework.version>2.0.7</springframework.version>
-	</properties>
+        <multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
+        <springframework.version>2.0.7</springframework.version>
+    </properties>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>add-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
-								<source>${generated_sources_dir}</source>
-							</sources>
-						</configuration>
-					</execution>
-					<execution>
-						<id>add-resource</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>add-resource</goal>
-						</goals>
-						<configuration>
-							<resources>
-								<resource>
-									<directory>${generated_resources_dir}</directory>
-									<targetPath>svarog</targetPath>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.4</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>org.signalml.app.SvarogApplication</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<outputEncoding>UTF-8</outputEncoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${generated_sources_dir}</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-resource</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <resources>
+                                <resource>
+                                    <directory>${generated_resources_dir}</directory>
+                                    <targetPath>svarog</targetPath>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>org.signalml.app.SvarogApplication</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <outputEncoding>UTF-8</outputEncoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
 
-				<configuration>
-					<mainClass>org.signalml.app.SvarogApplication</mainClass>
-				</configuration>
-			</plugin>
+                <configuration>
+                    <mainClass>org.signalml.app.SvarogApplication</mainClass>
+                </configuration>
+            </plugin>
 
-			<plugin>
-				<groupId>org.dstovall</groupId>
-				<artifactId>onejar-maven-plugin</artifactId>
-				<version>1.4.1</version>
-				<executions>
-					<execution>
-						<configuration>
-							<!-- Optional, default is false -->
-							<attachToBuild>true</attachToBuild>
-						</configuration>
-						<goals>
-							<goal>one-jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+            <plugin>
+                <groupId>org.dstovall</groupId>
+                <artifactId>onejar-maven-plugin</artifactId>
+                <version>1.4.1</version>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <!-- Optional, default is false -->
+                            <attachToBuild>true</attachToBuild>
+                        </configuration>
+                        <goals>
+                            <goal>one-jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.6</version>
-				<executions>
-					<execution>
-						<id>generate-sources-check</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<target>
-								<echo message="checking for ${protobuf.protoc}" />
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>generate-sources-check</id>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <target>
+                                <echo message="checking for ${protobuf.protoc}" />
 
-								<exec executable="${protobuf.protoc}"
-								      failifexecutionfails="false"
-								      outputproperty="protobuf.protoc.version.output"
-								      resultproperty="protobuf.protoc.version.result">
-									<arg value="--version" />
-								</exec>
-								<condition property="protobuf.protoc.available"
+                                <exec executable="${protobuf.protoc}"
+                                      failifexecutionfails="false"
+                                      outputproperty="protobuf.protoc.version.output"
+                                      resultproperty="protobuf.protoc.version.result">
+                                    <arg value="--version" />
+                                </exec>
+                                <condition property="protobuf.protoc.available"
                                                                            value="${protobuf.protoc}"
                                                                            else="true">
                                                                         <!-- I seems very hard to do a conditional compilation. Let's
                                                                              then do a fake compilation instead. -->
 
                                                                         <!-- protoc returns 1 on success, how lame -->
-									<equals arg1="${protobuf.protoc.version.result}" arg2="1" />
-								</condition>
+                                    <equals arg1="${protobuf.protoc.version.result}" arg2="1" />
+                                </condition>
 
-								<echo message="protobuf.protoc.version.result=${protobuf.protoc.version.result}" />
-								<echo message="protobuf.protoc.version.output=${protobuf.protoc.version.output}" />
+                                <echo message="protobuf.protoc.version.result=${protobuf.protoc.version.result}" />
+                                <echo message="protobuf.protoc.version.output=${protobuf.protoc.version.output}" />
                                                                 <echo message="protobuf.protoc.available=${protobuf.protoc.available}" />
 
                                                                 <mkdir dir="${generated_sources_dir}" />
                                                                 <exec executable="${protobuf.protoc.available}" failonerror="true">
-									<arg value="-I" />
-									<arg value="${protobuf.source_dir}" />
-									<arg value="--java_out=${generated_sources_dir}"/>
-									<arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
-								</exec>
+                                    <arg value="-I" />
+                                    <arg value="${protobuf.source_dir}" />
+                                    <arg value="--java_out=${generated_sources_dir}"/>
+                                    <arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
+                                </exec>
                                                         </target>
                                                 </configuration>
                                                 <goals>
-							<goal>run</goal>
-						</goals>
+                            <goal>run</goal>
+                        </goals>
                                         </execution>
 
-					<execution>
-						<id>generate-sources-compile</id>
+                    <execution>
+                        <id>generate-sources-compile</id>
                                                 <phase>generate-sources</phase>
                                                 <configuration>
                                                         <target>
                                                                 <java classname="multiplexer.jmx.tools.CompileConstants"
                                                                       failonerror="true">
                                                                         <arg value="-input"/>
-									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
-									<arg value="-outdir"/>
-									<arg value="${generated_sources_dir}/org/signalml/multiplexer/protocol"/>
-									<arg value="-class"/>
-									<arg value="SvarogConstants"/>
-									<arg value="-package"/>
-									<arg value="org.signalml.multiplexer.protocol"/>
-								</java>
+                                    <arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
+                                    <arg value="-outdir"/>
+                                    <arg value="${generated_sources_dir}/org/signalml/multiplexer/protocol"/>
+                                    <arg value="-class"/>
+                                    <arg value="SvarogConstants"/>
+                                    <arg value="-package"/>
+                                    <arg value="org.signalml.multiplexer.protocol"/>
+                                </java>
                                                         </target>
                                                 </configuration>
                                                 <goals>
-							<goal>run</goal>
-						</goals>
+                            <goal>run</goal>
+                        </goals>
                                         </execution>
 
-					<execution>
-						<id>git-describe</id>
-						<phase>generate-resources</phase>
-						<configuration>
-							<target>
-								<exec executable="${git.git}"
-								      failifexecutionfails="false"
-								      outputproperty="git-describe.output"
-								      resultproperty="git-describe.result">
-									<arg value="describe" />
-									<arg value="--always" />
-									<arg value="--tags" />
-									<arg value="--dirty=+" />
-								</exec>
-								<condition property="svarog.git-version"
-									   value="${git-describe.output}"
-									   else="${project.version}">
-									<equals arg1="${git-describe.result}" arg2="0" />
-								</condition>
-								<echo message="svarog.git-version=${svarog.git-version}" />
-								<echo message="${svarog.git-version}" output="${generated_resources_dir}/git-version" />
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
+                    <execution>
+                        <id>git-describe</id>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <target>
+                                <exec executable="${git.git}"
+                                      failifexecutionfails="false"
+                                      outputproperty="git-describe.output"
+                                      resultproperty="git-describe.result">
+                                    <arg value="describe" />
+                                    <arg value="--always" />
+                                    <arg value="--tags" />
+                                    <arg value="--dirty=+" />
+                                </exec>
+                                <condition property="svarog.git-version"
+                                       value="${git-describe.output}"
+                                       else="${project.version}">
+                                    <equals arg1="${git-describe.result}" arg2="0" />
+                                </condition>
+                                <echo message="svarog.git-version=${svarog.git-version}" />
+                                <echo message="${svarog.git-version}" output="${generated_resources_dir}/git-version" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
 
-					<execution>
-						<id>print-classpath</id>
-						<phase>compile</phase>
-						<configuration>
-							<target>
-								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
-								<echo message="runtime CLASSPATH=${runtime_classpath}"/>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
+                    <execution>
+                        <id>print-classpath</id>
+                        <phase>compile</phase>
+                        <configuration>
+                            <target>
+                                <property name="runtime_classpath" refid="maven.runtime.classpath"/>
+                                <echo message="runtime CLASSPATH=${runtime_classpath}"/>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
 
-				<dependencies>
-					<dependency>
-						<groupId>multiplexer</groupId>
-						<artifactId>jmx</artifactId>
-						<version>${multiplexer.jmx.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
+                <dependencies>
+                    <dependency>
+                        <groupId>multiplexer</groupId>
+                        <artifactId>jmx</artifactId>
+                        <version>${multiplexer.jmx.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<!--importing artifacts for downloading -->
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<id>copy</id>
-						<phase>site</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>svarog</artifactId>
-									<version>${project.version}</version>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>target/site/downloads/</outputDirectory>
-									<destFileName>svarog-${project.version}.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>svarog</artifactId>
-									<version>${project.version}</version>
-									<type>jar</type>
-									<classifier>onejar</classifier>
-									<overWrite>true</overWrite>
-									<outputDirectory>target/site/downloads/</outputDirectory>
-									<destFileName>svarog-${project.version}-onejar.jar</destFileName>
-								</artifactItem>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <!--importing artifacts for downloading -->
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.2</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>site</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>svarog</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/site/downloads/</outputDirectory>
+                                    <destFileName>svarog-${project.version}.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>svarog</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <classifier>onejar</classifier>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/site/downloads/</outputDirectory>
+                                    <destFileName>svarog-${project.version}-onejar.jar</destFileName>
+                                </artifactItem>
 
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>svarog-installer</artifactId>
-									<version>${project.version}</version>
-									<type>jar</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>target/site/downloads/</outputDirectory>
-									<destFileName>svarog-${project.version}-installer.jar</destFileName>
-								</artifactItem>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>svarog-installer</artifactId>
-									<version>${project.version}</version>
-									<type>exe</type>
-									<overWrite>true</overWrite>
-									<outputDirectory>target/site/downloads/</outputDirectory>
-									<destFileName>svarog-${project.version}-installer.exe</destFileName>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>svarog-installer</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>jar</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/site/downloads/</outputDirectory>
+                                    <destFileName>svarog-${project.version}-installer.jar</destFileName>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>svarog-installer</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>exe</type>
+                                    <overWrite>true</overWrite>
+                                    <outputDirectory>target/site/downloads/</outputDirectory>
+                                    <destFileName>svarog-${project.version}-installer.exe</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 
-			<plugin>
-				<groupId>org.xnap.commons</groupId>
-				<artifactId>maven-gettext-plugin</artifactId>
-				<version>1.2.3</version>
+            <plugin>
+                <groupId>org.xnap.commons</groupId>
+                <artifactId>maven-gettext-plugin</artifactId>
+                <version>1.2.3</version>
 
-				<configuration>
-					<poDirectory>${project.build.i18n.resources}</poDirectory>
-					<targetBundle>org.signalml.app</targetBundle>
-				</configuration>
+                <configuration>
+                    <poDirectory>${project.build.i18n.resources}</poDirectory>
+                    <targetBundle>org.signalml.app</targetBundle>
+                </configuration>
 
-				<executions>
-					<execution>
-						<id>gettext-dist</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>dist</goal>
-						</goals>
-						<inherited>false</inherited>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+                <executions>
+                    <execution>
+                        <id>gettext-dist</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>dist</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.xnap.commons</groupId>
-			<artifactId>gettext-commons</artifactId>
-			<version>0.9.6</version>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.xnap.commons</groupId>
+            <artifactId>gettext-commons</artifactId>
+            <version>0.9.6</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-math</artifactId>
-			<version>2.1</version>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-math</artifactId>
+            <version>2.1</version>
+        </dependency>
 
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-cli</groupId>
-			<artifactId>commons-cli</artifactId>
-			<version>1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>logkit</groupId>
-					<artifactId>logkit</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>avalon-framework</groupId>
-					<artifactId>avalon-framework</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>javax.servlet</groupId>
-					<artifactId>servlet-api</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${springframework.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>aopalliance</groupId>
-					<artifactId>aopalliance</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>janino</groupId>
-			<artifactId>janino</artifactId>
-			<version>2.5.10</version>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>1.0.8a</version>
-		</dependency>
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.3.1</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xpp3</groupId>
-					<artifactId>xpp3_min</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>xerces</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.9.1</version>
-		</dependency>
-		<dependency>
-			<groupId>jmatio</groupId>
-			<artifactId>jmatio</artifactId>
-			<version>0.1-alpha</version>
-		</dependency>
-		<dependency>
-			<groupId>org.signalml</groupId>
-			<artifactId>eega-tag-library</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.netty</groupId>
-			<artifactId>netty</artifactId>
-			<version>3.1.0.GA</version>
-		</dependency>
-		<dependency>
-			 <groupId>org.freemarker</groupId>
-			 <artifactId>freemarker</artifactId>
-			 <version>2.3.15</version>
-		</dependency>
-		<dependency>
-				<groupId>com.google.collections</groupId>
-				<artifactId>google-collections</artifactId>
-				<version>1.0-rc2</version>
-		</dependency>
-		<dependency>
-				<groupId>com.google.protobuf</groupId>
-				<artifactId>protobuf-java</artifactId>
-				<version>2.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.5.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-jdk14</artifactId>
-			<version>1.5.8</version>
-		</dependency>
-		<dependency>
-			<groupId>multiplexer</groupId>
-			<artifactId>jmx</artifactId>
-			<version>${multiplexer.jmx.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>edu.emory.mathcs</groupId>
-			<artifactId>jtransforms</artifactId>
-			<version>2.3</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.bluecove</groupId>
-			<artifactId>bluecove</artifactId>
-			<version>2.1.0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sf.bluecove</groupId>
-			<artifactId>bluecove-gpl</artifactId>
-			<version>2.1.0</version>
-			<scope>runtime</scope>
-		</dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-cli</groupId>
+            <artifactId>commons-cli</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>logkit</groupId>
+                    <artifactId>logkit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>avalon-framework</groupId>
+                    <artifactId>avalon-framework</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${springframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${springframework.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>aopalliance</groupId>
+                    <artifactId>aopalliance</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>2.5.10</version>
+        </dependency>
+        <dependency>
+            <groupId>jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.8a</version>
+        </dependency>
+        <dependency>
+            <groupId>com.thoughtworks.xstream</groupId>
+            <artifactId>xstream</artifactId>
+            <version>1.3.1</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xpp3</groupId>
+                    <artifactId>xpp3_min</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>jmatio</groupId>
+            <artifactId>jmatio</artifactId>
+            <version>0.1-alpha</version>
+        </dependency>
+        <dependency>
+            <groupId>org.signalml</groupId>
+            <artifactId>eega-tag-library</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>3.1.0.GA</version>
+        </dependency>
+        <dependency>
+             <groupId>org.freemarker</groupId>
+             <artifactId>freemarker</artifactId>
+             <version>2.3.15</version>
+        </dependency>
+        <dependency>
+                <groupId>com.google.collections</groupId>
+                <artifactId>google-collections</artifactId>
+                <version>1.0-rc2</version>
+        </dependency>
+        <dependency>
+                <groupId>com.google.protobuf</groupId>
+                <artifactId>protobuf-java</artifactId>
+                <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.5.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.5.8</version>
+        </dependency>
+        <dependency>
+            <groupId>multiplexer</groupId>
+            <artifactId>jmx</artifactId>
+            <version>${multiplexer.jmx.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>edu.emory.mathcs</groupId>
+            <artifactId>jtransforms</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.bluecove</groupId>
+            <artifactId>bluecove</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.bluecove</groupId>
+            <artifactId>bluecove-gpl</artifactId>
+            <version>2.1.0</version>
+            <scope>runtime</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.json</groupId>
-			<artifactId>json</artifactId>
-			<version>20090211</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jettison</groupId>
-			<artifactId>jettison</artifactId>
-			<version>1.3.1</version>
-		</dependency>
-		<dependency>
-   			<groupId>org.codehaus.jackson</groupId>
-   			<artifactId>jackson-mapper-asl</artifactId>
-   			<version>1.9.3</version>
-		</dependency>
-            
-		<!-- dependencies below are specified in util/maven/pom.xml -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20090211</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jettison</groupId>
+            <artifactId>jettison</artifactId>
+            <version>1.3.1</version>
+        </dependency>
+        <dependency>
+               <groupId>org.codehaus.jackson</groupId>
+               <artifactId>jackson-mapper-asl</artifactId>
+               <version>1.9.3</version>
+        </dependency>
 
-	<scm>
-		<connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
-		<developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
-		<url>http://escher.fuw.edu.pl/git/svarog</url>
-	</scm>
+        <!-- dependencies below are specified in util/maven/pom.xml -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 
-	<reporting>
-		<plugins>
+    <scm>
+        <connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
+        <developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
+        <url>http://escher.fuw.edu.pl/git/svarog</url>
+    </scm>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<version>2.4</version>
-				<reportSets>
-					<reportSet>
-						<reports>
-							<report>summary</report>
-							<report>license</report>
-							<report>project-team</report>
-							<report>mailing-list</report>
-							<report>scm</report>
-							<report>dependencies</report>
-							<report>issue-tracking</report>
-							<report>plugins</report>
-						</reports>
-					</reportSet>
-				</reportSets>
-			</plugin>
+    <reporting>
+        <plugins>
 
-		</plugins>
-	</reporting>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.4</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>summary</report>
+                            <report>license</report>
+                            <report>project-team</report>
+                            <report>mailing-list</report>
+                            <report>scm</report>
+                            <report>dependencies</report>
+                            <report>issue-tracking</report>
+                            <report>plugins</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
 
-	<mailingLists>
-		<mailingList>
-			<name>signalml</name>
-			<post>signalml@googlegroups.com</post>
-			<archive>http://groups.google.com/group/signalml</archive>
-			<subscribe>signalml-subscribe@googlegroups.com</subscribe>
-			<unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
-		</mailingList>
-		<mailingList>
-			<name>svarog-dev</name>
-			<post>svarog-dev@lists.eisenbits.com</post>
-			<archive>https://lists.eisenbits.com/cgi-bin/mailman/private/svarog-dev/</archive>
-		</mailingList>
-	</mailingLists>
+        </plugins>
+    </reporting>
 
-	<distributionManagement>
-		<site>
-			<id>signalml.org</id>
-			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/svarog</url>
-		</site>
-	</distributionManagement>
+    <mailingLists>
+        <mailingList>
+            <name>signalml</name>
+            <post>signalml@googlegroups.com</post>
+            <archive>http://groups.google.com/group/signalml</archive>
+            <subscribe>signalml-subscribe@googlegroups.com</subscribe>
+            <unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
+        </mailingList>
+        <mailingList>
+            <name>svarog-dev</name>
+            <post>svarog-dev@lists.eisenbits.com</post>
+            <archive>https://lists.eisenbits.com/cgi-bin/mailman/private/svarog-dev/</archive>
+        </mailingList>
+    </mailingLists>
+
+    <distributionManagement>
+        <site>
+            <id>signalml.org</id>
+            <url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/svarog</url>
+        </site>
+    </distributionManagement>
 </project>
