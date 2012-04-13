@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -11,7 +11,7 @@ import org.signalml.plugin.export.view.DocumentView;
  * Implementation of {@link PluginDocumentViewEvent}.
  * Contains the {@link Document} and the old value of the
  * {@link DocumentView view} for it (the new value can be obtained from
- * document).  
+ * document).
  * @author Marcin Szumski
  */
 public class PluginDocumentViewEventImpl extends PluginDocumentEventImpl implements PluginDocumentViewEvent {
@@ -20,7 +20,7 @@ public class PluginDocumentViewEventImpl extends PluginDocumentEventImpl impleme
 	 * the old value of the view for the document
 	 */
 	protected DocumentView view;
-	
+
 	/**
 	 * Constructor. Sets the {@link Document} and the old value of the
 	 * {@link DocumentView view} for it.
@@ -30,9 +30,9 @@ public class PluginDocumentViewEventImpl extends PluginDocumentEventImpl impleme
 	public PluginDocumentViewEventImpl(Document document, DocumentView documentView) {
 		super(document);
 		view = documentView;
-	}	
-	
-	
+	}
+
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.change.DocumentViewEvent#getView()
 	 */

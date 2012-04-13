@@ -95,7 +95,7 @@ class FilterZerosPolesGain {
 		}
 		else
 			complexNumeratorCoeffs = new Complex[] {
-			        new Complex(1.0, 0)
+				new Complex(1.0, 0)
 			};
 
 		denominatorPoly = ComplexPolynomial.rootsToPolynomial(getPoles());
@@ -175,7 +175,7 @@ class FilterZerosPolesGain {
 		int hash = 3;
 		hash = 67 * hash + Arrays.deepHashCode(this.zeros);
 		hash = 67 * hash + Arrays.deepHashCode(this.poles);
-		hash = 67 * hash + (int) (Double.doubleToLongBits(this.gain) ^ (Double.doubleToLongBits(this.gain) >>> 32));
+		hash = 67 * hash + (int)(Double.doubleToLongBits(this.gain) ^(Double.doubleToLongBits(this.gain) >>> 32));
 		return hash;
 
 	}

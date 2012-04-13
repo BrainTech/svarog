@@ -8,8 +8,8 @@ public class NewStagerSignalStatsResult extends NewStagerResult {
 	public final boolean montage[];
 
 	public NewStagerSignalStatsResult(NewStagerSleepStats signalStatCoeffs,
-					  NewStagerParameters newParameters, double muscle[],
-					  boolean montage[]) {
+									  NewStagerParameters newParameters, double muscle[],
+									  boolean montage[]) {
 		this.signalStatCoeffs = signalStatCoeffs;
 		this.newParameters = newParameters;
 		this.muscle = muscle;

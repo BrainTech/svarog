@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -16,7 +16,7 @@ public class PluginCodecEventImpl implements PluginCodecEvent {
 	 * the format name of the codec associated with this event
 	 */
 	protected String formatName = null;
-	
+
 	/**
 	 * Constructor. Sets the format name of the codec associated with this
 	 * event.
@@ -25,7 +25,7 @@ public class PluginCodecEventImpl implements PluginCodecEvent {
 	public PluginCodecEventImpl(String codecFormatName) {
 		formatName = codecFormatName;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.change.CodecEvent#getCodecFormatName()
 	 */

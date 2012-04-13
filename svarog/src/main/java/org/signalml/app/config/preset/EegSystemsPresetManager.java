@@ -65,7 +65,7 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 
 				if (eegSystemName.getSymbol().equalsIgnoreCase(symbol)
 						&& (type == null || type.isEmpty() ||
-						type.equalsIgnoreCase(eegSystemName.getType()))) {
+							type.equalsIgnoreCase(eegSystemName.getType()))) {
 					//if type of the EEG system in the montage generator is NULL then
 					//it is not taken into account while connecting montage generators
 					//with EEG systems - this makes sense for montage generators that fit for
@@ -108,7 +108,7 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	public Class<?> getPresetClass() {
 		throw new UnsupportedOperationException("This opperation is not supported by this preset manager.");
 	}
-	
+
 	public EegSystem getEegSystem(EegSystemName eegSystemName) {
 		for (Preset preset: presets) {
 			EegSystem eegSystem = (EegSystem) preset;

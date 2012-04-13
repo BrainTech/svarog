@@ -8,5 +8,5 @@ public class LeaveExperimentRequest extends AbstractJoinOrLeaveExperimentRequest
 		super(MessageType.LEAVE_EXPERIMENT_REQUEST, experiment);
 		setPeerId(experiment.getPeerId());
 	}
-	
+
 }

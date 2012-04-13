@@ -45,7 +45,7 @@ public class PagingParametersPanel extends AbstractPanel {
 	 * the text field with the size of the page of signal in seconds
 	 */
 	private JTextField pageSizeField;
-	
+
 	/**
 	 * the text field with the number of blocks that fit into one page of
 	 * the signal
@@ -79,8 +79,8 @@ public class PagingParametersPanel extends AbstractPanel {
 	protected void createInterface() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(_("Page & block parameters")),
-		        new EmptyBorder(2,2,2,2)
+			new TitledBorder(_("Page & block parameters")),
+			new EmptyBorder(2,2,2,2)
 		);
 
 		setBorder(cb);
@@ -96,15 +96,15 @@ public class PagingParametersPanel extends AbstractPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(pageSizeLabel)
-		        .addComponent(blocksPerPageLabel)
+			layout.createParallelGroup()
+			.addComponent(pageSizeLabel)
+			.addComponent(blocksPerPageLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getPageSizeField())
-		        .addComponent(getBlocksPerPageField())
+			layout.createParallelGroup()
+			.addComponent(getPageSizeField())
+			.addComponent(getBlocksPerPageField())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -112,16 +112,16 @@ public class PagingParametersPanel extends AbstractPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(pageSizeLabel)
-				.addComponent(getPageSizeField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(pageSizeLabel)
+			.addComponent(getPageSizeField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(blocksPerPageLabel)
-				.addComponent(getBlocksPerPageField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(blocksPerPageLabel)
+			.addComponent(getBlocksPerPageField())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

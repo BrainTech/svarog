@@ -45,7 +45,7 @@ public abstract class AbstractSignalSpaceAwarePresetDialog extends AbstractPrese
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
 	public AbstractSignalSpaceAwarePresetDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);	
+		super(presetManager, w, isModal);
 	}
 
 	/**

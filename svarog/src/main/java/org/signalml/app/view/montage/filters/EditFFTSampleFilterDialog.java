@@ -160,8 +160,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(_("Ranges")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Ranges")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
 
@@ -321,39 +321,39 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(fromFrequencyLabel)
-			        .addComponent(coefficientLabel)
+				layout.createParallelGroup()
+				.addComponent(fromFrequencyLabel)
+				.addComponent(coefficientLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getFromFrequencySpinner())
-			        .addComponent(getCoefficientSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getFromFrequencySpinner())
+				.addComponent(getCoefficientSpinner())
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(toFrequencyLabel)
-			        .addComponent(filler1)
+				layout.createParallelGroup()
+				.addComponent(toFrequencyLabel)
+				.addComponent(filler1)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getToFrequencySpinner())
-			        .addComponent(filler2)
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getToFrequencySpinner())
+				.addComponent(filler2)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(unlimitedLabel)
-			        .addComponent(multiplyLabel)
+				layout.createParallelGroup()
+				.addComponent(unlimitedLabel)
+				.addComponent(multiplyLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getUnlimitedCheckBox())
-			        .addComponent(getMultiplyCheckBox())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getUnlimitedCheckBox())
+				.addComponent(getMultiplyCheckBox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -361,23 +361,23 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(fromFrequencyLabel)
-			        .addComponent(getFromFrequencySpinner())
-			        .addComponent(toFrequencyLabel)
-			        .addComponent(getToFrequencySpinner())
-			        .addComponent(unlimitedLabel)
-			        .addComponent(getUnlimitedCheckBox())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(fromFrequencyLabel)
+				.addComponent(getFromFrequencySpinner())
+				.addComponent(toFrequencyLabel)
+				.addComponent(getToFrequencySpinner())
+				.addComponent(unlimitedLabel)
+				.addComponent(getUnlimitedCheckBox())
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(coefficientLabel)
-			        .addComponent(getCoefficientSpinner())
-			        .addComponent(filler1)
-			        .addComponent(filler2)
-			        .addComponent(multiplyLabel)
-			        .addComponent(getMultiplyCheckBox())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(coefficientLabel)
+				.addComponent(getCoefficientSpinner())
+				.addComponent(filler1)
+				.addComponent(filler2)
+				.addComponent(multiplyLabel)
+				.addComponent(getMultiplyCheckBox())
 			);
 
 			layout.setVerticalGroup(vGroup);
@@ -476,7 +476,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			coefficientSpinner = new DoubleSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
 			coefficientSpinner.setPreferredSize(new Dimension(80, 25));
 
-			final JTextField editor = ((JTextField) ((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
+			final JTextField editor = ((JTextField)((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
 
 			KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
 			editor.getInputMap(JComponent.WHEN_FOCUSED).put(enter, "add");

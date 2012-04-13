@@ -36,7 +36,7 @@ import org.signalml.app.util.DirectoryFileFilter;
  * custom location},</li>
  * <li>the {@link #getFileChooser() file chooser} which allows to select
  * the directory to be used (this chooser is visible only if appropriate
- * radio button is selected.</li></ul> 
+ * radio button is selected.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

@@ -9,7 +9,7 @@ public class NewStagerFixedParameters {
 	public final double corrCoeffSems;
 
 	public NewStagerFixedParameters(double swaWidthCoeff, double alphaPerc1,
-					double alphaPerc2, double corrCoeffRems, double corrCoeffSems) {
+									double alphaPerc2, double corrCoeffRems, double corrCoeffSems) {
 		this.swaWidthCoeff = swaWidthCoeff;
 		this.alphaPerc1 = alphaPerc1;
 		this.alphaPerc2 = alphaPerc2;

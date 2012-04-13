@@ -9,7 +9,7 @@ public class PluginComputationMgrStepData<Phase> {
 	public final ThreadFactory threadFactory;
 
 	public PluginComputationMgrStepData(IPluginComputationMgrStepTrackerProxy<Phase> tracker,
-					    ThreadFactory threadFactory) {
+										ThreadFactory threadFactory) {
 		this.tracker = tracker;
 		this.threadFactory = threadFactory;
 	}

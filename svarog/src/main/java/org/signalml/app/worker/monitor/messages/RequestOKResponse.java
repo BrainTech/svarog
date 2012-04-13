@@ -3,7 +3,7 @@ package org.signalml.app.worker.monitor.messages;
 import java.util.LinkedHashMap;
 
 public class RequestOKResponse extends Message {
-	
+
 	private LinkedHashMap<String, Object> params;
 	private String status;
 	private String request;

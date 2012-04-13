@@ -26,7 +26,7 @@ public class MontagePresetManager extends AbstractPresetManager {
 
 	private static final long serialVersionUID = 1L;
 	private EegSystemsPresetManager eegSystemsPresetManager;
-	
+
 	public MontagePresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
 	}

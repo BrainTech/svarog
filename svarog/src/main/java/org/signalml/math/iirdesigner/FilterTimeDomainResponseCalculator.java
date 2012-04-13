@@ -34,7 +34,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 
 		double[] excitation = new double[excitationLength];
 
-		for(int i = 0; i < excitation.length; i++)
+		for (int i = 0; i < excitation.length; i++)
 			excitation[i] = 1.0;
 
 		return excitation;
@@ -66,7 +66,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 		double[] excitation = new double[excitationLength];
 
 		excitation[0] = 1.0;
-		for(int i = 1; i < excitation.length; i++)
+		for (int i = 1; i < excitation.length; i++)
 			excitation[i] = 0.0;
 
 		return excitation;

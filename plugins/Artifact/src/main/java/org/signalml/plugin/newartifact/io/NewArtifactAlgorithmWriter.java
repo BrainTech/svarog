@@ -40,14 +40,14 @@ public class NewArtifactAlgorithmWriter implements INewArtifactAlgorithmWriter {
 					this.byteBuffer.putFloat((float) subArray[j]);
 				} else {
 					this.stream.write(this.byteBuffer.array(), 0,
-							  this.byteBuffer.capacity() - this.byteBuffer.remaining());
+									  this.byteBuffer.capacity() - this.byteBuffer.remaining());
 					this.byteBuffer.rewind();
 				}
 			}
 		}
 		if (this.byteBuffer.remaining() < this.byteBuffer.capacity()) {
 			this.stream.write(this.byteBuffer.array(), 0,
-					  this.byteBuffer.capacity() - this.byteBuffer.remaining());
+							  this.byteBuffer.capacity() - this.byteBuffer.remaining());
 		}
 
 		//this.stream.flush();

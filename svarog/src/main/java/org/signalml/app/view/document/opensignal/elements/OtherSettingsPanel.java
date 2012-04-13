@@ -47,7 +47,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private EditGainAndOffsetDialog editGainAndOffsetDialog;
 
 	private JButton registerSignalMLCodecButton;
-	
+
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
 	/**
@@ -69,7 +69,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private PresetComboBoxModel eegSystemsPresetComboBoxModel;
 
 	private JComboBox fileTypeComboBox;
-	
+
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
@@ -97,43 +97,43 @@ public class OtherSettingsPanel extends AbstractPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(tagStylesLabel)
-		        .addComponent(fileTypeLabel)
-		        .addComponent(eegSystemsLabel)
+			layout.createParallelGroup()
+			.addComponent(tagStylesLabel)
+			.addComponent(fileTypeLabel)
+			.addComponent(eegSystemsLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getTagPresetComboBox())
-		        .addComponent(getFileTypeComboBox())
-		        .addComponent(getEegSystemsPresetComboBox())
+			layout.createParallelGroup()
+			.addComponent(getTagPresetComboBox())
+			.addComponent(getFileTypeComboBox())
+			.addComponent(getEegSystemsPresetComboBox())
 		);
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-		
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tagStylesLabel)
-				.addComponent(getTagPresetComboBox())
-			);
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(tagStylesLabel)
+			.addComponent(getTagPresetComboBox())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(fileTypeLabel)
-				.addComponent(getFileTypeComboBox())
-			);
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(fileTypeLabel)
+			.addComponent(getFileTypeComboBox())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(eegSystemsLabel)
-				.addComponent(getEegSystemsPresetComboBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(eegSystemsLabel)
+			.addComponent(getEegSystemsPresetComboBox())
+		);
 
 		layout.setVerticalGroup(vGroup);
-		
+
 		return comboBoxesPanel;
 	}
 
@@ -149,16 +149,16 @@ public class OtherSettingsPanel extends AbstractPanel {
 	public JButton getRegisterSignalMLCodecButton() {
 		if (registerSignalMLCodecButton == null) {
 			RegisterCodecAction registerCodecAction = new RegisterCodecAction();
-	        registerCodecAction.setRegisterCodecDialog(viewerElementManager.getRegisterCodecDialog());
-	        registerCodecAction.setPleaseWaitDialog(viewerElementManager.getPleaseWaitDialog());
-	        registerCodecAction.initializeAll();
+			registerCodecAction.setRegisterCodecDialog(viewerElementManager.getRegisterCodecDialog());
+			registerCodecAction.setPleaseWaitDialog(viewerElementManager.getPleaseWaitDialog());
+			registerCodecAction.initializeAll();
 
 			registerSignalMLCodecButton = new JButton(registerCodecAction);
 			registerSignalMLCodecButton.setText(_("Register SignalML codec"));
 		}
 		return registerSignalMLCodecButton;
 	}
-	
+
 	public JComboBox getFileTypeComboBox() {
 		if (fileTypeComboBox == null) {
 			FileTypeComboBoxModel model = new FileTypeComboBoxModel();
@@ -170,13 +170,13 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	/**
 	 * Returns the {@link JComboBox} that lists the available tag style presets.
-	 * 
+	 *
 	 * @return the ComboBox with tag style presets.
 	 */
 	public JComboBox getTagPresetComboBox() {
 		if (tagPresetComboBox == null) {
 			TagPresetComboBoxModel model = new TagPresetComboBoxModel(
-					viewerElementManager.getStyledTagSetPresetManager());
+				viewerElementManager.getStyledTagSetPresetManager());
 			tagPresetComboBox = new JComboBox(model);
 		}
 		return tagPresetComboBox;
@@ -185,7 +185,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	/**
 	 * Returns (and if necessary - creates) the combo box for EEG system
 	 * selection.
-	 * 
+	 *
 	 * @return the combo box for EEG system selection
 	 */
 	protected JComboBox getEegSystemsPresetComboBox() {
@@ -199,7 +199,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	/**
 	 * Returns (and if necessary - creates) a ComboBoxModel for EEG system
 	 * selection.
-	 * 
+	 *
 	 * @return the ComboBoxModel for EEG system selection
 	 */
 	protected PresetComboBoxModel getPresetComboBoxModel() {
@@ -212,10 +212,10 @@ public class OtherSettingsPanel extends AbstractPanel {
 		}
 		return eegSystemsPresetComboBoxModel;
 	}
-	
+
 	/**
 	 * Returns the edit gain and offset button.
-	 * 
+	 *
 	 * @return the edit gain and offset button
 	 */
 	protected JButton getEditGainAndOffsetButton() {
@@ -238,7 +238,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	/**
 	 * Returns the edit gain and offset dialog
-	 * 
+	 *
 	 * @return the edit gain and offset dialog
 	 */
 	protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
@@ -251,7 +251,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	/**
 	 * Returns the EEG system selected using this panel.
-	 * 
+	 *
 	 * @return the selected EEG system
 	 */
 	public EegSystem getSelectedEegSystem() {
@@ -260,13 +260,13 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	/**
 	 * Sets the EEG system which should be selected in this panel.
-	 * 
+	 *
 	 * @param name
 	 *            the name of the EEG system to be selected
 	 */
 	public void setEegSystemByName(EegSystemName name) {
 		EegSystem eegSystem = (EegSystem) eegSystemsPresetManager
-				.getPresetByName(name.getFullName());
+							  .getPresetByName(name.getFullName());
 
 		if (eegSystem != null)
 			setEegSystem(eegSystem);
@@ -275,7 +275,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	}
 
 	/**
-	 * 
+	 *
 	 * Sets the EEG system which should be selected in this panel.
 	 * @param name
 	 *            the EEG system to be selected
@@ -310,7 +310,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
 			List<AmplifierChannel> channels = experimentDescriptor
-					.getAmplifier().getSelectedChannels();
+											  .getAmplifier().getSelectedChannels();
 
 			float[] gain = new float[channels.size()];
 			float[] offset = new float[channels.size()];
@@ -332,7 +332,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		tagStylesLabel.setVisible(isMonitor);
 
 		getRegisterSignalMLCodecButton().setVisible(!isMonitor);
-		
+
 		fileTypeLabel.setVisible(!isMonitor);
 		fileTypeComboBox.setVisible(!isMonitor);
 	}

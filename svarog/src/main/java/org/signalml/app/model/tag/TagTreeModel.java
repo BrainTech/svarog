@@ -156,7 +156,7 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 	public void documentAdded(DocumentManagerEvent e) {
 
 		Document document = e.getDocument();
-		if (document instanceof SignalDocument && ! (document instanceof MonitorSignalDocument)) {
+		if (document instanceof SignalDocument && !(document instanceof MonitorSignalDocument)) {
 			SignalDocument signalDocument = (SignalDocument) document;
 			signalDocument.addPropertyChangeListener(this);
 
@@ -175,10 +175,10 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 			tagDocumentMap.put(tagSet, tagDocument);
 
 			fireTreeNodesInserted(
-			        this,
-			        new Object[] { ROOT_NODE, parent },
-			        new int[] { parent.getTagDocuments().indexOf(tagDocument) },
-			        new Object[] { tagDocument }
+				this,
+				new Object[] { ROOT_NODE, parent },
+				new int[] { parent.getTagDocuments().indexOf(tagDocument) },
+				new Object[] { tagDocument }
 			);
 		}
 
@@ -209,10 +209,10 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 			int index = parent.getTagDocuments().indexOf(tagDocument);
 
 			fireTreeNodesRemoved(
-			        this,
-			        new Object[] { ROOT_NODE, parent },
-			        new int[] { index },
-			        new Object[] { tagDocument }
+				this,
+				new Object[] { ROOT_NODE, parent },
+				new int[] { index },
+				new Object[] { tagDocument }
 			);
 
 		}
@@ -228,10 +228,10 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 			SignalDocument parent = tagDocument.getParent();
 
 			fireTreeNodesChanged(
-			        this,
-			        new Object[] { ROOT_NODE, parent },
-			        new int[] { parent.getTagDocuments().indexOf(tagDocument) },
-			        new Object[] { tagDocument }
+				this,
+				new Object[] { ROOT_NODE, parent },
+				new int[] { parent.getTagDocuments().indexOf(tagDocument) },
+				new Object[] { tagDocument }
 			);
 		}
 
@@ -313,10 +313,10 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 		TagDocument tagDocument = tagDocumentMap.get(tagSet);
 
 		Object[] path = new Object[] {
-		        ROOT_NODE,
-		        tagDocument.getParent(),
-		        tagDocument,
-		        getTagTypeTreeNode(tagDocument, e.getTagStyle().getType().ordinal())
+			ROOT_NODE,
+			tagDocument.getParent(),
+			tagDocument,
+			getTagTypeTreeNode(tagDocument, e.getTagStyle().getType().ordinal())
 		};
 
 		return path;
@@ -334,17 +334,17 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 		TagDocument tagDocument = tagDocumentMap.get(tagSet);
 
 		Object[] path = new Object[] {
-		        ROOT_NODE,
-		        tagDocument.getParent(),
-		        tagDocument,
-		        getTagTypeTreeNode(tagDocument, e.getTag().getType().ordinal())
+			ROOT_NODE,
+			tagDocument.getParent(),
+			tagDocument,
+			getTagTypeTreeNode(tagDocument, e.getTag().getType().ordinal())
 		};
 
 		return path;
 
 	}
-	
-	public TagDocument getDocumentFromSet(StyledTagSet tagSet){
+
+	public TagDocument getDocumentFromSet(StyledTagSet tagSet) {
 		return tagDocumentMap.get(tagSet);
 	}
 

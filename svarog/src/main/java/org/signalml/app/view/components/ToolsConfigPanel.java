@@ -23,7 +23,7 @@ import org.springframework.validation.Errors;
  * <ul>
  * <li>the {@link MP5ToolConfigPanel mp5 tool},</li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ToolsConfigPanel extends JPanel {

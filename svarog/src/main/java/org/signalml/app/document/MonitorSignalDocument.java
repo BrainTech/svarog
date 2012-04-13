@@ -68,14 +68,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	private TagRecorder tagRecorderWorker = null;
 
-        /**
-         * Tag set to which the {@link MonitorWorker} saves tags.
-         */
+	/**
+	 * Tag set to which the {@link MonitorWorker} saves tags.
+	 */
 	private StyledMonitorTagSet tagSet;
 
-        /**
-         * Whether the signal was saved.
-         */
+	/**
+	 * Whether the signal was saved.
+	 */
 	private boolean saved = true;
 
 	public MonitorSignalDocument(ExperimentDescriptor descriptor) {
@@ -86,10 +86,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		double ps = descriptor.getSignalParameters().getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
 		sampleSource = new RoundBufferMultichannelSampleSource(descriptor.getSignalParameters().getChannelCount(), sampleCount);
-		
+
 		sampleSource.setCalibrationGain(descriptor.getSignalParameters().getCalibrationGain());
 		sampleSource.setCalibrationOffset(descriptor.getSignalParameters().getCalibrationOffset());
-		
+
 		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(descriptor.getAmplifier().getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 		((RoundBufferMultichannelSampleSource) sampleSource).setSamplingFrequency(freq);
@@ -145,8 +145,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		}
 
 		logger.info("Start initializing monitor data.");
-		tagSet = new StyledMonitorTagSet(descriptor.getSignalParameters().getPageSize(), 5, 
-						 descriptor.getSignalParameters().getSamplingFrequency());
+		tagSet = new StyledMonitorTagSet(descriptor.getSignalParameters().getPageSize(), 5,
+										 descriptor.getSignalParameters().getSamplingFrequency());
 		if (descriptor.getTagStyles() != null) {
 			tagSet.copyStylesFrom(descriptor.getTagStyles());
 		}
@@ -182,14 +182,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			monitorWorker = null;
 		}
 		tagSet.stopTagsRemoving();
-		
+
 		//disconnect from Jmx
 		DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(descriptor);
 		worker.execute();
-		
-		while(!worker.isDone())
+
+		while (!worker.isDone())
 			;
-		
+
 		//close document
 		super.closeDocument();
 
@@ -212,7 +212,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public SignalChecksum[] getChecksums(String[] types,
-	                                     SignalChecksumProgressMonitor monitor) throws SignalMLException {
+										 SignalChecksumProgressMonitor monitor) throws SignalMLException {
 		return null;
 	}
 
@@ -376,7 +376,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Returns a list of properties that {@link PropertyChangeListener
 	 * PropertyChangeListeners} can handle.
-	 * 
+	 *
 	 * @return a list of properties
 	 * @throws IntrospectionException if an exception occurs during introspection
 	 */

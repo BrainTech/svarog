@@ -52,7 +52,7 @@ public class SignalPlotPopupProvider {
 			plotPopupMenu.add(removeTagAction);
 			plotPopupMenu.addSeparator();
 			plotPopupMenu.add(preciseSelectionAction);
-			
+
 			PluginAccessClass.getGUIImpl().addToSignalPlotPopupMenu(plotPopupMenu);
 		}
 
@@ -80,7 +80,7 @@ public class SignalPlotPopupProvider {
 			columnHeaderPopupMenu.addSeparator();
 			JCheckBoxMenuItem compactMenuItem = new JCheckBoxMenuItem(plot.getSignalPlotColumnHeader().getSetCompactAction());
 			columnHeaderPopupMenu.add(compactMenuItem);
-			
+
 			PluginAccessClass.getGUIImpl().addToColumnHeaderPopupMenu(columnHeaderPopupMenu);
 		}
 

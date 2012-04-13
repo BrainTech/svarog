@@ -18,7 +18,7 @@ import javax.swing.tree.TreePath;
  * <li>addition, removal or change of nodes,</li>
  * <li>change in tree structure.</li>
  * </ul>
- * 
+ *
  * @see TreeModel
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -26,7 +26,7 @@ public abstract class AbstractTreeModel implements TreeModel {
 
 	/**
 	 * The list of listeners. Only {@link TreeModelListener}s
-	 * are held in it. 
+	 * are held in it.
 	 */
 	protected EventListenerList listenerList = new EventListenerList();
 
@@ -53,22 +53,22 @@ public abstract class AbstractTreeModel implements TreeModel {
 	 * The parameters are just like in here:
 	 * {@link TreeModelEvent#TreeModelEvent(Object, Object[], int[], Object[])}
 	 * (this event passed to listeners).
-     * @param source the Object responsible for generating the event (typically
-     *               the creator of the event object passes <code>this</code>
-     *               for its value)
-     * @param path   an array of Object identifying the path to the
-     *               parent of the modified item(s), where the first element
-     *               of the array is the Object stored at the root node and
-     *               the last element is the Object stored at the parent node
-     * @param childIndices an array of <code>int</code> that specifies the
-     *               index values of the removed items. The indices must be
-     *               in sorted order, from lowest to highest
-     * @param children an array of Object containing the inserted, removed, or
-     *                 changed objects
+	 * @param source the Object responsible for generating the event (typically
+	 *               the creator of the event object passes <code>this</code>
+	 *               for its value)
+	 * @param path   an array of Object identifying the path to the
+	 *               parent of the modified item(s), where the first element
+	 *               of the array is the Object stored at the root node and
+	 *               the last element is the Object stored at the parent node
+	 * @param childIndices an array of <code>int</code> that specifies the
+	 *               index values of the removed items. The indices must be
+	 *               in sorted order, from lowest to highest
+	 * @param children an array of Object containing the inserted, removed, or
+	 *                 changed objects
 	 */
 	protected void fireTreeNodesChanged(Object source, Object[] path,
-	                                    int[] childIndices,
-	                                    Object[] children) {
+										int[] childIndices,
+										Object[] children) {
 		Object[] listeners = listenerList.getListenerList();
 		TreeModelEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
@@ -87,21 +87,21 @@ public abstract class AbstractTreeModel implements TreeModel {
 	 * {@link TreeModelEvent#TreeModelEvent(Object, Object[], int[], Object[])}
 	 * (this event passed to listeners).
 	 *      * @param source the Object responsible for generating the event (typically
-     *               the creator of the event object passes <code>this</code>
-     *               for its value)
-     * @param path   an array of Object identifying the path to the
-     *               parent of the modified item(s), where the first element
-     *               of the array is the Object stored at the root node and
-     *               the last element is the Object stored at the parent node
-     * @param childIndices an array of <code>int</code> that specifies the
-     *               index values of the removed items. The indices must be
-     *               in sorted order, from lowest to highest
-     * @param children an array of Object containing the inserted, removed, or
-     *                 changed objects
+	 *               the creator of the event object passes <code>this</code>
+	 *               for its value)
+	 * @param path   an array of Object identifying the path to the
+	 *               parent of the modified item(s), where the first element
+	 *               of the array is the Object stored at the root node and
+	 *               the last element is the Object stored at the parent node
+	 * @param childIndices an array of <code>int</code> that specifies the
+	 *               index values of the removed items. The indices must be
+	 *               in sorted order, from lowest to highest
+	 * @param children an array of Object containing the inserted, removed, or
+	 *                 changed objects
 	 */
 	protected void fireTreeNodesInserted(Object source, Object[] path,
-	                                     int[] childIndices,
-	                                     Object[] children) {
+										 int[] childIndices,
+										 Object[] children) {
 		Object[] listeners = listenerList.getListenerList();
 		TreeModelEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
@@ -120,21 +120,21 @@ public abstract class AbstractTreeModel implements TreeModel {
 	 * {@link TreeModelEvent#TreeModelEvent(Object, Object[], int[], Object[])}
 	 * (this event passed to listeners).
 	 * @param source the Object responsible for generating the event (typically
-     *               the creator of the event object passes <code>this</code>
-     *               for its value)
-     * @param path   an array of Object identifying the path to the
-     *               parent of the modified item(s), where the first element
-     *               of the array is the Object stored at the root node and
-     *               the last element is the Object stored at the parent node
-     * @param childIndices an array of <code>int</code> that specifies the
-     *               index values of the removed items. The indices must be
-     *               in sorted order, from lowest to highest
-     * @param children an array of Object containing the inserted, removed, or
-     *                 changed objects
+	 *               the creator of the event object passes <code>this</code>
+	 *               for its value)
+	 * @param path   an array of Object identifying the path to the
+	 *               parent of the modified item(s), where the first element
+	 *               of the array is the Object stored at the root node and
+	 *               the last element is the Object stored at the parent node
+	 * @param childIndices an array of <code>int</code> that specifies the
+	 *               index values of the removed items. The indices must be
+	 *               in sorted order, from lowest to highest
+	 * @param children an array of Object containing the inserted, removed, or
+	 *                 changed objects
 	 */
 	protected void fireTreeNodesRemoved(Object source, Object[] path,
-	                                    int[] childIndices,
-	                                    Object[] children) {
+										int[] childIndices,
+										Object[] children) {
 		Object[] listeners = listenerList.getListenerList();
 		TreeModelEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
@@ -153,17 +153,17 @@ public abstract class AbstractTreeModel implements TreeModel {
 	 * {@link TreeModelEvent#TreeModelEvent(Object, Object[], int[], Object[])}
 	 * (this event passed to listeners).
 	 * @param source the Object responsible for generating the event (typically
-     *               the creator of the event object passes <code>this</code>
-     *               for its value)
-     * @param path   an array of Object identifying the path to the
-     *               parent of the modified item(s), where the first element
-     *               of the array is the Object stored at the root node and
-     *               the last element is the Object stored at the parent node
-     * @param childIndices an array of <code>int</code> that specifies the
-     *               index values of the removed items. The indices must be
-     *               in sorted order, from lowest to highest
-     * @param children an array of Object containing the inserted, removed, or
-     *                 changed objects
+	 *               the creator of the event object passes <code>this</code>
+	 *               for its value)
+	 * @param path   an array of Object identifying the path to the
+	 *               parent of the modified item(s), where the first element
+	 *               of the array is the Object stored at the root node and
+	 *               the last element is the Object stored at the parent node
+	 * @param childIndices an array of <code>int</code> that specifies the
+	 *               index values of the removed items. The indices must be
+	 *               in sorted order, from lowest to highest
+	 * @param children an array of Object containing the inserted, removed, or
+	 *                 changed objects
 	 */
 	protected void fireTreeStructureChanged(Object source, Object[] path, int[] childIndices, Object[] children) {
 		Object[] listeners = listenerList.getListenerList();
@@ -184,12 +184,12 @@ public abstract class AbstractTreeModel implements TreeModel {
 	 * {@link TreeModelEvent#TreeModelEvent(Object, Object[])}
 	 * (this event passed to listeners).
 	 * @param source the Object responsible for generating the event (typically
-     *               the creator of the event object passes <code>this</code>
-     *               for its value)
-     * @param path   an array of Object identifying the path to the root of the
-     *               modified subtree, where the first element of the array is
-     *               the object stored at the root node and the last element
-     *               is the object stored at the changed node
+	 *               the creator of the event object passes <code>this</code>
+	 *               for its value)
+	 * @param path   an array of Object identifying the path to the root of the
+	 *               modified subtree, where the first element of the array is
+	 *               the object stored at the root node and the last element
+	 *               is the object stored at the changed node
 	 */
 	protected void fireTreeStructureChanged(Object source, Object[] path) {
 		Object[] listeners = listenerList.getListenerList();

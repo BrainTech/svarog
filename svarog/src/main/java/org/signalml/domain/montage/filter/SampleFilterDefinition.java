@@ -29,18 +29,18 @@ public abstract class SampleFilterDefinition implements Serializable, Preset {
 
 	/**
 	 * Returns a String with a description of a filter
-	 * 
+	 *
 	 * @return String with a description of a filter
 	 */
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public abstract String getEffect();
 
 	/**
 	 * Sets the description to a given value
-	 * 
+	 *
 	 * @param description
 	 *            String with a description to be set
 	 */
@@ -50,14 +50,14 @@ public abstract class SampleFilterDefinition implements Serializable, Preset {
 
 	/**
 	 * Returns the type of a filter
-	 * 
+	 *
 	 * @return the type of a filter
 	 */
 	public abstract SampleFilterType getType();
 
 	/**
 	 * Creates a duplicate of a filters definition
-	 * 
+	 *
 	 * @return duplicate of a filters definition
 	 */
 	public abstract SampleFilterDefinition duplicate();

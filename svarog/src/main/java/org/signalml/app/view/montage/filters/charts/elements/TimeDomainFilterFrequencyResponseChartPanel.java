@@ -46,11 +46,11 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 
 		chart.addSubtitle(
 			new TextTitle(subtitleText,
-			createDefaultFont(),
-			Color.BLACK,
-			RectangleEdge.TOP,
-			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
-			new RectangleInsets(0, 0, 0, 9)));
+						  createDefaultFont(),
+						  Color.BLACK,
+						  RectangleEdge.TOP,
+						  HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
+						  new RectangleInsets(0, 0, 0, 9)));
 	}
 
 	@Override

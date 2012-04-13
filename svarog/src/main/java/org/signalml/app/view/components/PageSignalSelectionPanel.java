@@ -79,15 +79,15 @@ public class PageSignalSelectionPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(startPageLabel)
-		        .addComponent(lengthLabel)
+			layout.createParallelGroup()
+			.addComponent(startPageLabel)
+			.addComponent(lengthLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getStartPageSpinner())
-		        .addComponent(getLengthSpinner())
+			layout.createParallelGroup()
+			.addComponent(getStartPageSpinner())
+			.addComponent(getLengthSpinner())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -95,16 +95,16 @@ public class PageSignalSelectionPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(startPageLabel)
-				.addComponent(getStartPageSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(startPageLabel)
+			.addComponent(getStartPageSpinner())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(lengthLabel)
-				.addComponent(getLengthSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(lengthLabel)
+			.addComponent(getLengthSpinner())
+		);
 
 		layout.setVerticalGroup(vGroup);
 	}

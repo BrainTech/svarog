@@ -14,11 +14,11 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 	public static final int EXPERIMENT_NAME = 0;
 	public static final int AMPLIFIER_NAME = 1;
 	public static final int EXPERIMENT_STATUS = 2;
-	
+
 	private List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 
 	public ChooseExperimentTableModel() {
-		
+
 	}
 
 	public List<ExperimentDescriptor> getExperiments() {
@@ -47,21 +47,29 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
 		ExperimentDescriptor experiment = experiments.get(rowIndex);
-		switch(columnIndex) {
-			case EXPERIMENT_NAME: return experiment.getName();
-			case EXPERIMENT_STATUS: return experiment.getStatus();
-			case AMPLIFIER_NAME: return experiment.getAmplifier().getName();
-			default: return null;
+		switch (columnIndex) {
+		case EXPERIMENT_NAME:
+			return experiment.getName();
+		case EXPERIMENT_STATUS:
+			return experiment.getStatus();
+		case AMPLIFIER_NAME:
+			return experiment.getAmplifier().getName();
+		default:
+			return null;
 		}
 	}
 
 	@Override
 	public String getColumnName(int column) {
 		switch (column) {
-			case EXPERIMENT_NAME: return _("Experiment");
-			case AMPLIFIER_NAME: return _("Amplifier");
-			case EXPERIMENT_STATUS: return _("Status");
-			default: return "";
+		case EXPERIMENT_NAME:
+			return _("Experiment");
+		case AMPLIFIER_NAME:
+			return _("Amplifier");
+		case EXPERIMENT_STATUS:
+			return _("Status");
+		default:
+			return "";
 		}
 	}
 

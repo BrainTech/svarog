@@ -44,13 +44,13 @@ import org.signalml.plugin.export.view.AbstractDialog;
  * <li>the position where the tag starts (seconds),</li>
  * <li>the length of the tag.</li>
  * </ul>
- * 
+ *
  * @author Marcin Szumski
  */
 public class PreciseTagDialog extends AbstractDialog implements ActionListener, ChangeListener {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * the logger that is consistent with logging framework of Svarog;
 	 * requires {@code log4j.jar} as the library
@@ -58,29 +58,29 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	private static final Logger logger = Logger.getLogger(PreciseTagDialog.class);
 
 	/**
-	 * the {@link SvarogAccessSignal access} to signal options 
+	 * the {@link SvarogAccessSignal access} to signal options
 	 */
 	private SvarogAccessSignal signalAccess;
-	
+
 	/**
 	 * the combo-box in which the possible {@link ExportedSignalSelectionType
 	 * types} of the tag are displayed (BLOCK, PAGE, CHANNEL)
 	 */
 	private JComboBox typesBox;
-	
+
 	/**
 	 * the combo-box in which the {@link ExportedTagStyle styles} of the
 	 * currently active {@link ExportedSignalSelectionType type} are displayed
 	 */
 	private JComboBox stylesBox = new JComboBox();
-	
+
 	/**
 	 * the combo-box in which the names of channels of the signal are displayed
 	 * if the currently selected {@link ExportedSignalSelectionType type}
 	 * is a CHANNEL
 	 */
 	private JComboBox channelBox = new JComboBox();
-	
+
 	/**
 	 * the spinner with the position (in time - seconds) where the tag should
 	 * start;
@@ -94,7 +94,7 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * {@code CHANNEL} it is 1
 	 */
 	private SpinnerNumberModel startSpinnerModel;
-	
+
 	/**
 	 * the spinner with the length (seconds) of the {@link ExportedTag tag};
 	 * <p>
@@ -109,18 +109,18 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * {@code CHANNEL} it is 1
 	 */
 	private SpinnerNumberModel lengthSpinnerModel;
-	
+
 	/**
-	 * the {@link ExportedTagDocument document} to which the created 
+	 * the {@link ExportedTagDocument document} to which the created
 	 * {@link ExportedTag tag} is to be added
 	 */
 	private ExportedTagDocument tagDocument = null;
-	
+
 	/**
 	 * the {@link ExportedSignalDocument document} with the signal
 	 */
 	private ExportedSignalDocument signalDocument = null;
-	
+
 	/**
 	 * Constructor. Sets {@link SvarogAccessSignal signal access}.
 	 * @param signalAccess access to set
@@ -128,78 +128,78 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	public PreciseTagDialog(SvarogAccessSignal signalAccess) {
 		this.signalAccess = signalAccess;
 	}
-	
+
 	/**
 	 * Creates the {@link #typesBox}.
 	 * @return the created types box
 	 */
-	private JComboBox selectionTypesBox(){
+	private JComboBox selectionTypesBox() {
 		String[] types = new String[] {
 			ExportedSignalSelectionType.BLOCK,
 			ExportedSignalSelectionType.CHANNEL,
 			ExportedSignalSelectionType.PAGE
 		};
-		
+
 		typesBox = new JComboBox(types);
 		typesBox.addActionListener(this);
 		return typesBox;
 	}
-	
+
 	/**
 	 * Creates a panel with BorderLayout and the CompoundBorder with the given
 	 * text.
 	 * @param name the text to be set on the border
 	 * @return the created panel
 	 */
-	private JPanel createNamedPanel(String name){
+	private JPanel createNamedPanel(String name) {
 		JPanel panel = new JPanel(new BorderLayout());
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(name),
-		        null
+			new TitledBorder(name),
+			null
 		);
 		panel.setBorder(cb);
 		return panel;
 	}
-	
+
 	/**
 	 * Creates a panel with the {@link #typesBox} and the border with
 	 * text {@code "type"}.
 	 * @return the created panel
 	 */
-	private JPanel createTypesPanel(){
+	private JPanel createTypesPanel() {
 		JPanel panel = createNamedPanel("type");
 		panel.add(selectionTypesBox());
 		return panel;
 	}
-	
+
 	/**
 	 * Creates a panel with the {@link #stylesBox} and the border with
 	 * text {@code "style"}.
 	 * @return the created panel
 	 */
-	private JPanel createStylesPanel(){
+	private JPanel createStylesPanel() {
 		JPanel panel = createNamedPanel("style");
 		panel.add(stylesBox);
 		return panel;
 	}
-	
+
 	/**
 	 * Creates a panel with the {@link #channelBox} and the border with
 	 * text {@code "channel"}.
 	 * @return the created panel
 	 */
-	private JPanel createChannelPanel(){
+	private JPanel createChannelPanel() {
 		JPanel panel = createNamedPanel("channel");
 		panel.add(channelBox);
 		return panel;
 	}
-	
+
 	/**
 	 * Creates a panel with the spinner with model {@link #startSpinnerModel}
 	 * and the border with text {@code "position"}.
 	 * @return the created panel
 	 */
-	private JPanel createStartPanel(){
+	private JPanel createStartPanel() {
 		JPanel panel = createNamedPanel("position");
 		startSpinnerModel = new SpinnerNumberModel(0.0, 0.0, getSignalDocument().getMinSignalLength(), 1);
 		startSpinnerModel.addChangeListener(this);
@@ -207,13 +207,13 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 		panel.add(startSpinner);
 		return panel;
 	}
-	
+
 	/**
 	 * Creates a panel with the spinner with model {@link #lengthSpinnerModel}
 	 * and the border with text {@code "length"}.
 	 * @return the created panel
 	 */
-	private JPanel createLengthPanel(){
+	private JPanel createLengthPanel() {
 		JPanel panel = createNamedPanel("length");
 		lengthSpinnerModel = new SpinnerNumberModel(1.0, 0.0, getSignalDocument().getMinSignalLength(), 1);
 		lengthSpinnerModel.addChangeListener(this);
@@ -221,7 +221,7 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 		panel.add(lenghtSpinner);
 		return panel;
 	}
-	
+
 	/**
 	 * Creates a panel with box layout that contains sub-panels which allow to
 	 * select:
@@ -239,7 +239,7 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	protected JComponent createInterface() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		
+
 		panel.add(createTypesPanel());
 		JPanel styleAndChannelPanel = new JPanel();
 		styleAndChannelPanel.setLayout(new BoxLayout(styleAndChannelPanel, BoxLayout.LINE_AXIS));
@@ -251,8 +251,8 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 		positionAndLengthPanel.add(createStartPanel());
 		positionAndLengthPanel.add(createLengthPanel());
 		panel.add(positionAndLengthPanel);
-		
-		
+
+
 		updateStylesBox();
 		updateChannelBox();
 		updateStartSpinner();
@@ -286,8 +286,8 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 		Set<ExportedTagStyle> styles = getTagDocument().getTagStyles();
 		String selectedStyleName = (String) stylesBox.getSelectedItem();
 		ExportedTagStyle selectedStyle = null;
-		for (ExportedTagStyle style : styles){
-			if (style.getName().equals(selectedStyleName)){
+		for (ExportedTagStyle style : styles) {
+			if (style.getName().equals(selectedStyleName)) {
 				selectedStyle = style;
 			}
 		}
@@ -310,20 +310,20 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * Removes all styles and adds those that have the currently selected
 	 * {@link ExportedSignalSelectionType type}.
 	 */
-	private void updateStylesBox(){
+	private void updateStylesBox() {
 		stylesBox.removeAllItems();
 		String type = (String) typesBox.getSelectedItem();
 		Set<ExportedTagStyle> styles = getTagDocument().getTagStyles();
 		Set<ExportedTagStyle> selectedStyles = new HashSet<ExportedTagStyle>();
-		for (ExportedTagStyle style : styles){
+		for (ExportedTagStyle style : styles) {
 			if (style.getType().getName().equals(type))
 				selectedStyles.add(style);
 		}
-		for (ExportedTagStyle style : selectedStyles){
+		for (ExportedTagStyle style : selectedStyles) {
 			stylesBox.addItem(style.getName());
 		}
 	}
-	
+
 	/**
 	 * If the currently selected {@link ExportedSignalSelectionType type}
 	 * is a {@code CHANNEL} adds the names of channels to {@link #channelBox}
@@ -331,20 +331,20 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * If the currently selected type is not a {@code CHANNEL} sets
 	 * {@link #channelBox} to be disabled.
 	 */
-	private void updateChannelBox(){
+	private void updateChannelBox() {
 		channelBox.removeAllItems();
 		String type = (String) typesBox.getSelectedItem();
-		if (type.equals(ExportedSignalSelectionType.CHANNEL)){
+		if (type.equals(ExportedSignalSelectionType.CHANNEL)) {
 			channelBox.setEnabled(true);
 			int channelCount = getSignalDocument().getChannelCount();
 			List<String> labels = getSignalDocument().getSourceChannelLabels();
-			for (int i = 0; i < channelCount; ++i){
+			for (int i = 0; i < channelCount; ++i) {
 				channelBox.addItem(labels.get(i));
 			}
 		} else
 			channelBox.setEnabled(false);
 	}
-	
+
 	/**
 	 * Called when the selected value of the {@code typesBox}
 	 * has changed.
@@ -372,26 +372,26 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * (the largest multiple that is less then the current value) if the
 	 * currently selected type is {@code PAGE/BLOCK}</li>
 	 * <li>the step of the spinner to the size of block/page if the
-	 * currently selected type is {@code PAGE/BLOCK} or to 1 if 
+	 * currently selected type is {@code PAGE/BLOCK} or to 1 if
 	 * the type is {@code CHANNEL}</li>
 	 * </ul>
 	 */
-	private void updateLenghtSpinner(){
+	private void updateLenghtSpinner() {
 		double position = (Double) startSpinnerModel.getValue();
 		double length = (Double) lengthSpinnerModel.getValue();
 		double maximum = (Double) startSpinnerModel.getMaximum();
 		String type = (String) typesBox.getSelectedItem();
-		if (length + position > maximum){
+		if (length + position > maximum) {
 			length = maximum - position;
 		}
-		if (type.equals(ExportedSignalSelectionType.PAGE)){
+		if (type.equals(ExportedSignalSelectionType.PAGE)) {
 			float pageSize = getSignalDocument().getPageSize();
-			int numberOfPages = (int) (length / pageSize);
+			int numberOfPages = (int)(length / pageSize);
 			length = numberOfPages * pageSize;
 			lengthSpinnerModel.setStepSize(pageSize);
-		} else if (type.equals(ExportedSignalSelectionType.BLOCK)){
+		} else if (type.equals(ExportedSignalSelectionType.BLOCK)) {
 			float blockSize = getSignalDocument().getBlockSize();
-			int numberOfPages = (int) (length / blockSize);
+			int numberOfPages = (int)(length / blockSize);
 			length = numberOfPages * blockSize;
 			lengthSpinnerModel.setStepSize(blockSize);
 		} else {
@@ -400,7 +400,7 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 		lengthSpinnerModel.setValue(length);
 		lengthSpinnerModel.setMaximum(maximum - position);
 	}
-	
+
 	/**
 	 * Updates the {@link #startSpinnerModel}.
 	 * Sets:
@@ -409,28 +409,28 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * (the largest multiple that is less then the current value) if the
 	 * currently selected type is {@code PAGE/BLOCK}</li>
 	 * <li>the step of the spinner to the size of block/page if the
-	 * currently selected type is {@code PAGE/BLOCK} or to 1 if 
+	 * currently selected type is {@code PAGE/BLOCK} or to 1 if
 	 * the type is {@code CHANNEL}</li>
 	 * </ul>
 	 */
-	private void updateStartSpinner(){
+	private void updateStartSpinner() {
 		double position = (Double) startSpinnerModel.getValue();
 		String type = (String) typesBox.getSelectedItem();
-		if (type.equals(ExportedSignalSelectionType.PAGE)){
+		if (type.equals(ExportedSignalSelectionType.PAGE)) {
 			float pageSize = getSignalDocument().getPageSize();
-			int numberOfAPage = (int) (position / pageSize);
+			int numberOfAPage = (int)(position / pageSize);
 			position = pageSize*numberOfAPage;
 			startSpinnerModel.setStepSize(pageSize);
-		} else if (type.equals(ExportedSignalSelectionType.BLOCK)){
+		} else if (type.equals(ExportedSignalSelectionType.BLOCK)) {
 			float blockSize = getSignalDocument().getBlockSize();
-			int numberOfABlock = (int) (position / blockSize);
+			int numberOfABlock = (int)(position / blockSize);
 			position = blockSize*numberOfABlock;
 			startSpinnerModel.setStepSize(blockSize);
 		} else {
 			startSpinnerModel.setStepSize(1);
 		}
 		startSpinnerModel.setValue(position);
-		
+
 	}
 
 	/**
@@ -450,7 +450,7 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * @return the signalDocument
 	 */
 	private ExportedSignalDocument getSignalDocument() {
-		if (signalDocument == null){
+		if (signalDocument == null) {
 			try {
 				signalDocument = signalAccess.getActiveSignalDocument();
 			} catch (NoActiveObjectException e) {
@@ -468,7 +468,7 @@ public class PreciseTagDialog extends AbstractDialog implements ActionListener, 
 	 * @return the tagDocument
 	 */
 	private ExportedTagDocument getTagDocument() {
-		if (tagDocument == null){
+		if (tagDocument == null) {
 			try {
 				tagDocument = signalAccess.getActiveTagDocument();
 			} catch (NoActiveObjectException e) {

@@ -54,7 +54,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * the number of steps
 	 */
 	private JComponent[] interfaceStepComponents;
-	
+
 	/**
 	 * the layout for {@link #interfacePanel}
 	 */
@@ -73,7 +73,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	 * the button to {@link #nextAction go} to the next step
 	 */
 	private JButton nextButton;
-	
+
 	/**
 	 * the button to {@link #previousAction go} to the previous step
 	 */
@@ -241,7 +241,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Returns if validation should be performed when the step is changed 
+	 * Returns if validation should be performed when the step is changed
 	 * back.
 	 * By default false.
 	 * @return {@code false}
@@ -258,7 +258,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	protected class NavigationAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		/**
 		 * the number of steps that should be navigated back (negative value)
 		 * or forward (positive value)

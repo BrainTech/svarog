@@ -47,8 +47,8 @@ import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
  * <ul><li>
  * The parameters of the display are stored in {@link SignalFFTSettings}.</li>
  * <li>The power spectrum is calculated using the {@link FourierTransform FFT}.
- * </li></ul> 
- * 
+ * </li></ul>
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o., Marcin Szumski
  */
@@ -63,7 +63,7 @@ public class SignalFFTPlot extends JComponent {
 	 * the logger
 	 */
 	protected static final Logger logger = Logger
-			.getLogger(SignalFFTPlot.class);
+										   .getLogger(SignalFFTPlot.class);
 
 	/**
 	 * how many FFT result points to cutoff at the left - discards the mean to
@@ -149,7 +149,7 @@ public class SignalFFTPlot extends JComponent {
 
 	/**
 	 * the stored samples of the signal that are used to calculate power
-	 * spectrum 
+	 * spectrum
 	 */
 	private double[] samples = null;
 
@@ -238,7 +238,7 @@ public class SignalFFTPlot extends JComponent {
 
 		double timeZoomFactor = plot.getTimeZoomFactor();
 		int firstSample = (int) Math.floor((focusPoint.x / timeZoomFactor)
-				- windowWidth / 2);
+										   - windowWidth / 2);
 		if (firstSample < 0) {
 			error = _("Not enough signal points");
 		}
@@ -252,7 +252,7 @@ public class SignalFFTPlot extends JComponent {
 		int sampleCnt = lastSample - firstSample;
 		if (sampleCnt != windowWidth) {
 			throw new SanityCheckException(
-					"Sanity failed - sample count different than window size");
+				"Sanity failed - sample count different than window size");
 		}
 
 		if (samples == null || samples.length != sampleCnt) {
@@ -263,7 +263,7 @@ public class SignalFFTPlot extends JComponent {
 
 		try {
 			channelSamples = signalAccess.getActiveProcessedSignalSamples(
-					channel, firstSample, sampleCnt);
+								 channel, firstSample, sampleCnt);
 			samples = channelSamples.getSamples();
 		} catch (RuntimeException ex) {
 			setVisible(false);
@@ -276,19 +276,19 @@ public class SignalFFTPlot extends JComponent {
 		try {
 
 			logger.debug("Samples requested [" + sampleCnt + "] array size ["
-					+ samples.length + "]");
+						 + samples.length + "]");
 
 			FourierTransform fourierTransform = new FourierTransform();
 			fourierTransform.setWindowType(windowType, windowParameter);
 
 			powerSpectrum = fourierTransform.powerSpectrumReal(samples,
-					((float) 1) / channelSamples.getSamplingFrequency());
+							((float) 1) / channelSamples.getSamplingFrequency());
 			if (powerSpectrum == null) {
 				throw new NullPointerException("Null spectrum returned");
 			}
 
 			logger.debug("PS[0] size [" + powerSpectrum[0].length
-					+ "] PS[1] size [" + powerSpectrum[1].length + "]");
+						 + "] PS[1] size [" + powerSpectrum[1].length + "]");
 
 		} catch (RuntimeException ex) {
 			setVisible(false);
@@ -320,15 +320,15 @@ public class SignalFFTPlot extends JComponent {
 		if (powerSpectrumChart == null) {
 
 			powerSpectrumChart = new JFreeChart(null, titleFont,
-					powerSpectrumPlot, false);
+												powerSpectrumPlot, false);
 			powerSpectrumChart.setBorderVisible(false);
 			powerSpectrumChart.setBackgroundPaint(Color.WHITE);
 
 		}
 
 		double pixelPerSecond = plot.getPixelPerSecond();
-		float minTime = (float) ((firstSample * timeZoomFactor) / pixelPerSecond);
-		float maxTime = (float) ((lastSample * timeZoomFactor) / pixelPerSecond);
+		float minTime = (float)((firstSample * timeZoomFactor) / pixelPerSecond);
+		float maxTime = (float)((lastSample * timeZoomFactor) / pixelPerSecond);
 
 		StringBuilder minTimeSb = new StringBuilder(20);
 		FormatUtils.addTime(minTime, minTimeSb);
@@ -337,8 +337,8 @@ public class SignalFFTPlot extends JComponent {
 		FormatUtils.addTime(maxTime, maxTimeSb);
 
 		String title = _R("FFT over {0} points {1} - {2} ({3})",
-				  windowWidth, minTimeSb.toString(),
-				  maxTimeSb.toString(), channelSamples.getName());
+						  windowWidth, minTimeSb.toString(),
+						  maxTimeSb.toString(), channelSamples.getName());
 
 		powerSpectrumChart.setTitle(titleVisible ? new TextTitle(title, titleFont) : null);
 		powerSpectrumChart.setAntiAlias(antialias);
@@ -377,10 +377,10 @@ public class SignalFFTPlot extends JComponent {
 
 				double sampleDist = endIndex - startIndex;
 
-				int shift = (int) (((rangeEnd - oldRangeStart) / rangeSize) * sampleDist);
+				int shift = (int)(((rangeEnd - oldRangeStart) / rangeSize) * sampleDist);
 				endIndex = startIndex + shift;
 
-				shift = (int) (((rangeStart - oldRangeStart) / rangeSize) * sampleDist);
+				shift = (int)(((rangeStart - oldRangeStart) / rangeSize) * sampleDist);
 				startIndex += shift;
 
 			}
@@ -395,7 +395,7 @@ public class SignalFFTPlot extends JComponent {
 			min = Math.min(min, powerSpectrum[1][i]);
 		}
 		max *= 1.15; // scale up by 15% as per ZFB request (related to spline
-						// overshooting points).
+		// overshooting points).
 
 		if (logarithmic) {
 			logYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
@@ -467,13 +467,13 @@ public class SignalFFTPlot extends JComponent {
 			}
 
 			g.drawString(error, insets.left + x, insets.top
-					+ (size.height - height) / 2 + fontMetrics.getAscent());
+						 + (size.height - height) / 2 + fontMetrics.getAscent());
 			return;
 
 		}
 
 		powerSpectrumChart.draw(g, new Rectangle(insets.left, insets.top,
-				size.width, size.height));
+								size.width, size.height));
 
 	}
 
@@ -588,7 +588,7 @@ public class SignalFFTPlot extends JComponent {
 	 * @param channel the number of the channel for which the FFT is calculated
 	 */
 	public void setParameters(ExportedSignalPlot plot, Point focusPoint,
-			int channel) {
+							  int channel) {
 		this.plot = plot;
 		this.focusPoint = focusPoint;
 		this.channel = channel;

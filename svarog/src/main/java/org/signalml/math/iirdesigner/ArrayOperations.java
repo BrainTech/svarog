@@ -23,7 +23,7 @@ public class ArrayOperations {
 	 */
 	public static double[] padArrayWithZerosToSize(double[] array, int newSize) {
 
-		assert (newSize >= array.length);
+		assert(newSize >= array.length);
 
 		double[] paddedArray = new double[newSize];
 
@@ -97,7 +97,7 @@ public class ArrayOperations {
 	 */
 	public static double[] trimArrayToSize(double[] array, int size) {
 
-		assert (array.length >= size);
+		assert(array.length >= size);
 
 		double[] trimmedArray = new double[size];
 		System.arraycopy(array, 0, trimmedArray, 0, size);
@@ -116,7 +116,7 @@ public class ArrayOperations {
 	 */
 	public static double[] removeFirstElements(double[] array, int numberOfElements) {
 
-		assert (array.length > numberOfElements);
+		assert(array.length > numberOfElements);
 
 		double[] trimmedArray = new double[array.length - numberOfElements];
 

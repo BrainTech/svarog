@@ -27,7 +27,7 @@ public interface MutableDocument extends Document {
 	 * @return true if this document is saved or false otherwise
 	 */
 	boolean isSaved();
-	
+
 	/**
 	 * Sets if this document is saved.
 	 * @param saved true if this document is saved or false otherwise
@@ -39,7 +39,7 @@ public interface MutableDocument extends Document {
 	 * @throws SignalMLException never thrown in implementations
 	 */
 	void newDocument() throws SignalMLException;
-	
+
 	/**
 	 * Saves this document.
 	 * Document may be saved to file or saving may be performed only virtually.

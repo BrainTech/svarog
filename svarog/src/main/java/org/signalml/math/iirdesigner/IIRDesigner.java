@@ -83,8 +83,8 @@ public class IIRDesigner {
 	public static FilterCoefficients designDigitalFilter(TimeDomainSampleFilter filterDefinition) throws BadFilterParametersException {
 
 		return IIRDesigner.designDigitalFilter(filterDefinition.getApproximationFunctionType(), filterDefinition.getFilterType(),
-		                                       filterDefinition.getPassbandEdgeFrequencies(), filterDefinition.getStopbandEdgeFrequencies(),
-		                                       filterDefinition.getPassbandRipple(), filterDefinition.getStopbandAttenuation(), filterDefinition.getSamplingFrequency());
+											   filterDefinition.getPassbandEdgeFrequencies(), filterDefinition.getStopbandEdgeFrequencies(),
+											   filterDefinition.getPassbandRipple(), filterDefinition.getStopbandAttenuation(), filterDefinition.getSamplingFrequency());
 
 	}
 

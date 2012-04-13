@@ -12,7 +12,7 @@ public abstract class AbstractJoinOrLeaveExperimentRequest extends Message {
 
 	@JsonProperty("peer_type")
 	private String peerType;
-	
+
 	@JsonProperty("path")
 	private String path;
 

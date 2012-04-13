@@ -56,10 +56,10 @@ public class StyledTagSetConverter implements Converter {
 	 */
 	private static final double formatVersion = 1.0;
 
-        /**
-         * Name of the section containing tags.
-         */
-        public static final String TAG_NODE_NAME = "tags";
+	/**
+	 * Name of the section containing tags.
+	 */
+	public static final String TAG_NODE_NAME = "tags";
 
 	private FloatConverter floatConverter = new FloatConverter();
 	private IntConverter intConverter = new IntConverter();
@@ -68,13 +68,13 @@ public class StyledTagSetConverter implements Converter {
 	private FloatArrayConverter floatArrayConverter = new FloatArrayConverter();
 	private BooleanConverter booleanConverter = new BooleanConverter("1", "0", false);
 
-        /**
-         * Converts a {@link StyledTagSet StyledTagSet} to textual data.
-         * @param value the object to be marshaled
-         * @param writer a stream to write to
-         * @param context a context that allows nested objects to be processed
-         * by XStream
-         */
+	/**
+	 * Converts a {@link StyledTagSet StyledTagSet} to textual data.
+	 * @param value the object to be marshaled
+	 * @param writer a stream to write to
+	 * @param context a context that allows nested objects to be processed
+	 * by XStream
+	 */
 	@Override
 	public void marshal(Object value, HierarchicalStreamWriter writer, MarshallingContext context) {
 
@@ -215,11 +215,11 @@ public class StyledTagSetConverter implements Converter {
 
 	}
 
-        /**
-         * Converts a {@link TagStyle TagStyle} to textual data.
-         * @param style The TagStyle to be marshaled
-         * @param writer A stream to write to.
-         */
+	/**
+	 * Converts a {@link TagStyle TagStyle} to textual data.
+	 * @param style The TagStyle to be marshaled
+	 * @param writer A stream to write to.
+	 */
 	private void marshalStyle(HierarchicalStreamWriter writer, TagStyle style) {
 		writer.startNode("tagItem");
 		writer.addAttribute("name", style.getName());
@@ -236,7 +236,7 @@ public class StyledTagSetConverter implements Converter {
 		if (style.getAttributesDefinitions().getSize() > 0) {
 			writer.startNode("attributes");
 			for (TagStyleAttributeDefinition definition:
-				style.getAttributesDefinitions().getAttributesDefinitionsList()) {
+					style.getAttributesDefinitions().getAttributesDefinitionsList()) {
 
 				writer.startNode("attribute");
 				writer.addAttribute("code", definition.getCode());
@@ -250,12 +250,12 @@ public class StyledTagSetConverter implements Converter {
 		writer.endNode();
 	}
 
-        /**
-         * Convert textual data back into a {@link StyledTagSet StyledTagSet}.
-         * @param reader the stream to read the text from.
-         * @param context a context that allows nested objects to be processed by XStream.
-         * @return the created StyledTagSet
-         */
+	/**
+	 * Convert textual data back into a {@link StyledTagSet StyledTagSet}.
+	 * @param reader the stream to read the text from.
+	 * @param context a context that allows nested objects to be processed by XStream.
+	 * @return the created StyledTagSet
+	 */
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext context) {
 
@@ -280,7 +280,7 @@ public class StyledTagSetConverter implements Converter {
 
 		Montage montage = null;
 
-		if(Double.parseDouble(reader.getAttribute("formatVersion")) != formatVersion) {
+		if (Double.parseDouble(reader.getAttribute("formatVersion")) != formatVersion) {
 			throw new SanityCheckException("Unsupported tag file format version. Svarog supports only tag file with format version equal to " + formatVersion + ".");
 		}
 
@@ -450,11 +450,11 @@ public class StyledTagSetConverter implements Converter {
 		return sts;
 	}
 
-        /**
-         * Convert textual data back into a {@link TagStyle TagStyle}.
-         * @param reader the stream to read the text from.
-         * @param style the TagStyle object on which read data will be written
-         */
+	/**
+	 * Convert textual data back into a {@link TagStyle TagStyle}.
+	 * @param reader the stream to read the text from.
+	 * @param style the TagStyle object on which read data will be written
+	 */
 	private void unmarshalStyle(HierarchicalStreamReader reader, TagStyle style) {
 
 		String name = reader.getAttribute("name");
@@ -505,35 +505,35 @@ public class StyledTagSetConverter implements Converter {
 
 	}
 
-        /**
-         * Determines whether this converter can marshal a particular type.
-         * @param clazz the Class representing the object type to be converted
-         * @return true if this converter can marshal a particular type,
-         * false otherwise
-         */
+	/**
+	 * Determines whether this converter can marshal a particular type.
+	 * @param clazz the Class representing the object type to be converted
+	 * @return true if this converter can marshal a particular type,
+	 * false otherwise
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean canConvert(Class clazz) {
 		return (StyledTagSet.class.equals(clazz));
 	}
 
-        /**
-         * Static method that marshals given tag set and returns it as a string
-         * @param tags tags to marshal
-         * @return marshaled tag set
-         */
-        public static String marshalTagsToString(SortedSet<Tag> tags) throws IOException {
+	/**
+	 * Static method that marshals given tag set and returns it as a string
+	 * @param tags tags to marshal
+	 * @return marshaled tag set
+	 */
+	public static String marshalTagsToString(SortedSet<Tag> tags) throws IOException {
 
-                StringWriter stringWriter = new StringWriter();
-                PrettyPrintWriter writer = new PrettyPrintWriter(stringWriter);
+		StringWriter stringWriter = new StringWriter();
+		PrettyPrintWriter writer = new PrettyPrintWriter(stringWriter);
 
-                StyledTagSetConverter converter = new StyledTagSetConverter();
-                for (Tag tag : tags)
-                        converter.marshalTag(writer, tag);
+		StyledTagSetConverter converter = new StyledTagSetConverter();
+		for (Tag tag : tags)
+			converter.marshalTag(writer, tag);
 
-                writer.close();
-                stringWriter.close();
+		writer.close();
+		stringWriter.close();
 
-                return stringWriter.toString();
-        }
+		return stringWriter.toString();
+	}
 }

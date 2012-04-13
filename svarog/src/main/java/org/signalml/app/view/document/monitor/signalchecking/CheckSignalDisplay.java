@@ -33,240 +33,240 @@ import org.signalml.app.view.montage.VisualReferenceSourceChannel;
  */
 public class CheckSignalDisplay extends VisualReferenceDisplay {
 
-        /**
-         * Space between two bars or bar and a channel.
-         */
-        public static final int BAR_PADDING = 12;
-        /**
-         * Width of a bar.
-         */
-        public static final int BAR_WIDTH = 20;
-        /**
-         * Height of a bar.
-         */
-        public static final int BAR_HEIGHT = 50;
-        /**
-         * Bar border size.
-         */
-        public static final int BAR_BORDER = 2;
-        /**
-         * Text space between text and bar.
-         */
-        public static final int TEXT_SPACE = 3;
-        /**
-         * How much the bar is moved vertically.
-         */
-        public static final int BAR_VERTICAL_OFFSET = -14;
-        /**
-         * Channel info used when drawing the channel state.
-         */
-        private List<HashMap<String, ChannelState>> channels;
+	/**
+	 * Space between two bars or bar and a channel.
+	 */
+	public static final int BAR_PADDING = 12;
+	/**
+	 * Width of a bar.
+	 */
+	public static final int BAR_WIDTH = 20;
+	/**
+	 * Height of a bar.
+	 */
+	public static final int BAR_HEIGHT = 50;
+	/**
+	 * Bar border size.
+	 */
+	public static final int BAR_BORDER = 2;
+	/**
+	 * Text space between text and bar.
+	 */
+	public static final int TEXT_SPACE = 3;
+	/**
+	 * How much the bar is moved vertically.
+	 */
+	public static final int BAR_VERTICAL_OFFSET = -14;
+	/**
+	 * Channel info used when drawing the channel state.
+	 */
+	private List<HashMap<String, ChannelState>> channels;
 
-        /**
-         * Default construcot only calls super.
-         *
-         * @param model super parameter
-         */
-        public CheckSignalDisplay(VisualReferenceModel model) {
+	/**
+	 * Default construcot only calls super.
+	 *
+	 * @param model super parameter
+	 */
+	public CheckSignalDisplay(VisualReferenceModel model) {
 
-                super(model);
-        }
+		super(model);
+	}
 
-        /**
-         * Sets the given channels state, then repaints the component
-         * to visualize any possible changes.
-         *
-         * @param channels HashMap representing channels state
-         */
-        public void setChannelsState(List<HashMap<String, ChannelState>> channels) {
+	/**
+	 * Sets the given channels state, then repaints the component
+	 * to visualize any possible changes.
+	 *
+	 * @param channels HashMap representing channels state
+	 */
+	public void setChannelsState(List<HashMap<String, ChannelState>> channels) {
 
-                this.channels = channels;
-                this.repaint();
-        }
+		this.channels = channels;
+		this.repaint();
+	}
 
-        /**
-         * Draws bin contents based on the channel state.
-         *
-         * @param bin {@link VisualReferenceBin} object
-         * @param g {@link Graphics2D} object
-         */
-        @Override
-        protected void paintBinContents(VisualReferenceBin bin, Graphics2D g) {
+	/**
+	 * Draws bin contents based on the channel state.
+	 *
+	 * @param bin {@link VisualReferenceBin} object
+	 * @param g {@link Graphics2D} object
+	 */
+	@Override
+	protected void paintBinContents(VisualReferenceBin bin, Graphics2D g) {
 
-                HashMap<String, Boolean> validData = null;
-                HashMap<String, List<AdditionalChannelData>> additionalData = null;
+		HashMap<String, Boolean> validData = null;
+		HashMap<String, List<AdditionalChannelData>> additionalData = null;
 
-                boolean stateKnown = isStateKnown();
-                if (stateKnown) {
+		boolean stateKnown = isStateKnown();
+		if (stateKnown) {
 
-                        validData = getValidData();
-                        additionalData = getAdditionalData();
-                }
-                        
+			validData = getValidData();
+			additionalData = getAdditionalData();
+		}
+
 
 		Iterator<VisualReferenceSourceChannel> it = bin.iterator();
 		VisualReferenceSourceChannel channel;
 
-                if (!stateKnown) {
+		if (!stateKnown) {
 
-                        while (it.hasNext()) {
+			while (it.hasNext()) {
 
-                                channel = it.next();
-                                paintUnknownChannel(channel, g);
-                        }
+				channel = it.next();
+				paintUnknownChannel(channel, g);
+			}
 
-                } else {
+		} else {
 
-                        while (it.hasNext()) {
+			while (it.hasNext()) {
 
-                                channel = it.next();
-                                String channelLabel = channel.getLabel();
-                                Boolean valid = validData.get(channelLabel);
-                                if (valid != null) {
-                                	//ZERO and ONE channels are not in the validData
-                                	//and should not be analyzed.
-                                	List<AdditionalChannelData> data = additionalData.get(channel.getLabel());
-                                	paintKnownChannel(channel, g, valid, data);
-                                }
-                        }
-                }
-        }
+				channel = it.next();
+				String channelLabel = channel.getLabel();
+				Boolean valid = validData.get(channelLabel);
+				if (valid != null) {
+					//ZERO and ONE channels are not in the validData
+					//and should not be analyzed.
+					List<AdditionalChannelData> data = additionalData.get(channel.getLabel());
+					paintKnownChannel(channel, g, valid, data);
+				}
+			}
+		}
+	}
 
-        /**
-         * Draws an unknown channel - white fill and red thick outline.
-         * 
-         * @param channel {@link VisualReferenceSourceChannel} object
-         * @param g {@link Graphics2D} object
-         */
-        private void paintUnknownChannel(VisualReferenceSourceChannel channel, Graphics2D g) {
+	/**
+	 * Draws an unknown channel - white fill and red thick outline.
+	 *
+	 * @param channel {@link VisualReferenceSourceChannel} object
+	 * @param g {@link Graphics2D} object
+	 */
+	private void paintUnknownChannel(VisualReferenceSourceChannel channel, Graphics2D g) {
 
-                paintGivenChannel(channel.getLabel(), 0, channel.getShape(), channel.getOutlineShape(), Color.WHITE, Color.RED, true, g);
-        }
+		paintGivenChannel(channel.getLabel(), 0, channel.getShape(), channel.getOutlineShape(), Color.WHITE, Color.RED, true, g);
+	}
 
-        /**
-         * Draws a known channel - green fill and black thin outline if valid, red fill
-         * and black thick outline if invalid. Also draws the additional data.
-         *
-         * @param channel {@link VisualReferenceSourceChannel} object
-         * @param g {@link Graphics2D} object
-         * @param valid whether channel is valid
-         * @param additionalData list of additional data to draw
-         */
-        private void paintKnownChannel(VisualReferenceSourceChannel channel, Graphics2D g, boolean valid, List<AdditionalChannelData> additionalData) {
+	/**
+	 * Draws a known channel - green fill and black thin outline if valid, red fill
+	 * and black thick outline if invalid. Also draws the additional data.
+	 *
+	 * @param channel {@link VisualReferenceSourceChannel} object
+	 * @param g {@link Graphics2D} object
+	 * @param valid whether channel is valid
+	 * @param additionalData list of additional data to draw
+	 */
+	private void paintKnownChannel(VisualReferenceSourceChannel channel, Graphics2D g, boolean valid, List<AdditionalChannelData> additionalData) {
 
-                paintGivenChannel(channel.getLabel(), 0, channel.getShape(), channel.getOutlineShape(), (valid) ? Color.GREEN : Color.RED, Color.BLACK, false, g);
+		paintGivenChannel(channel.getLabel(), 0, channel.getShape(), channel.getOutlineShape(), (valid) ? Color.GREEN : Color.RED, Color.BLACK, false, g);
 
-                if (!additionalData.isEmpty()) {
+		if (!additionalData.isEmpty()) {
 
-                        int startX = channel.getLocation().x + VisualReferenceSourceChannel.CIRCLE_DIAMETER + BAR_PADDING;
-                        int startY = channel.getLocation().y + BAR_VERTICAL_OFFSET + (VisualReferenceSourceChannel.CIRCLE_DIAMETER - BAR_HEIGHT) / 2;
-                        Point location = new Point(startX, startY);
-                        for (AdditionalChannelData data : additionalData) {
+			int startX = channel.getLocation().x + VisualReferenceSourceChannel.CIRCLE_DIAMETER + BAR_PADDING;
+			int startY = channel.getLocation().y + BAR_VERTICAL_OFFSET + (VisualReferenceSourceChannel.CIRCLE_DIAMETER - BAR_HEIGHT) / 2;
+			Point location = new Point(startX, startY);
+			for (AdditionalChannelData data : additionalData) {
 
-                                paintAdditionalDataBar(location, g, data);
-                                startX += BAR_WIDTH + BAR_PADDING;
-                                location = new Point(startX, startY);
-                        }
-                        
-                }
-        }
+				paintAdditionalDataBar(location, g, data);
+				startX += BAR_WIDTH + BAR_PADDING;
+				location = new Point(startX, startY);
+			}
 
-        /**
-         * Paints a value bar.
-         * @param location location of the bar
-         * @param g {@link Graphics2D} object
-         * @param data data to draw
-         */
-        private void paintAdditionalDataBar(Point location, Graphics2D g, AdditionalChannelData data) {
+		}
+	}
 
-                paintBar(location, g, data);
-                paintLabels(location, g, data);
-        }
+	/**
+	 * Paints a value bar.
+	 * @param location location of the bar
+	 * @param g {@link Graphics2D} object
+	 * @param data data to draw
+	 */
+	private void paintAdditionalDataBar(Point location, Graphics2D g, AdditionalChannelData data) {
 
-        /**
-         * Paints a value bar.
-         * @param location location of the bar
-         * @param g {@link Graphics2D} object
-         * @param data data to draw
-         */
-        private void paintBar(Point location, Graphics2D g, AdditionalChannelData data) {
+		paintBar(location, g, data);
+		paintLabels(location, g, data);
+	}
 
-                int validHeight = (int)(BAR_HEIGHT * ((data.getLimit() - data.getMin()) / (data.getMax() - data.getMin())));
-                int validStart = BAR_HEIGHT - validHeight;
-                int currentHeight = (int)( (data.getCurrent() < data.getMax()) ? (BAR_HEIGHT * ((data.getCurrent() - data.getMin()) / (data.getMax() - data.getMin()))) : BAR_HEIGHT );
-                int currentEnd = BAR_HEIGHT - currentHeight;
+	/**
+	 * Paints a value bar.
+	 * @param location location of the bar
+	 * @param g {@link Graphics2D} object
+	 * @param data data to draw
+	 */
+	private void paintBar(Point location, Graphics2D g, AdditionalChannelData data) {
 
-                g.setPaint(Color.RED);
-                g.fillRect(location.x, location.y, BAR_WIDTH, BAR_HEIGHT - validHeight);
+		int validHeight = (int)(BAR_HEIGHT * ((data.getLimit() - data.getMin()) / (data.getMax() - data.getMin())));
+		int validStart = BAR_HEIGHT - validHeight;
+		int currentHeight = (int)((data.getCurrent() < data.getMax()) ? (BAR_HEIGHT * ((data.getCurrent() - data.getMin()) / (data.getMax() - data.getMin()))) : BAR_HEIGHT);
+		int currentEnd = BAR_HEIGHT - currentHeight;
 
-                g.setPaint(new GradientPaint(location.x, location.y + validStart, Color.RED, location.x, location.y + BAR_HEIGHT, Color.GREEN));
-                g.fillRect(location.x, location.y + validStart, BAR_WIDTH, validHeight);
+		g.setPaint(Color.RED);
+		g.fillRect(location.x, location.y, BAR_WIDTH, BAR_HEIGHT - validHeight);
 
-                g.setPaint(Color.WHITE);
-                g.fillRect(location.x, location.y, BAR_WIDTH, currentEnd);
+		g.setPaint(new GradientPaint(location.x, location.y + validStart, Color.RED, location.x, location.y + BAR_HEIGHT, Color.GREEN));
+		g.fillRect(location.x, location.y + validStart, BAR_WIDTH, validHeight);
 
-                g.setPaint(Color.BLACK);
-                g.setStroke(new BasicStroke(BAR_BORDER));
-                g.drawRect(location.x, location.y, BAR_WIDTH, BAR_HEIGHT);
-                g.drawLine(location.x, location.y + validStart, location.x + BAR_WIDTH, location.y + validStart);
+		g.setPaint(Color.WHITE);
+		g.fillRect(location.x, location.y, BAR_WIDTH, currentEnd);
+
+		g.setPaint(Color.BLACK);
+		g.setStroke(new BasicStroke(BAR_BORDER));
+		g.drawRect(location.x, location.y, BAR_WIDTH, BAR_HEIGHT);
+		g.drawLine(location.x, location.y + validStart, location.x + BAR_WIDTH, location.y + validStart);
 
 
-        }
+	}
 
-        /**
-         * Paints bar labels: max, min, current, and method name
-         * @param location location of the bar
-         * @param g {@link Graphics2D} object
-         * @param data data to draw
-         */
-        private void paintLabels(Point location, Graphics2D g, AdditionalChannelData data) {
+	/**
+	 * Paints bar labels: max, min, current, and method name
+	 * @param location location of the bar
+	 * @param g {@link Graphics2D} object
+	 * @param data data to draw
+	 */
+	private void paintLabels(Point location, Graphics2D g, AdditionalChannelData data) {
 
-                g.setFont(channelLabelFont);
+		g.setFont(channelLabelFont);
 
-                String toWrite = formatDouble(data.getMax());
-                Rectangle2D rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
-                int textHeight = (int)rect.getHeight();
-                int textWidth = (int)(rect.getWidth());
-                int offset = (BAR_WIDTH - textWidth) / 2;
-                int textX = location.x + offset;
-                int textY = location.y - TEXT_SPACE;
-                paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
+		String toWrite = formatDouble(data.getMax());
+		Rectangle2D rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
+		int textHeight = (int)rect.getHeight();
+		int textWidth = (int)(rect.getWidth());
+		int offset = (BAR_WIDTH - textWidth) / 2;
+		int textX = location.x + offset;
+		int textY = location.y - TEXT_SPACE;
+		paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
 
-                toWrite = formatDouble(data.getCurrent());
-                rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
-                textHeight = (int)rect.getHeight();
-                textWidth = (int)rect.getWidth();
-                offset = (BAR_WIDTH - textWidth) / 2;
-                textX = location.x + offset;
-                textY = textY - textHeight;
-                paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
+		toWrite = formatDouble(data.getCurrent());
+		rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
+		textHeight = (int)rect.getHeight();
+		textWidth = (int)rect.getWidth();
+		offset = (BAR_WIDTH - textWidth) / 2;
+		textX = location.x + offset;
+		textY = textY - textHeight;
+		paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
 
-                toWrite = formatDouble(data.getMin());
-                rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
-                textHeight = (int)rect.getHeight();
-                textWidth = (int)rect.getWidth();
-                offset = (BAR_WIDTH - textWidth) / 2;
-                textX = location.x + offset;
-                textY = location.y + textHeight + BAR_HEIGHT + TEXT_SPACE;
-                paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
-        }
+		toWrite = formatDouble(data.getMin());
+		rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
+		textHeight = (int)rect.getHeight();
+		textWidth = (int)rect.getWidth();
+		offset = (BAR_WIDTH - textWidth) / 2;
+		textX = location.x + offset;
+		textY = location.y + textHeight + BAR_HEIGHT + TEXT_SPACE;
+		paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
+	}
 
-        /**
-         * Paints given String with white background.
-         * @param toWrite String to write
-         * @param textX x position
-         * @param textY y position
-         * @param textWidth text width
-         * @param textHeight text height
-         * @param g {@link Graphics2D} object
-         */
-        private void paintLabelWithBackground(String toWrite, int textX, int textY, int textWidth, int textHeight, Graphics2D g) {
+	/**
+	 * Paints given String with white background.
+	 * @param toWrite String to write
+	 * @param textX x position
+	 * @param textY y position
+	 * @param textWidth text width
+	 * @param textHeight text height
+	 * @param g {@link Graphics2D} object
+	 */
+	private void paintLabelWithBackground(String toWrite, int textX, int textY, int textWidth, int textHeight, Graphics2D g) {
 
-                g.setPaint(Color.WHITE);
-                g.fillRect(textX, textY - textHeight, textWidth, textHeight);
-                g.setPaint(Color.BLACK);
-                g.drawString(toWrite, textX, textY);
-        }
+		g.setPaint(Color.WHITE);
+		g.fillRect(textX, textY - textHeight, textWidth, textHeight);
+		g.setPaint(Color.BLACK);
+		g.drawString(toWrite, textX, textY);
+	}
 
 	/**
 	 * Formats given double.
@@ -285,73 +285,73 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 		return formatter.format(input);
 	}
 
-        /**
-         * Whether the state is known - all diagnosis objects returned non-null value.
-         *
-         * @return true if the state is known, false otherwise
-         */
-        private boolean isStateKnown() {
+	/**
+	 * Whether the state is known - all diagnosis objects returned non-null value.
+	 *
+	 * @return true if the state is known, false otherwise
+	 */
+	private boolean isStateKnown() {
 
-                for (Object diagnosisResult : channels)
-                        if (diagnosisResult == null)
-                                return false;
-                return true;
-        }
+		for (Object diagnosisResult : channels)
+			if (diagnosisResult == null)
+				return false;
+		return true;
+	}
 
-        /**
-         * For each channel, checks if that channel is valid.
-         * 
-         * @return valid data on each channel
-         */
-        private HashMap<String, Boolean> getValidData() {
+	/**
+	 * For each channel, checks if that channel is valid.
+	 *
+	 * @return valid data on each channel
+	 */
+	private HashMap<String, Boolean> getValidData() {
 
-             HashMap<String, Boolean> validData = new HashMap<String, Boolean>();
-             Set<String> channelNames = channels.get(0).keySet();
+		HashMap<String, Boolean> validData = new HashMap<String, Boolean>();
+		Set<String> channelNames = channels.get(0).keySet();
 
-             for (String channel : channelNames) {
+		for (String channel : channelNames) {
 
-                     boolean valid = true;
-                     for (HashMap<String, ChannelState> diagnosisResult : channels) {
+			boolean valid = true;
+			for (HashMap<String, ChannelState> diagnosisResult : channels) {
 
-                             if (!diagnosisResult.get(channel).isValid()) {
+				if (!diagnosisResult.get(channel).isValid()) {
 
-                                     valid = false;
-                                     break;
-                             }
-                     }
+					valid = false;
+					break;
+				}
+			}
 
-                     validData.put(channel, valid);
-             }
+			validData.put(channel, valid);
+		}
 
-             return validData;
-        }
+		return validData;
+	}
 
-        /**
-         * Gets list additional channel data for each channel.
-         * 
-         * @return additional data
-         */
-        private HashMap<String, List<AdditionalChannelData>> getAdditionalData() {
+	/**
+	 * Gets list additional channel data for each channel.
+	 *
+	 * @return additional data
+	 */
+	private HashMap<String, List<AdditionalChannelData>> getAdditionalData() {
 
-                HashMap<String, List<AdditionalChannelData>> additionalData =
-                        new HashMap<String, List<AdditionalChannelData>>();
+		HashMap<String, List<AdditionalChannelData>> additionalData =
+			new HashMap<String, List<AdditionalChannelData>>();
 
-                Set<String> channelNames = channels.get(0).keySet();
+		Set<String> channelNames = channels.get(0).keySet();
 
-                for (String channel : channelNames) {
+		for (String channel : channelNames) {
 
-                        List<AdditionalChannelData> channelsAdditionalData = new ArrayList<AdditionalChannelData>();
-                        for (HashMap<String, ChannelState> diagnosisResult : channels) {
+			List<AdditionalChannelData> channelsAdditionalData = new ArrayList<AdditionalChannelData>();
+			for (HashMap<String, ChannelState> diagnosisResult : channels) {
 
-                              AdditionalChannelData currentData = diagnosisResult.get(channel).getAdditionalChannelData();
-                              if (currentData != null)
-                                      channelsAdditionalData.add(currentData);
-                        }
+				AdditionalChannelData currentData = diagnosisResult.get(channel).getAdditionalChannelData();
+				if (currentData != null)
+					channelsAdditionalData.add(currentData);
+			}
 
-                        additionalData.put(channel, channelsAdditionalData);
-                }
+			additionalData.put(channel, channelsAdditionalData);
+		}
 
-                return additionalData;
-        }
-        
+		return additionalData;
+	}
+
 }

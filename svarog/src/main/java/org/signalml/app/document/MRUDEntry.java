@@ -25,7 +25,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
  * <li>the class of the document</li>
  * </ul>
  * and the described file, which is not serialized.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("mrud")
@@ -41,13 +41,13 @@ public class MRUDEntry implements MessageSourceResolvable, PropertyProvider {
 	 * the last time when the file was opened
 	 */
 	private Date lastTimeOpened;
-	
+
 	/**
 	 * the {@link ManagedDocumentType type} of a document that can be created
 	 * using the described file
 	 */
 	private ManagedDocumentType documentType;
-	
+
 	/**
 	 * the class of the document TODO only set and never read?
 	 */

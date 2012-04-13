@@ -61,9 +61,9 @@ public class ChebyshevIIRDesignerTest {
 
 		//chebyshev test (both chebyshev's are implemented by the same code)
 		BandstopObjectiveFunction bo = iirdesigner.new BandstopObjectiveFunction(0,
-		                               new double[] {0.1, 0.8},
-		                               new double[] {0.4, 0.6},
-		                               3, 20);
+									   new double[] {0.1, 0.8},
+									   new double[] {0.4, 0.6},
+									   3, 20);
 		assertEquals(3.7599806708583481, bo.value(0.0), 1e-8);
 
 	}

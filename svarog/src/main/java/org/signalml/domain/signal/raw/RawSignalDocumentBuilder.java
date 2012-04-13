@@ -60,7 +60,7 @@ public class RawSignalDocumentBuilder {
 	public static final String CALIBRATION_GAIN = "rs:calibrationGain";
 	public static final String CALIBRATION_OFFSET = "rs:calibrationOffset";
 	public static final String FIRST_SAMPLE_TIMESTAMP = "rs:firstSampleTimestamp";
-        public static final String IS_BACKUP = "rs:isBackup";
+	public static final String IS_BACKUP = "rs:isBackup";
 
 	static final String JAXP_SCHEMA_LANGUAGE = "http://java.sun.com/xml/jaxp/properties/schemaLanguage";
 
@@ -68,23 +68,23 @@ public class RawSignalDocumentBuilder {
 
 	static final String JAXP_SCHEMA_SOURCE = "http://java.sun.com/xml/jaxp/properties/schemaSource";
 
-        /**
-         * the default instance of the builder
-         */
+	/**
+	 * the default instance of the builder
+	 */
 	private static RawSignalDocumentBuilder instance = null;
 
-        /**
-         * the factory used to create this builder
-         */
+	/**
+	 * the factory used to create this builder
+	 */
 	private DocumentBuilderFactory documentBuiderFactory;
-        /**
-         * the actual {@link DocumentBuilder} of documents
-         */
+	/**
+	 * the actual {@link DocumentBuilder} of documents
+	 */
 	private DocumentBuilder documentBuilder;
 
-        /**
-         * Constructor. Creates the builder.
-         */
+	/**
+	 * Constructor. Creates the builder.
+	 */
 	protected RawSignalDocumentBuilder() {
 
 		Resource schemaResource = new ClassPathResource("org/signalml/schema/rawsignal.xsd");
@@ -136,37 +136,37 @@ public class RawSignalDocumentBuilder {
 
 	}
 
-        /**
-         * Returns the default instance of the builder. If it doesn't exist
-         * creates it.
-         * @return the default instance of the builder
-         */
+	/**
+	 * Returns the default instance of the builder. If it doesn't exist
+	 * creates it.
+	 * @return the default instance of the builder
+	 */
 	public static RawSignalDocumentBuilder getInstance() {
 		if (instance == null) {
-		    synchronized (RawSignalDocumentBuilder.class) {
-		        if (instance == null)
-		            instance = new RawSignalDocumentBuilder();
-		    }
+			synchronized (RawSignalDocumentBuilder.class) {
+				if (instance == null)
+					instance = new RawSignalDocumentBuilder();
+			}
 		}
 
 		return instance;
 	}
 
-        /**
-         * Creates the new document with the raw signal.
-         * @return the new document with the raw signal
-         */
+	/**
+	 * Creates the new document with the raw signal.
+	 * @return the new document with the raw signal
+	 */
 	public Document newDocument() {
 		return documentBuilder.newDocument();
 	}
 
-        /**
-         * Creates the document with the raw signal from file
-         * @param f the file with the signal
-         * @return the created document
-         * @throws SAXException If any parse errors occur.
-         * @throws IOException If any IO errors occur.
-         */
+	/**
+	 * Creates the document with the raw signal from file
+	 * @param f the file with the signal
+	 * @return the created document
+	 * @throws SAXException If any parse errors occur.
+	 * @throws IOException If any IO errors occur.
+	 */
 	public Document parse(File f) throws SAXException, IOException {
 		return documentBuilder.parse(f);
 	}

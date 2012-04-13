@@ -47,7 +47,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model)
-			throws SignalMLException {
+	throws SignalMLException {
 
 		if (toStep == 1 && fromStep == 0) {
 			AbstractOpenSignalDescriptor openSignalDescriptor = getStepOnePanel().getOpenSignalDescriptor();
@@ -71,10 +71,10 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 			getSignalMontagePanel().fillPanelFromModel(createdMontage);
 			getSignalMontagePanel().setSamplingFrequency(signalParameters.getSamplingFrequency());
-			
+
 			getSignalMontagePanel().resetPreset();
 		}
-		
+
 		return super.onStepChange(toStep, fromStep, model);
 	}
 
@@ -103,7 +103,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 		if (stepTwoPanel == null) {
 			stepTwoPanel = new SignalMontagePanel(viewerElementManager);
 		}
-		return stepTwoPanel;		
+		return stepTwoPanel;
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 	@Override
 	public boolean isFinishAllowedOnStep(int step) {
-		return step == 1; 
+		return step == 1;
 	}
 
 	@Override

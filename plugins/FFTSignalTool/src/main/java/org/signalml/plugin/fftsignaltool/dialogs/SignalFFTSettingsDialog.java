@@ -13,7 +13,7 @@ import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
  * <p>
  * The model for this dialog is of type {@link SignalFFTSettings} and the
  * parameters are stored in it.
- * 
+ *
  * @author Marcin Szumski
  */
 public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.AbstractPluginDialog  {
@@ -22,13 +22,13 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	 * the serialization constant
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * the {@link SignalFFTSettingsPanel panel} with the actual contents of
 	 * this dialog
 	 */
 	private SignalFFTSettingsPanel signalFFTSettingsPanel;
-	
+
 	/**
 	 * Constructor. Sets message source, that there is no parent window and
 	 * that this dialog blocks top-level windows.
@@ -36,7 +36,7 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	public SignalFFTSettingsDialog() {
 		super(null, true);
 	}
-	
+
 	/**
 	 * Creates the interface for this dialog.
 	 * This interface contains only {@link SignalFFTSettingsPanel}.
@@ -81,8 +81,8 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 		signalFFTSettingsPanel.fillModelFromPanel(settings);
 
 	}
-	
-	
+
+
 	/**
 	 * Validates this dialog.
 	 * This dialog is valid if {@link SignalFFTSettingsPanel} is {@link
@@ -90,7 +90,7 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	 */
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-			throws SignalMLException {
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		signalFFTSettingsPanel.validatePanel(errors);

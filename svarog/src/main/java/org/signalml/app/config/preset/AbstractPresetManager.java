@@ -32,7 +32,7 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 
 	protected transient HashMap<String, Integer> presetsByName;
 
-	protected transient EventListenerList listenerList = new EventListenerList();		
+	protected transient EventListenerList listenerList = new EventListenerList();
 
 	@Override
 	public Preset getPresetAt(int index) {
@@ -140,9 +140,9 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 		for (int i=0; i<cnt; i++) {
 			presetsByName.put(presets.get(i).getName(), i);
 		}
-		
+
 	}
-			
+
 	public void addPresetManagerListener(PresetManagerListener l) {
 		listenerList.add(PresetManagerListener.class, l);
 	}
@@ -160,10 +160,10 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 					e = new PresetManagerEvent(source, null, newPreset);
 				}
 				((PresetManagerListener)listeners[i+1]).presetAdded(e);
-			}		  
+			}
 		}
 	}
-	
+
 	protected void firePresetRemoved(Object source, Preset oldPreset) {
 		Object[] listeners = listenerList.getListenerList();
 		PresetManagerEvent e = null;
@@ -173,10 +173,10 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 					e = new PresetManagerEvent(source, oldPreset, null);
 				}
 				((PresetManagerListener)listeners[i+1]).presetRemoved(e);
-			}		  
+			}
 		}
 	}
-	
+
 	protected void firePresetReplaced(Object source, Preset oldPreset, Preset newPreset) {
 		Object[] listeners = listenerList.getListenerList();
 		PresetManagerEvent e = null;
@@ -186,7 +186,7 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 					e = new PresetManagerEvent(source, oldPreset, newPreset);
 				}
 				((PresetManagerListener)listeners[i+1]).presetReplaced(e);
-			}		  
+			}
 		}
 	}
 
@@ -199,7 +199,7 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 					e = new PresetManagerEvent(source, oldPreset, newPreset);
 				}
 				((PresetManagerListener)listeners[i+1]).defaultPresetChanged(e);
-			}		  
+			}
 		}
 	}
 
@@ -210,5 +210,5 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 		if (otherPresetManager.defaultPreset != null)
 			this.defaultPreset = otherPresetManager.defaultPreset;
 	}
-	
+
 }

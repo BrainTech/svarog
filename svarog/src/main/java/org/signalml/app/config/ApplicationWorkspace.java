@@ -94,9 +94,9 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 			} catch (IOException ex) {
 				logger.error("Exception while restoring workspace", ex);
 			} catch (SignalMLException ex) {
-				logger.error( "Exception while restoring workspace", ex );
+				logger.error("Exception while restoring workspace", ex);
 			} catch (ConnectException ex) {
-				logger.error( "Exception while restoring workspace", ex );
+				logger.error("Exception while restoring workspace", ex);
 			}
 
 			if (this.activeDocument == workspaceDocument) {
@@ -202,14 +202,14 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		XMLUtils.configureStreamerForMontage(streamer);
 		XMLUtils.configureStreamerForBookFilter(streamer);
 		Annotations.configureAliases(
-		        streamer,
-		        ApplicationWorkspace.class,
-		        WorkspaceDocument.class,
-		        WorkspaceSignal.class,
-		        WorkspaceBook.class,
-		        WorkspaceTag.class,
-		        WorkspaceSignalPlot.class,
-		        WorkspaceBookPlot.class
+			streamer,
+			ApplicationWorkspace.class,
+			WorkspaceDocument.class,
+			WorkspaceSignal.class,
+			WorkspaceBook.class,
+			WorkspaceTag.class,
+			WorkspaceSignalPlot.class,
+			WorkspaceBookPlot.class
 		);
 		streamer.setMode(XStream.ID_REFERENCES);
 

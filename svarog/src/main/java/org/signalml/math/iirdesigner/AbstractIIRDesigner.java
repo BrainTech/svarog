@@ -533,7 +533,7 @@ abstract class AbstractIIRDesigner {
 		String split[];
 
 		split = s.split("\\n");
-		for(String str: split)
+		for (String str: split)
 			logger.debug(str);
 	}
 

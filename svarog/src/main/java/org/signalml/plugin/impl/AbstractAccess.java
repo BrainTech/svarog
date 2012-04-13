@@ -8,21 +8,21 @@ import org.signalml.app.view.workspace.ViewerElementManager;
  * @author Stanislaw Findeisen
  */
 public class AbstractAccess {
-    
-    /**
-     * the manager of the elements of Svarog
-     */
-    private ViewerElementManager viewerElementManager;
-    
-    protected void setViewerElementManager(ViewerElementManager manager) {
-        this.viewerElementManager = manager;
-    }
-    
-    protected ViewerElementManager getViewerElementManager() {
-        return viewerElementManager;
-    }
 
-    protected boolean hasViewerElementManager() {
-        return (null != viewerElementManager);
-    }
+	/**
+	 * the manager of the elements of Svarog
+	 */
+	private ViewerElementManager viewerElementManager;
+
+	protected void setViewerElementManager(ViewerElementManager manager) {
+		this.viewerElementManager = manager;
+	}
+
+	protected ViewerElementManager getViewerElementManager() {
+		return viewerElementManager;
+	}
+
+	protected boolean hasViewerElementManager() {
+		return (null != viewerElementManager);
+	}
 }

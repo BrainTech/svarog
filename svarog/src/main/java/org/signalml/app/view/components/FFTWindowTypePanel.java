@@ -57,7 +57,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * window can be entered
 	 */
 	private JTextField windowParameterTextField;
-	
+
 	/**
 	 * the group containing the buttons for different {@link WindowType types}
 	 * of windows
@@ -98,8 +98,8 @@ public class FFTWindowTypePanel extends JPanel {
 		}
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Window type")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Window type")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

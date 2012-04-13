@@ -241,7 +241,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 * domain responses
 	 */
 	protected int getNumberOfPointsForTimeDomainResponse() {
-		return (int) (TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS * samplingFrequency);
+		return (int)(TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS * samplingFrequency);
 	}
 
 	@Override

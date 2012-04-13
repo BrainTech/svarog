@@ -29,7 +29,7 @@ import org.signalml.domain.montage.MontageSampleFilter;
 /**
  * The table which allows to check which {@link MontageChannel montage channels}
  * should not be {@link MontageSampleFilter filtered} by which filter.
- * This table has: 
+ * This table has:
  * <ul>
  * <li>no header,</li>
  * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
@@ -59,7 +59,7 @@ public class MontageFilterExclusionTable extends JTable {
 	 * the height of the row
 	 */
 	private static final int ROW_SIZE = 35;
-	
+
 	/**
 	 * the width of the column
 	 */
@@ -190,7 +190,7 @@ public class MontageFilterExclusionTable extends JTable {
 		 * MontageFilterExclusionTable#DISABLED_COLOR},</li>
 		 * <li>the width to {@link MontageFilterExclusionTable#ROW_SIZE} and
 		 * the height to {@link MontageFilterExclusionTable#COLUMN_SIZE}.
-		 * </li></ul> 
+		 * </li></ul>
 		 */
 		public CornerPanel() {
 			super();
@@ -227,11 +227,11 @@ public class MontageFilterExclusionTable extends JTable {
 	 * height,</li>
 	 * <li>{@link MontageFilterExclusionTable#COLUMN_SIZE COLUMN_SIZE}
 	 * as the column width,</li>
-	 * <li>the values centered in the cell.</li></ul> 
+	 * <li>the values centered in the cell.</li></ul>
 	 */
 	private class ColumnHeaderTable extends JTable {
 
-		
+
 		/**
 		 * the default serialization constant
 		 */
@@ -323,7 +323,7 @@ public class MontageFilterExclusionTable extends JTable {
 	 * height,</li>
 	 * <li>{@link MontageFilterExclusionTable#COLUMN_SIZE COLUMN_SIZE}
 	 * as the column width,</li>
-	 * <li>the values centered in the cell.</li></ul> 
+	 * <li>the values centered in the cell.</li></ul>
 	 */
 	private class RowHeaderTable extends JTable {
 

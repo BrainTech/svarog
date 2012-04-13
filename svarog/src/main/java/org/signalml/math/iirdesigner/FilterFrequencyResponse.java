@@ -102,12 +102,12 @@ public class FilterFrequencyResponse {
 		return values;
 	}
 
-		/**
-	 * Sets the value of the specified element in the gain arrray.
-	 *
-	 * @param i the index of the element to change
-	 * @param newValue the new value of gain
-	 */
+	/**
+	* Sets the value of the specified element in the gain arrray.
+	*
+	* @param i the index of the element to change
+	* @param newValue the new value of gain
+	*/
 	public void setValue(int i, double newValue) {
 		values[i] = newValue;
 	}

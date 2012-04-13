@@ -60,8 +60,8 @@ public class ProgressTableCellRenderer extends JPanel implements TableCellRender
 				}
 				Insets ins = border.getBorderInsets(this);
 				focusBorder = new CompoundBorder(
-				        border,
-				        new EmptyBorder(4-ins.top,4-ins.left,4-ins.bottom,4-ins.right)
+					border,
+					new EmptyBorder(4-ins.top,4-ins.left,4-ins.bottom,4-ins.right)
 				);
 			}
 			setBorder(focusBorder);

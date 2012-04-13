@@ -61,7 +61,7 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 	public NewArtifactToolConfigPanel getConfigPanel() {
 		if (configPanel == null) {
 			configPanel = new NewArtifactToolConfigPanel(
-					fileChooser);
+				fileChooser);
 		}
 		return configPanel;
 	}
@@ -89,7 +89,7 @@ public class NewArtifactToolConfigDialog extends org.signalml.plugin.export.view
 
 		if (!errors.hasErrors()) {
 			File file = getConfigPanel().getWorkingDirectoryPanel()
-				    .getDirectory();
+						.getDirectory();
 			if (file == null || !file.exists() || !file.canWrite()) {
 				errors.addError(_("Working directory not set or unusable"));
 			}

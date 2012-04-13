@@ -99,7 +99,7 @@ public class NewArtifactMgrPreprocessStep extends
 
 		@Override
 		public double[][] getNextBufferForObject(Object sender)
-				throws InterruptedException {
+		throws InterruptedException {
 			final Semaphore s;
 			synchronized (this) {
 				if (!waitSemaphore.containsKey(sender)) {
@@ -201,7 +201,7 @@ public class NewArtifactMgrPreprocessStep extends
 		private void copyChunk(double buffer[][]) {
 			for (int i = 0; i < buffer.length; ++i) {
 				buffer[i] = Arrays.copyOf(this.currentBuffer[i],
-							  buffer[i].length); // TODO
+										  buffer[i].length); // TODO
 			}
 
 		}
@@ -361,7 +361,7 @@ public class NewArtifactMgrPreprocessStep extends
 
 	private void prepareWorkers() throws ComputationException {
 		int channelCount = this.data.artifactData.getSampleSource()
-				   .getChannelCount();
+						   .getChannelCount();
 		int blockLength = this.data.constants.getBlockLengthWithPadding();
 
 		double[][][] inputBuffer = new double[this.INPUT_BUFFER_QUEUE_SIZE][channelCount][blockLength];
@@ -382,21 +382,21 @@ public class NewArtifactMgrPreprocessStep extends
 		for (NewArtifactComputationType algorithmType : NewArtifactComputationType
 				.values()) {
 			INewArtifactAlgorithmWriter writer = this
-							     .createResultWriterForAlgorithm(algorithmType);
+												 .createResultWriterForAlgorithm(algorithmType);
 			if (writer != null) {
 				this.writers.add(writer);
 				this.workers.add(new NewArtifactAlgorithmWorker(
-							 new NewArtifactAlgorithmDataSource(synchronizer),
-							 new NewArtifactAlgorithmFactory(algorithmType,
-									 this.data.constants), writer,
-							 new NewArtifactAlgorithmWorkerData(
-								 this.data.artifactData, this.data.constants)));
+									 new NewArtifactAlgorithmDataSource(synchronizer),
+									 new NewArtifactAlgorithmFactory(algorithmType,
+											 this.data.constants), writer,
+									 new NewArtifactAlgorithmWorkerData(
+										 this.data.artifactData, this.data.constants)));
 			}
 		}
 		this.workers.add(reader);
 
 		this.updater = new TrackerUpdater(this.data.tracker,
-						  this.getBlockCount());
+										  this.getBlockCount());
 	}
 
 	@Override
@@ -457,7 +457,7 @@ public class NewArtifactMgrPreprocessStep extends
 		}
 
 		String fileNames[] = this.data.pathConstructor
-				     .getIntermediateFileNamesForAlgorithm(algorithmType);
+							 .getIntermediateFileNamesForAlgorithm(algorithmType);
 		String workDirName = this.data.pathConstructor.getPathToWorkDir();
 
 		try {
@@ -478,7 +478,7 @@ public class NewArtifactMgrPreprocessStep extends
 			default:
 				assert fileNames.length == 1;
 				return new NewArtifactAlgorithmWriter(new File(workDirName,
-								      fileNames[0]));
+													  fileNames[0]));
 			}
 		} catch (SignalMLException e) {
 			throw new ComputationException(e);
@@ -487,8 +487,8 @@ public class NewArtifactMgrPreprocessStep extends
 
 	private int getBlockCount() {
 		return PluginSignalHelper.GetBlockCount(
-			       this.data.artifactData.getSampleSource(),
-			       this.data.constants.getBlockLength());
+				   this.data.artifactData.getSampleSource(),
+				   this.data.constants.getBlockLength());
 	}
 
 }

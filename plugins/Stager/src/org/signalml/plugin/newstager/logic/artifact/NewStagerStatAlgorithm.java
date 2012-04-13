@@ -44,9 +44,9 @@ public class NewStagerStatAlgorithm {
 		this.emgArtifacts.add(this.emgAnalyser.run(signal));
 
 		double c3[] = NewStagerArtifactAnalysisAlgorithmBase.GetChannelSignal(
-				      this.data.channels, EegChannel.C3, signal);
+						  this.data.channels, EegChannel.C3, signal);
 		double a2[] = NewStagerArtifactAnalysisAlgorithmBase.GetChannelSignal(
-				      this.data.channels, EegChannel.A2, signal);
+						  this.data.channels, EegChannel.A2, signal);
 
 		assert(c3.length == a2.length);
 		for (int i = 0; i < c3.length; ++i) {
@@ -77,9 +77,9 @@ public class NewStagerStatAlgorithm {
 		int count = length * this.data.constants.getBlockLength();
 		double mean = this.c3a2diff / count;
 		double dev = this.c3a2diffSquare - 2 * mean * this.c3a2diff + mean
-			     * mean * count;
+					 * mean * count;
 
 		return new NewStagerStatAlgorithmResult(Math.sqrt(dev / (count - 1)),
-							muscle, montage);
+												muscle, montage);
 	}
 }

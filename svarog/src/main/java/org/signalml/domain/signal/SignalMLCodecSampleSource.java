@@ -23,88 +23,88 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 	protected static final Logger logger = Logger.getLogger(SignalMLCodecSampleSource.class);
 
-        /**
-         * the {@link SignalMLCodecReader reader} that gets all informations
-         * about the signal from file
-         */
+	/**
+	 * the {@link SignalMLCodecReader reader} that gets all informations
+	 * about the signal from file
+	 */
 	private SignalMLCodecReader reader = null;
 
-        /**
-         * the number of samples per second
-         */
+	/**
+	 * the number of samples per second
+	 */
 	private float samplingFrequency;
 
-        /**
-         * the number of channels
-         */
+	/**
+	 * the number of channels
+	 */
 	private int channelCount;
 
-        /**
-         * the calibration of the signal
-         */
+	/**
+	 * the calibration of the signal
+	 */
 	private float calibration;
 
-        /**
-         * the number of samples in the single channel
-         */
-        private int sampleCount;
+	/**
+	 * the number of samples in the single channel
+	 */
+	private int sampleCount;
 
-        /**
-         * if this source is capable of returning a the number of samples
-         * per second
-         */
+	/**
+	 * if this source is capable of returning a the number of samples
+	 * per second
+	 */
 	private boolean samplingFrequencyCapable = false;
-        /**
-         * if this source is capable of returning the number of channels
-         */
+	/**
+	 * if this source is capable of returning the number of channels
+	 */
 	private boolean channelCountCapable = false;
-        /**
-         * if this source is capable of returning a calibration
-         */
+	/**
+	 * if this source is capable of returning a calibration
+	 */
 	private boolean calibrationCapable = false;
 
-        /**
-         * true if frequency of sampling is equal for all channels, false
-         * otherwise
-         */
+	/**
+	 * true if frequency of sampling is equal for all channels, false
+	 * otherwise
+	 */
 	private boolean uniformSampling = true;
 
-        /**
-         * an array containing for each channel the number of samples per second
-         */
+	/**
+	 * an array containing for each channel the number of samples per second
+	 */
 	private float[] channelSampling;
 
-        /**
-         * an array of labels of channels
-         */
+	/**
+	 * an array of labels of channels
+	 */
 	private String[] labels;
 
-        /**
-         * informs whether the sampling frequency has changed
-         */
+	/**
+	 * informs whether the sampling frequency has changed
+	 */
 	private boolean samplingFrequencyExternal = false;
-        /**
-         * informs whether the channel count has changed
-         */
+	/**
+	 * informs whether the channel count has changed
+	 */
 	private boolean channelCountExternal = false;
-        /**
-         * informs whether the calibration has changed
-         */
+	/**
+	 * informs whether the calibration has changed
+	 */
 	private boolean calibrationExternal = false;
 
-        /**
-         * the {@link MultichannelSignalResampler resampler} of the signal
-         */
+	/**
+	 * the {@link MultichannelSignalResampler resampler} of the signal
+	 */
 	private MultichannelSignalResampler resampler = null;
 
-        /**
-         * Constructor. Creates the source of samples based on a given
-         * {@link SignalMLCodecReader reader}.
-         * @param reader the reader that gets all informations about signal
-         * from file
-         * @throws SignalMLException if codec doesn't support max offset, so
-         * is unusable
-         */
+	/**
+	 * Constructor. Creates the source of samples based on a given
+	 * {@link SignalMLCodecReader reader}.
+	 * @param reader the reader that gets all informations about signal
+	 * from file
+	 * @throws SignalMLException if codec doesn't support max offset, so
+	 * is unusable
+	 */
 	public SignalMLCodecSampleSource(SignalMLCodecReader reader) throws SignalMLException {
 		super();
 		this.reader = reader;
@@ -184,10 +184,10 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 	}
 
-        /**
-         * Reads the frequency of sampling (number of samples per second) for
-         * each channel from file.
-         */
+	/**
+	 * Reads the frequency of sampling (number of samples per second) for
+	 * each channel from file.
+	 */
 	private void collectChannelSampling() {
 
 		channelSampling = new float[channelCount];
@@ -206,10 +206,10 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 	}
 
-        /**
-         * Reads the labels of channels from file. If some labels are missing
-         * the default labels are used.
-         */
+	/**
+	 * Reads the labels of channels from file. If some labels are missing
+	 * the default labels are used.
+	 */
 	private void readLabels() {
 
 		labels = null;
@@ -259,12 +259,12 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 	}
 
-        /**
-         * Returns the {@link SignalMLCodecReader reader} that gets all
-         * informations about the signal from file
-         * @return the reader that gets all informations about the signal
-         * from file
-         */
+	/**
+	 * Returns the {@link SignalMLCodecReader reader} that gets all
+	 * informations about the signal from file
+	 * @return the reader that gets all informations about the signal
+	 * from file
+	 */
 	public SignalMLCodecReader getReader() {
 		return reader;
 	}
@@ -279,32 +279,32 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 		return channelCount;
 	}
 
-        /**
-         * Returns if this source is capable of returning a calibration
-         * @return true if this source is capable of returning a
-         * calibration, false otherwise
-         */
+	/**
+	 * Returns if this source is capable of returning a calibration
+	 * @return true if this source is capable of returning a
+	 * calibration, false otherwise
+	 */
 	@Override
 	public boolean isCalibrationCapable() {
 		return calibrationCapable;
 	}
 
-        /**
-         * Returns if this source is capable of returning a sampling
-         * frequency
-         * @return true if this source is capable of returning a
-         * sampling frequency, false otherwise
-         */
+	/**
+	 * Returns if this source is capable of returning a sampling
+	 * frequency
+	 * @return true if this source is capable of returning a
+	 * sampling frequency, false otherwise
+	 */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return samplingFrequencyCapable;
 	}
 
-        /**
-         * Returns if this source is capable of returning a channel count
-         * @return true if this source is capable of returning a
-         * channel count, false otherwise
-         */
+	/**
+	 * Returns if this source is capable of returning a channel count
+	 * @return true if this source is capable of returning a
+	 * channel count, false otherwise
+	 */
 	@Override
 	public boolean isChannelCountCapable() {
 		return channelCountCapable;
@@ -339,24 +339,24 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 		return sampleCount;
 	}
 
-        /**
-         * Returns the given number of samples for a given channel starting
-         * from a given position in time.
-         * If sampling frequency for the channel is different from default
-         * the signal is {@link MultichannelSignalResampler resampled}.
-         * @param channel the number of channel
-         * @param target the array to which results will be written starting
-         * from position <code>arrayOffset</code>
-         * @param signalOffset the position (in time) in the signal starting
-         * from which samples will be returned
-         * @param count the number of samples to be returned
-         * @param arrayOffset the offset in <code>target</code> array starting
-         * from which samples will be written
-         * @throws IndexOutOfBoundsException if channel of given index doesn't
-         * exist
-         * or some of the requested samples are not in the signal
-         * or created result doesn't fit in the <code>target</code> array
-         */
+	/**
+	 * Returns the given number of samples for a given channel starting
+	 * from a given position in time.
+	 * If sampling frequency for the channel is different from default
+	 * the signal is {@link MultichannelSignalResampler resampled}.
+	 * @param channel the number of channel
+	 * @param target the array to which results will be written starting
+	 * from position <code>arrayOffset</code>
+	 * @param signalOffset the position (in time) in the signal starting
+	 * from which samples will be returned
+	 * @param count the number of samples to be returned
+	 * @param arrayOffset the offset in <code>target</code> array starting
+	 * from which samples will be written
+	 * @throws IndexOutOfBoundsException if channel of given index doesn't
+	 * exist
+	 * or some of the requested samples are not in the signal
+	 * or created result doesn't fit in the <code>target</code> array
+	 */
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized (this) {
@@ -379,18 +379,18 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 				float gain;
 				try {
 					gain = this.reader.get_calibration(channel);
-				} catch(SignalMLCodecException e) {
+				} catch (SignalMLCodecException e) {
 					logger.error("get_calibration(channel) failed", e);
 					try {
 						gain = this.reader.get_calibration();
-					} catch(SignalMLCodecException e2) {
+					} catch (SignalMLCodecException e2) {
 						logger.error("get_calibration() failed", e2);
 						throw new RuntimeException(e);
 					}
 				}
 				float offset = this.getCalibrationOffset()[channel];
 				logger.debug(String.format("[%d] gain=%f offset=%f", channel, gain, offset));
-				for(int i=0; i<count; i++) {
+				for (int i=0; i<count; i++) {
 					target[arrayOffset + i] *= gain;
 					target[arrayOffset + i] += offset;
 				}
@@ -420,11 +420,11 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 		}
 	}
 
-        /**
-         * Sets the calibration to the given value and tries to update
-         * it in the file.
-         * @param calibration the new value of calibration
-         */
+	/**
+	 * Sets the calibration to the given value and tries to update
+	 * it in the file.
+	 * @param calibration the new value of calibration
+	 */
 	@Override
 	public void setCalibrationGain(float calibration) {
 		synchronized (this) {
@@ -504,10 +504,10 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 	}
 
-        /**
-         * Closes the file and removes the <code>reader</code> from this
-         * source.
-         */
+	/**
+	 * Closes the file and removes the <code>reader</code> from this
+	 * source.
+	 */
 	@Override
 	public void destroy() {
 		reader.close();

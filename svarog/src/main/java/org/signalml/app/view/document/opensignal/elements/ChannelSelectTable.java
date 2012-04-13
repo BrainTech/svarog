@@ -75,7 +75,7 @@ public class ChannelSelectTable extends JTable {
 	public void setAllSelected(boolean selected) {
 		getChannelSelectTableModel().setAllSelected(selected);
 	}
-	
+
 	public void fillTableFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		ChannelSelectTableModel model = new ChannelSelectTableModel(openSignalDescriptor);
 

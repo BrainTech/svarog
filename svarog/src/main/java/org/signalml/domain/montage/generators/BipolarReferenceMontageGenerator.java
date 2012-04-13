@@ -37,22 +37,22 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * An array of pairs of channels (channels {@link Channel functions})
-         * that will be used to create montage channels.
-         * Each pair is used to create one {@link MontageChannel montage channel}.
-         * First element as primary channel, second as reference.
-         */
+	/**
+	 * An array of pairs of channels (channels {@link Channel functions})
+	 * that will be used to create montage channels.
+	 * Each pair is used to create one {@link MontageChannel montage channel}.
+	 * First element as primary channel, second as reference.
+	 */
 	protected transient String[][] channelPairs;
 
-        /**
-         * Constructor. Creates a generator for an bipolar reference montage
-         * based on <i>refChannels</i> array
-         * @param channelPairs an array of pairs of {@link Channel channels}
-         * (channels functions) that will be used to create montage channels.
-         * Each pair is used to create one {@link MontageChannel montage channel}.
-         * First element as primary channel, second as reference.
-         */
+	/**
+	 * Constructor. Creates a generator for an bipolar reference montage
+	 * based on <i>refChannels</i> array
+	 * @param channelPairs an array of pairs of {@link Channel channels}
+	 * (channels functions) that will be used to create montage channels.
+	 * Each pair is used to create one {@link MontageChannel montage channel}.
+	 * First element as primary channel, second as reference.
+	 */
 	public BipolarReferenceMontageGenerator(String[][] channelPairs) {
 		if (channelPairs == null || channelPairs.length == 0) {
 			throw new NullPointerException("Definition cannot be null or empty");
@@ -60,12 +60,12 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 		this.channelPairs = channelPairs;
 	}
 
-        /**
-         * Creates a bipolar montage from the given montage.
-         * @param montage the montage to be used
-         * @throws MontageException if two channels have the same function
-         * (in the given montage) or there is no channel with some function
-         */
+	/**
+	 * Creates a bipolar montage from the given montage.
+	 * @param montage the montage to be used
+	 * @throws MontageException if two channels have the same function
+	 * (in the given montage) or there is no channel with some function
+	 */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 
@@ -111,8 +111,8 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 			for (int i=0; i<size; i++) {
 				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
 				if (sourceChannel.getFunction() != ChannelFunction.EEG
-					|| (sourceChannel.getFunction() == ChannelFunction.EEG
-					&& !sourceChannel.isChannelType(ChannelType.PRIMARY))) {
+						|| (sourceChannel.getFunction() == ChannelFunction.EEG
+							&& !sourceChannel.isChannelType(ChannelType.PRIMARY))) {
 					index = montage.addMontageChannel(i);
 				}
 			}
@@ -126,12 +126,12 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	}
 
-        /**
-         * Checks if the montage is a valid bipolar montage.
-         * @param sourceMontage the montage to be checked
-         * @param errors Errors object used to report errors
-         * @return true if the montage is a valid bipolar montage, false otherwise
-         */
+	/**
+	 * Checks if the montage is a valid bipolar montage.
+	 * @param sourceMontage the montage to be checked
+	 * @param errors Errors object used to report errors
+	 * @return true if the montage is a valid bipolar montage, false otherwise
+	 */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 

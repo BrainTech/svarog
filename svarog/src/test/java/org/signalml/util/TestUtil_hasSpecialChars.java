@@ -21,7 +21,7 @@ public class TestUtil_hasSpecialChars {
 	};
 
 	@Test public void test_opisy_jarka() {
-		for(String s: opisy_jarka)
+		for (String s: opisy_jarka)
 			assertFalse(s, hasSpecialChars(s));
 		// TODO: convert to parametric tests when junit is changed to something better
 	}

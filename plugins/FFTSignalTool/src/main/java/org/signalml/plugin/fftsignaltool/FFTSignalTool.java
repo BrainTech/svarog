@@ -29,7 +29,7 @@ import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListene
  * </ul>
  * <p>
  * To calculate the FFT, the {@link FFT} plug-in is used.
- * 
+ *
  * @author Marcin Szumski
  */
 public class FFTSignalTool implements Plugin, PluginCloseListener {
@@ -40,10 +40,10 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	 * the {@link SvarogAccessGUI} access to Svarog GUI
 	 */
 	private SvarogAccessGUI guiAccess;
-	
+
 	/** Svarog configuration facade reference. */
-    private SvarogAccessConfig configAccess;
-    	
+	private SvarogAccessConfig configAccess;
+
 	/**
 	 * the tool that is registered by this plug-in
 	 */
@@ -62,7 +62,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	 * the file to which the resources of this plug-in are extracted
 	 */
 	private File resourceDirectory = null;
-	
+
 	/**
 	 * the temporary files created by this plug-in, which should be removed
 	 * when the application is closed
@@ -86,7 +86,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	 */
 	@Override
 	public void register(SvarogAccess access)
-		throws IOException {
+	throws IOException {
 
 		i18nDelegate = new FFTSignalToolI18nDelegate(access);
 		guiAccess = access.getGUIAccess();
@@ -96,7 +96,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 		signalFFTSettings = new SignalFFTSettings();
 		settingsFile = new File(configAccess.getProfileDirectory(), "signalFFTSettings.xml");
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
-		
+
 		//creates and adds the signal tool
 		tool = new SignalFFTTool();
 		tool.setSettings(signalFFTSettings);
@@ -104,8 +104,8 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 		listener = new SignalFFTToolButtonMouseListener();
 		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
 		guiAccess.addSignalTool(tool, icon, _("Signal FFT (for settings press and hold the mouse button here)"), listener);
-		
-		//creates and adds the action which shows the 
+
+		//creates and adds the action which shows the
 		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
 		guiAccess.addButtonToToolsMenu(action);
 	}
@@ -123,7 +123,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 
 	/**
 	 * I18n shortcut.
-	 * 
+	 *
 	 * @param msgKey message to translate (English version)
 	 * @return
 	 */
@@ -133,7 +133,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 
 	/**
 	 * I18n shortcut.
-	 * 
+	 *
 	 * @param msgKey message to translate (English version)
 	 * @param arguments the values to render
 	 * @return

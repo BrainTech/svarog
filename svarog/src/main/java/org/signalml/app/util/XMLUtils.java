@@ -60,46 +60,46 @@ public abstract class XMLUtils {
 
 	public static void configureStreamerForMontage(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				ChannelFunction.class,
-				MontagePresetManager.class,
-				SourceChannel.class,
-				MontageChannel.class,
-				SourceMontage.class,
-				Montage.class,
-				RawMontageGenerator.class,
-				MontageSampleFilter.class,
-				SampleFilterDefinition.class,
-				FFTSampleFilter.class,
-				TimeDomainSampleFilter.class
-		);		
+			streamer,
+			ChannelFunction.class,
+			MontagePresetManager.class,
+			SourceChannel.class,
+			MontageChannel.class,
+			SourceMontage.class,
+			Montage.class,
+			RawMontageGenerator.class,
+			MontageSampleFilter.class,
+			SampleFilterDefinition.class,
+			FFTSampleFilter.class,
+			TimeDomainSampleFilter.class
+		);
 	}
 
 	public static void configureStreamerForBookFilter(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        BookFilterPresetManager.class,
-		        AtomFilterChain.class,
-		        AbstractAtomFilter.class,
-		        ParameterRangeAtomFilter.class,
-		        TagBasedAtomFilter.class,
-		        DelegatingAtomFilter.class
+			streamer,
+			BookFilterPresetManager.class,
+			AtomFilterChain.class,
+			AbstractAtomFilter.class,
+			ParameterRangeAtomFilter.class,
+			TagBasedAtomFilter.class,
+			DelegatingAtomFilter.class
 		);
 	}
 
 	public static void configureStreamerForSignalExport(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        SignalExportPresetManager.class,
-		        SignalExportDescriptor.class
+			streamer,
+			SignalExportPresetManager.class,
+			SignalExportDescriptor.class
 		);
 	}
 
 	public static void configureStreamerForFFTSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        FFTSampleFilterPresetManager.class,
-		        FFTSampleFilter.class
+			streamer,
+			FFTSampleFilterPresetManager.class,
+			FFTSampleFilter.class
 		);
 	}
 
@@ -108,13 +108,13 @@ public abstract class XMLUtils {
 	 * streaming.
 	 * @param streamer a streamer to be configured
 	 */
-        public static void configureStreamerForOpenBCIModule(XStream streamer) {
-                Annotations.configureAliases(
-                        streamer,
-                        OpenBCIModulePresetManager.class,
-                        OpenBCIModule.class
-                );
-        }
+	public static void configureStreamerForOpenBCIModule(XStream streamer) {
+		Annotations.configureAliases(
+			streamer,
+			OpenBCIModulePresetManager.class,
+			OpenBCIModule.class
+		);
+	}
 
 	/**
 	 * Configures the given {@link XStream XStreamer} for {@link TimeDomainSampleFilter}
@@ -123,9 +123,9 @@ public abstract class XMLUtils {
 	 */
 	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				TimeDomainSampleFilterPresetManager.class,
-				TimeDomainSampleFilter.class
+			streamer,
+			TimeDomainSampleFilterPresetManager.class,
+			TimeDomainSampleFilter.class
 		);
 	}
 
@@ -136,10 +136,10 @@ public abstract class XMLUtils {
 	 */
 	public static void configureStreamerForPredefinedTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				PredefinedTimeDomainFiltersPresetManager.class,
-				PredefinedFiltersConfiguration.class,
-				TimeDomainSampleFilter.class
+			streamer,
+			PredefinedTimeDomainFiltersPresetManager.class,
+			PredefinedFiltersConfiguration.class,
+			TimeDomainSampleFilter.class
 		);
 	}
 

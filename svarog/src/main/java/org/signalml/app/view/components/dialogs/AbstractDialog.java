@@ -51,8 +51,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  * <li>{@link #supportsModelClass(Class)}</li>
  * <li>{@link #createInterface()}</li>
  * </ul>
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractDialog extends JDialog {
@@ -75,7 +75,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * the results of this dialog are stored
 	 */
 	protected Object currentModel;
-	
+
 	/**
 	 * true if this dialog was closed with the OK button
 	 * (or in other way that means the success) and there were no errors
@@ -88,7 +88,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * the action that is performed when the dialog is closed with OK button
 	 */
 	OkAction okAction;
-	
+
 	/**
 	 * the action that is performed when the dialog is closed with CANCEL button
 	 */
@@ -128,7 +128,7 @@ public abstract class AbstractDialog extends JDialog {
 	 * the dialog in which the help for this dialog is displayed
 	 */
 	private HelpDialog helpDialog;
-	
+
 	/**
 	 * Constructor. Sets the default source of messages (obtained from
 	 * {@link PluginAccessClass}).
@@ -218,7 +218,7 @@ public abstract class AbstractDialog extends JDialog {
 		addContextHelp();
 
 	}
-	
+
 	/**
 	 * If the {@link #getContextHelpURL() context help URL} is not null the
 	 * {@link ContextHelpAction action} that shows help is created, it is added
@@ -554,9 +554,9 @@ public abstract class AbstractDialog extends JDialog {
 	 * {@code ypos*parentHeight} from the top border of the parent window.
 	 * If there is no parent window, the whole screen is considered.
 	 * @param xpos the x proportion of the parent window at which this dialog
-	 * should be located 
+	 * should be located
 	 * @param ypos the y proportion of the parent window at which this dialog
-	 * should be located 
+	 * should be located
 	 */
 	public void centerInParent(double xpos, double ypos) {
 
@@ -590,9 +590,9 @@ public abstract class AbstractDialog extends JDialog {
 	 * If there is no parent window, the whole screen is considered.
 	 * @param top the component in which this dialog is to centered
 	 * @param xpos the x proportion of the given component at which this dialog
-	 * should be located 
+	 * should be located
 	 * @param ypos the y proportion of the given component at which this dialog
-	 * should be located 
+	 * should be located
 	 */
 	public void centerInComponent(Component top, double xpos, double ypos) {
 

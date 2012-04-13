@@ -19,14 +19,14 @@ import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
  */
 public interface SegmentedSampleSourceDescriptor extends Serializable {
 
-        /**
-         * Creates the
-         * {@link MultichannelSegmentedSampleSource segmented source of samples}
-         * based on this descriptor.
-         * Uses provided source of samples for the whole channel.
-         * @param source the actual source of samples for the whole channel.
-         * @return the created source of samples
-         */
+	/**
+	 * Creates the
+	 * {@link MultichannelSegmentedSampleSource segmented source of samples}
+	 * based on this descriptor.
+	 * Uses provided source of samples for the whole channel.
+	 * @param source the actual source of samples for the whole channel.
+	 * @return the created source of samples
+	 */
 	MultichannelSegmentedSampleSource createSegmentedSource(MultichannelSampleSource source);
 
 }

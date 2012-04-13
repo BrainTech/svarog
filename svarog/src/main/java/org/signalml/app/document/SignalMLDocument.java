@@ -27,7 +27,7 @@ import org.signalml.plugin.export.SignalMLException;
  * <li>number of channels</li>
  * </ul>
  * and if it does allows to get and set them.
- * It is done by passing these functions to the 
+ * It is done by passing these functions to the
  * {@link MultichannelSampleSource source} of samples.</li>
  * </ul>
  *

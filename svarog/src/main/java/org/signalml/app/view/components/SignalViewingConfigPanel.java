@@ -59,13 +59,13 @@ public class SignalViewingConfigPanel extends JPanel {
 	 * forward when right-clicked
 	 */
 	private JCheckBox rightClickPagesForwardCheckBox;
-	
+
 	/**
 	 * the check-box which tells if the default {@link Montage montage} should
 	 * be loaded automatically when the signal is opened
 	 */
 	private JCheckBox autoLoadDefaultMontageCheckBox;
-	
+
 	/**
 	 * the check-box which tells if the {@link SignalChecksum checksum} should
 	 * be pre-calculated
@@ -149,17 +149,17 @@ public class SignalViewingConfigPanel extends JPanel {
 	private JSpinner maxTimeScaleSpinner;
 
 	/**
-	 * the panel with general options of signal viewing - see 
+	 * the panel with general options of signal viewing - see
 	 * {@link #getGeneralPanel()}
 	 */
 	private JPanel generalPanel;
-	
+
 	/**
 	 * the panel with the options of the {@link SignalPlot} - see
 	 * {@link #getPlotOptionsPanel()}
 	 */
 	private JPanel plotOptionsPanel;
-	
+
 	/**
 	 * the panel which allows to scale the displayed signal -
 	 * see {@link #getScalesPanel()}
@@ -479,9 +479,9 @@ public class SignalViewingConfigPanel extends JPanel {
 			generalPanel = new JPanel();
 			generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
 			generalPanel.setBorder(new CompoundBorder(
-			                               new TitledBorder(_("General")),
-			                               new EmptyBorder(3,3,3,3)
-			                       ));
+									   new TitledBorder(_("General")),
+									   new EmptyBorder(3,3,3,3)
+								   ));
 
 			generalPanel.add(getAutoLoadDefaultMontageCheckBox());
 			generalPanel.add(getRightClickPagesForwardCheckBox());
@@ -533,9 +533,9 @@ public class SignalViewingConfigPanel extends JPanel {
 		if (plotOptionsPanel == null) {
 			plotOptionsPanel = new JPanel(new BorderLayout());
 			plotOptionsPanel.setBorder(new CompoundBorder(
-			                                   new TitledBorder(_("Plot options")),
-			                                   new EmptyBorder(3,3,3,3)
-			                           ));
+										   new TitledBorder(_("Plot options")),
+										   new EmptyBorder(3,3,3,3)
+									   ));
 
 			JPanel plotOptionsLeftPanel = new JPanel(new GridLayout(7, 1, 0, 0));
 
@@ -563,17 +563,17 @@ public class SignalViewingConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.LEADING)
-			        .addComponent(tagPaintModeLabel)
-			        .addComponent(signalColorLabel)
-			        .addComponent(signalXORLabel)
+				layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(tagPaintModeLabel)
+				.addComponent(signalColorLabel)
+				.addComponent(signalXORLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getTagPaintModeComboBox())
-			        .addComponent(getSignalColorComboBox())
-			        .addComponent(getSignalXORCheckBox())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getTagPaintModeComboBox())
+				.addComponent(getSignalColorComboBox())
+				.addComponent(getSignalXORCheckBox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -581,22 +581,22 @@ public class SignalViewingConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(tagPaintModeLabel)
-					.addComponent(getTagPaintModeComboBox())
-				);
-			
-			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(signalColorLabel)
-					.addComponent(getSignalColorComboBox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(tagPaintModeLabel)
+				.addComponent(getTagPaintModeComboBox())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(signalXORLabel)
-					.addComponent(getSignalXORCheckBox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(signalColorLabel)
+				.addComponent(getSignalColorComboBox())
+			);
+
+			vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(signalXORLabel)
+				.addComponent(getSignalXORCheckBox())
+			);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -637,9 +637,9 @@ public class SignalViewingConfigPanel extends JPanel {
 
 			scalesPanel = new JPanel();
 			scalesPanel.setBorder(new CompoundBorder(
-			                              new TitledBorder(_("Scale limits (changes do not affect signals already open)")),
-			                              new EmptyBorder(3,6,3,6)
-			                      ));
+									  new TitledBorder(_("Scale limits (changes do not affect signals already open)")),
+									  new EmptyBorder(3,6,3,6)
+								  ));
 
 			GroupLayout layout = new GroupLayout(scalesPanel);
 			scalesPanel.setLayout(layout);
@@ -660,38 +660,38 @@ public class SignalViewingConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.LEADING)
-			        .addComponent(channelHeightLabel)
-			        .addComponent(valueScaleLabel)
-			        .addComponent(timeScaleLabel)
+				layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(channelHeightLabel)
+				.addComponent(valueScaleLabel)
+				.addComponent(timeScaleLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.LEADING)
-			        .addComponent(minChannelHeightLabel)
-			        .addComponent(minValueScaleLabel)
-			        .addComponent(minTimeScaleLabel)
+				layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(minChannelHeightLabel)
+				.addComponent(minValueScaleLabel)
+				.addComponent(minTimeScaleLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getMinChannelHeightSpinner())
-			        .addComponent(getMinValueScaleSpinner())
-			        .addComponent(getMinTimeScaleSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getMinChannelHeightSpinner())
+				.addComponent(getMinValueScaleSpinner())
+				.addComponent(getMinTimeScaleSpinner())
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.LEADING)
-			        .addComponent(maxChannelHeightLabel)
-			        .addComponent(maxValueScaleLabel)
-			        .addComponent(maxTimeScaleLabel)
+				layout.createParallelGroup(Alignment.LEADING)
+				.addComponent(maxChannelHeightLabel)
+				.addComponent(maxValueScaleLabel)
+				.addComponent(maxTimeScaleLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getMaxChannelHeightSpinner())
-			        .addComponent(getMaxValueScaleSpinner())
-			        .addComponent(getMaxTimeScaleSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getMaxChannelHeightSpinner())
+				.addComponent(getMaxValueScaleSpinner())
+				.addComponent(getMaxTimeScaleSpinner())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -699,31 +699,31 @@ public class SignalViewingConfigPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(channelHeightLabel)
-					.addComponent(minChannelHeightLabel)
-					.addComponent(getMinChannelHeightSpinner())
-					.addComponent(maxChannelHeightLabel)
-					.addComponent(getMaxChannelHeightSpinner())
-				);
-			
-			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(valueScaleLabel)
-					.addComponent(minValueScaleLabel)
-					.addComponent(getMinValueScaleSpinner())
-					.addComponent(maxValueScaleLabel)
-					.addComponent(getMaxValueScaleSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(channelHeightLabel)
+				.addComponent(minChannelHeightLabel)
+				.addComponent(getMinChannelHeightSpinner())
+				.addComponent(maxChannelHeightLabel)
+				.addComponent(getMaxChannelHeightSpinner())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(timeScaleLabel)
-					.addComponent(minTimeScaleLabel)
-					.addComponent(getMinTimeScaleSpinner())
-					.addComponent(maxTimeScaleLabel)
-					.addComponent(getMaxTimeScaleSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(valueScaleLabel)
+				.addComponent(minValueScaleLabel)
+				.addComponent(getMinValueScaleSpinner())
+				.addComponent(maxValueScaleLabel)
+				.addComponent(getMaxValueScaleSpinner())
+			);
+
+			vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(timeScaleLabel)
+				.addComponent(minTimeScaleLabel)
+				.addComponent(getMinTimeScaleSpinner())
+				.addComponent(maxTimeScaleLabel)
+				.addComponent(getMaxTimeScaleSpinner())
+			);
 
 			layout.setVerticalGroup(vGroup);
 

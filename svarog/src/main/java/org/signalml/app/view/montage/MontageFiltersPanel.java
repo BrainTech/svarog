@@ -56,7 +56,7 @@ import org.signalml.exception.SanityCheckException;
 
 /**
  * Panel which allows to add, remove and edit filters associated with the.
- * 
+ *
  * {@link Montage montage}. There filters can be either
  * {@link TimeDomainSampleFilter}s or {@link FFTSampleFilter}s.
  * <p>
@@ -87,7 +87,7 @@ import org.signalml.exception.SanityCheckException;
  * {@link #getAddFFTFilterButton() button} do to it,</li>
  * <li>the panel with the {@link #getFilterExclusionTable() exclusion table}.</li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -113,13 +113,13 @@ public class MontageFiltersPanel extends JPanel {
 
 	/** the {@link Montage montage} that is edited. */
 	private Montage montage;
-	
+
 	/**
 	 * <code>true</code> if there exists a {@link SignalDocument document}
 	 * associated with the {@link Montage montage}, <code>false</code> otherwise.
 	 */
 	private boolean signalBound;
-	
+
 	/** the sampling frequency of the signal (the number of samples per second). */
 	private float currentSamplingFrequency;
 
@@ -139,13 +139,13 @@ public class MontageFiltersPanel extends JPanel {
 	 * the {@link MontageFiltersTableModel model} for the {@link #filtersTable}.
 	 */
 	private MontageFiltersTableModel filtersTableModel;
-	
+
 	/**
 	 * the {@link MontageFiltersTable table} with the list of filters associated
 	 * with the {@link #getMontage() montage}.
 	 */
 	private MontageFiltersTable filtersTable;
-	
+
 	/** the scroll pane for the {@link #getFiltersTable() filters table}. */
 	private JScrollPane filtersScrollPane;
 
@@ -154,14 +154,14 @@ public class MontageFiltersPanel extends JPanel {
 	 * {@link #getFilterExclusionTable() filter exclusion table}
 	 */
 	private MontageFilterExclusionTableModel filterExclusionTableModel;
-	
+
 	/**
 	 * the table which allows to select which {@link MontageChannel montage
 	 * channels} should not be {@link MontageSampleFilter filtered} by which
 	 * filter.
 	 */
 	private MontageFilterExclusionTable filterExclusionTable;
-	
+
 	/**
 	 * the scroll pane for the {@link #getFilterExclusionTable() filter
 	 * exclusion table}.
@@ -194,27 +194,27 @@ public class MontageFiltersPanel extends JPanel {
 	 * addCustomTimeDomainFilterButton}
 	 */
 	private AddCustomTimeDomainFilterAction addCustomTimeDomainFilterAction;
-	
+
 	/**
 	 * action which adds a {@link FFTSampleFilter} and is invoked after pressing
 	 * the {@link #getAddFFTFilterButton() addFFTFilterButton}.
 	 */
 	private AddFFTFilterAction addFFTFilterAction;
-	
+
 	/**
 	 * action which displays a {@link EditTimeDomainSampleFilterDialog} and is
 	 * invoked after pressing the {@link #getEditFilterButton()
 	 * editFilterButton}.
 	 */
 	private EditFilterAction editFilterAction;
-	
+
 	/**
 	 * action which removes a selected {@link MontageSampleFilter filter} from
 	 * the list of filters and is invoked after pressing the
 	 * {@link #getRemoveFilterButton() removeFilterButton}.
 	 */
 	private RemoveFilterAction removeFilterAction;
-	
+
 	/**
 	 * action which removes the exclusions of the filters and is invoked after
 	 * pressing the {@link #getClearFilterExclusionButton()
@@ -317,11 +317,11 @@ public class MontageFiltersPanel extends JPanel {
 		filteringOptionsPanel.add(masterSwitchPanel, BorderLayout.NORTH);
 		filteringOptionsPanel.add(enableFiltfiltPanel, BorderLayout.SOUTH);
 
-                //filters table panel
+		//filters table panel
 		JPanel filtersTablePanel = new JPanel(new BorderLayout(3, 3));
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Filters")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Filters")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		filtersTablePanel.setBorder(border);
 
@@ -335,8 +335,8 @@ public class MontageFiltersPanel extends JPanel {
 
 		JPanel addTimeDomainFilterPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
-		        new TitledBorder(_("Add time domain filter")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Add time domain filter")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		addTimeDomainFilterPanel.setBorder(border);
 
@@ -351,8 +351,8 @@ public class MontageFiltersPanel extends JPanel {
 
 		JPanel addFftFilterPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
-		        new TitledBorder(_("Add FFT filter")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Add FFT filter")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		addFftFilterPanel.setBorder(border);
 
@@ -377,8 +377,8 @@ public class MontageFiltersPanel extends JPanel {
 
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
-		        new TitledBorder(_("Filter channel exclusion")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Filter channel exclusion")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
 
@@ -434,7 +434,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Gets the check box which states if the signal should be
 	 * {@link Montage#isFiltered() filtered}.
-	 * 
+	 *
 	 * @return the check box which states if the signal should be
 	 *         {@link Montage#isFiltered() filtered}
 	 */
@@ -484,7 +484,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Gets the {@link MontageFiltersTableModel model} for the
 	 * {@link #filtersTable}.
-	 * 
+	 *
 	 * @return the {@link MontageFiltersTableModel model} for the
 	 *         {@link #filtersTable}
 	 */
@@ -498,7 +498,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Gets the {@link MontageFiltersTable table} with the list of filters
 	 * associated with the {@link #getMontage() montage}.
-	 * 
+	 *
 	 * @return the {@link MontageFiltersTable table} with the list of filters
 	 *         associated with the {@link #getMontage() montage}
 	 */
@@ -530,7 +530,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Gets the scroll pane for the {@link #getFiltersTable() filters table}.
-	 * 
+	 *
 	 * @return the scroll pane for the {@link #getFiltersTable() filters table}
 	 */
 	public JScrollPane getFiltersScrollPane() {
@@ -543,7 +543,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Gets the {@link MontageFilterExclusionTableModel model} for the.
-	 * 
+	 *
 	 * @return the {@link MontageFilterExclusionTableModel model} for the
 	 */
 	public MontageFilterExclusionTableModel getFilterExclusionTableModel() {
@@ -557,7 +557,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * Gets the table which allows to select which {@link MontageChannel montage
 	 * channels} should not be {@link MontageSampleFilter filtered} by which
 	 * filter.
-	 * 
+	 *
 	 * @return the table which allows to select which {@link MontageChannel
 	 *         montage channels} should not be {@link MontageSampleFilter
 	 *         filtered} by which filter
@@ -572,7 +572,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Gets the scroll pane for the {@link #getFilterExclusionTable() filter
 	 * exclusion table}.
-	 * 
+	 *
 	 * @return the scroll pane for the {@link #getFilterExclusionTable() filter
 	 *         exclusion table}
 	 */
@@ -600,7 +600,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Returns the {@link JComboBox} allowing to select whether the
-	 * 
+	 *
 	 * @return a {@link JComboBox} allowing to select initial parameters of the
 	 *         {@link FFTSampleFilter} to be edited {@link FFTSampleFilter}
 	 *         which will be shown in
@@ -610,9 +610,9 @@ public class MontageFiltersPanel extends JPanel {
 	public JComboBox getFftFilterTypeComboBox() {
 		if (fftFilterTypeComboBox == null) {
 			DefaultComboBoxModel model = new DefaultComboBoxModel(new Object[] {
-			                        _("Initially passing filter"),
-			                        _("Initially stopping filter")
-			                });
+						_("Initially passing filter"),
+						_("Initially stopping filter")
+					});
 			fftFilterTypeComboBox = new JComboBox(model);
 			fftFilterTypeComboBox.setSelectedIndex(0);
 			fftFilterTypeComboBox.setPreferredSize(new Dimension(200, 25));
@@ -622,7 +622,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Returns a {@link JButton} allowing to add a predefined
-	 * 
+	 *
 	 * @return a button allowing to add a new predefined TimeDomainSampleFilter
 	 *         to the signal chain {@link TimeDomainSampleFilter} to the signal
 	 *         chain.
@@ -637,7 +637,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Returns a button which opens a {@link EditTimeDomainSampleFilterDialog}
 	 * which allows to add a new custom designed
-	 * 
+	 *
 	 * @return a button allowing to open a
 	 *         {@link EditTimeDomainSampleFilterDialog}
 	 *         {@link TimeDomainSampleFilter} to the signal chain
@@ -663,7 +663,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Gets the a button allowing to edit the selected filter's parameters.
-	 * 
+	 *
 	 * @return the a button allowing to edit the selected filter's parameters
 	 */
 	public JButton getEditFilterButton() {
@@ -676,7 +676,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Gets the a button allowing to delete currently selected filter from the
 	 * list of filters.
-	 * 
+	 *
 	 * @return the a button allowing to delete currently selected filter from
 	 *         the list of filters
 	 */
@@ -689,7 +689,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Gets the a button allowing to clear all selections in the.
-	 * 
+	 *
 	 * @return the a button allowing to clear all selections in the
 	 */
 	public JButton getClearFilterExclusionButton() {
@@ -701,7 +701,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Gets the dialog that is used when editing.
-	 * 
+	 *
 	 * @return the dialog that is used when editing
 	 */
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
@@ -710,7 +710,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Sets the dialog that is used when editing.
-	 * 
+	 *
 	 * @param editFFTSampleFilterDialog
 	 *            the new dialog that is used when editing
 	 */
@@ -739,7 +739,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Gets the {@link Montage montage} that is edited.
-	 * 
+	 *
 	 * @return the {@link Montage montage} that is edited
 	 */
 	public Montage getMontage() {
@@ -748,7 +748,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Sets the {@link Montage montage} that is edited.
-	 * 
+	 *
 	 * @param montage
 	 *            the new {@link Montage montage} that is edited
 	 */
@@ -798,7 +798,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * Checks if is <code>true</code> if there exists a {@link SignalDocument
 	 * document} associated with the {@link Montage montage}, <code>false</code>
 	 * otherwise.
-	 * 
+	 *
 	 * @return the <code>true</code> if there exists a {@link SignalDocument
 	 *         document} associated with the {@link Montage montage},
 	 *         <code>false</code> otherwise
@@ -811,7 +811,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * Sets the <code>true</code> if there exists a {@link SignalDocument
 	 * document} associated with the {@link Montage montage}, <code>false</code>
 	 * otherwise.
-	 * 
+	 *
 	 * @param signalBound
 	 *            the new <code>true</code> if there exists a
 	 *            {@link SignalDocument document} associated with the
@@ -826,7 +826,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Gets the sampling frequency of the signal (the number of samples per
 	 * second).
-	 * 
+	 *
 	 * @return the sampling frequency of the signal (the number of samples per
 	 *         second)
 	 */
@@ -837,7 +837,7 @@ public class MontageFiltersPanel extends JPanel {
 	/**
 	 * Sets the sampling frequency of the signal (the number of samples per
 	 * second).
-	 * 
+	 *
 	 * @param currentSamplingFrequency
 	 *            the new sampling frequency of the signal (the number of
 	 *            samples per second)
@@ -851,7 +851,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Action which creates a {@link TimeDomainSampleFilter} of a.
-	 * 
+	 *
 	 * {@link MontageFiltersPanel#getTimeDomainFilterTypeComboBox() selected}
 	 * type and adds it to the {@link MontageFiltersPanel#montage montage}.
 	 */
@@ -896,7 +896,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Action which creates a {@link TimeDomainSampleFilter} and displays a.
-	 * 
+	 *
 	 * {@link MontageFiltersPanel#editTimeDomainSampleFilterDialog dialog} to
 	 * edit it.
 	 */
@@ -951,7 +951,7 @@ public class MontageFiltersPanel extends JPanel {
 
 	/**
 	 * Action which creates a {@link FFTSampleFilter} of a.
-	 * 
+	 *
 	 * {@link MontageFiltersPanel#getFftFilterTypeComboBox() selected} type and
 	 * adds it to the {@link MontageFiltersPanel#montage montage}.
 	 */
@@ -1004,7 +1004,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * {@link MontageSampleFilter sample filter}:
 	 * <ul>
 	 * <li>{@link EditFFTSampleFilterDialog} if it is a.
-	 * 
+	 *
 	 * {@link FFTSampleFilter FFT filter},</li>
 	 * <li>{@link EditTimeDomainSampleFilterDialog} if it is a
 	 * {@link TimeDomainSampleFilter time domain filter}.</li>
@@ -1029,7 +1029,7 @@ public class MontageFiltersPanel extends JPanel {
 		 * sample filter} in the {@link MontageFiltersPanel#getFiltersTable()
 		 * filters table} is selected and displays the dialog to edit it:
 		 * <ul>
-		 * <li>{@link EditFFTSampleFilterDialog} if it is a 
+		 * <li>{@link EditFFTSampleFilterDialog} if it is a
 		 * {@link FFTSampleFilter FFT filter},</li>
 		 * <li>{@link EditTimeDomainSampleFilterDialog} if it is a
 		 * {@link TimeDomainSampleFilter time domain filter}.</li></ul>
@@ -1204,7 +1204,7 @@ public class MontageFiltersPanel extends JPanel {
 
 		/**
 		 * Returns a {@link #getDefaultPopupMenu() default popup menu}.
-		 * 
+		 *
 		 * @return the a popup menu with two buttons:
 		 *         <ul>
 		 *         <li>button to {@link EditFilterAction edit} a filter,</li>

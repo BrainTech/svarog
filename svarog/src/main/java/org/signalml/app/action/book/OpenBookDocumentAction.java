@@ -56,14 +56,14 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 
 		String lastFileChooserPath = documentFlowIntegrator.getApplicationConfig().getLastFileChooserPath();
 		getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
-		
+
 		File selectedFile = getFileChooser().chooseOpenBook(null);
 		//File selectedFile = getFileChooser().getSelectedFile();
 
 		if (selectedFile == null) {
 			return;
 		}
-		
+
 		documentFlowIntegrator.getApplicationConfig().setLastFileChooserPath(selectedFile.getParentFile().getPath());
 
 		OpenDocumentDescriptor openDocumentDescriptor = new OpenDocumentDescriptor();
@@ -81,7 +81,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 			Logger.getLogger(OpenBookDocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}

@@ -47,7 +47,7 @@ public class SignalMLFileChooser extends JFileChooser {
 	 * <li>the file can be read or {@code acceptUnreadable} is {@code true},</li>
 	 * <li>the file can be written or {@code acceptReadOnly} is {@code true},</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param errors
 	 *            the variable in which errors are stored
 	 * @param property

@@ -69,7 +69,7 @@ public class TagStylesGenerator {
 		this.blockSize = pageSize / blocksPerPage;
 	}
 
-	protected Collection<TagStyle> getStylesFromDataBase(){
+	protected Collection<TagStyle> getStylesFromDataBase() {
 
 		//Create for a moment TagDocument so that it'll read-in database styles
 		Resource r = new ClassPathResource(STYLES_PATH);
@@ -107,7 +107,7 @@ public class TagStylesGenerator {
 		//generating new style for the tag
 		Color c = this.getNextColor();
 		TagStyle style = new TagStyle(signalSelectionType, name, "",
-				c, Color.RED, 1);
+									  c, Color.RED, 1);
 		logger.info("Generated color for:"+name+" = "+c+" with type: "+signalSelectionType);
 		if (tagLength < 0.001)
 			style.setMarker(true);

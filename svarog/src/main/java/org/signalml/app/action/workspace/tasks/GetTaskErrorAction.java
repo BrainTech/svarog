@@ -59,7 +59,7 @@ public class GetTaskErrorAction extends AbstractFocusableSignalMLAction<TaskFocu
 			logger.warn("No exception to get");
 			return;
 		}
-		
+
 		Dialogs.showExceptionDialog(exception);
 
 	}

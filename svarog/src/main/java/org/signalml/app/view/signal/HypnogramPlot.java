@@ -72,9 +72,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private int focusEnd;
 	private int focusWidth;
 	private int focusCenter;
-		
+
 	private int factorStep;
-	
+
 	private String noTagsMessage = null;
 
 	private HypnogramMode mode = HypnogramMode.SHOW_ACTIVE;
@@ -208,10 +208,10 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 						if ((hypnogramLines[i].start - hypnogramLines[i-1].end) <= 1) {
 							g.setColor(Color.BLACK);
 							g.drawLine(
-							        hypnogramLines[i].start,
-							        offset+hypnogramLines[i-1].level,
-							        hypnogramLines[i].start,
-							        offset+hypnogramLines[i].level
+								hypnogramLines[i].start,
+								offset+hypnogramLines[i-1].level,
+								hypnogramLines[i].start,
+								offset+hypnogramLines[i].level
 							);
 						}
 					}
@@ -219,10 +219,10 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 				g.setColor(hypnogramLines[i].color);
 				g.drawLine(
-				        hypnogramLines[i].start,
-				        offset+hypnogramLines[i].level,
-				        hypnogramLines[i].end,
-				        offset+hypnogramLines[i].level
+					hypnogramLines[i].start,
+					offset+hypnogramLines[i].level,
+					hypnogramLines[i].end,
+					offset+hypnogramLines[i].level
 				);
 
 			}
@@ -327,7 +327,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 			allRadio = new JRadioButtonMenuItem(_("For all tags"));
 			group.add(allRadio);
 			popupMenu.add(allRadio);
-			
+
 			PluginAccessClass.getGUIImpl().addToHypnogramPlotPopupMenu(popupMenu);
 
 			ActionListener actionListener = new ActionListener() {

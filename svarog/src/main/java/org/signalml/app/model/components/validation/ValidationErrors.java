@@ -8,7 +8,7 @@ import javax.swing.AbstractListModel;
 public class ValidationErrors extends AbstractListModel {
 
 	protected List<String> errorStrings = new ArrayList<String>();
-	
+
 	public void addError(String error) {
 		errorStrings.add(error);
 	}
@@ -21,20 +21,20 @@ public class ValidationErrors extends AbstractListModel {
 	public Object getElementAt(int index) {
 		return errorStrings.get(index);
 	}
-	
+
 	public boolean hasErrors() {
-		return getSize() > 0; 
+		return getSize() > 0;
 	}
 
 	@Override
 	public int getSize() {
 		return errorStrings.size();
 	}
-	
+
 	public void addAllErrors(ValidationErrors other) {
 		for (String error: other.errorStrings) {
 			this.addError(error);
 		}
 	}
-	
+
 }

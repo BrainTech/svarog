@@ -26,7 +26,7 @@ public abstract class AbstractPresetPanel extends AbstractPanel implements Prese
 	protected ViewerFileChooser fileChooser;
 
 	protected PresetControlsPanel presetControlsPanel;
-	
+
 	protected PresetManager presetManager;
 
 	/**
@@ -38,7 +38,7 @@ public abstract class AbstractPresetPanel extends AbstractPanel implements Prese
 		super();
 		this.presetManager = presetManager;
 	}
-	
+
 	protected PresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null) {
 			presetControlsPanel = new PresetControlsPanel(this, presetManager);

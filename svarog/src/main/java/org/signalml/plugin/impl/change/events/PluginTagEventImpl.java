@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -30,7 +30,7 @@ public class PluginTagEventImpl implements PluginTagEvent {
 	 * @param tag the tag to set
 	 * @param document the document in which the tag is located
 	 */
-	public PluginTagEventImpl(ExportedTag tag, ExportedTagDocument document){
+	public PluginTagEventImpl(ExportedTag tag, ExportedTagDocument document) {
 		this.tag = tag;
 		this.document = document;
 	}

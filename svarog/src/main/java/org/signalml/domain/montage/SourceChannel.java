@@ -30,19 +30,19 @@ public class SourceChannel implements Serializable {
 	public static final String RIGHT_EAR_CHANNEL_NAME = "A2";
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * an index of this SourceChannel  >=0
-         */
+	/**
+	 * an index of this SourceChannel  >=0
+	 */
 	private int channel;
 
-        /**
-         * String representing a label of this SourceChannel
-         */
+	/**
+	 * String representing a label of this SourceChannel
+	 */
 	private String label;
 
-        /**
-         * the function of this SourceChannel
-         */
+	/**
+	 * the function of this SourceChannel
+	 */
 	private IChannelFunction function;
 
 	/**
@@ -52,29 +52,29 @@ public class SourceChannel implements Serializable {
 	 */
 	private EegElectrode eegElectrode;
 
-        /**
-         * Constructor. Creates an empty SourceChannel.
-         */
+	/**
+	 * Constructor. Creates an empty SourceChannel.
+	 */
 	protected SourceChannel() {
 	}
 
-        /**
-         * Constructor. Creates a SourceChannel with a given index,
-         * label and function.
-         * @param channel an index of a SourceChannel
-         * @param label a label of a SourceChannel
-         * @param function a function of a SourceChannel
-         */
+	/**
+	 * Constructor. Creates a SourceChannel with a given index,
+	 * label and function.
+	 * @param channel an index of a SourceChannel
+	 * @param label a label of a SourceChannel
+	 * @param function a function of a SourceChannel
+	 */
 	public SourceChannel(int channel, String label, IChannelFunction function) {
 		this.channel = channel;
 		setLabel(label);
 		setFunction(function);
 	}
 
-        /**
-         * Copy constructor.
-         * @param sourceChannel a SourceChannel to be copied
-         */
+	/**
+	 * Copy constructor.
+	 * @param sourceChannel a SourceChannel to be copied
+	 */
 	public SourceChannel(SourceChannel sourceChannel) {
 		this.channel = sourceChannel.channel;
 		this.label = sourceChannel.label;
@@ -82,10 +82,10 @@ public class SourceChannel implements Serializable {
 		this.eegElectrode = sourceChannel.eegElectrode;
 	}
 
-        /**
-         * Returns an index of this SourceChannel.
-         * @return an index of this SourceChannel
-         */
+	/**
+	 * Returns an index of this SourceChannel.
+	 * @return an index of this SourceChannel
+	 */
 	public int getChannel() {
 		return channel;
 	}
@@ -98,26 +98,26 @@ public class SourceChannel implements Serializable {
 		this.channel = channel;
 	}
 
-        /**
-         * Returns a label of this SourceChannel.
-         * @return a label of this SourceChannel
-         */
+	/**
+	 * Returns a label of this SourceChannel.
+	 * @return a label of this SourceChannel
+	 */
 	public String getLabel() {
 		return label;
 	}
 
-        /**
-         * Returns a function of this SourceChannel.
-         * @return a function of this SourceChannel
-         */
+	/**
+	 * Returns a function of this SourceChannel.
+	 * @return a function of this SourceChannel
+	 */
 	public IChannelFunction getFunction() {
 		return function;
 	}
 
-        /**
-         * Sets a label of this SourceChannel.
-         * @param label a String with a label to be set
-         */
+	/**
+	 * Sets a label of this SourceChannel.
+	 * @param label a String with a label to be set
+	 */
 	public void setLabel(String label) {
 		if (label == null) {
 			throw new NullPointerException("Null label");
@@ -128,10 +128,10 @@ public class SourceChannel implements Serializable {
 		this.label = label;
 	}
 
-        /**
-         * Sets a function of this SourceChannel.
-         * @param function a function to be set
-         */
+	/**
+	 * Sets a function of this SourceChannel.
+	 * @param function a function to be set
+	 */
 	public void setFunction(IChannelFunction function) {
 		if (function == null) {
 			throw new NullPointerException("Null function");
@@ -167,7 +167,7 @@ public class SourceChannel implements Serializable {
 	 */
 	public boolean isChannelType(ChannelType type) {
 		if (eegElectrode != null &&
-			eegElectrode.getChannelType() == type)
+				eegElectrode.getChannelType() == type)
 			return true;
 		else
 			return false;

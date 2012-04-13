@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -14,18 +14,18 @@ import org.signalml.plugin.export.signal.Document;
 public class PluginDocumentEventImpl implements PluginDocumentEvent {
 
 	/**
-	 * the {@link Document} associated with this event 
+	 * the {@link Document} associated with this event
 	 */
 	protected Document document;
-	
+
 	/**
 	 * Constructor. Sets the {@link Document}.
 	 * @param document the document to set
 	 */
-	public PluginDocumentEventImpl(Document document){
+	public PluginDocumentEventImpl(Document document) {
 		this.document = document;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.change.DocumentEvent#getDocument()
 	 */

@@ -72,7 +72,7 @@ public class MultichannelSampleFilterTest {
 	@Test
 	public void testAddFilterAllChannels() {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-		                new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
+				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
 		definition.setSamplingFrequency(128.0);
 		TimeDomainSampleFilterEngine filterEngine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
@@ -93,7 +93,7 @@ public class MultichannelSampleFilterTest {
 	@Test
 	public void testAddFilterForSpecifiedChannels() {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-		                new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
+				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
 		definition.setSamplingFrequency(128.0);
 		TimeDomainSampleFilterEngine filterEngine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
@@ -147,14 +147,14 @@ public class MultichannelSampleFilterTest {
 
 		//two filters in a montage
 		SampleFilterDefinition definition[] = {new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-		                                       new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0),
-		                                       new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-		                                                                  new double[] {20, 0}, new double[] {30, 8}, 5.0, 10.0),
-		                                       new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-		                                                                  new double[] {20, 0}, new double[] {30, 8}, 5.0, 15.0),
-		                                       new FFTSampleFilter(true),
-		                                       new FFTSampleFilter(true)
-		                                      };
+					new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0),
+						new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
+												   new double[] {20, 0}, new double[] {30, 8}, 5.0, 10.0),
+						new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
+												   new double[] {20, 0}, new double[] {30, 8}, 5.0, 15.0),
+						new FFTSampleFilter(true),
+						new FFTSampleFilter(true)
+		};
 
 		/*MultichannelSampleFilter sums all FFT filters ranges into one FFT filter
 		 *summaryFFT filter is used to check if that functionality works

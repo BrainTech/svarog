@@ -422,12 +422,12 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForMontage(streamer);
 		Annotations.configureAliases(
-		        streamer,
-		        SignalProcessingChainDescriptor.class,
-		        SelectionSegmentedSampleSourceDescriptor.class,
-		        MarkerSegmentedSampleSourceDescriptor.class,
-		        MP5Data.class,
-		        MP5Parameters.class
+			streamer,
+			SignalProcessingChainDescriptor.class,
+			SelectionSegmentedSampleSourceDescriptor.class,
+			MarkerSegmentedSampleSourceDescriptor.class,
+			MP5Data.class,
+			MP5Parameters.class
 		);
 		streamer.setMode(XStream.ID_REFERENCES);
 

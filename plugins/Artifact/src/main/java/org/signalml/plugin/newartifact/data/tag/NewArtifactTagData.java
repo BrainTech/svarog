@@ -11,10 +11,10 @@ public class NewArtifactTagData {
 	public final int excludedChannels[];
 
 	public NewArtifactTagData(final double source[][],
-				  final NewArtifactConstants constants,
-				  final NewArtifactParameters parameters,
-				  final int eegChannels[],
-				  final int excludedChannels[]) {
+							  final NewArtifactConstants constants,
+							  final NewArtifactParameters parameters,
+							  final int eegChannels[],
+							  final int excludedChannels[]) {
 		this.source = source;
 		this.constants = constants;
 		this.parameters = parameters;

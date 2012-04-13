@@ -406,15 +406,15 @@ public abstract class Util {
 	 */
 	public static boolean hasSpecialChars(String s) {
 		final int length = s.length();
-		for (int offset = 0; offset < length; ) {
+		for (int offset = 0; offset < length;) {
 			final int codepoint = s.codePointAt(offset);
 			final int type = Character.getType(codepoint);
-			switch(type){
+			switch (type) {
 			case Character.CONTROL:
 			case Character.UNASSIGNED:
 			case Character.PRIVATE_USE:
 				logger.warn(String.format("string '%s' failed validation at offset %d",
-							  s, offset));
+										  s, offset));
 				return true;
 			case Character.SURROGATE:
 				logger.warn(String.format("truncated string '%s' failed validation", s));
@@ -434,9 +434,9 @@ public abstract class Util {
 	 */
 	public static boolean isCombining(int codepoint) {
 		return (codepoint >= 0x0300 && codepoint <= 0x036f) ||
-			(codepoint >= 0x1dc0 && codepoint <= 0x1dff) ||
-			(codepoint >= 0x20d0 && codepoint <= 0x20ff) ||
-			(codepoint >= 0xfe20 && codepoint <= 0xfe2f);
+			   (codepoint >= 0x1dc0 && codepoint <= 0x1dff) ||
+			   (codepoint >= 0x20d0 && codepoint <= 0x20ff) ||
+			   (codepoint >= 0xfe20 && codepoint <= 0xfe2f);
 	}
 
 	/**

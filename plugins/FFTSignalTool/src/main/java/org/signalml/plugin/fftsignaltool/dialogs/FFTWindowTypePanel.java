@@ -36,7 +36,7 @@ import org.springframework.validation.Errors;
  * </ul>
  * This panel can be either wide (3 columns, 3 rows) or high (2 columns, 5
  * rows).
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -70,7 +70,7 @@ public class FFTWindowTypePanel extends JPanel {
 	/**
 	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
 	 * initializes this panel.
-	 * 
+	 *
 	 * @param wide
 	 *            {@code true} if this panel should be wide (have 3 columns) or
 	 *            {@code false} if high (2 columns, 5 rows)
@@ -91,7 +91,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * </ul>
 	 * Adds listeners to the all buttons, which activate (or deactivate) the
 	 * text field and set the default value for selected window type.
-	 * 
+	 *
 	 * @param wide
 	 *            {@code true} if this panel should be wide (have 3 columns) or
 	 *            {@code false} if high (2 columns, 5 rows)
@@ -107,7 +107,7 @@ public class FFTWindowTypePanel extends JPanel {
 		}
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Window type")),
+					_("Window type")),
 				new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
@@ -122,7 +122,7 @@ public class FFTWindowTypePanel extends JPanel {
 				boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
 				if (selected) {
 					WindowType type = getWindowTypeForRadio((JRadioButton) e
-							.getSource());
+															.getSource());
 					if (type == null) {
 						throw new NullPointerException("No type for radio");
 					}
@@ -130,21 +130,21 @@ public class FFTWindowTypePanel extends JPanel {
 					if (parametrized) {
 						if (windowParameterTextField.getText().isEmpty()) {
 							windowParameterTextField.setText(Double
-									.toString(type.getParameterDefault()));
+															 .toString(type.getParameterDefault()));
 						} else {
 							try {
 								double value = Double
-										.parseDouble(windowParameterTextField
-												.getText());
+											   .parseDouble(windowParameterTextField
+															.getText());
 								if (value < type.getParameterMin()
-										|| value > type.getParameterMax()) {
+								|| value > type.getParameterMax()) {
 									windowParameterTextField.setText(Double
-											.toString(type
-													.getParameterDefault()));
+																	 .toString(type
+																			 .getParameterDefault()));
 								}
 							} catch (NumberFormatException ex) {
 								windowParameterTextField.setText(Double
-										.toString(type.getParameterDefault()));
+																 .toString(type.getParameterDefault()));
 							}
 						}
 					}
@@ -158,8 +158,8 @@ public class FFTWindowTypePanel extends JPanel {
 		windowTypeRadioButtons = new JRadioButton[windowTypes.length];
 		for (int i = 0; i < windowTypes.length; i++) {
 			windowTypeRadioButtons[i] = new JRadioButton(
-					i18n().getMessage("fft.windowType."
-							+ windowTypes[i].toString()));
+				i18n().getMessage("fft.windowType."
+								  + windowTypes[i].toString()));
 			windowTypeButtonGroup.add(windowTypeRadioButtons[i]);
 			add(windowTypeRadioButtons[i]);
 			windowTypeRadioButtons[i].addItemListener(windowTypeListener);
@@ -178,7 +178,7 @@ public class FFTWindowTypePanel extends JPanel {
 
 	/**
 	 * Returns the {@link WindowType window type} for the given radio button.
-	 * 
+	 *
 	 * @param source
 	 *            the button
 	 * @return the type which is represented by this radio button
@@ -198,7 +198,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * if this {@link WindowType type} {@link WindowType#isParametrized() is
 	 * parameterized} the {@link FFTWindowTypeSettings#getWindowParameter()
 	 * parameter}.
-	 * 
+	 *
 	 * @param settings
 	 *            the FFT window type {@link FFTWindowTypeSettings settings}
 	 */
@@ -213,7 +213,7 @@ public class FFTWindowTypePanel extends JPanel {
 		}
 		if (windowType.isParametrized()) {
 			windowParameterTextField.setText(Double.toString(settings
-					.getWindowParameter()));
+											 .getWindowParameter()));
 		} else {
 			windowParameterTextField.setText("");
 		}
@@ -224,7 +224,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * Stores in the setting the selected {@link WindowType type} of FFT window
 	 * and if this type {@link WindowType#isParametrized() is parameterized} the
 	 * {@link FFTWindowTypeSettings#setWindowParameter(double) parameter}.
-	 * 
+	 *
 	 * @param settings
 	 *            the FFT window type {@link FFTWindowTypeSettings settings}
 	 */
@@ -234,7 +234,7 @@ public class FFTWindowTypePanel extends JPanel {
 			if (windowTypeRadioButtons[i].isSelected()) {
 				if (windowTypes[i].isParametrized()) {
 					settings.setWindowParameter(Double
-							.parseDouble(windowParameterTextField.getText()));
+												.parseDouble(windowParameterTextField.getText()));
 				}
 				settings.setWindowType(windowTypes[i]);
 			}
@@ -247,7 +247,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * selected {@link WindowType type} of the FFT window is a valid double and
 	 * within the range
 	 * {@code [WindowType#getParameterMin(), WindowType#getParameterMax()]}.
-	 * 
+	 *
 	 * @param errors
 	 *            the object in which the errors are stored
 	 */
@@ -258,24 +258,24 @@ public class FFTWindowTypePanel extends JPanel {
 				if (windowTypes[i].isParametrized()) {
 					try {
 						double parameter = Double
-								.parseDouble(windowParameterTextField.getText());
+										   .parseDouble(windowParameterTextField.getText());
 						if (parameter < windowTypes[i].getParameterMin()
 								|| parameter > windowTypes[i].getParameterMax()) {
 							double parameterMin = windowTypes[i]
-									.getParameterMin();
+												  .getParameterMin();
 							double parameterMax = windowTypes[i]
-									.getParameterMax();
+												  .getParameterMax();
 							String parameterMinString;
 							String parameterMaxString;
 							if (parameterMin > Double.MIN_VALUE) {
 								parameterMinString = Double
-										.toString(parameterMin);
+													 .toString(parameterMin);
 							} else {
 								parameterMinString = "";
 							}
 							if (parameterMax < Double.MAX_VALUE) {
 								parameterMaxString = Double
-										.toString(parameterMax);
+													 .toString(parameterMax);
 							} else {
 								parameterMaxString = "";
 							}

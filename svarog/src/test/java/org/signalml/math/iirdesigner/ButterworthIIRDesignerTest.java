@@ -38,8 +38,8 @@ public class ButterworthIIRDesignerTest {
 	public void testDesignAnalogFilter() throws BadFilterParametersException {
 
 		double[] pythonA = new double[] {1.00000000e+00, 1.79338716e+01, 1.60811875e+02,
-		                             9.14184873e+02, 3.46464456e+03, 8.32444329e+03, 1.00005000e+04
-		                            };
+										 9.14184873e+02, 3.46464456e+03, 8.32444329e+03, 1.00005000e+04
+										};
 		double[] pythonB = new double[] {10000.5000375};
 
 		FilterCoefficients coeffs = iirdesigner.designFilter(FilterType.LOWPASS, new double[] {4.0, 0.0}, new double[] {10.0, 0.0}, 3.0, 40.0, true);
@@ -61,58 +61,58 @@ public class ButterworthIIRDesignerTest {
 
 		//lowpass
 		pythonB = new double[] {1.79924818e-06, 1.25947373e-05, 3.77842118e-05,
-		                    6.29736863e-05, 6.29736863e-05, 3.77842118e-05,
-		                    1.25947373e-05, 1.79924818e-06
-		                   };
+								6.29736863e-05, 6.29736863e-05, 3.77842118e-05,
+								1.25947373e-05, 1.79924818e-06
+							   };
 		pythonA = new double[] {1.0, -5.50239773, 13.10636815,
-		                    -17.49826739, 14.12933064, -6.89514162,
-		                    1.88178747, -0.22144923
-		                   };
+								-17.49826739, 14.12933064, -6.89514162,
+								1.88178747, -0.22144923
+							   };
 
 		coeffs = iirdesigner.designDigitalFilter(FilterType.LOWPASS, new double[] {0.1, 0.0}, new double[] {0.2, 0.0}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 
 		//highpass
 		pythonB = new double[] {0.0030623, -0.02449839, 0.08574436,
-		                    -0.17148872, 0.2143609, -0.17148872,
-		                    0.08574436, -0.02449839, 0.0030623
-		                   };
+								-0.17148872, 0.2143609, -0.17148872,
+								0.08574436, -0.02449839, 0.0030623
+							   };
 		pythonA = new double[] {1.00000000e+00, 1.28289711e+00, 1.72596336e+00,
-		                    1.13734282e+00, 6.51093826e-01, 2.22784566e-01,
-		                    5.74976483e-02, 8.15653354e-03, 5.74611669e-04
-		                   };
+								1.13734282e+00, 6.51093826e-01, 2.22784566e-01,
+								5.74976483e-02, 8.15653354e-03, 5.74611669e-04
+							   };
 		coeffs = iirdesigner.designDigitalFilter(FilterType.HIGHPASS, new double[] {0.6, 0.0}, new double[] {0.4, 0.0}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 
 		//bandpass
 		pythonB = new double[] {4.06633016e-04, 0.00000000e+00, -2.43979810e-03,
-		                    -9.59124377e-19, 6.09949524e-03, -9.11168158e-18,
-		                    -8.13266032e-03, 9.11168158e-18, 6.09949524e-03,
-		                    9.59124377e-19, -2.43979810e-03, 0.00000000e+00,
-		                    4.06633016e-04
-		                   };
+								-9.59124377e-19, 6.09949524e-03, -9.11168158e-18,
+								-8.13266032e-03, 9.11168158e-18, 6.09949524e-03,
+								9.59124377e-19, -2.43979810e-03, 0.00000000e+00,
+								4.06633016e-04
+							   };
 		pythonA = new double[] {1.00000000e+00, 2.99246806e-16, 3.49439866e+00,
-		                    2.70089425e-15, 5.42502143e+00, 4.91071681e-16,
-		                    4.68892114e+00, -2.94643009e-15, 2.35792769e+00,
-		                    -3.68303761e-16, 6.50028902e-01, 1.61132895e-16,
-		                    7.64240933e-02
-		                   };
+								2.70089425e-15, 5.42502143e+00, 4.91071681e-16,
+								4.68892114e+00, -2.94643009e-15, 2.35792769e+00,
+								-3.68303761e-16, 6.50028902e-01, 1.61132895e-16,
+								7.64240933e-02
+							   };
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDPASS, new double[] {0.4, 0.6}, new double[] {0.3, 0.7}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 
 		//bandstop
 		pythonB = new double[] {7.65853414e-02, 5.23150264e-07, 4.59512048e-01,
-		                    2.61575132e-06, 1.14878012e+00, 5.23150264e-06,
-		                    1.53170683e+00, 5.23150264e-06, 1.14878012e+00,
-		                    2.61575132e-06, 4.59512048e-01, 5.23150264e-07,
-		                    7.65853414e-02
-		                   };
+								2.61575132e-06, 1.14878012e+00, 5.23150264e-06,
+								1.53170683e+00, 5.23150264e-06, 1.14878012e+00,
+								2.61575132e-06, 4.59512048e-01, 5.23150264e-07,
+								7.65853414e-02
+							   };
 		pythonA = new double[] {1.00000000e+00, 4.16730153e-06, 1.32074661e+00,
-		                    5.38773302e-06, 1.43047982e+00, 4.58932829e-06,
-		                    7.80068865e-01, 2.02131353e-06, 3.02664538e-01,
-		                    5.19781746e-07, 6.15555007e-02, 5.53503535e-08,
-		                    5.94651712e-03
-		                   };
+								5.38773302e-06, 1.43047982e+00, 4.58932829e-06,
+								7.80068865e-01, 2.02131353e-06, 3.02664538e-01,
+								5.19781746e-07, 6.15555007e-02, 5.53503535e-08,
+								5.94651712e-03
+							   };
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDSTOP, new double[] {0.3, 0.7}, new double[] {0.4, 0.6}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-5);
 
@@ -214,17 +214,17 @@ public class ButterworthIIRDesignerTest {
 
 		//butterworth test
 		AbstractIIRDesigner.BandstopObjectiveFunction bo = iirdesigner.new BandstopObjectiveFunction(0,
-		                new double[] {0.5, 0.8},
-		                new double[] {0.6, 0.7},
-		                3, 40);
+				new double[] {0.5, 0.8},
+				new double[] {0.6, 0.7},
+				3, 40);
 
 		assertEquals(-3.546182557211913, bo.value(1.0), 1e-8);
 
 		//butterworth test 2
 		bo = iirdesigner.new BandstopObjectiveFunction(0,
-		                new double[] {1.0, 4.0},
-		                new double[] {2.0, 3.0},
-		                3, 20);
+				new double[] {1.0, 4.0},
+				new double[] {2.0, 3.0},
+				3, 20);
 
 		assertEquals(7.9947088019182813, bo.value(0.0), 1e-8);
 		assertEquals(14.920040569147393, bo.value(1.9), 1e-8);

@@ -21,7 +21,7 @@ import org.signalml.util.Util;
  * <li>any other extension or no extension -
  * {@link ManagedDocumentType#SIGNAL signal} file.</li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExtensionBasedDocumentDetector implements DocumentDetector {

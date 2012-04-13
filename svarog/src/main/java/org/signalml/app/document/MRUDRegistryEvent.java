@@ -30,7 +30,7 @@ public class MRUDRegistryEvent extends EventObject {
 	 * the {@link MRUDEntry entry} connected with the change
 	 */
 	private MRUDEntry entry;
-	
+
 	/**
 	 * the index of the {@link MRUDEntry entry} in the collection of all
 	 * entries in the registry

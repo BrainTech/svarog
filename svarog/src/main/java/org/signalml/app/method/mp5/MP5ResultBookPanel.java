@@ -51,8 +51,8 @@ public class MP5ResultBookPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Choose book file")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose book file")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -66,18 +66,18 @@ public class MP5ResultBookPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(bookFileLabel)
+			layout.createParallelGroup()
+			.addComponent(bookFileLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getBookTextField())
+			layout.createParallelGroup()
+			.addComponent(getBookTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getChooseBookButton())
+			layout.createParallelGroup()
+			.addComponent(getChooseBookButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -85,11 +85,11 @@ public class MP5ResultBookPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(bookFileLabel)
-				.addComponent(getBookTextField())
-				.addComponent(getChooseBookButton())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(bookFileLabel)
+			.addComponent(getBookTextField())
+			.addComponent(getChooseBookButton())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

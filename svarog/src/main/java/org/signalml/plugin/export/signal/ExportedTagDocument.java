@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.signal;
 
@@ -53,18 +53,18 @@ public interface ExportedTagDocument extends Document, MutableDocument, FileBack
 	 * @return the number of tags in this document
 	 */
 	int getTagCount();
-	
+
 	/**
 	 * Returns the set of {@link ExportedTag tags} that are stored in this document.
 	 * @return the set of tags that are stored in this document
 	 */
 	Set<ExportedTag> getSetOfTags();
-	
+
 	/**
 	 * Returns a set containing all styles in this document.
 	 * @return a set containing all styles in this document
 	 */
 	Set<ExportedTagStyle> getTagStyles();
-	
+
 
 }

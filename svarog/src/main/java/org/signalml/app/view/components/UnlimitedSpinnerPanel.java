@@ -23,7 +23,7 @@ import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
 
 /** TODO it is almost the same as {@link AutoSpinnerPanel}
- * 
+ *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

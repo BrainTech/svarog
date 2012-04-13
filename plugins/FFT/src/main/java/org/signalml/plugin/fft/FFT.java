@@ -7,7 +7,7 @@ import org.signalml.plugin.export.SvarogAccess;
 /**
  * This class contains only the empty registration function, which is called
  * when this plug-in is loaded.
- * 
+ *
  * @author Marcin Szumski
  */
 public class FFT implements Plugin {

@@ -69,7 +69,7 @@ public class SignalZoomSettingsPanel extends JPanel {
 	 */
 	private ButtonGroup factorButtonGroup;
 	/**
-	 * the group of radio buttons with possible sizes of the zoom window 
+	 * the group of radio buttons with possible sizes of the zoom window
 	 */
 	private ButtonGroup sizeButtonGroup;
 
@@ -110,8 +110,8 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel factorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledCrossBorder(_("Zoom factor"), hasCloseCross),
-		        new EmptyBorder(3,3,3,3)
+			new TitledCrossBorder(_("Zoom factor"), hasCloseCross),
+			new EmptyBorder(3,3,3,3)
 		);
 		factorPanel.setBorder(border);
 
@@ -131,8 +131,8 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel sizePanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(_("Zoom window size")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Zoom window size")),
+			new EmptyBorder(3,3,3,3)
 		);
 		sizePanel.setBorder(border);
 
@@ -149,8 +149,8 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel switchingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(_("Channel switching")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Channel switching")),
+			new EmptyBorder(3,3,3,3)
 		);
 		switchingPanel.setBorder(border);
 

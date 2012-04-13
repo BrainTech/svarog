@@ -168,7 +168,7 @@ public class InitalStateCalculator {
 
 		for (int i = 0; i < edge; i++) {
 			grownSignal[edge + signal.length + i] = 2 * signal[signal.length - 1]
-				- signal[signal.length - 2 - i];
+													- signal[signal.length - 2 - i];
 		}
 
 		return grownSignal;

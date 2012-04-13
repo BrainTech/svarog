@@ -36,7 +36,7 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 	}
 
 	public NewArtifactExclusionDialog(
-					  Window w, boolean isModal) {
+		Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
@@ -44,7 +44,7 @@ public class NewArtifactExclusionDialog extends org.signalml.plugin.export.view.
 	protected void initialize() {
 		setTitle(_("Exclusion"));
 		setIconImage(IconUtils
-			     .loadClassPathImage("org/signalml/app/icon/editexclusion.png"));
+					 .loadClassPathImage("org/signalml/app/icon/editexclusion.png"));
 		setResizable(false);
 		super.initialize();
 	}

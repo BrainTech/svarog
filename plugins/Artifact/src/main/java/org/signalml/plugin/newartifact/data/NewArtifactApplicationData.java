@@ -81,7 +81,7 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 	public void calculate() throws SignalMLException {
 
-			int i;
+		int i;
 
 		Map<String, Integer> keyChannelMap = getKeyChannelMap();
 		ArrayList<Integer> eegChannels = getEegChannels();
@@ -155,7 +155,7 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		 */
 
 		setSampleSource(new NewArtifactPluginSampleSource(signalAccess,
-				signalDocument));
+						signalDocument));
 
 		// TODO rethink this cast - what is the data type in matlab code?
 		setPageSize((int) signalDocument.getPageSize());

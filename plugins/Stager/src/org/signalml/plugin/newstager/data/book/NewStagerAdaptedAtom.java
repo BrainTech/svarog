@@ -20,9 +20,9 @@ public class NewStagerAdaptedAtom {
 
 	public static NewStagerAdaptedAtom FromStandardBookAtom(StandardBookAtom atom) {
 		return new NewStagerAdaptedAtom(atom.getAmplitude(),
-						atom.getFrequency(), //TODO ?
-						atom.getScale(),
-						atom.getPosition(),
-						atom.getPhase());
+										atom.getFrequency(), //TODO ?
+										atom.getScale(),
+										atom.getPosition(),
+										atom.getPhase());
 	}
 }

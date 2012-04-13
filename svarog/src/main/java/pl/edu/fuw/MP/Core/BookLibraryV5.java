@@ -81,8 +81,8 @@ public class BookLibraryV5 implements BookLibraryInterface {
 					BookLibraryV5IndexElement y=index.elementAt(j);
 
 					if (x.channel==y.channel &&
-					                x.offset==y.offset   &&
-					                x.type!=y.type) {
+							x.offset==y.offset   &&
+							x.type!=y.type) {
 						x.parent=y;
 						y.parent=x;
 						break;
@@ -465,15 +465,15 @@ public class BookLibraryV5 implements BookLibraryInterface {
 			mytext="(null)";
 
 		return ("\nSampling frequency: "+getSamplingFreq()+" Hz\n"+
-		        "Version           : "+getVersion()+"\n"+
-		        "Conversion        : "+getConvFactor()+" points/uV\n"+
-		        "Dictionary Type   : "+getDictionaryType()+"\n"+
-		        "Dictionary Size   : "+getDictionarySize()+"\n"+
-		        "Energy Percent    : "+getEnergyPercent()+" %\n"+
-		        "Number of channels: "+getMaxChannel()+"\n"+
-		        "Text              : "+mytext+"\n"+
-		        "Date              : "+mydate+"\n"
-		       );
+				"Version           : "+getVersion()+"\n"+
+				"Conversion        : "+getConvFactor()+" points/uV\n"+
+				"Dictionary Type   : "+getDictionaryType()+"\n"+
+				"Dictionary Size   : "+getDictionarySize()+"\n"+
+				"Energy Percent    : "+getEnergyPercent()+" %\n"+
+				"Number of channels: "+getMaxChannel()+"\n"+
+				"Text              : "+mytext+"\n"+
+				"Date              : "+mydate+"\n"
+			   );
 	}
 
 	public boolean Open(String filename, int off) throws BookFormatException {

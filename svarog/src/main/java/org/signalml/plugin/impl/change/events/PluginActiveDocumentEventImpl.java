@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -17,7 +17,7 @@ public class PluginActiveDocumentEventImpl extends PluginDocumentEventImpl imple
 	 * the old value of the active {@link Document}
 	 */
 	protected Document oldDocument;
-	
+
 	/**
 	 * Constructor. Sets the old and the new value of the active
 	 * {@link Document}.

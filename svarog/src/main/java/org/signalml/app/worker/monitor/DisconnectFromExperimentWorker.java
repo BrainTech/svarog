@@ -29,7 +29,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 
 	private void disconnectFromMultiplexer() {
 		JmxClient jmxClient = experimentDescriptor.getJmxClient();
-		
+
 		if (jmxClient != null)
 			try {
 				jmxClient.shutdown();

@@ -37,7 +37,7 @@ public class NewStagerBookAtomTagCreator {
 
 	public IPluginTagDef createChannelTag(double offset, double length, int channel) {
 		return new PluginChannelTagDef(offset / this.frequency, length
-					       / this.frequency, channel);
+									   / this.frequency, channel);
 	}
 
 }

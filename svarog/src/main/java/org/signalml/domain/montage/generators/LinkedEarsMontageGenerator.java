@@ -17,8 +17,9 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 	public LinkedEarsMontageGenerator() {
 
 		super(new String[] {
-			SourceChannel.LEFT_EAR_CHANNEL_NAME,
-			SourceChannel.RIGHT_EAR_CHANNEL_NAME});
+				  SourceChannel.LEFT_EAR_CHANNEL_NAME,
+				  SourceChannel.RIGHT_EAR_CHANNEL_NAME
+			  });
 		setName(_("Linked ears montage"));
 	}
 

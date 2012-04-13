@@ -34,10 +34,10 @@ public class ViewerTabbedPane extends JTabbedPane {
 
 	/**
 	 * Adds a new tab to this pane.
-	 * 
+	 *
 	 * Note: this method has changed on 2011-11-05. Now title and toolTip parameters
 	 * should be strings to display, NOT their keys! Message keys are now obsolete.
-	 * 
+	 *
 	 * @param title tab title
 	 * @param iconPath
 	 * @param component

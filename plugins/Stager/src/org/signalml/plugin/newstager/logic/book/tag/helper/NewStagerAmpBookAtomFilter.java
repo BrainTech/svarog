@@ -28,9 +28,9 @@ public class NewStagerAmpBookAtomFilter extends NewStagerBookAtomFilterBase {
 			@Override
 			public boolean matches(NewStagerAdaptedAtom atom) {
 				return oldSelector.matches(atom)
-				       && NewStagerRangeGabor.HRangeGabor(signalSize,
-						       samplingFrequency, atom.scale, atom.frequency,
-						       atom.position, atom.amplitude, atom.phase) >= min;
+					   && NewStagerRangeGabor.HRangeGabor(signalSize,
+							   samplingFrequency, atom.scale, atom.frequency,
+							   atom.position, atom.amplitude, atom.phase) >= min;
 			}
 		};
 	}

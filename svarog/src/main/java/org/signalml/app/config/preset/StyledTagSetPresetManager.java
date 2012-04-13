@@ -53,7 +53,7 @@ public class StyledTagSetPresetManager extends AbstractPresetManager {
 	private XStream createStreamer() {
 
 		XStream streamer = new XStream(
-		        new PureJavaReflectionProvider(new FieldDictionary(new NativeFieldKeySorter())),
+			new PureJavaReflectionProvider(new FieldDictionary(new NativeFieldKeySorter())),
 		new DomDriver("UTF-8", new XmlFriendlyReplacer() {
 
 			// the classes in question don't have $'s in their names and the
@@ -69,10 +69,10 @@ public class StyledTagSetPresetManager extends AbstractPresetManager {
 
 		}
 
-		                     ));
+						 ));
 		Annotations.configureAliases(streamer,
-		                             StyledTagSet.class
-		                            );
+									 StyledTagSet.class
+									);
 		XMLUtils.configureStreamerForMontage(streamer);
 
 		return streamer;

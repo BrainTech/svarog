@@ -12,24 +12,24 @@ package org.signalml.domain.signal;
  */
 public interface SignalWriterMonitor {
 
-        /**
-         * Sets the number of already processed samples.
-         * @param sampleCount the number of already processed samples
-         */
+	/**
+	 * Sets the number of already processed samples.
+	 * @param sampleCount the number of already processed samples
+	 */
 	void setProcessedSampleCount(int sampleCount);
 
-        /**
-         * Sets that this monitor should request abortion of the monitored
-         * process.
-         */
+	/**
+	 * Sets that this monitor should request abortion of the monitored
+	 * process.
+	 */
 	void abort();
 
-        /**
-         * Returns if this monitor requests the abortion of the monitored
-         * process.
-         * @return true if this monitor requests the abortion of the monitored
-         * process, false otherwise
-         */
+	/**
+	 * Returns if this monitor requests the abortion of the monitored
+	 * process.
+	 * @return true if this monitor requests the abortion of the monitored
+	 * process, false otherwise
+	 */
 	boolean isRequestingAbort();
 
 }

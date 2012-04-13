@@ -28,7 +28,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
 	private static Logger logger = Logger.getLogger(ChooseExperimentPanel.class);
-	
+
 	private ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 	private JButton refreshButton;
@@ -39,24 +39,24 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 	protected void createInterface() {
 		setTitledBorder(_("Choose experiment"));
-		
+
 		chooseExperimentTableModel = new ChooseExperimentTableModel();
 		chooseExperimentTable = new ChooseExperimentTable(chooseExperimentTableModel);
 		chooseExperimentTable.getSelectionModel().addListSelectionListener(this);
 		refreshButton = new JButton(new RefreshButtonAction());
-		
+
 		setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(chooseExperimentTable);
 		scrollPane.setPreferredSize(new Dimension(300, 200));
 		add(scrollPane, BorderLayout.CENTER);
-		
+
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.add(refreshButton);
 		//buttonsPanel.add(startExperimentButton);
-		
+
 		add(buttonsPanel, BorderLayout.SOUTH);
 	}
-	
+
 	protected void fireExperimentSelected(ExperimentDescriptor experiment) {
 		this.firePropertyChange(EXPERIMENT_SELECTED_PROPERTY, null, experiment);
 	}
@@ -65,7 +65,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 	public void valueChanged(ListSelectionEvent e) {
 		fireExperimentSelected(getSelectedExperiment());
 	}
-	
+
 	public ExperimentDescriptor getSelectedExperiment() {
 		int selectedRow = chooseExperimentTable.getSelectedRow();
 		ExperimentDescriptor selectedExperiment;
@@ -75,7 +75,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 			selectedExperiment = chooseExperimentTableModel.getExperiments().get(selectedRow);
 		return selectedExperiment;
 	}
-	
+
 	public void clearSelection() {
 		chooseExperimentTable.clearSelection();
 	}
@@ -83,18 +83,18 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
 		private GetOpenBCIExperimentsWorker worker;
 		private boolean executing = false;
-		
+
 		public RefreshButtonAction() {
 			this.setText(_("Refresh"));
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			synchronized(this) {
+			synchronized (this) {
 				//only one action should be executed at once.
 				chooseExperimentTableModel.setExperiments(null);
-				if(executing)
+				if (executing)
 					return;
 				executing = true;
 				setEnabled(false);

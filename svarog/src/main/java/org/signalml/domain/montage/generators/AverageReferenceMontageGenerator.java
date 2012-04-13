@@ -33,23 +33,23 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * an array with names of {@link SourceChannel source channels} that
-         * this generator will use as reference channels in the created
-         * {@link Montage montages} (actually in the
-         * {@link MontageChannel montage channels} in a montage)
-         */
+	/**
+	 * an array with names of {@link SourceChannel source channels} that
+	 * this generator will use as reference channels in the created
+	 * {@link Montage montages} (actually in the
+	 * {@link MontageChannel montage channels} in a montage)
+	 */
 	protected String[] referenceChannelsNames;
 
-        /**
-         * Constructor. Creates a generator for an average reference montage
-         * based on the <i>refChannels</i> array.
-         * @param refChannels array with labels of
-         * {@link SourceChannel source channels} that will be used as
-         * reference channels in created {@link Montage montage}
-         * (actually in {@link MontageChannel montage channels} in a montage)
-         * @throws NullPointerException if the array of channels is null or empty
-         */
+	/**
+	 * Constructor. Creates a generator for an average reference montage
+	 * based on the <i>refChannels</i> array.
+	 * @param refChannels array with labels of
+	 * {@link SourceChannel source channels} that will be used as
+	 * reference channels in created {@link Montage montage}
+	 * (actually in {@link MontageChannel montage channels} in a montage)
+	 * @throws NullPointerException if the array of channels is null or empty
+	 */
 	public AverageReferenceMontageGenerator(String[] refChannelsNames) {
 		if (refChannelsNames == null) {
 			throw new NullPointerException("Channels cannot be null or empty");
@@ -57,11 +57,11 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 		this.referenceChannelsNames = refChannelsNames;
 	}
 
-        /**
-         * Creates an average reference montage from a given montage.
-         * @param sourceMontage the montage to be used
-         * @throws MontageException thrown if there is no channel with some label
-         */
+	/**
+	 * Creates an average reference montage from a given montage.
+	 * @param sourceMontage the montage to be used
+	 * @throws MontageException thrown if there is no channel with some label
+	 */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 		List<SourceChannel> referenceSourceChannels = getReferenceSourceChannels(montage);
@@ -110,13 +110,13 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 		return sourceChannels;
 	}
 
-        /**
-         * Checks if the montage is a valid average reference montage.
-         * @param sourceMontage the montage to be checked
-         * @param errors Errors object used to report errors
-         * @return true if the montage is a valid average reference montage,
-         * false otherwise
-         */
+	/**
+	 * Checks if the montage is a valid average reference montage.
+	 * @param sourceMontage the montage to be checked
+	 * @param errors Errors object used to report errors
+	 * @return true if the montage is a valid average reference montage,
+	 * false otherwise
+	 */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 

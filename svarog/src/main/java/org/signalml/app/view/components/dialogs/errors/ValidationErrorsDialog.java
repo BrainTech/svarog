@@ -9,7 +9,7 @@ import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Dialog for showing {@link ValidationErrors}.
- * 
+ *
  * @author Piotr Szachewicz
  */
 public class ValidationErrorsDialog extends AbstractErrorsDialog {
@@ -27,7 +27,7 @@ public class ValidationErrorsDialog extends AbstractErrorsDialog {
 
 	@Override
 	protected void fillDialogFromModel(Object model) throws SignalMLException {
-		
+
 		if (model instanceof ValidationErrors) {
 			ValidationErrors errors = (ValidationErrors) model;
 			errorList.setModel(errors);

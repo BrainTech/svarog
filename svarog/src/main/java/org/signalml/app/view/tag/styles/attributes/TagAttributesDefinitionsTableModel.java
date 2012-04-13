@@ -66,12 +66,12 @@ public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		TagStyleAttributeDefinition attributeDefinition = tagStyleAttributes.getAttributeDefinition(rowIndex);
 		switch (columnIndex) {
-			case 0:
-				return attributeDefinition.getCode();
-			case 1:
-				return attributeDefinition.getDisplayName();
-			case 2:
-				return attributeDefinition.isVisible();
+		case 0:
+			return attributeDefinition.getCode();
+		case 1:
+			return attributeDefinition.getDisplayName();
+		case 2:
+			return attributeDefinition.isVisible();
 		}
 
 		return null;
@@ -94,12 +94,12 @@ public class TagAttributesDefinitionsTableModel extends AbstractTableModel {
 	@Override
 	public String getColumnName(int column) {
 		switch (column) {
-			case 0:
-				return "code";
-			case 1:
-				return "display";
-			case 2:
-				return "visible";
+		case 0:
+			return "code";
+		case 1:
+			return "display";
+		case 2:
+			return "visible";
 		}
 		return "";
 	}

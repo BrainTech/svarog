@@ -31,7 +31,7 @@ public class MessageParser {
 		}
 		return null;
 	}
-	
+
 	public static boolean checkIfResponseIsOK(String response, MessageType awaitedMessageType) {
 		if (response == null) {
 			Dialogs.showError(_("Server is not responding!"));

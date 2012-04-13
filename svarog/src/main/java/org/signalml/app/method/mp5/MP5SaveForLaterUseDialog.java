@@ -55,8 +55,8 @@ public class MP5SaveForLaterUseDialog extends AbstractDialog  {
 		JPanel interfacePanel = new JPanel(new GridLayout(2,1,3,3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Choose what to save")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose what to save")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		interfacePanel.setBorder(border);

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.change;
 
@@ -39,38 +39,38 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
  * <li>{@link PluginTagListener}</li>
  * to listen on changes concerning only one {@link ExportedTagDocument tag}
  * or {@link ExportedSignalDocument signal} document.
- * 
+ *
  * @author Marcin Szumski
  */
 public interface SvarogAccessChangeSupport {
-	
+
 	/**
 	 * Adds a {@link PluginCloseListener listener} on close of Svarog.
 	 * @param closeListener the listener to add
 	 */
 	void addCloseListener(PluginCloseListener closeListener);
-	
+
 	/**
 	 * Adds a {@link PluginCodecListener listener} on codec changes
 	 * (addition and removal).
 	 * @param codecListener the listener to add
 	 */
 	void addCodecListener(PluginCodecListener codecListener);
-	
+
 	/**
 	 * Adds a {@link PluginDocumentListener listener} on changes associated
 	 * with a {@link Document}.
 	 * @param documentListener the listener to add
 	 */
 	void addDocumentListener(PluginDocumentListener documentListener);
-	
+
 	/**
 	 * Adds a {@link PluginTagDocumentListener listener} on changes of
 	 * an active {@link TagDocument}.
 	 * @param tagDocumentListener the listener to add
 	 */
 	void addTagDocumentListener(PluginTagDocumentListener tagDocumentListener);
-	
+
 	/**
 	 * Adds a {@link PluginTagListenerWithActive listener} on
 	 * {@link ExportedTag tag} changes (addition, removal, change)
@@ -78,14 +78,14 @@ public interface SvarogAccessChangeSupport {
 	 * @param tagListener the listener to add
 	 */
 	void addTagListener(PluginTagListenerWithActive tagListener);
-	
+
 	/**
 	 * Adds a {@link PluginTagStyleListener listener} on
 	 * {@link ExportedTagStyle tag style} changes (addition, removal, change).
 	 * @param tagStyleListener the listener to add
 	 */
 	void addTagStyleListener(PluginTagStyleListener tagStyleListener);
-	
+
 	/**
 	 * Adds a {@link PluginTagListener listener} on {@link ExportedTag tag}
 	 * changes (addition, removal, change) for a specified
@@ -94,7 +94,7 @@ public interface SvarogAccessChangeSupport {
 	 * @param document the document for which the listener is added
 	 */
 	void addTagListenerForTagDocument(PluginTagListener tagListener, ExportedTagDocument document);
-	
+
 	/**
 	 * Adds a {@link PluginTagListener listener} on {@link ExportedTag tag}
 	 * changes (addition, removal, change) for all {@link ExportedTagDocument
@@ -104,7 +104,7 @@ public interface SvarogAccessChangeSupport {
 	 * @param document the document for which the listener is added
 	 */
 	void addTagListenerForSignalDocument(PluginTagListener tagListener, ExportedSignalDocument document);
-	
+
 	/**
 	 * Adds a {@link PluginTagStyleListener listener} on
 	 * {@link ExportedTagStyle tag style} changes (addition, removal, change)
@@ -113,7 +113,7 @@ public interface SvarogAccessChangeSupport {
 	 * @param document the document for which the listener is added
 	 */
 	void addTagStyleListenerForTagDocument(PluginTagStyleListener tagStyleListener, ExportedTagDocument document);
-	
+
 	/**
 	 * Adds a {@link PluginTagStyleListener listener} on
 	 * {@link ExportedTagStyle tag style} changes (addition, removal, change)

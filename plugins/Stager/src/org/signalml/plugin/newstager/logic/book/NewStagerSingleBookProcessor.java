@@ -43,7 +43,7 @@ public class NewStagerSingleBookProcessor {
 		PluginPair<NewStagerTagCollectionType, INewStagerBookAtomPrimaryTagHelper> {
 
 		public Pair(NewStagerTagCollectionType x,
-			    INewStagerBookAtomPrimaryTagHelper y) {
+					INewStagerBookAtomPrimaryTagHelper y) {
 			super(x, y);
 		}
 
@@ -58,26 +58,26 @@ public class NewStagerSingleBookProcessor {
 		NewStagerBookInfo bookInfo = data.bookInfo;
 		this.helperSet.alphaFilter = new NewStagerBookAtomFilterBase(
 			new NewStagerBookAtomFilterData(bookInfo,
-							thresholds.alphaThreshold, this.helperSet));
+											thresholds.alphaThreshold, this.helperSet));
 		this.helperSet.deltaFilter = new NewStagerBookAtomFilterBase(
 			new NewStagerBookAtomFilterData(bookInfo,
-							thresholds.deltaThreshold, this.helperSet));
+											thresholds.deltaThreshold, this.helperSet));
 		this.helperSet.gaborDeltaFilter = new NewStagerAmpBookAtomFilter(
 			new NewStagerBookAtomFilterData(bookInfo,
-							thresholds.deltaThreshold, this.helperSet));
+											thresholds.deltaThreshold, this.helperSet));
 		this.helperSet.spindleFilter = new NewStagerBookAtomFilterBase(
 			new NewStagerBookAtomFilterData(bookInfo,
-							thresholds.spindleThreshold, this.helperSet));
+											thresholds.spindleThreshold, this.helperSet));
 		this.helperSet.kcFilter = new NewStagerAmpBookAtomFilter(
 			new NewStagerBookAtomFilterData(bookInfo,
-							thresholds.kCThreshold, this.helperSet));
+											thresholds.kCThreshold, this.helperSet));
 		this.helperSet.thetaGaborFilter = new NewStagerAmpBookAtomFilter(
 			new NewStagerBookAtomFilterData(bookInfo,
-							thresholds.thetaThreshold, this.helperSet));
+											thresholds.thetaThreshold, this.helperSet));
 
 		this.tagCreator = new NewStagerBookAtomTagCreator(
 			new NewStagerBookAtomTagCreatorData(data.constants,
-					data.bookInfo));
+												data.bookInfo));
 
 		this.builderSet = new NewStagerTagBuilderSet();
 
@@ -138,11 +138,11 @@ public class NewStagerSingleBookProcessor {
 		NewStagerNonEmptyHelperConditionBuilderChain swaChain = new NewStagerNonEmptyHelperConditionBuilderChain(
 			chainData, this.helperSet.gaborDeltaHelper);
 		swaChain.compose(new NewStagerHelperValueThresholdTagBuilderChain(
-					 chainData, this.helperSet.swaHelper, 0.5d)
-				 .compose(stadium4Builder));
+							 chainData, this.helperSet.swaHelper, 0.5d)
+						 .compose(stadium4Builder));
 		swaChain.compose(new NewStagerHelperValueThresholdTagBuilderChain(
-					 chainData, this.helperSet.swaHelper, 0.2d)
-				 .compose(stadium3Builder));
+							 chainData, this.helperSet.swaHelper, 0.2d)
+						 .compose(stadium3Builder));
 
 		swaChain.compose(spindleTopChain);
 
@@ -185,8 +185,8 @@ public class NewStagerSingleBookProcessor {
 
 		kcTopChain
 		.compose(new NewStagerHelperValueThresholdTagBuilderChain(
-				 chainData, this.helperSet.kcHelper, 0)
-			 .compose(stadium2Builder));
+					 chainData, this.helperSet.kcHelper, 0)
+				 .compose(stadium2Builder));
 		kcTopChain.composeChain().compose(spindleSubChain2)
 		.compose(thetaTopChain);
 
@@ -219,12 +219,12 @@ public class NewStagerSingleBookProcessor {
 				this.helperSet, this.tagCreator);
 
 			for (final Pair p : Arrays.asList(new Pair(
-					NewStagerTagCollectionType.HYPNO_ALPHA,
-					this.helperSet.alphaPrimaryHelper), new Pair(
-							NewStagerTagCollectionType.HYPNO_DELTA,
-							this.helperSet.gaborDeltaHelper), new Pair(
-									NewStagerTagCollectionType.HYPNO_SPINDLE,
-									this.helperSet.spindlePrimaryHelper))) {
+												  NewStagerTagCollectionType.HYPNO_ALPHA,
+												  this.helperSet.alphaPrimaryHelper), new Pair(
+												  NewStagerTagCollectionType.HYPNO_DELTA,
+												  this.helperSet.gaborDeltaHelper), new Pair(
+												  NewStagerTagCollectionType.HYPNO_SPINDLE,
+												  this.helperSet.spindlePrimaryHelper))) {
 				this.builderSet
 				.add(new NewStagerPrimaryTagBuilder(builderData) {
 
@@ -248,8 +248,8 @@ public class NewStagerSingleBookProcessor {
 
 	public NewStagerBookProcessorResult getResult() {
 		return new NewStagerBookProcessorResult(
-			       this.bookInfo,
-			       this.builderSet.getResult());
+				   this.bookInfo,
+				   this.builderSet.getResult());
 	}
 
 }

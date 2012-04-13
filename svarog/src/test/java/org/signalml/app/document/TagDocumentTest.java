@@ -44,7 +44,7 @@ public class TagDocumentTest {
 		tagDocument = new TagDocument(defaultFile);
 		sts = tagDocument.getTagSet();
 	}
-	
+
 	private void testDefaults() {
 		assertEquals(12, sts.getTagStyleCount());
 		assertEquals(7, sts.getPageStyleCount());

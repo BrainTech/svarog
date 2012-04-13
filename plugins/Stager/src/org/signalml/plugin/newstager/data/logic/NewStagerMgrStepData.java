@@ -17,11 +17,11 @@ public class NewStagerMgrStepData extends PluginComputationMgrStepData<NewStager
 	public final NewStagerFixedParameters fixedParameters;
 
 	public NewStagerMgrStepData(NewStagerData stagerData,
-				    NewStagerConstants constants,
-				    NewStagerParameters parameters,
-				    NewStagerFixedParameters fixedParameters,
-				    IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
-				    ThreadFactory threadFactory) {
+								NewStagerConstants constants,
+								NewStagerParameters parameters,
+								NewStagerFixedParameters fixedParameters,
+								IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
+								ThreadFactory threadFactory) {
 		super(tracker, threadFactory);
 		this.stagerData = stagerData;
 		this.constants = constants;

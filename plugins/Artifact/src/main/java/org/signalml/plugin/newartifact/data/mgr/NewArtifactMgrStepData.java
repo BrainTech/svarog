@@ -15,10 +15,10 @@ public class NewArtifactMgrStepData extends PluginComputationMgrStepData<NewArti
 	public final INewArtifactPathConstructor pathConstructor;
 
 	public NewArtifactMgrStepData(final NewArtifactData artifactData,
-				      final NewArtifactConstants constants,
-				      final INewArtifactPathConstructor pathConstructor,
-				      final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker,
-				      final ThreadFactory threadFactory) {
+								  final NewArtifactConstants constants,
+								  final INewArtifactPathConstructor pathConstructor,
+								  final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker,
+								  final ThreadFactory threadFactory) {
 		super(tracker, threadFactory);
 		this.artifactData = artifactData;
 		this.constants = constants;

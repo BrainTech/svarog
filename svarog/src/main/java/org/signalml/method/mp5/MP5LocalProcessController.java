@@ -40,9 +40,9 @@ public class MP5LocalProcessController {
 
 		ProcessBuilder pb = new ProcessBuilder();
 		pb.command(
-		        mp5ExecutablePath,
-		        "-x",
-		        configFile.getAbsolutePath()
+			mp5ExecutablePath,
+			"-x",
+			configFile.getAbsolutePath()
 		);
 		pb.directory(workingDirectory);
 		pb.redirectErrorStream(true);

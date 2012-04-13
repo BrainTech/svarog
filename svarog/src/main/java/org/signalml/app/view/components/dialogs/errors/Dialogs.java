@@ -23,21 +23,21 @@ public class Dialogs {
 	 */
 	public static Dialogs.DIALOG_OPTIONS showWarningYesNoDialog(String warning) {
 		Object[] options = {_("Yes"), _("No")};
-		
+
 		int selectedIndex = JOptionPane.showOptionDialog(null,
-			warning,
-			_("Warning"),
-			JOptionPane.YES_NO_OPTION,
-			JOptionPane.WARNING_MESSAGE,
-			null,
-			options,
-			options[1]);
-		
+							warning,
+							_("Warning"),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							options,
+							options[1]);
+
 		if (selectedIndex == 0)
 			return Dialogs.DIALOG_OPTIONS.YES;
 		else
 			return Dialogs.DIALOG_OPTIONS.NO;
-	
+
 	}
 
 	/**
@@ -46,10 +46,10 @@ public class Dialogs {
 	 */
 	public static void showError(final String message) {
 		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
-		    }
-		  });
+			public void run() {
+				JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
 
 	/**
@@ -80,12 +80,12 @@ public class Dialogs {
 	 */
 	public static void showExceptionDialog(final Window w, final Throwable t) {
 		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
-		    }
-		  });
+			public void run() {
+				JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
-	
+
 	/**
 	 * Shows the {@link ExceptionDialog} with the provided exception.
 	 * The dialog is shown in the Event Dispatching Thread.
@@ -94,9 +94,9 @@ public class Dialogs {
 	 */
 	public static void showExceptionDialog(final Throwable t) {
 		SwingUtilities.invokeLater(new Runnable() {
-		    public void run() {
-		    	JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
-		    }
-		  });
+			public void run() {
+				JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
 }

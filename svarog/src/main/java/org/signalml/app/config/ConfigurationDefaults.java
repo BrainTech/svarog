@@ -40,7 +40,7 @@ public class ConfigurationDefaults {
 		properties = new Properties();
 		try {
 			InputStream is = ConfigurationDefaults.class.getResourceAsStream(
-							"signalml_defaults.properties");
+								 "signalml_defaults.properties");
 			properties.load(is);
 		} catch (IOException ex) {
 			logger.error("Failed to load default properties - i/o exception", ex);
@@ -144,21 +144,21 @@ public class ConfigurationDefaults {
 		}
 
 		config.setScaleType(WignerMapScaleType.valueOf(getString("application.scaleType")));
-		
-		config.setSignalAntialiased( getBoolean("application.signalAntialiased") );
-		config.setOriginalSignalVisible( getBoolean("application.originalSignalVisible") );
-		config.setFullReconstructionVisible( getBoolean("application.fullReconstructionVisible") );
-		config.setReconstructionVisible( getBoolean("application.reconstructionVisible") );
-		config.setLegendVisible( getBoolean("application.legendVisible") );
-		config.setScaleVisible( getBoolean("application.scaleVisible") );
-		config.setAxesVisible( getBoolean("application.axesVisible") );
-		config.setAtomToolTipsVisible( getBoolean("application.atomToolTipsVisible") );
-		
-		config.setMapAspectRatioUp( getInt("application.mapAspectRatioUp") );
-		config.setMapAspectRatioDown( getInt("application.mapAspectRatioDown") );
-		config.setReconstructionHeight( getInt("application.reconstructionHeight") );
-		
-		config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
+
+		config.setSignalAntialiased(getBoolean("application.signalAntialiased"));
+		config.setOriginalSignalVisible(getBoolean("application.originalSignalVisible"));
+		config.setFullReconstructionVisible(getBoolean("application.fullReconstructionVisible"));
+		config.setReconstructionVisible(getBoolean("application.reconstructionVisible"));
+		config.setLegendVisible(getBoolean("application.legendVisible"));
+		config.setScaleVisible(getBoolean("application.scaleVisible"));
+		config.setAxesVisible(getBoolean("application.axesVisible"));
+		config.setAtomToolTipsVisible(getBoolean("application.atomToolTipsVisible"));
+
+		config.setMapAspectRatioUp(getInt("application.mapAspectRatioUp"));
+		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));
+		config.setReconstructionHeight(getInt("application.reconstructionHeight"));
+
+		config.setBackupFrequency(getFloat("application.signalRecording.frequency"));
 
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 		config.setOpenbciIPAddress(getString("monitor.openbciIPAddress"));

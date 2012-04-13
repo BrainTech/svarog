@@ -116,17 +116,17 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.LEADING)
-		        .addComponent(tagPaintModeLabel)
-		        .addComponent(signalColorLabel)
-		        .addComponent(signalXORLabel)
+			layout.createParallelGroup(Alignment.LEADING)
+			.addComponent(tagPaintModeLabel)
+			.addComponent(signalColorLabel)
+			.addComponent(signalXORLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getTagPaintModeComboBox())
-		        .addComponent(getSignalColorComboBox())
-		        .addComponent(getSignalXORCheckBox())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getTagPaintModeComboBox())
+			.addComponent(getSignalColorComboBox())
+			.addComponent(getSignalXORCheckBox())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -134,27 +134,27 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tagPaintModeLabel)
-				.addComponent(getTagPaintModeComboBox())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(signalColorLabel)
-				.addComponent(getSignalColorComboBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(tagPaintModeLabel)
+			.addComponent(getTagPaintModeComboBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(signalXORLabel)
-				.addComponent(getSignalXORCheckBox())
-			);
-		
-		layout.setVerticalGroup(vGroup);		
-		
-		
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(signalColorLabel)
+			.addComponent(getSignalColorComboBox())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(signalXORLabel)
+			.addComponent(getSignalXORCheckBox())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
+
+
 		return settingPanel;
 
 	}

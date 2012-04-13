@@ -6,7 +6,7 @@ public class FindEEGExperimentsRequest extends Message {
 
 	@JsonProperty("client_push_address")
 	private String clientPushAddress;
-	
+
 	@JsonProperty("checked_srvs")
 	private String checkedSrvs;
 
@@ -22,6 +22,6 @@ public class FindEEGExperimentsRequest extends Message {
 
 	public void setClientPushAddress(String clientPushAddress) {
 		this.clientPushAddress = clientPushAddress;
-	}	
-	
+	}
+
 }

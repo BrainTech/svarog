@@ -111,9 +111,9 @@ public class IterationSetupDialog extends AbstractDialog  {
 		JPanel baseConfigurationPanel = new JPanel();
 		baseConfigurationPanel.setLayout(new BoxLayout(baseConfigurationPanel, BoxLayout.X_AXIS));
 		baseConfigurationPanel.setBorder(new CompoundBorder(
-		                new TitledBorder(_("Base method configuration")),
-		                new EmptyBorder(3,3,3,3)
-		                                 ));
+											 new TitledBorder(_("Base method configuration")),
+											 new EmptyBorder(3,3,3,3)
+										 ));
 
 		baseConfigurationPanel.add(new JLabel(_("Edit base configuration")));
 		baseConfigurationPanel.add(Box.createHorizontalStrut(5));
@@ -122,9 +122,9 @@ public class IterationSetupDialog extends AbstractDialog  {
 
 		JPanel iterationPanel = new JPanel();
 		iterationPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Iteration configuration")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Iteration configuration")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		GroupLayout layout = new GroupLayout(iterationPanel);
 		iterationPanel.setLayout(layout);
@@ -140,21 +140,21 @@ public class IterationSetupDialog extends AbstractDialog  {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(iterationCountLabel)
-		        .addComponent(parameterLabel)
-		        .addComponent(iterateLabel)
-		        .addComponent(iterationStartLabel)
-		        .addComponent(iterationEndLabel)
+			layout.createParallelGroup()
+			.addComponent(iterationCountLabel)
+			.addComponent(parameterLabel)
+			.addComponent(iterateLabel)
+			.addComponent(iterationStartLabel)
+			.addComponent(iterationEndLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getIterationCountSpinner())
-		        .addComponent(getParameterComboBox())
-		        .addComponent(getIterateCheckBox())
-		        .addComponent(getStartSpinner())
-		        .addComponent(getEndSpinner())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getIterationCountSpinner())
+			.addComponent(getParameterComboBox())
+			.addComponent(getIterateCheckBox())
+			.addComponent(getStartSpinner())
+			.addComponent(getEndSpinner())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -162,40 +162,40 @@ public class IterationSetupDialog extends AbstractDialog  {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationCountLabel)
-				.addComponent(getIterationCountSpinner())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(parameterLabel)
-				.addComponent(getParameterComboBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationCountLabel)
+			.addComponent(getIterationCountSpinner())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterateLabel)
-				.addComponent(getIterateCheckBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(parameterLabel)
+			.addComponent(getParameterComboBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationStartLabel)
-				.addComponent(getStartSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterateLabel)
+			.addComponent(getIterateCheckBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationEndLabel)
-				.addComponent(getEndSpinner())
-			);
-		
-		layout.setVerticalGroup(vGroup);		
-		
-		interfacePanel.add( baseConfigurationPanel, BorderLayout.NORTH );
-		interfacePanel.add( iterationPanel, BorderLayout.CENTER );
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationStartLabel)
+			.addComponent(getStartSpinner())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationEndLabel)
+			.addComponent(getEndSpinner())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
+		interfacePanel.add(baseConfigurationPanel, BorderLayout.NORTH);
+		interfacePanel.add(iterationPanel, BorderLayout.CENTER);
+
 		return interfacePanel;
 
 	}

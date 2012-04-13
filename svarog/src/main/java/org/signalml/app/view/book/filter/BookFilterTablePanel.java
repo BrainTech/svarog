@@ -94,9 +94,9 @@ public class BookFilterTablePanel extends JPanel {
 		setLayout(new BorderLayout(5,5));
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(_("Filter list")),
-		                  new EmptyBorder(3,3,3,3)
-		          ));
+					  new TitledBorder(_("Filter list")),
+					  new EmptyBorder(3,3,3,3)
+				  ));
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
 

@@ -14,117 +14,117 @@ import java.util.List;
  */
 public class ProcessSubject extends Thread {
 
-        /**
-         * {@link ProcessBuilder} that will start the process.
-         */
-        private ProcessBuilder processBuilder;
+	/**
+	 * {@link ProcessBuilder} that will start the process.
+	 */
+	private ProcessBuilder processBuilder;
 
-        /**
-         * {@link Process} object.
-         */
-        private Process process = null;
+	/**
+	 * {@link Process} object.
+	 */
+	private Process process = null;
 
-        /**
-         * {@link ProcessManager} to notify when the process ends.
-         */
-        private ProcessManager processManager;
+	/**
+	 * {@link ProcessManager} to notify when the process ends.
+	 */
+	private ProcessManager processManager;
 
-        /**
-         * Process id.
-         */
-        private String id;
+	/**
+	 * Process id.
+	 */
+	private String id;
 
-        /**
-         * Constructor prepares the process.
-         *
-         * @param id the process id
-         * @param path path to the executable file
-         * @param parameters command line parameters
-         */
-        public ProcessSubject(String id, String path, List<String> parameters, ProcessManager processManager) {
+	/**
+	 * Constructor prepares the process.
+	 *
+	 * @param id the process id
+	 * @param path path to the executable file
+	 * @param parameters command line parameters
+	 */
+	public ProcessSubject(String id, String path, List<String> parameters, ProcessManager processManager) {
 
-                File executable = new File(path);
-                ArrayList<String> command = new ArrayList<String>();
-                command.add("./" + executable.getName());
-                command.addAll(parameters);
-                
-                String directory = executable.getAbsolutePath().substring(0, executable.getAbsolutePath().length() - executable.getName().length());
+		File executable = new File(path);
+		ArrayList<String> command = new ArrayList<String>();
+		command.add("./" + executable.getName());
+		command.addAll(parameters);
 
-                this.id = id;
-                this.processManager = processManager;
-                this.processBuilder = new ProcessBuilder(command);
-                this.processBuilder.directory(new File(directory));
-        }
-        
-        private void pipe(final InputStream src, final PrintStream dest) {
-            new Thread(new Runnable() {
-                public void run() {
-                    try {
-                        byte[] buffer = new byte[1024];
-                        for (int n = 0; n != -1; n = src.read(buffer)) {
-                            dest.write(buffer, 0, n);
-                        }
-                    } catch (IOException e) { // just exit
-                    }
-                }
-            }).start();
-        }
+		String directory = executable.getAbsolutePath().substring(0, executable.getAbsolutePath().length() - executable.getName().length());
 
-        /**
-         * Gets the process.
-         *
-         * @return the process
-         */
-        public Process getProcess() {
+		this.id = id;
+		this.processManager = processManager;
+		this.processBuilder = new ProcessBuilder(command);
+		this.processBuilder.directory(new File(directory));
+	}
 
-                return process;
-        }
+	private void pipe(final InputStream src, final PrintStream dest) {
+		new Thread(new Runnable() {
+			public void run() {
+				try {
+					byte[] buffer = new byte[1024];
+					for (int n = 0; n != -1; n = src.read(buffer)) {
+						dest.write(buffer, 0, n);
+					}
+				} catch (IOException e) { // just exit
+				}
+			}
+		}).start();
+	}
 
-        /**
-         * Starts the process with a given delay
-         */
-        public void startProcess() {
+	/**
+	 * Gets the process.
+	 *
+	 * @return the process
+	 */
+	public Process getProcess() {
 
-                this.start();
-        }
+		return process;
+	}
 
-        /**
-         * Kills the process.
-         */
-        public void killProcess() {
+	/**
+	 * Starts the process with a given delay
+	 */
+	public void startProcess() {
 
-                this.interrupt();
-        }
+		this.start();
+	}
 
-        /**
-         * Starts the process, and waits for it to finish.
-         * The {@link #processManager} is notified afterwards.
-         */
-        @Override
-        public void run() {
+	/**
+	 * Kills the process.
+	 */
+	public void killProcess() {
 
-                try {
-                        try {
-                                process = processBuilder.start();
-                                pipe(process.getErrorStream(), System.err);
-                                pipe(process.getInputStream(), System.out);
+		this.interrupt();
+	}
 
-                               
-                        } catch (IOException ex) {
-                        		ex.printStackTrace();
-                                process = null;
-                        }
+	/**
+	 * Starts the process, and waits for it to finish.
+	 * The {@link #processManager} is notified afterwards.
+	 */
+	@Override
+	public void run() {
 
-                        if (process != null) {
-                                process.waitFor();
-                                processManager.processEnded(id, process.exitValue());
-                        } else {
-                                processManager.processEnded(id, null);
-                        }
+		try {
+			try {
+				process = processBuilder.start();
+				pipe(process.getErrorStream(), System.err);
+				pipe(process.getInputStream(), System.out);
 
-                } catch (InterruptedException ex) {
-                		ex.printStackTrace();
-                        if (process != null) process.destroy();
-                }
-        }
+
+			} catch (IOException ex) {
+				ex.printStackTrace();
+				process = null;
+			}
+
+			if (process != null) {
+				process.waitFor();
+				processManager.processEnded(id, process.exitValue());
+			} else {
+				processManager.processEnded(id, null);
+			}
+
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+			if (process != null) process.destroy();
+		}
+	}
 }

@@ -3,7 +3,7 @@ package org.signalml.plugin.newstager.logic.helper;
 public class NewStagerFilterHelper {
 
 	public static double[] LowPassFilter(double signal[], double num[],
-					     double den[]) {
+										 double den[]) {
 		int blockCount = signal.length;
 		int numLength = num.length;
 		int denLength = den.length;

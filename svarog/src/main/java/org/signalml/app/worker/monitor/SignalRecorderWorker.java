@@ -21,113 +21,113 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 
-/** 
+/**
  * SignalRecorderWorker
  */
 public class SignalRecorderWorker {
 
-        /**
-         * Logger.
-         */
+	/**
+	 * Logger.
+	 */
 	protected static final Logger logger = Logger.getLogger(SignalRecorderWorker.class);
 
-        /**
-         * Array to store received samples in.
-         */
+	/**
+	 * Array to store received samples in.
+	 */
 	private List<double[]> sampleList;
 
-        /**
-         * The stream to save signal to.
-         */
+	/**
+	 * The stream to save signal to.
+	 */
 	private OutputStream outputStream;
 
-        /**
-         * Path to data file.
-         */
-        private String dataFilePath;
+	/**
+	 * Path to data file.
+	 */
+	private String dataFilePath;
 
-        /**
-         * Path to metadata file.
-         */
-        private String metadataFilePath;
+	/**
+	 * Path to metadata file.
+	 */
+	private String metadataFilePath;
 
-        /**
-         * Object describing the signal.
-         */
+	/**
+	 * Object describing the signal.
+	 */
 	private ExperimentDescriptor monitorDescriptor;
 
-        /**
-         * How many samples have been received.
-         */
+	/**
+	 * How many samples have been received.
+	 */
 	private int savedSampleCount;
 
-        /**
-         * How often a backup should be saved.
-         */
-        private float backupFrequencyInMiliseconds;
+	/**
+	 * How often a backup should be saved.
+	 */
+	private float backupFrequencyInMiliseconds;
 
 	/**
 	 * The timestamp of the first recorded sample.
 	 */
 	private double firstSampleTimestamp;
 
-        /**
-         * Whether the worker is finished.
-         */
-        private volatile boolean finished;
+	/**
+	 * Whether the worker is finished.
+	 */
+	private volatile boolean finished;
 
-        /**
-         * Timestamp of last offer.
-         */
-        private long lastOffer;
+	/**
+	 * Timestamp of last offer.
+	 */
+	private long lastOffer;
 
-        /**
-         * Sum of time elapsed between offers;
-         */
-        private long timeElapsed;
+	/**
+	 * Sum of time elapsed between offers;
+	 */
+	private long timeElapsed;
 
-        /**
-         * Tags recorder related to current recording.
-         * This object calls the backup method, so it is synchronized.
-         */
-        private TagRecorder tagRecorder;
+	/**
+	 * Tags recorder related to current recording.
+	 * This object calls the backup method, so it is synchronized.
+	 */
+	private TagRecorder tagRecorder;
 
 	/**
 	 * Descriptor for recorded samples.
 	 */
 	private RawSignalDescriptor rawSignalDescriptor = new RawSignalDescriptor();
 
-        /**
-         * Default constructor.
-         * @param dataPath path to output file
-         * @param experimentDescriptor object describing the signal        
-         * @throws FileNotFoundException when output stream cannot be initialized
-         */
+	/**
+	 * Default constructor.
+	 * @param dataPath path to output file
+	 * @param experimentDescriptor object describing the signal
+	 * @throws FileNotFoundException when output stream cannot be initialized
+	 */
 	public SignalRecorderWorker(String dataPath, ExperimentDescriptor experimentDescriptor) throws FileNotFoundException {
 
-                String metadataPath;
-                if (dataPath.endsWith(".raw")) {
+		String metadataPath;
+		if (dataPath.endsWith(".raw")) {
 			metadataPath = dataPath.substring(0, dataPath.length() - 4) + ".xml";
-                } else {
+		} else {
 			metadataPath = dataPath + ".xml";
 			dataPath = dataPath + ".raw";
 		}
 
-                this.dataFilePath = dataPath;
-                this.metadataFilePath = metadataPath;
-               
-		this.sampleList = new ArrayList<double[]>();		
+		this.dataFilePath = dataPath;
+		this.metadataFilePath = metadataPath;
+
+		this.sampleList = new ArrayList<double[]>();
 		this.monitorDescriptor = experimentDescriptor;
 
-                this.backupFrequencyInMiliseconds = experimentDescriptor.getBackupFrequency() * 1000;
-                this.lastOffer = System.currentTimeMillis();
-                this.timeElapsed = 0;
-                
-                this.finished = false;
-		this.savedSampleCount = 0;
-                this.firstSampleTimestamp = Double.NaN;
+		this.backupFrequencyInMiliseconds = experimentDescriptor.getBackupFrequency() * 1000;
+		this.lastOffer = System.currentTimeMillis();
+		this.timeElapsed = 0;
 
-                this.tagRecorder = null;
+		this.finished = false;
+		this.savedSampleCount = 0;
+		this.firstSampleTimestamp = Double.NaN;
+
+		this.tagRecorder = null;
 
 		rawSignalDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 		rawSignalDescriptor.setByteOrder(RawSignalByteOrder.LITTLE_ENDIAN);
@@ -141,93 +141,93 @@ public class SignalRecorderWorker {
 	 */
 	public void offerChunk(double[] samples) {
 
-                synchronized (this) {
+		synchronized (this) {
 
-                        if (!finished) {
+			if (!finished) {
 
-                                sampleList.add(samples);
-                                
-                                long currentTimestamp = System.currentTimeMillis();
-                                timeElapsed += currentTimestamp - lastOffer;
-                                lastOffer = currentTimestamp;
+				sampleList.add(samples);
 
-                                if (timeElapsed > backupFrequencyInMiliseconds) {
+				long currentTimestamp = System.currentTimeMillis();
+				timeElapsed += currentTimestamp - lastOffer;
+				lastOffer = currentTimestamp;
 
-                                        timeElapsed = 0;
-                                        doSave(true);
+				if (timeElapsed > backupFrequencyInMiliseconds) {
 
-                                        // it's time for a backup - let the TagRecorder know
-                                        if (tagRecorder != null)
-                                                tagRecorder.doBackup();
-                                }                                
-                        }
-                }
+					timeElapsed = 0;
+					doSave(true);
+
+					// it's time for a backup - let the TagRecorder know
+					if (tagRecorder != null)
+						tagRecorder.doBackup();
+				}
+			}
+		}
 	}
 
-        /**
-         * Saves all remaining samples.
-         */
-        public void save() {
+	/**
+	 * Saves all remaining samples.
+	 */
+	public void save() {
 
-                synchronized(this) {
-                        
-                        doSave(false);
-                        finished = true;
-                }
-        }
+		synchronized (this) {
 
-        /**
-         * Saves all data to the disk.
-         * @param isBackup whether the save is a backup
-         */
-        private void doSave(boolean isBackup) {
-                
-                try {
-                        flushSamples();
-                        saveMetadata(isBackup);
-                } catch (IOException ex) { }
-        }
+			doSave(false);
+			finished = true;
+		}
+	}
 
-        /**
-         * Saves all samples from the list to the output.
-         */
-        private void flushSamples() throws IOException {
+	/**
+	 * Saves all data to the disk.
+	 * @param isBackup whether the save is a backup
+	 */
+	private void doSave(boolean isBackup) {
 
-                if (outputStream == null)
-                        outputStream = new FileOutputStream(dataFilePath);
+		try {
+			flushSamples();
+			saveMetadata(isBackup);
+		} catch (IOException ex) { }
+	}
 
-                int chunkCount = sampleList.size();
-                if (chunkCount == 0)
-                        return;
-                
-                int sampleSize = rawSignalDescriptor.getSampleType().getByteWidth();
-                int chunkSize = sampleList.get(0).length * sampleSize;
+	/**
+	 * Saves all samples from the list to the output.
+	 */
+	private void flushSamples() throws IOException {
 
-                byte[] toSave = new byte[chunkSize * chunkCount];
+		if (outputStream == null)
+			outputStream = new FileOutputStream(dataFilePath);
 
-                int position = 0;
-                for (int i = 0; i < chunkCount; i++) {
+		int chunkCount = sampleList.size();
+		if (chunkCount == 0)
+			return;
 
-                        double[] chunk = sampleList.get(i);
-                        byte[] processedChunk = processChunk(chunk);
+		int sampleSize = rawSignalDescriptor.getSampleType().getByteWidth();
+		int chunkSize = sampleList.get(0).length * sampleSize;
 
-                        for (int j = 0; j < processedChunk.length; j++) {
-                                toSave[position++] = processedChunk[j];
-                        }
-                }
+		byte[] toSave = new byte[chunkSize * chunkCount];
 
-                outputStream.write(toSave, 0, toSave.length);
-                outputStream.flush();
+		int position = 0;
+		for (int i = 0; i < chunkCount; i++) {
 
-                savedSampleCount += chunkCount;
-                sampleList.clear();
-        }
+			double[] chunk = sampleList.get(i);
+			byte[] processedChunk = processChunk(chunk);
 
-        /**
-         * Processes a chunk to be saved.
-         * @param chunk chunk to be saved
-         * @return processed chunk
-         */
+			for (int j = 0; j < processedChunk.length; j++) {
+				toSave[position++] = processedChunk[j];
+			}
+		}
+
+		outputStream.write(toSave, 0, toSave.length);
+		outputStream.flush();
+
+		savedSampleCount += chunkCount;
+		sampleList.clear();
+	}
+
+	/**
+	 * Processes a chunk to be saved.
+	 * @param chunk chunk to be saved
+	 * @return processed chunk
+	 */
 	private byte[] processChunk(double[] chunk) {
 
 		byte[] byteBuffer = new byte[chunk.length * rawSignalDescriptor.getSampleType().getByteWidth()];
@@ -241,17 +241,17 @@ public class SignalRecorderWorker {
 		return byteBuffer;
 	}
 
-        /**
-         * Saves metadata.
-         * @param isBackup whether this save is a backup or a normal save
-         * @throws IOException when file cannot be used
-         */
-        private void saveMetadata(boolean isBackup) throws IOException {
+	/**
+	 * Saves metadata.
+	 * @param isBackup whether this save is a backup or a normal save
+	 * @throws IOException when file cannot be used
+	 */
+	private void saveMetadata(boolean isBackup) throws IOException {
 
-                File metadataFile = new File(metadataFilePath);
-                if (metadataFile.exists())
-                        metadataFile.delete();
-                metadataFile.createNewFile();
+		File metadataFile = new File(metadataFilePath);
+		if (metadataFile.exists())
+			metadataFile.delete();
+		metadataFile.createNewFile();
 
 		RawSignalDescriptor rsd = new RawSignalDescriptor();
 		rsd.setExportFileName(dataFilePath);
@@ -268,13 +268,13 @@ public class SignalRecorderWorker {
 		rsd.setSamplingFrequency(signalParameters.getSamplingFrequency());
 		rsd.setSourceSignalType(SourceSignalType.RAW);
 		rsd.setFirstSampleTimestamp(firstSampleTimestamp);
-                rsd.setIsBackup(isBackup);
+		rsd.setIsBackup(isBackup);
 		if (monitorDescriptor.getEegSystem() != null)
 			rsd.setEegSystemName(monitorDescriptor.getEegSystem().getEegSystemName());
 
 		RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 		descrWriter.writeDocument(rsd, metadataFile);
-        }
+	}
 
 	/**
 	 * Sets the timestamp of the first sample for this signal.
@@ -291,16 +291,16 @@ public class SignalRecorderWorker {
 	public boolean isFirstSampleTimestampSet() {
 		if (Double.isNaN(firstSampleTimestamp)) {
 			return false;
-                }
+		}
 		return true;
 	}
 
-        /**
-         * Sets {@link #tagRecorder}.
-         * @param tagRecorder {@link #tagRecorder}
-         */
-        public void setTagRecorder(TagRecorder tagRecorder) {
-                this.tagRecorder = tagRecorder;
-        }
+	/**
+	 * Sets {@link #tagRecorder}.
+	 * @param tagRecorder {@link #tagRecorder}
+	 */
+	public void setTagRecorder(TagRecorder tagRecorder) {
+		this.tagRecorder = tagRecorder;
+	}
 
 }

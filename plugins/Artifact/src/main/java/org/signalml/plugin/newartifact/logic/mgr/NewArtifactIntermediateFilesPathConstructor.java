@@ -24,8 +24,8 @@ public class NewArtifactIntermediateFilesPathConstructor implements
 			return new String[] { "moj_par_oddech_4s.bin" };
 		case MUSCLE_PLUS_POWER:
 			return new String[] { "moj_par_muscle_1s.bin",
-					      "moj_par_powerf_1s.bin"
-					    };
+								  "moj_par_powerf_1s.bin"
+								};
 		case MUSCLE_ACTIVITY:
 			return new String[] { "moj_par_muscle_1s.bin" };
 		case EYE_MOVEMENT:
@@ -48,7 +48,7 @@ public class NewArtifactIntermediateFilesPathConstructor implements
 	@Override
 	public String getPathToWorkDir() {
 		return new File(this.artifactData.getProjectPath(), artifactData
-				.getPatientName()).getAbsolutePath();
+						.getPatientName()).getAbsolutePath();
 	}
 
 	@Override

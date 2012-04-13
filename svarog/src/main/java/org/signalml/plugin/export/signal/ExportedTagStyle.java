@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.signal;
 
@@ -78,7 +78,7 @@ public interface ExportedTagStyle {
 	Stroke getOutlineStroke();
 
 	/**
-	 * Returns the key that will be used to start creation of a 
+	 * Returns the key that will be used to start creation of a
 	 * {@link ExportedTag selection} of this style.
 	 * @return the key that will be used to start creation of a selection of
 	 * this style

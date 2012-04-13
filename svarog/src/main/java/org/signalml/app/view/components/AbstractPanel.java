@@ -20,7 +20,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
  * All panels in Svarog should extend this panel. Contains an instance of
  * SvarogI18n and methods for enabling/disabling all components
  * within the panel.
- * 
+ *
  * @author Piotr Szachewicz
  */
 public class AbstractPanel extends JPanel implements PropertyChangeListener {
@@ -31,7 +31,7 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 	 * PropertyChangeSupport to fire property changes when needed.
 	 */
 	private PropertyChangeSupport propertyChangeSupport;
-	
+
 	/**
 	 * Constructor.
 	 * @param messageSource message Source capable of returning localized
@@ -46,7 +46,7 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 
 		Container container = this;
 
-		while(!(container instanceof Window)) {
+		while (!(container instanceof Window)) {
 			if (container == null)
 				return null;
 			container = container.getParent();
@@ -90,11 +90,11 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 	protected void setTitledBorder(String label) {
 		setTitledBorder(this, label);
 	}
-	
+
 	protected void setTitledBorder(JPanel panel, String label) {
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(label),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(label),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		panel.setBorder(cb);

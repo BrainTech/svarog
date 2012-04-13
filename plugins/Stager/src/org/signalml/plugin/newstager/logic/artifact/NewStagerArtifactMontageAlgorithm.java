@@ -15,12 +15,12 @@ public class NewStagerArtifactMontageAlgorithm extends
 	private static final double butterEEGNum[] = { 0.293416181696000d,
 			-1.467080908480002d, 2.934161816960004d, -2.934161816960004d,
 			1.467080908480002d, -0.293416181696000d
-						     };
+												 };
 
 	private static final double butterEEGDen[] = { 1.000000000000000d,
 			-2.630709206701736d, 3.100229979210853d, -1.937767771895702d,
 			0.634524080553226d, -0.086086775910497d
-						     };
+												 };
 
 	private int montageArtifactCount;
 	private int c3a2Count;
@@ -61,12 +61,12 @@ public class NewStagerArtifactMontageAlgorithm extends
 
 		if (emgFlag & eegFlag) {
 			return (this.montageArtifactCount > halfEpochSize
-				|| this.c3a2Count > halfEpochSize || this.c4a1Count > halfEpochSize);
+					|| this.c3a2Count > halfEpochSize || this.c4a1Count > halfEpochSize);
 		} else if (emgFlag) {
 			return this.montageArtifactCount > halfEpochSize;
 		} else {
 			return this.c3a2Count > halfEpochSize
-			       || this.c4a1Count > halfEpochSize;
+				   || this.c4a1Count > halfEpochSize;
 		}
 	}
 
@@ -76,15 +76,15 @@ public class NewStagerArtifactMontageAlgorithm extends
 		double montageThreshold = this.data.parameters.thresholds.montageEMGThreshold;
 		double montageToneThreshold = this.data.parameters.thresholds.montageToneEMGThreshold;
 		double emgChannelSignal[] = GetChannelSignal(this.data.channels,
-					    EegChannel.EMG, signal);
+									EegChannel.EMG, signal);
 
 		double emgMean[] = this.computeItermediateMean(
-					   Arrays.copyOf(emgChannelSignal, emgChannelSignal.length),
-					   constants);
+							   Arrays.copyOf(emgChannelSignal, emgChannelSignal.length),
+							   constants);
 		double emgFilteredMean[] = this.computeItermediateMeanFiltered(
-						   emgChannelSignal,
-						   NewStagerArtifactMontageAlgorithm.butterEEGNum,
-						   NewStagerArtifactMontageAlgorithm.butterEEGDen, constants);
+									   emgChannelSignal,
+									   NewStagerArtifactMontageAlgorithm.butterEEGNum,
+									   NewStagerArtifactMontageAlgorithm.butterEEGDen, constants);
 
 		assert(emgFilteredMean.length == emgMean.length);
 
@@ -102,9 +102,9 @@ public class NewStagerArtifactMontageAlgorithm extends
 	private void computeEEGArtifactCount(double signal[][])
 	throws NewStagerPluginException {
 		this.c3a2Count = this.computeDifferenceArtifactCount(signal,
-				 EegChannel.C3, EegChannel.A2);
+						 EegChannel.C3, EegChannel.A2);
 		this.c4a1Count = this.computeDifferenceArtifactCount(signal,
-				 EegChannel.C4, EegChannel.A1);
+						 EegChannel.C4, EegChannel.A1);
 	}
 
 	private int computeDifferenceArtifactCount(double signal[][],
@@ -122,14 +122,14 @@ public class NewStagerArtifactMontageAlgorithm extends
 
 		for (int i = 0; i < length; ++i) {
 			channelSignalDifference[i] = (channelSignal1[i] - channelSignal2[i])
-						     / NewStagerArtifactMontageAlgorithm.NORMALIZING_FACTOR;
+										 / NewStagerArtifactMontageAlgorithm.NORMALIZING_FACTOR;
 		}
 
 		double mean[] = this.computeItermediateMeanFiltered(
-					channelSignalDifference,
-					NewStagerArtifactMontageAlgorithm.butterEEGNum,
-					NewStagerArtifactMontageAlgorithm.butterEEGDen,
-					this.data.constants);
+							channelSignalDifference,
+							NewStagerArtifactMontageAlgorithm.butterEEGNum,
+							NewStagerArtifactMontageAlgorithm.butterEEGDen,
+							this.data.constants);
 
 		int count = 0;
 		for (int i = 0; i < mean.length; ++i) {

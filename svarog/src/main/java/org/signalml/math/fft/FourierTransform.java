@@ -120,16 +120,16 @@ public class FourierTransform {
 		}
 
 		return frequencies;
-		
+
 		/*/double step = samplingFrequency / N;
-        double[] result = new double[N];
-        for (int i = 0; i < (N + 1) / 2; i++) {
-                result[i] = step * i;
-        }
-        for (int i = (N + 1) / 2; i < N; i++) {
-                result[i] = -(step * (N - i));
-        }
-        return result;*/
+		double[] result = new double[N];
+		for (int i = 0; i < (N + 1) / 2; i++) {
+		        result[i] = step * i;
+		}
+		for (int i = (N + 1) / 2; i < N; i++) {
+		        result[i] = -(step * (N - i));
+		}
+		return result;*/
 	}
 
 }

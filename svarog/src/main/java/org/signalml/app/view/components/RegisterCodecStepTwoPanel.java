@@ -22,7 +22,7 @@ import org.signalml.codec.SignalMLCodec;
  * Panel for the second step of {@link RegisterCodecDialog}.
  * Allows to {@link #getFormatNamePanel() select} the format name for the
  * opened {@link SignalMLCodec codec} and {@link #getWarningLabel() informs}
- * user if such name already exists. 
+ * user if such name already exists.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

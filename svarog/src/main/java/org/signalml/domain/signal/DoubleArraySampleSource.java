@@ -17,14 +17,14 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	protected int channelCount;
 	protected int sampleCount;
 
-        /**
-         * Constructor. Creates a <code>DoubleArraySampleSource</code> with a
-         * given number of channels, a given number of samples and a given array
-         * of samples.
-         * @param samples the 2D array with samples
-         * @param channelCount the number of channels
-         * @param sampleCount the number of samples per channel
-         */
+	/**
+	 * Constructor. Creates a <code>DoubleArraySampleSource</code> with a
+	 * given number of channels, a given number of samples and a given array
+	 * of samples.
+	 * @param samples the 2D array with samples
+	 * @param channelCount the number of channels
+	 * @param sampleCount the number of samples per channel
+	 */
 	public DoubleArraySampleSource(double[][] samples, int channelCount, int sampleCount) {
 		super();
 		this.samples = samples;
@@ -37,11 +37,11 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 		return channelCount;
 	}
 
-        /**
-         * Returns the number of the channel. The same value as given
-         * @param channel the number of a channel
-         * @return the number of the channel, the same value as given
-         */
+	/**
+	 * Returns the number of the channel. The same value as given
+	 * @param channel the number of a channel
+	 * @return the number of the channel, the same value as given
+	 */
 	@Override
 	public int getDocumentChannelIndex(int channel) {
 		return channel;
@@ -63,25 +63,25 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 			target[arrayOffset+i] = samples[channel][signalOffset+i];
 		}
 	}
-        //TODO shouldn't we check if index is not out of bound?
+	//TODO shouldn't we check if index is not out of bound?
 
-		
-        /**
-         * Returns if the implementation is capable of returning a channel count
-         * @return the implementation is capable of returning a channel
-         * count, so true
-         */
+
+	/**
+	 * Returns if the implementation is capable of returning a channel count
+	 * @return the implementation is capable of returning a channel
+	 * count, so true
+	 */
 	@Override
 	public boolean isChannelCountCapable() {
 		return true;
 	}
 
-        /**
-         * Returns if the implementation is capable of returning a
-         * sampling frequency
-         * @return true the implementation is not capable of returning a
-         * sampling frequency, so false
-         */
+	/**
+	 * Returns if the implementation is capable of returning a
+	 * sampling frequency
+	 * @return true the implementation is not capable of returning a
+	 * sampling frequency, so false
+	 */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return false;

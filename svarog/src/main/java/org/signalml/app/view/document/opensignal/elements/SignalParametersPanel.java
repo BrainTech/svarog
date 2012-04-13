@@ -30,7 +30,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 
 /**
  * Panel allowing to present and edit signal parameters.
- * 
+ *
  * @author Tomasz Sawicki
  * @author Piotr Szachewicz
  */
@@ -49,7 +49,7 @@ public class SignalParametersPanel extends JPanel {
 
 	/**
 	 * Default constructor. Creates the interface.
-	 * 
+	 *
 	 */
 	public SignalParametersPanel() {
 		super();
@@ -62,7 +62,7 @@ public class SignalParametersPanel extends JPanel {
 	private void createInterface() {
 
 		setBorder(new CompoundBorder(new TitledBorder(_("Signal parameters")),
-				new EmptyBorder(3, 3, 3, 3)));
+									 new EmptyBorder(3, 3, 3, 3)));
 
 		setLayout(new BorderLayout(0, 10));
 
@@ -76,14 +76,14 @@ public class SignalParametersPanel extends JPanel {
 		this.createFieldsPanelElements(fieldsPanel, constraints, 0);
 
 		add(fieldsPanel);
-		
+
 		setEnabledToAll(false);
 	}
 
 	/**
 	 * Fills a {@link JPanel} object with component, regarding
 	 * {@link GridBagConstraints} object.
-	 * 
+	 *
 	 * @param fieldsPanel
 	 *            an object to be filled with components
 	 * @param constraints
@@ -91,13 +91,13 @@ public class SignalParametersPanel extends JPanel {
 	 *            fieldsPanel
 	 * @param startingRow
 	 *            a row to start from
-	 * 
+	 *
 	 * @return a number of rows that fieldsPanel contains after performing all
 	 *         operations
 	 */
 
 	protected int createFieldsPanelElements(JPanel fieldsPanel,
-			GridBagConstraints constraints, int startingRow) {
+											GridBagConstraints constraints, int startingRow) {
 		JLabel samplingFrequencyLabel = new JLabel(_("Sampling frequency: "));
 		JLabel channelCountLabel = new JLabel(_("Channel count: "));
 		JLabel byteOrderLabel = new JLabel(_("Byte order: "));
@@ -147,7 +147,7 @@ public class SignalParametersPanel extends JPanel {
 
 	/**
 	 * Method fills a {@link GridBagConstraints} object with data.
-	 * 
+	 *
 	 * @param constraints
 	 *            a {@link GridBagConstraints}
 	 * @param gridx
@@ -162,7 +162,7 @@ public class SignalParametersPanel extends JPanel {
 	 *            {@link GridBagConstraints#gridwidth}
 	 */
 	protected void fillConstraints(GridBagConstraints constraints, int gridx,
-			int gridy, int weightx, int weighty, int gridwidth) {
+								   int gridy, int weightx, int weighty, int gridwidth) {
 
 		constraints.gridx = gridx;
 		constraints.gridy = gridy;
@@ -173,7 +173,7 @@ public class SignalParametersPanel extends JPanel {
 
 	/**
 	 * Returns the sampling frequency combo box.
-	 * 
+	 *
 	 * @return the sampling frequency combo box
 	 */
 	public JComboBox getSamplingFrequencyComboBox() {
@@ -187,7 +187,7 @@ public class SignalParametersPanel extends JPanel {
 
 	/**
 	 * Returns the channel count field
-	 * 
+	 *
 	 * @return the channel count field
 	 */
 	protected IntegerSpinner getChannelCountSpinner() {
@@ -210,7 +210,7 @@ public class SignalParametersPanel extends JPanel {
 
 	/**
 	 * Notifies all listeners that the number of channels has changed.
-	 * 
+	 *
 	 * @param numberOfChannels
 	 *            the new number of channels
 	 */
@@ -220,7 +220,7 @@ public class SignalParametersPanel extends JPanel {
 
 	/**
 	 * Returns the byte order combo box.
-	 * 
+	 *
 	 * @return the byte order combo box
 	 */
 	protected ResolvableComboBox getByteOrderComboBox() {
@@ -228,14 +228,14 @@ public class SignalParametersPanel extends JPanel {
 		if (byteOrderComboBox == null) {
 			byteOrderComboBox = new ResolvableComboBox();
 			byteOrderComboBox.setModel(new DefaultComboBoxModel(
-					RawSignalByteOrder.values()));
+										   RawSignalByteOrder.values()));
 		}
 		return byteOrderComboBox;
 	}
 
 	/**
 	 * Returns the sample type combo box.
-	 * 
+	 *
 	 * @return the sample type combo box
 	 */
 	protected ResolvableComboBox getSampleTypeComboBox() {
@@ -243,28 +243,28 @@ public class SignalParametersPanel extends JPanel {
 		if (sampleTypeComboBox == null) {
 			sampleTypeComboBox = new ResolvableComboBox();
 			sampleTypeComboBox.setModel(new DefaultComboBoxModel(
-					RawSignalSampleType.values()));
+											RawSignalSampleType.values()));
 		}
 		return sampleTypeComboBox;
 	}
 
 	/**
 	 * Returns the page size spinner.
-	 * 
+	 *
 	 * @return the page size spinner
 	 */
 	protected FloatSpinner getPageSizeSpinner() {
 
 		if (pageSizeSpinner == null) {
 			pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F,
-					0.1F, 100000.0F, 0.1F));
+											   0.1F, 100000.0F, 0.1F));
 		}
 		return pageSizeSpinner;
 	}
 
 	/**
 	 * Returns the blocks per page field.
-	 * 
+	 *
 	 * @return the blocks per page field
 	 */
 	protected IntegerSpinner getBlocksPerPageSpinner() {
@@ -283,7 +283,7 @@ public class SignalParametersPanel extends JPanel {
 
 	public float getSamplingFrequency() {
 		return Float.parseFloat(getSamplingFrequencyComboBox()
-				.getSelectedItem().toString());
+								.getSelectedItem().toString());
 	}
 
 	protected void setEnabledAsNeeded(AbstractOpenSignalDescriptor openSignalDescriptor) {
@@ -352,7 +352,7 @@ public class SignalParametersPanel extends JPanel {
 		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
 			signalParameters.setChannelCount(experimentDescriptor
-					.getAmplifier().getSelectedChannels().size());
+											 .getAmplifier().getSelectedChannels().size());
 		}
 	}
 

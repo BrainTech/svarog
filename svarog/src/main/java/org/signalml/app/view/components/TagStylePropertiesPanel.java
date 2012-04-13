@@ -262,7 +262,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the layout for the {@link #getFillColorPanel() fillColorPanel}. 
+	 * Returns the layout for the {@link #getFillColorPanel() fillColorPanel}.
 	 * If the layout doesn't exist it is created.
 	 * @return the layout for the fillColorPanel
 	 */
@@ -296,7 +296,7 @@ public class TagStylePropertiesPanel extends JPanel {
 
 	/**
 	 * Returns the layout for the {@link #getOutlineColorPanel()
-	 * outlineColorPanel}. 
+	 * outlineColorPanel}.
 	 * If the layout doesn't exist it is created.
 	 * @return the layout for the outlineColorPanel
 	 */
@@ -329,7 +329,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the layout for the {@link #getPreviewPanel() previewPanel}. 
+	 * Returns the layout for the {@link #getPreviewPanel() previewPanel}.
 	 * If the layout doesn't exist it is created.
 	 * @return the layout for the previewPanel
 	 */
@@ -414,15 +414,15 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(widthLabel)
-			        .addComponent(dashLabel)
+				layout.createParallelGroup()
+				.addComponent(widthLabel)
+				.addComponent(dashLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(getWidthSpinner())
-			        .addComponent(getDashComboBox())
+				layout.createParallelGroup()
+				.addComponent(getWidthSpinner())
+				.addComponent(getDashComboBox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -430,16 +430,16 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(widthLabel)
-					.addComponent(getWidthSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(widthLabel)
+				.addComponent(getWidthSpinner())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(dashLabel)
-					.addComponent(getDashComboBox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(dashLabel)
+				.addComponent(getDashComboBox())
+			);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -463,9 +463,9 @@ public class TagStylePropertiesPanel extends JPanel {
 
 			propertiesPanel = new JPanel();
 			propertiesPanel.setBorder(new CompoundBorder(
-			                                  new TitledBorder(_("Properties")),
-			                                  new EmptyBorder(3,3,3,3)
-			                          ));
+										  new TitledBorder(_("Properties")),
+										  new EmptyBorder(3,3,3,3)
+									  ));
 
 			GroupLayout layout = new GroupLayout(propertiesPanel);
 			propertiesPanel.setLayout(layout);
@@ -487,20 +487,20 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(nameLabel)
-			        .addComponent(descriptionLabel)
-			        .addComponent(keyLabel)
-			        .addComponent(markerLabel)
+				layout.createParallelGroup()
+				.addComponent(nameLabel)
+				.addComponent(descriptionLabel)
+				.addComponent(keyLabel)
+				.addComponent(markerLabel)
 				.addComponent(visibilityLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(getNameTextField())
-			        .addComponent(getDescriptionScrollPane())
-			        .addComponent(keyPanel)
-			        .addComponent(getMarkerCheckBox())
+				layout.createParallelGroup()
+				.addComponent(getNameTextField())
+				.addComponent(getDescriptionScrollPane())
+				.addComponent(keyPanel)
+				.addComponent(getMarkerCheckBox())
 				.addComponent(getVisiblityCheckbox())
 			);
 
@@ -509,33 +509,33 @@ public class TagStylePropertiesPanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(nameLabel)
-					.addComponent(getNameTextField())
-				);
-			
-			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(descriptionLabel)
-					.addComponent(getDescriptionScrollPane())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(nameLabel)
+				.addComponent(getNameTextField())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(keyLabel)
-					.addComponent(keyPanel)
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(descriptionLabel)
+				.addComponent(getDescriptionScrollPane())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(markerLabel)
-					.addComponent(getMarkerCheckBox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(keyLabel)
+				.addComponent(keyPanel)
+			);
+
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(visibilityLabel)
-					.addComponent(getVisiblityCheckbox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(markerLabel)
+				.addComponent(getMarkerCheckBox())
+			);
+			vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(visibilityLabel)
+				.addComponent(getVisiblityCheckbox())
+			);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -640,12 +640,12 @@ public class TagStylePropertiesPanel extends JPanel {
 	public DefaultComboBoxModel getDashComboBoxModel() {
 		if (dashComboBoxModel == null) {
 			dashComboBoxModel = new DefaultComboBoxModel(new Dash[] {
-			                        null,
-			                        new Dash(new float[] { 8F, 8F }),
-			                        new Dash(new float[] { 2F, 2F }),
-			                        new Dash(new float[] { 8F, 2F, 2F, 2F }),
-			                        new Dash(new float[] { 8F, 2F, 2F, 2F, 2F, 2F }),
-			                });
+						null,
+						new Dash(new float[] { 8F, 8F }),
+						new Dash(new float[] { 2F, 2F }),
+						new Dash(new float[] { 8F, 2F, 2F, 2F }),
+						new Dash(new float[] { 8F, 2F, 2F, 2F, 2F, 2F }),
+					});
 		}
 		return dashComboBoxModel;
 	}

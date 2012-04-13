@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.exampleplugin;
 

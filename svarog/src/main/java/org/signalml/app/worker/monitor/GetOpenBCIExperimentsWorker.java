@@ -21,7 +21,7 @@ import org.signalml.app.worker.monitor.messages.parsing.ExperimentDescriptorJSon
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.util.FormatUtils;
 
-public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<ExperimentDescriptor>, Void>{
+public class GetOpenBCIExperimentsWorker extends SwingWorkerWithBusyDialog<List<ExperimentDescriptor>, Void> {
 
 	public GetOpenBCIExperimentsWorker(Container parent) {
 		super(parent);

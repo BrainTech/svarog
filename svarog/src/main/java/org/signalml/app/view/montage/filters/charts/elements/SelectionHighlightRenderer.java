@@ -186,12 +186,12 @@ public class SelectionHighlightRenderer {
 		return convertPositionToFrequency(p.x);
 	}
 
-	 /**
-	  * Converts the given x-position to an appropriate frequency.
-	  * @param xPosition the x-position to be converted
-	  * @return the frequency which corresponds to the given x-position
-	  * on the chart
-	  */
+	/**
+	 * Converts the given x-position to an appropriate frequency.
+	 * @param xPosition the x-position to be converted
+	 * @return the frequency which corresponds to the given x-position
+	 * on the chart
+	 */
 	protected double convertPositionToFrequency(double xPosition) {
 
 		int xMin = getMinimumChartPosition();
@@ -204,7 +204,7 @@ public class SelectionHighlightRenderer {
 			return getMaximumChartFrequency();
 		}
 
-		double freq = getMaximumChartFrequency() * (((double) (xPosition - xMin)) / ((double) (xMax - xMin)));
+		double freq = getMaximumChartFrequency() * (((double)(xPosition - xMin)) / ((double)(xMax - xMin)));
 
 		return ((double) Math.round(freq * 4)) / 4.0;
 	}
@@ -228,7 +228,7 @@ public class SelectionHighlightRenderer {
 	protected double getNumberOfPixelsPerHertz() {
 		int xMax = getMaximumChartPosition();
 		int xMin = getMinimumChartPosition();
-		double perHz = ((double) (xMax - xMin)) / getMaximumChartFrequency();
+		double perHz = ((double)(xMax - xMin)) / getMaximumChartFrequency();
 		return perHz;
 	}
 

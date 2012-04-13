@@ -88,9 +88,9 @@ class ButterworthIIRDesigner extends AbstractIIRDesigner {
 			passb[1] = result[1];
 
 			WN[0] = ((passb[1] - passb[0]) + Math.sqrt(Math.pow((passb[1] - passb[0]), 2) +
-			                4 * Math.pow(W0, 2) * passb[0] * passb[1])) / (2 * W0);
+					 4 * Math.pow(W0, 2) * passb[0] * passb[1])) / (2 * W0);
 			WN[1] = ((passb[1] - passb[0]) - Math.sqrt(Math.pow((passb[1] - passb[0]), 2) +
-			                4 * Math.pow(W0, 2) * passb[0] * passb[1])) / (2 * W0);
+					 4 * Math.pow(W0, 2) * passb[0] * passb[1])) / (2 * W0);
 			WN[0] = Math.abs(WN[0]);
 			WN[1] = Math.abs(WN[1]);
 
@@ -104,9 +104,9 @@ class ButterworthIIRDesigner extends AbstractIIRDesigner {
 		else if (type.isBandpass()) {
 
 			WN[0] = W0 * (passb[1] - passb[0]) / 2.0 + Math.sqrt(Math.pow(-W0, 2) / 4.0 *
-			                Math.pow((passb[1]-passb[0]), 2) + passb[0] * passb[1]);
+					Math.pow((passb[1]-passb[0]), 2) + passb[0] * passb[1]);
 			WN[1] = -W0 * (passb[1]-passb[0]) / 2.0 + Math.sqrt(Math.pow(W0, 2) / 4.0 *
-			                Math.pow((passb[1] - passb[0]), 2) + passb[0] * passb[1]);
+					Math.pow((passb[1] - passb[0]), 2) + passb[0] * passb[1]);
 			WN[0] = Math.abs(WN[0]);
 			WN[1] = Math.abs(WN[1]);
 

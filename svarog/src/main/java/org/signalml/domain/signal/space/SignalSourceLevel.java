@@ -17,17 +17,17 @@ import org.signalml.domain.signal.MultichannelSampleSource;
  */
 public enum SignalSourceLevel {
 
-        /**
-         * the signal is neither assembled nor filtered
-         */
+	/**
+	 * the signal is neither assembled nor filtered
+	 */
 	RAW,
-        /**
-         * the signal is assembled but not filtered
-         */
+	/**
+	 * the signal is assembled but not filtered
+	 */
 	ASSEMBLED,
-        /**
-         * the signal is assembled and filtered
-         */
+	/**
+	 * the signal is assembled and filtered
+	 */
 	FILTERED
 
 	;

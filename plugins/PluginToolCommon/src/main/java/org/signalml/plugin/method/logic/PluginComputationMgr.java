@@ -26,7 +26,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 		public CheckedThreadGroup() {
 			super(Thread.currentThread().getThreadGroup(),
-			      "PluginComputationGroup");
+				  "PluginComputationGroup");
 
 			this.parentThread = Thread.currentThread();
 
@@ -163,7 +163,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 			Throwable cause = this.threadGroup.getCause();
 			if (cause != null) {
 				log.error("Error in worker thread "
-					  + this.threadGroup.getCausingThread().getId());
+						  + this.threadGroup.getCausingThread().getId());
 				throw new ComputationException(cause);
 			}
 		}

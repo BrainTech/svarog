@@ -83,9 +83,9 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		JPanel parameterPanel = new JPanel();
 
 		parameterPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Choose limits")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Choose limits")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		GroupLayout layout = new GroupLayout(parameterPanel);
 		parameterPanel.setLayout(layout);
@@ -127,69 +127,69 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(iterationLabel)
-		        .addComponent(modulusLabel)
-		        .addComponent(amplitudeLabel)
-		        .addComponent(positionLabel)
-		        .addComponent(scaleLabel)
-		        .addComponent(frequencyLabel)
-		        .addComponent(phaseLabel)
+			layout.createParallelGroup()
+			.addComponent(iterationLabel)
+			.addComponent(modulusLabel)
+			.addComponent(amplitudeLabel)
+			.addComponent(positionLabel)
+			.addComponent(scaleLabel)
+			.addComponent(frequencyLabel)
+			.addComponent(phaseLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(minIterationLabel)
-		        .addComponent(minModulusLabel)
-		        .addComponent(minAmplitudeLabel)
-		        .addComponent(minPositionLabel)
-		        .addComponent(minScaleLabel)
-		        .addComponent(minFrequencyLabel)
-		        .addComponent(minPhaseLabel)
+			layout.createParallelGroup()
+			.addComponent(minIterationLabel)
+			.addComponent(minModulusLabel)
+			.addComponent(minAmplitudeLabel)
+			.addComponent(minPositionLabel)
+			.addComponent(minScaleLabel)
+			.addComponent(minFrequencyLabel)
+			.addComponent(minPhaseLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMinIterationPanel())
-		        .addComponent(getMinModulusPanel())
-		        .addComponent(getMinAmplitudePanel())
-		        .addComponent(getMinPositionPanel())
-		        .addComponent(getMinScalePanel())
-		        .addComponent(getMinFrequencyPanel())
-		        .addComponent(getMinPhasePanel())
+			layout.createParallelGroup()
+			.addComponent(getMinIterationPanel())
+			.addComponent(getMinModulusPanel())
+			.addComponent(getMinAmplitudePanel())
+			.addComponent(getMinPositionPanel())
+			.addComponent(getMinScalePanel())
+			.addComponent(getMinFrequencyPanel())
+			.addComponent(getMinPhasePanel())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(iterationGlue)
-		        .addComponent(modulusGlue)
-		        .addComponent(amplitudeGlue)
-		        .addComponent(positionGlue)
-		        .addComponent(scaleGlue)
-		        .addComponent(frequencyGlue)
-		        .addComponent(phaseGlue)
+			layout.createParallelGroup()
+			.addComponent(iterationGlue)
+			.addComponent(modulusGlue)
+			.addComponent(amplitudeGlue)
+			.addComponent(positionGlue)
+			.addComponent(scaleGlue)
+			.addComponent(frequencyGlue)
+			.addComponent(phaseGlue)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxIterationLabel)
-		        .addComponent(maxModulusLabel)
-		        .addComponent(maxAmplitudeLabel)
-		        .addComponent(maxPositionLabel)
-		        .addComponent(maxScaleLabel)
-		        .addComponent(maxFrequencyLabel)
-		        .addComponent(maxPhaseLabel)
+			layout.createParallelGroup()
+			.addComponent(maxIterationLabel)
+			.addComponent(maxModulusLabel)
+			.addComponent(maxAmplitudeLabel)
+			.addComponent(maxPositionLabel)
+			.addComponent(maxScaleLabel)
+			.addComponent(maxFrequencyLabel)
+			.addComponent(maxPhaseLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMaxIterationPanel())
-		        .addComponent(getMaxModulusPanel())
-		        .addComponent(getMaxAmplitudePanel())
-		        .addComponent(getMaxPositionPanel())
-		        .addComponent(getMaxScalePanel())
-		        .addComponent(getMaxFrequencyPanel())
-		        .addComponent(getMaxPhasePanel())
+			layout.createParallelGroup()
+			.addComponent(getMaxIterationPanel())
+			.addComponent(getMaxModulusPanel())
+			.addComponent(getMaxAmplitudePanel())
+			.addComponent(getMaxPositionPanel())
+			.addComponent(getMaxScalePanel())
+			.addComponent(getMaxFrequencyPanel())
+			.addComponent(getMaxPhasePanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -197,74 +197,74 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationLabel)
-				.addComponent(minIterationLabel)
-				.addComponent(getMinIterationPanel())
-				.addComponent(iterationGlue)
-				.addComponent(maxIterationLabel)
-				.addComponent(getMaxIterationPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationLabel)
+			.addComponent(minIterationLabel)
+			.addComponent(getMinIterationPanel())
+			.addComponent(iterationGlue)
+			.addComponent(maxIterationLabel)
+			.addComponent(getMaxIterationPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(modulusLabel)
-				.addComponent(minModulusLabel)
-				.addComponent(getMinModulusPanel())
-				.addComponent(modulusGlue)
-				.addComponent(maxModulusLabel)
-				.addComponent(getMaxModulusPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(modulusLabel)
+			.addComponent(minModulusLabel)
+			.addComponent(getMinModulusPanel())
+			.addComponent(modulusGlue)
+			.addComponent(maxModulusLabel)
+			.addComponent(getMaxModulusPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(amplitudeLabel)
-				.addComponent(minAmplitudeLabel)
-				.addComponent(getMinAmplitudePanel())
-				.addComponent(amplitudeGlue)
-				.addComponent(maxAmplitudeLabel)
-				.addComponent(getMaxAmplitudePanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(amplitudeLabel)
+			.addComponent(minAmplitudeLabel)
+			.addComponent(getMinAmplitudePanel())
+			.addComponent(amplitudeGlue)
+			.addComponent(maxAmplitudeLabel)
+			.addComponent(getMaxAmplitudePanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(positionLabel)
-				.addComponent(minPositionLabel)
-				.addComponent(getMinPositionPanel())
-				.addComponent(positionGlue)
-				.addComponent(maxPositionLabel)
-				.addComponent(getMaxPositionPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(positionLabel)
+			.addComponent(minPositionLabel)
+			.addComponent(getMinPositionPanel())
+			.addComponent(positionGlue)
+			.addComponent(maxPositionLabel)
+			.addComponent(getMaxPositionPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(scaleLabel)
-				.addComponent(minScaleLabel)
-				.addComponent(getMinScalePanel())
-				.addComponent(scaleGlue)
-				.addComponent(maxScaleLabel)
-				.addComponent(getMaxScalePanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(scaleLabel)
+			.addComponent(minScaleLabel)
+			.addComponent(getMinScalePanel())
+			.addComponent(scaleGlue)
+			.addComponent(maxScaleLabel)
+			.addComponent(getMaxScalePanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(frequencyLabel)
-				.addComponent(minFrequencyLabel)
-				.addComponent(getMinFrequencyPanel())
-				.addComponent(frequencyGlue)
-				.addComponent(maxFrequencyLabel)
-				.addComponent(getMaxFrequencyPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(frequencyLabel)
+			.addComponent(minFrequencyLabel)
+			.addComponent(getMinFrequencyPanel())
+			.addComponent(frequencyGlue)
+			.addComponent(maxFrequencyLabel)
+			.addComponent(getMaxFrequencyPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(phaseLabel)
-				.addComponent(minPhaseLabel)
-				.addComponent(getMinPhasePanel())
-				.addComponent(phaseGlue)
-				.addComponent(maxPhaseLabel)
-				.addComponent(getMaxPhasePanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(phaseLabel)
+			.addComponent(minPhaseLabel)
+			.addComponent(getMinPhasePanel())
+			.addComponent(phaseGlue)
+			.addComponent(maxPhaseLabel)
+			.addComponent(getMaxPhasePanel())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

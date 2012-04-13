@@ -74,9 +74,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 	@Override
 	protected Void doInBackground() {
-		
+
 		MultiplexerMessage sampleMsg;
-		
+
 		while (!isCancelled()) {
 			try {
 				IncomingMessageData msgData = client.receive(TIMEOUT_MILIS);
@@ -101,22 +101,22 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			int sampleType = sampleMsg.getType();
 			logger.debug("Worker: received message type: " + sampleType);
 
-			switch (sampleType){
-				case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
-					parseMessageWithSamples(sampleMsg.getMessage());
-					break;
-				case MessageTypes.TAG:
-					parseMessageWithTags(sampleMsg.getMessage());
-					break;
-				default:
-					final String name = MessageTypes.instance.getConstantsNames().get(sampleType);
-					logger.error("received unknown reply: " +  sampleType + "/" + name);
+			switch (sampleType) {
+			case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
+				parseMessageWithSamples(sampleMsg.getMessage());
+				break;
+			case MessageTypes.TAG:
+				parseMessageWithTags(sampleMsg.getMessage());
+				break;
+			default:
+				final String name = MessageTypes.instance.getConstantsNames().get(sampleType);
+				logger.error("received unknown reply: " +  sampleType + "/" + name);
 			}
 		}
 
 		return null;
 	}
-		
+
 	/**
 	 * If the message contains samples, this function can be used
 	 * to parse its contents.
@@ -134,14 +134,14 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		}
 		List<Sample> samples = sampleVector.getSamplesList();
 
-		for (int k=0; k<sampleVector.getSamplesCount();k++) {
+		for (int k=0; k<sampleVector.getSamplesCount(); k++) {
 			Sample sample = sampleVector.getSamples(k);
 
 			double[] newSamplesArray = new double[sample.getChannelsCount()];
 			for (int i = 0; i < newSamplesArray.length; i++) {
 				newSamplesArray[i] = sample.getChannels(i);
 			}
-			
+
 			double samplesTimestamp = samples.get(0).getTimestamp();
 			//System.out.println("  -- " + samplesTimestamp);
 			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
@@ -149,9 +149,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			publish(newSamplesPackage);
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * If the given message contains tags, this method can be used
 	 * to parse its contents.
@@ -171,17 +171,17 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 		// TODO: By now we ignore field channels and assume that tag if for all channels
 		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 
-                        TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
+		TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
 
-                        if (style == null) {
-                            style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
-                            tagSet.addStyle(style);
-                        }
+		if (style == null) {
+			style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
+			tagSet.addStyle(style);
+		}
 
 		final MonitorTag tag = new MonitorTag(style,
-					 tagMsg.getStartTimestamp(),
-					 tagLen,
-					 -1);
+											  tagMsg.getStartTimestamp(),
+											  tagLen,
+											  -1);
 
 		for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
 			if (v.getKey().equals("annotation")) {
@@ -203,8 +203,8 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				sampleSource.lock();
 				tagSet.lock();
-					sampleSource.addSamples(data.getSampleValues());
-					tagSet.newSample(data.getSamplesTimestamp());
+				sampleSource.addSamples(data.getSampleValues());
+				tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
 				sampleSource.unlock();
 

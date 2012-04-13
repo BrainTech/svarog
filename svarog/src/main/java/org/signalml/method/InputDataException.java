@@ -16,11 +16,11 @@ public class InputDataException extends BindException {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * Creates new exception with specified data which caused it and name of this object.
-         * @param target data which caused this exception
-         * @param objectName name of object which caused this exception
-         */
+	/**
+	 * Creates new exception with specified data which caused it and name of this object.
+	 * @param target data which caused this exception
+	 * @param objectName name of object which caused this exception
+	 */
 	public InputDataException(Object target, String objectName) {
 		super(target, objectName);
 	}

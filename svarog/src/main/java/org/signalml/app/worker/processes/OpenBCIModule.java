@@ -11,69 +11,69 @@ import org.signalml.app.config.preset.Preset;
 @XStreamAlias("module")
 public class OpenBCIModule implements Preset {
 
-        /**
-         * Module name.
-         */
-        private String name;
-        
-        /**
-         * Module path.
-         */
-        private String path;
+	/**
+	 * Module name.
+	 */
+	private String name;
 
-        /**
-         * Module delay in miliseconds.
-         */
-        private Integer delay;
+	/**
+	 * Module path.
+	 */
+	private String path;
 
-        /**
-         * Module parameters.
-         */
-        private String parameters;
+	/**
+	 * Module delay in miliseconds.
+	 */
+	private Integer delay;
 
-        public OpenBCIModule() {
-                this.path = "";
-                this.name = "";
-                this.delay = 1000;
-                this.parameters = "";
-        }
+	/**
+	 * Module parameters.
+	 */
+	private String parameters;
 
-        @Override
-        public String getName() {
-                return name;
-        }
+	public OpenBCIModule() {
+		this.path = "";
+		this.name = "";
+		this.delay = 1000;
+		this.parameters = "";
+	}
 
-        @Override
-        public void setName(String name) {
-                this.name = name;
-        }
+	@Override
+	public String getName() {
+		return name;
+	}
 
-        public String getPath() {
-                return path;
-        }
+	@Override
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        public void setPath(String path) {
-                this.path = path;
-        }
+	public String getPath() {
+		return path;
+	}
 
-        public Integer getDelay() {
-                return delay;
-        }
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-        public void setDelay(Integer delay) {
-                this.delay = delay;
-        }
+	public Integer getDelay() {
+		return delay;
+	}
 
-        public String getParameters() {
-                return parameters;
-        }
+	public void setDelay(Integer delay) {
+		this.delay = delay;
+	}
 
-        public void setParameters(String parameters) {
-                this.parameters = parameters;
-        }
+	public String getParameters() {
+		return parameters;
+	}
 
-        @Override
-        public String toString() {
-                return name;
-        }
+	public void setParameters(String parameters) {
+		this.parameters = parameters;
+	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
 }

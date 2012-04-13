@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.change.listeners;
 
@@ -15,7 +15,7 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
  * Can be added only to listen on changes concerning with a selected document
  * ({@link ExportedTagDocument tag} or {@link ExportedSignalDocument signal}).
  * To listen on all changes {@link PluginTagListenerWithActive} is required.
- * 
+ *
  * @see SvarogAccessChangeSupport
  * @author Marcin Szumski
  */

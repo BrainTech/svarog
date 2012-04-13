@@ -25,7 +25,7 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
  * associated with a {@link Montage}.
  * Contains three columns:
  * <ul>
- * <li>the index of the filter in the montage,</li> 
+ * <li>the index of the filter in the montage,</li>
  * <li>the custom name of the filter (description),</li>
  * <li>the description of the effect of the filter.</li></ul>
  *

@@ -159,9 +159,9 @@ public class MiscellaneousConfigPanel extends JPanel {
 		JPanel generalPanel = new JPanel();
 		generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
 		generalPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(_("General")),
-		                               new EmptyBorder(3,3,3,3)
-		                       ));
+								   new TitledBorder(_("General")),
+								   new EmptyBorder(3,3,3,3)
+							   ));
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			generalPanel.add(getSaveConfigOnEveryChangeCheckBox());
@@ -171,9 +171,9 @@ public class MiscellaneousConfigPanel extends JPanel {
 		JPanel toolTipPanel = new JPanel();
 		toolTipPanel.setLayout(new BoxLayout(toolTipPanel, BoxLayout.X_AXIS));
 		toolTipPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(_("Tool tip settings")),
-		                               new EmptyBorder(3,3,3,3)
-		                       ));
+								   new TitledBorder(_("Tool tip settings")),
+								   new EmptyBorder(3,3,3,3)
+							   ));
 
 		toolTipPanel.add(new JLabel(_("To show")));
 		toolTipPanel.add(Box.createHorizontalStrut(5));
@@ -196,9 +196,9 @@ public class MiscellaneousConfigPanel extends JPanel {
 			viewModePanel.setLayout(new GridLayout(2,2,3,3));
 		}
 		viewModePanel.setBorder(new CompoundBorder(
-		                                new TitledBorder(_("View mode")),
-		                                new EmptyBorder(3,3,3,3)
-		                        ));
+									new TitledBorder(_("View mode")),
+									new EmptyBorder(3,3,3,3)
+								));
 
 		viewModePanel.add(getViewModeHidesMainToolBarCheckBox());
 		if (mode == SignalMLOperationMode.APPLICATION) {

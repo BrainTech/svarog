@@ -35,10 +35,10 @@ public class RandomBookBuilder implements BookBuilder {
 
 	public static RandomBookBuilder getInstance() {
 		if (sharedInstance == null) {
-		    synchronized (RandomBookBuilder.class) {
-		        if (sharedInstance == null)
-		            sharedInstance = new RandomBookBuilder();
-		    }
+			synchronized (RandomBookBuilder.class) {
+				if (sharedInstance == null)
+					sharedInstance = new RandomBookBuilder();
+			}
 		}
 
 		return sharedInstance;
@@ -155,18 +155,18 @@ public class RandomBookBuilder implements BookBuilder {
 	private StandardBookAtom createRandomAtom(Random random, int iteration, float samplingFrequency, int segmentLength) {
 
 		DefaultBookAtom atom = new DefaultBookAtom(
-		        samplingFrequency,
-		        segmentLength,
-		        StandardBookAtom.GABORWAVE_IDENTITY,
-		        iteration,
-		        (float)(100 * Math.abs(random.nextDouble())),
-		        //(int) ( (segmentLength/2) * Math.abs( random.nextDouble() ) ),
-		        2560/2-1,
-		        //(int) (segmentLength * Math.abs( random.nextDouble() ) ),
-		        2560-1,
-		        (int)(segmentLength * Math.abs(random.nextDouble())),
-		        (float)(100 * Math.abs(random.nextDouble())),
-		        (float)(3.14 * random.nextDouble())
+			samplingFrequency,
+			segmentLength,
+			StandardBookAtom.GABORWAVE_IDENTITY,
+			iteration,
+			(float)(100 * Math.abs(random.nextDouble())),
+			//(int) ( (segmentLength/2) * Math.abs( random.nextDouble() ) ),
+			2560/2-1,
+			//(int) (segmentLength * Math.abs( random.nextDouble() ) ),
+			2560-1,
+			(int)(segmentLength * Math.abs(random.nextDouble())),
+			(float)(100 * Math.abs(random.nextDouble())),
+			(float)(3.14 * random.nextDouble())
 		);
 
 		return atom;

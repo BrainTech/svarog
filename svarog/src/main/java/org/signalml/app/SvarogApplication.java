@@ -229,7 +229,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private static void _install_properties(String...args) {
 		Pattern p = Pattern.compile("-D([a-zA-Z0-9_.]+?)=(.+)");
 
-		for(String arg: args)
+		for (String arg: args)
 			if (arg.startsWith("-D")) {
 				Matcher m = p.matcher(arg);
 				if (!m.matches()) {
@@ -302,7 +302,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		try {
 			_run(cmdLineArgs);
-		} catch(Throwable e) {
+		} catch (Throwable e) {
 			logger.error("uncaught exception", e);
 
 			// also log directly to stderr in case of problems with logging
@@ -400,12 +400,12 @@ public class SvarogApplication implements java.lang.Runnable {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 
-						@Override
-						public void run() {
-							splashScreen = new SplashScreen();
-							splashScreen.setVisible(true);
-						}
-					});
+					@Override
+					public void run() {
+						splashScreen = new SplashScreen();
+						splashScreen.setVisible(true);
+					}
+				});
 			} catch (InterruptedException ex) {
 				logger.error("Failed to create splash screen", ex);
 				System.exit(1);
@@ -420,11 +420,11 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			SwingUtilities.invokeAndWait(new Runnable() {
 
-					@Override
-					public void run() {
-						createMainFrame();
-					}
-				});
+				@Override
+				public void run() {
+					createMainFrame();
+				}
+			});
 		} catch (InterruptedException ex) {
 			logger.error("Failed to create GUI", ex);
 			System.exit(1);
@@ -439,17 +439,17 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		SwingUtilities.invokeLater(new Runnable() {
 
-				@Override
-				public void run() {
-					viewerMainFrame.setVisible(true);
-					viewerMainFrame.bootstrap();
-					if (splashScreen != null) {
-						splashScreen.setVisible(false);
-						splashScreen.dispose();
-						splashScreen = null;
-					}
+			@Override
+			public void run() {
+				viewerMainFrame.setVisible(true);
+				viewerMainFrame.bootstrap();
+				if (splashScreen != null) {
+					splashScreen.setVisible(false);
+					splashScreen.dispose();
+					splashScreen = null;
 				}
-			});
+			}
+		});
 
 		logger.debug("SvarogApplication._run complete!");
 	}
@@ -460,11 +460,11 @@ public class SvarogApplication implements java.lang.Runnable {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 
-						@Override
-						public void run() {
-							locale = OptionPane.showLanguageOption();
-						}
-					});
+					@Override
+					public void run() {
+						locale = OptionPane.showLanguageOption();
+					}
+				});
 			} catch (InterruptedException ex) {
 				logger.error("Language choice error", ex);
 				System.exit(1);
@@ -484,11 +484,11 @@ public class SvarogApplication implements java.lang.Runnable {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
 
-						@Override
-						public void run() {
-							initialConfig = askForProfilePath(suggested);
-						}
-					});
+					@Override
+					public void run() {
+						initialConfig = askForProfilePath(suggested);
+					}
+				});
 			} catch (InterruptedException ex) {
 				logger.error("Profile choice error", ex);
 				System.exit(1);
@@ -638,25 +638,25 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(streamer,
-					     ApplicationConfiguration.class,
-					     ZoomSignalSettings.class,
-					     GeneralConfiguration.class,
-					     MainFrameConfiguration.class,
-					     SignalMLCodecConfiguration.class,
-					     SignalMLCodecDescriptor.class,
-					     MRUDConfiguration.class,
-					     MRUDEntry.class,
-					     SignalMLDescriptor.class,
-					     SignalMLMRUDEntry.class,
-					     RawSignalMRUDEntry.class,
-					     RawSignalDescriptor.class,
-					     ChannelFunction.class,
-					     MethodPresetManager.class,
-					     MP5Parameters.class,
-					     MP5Data.class,
-					     MP5ApplicationData.class,
-					     EvokedPotentialParameters.class
-					     );
+									 ApplicationConfiguration.class,
+									 ZoomSignalSettings.class,
+									 GeneralConfiguration.class,
+									 MainFrameConfiguration.class,
+									 SignalMLCodecConfiguration.class,
+									 SignalMLCodecDescriptor.class,
+									 MRUDConfiguration.class,
+									 MRUDEntry.class,
+									 SignalMLDescriptor.class,
+									 SignalMLMRUDEntry.class,
+									 RawSignalMRUDEntry.class,
+									 RawSignalDescriptor.class,
+									 ChannelFunction.class,
+									 MethodPresetManager.class,
+									 MP5Parameters.class,
+									 MP5Data.class,
+									 MP5ApplicationData.class,
+									 EvokedPotentialParameters.class
+									);
 
 		streamer.setMode(XStream.NO_REFERENCES);
 
@@ -670,8 +670,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		applicationConfig.setStreamer(streamer);
 		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
 		applicationConfig.maybeReadFromPersistence(
-				"Application config not found - will use defaults",
-				"Failed to read application configuration - will use defaults");
+			"Application config not found - will use defaults",
+			"Failed to read application configuration - will use defaults");
 		applicationConfig.applySystemSettings();
 
 		splash(_("Initializing codecs"), true);
@@ -738,7 +738,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		taskManager.setMethodManager(methodManager);
 
 		splash(_("Initializing presets"), true);
-		
+
 		eegSystemsPresetManager = new EegSystemsPresetManager();
 		eegSystemsPresetManager.setProfileDir(profileDir);
 
@@ -1147,7 +1147,7 @@ public class SvarogApplication implements java.lang.Runnable {
 						presetManager.writeToPersistence(null);
 					} catch (Exception ex) {
 						logger.error("Failed to write preset manager for method ["
-							     + method.getName() + "]", ex);
+									 + method.getName() + "]", ex);
 					}
 				}
 			}

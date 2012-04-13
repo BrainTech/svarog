@@ -158,10 +158,10 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 		URLClassLoader loader = new URLClassLoader(classPath, parentClassLoader);
 
 		ClassLoader cl = new JavaSourceClassLoader(
-		        loader,  						   // parentClassLoader
-		        sourcePath,         			   // optionalSourcePath
-		        (String) null,                     // optionalCharacterEncoding
-		        DebuggingInformation.NONE          // debuggingInformation
+			loader,  						   // parentClassLoader
+			sourcePath,         			   // optionalSourcePath
+			(String) null,                     // optionalCharacterEncoding
+			DebuggingInformation.NONE          // debuggingInformation
 		);
 
 		Class<?> clazz = null;

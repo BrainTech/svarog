@@ -28,7 +28,7 @@ import org.signalml.plugin.export.SignalMLException;
  * <li>the {@link #getChannelCountField() number of channels},</li>
  * <li>the {@link #getCalibrationField() value of calibration}</li></ul>
  * and if these fields should be editable, to these values them.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RequiredSignalParametersPanel extends JPanel {
@@ -71,8 +71,8 @@ public class RequiredSignalParametersPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(_("Required signal parameters")),
-		        new EmptyBorder(2,2,2,2)
+			new TitledBorder(_("Required signal parameters")),
+			new EmptyBorder(2,2,2,2)
 		);
 
 		setBorder(cb);
@@ -88,15 +88,15 @@ public class RequiredSignalParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(samplingFrequencyLabel)
-		        .addComponent(channelCountLabel)
+			layout.createParallelGroup()
+			.addComponent(samplingFrequencyLabel)
+			.addComponent(channelCountLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getSamplingFrequencyField())
-		        .addComponent(getChannelCountField())
+			layout.createParallelGroup()
+			.addComponent(getSamplingFrequencyField())
+			.addComponent(getChannelCountField())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -104,16 +104,16 @@ public class RequiredSignalParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(samplingFrequencyLabel)
-				.addComponent(getSamplingFrequencyField())
-			);
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(samplingFrequencyLabel)
+			.addComponent(getSamplingFrequencyField())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(channelCountLabel)
-				.addComponent(getChannelCountField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(channelCountLabel)
+			.addComponent(getChannelCountField())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

@@ -13,8 +13,8 @@ public class NewStagerMgrData extends PluginMgrData {
 	public final NewStagerFixedParameters fixedParameters;
 
 	public NewStagerMgrData(NewStagerData stagerData,
-				NewStagerConstants constants, NewStagerParameters parameters,
-				NewStagerFixedParameters fixedParameters) {
+							NewStagerConstants constants, NewStagerParameters parameters,
+							NewStagerFixedParameters fixedParameters) {
 		this.stagerData = stagerData;
 		this.constants = constants;
 		this.parameters = parameters;

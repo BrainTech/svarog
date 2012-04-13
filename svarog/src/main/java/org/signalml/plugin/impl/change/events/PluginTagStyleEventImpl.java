@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -17,16 +17,16 @@ public class PluginTagStyleEventImpl implements PluginTagStyleEvent {
 	 * the tag style associated with this event
 	 */
 	protected ExportedTagStyle style;
-	
+
 	/**
 	 * Constructor.
 	 * @param style the {@link ExportedTagStyle tag style} to be associated
 	 * with this event
 	 */
-	public PluginTagStyleEventImpl(ExportedTagStyle style){
+	public PluginTagStyleEventImpl(ExportedTagStyle style) {
 		this.style = style;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.change.TagStyleEvent#getTagStyle()
 	 */

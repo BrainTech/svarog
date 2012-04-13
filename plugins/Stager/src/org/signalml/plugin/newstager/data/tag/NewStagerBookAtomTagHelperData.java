@@ -12,8 +12,8 @@ public class NewStagerBookAtomTagHelperData {
 	public final NewStagerSleepStats signalStatCoeffs;
 
 	public NewStagerBookAtomTagHelperData(NewStagerBookInfo bookInfo,
-					      NewStagerBookAtomSampleHelperSet helperSet, double muscle[],
-					      NewStagerSleepStats signalStatCoeffs) {
+										  NewStagerBookAtomSampleHelperSet helperSet, double muscle[],
+										  NewStagerSleepStats signalStatCoeffs) {
 		this.bookInfo = bookInfo;
 		this.helperSet = helperSet;
 		this.muscle = muscle;

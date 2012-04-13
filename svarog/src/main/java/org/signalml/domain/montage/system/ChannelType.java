@@ -32,7 +32,7 @@ public enum ChannelType implements MessageSourceResolvable {
 
 	@Override
 	public String[] getCodes() {
-		return new String[]{"channelType." + this.toString()};
+		return new String[] {"channelType." + this.toString()};
 	}
 
 	@Override

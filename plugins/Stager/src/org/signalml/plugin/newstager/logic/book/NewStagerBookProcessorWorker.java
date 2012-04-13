@@ -10,7 +10,7 @@ import org.signalml.plugin.newstager.data.tag.NewStagerBookProcessorData;
 public class NewStagerBookProcessorWorker implements Runnable {
 
 	protected static final Logger logger = Logger
-					       .getLogger(NewStagerBookProcessorWorker.class);
+										   .getLogger(NewStagerBookProcessorWorker.class);
 
 	private final NewStagerBookProcessorWorkerData data;
 
@@ -27,10 +27,10 @@ public class NewStagerBookProcessorWorker implements Runnable {
 			NewStagerBookInfo bookInfo = provider.getBookInfo();
 			NewStagerSingleBookProcessor processor = new NewStagerSingleBookProcessor(
 				new NewStagerBookProcessorData(this.data.constants,
-							       this.data.channelMap,
-							       this.data.parameters, this.data.fixedParameters,
-							       this.data.muscle, this.data.signalStatCoeffs,
-							       bookInfo));
+											   this.data.channelMap,
+											   this.data.parameters, this.data.fixedParameters,
+											   this.data.muscle, this.data.signalStatCoeffs,
+											   bookInfo));
 			while (true) {
 				sample = provider.getNextBookAtoms();
 				if (sample == null) {

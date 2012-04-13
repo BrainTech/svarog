@@ -16,26 +16,26 @@ import java.beans.PropertyChangeSupport;
  */
 public abstract class AbstractMultichannelSampleSource implements MultichannelSampleSource {
 
-        /**
-         * A {@link PropertyChangeSupport support} for changes associated with
-         * this montage.
-         */
+	/**
+	 * A {@link PropertyChangeSupport support} for changes associated with
+	 * this montage.
+	 */
 	protected PropertyChangeSupport pcSupport;
 
-        /**
-         * Default constructor. Creates an empty source with an empty
-         * {@link PropertyChangeSupport change support}.
-         */
+	/**
+	 * Default constructor. Creates an empty source with an empty
+	 * {@link PropertyChangeSupport change support}.
+	 */
 	public AbstractMultichannelSampleSource() {
 		pcSupport = new PropertyChangeSupport(this);
 	}
 
-        @Override
+	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		pcSupport.addPropertyChangeListener(listener);
 	}
 
-        @Override
+	@Override
 	public void removePropertyChangeListener(PropertyChangeListener listener) {
 		pcSupport.removePropertyChangeListener(listener);
 	}

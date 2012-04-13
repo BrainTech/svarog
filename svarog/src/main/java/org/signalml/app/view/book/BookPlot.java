@@ -446,7 +446,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		if (fullReconstructionVisible) {
 
 			fullReconstructionRectangle = new Rectangle();
-			
+
 			fullReconstructionRectangle.x = insets.left + reservedLeftWidth;
 			fullReconstructionRectangle.width = availableWidth;
 
@@ -1023,10 +1023,10 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 
-	
-		if ( signalAntialiased ) {	   
+
+		if (signalAntialiased) {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-		}				
+		}
 
 		int level = area.y + area.height / 2;
 
@@ -1179,16 +1179,16 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		int imgY = mapToRepaint.y - mapRectangle.y;
 
 		g.drawImage(
-		        cachedImage,
-		        mapToRepaint.x,
-		        mapToRepaint.y,
-		        mapToRepaint.x+mapToRepaint.width,
-		        mapToRepaint.y+mapToRepaint.height,
-		        imgX,
-		        imgY,
-		        imgX+mapToRepaint.width,
-		        imgY+mapToRepaint.height,
-		        null
+			cachedImage,
+			mapToRepaint.x,
+			mapToRepaint.y,
+			mapToRepaint.x+mapToRepaint.width,
+			mapToRepaint.y+mapToRepaint.height,
+			imgX,
+			imgY,
+			imgX+mapToRepaint.width,
+			imgY+mapToRepaint.height,
+			null
 		);
 
 		Rectangle markCaptureRectangle = new Rectangle(mapToRepaint);

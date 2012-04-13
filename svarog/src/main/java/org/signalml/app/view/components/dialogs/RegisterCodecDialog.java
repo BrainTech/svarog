@@ -51,7 +51,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	 * the {@link SignalMLCodecManager manager} of {@link SignalMLCodec codecs}
 	 */
 	private SignalMLCodecManager codecManager;
-	
+
 	/**
 	 * the {@link SignalMLCodec codec} read in this dialog
 	 */
@@ -253,7 +253,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {

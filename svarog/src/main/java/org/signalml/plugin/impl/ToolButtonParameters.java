@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl;
 
@@ -29,7 +29,7 @@ public class ToolButtonParameters {
 	 * the listener for mouse events
 	 */
 	private SignalToolButtonListener listener;
-	
+
 	/**
 	 * Constructor. Sets parameters.
 	 * @param toolTipText the text used in tooltip

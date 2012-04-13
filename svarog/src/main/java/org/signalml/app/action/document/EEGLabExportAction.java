@@ -28,12 +28,12 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 	/**
 	 * Logger to save history of execution at.
 	 */
-        protected static final Logger logger = Logger.getLogger(CheckSignalAction.class);
+	protected static final Logger logger = Logger.getLogger(CheckSignalAction.class);
 
-        /**
-	 * The dialog which is shown after evoking this action.
+	/**
+	* The dialog which is shown after evoking this action.
 	 */
-        private EEGLabExportDialog eeglabExportDialog;
+	private EEGLabExportDialog eeglabExportDialog;
 
 	/**
 	 * Constructor.
@@ -41,9 +41,9 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 	 * @param signalDocumentFocusSelector a {@link SignalDocumentFocusSelector} used to detect
 	 * which document is active.
 	 */
-        public EEGLabExportAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public EEGLabExportAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super(signalDocumentFocusSelector);
+		super(signalDocumentFocusSelector);
 		setText(_("Export to EEGLab..."));
 		setToolTip(_("Export signal in EEGLab format"));
 		setMnemonic(KeyEvent.VK_E);
@@ -54,12 +54,12 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 	 *
 	 * @param ev an event describing a change
 	 */
-        @Override
-        public void actionPerformed(ActionEvent e) {
+	@Override
+	public void actionPerformed(ActionEvent e) {
 
-                logger.debug("EEGLab Export");
+		logger.debug("EEGLab Export");
 
-                SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
@@ -67,16 +67,16 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		MontageDescriptor descriptor = new MontageDescriptor(signalDocument.getMontage(), signalDocument);
 
-                boolean ok = eeglabExportDialog.showDialog(descriptor, true);
-                if (!ok) {
-                        return;
-                }
+		boolean ok = eeglabExportDialog.showDialog(descriptor, true);
+		if (!ok) {
+			return;
+		}
 
-        }
+	}
 
-        /**
-         * Action is enabled only if an offline document is open.
-         */
+	/**
+	 * Action is enabled only if an offline document is open.
+	 */
 	@Override
 	public void setEnabledAsNeeded() {
 		SignalDocumentFocusSelector x = getActionFocusSelector();
@@ -86,26 +86,26 @@ public class EEGLabExportAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 	}
 
-        /**
-         * Gets the {@link #eeglabExportDialog}.
-         *
-         * @return the {@link #eeglabExportDialog}
-         */
-        public EEGLabExportDialog getEEGLabExportDialog() {
+	/**
+	 * Gets the {@link #eeglabExportDialog}.
+	 *
+	 * @return the {@link #eeglabExportDialog}
+	 */
+	public EEGLabExportDialog getEEGLabExportDialog() {
 
-                return eeglabExportDialog;
-        }
+		return eeglabExportDialog;
+	}
 
-        /**
-         * Sets the {@link #eeglabExportDialog}
-         *
-         * @param eeglabExportDialog an {@link EEGLabExportDialog} object
-         */
-        public void setEEGLabExportDialog(EEGLabExportDialog eeglabExportDialog) {
+	/**
+	 * Sets the {@link #eeglabExportDialog}
+	 *
+	 * @param eeglabExportDialog an {@link EEGLabExportDialog} object
+	 */
+	public void setEEGLabExportDialog(EEGLabExportDialog eeglabExportDialog) {
 
-                if(eeglabExportDialog == null) {
+		if (eeglabExportDialog == null) {
 			throw new NullPointerException();
 		}
-                this.eeglabExportDialog = eeglabExportDialog;
-        }
+		this.eeglabExportDialog = eeglabExportDialog;
+	}
 }

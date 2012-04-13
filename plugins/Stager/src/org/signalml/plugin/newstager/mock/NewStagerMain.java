@@ -189,17 +189,17 @@ public class NewStagerMain {
 
 			mgr.compute(
 				new NewStagerMgrData(stagerData, new NewStagerConstants(b
-						     .getSamplingFrequency(), (int) b.getCalibration(),
-						     NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
-						     NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
-						     NewStagerConstants.DEFAULT_AMPLITUDE_A,
-						     NewStagerConstants.DEFAULT_AMPLITUDE_B,
-						     NewStagerConstants.DEFAULT_ALPHA_OFFSET,
-						     NewStagerConstants.DEFAULT_DELTA_OFFSET,
-						     NewStagerConstants.DEFAULT_SPINDLE_OFFSET),
-						     new NewStagerParameters(bookFilePath, b.getSegmentCount(),
-								     true, true, true, thresholds),
-						     new NewStagerFixedParameters(1.0d, 0.75d, 0.5d, -0.85d, -0.7d)),
+									 .getSamplingFrequency(), (int) b.getCalibration(),
+									 NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
+									 NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
+									 NewStagerConstants.DEFAULT_AMPLITUDE_A,
+									 NewStagerConstants.DEFAULT_AMPLITUDE_B,
+									 NewStagerConstants.DEFAULT_ALPHA_OFFSET,
+									 NewStagerConstants.DEFAULT_DELTA_OFFSET,
+									 NewStagerConstants.DEFAULT_SPINDLE_OFFSET),
+									 new NewStagerParameters(bookFilePath, b.getSegmentCount(),
+											 true, true, true, thresholds),
+									 new NewStagerFixedParameters(1.0d, 0.75d, 0.5d, -0.85d, -0.7d)),
 				new Tracker());
 
 		} catch (Exception e) {

@@ -62,8 +62,8 @@ public class NewStagerSignalStatsStep extends
 		NewStagerParameters parameters = this.computeNewParamters();
 
 		return new NewStagerSignalStatsResult(
-			       this.getSignalStatCoeffs(parameters), parameters,
-			       this.statResult.muscle, this.statResult.montage);
+				   this.getSignalStatCoeffs(parameters), parameters,
+				   this.statResult.muscle, this.statResult.montage);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class NewStagerSignalStatsStep extends
 
 	private void createWorkers() {
 		MultichannelSampleSource source = this.data.stagerData
-						  .getSampleSource();
+										  .getSampleSource();
 
 		final BlockingQueue<double[][]> freeBufferQueue = new ArrayBlockingQueue<double[][]>(
 			BUFFER_QUEUE_SIZE);
@@ -162,8 +162,8 @@ public class NewStagerSignalStatsStep extends
 			new NewStagerSignalReaderWorkerData(source, synchronizer));
 		Runnable statWorker = new NewStagerStatWorker(
 			new NewStagerStatWorkerData(synchronizer, completion,
-						    this.data.constants, this.data.parameters,
-						    this.data.stagerData.getChannelMap()));
+										this.data.constants, this.data.parameters,
+										this.data.stagerData.getChannelMap()));
 
 		this.workers.add(readerWorker);
 		this.workers.add(statWorker);
@@ -183,25 +183,25 @@ public class NewStagerSignalStatsStep extends
 		NewStagerConstants constants = this.data.constants;
 
 		double coeff = constants.amplitudeA * this.statResult.deviation
-			       + constants.amplitudeB;
+					   + constants.amplitudeB;
 
 		return new NewStagerParameters(oldParameters.bookFilePath,
-					       oldParameters.segmentCount,
-					       oldParameters.analyseEMGChannelFlag,
-					       oldParameters.analyseEEGChannelsFlag,
-					       oldParameters.primaryHypnogramFlag,
-					       new NewStagerParameterThresholds(
-						       this.computeMontageToneEMGThreshold(),
-						       thresholds.montageEEGThreshold,
-						       thresholds.montageEMGThreshold,
-						       thresholds.montageToneEMGThreshold,
-						       this.convertThreshold(thresholds.alphaThreshold, coeff,
-								       constants.alphaOffset), this.convertThreshold(
-										       thresholds.deltaThreshold, coeff, constants.deltaOffset),
-						       this.convertThreshold(thresholds.spindleThreshold,
-								       coeff, constants.spindleOffset),
-						       thresholds.thetaThreshold,
-						       thresholds.kCThreshold));
+									   oldParameters.segmentCount,
+									   oldParameters.analyseEMGChannelFlag,
+									   oldParameters.analyseEEGChannelsFlag,
+									   oldParameters.primaryHypnogramFlag,
+									   new NewStagerParameterThresholds(
+										   this.computeMontageToneEMGThreshold(),
+										   thresholds.montageEEGThreshold,
+										   thresholds.montageEMGThreshold,
+										   thresholds.montageToneEMGThreshold,
+										   this.convertThreshold(thresholds.alphaThreshold, coeff,
+												   constants.alphaOffset), this.convertThreshold(
+											   thresholds.deltaThreshold, coeff, constants.deltaOffset),
+										   this.convertThreshold(thresholds.spindleThreshold,
+												   coeff, constants.spindleOffset),
+										   thresholds.thetaThreshold,
+										   thresholds.kCThreshold));
 	}
 
 	private NewStagerFASPThreshold convertThreshold(
@@ -209,10 +209,10 @@ public class NewStagerSignalStatsStep extends
 		if (threshold.amplitude.getMin() == MinMaxRange.AUTO) {
 			MinMaxRange amplitude = threshold.amplitude;
 			return new NewStagerFASPThreshold(new MinMaxRange(
-					amplitude.getUnlimitedValue(), coeff - offset,
-					amplitude.getMax(), amplitude.isMinUnlimited(),
-					amplitude.isMaxUnlimited()), threshold.frequency,
-							  threshold.scale, threshold.phase);
+												  amplitude.getUnlimitedValue(), coeff - offset,
+												  amplitude.getMax(), amplitude.isMinUnlimited(),
+												  amplitude.isMaxUnlimited()), threshold.frequency,
+											  threshold.scale, threshold.phase);
 		}
 		return threshold;
 	}
@@ -227,7 +227,7 @@ public class NewStagerSignalStatsStep extends
 			}
 			mean /= t.length;
 			return (mean > this.data.constants.muscleThreshold) ? this.data.constants.muscleThreshold
-			       : mean / this.data.constants.muscleThresholdRate;
+				   : mean / this.data.constants.muscleThresholdRate;
 		} else {
 			return oldThreshold;
 		}
@@ -237,10 +237,10 @@ public class NewStagerSignalStatsStep extends
 		NewStagerParameters parameters) {
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		return new NewStagerSleepStats(
-			       thresholds.alphaThreshold.amplitude.getMin(),
-			       thresholds.deltaThreshold.amplitude.getMin(),
-			       thresholds.spindleThreshold.amplitude.getMin(),
-			       thresholds.toneEMG);
+				   thresholds.alphaThreshold.amplitude.getMin(),
+				   thresholds.deltaThreshold.amplitude.getMin(),
+				   thresholds.spindleThreshold.amplitude.getMin(),
+				   thresholds.toneEMG);
 	}
 
 }

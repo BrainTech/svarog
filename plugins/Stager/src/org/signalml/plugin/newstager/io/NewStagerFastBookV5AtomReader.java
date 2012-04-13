@@ -25,7 +25,7 @@ import pl.edu.fuw.MP.Core.FormatComponentV5;
 public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 
 	protected static final Logger logger = Logger
-					       .getLogger(NewStagerFastBookV5AtomReader.class);
+										   .getLogger(NewStagerFastBookV5AtomReader.class);
 
 	private static String bookFilePath = "E:/book_20sec_a1.3_smp.b";
 
@@ -69,7 +69,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 
 			try {
 				this.fileBuffer = channel.map(MapMode.READ_ONLY, 0,
-							      channel.size());
+											  channel.size());
 
 				this.skipMagicAndComment();
 				this.readFileHeader();
@@ -100,8 +100,8 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 		}
 
 		return new NewStagerBookData(new NewStagerBookInfo(
-						     this.offsetDimension, this.signalInfo.samplingFrequency,
-						     this.signalInfo.pointsPerMicrovolt), atoms);
+										 this.offsetDimension, this.signalInfo.samplingFrequency,
+										 this.signalInfo.pointsPerMicrovolt), atoms);
 	}
 
 	private void readSegments() throws NewStagerBookReaderException {
@@ -141,7 +141,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 			switch (this.lastCode) {
 			case FormatComponentV5.SIGNAL_SEGMENT_IDENTITY:
 				this.fileBuffer.position(this.fileBuffer.position()
-							 + segmentSize);
+										 + segmentSize);
 				break;
 			case FormatComponentV5.ATOMS_SEGMENT_IDENTITY:
 				this.readSingleAtomSegment(offsetNumber, segmentSize);
@@ -149,7 +149,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 			default:
 				logger.warn("Unknown segment code: " + this.lastCode);
 				this.fileBuffer.position(this.fileBuffer.position()
-							 + segmentSize);
+										 + segmentSize);
 			}
 		}
 
@@ -188,7 +188,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 			channelAtoms.add(null);
 		}
 		channelAtoms.set(offsetNumber - 1,
-				 atoms.toArray(new NewStagerBookAtom[atoms.size()]));
+						 atoms.toArray(new NewStagerBookAtom[atoms.size()]));
 	}
 
 	private NewStagerBookAtom readSingleAtom()
@@ -201,27 +201,27 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 		case StandardBookAtom.GABORWAVE_IDENTITY:
 			AssertSize(atomSize, 6 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateGaborWave(
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
 		case StandardBookAtom.DIRACDELTA_IDENTITY:
 			AssertSize(atomSize, 3 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateDiracDelta(
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
-				       this.fileBuffer.getFloat());
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
+					   this.fileBuffer.getFloat());
 		case StandardBookAtom.GAUSSFUNCTION_IDENTITY:
 			AssertSize(atomSize, 4 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateGaussFunction(
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
 		case StandardBookAtom.SINCOSWAVE_IDENTITY:
 			AssertSize(atomSize, 4 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateSinCosWave(
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
-				       this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
+					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
 		default:
 			throw new NewStagerBookReaderException("Unknown atom code: "
-							       + this.lastCode);
+												   + this.lastCode);
 		}
 	}
 
@@ -262,7 +262,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 				// skip; //$FALL-THROUGH$
 			default:
 				this.fileBuffer.position(this.fileBuffer.position()
-							 + sizeOfField);
+										 + sizeOfField);
 			}
 		}
 	}
@@ -272,7 +272,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 		this.readSegmentCode();
 		if (this.lastCode == FormatComponentV5.COMMENT_SEGMENT_IDENTITY) {
 			this.fileBuffer.position(this.fileBuffer.getInt()
-						 + this.fileBuffer.position());
+									 + this.fileBuffer.position());
 		}
 	}
 
@@ -284,7 +284,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 	throws NewStagerBookReaderException {
 		if (size != desiredSize) {
 			throw new NewStagerBookReaderException("Bad field size: " + size
-							       + " expected: " + desiredSize);
+												   + " expected: " + desiredSize);
 		}
 	}
 

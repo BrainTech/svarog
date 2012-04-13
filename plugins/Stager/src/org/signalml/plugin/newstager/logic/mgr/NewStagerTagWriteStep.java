@@ -87,39 +87,39 @@ public class NewStagerTagWriteStep extends
 
 		if (this.data.parameters.primaryHypnogramFlag) {
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_ALPHA,
-					 EnumSet.of(NewStagerTagCollectionType.HYPNO_ALPHA), tagMap);
+							 EnumSet.of(NewStagerTagCollectionType.HYPNO_ALPHA), tagMap);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_DELTA,
-					 EnumSet.of(NewStagerTagCollectionType.HYPNO_DELTA), tagMap);
+							 EnumSet.of(NewStagerTagCollectionType.HYPNO_DELTA), tagMap);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_SPINDLE,
-					 EnumSet.of(NewStagerTagCollectionType.HYPNO_SPINDLE),
-					 tagMap);
+							 EnumSet.of(NewStagerTagCollectionType.HYPNO_SPINDLE),
+							 tagMap);
 		}
 
 		writer.writeTags(NewStagerTagCollectionType.SLEEP_PAGES,
-				 this.getSleepStages(), tagMap);
+						 this.getSleepStages(), tagMap);
 
 
 		writer.writeTags(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_PAGES,
-				 this.getConsolidatedSleepStages(), tagMap);
+						 this.getConsolidatedSleepStages(), tagMap);
 	}
 
 	private EnumSet<NewStagerTagCollectionType> getSleepStages() {
 		return EnumSet.of(NewStagerTagCollectionType.SLEEP_STAGE_1,
-				  NewStagerTagCollectionType.SLEEP_STAGE_2,
-				  NewStagerTagCollectionType.SLEEP_STAGE_3,
-				  NewStagerTagCollectionType.SLEEP_STAGE_4,
-				  NewStagerTagCollectionType.SLEEP_STAGE_R,
-				  NewStagerTagCollectionType.SLEEP_STAGE_W);
+						  NewStagerTagCollectionType.SLEEP_STAGE_2,
+						  NewStagerTagCollectionType.SLEEP_STAGE_3,
+						  NewStagerTagCollectionType.SLEEP_STAGE_4,
+						  NewStagerTagCollectionType.SLEEP_STAGE_R,
+						  NewStagerTagCollectionType.SLEEP_STAGE_W);
 	}
 
 	private EnumSet<NewStagerTagCollectionType> getConsolidatedSleepStages() {
 		return EnumSet.of(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_1,
-				  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_2,
-				  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_3,
-				  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4,
-				  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_R,
-				  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_W,
-				  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M);
+						  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_2,
+						  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_3,
+						  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4,
+						  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_R,
+						  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_W,
+						  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M);
 	}
 
 	private Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> mergeTags(
@@ -186,7 +186,7 @@ public class NewStagerTagWriteStep extends
 
 		NewStagerBookAtomTagCreator tagCreator = new NewStagerBookAtomTagCreator(
 			new NewStagerBookAtomTagCreatorData(this.data.constants,
-					bookInfo));
+												bookInfo));
 
 
 		Iterator<IPluginTagDef> it = allSleepPageTags.iterator();
@@ -248,7 +248,7 @@ public class NewStagerTagWriteStep extends
 				}
 
 				map.get(tagTypeToCreate).add(tagCreator.createPageTag(tag.getOffset()
-							     / tag.getLength()));
+											 / tag.getLength()));
 			}
 
 			prevKey = key;

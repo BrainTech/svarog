@@ -42,7 +42,7 @@ public class TagStyleTableCellRenderer extends DefaultTableCellRenderer {
 
 	}
 
-	
+
 
 	public TagIconProducer getTagIconProducer() {
 		return tagIconProducer;

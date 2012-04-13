@@ -90,11 +90,11 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * the signal should be displayed by default
 	 */
 	private SignalViewingConfigPanel signalViewingConfigPanel;
-        /**
-         * the {@link MonitorConfigPanel} which allows to configurate
-         * signal recording options
-         */
-        private MonitorConfigPanel monitorConfigPanel;
+	/**
+	 * the {@link MonitorConfigPanel} which allows to configurate
+	 * signal recording options
+	 */
+	private MonitorConfigPanel monitorConfigPanel;
 	/**
 	 * the {@link TaggingConfigPanel panel} with options for {@link Tag tags}
 	 */
@@ -224,8 +224,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * the signal should be displayed by default,</li>
 	 * <li>the {@link TaggingConfigPanel panel} with options for {@link Tag
 	 * tags},</li>
-         * <li>the {@link MonitorConfigPanel} with options for
-         * signal recording,</li>
+	     * <li>the {@link MonitorConfigPanel} with options for
+	     * signal recording,</li>
 	 * <li>the {@link MiscellaneousConfigPanel panel} with various "other"
 	 * options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel panel} which allows to select
@@ -305,7 +305,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * <ul>
 	 * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
-         * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
+	     * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
 	 * <li>the {@link MonitorConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) tagging configuration panel},</li>
@@ -332,7 +332,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		taggingConfigPanel.fillPanelFromModel(config);
 		miscellaneousConfigPanel.fillPanelFromModel(config);
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
-                monitorConfigPanel.fillPanelFromModel(config);
+		monitorConfigPanel.fillPanelFromModel(config);
 	}
 
 	/**
@@ -341,7 +341,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * <ul>
 	 * <li>the {@link SignalViewingConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
-         * <li>the {@link MonitorConfigPanel#fillModelFromPanel(
+	     * <li>the {@link MonitorConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
 	 * <li>the {@link TaggingConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) tagging configuration panel},</li>
@@ -361,7 +361,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		taggingConfigPanel.fillModelFromPanel(config);
 		miscellaneousConfigPanel.fillModelFromPanel(config);
 		signalZoomSettingsPanel.fillModelFromPanel(config.getZoomSignalSettings());
-                monitorConfigPanel.fillModelFromPanel(config);
+		monitorConfigPanel.fillModelFromPanel(config);
 
 		config.applySystemSettings();
 

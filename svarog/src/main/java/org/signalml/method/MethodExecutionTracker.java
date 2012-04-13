@@ -14,14 +14,14 @@ public interface MethodExecutionTracker {
 
 
 	/**
-         *  Returns true if the controlling code requests the method to abort computations.
+	     *  Returns true if the controlling code requests the method to abort computations.
 	 *
 	 * @return true if an abortion request is posted
 	 */
 	boolean isRequestingAbort();
 
 	/**
-         *  Returns true if the controlling code requests the method to suspend computations.
+	     *  Returns true if the controlling code requests the method to suspend computations.
 	 *
 	 * @return true if an suspention request is posted
 	 */
@@ -46,7 +46,7 @@ public interface MethodExecutionTracker {
 	String getMessage();
 
 	/**
-         *  Returns the limits (maximum values) for the tickers associated with this task. For methods which
+	     *  Returns the limits (maximum values) for the tickers associated with this task. For methods which
 	 *  aren't trackable an empty array should be returned. For trackable methods the length of the array
 	 *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
 	 *  method.
@@ -56,7 +56,7 @@ public interface MethodExecutionTracker {
 	int[] getTickerLimits();
 
 	/**
-         *  Sets the limits (maximum values) for the tickers associated with this task. The method
+	     *  Sets the limits (maximum values) for the tickers associated with this task. The method
 	 *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
 	 *  the given array is longer than the ticker count for the method.
 	 *
@@ -66,7 +66,7 @@ public interface MethodExecutionTracker {
 
 
 	/**
-         *  Sets a single ticker limit. See {@link #setTickerLimits(int[])}.
+	     *  Sets a single ticker limit. See {@link #setTickerLimits(int[])}.
 	 *
 	 * @param index the index of the ticker
 	 * @param limit the new limit
@@ -74,7 +74,7 @@ public interface MethodExecutionTracker {
 	void setTickerLimit(int index, int limit);
 
 	/**
-         *  Returns the current values for the tickers associated with this task. For methods which
+	     *  Returns the current values for the tickers associated with this task. For methods which
 	 *  aren't trackable an empty array should be returned. For trackable methods the length of the array
 	 *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
 	 *  method.
@@ -84,12 +84,12 @@ public interface MethodExecutionTracker {
 	int[] getTickers();
 
 	/**
-         *  Resets all ticker values to 0.
+	     *  Resets all ticker values to 0.
 	 */
 	void resetTickers();
 
 	/**
-         *  Sets the current values for the tickers associated with this task. The method
+	     *  Sets the current values for the tickers associated with this task. The method
 	 *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
 	 *  the given array is longer than the ticker count for the method.
 	 *
@@ -98,7 +98,7 @@ public interface MethodExecutionTracker {
 	void setTickers(int[] current);
 
 	/**
-         *  Sets a single ticker value. See {@link #setTickers(int[])}.
+	     *  Sets a single ticker value. See {@link #setTickers(int[])}.
 	 *
 	 * @param index the index of the ticker
 	 * @param value the new value
@@ -106,14 +106,14 @@ public interface MethodExecutionTracker {
 	void setTicker(int index, int value);
 
 	/**
-         *  Advances the given ticker by one.
+	     *  Advances the given ticker by one.
 	 *
 	 * @param index the index of the ticker
 	 */
 	void tick(int index);
 
 	/**
-         *  Advances the given ticker by the given value
+	     *  Advances the given ticker by the given value
 	 *
 	 * @param index the index of the ticker
 	 * @param step the increase
@@ -121,7 +121,7 @@ public interface MethodExecutionTracker {
 	void tick(int index, int step);
 
 	/**
-         *  Should return the expected number of seconds until given ticker is complete. This
+	     *  Should return the expected number of seconds until given ticker is complete. This
 	 *  should return <code>null</code> if the expected time is unknown or uncertain.
 	 *
 	 * @param index the index of the ticker

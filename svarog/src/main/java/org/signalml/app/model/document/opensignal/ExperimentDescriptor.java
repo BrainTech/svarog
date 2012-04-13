@@ -20,20 +20,20 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private String path;
 	private Amplifier amplifier;
 	private ExperimentStatus status;
-	
+
 	private String experimentIPAddress;
 	private int experimentPort;
-	
+
 	private String multiplexerAddress;
 	private int multiplexerPort;
 	private JmxClient jmxClient;
-	
+
 	private Float backupFrequency;
 	private MonitorRecordingDescriptor monitorRecordingDescriptor = new MonitorRecordingDescriptor();
-	
+
 	private StyledTagSet tagStyles;
 	private String peerId;
-	
+
 	public ExperimentDescriptor(ExperimentDescriptor other) {
 		this();
 
@@ -49,9 +49,9 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
 		//other fields should be filled after sending "join_experiment" request
 	}
-	
+
 	public ExperimentDescriptor() {
-        setBackupFrequency(10.0F);
+		setBackupFrequency(10.0F);
 	}
 
 	public String getName() {
@@ -150,12 +150,12 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	public void setPeerId(String peerId) {
 		this.peerId = peerId;
 	}
-	
+
 	@Override
 	public String[] getChannelLabels() {
 		return amplifier.getSelectedChannelsLabels();
 	}
-	
+
 	/**
 	 * Multiplexer client to get signal from it.
 	 * może nie powinno tego tu być, tylko gdzie indziej.

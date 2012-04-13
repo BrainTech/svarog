@@ -16,13 +16,19 @@ import org.signalml.app.view.I18nMessage;
 public enum WignerMapScaleType implements I18nMessage {
 
 	NORMAL {
-		public String i18n() { return _("Linear"); }
+		public String i18n() {
+			return _("Linear");
+		}
 	},
 	LOG {
-		public String i18n() { return _("Logarithmic"); }
+		public String i18n() {
+			return _("Logarithmic");
+		}
 	},
 	SQRT {
-		public String i18n() { return _("Square root"); }
+		public String i18n() {
+			return _("Square root");
+		}
 	},
 	;
 

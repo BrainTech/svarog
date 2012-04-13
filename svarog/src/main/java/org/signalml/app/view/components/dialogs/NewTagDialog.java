@@ -126,7 +126,7 @@ public class NewTagDialog extends AbstractDialog  {
 	 * <li>sets in the {@link NewTagPanel#getFileChooser() file chooser} the
 	 * selected file or if there is none the path,</li>
 	 * <li>{@link PagingParametersPanel#fillPanelFromModel(
-	 * org.signalml.app.model.PagingParameterDescriptor) fills} the {@link 
+	 * org.signalml.app.model.PagingParameterDescriptor) fills} the {@link
 	 * PagingParametersPanel}.</li></ul>
 	 */
 	@Override
@@ -149,14 +149,14 @@ public class NewTagDialog extends AbstractDialog  {
 		} else {
 			throw new SanityCheckException("Unknown mode [" + mode + "]");
 		}
-		
+
 		newTagPanel.getPresetRadio().setEnabled(styledTagSetPresetManager.getPresetCount() > 0);
 
 		File file = descriptor.getFile();
 		if (file != null && file.exists()) {
 			newTagPanel.getFileChooser().setSelectedFile(file);
 		} else {
-			String lastPath = applicationConfig.getLastFileChooserPath(); 
+			String lastPath = applicationConfig.getLastFileChooserPath();
 			newTagPanel.getFileChooser().setCurrentDirectory(new File(lastPath));
 		}
 

@@ -336,11 +336,11 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	}
 
 	/**
-         * Sets all parameters of this filter to mathch the values of the
-         * parameters of the given filter.
-         * @param filter a filter which parameters are to be copied
-         * to this filter
-         */
+	     * Sets all parameters of this filter to mathch the values of the
+	     * parameters of the given filter.
+	     * @param filter a filter which parameters are to be copied
+	     * to this filter
+	     */
 	public void copyFrom(TimeDomainSampleFilter filter) {
 
 		filterType = filter.filterType;
@@ -371,9 +371,9 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 		TimeDomainSampleFilter tdf = (TimeDomainSampleFilter)o;
 		if (tdf.filterType.equals(filterType) && tdf.approximationFunctionType.equals(approximationFunctionType) &&
-		                Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
-		                Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
-		                passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
+				Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
+				Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
+				passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
 			return true;
 		return false;
 

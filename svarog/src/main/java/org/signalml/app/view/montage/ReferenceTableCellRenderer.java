@@ -35,7 +35,7 @@ public class ReferenceTableCellRenderer extends DefaultTableCellRenderer {
 	 * the color used if the cell is not editable
 	 */
 	private static final Color DISABLED_COLOR = new Color(220,220,220);
-	
+
 	/**
 	 * the color used if the cell is editable and there is a value in it
 	 */

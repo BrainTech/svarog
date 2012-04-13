@@ -15,17 +15,17 @@ public class SignalScanner {
 
 	private static final int BUFFER_SIZE = 8192;
 
-        /**
-         * Looks for the minimal and maximal value (of the sample) in the signal.
-         * Informs the <code>monitor</code> about the number of already
-         * processed samples and aborts operation if monitor says to do so.
-         * @param sampleSource the {@link MultichannelSampleSource source}
-         * of samples
-         * @param monitor the {@link SignalWriterMonitor monitor} for this
-         * operation
-         * @return the created {@link SignalScanResult result} containing
-         * the minimal and maximal value in the signal
-         */
+	/**
+	 * Looks for the minimal and maximal value (of the sample) in the signal.
+	 * Informs the <code>monitor</code> about the number of already
+	 * processed samples and aborts operation if monitor says to do so.
+	 * @param sampleSource the {@link MultichannelSampleSource source}
+	 * of samples
+	 * @param monitor the {@link SignalWriterMonitor monitor} for this
+	 * operation
+	 * @return the created {@link SignalScanResult result} containing
+	 * the minimal and maximal value in the signal
+	 */
 	public SignalScanResult scanSignal(MultichannelSampleSource sampleSource, SignalWriterMonitor monitor) {
 
 		int channelCount = sampleSource.getChannelCount();

@@ -40,7 +40,7 @@ public class SignalSpacePanel extends JPanel {
 	 * signal
 	 */
 	private TimeSpacePanel timeSpacePanel;
-	
+
 	/**
 	 * the {@link ChannelSpacePanel panel} to select the channels
 	 */

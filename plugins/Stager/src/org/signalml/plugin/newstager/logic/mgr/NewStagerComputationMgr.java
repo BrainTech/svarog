@@ -32,7 +32,7 @@ public class NewStagerComputationMgr extends
 
 		@Override
 		public void setProgressPhase(NewStagerComputationProgressPhase phase,
-					     Object... arguments) {
+									 Object... arguments) {
 			// TODO Auto-generated method stub
 
 		}

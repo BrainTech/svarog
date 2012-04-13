@@ -112,20 +112,20 @@ public class RulerSignalTool extends AbstractSignalTool {
 		if (plot != null) {
 			Dimension size = plot.getSize();
 			Point corrPoint = new Point(
-			        Math.max(0, Math.min(size.width, point.x)),
-			        Math.max(0, Math.min(size.height, point.y))
+				Math.max(0, Math.min(size.width, point.x)),
+				Math.max(0, Math.min(size.height, point.y))
 			);
 			Point origin = plot.getViewport().getViewPosition();
 			Point pixelSize = new Point(
-			        Math.abs(corrPoint.x - dragStart.x),
-			        Math.abs(corrPoint.y - dragStart.y)
+				Math.abs(corrPoint.x - dragStart.x),
+				Math.abs(corrPoint.y - dragStart.y)
 			);
 			Point2D signalSize = plot.toSignalSpace(pixelSize);
 			measurmentPlot.setEndParameters(
-			        corrPoint,
-			        (float)(Math.round(signalSize.getX()*1000F) / 1000F),
-			        (float)(Math.round(signalSize.getY()*1000F) / 1000F),
-			        origin
+				corrPoint,
+				(float)(Math.round(signalSize.getX()*1000F) / 1000F),
+				(float)(Math.round(signalSize.getY()*1000F) / 1000F),
+				origin
 			);
 			showMeasurment();
 		}

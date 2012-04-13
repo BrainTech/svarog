@@ -18,7 +18,7 @@ public class NewArtifactAlgorithmFactory {
 	private final NewArtifactConstants constants;
 
 	public NewArtifactAlgorithmFactory(NewArtifactComputationType prodAlgorithmType,
-					   NewArtifactConstants constants) {
+									   NewArtifactConstants constants) {
 		this.producedAlgorithmType = prodAlgorithmType;
 		this.constants = constants;
 	}

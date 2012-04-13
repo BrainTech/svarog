@@ -32,7 +32,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	protected DocumentView documentView;
 	protected float samplingFrequency;
 	protected Object[] labels;
-	
+
 	/**
 	 * The calibration gain for the signal - the value by which each sample
 	 * value is multiplied.
@@ -187,7 +187,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 				target[arrayOffset+i] = tmp[signalOffset + i];
 		}
 	}
-	
+
 	protected double calibrateSample(double inputSampleValue, int channelIndex) {
 		if (calibrationGain != null && calibrationOffset != null)
 			return calibrationGain[channelIndex] * inputSampleValue + calibrationOffset[channelIndex];
@@ -254,18 +254,18 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		semaphore.release();
 	}
 
-        /*
-         * Gets the number of received samples.
-         *
-         * @return number of samples received from the start
-         */
-        public int getReceivedSampleCount() {
-                if (full) {
-                        return sampleCount;
-                } else {
-                        return nextInsertPos;
-                }
-        }
+	/*
+	 * Gets the number of received samples.
+	 *
+	 * @return number of samples received from the start
+	 */
+	public int getReceivedSampleCount() {
+		if (full) {
+			return sampleCount;
+		} else {
+			return nextInsertPos;
+		}
+	}
 
 	@Override
 	public boolean isCalibrationCapable() {
@@ -292,19 +292,19 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		return 1F;
 	}
 
-        /**
-         * Returns the number of samples per second
-         * @return the number of samples per second = 128
-         */
+	/**
+	 * Returns the number of samples per second
+	 * @return the number of samples per second = 128
+	 */
 	public float getSamplingFrequency() {
 		return this.samplingFrequency;
 	}
 
-        /**
-         * Sets the number of samples per second
-         * @param sampling - sampling frequency
-         * @return Null
-         */
+	/**
+	 * Sets the number of samples per second
+	 * @param sampling - sampling frequency
+	 * @return Null
+	 */
 	public void setSamplingFrequency(float sampling) {
 		this.samplingFrequency = sampling;
 	}

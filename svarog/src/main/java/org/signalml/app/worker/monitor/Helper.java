@@ -32,14 +32,14 @@ public class Helper {
 	}
 
 	public static String sendRequest(Message request, String destinationIP,
-			int destinationPort) throws SocketTimeoutException, IOException {
+									 int destinationPort) throws SocketTimeoutException, IOException {
 		Socket socket = new Socket(destinationIP, destinationPort);
 		socket.setSoTimeout(RECEIVE_TIMEOUT_MS);
 
 		PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 		Netstring netstring = new Netstring(request);
 		logger.debug("Sending message to " + destinationIP
-				+ ":" + destinationPort + ": " + netstring);
+					 + ":" + destinationPort + ": " + netstring);
 		writer.println(netstring);
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

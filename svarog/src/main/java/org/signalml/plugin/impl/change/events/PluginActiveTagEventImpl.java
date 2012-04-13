@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change.events;
 
@@ -21,7 +21,7 @@ public class PluginActiveTagEventImpl implements PluginActiveTagEvent {
 	 * the new value of the active {@link ExportedTag tag}
 	 */
 	protected ExportedTag tag;
-	
+
 	/**
 	 * Constructor. Sets the old and new value of the active
 	 * {@link ExportedTag tag}.
@@ -40,7 +40,7 @@ public class PluginActiveTagEventImpl implements PluginActiveTagEvent {
 	public ExportedTag getTag() {
 		return tag;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.change.ActiveTagEvent#getOldTag()
 	 */

@@ -23,13 +23,14 @@ public class MontageGeneratorsConverter implements Converter {
 	 * Montage generators that are added to all EEG systems by default.
 	 */
 	private static final List<IMontageGenerator> defaultMontageGenerators = new ArrayList<IMontageGenerator>()
-		{{
+	{{
 			add(new RawMontageGenerator());
 			add(new CommonAverageMontageGenerator());
 			add(new LeftEarMontageGenerator());
 			add(new RightEarMontageGenerator());
 			add(new LinkedEarsMontageGenerator());
-		}};
+		}
+	};
 
 	/**
 	 * Logger for recording the history of execution.
@@ -101,18 +102,18 @@ public class MontageGeneratorsConverter implements Converter {
 				}
 			} else if ("channels".equals(reader.getNodeName()) && generatorType != null) {
 				switch (generatorType) {
-					case SINGLE_REFERENCE:
-						String singleReferenceChannel = unmarshallSingleChannel(reader);
-						montageGenerator = new SingleReferenceMontageGenerator(singleReferenceChannel);
-						break;
-					case BIPOLAR_REFERENCE:
-						String[][] bipolarReferenceChannels = unmarshallPairsOfChannels(reader);
-						montageGenerator = new BipolarReferenceMontageGenerator(bipolarReferenceChannels);
-						break;
-					case AVERAGE_REFERENCE:
-						String[] averageReferenceChannels = unmarshallVectorOfChannels(reader);
-						montageGenerator = new AverageReferenceMontageGenerator(averageReferenceChannels);
-						break;
+				case SINGLE_REFERENCE:
+					String singleReferenceChannel = unmarshallSingleChannel(reader);
+					montageGenerator = new SingleReferenceMontageGenerator(singleReferenceChannel);
+					break;
+				case BIPOLAR_REFERENCE:
+					String[][] bipolarReferenceChannels = unmarshallPairsOfChannels(reader);
+					montageGenerator = new BipolarReferenceMontageGenerator(bipolarReferenceChannels);
+					break;
+				case AVERAGE_REFERENCE:
+					String[] averageReferenceChannels = unmarshallVectorOfChannels(reader);
+					montageGenerator = new AverageReferenceMontageGenerator(averageReferenceChannels);
+					break;
 				}
 				if (montageGenerator != null) {
 					montageGenerator.setName(montageGeneratorName);

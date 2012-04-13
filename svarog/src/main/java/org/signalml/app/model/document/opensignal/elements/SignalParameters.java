@@ -5,21 +5,21 @@ import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 
 public class SignalParameters extends PagingParameterDescriptor {
-	
+
 	private float samplingFrequency;
 	private int channelCount;
 	private float[] calibrationGain;
 	private float[] calibrationOffset;
-	
+
 	private Float maximumValue;
 	private Float minimumValue;
-	
+
 	private boolean channelCountEditable = false;
 	private boolean calibrationEditable = true;
 
 	public SignalParameters() {
-        samplingFrequency = 128.0F;
-        channelCount = 1;
+		samplingFrequency = 128.0F;
+		channelCount = 1;
 	}
 
 	public SignalParameters(SignalParameters signalParameters) {
@@ -70,7 +70,7 @@ public class SignalParameters extends PagingParameterDescriptor {
 	public void setMinimumValue(Float minimumValue) {
 		this.minimumValue = minimumValue;
 	}
-	
+
 	public boolean isChannelCountEditable() {
 		return channelCountEditable;
 	}

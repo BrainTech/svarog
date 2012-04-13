@@ -19,24 +19,24 @@ public enum MessageType {
 
 	PING("ping", Message.class),
 	PONG("pong", Message.class),
-	
+
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
 	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", null),
-	
+
 	JOIN_EXPERIMENT_REQUEST("join_experiment", JoinExperimentRequest.class),
 	LEAVE_EXPERIMENT_REQUEST("leave_experiment", LeaveExperimentRequest.class),
-	
+
 	REQUEST_OK_RESPONSE("rq_ok", RequestOKResponse.class),
 	REQUEST_ERROR_RESPONSE("rq_error", RequestErrorResponse.class);
 
 	private Class messageClass;
 	private String messageCode;
-	
+
 	private MessageType(String messageCode, Class messageClass) {
 		this.messageCode = messageCode;
 		this.messageClass = messageClass;
 	}
-	
+
 	public String getMessageCode() {
 		return messageCode;
 	}
@@ -45,7 +45,7 @@ public enum MessageType {
 	public String toString() {
 		return this.messageCode;
 	}
-	
+
 	public static MessageType parseMessageTypeFromMessageCode(String code) {
 		for (MessageType type: MessageType.values()) {
 			if (type.getMessageCode().equalsIgnoreCase(code)) {
@@ -54,16 +54,16 @@ public enum MessageType {
 		}
 		return null;
 	}
-	
+
 	public static MessageType parseMessageTypeFromResponse(String response) {
 
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			HashMap<String,Object> map = mapper.readValue(response.getBytes(), new TypeReference<HashMap<String, Object>>(){});
-			
+			HashMap<String,Object> map = mapper.readValue(response.getBytes(), new TypeReference<HashMap<String, Object>>() {});
+
 			String msgTypeCode = (String) map.get("type");
 			return MessageType.parseMessageTypeFromMessageCode(msgTypeCode);
-			
+
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

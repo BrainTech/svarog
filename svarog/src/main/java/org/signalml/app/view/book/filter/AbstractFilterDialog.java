@@ -57,9 +57,9 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 		if (namePanel == null) {
 			namePanel = new JPanel(new BorderLayout());
 			namePanel.setBorder(new CompoundBorder(
-			                            new TitledBorder(_("Filter name")),
-			                            new EmptyBorder(3,3,3,3)
-			                    ));
+									new TitledBorder(_("Filter name")),
+									new EmptyBorder(3,3,3,3)
+								));
 
 			namePanel.add(getNameTextField());
 

@@ -132,32 +132,32 @@ public class ViewerStatusBar extends JPanel implements ActionFocusListener, Prop
 
 		statusPanel = new JPanel(new BorderLayout());
 		statusPanel.setBorder(new CompoundBorder(
-		                              new BevelBorder(BevelBorder.LOWERED),
-		                              new EmptyBorder(2,4,2,4)
-		                      ));
+								  new BevelBorder(BevelBorder.LOWERED),
+								  new EmptyBorder(2,4,2,4)
+							  ));
 		statusPanel.add(getStatusLabel(), BorderLayout.CENTER);
 
 		positionPanel = new JPanel(new BorderLayout());
 		positionPanel.setBorder(new CompoundBorder(
-		                                new BevelBorder(BevelBorder.LOWERED),
-		                                new EmptyBorder(2,4,2,4)
-		                        ));
+									new BevelBorder(BevelBorder.LOWERED),
+									new EmptyBorder(2,4,2,4)
+								));
 		positionPanel.setPreferredSize(new Dimension(360,20));
 		positionPanel.add(getPositionLabel(), BorderLayout.CENTER);
 
 		selectionPanel = new JPanel(new BorderLayout());
 		selectionPanel.setBorder(new CompoundBorder(
-		                                 new BevelBorder(BevelBorder.LOWERED),
-		                                 new EmptyBorder(2,4,2,4)
-		                         ));
+									 new BevelBorder(BevelBorder.LOWERED),
+									 new EmptyBorder(2,4,2,4)
+								 ));
 		selectionPanel.setPreferredSize(new Dimension(360,20));
 		selectionPanel.add(getSelectionLabel(), BorderLayout.CENTER);
 
 		filteringPanel = new JPanel(new BorderLayout());
 		filteringPanel.setBorder(new CompoundBorder(
-		                                 new BevelBorder(BevelBorder.LOWERED),
-		                                 new EmptyBorder(2,4,2,4)
-		                         ));
+									 new BevelBorder(BevelBorder.LOWERED),
+									 new EmptyBorder(2,4,2,4)
+								 ));
 		filteringPanel.setPreferredSize(new Dimension(65,20));
 		filteringPanel.add(getFilteringLabel(), BorderLayout.CENTER);
 

@@ -26,7 +26,7 @@ public class FourierTransformTest {
 			new Complex(-8.12132034, 0.87867966),
 			new Complex(1.00000000,7),
 			new Complex(-3.87867966, -5.12132034)
-			};
+		};
 		Complex[] actualFFT = transform.forwardFFT(signal);
 		assertArrayEquals(expectedFFT, actualFFT, new Complex(1e-5, 1e-5));
 	}
@@ -57,7 +57,7 @@ public class FourierTransformTest {
 			new Complex(-12.19238816, -0.87867966),
 			new Complex(2.00000000, 13),
 			new Complex(6.19238816, +5.12132034)
-			};
+		};
 		Complex[] actualFFT = transform.forwardFFT(signal);
 		assertArrayEquals(expectedFFT, actualFFT, new Complex(1e-5, 1e-5));
 	}
@@ -84,7 +84,7 @@ public class FourierTransformTest {
 		expected = new double[] {1, 2, 3, 4};
 		assertArrayEquals(expected, paddedSignal, 1e-5);
 	}
-	
+
 	@Test
 	public void testGetFrequencies() {
 		double[] signal = new double[8];

@@ -31,192 +31,192 @@ import org.signalml.app.view.components.dialogs.AbstractDialog;
  */
 public class ProgressDialog extends AbstractDialog implements PropertyChangeListener {
 
-        public static final String PROGRESS_STATE = "progressState";
-        public final int DIALOG_WIDTH = 400;
-        public final int DIALOG_HEIGHT = 280;
-        /**
-         * The text area.
-         */
-        private ProgressStateList progressStateList = null;
-        /**
-         * The progress bar.
-         */
-        private JProgressBar progressBar = null;
-        /**
-         * If there was an error.
-         */
-        private boolean error;
-        /**
-         * If there was a success.
-         */
-        private boolean success;
+	public static final String PROGRESS_STATE = "progressState";
+	public final int DIALOG_WIDTH = 400;
+	public final int DIALOG_HEIGHT = 280;
+	/**
+	 * The text area.
+	 */
+	private ProgressStateList progressStateList = null;
+	/**
+	 * The progress bar.
+	 */
+	private JProgressBar progressBar = null;
+	/**
+	 * If there was an error.
+	 */
+	private boolean error;
+	/**
+	 * If there was a success.
+	 */
+	private boolean success;
 
-        /**
-         * Default constructor.
-         *
-         * @param w parent window
-         * @param isModal if this window is modal
-         * @param caption window's caption
-         */
-        public ProgressDialog(Window w, boolean isModal, String title) {
+	/**
+	 * Default constructor.
+	 *
+	 * @param w parent window
+	 * @param isModal if this window is modal
+	 * @param caption window's caption
+	 */
+	public ProgressDialog(Window w, boolean isModal, String title) {
 
-                super(w, isModal);
-                setTitle(title);
-                setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
-        }
+		super(w, isModal);
+		setTitle(title);
+		setPreferredSize(new Dimension(DIALOG_WIDTH, DIALOG_HEIGHT));
+	}
 
-        /**
-         * Creates the interface.
-         *
-         * @return the interfacesize
-         */
-        @Override
-        protected JComponent createInterface() {
+	/**
+	 * Creates the interface.
+	 *
+	 * @return the interfacesize
+	 */
+	@Override
+	protected JComponent createInterface() {
 
-                JPanel interfacePanel = new JPanel(new BorderLayout(10, 10));
-                CompoundBorder panelBorder = new CompoundBorder(new TitledBorder(""), new EmptyBorder(3, 3, 3, 3));
-                interfacePanel.setBorder(panelBorder);
+		JPanel interfacePanel = new JPanel(new BorderLayout(10, 10));
+		CompoundBorder panelBorder = new CompoundBorder(new TitledBorder(""), new EmptyBorder(3, 3, 3, 3));
+		interfacePanel.setBorder(panelBorder);
 
-                interfacePanel.add(new JScrollPane(getProgressStateList()), BorderLayout.CENTER);
-                interfacePanel.add(getProgressBar(), BorderLayout.PAGE_END);
+		interfacePanel.add(new JScrollPane(getProgressStateList()), BorderLayout.CENTER);
+		interfacePanel.add(getProgressBar(), BorderLayout.PAGE_END);
 
-                return interfacePanel;
-        }
+		return interfacePanel;
+	}
 
-        /**
-         * Gets the text area.
-         *
-         * @return the text area
-         */
-        private ProgressStateList getProgressStateList() {
+	/**
+	 * Gets the text area.
+	 *
+	 * @return the text area
+	 */
+	private ProgressStateList getProgressStateList() {
 
-                if (progressStateList == null) {
-                        progressStateList = new ProgressStateList();
-                }
-                return progressStateList;
-        }
+		if (progressStateList == null) {
+			progressStateList = new ProgressStateList();
+		}
+		return progressStateList;
+	}
 
-        /**
-         * Gets the progress bar.
-         *
-         * @return the progress bar
-         */
-        private JProgressBar getProgressBar() {
+	/**
+	 * Gets the progress bar.
+	 *
+	 * @return the progress bar
+	 */
+	private JProgressBar getProgressBar() {
 
-                if (progressBar == null) {
-                        progressBar = new JProgressBar();
-                }
-                return progressBar;
-        }
+		if (progressBar == null) {
+			progressBar = new JProgressBar();
+		}
+		return progressBar;
+	}
 
-        /**
-         * Only supported model is {@link ProgressState}.
-         *
-         * @param clazz class
-         * @return true if clazz can be assigned to a ProgressState object
-         */
-        @Override
-        public boolean supportsModelClass(Class<?> clazz) {
+	/**
+	 * Only supported model is {@link ProgressState}.
+	 *
+	 * @param clazz class
+	 * @return true if clazz can be assigned to a ProgressState object
+	 */
+	@Override
+	public boolean supportsModelClass(Class<?> clazz) {
 
-                return ProgressState.class.isAssignableFrom(clazz);
-        }
+		return ProgressState.class.isAssignableFrom(clazz);
+	}
 
-        /**
-         * Fills all components from a {@link ProgressState} object.
-         *
-         * @param model a {@link ProgressState} object
-         */
-        @Override
-        public void fillDialogFromModel(Object model) {
+	/**
+	 * Fills all components from a {@link ProgressState} object.
+	 *
+	 * @param model a {@link ProgressState} object
+	 */
+	@Override
+	public void fillDialogFromModel(Object model) {
 
-                ProgressState state = (ProgressState) model;
+		ProgressState state = (ProgressState) model;
 
-                error = (state.getCurrentProgress() < 0);
-                success = (state.getCurrentProgress() == state.getMaxProgress());
+		error = (state.getCurrentProgress() < 0);
+		success = (state.getCurrentProgress() == state.getMaxProgress());
 
-                getProgressStateList().add(state);
-                getProgressBar().setValue(state.getCurrentProgress());
-                getProgressBar().setMaximum(state.getMaxProgress());
+		getProgressStateList().add(state);
+		getProgressBar().setValue(state.getCurrentProgress());
+		getProgressBar().setMaximum(state.getMaxProgress());
 
-                if (error || success) {
-                        getOkButton().setEnabled(true);
-                        getCancelButton().setEnabled(false);
-                } else {
-                        getOkButton().setEnabled(false);
-                        getCancelButton().setEnabled(true);
-                }
-        }
+		if (error || success) {
+			getOkButton().setEnabled(true);
+			getCancelButton().setEnabled(false);
+		} else {
+			getOkButton().setEnabled(false);
+			getCancelButton().setEnabled(true);
+		}
+	}
 
-        /**
-         * Dialog is read only.
-         *
-         * @param model not used
-         */
-        @Override
-        public void fillModelFromDialog(Object model) {
-        }
+	/**
+	 * Dialog is read only.
+	 *
+	 * @param model not used
+	 */
+	@Override
+	public void fillModelFromDialog(Object model) {
+	}
 
-        /**
-         * Only supported property is progressState.
-         *
-         * @param evt property change event
-         */
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
+	/**
+	 * Only supported property is progressState.
+	 *
+	 * @param evt property change event
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
 
-                if (PROGRESS_STATE.equals(evt.getPropertyName())) {
-                        fillDialogFromModel(evt.getNewValue());
-                }
-        }
+		if (PROGRESS_STATE.equals(evt.getPropertyName())) {
+			fillDialogFromModel(evt.getNewValue());
+		}
+	}
 
-        /**
-         * No cancel on escape.
-         *
-         * @return false
-         */
-        @Override
-        public boolean isCancelOnEscape() {
+	/**
+	 * No cancel on escape.
+	 *
+	 * @return false
+	 */
+	@Override
+	public boolean isCancelOnEscape() {
 
-                return false;
-        }
+		return false;
+	}
 
-        /**
-         * Shows an empty dialog.
-         */
-        public boolean showDialog() {
+	/**
+	 * Shows an empty dialog.
+	 */
+	public boolean showDialog() {
 
-                return showDialog(new ProgressState(), true);
-        }
+		return showDialog(new ProgressState(), true);
+	}
 
-        /**
-         * Resets dialog.
-         */
-        @Override
-        protected void resetDialog() {
+	/**
+	 * Resets dialog.
+	 */
+	@Override
+	protected void resetDialog() {
 
-                super.resetDialog();
-                getProgressStateList().removeAll();
-        }
+		super.resetDialog();
+		getProgressStateList().removeAll();
+	}
 
-        /**
-         * Returns true if the window was cancelled.
-         *
-         * @return true if the window was cancelled
-         */
-        public boolean wasCancelled() {
+	/**
+	 * Returns true if the window was cancelled.
+	 *
+	 * @return true if the window was cancelled
+	 */
+	public boolean wasCancelled() {
 
-                return (!(error || success));
-        }
+		return (!(error || success));
+	}
 
-        /**
-         * Returns true if there was a success.
-         *
-         * @return true if there was a success
-         */
-        public boolean wasSuccess() {
+	/**
+	 * Returns true if there was a success.
+	 *
+	 * @return true if there was a success
+	 */
+	public boolean wasSuccess() {
 
-                return success;
-        }
+		return success;
+	}
 }
 
 /**
@@ -226,34 +226,34 @@ public class ProgressDialog extends AbstractDialog implements PropertyChangeList
  */
 class ProgressStateList extends JList {
 
-        /**
-         * Default constructor
-         */
-        public ProgressStateList() {
+	/**
+	 * Default constructor
+	 */
+	public ProgressStateList() {
 
-                setCellRenderer(new ProgressStateListCellRenderer());
-                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        }
+		setCellRenderer(new ProgressStateListCellRenderer());
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	}
 
-        /**
-         * Adds an element to the list.
-         *
-         * @param state progress state
-         */
-        public void add(ProgressState state) {
+	/**
+	 * Adds an element to the list.
+	 *
+	 * @param state progress state
+	 */
+	public void add(ProgressState state) {
 
-                if (state.getProgressMsg().equals("")) {
-                        return;
-                }
-                Dimension size = getSize();
-                ArrayList<ProgressState> list = new ArrayList<ProgressState>();
-                for (int i = 0; i < getModel().getSize(); i++) {
-                        list.add((ProgressState) getModel().getElementAt(i));
-                }
-                list.add(state);
-                setListData(list.toArray());
-                setSize(size);
-        }
+		if (state.getProgressMsg().equals("")) {
+			return;
+		}
+		Dimension size = getSize();
+		ArrayList<ProgressState> list = new ArrayList<ProgressState>();
+		for (int i = 0; i < getModel().getSize(); i++) {
+			list.add((ProgressState) getModel().getElementAt(i));
+		}
+		list.add(state);
+		setListData(list.toArray());
+		setSize(size);
+	}
 }
 
 /**
@@ -263,21 +263,21 @@ class ProgressStateList extends JList {
  */
 class ProgressStateListCellRenderer implements ListCellRenderer {
 
-        @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+	@Override
+	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 
-                ProgressState state = (ProgressState) value;
-                JTextArea textArea = new JTextArea(state.getProgressMsg());
-                textArea.setBackground(Color.WHITE);
+		ProgressState state = (ProgressState) value;
+		JTextArea textArea = new JTextArea(state.getProgressMsg());
+		textArea.setBackground(Color.WHITE);
 
-                if (state.getCurrentProgress() < 0) {
-                        textArea.setForeground(Color.RED);
-                } else if (state.getCurrentProgress() == state.getMaxProgress()) {
-                        textArea.setForeground(Color.GREEN);
-                } else {
-                        textArea.setForeground(Color.BLACK);
-                }
+		if (state.getCurrentProgress() < 0) {
+			textArea.setForeground(Color.RED);
+		} else if (state.getCurrentProgress() == state.getMaxProgress()) {
+			textArea.setForeground(Color.GREEN);
+		} else {
+			textArea.setForeground(Color.BLACK);
+		}
 
-                return textArea;
-        }
+		return textArea;
+	}
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl.change;
 
@@ -40,53 +40,53 @@ import org.signalml.plugin.impl.change.events.PluginTagStyleEventImpl;
  * This is used both as a super-type for {@link SvarogAccessChangeSupportImpl} and to listen
  * for changes associated with a single {@link TagDocument tag}/{@link
  * SignalDocument signal} document.
- * 
+ *
  * @author Marcin Szumski
  */
 public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implements TagListener, TagStyleListener {
 
 	protected static final Logger logger = Logger.getLogger(SvarogAccessChangeSupportImpl.class);
-	
+
 	/**
 	 * {@link PluginTagListener listeners} on {@link ExportedTag tag} changes
 	 * (addition, removal, change)
 	 */
 	protected ArrayList<PluginTagListener> tagListeners = new ArrayList<PluginTagListener>();
-	
+
 	/**
 	 * {@link PluginTagStyleListener listener} on {@link ExportedTagStyle
 	 * tag style} changes (addition, removal, change)
 	 */
 	protected ArrayList<PluginTagStyleListener> tagStyleListeners = new ArrayList<PluginTagStyleListener>();
-	
+
 	protected SvarogAccessChangeSupportDocumentImpl() { }
 
 	/**
 	 * Adds a {@link PluginTagListener} to the list of tag listeners.
 	 * @param listener the listener to add
 	 */
-	public void addTagListener(PluginTagListener listener){
+	public void addTagListener(PluginTagListener listener) {
 		tagListeners.add(listener);
 	}
-	
+
 	/**
 	 * Adds a {@link PluginTagStyleListener} to the list of tag listeners.
 	 * @param listener the listener to add
 	 */
-	public void addTagStyleListener(PluginTagStyleListener listener){
+	public void addTagStyleListener(PluginTagStyleListener listener) {
 		tagStyleListeners.add(listener);
 	}
-	
+
 	/**
 	 * Creates a {@link PluginTagEvent} from given {@link TagEvent}.
 	 * Sets the tag and document in which the tag is located.
 	 * @param e the TagEvent to be used
 	 * @return created SvarogTagEvent
 	 */
-	protected PluginTagEvent createTagEvent(TagEvent e){
+	protected PluginTagEvent createTagEvent(TagEvent e) {
 		Tag tag = e.getTag();
 		TagDocument document = null;
-		if (e.getSource() instanceof StyledTagSet){
+		if (e.getSource() instanceof StyledTagSet) {
 			StyledTagSet tagSet = (StyledTagSet) e.getSource();
 			TagTreeModel treeModel = getViewerElementManager().getTagTreeModel();
 			document = treeModel.getDocumentFromSet(tagSet);
@@ -94,13 +94,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 		PluginTagEventImpl tagEvent = new PluginTagEventImpl(tag, document);
 		return tagEvent;
 	}
-	
+
 	/**
 	 * Informs given {@link PluginTagListener listener} that the tag was added.
 	 * @param event the {@link PluginTagEvent event} describing the change
 	 * @param listener the listener to be informed
 	 */
-	protected void singleTagAdded(PluginTagEvent event, PluginTagListener listener){
+	protected void singleTagAdded(PluginTagEvent event, PluginTagListener listener) {
 		try {
 			listener.tagAdded(event);
 		} catch (Exception ex) {
@@ -108,7 +108,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 			ex.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Informs listeners that a {@link Tag} was added.
 	 * @param e the event object which describes a change
@@ -117,7 +117,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	public void tagAdded(TagEvent e) {
 		try {
 			PluginTagEvent event = createTagEvent(e);
-			for (PluginTagListener listener: tagListeners){
+			for (PluginTagListener listener: tagListeners) {
 				singleTagAdded(event, listener);
 			}
 		} catch (Exception ex) {
@@ -125,13 +125,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 			ex.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Informs given {@link PluginTagListener listener} that the tag was removed.
 	 * @param event the {@link PluginTagEvent event} describing the change
 	 * @param listener the listener to be informed
 	 */
-	protected void singleTagRemoved(PluginTagEvent event, PluginTagListener listener){
+	protected void singleTagRemoved(PluginTagEvent event, PluginTagListener listener) {
 		try {
 			listener.tagRemoved(event);
 		} catch (Exception ex) {
@@ -148,7 +148,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	public void tagRemoved(TagEvent e) {
 		try {
 			PluginTagEvent event = createTagEvent(e);
-			for (PluginTagListener listener: tagListeners){
+			for (PluginTagListener listener: tagListeners) {
 				singleTagRemoved(event, listener);
 			}
 		} catch (Exception ex) {
@@ -156,13 +156,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 			ex.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Informs given {@link PluginTagListener listener} that the tag was changed.
 	 * @param event the {@link PluginTagEvent event} describing the change
 	 * @param listener the listener to be informed
 	 */
-	protected void singleTagChanged(PluginTagEvent event, PluginTagListener listener){
+	protected void singleTagChanged(PluginTagEvent event, PluginTagListener listener) {
 		try {
 			listener.tagChanged(event);
 		} catch (Exception ex) {
@@ -179,7 +179,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	public void tagChanged(TagEvent e) {
 		try {
 			PluginTagEvent event = createTagEvent(e);
-			for (PluginTagListener listener: tagListeners){
+			for (PluginTagListener listener: tagListeners) {
 				singleTagChanged(event, listener);
 			}
 		} catch (Exception ex) {
@@ -194,12 +194,12 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	 * @param e the TagStyleEvent to be used
 	 * @return created SvarogTagStyleEvent
 	 */
-	protected PluginTagStyleEvent createTagStyleEvent(TagStyleEvent e){
+	protected PluginTagStyleEvent createTagStyleEvent(TagStyleEvent e) {
 		TagStyle style = e.getTagStyle();
 		PluginTagStyleEventImpl tagStyleEvent = new PluginTagStyleEventImpl(style);
 		return tagStyleEvent;
 	}
-	
+
 	/**
 	 * Informs listeners that a {@link TagStyle} was added.
 	 * @param e the event object which describes a change
@@ -208,7 +208,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	public void tagStyleAdded(TagStyleEvent e) {
 		try {
 			PluginTagStyleEvent event = createTagStyleEvent(e);
-			for (PluginTagStyleListener listener: tagStyleListeners){
+			for (PluginTagStyleListener listener: tagStyleListeners) {
 				try {
 					listener.tagStyleAdded(event);
 				} catch (Exception ex) {
@@ -230,7 +230,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	public void tagStyleRemoved(TagStyleEvent e) {
 		try {
 			PluginTagStyleEvent event = createTagStyleEvent(e);
-			for (PluginTagStyleListener listener: tagStyleListeners){
+			for (PluginTagStyleListener listener: tagStyleListeners) {
 				try {
 					listener.tagStyleRemoved(event);
 				} catch (Exception ex) {
@@ -252,7 +252,7 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	public void tagStyleChanged(TagStyleEvent e) {
 		try {
 			PluginTagStyleEvent event = createTagStyleEvent(e);
-			for (PluginTagStyleListener listener: tagStyleListeners){
+			for (PluginTagStyleListener listener: tagStyleListeners) {
 				try {
 					listener.tagStyleChanged(event);
 				} catch (Exception ex) {
@@ -266,8 +266,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 		}
 	}
 
-    public void setViewerElementManager(ViewerElementManager manager) {
-        super.setViewerElementManager(manager);
-    }
+	public void setViewerElementManager(ViewerElementManager manager) {
+		super.setViewerElementManager(manager);
+	}
 
 }

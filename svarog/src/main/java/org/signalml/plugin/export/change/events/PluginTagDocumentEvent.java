@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.change.events;
 
@@ -13,7 +13,7 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
  * @author Marcin Szumski
  */
 public interface PluginTagDocumentEvent extends PluginEvent {
-	
+
 	/**
 	 * Returns the old active {@link TagDocument} (the tag document that
 	 * WAS active).

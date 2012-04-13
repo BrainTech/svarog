@@ -28,7 +28,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 public class EegSystemSelectionPanel extends AbstractPanel {
 
 	public static String EEG_SYSTEM_PROPERTY = "eegSystemProperty";
-	
+
 	/**
 	 * The current montage.
 	 */
@@ -56,14 +56,14 @@ public class EegSystemSelectionPanel extends AbstractPanel {
 		addPropertyChangeListener(listener);
 		createInterface();
 	}
-	
+
 	public EegSystemSelectionPanel(EegSystemsPresetManager eegSystemsPresetManager) {
 		this.eegSystemsPresetManager = eegSystemsPresetManager;
 		createInterface();
 	}
 
 	protected void createInterface() {
-		
+
 		//setTitledBorder(_("Select EEG system"));
 		add(getPresetComboBox());
 
@@ -91,7 +91,7 @@ public class EegSystemSelectionPanel extends AbstractPanel {
 		}
 		return presetComboBox;
 	}
-	
+
 	public void fireEegSystemChangedProperty() {
 		firePropertyChange(EEG_SYSTEM_PROPERTY, null, getSelectedEegSystem());
 	}
@@ -146,7 +146,7 @@ public class EegSystemSelectionPanel extends AbstractPanel {
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
 			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
-			
+
 			if (eegSystemName != null)
 				setEegSystemByName(eegSystemName);
 		}

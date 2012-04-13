@@ -21,64 +21,64 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
  */
 public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor implements MultichannelSegmentedSampleSource {
 
-        /**
-         * the index of the first selected sample
-         */
+	/**
+	 * the index of the first selected sample
+	 */
 	private int firstSample;
-        /**
-         * the number of samples in the selection
-         */
+	/**
+	 * the number of samples in the selection
+	 */
 	private int segmentLength;
-        /**
-         * the number of segments in this source:
-         * <ul>
-         * <li>if the {@link SignalSelection selection} is a page selection - the
-         * number of pages in the selection</li>
-         * <li>if the selection is a block selection - the number of blocks</li>
-         * <li>if the selection is a channel selection - <code>1</code></li>
-         * </ul>
-         */
+	/**
+	 * the number of segments in this source:
+	 * <ul>
+	 * <li>if the {@link SignalSelection selection} is a page selection - the
+	 * number of pages in the selection</li>
+	 * <li>if the selection is a block selection - the number of blocks</li>
+	 * <li>if the selection is a channel selection - <code>1</code></li>
+	 * </ul>
+	 */
 	private int segmentCount;
 
-        /**
-         * the number of channels in this source
-         */
+	/**
+	 * the number of channels in this source
+	 */
 	private int channelCount;
-        /**
-         * an array mapping indexes in this source to the indexes of channels
-         * in the actual source
-         */
+	/**
+	 * an array mapping indexes in this source to the indexes of channels
+	 * in the actual source
+	 */
 	private int[] channelIndices;
 
-        /**
-         * the number of segments that can not be used (the required
-         * segment is not in the signal).
-         */
+	/**
+	 * the number of segments that can not be used (the required
+	 * segment is not in the signal).
+	 */
 	private int unusableSegmentCount;
-        /**
-         * the point in time (seconds) where the selection starts
-         */
+	/**
+	 * the point in time (seconds) where the selection starts
+	 */
 	private double firstPosition;
 
-        /**
-         * Constructor. Creates a source without the selection
-         * @param source the actual source of samples
-         */
+	/**
+	 * Constructor. Creates a source without the selection
+	 * @param source the actual source of samples
+	 */
 	public SelectionSegmentedSampleSource(MultichannelSampleSource source) {
 		super(source);
 	}
 
-        /**
-         * Constructor. Creates the source of samples based on a given
-         * {@link MultichannelSampleSource source} of the signal,
-         * {@link ChannelSpace subset} of channels and
-         * {@link SignalSelection selection}.
-         * @param source the source for the whole signal
-         * @param selection the selection of the part of the signal
-         * @param channelSpace the subset of channels
-         * @param pageSize the size of a page (in seconds)
-         * @param blockSize the size of a block (in seconds)
-         */
+	/**
+	 * Constructor. Creates the source of samples based on a given
+	 * {@link MultichannelSampleSource source} of the signal,
+	 * {@link ChannelSpace subset} of channels and
+	 * {@link SignalSelection selection}.
+	 * @param source the source for the whole signal
+	 * @param selection the selection of the part of the signal
+	 * @param channelSpace the subset of channels
+	 * @param pageSize the size of a page (in seconds)
+	 * @param blockSize the size of a block (in seconds)
+	 */
 	public SelectionSegmentedSampleSource(MultichannelSampleSource source, SignalSelection selection, SignalSpace signalSpace, float pageSize, float blockSize) {
 		super(source);
 
@@ -116,7 +116,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 		firstSample = (int)(firstPosition * samplingFrequency);
 
 		if (selectionType.isChannel()
-			|| (selectionType.isPage() && !signalSpace.isWholeSignalCompletePagesOnly())) {
+				|| (selectionType.isPage() && !signalSpace.isWholeSignalCompletePagesOnly())) {
 
 			segmentCount = 1;
 			segmentLength = (int)(selection.getLength() * samplingFrequency);
@@ -151,13 +151,13 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 		return firstPosition + (segmentLength*segment);
 	}
 
-         /**
-         * Constructor. Creates the source of samples based on the given
-         * {@link MultichannelSampleSource source} of all channels an the given
-         * {@link SelectionSegmentedSampleSourceDescriptor descriptor}.
-         * @param source the source of samples for all channels
-         * @param descriptor the descriptor of this source
-         */
+	/**
+	* Constructor. Creates the source of samples based on the given
+	* {@link MultichannelSampleSource source} of all channels an the given
+	* {@link SelectionSegmentedSampleSourceDescriptor descriptor}.
+	* @param source the source of samples for all channels
+	* @param descriptor the descriptor of this source
+	*/
 	public SelectionSegmentedSampleSource(MultichannelSampleSource source, SelectionSegmentedSampleSourceDescriptor descriptor) {
 		this(source);
 

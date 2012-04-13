@@ -133,7 +133,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 			documentPopupMenu.add(getSaveDocumentAsAction());
 			documentPopupMenu.addSeparator();
 			documentPopupMenu.add(getCloseDocumentAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToWorkspaceTreeDocumentPopupMenu(documentPopupMenu);
 		}
 
@@ -147,7 +147,7 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 			mrudPopupMenu = new JPopupMenu();
 
 			mrudPopupMenu.add(getOpenMRUDAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToWorkspaceTreeMRUDPopupMenu(mrudPopupMenu);
 		}
 
@@ -159,9 +159,9 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 		if (otherPopupMenu == null) {
 			otherPopupMenu = new JPopupMenu();
-			
+
 //			empty pop up menu
-			
+
 			PluginAccessClass.getGUIImpl().addToWorkspaceTreeOtherPopupMenu(otherPopupMenu);
 		}
 

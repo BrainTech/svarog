@@ -22,7 +22,7 @@ public class PluginMethodManager {
 	private PluginAbstractMethod method;
 
 	public PluginMethodManager(SvarogAccess svarogAccess,
-				   PluginConfigForMethod config) {
+							   PluginConfigForMethod config) {
 		this.svarogAccess = svarogAccess;
 
 		this.methodConfig = config.getMethodConfig();
@@ -55,7 +55,7 @@ public class PluginMethodManager {
 		if (configurer != null) {
 			try {
 				boolean configurationOk = configurer.configure(this.method,
-							  data);
+										  data);
 				if (!configurationOk) {
 					return;
 				}
@@ -66,7 +66,7 @@ public class PluginMethodManager {
 		}
 
 		SvarogTask task = new LocalTask(this.method, data,
-					  (method instanceof TrackableMethod));
+										(method instanceof TrackableMethod));
 
 		SvarogAccessMethod svarogMethods = this.svarogAccess.getMethodAccess();
 		svarogMethods.addTask(task);

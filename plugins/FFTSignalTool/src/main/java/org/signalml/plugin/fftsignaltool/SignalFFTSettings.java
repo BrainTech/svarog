@@ -31,7 +31,7 @@ import org.xml.sax.SAXException;
 /**
  * Settings how the power spectrum of the signal should be displayed.
  * For more information read them description of the parameters below.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o., Marcin Szumski
  */
@@ -45,7 +45,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 
 	/**
 	 * boolean which tells if the channel for which the power spectrum is
-	 * calculated should be changed, when the mouse goes up or down 
+	 * calculated should be changed, when the mouse goes up or down
 	 */
 	private boolean channelSwitching;
 	/**
@@ -145,7 +145,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 * Returns if the channel for which the power spectrum is
 	 * calculated should be changed, when the mouse goes up or down .
 	 * @return if the channel for which the power spectrum is
-	 * calculated should be changed, when the mouse goes up or down 
+	 * calculated should be changed, when the mouse goes up or down
 	 */
 	public boolean isChannelSwitching() {
 		return channelSwitching;
@@ -153,7 +153,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 
 	/**
 	 * Sets if the channel for which the power spectrum is
-	 * calculated should be changed, when the mouse goes up or down 
+	 * calculated should be changed, when the mouse goes up or down
 	 * @param channelSwitching {@code true} if the channel for which the power
 	 * spectrum is calculated should be changed, when the mouse goes up or down
 	 */
@@ -248,7 +248,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		return antialias;
 	}
 
-	
+
 	/**
 	 * Sets if the chart should be antialiased.
 	 * @param antialias {@code true} if the chart should be antialiased,
@@ -379,8 +379,8 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	public void setScaleToView(boolean scaleToView) {
 		this.scaleToView = scaleToView;
 	}
-	
-	
+
+
 	/**
 	 * Opens an XML file and returns the document element.
 	 * @param file the file in which XML tree is stored
@@ -400,7 +400,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		return element;
 
 	}
-	
+
 	/**
 	 * Writes the provided data to XML file of a given name.
 	 * @param path the path to the file
@@ -422,8 +422,8 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		trans.transform(source, result);
 		ps.close();
 	}
-	
-	
+
+
 	/**
 	 * Creates a document used to save data in XML form
 	 * @return created document
@@ -435,111 +435,111 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		Document doc = docBuilder.newDocument();
 		return doc;
 	}
-	
+
 	/**
 	 * Adds an XML node with the boolean value as the child of the {@code root}
-	 * node in the document {@code doc} and sets its {@code value}. 
+	 * node in the document {@code doc} and sets its {@code value}.
 	 * @param doc the document in which the nodes are located
 	 * @param root the node to which the child will be added
 	 * @param name the name of the child node
 	 * @param value the value of the child node
 	 */
-	private void addBooleanNode(Document doc, Element root, String name, boolean value){
+	private void addBooleanNode(Document doc, Element root, String name, boolean value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(Boolean.toString(value)));
 		root.appendChild(node);
 	}
-	
+
 	/**
 	 * Adds an XML node with the integer value as the child of the {@code root}
-	 * node in the document {@code doc} and sets its {@code value}. 
+	 * node in the document {@code doc} and sets its {@code value}.
 	 * @param doc the document in which the nodes are located
 	 * @param root the node to which the child will be added
 	 * @param name the name of the child node
 	 * @param value the value of the child node
 	 */
-	private void addIntNode(Document doc, Element root, String name, int value){
+	private void addIntNode(Document doc, Element root, String name, int value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(Integer.toString(value)));
 		root.appendChild(node);
 	}
-	
+
 	/**
 	 * Adds an XML node with the double value as the child of the {@code root}
-	 * node in the document {@code doc} and sets its {@code value}. 
+	 * node in the document {@code doc} and sets its {@code value}.
 	 * @param doc the document in which the nodes are located
 	 * @param root the node to which the child will be added
 	 * @param name the name of the child node
 	 * @param value the value of the child node
 	 */
-	private void addDoubleNode(Document doc, Element root, String name, Double value){
+	private void addDoubleNode(Document doc, Element root, String name, Double value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value.toString()));
 		root.appendChild(node);
 	}
-	
+
 	/**
 	 * Adds an XML node with the Dimension value as the child of the {@code root}
-	 * node in the document {@code doc} and sets its {@code value}. 
+	 * node in the document {@code doc} and sets its {@code value}.
 	 * @param doc the document in which the nodes are located
 	 * @param root the node to which the child will be added
 	 * @param name the name of the child node
 	 * @param value the value of the child node
 	 */
-	private void addDimensionNode(Document doc, Element root, String name, Dimension value){
+	private void addDimensionNode(Document doc, Element root, String name, Dimension value) {
 		Element node = doc.createElement(name);
 		addIntNode(doc, node, "height", value.height);
 		addIntNode(doc, node, "width", value.width);
 		root.appendChild(node);
 	}
-	
+
 	/**
 	 * Adds an XML node with the {@link WindowType} value as the child of the
-	 * {@code root} node in the document {@code doc} and sets its {@code value}. 
+	 * {@code root} node in the document {@code doc} and sets its {@code value}.
 	 * @param doc the document in which the nodes are located
 	 * @param root the node to which the child will be added
 	 * @param name the name of the child node
 	 * @param value the value of the child node
 	 */
-	private void addWindowTypeNode(Document doc, Element root, String name, WindowType value){
+	private void addWindowTypeNode(Document doc, Element root, String name, WindowType value) {
 		Element node = doc.createElement(name);
 		node.appendChild(doc.createTextNode(value.name()));
 		root.appendChild(node);
 	}
-	
+
 	/**
-	 * Reads the boolean value from the given XML node. 
+	 * Reads the boolean value from the given XML node.
 	 * @param node the node
 	 * @return the read value
 	 */
-	private boolean readBooleanNode(Node node){
+	private boolean readBooleanNode(Node node) {
 		return Boolean.parseBoolean(node.getFirstChild().getNodeValue());
 	}
-	
+
 	/**
-	 * Reads the integer value from the given XML node. 
+	 * Reads the integer value from the given XML node.
 	 * @param node the node
 	 * @return the read value
 	 */
-	private int readIntNode(Node node){
+	private int readIntNode(Node node) {
 		return Integer.parseInt(node.getFirstChild().getNodeValue());
 	}
-	
+
 	/**
-	 * Reads the double value from the given XML node. 
+	 * Reads the double value from the given XML node.
 	 * @param node the node
 	 * @return the read value
 	 */
-	private double readDoubleNode (Node node){
+	private double readDoubleNode(Node node) {
 		return Double.parseDouble(node.getFirstChild().getNodeValue());
 	}
-	
+
 	/**
-	 * Reads the Dimension value from the given XML node. 
+	 * Reads the Dimension value from the given XML node.
 	 * @param node the node
 	 * @return the read value
 	 */
-	private Dimension readDimensionNode(Node node){
+	private Dimension readDimensionNode(Node node) {
 		NodeList nodeList = node.getChildNodes();
 		int width=0, height=0;
 		for (int i = 0; i < nodeList.getLength(); ++i) {
@@ -551,22 +551,22 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		}
 		return new Dimension(width, height);
 	}
-	
+
 	/**
-	 * Reads the {@link WindowType} value from the given XML node. 
+	 * Reads the {@link WindowType} value from the given XML node.
 	 * @param node the node
 	 * @return the read value
 	 */
-	private WindowType readWindowTypeNode(Node node){
+	private WindowType readWindowTypeNode(Node node) {
 		return WindowType.valueOf(node.getFirstChild().getNodeValue());
 	}
-	
+
 	/**
 	 * Updates the fields of this object with the data read from the given
 	 * XML file.
 	 * @param xmlFile the XML file
 	 */
-	public void readFromXMLFile(File xmlFile){
+	public void readFromXMLFile(File xmlFile) {
 		if (!xmlFile.exists()) return;
 		Element element;
 		try {
@@ -604,7 +604,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 					setPlotSize(readDimensionNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("windowType"))
 					setWindowType(readWindowTypeNode(nodeTmp));
-				
+
 			}
 		} catch (ParserConfigurationException e) {
 			e.printStackTrace();
@@ -613,15 +613,15 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-				
+
+
 	}
-	
+
 	/**
 	 * Stores this object in the given XML file.
 	 * @param xmlFile the XML file
 	 */
-	public void storeInXMLFile(File xmlFile){
+	public void storeInXMLFile(File xmlFile) {
 		try {
 			Document doc = createXMLDocumentToSave();
 			Element root = doc.createElement("signalFFTSettings");

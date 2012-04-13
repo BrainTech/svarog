@@ -56,7 +56,7 @@ public class PresetControlsPanel extends AbstractPanel {
 	/**
 	 * The dialog/panel which is controlled by this preset control panel
 	 * (e.g. the presets selected in this PresetControlsPanel affects
-	 * the presetPanel). 
+	 * the presetPanel).
 	 */
 	private PresetableView presetPanel;
 
@@ -64,7 +64,7 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * the {@link PresetManager manager} of {@link Preset presets}
 	 */
 	protected PresetManager presetManager;
-	
+
 	/**
 	 * the {@link ViewerFileChooser file chooser}
 	 */
@@ -74,7 +74,7 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * the model for {@link #presetComboBox}
 	 */
 	private PresetComboBoxModel presetComboBoxModel;
-	
+
 	/**
 	 * the combo box which allows to select the {@link Preset preset}
 	 */
@@ -90,12 +90,12 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * @see LoadDefaultPresetAction
 	 */
 	private Action loadDefaultPresetAction;
-	
+
 	/**
 	 * @see SaveDefaultPresetAction
 	 */
 	private Action saveDefaultPresetAction;
-	
+
 	/**
 	 * @see RemoveDefaultPresetAction
 	 */
@@ -105,12 +105,12 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * @see SavePresetAction
 	 */
 	private Action savePresetAction;
-	
+
 	/**
 	 * @see LoadPresetAction
 	 */
 	private Action loadPresetAction;
-	
+
 	/**
 	 * @see RemovePresetAction
 	 */
@@ -120,7 +120,7 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * @see SaveFileAction
 	 */
 	private Action saveFileAction;
-	
+
 	/**
 	 * @see LoadFileAction
 	 */
@@ -130,12 +130,12 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * the button for {@link #loadDefaultPresetAction}
 	 */
 	private JButton loadDefaultPresetButton;
-	
+
 	/**
 	 * the button for {@link #saveDefaultPresetAction}
 	 */
 	private JButton saveDefaultPresetButton;
-	
+
 	/**
 	 * the button for {@link #removeDefaultPresetAction}
 	 */
@@ -158,7 +158,7 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * the button for {@link #loadFileAction}
 	 */
 	private JButton loadFileButton;
-	
+
 	private boolean showLoadSaveRemoveDefaultPresetButton;
 
 	/**
@@ -172,7 +172,7 @@ public class PresetControlsPanel extends AbstractPanel {
 		this.presetManager = presetManager;
 		createInterface();
 	}
-	
+
 	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager, boolean showLoadSaveRemoveDefaultPresetButton) {
 		super();
 		this.presetPanel = presetPanel;
@@ -183,7 +183,7 @@ public class PresetControlsPanel extends AbstractPanel {
 
 	protected void createInterface() {
 		presetManager.addPresetManagerListener(new PresetManagerChangeListener());
-		
+
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setTitledBorder(_("Presets"));
 
@@ -222,7 +222,7 @@ public class PresetControlsPanel extends AbstractPanel {
 			removeDefaultPresetButton = new JButton(removeDefaultPresetAction);
 			add(removeDefaultPresetButton);
 			add(Box.createHorizontalStrut(3));
-			
+
 			add(Box.createHorizontalStrut(3));
 			add(Box.createHorizontalGlue());
 		}
@@ -703,7 +703,7 @@ public class PresetControlsPanel extends AbstractPanel {
 
 	}
 
-	
+
 	/**
 	 * Action that removes the selected preset.
 	 * If there is no selected preset does nothing.
@@ -939,12 +939,12 @@ public class PresetControlsPanel extends AbstractPanel {
 		 * the model for a combo box that allows to select the preset
 		 */
 		private PresetComboBoxModel presetComboBoxModel;
-		
+
 		/**
 		 * the combo box that allows to select the preset
 		 */
 		protected JComboBox presetComboBox;
-		
+
 		/**
 		 * the text field to specify the name for the preset
 		 */
@@ -1013,9 +1013,9 @@ public class PresetControlsPanel extends AbstractPanel {
 
 			JPanel interfacePanel = new JPanel(new BorderLayout());
 			interfacePanel.setBorder(new CompoundBorder(
-							 new TitledBorder(_("Select preset name")),
-							 new EmptyBorder(3,3,3,3)
-			                         ));
+										 new TitledBorder(_("Select preset name")),
+										 new EmptyBorder(3,3,3,3)
+									 ));
 
 			JPanel inputPanel = new JPanel();
 			inputPanel.setBorder(new EmptyBorder(0,8,0,0));
@@ -1123,7 +1123,7 @@ public class PresetControlsPanel extends AbstractPanel {
 		/**
 		 * Shows this dialog and returns the entered name.
 		 * @param initialName the name that (if it is not empty) will be
-		 * set as the value of {@link #getNameTextField() name text field} 
+		 * set as the value of {@link #getNameTextField() name text field}
 		 * @param editable {@code true} if the name text field should be
 		 * editable, {@code false} otherwise
 		 * @return the specified name or null if there is no name (or the name

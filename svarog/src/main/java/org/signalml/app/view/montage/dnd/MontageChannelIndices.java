@@ -36,7 +36,7 @@ public class MontageChannelIndices {
 	/**
 	 * Gets the array of indexes of {@link MontageChannel montage channels} that
 	 * are stored in this "collection".
-	 * 
+	 *
 	 * @return the array of indexes of montage channels
 	 */
 	public int[] getMontageChannels() {

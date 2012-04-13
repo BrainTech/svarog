@@ -91,19 +91,19 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 		this.timeDomainSampleFilterPresetManager = viewerElementManager.getTimeDomainSampleFilterPresetManager();
 		this.fftFilterPresetManager = viewerElementManager.getFftFilterPresetManager();
 		setFileChooser(viewerElementManager.getFileChooser());
-		
+
 		this.setLayout(new BorderLayout());
 		this.add(createInterface(), BorderLayout.CENTER);
 		this.add(getPresetControlsPanel(), BorderLayout.SOUTH);
 	}
-	
+
 	protected JPanel createInterface() {
 		JPanel interfacePanel = new JPanel();
 		interfacePanel.setLayout(new BorderLayout());
 		interfacePanel.setPreferredSize(new Dimension(800, 500));
 
 		tabbedPane = new JTabbedPane();
-		
+
 		filtersPanel = new MontageFiltersPanel(predefinedTimeDomainSampleFilterPresetManager);
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
 		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
@@ -115,19 +115,19 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 		tabbedPane.addTab(_("Montage"), montageEditionPanel);
 		tabbedPane.addTab(_("Filters"), filtersPanel);
 		tabbedPane.addTab(_("Miscellaneous"), miscellaneousPanel);
-		
+
 		interfacePanel.add(tabbedPane);
 
 		return interfacePanel;
 	}
-	
+
 	@Override
 	protected PresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null)
 			presetControlsPanel = new PresetControlsPanel(this, presetManager, true);
 		return presetControlsPanel;
 	}
-	
+
 	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
 		return fftFilterPresetManager;
 	}
@@ -207,7 +207,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 	public EegSystemsPresetManager getEegSystemsPresetManager() {
 		return eegSystemsPresetManager;
 	}
-	
+
 	/**
 	 * Returns the validation errors dialog.
 	 * If it doesn't exist it is created.
@@ -232,7 +232,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 			final boolean signalBound = (signalDocument != null);
 			if (montage == null)
 				this.currentMontage = new Montage(signalBound ?
-								  new SourceMontage(signalDocument) : new SourceMontage());
+												  new SourceMontage(signalDocument) : new SourceMontage());
 			else
 				this.currentMontage = new Montage(montage);
 			this.signalDocument = signalDocument;
@@ -244,7 +244,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 			filtersPanel.setSignalBound(signalBound);
 
 			filtersPanel.setCurrentSamplingFrequency(signalBound ?
-								 signalDocument.getSamplingFrequency() : 128.0F);
+					signalDocument.getSamplingFrequency() : 128.0F);
 		}
 
 		if (signalDocument != null && !this.currentMontage.isCompatible(signalDocument))
@@ -252,7 +252,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 
 		setMontageToPanels(this.currentMontage);
 	}
-	
+
 	public void setMontageToPanels(Montage montage) {
 		if (montage != null && montage.getEegSystemName() != null) {
 			EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
@@ -263,7 +263,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 		filtersPanel.setMontage(montage);
 		miscellaneousPanel.setMontage(montage);
 	}
-	
+
 	public void fillModelFromPanel(Object model) throws SignalMLException {
 		if (model instanceof MontageDescriptor) {
 			MontageDescriptor descriptor = (MontageDescriptor) model;
@@ -276,7 +276,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 			openDocumentDescriptor.getOpenSignalDescriptor().setMontage(getCurrentMontage());
 		}
 	}
-	
+
 	public void validate(Object model, ValidationErrors errors) throws SignalMLException {
 		// validate montage table
 		if (currentMontage.getMontageChannelCount() == 0) {
@@ -305,7 +305,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 
 		return preset;
 	}
-	
+
 	@Override
 	public void setPreset(Preset preset) throws SignalMLException {
 		fillPanelFromModel(preset);
@@ -320,12 +320,12 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 		if (presetChannelsCount != thisChannelsCount) {
 			Dialogs.showError(_("Preset is incompatible with this montage - bad channels count in the preset montage!"));
 			logger.error("Preset incompatible: current montage 'normal' channel count = " +
-					+ thisChannelsCount + " preset channel count = " + presetChannelsCount);
+						 + thisChannelsCount + " preset channel count = " + presetChannelsCount);
 			return false;
 		}
 		return true;
 	}
-	
+
 	private int getNormalChannelsCount(Montage montage) {
 		int normalChannelsCount = 0;
 

@@ -29,7 +29,7 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	public static final int TRYOUT_COUNT = 10;
 
 	private ExperimentDescriptor experimentDescriptor;
-	
+
 	private String multiplexerAddress;
 	private int multiplexerPort;
 
@@ -38,25 +38,25 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 	public ConnectToExperimentWorker(ExperimentDescriptor experimentDescriptor) {
 		this.experimentDescriptor = experimentDescriptor;
 	}
-	
+
 	@Override
 	protected JmxClient doInBackground() throws Exception {
 		if (sendJoinExperimentRequest())
 			return connectToMultiplexer();
 		return null;
 	}
-	
-	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException { 
+
+	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException {
 		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
 
 		String responseString = null;
 		try {
 			responseString = Helper.sendRequest(request, experimentDescriptor.getExperimentIPAddress(), experimentDescriptor.getExperimentPort());
-		} catch(SocketTimeoutException ex) {
+		} catch (SocketTimeoutException ex) {
 			ex.printStackTrace();
 			Dialogs.showError(_("Socket timeout exceeded!"));
 			return false;
-		} catch(ConnectException ex) {
+		} catch (ConnectException ex) {
 			ex.printStackTrace();
 			Dialogs.showError(_("Could not connect to the experiment!"));
 			return false;
@@ -65,9 +65,9 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 		if (!MessageParser.checkIfResponseIsOK(responseString, MessageType.REQUEST_OK_RESPONSE)) {
 			return false;
 		}
-		
+
 		RequestOKResponse response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
-		
+
 		String mxAddr = (String) response.getParams().get("mx_addr");
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
 		multiplexerAddress = tokenizer.nextToken();
@@ -75,12 +75,12 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 
 		return true;
 	}
-	
+
 	protected JmxClient connectToMultiplexer() {
 		JmxClient client;
-		
+
 		multiplexerSocket = new InetSocketAddress(multiplexerAddress, multiplexerPort);
-        client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
+		client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
 		ChannelFuture connectFuture = client.asyncConnect(multiplexerSocket);
 
 		int i = 0;
@@ -94,7 +94,7 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 				break;
 			}
 		}
-		
+
 		return client;
 	}
 

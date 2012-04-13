@@ -18,22 +18,22 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.montage.MontageDescriptor;
 
-/** 
+/**
  * Opens a {@link CheckSignalDialog}.
  *
  * @author Tomasz Sawicki
  */
 public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
-       
+
 	/**
 	 * Logger to save history of execution at.
 	 */
-        protected static final Logger logger = Logger.getLogger(CheckSignalAction.class);
+	protected static final Logger logger = Logger.getLogger(CheckSignalAction.class);
 
-        /**
-	 * The dialog which is shown after evoking this action.
+	/**
+	* The dialog which is shown after evoking this action.
 	 */
-        private CheckSignalDialog checkSignalDialog;
+	private CheckSignalDialog checkSignalDialog;
 
 	/**
 	 * Constructor.
@@ -43,7 +43,7 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	 */
 	public CheckSignalAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 
-                super(signalDocumentFocusSelector);
+		super(signalDocumentFocusSelector);
 		setText(_("Check signal..."));
 		setToolTip(_("Check if signal is OK"));
 		setMnemonic(KeyEvent.VK_C);
@@ -58,8 +58,8 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 	public void actionPerformed(ActionEvent ev) {
 
 		logger.debug("Check signal");
-                
-                SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if (signalDocument == null) {
 			logger.warn("Target document doesn't exist or is not a signal");
 			return;
@@ -75,9 +75,9 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 		signalDocument.setMontage(descriptor.getMontage());
 	}
 
-        /**
-         * Action is enabled only if the monitor is open.
-         */
+	/**
+	 * Action is enabled only if the monitor is open.
+	 */
 	@Override
 	public void setEnabledAsNeeded() {
 
@@ -85,24 +85,24 @@ public class CheckSignalAction extends AbstractFocusableSignalMLAction<SignalDoc
 		setEnabled((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument));
 	}
 
-        /**
-         * Gets the {@link #checkSignalDialog}.
-         *
-         * @return {@link #checkSignalDialog}
-         */
+	/**
+	 * Gets the {@link #checkSignalDialog}.
+	 *
+	 * @return {@link #checkSignalDialog}
+	 */
 	public CheckSignalDialog getCheckSignalDialog() {
 
-                return checkSignalDialog;
+		return checkSignalDialog;
 	}
 
-        /**
-         * Sets the {@link #checkSignalDialog}.
-         *
-         * @param checkSignalDialog a {@link CheckSignalDialog} object
-         */
+	/**
+	 * Sets the {@link #checkSignalDialog}.
+	 *
+	 * @param checkSignalDialog a {@link CheckSignalDialog} object
+	 */
 	public void setCheckSignalDialog(CheckSignalDialog checkSignalDialog) {
-           
-                if( checkSignalDialog == null ) {
+
+		if (checkSignalDialog == null) {
 			throw new NullPointerException();
 		}
 		this.checkSignalDialog = checkSignalDialog;

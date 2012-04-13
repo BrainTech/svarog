@@ -6,7 +6,7 @@ import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
 
 /**
  * Interface for listeners for signal changes, e.g. when new samples are added.
- * 
+ *
  * @author Piotr Szachewicz
  */
 public interface PluginSignalChangeListener extends EventListener {

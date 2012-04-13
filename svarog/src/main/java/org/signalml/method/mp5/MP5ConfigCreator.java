@@ -136,7 +136,7 @@ public class MP5ConfigCreator {
 		if (customConfigText != null && !customConfigText.isEmpty()) {
 			formatter.format("%s%n", customConfigText);
 			formatter.format("%n");
-		}		
+		}
 
 	}
 

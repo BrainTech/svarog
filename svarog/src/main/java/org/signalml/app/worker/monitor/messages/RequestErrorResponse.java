@@ -9,14 +9,14 @@ public class RequestErrorResponse extends Message {
 
 	@JsonProperty("err_code")
 	private String errorCode;
-	
+
 	@JsonIgnore
 	private String request;
-	
+
 	public RequestErrorResponse() {
 		super(MessageType.REQUEST_ERROR_RESPONSE);
 	}
-	
+
 	public String getDetails() {
 		return details;
 	}

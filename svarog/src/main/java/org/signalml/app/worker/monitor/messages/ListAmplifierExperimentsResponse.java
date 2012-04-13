@@ -14,6 +14,6 @@ public class ListAmplifierExperimentsResponse {
 	public void setAmplifier_peer_info(String amplifier_peer_info) {
 		this.amplifier_peer_info = amplifier_peer_info;
 	}
-	
-	
+
+
 }

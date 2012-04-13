@@ -15,27 +15,27 @@ import org.signalml.app.document.MonitorSignalDocument;
  * @author Tomasz Sawicki
  */
 public abstract class GenericAmplifierDiagnosis {
-        
-        private MonitorSignalDocument monitorSignalDocument;
 
-        /**
-         * Constructor. The only parameter is a {@link MonitorSignalDocument} object.
-         *
-         * @param monitorSignalDocument represents the currently open monitor document
-         */
-        public GenericAmplifierDiagnosis(MonitorSignalDocument monitorSignalDocument) {
+	private MonitorSignalDocument monitorSignalDocument;
 
-                this.monitorSignalDocument = monitorSignalDocument;
-        }
+	/**
+	 * Constructor. The only parameter is a {@link MonitorSignalDocument} object.
+	 *
+	 * @param monitorSignalDocument represents the currently open monitor document
+	 */
+	public GenericAmplifierDiagnosis(MonitorSignalDocument monitorSignalDocument) {
 
-        /**
-         * Returns an information on each channel based on the information
-         * from the {@link MonitorSignalDocument} object.
-         *
-         * @return a HashMap<String, Boolean> - the key is channel's label,
-         * the value - true if the signal is OK, false it it's not. If there weren't
-         * enough samples in the system to test the signal state, the return value
-         * is null.
-         */
-        public abstract HashMap<String, Boolean> signalState();
+		this.monitorSignalDocument = monitorSignalDocument;
+	}
+
+	/**
+	 * Returns an information on each channel based on the information
+	 * from the {@link MonitorSignalDocument} object.
+	 *
+	 * @return a HashMap<String, Boolean> - the key is channel's label,
+	 * the value - true if the signal is OK, false it it's not. If there weren't
+	 * enough samples in the system to test the signal state, the return value
+	 * is null.
+	 */
+	public abstract HashMap<String, Boolean> signalState();
 }

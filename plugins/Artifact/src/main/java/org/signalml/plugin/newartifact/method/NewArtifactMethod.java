@@ -51,8 +51,8 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		NewArtifactData artifactData = (NewArtifactData) data;
 
 		File patientTagFile = new File(new File(artifactData.getProjectPath(),
-							artifactData.getPatientName()).getAbsolutePath(),
-					       artifactData.getPatientName() + ".lock");
+												artifactData.getPatientName()).getAbsolutePath(),
+									   artifactData.getPatientName() + ".lock");
 
 		FileChannel channel;
 		try {
@@ -72,8 +72,8 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 			NewArtifactComputationMgr mgr = new NewArtifactComputationMgr();
 
 			return mgr.compute(
-				       new NewArtifactMgrData(artifactData, this
-							      .getArtifactConstants(artifactData)), tracker);
+					   new NewArtifactMgrData(artifactData, this
+											  .getArtifactConstants(artifactData)), tracker);
 
 		} catch (IOException e) {
 			throw new ComputationException(e);
@@ -94,12 +94,12 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		NewArtifactData artifactData) {
 		MultichannelSampleSource sampleSource = artifactData.getSampleSource();
 		return new NewArtifactConstants(sampleSource.getChannelCount(),
-						sampleSource.getSamplingFrequency(), artifactData
-						.getParameters().getPowerGridFrequency(),
-						this.BLOCK_LENGTH_IN_SECONDS,
-						this.SMALL_BLOCK_LENGTH_IN_SECONDS,
-						this.TAIL_LENGTH_IN_SECONDS, this.SMALL_TAIL_LENGTH_IN_SECONDS,
-						this.SLOPE_LENGTH_IN_SECONDS);
+										sampleSource.getSamplingFrequency(), artifactData
+										.getParameters().getPowerGridFrequency(),
+										this.BLOCK_LENGTH_IN_SECONDS,
+										this.SMALL_BLOCK_LENGTH_IN_SECONDS,
+										this.TAIL_LENGTH_IN_SECONDS, this.SMALL_TAIL_LENGTH_IN_SECONDS,
+										this.SLOPE_LENGTH_IN_SECONDS);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		for (int i = 0; i < chosenArtifactTypes.length; i++) {
 			if (chosenArtifactTypes[i] != 0) {
 				list.add(new NewIterableSensitivity(parameters, NewArtifactType
-								    .values()[i]));
+													.values()[i]));
 			}
 		}
 
@@ -156,7 +156,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		File tagFile = result.getTagFile();
 
 		File iterationTagFile = new File(tagFile.getParentFile(), "iteration_"
-						 + iteration + "_" + tagFile.getName());
+										 + iteration + "_" + tagFile.getName());
 
 		tagFile.renameTo(iterationTagFile);
 		result.setTagFile(iterationTagFile);
@@ -191,7 +191,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	public String getName() {
 		try {
 			return ((PluginConfigForMethod) PluginResourceRepository
-				.GetResource("config", NewArtifactPlugin.class)).getMethodConfig().getMethodName();
+					.GetResource("config", NewArtifactPlugin.class)).getMethodConfig().getMethodName();
 		} catch (PluginException e) {
 			return "";
 		}

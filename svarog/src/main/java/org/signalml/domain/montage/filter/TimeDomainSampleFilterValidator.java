@@ -43,11 +43,19 @@ public final class TimeDomainSampleFilterValidator {
 
 		FilterType filterType = filter.getFilterType();
 
-		switch(filterType) {
-			case HIGHPASS: isValid = isHighpassValid(); break;
-			case LOWPASS: isValid = isLowpassValid(); break;
-			case BANDPASS: isValid = isBandpassValid(); break;
-			case BANDSTOP: isValid = isBandstopValid(); break;
+		switch (filterType) {
+		case HIGHPASS:
+			isValid = isHighpassValid();
+			break;
+		case LOWPASS:
+			isValid = isLowpassValid();
+			break;
+		case BANDPASS:
+			isValid = isBandpassValid();
+			break;
+		case BANDSTOP:
+			isValid = isBandstopValid();
+			break;
 		}
 
 		boolean isRippleValid = isRippleAndAttenuationValid();
@@ -90,7 +98,7 @@ public final class TimeDomainSampleFilterValidator {
 	 * @return true if the filter is correct, false otherwise
 	 */
 	private boolean isHighpassValid() {
-		if(filter.getStopbandEdgeFrequencies()[0] < filter.getPassbandEdgeFrequencies()[0]) {
+		if (filter.getStopbandEdgeFrequencies()[0] < filter.getPassbandEdgeFrequencies()[0]) {
 			return true;
 		}
 		else {
@@ -106,7 +114,7 @@ public final class TimeDomainSampleFilterValidator {
 	 * @return true if the filter is correct, false otherwise
 	 */
 	private boolean isLowpassValid() {
-		if(filter.getPassbandEdgeFrequencies()[0] < filter.getStopbandEdgeFrequencies()[0]) {
+		if (filter.getPassbandEdgeFrequencies()[0] < filter.getStopbandEdgeFrequencies()[0]) {
 			return true;
 		}
 		else {
@@ -123,8 +131,8 @@ public final class TimeDomainSampleFilterValidator {
 	 */
 	private boolean isBandpassValid() {
 		if (filter.getStopbandEdgeFrequencies()[0] < filter.getPassbandEdgeFrequencies()[0] &&
-		    filter.getPassbandEdgeFrequencies()[0] < filter.getPassbandEdgeFrequencies()[1] &&
-		    filter.getPassbandEdgeFrequencies()[1] < filter.getStopbandEdgeFrequencies()[1]) {
+				filter.getPassbandEdgeFrequencies()[0] < filter.getPassbandEdgeFrequencies()[1] &&
+				filter.getPassbandEdgeFrequencies()[1] < filter.getStopbandEdgeFrequencies()[1]) {
 			return true;
 		}
 		else {
@@ -140,9 +148,9 @@ public final class TimeDomainSampleFilterValidator {
 	 * @return true if the filter is correct, false otherwise
 	 */
 	private boolean isBandstopValid() {
-		if(filter.getPassbandEdgeFrequencies()[0] < filter.getStopbandEdgeFrequencies()[0] &&
-		   filter.getStopbandEdgeFrequencies()[0] < filter.getStopbandEdgeFrequencies()[1] &&
-		   filter.getStopbandEdgeFrequencies()[1] < filter.getPassbandEdgeFrequencies()[1]) {
+		if (filter.getPassbandEdgeFrequencies()[0] < filter.getStopbandEdgeFrequencies()[0] &&
+				filter.getStopbandEdgeFrequencies()[0] < filter.getStopbandEdgeFrequencies()[1] &&
+				filter.getStopbandEdgeFrequencies()[1] < filter.getPassbandEdgeFrequencies()[1]) {
 			return true;
 		}
 		else {

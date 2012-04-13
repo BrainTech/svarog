@@ -39,18 +39,18 @@ public class TagSeqTest extends TestCase {
 	}
 
 	public void testRandomString() {
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
 	}
-	
+
 }

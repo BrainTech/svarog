@@ -233,20 +233,20 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 
 	@Override
 	public Object[] getArguments() {
-		return new Object[]{
-				style.getDescriptionOrName(),
-				position,
-				length,
-				position + length,
-				channel
-			};
+		return new Object[] {
+				   style.getDescriptionOrName(),
+				   position,
+				   length,
+				   position + length,
+				   channel
+			   };
 	}
 
 	@Override
 	public String[] getCodes() {
-		return new String[]{
-				(channel == CHANNEL_NULL ? "tagWithoutChannel" : "tagWithChannel")
-			};
+		return new String[] {
+				   (channel == CHANNEL_NULL ? "tagWithoutChannel" : "tagWithChannel")
+			   };
 	}
 
 	@Override

@@ -34,7 +34,7 @@ import org.signalml.app.view.workspace.ViewerFileChooser;
  * <li>save the current preset in {@link PresetManager} and get a preset from
  * there.</li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractPresetDialog extends AbstractDialog implements PresetableView {
@@ -45,7 +45,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog implements Pre
 	 * the panel with OK and CANCEL button
 	 */
 	protected JPanel buttonPane;
-	
+
 	/**
 	 * The panel with all the controls to load/save presets.
 	 */
@@ -73,15 +73,15 @@ public abstract class AbstractPresetDialog extends AbstractDialog implements Pre
 		super(w, isModal);
 		this.presetManager = presetManager;
 	}
-	
+
 	public void setFileChooser(ViewerFileChooser fileChooser) {
 		getPresetControlsPanel().setFileChooser(fileChooser);
 	}
-	
+
 	public ViewerFileChooser getFileChooser() {
 		return getPresetControlsPanel().getFileChooser();
 	}
-	
+
 	protected PresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null) {
 			presetControlsPanel = new PresetControlsPanel(this, presetManager);

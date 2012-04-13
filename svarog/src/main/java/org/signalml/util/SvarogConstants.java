@@ -24,7 +24,7 @@ public abstract class SvarogConstants {
 	 * The format is {lastest-tag}[-{commits-since-the-tag}-{sha1}[{+ if dirty}]].
 	 */
 	public static final String VERSION =
-	    new Scanner(SvarogConstants.class.getResourceAsStream("/svarog/git-version")).next();
+		new Scanner(SvarogConstants.class.getResourceAsStream("/svarog/git-version")).next();
 
 	/**
 	 * Recommended minimal dimension of the screen

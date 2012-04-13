@@ -66,8 +66,8 @@ public class MP5LocalExecutorDialog extends AbstractDialog  {
 		JPanel namePanel = new JPanel(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Executor name")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Executor name")),
+			new EmptyBorder(3,3,3,3)
 		);
 		namePanel.setBorder(border);
 

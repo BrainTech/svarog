@@ -10,7 +10,7 @@ import org.signalml.app.util.IconUtils;
 
 /**
  * The label with the icon of a trash can.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageWasteBasket extends JLabel {

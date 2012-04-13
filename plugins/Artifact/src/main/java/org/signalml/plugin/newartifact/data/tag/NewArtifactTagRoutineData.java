@@ -11,9 +11,9 @@ public class NewArtifactTagRoutineData {
 	public final int excludedChannels[];
 
 	public NewArtifactTagRoutineData(final NewArtifactConstants constants,
-					 final NewArtifactParameters parameters,
-					 final int eegChannels[],
-					 final int excludedChannels[]) {
+									 final NewArtifactParameters parameters,
+									 final int eegChannels[],
+									 final int excludedChannels[]) {
 		this.constants = constants;
 		this.parameters = parameters;
 		this.eegChannels = eegChannels;

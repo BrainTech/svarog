@@ -20,6 +20,6 @@ public class I18NAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent a) {
 		sa.getI18nAccess().translateN(
-		       "Deleted one file", "Deleted {0} files", 11);
+			"Deleted one file", "Deleted {0} files", 11);
 	}
 }

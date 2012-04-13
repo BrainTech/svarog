@@ -8,7 +8,7 @@ public class NewStagerBookSample {
 	public final NewStagerAdaptedAtom[] atoms;
 
 	public NewStagerBookSample(int offset, NewStagerBookAtom atoms[],
-				   NewStagerBookInfo bookInfo) {
+							   NewStagerBookInfo bookInfo) {
 		this.offset = offset;
 
 		this.atoms = this.rescaleWith(atoms, bookInfo);
@@ -24,13 +24,13 @@ public class NewStagerBookSample {
 		for (int i = 0; i < atoms.length; ++i) {
 			NewStagerBookAtom atom = atoms[i];
 			double amplitude = 2.0d * (double) atom.amplitude
-					   / pointsPerMicrovolt;
+							   / pointsPerMicrovolt;
 			double frequency = 0.5d * (double) atom.frequency * samplingFrequency;
 			double scale = (double) atom.scale / samplingFrequency;
 			double position = (double) atom.position / samplingFrequency;
 
 			result[i] = new NewStagerAdaptedAtom(amplitude, frequency, scale,
-							     position, atom.phase);
+												 position, atom.phase);
 		}
 
 		return result;

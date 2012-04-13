@@ -13,7 +13,7 @@ public class BusyDialog extends JDialog {
 
 	private JLabel label;
 	private JProgressBar progressBar;
-	
+
 	public BusyDialog(Container parentContainer) {
 		super();
 		setLocationRelativeTo(parentContainer);
@@ -26,11 +26,11 @@ public class BusyDialog extends JDialog {
 		label = new JLabel(_("Please wait"));
 		progressBar = new JProgressBar();
 		progressBar.setIndeterminate(true);
-		
+
 		JPanel panel = new JPanel();
 		panel.add(label);
 		panel.add(progressBar);
 		this.add(panel);
-		
+
 	}
 }

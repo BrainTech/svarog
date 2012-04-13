@@ -11,8 +11,8 @@ public class NewStagerBookAtomFilterData {
 	public NewStagerBookAtomSampleHelperSet converterSet;
 
 	public NewStagerBookAtomFilterData(NewStagerBookInfo bookInfo,
-					   NewStagerFASPThreshold threshold,
-					   NewStagerBookAtomSampleHelperSet converterSet) {
+									   NewStagerFASPThreshold threshold,
+									   NewStagerBookAtomSampleHelperSet converterSet) {
 		this.bookInfo = bookInfo;
 		this.threshold = threshold;
 		this.converterSet = converterSet;

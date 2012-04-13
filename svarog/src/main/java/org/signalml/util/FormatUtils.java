@@ -14,7 +14,7 @@ import javax.swing.text.NumberFormatter;
 
 /**
  * Class which should be used format numbers to strings.
- * 
+ *
  * @author Piotr Szachewicz
  */
 public class FormatUtils {
@@ -40,7 +40,7 @@ public class FormatUtils {
 	/**
 	 * Returns specified date in format "YYYY-MM-DD HH:MM:SS" (YYYY-year,
 	 * MM-month, DD-day; HH-hour, MM-minutes, SS-seconds).
-	 * 
+	 *
 	 * @param time
 	 *            date to process
 	 * @return string representation of date in format above
@@ -61,7 +61,7 @@ public class FormatUtils {
 	 * Returns Date from specified String time representation. String
 	 * representations must be in format YYYY-MM-DD HH:MM:SS (YYYY-year,
 	 * MM-month, DD-day; HH-hour, MM-minutes, SS-seconds).
-	 * 
+	 *
 	 * @param time
 	 *            String representation of Date
 	 * @return Date from String time representation
@@ -103,7 +103,7 @@ public class FormatUtils {
 	 * Returns String representation of givens time in seconds in format
 	 * "xx h xx m yy s xx ms (yy min / yy epochs)", where all xx are numbers
 	 * greater then 0 and yy are nonnegative numers.
-	 * 
+	 *
 	 * @param seconds
 	 *            seconds to process
 	 * @return String representation of given seconds
@@ -115,7 +115,7 @@ public class FormatUtils {
 		float mmin = Math.round(whole / 60f * 100) / 100f;
 		int epochs = Math.round(mmin * 3);
 
-		int ms = (int) (((double) Math.round((seconds - whole) * 1000)) / 1000);
+		int ms = (int)(((double) Math.round((seconds - whole) * 1000)) / 1000);
 		int hours = whole / 3600;
 		whole = whole % 3600;
 		int minutes = whole / 60;
@@ -143,7 +143,7 @@ public class FormatUtils {
 	 * Adds time to specified StringBuilder. Time is in format DD:HH:MM (DD -
 	 * days, HH - hours, MM - minutes) or DD:HH:MM.SS (SS - seconds) when second
 	 * are greater then zero.
-	 * 
+	 *
 	 * @param time
 	 *            time to add
 	 * @param sb

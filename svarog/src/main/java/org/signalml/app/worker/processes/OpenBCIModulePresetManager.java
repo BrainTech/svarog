@@ -15,17 +15,17 @@ import org.signalml.app.util.XMLUtils;
 @XStreamAlias("modules")
 public class OpenBCIModulePresetManager extends AbstractPresetManager {
 
-        @Override
-        public String getStandardFilename() {
-                return "modules.xml";
-        }
+	@Override
+	public String getStandardFilename() {
+		return "modules.xml";
+	}
 
-        @Override
-        public Class<?> getPresetClass() {
-                return OpenBCIModule.class;
-        }
+	@Override
+	public Class<?> getPresetClass() {
+		return OpenBCIModule.class;
+	}
 
-        @Override
+	@Override
 	public XStream getStreamer() {
 
 		if (streamer == null)
@@ -43,41 +43,41 @@ public class OpenBCIModulePresetManager extends AbstractPresetManager {
 		return streamer;
 	}
 
-        /**
-         * Returns the configuration.
-         *
-         * @return a HashMap - the key is module's name, value: module's path.
-         */
-        public HashMap<String, OpenBCIModuleData> getAllModulesData() {
+	/**
+	 * Returns the configuration.
+	 *
+	 * @return a HashMap - the key is module's name, value: module's path.
+	 */
+	public HashMap<String, OpenBCIModuleData> getAllModulesData() {
 
-                HashMap<String, OpenBCIModuleData> modulesConfiguration = new HashMap<String, OpenBCIModuleData>();
+		HashMap<String, OpenBCIModuleData> modulesConfiguration = new HashMap<String, OpenBCIModuleData>();
 
-                for (Preset preset : presets) {
+		for (Preset preset : presets) {
 
-                        OpenBCIModule module = (OpenBCIModule) preset;
-                        modulesConfiguration.put(module.getName(), new OpenBCIModuleData(module));
-                }
+			OpenBCIModule module = (OpenBCIModule) preset;
+			modulesConfiguration.put(module.getName(), new OpenBCIModuleData(module));
+		}
 
-                return modulesConfiguration;
-        }
+		return modulesConfiguration;
+	}
 
-        /**
-         * Returns one module path.
-         *
-         * @param name name of the module
-         * @return the path
-         * @throws Exception when module's name can't be found
-         */
-        public OpenBCIModuleData getModuleData(String name) throws Exception {
+	/**
+	 * Returns one module path.
+	 *
+	 * @param name name of the module
+	 * @return the path
+	 * @throws Exception when module's name can't be found
+	 */
+	public OpenBCIModuleData getModuleData(String name) throws Exception {
 
-                for (Preset preset : presets) {
+		for (Preset preset : presets) {
 
-                        OpenBCIModule module = (OpenBCIModule) preset;
-                        if (module.getName().equals(name)) {
-                                return new OpenBCIModuleData(module);
-                        }
-                }
+			OpenBCIModule module = (OpenBCIModule) preset;
+			if (module.getName().equals(name)) {
+				return new OpenBCIModuleData(module);
+			}
+		}
 
-                throw new Exception();
-        }
+		throw new Exception();
+	}
 }

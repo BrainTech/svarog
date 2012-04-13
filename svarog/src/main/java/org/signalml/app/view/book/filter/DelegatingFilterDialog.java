@@ -95,9 +95,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		JPanel classPathPanel = new JPanel(new BorderLayout(5,5));
 
 		classPathPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Choose class path")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Choose class path")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
 
@@ -117,9 +117,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 		JPanel fqClassNamePanel = new JPanel(new BorderLayout(5,5));
 		fqClassNamePanel.setBorder(new CompoundBorder(
-		                                   new TitledBorder(_("Choose fully qualified filter class name")),
-		                                   new EmptyBorder(3,3,3,3)
-		                           ));
+									   new TitledBorder(_("Choose fully qualified filter class name")),
+									   new EmptyBorder(3,3,3,3)
+								   ));
 
 		fqClassNamePanel.add(getFqClassNameTextField(), BorderLayout.CENTER);
 		fqClassNamePanel.add(getQuickFileButton(), BorderLayout.EAST);

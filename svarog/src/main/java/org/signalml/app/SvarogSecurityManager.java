@@ -48,7 +48,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	 */
 	protected static void install() {
 		final String mode = System.getProperties().getProperty("svarog.security_manager",
-								       "off");
+							"off");
 		if (mode.equals("off")) {
 			log.debug("SvarogSecurityManager is off");
 			return;
@@ -60,7 +60,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 		} else {
 			if (!mode.equals("enforcing"))
 				log.error("svarog.security_manager has invalid value "
-					  + "'" + mode + "', ignoring");
+						  + "'" + mode + "', ignoring");
 			enforcing = true;
 		}
 
@@ -110,7 +110,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 		PluginLoaderHi pluginLoaderHi = PluginLoaderHi.getInstance();
 		if (pluginLoaderHi == null)
 			return null;
-		if (! (pluginLoaderHi.hasStartedLoading()))
+		if (!(pluginLoaderHi.hasStartedLoading()))
 			return null;
 
 		StackTraceElement[] stack = t.getStackTrace();
@@ -138,7 +138,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 				// This is the reason we do this rudimentary check for a root
 				// class in the stack.
 				if ("java.lang.Thread".equals(className) ||
-				    S_SvarogApplication.equals(className))
+						S_SvarogApplication.equals(className))
 					hasRoot = true;
 			}
 		}
@@ -215,7 +215,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 
 			if (!permit) {
 				String errMsg = "Permission DENIED [" + t.getId() + "/" +
-					t.getName() + "]: " + p;
+								t.getName() + "]: " + p;
 				if (frame != null)
 					errMsg += "; plugin ctx: " + toString(frame);
 				permissionDenied(t, p, e, frame);
@@ -242,9 +242,9 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 
 	/** Used by {@link SvarogSecurityManager} to log security decisions. */
 	protected void permissionDenied(Thread t, Permission p, SecurityException e,
-				     StackTraceElement frame) {
+									StackTraceElement frame) {
 		String msg = "Permission DENIED [" + (t.getId()) + "/"
-			+ (t.getName()) + "]: " + p + "; plugin ctx: " + frame;
+					 + (t.getName()) + "]: " + p + "; plugin ctx: " + frame;
 		if (e != null)
 			msg += "\n" + getExceptionMessage(e);
 		log.warn(msg);
@@ -266,6 +266,6 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 
 	protected String toString(StackTraceElement f) {
 		return f.getClassName() + "#" + f.getMethodName() + "(" + f.getFileName() + ":"
-			+ f.getLineNumber() + ")";
+			   + f.getLineNumber() + ")";
 	}
 }

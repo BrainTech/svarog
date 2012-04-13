@@ -48,10 +48,10 @@ public class RainbowMapPalette implements WignerMapPalette {
 
 	public static RainbowMapPalette getInstance() {
 		if (sharedInstance == null) {
-		    synchronized (RainbowMapPalette.class) {
-		        if (sharedInstance == null)
-		            sharedInstance = new RainbowMapPalette();
-		    }
+			synchronized (RainbowMapPalette.class) {
+				if (sharedInstance == null)
+					sharedInstance = new RainbowMapPalette();
+			}
 		}
 
 		return sharedInstance;
@@ -69,7 +69,7 @@ public class RainbowMapPalette implements WignerMapPalette {
 
 	/**
 	 * Returns the name of this palette [i18n].
-	 * 
+	 *
 	 * @return the name of this palette
 	 */
 	public String i18n() {

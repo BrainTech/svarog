@@ -22,7 +22,7 @@ import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
 public class NewArtifactComputationMgr extends
 	PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethod.class);
+										   .getLogger(NewArtifactMethod.class);
 
 	private class TrackerProxy implements
 		IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> {
@@ -35,7 +35,7 @@ public class NewArtifactComputationMgr extends
 		private NewArtifactProgressPhase phase;
 
 		public TrackerProxy(CheckedThreadGroup threadGroup,
-				    MethodExecutionTracker tracker, int index) {
+							MethodExecutionTracker tracker, int index) {
 			this.threadGroup = threadGroup;
 			this.tracker = tracker;
 			this.index = index;
@@ -50,7 +50,7 @@ public class NewArtifactComputationMgr extends
 
 		@Override
 		public void setProgressPhase(NewArtifactProgressPhase phase,
-					     Object... arguments) {
+									 Object... arguments) {
 			if (this.phase == NewArtifactProgressPhase.ABORT_PHASE) {
 				return;
 			}
@@ -73,7 +73,7 @@ public class NewArtifactComputationMgr extends
 				this.setProgressPhase(NewArtifactProgressPhase.ABORT_PHASE);
 				synchronized (this.tracker) {
 					this.tracker.setTicker(this.index,
-							       this.tracker.getTickerLimits()[this.index]);
+										   this.tracker.getTickerLimits()[this.index]);
 				}
 			}
 			return result;
@@ -112,15 +112,15 @@ public class NewArtifactComputationMgr extends
 	protected Collection<IPluginComputationMgrStep> prepareStepChain() {
 		this.steps = new LinkedList<IPluginComputationMgrStep>();
 		this.steps.add(new NewArtifactMgrPreprocessStep(this.makeStepData(
-					this.data, this.tracker, 0)));
+						   this.data, this.tracker, 0)));
 		this.steps.add(new NewArtifactMgrTagStep(this.makeStepData(this.data,
-				this.tracker, 0)));
+					   this.tracker, 0)));
 		return this.steps;
 	}
 
 	@Override
 	protected void initializeRun(Collection<IPluginComputationMgrStep> steps,
-				     int ticks) {
+								 int ticks) {
 		this.tracker.setTickerLimit(0, ticks);
 	}
 
@@ -148,10 +148,10 @@ public class NewArtifactComputationMgr extends
 	private NewArtifactMgrStepData makeStepData(NewArtifactMgrData data,
 			MethodExecutionTracker tracker, int stepNumber) {
 		return new NewArtifactMgrStepData(data.artifactData, data.constants,
-						  new NewArtifactIntermediateFilesPathConstructor(
-								  data.artifactData), new TrackerProxy(
-										  this.getThreadGroup(), tracker, stepNumber),
-						  this.getThreadFactory());
+										  new NewArtifactIntermediateFilesPathConstructor(
+											  data.artifactData), new TrackerProxy(
+											  this.getThreadGroup(), tracker, stepNumber),
+										  this.getThreadFactory());
 	}
 
 }

@@ -16,7 +16,7 @@ import org.signalml.codec.SignalMLCodecManagerListener;
  * <li>RAW - will try to load a file as a RAW signal file
  * <li>EDF/EASYS/etc. - will use a {@link SignalMLCodec} to open the file.
  *</ul>
- * 
+ *
  * @author Piotr Szachewicz
  */
 public class FileTypeComboBoxModel extends AbstractListModel implements ComboBoxModel, SignalMLCodecManagerListener {
@@ -31,10 +31,13 @@ public class FileTypeComboBoxModel extends AbstractListModel implements ComboBox
 
 	@Override
 	public Object getElementAt(int index) {
-		switch(index) {
-		case 0: return FileOpenSignalMethod.AUTODETECT;
-		case 1: return FileOpenSignalMethod.RAW;
-		default: return codecManager.getCodecAt(index - 2);
+		switch (index) {
+		case 0:
+			return FileOpenSignalMethod.AUTODETECT;
+		case 1:
+			return FileOpenSignalMethod.RAW;
+		default:
+			return codecManager.getCodecAt(index - 2);
 		}
 	}
 

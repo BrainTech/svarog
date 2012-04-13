@@ -22,7 +22,7 @@ public class TextPanePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the real text pane which is encapsulated in this panel  
+	 * the real text pane which is encapsulated in this panel
 	 */
 	private JTextPane textPane;
 	/**

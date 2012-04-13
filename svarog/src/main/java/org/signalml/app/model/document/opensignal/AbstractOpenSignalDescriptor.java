@@ -13,7 +13,7 @@ public abstract class AbstractOpenSignalDescriptor {
 	/**
 	 * an array of labels of signal channels
 	 */
-	private String[] channelLabels;	
+	private String[] channelLabels;
 
 	/**
 	 * Montage to be applied to the signal directly after opening.
@@ -40,7 +40,7 @@ public abstract class AbstractOpenSignalDescriptor {
 
 	/**
 	 * Sets a montage to be applied to the document directly after opening.
-	 * 
+	 *
 	 * @param montage
 	 *            montage to be applied
 	 */
@@ -50,7 +50,7 @@ public abstract class AbstractOpenSignalDescriptor {
 
 	/**
 	 * Returns the montage to be applied to the document directly after opening.
-	 * 
+	 *
 	 * @return the montage to be applied
 	 */
 	public Montage getMontage() {
@@ -59,7 +59,7 @@ public abstract class AbstractOpenSignalDescriptor {
 
 	/**
 	 * Returns an array of labels of signal channels
-	 * 
+	 *
 	 * @return an array of labels of signal channels
 	 */
 	public String[] getChannelLabels() {
@@ -68,7 +68,7 @@ public abstract class AbstractOpenSignalDescriptor {
 
 	/**
 	 * Sets an array of labels of signal channels
-	 * 
+	 *
 	 * @param channelLabels
 	 *            an array of labels of signal channels
 	 */
@@ -79,7 +79,7 @@ public abstract class AbstractOpenSignalDescriptor {
 	public void setCorrectlyRead(boolean correctlyRead) {
 		this.correctlyRead = correctlyRead;
 	}
-	
+
 	public boolean isCorrectlyRead() {
 		return correctlyRead;
 	}

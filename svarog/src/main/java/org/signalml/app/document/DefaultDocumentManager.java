@@ -312,13 +312,13 @@ public class DefaultDocumentManager implements DocumentManager {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==DocumentManagerListener.class) {
-				 if( e == null ) { 
-					 e = new DocumentManagerEvent(this,document,index,inTypeIndex);
-				 }
-				 ((DocumentManagerListener)listeners[i+1]).documentAdded(e);
-			 }
-		 }
+			if (listeners[i]==DocumentManagerListener.class) {
+				if (e == null) {
+					e = new DocumentManagerEvent(this,document,index,inTypeIndex);
+				}
+				((DocumentManagerListener)listeners[i+1]).documentAdded(e);
+			}
+		}
 	}
 
 	/**
@@ -334,13 +334,13 @@ public class DefaultDocumentManager implements DocumentManager {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==DocumentManagerListener.class) {
-				 if( e == null ) { 
-					 e = new DocumentManagerEvent(this,document,index,inTypeIndex);
-				 }
-				 ((DocumentManagerListener)listeners[i+1]).documentRemoved(e);
-			 }
-		 }
+			if (listeners[i]==DocumentManagerListener.class) {
+				if (e == null) {
+					e = new DocumentManagerEvent(this,document,index,inTypeIndex);
+				}
+				((DocumentManagerListener)listeners[i+1]).documentRemoved(e);
+			}
+		}
 	}
 
 	/**
@@ -356,13 +356,13 @@ public class DefaultDocumentManager implements DocumentManager {
 		Object[] listeners = listenerList.getListenerList();
 		DocumentManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==DocumentManagerListener.class) {
-				 if( e == null ) { 
-					 e = new DocumentManagerEvent(this,document,index,inTypeIndex);
-				 }
-				 ((DocumentManagerListener)listeners[i+1]).documentPathChanged(e);
-			 }
-		 }
+			if (listeners[i]==DocumentManagerListener.class) {
+				if (e == null) {
+					e = new DocumentManagerEvent(this,document,index,inTypeIndex);
+				}
+				((DocumentManagerListener)listeners[i+1]).documentPathChanged(e);
+			}
+		}
 	}
 
 	@Override

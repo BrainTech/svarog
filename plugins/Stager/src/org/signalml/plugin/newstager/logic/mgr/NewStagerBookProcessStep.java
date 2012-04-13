@@ -121,7 +121,7 @@ public class NewStagerBookProcessStep extends
 		}
 
 		int numberOfThreads = Math.max(1, Runtime.getRuntime()
-					       .availableProcessors());
+									   .availableProcessors());
 
 		final AtomicInteger counter = this.aliveWorkers = new AtomicInteger(
 			numberOfThreads);
@@ -144,13 +144,13 @@ public class NewStagerBookProcessStep extends
 
 		for (int i = 0; i < numberOfThreads; ++i) {
 			this.workers.add(new NewStagerBookProcessorWorker(
-						 new NewStagerBookProcessorWorkerData(this.bookDataProvider,
-								 completion, this.data.constants,
-								 this.data.stagerData.getChannelMap(),
-								 this.signalStatResult.newParameters,
-								 this.data.fixedParameters,
-								 this.signalStatResult.muscle,
-								 this.signalStatResult.signalStatCoeffs)));
+								 new NewStagerBookProcessorWorkerData(this.bookDataProvider,
+										 completion, this.data.constants,
+										 this.data.stagerData.getChannelMap(),
+										 this.signalStatResult.newParameters,
+										 this.data.fixedParameters,
+										 this.signalStatResult.muscle,
+										 this.signalStatResult.signalStatCoeffs)));
 		}
 
 	}

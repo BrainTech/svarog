@@ -21,71 +21,71 @@ public class TagSignalIdentification implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * the id of the format of the signal
-         */
+	/**
+	 * the id of the format of the signal
+	 */
 	private String formatId;
 
-        /**
-         * the name of the file in which signal is stored
-         */
+	/**
+	 * the name of the file in which signal is stored
+	 */
 	private String fileName;
 
-        /**
-         * the checksum of the signal
-         */
-        private SignalChecksum checksum;
+	/**
+	 * the checksum of the signal
+	 */
+	private SignalChecksum checksum;
 
-        /**
-         * Creates an empty TagSignalIdentification.
-         */
+	/**
+	 * Creates an empty TagSignalIdentification.
+	 */
 	public TagSignalIdentification() {
 	}
 
-        /**
-         * Returns the id of the format of the signal.
-         * @return the id of the format of the signal
-         */
+	/**
+	 * Returns the id of the format of the signal.
+	 * @return the id of the format of the signal
+	 */
 	public String getFormatId() {
 		return formatId;
 	}
 
-        /**
-         * Sets the id of the format of the signal.
-         * @param formatId the id of the format of the signal
-         */
+	/**
+	 * Sets the id of the format of the signal.
+	 * @param formatId the id of the format of the signal
+	 */
 	public void setFormatId(String formatId) {
 		this.formatId = formatId;
 	}
 
-        /**
-         * Returns the name of the file in which signal is stored.
-         * @return the name of the file in which signal is stored
-         */
+	/**
+	 * Returns the name of the file in which signal is stored.
+	 * @return the name of the file in which signal is stored
+	 */
 	public String getFileName() {
 		return fileName;
 	}
 
-        /**
-         * Sets the name of the file in which signal is stored.
-         * @param fileName the name of the file in which signal is stored
-         */
+	/**
+	 * Sets the name of the file in which signal is stored.
+	 * @param fileName the name of the file in which signal is stored
+	 */
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
 
-        /**
-         * Returns the checksum of the signal.
-         * @return the checksum of the signal
-         */
+	/**
+	 * Returns the checksum of the signal.
+	 * @return the checksum of the signal
+	 */
 	public SignalChecksum getChecksum() {
 		return checksum;
 	}
 
-        /**
-         * Sets the checksum of the signal.
-         * @param checksum the checksum of the signal
-         */
+	/**
+	 * Sets the checksum of the signal.
+	 * @param checksum the checksum of the signal
+	 */
 	public void setChecksum(SignalChecksum checksum) {
 		this.checksum = checksum;
 	}

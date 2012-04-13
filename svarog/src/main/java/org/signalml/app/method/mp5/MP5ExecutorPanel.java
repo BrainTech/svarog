@@ -44,8 +44,8 @@ public class MP5ExecutorPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("MP5 executor")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("MP5 executor")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

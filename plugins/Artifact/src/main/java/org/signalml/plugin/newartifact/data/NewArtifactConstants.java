@@ -18,10 +18,10 @@ public class NewArtifactConstants {
 	private static final double FM1 = 38;
 
 	public NewArtifactConstants(int channelCount,
-				    float frequency, float powerGridFrequency,
-				    int blockLengthInSeconds, int smallBlockLengthInSeconds,
-				    int tailLengthInSeconds, float smallTailLengthInSeconds,
-				    float slopeLengthInSeconds) {
+								float frequency, float powerGridFrequency,
+								int blockLengthInSeconds, int smallBlockLengthInSeconds,
+								int tailLengthInSeconds, float smallTailLengthInSeconds,
+								float slopeLengthInSeconds) {
 		this.channelCount = channelCount;
 		this.frequency = frequency;
 		this.powerGridFrequency = powerGridFrequency;

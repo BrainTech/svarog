@@ -24,38 +24,38 @@ import org.signalml.plugin.loader.PluginHead;
  * Passes the information that the {@link #setInitializationPhaseEnd
  * initialization phase} has finished to the {@link GUIAccessImpl GUI access}
  * and the information that the application is {@link #onClose() closing}
- * to {@link SvarogAccessChangeSupportImpl change support}. 
- * 
+ * to {@link SvarogAccessChangeSupportImpl change support}.
+ *
  * @author Marcin Szumski
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class PluginAccessClass implements SvarogAccess {
-	
+
 	private static final Logger logger = Logger.getLogger(PluginAccessClass.class);
-	
+
 	/**
 	 * the manager of Svarog elements
 	 */
 	private static ViewerElementManager manager = null;
 
 	private final Class _klass;
-	
+
 	private SvarogI18n i18nAccessImpl;
 
 	private final SvarogAccessResourcesImpl resourcesAccessImpl;
-	
+
 	/**
 	 * access to GUI features of Svarog
 	 */
 	protected static final GUIAccessImpl guiAccess = GUIAccessImpl.getInstance();
 
-	
+
 	/** Svarog methods and tasks facade. */
 	private static final MethodAccessImpl methodAccessImpl = MethodAccessImpl.getInstance();
-	
+
 	/** Svarog configuration facade. */
 	private static final ConfigAccessImpl configAccessImpl = ConfigAccessImpl.getInstance();
-	
+
 	/**
 	 * access to ordinary features of Svarog
 	 */
@@ -69,25 +69,25 @@ public class PluginAccessClass implements SvarogAccess {
 	 * The plugin map.
 	 */
 	private static HashMap<Object, PluginHead> pluginMap = new HashMap<Object, PluginHead>();
-	
+
 	/**
 	 * Constructor. Creates child accesses.
 	 */
-	public PluginAccessClass(PluginHead head){
+	public PluginAccessClass(PluginHead head) {
 		this._klass = head.getPluginObj().getClass();
 		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(this._klass);
 	}
-	
+
 	/**
 	 * Adds given plugin to {@link #pluginMap}.
 	 * @param head plugin to add
 	 */
 	public synchronized static void addPlugin(PluginHead head) {
-	    if (pluginMap.containsKey(head)) {
-		    throw new IllegalArgumentException("Duplicate plugin auth! (" + head + ")");
-	    }
-	    pluginMap.put(head, head);
-	    logger.debug("addPlugin: " + head + " --> " + head);
+		if (pluginMap.containsKey(head)) {
+			throw new IllegalArgumentException("Duplicate plugin auth! (" + head + ")");
+		}
+		pluginMap.put(head, head);
+		logger.debug("addPlugin: " + head + " --> " + head);
 	}
 
 	/**
@@ -155,14 +155,14 @@ public class PluginAccessClass implements SvarogAccess {
 	public static void setInitializationPhaseEnd() {
 		guiAccess.setInitializationPhaseEnd();
 	}
-	
+
 	/**
 	 * Calls {@link SvarogAccessChangeSupportImpl#onClose()}.
 	 */
-	public static void onClose(){
+	public static void onClose() {
 		changeSupport.onClose();
 	}
-	
+
 	@Override
 	public SvarogAccessMethod getMethodAccess() {
 		return methodAccessImpl;

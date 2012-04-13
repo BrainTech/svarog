@@ -42,26 +42,26 @@ public class HashtableMock {
 
 	private static MultiplexerMessage createResponse(MessageContext context, String val) {
 		MultiplexerMessage.Builder responseBuilder = null;
-		responseBuilder = context.createResponse( 
-				SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE, 
-				ByteString.copyFromUtf8(val));
+		responseBuilder = context.createResponse(
+							  SvarogConstants.MessageTypes.DICT_GET_RESPONSE_MESSAGE,
+							  ByteString.copyFromUtf8(val));
 		return responseBuilder.build();
 	}
 
 
 	private static MultiplexerMessage createSamplingRateResponse(MessageContext context) {
-		return createResponse( context, "11");
+		return createResponse(context, "11");
 	}
 
 	private static MultiplexerMessage createNumberOfChanelsResponse(MessageContext context) {
-		return createResponse( context, "20");
+		return createResponse(context, "20");
 	}
 
 	private static MultiplexerMessage createAmplifierChannelsToRecordResponse(MessageContext context) {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<20; i++) {
 			if (i > 0)
-				buf.append( " ");
+				buf.append(" ");
 			buf.append(Integer.toString(i));
 		}
 		String ch = buf.toString();
@@ -72,8 +72,8 @@ public class HashtableMock {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<20; i++) {
 			if (i > 0)
-				buf.append( ";");
-			buf.append( "ch").append(Integer.toString(i));
+				buf.append(";");
+			buf.append("ch").append(Integer.toString(i));
 		}
 		String ch = buf.toString();
 		return createResponse(context, ch);
@@ -83,9 +83,9 @@ public class HashtableMock {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<20; i++) {
 			if (i > 0)
-				buf.append( " ");
+				buf.append(" ");
 //			buf.append(Float.toString(i + 1.5f));
-			buf.append(Float.toString( (float) gain));
+			buf.append(Float.toString((float) gain));
 		}
 		String ch = buf.toString();
 		return createResponse(context, ch);
@@ -95,20 +95,20 @@ public class HashtableMock {
 		StringBuffer buf = new StringBuffer();
 		for (int i=0; i<20; i++) {
 			if (i > 0)
-				buf.append( " ");
+				buf.append(" ");
 //			buf.append(Float.toString(i + 2.3f));
-			buf.append(Float.toString( (float) offset));
+			buf.append(Float.toString((float) offset));
 		}
 		String ch = buf.toString();
 		return createResponse(context, ch);
 	}
 
 	private static MultiplexerMessage createMinDataResponse(MessageContext context) {
-		return createResponse(context, Float.toString( (float) min));
+		return createResponse(context, Float.toString((float) min));
 	}
 
 	private static MultiplexerMessage createMaxDataResponse(MessageContext context) {
-		return createResponse(context, Float.toString( (float) max));
+		return createResponse(context, Float.toString((float) max));
 	}
 
 	private static class RequestHandler implements MessageHandler {
@@ -117,7 +117,7 @@ public class HashtableMock {
 			if (message.getType() == SvarogConstants.MessageTypes.DICT_GET_REQUEST_MESSAGE) {
 				MultiplexerMessage response = null;
 				String s = message.getMessage().toStringUtf8();
-				System.out.println( s);
+				System.out.println(s);
 				if (SAMPLING_RATE.equals(s)) {
 					response = createSamplingRateResponse(context);
 				}
@@ -143,35 +143,35 @@ public class HashtableMock {
 					response = createMaxDataResponse(context);
 				}
 				else {
-					System.out.println( "Bad message!");
+					System.out.println("Bad message!");
 					return;
 				}
 				context.reply(response);
 			}
 			else
-				System.out.println( "Bad request!");
+				System.out.println("Bad request!");
 		}
 	}
 
 	/**
 	 * @param args
-	 * @throws ConnectException 
-	 * @throws NoPeerForTypeException 
-	 * @throws InterruptedException 
-	 * @throws IOException 
+	 * @throws ConnectException
+	 * @throws NoPeerForTypeException
+	 * @throws InterruptedException
+	 * @throws IOException
 	 */
 	public static void main(String[] args) throws ConnectException, NoPeerForTypeException, InterruptedException {
 		if (args.length > 0)
-			gain = Double.parseDouble( args[0]);
+			gain = Double.parseDouble(args[0]);
 		if (args.length > 1)
-			offset = Double.parseDouble( args[1]);
+			offset = Double.parseDouble(args[1]);
 		if (args.length > 2)
-			min = Double.parseDouble( args[2]);
+			min = Double.parseDouble(args[2]);
 		if (args.length > 3)
-			max = Double.parseDouble( args[3]);
-		SimpleBackend backend = new SimpleBackend( 
-				SvarogConstants.PeerTypes.HASHTABLE, 
-				new RequestHandler());
+			max = Double.parseDouble(args[3]);
+		SimpleBackend backend = new SimpleBackend(
+			SvarogConstants.PeerTypes.HASHTABLE,
+			new RequestHandler());
 		backend.asyncConnect(jmxServerAddress());
 		backend.run();
 	}

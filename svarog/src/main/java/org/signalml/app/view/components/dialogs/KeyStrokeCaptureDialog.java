@@ -76,8 +76,8 @@ public class KeyStrokeCaptureDialog extends AbstractDialog  {
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
-		        new LineBorder(Color.LIGHT_GRAY),
-		        new EmptyBorder(10,10,10,10)
+			new LineBorder(Color.LIGHT_GRAY),
+			new EmptyBorder(10,10,10,10)
 		);
 		p.setBorder(border);
 

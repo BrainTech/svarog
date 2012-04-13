@@ -14,43 +14,43 @@ package org.signalml.domain.signal;
  */
 public class ChannelSelectorSampleSource implements SampleSource {
 
-        /**
-         * the {@link MultichannelSampleSource sample source} for all channels
-         */
+	/**
+	 * the {@link MultichannelSampleSource sample source} for all channels
+	 */
 	private MultichannelSampleSource source;
 
-        /**
-         * the number of the channel that this sample source represents
-         */
-        private int channel;
+	/**
+	 * the number of the channel that this sample source represents
+	 */
+	private int channel;
 
 	/**
-         * Constructor. Creates a sample source for a single channel using a
-         * {@link MultichannelSampleSource sample source} for all channels and
-         * the number of the channel
-         * @param source the sample source for all channels
-         * @param channel the number of the channel that this sample source
-         * will represent
-         */
-        public ChannelSelectorSampleSource(MultichannelSampleSource source, int channel) {
+	     * Constructor. Creates a sample source for a single channel using a
+	     * {@link MultichannelSampleSource sample source} for all channels and
+	     * the number of the channel
+	     * @param source the sample source for all channels
+	     * @param channel the number of the channel that this sample source
+	     * will represent
+	     */
+	public ChannelSelectorSampleSource(MultichannelSampleSource source, int channel) {
 		super();
 		this.source = source;
 		this.channel = channel;
 	}
 
-        /**
-         * Returns the {@link MultichannelSampleSource sample source} for all
-         * channels.
-         * @return the sample source for all channels
-         */
+	/**
+	 * Returns the {@link MultichannelSampleSource sample source} for all
+	 * channels.
+	 * @return the sample source for all channels
+	 */
 	public MultichannelSampleSource getSource() {
 		return source;
 	}
 
-        /**
-         * Returns the number of the channel that this sample source represents
-         * @return the number of the channel that this sample source represents
-         */
+	/**
+	 * Returns the number of the channel that this sample source represents
+	 * @return the number of the channel that this sample source represents
+	 */
 	public int getChannel() {
 		return channel;
 	}
@@ -75,23 +75,23 @@ public class ChannelSelectorSampleSource implements SampleSource {
 		return source.getSamplingFrequency();
 	}
 
-        /**
-         * Returns if the {@link MultichannelSampleSource sample source} for all
-         * channels is capable of returning a channel count
-         * @return true if the sample source for all channels is capable of
-         * returning a channel count, false otherwise
-         */
+	/**
+	 * Returns if the {@link MultichannelSampleSource sample source} for all
+	 * channels is capable of returning a channel count
+	 * @return true if the sample source for all channels is capable of
+	 * returning a channel count, false otherwise
+	 */
 	@Override
 	public boolean isChannelCountCapable() {
 		return source.isChannelCountCapable();
 	}
 
-        /**
-         * Returns if the {@link MultichannelSampleSource sample source} for all
-         * channels is capable of returning a sampling frequency
-         * @return true if the sample source for all channels is capable of
-         * returning a sampling frequency, false otherwise
-         */
+	/**
+	 * Returns if the {@link MultichannelSampleSource sample source} for all
+	 * channels is capable of returning a sampling frequency
+	 * @return true if the sample source for all channels is capable of
+	 * returning a sampling frequency, false otherwise
+	 */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return source.isSamplingFrequencyCapable();

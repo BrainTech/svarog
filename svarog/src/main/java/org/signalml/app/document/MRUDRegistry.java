@@ -27,7 +27,7 @@ public interface MRUDRegistry {
 	 * @return the number of all entries in this registry
 	 */
 	int getMRUDEntryCount();
-	
+
 	/**
 	 * Returns the {@link MRUDEntry entry} of a given "global" index (the index in the
 	 * collection of all entries) in this registry.
@@ -35,7 +35,7 @@ public interface MRUDRegistry {
 	 * @return the entry of a given index
 	 */
 	MRUDEntry getMRUDEntryAt(int index);
-	
+
 	/**
 	 * Returns the "global" index (the index in the collection of all
 	 * {@link MRUDEntry entries}) of a given entry.
@@ -51,7 +51,7 @@ public interface MRUDRegistry {
 	 * @return the number of entries of that type in this registry
 	 */
 	int getMRUDEntryCount(ManagedDocumentType type);
-	
+
 	/**
 	 * Returns the {@link MRUDEntry entry} of a given in-type index (the index
 	 * in the collection of entries for a given {@link ManagedDocumentType
@@ -61,7 +61,7 @@ public interface MRUDRegistry {
 	 * @return the entry of a given index
 	 */
 	MRUDEntry getMRUDEntryAt(ManagedDocumentType type, int index);
-	
+
 	/**
 	 * Returns the in-type index (the index in the collection of entries for
 	 * a given {@link ManagedDocumentType type} of a document) of a given entry.
@@ -74,7 +74,7 @@ public interface MRUDRegistry {
 	/**
 	 * Adds an {@link MRUDEntry entry} to this registry.
 	 * If the size of the registry is exceeded, the oldest entry (access times)
-	 * is removed. 
+	 * is removed.
 	 * @param mrud the entry to be added
 	 */
 	void registerMRUDEntry(MRUDEntry mrud);
@@ -84,7 +84,7 @@ public interface MRUDRegistry {
 	 * @param listener the listener to be added
 	 */
 	void addMRUDRegistryListener(MRUDRegistryListener listener);
-	
+
 	/**
 	 * Removes a {@link MRUDRegistryListener listener} from this registry.
 	 * @param listener the listener to be removed

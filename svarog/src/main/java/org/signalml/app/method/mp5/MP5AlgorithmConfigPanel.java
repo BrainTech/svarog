@@ -50,8 +50,8 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Selection of the algorithm")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Selection of the algorithm")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		setBorder(border);
@@ -70,23 +70,23 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(algorithmLabel)
+			layout.createParallelGroup()
+			.addComponent(algorithmLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(glue1)
+			layout.createParallelGroup()
+			.addComponent(glue1)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getAlgorithmComboBox())
+			layout.createParallelGroup()
+			.addComponent(getAlgorithmComboBox())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(algorithmHelpButton)
+			layout.createParallelGroup()
+			.addComponent(algorithmHelpButton)
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -94,15 +94,15 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(algorithmLabel)
-				.addComponent(glue1)
-				.addComponent(getAlgorithmComboBox())
-				.addComponent(algorithmHelpButton)
-			);
-					
-		layout.setVerticalGroup(vGroup);				
-						
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(algorithmLabel)
+			.addComponent(glue1)
+			.addComponent(getAlgorithmComboBox())
+			.addComponent(algorithmHelpButton)
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	public ResolvableComboBox getAlgorithmComboBox() {

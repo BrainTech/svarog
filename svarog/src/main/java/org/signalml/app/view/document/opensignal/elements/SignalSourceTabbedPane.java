@@ -58,15 +58,15 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	 */
 	public FileChooserPanel getFileChooserPanel() {
 		if (fileChooserPanel == null) {
-			fileChooserPanel = new FileChooserPanel( ManagedDocumentType.SIGNAL);
-			
+			fileChooserPanel = new FileChooserPanel(ManagedDocumentType.SIGNAL);
+
 			String lastFileChooserPath = SvarogApplication.getApplicationConfiguration().getLastFileChooserPath();
 			getFileChooserPanel().getFileChooser().setCurrentDirectory(new File(lastFileChooserPath));
 			fileChooserPanel.getFileChooser().addPropertyChangeListener(this);
 		}
 		return fileChooserPanel;
 	}
-	
+
 	protected ChooseExperimentPanel getChooseExperimentPanel() {
 		if (chooseExperimentPanel == null) {
 			chooseExperimentPanel = new ChooseExperimentPanel();
@@ -74,7 +74,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		}
 		return chooseExperimentPanel;
 	}
-	
+
 	public SignalSource getSelectedSignalSource() {
 		if (getSelectedComponent() == getFileChooserPanel())
 			return SignalSource.FILE;
@@ -115,17 +115,17 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			autodetectFileTypeAndReadMetadata(file);
 		else if (fileTypeMethod == FileOpenSignalMethod.RAW)
 			readRawFileMetadata(file);
-		else if (fileTypeMethod instanceof SignalMLCodec){
+		else if (fileTypeMethod instanceof SignalMLCodec) {
 			SignalMLCodec codec = (SignalMLCodec) fileTypeMethod;
 			readSignalMLMetadata(file, codec);
 		}
 		else {
 			openSignalDescriptor = null;
 		}
-		
+
 		fireOpenSignalDescriptorChanged();
 	}
-	
+
 	protected void autodetectFileTypeAndReadMetadata(File file) {
 		String extension = Util.getFileExtension(file, false);
 		if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
@@ -144,22 +144,22 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 			SignalMLCodecManager codecManager = viewerElementManager.getCodecManager();
 			SignalMLCodec codec = codecManager.getCodecForFormat(formatName);
-			
+
 			if (codec == null) {
 				Dialogs.showError(_("No SignalML codec was found to open this file!"));
 				fireOpenSignalDescriptorChanged();
 				fileChooserPanel.getFileChooser().setSelectedFile(null);
 				return;
 			}
-			
+
 			readSignalMLMetadata(file, codec);
 		}
 	}
-	
+
 	protected void fireOpenSignalDescriptorChanged() {
 		firePropertyChange(OPEN_SIGNAL_DESCRIPTOR_PROPERTY, null, openSignalDescriptor);
 	}
-	
+
 	protected void readSignalMLMetadata(File signalFile, SignalMLCodec codec) {
 		File file = getFileChooserPanel().getSelectedFile();
 
@@ -184,7 +184,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 		if (!xmlManifestFile.exists())
 			xmlManifestFile = Util.changeOrAddFileExtension(signalFile, "svarog.info");
-		
+
 		RawSignalDescriptorReader reader = new RawSignalDescriptorReader();
 		openSignalDescriptor = null;
 		if (!xmlManifestFile.exists()) {
@@ -192,7 +192,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 				JFileChooser fileChooser = new JFileChooser(signalFile);
 				fileChooser.showOpenDialog(null);
 				xmlManifestFile =  fileChooser.getSelectedFile();
-				if(xmlManifestFile == null)
+				if (xmlManifestFile == null)
 					return;
 			}
 			else {
@@ -216,7 +216,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
 		return openSignalDescriptor;
 	}
-	
+
 	@Override
 	protected void fireStateChanged() {
 		if (this.getSelectedComponent() == fileChooserPanel) {
@@ -225,12 +225,12 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		else {
 			updateSelectedExperiment();
 		}
-		
+
 		super.fireStateChanged();
 	}
 
 	/**
-	 * Invoked when the selected file type changed. 
+	 * Invoked when the selected file type changed.
 	 * @param
 	 */
 	@Override
@@ -242,7 +242,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	public void onDialogCloseWithOK() {
 		log.debug("onDialogCloseWithOK");
-		if(getSelectedSignalSource() == SignalSource.FILE)
+		if (getSelectedSignalSource() == SignalSource.FILE)
 			getFileChooserPanel().getFileChooser().lastDirectoryChanged();
 	}
 }

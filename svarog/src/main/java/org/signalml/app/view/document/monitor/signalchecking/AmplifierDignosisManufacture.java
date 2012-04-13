@@ -15,24 +15,24 @@ import org.signalml.app.document.MonitorSignalDocument;
  */
 public class AmplifierDignosisManufacture {
 
-        /**
-         * A static method which returns a {@link GenericAmplifierDiagnosis} object.
-         *
-         * @param method a {@link SignalCheckingMethod} object
-         * @param monitorSignalDocument a {@link MonitorSignalDocument} object representing the
-         * currently open monitor document
-         * @param parameters hashmap of parameters for the amp diagnosis
-         * @return a {@link GenericAmplifierDiagnosis} object for the given amplifier model
-         */
-        public static GenericAmplifierDiagnosis getAmplifierDiagnosis(SignalCheckingMethod method, MonitorSignalDocument monitorSignalDocument, HashMap<String, Object> paramters) {
+	/**
+	 * A static method which returns a {@link GenericAmplifierDiagnosis} object.
+	 *
+	 * @param method a {@link SignalCheckingMethod} object
+	 * @param monitorSignalDocument a {@link MonitorSignalDocument} object representing the
+	 * currently open monitor document
+	 * @param parameters hashmap of parameters for the amp diagnosis
+	 * @return a {@link GenericAmplifierDiagnosis} object for the given amplifier model
+	 */
+	public static GenericAmplifierDiagnosis getAmplifierDiagnosis(SignalCheckingMethod method, MonitorSignalDocument monitorSignalDocument, HashMap<String, Object> paramters) {
 
-                if (method.isAmpNull())
-                        return new AmplifierNullDiagnosis(monitorSignalDocument, paramters);
-                else if (method.isDC())
-                        return new DCDiagnosis(monitorSignalDocument, paramters);
-                else if (method.isFFT())
-                        return new FFTDiagnosis(monitorSignalDocument, paramters);
+		if (method.isAmpNull())
+			return new AmplifierNullDiagnosis(monitorSignalDocument, paramters);
+		else if (method.isDC())
+			return new DCDiagnosis(monitorSignalDocument, paramters);
+		else if (method.isFFT())
+			return new FFTDiagnosis(monitorSignalDocument, paramters);
 
-                else return null;
-        }
+		else return null;
+	}
 }

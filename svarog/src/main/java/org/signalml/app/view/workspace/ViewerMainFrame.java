@@ -442,7 +442,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
-		
+
 		PluginLoaderHi.getInstance().onClose();
 
 		saveViewPreferences();
@@ -679,7 +679,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		config.setStreamer(elementManager.getStreamer());
 		ConfigurationDefaults.setMainFrameConfigurationDefaults(config);
 		config.maybeReadFromPersistence("No mainframe configuration, will use defaults",
-						"Bad mainframe configuration, will use defaults");
+										"Bad mainframe configuration, will use defaults");
 
 		setSize(new Dimension(config.getXSize(),config.getYSize()));
 

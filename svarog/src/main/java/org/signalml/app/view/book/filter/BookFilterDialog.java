@@ -95,9 +95,9 @@ public class BookFilterDialog extends AbstractPresetDialog {
 		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3,3));
 
 		masterSwitchPanel.setBorder(new CompoundBorder(
-		                                    new TitledBorder(_("Filtering master switch")),
-		                                    new EmptyBorder(3,3,3,3)
-		                            ));
+										new TitledBorder(_("Filtering master switch")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 		JLabel filteringEnabledLabel = new JLabel(_("Enable book filtering"));
 
@@ -107,9 +107,9 @@ public class BookFilterDialog extends AbstractPresetDialog {
 		JPanel conditionPanel = new JPanel(new GridLayout(1,2,3,3));
 
 		conditionPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Condition type")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Condition type")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		conditionPanel.add(getConjunctionRadioButton());
 		conditionPanel.add(getAlternativeRadioButton());

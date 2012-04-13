@@ -24,10 +24,10 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private OpenSignalWizardDialog openSignalWizardDialog;
-	
+
 	private OpenDocumentDescriptor openDocumentDescriptor;
 	private ConnectToExperimentWorker worker;
-	
+
 	/**
 	 * Constructor.
 	 * @param viewerElementManager ViewerElementManager to be used by
@@ -50,7 +50,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	public void actionPerformed(ActionEvent arg0) {
 		openDocumentDescriptor = new OpenDocumentDescriptor();
 
-		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor, true); 
+		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor, true);
 		if (!ok) {
 			return;
 		}
@@ -73,7 +73,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 			JmxClient jmxClient;
 			try {
 				jmxClient = worker.get();
-				
+
 				if (jmxClient != null) {
 					ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openDocumentDescriptor.getOpenSignalDescriptor();
 					experimentDescriptor.setJmxClient(jmxClient);
@@ -86,7 +86,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
 

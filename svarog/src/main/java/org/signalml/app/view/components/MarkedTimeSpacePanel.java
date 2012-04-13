@@ -59,7 +59,7 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 * the marker
 	 */
 	private JPanel markerPanel;
-	
+
 	/**
 	 * the panel which allows to select how many seconds before and after the
 	 * marker should be taken
@@ -70,7 +70,7 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 * the combo-box with the list of names of signal channels
 	 */
 	private JComboBox markerChannelComboBox;
-	
+
 	/**
 	 * the combo-box with the list of {@link TagStyle#isMarker() marker}
 	 * {@link TagStyle styles}
@@ -90,10 +90,10 @@ public class MarkedTimeSpacePanel extends JPanel {
 
 	/**
 	 * the names of channels,
-	 * at index {@code i} - the name of the channel of index {@code i} 
+	 * at index {@code i} - the name of the channel of index {@code i}
 	 */
 	private String[] channels;
-	
+
 	/**
 	 * the array of {@link TagStyle#isMarker() marker}
 	 * {@link TagStyle styles}
@@ -154,9 +154,9 @@ public class MarkedTimeSpacePanel extends JPanel {
 
 			markerPanel = new JPanel();
 			markerPanel.setBorder(new CompoundBorder(
-			                              new TitledBorder(_("Marker channel & style")),
-			                              new EmptyBorder(3,3,3,3)
-			                      ));
+									  new TitledBorder(_("Marker channel & style")),
+									  new EmptyBorder(3,3,3,3)
+								  ));
 
 			GroupLayout layout = new GroupLayout(markerPanel);
 			markerPanel.setLayout(layout);
@@ -169,15 +169,15 @@ public class MarkedTimeSpacePanel extends JPanel {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(markerChannelLabel)
-			        .addComponent(markerStyleLabel)
+				layout.createParallelGroup()
+				.addComponent(markerChannelLabel)
+				.addComponent(markerStyleLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(getMarkerChannelComboBox())
-			        .addComponent(getMarkerStyleComboBox())
+				layout.createParallelGroup()
+				.addComponent(getMarkerChannelComboBox())
+				.addComponent(getMarkerStyleComboBox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -185,16 +185,16 @@ public class MarkedTimeSpacePanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(markerChannelLabel)
-					.addComponent(getMarkerChannelComboBox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(markerChannelLabel)
+				.addComponent(getMarkerChannelComboBox())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(markerStyleLabel)
-					.addComponent(getMarkerStyleComboBox())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(markerStyleLabel)
+				.addComponent(getMarkerStyleComboBox())
+			);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -267,9 +267,9 @@ public class MarkedTimeSpacePanel extends JPanel {
 			settingsPanel = new JPanel();
 
 			settingsPanel.setBorder(new CompoundBorder(
-			                                new TitledBorder(_("Settings")),
-			                                new EmptyBorder(3,3,3,3)
-			                        ));
+										new TitledBorder(_("Settings")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 			GroupLayout layout = new GroupLayout(settingsPanel);
 			settingsPanel.setLayout(layout);
@@ -282,15 +282,15 @@ public class MarkedTimeSpacePanel extends JPanel {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(secondsBeforeLabel)
-			        .addComponent(secondsAfterLabel)
+				layout.createParallelGroup()
+				.addComponent(secondsBeforeLabel)
+				.addComponent(secondsAfterLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getSecondsBeforeSpinner())
-			        .addComponent(getSecondsAfterSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getSecondsBeforeSpinner())
+				.addComponent(getSecondsAfterSpinner())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -298,16 +298,16 @@ public class MarkedTimeSpacePanel extends JPanel {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(secondsBeforeLabel)
-					.addComponent(getSecondsBeforeSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(secondsBeforeLabel)
+				.addComponent(getSecondsBeforeSpinner())
+			);
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(secondsAfterLabel)
-					.addComponent(getSecondsAfterSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(secondsAfterLabel)
+				.addComponent(getSecondsAfterSpinner())
+			);
 
 			layout.setVerticalGroup(vGroup);
 		}

@@ -16,334 +16,334 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ChannelDefinitionsTable extends JTable {
 
-        /**
-         * Wheter this table is used in edit g&o dialog (true), or in edit
-         * amp def dialog (false).
-         */
-        private boolean dialog;
+	/**
+	 * Wheter this table is used in edit g&o dialog (true), or in edit
+	 * amp def dialog (false).
+	 */
+	private boolean dialog;
 
-        /**
-         * Default constructor.
-         */
-        public ChannelDefinitionsTable(boolean dialog) {
+	/**
+	 * Default constructor.
+	 */
+	public ChannelDefinitionsTable(boolean dialog) {
 
-                super();
-                setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<ChannelDefinition>()));
-                setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                this.dialog = dialog;
-        }
+		super();
+		setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<ChannelDefinition>()));
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		this.dialog = dialog;
+	}
 
-        /**
-         * Adds a definition to the table.
-         *
-         * @param definition definition to be added
-         */
-        public void add(ChannelDefinition definition) {
+	/**
+	 * Adds a definition to the table.
+	 *
+	 * @param definition definition to be added
+	 */
+	public void add(ChannelDefinition definition) {
 
-                List<ChannelDefinition> definitions = getDefinitionTableModel().getDefinitions();
-                definitions.add(definition);
-                setModel(new ChannelDefinitionTableModel(dialog, definitions));
+		List<ChannelDefinition> definitions = getDefinitionTableModel().getDefinitions();
+		definitions.add(definition);
+		setModel(new ChannelDefinitionTableModel(dialog, definitions));
 
-        }
+	}
 
-        /**
-         * Removes selected definition from the table.
-         */
-        public void removeSelected() {
+	/**
+	 * Removes selected definition from the table.
+	 */
+	public void removeSelected() {
 
-                int selectedRow = getSelectedRow();
-                if (selectedRow < 0) {
-                        return;
-                }
-                List<ChannelDefinition> definitions = getDefinitionTableModel().getDefinitions();
-                definitions.remove(selectedRow);
-                setModel(new ChannelDefinitionTableModel(dialog, definitions));
-        }
+		int selectedRow = getSelectedRow();
+		if (selectedRow < 0) {
+			return;
+		}
+		List<ChannelDefinition> definitions = getDefinitionTableModel().getDefinitions();
+		definitions.remove(selectedRow);
+		setModel(new ChannelDefinitionTableModel(dialog, definitions));
+	}
 
-        /**
-         * Sets data.
-         *
-         * @param definitions definitions list
-         */
-        public void setData(List<ChannelDefinition> definitions) {
+	/**
+	 * Sets data.
+	 *
+	 * @param definitions definitions list
+	 */
+	public void setData(List<ChannelDefinition> definitions) {
 
-                setModel(new ChannelDefinitionTableModel(dialog, definitions));
-        }
+		setModel(new ChannelDefinitionTableModel(dialog, definitions));
+	}
 
-        /**
-         * Gets data.
-         *
-         * @return data
-         */
-        public List<ChannelDefinition> getData() {
+	/**
+	 * Gets data.
+	 *
+	 * @return data
+	 */
+	public List<ChannelDefinition> getData() {
 
-                return getDefinitionTableModel().getDefinitions();
-        }
+		return getDefinitionTableModel().getDefinitions();
+	}
 
-        /**
-         * Gets the definition table model.
-         *
-         * @return the definition table model
-         */
-        private ChannelDefinitionTableModel getDefinitionTableModel() {
+	/**
+	 * Gets the definition table model.
+	 *
+	 * @return the definition table model
+	 */
+	private ChannelDefinitionTableModel getDefinitionTableModel() {
 
-                return (ChannelDefinitionTableModel) getModel();
-        }
+		return (ChannelDefinitionTableModel) getModel();
+	}
 
-        /**
-         * Gets the channel number
-         *
-         * @return list of channel numbers
-         */
-        public List<Integer> getChannelNumbers() {
+	/**
+	 * Gets the channel number
+	 *
+	 * @return list of channel numbers
+	 */
+	public List<Integer> getChannelNumbers() {
 
-                List<Integer> numbers = new ArrayList<Integer>();
+		List<Integer> numbers = new ArrayList<Integer>();
 
-                for (ChannelDefinition definition : getData()) {
+		for (ChannelDefinition definition : getData()) {
 
-                        numbers.add(definition.getNumber());
-                }
+			numbers.add(definition.getNumber());
+		}
 
-                return numbers;
-        }
+		return numbers;
+	}
 
-        /**
-         * Gets the gain values
-         *
-         * @return list of gain values
-         */
-        public List<Float> getGainValues() {
+	/**
+	 * Gets the gain values
+	 *
+	 * @return list of gain values
+	 */
+	public List<Float> getGainValues() {
 
-                List<Float> gain = new ArrayList<Float>();
-                for (ChannelDefinition definition : getData()) {
+		List<Float> gain = new ArrayList<Float>();
+		for (ChannelDefinition definition : getData()) {
 
-                        gain.add(definition.getGain());
-                }
-                return gain;
-        }
+			gain.add(definition.getGain());
+		}
+		return gain;
+	}
 
-        /**
-         * Gets the offset values
-         *
-         * @return list of channel numbers
-         */
-        public List<Float> getOffsetValues() {
+	/**
+	 * Gets the offset values
+	 *
+	 * @return list of channel numbers
+	 */
+	public List<Float> getOffsetValues() {
 
-                List<Float> offset = new ArrayList<Float>();
-                for (ChannelDefinition definition : getData()) {
+		List<Float> offset = new ArrayList<Float>();
+		for (ChannelDefinition definition : getData()) {
 
-                        offset.add(definition.getOffset());
-                }
-                return offset;
-        }
+			offset.add(definition.getOffset());
+		}
+		return offset;
+	}
 
-        /**
-         * Gets the the default names.
-         *
-         * @return list of default names
-         */
-        public List<String> getDefaultNames() {
+	/**
+	 * Gets the the default names.
+	 *
+	 * @return list of default names
+	 */
+	public List<String> getDefaultNames() {
 
-                List<String> names = new ArrayList<String>();
-                for (ChannelDefinition definition : getData()) {
+		List<String> names = new ArrayList<String>();
+		for (ChannelDefinition definition : getData()) {
 
-                        names.add(definition.getDefaultName());
-                }
-                return names;
-        }
+			names.add(definition.getDefaultName());
+		}
+		return names;
+	}
 
-        /**
-         * Wheter all gain and offset are presented, or only one.
-         * All are default.
-         *
-         * @param all all
-         */
-        public void setAllEditable(boolean allEditable) {
+	/**
+	 * Wheter all gain and offset are presented, or only one.
+	 * All are default.
+	 *
+	 * @param all all
+	 */
+	public void setAllEditable(boolean allEditable) {
 
-                ChannelDefinitionTableModel newModel = new ChannelDefinitionTableModel(dialog, getData());
-                newModel.setAllGainAndOffset(allEditable);
-                setModel(newModel);
-        }
+		ChannelDefinitionTableModel newModel = new ChannelDefinitionTableModel(dialog, getData());
+		newModel.setAllGainAndOffset(allEditable);
+		setModel(newModel);
+	}
 }
 
 /**
  * Table model for channel definition table
- * 
+ *
  * @author Tomasz Sawicki
  */
 class ChannelDefinitionTableModel extends AbstractTableModel {
 
-        private final int CHANNEL_NUMBER = 0;
-        private final int CHANNEL_GAIN = 1;
-        private final int CHANNEL_OFFSET = 2;
-        private final int CHANNEL_NAME = 3;
-        /**
-         * Wheter this table is used in edit g&o dialog (true), or in edit
-         * amp def dialog (false).
-         */
-        private boolean dialog;
-        /**
-         * Definitions.
-         */
-        private List<ChannelDefinition> definitions;
-        /**
-         * Wheter all gain and offset are presented, or only one.
-         */
-        private boolean allGainAndOffset;
+	private final int CHANNEL_NUMBER = 0;
+	private final int CHANNEL_GAIN = 1;
+	private final int CHANNEL_OFFSET = 2;
+	private final int CHANNEL_NAME = 3;
+	/**
+	 * Wheter this table is used in edit g&o dialog (true), or in edit
+	 * amp def dialog (false).
+	 */
+	private boolean dialog;
+	/**
+	 * Definitions.
+	 */
+	private List<ChannelDefinition> definitions;
+	/**
+	 * Wheter all gain and offset are presented, or only one.
+	 */
+	private boolean allGainAndOffset;
 
-        /**
-         * Default constructor.
-         *
-         * @param dialog {@link #dialog}
-         * @param definitions {@link #definitions}
-         */
-        public ChannelDefinitionTableModel(boolean dialog, List<ChannelDefinition> definitions) {
+	/**
+	 * Default constructor.
+	 *
+	 * @param dialog {@link #dialog}
+	 * @param definitions {@link #definitions}
+	 */
+	public ChannelDefinitionTableModel(boolean dialog, List<ChannelDefinition> definitions) {
 
-                this.dialog = dialog;
-                this.definitions = definitions;
-                this.allGainAndOffset = true;
-        }
+		this.dialog = dialog;
+		this.definitions = definitions;
+		this.allGainAndOffset = true;
+	}
 
-        /**
-         * The row count.
-         *
-         * @return the row count
-         */
-        @Override
-        public int getRowCount() {
+	/**
+	 * The row count.
+	 *
+	 * @return the row count
+	 */
+	@Override
+	public int getRowCount() {
 
-                return definitions.size();
-        }
+		return definitions.size();
+	}
 
-        /**
-         * 3 or 4 columns, depending on {@link #dialog}.
-         *
-         * @return the column count
-         */
-        @Override
-        public int getColumnCount() {
+	/**
+	 * 3 or 4 columns, depending on {@link #dialog}.
+	 *
+	 * @return the column count
+	 */
+	@Override
+	public int getColumnCount() {
 
-                return (dialog) ? 3 : 4;
-        }
+		return (dialog) ? 3 : 4;
+	}
 
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
 
-                if (columnIndex == CHANNEL_NUMBER) {
-                        if (allGainAndOffset) {
-                                return definitions.get(rowIndex).getNumber();
-                        } else {
-                                return _("All channels");
-                        }
-                } else if (columnIndex == CHANNEL_GAIN) {
-                        return definitions.get(rowIndex).getGain();
-                } else if (columnIndex == CHANNEL_OFFSET) {
-                        return definitions.get(rowIndex).getOffset();
-                } else if (columnIndex == CHANNEL_NAME) {
-                        return definitions.get(rowIndex).getDefaultName();
-                }
-                return null;
-        }
+		if (columnIndex == CHANNEL_NUMBER) {
+			if (allGainAndOffset) {
+				return definitions.get(rowIndex).getNumber();
+			} else {
+				return _("All channels");
+			}
+		} else if (columnIndex == CHANNEL_GAIN) {
+			return definitions.get(rowIndex).getGain();
+		} else if (columnIndex == CHANNEL_OFFSET) {
+			return definitions.get(rowIndex).getOffset();
+		} else if (columnIndex == CHANNEL_NAME) {
+			return definitions.get(rowIndex).getDefaultName();
+		}
+		return null;
+	}
 
-        /**
-         * Column names.
-         *
-         * @param column column number
-         * @return column name
-         */
-        @Override
-        public String getColumnName(int column) {
+	/**
+	 * Column names.
+	 *
+	 * @param column column number
+	 * @return column name
+	 */
+	@Override
+	public String getColumnName(int column) {
 
-                if (column == CHANNEL_NUMBER) {
-                        return _("Channel no.: ");
-                } else if (column == CHANNEL_GAIN) {
-                        return _("Gain: ");
-                } else if (column == CHANNEL_OFFSET) {
-                        return _("Offset: ");
-                } else if (column == CHANNEL_NAME) {
-                        return _("Default name: ");
-                }
-                return null;
-        }
+		if (column == CHANNEL_NUMBER) {
+			return _("Channel no.: ");
+		} else if (column == CHANNEL_GAIN) {
+			return _("Gain: ");
+		} else if (column == CHANNEL_OFFSET) {
+			return _("Offset: ");
+		} else if (column == CHANNEL_NAME) {
+			return _("Default name: ");
+		}
+		return null;
+	}
 
-        /**
-         * Gets the definitions list.
-         *
-         * @return definitions list
-         */
-        public List<ChannelDefinition> getDefinitions() {
+	/**
+	 * Gets the definitions list.
+	 *
+	 * @return definitions list
+	 */
+	public List<ChannelDefinition> getDefinitions() {
 
-                return definitions;
-        }
+		return definitions;
+	}
 
-        /**
-         * Depending on {@link #editable}.
-         */
-        @Override
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
+	/**
+	 * Depending on {@link #editable}.
+	 */
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
 
-                if (!dialog) {
-                        return true;
-                } else if (dialog && (columnIndex == CHANNEL_GAIN || columnIndex == CHANNEL_OFFSET)) {
-                        return true;
-                } else {
-                        return false;
-                }
-        }
+		if (!dialog) {
+			return true;
+		} else if (dialog && (columnIndex == CHANNEL_GAIN || columnIndex == CHANNEL_OFFSET)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-        /**
-         * Sets the value.
-         *
-         * @param aValue new value
-         * @param rowIndex row no
-         * @param columnIndex col no
-         */
-        @Override
-        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+	/**
+	 * Sets the value.
+	 *
+	 * @param aValue new value
+	 * @param rowIndex row no
+	 * @param columnIndex col no
+	 */
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 
-                if (columnIndex == CHANNEL_NUMBER) {
+		if (columnIndex == CHANNEL_NUMBER) {
 
-                        int newValue;
+			int newValue;
 
-                        try {
-                                newValue = Integer.parseInt((String) aValue);
-                        } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(null, _("Please insert an integer value"));
-                                return;
-                        }
+			try {
+				newValue = Integer.parseInt((String) aValue);
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, _("Please insert an integer value"));
+				return;
+			}
 
-                        definitions.get(rowIndex).setNumber(newValue);
+			definitions.get(rowIndex).setNumber(newValue);
 
-                } else if (columnIndex == CHANNEL_GAIN || columnIndex == CHANNEL_OFFSET) {
+		} else if (columnIndex == CHANNEL_GAIN || columnIndex == CHANNEL_OFFSET) {
 
-                        float newValue;
+			float newValue;
 
-                        try {
-                                newValue = Float.parseFloat((String) aValue);
-                        } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(null, _("Please insert a rational value"));
-                                return;
-                        }
+			try {
+				newValue = Float.parseFloat((String) aValue);
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, _("Please insert a rational value"));
+				return;
+			}
 
-                        if (columnIndex == CHANNEL_GAIN) {
-                                definitions.get(rowIndex).setGain(newValue);
-                        } else if (columnIndex == CHANNEL_OFFSET) {
-                                definitions.get(rowIndex).setOffset(newValue);
-                        }
+			if (columnIndex == CHANNEL_GAIN) {
+				definitions.get(rowIndex).setGain(newValue);
+			} else if (columnIndex == CHANNEL_OFFSET) {
+				definitions.get(rowIndex).setOffset(newValue);
+			}
 
-                } else if (columnIndex == CHANNEL_NAME) {
+		} else if (columnIndex == CHANNEL_NAME) {
 
-                        definitions.get(rowIndex).setDefaultName((String) aValue);
-                }
-        }
+			definitions.get(rowIndex).setDefaultName((String) aValue);
+		}
+	}
 
-        /**
-         * Sets {@link #allGainAndOffset}.
-         *
-         * @param allGainAndOffset {@link #allGainAndOffset}
-         */
-        public void setAllGainAndOffset(boolean allGainAndOffset) {
+	/**
+	 * Sets {@link #allGainAndOffset}.
+	 *
+	 * @param allGainAndOffset {@link #allGainAndOffset}
+	 */
+	public void setAllGainAndOffset(boolean allGainAndOffset) {
 
-                this.allGainAndOffset = allGainAndOffset;
-        }
+		this.allGainAndOffset = allGainAndOffset;
+	}
 }

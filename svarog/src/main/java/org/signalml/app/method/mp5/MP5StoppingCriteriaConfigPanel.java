@@ -48,8 +48,8 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Stopping criteria")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Stopping criteria")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		setBorder(border);
@@ -71,27 +71,27 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxIterationCountLabel)
-		        .addComponent(energyPercentLabel)
+			layout.createParallelGroup()
+			.addComponent(maxIterationCountLabel)
+			.addComponent(energyPercentLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(glue1)
-		        .addComponent(glue2)
+			layout.createParallelGroup()
+			.addComponent(glue1)
+			.addComponent(glue2)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMaxIterationCountSpinner())
-		        .addComponent(getEnergyPercentSpinner())
+			layout.createParallelGroup()
+			.addComponent(getMaxIterationCountSpinner())
+			.addComponent(getEnergyPercentSpinner())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxIterationCountHelpButton)
-		        .addComponent(energyPercentHelpButton)
+			layout.createParallelGroup()
+			.addComponent(maxIterationCountHelpButton)
+			.addComponent(energyPercentHelpButton)
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -99,20 +99,20 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(maxIterationCountLabel)
-				.addComponent(glue1)
-				.addComponent(getMaxIterationCountSpinner())
-				.addComponent(maxIterationCountHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(maxIterationCountLabel)
+			.addComponent(glue1)
+			.addComponent(getMaxIterationCountSpinner())
+			.addComponent(maxIterationCountHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(energyPercentLabel)
-				.addComponent(glue2)
-				.addComponent(getEnergyPercentSpinner())
-				.addComponent(energyPercentHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(energyPercentLabel)
+			.addComponent(glue2)
+			.addComponent(getEnergyPercentSpinner())
+			.addComponent(energyPercentHelpButton)
+		);
 
 		layout.setVerticalGroup(vGroup);
 
@@ -121,12 +121,12 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	public JSpinner getMaxIterationCountSpinner() {
 		if (maxIterationCountSpinner == null) {
 			maxIterationCountSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                MP5Parameters.MIN_ITERATION_COUNT,
-			                MP5Parameters.MIN_ITERATION_COUNT,
-			                MP5Parameters.MAX_ITERATION_COUNT,
-			                1
-			        )
+				new SpinnerNumberModel(
+					MP5Parameters.MIN_ITERATION_COUNT,
+					MP5Parameters.MIN_ITERATION_COUNT,
+					MP5Parameters.MAX_ITERATION_COUNT,
+					1
+				)
 			);
 			maxIterationCountSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			maxIterationCountSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
@@ -139,12 +139,12 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	public JSpinner getEnergyPercentSpinner() {
 		if (energyPercentSpinner == null) {
 			energyPercentSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                ((double) MP5Parameters.MIN_ENERGY_PERCENT),
-			                ((double) MP5Parameters.MIN_ENERGY_PERCENT),
-			                ((double) MP5Parameters.MAX_ENERGY_PERCENT),
-			                0.1d
-			        )
+				new SpinnerNumberModel(
+					((double) MP5Parameters.MIN_ENERGY_PERCENT),
+					((double) MP5Parameters.MIN_ENERGY_PERCENT),
+					((double) MP5Parameters.MAX_ENERGY_PERCENT),
+					0.1d
+				)
 			);
 			energyPercentSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			energyPercentSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);

@@ -4,12 +4,12 @@ public enum ElectrodeType {
 
 	STANDARD_SIGNAL_VALUES("Standard", 0, 10000, 15000),
 	HIGH_SIGNAL_VALUES("High signal values", 100, 100000, 150000);
-	
+
 	private String name;
 	private int min;
 	private int limit;
 	private int max;
-	
+
 	ElectrodeType(String name, int min, int limit, int max) {
 		this.name = name;
 		this.min = min;
@@ -48,10 +48,10 @@ public enum ElectrodeType {
 	public void setMax(int max) {
 		this.max = max;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
 	}
-	
+
 }

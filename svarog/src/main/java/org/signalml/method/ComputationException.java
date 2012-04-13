@@ -22,14 +22,14 @@ public class ComputationException extends ResolvableException {
 		super(new String[] { "error.computationException" }, new Object[0]);
 	}
 
-        /**
-         * Constructs a new computation exception with specified message and cause of it.
-	 * Array of codes get this message as its only one element and array of arguments is empty.
+	/**
+	 * Constructs a new computation exception with specified message and cause of it.
+	* Array of codes get this message as its only one element and array of arguments is empty.
 	 * @param message String representation of this exception detail message
 	 * @param cause the cause (which is saved for later retrieval by the Throwable.getCause()
 	 * method). (A null value is permitted, and indicates that the cause is nonexistent or
 	 * unknown.)
-         */
+	       */
 	public ComputationException(String message, Throwable cause) {
 		super(message, cause);
 	}
@@ -37,17 +37,17 @@ public class ComputationException extends ResolvableException {
 	/**
 	 * Constructs a new computation exception with specified message.
 	 * Array of codes get this message as its only one element and array of arguments is empty.
-         * @param message String representation of this exception detail message
+	     * @param message String representation of this exception detail message
 	 */
 	public ComputationException(String message) {
 		super(message);
 	}
 
-        /**
-         * Constructs a new computation exception with specified message and arguments.
-         * Array of codes get this message as its only one element.
-         * @param message String representation of this exception detail message
-         */
+	/**
+	 * Constructs a new computation exception with specified message and arguments.
+	 * Array of codes get this message as its only one element.
+	 * @param message String representation of this exception detail message
+	 */
 	public ComputationException(String message, Object[] arguments) {
 		super(message, arguments);
 	}

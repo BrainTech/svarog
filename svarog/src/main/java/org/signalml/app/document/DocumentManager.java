@@ -40,7 +40,7 @@ public interface DocumentManager {
 	 * @return the number of all documents in this manager
 	 */
 	int getDocumentCount();
-	
+
 	/**
 	 * Returns the {@link Document document} of a specified index in the
 	 * collection of all documents in this manager.
@@ -48,7 +48,7 @@ public interface DocumentManager {
 	 * @return the document of a specified index
 	 */
 	Document getDocumentAt(int index);
-	
+
 	/**
 	 * Returns the index of a given {@link Document document} in the
 	 * collection of all documents in this manager.
@@ -57,7 +57,7 @@ public interface DocumentManager {
 	 * collection of all documents in this manager.
 	 */
 	int getIndexOfDocument(Document document);
-	
+
 	/**
 	 * Returns the iterator over the collection of all {@link Document
 	 * documents} in this manager.
@@ -65,7 +65,7 @@ public interface DocumentManager {
 	 * manager
 	 */
 	Iterator<Document> iterator();
-	
+
 	/**
 	 * Returns the {@link Document document} which has a given file
 	 * as a backing file.
@@ -87,7 +87,7 @@ public interface DocumentManager {
 	 * @param document the document to remove
 	 */
 	void removeDocument(Document document);
-	
+
 	/**
 	 * Removes a {@link Document document} from this manager.
 	 * @param index the index of the document
@@ -113,7 +113,7 @@ public interface DocumentManager {
 	 * @return the number of documents of a specified type
 	 */
 	int getDocumentCount(ManagedDocumentType type);
-	
+
 	/**
 	 * Returns the {@link Document document} of a specified index in the
 	 * collection of documents of a specified {@link ManagedDocumentType type}.
@@ -122,7 +122,7 @@ public interface DocumentManager {
 	 * @return the document of a specified index
 	 */
 	Document getDocumentAt(ManagedDocumentType type, int index);
-	
+
 	/**
 	 * Returns the index of a given {@link Document document} in the
 	 * collection of documents of a specified {@link ManagedDocumentType type}.
@@ -140,7 +140,7 @@ public interface DocumentManager {
 	 * @param listener the listener to be added
 	 */
 	void addDocumentManagerListener(DocumentManagerListener listener);
-	
+
 	/**
 	 * Removes a {@link DocumentManagerListener listener} for changes in this
 	 * manager (addition, removal and change of the path of the

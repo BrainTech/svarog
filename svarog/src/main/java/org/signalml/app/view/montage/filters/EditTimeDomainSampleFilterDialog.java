@@ -176,8 +176,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	@Override
 	protected void updateGraph() {
 
-		if(!validateCurrentFilterAndShowErrorMessage())
-				return;
+		if (!validateCurrentFilterAndShowErrorMessage())
+			return;
 
 		try {
 			getChartGroupPanelWithABorder().updateGraphs(currentFilter);

@@ -7,8 +7,8 @@ import org.signalml.plugin.fft.export.WindowType;
 
 /**
  * Interface which allows to get and set the parameters of the window function,
- * namely its {@link WindowType type} and parameter. 
- * 
+ * namely its {@link WindowType type} and parameter.
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */

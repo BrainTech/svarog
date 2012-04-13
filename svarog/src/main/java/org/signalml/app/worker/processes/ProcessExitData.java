@@ -7,26 +7,26 @@ package org.signalml.app.worker.processes;
  */
 public class ProcessExitData {
 
-        /**
-         * Process id.
-         */
-        private String id;
+	/**
+	 * Process id.
+	 */
+	private String id;
 
-        /**
-         * The exit code.
-         */
-        private Integer exitCode;
+	/**
+	 * The exit code.
+	 */
+	private Integer exitCode;
 
-        public ProcessExitData(String id, Integer exitCode) {
-                this.id = id;
-                this.exitCode = exitCode;
-        }
+	public ProcessExitData(String id, Integer exitCode) {
+		this.id = id;
+		this.exitCode = exitCode;
+	}
 
-        public Integer getExitCode() {
-                return exitCode;
-        }
+	public Integer getExitCode() {
+		return exitCode;
+	}
 
-        public String getId() {
-                return id;
-        }
+	public String getId() {
+		return id;
+	}
 }

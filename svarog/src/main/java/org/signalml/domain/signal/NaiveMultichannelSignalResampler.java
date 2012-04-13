@@ -14,30 +14,30 @@ package org.signalml.domain.signal;
  */
 public class NaiveMultichannelSignalResampler implements MultichannelSignalResampler {
 
-        /**
-         * the buffer of signal samples
-         */
+	/**
+	 * the buffer of signal samples
+	 */
 	private double[] tempBuffer = null;
 
-        /**
-         * For a given channel creates an array of samples that are between two
-         * points in time:
-         * 1. <code>externalSignalOffset / externalFrequency</code>
-         * 2. <code>(externalSignalOffset+externalCount)/externalFrequency<code>
-         * To calculate the indexes of these samples uses
-         * <code>internalFrequency</code>
-         * @param sampleSource the source of samples
-         * @param channel the number of channel for which samples are returned
-         * @param target an array in which result is stored
-         * @param externalSignalOffset the position in the RESAMPLED array from
-         * which copying starts
-         * @param externalCount the number of samples in the RESAMPLED array
-         * that are to be copied
-         * @param arrayOffset the index in <code>target</code> array writing
-         * result will start
-         * @param externalFrequency the targeted frequency
-         * @param internalFrequency the current frequency
-         */
+	/**
+	 * For a given channel creates an array of samples that are between two
+	 * points in time:
+	 * 1. <code>externalSignalOffset / externalFrequency</code>
+	 * 2. <code>(externalSignalOffset+externalCount)/externalFrequency<code>
+	 * To calculate the indexes of these samples uses
+	 * <code>internalFrequency</code>
+	 * @param sampleSource the source of samples
+	 * @param channel the number of channel for which samples are returned
+	 * @param target an array in which result is stored
+	 * @param externalSignalOffset the position in the RESAMPLED array from
+	 * which copying starts
+	 * @param externalCount the number of samples in the RESAMPLED array
+	 * that are to be copied
+	 * @param arrayOffset the index in <code>target</code> array writing
+	 * result will start
+	 * @param externalFrequency the targeted frequency
+	 * @param internalFrequency the current frequency
+	 */
 	@Override
 	public void resample(ResamplableSampleSource sampleSource, int channel, double[] target, int externalSignalOffset, int externalCount, int arrayOffset, float externalFrequency, float internalFrequency) {
 

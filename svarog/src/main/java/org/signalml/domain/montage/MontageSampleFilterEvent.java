@@ -16,39 +16,39 @@ public class MontageSampleFilterEvent extends EventObject {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * indexes of {@link MontageSampleFilter filters} that were
-         * changed/added/removed
-         */
+	/**
+	 * indexes of {@link MontageSampleFilter filters} that were
+	 * changed/added/removed
+	 */
 	private int[] indices;
 
-        /**
-         * Constructor. Creates an event associated with a given object.
-         * @param source a {@link Montage montage} on which the Event initially
-         * occurred
-         */
+	/**
+	 * Constructor. Creates an event associated with a given object.
+	 * @param source a {@link Montage montage} on which the Event initially
+	 * occurred
+	 */
 	public MontageSampleFilterEvent(Object source) {
 		super(source);
 	}
 
-        /**
-         * Constructor. Creates an event associated with a given
-         * {@link Montage montage} and a list of filters indexes.
-         * @param source a montage on which the Event initially occurred.
-         * @param indices an array with indexes of
-         * {@link MontageSampleFilter filters} that were changed/added/removed
-         */
+	/**
+	 * Constructor. Creates an event associated with a given
+	 * {@link Montage montage} and a list of filters indexes.
+	 * @param source a montage on which the Event initially occurred.
+	 * @param indices an array with indexes of
+	 * {@link MontageSampleFilter filters} that were changed/added/removed
+	 */
 	public MontageSampleFilterEvent(Object source, int[] indices) {
 		super(source);
 		this.indices = indices;
 	}
 
-        /**
-         * Returns an array with indexes of {@link MontageSampleFilter filters}
-         * that were changed/added/removed
-         * @return an array with indexes of filters that were
-         * changed/added/removed
-         */
+	/**
+	 * Returns an array with indexes of {@link MontageSampleFilter filters}
+	 * that were changed/added/removed
+	 * @return an array with indexes of filters that were
+	 * changed/added/removed
+	 */
 	public int[] getIndices() {
 		return indices;
 	}

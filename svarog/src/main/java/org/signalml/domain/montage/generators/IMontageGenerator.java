@@ -25,23 +25,23 @@ import org.springframework.validation.Errors;
 @XStreamAlias("montageGenerator")
 public interface IMontageGenerator extends Serializable {
 
-        /**
-         * Creates a {@link Montage montage} of a specified type
-         * (depending on a type of this generator) from a given montage.
-         * @param montage a montage to be used
-         * @throws MontageException if there is an error while creating
-         * a montage (when it occurs depends on a type of this montage generator)
-         */
+	/**
+	 * Creates a {@link Montage montage} of a specified type
+	 * (depending on a type of this generator) from a given montage.
+	 * @param montage a montage to be used
+	 * @throws MontageException if there is an error while creating
+	 * a montage (when it occurs depends on a type of this montage generator)
+	 */
 	void createMontage(Montage montage) throws MontageException;
 
-        /**
-         * Checks if a {@link Montage montage} is a valid montage of a
-         * specified type (depending on a type of this generator).
-         * @param sourceMontage the montage to be checked
-         * @param errors Errors object used to report errors
-         * @return true if a montage is a valid montage of a specified type,
-         * false otherwise
-         */
+	/**
+	 * Checks if a {@link Montage montage} is a valid montage of a
+	 * specified type (depending on a type of this generator).
+	 * @param sourceMontage the montage to be checked
+	 * @param errors Errors object used to report errors
+	 * @return true if a montage is a valid montage of a specified type,
+	 * false otherwise
+	 */
 	boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors);
 
 	/**
@@ -49,7 +49,7 @@ public interface IMontageGenerator extends Serializable {
 	 * @param name to be used
 	 */
 	void setName(String name);
-	
+
 	/**
 	 * Returns the (display) name of this montage generator.
 	 * @return the name of this montage generator.

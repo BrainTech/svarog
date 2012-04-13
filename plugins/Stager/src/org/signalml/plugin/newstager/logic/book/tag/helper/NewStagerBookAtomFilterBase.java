@@ -34,14 +34,14 @@ public class NewStagerBookAtomFilterBase implements
 			@Override
 			public boolean matches(NewStagerAdaptedAtom atom) {
 				return (amplitude == null || (atom.amplitude >= amplitude
-							      .getMin() && atom.amplitude <= amplitude.getMax()))
-				       && (frequency == null || (atom.frequency >= frequency
-								 .getMin() && atom.frequency <= frequency
-								 .getMax()))
-				       && (phase == null || (atom.phase <= phase.getMin() || atom.phase >= phase
-							     .getMax()))
-				       && (scale == null || (atom.scale >= scale.getMin() && atom.scale <= scale
-							     .getMax()));
+											  .getMin() && atom.amplitude <= amplitude.getMax()))
+					   && (frequency == null || (atom.frequency >= frequency
+												 .getMin() && atom.frequency <= frequency
+												 .getMax()))
+					   && (phase == null || (atom.phase <= phase.getMin() || atom.phase >= phase
+											 .getMax()))
+					   && (scale == null || (atom.scale >= scale.getMin() && atom.scale <= scale
+											 .getMax()));
 			}
 		};
 	}

@@ -40,33 +40,33 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	private static final String RECENT_TAGS_NODE = _("Tags");
 
 	private static final String[] ROOT_NODE_CHILDREN = new String[] {
-	        OPEN_DOCUMENTS_NODE,
-	        RECENT_DOCUMENTS_NODE
+		OPEN_DOCUMENTS_NODE,
+		RECENT_DOCUMENTS_NODE
 	};
 
 
-	private static final String[] OPEN_NODE_CHILDREN = new String[] { 
-		OPEN_SIGNALS_NODE, 
-		OPEN_MONITORS_NODE, 
+	private static final String[] OPEN_NODE_CHILDREN = new String[] {
+		OPEN_SIGNALS_NODE,
+		OPEN_MONITORS_NODE,
 		OPEN_BOOKS_NODE,
 		OPEN_TAGS_NODE
 	};
 
-	private static final String[] RECENT_NODE_CHILDREN = new String[] { 
+	private static final String[] RECENT_NODE_CHILDREN = new String[] {
 		RECENT_SIGNALS_NODE,
 		RECENT_MONITORS_NODE,
 		RECENT_BOOKS_NODE,
 		RECENT_TAGS_NODE
 	};
-	
-	private static final ManagedDocumentType[] OPEN_TYPES = new ManagedDocumentType[] { 
+
+	private static final ManagedDocumentType[] OPEN_TYPES = new ManagedDocumentType[] {
 		ManagedDocumentType.SIGNAL,
 		ManagedDocumentType.MONITOR,
 		ManagedDocumentType.BOOK,
 		ManagedDocumentType.TAG
 	};
 
-	private static final ManagedDocumentType[] RECENT_TYPES = new ManagedDocumentType[] { 
+	private static final ManagedDocumentType[] RECENT_TYPES = new ManagedDocumentType[] {
 		ManagedDocumentType.SIGNAL,
 		ManagedDocumentType.MONITOR,
 		ManagedDocumentType.BOOK,
@@ -217,11 +217,11 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 			return new Object[0];
 		}
 		return new Object[] {
-		               ROOT_NODE,
-		               OPEN_DOCUMENTS_NODE,
-		               OPEN_NODE_CHILDREN[getArrayIndex(OPEN_TYPES, type)],
-		               document
-		       };
+				   ROOT_NODE,
+				   OPEN_DOCUMENTS_NODE,
+				   OPEN_NODE_CHILDREN[getArrayIndex(OPEN_TYPES, type)],
+				   document
+			   };
 	}
 
 	public Object[] getObjectPathToRootFromParent(Document document) {
@@ -230,10 +230,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 			return new Object[0];
 		}
 		return new Object[] {
-		               ROOT_NODE,
-		               OPEN_DOCUMENTS_NODE,
-		               OPEN_NODE_CHILDREN[getArrayIndex(OPEN_TYPES, type)]
-		       };
+				   ROOT_NODE,
+				   OPEN_DOCUMENTS_NODE,
+				   OPEN_NODE_CHILDREN[getArrayIndex(OPEN_TYPES, type)]
+			   };
 	}
 
 	public Object[] getObjectPathToRootFromParent(MRUDEntry entry) {
@@ -242,10 +242,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 			return new Object[0];
 		}
 		return new Object[] {
-		               ROOT_NODE,
-		               RECENT_DOCUMENTS_NODE,
-		               RECENT_NODE_CHILDREN[getArrayIndex(RECENT_TYPES, type)]
-		       };
+				   ROOT_NODE,
+				   RECENT_DOCUMENTS_NODE,
+				   RECENT_NODE_CHILDREN[getArrayIndex(RECENT_TYPES, type)]
+			   };
 	}
 
 	public Object getParentObject(Document document) {
@@ -260,10 +260,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	public void documentAdded(DocumentManagerEvent e) {
 		Document document = e.getDocument();
 		fireTreeNodesInserted(
-		        this,
-		        getObjectPathToRootFromParent(document),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { document }
+			this,
+			getObjectPathToRootFromParent(document),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { document }
 		);
 	}
 
@@ -271,10 +271,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	public void documentRemoved(DocumentManagerEvent e) {
 		Document document = e.getDocument();
 		fireTreeNodesRemoved(
-		        this,
-		        getObjectPathToRootFromParent(document),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { document }
+			this,
+			getObjectPathToRootFromParent(document),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { document }
 		);
 	}
 
@@ -282,10 +282,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	public void documentPathChanged(DocumentManagerEvent e) {
 		Document document = e.getDocument();
 		fireTreeNodesChanged(
-		        this,
-		        getObjectPathToRootFromParent(document),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { document }
+			this,
+			getObjectPathToRootFromParent(document),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { document }
 		);
 	}
 
@@ -293,10 +293,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	public void mrudEntryRegistered(MRUDRegistryEvent e) {
 		MRUDEntry entry = e.getEntry();
 		fireTreeNodesInserted(
-		        this,
-		        getObjectPathToRootFromParent(entry),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { entry }
+			this,
+			getObjectPathToRootFromParent(entry),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { entry }
 		);
 	}
 
@@ -304,10 +304,10 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	public void mrudEntryRemoved(MRUDRegistryEvent e) {
 		MRUDEntry entry = e.getEntry();
 		fireTreeNodesRemoved(
-		        this,
-		        getObjectPathToRootFromParent(entry),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { entry }
+			this,
+			getObjectPathToRootFromParent(entry),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { entry }
 		);
 	}
 

@@ -36,15 +36,15 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	protected static final Logger logger = Logger.getLogger(MultichannelSampleFilter.class);
 
-        /**
-         * a vector that at each index (being also the index of a channel) holds
-         * a chain (list) of {@link SampleFilterEngine engines}.
-         */
+	/**
+	 * a vector that at each index (being also the index of a channel) holds
+	 * a chain (list) of {@link SampleFilterEngine engines}.
+	 */
 	protected Vector<LinkedList<SampleFilterEngine>> chains;
 
-        /**
-         * the {@link Montage montage} with which this filter is associated
-         */
+	/**
+	 * the {@link Montage montage} with which this filter is associated
+	 */
 	private Montage currentMontage = null;
 
 	/**
@@ -175,11 +175,11 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	}
 
-        /**
-         * Adds the filter {@link SampleFilterEngine engine} for all
-         * channels.
-         * @param filter the filter engine to be added
-         */
+	/**
+	 * Adds the filter {@link SampleFilterEngine engine} for all
+	 * channels.
+	 * @param filter the filter engine to be added
+	 */
 	public void addFilter(SampleFilterEngine filter) {
 		int cnt = chains.size();
 		LinkedList<SampleFilterEngine> chain;
@@ -189,13 +189,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 	}
 
-        /**
-         * Adds the filter {@link SampleFilterEngine engine} for specified
-         * channels.
-         * @param filter the filter engine to be added
-         * @param channels array of indexes of channels for which filter engine
-         * is to be added
-         */
+	/**
+	 * Adds the filter {@link SampleFilterEngine engine} for specified
+	 * channels.
+	 * @param filter the filter engine to be added
+	 * @param channels array of indexes of channels for which filter engine
+	 * is to be added
+	 */
 	public void addFilter(SampleFilterEngine filter, int[] channels) {
 		LinkedList<SampleFilterEngine> chain;
 		for (int i=0; i<channels.length; i++) {
@@ -204,13 +204,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		}
 	}
 
-        /**
-         * Adds the filter {@link SampleFilterEngine engine} for the
-         * specified channel.
-         * @param filter the filter engine to be added
-         * @param channel the number of the channel for which filter engine
-         * is to be added
-         */
+	/**
+	 * Adds the filter {@link SampleFilterEngine engine} for the
+	 * specified channel.
+	 * @param filter the filter engine to be added
+	 * @param channel the number of the channel for which filter engine
+	 * is to be added
+	 */
 	public void addFilter(SampleFilterEngine filter, int channel) {
 		LinkedList<SampleFilterEngine> chain;
 		chain = chains.get(channel);
@@ -232,10 +232,10 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	}
 
-        /**
-         * Clears the list of filter {@link SampleFilterEngine engines}.
-         * It is done by creating new and replacing.
-         */
+	/**
+	 * Clears the list of filter {@link SampleFilterEngine engines}.
+	 * It is done by creating new and replacing.
+	 */
 	public void reinitFilterChains() {
 
 		int cnt = source.getChannelCount();

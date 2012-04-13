@@ -14,50 +14,50 @@ package org.signalml.domain.signal;
  */
 public interface SampleSource {
 
-         /**
-         * Returns if the implementation is capable of returning a
-         * sampling frequency
-         * @return true if the implementation is capable of returning a
-         * sampling frequency, false otherwise
-         */
+	/**
+	* Returns if the implementation is capable of returning a
+	* sampling frequency
+	* @return true if the implementation is capable of returning a
+	* sampling frequency, false otherwise
+	*/
 	boolean isSamplingFrequencyCapable();
 
-        /**
-         * Returns if the implementation is capable of returning a channel count
-         * @return true if the implementation is capable of returning a channel
-         * count, false otherwise
-         */
+	/**
+	 * Returns if the implementation is capable of returning a channel count
+	 * @return true if the implementation is capable of returning a channel
+	 * count, false otherwise
+	 */
 	boolean isChannelCountCapable();
 
-        /**
-         * Returns the sampling frequency
-         * @return the sampling frequency
-         */
+	/**
+	 * Returns the sampling frequency
+	 * @return the sampling frequency
+	 */
 	float getSamplingFrequency();
 
-        /**
-         * Returns the number of samples
-         * @return the number of samples
-         */
+	/**
+	 * Returns the number of samples
+	 * @return the number of samples
+	 */
 	int getSampleCount();
 
-        /**
-         * Returns the given number of samples starting from a given position
-         * in time.
-         * @param target the array to which results will be written starting
-         * from position <code>arrayOffset</code>
-         * @param signalOffset the position (in time) in the signal starting
-         * from which samples will be returned
-         * @param count the number of samples to be returned
-         * @param arrayOffset the offset in <code>target</code> array starting
-         * from which samples will be written
-         */
+	/**
+	 * Returns the given number of samples starting from a given position
+	 * in time.
+	 * @param target the array to which results will be written starting
+	 * from position <code>arrayOffset</code>
+	 * @param signalOffset the position (in time) in the signal starting
+	 * from which samples will be returned
+	 * @param count the number of samples to be returned
+	 * @param arrayOffset the offset in <code>target</code> array starting
+	 * from which samples will be written
+	 */
 	void getSamples(double[] target, int signalOffset, int count, int arrayOffset);
 
-        /**
-         * Returns the label of the channel
-         * @return a string with a label of the channel
-         */
+	/**
+	 * Returns the label of the channel
+	 * @return a string with a label of the channel
+	 */
 	String getLabel();
 
 }

@@ -52,8 +52,9 @@ public class ComplexPolynomialTest {
 
 		Complex[] coefficients = result.getCoefficients();
 		Complex[] expected = new Complex[] {new Complex(4.0, 0.0), new Complex(11.0, 0.0), new Complex(21.0, 0.0),
-		new Complex(15.0, 0.0), new Complex(9.0, 0.0)};
-		for(int i = 0; i < coefficients.length; i++)
+					new Complex(15.0, 0.0), new Complex(9.0, 0.0)
+		};
+		for (int i = 0; i < coefficients.length; i++)
 			assertEquals(expected[i], coefficients[i]);
 
 	}
@@ -70,8 +71,9 @@ public class ComplexPolynomialTest {
 
 		Complex[] coefficients = result.getCoefficients();
 		Complex[] expected = new Complex[] {new Complex(3.0, 11.0), new Complex(13.0, 11.0), new Complex(3.4, 10.3),
-		new Complex(0.2, 2.4), new Complex(-0.05, 0.4)};
-		for(int i = 0; i < coefficients.length; i++)
+					new Complex(0.2, 2.4), new Complex(-0.05, 0.4)
+		};
+		for (int i = 0; i < coefficients.length; i++)
 			assertEquals(expected[i], coefficients[i]);
 
 	}
@@ -88,7 +90,7 @@ public class ComplexPolynomialTest {
 
 		Complex[] coefficients = result.getCoefficients();
 		Complex[] expected = new Complex[] {new Complex(1.0, 0.0), new Complex(-3.0, -3.5), new Complex(0.5, 4.0)};
-		for(int i = 0; i < coefficients.length; i++)
+		for (int i = 0; i < coefficients.length; i++)
 			assertEquals(expected[i], coefficients[i]);
 
 	}
@@ -161,9 +163,10 @@ public class ComplexPolynomialTest {
 	@Test
 	public void testRootsToPolynomialComplex4() {
 		Complex[] roots = new Complex[] {new Complex(-0.0851704, 0.94648443),
-				new Complex(-0.20561953, 0.39204669),
-				new Complex(-0.20561953, -0.39204669),
-				new Complex(-0.0851704, -0.94648443)};
+					new Complex(-0.20561953, 0.39204669),
+					new Complex(-0.20561953, -0.39204669),
+					new Complex(-0.0851704, -0.94648443)
+		};
 		ComplexPolynomial polynomial = ComplexPolynomial.rootsToPolynomial(roots);
 		Complex[] coefficients = polynomial.getCoefficients();
 

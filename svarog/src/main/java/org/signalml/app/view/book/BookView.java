@@ -534,7 +534,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	private BookPlotOptionsPopupDialog getPlotOptionsDialog() {
 		if (bookOptionsPopupDialog == null) {
-			bookOptionsPopupDialog = new BookPlotOptionsPopupDialog( (Window) getTopLevelAncestor(), true);
+			bookOptionsPopupDialog = new BookPlotOptionsPopupDialog((Window) getTopLevelAncestor(), true);
 			bookOptionsPopupDialog.setBookView(this);
 		}
 
@@ -543,7 +543,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	public BookZoomPopupDialog getBookZoomPopupDialog() {
 		if (bookZoomPopupDialog == null) {
-			bookZoomPopupDialog = new BookZoomPopupDialog( (Window) getTopLevelAncestor(), true);
+			bookZoomPopupDialog = new BookZoomPopupDialog((Window) getTopLevelAncestor(), true);
 		}
 		return bookZoomPopupDialog;
 	}
@@ -855,10 +855,10 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		public void mouseReleased(MouseEvent e) {
 
 			plot.setZoom(
-			        0,
-			        plot.getSegment().getSegmentLength(),
-			        0,
-			        plot.getSegment().getSamplingFrequency()
+				0,
+				plot.getSegment().getSegmentLength(),
+				0,
+				plot.getSegment().getSamplingFrequency()
 			);
 
 		}

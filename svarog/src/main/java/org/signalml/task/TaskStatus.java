@@ -186,51 +186,51 @@ public enum TaskStatus implements Serializable {
 
 	private String getShortStatusString() {
 		switch (this) {
-			case NEW:
-				return _("New");
-			case ACTIVE:
-				return _("Active");
-			case ACTIVE_WAITING:
-				return _("Waiting");
-			case REQUESTING_SUSPEND:
-				return _("Requesting suspend");
-			case SUSPENDED:
-				return _("Suspended");
-			case REQUESTING_ABORT:
-				return _("Requesting abort");
-			case ABORTED:
-				return _("Aborted");
-			case ERROR:
-				return _("Error");
-			case FINISHED:
-				return _("Finished");
-			default:
-				throw new IllegalStateException();
+		case NEW:
+			return _("New");
+		case ACTIVE:
+			return _("Active");
+		case ACTIVE_WAITING:
+			return _("Waiting");
+		case REQUESTING_SUSPEND:
+			return _("Requesting suspend");
+		case SUSPENDED:
+			return _("Suspended");
+		case REQUESTING_ABORT:
+			return _("Requesting abort");
+		case ABORTED:
+			return _("Aborted");
+		case ERROR:
+			return _("Error");
+		case FINISHED:
+			return _("Finished");
+		default:
+			throw new IllegalStateException();
 		}
 	}
 
 	private String getLongStatusString() {
 		switch (this) {
-			case NEW:
-				return _("New task");
-			case ACTIVE:
-				return _("Task is running");
-			case ACTIVE_WAITING:
-				return _("Task is waiting to run");
-			case REQUESTING_SUSPEND:
-				return _("Task is requesting suspend");
-			case SUSPENDED:
-				return _("Task has been suspended");
-			case REQUESTING_ABORT:
-				return _("Task is requesting abort");
-			case ABORTED:
-				return _("Task has been aborted");
-			case ERROR:
-				return _("Task encountered an error");
-			case FINISHED:
-				return _("Task has finished");
-			default:
-				throw new IllegalStateException();
+		case NEW:
+			return _("New task");
+		case ACTIVE:
+			return _("Task is running");
+		case ACTIVE_WAITING:
+			return _("Task is waiting to run");
+		case REQUESTING_SUSPEND:
+			return _("Task is requesting suspend");
+		case SUSPENDED:
+			return _("Task has been suspended");
+		case REQUESTING_ABORT:
+			return _("Task is requesting abort");
+		case ABORTED:
+			return _("Task has been aborted");
+		case ERROR:
+			return _("Task encountered an error");
+		case FINISHED:
+			return _("Task has finished");
+		default:
+			throw new IllegalStateException();
 		}
 	}
 }

@@ -51,8 +51,8 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Dictionary density and size")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Dictionary density and size")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		setBorder(border);
@@ -79,35 +79,35 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(dilationFactorLabel)
+			layout.createParallelGroup()
+			.addComponent(dilationFactorLabel)
 			.addComponent(dilationFactorPercentageLabel)
-		        .addComponent(atomCountLabel)
-		        .addComponent(ramUsageLabel)
+			.addComponent(atomCountLabel)
+			.addComponent(ramUsageLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(glue1)
-		        .addComponent(glue2)
-		        .addComponent(glue3)
+			layout.createParallelGroup()
+			.addComponent(glue1)
+			.addComponent(glue2)
+			.addComponent(glue3)
 			.addComponent(glue4)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getDilationFactorSpinner())
+			layout.createParallelGroup()
+			.addComponent(getDilationFactorSpinner())
 			.addComponent(getDilationFactorPercentageSpinner())
-		        .addComponent(getAtomCountTextField())
-		        .addComponent(getRamUsageTextField())
+			.addComponent(getAtomCountTextField())
+			.addComponent(getRamUsageTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(dilationFactorHelpButton)
+			layout.createParallelGroup()
 			.addComponent(dilationFactorHelpButton)
-		        .addComponent(atomCountHelpButton)
-		        .addComponent(ramUsageHelpButton)
+			.addComponent(dilationFactorHelpButton)
+			.addComponent(atomCountHelpButton)
+			.addComponent(ramUsageHelpButton)
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -115,51 +115,51 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(dilationFactorLabel)
-				.addComponent(glue1)
-				.addComponent(getDilationFactorSpinner())
-				.addComponent(dilationFactorHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(dilationFactorLabel)
+			.addComponent(glue1)
+			.addComponent(getDilationFactorSpinner())
+			.addComponent(dilationFactorHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(dilationFactorPercentageLabel)
-				.addComponent(glue2)
-				.addComponent(getDilationFactorPercentageSpinner())
-				.addComponent(dilationFactorHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(dilationFactorPercentageLabel)
+			.addComponent(glue2)
+			.addComponent(getDilationFactorPercentageSpinner())
+			.addComponent(dilationFactorHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(atomCountLabel)
-				.addComponent(glue3)
-				.addComponent(getAtomCountTextField())
-				.addComponent(atomCountHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(atomCountLabel)
+			.addComponent(glue3)
+			.addComponent(getAtomCountTextField())
+			.addComponent(atomCountHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(ramUsageLabel)
-				.addComponent(glue4)
-				.addComponent(getRamUsageTextField())
-				.addComponent(ramUsageHelpButton)
-			);
-		
-		layout.setVerticalGroup(vGroup);				
-						
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(ramUsageLabel)
+			.addComponent(glue4)
+			.addComponent(getRamUsageTextField())
+			.addComponent(ramUsageHelpButton)
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	@SuppressWarnings("cast")
 	public JSpinner getDilationFactorSpinner() {
 		if (dilationFactorSpinner == null) {
 			dilationFactorSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                ((double) MP5Parameters.MIN_DILATION_FACTOR),
-			                ((double) MP5Parameters.MIN_DILATION_FACTOR),
-			                ((double) MP5Parameters.MAX_DILATION_FACTOR),
-			                0.1d
-			        )
+				new SpinnerNumberModel(
+					((double) MP5Parameters.MIN_DILATION_FACTOR),
+					((double) MP5Parameters.MIN_DILATION_FACTOR),
+					((double) MP5Parameters.MAX_DILATION_FACTOR),
+					0.1d
+				)
 			);
 			dilationFactorSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			dilationFactorSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
@@ -172,12 +172,12 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	public JSpinner getDilationFactorPercentageSpinner() {
 		if (dilationFactorPercentageSpinner == null) {
 			dilationFactorPercentageSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                ((double) MP5Parameters.MIN_DILATION_FACTOR_PERCENTAGE),
-			                ((double) MP5Parameters.MIN_DILATION_FACTOR_PERCENTAGE),
-			                ((double) MP5Parameters.MAX_DILATION_FACTOR_PERCENTAGE),
-			                0.1d
-			        )
+				new SpinnerNumberModel(
+					((double) MP5Parameters.MIN_DILATION_FACTOR_PERCENTAGE),
+					((double) MP5Parameters.MIN_DILATION_FACTOR_PERCENTAGE),
+					((double) MP5Parameters.MAX_DILATION_FACTOR_PERCENTAGE),
+					0.1d
+				)
 			);
 			dilationFactorPercentageSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			dilationFactorPercentageSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);

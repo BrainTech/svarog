@@ -74,10 +74,10 @@ public class MontageChannelsPanel extends JPanel {
 	 * the {@link Montage montage} that is the model for this panel
 	 */
 	private Montage montage;
-	
+
 	/**
 	 * {@code true} if the {@link SignalDocument signal document} exists
-	 * {@code false} otherwise 
+	 * {@code false} otherwise
 	 */
 	private boolean signalBound;
 
@@ -86,7 +86,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * {@link #getSourceMontageTable()}
 	 */
 	private SourceMontageTableModel sourceMontageTableModel;
-	
+
 	/**
 	 * the {@link MontageTableModel model} for {@link #montageTable}
 	 */
@@ -97,7 +97,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * functions of {@link SourceChannel source channels}
 	 */
 	private SourceMontageTable sourceMontageTable;
-	
+
 	/**
 	 * the {@link MontageTable table} which allows to edit the labels and
 	 * the order (the indexes) of {@link MontageChannel montage channels}
@@ -109,7 +109,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * table}
 	 */
 	private JScrollPane sourceScrollPane;
-	
+
 	/**
 	 * the scroll pane with the {@link #getMontageTable() montage table}
 	 */
@@ -122,7 +122,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * {@link #removeSourceChannelButton}) below the table
 	 */
 	private JPanel sourceTablePanel;
-	
+
 	/**
 	 * the panel with the {@link MontageTable} enclosed in the
 	 * {@link #getScrollPane() scroll pane} and the panel
@@ -138,7 +138,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * from {@code i - 1} to {@code i})
 	 */
 	private Action moveUpAction;
-	
+
 	/**
 	 * the {@link MoveDownAction action} which moves the selected
 	 * {@link MontageChannel montage channel} down in the
@@ -147,14 +147,14 @@ public class MontageChannelsPanel extends JPanel {
 	 * channel below from {@code i + 1} to {@code i})
 	 */
 	private Action moveDownAction;
-	
+
 	/**
 	 * the {@link AddChannelsAction action} which adds the selected
 	 * {@link SourceChannel source channel} to the target {@link Montage
 	 * montage}
 	 */
 	private Action addChannelsAction;
-	
+
 	/**
 	 * the {@link RemoveChannelsAction action} which removes the selected
 	 * {@link MontageChannel montage channel} from the {@link Montage
@@ -164,14 +164,14 @@ public class MontageChannelsPanel extends JPanel {
 
 	private Action addZeroChannelAction;
 	private Action addOneChannelAction;
-	
+
 	/**
 	 * the {@link RemoveSourceChannelAction action} which
 	 * {@link Montage#removeSourceChannel() removes} the {@link SourceChannel
 	 * source channel} from the {@link Montage montage}
 	 */
 	private Action removeSourceChannelAction;
-	
+
 	/**
 	 * the {@link ClearMontageAction action} which {@link Montage#reset()
 	 * removes} all {@link MontageChannel montage channels} from the
@@ -183,7 +183,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * the button for the {@link #moveUpAction}
 	 */
 	private JButton moveUpButton;
-	
+
 	/**
 	 * the button for the {@link #moveDownAction}
 	 */
@@ -193,7 +193,7 @@ public class MontageChannelsPanel extends JPanel {
 	 * the button for the {@link #addChannelsAction}
 	 */
 	private JButton addChannelsButton;
-	
+
 	/**
 	 * the button for the {@link #removeChannelsAction}
 	 */
@@ -201,7 +201,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	private JButton addZeroChannelButton;
 	private JButton addOneChannelButton;
-	
+
 	/**
 	 * the button for the {@link #removeSourceChannelAction}
 	 */
@@ -346,7 +346,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Gets the panel with the {@link SourceMontageTable} enclosed in the.
-	 * 
+	 *
 	 * @return the panel with the {@link SourceMontageTable} enclosed in the
 	 */
 	public JPanel getSourceTablePanel() {
@@ -354,8 +354,8 @@ public class MontageChannelsPanel extends JPanel {
 
 			sourceTablePanel = new JPanel(new BorderLayout());
 			CompoundBorder border = new CompoundBorder(
-			        new TitledBorder(_("Source montage")),
-			        new EmptyBorder(3,3,3,3)
+				new TitledBorder(_("Source montage")),
+				new EmptyBorder(3,3,3,3)
 			);
 			sourceTablePanel.setBorder(border);
 
@@ -379,7 +379,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Gets the panel with the {@link MontageTable} enclosed in the.
-	 * 
+	 *
 	 * @return the panel with the {@link MontageTable} enclosed in the
 	 */
 	public JPanel getMontageTablePanel() {
@@ -388,8 +388,8 @@ public class MontageChannelsPanel extends JPanel {
 			montageTablePanel = new JPanel();
 			montageTablePanel.setLayout(new BorderLayout());
 			CompoundBorder border = new CompoundBorder(
-			        new TitledBorder(_("Target montage")),
-			        new EmptyBorder(3,3,3,3)
+				new TitledBorder(_("Target montage")),
+				new EmptyBorder(3,3,3,3)
 			);
 			montageTablePanel.setBorder(border);
 
@@ -409,7 +409,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Gets the {@link SourceMontageTableModel model} for.
-	 * 
+	 *
 	 * @return the {@link SourceMontageTableModel model} for
 	 */
 	public SourceMontageTableModel getSourceMontageTableModel() {
@@ -421,7 +421,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Gets the {@link MontageTableModel model} for {@link #montageTable}.
-	 * 
+	 *
 	 * @return the {@link MontageTableModel model} for {@link #montageTable}
 	 */
 	public MontageTableModel getMontageTableModel() {
@@ -434,7 +434,7 @@ public class MontageChannelsPanel extends JPanel {
 	/**
 	 * Gets the {@link MontageTable table} which allows to edit the labels and
 	 * the order (the indexes) of {@link MontageChannel montage channels}.
-	 * 
+	 *
 	 * @return the {@link MontageTable table} which allows to edit the labels
 	 *         and the order (the indexes) of {@link MontageChannel montage
 	 *         channels}
@@ -463,7 +463,7 @@ public class MontageChannelsPanel extends JPanel {
 	/**
 	 * Gets the {@link SourceMontageTable table} which allows to edit the labels
 	 * and functions of {@link SourceChannel source channels}.
-	 * 
+	 *
 	 * @return the {@link SourceMontageTable table} which allows to edit the
 	 *         labels and functions of {@link SourceChannel source channels}
 	 */
@@ -491,7 +491,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Gets the scroll pane with the {@link #getMontageTable() montage table}.
-	 * 
+	 *
 	 * @return the scroll pane with the {@link #getMontageTable() montage table}
 	 */
 	public JScrollPane getScrollPane() {
@@ -504,7 +504,7 @@ public class MontageChannelsPanel extends JPanel {
 	/**
 	 * Gets the scroll pane with the {@link #getSourceMontageTable() source
 	 * montage table}.
-	 * 
+	 *
 	 * @return the scroll pane with the {@link #getSourceMontageTable() source
 	 *         montage table}
 	 */
@@ -517,7 +517,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Gets the {@link Montage montage} that is the model for this panel.
-	 * 
+	 *
 	 * @return the {@link Montage montage} that is the model for this panel
 	 */
 	public Montage getMontage() {
@@ -526,7 +526,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Sets the {@link Montage montage} that is the model for this panel.
-	 * 
+	 *
 	 * @param montage
 	 *            the new {@link Montage montage} that is the model for this
 	 *            panel
@@ -544,7 +544,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Checks if is signal bound.
-	 * 
+	 *
 	 * @return true, if is signal bound
 	 */
 	public boolean isSignalBound() {
@@ -553,7 +553,7 @@ public class MontageChannelsPanel extends JPanel {
 
 	/**
 	 * Sets the signal bound.
-	 * 
+	 *
 	 * @param signalBound
 	 *            the new signal bound
 	 */
@@ -835,7 +835,7 @@ public class MontageChannelsPanel extends JPanel {
 					String lb = montage.getNewSourceChannelLabel(_("ONE"));
 					montage.addSourceChannel(lb, ChannelFunction.ONE);
 				}
-				
+
 			} catch (MontageException ex) {
 				logger.error("Failed to add source channel", ex);
 				Dialogs.showExceptionDialog((Window) null, ex);
@@ -913,7 +913,7 @@ public class MontageChannelsPanel extends JPanel {
 	}
 
 	/**
-	 * 
+	 *
 	 * @author Marcin Szumski
 	 *
 	 */
@@ -939,7 +939,7 @@ public class MontageChannelsPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent ev) {
 			if (Dialogs.showWarningYesNoDialog(_("Do you really want to clear the montage?"))
-			    == Dialogs.DIALOG_OPTIONS.YES)
+					== Dialogs.DIALOG_OPTIONS.YES)
 				montage.reset();
 		}
 

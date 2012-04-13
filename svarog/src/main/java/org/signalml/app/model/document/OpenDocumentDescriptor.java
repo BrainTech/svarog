@@ -61,7 +61,7 @@ public class OpenDocumentDescriptor {
 	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
 		return openSignalDescriptor;
 	}
-	
+
 	public void setOpenSignalDescriptor(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		this.openSignalDescriptor = openSignalDescriptor;
 	}

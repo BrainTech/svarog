@@ -86,8 +86,8 @@ public class AtomTableDialog extends AbstractDialog  implements PropertyChangeLi
 		JPanel tablePanel = new JPanel(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Atoms in the current segment (may exclude filtered atoms)")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Atoms in the current segment (may exclude filtered atoms)")),
+			new EmptyBorder(3,3,3,3)
 		);
 		tablePanel.setBorder(border);
 

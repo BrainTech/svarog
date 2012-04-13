@@ -54,9 +54,9 @@ public class ApplicationTaskManagerDescriptor extends AbstractXMLConfiguration i
 	private XStream createTaskManagerStreamer() {
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-		        streamer,
-		        ApplicationTaskManagerDescriptor.class,
-		        ApplicationTaskDescriptor.class
+			streamer,
+			ApplicationTaskManagerDescriptor.class,
+			ApplicationTaskDescriptor.class
 		);
 		streamer.setMode(XStream.NO_REFERENCES);
 

@@ -79,23 +79,23 @@ public class ZoomSignalPlot extends JComponent {
 		int firstSample = (int) Math.max(0, Math.floor(minTime * samplingFrequency));
 		int lastSample = (int) Math.min(plot.getMaxSampleCount()-1, Math.ceil(maxTime * samplingFrequency));
 		int sampleCnt = lastSample - firstSample;
-		
-		if( samples == null || samples.length < sampleCnt ) {
+
+		if (samples == null || samples.length < sampleCnt) {
 			samples = new double[sampleCnt];
 		}
-		
+
 		try {
 			sampleSource.getSamples(channel, samples, firstSample, sampleCnt, 0);
-		} catch( RuntimeException ex ) {
+		} catch (RuntimeException ex) {
 			setVisible(false);
 			throw ex;
 		}
 
 		int i;
-		double x, y;	
+		double x, y;
 		double pixelPerValue = plot.getPixelPerValue() * factor;
-		double timeZoomFactor = plot.getTimeZoomFactor() * factor; 
-		
+		double timeZoomFactor = plot.getTimeZoomFactor() * factor;
+
 		int centerOffset = (int) Math.round((focusPoint.y - channelCenter) * factor);
 
 		int leftOffset;
@@ -104,60 +104,60 @@ public class ZoomSignalPlot extends JComponent {
 		} else {
 			leftOffset = insets.left;
 		}
-		
+
 		x = leftOffset;
 		y = size.height/2 - samples[0] * pixelPerValue - centerOffset;
-		
+
 		int ix, iy, lastix, lastiy;
-		
+
 		ix = (int) StrictMath.floor(x+0.5);
 		iy = (int) StrictMath.floor(y+0.5);
-		
+
 		generalPath.reset();
-		generalPath.moveTo( x, y );
-		
+		generalPath.moveTo(x, y);
+
 		lastix = ix;
 		lastiy = iy;
-				  
-		for( i=1; i<sampleCnt; i++ ) {
-			
+
+		for (i=1; i<sampleCnt; i++) {
+
 			y = size.height/2 - samples[i] * pixelPerValue - centerOffset;
 			x = leftOffset + timeZoomFactor * i;
 
 			ix = (int) StrictMath.floor(x+0.5);
 			iy = (int) StrictMath.floor(y+0.5);
 
-			if( lastix != ix || lastiy != iy ) {
-				generalPath.lineTo( ix, iy );
+			if (lastix != ix || lastiy != iy) {
+				generalPath.lineTo(ix, iy);
 			}
-			
+
 			lastix = ix;
-			lastiy = iy;			
-							
+			lastiy = iy;
+
 		}
-		
+
 		g.draw(generalPath);
-		
-		g.drawImage(zoomImage,insets.left+1,insets.top+1,null);		
-		
+
+		g.drawImage(zoomImage,insets.left+1,insets.top+1,null);
+
 		String label = Float.toString(factor) + "x " + sampleSource.getLabel(channel);
 		TextLayout textLayout = new TextLayout(label,g.getFont(),g.getFontRenderContext());
 		Point labelPoint = new Point(insets.left+1+zoomImage.getWidth(null)+3, insets.top+1+zoomImage.getHeight(null)/2);
 		Rectangle labelRect = textLayout.getPixelBounds(
-				null, 
-				labelPoint.x,
-				labelPoint.y
-								
-		);
+								  null,
+								  labelPoint.x,
+								  labelPoint.y
+
+							  );
 		labelPoint.translate(0, labelRect.height/2);
 		labelRect.translate(0, labelRect.height/2);
 		g.setColor(Color.WHITE);
 		g.fill(labelRect);
 		g.setColor(Color.BLACK);
 		textLayout.draw(
-		        g,
-		        labelPoint.x,
-		        labelPoint.y
+			g,
+			labelPoint.x,
+			labelPoint.y
 		);
 
 	}

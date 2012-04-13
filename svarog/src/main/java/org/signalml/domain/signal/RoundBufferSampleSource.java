@@ -24,7 +24,7 @@ public class RoundBufferSampleSource {
 	 * an array containing samples.
 	 */
 	protected double samples[];
-	
+
 	/**
 	 * an integer indicating how much samples can be stored in the buffer
 	 */
@@ -96,10 +96,10 @@ public class RoundBufferSampleSource {
 
 	}
 
-    public void addSample(double newSample) {
-	samples[nextInsertPos] = newSample;
-	incrNextInsertPos();
-    }
+	public void addSample(double newSample) {
+		samples[nextInsertPos] = newSample;
+		incrNextInsertPos();
+	}
 
 	/**
 	 * Returns an array containing samples in this buffer.

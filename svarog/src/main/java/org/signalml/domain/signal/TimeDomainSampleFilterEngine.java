@@ -159,8 +159,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		}
 
 		source.getSamples(unfilteredSamplesCache,
-			source.getSampleCount() - unfilteredSamplesNeeded + zeroPaddingSize,
-			unfilteredSamplesNeeded - zeroPaddingSize, zeroPaddingSize);
+						  source.getSampleCount() - unfilteredSamplesNeeded + zeroPaddingSize,
+						  unfilteredSamplesNeeded - zeroPaddingSize, zeroPaddingSize);
 		return unfilteredSamplesCache;
 
 	}
@@ -184,7 +184,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 		if (filtered == null) {
 			filtered = new RoundBufferSampleSource(source.getSampleCount());
 			for (int i = 0; i < source.getSampleCount(); i++) {
-				filtered.addSamples(new double[]{0.0});
+				filtered.addSamples(new double[] {0.0});
 			}
 		}
 
@@ -212,7 +212,7 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * @return an array containing new filtered samples of the signal (size of the array = newSamples)
 	 */
 	protected double[] calculateNewFilteredSamples(double[] unfilteredSamplesCache,
-		double[] filteredSamplesCache, int newSamples) {
+			double[] filteredSamplesCache, int newSamples) {
 		return calculateNewFilteredSamples(bCoefficients, aCoefficients, filterOrder, unfilteredSamplesCache, filteredSamplesCache, newSamples);
 	}
 
@@ -231,8 +231,8 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 	 * @return an array containing new filtered samples of the signal (size of the array = newSamples)
 	 */
 	protected static double[] calculateNewFilteredSamples(double[] bCoefficients,
-		double[] aCoefficients, int filterOrder, double[] unfilteredSamplesCache,
-		double[] filteredSamplesCache, int newSamples) {
+			double[] aCoefficients, int filterOrder, double[] unfilteredSamplesCache,
+			double[] filteredSamplesCache, int newSamples) {
 
 		for (int i = filterOrder; i < filteredSamplesCache.length; i++) {
 
@@ -303,14 +303,14 @@ public class TimeDomainSampleFilterEngine extends SampleFilterEngine {
 
 				for (; zi < bCoefficients.length - 2; zi++) {
 					initialConditions[zi] = initialConditions[zi + 1]
-						+ input[n] * bCoefficients[bi] / aCoefficients[0]
-						- filtered[n] * aCoefficients[ai] / aCoefficients[0];
+											+ input[n] * bCoefficients[bi] / aCoefficients[0]
+											- filtered[n] * aCoefficients[ai] / aCoefficients[0];
 
 					bi++;
 					ai++;
 				}
 				initialConditions[zi] = input[n] * bCoefficients[bi] / aCoefficients[0]
-					- filtered[n] * aCoefficients[ai] / aCoefficients[0];
+										- filtered[n] * aCoefficients[ai] / aCoefficients[0];
 			} else {
 				filtered[n] = input[n] * bCoefficients[bi] / aCoefficients[0];
 			}

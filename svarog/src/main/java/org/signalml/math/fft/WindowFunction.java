@@ -67,39 +67,39 @@ public class WindowFunction {
 		windowWeights = new double[length];
 		double n = length;
 		switch (windowType) {
-			case BARTLETT:
-				for (int i = 0; i < length; ++i) {
-					windowWeights[i] = 1.0D - Math.abs((2.0D * i - n + 1.0D) / (n - 1.0D));
-				}
-				break;
-			case GAUSSIAN:
-				for (int i = 0; i < length; ++i) {
-					windowWeights[i] = Math.exp((-0.5D) * square(windowParameter * ((2.0D * i - n + 1.0D) / (n - 1.0D))));
-				}
-				break;
-			case HAMMING:
-				for (int i = 0; i < length; ++i) {
-					windowWeights[i] = 0.54D - 0.46D * Math.cos(2.0D * i * Math.PI / (n - 1.0D));
-				}
-				break;
-			case HANN:
-				for (int i = 0; i < length; ++i) {
-					windowWeights[i] = 0.5D * (1.0D - Math.cos(2.0D * i * Math.PI / (n - 1.0D)));
-				}
-				break;
-			case KAISER:
+		case BARTLETT:
+			for (int i = 0; i < length; ++i) {
+				windowWeights[i] = 1.0D - Math.abs((2.0D * i - n + 1.0D) / (n - 1.0D));
+			}
+			break;
+		case GAUSSIAN:
+			for (int i = 0; i < length; ++i) {
+				windowWeights[i] = Math.exp((-0.5D) * square(windowParameter * ((2.0D * i - n + 1.0D) / (n - 1.0D))));
+			}
+			break;
+		case HAMMING:
+			for (int i = 0; i < length; ++i) {
+				windowWeights[i] = 0.54D - 0.46D * Math.cos(2.0D * i * Math.PI / (n - 1.0D));
+			}
+			break;
+		case HANN:
+			for (int i = 0; i < length; ++i) {
+				windowWeights[i] = 0.5D * (1.0D - Math.cos(2.0D * i * Math.PI / (n - 1.0D)));
+			}
+			break;
+		case KAISER:
 
 			//TODO kaiser window
-			case RECTANGULAR:
-				for (int i = 0; i < length; ++i) {
-					windowWeights[i] = 1.0D;
-				}
-				break;
-			case WELCH:
-				for (int i = 0; i < length; ++i) {
-					windowWeights[i] = 1.0D - square((2.0D * i - n + 1.0D) / (n - 1.0D));
-				}
-				break;
+		case RECTANGULAR:
+			for (int i = 0; i < length; ++i) {
+				windowWeights[i] = 1.0D;
+			}
+			break;
+		case WELCH:
+			for (int i = 0; i < length; ++i) {
+				windowWeights[i] = 1.0D - square((2.0D * i - n + 1.0D) / (n - 1.0D));
+			}
+			break;
 		}
 	}
 

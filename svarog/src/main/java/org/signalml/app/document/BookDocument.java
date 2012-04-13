@@ -53,7 +53,7 @@ public class BookDocument extends AbstractFileDocument {
 	 * a {@link StandardBook book} that is stored in this document
 	 */
 	private StandardBook book;
-	
+
 	/**
 	 * the {@link AtomFilterChain chain} of {@link AtomFilter atom filters}
 	 * for this document (to filter atoms in the {@link #book})
@@ -138,8 +138,8 @@ public class BookDocument extends AbstractFileDocument {
 	@Override
 	public Object[] getArguments() {
 		return new Object[] {
-		               getName()
-		       };
+				   getName()
+			   };
 	}
 
 	@Override

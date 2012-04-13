@@ -37,7 +37,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	 * message as this dialog) shouldn't be shown again
 	 */
 	private JCheckBox dontShowAgainCheckBox;
-	
+
 	/**
 	 * the panel with {@link #messageLabel}
 	 */
@@ -51,7 +51,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	 * the {@link ApplicationConfiguration configuration} of Svarog
 	 */
 	private ApplicationConfiguration applicationConfig;
-	
+
 	/**
 	 * the Preferences of Svarog
 	 */
@@ -124,7 +124,7 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	/**
 	 * Returns the panel with the {@link #getMessageLabel() label} with the
 	 * message of this dialog.
-	 * If the panel doesn't exist it is created 
+	 * If the panel doesn't exist it is created
 	 * @return the panel with the label
 	 */
 	public JPanel getMessagePanel() {

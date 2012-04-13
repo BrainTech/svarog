@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.exampleplugin;
 
@@ -22,7 +22,7 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 public class ShowTagsFromActiveSignalAction extends ShowTagAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * Constructor. Sets {@link SvarogAccessSignal signal access}.
 	 * @param signalAccess access to set
@@ -42,7 +42,7 @@ public class ShowTagsFromActiveSignalAction extends ShowTagAction {
 		try {
 			List<ExportedTag> tags = signalAccess.getTagsFromAllDocumentsAssociatedWithAcitiveSignal();
 			String text = new String();
-			for (ExportedTag tag : tags){
+			for (ExportedTag tag : tags) {
 				text += tagToString(tag);
 			}
 			JOptionPane.showMessageDialog(null, text);

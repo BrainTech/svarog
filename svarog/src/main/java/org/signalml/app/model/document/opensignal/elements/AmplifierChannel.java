@@ -25,10 +25,10 @@ public class AmplifierChannel {
 	 * The label representing this channel.
 	 */
 	private String label;
-	
+
 	private float calibrationGain;
 	private float calibrationOffset;
-	
+
 	public AmplifierChannel(AmplifierChannel channel) {
 		this.selected = channel.selected;
 		this.number = channel.number;

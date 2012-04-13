@@ -23,7 +23,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 
 /**
  * Allows to configurate signal recording options.
- * 
+ *
  * @author Tomasz Sawicki
  */
 public class MonitorConfigPanel extends AbstractPanel {
@@ -115,7 +115,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 
 	/**
 	 * Returns the frequency text field.
-	 * 
+	 *
 	 * @return the frequency text field
 	 */
 	protected FloatSpinner getBackupFrequencySpinner() {
@@ -143,7 +143,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 	/**
 	 * Fills all the fields of this panel from the given
 	 * {@link ApplicationConfiguration configuration} of Svarog.
-	 * 
+	 *
 	 * @param applicationConfig
 	 *            the configuration of Svarog
 	 */
@@ -156,7 +156,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 	/**
 	 * Writes the values of the fields from this panel to the
 	 * {@link ApplicationConfiguration configuration} of Svarog.
-	 * 
+	 *
 	 * @param applicationConfig
 	 *            the configuration of Svarog
 	 */
@@ -168,18 +168,18 @@ public class MonitorConfigPanel extends AbstractPanel {
 
 	/**
 	 * Validates this panel.
-	 * 
+	 *
 	 * @param errors
 	 *            the object in which the errors should be stored
 	 */
 	public void validate(ValidationErrors errors) {
 
-		String ipAddressPattern = 
-				"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." 
-				+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." 
-				+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." 
-				+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-		
+		String ipAddressPattern =
+			"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+			+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+			+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
+			+ "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
 		Pattern pattern = Pattern.compile(ipAddressPattern);
 		Matcher matcher = pattern.matcher(getOpenbciIpAddressTextField().getText());
 

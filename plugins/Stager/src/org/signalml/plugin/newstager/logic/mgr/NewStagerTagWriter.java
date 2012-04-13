@@ -26,14 +26,14 @@ public class NewStagerTagWriter {
 	private final NewStagerParameters parameters;
 
 	public NewStagerTagWriter(final NewStagerData stagerData,
-				  final NewStagerParameters parameters) {
+							  final NewStagerParameters parameters) {
 		this.stagerData = stagerData;
 		this.parameters = parameters;
 	}
 
 	public void writeTags(NewStagerTagCollectionType tagType,
-			      EnumSet<NewStagerTagCollectionType> stages,
-			      Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap) throws IOException, SignalMLException {
+						  EnumSet<NewStagerTagCollectionType> stages,
+						  Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap) throws IOException, SignalMLException {
 
 		List<PluginTagGroup> sleepTags = new LinkedList<PluginTagGroup>();
 		for (Entry<NewStagerTagCollectionType, Collection<IPluginTagDef>> entry : tagMap
@@ -43,9 +43,9 @@ public class NewStagerTagWriter {
 				Collection<IPluginTagDef> tagCollection = entry.getValue();
 				if (!tagCollection.isEmpty()) {
 					sleepTags.add(new PluginTagGroup(this
-									 .getTagNameFromType(entry.getKey()),
-									 SignalSelectionType.CHANNEL, tagCollection, 1,
-									 "test")); // TODO 1
+													 .getTagNameFromType(entry.getKey()),
+													 SignalSelectionType.CHANNEL, tagCollection, 1,
+													 "test")); // TODO 1
 				}
 			}
 		}

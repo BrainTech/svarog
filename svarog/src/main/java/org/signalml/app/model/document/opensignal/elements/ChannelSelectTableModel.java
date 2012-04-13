@@ -103,16 +103,20 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		
+
 		AmplifierChannel channel = channels.get(rowIndex);
-		switch(columnIndex) {
-			case SELECTED_COLUMN: return channel.isSelected();
-			case NUMBER_COLUMN: return channel.getNumber();
-			case LABEL_COLUMN: return channel.getLabel();
-			default: return null;
+		switch (columnIndex) {
+		case SELECTED_COLUMN:
+			return channel.isSelected();
+		case NUMBER_COLUMN:
+			return channel.getNumber();
+		case LABEL_COLUMN:
+			return channel.getLabel();
+		default:
+			return null;
 		}
 	}
-	
+
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
 		if (columnIndex == 2)
@@ -144,10 +148,14 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	@Override
 	public String getColumnName(int column) {
 		switch (column) {
-			case SELECTED_COLUMN: return _("selected");
-			case NUMBER_COLUMN: return _("number");
-			case LABEL_COLUMN: return _("label");
-			default: return "";
+		case SELECTED_COLUMN:
+			return _("selected");
+		case NUMBER_COLUMN:
+			return _("number");
+		case LABEL_COLUMN:
+			return _("label");
+		default:
+			return "";
 		}
 	}
 
@@ -169,7 +177,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	public void setEditable(boolean editable) {
 		this.editable = editable;
 	}
-	
+
 	public String[] getChannelLabels() {
 		String[] channelLabels = new String[channels.size()];
 		int i = 0;

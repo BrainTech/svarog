@@ -79,7 +79,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 	public int getNaturalFrequency() {
 		return frequency;
 	}
-	
+
 	@Override
 	public float getFrequency() {
 		return this.frequency;

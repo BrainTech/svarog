@@ -23,13 +23,13 @@ public class NewStagerConstants {
 	public final float spindleOffset;
 
 	public NewStagerConstants(float frequency, int blockLengthInSeconds,
-				  float muscleThreshold,
-				  float muscleThresholdRate,
-				  float amplitudeA,
-				  float amplitudeB,
-				  float alphaOffset,
-				  float deltaOffset,
-				  float spindleOffset) {
+							  float muscleThreshold,
+							  float muscleThresholdRate,
+							  float amplitudeA,
+							  float amplitudeB,
+							  float alphaOffset,
+							  float deltaOffset,
+							  float spindleOffset) {
 		this.frequency = frequency;
 		this.blockLengthInSeconds = blockLengthInSeconds;
 		this.muscleThreshold = muscleThreshold;

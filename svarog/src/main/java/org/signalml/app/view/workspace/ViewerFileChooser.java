@@ -40,7 +40,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	protected static final Logger logger = Logger.getLogger(ViewerFileChooser.class);
 
 	private ApplicationConfiguration applicationConfig;
-	
+
 	public ViewerFileChooser() {
 		super();
 		this.setPreferredSize(new Dimension(500, 380));
@@ -56,7 +56,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileFilter exe = new FileNameExtensionFilter(_("Executable files (*.exe)"), "exe");
 		FileFilter jar = new FileNameExtensionFilter(_("Jar files (*.jar)"), "jar");
 		FileFilter jar_class = new FileNameExtensionFilter(_("Code files (*.java, *.class)"),
-								   "java", "class");
+				"java", "class");
 
 		OptionSet.consoleSaveAsText.setFilters(text);
 		OptionSet.tableSaveAsText.setFilters(text);
@@ -142,14 +142,14 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		File file = chooseForReadOrWrite(parent, optionset);
 		if (file != null) {
 			applicationConfig.setPath(optionset.path,
-				getCurrentDirectory().getAbsolutePath());
+									  getCurrentDirectory().getAbsolutePath());
 			if (file.exists() && getAccessory() != null)
 				getAccessory().lastDirectoryChanged(file.getParent());
 		}
 		return file;
 	}
 	public synchronized File chooseFile(Component parent, OptionSet optionset,
-			       File directory, File fileSuggestion) {
+										File directory, File fileSuggestion) {
 		return chooseFile(parent, optionset, fileSuggestion);
 	}
 	public synchronized File chooseFile(Component parent, OptionSet optionset) {
@@ -242,14 +242,14 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	public synchronized File chooseExportTag(Component parent) {
 		return chooseFile(parent, OptionSet.exportTag);
 	}
-	
+
 	public synchronized File chooseOpenBook(Component parent) {
 		return chooseFile(parent, OptionSet.openBook);
 	}
 
 	public synchronized File chooseReadXMLManifest(File directory, File fileSuggestion, Component parent) {
 		return chooseFile(parent, OptionSet.readXMLManifest,
-				  fileSuggestion, directory);
+						  fileSuggestion, directory);
 	}
 
 	public synchronized File chooseSavePresetFile(Component parent) {
@@ -327,7 +327,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	}
 
 	@Override
-	public EmbeddedFileChooserFavorites getAccessory(){
+	public EmbeddedFileChooserFavorites getAccessory() {
 		return (EmbeddedFileChooserFavorites) super.getAccessory();
 	}
 
@@ -349,7 +349,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			boolean verify(Component parent, File file) {
 				File dir = file.getParentFile();
 				boolean good = dir != null &&
-					dir.exists() && dir.canRead() && dir.canWrite();
+							   dir.exists() && dir.canRead() && dir.canWrite();
 				// XXX: when dir == null?
 				if (!good)
 					OptionPane.showDirectoryNotFound(parent, dir);
@@ -361,7 +361,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			@Override
 			boolean verify(Component parent, File file) {
 				boolean good = file.exists() && file.canRead()
-					&& file.canExecute();
+							   && file.canExecute();
 				if (!good)
 					OptionPane.showFileNotFound(parent, file);
 				return good;
@@ -391,71 +391,71 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		}
 
 		static Operation
-			open = new Open(),
-			save = new Save(),
-			execute = new Execute(),
-			usedir = new UseDirectory();
+		open = new Open(),
+		save = new Save(),
+		execute = new Execute(),
+		usedir = new UseDirectory();
 	}
 
 	protected enum OptionSet {
 		consoleSaveAsText(Operation.save, _("Choose text file to save"),
-				  null, _("Save")),
+		null, _("Save")),
 		tableSaveAsText(Operation.save, _("Choose text file to save"),
-				null, _("Save")),
+		null, _("Save")),
 		samplesSaveAsText(Operation.save, _("Choose text file to save"),
-				  null, _("Save")),
+		null, _("Save")),
 		samplesSaveAsFloat(Operation.save, _("Choose binary file to save"),
-				   null, _("Save")),
+		null, _("Save")),
 		chartSaveAsPng(Operation.save, _("Choose png file to save"),
-			       null, _("Save")),
+		null, _("Save")),
 		saveMP5Config(Operation.save, _("Choose MP5 config file to save"),
-			      null, _("Save")),
+		null, _("Save")),
 		saveMP5Signal(Operation.save, _("Choose MP5 signal file to save"),
-			      null, _("Save")),
+		null, _("Save")),
 		saveDocument(Operation.save, _("Save document"),
-			     null, _("Save")),
+		null, _("Save")),
 		saveTag(Operation.save, _("Save tag"),
-			null, _("Save")),
+		null, _("Save")),
 		openTag(Operation.open, _("Open tag"),
-			null, _("Open")),
+		null, _("Open")),
 		expertTag(Operation.open, _("Choose expert tag"),
-			  null, _("Choose")),
+		null, _("Choose")),
 		importTag(Operation.open, _("Import legacy tag"),
-			  null, _("Import")),
+		null, _("Import")),
 		exportTag(Operation.save, _("Export legacy tag"),
-			  null, _("Export")),
+		null, _("Export")),
 		openBook(Operation.open, _("Choose a book file"),
-		      null, _("Choose")),
+		null, _("Choose")),
 		savePreset(Operation.save, _("Save preset to file"),
-			   "LastPresetPath", _("Save")),
+		"LastPresetPath", _("Save")),
 		loadPreset(Operation.open, _("Load preset from file"),
-			   "LastPresetPath", _("Load")),
+		"LastPresetPath", _("Load")),
 		executablePreset(Operation.open, _("Choose executable"),
-				 null, _("Choose")),
+		null, _("Choose")),
 		bookFilePreset(Operation.open, _("Choose a book file"),
-			       null, _("Choose")),
+		null, _("Choose")),
 		bookSavePreset(Operation.save, _("Choose a book file"),
-			       null, _("Save")),
+		null, _("Save")),
 		artifactProjectPreset(Operation.usedir, "filechooser.artifactProjectPreset.title",
-				      null, _("Choose"),
-				      false, false, FILES_ONLY),
+		null, _("Choose"),
+		false, false, FILES_ONLY),
 		exportSignal(Operation.save, _("Export binary signal"),
-			     null, _("Export")),
+		null, _("Export")),
 		exportBook(Operation.save, _("Export book"),
-			   null, _("Export")),
+		null, _("Export")),
 		readXMLManifest(Operation.open, _("Read XML manifest"),
-				null, _("Read")),
+		null, _("Read")),
 		workingDirectoryPreset(Operation.usedir, _("Choose working directory"),
-				       null, _("Choose"),
-				       false, false, DIRECTORIES_ONLY),
+		null, _("Choose"),
+		false, false, DIRECTORIES_ONLY),
 		classPathDirectoryPreset(Operation.open, _("Choose class path directories"),
-					 null, _("Choose"),
-					 false, true, DIRECTORIES_ONLY),
+		null, _("Choose"),
+		false, true, DIRECTORIES_ONLY),
 		jarFilePreset(Operation.open, _("Choose jar files"),
-			      null, _("Choose"),
-			      true, true, FILES_ONLY),
+		null, _("Choose"),
+		true, true, FILES_ONLY),
 		codeFilePreset(Operation.open, _("Choose code file"),
-			       "LastLibraryPath" /* sic */, _("Choose"));
+		"LastLibraryPath" /* sic */, _("Choose"));
 
 		final Operation operation;
 		final String title, buttonLabel;
@@ -466,9 +466,9 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileFilter[] fileFilters;
 
 		private OptionSet(Operation operation,
-				  String title, String path, String buttonLabel,
-				  boolean acceptAllUsed, boolean multiSelectionEnabled,
-				  int fileSelectionMode) {
+		String title, String path, String buttonLabel,
+		boolean acceptAllUsed, boolean multiSelectionEnabled,
+		int fileSelectionMode) {
 			this.operation = operation;
 			this.title = title;
 			this.buttonLabel = buttonLabel;
@@ -478,11 +478,11 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			this.fileSelectionMode = fileSelectionMode;
 			this.fileFilters = fileFilters;
 			logger.debug("added OptionSet \"" + title + "\" (" +
-				     operation.getClass().getSimpleName() +
-				     " \"" + buttonLabel + "\" / " + path + ")");
+			operation.getClass().getSimpleName() +
+			" \"" + buttonLabel + "\" / " + path + ")");
 		}
 		private OptionSet(Operation operation,
-				  String title, String path, String buttonLabel) {
+		String title, String path, String buttonLabel) {
 			this(operation, title, path, buttonLabel, true, false, FILES_ONLY);
 		}
 
@@ -498,7 +498,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 					chooser.addChoosableFileFilter(this.fileFilters[i]);
 		}
 
-		void setFilters(FileFilter ... fileFilters){
+		void setFilters(FileFilter ... fileFilters) {
 			this.fileFilters = fileFilters;
 		}
 	}

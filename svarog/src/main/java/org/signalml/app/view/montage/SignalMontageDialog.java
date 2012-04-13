@@ -38,7 +38,7 @@ public class SignalMontageDialog extends AbstractDialog {
 	private URL contextHelpURL = null;
 
 	public SignalMontageDialog(ViewerElementManager viewerElementManager,
-				   Window f, boolean isModal) {
+							   Window f, boolean isModal) {
 
 		super(f, isModal);
 		this.viewerElementManager = viewerElementManager;
@@ -61,7 +61,7 @@ public class SignalMontageDialog extends AbstractDialog {
 
 		return interfacePanel;
 	}
-	
+
 	public SignalMontagePanel getSignalMontagePanel() {
 		if (signalMontagePanel == null)
 			signalMontagePanel = new SignalMontagePanel(viewerElementManager);

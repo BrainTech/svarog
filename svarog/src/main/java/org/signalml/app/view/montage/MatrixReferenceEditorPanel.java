@@ -40,13 +40,13 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	 * the {@link ReferenceTableModel model} for the {@link #referenceTable}
 	 */
 	private ReferenceTableModel referenceTableModel;
-	
+
 	/**
 	 * the {@link ReferenceTable table} which displays the reference between
 	 * {@link MontageChannel montage channels} and original channels
 	 */
 	private ReferenceTable referenceTable;
-	
+
 	/**
 	 * the scroll pane with the {@link #referenceTable}
 	 */
@@ -70,8 +70,8 @@ public class MatrixReferenceEditorPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Edit reference")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Edit reference")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

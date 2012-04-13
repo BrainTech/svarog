@@ -46,7 +46,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * such as the time interval, level of processing and selected channels
 	 */
 	private SignalSpacePanel signalSpacePanel;
-	
+
 	/**
 	 * the {@link ExportSignalOptionsPanel panel} to select the format in
 	 * which the signal will be stored
@@ -185,7 +185,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 
 	/**
 	 * Validates this dialog.
-	 * This dialog is valid if sub-panels ({@link 
+	 * This dialog is valid if sub-panels ({@link
 	 * SignalSpacePanel#validatePanel(Errors) signal space} and
 	 * {@link ExportSignalOptionsPanel#validatePanel(Errors) options}) are
 	 * valid.

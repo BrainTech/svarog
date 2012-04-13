@@ -53,32 +53,32 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 	float getSingleCalibrationGain();
 
 	/**
-         * Returns the calibration gain for each channel.
-         * @return an array containing calibration gain for each channel
-         */
+	     * Returns the calibration gain for each channel.
+	     * @return an array containing calibration gain for each channel
+	     */
 	float[] getCalibrationGain();
 
-        /**
-         * Sets the sampling frequency (number of samples per second) to a
-         * given value
-         * @param samplingFrequency sampling frequency (number of samples per
-         * second) to be set
-         */
+	/**
+	 * Sets the sampling frequency (number of samples per second) to a
+	 * given value
+	 * @param samplingFrequency sampling frequency (number of samples per
+	 * second) to be set
+	 */
 	void setSamplingFrequency(float samplingFrequency);
 
-        /**
-         * Sets the number of signal channels.
-         * @param channelCount the number of signal channels to be set
-         */
-        void setChannelCount(int channelCount);
+	/**
+	 * Sets the number of signal channels.
+	 * @param channelCount the number of signal channels to be set
+	 */
+	void setChannelCount(int channelCount);
 
-        /**
-         * Sets the new value of calibration. Could be used only if the source
-	 * is capable of calibrating each channel
+	/**
+	 * Sets the new value of calibration. Could be used only if the source
+	* is capable of calibrating each channel
 	 * (see: {@link OriginalMultichannelSampleSource#areIndividualChannelsCalibrationCapable()}.
 	 *
-         * @param calibration the new value of calibration
-         */
+	       * @param calibration the new value of calibration
+	       */
 	void setCalibrationGain(float[] calibration);
 
 	/**
@@ -113,11 +113,11 @@ public interface OriginalMultichannelSampleSource extends MultichannelSampleSour
 	 */
 	void setCalibrationOffset(float calibrationOffset);
 
-        /**
-         * Creates the copy of this sample source.
-         * @return the copy of this sample source.
-         * @throws SignalMLException depends on the implementation
-         */
+	/**
+	 * Creates the copy of this sample source.
+	 * @return the copy of this sample source.
+	 * @throws SignalMLException depends on the implementation
+	 */
 	OriginalMultichannelSampleSource duplicate() throws SignalMLException;
 
 }

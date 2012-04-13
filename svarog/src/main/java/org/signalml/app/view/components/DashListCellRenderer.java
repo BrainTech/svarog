@@ -57,7 +57,7 @@ public class DashListCellRenderer extends JComponent implements ListCellRenderer
 	 * <li>different background and foreground color for cell:<ul>
 	 * <li>focused,</li><li>unfocused.</li></ul></li></ul>
 	 * From the {@code value} of the cell dashing pattern is extracted, stored
-	 * and later it is used for drawing this component. 
+	 * and later it is used for drawing this component.
 	 */
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

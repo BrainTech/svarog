@@ -40,20 +40,20 @@ import org.springframework.validation.Errors;
  */
 public class EEGLabExportDialog extends AbstractDialog   {
 
-        /**
-         * Currently open document.
-         */
-        private SignalDocument signalDocument;
+	/**
+	 * Currently open document.
+	 */
+	private SignalDocument signalDocument;
 
-        /**
-         * Current montage.
-         */
-        private Montage currentMontage;
+	/**
+	 * Current montage.
+	 */
+	private Montage currentMontage;
 
-        /**
-         * A {@link FileSelectPanel} object - part of the interface.
-         */
-        private FileSelectPanel fileSelectPanel;
+	/**
+	 * A {@link FileSelectPanel} object - part of the interface.
+	 */
+	private FileSelectPanel fileSelectPanel;
 
 	/**
 	 * Constructor. Sets parent window and if this dialog
@@ -61,13 +61,13 @@ public class EEGLabExportDialog extends AbstractDialog   {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal dialog blocks top-level windows if true
 	 */
-        public EEGLabExportDialog(Window w, boolean isModal) {
-                super(w, isModal);
-        }
+	public EEGLabExportDialog(Window w, boolean isModal) {
+		super(w, isModal);
+	}
 
-        /**
-         * Sets window's title then calls {@link AbstractDialog#initialize()}.
-         */
+	/**
+	 * Sets window's title then calls {@link AbstractDialog#initialize()}.
+	 */
 	@Override
 	protected void initialize() {
 
@@ -75,112 +75,112 @@ public class EEGLabExportDialog extends AbstractDialog   {
 		super.initialize();
 	}
 
-        /**
-         * Creates the interface - a panel with {@link #fileSelectPanel}.
-         *
-         * @return the interface
-         */
-        @Override
-        protected JComponent createInterface() {
+	/**
+	 * Creates the interface - a panel with {@link #fileSelectPanel}.
+	 *
+	 * @return the interface
+	 */
+	@Override
+	protected JComponent createInterface() {
 
-                JPanel interfacePanel = new JPanel(new BorderLayout());                
-                CompoundBorder panelBorder = new CompoundBorder(new TitledBorder(""), new EmptyBorder(3, 3, 3, 3));
-                interfacePanel.setBorder(panelBorder);
-                interfacePanel.add(getFileSelectPanel(), BorderLayout.CENTER);
-                return interfacePanel;
-        }
+		JPanel interfacePanel = new JPanel(new BorderLayout());
+		CompoundBorder panelBorder = new CompoundBorder(new TitledBorder(""), new EmptyBorder(3, 3, 3, 3));
+		interfacePanel.setBorder(panelBorder);
+		interfacePanel.add(getFileSelectPanel(), BorderLayout.CENTER);
+		return interfacePanel;
+	}
 
-        /**
-         * Gets the {@link #fileSelectPanel}.
-         *
-         * @return {@link #fileSelectPanel}
-         */
+	/**
+	 * Gets the {@link #fileSelectPanel}.
+	 *
+	 * @return {@link #fileSelectPanel}
+	 */
 	private FileSelectPanel getFileSelectPanel() {
 
 		if (fileSelectPanel == null) {
 
-                        HashMap<String, String[]> filters = new HashMap<String, String[]>();
-                        filters.put(_("Dateset files"), new String[] { "set" } );
+			HashMap<String, String[]> filters = new HashMap<String, String[]>();
+			filters.put(_("Dateset files"), new String[] { "set" });
 			fileSelectPanel = new FileSelectPanel(_("Output file name: "), filters, true);
 		}
 		return fileSelectPanel;
 	}
 
-        @Override
-        public boolean supportsModelClass(Class<?> clazz) {
+	@Override
+	public boolean supportsModelClass(Class<?> clazz) {
 
-                return MontageDescriptor.class.isAssignableFrom(clazz);
-        }
+		return MontageDescriptor.class.isAssignableFrom(clazz);
+	}
 
-        @Override
-        public void fillDialogFromModel(Object model) throws SignalMLException {
+	@Override
+	public void fillDialogFromModel(Object model) throws SignalMLException {
 
-                MontageDescriptor descriptor = (MontageDescriptor) model;
+		MontageDescriptor descriptor = (MontageDescriptor) model;
 		Montage montage = descriptor.getMontage();
 		signalDocument = descriptor.getSignalDocument();
 
 		if (montage == null) {
-                        currentMontage = new Montage(new SourceMontage(signalDocument));
-                } else {
-                        currentMontage = new Montage(montage);
-                }
+			currentMontage = new Montage(new SourceMontage(signalDocument));
+		} else {
+			currentMontage = new Montage(montage);
+		}
 
 		getOkButton().setVisible(true);
 		getRootPane().setDefaultButton(getOkButton());
-        }
+	}
 
-        @Override
-        public void fillModelFromDialog(Object model) throws SignalMLException {
+	@Override
+	public void fillModelFromDialog(Object model) throws SignalMLException {
 
 		MontageDescriptor descriptor = (MontageDescriptor) model;
 		descriptor.setMontage(currentMontage);
-        }
-
-        /**
-         * On close with ok export the signal, clear the text box,
-         * then call {@link AbstractDialog#onDialogCloseWithOK()}.
-         */
-        @Override
-        protected void onDialogCloseWithOK() {
-                
-                String fileName = getFileSelectPanel().getFileName();
-                fileSelectPanel.setFileName("");
-                
-                EEGLabSignalWriter signalWriter = new EEGLabSignalWriter((signalDocument));
-                try {
-                        signalWriter.writeSignal(fileName);
-                } catch (IOException ex) {
-                        Logger.getLogger(EEGLabExportDialog.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-                super.onDialogCloseWithOK();
 	}
 
-        /**
-         * On close clear the text box, then call {@link AbstractDialog#onDialogClose()}.
-         */
-        @Override
-        protected void onDialogClose() {
+	/**
+	 * On close with ok export the signal, clear the text box,
+	 * then call {@link AbstractDialog#onDialogCloseWithOK()}.
+	 */
+	@Override
+	protected void onDialogCloseWithOK() {
 
-                fileSelectPanel.setFileName("");
-                super.onDialogClose();                
-        }
+		String fileName = getFileSelectPanel().getFileName();
+		fileSelectPanel.setFileName("");
 
-        /**
-         * Checks wheter the file name is correct.
-         *
-         * @param model model for this panel
-         * @param errors object in whick errors are stored
-         * @throws SignalMLException TODO when it is thrown
-         */
-        @Override
+		EEGLabSignalWriter signalWriter = new EEGLabSignalWriter((signalDocument));
+		try {
+			signalWriter.writeSignal(fileName);
+		} catch (IOException ex) {
+			Logger.getLogger(EEGLabExportDialog.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		super.onDialogCloseWithOK();
+	}
+
+	/**
+	 * On close clear the text box, then call {@link AbstractDialog#onDialogClose()}.
+	 */
+	@Override
+	protected void onDialogClose() {
+
+		fileSelectPanel.setFileName("");
+		super.onDialogClose();
+	}
+
+	/**
+	 * Checks wheter the file name is correct.
+	 *
+	 * @param model model for this panel
+	 * @param errors object in whick errors are stored
+	 * @throws SignalMLException TODO when it is thrown
+	 */
+	@Override
 	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
-                super.validateDialog(model, errors);
+		super.validateDialog(model, errors);
 		fillModelFromDialog(model);
 
-                String fileName = getFileSelectPanel().getFileName();
-                File file = new File(fileName);
+		String fileName = getFileSelectPanel().getFileName();
+		File file = new File(fileName);
 
 		if (fileName.isEmpty()) {
 			errors.addError(_("Please input a filename"));
@@ -190,9 +190,9 @@ public class EEGLabExportDialog extends AbstractDialog   {
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
 				errors.addError("");
 
-                        if (!file.canWrite()) {
-                        	errors.addError(_("File cannot be written"));
-                        }
+			if (!file.canWrite()) {
+				errors.addError(_("File cannot be written"));
+			}
 		}
 	}
 }

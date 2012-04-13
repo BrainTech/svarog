@@ -96,12 +96,12 @@ public class WorkspaceSignal extends WorkspaceDocument {
 			mrud.setLastTimeOpened(new Date());
 
 			mrudEntry = mrud;
-		
+
 		} else {
 			File backingFile = ((FileBackedDocument) document).getBackingFile();
 			if (backingFile != null)
-				mrudEntry = new MRUDEntry( ManagedDocumentType.SIGNAL, document.getClass(), backingFile.getAbsolutePath() );
-			
+				mrudEntry = new MRUDEntry(ManagedDocumentType.SIGNAL, document.getClass(), backingFile.getAbsolutePath());
+
 		}
 
 		SignalView view = (SignalView) document.getDocumentView();

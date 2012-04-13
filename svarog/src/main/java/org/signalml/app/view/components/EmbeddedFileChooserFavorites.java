@@ -153,7 +153,7 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	@Override
 	public void actionPerformed(ActionEvent action) {
 		//if action is combo box - set current directory (or file)
-		String path = (String) ((JComboBox) action.getSource()).getSelectedItem();
+		String path = (String)((JComboBox) action.getSource()).getSelectedItem();
 		if (path != null) {
 			File dir = new File(path);
 			this.fc.setCurrentDirectory(dir);
@@ -181,7 +181,7 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 * Gets current directory from file chooser and adds it to favorites (to
 	 * application configuration and to GUI).
 	 */
-	public void addCurrentDirectory(){
+	public void addCurrentDirectory() {
 		String dir = this.fc.getCurrentDirectory().getAbsolutePath();
 		String[] dirs = this.applicationConfiguration.getFavouriteDirs();
 		String[] new_dirs;
@@ -254,11 +254,11 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 */
 	public void lastDirectoryChanged(String dir) {
 		log.debug("lastDirectoryChanged: " + dir);
-	 	String[] dirs = this.applicationConfiguration.getLastDirs();
+		String[] dirs = this.applicationConfiguration.getLastDirs();
 		LinkedList<String> list = new LinkedList<String>(Arrays.asList(dirs));
 		list.remove(dir);
 		list.addFirst(dir);
-		if(list.size() > NUM_OF_LAST_DIRECTORIES)
+		if (list.size() > NUM_OF_LAST_DIRECTORIES)
 			list.removeLast();
 		this.updateLastDirectories(list.toArray(new String[0]));
 	}
@@ -289,14 +289,14 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	protected JPanel getFavouritesButtonGui() {
 		JButton b = new JButton("");
 		b.setBorder(BorderFactory.
-			    createEmptyBorder(0, 0, 0, 0));
+					createEmptyBorder(0, 0, 0, 0));
 		b.setContentAreaFilled(false);
 		final EmbeddedFileChooserFavorites fcf = this;
 		b.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					fcf.showHide();
-				}
-			});
+			public void actionPerformed(ActionEvent e) {
+				fcf.showHide();
+			}
+		});
 		this.favoritesButton = b;
 
 		//Prepare icons for button
@@ -342,20 +342,20 @@ public class EmbeddedFileChooserFavorites extends JPanel
 		addFavsButton.setToolTipText(_("Add current directory to favorites"));
 		addFavsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		addFavsButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					fcf.addCurrentDirectory();
-				}
-			});
+			public void actionPerformed(ActionEvent e) {
+				fcf.addCurrentDirectory();
+			}
+		});
 		ic = new ImageIcon(IconUtils.loadClassPathImage("org/signalml/app/icon/remove.png"));
 		JButton removeFavsButton = new JButton(ic);
 		removeFavsButton.setContentAreaFilled(false);
 		removeFavsButton.setToolTipText(_("Remove from favorites"));
 		removeFavsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		removeFavsButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					fcf.removeCurrentDirectory();
-				}
-			});
+			public void actionPerformed(ActionEvent e) {
+				fcf.removeCurrentDirectory();
+			}
+		});
 
 		//layout filling
 		JPanel p2 = new JPanel();

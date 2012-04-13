@@ -86,22 +86,22 @@ public class DocumentFlowIntegrator {
 	 * the {@link DocumentManager manager} of {@link Document documents} in Svarog
 	 */
 	private DocumentManager documentManager;
-	
+
 	/**
 	 * the {@link MRUDRegistry cache} of {@link MRUDEntry file descriptions}
 	 */
 	private MRUDRegistry mrudRegistry;
-	
+
 	/**
 	 * the manager of {@link SignalMLCodec codecs}
 	 */
 	private SignalMLCodecManager codecManager;
-	
+
 	/**
-	 * the parent pane to all dialogs shown by this integrator 
+	 * the parent pane to all dialogs shown by this integrator
 	 */
 	private Component optionPaneParent = null;
-	
+
 	/**
 	 * the {@link ViewerFileChooser chooser} for files in Svarog
 	 */
@@ -117,12 +117,12 @@ public class DocumentFlowIntegrator {
 	 * the {@link ActionFocusManager manager} of active elements in Svarog
 	 */
 	private ActionFocusManager actionFocusManager;
-	
+
 	/**
 	 * the {@link ApplicationConfiguration configuration} of Svarog
 	 */
 	private ApplicationConfiguration applicationConfig;
-	
+
 	/**
 	 * the {@link MontagePresetManager manager} of montage presets
 	 */
@@ -134,7 +134,7 @@ public class DocumentFlowIntegrator {
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	/**
-	 * Opens a {@link Document document} described in a given 
+	 * Opens a {@link Document document} described in a given
 	 * {@link OpenDocumentDescriptor descriptor} and returns it.
 	 * Depending on a {@link ManagedDocumentType type} of a document
 	 * {@link OpenDocumentDescriptor#getType() obtained} from the descriptor
@@ -153,7 +153,8 @@ public class DocumentFlowIntegrator {
 		ManagedDocumentType type = descriptor.getType();
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 			return openSignalDocument(descriptor);
-		} if(type.equals(ManagedDocumentType.MONITOR)) {
+		}
+		if (type.equals(ManagedDocumentType.MONITOR)) {
 			return openMonitorDocument(descriptor);
 		} else if (type.equals(ManagedDocumentType.BOOK)) {
 			return openBookDocument(descriptor);
@@ -391,7 +392,7 @@ public class DocumentFlowIntegrator {
 	 * @return true if the operation was successful, false otherwise
 	 * @throws IOException TODO never thrown (???)
 	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
 	 * failed to calculate the checksum
 	 */
 	public boolean saveDocument(Document document, boolean saveAsOnly) throws IOException, SignalMLException {
@@ -462,7 +463,7 @@ public class DocumentFlowIntegrator {
 					if (type.equals(ManagedDocumentType.SIGNAL)) {
 						ok = true;
 						// do nothing
-					} else if(type.equals(ManagedDocumentType.MONITOR) ) {
+					} else if (type.equals(ManagedDocumentType.MONITOR)) {
 						ok = true;
 						// do nothing
 					} else if (type.equals(ManagedDocumentType.BOOK)) {
@@ -512,7 +513,7 @@ public class DocumentFlowIntegrator {
 	 * {@code false} if saving any of the files failed
 	 * @throws IOException TODO never thrown (???)
 	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
 	 * failed to calculate the checksum
 	 */
 	public boolean saveAllDocuments() throws IOException, SignalMLException {
@@ -538,7 +539,7 @@ public class DocumentFlowIntegrator {
 		return allOk;
 
 	}
-		
+
 	/**
 	 * Creates a {@link OpenDocumentDescriptor descriptor} of a file based
 	 * on a given {@link MRUDEntry} and uses this descriptor to
@@ -550,7 +551,7 @@ public class DocumentFlowIntegrator {
 	 * unknown type,</li>
 	 * <li>it is a {@link TagDocument tag document} and there is no active
 	 * signal</li>
-	 * </ul> 
+	 * </ul>
 	 * @throws IOException if the file doesn't exist or is unreadable
 	 * or I/O error occurs while opening RAW signal
 	 * @throws SignalMLException if there is no {@link SignalMLCodec codec}
@@ -575,9 +576,9 @@ public class DocumentFlowIntegrator {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
 				SignalMLDescriptor signalmlDescriptor = smlEntry.getDescriptor();
-				
+
 				SignalMLCodec codec = codecManager.getCodecByUID(signalmlDescriptor.getCodecUID());
-				
+
 				if (codec == null) {
 					logger.warn("Mrud codec not found for uid [" + signalmlDescriptor.getCodecUID() + "]");
 					throw new MissingCodecException("error.mrudMissingCodecException");
@@ -800,7 +801,7 @@ public class DocumentFlowIntegrator {
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
 		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
-		
+
 		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
@@ -814,7 +815,7 @@ public class DocumentFlowIntegrator {
 
 		((SignalView) monitorSignalDocument.getDocumentView()).setSnapToPageMode(true);
 		logger.debug("monitor openned");
-		
+
 		return monitorSignalDocument;
 
 	}
@@ -840,7 +841,7 @@ public class DocumentFlowIntegrator {
 	 * </ul>
 	 * @throws IOException if the file doesn't exist or is unreadable
 	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
 	 * failed to calculate the checksum
 	 */
 	private BookDocument openBookDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
@@ -1123,7 +1124,7 @@ public class DocumentFlowIntegrator {
 
 	}
 
-	
+
 	/**
 	 * Performs operations necessary when a {@link Document document} is added:
 	 * <ul>
@@ -1298,7 +1299,7 @@ public class DocumentFlowIntegrator {
 	 * @param string TODO never used
 	 * @return the calculated checksum
 	 * @throws SignalMLException if the calculation was interrupted or
-	 * {@link SignalChecksumWorker worker} failed to calculate the checksum 
+	 * {@link SignalChecksumWorker worker} failed to calculate the checksum
 	 */
 	private SignalChecksum getSignalCheckSum(SignalDocument parent, String string) throws SignalMLException {
 
@@ -1635,7 +1636,7 @@ public class DocumentFlowIntegrator {
 			spd.setChannelCountEditable(false);
 		} else {
 			spd.setChannelCount(0);
-			spd.setChannelCountEditable(true);	
+			spd.setChannelCountEditable(true);
 		}
 
 		if (!signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {

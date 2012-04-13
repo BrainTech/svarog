@@ -8,8 +8,8 @@ import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 
 public class NewArtifactParameterHelper {
 	public static boolean IsParameterEnabled(
-			NewArtifactComputationType algorithmType,
-			NewArtifactData artifactData) {
+		NewArtifactComputationType algorithmType,
+		NewArtifactData artifactData) {
 
 		NewArtifactParameters parameters = artifactData.getParameters();
 		Map<String, Integer> channelMap = artifactData.getChannelMap();
@@ -25,8 +25,8 @@ public class NewArtifactParameterHelper {
 			break;
 		case EYE_MOVEMENT:
 			channelsEnabled = NewArtifactParameterHelper
-					.CheckChannelAvailability(channelMap, "EOGL", "EOGP", "F7",
-							"F8", "T3", "T4");
+							  .CheckChannelAvailability(channelMap, "EOGL", "EOGP", "F7",
+									  "F8", "T3", "T4");
 			idx = 1;
 			break;
 		case MUSCLE_ACTIVITY:
@@ -36,8 +36,8 @@ public class NewArtifactParameterHelper {
 			return chosenTypes[2] != 0 || chosenTypes[5] != 0;
 		case EYEBLINKS:
 			channelsEnabled = NewArtifactParameterHelper
-					.CheckChannelAvailability(channelMap, "Fp1", "F3", "F3",
-							"C3", "Fp2", "F4", "F4", "C4");
+							  .CheckChannelAvailability(channelMap, "Fp1", "F3", "F3",
+									  "C3", "Fp2", "F4", "F4", "C4");
 			idx = 3;
 			break;
 		case TECHNICAL:
@@ -48,7 +48,7 @@ public class NewArtifactParameterHelper {
 			break;
 		case ECG:
 			channelsEnabled = NewArtifactParameterHelper
-					.CheckChannelAvailability(channelMap, "ECG");
+							  .CheckChannelAvailability(channelMap, "ECG");
 			idx = 6;
 			break;
 		case UNKNOWN:
@@ -61,7 +61,7 @@ public class NewArtifactParameterHelper {
 	}
 
 	private static boolean CheckChannelAvailability(
-			Map<String, Integer> channelMap, String... channelNames) {
+		Map<String, Integer> channelMap, String... channelNames) {
 		for (String channelName : channelNames) {
 			if (channelMap.get(channelName) == null) {
 				return false;

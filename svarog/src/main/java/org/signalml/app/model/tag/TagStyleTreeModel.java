@@ -133,10 +133,10 @@ public class TagStyleTreeModel extends AbstractTreeModel implements TagStyleList
 	public void tagStyleAdded(TagStyleEvent e) {
 		TagStyle style = e.getTagStyle();
 		fireTreeNodesInserted(
-		        this,
-		        getTagStyleParentPath(style.getType()),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { style }
+			this,
+			getTagStyleParentPath(style.getType()),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { style }
 		);
 	}
 
@@ -154,10 +154,10 @@ public class TagStyleTreeModel extends AbstractTreeModel implements TagStyleList
 		TagStyle style = e.getTagStyle();
 		iconProducer.reset(style);
 		fireTreeNodesRemoved(
-		        this,
-		        getTagStyleParentPath(style.getType()),
-		        new int[] { e.getInTypeIndex() },
-		        new Object[] { style }
+			this,
+			getTagStyleParentPath(style.getType()),
+			new int[] { e.getInTypeIndex() },
+			new Object[] { style }
 		);
 	}
 

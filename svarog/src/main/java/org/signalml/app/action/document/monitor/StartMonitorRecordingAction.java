@@ -18,7 +18,7 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 
 /**
- * This class is responsible for actions regarding the menu item which starts 
+ * This class is responsible for actions regarding the menu item which starts
  * the recording of the open monitor.
  *
  * @author Piotr Szachewicz
@@ -42,7 +42,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	 * which document is active.
 	 */
 	public StartMonitorRecordingAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
-                super(signalDocumentFocusSelector);
+		super(signalDocumentFocusSelector);
 		setText(_("Start monitor recording"));
 		setIconPath("org/signalml/app/icon/record.png");
 		setToolTip(_("Record signal and tags from this monitor to a file"));
@@ -63,7 +63,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 
 			boolean ok = startMonitorRecordingDialog.showDialog(monitorSignalDocument.getExperimentDescriptor(), true);
-				if (!ok) {
+			if (!ok) {
 				return;
 			}
 
@@ -87,7 +87,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)
-			&& !((MonitorSignalDocument) signalDocument).isRecording())
+				&& !((MonitorSignalDocument) signalDocument).isRecording())
 			setEnabled(true);
 		else
 			setEnabled(false);

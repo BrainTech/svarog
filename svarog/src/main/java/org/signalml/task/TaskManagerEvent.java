@@ -18,10 +18,10 @@ public class TaskManagerEvent extends EventObject {
 	private Task task;
 	private int index;
 
-        /**
-         * Constructs new instance of TaskManagerEvent
-         * @param source the object on which the Event initially occured
-	 * @param task which was cause of the Event
+	/**
+	 * Constructs new instance of TaskManagerEvent
+	 * @param source the object on which the Event initially occured
+	* @param task which was cause of the Event
 	 * @param index index of the Event
 	 */
 	public TaskManagerEvent(Object source, Task task, int index) {
@@ -30,18 +30,18 @@ public class TaskManagerEvent extends EventObject {
 		this.index = index;
 	}
 
-        /**
-         * Returns Task from this Event
-         * @return Task from this Event
-         */
+	/**
+	 * Returns Task from this Event
+	 * @return Task from this Event
+	 */
 	public Task getTask() {
 		return task;
 	}
 
-        /**
-         * Returns index of this Event
-         * @return index of this Event
-         */
+	/**
+	 * Returns index of this Event
+	 * @return index of this Event
+	 */
 	public int getIndex() {
 		return index;
 	}

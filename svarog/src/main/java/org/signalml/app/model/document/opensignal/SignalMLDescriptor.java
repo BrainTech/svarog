@@ -5,7 +5,7 @@ import org.signalml.codec.SignalMLCodec;
 
 /**
  * Describes the parameters of a SignalML file to be opened.
- * 
+ *
  * @author Piotr Szachewicz
  */
 public class SignalMLDescriptor extends AbstractOpenSignalDescriptor {

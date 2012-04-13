@@ -51,8 +51,8 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Advanced decomposition settings")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Advanced decomposition settings")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		setBorder(border);
@@ -77,31 +77,31 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(dictionaryTypeLabel)
-		        .addComponent(dictionaryReinitTypeLabel)
-		        .addComponent(scaleToPeriodFactorLabel)
+			layout.createParallelGroup()
+			.addComponent(dictionaryTypeLabel)
+			.addComponent(dictionaryReinitTypeLabel)
+			.addComponent(scaleToPeriodFactorLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(glue1)
-		        .addComponent(glue2)
-		        .addComponent(glue3)
+			layout.createParallelGroup()
+			.addComponent(glue1)
+			.addComponent(glue2)
+			.addComponent(glue3)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getDictionaryTypeComboBox())
-		        .addComponent(getDictionaryReinitTypeComboBox())
-		        .addComponent(getScaleToPeriodFactorSpinner())
+			layout.createParallelGroup()
+			.addComponent(getDictionaryTypeComboBox())
+			.addComponent(getDictionaryReinitTypeComboBox())
+			.addComponent(getScaleToPeriodFactorSpinner())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(dictionaryTypeHelpButton)
-		        .addComponent(dictionaryReinitTypeHelpButton)
-		        .addComponent(scaleToPeriodFactorHelpButton)
+			layout.createParallelGroup()
+			.addComponent(dictionaryTypeHelpButton)
+			.addComponent(dictionaryReinitTypeHelpButton)
+			.addComponent(scaleToPeriodFactorHelpButton)
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -109,31 +109,31 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(dictionaryTypeLabel)
-				.addComponent(glue1)
-				.addComponent(getDictionaryTypeComboBox())
-				.addComponent(dictionaryTypeHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(dictionaryTypeLabel)
+			.addComponent(glue1)
+			.addComponent(getDictionaryTypeComboBox())
+			.addComponent(dictionaryTypeHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(dictionaryReinitTypeLabel)
-				.addComponent(glue2)
-				.addComponent(getDictionaryReinitTypeComboBox())
-				.addComponent(dictionaryReinitTypeHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(dictionaryReinitTypeLabel)
+			.addComponent(glue2)
+			.addComponent(getDictionaryReinitTypeComboBox())
+			.addComponent(dictionaryReinitTypeHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(scaleToPeriodFactorLabel)
-				.addComponent(glue3)
-				.addComponent(getScaleToPeriodFactorSpinner())
-				.addComponent(scaleToPeriodFactorHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(scaleToPeriodFactorLabel)
+			.addComponent(glue3)
+			.addComponent(getScaleToPeriodFactorSpinner())
+			.addComponent(scaleToPeriodFactorHelpButton)
+		);
 
-		layout.setVerticalGroup(vGroup);				
-								
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	public ResolvableComboBox getDictionaryTypeComboBox() {
@@ -162,12 +162,12 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 	public JSpinner getScaleToPeriodFactorSpinner() {
 		if (scaleToPeriodFactorSpinner == null) {
 			scaleToPeriodFactorSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                ((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
-			                ((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
-			                ((double) MP5Parameters.MAX_SCALE_TO_PERIOD_FACTOR),
-			                0.1d
-			        )
+				new SpinnerNumberModel(
+					((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
+					((double) MP5Parameters.MIN_SCALE_TO_PERIOD_FACTOR),
+					((double) MP5Parameters.MAX_SCALE_TO_PERIOD_FACTOR),
+					0.1d
+				)
 			);
 			scaleToPeriodFactorSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			scaleToPeriodFactorSpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);

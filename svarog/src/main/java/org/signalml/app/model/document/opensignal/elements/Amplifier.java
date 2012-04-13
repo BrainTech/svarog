@@ -4,29 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Amplifier {
-	
+
 	private String name;
 	private int samplesPerPacket;
 	private List<Float> samplingFrequencies;
 	private List<AmplifierChannel> channels;
 
 	private double amplifierNull;
-	
+
 	public Amplifier(Amplifier amp) {
 		this.name = amp.name;
 		this.samplesPerPacket = amp.samplesPerPacket;
-		
+
 		this.samplingFrequencies = new ArrayList<Float>();
 		for (Float samplingFrequency: amp.getSamplingFrequencies())
 			this.samplingFrequencies.add(samplingFrequency);
-		
+
 		this.channels = new ArrayList<AmplifierChannel>();
 		for (AmplifierChannel channel: amp.getChannels())
 			this.channels.add(new AmplifierChannel(channel));
-		
+
 		this.amplifierNull = amp.amplifierNull;
 	}
-	
+
 	public Amplifier() {
 	}
 
@@ -43,7 +43,7 @@ public class Amplifier {
 	}
 
 	public void setSamplingFrequencies(
-			List<Float> availableSamplingFrequencies) {
+		List<Float> availableSamplingFrequencies) {
 		this.samplingFrequencies = availableSamplingFrequencies;
 	}
 
@@ -62,7 +62,7 @@ public class Amplifier {
 	public void setSamplesPerPacket(int samplesPerPacket) {
 		this.samplesPerPacket = samplesPerPacket;
 	}
-	
+
 	public List<AmplifierChannel> getSelectedChannels() {
 		List<AmplifierChannel> selectedChannels = new ArrayList<AmplifierChannel>();
 		for (AmplifierChannel channel: this.getChannels()) {
@@ -71,7 +71,7 @@ public class Amplifier {
 		}
 		return selectedChannels;
 	}
-	
+
 	public String[] getSelectedChannelsLabels() {
 		List<String> channelLabels = new ArrayList<String>();
 		for (AmplifierChannel channel: getSelectedChannels()) {

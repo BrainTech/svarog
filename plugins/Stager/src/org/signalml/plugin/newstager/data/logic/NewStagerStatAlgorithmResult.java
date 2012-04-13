@@ -7,7 +7,7 @@ public class NewStagerStatAlgorithmResult {
 	public final boolean montage[];
 
 	public NewStagerStatAlgorithmResult(double deviation, double muscle[],
-					    boolean montage[]) {
+										boolean montage[]) {
 		this.deviation = deviation;
 		this.muscle = muscle;
 		this.montage = montage;

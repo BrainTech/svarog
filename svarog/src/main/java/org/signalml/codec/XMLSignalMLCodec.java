@@ -118,8 +118,8 @@ public class XMLSignalMLCodec extends AbstractSignalMLCodec {
 
 				try {
 					readerDelegateClass = dynamicCompiler.compile(
-					srcDir,
-					"org.signalml.codec." + getFormatName(),
+											  srcDir,
+											  "org.signalml.codec." + getFormatName(),
 					new JavaCodeProvider() {
 						@Override
 						public String getCode() throws CompilationException {
@@ -134,7 +134,7 @@ public class XMLSignalMLCodec extends AbstractSignalMLCodec {
 						}
 
 					}
-					                      );
+										  );
 				} catch (CompilationException ex) {
 					logger.error("Compilation failed", ex);
 					throw new SignalMLCodecException("error.codecCompilationFailed",ex);

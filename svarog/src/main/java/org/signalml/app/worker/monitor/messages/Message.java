@@ -14,16 +14,16 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 public class Message {
-	
+
 	@JsonProperty("sender_ip")
 	private String senderIp = "";
 	private MessageType type;
 	private String sender = "";
 	private String receiver ="";
-	
+
 	public Message() {
 	}
-	
+
 	public Message(MessageType type) {
 		this.type = type;
 	}
@@ -59,11 +59,11 @@ public class Message {
 	public void setReceiver(String receiver) {
 		this.receiver = receiver;
 	}
-	
+
 	public String toString() {
-		
+
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
 			mapper.writeValue(os, this);

@@ -106,10 +106,10 @@ public abstract class PredefinedFiltersPresetManager extends AbstractXMLConfigur
 	}
 
 	/**
-         * Returns the number of {@link TimeDomainSampleFilter filters} predefined
+	     * Returns the number of {@link TimeDomainSampleFilter filters} predefined
 	 * for the given sampling frequency.
-         * @return the number of predefined filters
-         */
+	     * @return the number of predefined filters
+	     */
 	public int getPredefinedFilterCount(double samplingFrequency) {
 
 		PredefinedFiltersConfiguration p = findConfiguration(samplingFrequency);

@@ -44,7 +44,7 @@ import org.springframework.validation.Errors;
  * displayed,</li>
  * <li>the panel with check-box if the zoom ratio should be preserved
  * on drag.</li>
- * </ul> 
+ * </ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -136,9 +136,9 @@ public class BookZoomSettingsPanel extends JPanel {
 		JPanel rangePanel = new JPanel();
 
 		rangePanel.setBorder(new CompoundBorder(
-		                             new TitledCrossBorder(_("Range"), hasCloseCross),
-		                             new EmptyBorder(3,3,3,3)
-		                     ));
+								 new TitledCrossBorder(_("Range"), hasCloseCross),
+								 new EmptyBorder(3,3,3,3)
+							 ));
 
 		GroupLayout layout = new GroupLayout(rangePanel);
 		rangePanel.setLayout(layout);
@@ -160,39 +160,39 @@ public class BookZoomSettingsPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(positionLabel)
-		        .addComponent(frequencyLabel)
+			layout.createParallelGroup()
+			.addComponent(positionLabel)
+			.addComponent(frequencyLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(minPositionLabel)
-		        .addComponent(minFrequencyLabel)
+			layout.createParallelGroup()
+			.addComponent(minPositionLabel)
+			.addComponent(minFrequencyLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMinPositionSpinner())
-		        .addComponent(getMinFrequencySpinner())
+			layout.createParallelGroup()
+			.addComponent(getMinPositionSpinner())
+			.addComponent(getMinFrequencySpinner())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(positionGlue)
-		        .addComponent(frequencyGlue)
+			layout.createParallelGroup()
+			.addComponent(positionGlue)
+			.addComponent(frequencyGlue)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxPositionLabel)
-		        .addComponent(maxFrequencyLabel)
+			layout.createParallelGroup()
+			.addComponent(maxPositionLabel)
+			.addComponent(maxFrequencyLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMaxPositionSpinner())
-		        .addComponent(getMaxFrequencySpinner())
+			layout.createParallelGroup()
+			.addComponent(getMaxPositionSpinner())
+			.addComponent(getMaxFrequencySpinner())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -200,33 +200,33 @@ public class BookZoomSettingsPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(positionLabel)
-				.addComponent(minPositionLabel)
-				.addComponent(getMinPositionSpinner())
-				.addComponent(positionGlue)
-				.addComponent(maxPositionLabel)
-				.addComponent(getMaxPositionSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(positionLabel)
+			.addComponent(minPositionLabel)
+			.addComponent(getMinPositionSpinner())
+			.addComponent(positionGlue)
+			.addComponent(maxPositionLabel)
+			.addComponent(getMaxPositionSpinner())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(frequencyLabel)
-				.addComponent(minFrequencyLabel)
-				.addComponent(getMinFrequencySpinner())
-				.addComponent(frequencyGlue)
-				.addComponent(maxFrequencyLabel)
-				.addComponent(getMaxFrequencySpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(frequencyLabel)
+			.addComponent(minFrequencyLabel)
+			.addComponent(getMinFrequencySpinner())
+			.addComponent(frequencyGlue)
+			.addComponent(maxFrequencyLabel)
+			.addComponent(getMaxFrequencySpinner())
+		);
 
 		layout.setVerticalGroup(vGroup);
 
 		JPanel preservationPanel = new JPanel(new FlowLayout());
 
-		preservationPanel.setBorder( new CompoundBorder(
-				new TitledBorder( _("Ratio preservation") ),
-				new EmptyBorder( 3,3,3,3 )					
-		));
+		preservationPanel.setBorder(new CompoundBorder(
+										new TitledBorder(_("Ratio preservation")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 		preservationPanel.add(getPreserveRatioCheckBox());
 
@@ -242,7 +242,7 @@ public class BookZoomSettingsPanel extends JPanel {
 
 	/**
 	 * Returns the model for the {@link #getMinPositionSpinner() minimum
-	 * position spinner}. 
+	 * position spinner}.
 	 * If the model doesn't exist it is created with parameters:
 	 * <ul>
 	 * <li>minimum {@code = 0},</li>
@@ -304,7 +304,7 @@ public class BookZoomSettingsPanel extends JPanel {
 
 	/**
 	 * Returns the model for the {@link #getMaxPositionSpinner() maximum
-	 * position spinner}. 
+	 * position spinner}.
 	 * If the model doesn't exist it is created with parameters:
 	 * <ul>
 	 * <li>minimum {@code = 0.01},</li>
@@ -366,7 +366,7 @@ public class BookZoomSettingsPanel extends JPanel {
 
 	/**
 	 * Returns the model for the {@link #getMinFrequencySpinner() minimum
-	 * frequency spinner}. 
+	 * frequency spinner}.
 	 * If the model doesn't exist it is created with parameters:
 	 * <ul>
 	 * <li>minimum {@code = 0},</li>
@@ -428,7 +428,7 @@ public class BookZoomSettingsPanel extends JPanel {
 
 	/**
 	 * Returns the model for the {@link #getMaxPositionSpinner() maximum
-	 * position spinner}. 
+	 * position spinner}.
 	 * If the model doesn't exist it is created with parameters:
 	 * <ul>
 	 * <li>minimum {@code = 0.01},</li>

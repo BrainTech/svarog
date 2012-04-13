@@ -27,9 +27,9 @@ public class NewStagerArtifactToneEMGAlgorithm extends
 		}
 
 		double mean[] = this.computeItermediateMeanFiltered(channelSignal,
-				NewStagerArtifactAnalysisAlgorithmBase.butterEMGNum,
-				NewStagerArtifactAnalysisAlgorithmBase.butterEMGDen,
-				this.data.constants);
+						NewStagerArtifactAnalysisAlgorithmBase.butterEMGNum,
+						NewStagerArtifactAnalysisAlgorithmBase.butterEMGDen,
+						this.data.constants);
 
 		if (mean == null) {
 			return 0.0d;
@@ -72,8 +72,8 @@ public class NewStagerArtifactToneEMGAlgorithm extends
 			}
 			k = Math.max(k, 1);
 			result[p] = source[k - 1] + source.length
-				    * (percentiles[p] - percents[k - 1]) / 100.d
-				    * (source[k] - source[k - 1]);
+						* (percentiles[p] - percents[k - 1]) / 100.d
+						* (source[k] - source[k - 1]);
 		}
 
 		return result;
@@ -82,7 +82,7 @@ public class NewStagerArtifactToneEMGAlgorithm extends
 	public static void main(String[] args) {
 		NewStagerArtifactToneEMGAlgorithm a = new NewStagerArtifactToneEMGAlgorithm(null);
 		double[] re = a.percentile(new double[] { 15, 20, 35, 40, 50 },
-					   new double[] { 10, 30, 90 });
+								   new double[] { 10, 30, 90 });
 		for (int i = 0; i < re.length; i++) {
 			System.out.println(re[i]);
 		}

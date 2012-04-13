@@ -5,7 +5,7 @@ import org.signalml.plugin.exception.PluginException;
 public class NewArtifactPluginException extends PluginException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -7907800548785251685L;
 

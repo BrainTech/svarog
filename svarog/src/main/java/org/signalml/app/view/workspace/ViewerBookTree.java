@@ -109,7 +109,7 @@ public class ViewerBookTree extends AbstractViewerTree  implements BookDocumentF
 			bookDocumentPopupMenu.add(getActivateDocumentAction());
 			bookDocumentPopupMenu.addSeparator();
 			bookDocumentPopupMenu.add(getCloseDocumentAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToBookTreeBookDocumentPopupMenu(bookDocumentPopupMenu);
 		}
 

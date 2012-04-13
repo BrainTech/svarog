@@ -10,9 +10,9 @@ import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
 /**
- * This class allows to export a {@link StyledTagSet StyledTagSet} to 
+ * This class allows to export a {@link StyledTagSet StyledTagSet} to
  * an ASCII file, which can be imported into EEGLab
- * 
+ *
  * @author Maciej Pawlisz, Titanis
  */
 
@@ -36,9 +36,9 @@ public class EEGLabTagExporter {
 			logger.error("Exception when writing EEGLab tags", ex);
 			throw new ResolvableException(ex);
 		}
-		
+
 	}
-	
+
 	private String convertToString(StyledTagSet tagSet) {
 		StringBuffer str=new StringBuffer();
 		str.append("#This is ASCII representation of tags from svarog\n");

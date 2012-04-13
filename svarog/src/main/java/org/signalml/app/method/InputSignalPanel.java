@@ -38,8 +38,8 @@ public class InputSignalPanel extends JPanel {
 		setLayout(new BorderLayout(3,3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Input data")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Input data")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

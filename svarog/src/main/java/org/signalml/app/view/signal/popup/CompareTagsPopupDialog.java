@@ -96,9 +96,9 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		JPanel graphicalComparePanel = new JPanel();
 		graphicalComparePanel.setLayout(new BoxLayout(graphicalComparePanel, BoxLayout.Y_AXIS));
 		graphicalComparePanel.setBorder(new CompoundBorder(
-		                                        new TitledCrossBorder(_("Graphical comparison"), true),
-		                                        new EmptyBorder(3,3,3,3)
-		                                ));
+											new TitledCrossBorder(_("Graphical comparison"), true),
+											new EmptyBorder(3,3,3,3)
+										));
 
 		compareOnRadio = new JRadioButton(_("Comparison mode enabled"));
 		compareOffRadio = new JRadioButton(_("Comparison mode disabled"));
@@ -124,9 +124,9 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		chooseTagsPanel.setLayout(new GridLayout(cnt, 1, 3, 3));
 
 		chooseTagsPanel.setBorder(new CompoundBorder(
-		                                  new TitledBorder(_("Choose tag documents (2 required)")),
-		                                  new EmptyBorder(3,3,3,3)
-		                          ));
+									  new TitledBorder(_("Choose tag documents (2 required)")),
+									  new EmptyBorder(3,3,3,3)
+								  ));
 
 		checkBoxes = new JCheckBox[cnt];
 		CheckBoxCoordinator checkBoxCoordinator = new CheckBoxCoordinator();

@@ -26,17 +26,17 @@ import org.signalml.domain.signal.space.SelectionSegmentedSampleSource;
  */
 public abstract class MultichannelSampleProcessor extends AbstractMultichannelSampleSource implements MultichannelSampleSource, PropertyChangeListener {
 
-        /**
-         * the actual {@link MultichannelSampleSource source} of samples for
-         * a multichannel signal
-         */
+	/**
+	 * the actual {@link MultichannelSampleSource source} of samples for
+	 * a multichannel signal
+	 */
 	protected MultichannelSampleSource source;
 
-        /**
-         * Constructor. Creates a processor using a given
-         * {@link MultichannelSampleSource source}
-         * @param source the actual source of signal samples
-         */
+	/**
+	 * Constructor. Creates a processor using a given
+	 * {@link MultichannelSampleSource source}
+	 * @param source the actual source of signal samples
+	 */
 	public MultichannelSampleProcessor(MultichannelSampleSource source) {
 		super();
 		this.source = source;
@@ -48,10 +48,10 @@ public abstract class MultichannelSampleProcessor extends AbstractMultichannelSa
 		source.removePropertyChangeListener(this);
 	}
 
-        /**
-         * Returns the actual {@link MultichannelSampleSource source} of samples
-         * @return  the actual source of samples
-         */
+	/**
+	 * Returns the actual {@link MultichannelSampleSource source} of samples
+	 * @return  the actual source of samples
+	 */
 	public MultichannelSampleSource getSource() {
 		return source;
 	}
@@ -81,32 +81,32 @@ public abstract class MultichannelSampleProcessor extends AbstractMultichannelSa
 		return source.getSamplingFrequency();
 	}
 
-        /**
-         * Returns if the actual {@link MultichannelSampleSource sample source}
-         * is capable of returning a channel count
-         * @return true if the actual sample source is capable of
-         * returning a channel count, false otherwise
-         */
+	/**
+	 * Returns if the actual {@link MultichannelSampleSource sample source}
+	 * is capable of returning a channel count
+	 * @return true if the actual sample source is capable of
+	 * returning a channel count, false otherwise
+	 */
 	@Override
 	public boolean isChannelCountCapable() {
 		return source.isChannelCountCapable();
 	}
 
-        /**
-         * Returns if the actual {@link MultichannelSampleSource sample source}
-         * is capable of returning a sampling frequency
-         * @return true if the actual sample source is capable of
-         * returning a sampling frequency, false otherwise
-         */
+	/**
+	 * Returns if the actual {@link MultichannelSampleSource sample source}
+	 * is capable of returning a sampling frequency
+	 * @return true if the actual sample source is capable of
+	 * returning a sampling frequency, false otherwise
+	 */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return source.isSamplingFrequencyCapable();
 	}
 
-        /**
-         * Fires all listeners in this listener that the property has changed
-         * @param evt an event describing the change
-         */
+	/**
+	 * Fires all listeners in this listener that the property has changed
+	 * @param evt an event describing the change
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		pcSupport.firePropertyChange(evt);

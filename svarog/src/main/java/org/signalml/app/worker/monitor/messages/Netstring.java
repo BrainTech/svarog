@@ -24,9 +24,9 @@ public class Netstring {
 		try {
 			length = Integer.parseInt(lengthToken);
 			data = netstring.substring(lengthToken.length() + 1,
-					lengthToken.length() + 1 + length);
+									   lengthToken.length() + 1 + length);
 			String lastCharacter = netstring.substring(netstring.length() - 1,
-					netstring.length());
+								   netstring.length());
 			if (lastCharacter.equals(","))
 				correct = true;
 		} catch (Exception e) {

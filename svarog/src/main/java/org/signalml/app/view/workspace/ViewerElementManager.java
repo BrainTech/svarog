@@ -254,8 +254,8 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
-        private EEGLabExportDialog eeglabExportDialog;
-        private CheckSignalDialog checkSignalDialog;
+	private EEGLabExportDialog eeglabExportDialog;
+	private CheckSignalDialog checkSignalDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private RegisterCodecDialog registerCodecDialog;
@@ -295,8 +295,8 @@ public class ViewerElementManager {
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
-        private EEGLabExportAction eeglabExportAction;
-        private CheckSignalAction checkSignalAction;
+	private EEGLabExportAction eeglabExportAction;
+	private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
 	private HelpContentsAction helpContentsAction;
@@ -533,13 +533,13 @@ public class ViewerElementManager {
 		this.fftFilterPresetManager = fftFilterPresetManager;
 	}
 
-        public OpenBCIModulePresetManager getOpenBCIModulePresetManager() {
-                return openBCIModulePresetManager;
-        }
+	public OpenBCIModulePresetManager getOpenBCIModulePresetManager() {
+		return openBCIModulePresetManager;
+	}
 
-        public void setOpenBCIModulePresetManager (OpenBCIModulePresetManager openBCIModulePresetManager) {
-                this.openBCIModulePresetManager = openBCIModulePresetManager;
-        }
+	public void setOpenBCIModulePresetManager(OpenBCIModulePresetManager openBCIModulePresetManager) {
+		this.openBCIModulePresetManager = openBCIModulePresetManager;
+	}
 
 	/**
 	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
@@ -709,7 +709,7 @@ public class ViewerElementManager {
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
 			statusBar.setStatus(_R(("Svarog v.{0} ready"),
-			                    new Object[] {SvarogConstants.VERSION}));
+								   new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);
 		}
 		return statusBar;
@@ -842,7 +842,7 @@ public class ViewerElementManager {
 		return tagsMenu;
 	}
 
-	
+
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(_("Tools"));
@@ -1136,7 +1136,7 @@ public class ViewerElementManager {
 
 	public PleaseWaitDialog getPleaseWaitDialog() {
 		if (pleaseWaitDialog == null) {
-			pleaseWaitDialog = new PleaseWaitDialog( getDialogParent());
+			pleaseWaitDialog = new PleaseWaitDialog(getDialogParent());
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
@@ -1295,12 +1295,12 @@ public class ViewerElementManager {
 		return exportSignalDialog;
 	}
 
-        public EEGLabExportDialog getEEGLabExportDialog() {
-                if (eeglabExportDialog == null) {
-                        eeglabExportDialog = new EEGLabExportDialog(getDialogParent(), true);
-                }
-                return eeglabExportDialog;
-        }
+	public EEGLabExportDialog getEEGLabExportDialog() {
+		if (eeglabExportDialog == null) {
+			eeglabExportDialog = new EEGLabExportDialog(getDialogParent(), true);
+		}
+		return eeglabExportDialog;
+	}
 
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
@@ -1457,7 +1457,7 @@ public class ViewerElementManager {
 	 */
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
 		if (startMonitorRecordingAction == null) {
-			startMonitorRecordingAction = new StartMonitorRecordingAction( getActionFocusManager());
+			startMonitorRecordingAction = new StartMonitorRecordingAction(getActionFocusManager());
 			startMonitorRecordingAction.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 		}
 		return startMonitorRecordingAction;
@@ -1470,13 +1470,13 @@ public class ViewerElementManager {
 	 */
 	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
 		if (stopMonitorRecordingAction == null)
-			stopMonitorRecordingAction = new StopMonitorRecordingAction( getActionFocusManager());
+			stopMonitorRecordingAction = new StopMonitorRecordingAction(getActionFocusManager());
 		return stopMonitorRecordingAction;
 	}
 
 	public CloseDocumentAction getCloseActiveDocumentAction() {
 		if (closeActiveDocumentAction == null) {
-			closeActiveDocumentAction = new CloseDocumentAction( getActionFocusManager());
+			closeActiveDocumentAction = new CloseDocumentAction(getActionFocusManager());
 			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeActiveDocumentAction;
@@ -1492,7 +1492,7 @@ public class ViewerElementManager {
 
 	public SaveDocumentAction getSaveActiveDocumentAction() {
 		if (saveActiveDocumentAction == null) {
-			saveActiveDocumentAction = new SaveDocumentAction( getActionFocusManager());
+			saveActiveDocumentAction = new SaveDocumentAction(getActionFocusManager());
 			saveActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveActiveDocumentAction;
@@ -1500,7 +1500,7 @@ public class ViewerElementManager {
 
 	public SaveDocumentAsAction getSaveActiveDocumentAsAction() {
 		if (saveActiveDocumentAsAction == null) {
-			saveActiveDocumentAsAction = new SaveDocumentAsAction( getActionFocusManager());
+			saveActiveDocumentAsAction = new SaveDocumentAsAction(getActionFocusManager());
 			saveActiveDocumentAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveActiveDocumentAsAction;
@@ -1508,7 +1508,7 @@ public class ViewerElementManager {
 
 	public NewTagAction getNewTagAction() {
 		if (newTagAction == null) {
-			newTagAction = new NewTagAction( getActionFocusManager());
+			newTagAction = new NewTagAction(getActionFocusManager());
 			newTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			newTagAction.setNewTagDialog(getNewTagDialog());
 		}
@@ -1517,7 +1517,7 @@ public class ViewerElementManager {
 
 	public OpenTagAction getOpenTagAction() {
 		if (openTagAction == null) {
-			openTagAction = new OpenTagAction( getActionFocusManager());
+			openTagAction = new OpenTagAction(getActionFocusManager());
 			openTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			openTagAction.setFileChooser(getFileChooser());
 			openTagAction.setOptionPaneParent(getOptionPaneParent());
@@ -1527,7 +1527,7 @@ public class ViewerElementManager {
 
 	public CloseTagAction getCloseTagAction() {
 		if (closeTagAction == null) {
-			closeTagAction = new CloseTagAction( getActionFocusManager());
+			closeTagAction = new CloseTagAction(getActionFocusManager());
 			closeTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeTagAction;
@@ -1535,7 +1535,7 @@ public class ViewerElementManager {
 
 	public SaveTagAction getSaveTagAction() {
 		if (saveTagAction == null) {
-			saveTagAction = new SaveTagAction( getActionFocusManager());
+			saveTagAction = new SaveTagAction(getActionFocusManager());
 			saveTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAction;
@@ -1543,7 +1543,7 @@ public class ViewerElementManager {
 
 	public SaveTagAsAction getSaveTagAsAction() {
 		if (saveTagAsAction == null) {
-			saveTagAsAction = new SaveTagAsAction( getActionFocusManager());
+			saveTagAsAction = new SaveTagAsAction(getActionFocusManager());
 			saveTagAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAsAction;
@@ -1551,7 +1551,7 @@ public class ViewerElementManager {
 
 	public OpenTagAction getImportTagAction() {
 		if (importTagAction == null) {
-			importTagAction = new OpenTagAction( getActionFocusManager());
+			importTagAction = new OpenTagAction(getActionFocusManager());
 			importTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			importTagAction.setFileChooser(getFileChooser());
 			importTagAction.setOptionPaneParent(getOptionPaneParent());
@@ -1568,7 +1568,7 @@ public class ViewerElementManager {
 	 */
 	public ChooseActiveTagAction getChooseActiveTagAction() {
 		if (chooseActiveTagAction == null) {
-			chooseActiveTagAction = new ChooseActiveTagAction( getActionFocusManager());
+			chooseActiveTagAction = new ChooseActiveTagAction(getActionFocusManager());
 		}
 		return chooseActiveTagAction;
 	}
@@ -1581,7 +1581,7 @@ public class ViewerElementManager {
 	 */
 	public CompareTagsAction getCompareTagsAction() {
 		if (compareTagsAction == null) {
-			compareTagsAction = new CompareTagsAction( getActionFocusManager());
+			compareTagsAction = new CompareTagsAction(getActionFocusManager());
 			compareTagsAction.setTagComparisonDialog(getTagComparisonDialog());
 		}
 		return compareTagsAction;
@@ -1589,7 +1589,7 @@ public class ViewerElementManager {
 
 	public ExportEEGLabTagAction getExportEEGLabTagAction() {
 		if (exportEEGLabTagAction == null) {
-			exportEEGLabTagAction = new ExportEEGLabTagAction( getActionFocusManager());
+			exportEEGLabTagAction = new ExportEEGLabTagAction(getActionFocusManager());
 			exportEEGLabTagAction.setFileChooser(getFileChooser());
 			exportEEGLabTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
@@ -1598,7 +1598,7 @@ public class ViewerElementManager {
 
 	public EditSignalParametersAction getEditSignalParametersAction() {
 		if (editSignalMontageAction == null) {
-			editSignalParametersAction = new EditSignalParametersAction( getActionFocusManager());
+			editSignalParametersAction = new EditSignalParametersAction(getActionFocusManager());
 			editSignalParametersAction.setSignalParametersDialog(getSignalParametersDialog());
 		}
 		return editSignalParametersAction;
@@ -1606,12 +1606,12 @@ public class ViewerElementManager {
 
 	public EditSignalMontageAction getEditSignalMontageAction() {
 		if (editSignalMontageAction == null) {
-			editSignalMontageAction = new EditSignalMontageAction( getActionFocusManager());
+			editSignalMontageAction = new EditSignalMontageAction(getActionFocusManager());
 			editSignalMontageAction.setSignalMontageDialog(getSignalMontageDialog());
 		}
 		return editSignalMontageAction;
 	}
-	
+
 	public OpenSignalWizardAction getOpenSignalWizardAction() {
 		if (openSignalWizardAction == null) {
 			openSignalWizardAction = new OpenSignalWizardAction(getDocumentFlowIntegrator());
@@ -1622,14 +1622,14 @@ public class ViewerElementManager {
 
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {
 		if (applyDefaultMontageAction == null) {
-			applyDefaultMontageAction = new ApplyDefaultMontageAction( getActionFocusManager());
+			applyDefaultMontageAction = new ApplyDefaultMontageAction(getActionFocusManager());
 		}
 		return applyDefaultMontageAction;
 	}
 
 	public PreciseSelectionAction getPreciseSelectionAction() {
 		if (preciseSelectionAction == null) {
-			preciseSelectionAction = new PreciseSelectionAction( getActionFocusManager());
+			preciseSelectionAction = new PreciseSelectionAction(getActionFocusManager());
 			preciseSelectionAction.setSignalSelectionDialog(getSignalSelectionDialog());
 		}
 		return preciseSelectionAction;
@@ -1637,7 +1637,7 @@ public class ViewerElementManager {
 
 	public EditTagStylesAction getEditTagStylesAction() {
 		if (editTagStylesAction == null) {
-			editTagStylesAction = new EditTagStylesAction( getActionFocusManager());
+			editTagStylesAction = new EditTagStylesAction(getActionFocusManager());
 			editTagStylesAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
 		}
 		return editTagStylesAction;
@@ -1649,7 +1649,7 @@ public class ViewerElementManager {
 	 */
 	public EditTagStylePresetsAction getEditTagStylePresetsAction() {
 		if (editTagStylePresetsAction == null) {
-			editTagStylePresetsAction = new EditTagStylePresetsAction( getActionFocusManager());
+			editTagStylePresetsAction = new EditTagStylePresetsAction(getActionFocusManager());
 			editTagStylePresetsAction.setTagStylePaletteDialog(getTagStylePresetDialog());
 		}
 		return editTagStylePresetsAction;
@@ -1657,7 +1657,7 @@ public class ViewerElementManager {
 
 	public EditTagDescriptionAction getEditTagDescriptionAction() {
 		if (editTagDescriptionAction == null) {
-			editTagDescriptionAction = new EditTagDescriptionAction( getActionFocusManager());
+			editTagDescriptionAction = new EditTagDescriptionAction(getActionFocusManager());
 			editTagDescriptionAction.setEditTagDescriptionDialog(getEditTagDescriptionDialog());
 		}
 		return editTagDescriptionAction;
@@ -1665,7 +1665,7 @@ public class ViewerElementManager {
 
 	public ExportSignalAction getExportSignalAction() {
 		if (exportSignalAction == null) {
-			exportSignalAction = new ExportSignalAction( getActionFocusManager());
+			exportSignalAction = new ExportSignalAction(getActionFocusManager());
 			exportSignalAction.setExportSignalDialog(getExportSignalDialog());
 			exportSignalAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			exportSignalAction.setFileChooser(getFileChooser());
@@ -1676,7 +1676,7 @@ public class ViewerElementManager {
 
 	public ExportBookAction getExportBookAction() {
 		if (exportBookAction == null) {
-			exportBookAction = new ExportBookAction( getActionFocusManager());
+			exportBookAction = new ExportBookAction(getActionFocusManager());
 			exportBookAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			exportBookAction.setFileChooser(getFileChooser());
 			exportBookAction.setOptionPaneParent(getOptionPaneParent());
@@ -1684,13 +1684,13 @@ public class ViewerElementManager {
 		return exportBookAction;
 	}
 
-        public EEGLabExportAction getEEGLabExportAction() {
-                if (eeglabExportAction == null) {
-                        eeglabExportAction = new EEGLabExportAction(getActionFocusManager());
-                        eeglabExportAction.setEEGLabExportDialog(getEEGLabExportDialog());
-                }
-                return eeglabExportAction;
-        }
+	public EEGLabExportAction getEEGLabExportAction() {
+		if (eeglabExportAction == null) {
+			eeglabExportAction = new EEGLabExportAction(getActionFocusManager());
+			eeglabExportAction.setEEGLabExportDialog(getEEGLabExportDialog());
+		}
+		return eeglabExportAction;
+	}
 
 	public AbortAllTasksAction getAbortAllTasksAction() {
 		if (abortAllTasksAction == null) {
@@ -1762,7 +1762,7 @@ public class ViewerElementManager {
 			RunMethodAction runMethodAction;
 			for (Method method : methods) {
 
-				runMethodAction = new RunMethodAction( method, getMethodManager());
+				runMethodAction = new RunMethodAction(method, getMethodManager());
 				runMethodAction.setTaskManager(getTaskManager());
 				runMethodActions.add(runMethodAction);
 
@@ -1789,7 +1789,7 @@ public class ViewerElementManager {
 			for (Method method : methods) {
 
 				if (method instanceof IterableMethod) {
-					iterateMethodAction = new IterateMethodAction( (IterableMethod) method, getMethodManager());
+					iterateMethodAction = new IterateMethodAction((IterableMethod) method, getMethodManager());
 					iterateMethodAction.setTaskManager(getTaskManager());
 					iterateMethodAction.setIterationSetupDialog(getIterationSetupDialog());
 					iterateMethodActions.add(iterateMethodAction);

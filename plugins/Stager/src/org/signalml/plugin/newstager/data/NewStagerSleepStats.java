@@ -8,7 +8,7 @@ public class NewStagerSleepStats {
 	public final double toneMThreshold;
 
 	public NewStagerSleepStats(double alphaThresholds, double deltaThreshold,
-				   double spindleThreshold, double toneMThreshold) {
+							   double spindleThreshold, double toneMThreshold) {
 		this.alphaThresholds = alphaThresholds;
 		this.deltaThreshold = deltaThreshold;
 		this.spindleThreshold = spindleThreshold;
