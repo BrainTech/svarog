@@ -23,6 +23,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -361,6 +362,9 @@ public class SvarogApplication implements java.lang.Runnable {
 			System.err.println("Critical error: no logging configuration");
 			System.exit(1);
 		}
+
+		// system properties override file configuration
+		new PropertyConfigurator().configure(System.getProperties());
 
 		Util.dumpDebuggingInfo();
 
