@@ -36,12 +36,16 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+
+import org.apache.log4j.Logger;
+
 /**
  * Favorites and visited-dirs history panel for file chooser.
  * @author Mateusz Kruszyński &copy; 2011 CC Titanis
  */
 public class EmbeddedFileChooserFavorites extends JPanel
 	implements PropertyChangeListener, ActionListener {
+	protected static final Logger log = Logger.getLogger(EmbeddedFileChooserFavorites.class);
 
 	private static final long serialVersionUID = 1L;
 
@@ -246,6 +250,7 @@ public class EmbeddedFileChooserFavorites extends JPanel
 	 * @param dir directory's abs path that has just been selected
 	 */
 	public void lastDirectoryChanged(String dir) {
+		log.debug("lastDirectoryChanged: " + dir);
 	 	String[] dirs = this.applicationConfiguration.getLastDirs();
 	 	String[] new_dirs;
 	 	if (dirs == null) {

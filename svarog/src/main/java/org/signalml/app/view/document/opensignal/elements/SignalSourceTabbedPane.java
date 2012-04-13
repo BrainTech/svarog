@@ -35,10 +35,13 @@ import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
+import org.apache.log4j.Logger;
+
 public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
+	protected static final Logger log = Logger.getLogger(SignalSourceTabbedPane.class);
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
-	
+
 	private ViewerElementManager viewerElementManager;
 	/**
 	 * The panel for choosing a file to be opened.

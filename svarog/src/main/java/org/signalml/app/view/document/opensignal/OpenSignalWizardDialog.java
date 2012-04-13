@@ -22,7 +22,10 @@ import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
 
+import org.apache.log4j.Logger;
+
 public class OpenSignalWizardDialog extends AbstractWizardDialog {
+	protected static final Logger log = Logger.getLogger(OpenSignalWizardDialog.class);
 
 	private static final long serialVersionUID = -6697344610944631342L;
 

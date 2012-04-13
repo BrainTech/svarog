@@ -17,7 +17,10 @@ import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
 import org.signalml.app.view.workspace.ViewerElementManager;
 
+import org.apache.log4j.Logger;
+
 public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListener, PropertyChangeListener {
+	protected static final Logger log = Logger.getLogger(OpenSignalWizardStepOnePanel.class);
 
 	private SignalSourceTabbedPane signalSourceTabbedPane;
 	private ViewerElementManager viewerElementManager;
