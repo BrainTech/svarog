@@ -23,8 +23,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("application")
 public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
-	private String[] favouriteDirs;
-	private String[] lastDirs;
+	private String[] favouriteDirs = new String[0];
+	private String[] lastDirs = new String[0];
 
 	private String lastFileChooserPath;
 	private String lastPresetPath;
