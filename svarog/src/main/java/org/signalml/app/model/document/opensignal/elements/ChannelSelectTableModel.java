@@ -61,6 +61,9 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
 			setChannels(experimentDescriptor.getAmplifier().getChannels());
 			showSelectedColumn = true;
+
+			editable = (experimentDescriptor.getStatus() == ExperimentStatus.NEW);
+
 		}
 		else {
 			int i = 1;
@@ -127,7 +130,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 0 || columnIndex == 2) {
+		if (columnIndex == 1 || columnIndex == 2) {
 			return isEditable();
 		}
 		else
@@ -137,9 +140,9 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
 		AmplifierChannel x = channels.get(rowIndex);
-		if (columnIndex == 0)
+		if (columnIndex == 2)
 			x.setSelected((Boolean) aValue);
-		else if (columnIndex == 2)
+		else if (columnIndex == 1)
 			x.setLabel(aValue.toString());
 
 		fireTableCellUpdated(rowIndex, columnIndex);

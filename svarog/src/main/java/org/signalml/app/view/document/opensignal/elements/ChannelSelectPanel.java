@@ -169,6 +169,12 @@ public class ChannelSelectPanel extends JPanel {
 	 */
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		getChannelSelectTable().fillTableFromModel(openSignalDescriptor);
+
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			boolean enableSelection = ((ExperimentDescriptor) openSignalDescriptor).getStatus() == ExperimentStatus.NEW;
+			getSelectAllButton().setEnabled(enableSelection);
+			getClearSelectionButton().setEnabled(enableSelection);
+		}
 	}
 
 	public void fillModelFromPanel(AbstractOpenSignalDescriptor openSignalDescriptor) {
@@ -177,8 +183,6 @@ public class ChannelSelectPanel extends JPanel {
 	}
 
 	public void preparePanelForSignalSource(SignalSource signalSource) {
-		//getSelectAllButton().setEnabled(signalSource.isOpenBCI());
-		//getClearSelectionButton().setEnabled(signalSource.isOpenBCI());
 	}
 
 }

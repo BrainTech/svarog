@@ -56,6 +56,10 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 				Dialogs.showError(_("Please select a proper file or monitor signal source!"));
 				return false;
 			}
+			if (openSignalDescriptor.getChannelLabels().length == 0) {
+				Dialogs.showError(_("Please select some channels!"));
+				return false;
+			}
 
 			SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 			Montage createdMontage = SignalConfigurer.createMontage(signalParameters.getChannelCount());

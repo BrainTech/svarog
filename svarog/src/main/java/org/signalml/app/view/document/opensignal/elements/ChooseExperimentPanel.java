@@ -21,7 +21,7 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
 import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.worker.monitor.GetOpenBCIExperimentsWorker;
+import org.signalml.app.worker.monitor.FindEEGExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 public class ChooseExperimentPanel extends AbstractPanel implements ListSelectionListener {
@@ -81,7 +81,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 	}
 
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
-		private GetOpenBCIExperimentsWorker worker;
+		private FindEEGExperimentsWorker worker;
 		private boolean executing = false;
 
 		public RefreshButtonAction() {
@@ -102,7 +102,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 			System.out.println("Refreshing the list of experiments");
 
-			worker = new GetOpenBCIExperimentsWorker(ChooseExperimentPanel.this);
+			worker = new FindEEGExperimentsWorker(ChooseExperimentPanel.this);
 			worker.addPropertyChangeListener(this);
 			worker.execute();
 		}

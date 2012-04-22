@@ -11,6 +11,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias(value="channel")
 public class AmplifierChannel {
 
+	public static String DRIVER_SAW_CHANNEL_NAME = "Driver_Saw";
+	public static String TRIGGER_CHANNEL_NAME = "Trigger";
+
 	/**
 	 * Determines whether this channel is selected to be shown or not.
 	 */
@@ -25,6 +28,8 @@ public class AmplifierChannel {
 	 * The label representing this channel.
 	 */
 	private String label;
+
+	private String originalName;
 
 	private float calibrationGain;
 	private float calibrationOffset;
@@ -101,6 +106,13 @@ public class AmplifierChannel {
 
 	public void setCalibrationOffset(float calibrationOffset) {
 		this.calibrationOffset = calibrationOffset;
+	}
+
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
+	}
+	public String getOriginalName() {
+		return originalName;
 	}
 
 }

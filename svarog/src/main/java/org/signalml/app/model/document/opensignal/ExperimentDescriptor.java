@@ -34,6 +34,8 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private StyledTagSet tagStyles;
 	private String peerId;
 
+	private String recommendedScenario;
+
 	public ExperimentDescriptor(ExperimentDescriptor other) {
 		this();
 
@@ -154,6 +156,13 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	@Override
 	public String[] getChannelLabels() {
 		return amplifier.getSelectedChannelsLabels();
+	}
+
+	public String getRecommendedScenario() {
+		return recommendedScenario;
+	}
+	public void setRecommendedScenario(String recommendedScenario) {
+		this.recommendedScenario = recommendedScenario;
 	}
 
 	/**

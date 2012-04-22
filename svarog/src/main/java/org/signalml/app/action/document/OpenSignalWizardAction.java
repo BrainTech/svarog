@@ -2,6 +2,7 @@ package org.signalml.app.action.document;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
@@ -16,6 +17,7 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
@@ -24,7 +26,6 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private OpenSignalWizardDialog openSignalWizardDialog;
-
 	private OpenDocumentDescriptor openDocumentDescriptor;
 	private ConnectToExperimentWorker worker;
 

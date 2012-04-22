@@ -23,6 +23,17 @@ public enum MessageType {
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
 	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", null),
 
+	FIND_EEG_AMPLIFIERS_REQUEST("find_eeg_amplifiers", FindEEGAmplifiersRequest.class),
+	EEG_AMPLIFIERS_RESPONSE("eeg_amplifiers", null),
+
+	START_EEG_SIGNAL_REQUEST("start_eeg_signal", StartEEGSignalRequest.class),
+	START_EEG_SIGNAL_RESPONSE("starting_experiment", StartEEGSignalResponse.class),
+
+	KILL_EXPERIMENT_REQUEST("kill_experiment", KillExperimentRequest.class),
+
+	GET_EXPERIMENT_CONTACT_REQUEST("get_experiment_contact", GetExperimentContactRequest.class),
+	GET_EXPERIMENT_CONTACT_RESPONSE("experiment_contact", GetExperimentContactResponse.class),
+
 	JOIN_EXPERIMENT_REQUEST("join_experiment", JoinExperimentRequest.class),
 	LEAVE_EXPERIMENT_REQUEST("leave_experiment", LeaveExperimentRequest.class),
 

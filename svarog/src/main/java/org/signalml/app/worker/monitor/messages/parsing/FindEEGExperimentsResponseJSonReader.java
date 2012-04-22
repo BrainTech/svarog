@@ -17,9 +17,9 @@ import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 
-public class ExperimentDescriptorJSonReader {
+public class FindEEGExperimentsResponseJSonReader {
 
-	protected static final Logger logger = Logger.getLogger(ExperimentDescriptorJSonReader.class);
+	protected static final Logger logger = Logger.getLogger(FindEEGExperimentsResponseJSonReader.class);
 
 	public List<ExperimentDescriptor> parseExperiments(String s) {
 
@@ -98,7 +98,9 @@ public class ExperimentDescriptorJSonReader {
 		int i = 0;
 		for (Object item: channelsInfo) {
 			LinkedHashMap<String, Object> channelInfo = (LinkedHashMap<String, Object>) item;
-			AmplifierChannel channel = new AmplifierChannel(i+1, (String) channelInfo.get("name"));
+			String channelName = (String) channelInfo.get("name");
+			AmplifierChannel channel = new AmplifierChannel(i+1, channelName);
+			channel.setOriginalName(channelName);
 			double gain = (Double) channelInfo.get("gain");
 			double offset = (Double) channelInfo.get("offset");
 			channel.setCalibrationGain((float)gain);
