@@ -32,7 +32,7 @@ import org.signalml.multiplexer.protocol.SvarogConstants;
 public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 
 	public static final int TIMEOUT_MILIS = 500;
-	public static final int TRYOUT_COUNT = 10;
+	public static final int TRYOUT_COUNT = 20;
 	private static Logger logger = Logger.getLogger(ConnectToExperimentWorker.class);
 
 	private ExperimentDescriptor experimentDescriptor;
@@ -108,7 +108,7 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 			else {
 				logger.warn("Error while connecting to experiment, retrying");
 				try {
-					Thread.sleep(500);
+					Thread.sleep(TIMEOUT_MILIS);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

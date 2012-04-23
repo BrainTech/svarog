@@ -24,7 +24,7 @@ public class Helper {
 
 	protected static Logger logger = Logger.getLogger(Helper.class);
 
-	public static final int RECEIVE_TIMEOUT_MS = 7000;
+	public static final int RECEIVE_TIMEOUT_MS = 10000;
 
 	protected static ApplicationConfiguration getApplicationConfiguration() {
 		return SvarogApplication.getApplicationConfiguration();
