@@ -103,10 +103,36 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 * the maximum number of labels on the X (frequencies) axis
 	 */
 	private int maxLabelCount = Integer.MAX_VALUE;
-	/**
-	 * boolean which tells if the power range should be scaled to data
-	 */
-	private boolean scaleToView = false;
+
+	private boolean autoScaleYAxis = false;
+	
+	private double minPowerAxis = 0.0;
+	
+	private double maxPowerAxis = 200.00;
+	
+	public boolean isAutoScaleYAxis() {
+		return autoScaleYAxis;
+	}
+
+	public void setAutoScaleYAxis(boolean autoScaleYAxis) {
+		this.autoScaleYAxis = autoScaleYAxis;
+	}
+
+	public double getMinPowerAxis() {
+		return minPowerAxis;
+	}
+
+	public void setMinPowerAxis(double minPowerAxis) {
+		this.minPowerAxis = minPowerAxis;
+	}
+
+	public double getMaxPowerAxis() {
+		return maxPowerAxis;
+	}
+
+	public void setMaxPowerAxis(double maxPowerAxis) {
+		this.maxPowerAxis = maxPowerAxis;
+	}
 
 	/**
 	 * Constructor. Sets the default values of the parameters.
@@ -363,25 +389,6 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	}
 
 	/**
-	 * Returns if the power range should be scaled to data.
-	 * @return {@code true} if the power range should be scaled to data,
-	 * {@code false} otherwise
-	 */
-	public boolean isScaleToView() {
-		return scaleToView;
-	}
-
-	/**
-	 * Sets if the power range should be scaled to data.
-	 * @param scaleToView {@code true} if the power range should be scaled to
-	 * data, {@code false} otherwise
-	 */
-	public void setScaleToView(boolean scaleToView) {
-		this.scaleToView = scaleToView;
-	}
-
-
-	/**
 	 * Opens an XML file and returns the document element.
 	 * @param file the file in which XML tree is stored
 	 * @return the document element
@@ -584,8 +591,6 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 					setLogarithmic(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("powerAxisLabelsVisible"))
 					setPowerAxisLabelsVisible(readBooleanNode(nodeTmp));
-				if (nodeTmp.getNodeName().equals("scaleToView"))
-					setScaleToView(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("spline"))
 					setSpline(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("titleVisible"))
@@ -604,6 +609,13 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 					setPlotSize(readDimensionNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("windowType"))
 					setWindowType(readWindowTypeNode(nodeTmp));
+
+				if (nodeTmp.getNodeName().equals("minYAxis"))
+					setMinPowerAxis(readDoubleNode(nodeTmp));
+				if (nodeTmp.getNodeName().equals("maxYAxis"))
+					setMaxPowerAxis(readDoubleNode(nodeTmp));
+				if (nodeTmp.getNodeName().equals("autoScaleY"))
+					setAutoScaleYAxis(readBooleanNode(nodeTmp));
 
 			}
 		} catch (ParserConfigurationException e) {
@@ -631,14 +643,16 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 			addBooleanNode(doc, root, "frequencyAxisLabelsVisible", isFrequencyAxisLabelsVisible());
 			addBooleanNode(doc, root, "logarithmic", isLogarithmic());
 			addBooleanNode(doc, root, "powerAxisLabelsVisible", isPowerAxisLabelsVisible());
-			addBooleanNode(doc, root, "scaleToView", isScaleToView());
 			addBooleanNode(doc, root, "spline", isSpline());
 			addBooleanNode(doc, root, "titleVisible", isTitleVisible());
+			addBooleanNode(doc, root, "autoScaleY", isAutoScaleYAxis());
 			addIntNode(doc, root, "maxLabelCount", getMaxLabelCount());
 			addIntNode(doc, root, "visibleRangeEnd", getVisibleRangeEnd());
 			addIntNode(doc, root, "visibleRangeStart", getVisibleRangeStart());
 			addIntNode(doc, root, "windowWidth", getWindowWidth());
 			addDoubleNode(doc, root, "windowParameter", getWindowParameter());
+			addDoubleNode(doc, root, "minYAxis", getMinPowerAxis());
+			addDoubleNode(doc, root, "maxYAxis", getMaxPowerAxis());
 			addDimensionNode(doc, root, "plotSize", getPlotSize());
 			addWindowTypeNode(doc, root, "windowType", getWindowType());
 			saveToXMLFile(xmlFile, doc);
