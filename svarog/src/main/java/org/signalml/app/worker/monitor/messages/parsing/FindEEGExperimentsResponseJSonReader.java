@@ -48,6 +48,7 @@ public class FindEEGExperimentsResponseJSonReader {
 				descriptor.setCorrectlyRead(true);
 				experiments.add(descriptor);
 			} catch (Exception e) {
+				e.printStackTrace();
 				logger.error("There was an error parsing an experiment: " + e.getCause());
 			}
 		}
@@ -144,7 +145,7 @@ public class FindEEGExperimentsResponseJSonReader {
 
 		experiment.setAmplifier(amplifier);
 
-		List<Object> tcpAddress = (List<Object>) map.get("tcp_addr");
+		List<Object> tcpAddress = (List<Object>) ((List<Object>) map.get("tcp_addrs")).get(0);
 		experiment.setExperimentIPAddress((String) tcpAddress.get(0));
 		experiment.setExperimentPort((Integer) tcpAddress.get(1));
 
