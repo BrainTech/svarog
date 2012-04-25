@@ -11,6 +11,7 @@ public class Amplifier {
 	private List<AmplifierChannel> channels;
 
 	private double amplifierNull;
+	private Object additionalParameters;
 
 	public Amplifier(Amplifier amp) {
 		this.name = amp.name;
@@ -86,6 +87,13 @@ public class Amplifier {
 
 	public void setAmplifierNull(double amplifierNull) {
 		this.amplifierNull = amplifierNull;
+	}
+
+	public Object getAdditionalParameters() {
+		return additionalParameters;
+	}
+	public void setAdditionalParameters(Object additionalParameters) {
+		this.additionalParameters = additionalParameters;
 	}
 
 }

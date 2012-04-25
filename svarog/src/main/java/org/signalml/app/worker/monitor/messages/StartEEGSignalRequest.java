@@ -1,7 +1,6 @@
 package org.signalml.app.worker.monitor.messages;
 
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
@@ -72,6 +71,9 @@ class AmplifierParameters {
 	@JsonProperty("sampling_rate")
 	private Float samplingFrequency;
 
+	@JsonProperty("additional_params")
+	private Object additionalParameters;
+
 	public AmplifierParameters(ExperimentDescriptor experimentDescriptor) {
 		samplingFrequency = experimentDescriptor.getSignalParameters().getSamplingFrequency();
 
@@ -92,6 +94,8 @@ class AmplifierParameters {
 				channelNames += ";";
 			}
 		}
+
+		this.additionalParameters = experimentDescriptor.getAmplifier().getAdditionalParameters();
 	}
 
 	public String getChannelNames() {
@@ -116,6 +120,13 @@ class AmplifierParameters {
 
 	public void setSamplingFrequency(Float samplingFrequency) {
 		this.samplingFrequency = samplingFrequency;
+	}
+
+	public void setAdditionalParameters(Object additionalParameters) {
+		this.additionalParameters = additionalParameters;
+	}
+	public Object getAdditionalParameters() {
+		return additionalParameters;
 	}
 
 }

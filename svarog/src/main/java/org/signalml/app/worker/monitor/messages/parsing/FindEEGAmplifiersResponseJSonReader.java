@@ -61,7 +61,8 @@ public class FindEEGAmplifiersResponseJSonReader {
 		experiment.setStatus(ExperimentStatus.NEW);
 
 		//experiment info
-		String recommendedScenario = (String) map.get("recommended_scenario");
+		LinkedHashMap<String, Object> experimentInfo = (LinkedHashMap<String, Object>) map.get("experiment_info");
+		String recommendedScenario = (String) experimentInfo.get("launch_file_path");
 		experiment.setRecommendedScenario(recommendedScenario);
 
 		StringTokenizer tokenizer = new StringTokenizer(recommendedScenario, "/");
@@ -70,10 +71,15 @@ public class FindEEGAmplifiersResponseJSonReader {
 			experiment.setName(tokenizer.nextToken());
 		}
 
-		LinkedHashMap<String, Object> channelsInfo = (LinkedHashMap<String, Object>) map.get("channels_info");
+		LinkedHashMap<String, Object> amplifierParams = (LinkedHashMap<String, Object>) map.get("amplifier_params");
+		LinkedHashMap<String, Object> channelsInfo = (LinkedHashMap<String, Object>) amplifierParams.get("channels_info");
 
 		Amplifier amplifier = new Amplifier();
 		experiment.setAmplifier(amplifier);
+
+		Object additionalParams = amplifierParams.get("additional_params");
+		amplifier.setAdditionalParameters(additionalParams);
+
 		amplifier.setName((String) channelsInfo.get("name"));
 
 		List<Integer> samplingFrequencies = (List<Integer>) channelsInfo.get("sampling_rates");
