@@ -23,8 +23,21 @@
         <module>plugins/FFTSignalTool</module>
         <module>plugins/PluginToolCommon</module>
         <module>plugins/Artifact</module>
-        <module>izpack</module>
     </modules>
+
+    <profiles>
+        <profile>
+            <id>installer</id>
+            <modules>
+                <module>svarog</module>
+                <module>plugins/FFT</module>
+                <module>plugins/FFTSignalTool</module>
+                <module>plugins/PluginToolCommon</module>
+                <module>plugins/Artifact</module>
+                <module>izpack</module>
+            </modules>
+        </profile>
+    </profiles>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
