@@ -26,6 +26,14 @@ public class FindEEGAmplifiersRequest extends Message {
 		amplifierTypes.add(AmplifierType.VIRTUAL);
 	}
 
+	public FindEEGAmplifiersRequest(AmplifierType amplifierType) {
+		super(MessageType.FIND_EEG_AMPLIFIERS_REQUEST);
+		this.clientPushAddress = "";
+		this.checkedSrvs = "";
+
+		amplifierTypes.add(amplifierType);
+	}
+
 	public String getClientPushAddress() {
 		return clientPushAddress;
 	}

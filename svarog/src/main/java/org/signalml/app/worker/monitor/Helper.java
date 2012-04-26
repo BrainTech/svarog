@@ -1,6 +1,7 @@
 package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,14 +18,17 @@ import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.messages.Message;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.Netstring;
-import org.signalml.app.worker.monitor.messages.RequestOKResponse;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 
 public class Helper {
 
 	protected static Logger logger = Logger.getLogger(Helper.class);
 
-	public static final int RECEIVE_TIMEOUT_MS = 10000;
+	private static Socket socket;
+	private static boolean cancelled;
+
+	public static final int DEFAULT_RECEIVE_TIMEOUT = 2000;
+	public static final int INFINITE_TIMEOUT = 0;
 
 	protected static ApplicationConfiguration getApplicationConfiguration() {
 		return SvarogApplication.getApplicationConfiguration();
@@ -54,38 +58,68 @@ public class Helper {
 
 	public static String sendRequestAndHandleExceptions(Message request, String destinationIP,
 			int destinationPort) {
+		return sendRequestAndHandleExceptions(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
+	}
+
+	public static String sendRequestAndHandleExceptions(Message request, String destinationIP,
+			int destinationPort, int timeout) {
 		String responseString = null;
 		try {
-			responseString = Helper.sendRequest(request, destinationIP, destinationPort);
+			responseString = Helper.sendRequest(request, destinationIP, destinationPort, timeout);
 		} catch (SocketTimeoutException ex) {
 			ex.printStackTrace();
 			Dialogs.showError(_("Socket timeout exceeded!"));
 		} catch (ConnectException ex) {
 			ex.printStackTrace();
-			Dialogs.showError(_("Could not connect to the experiment!"));
+			Dialogs.showError(_R("Could not connect to {0}:{1}", destinationIP, destinationPort));
 		} catch (IOException ex) {
-			ex.printStackTrace();
-			Dialogs.showError(_("Error while IO operation on socket."));
+			if (!cancelled) {
+				//cancelling receving results in throwing this exception
+				//so in this case we should not show a message about
+				//the io exception
+				ex.printStackTrace();
+				Dialogs.showError(_("Error while IO operation on socket."));
+			}
+			else {
+				responseString = null;
+			}
 		}
 		return responseString;
 	}
 
-	public static String sendRequest(Message request, String destinationIP,
-									 int destinationPort) throws SocketTimeoutException, IOException {
-		Socket socket = new Socket(destinationIP, destinationPort);
-		socket.setSoTimeout(RECEIVE_TIMEOUT_MS);
+	public static void cancelReceiving() {
+		cancelled = true;
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static synchronized String sendRequest(Message request, String destinationIP,
+			 int destinationPort) throws SocketTimeoutException, IOException {
+		return sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
+	}
+
+	public static synchronized String sendRequest(Message request, String destinationIP,
+			 int destinationPort, int timeout) throws SocketTimeoutException, IOException {
+		cancelled = false;
+		socket = new Socket(destinationIP, destinationPort);
+		socket.setSoTimeout(timeout);
 
 		PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 		Netstring netstring = new Netstring(request);
-		logger.debug("Sending message to " + destinationIP
-					 + ":" + destinationPort + ": " + netstring);
+		logger.debug("Sending message from "
+				+ socket.getLocalAddress() + ":" + socket.getLocalPort()
+				+ " to " + socket.getInetAddress() + ":" + socket.getPort()
+				+ ": " + netstring);
 		writer.println(netstring);
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		StringBuilder stringBuilder = new StringBuilder();
 
-		String line = "";
+		String line;
 		do {
 			line = in.readLine();
 			if (line != null)
@@ -104,4 +138,5 @@ public class Helper {
 
 		return responseNetstring.getData();
 	}
+
 }

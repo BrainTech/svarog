@@ -11,9 +11,9 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @JsonSerialize(using=AmplifierTypeSerializer.class)
 public enum AmplifierType {
 
-	BLUETOOTH("bt"), //TODO -- poprosić Asię, żeby zmieniła to na BLUETOOTH
-	USB("usb"),
-	VIRTUAL("virtual");
+	VIRTUAL("virtual"),
+	BLUETOOTH("bluetooth"),
+	USB("usb");
 
 	private String code;
 

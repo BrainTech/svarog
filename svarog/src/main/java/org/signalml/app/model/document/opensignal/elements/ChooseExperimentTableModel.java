@@ -18,7 +18,6 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 	private List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 
 	public ChooseExperimentTableModel() {
-
 	}
 
 	public List<ExperimentDescriptor> getExperiments() {
@@ -31,6 +30,19 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 		else
 			this.experiments = experiments;
 		fireTableDataChanged();
+	}
+
+	public void clearExperiments() {
+		this.experiments.clear();
+		fireTableDataChanged();
+	}
+
+	public void addExperiments(List<ExperimentDescriptor> newExperiments) {
+		this.experiments.addAll(newExperiments);
+
+		int lastRow = this.experiments.size() - 1;
+		int firstRow = lastRow - newExperiments.size() + 1;
+		fireTableRowsInserted(firstRow, lastRow);
 	}
 
 	@Override
