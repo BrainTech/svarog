@@ -1,14 +1,9 @@
 package org.signalml.app.worker.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import java.awt.Container;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.InetSocketAddress;
-import java.net.SocketTimeoutException;
 import java.util.StringTokenizer;
-
-import javax.swing.SwingWorker;
 
 import multiplexer.jmx.client.JmxClient;
 
@@ -18,7 +13,7 @@ import org.codehaus.jackson.JsonProcessingException;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
@@ -29,7 +24,7 @@ import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.multiplexer.protocol.SvarogConstants;
 
-public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
+public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClient, Void> {
 
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 20;
@@ -42,13 +37,19 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 
 	private InetSocketAddress multiplexerSocket;
 
-	public ConnectToExperimentWorker(ExperimentDescriptor experimentDescriptor) {
+	public ConnectToExperimentWorker(Container parentContainer, ExperimentDescriptor experimentDescriptor) {
+		super(parentContainer);
 		this.experimentDescriptor = experimentDescriptor;
+	}
+
+	public ExperimentDescriptor getExperimentDescriptor() {
+		return experimentDescriptor;
 	}
 
 	@Override
 	protected JmxClient doInBackground() throws Exception {
 
+		showBusyDialog();
 		if (experimentDescriptor.getStatus() == ExperimentStatus.NEW) {
 			if (!startNewExperiment())
 				return null;

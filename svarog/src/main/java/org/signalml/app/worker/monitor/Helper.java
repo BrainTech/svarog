@@ -19,6 +19,7 @@ import org.signalml.app.worker.monitor.messages.Message;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.Netstring;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
+import org.signalml.util.FormatUtils;
 
 public class Helper {
 
@@ -71,7 +72,7 @@ public class Helper {
 			Dialogs.showError(_("Socket timeout exceeded!"));
 		} catch (ConnectException ex) {
 			ex.printStackTrace();
-			Dialogs.showError(_R("Could not connect to {0}:{1}", destinationIP, destinationPort));
+			Dialogs.showError(_R("Could not connect to {0}:{1}", destinationIP, FormatUtils.formatNoGrouping(destinationPort)));
 		} catch (IOException ex) {
 			if (!cancelled) {
 				//cancelling receving results in throwing this exception

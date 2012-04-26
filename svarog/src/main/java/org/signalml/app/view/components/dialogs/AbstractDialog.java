@@ -3,8 +3,9 @@
  */
 package org.signalml.app.view.components.dialogs;
 
-import java.awt.BorderLayout;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
 import java.awt.Dimension;
@@ -31,13 +32,11 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.SvarogConstants;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.springframework.validation.Errors;
 
 /**
  * The abstract dialog, from which every dialog in Svarog should inherit.
@@ -735,6 +734,29 @@ public abstract class AbstractDialog extends JDialog {
 		this.closedWithOk = closedWithOk;
 	}
 
+	protected void onOkPressed() {
+		if (validateDialog() == false)
+			return;
+
+		try {
+			fillModelFromDialog(currentModel);
+		} catch (SignalMLException ex) {
+			logger.error("Exception when filling the model from the dialog", ex);
+			Dialogs.showExceptionDialog(AbstractDialog.this, ex);
+			currentModel = null;
+			closedWithOk = false;
+			setVisible(false);
+			return;
+		}
+
+		currentModel = null;
+		closedWithOk = true;
+		setVisible(false);
+
+		onDialogCloseWithOK();
+		onDialogClose();
+	}
+
 	/**
 	 * The OK action.
 	 * Contains the icon which is used to create the button.
@@ -762,28 +784,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * the model from it and sets the dialog to be invisible.
 		 */
 		public void actionPerformed(ActionEvent ev) {
-
-			if (validateDialog() == false)
-				return;
-
-			try {
-				fillModelFromDialog(currentModel);
-			} catch (SignalMLException ex) {
-				logger.error("Exception when filling the model from the dialog", ex);
-				Dialogs.showExceptionDialog(AbstractDialog.this, ex);
-				currentModel = null;
-				closedWithOk = false;
-				setVisible(false);
-				return;
-			}
-
-			currentModel = null;
-			closedWithOk = true;
-			setVisible(false);
-
-			onDialogCloseWithOK();
-			onDialogClose();
-
+			onOkPressed();
 		}
 
 	}

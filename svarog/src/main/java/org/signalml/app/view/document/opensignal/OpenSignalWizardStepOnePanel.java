@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.view.document.opensignal.elements.ChannelSelectPanel;
@@ -16,8 +17,6 @@ import org.signalml.app.view.document.opensignal.elements.OtherSettingsPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
 import org.signalml.app.view.workspace.ViewerElementManager;
-
-import org.apache.log4j.Logger;
 
 public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListener, PropertyChangeListener {
 	protected static final Logger log = Logger.getLogger(OpenSignalWizardStepOnePanel.class);
@@ -151,7 +150,6 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	}
 
 	protected void onDialogCloseWithOK() {
-		log.debug("onDialogCloseWithOK");
 		getSignalSourceTabbedPane().onDialogCloseWithOK();
 	}
 }
