@@ -28,7 +28,7 @@ public class Helper {
 	private static Socket socket;
 	private static boolean cancelled;
 
-	public static final int DEFAULT_RECEIVE_TIMEOUT = 2000;
+	public static final int DEFAULT_RECEIVE_TIMEOUT = 10000;
 	public static final int INFINITE_TIMEOUT = 0;
 
 	protected static ApplicationConfiguration getApplicationConfiguration() {
