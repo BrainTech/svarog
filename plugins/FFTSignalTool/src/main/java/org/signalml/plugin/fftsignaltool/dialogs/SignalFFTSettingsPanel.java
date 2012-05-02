@@ -3,6 +3,8 @@
  */
 package org.signalml.plugin.fftsignaltool.dialogs;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -27,11 +29,9 @@ import javax.swing.event.ChangeListener;
 import org.apache.log4j.Logger;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-
-import org.springframework.validation.Errors;
 
 /**
  * Panel which allows to select the parameters of the FFT. Contains 6
@@ -184,7 +184,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * on the X axis
 	 */
 	private JTextField maxLabelCountTextField;
-	
+
 	private JRadioButton autoScaleYAxisRadioButton;
 
 	/**
@@ -394,9 +394,9 @@ public class SignalFFTSettingsPanel extends JPanel {
 			countPanel.add(maxLabelCountTextField);
 			fftViewPanel.add(countPanel);
 			fftViewPanel.add(rangePanel);
-			
+
 			autoScaleYAxisButtonGroup = new ButtonGroup();
-			
+
 			autoScaleYAxisRadioButton = new JRadioButton(
 					_("Fit Y-axis to data"));
 			fixedYAxisRadioButton = new JRadioButton(
@@ -405,7 +405,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			autoScaleYAxisButtonGroup.add(fixedYAxisRadioButton);
 			fixedYAxisRadioButton.setSelected(true);
 			fftViewPanel.add(autoScaleYAxisRadioButton);
-			
+
 			InputVerifier doubleInputVerifier = new InputVerifier() {
 				@Override
 				public boolean verify(JComponent input) {
@@ -442,7 +442,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			yAxisRangePanel.add(customMaxYAxis);
 			fftViewPanel.add(yAxisRangePanel);
 			fixedYAxisRadioButton.addChangeListener(new ChangeListener() {
-				
+
 				@Override
 				public void stateChanged(ChangeEvent e) {
 					customMinYAxis.setEnabled(((JRadioButton)e.getSource()).isSelected());
@@ -766,8 +766,15 @@ public class SignalFFTSettingsPanel extends JPanel {
 		}
 
 		fftWindowTypePanel.validatePanel(errors);
-		if (Double.parseDouble(customMaxYAxis.getText()) <= Double.parseDouble(customMinYAxis.getText()))
+		double maxY = Double.parseDouble(customMaxYAxis.getText());
+		double minY = Double.parseDouble(customMinYAxis.getText());
+		if (maxY <= minY)
 			errors.addError(_("Bad power axis range - min must be lower than max"));
+
+		if (fixedYAxisRadioButton.isSelected() &&
+				logarithmicCheckBox.isSelected() && minY == 0)
+			errors.addError(_("For logarithmic scale for Y axis min cannot be equal to 0."));
+
 	}
 
 }
