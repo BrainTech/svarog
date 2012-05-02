@@ -81,8 +81,7 @@ class AmplifierParameters {
 		for (int i = 0; i < selectedChannels.size(); i++) {
 			AmplifierChannel channel = selectedChannels.get(i);
 
-			if (channel.getOriginalName().equalsIgnoreCase(AmplifierChannel.DRIVER_SAW_CHANNEL_NAME)
-					|| channel.getOriginalName().equalsIgnoreCase(AmplifierChannel.TRIGGER_CHANNEL_NAME))
+			if (AmplifierChannel.SPECIAL_CHANNEL_NAMES.contains(channel.getOriginalName()))
 				activeChannels += channel.getOriginalName();
 			else
 				activeChannels += i;
