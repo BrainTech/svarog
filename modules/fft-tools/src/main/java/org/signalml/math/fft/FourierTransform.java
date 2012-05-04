@@ -132,4 +132,34 @@ public class FourierTransform {
 		return result;*/
 	}
 
+	/**
+	 * Calculates the power spectrum of the provided real sample
+	 * data using FFT.
+	 * @param samples the data (real numbers)
+	 * @return estimates of the power spectrum
+	 */
+	public double[] calculatePowerSpectrum(double[] samples) {
+
+		Complex[] fftTransformedData = forwardFFT(samples);
+		int dataLength = samples.length;
+		int size = dataLength/2;
+
+		double[] powerSpectrum = new double[size];
+		powerSpectrum[0] = square(fftTransformedData[0].getReal()) + square(fftTransformedData[0].getImaginary());
+		for (int i = 1; i < size ; ++i) {
+			powerSpectrum[i] = square(fftTransformedData[i].getReal())
+					+ square(fftTransformedData[i].getImaginary())
+					+ square(fftTransformedData[dataLength - i].getReal())
+					+ square(fftTransformedData[dataLength-i].getImaginary());
+		}
+		for (int i = 1; i < size ; ++i) {
+			powerSpectrum[i] = 2.0D * powerSpectrum[i] / (windowFunction.getWindowWeightsSqueredSum()*dataLength);
+		}
+		return powerSpectrum;
+	}
+
+	protected double square(double x) {
+		return x*x;
+	}
+
 }

@@ -21,7 +21,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.math.fft.WindowType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -105,11 +105,11 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	private int maxLabelCount = Integer.MAX_VALUE;
 
 	private boolean autoScaleYAxis = false;
-	
+
 	private double minPowerAxis = 0.0;
-	
+
 	private double maxPowerAxis = 200.00;
-	
+
 	public boolean isAutoScaleYAxis() {
 		return autoScaleYAxis;
 	}

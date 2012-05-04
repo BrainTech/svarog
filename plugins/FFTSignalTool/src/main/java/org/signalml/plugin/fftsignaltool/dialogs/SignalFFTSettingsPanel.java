@@ -29,8 +29,8 @@ import javax.swing.event.ChangeListener;
 import org.apache.log4j.Logger;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.math.fft.WindowType;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
-import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 
 /**
