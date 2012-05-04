@@ -1,10 +1,10 @@
 package org.signalml.math.fft;
 
+import static org.junit.Assert.assertEquals;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
+
 import org.apache.commons.math.complex.Complex;
 import org.junit.Test;
-import org.signalml.math.fft.FourierTransform;
-
-import static org.signalml.SignalMLAssert.*;
 
 /**
  * Applies unit tests to the {@link FourierTransform}.

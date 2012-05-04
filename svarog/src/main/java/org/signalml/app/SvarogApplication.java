@@ -3,16 +3,17 @@
  */
 package org.signalml.app;
 
-import java.io.File;
+import static java.lang.String.format;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import java.util.prefs.Preferences;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import static java.lang.String.format;
+import java.util.regex.Pattern;
 
 import javax.swing.SwingUtilities;
 
@@ -21,8 +22,8 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.Logger;
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.selector.ActionFocusManager;
@@ -35,11 +36,13 @@ import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
+import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
 import org.signalml.app.document.DefaultMRUDRegistry;
 import org.signalml.app.document.DocumentDetector;
@@ -70,9 +73,13 @@ import org.signalml.app.view.components.dialogs.ProfilePathDialog;
 import org.signalml.app.view.components.dialogs.SplashScreen;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
+import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
+import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
@@ -89,19 +96,11 @@ import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.loader.PluginLoaderHi;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
-
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
-import org.signalml.app.worker.processes.ProcessManager;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The Svarog application.

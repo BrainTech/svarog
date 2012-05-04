@@ -6,8 +6,6 @@ package org.signalml.math.iirdesigner;
 
 import org.apache.commons.math.complex.Complex;
 import org.signalml.SignalMLAssert;
-import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterZerosPolesGain;
 
 /**
  * This class is an extension of a SignalMLAssert class and is able to perform some additional

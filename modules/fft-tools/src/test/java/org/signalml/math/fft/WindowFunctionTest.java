@@ -1,11 +1,10 @@
 package org.signalml.math.fft;
 
-import java.util.Arrays;
-import org.junit.Test;
-import org.signalml.math.fft.WindowFunction;
-import org.signalml.math.fft.WindowType;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 
-import static org.signalml.SignalMLAssert.*;
+import java.util.Arrays;
+
+import org.junit.Test;
 
 /**
  * Applies unit tests to the {@link WindowFunction}.

@@ -2,7 +2,7 @@ package org.signalml.math.fft;
 
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
-import org.signalml.math.iirdesigner.ArrayOperations;
+import org.signalml.math.ArrayOperations;
 
 /**
  * This class can be used to calculate FFT of a signal.

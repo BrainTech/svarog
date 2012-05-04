@@ -2,12 +2,12 @@
  *
  */
 
-package org.signalml.math.iirdesigner;
+package org.signalml.math;
+
+import static org.junit.Assert.assertEquals;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
-import org.signalml.math.iirdesigner.ArrayOperations;
-
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 /**
  * This method performs unit tests on {@link Convolution}.

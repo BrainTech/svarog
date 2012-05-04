@@ -1,17 +1,12 @@
-/* WindowType.java created 2007-12-16
- *
- */
-
 package org.signalml.math.fft;
 
-import org.springframework.context.MessageSourceResolvable;
 
 /** WindowType
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public enum WindowType implements MessageSourceResolvable {
+public enum WindowType {
 
 	RECTANGULAR,
 	BARTLETT,
@@ -57,21 +52,6 @@ public enum WindowType implements MessageSourceResolvable {
 
 	public double getParameterMax() {
 		return parameterMax;
-	}
-
-	@Override
-	public Object[] getArguments() {
-		return ARGUMENTS;
-	}
-
-	@Override
-	public String[] getCodes() {
-		return new String[] { "fft.windowType." + name() };
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return name();
 	}
 
 }

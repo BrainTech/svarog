@@ -1,7 +1,4 @@
-/* ArrayOperations.java created 2010-12-02
- *
- */
-package org.signalml.math.iirdesigner;
+package org.signalml.math;
 
 import org.apache.commons.math.complex.Complex;
 

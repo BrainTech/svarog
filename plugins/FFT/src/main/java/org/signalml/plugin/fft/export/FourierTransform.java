@@ -1,6 +1,5 @@
 package org.signalml.plugin.fft.export;
 
-
 import edu.emory.mathcs.jtransforms.fft.DoubleFFT_1D;
 
 /**

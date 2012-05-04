@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.math.fft.iirdesigner.math;
+package org.signalml.math.iirdesigner.math;
 
 import org.junit.Test;
 import org.signalml.math.iirdesigner.math.SpecialMath;
