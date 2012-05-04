@@ -4,15 +4,15 @@
 
 package org.signalml.domain.signal.raw;
 
-import java.util.Date;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents the descriptor of a raw signal.
@@ -295,7 +295,7 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 			else
 				calibrationOffset = new float[1];
 		Arrays.fill(calibrationOffset, offset);
-		signalParameters.setCalibrationGain(calibrationOffset);
+		signalParameters.setCalibrationOffset(calibrationOffset);
 	}
 
 	/**
