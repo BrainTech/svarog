@@ -397,6 +397,7 @@ public class NewArtifactMgrPreprocessStep extends
 	@Override
 	protected void cleanup() {
 		super.cleanup();
+		this.trackerUpdater.stop();
 		this.stopWorkers();
 	}
 
