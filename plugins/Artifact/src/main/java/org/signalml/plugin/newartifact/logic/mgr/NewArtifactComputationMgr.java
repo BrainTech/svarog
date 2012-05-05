@@ -1,5 +1,8 @@
 package org.signalml.plugin.newartifact.logic.mgr;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
+
 import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -9,90 +12,66 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
+import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStep;
-import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
+import org.signalml.plugin.method.logic.PluginCheckedThreadGroup;
 import org.signalml.plugin.method.logic.PluginComputationMgr;
 import org.signalml.plugin.newartifact.data.NewArtifactResult;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepResult;
 import org.signalml.plugin.newartifact.method.NewArtifactMethod;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
 
 public class NewArtifactComputationMgr extends
-	PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
+		PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethod.class);
+			.getLogger(NewArtifactMethod.class);
 
-	private class TrackerProxy implements
-		IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> {
+	private class TrackerProxy
+			extends
+			AbstractPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> {
 
-		private final CheckedThreadGroup threadGroup;
-
-		private final MethodExecutionTracker tracker;
-		private final int index;
-
-		private NewArtifactProgressPhase phase;
-
-		public TrackerProxy(CheckedThreadGroup threadGroup,
-				    MethodExecutionTracker tracker, int index) {
-			this.threadGroup = threadGroup;
-			this.tracker = tracker;
-			this.index = index;
+		public TrackerProxy(PluginCheckedThreadGroup threadGroup,
+				MethodExecutionTracker tracker) {
+			super(threadGroup, tracker);
 		}
 
 		@Override
 		public void advance(IPluginComputationMgrStep step, int tick) {
 			synchronized (this.tracker) {
-				this.tracker.tick(this.index, tick);
+				this.tracker.tick(0, tick);
 			}
 		}
 
 		@Override
-		public void setProgressPhase(NewArtifactProgressPhase phase,
-					     Object... arguments) {
-			if (this.phase == NewArtifactProgressPhase.ABORT_PHASE) {
+		public void setProgressPhase(NewArtifactComputationProgressPhase phase,
+				Object... arguments) {
+			if (this.phase == NewArtifactComputationProgressPhase.ABORT_PHASE) {
 				return;
 			}
-			this.phase = phase;
-			String message = this.getMessageForPhase(phase, arguments);
-			if (message != null) {
-				synchronized (this.tracker) {
-					this.tracker.setMessage(message);
-				}
-			}
+			super.setProgressPhase(phase, arguments);
 		}
 
 		@Override
 		public boolean isRequestingAbort() {
-			boolean result;
-			synchronized (this.tracker) {
-				result = this.tracker.isRequestingAbort();
-			}
+			boolean result = super.isRequestingAbort();
 			if (result) {
-				this.setProgressPhase(NewArtifactProgressPhase.ABORT_PHASE);
-				synchronized (this.tracker) {
-					this.tracker.setTicker(this.index,
-							       this.tracker.getTickerLimits()[this.index]);
-				}
+				this.setProgressPhase(NewArtifactComputationProgressPhase.ABORT_PHASE);
 			}
 			return result;
 		}
 
 		@Override
-		public boolean isInterrupted() {
-			return this.threadGroup.isShutdownStarted() || Thread.interrupted();
-		}
-
-		private String getMessageForPhase(NewArtifactProgressPhase phase, Object ... arguments) {
+		protected String getMessageForPhase(
+				NewArtifactComputationProgressPhase phase, Object... arguments) {
 			switch (phase) {
 			case PREPROCESS_PREPARE_PHASE:
 				return _("Preparing");
 			case SOURCE_FILE_INITIAL_READ_PHASE:
 				return _("Reading source data");
 			case INTERMEDIATE_COMPUTATION_PHASE:
-				return _R("Computing intermediate data (block {0} of {1})", arguments);
+				return _R("Computing intermediate data (block {0} of {1})",
+						arguments);
 			case TAGGER_PREPARE_PHASE:
 				return _("Preparing tagger");
 			case TAGGING_PHASE:
@@ -108,25 +87,33 @@ public class NewArtifactComputationMgr extends
 	}
 
 	private List<IPluginComputationMgrStep> steps;
+	private TrackerProxy trackerProxy;
 
 	@Override
 	protected Collection<IPluginComputationMgrStep> prepareStepChain() {
 		this.steps = new LinkedList<IPluginComputationMgrStep>();
-		this.steps.add(new NewArtifactMgrPreprocessStep(this.makeStepData(
-					this.data, this.tracker, 0)));
-		this.steps.add(new NewArtifactMgrTagStep(this.makeStepData(this.data,
-				this.tracker, 0)));
+
+		this.trackerProxy = new TrackerProxy(this.getThreadGroup(),
+				this.tracker);
+
+		NewArtifactMgrStepData stepData = new NewArtifactMgrStepData(
+				data.artifactData, data.constants,
+				new NewArtifactIntermediateFilesPathConstructor(
+						data.artifactData), this.trackerProxy,
+				this.getThreadFactory());
+
+		this.steps.add(new NewArtifactMgrPreprocessStep(stepData));
+		this.steps.add(new NewArtifactMgrTagStep(stepData));
+
 		return this.steps;
 	}
 
 	@Override
 	protected void initializeRun(Map<IPluginComputationMgrStep, Integer> tickMap) {
-		int ticks = 0;
-		for (Map.Entry<IPluginComputationMgrStep, Integer> v : tickMap.entrySet()) {
-			ticks += v.getValue();
+		for (Map.Entry<IPluginComputationMgrStep, Integer> v : tickMap
+				.entrySet()) {
+			this.trackerProxy.setTickerLimit(v.getKey(), v.getValue());
 		}
-		
-		this.tracker.setTickerLimit(0, ticks);
 	}
 
 	@Override
@@ -148,15 +135,6 @@ public class NewArtifactComputationMgr extends
 		NewArtifactResult result = new NewArtifactResult();
 		result.setTagFile(new File(castedLastStepResult.resultTagPath));
 		return result;
-	}
-
-	private NewArtifactMgrStepData makeStepData(NewArtifactMgrData data,
-			MethodExecutionTracker tracker, int stepNumber) {
-		return new NewArtifactMgrStepData(data.artifactData, data.constants,
-						  new NewArtifactIntermediateFilesPathConstructor(
-								  data.artifactData), new TrackerProxy(
-										  this.getThreadGroup(), tracker, stepNumber),
-						  this.getThreadFactory());
 	}
 
 }

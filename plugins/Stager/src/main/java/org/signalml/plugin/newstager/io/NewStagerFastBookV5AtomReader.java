@@ -98,6 +98,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 		}
 
 		return new NewStagerBookData(new NewStagerBookInfo(
+				atoms.length,
 				this.offsetDimension, this.signalInfo.samplingFrequency,
 				this.signalInfo.pointsPerMicrovolt), atoms);
 	}
@@ -241,7 +242,6 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 			switch (this.lastCode) {
 			case FormatComponentV5.SIGNAL_INFO:
 				AssertSize(sizeOfField, 2 * FLOAT_SIZE + SHORT_SIZE);
-				assert (sizeOfField == 4 + 4 + 2);
 				this.signalInfo = new NewStagerSignalInfo(
 						this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
 						this.fileBuffer.getShort());

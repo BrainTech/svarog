@@ -1,6 +1,6 @@
 package org.signalml.plugin.newartifact.logic.mgr;
 
-public enum NewArtifactProgressPhase {
+public enum NewArtifactComputationProgressPhase {
 	PREPROCESS_PREPARE_PHASE,
 	SOURCE_FILE_INITIAL_READ_PHASE,
 	INTERMEDIATE_COMPUTATION_PHASE,

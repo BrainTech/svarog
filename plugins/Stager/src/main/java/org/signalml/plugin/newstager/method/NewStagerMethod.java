@@ -123,15 +123,13 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 
 	@Override
 	public int getTickerCount() {
-		return 2;
+		return 1;
 	}
 
 	@Override
 	public String getTickerLabel(int ticker) {
 		if (ticker == 0) {
-			return _("Preparing");
-		} else if (ticker == 1) {
-			return _("Preparing");
+			return _("Sleep staging");
 		} else {
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}
@@ -142,7 +140,6 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		BookDocument doc;
 		try {
 			doc = new BookDocument(new File(stagerData.getParameters().getBookFilePath()));
-			doc.openDocument();
 		} catch (IOException e) {
 			throw new SignalMLException(e);
 		}

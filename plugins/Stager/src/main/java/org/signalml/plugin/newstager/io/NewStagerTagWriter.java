@@ -1,4 +1,4 @@
-package org.signalml.plugin.newstager.logic.mgr;
+package org.signalml.plugin.newstager.io;
 
 import java.io.File;
 import java.io.IOException;

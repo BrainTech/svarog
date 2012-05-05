@@ -74,9 +74,9 @@ public class NewArtifactMgrTagStep extends
 			throws PluginToolAbortException, ComputationException,
 			PluginToolInterruptedException {
 
-		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
+		final IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker = this.data.tracker;
 
-		tracker.setProgressPhase(NewArtifactProgressPhase.TAGGER_PREPARE_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.TAGGER_PREPARE_PHASE);
 
 		this.checkAbortState();
 		this.prepareWorkers();
@@ -94,7 +94,7 @@ public class NewArtifactMgrTagStep extends
 
 		NewArtifactTagMerger merger = new NewArtifactTagMerger();
 
-		tracker.setProgressPhase(NewArtifactProgressPhase.TAGGING_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.TAGGING_PHASE);
 		for (int j = 0; j < this.taggerRoutines.size(); ++j) {
 			this.checkAbortState();
 			try {
@@ -121,7 +121,7 @@ public class NewArtifactMgrTagStep extends
 		}
 
 		this.checkAbortState();
-		tracker.setProgressPhase(NewArtifactProgressPhase.TAG_MERGING_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.TAG_MERGING_PHASE);
 		return this.mergeTags(merger);
 	}
 

@@ -2,6 +2,8 @@ package org.signalml.plugin.newstager.logic.artifact;
 
 import org.signalml.plugin.exception.PluginThreadRuntimeException;
 import org.signalml.plugin.newstager.data.NewStagerStatWorkerData;
+import org.signalml.plugin.newstager.data.logic.INewStagerWorkerCompletion;
+import org.signalml.plugin.newstager.data.logic.NewStagerStatAlgorithmResult;
 import org.signalml.plugin.newstager.data.logic.NewStagerStatData;
 import org.signalml.plugin.newstager.exception.NewStagerPluginException;
 import org.signalml.plugin.newstager.io.INewStagerStatsSynchronizer;
@@ -16,13 +18,14 @@ public class NewStagerStatWorker implements Runnable {
 
 	@Override
 	public void run() {
+		INewStagerStatsSynchronizer synchronizer = this.data.synchronizer;
+		INewStagerWorkerCompletion<NewStagerStatAlgorithmResult> completion = this.data.completion;
+		
 		try {
 			NewStagerStatData data = new NewStagerStatData(this.data.constants,
 					this.data.parameters, this.data.channelMap);
 			NewStagerStatAlgorithm stagerStat = new NewStagerStatAlgorithm(data);
 
-			INewStagerStatsSynchronizer synchronizer = this.data.synchronizer;
-			
 			int count = 0;
 			int channelCount = 0, sampleCount = 0;
 			while (true) { // TODO
@@ -35,6 +38,7 @@ public class NewStagerStatWorker implements Runnable {
 				
 				stagerStat.compute(buffer);
 				synchronizer.markBufferAsProcessed(buffer);
+				completion.signalProgress(1);
 				++count;
 			}
 			
@@ -44,9 +48,9 @@ public class NewStagerStatWorker implements Runnable {
 				++count;
 			}
 			
-			this.data.completion.completeWork(stagerStat.getResult());
+			completion.completeWork(stagerStat.getResult());
 		} catch (InterruptedException e) {
-			this.data.completion.completeWork(null);
+			completion.completeWork(null);
 			return;
 		} catch (NewStagerPluginException e) {
 			this.data.completion.completeWork(null);

@@ -38,6 +38,8 @@ public class NewStagerBookProcessorWorker implements Runnable {
 				}
 
 				processor.process(new NewStagerSingleBookProcessorData(sample));
+				
+				this.data.completion.signalProgress(1);
 			}
 
 			this.data.completion.completeWork(processor.getResult());

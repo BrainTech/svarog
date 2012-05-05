@@ -26,17 +26,21 @@ import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.newstager.data.NewStagerBookInfo;
 import org.signalml.plugin.newstager.data.logic.NewStagerBookProcessorResult;
 import org.signalml.plugin.newstager.data.logic.NewStagerBookProcessorStepResult;
+import org.signalml.plugin.newstager.data.logic.NewStagerComputationProgressPhase;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrStepData;
 import org.signalml.plugin.newstager.data.logic.NewStagerTagWriteStepResult;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagCreatorData;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollection;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
+import org.signalml.plugin.newstager.io.NewStagerTagWriter;
 import org.signalml.plugin.newstager.logic.book.tag.NewStagerBookAtomTagCreator;
+import org.signalml.plugin.signal.PluginSignalHelper;
 
 public class NewStagerTagWriteStep extends
 		AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
 
 	private File primaryTagFile;
+	private Integer signalBlockCount;
 
 	public NewStagerTagWriteStep(NewStagerMgrStepData data) {
 		super(data);
@@ -45,8 +49,7 @@ public class NewStagerTagWriteStep extends
 
 	@Override
 	public int getStepNumberEstimate() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.getNumberOfOutputFiles() * this.getSignalBlockCountScaled();
 	}
 
 	@Override
@@ -72,6 +75,9 @@ public class NewStagerTagWriteStep extends
 			throw new ComputationException(e);
 		}
 
+		this.data.tracker
+				.setProgressPhase(NewStagerComputationProgressPhase.TAG_WRITING_PREPARE_PHASE);
+
 		Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tags = this
 				.mergeTags(tagResult);
 
@@ -89,22 +95,28 @@ public class NewStagerTagWriteStep extends
 	private void writeTagsToFile(
 			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap)
 			throws IOException, SignalMLException {
-
 		NewStagerTagWriter writer = new NewStagerTagWriter(this.data.stagerData);
 
 		if (this.data.stagerData.getParameters().primaryHypnogramFlag) {
+			this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_ALPHA);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_ALPHA,
 					EnumSet.of(NewStagerTagCollectionType.HYPNO_ALPHA), tagMap);
+			
+			this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_DELTA);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_DELTA,
 					EnumSet.of(NewStagerTagCollectionType.HYPNO_DELTA), tagMap);
+			
+			this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_SPINDLE);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_SPINDLE,
 					EnumSet.of(NewStagerTagCollectionType.HYPNO_SPINDLE),
 					tagMap);
 		}
 
+		this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_SLEEP_PAGES);
 		writer.writeTags(NewStagerTagCollectionType.SLEEP_PAGES,
 				this.getSleepStages(), tagMap);
 
+		this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_CONSOLIDATED_SLEEP_PAGES);
 		this.primaryTagFile = writer.writeTags(
 				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_PAGES,
 				this.getConsolidatedSleepStages(), tagMap);
@@ -265,4 +277,54 @@ public class NewStagerTagWriteStep extends
 		}
 
 	}
+
+	private int getSignalBlockCount() {
+		if (this.signalBlockCount == null) {
+			this.signalBlockCount = PluginSignalHelper.GetBlockCount(
+				this.data.stagerData.getSampleSource(),
+				this.data.constants.getBlockLength());
+		}
+		
+		return this.signalBlockCount;
+	}
+
+	private int getSignalBlockCountScaled() {
+		return this.getSignalBlockCount() / 20;
+	}
+	
+	private void updateTracker(NewStagerComputationProgressPhase phase) {
+		this.data.tracker.setProgressPhase(phase);
+		
+		boolean primaryFlag = this.data.stagerData.getParameters().primaryHypnogramFlag; 
+		int numberOfFiles = this.getNumberOfOutputFiles();
+		int pos;
+		
+		switch (phase) {
+			case TAG_WRITING_ALPHA:
+				pos = 1;
+				break;
+			case TAG_WRITING_DELTA:
+				pos = 2;
+				break;
+			case TAG_WRITING_SPINDLE:
+				pos = 3;
+				break;
+			case TAG_WRITING_SLEEP_PAGES:
+				pos = primaryFlag ? 4 : 1; 
+			case TAG_WRITING_CONSOLIDATED_SLEEP_PAGES:
+				pos = primaryFlag ? 5 : 2;
+			default:
+				return;
+		}
+		
+		int blockCount = this.getSignalBlockCountScaled();
+		this.data.tracker.advance(this, (int) (((double) pos) / numberOfFiles * blockCount - ((double) pos - 1) / numberOfFiles * blockCount));
+	}
+
+	private int getNumberOfOutputFiles() {
+		boolean primaryFlag = this.data.stagerData.getParameters().primaryHypnogramFlag;
+		return primaryFlag ? 5 : 2;
+	}
+
+	
 }

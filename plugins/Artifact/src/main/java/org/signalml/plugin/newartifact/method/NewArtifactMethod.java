@@ -119,7 +119,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	@Override
 	public String getTickerLabel(int ticker) {
 		if (ticker == 0) {
-			return _("Processing");
+			return _("Artifact detection");
 		} else {
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}

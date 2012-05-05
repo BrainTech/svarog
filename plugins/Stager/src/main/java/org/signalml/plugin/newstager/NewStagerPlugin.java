@@ -42,6 +42,10 @@ public class NewStagerPlugin implements Plugin {
 		return i18nDelegate._(msgKey);
 	}
 
+	public static String _R(String msgKey, Object ... arguments) {
+		return i18nDelegate._R(msgKey, arguments);
+	}
+	
 	private void setupGUI(SvarogAccessGUI guiAccess)
 			throws UnsupportedOperationException, PluginException {
 		guiAccess

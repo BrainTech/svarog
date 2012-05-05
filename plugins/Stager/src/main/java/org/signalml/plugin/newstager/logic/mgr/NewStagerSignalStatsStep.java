@@ -4,13 +4,16 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
+import org.signalml.plugin.method.helper.AbstractPluginTrackerUpdaterWithTimer;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
+import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.method.logic.PluginWorkerSet;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerFASPThreshold;
@@ -21,6 +24,7 @@ import org.signalml.plugin.newstager.data.NewStagerSignalStatsResult;
 import org.signalml.plugin.newstager.data.NewStagerSleepStats;
 import org.signalml.plugin.newstager.data.NewStagerStatWorkerData;
 import org.signalml.plugin.newstager.data.logic.INewStagerWorkerCompletion;
+import org.signalml.plugin.newstager.data.logic.NewStagerComputationProgressPhase;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrStepData;
 import org.signalml.plugin.newstager.data.logic.NewStagerStatAlgorithmResult;
 import org.signalml.plugin.newstager.io.INewStagerStatsSynchronizer;
@@ -32,26 +36,64 @@ import org.signalml.util.MinMaxRange;
 public class NewStagerSignalStatsStep extends
 		AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
 
+	private class TrackerUpdater extends AbstractPluginTrackerUpdaterWithTimer {
+
+		private final NewStagerSignalStatsStep step;
+		private final IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker;
+		private final int blockCount;
+
+		public TrackerUpdater(
+				NewStagerSignalStatsStep step,
+				IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
+				int blockCount) {
+			this.step = step;
+			this.tracker = tracker;
+			this.blockCount = blockCount;
+		}
+
+		@Override
+		public void update(int progress, int prevProgress) {
+			if (progress < this.blockCount) {
+				this.tracker.advance(this.step,
+						Math.max(progress - prevProgress, 0));
+				this.tracker
+						.setProgressPhase(
+								NewStagerComputationProgressPhase.SIGNAL_STATS_BLOCK_COMPUTATION_PHASE,
+								progress, this.blockCount);
+			}
+		}
+
+	}
+
 	private static final int BUFFER_QUEUE_SIZE = 20;
 
-	private PluginWorkerSet workers;
+	private final PluginWorkerSet workers;
 
+	private final TrackerUpdater trackerUpdater;
+
+	private AtomicInteger progressBlockCount;
 	private AtomicBoolean statResultReadyFlag;
+
+	private Integer blockCount;
+
 	private NewStagerStatAlgorithmResult statResult;
 
 	public NewStagerSignalStatsStep(NewStagerMgrStepData data) {
 		super(data);
 
 		this.workers = new PluginWorkerSet(this.data.threadFactory);
+		this.progressBlockCount = new AtomicInteger(0);
 		this.statResultReadyFlag = new AtomicBoolean(false);
+
+		this.trackerUpdater = new TrackerUpdater(this, this.data.tracker,
+				this.getBlockCount());
+
 		this.statResult = null;
 	}
 
 	@Override
 	public int getStepNumberEstimate() {
-		return PluginSignalHelper.GetBlockCount(
-				       this.data.stagerData.getSampleSource(),
-				       this.data.constants.getBlockLength()) + 1;
+		return this.getBlockCount() + 1;
 	}
 
 	@Override
@@ -73,14 +115,22 @@ public class NewStagerSignalStatsStep extends
 			throws PluginToolAbortException, PluginToolInterruptedException,
 			ComputationException {
 
+		IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker = this.data.tracker;
+
+		tracker.setProgressPhase(NewStagerComputationProgressPhase.SIGNAL_STATS_PREPARE_PHASE);
+
 		this.createWorkers();
 
 		this.workers.startAll();
+		
+		tracker.setProgressPhase(NewStagerComputationProgressPhase.SIGNAL_STATS_SOURCE_FILE_INITIAL_READ_PHASE);
 
+		this.trackerUpdater.start(1500);
+		
 		while (!this.statResultReadyFlag.get()) {
 			try {
-				Thread.sleep(1000);
-				this.data.tracker.advance(this, 1);
+				Thread.sleep(500);
+				this.trackerUpdater.setProgress(this.progressBlockCount.get());
 			} catch (InterruptedException e) {
 				throw new PluginToolInterruptedException(e);
 			}
@@ -93,6 +143,7 @@ public class NewStagerSignalStatsStep extends
 	@Override
 	protected void cleanup() {
 		super.cleanup();
+		this.trackerUpdater.stop();
 		this.stopWorkers();
 	}
 
@@ -152,12 +203,18 @@ public class NewStagerSignalStatsStep extends
 
 		final AtomicBoolean resultReadyFlag = this.statResultReadyFlag;
 		INewStagerWorkerCompletion<NewStagerStatAlgorithmResult> completion = new INewStagerWorkerCompletion<NewStagerStatAlgorithmResult>() {
-
+			
+			@Override
+			public void signalProgress(int i) {
+				progressBlockCount.incrementAndGet();
+			}
+			
 			@Override
 			public void completeWork(NewStagerStatAlgorithmResult result) {
 				resultReadyFlag.set(true);
 				statResult = result;
 			}
+
 		};
 
 		Runnable readerWorker = new NewStagerSignalReaderWorker(
@@ -190,8 +247,7 @@ public class NewStagerSignalStatsStep extends
 				+ constants.amplitudeB;
 
 		return new NewStagerParameters(oldParameters.getBookFilePath(),
-				oldParameters.rules,
-				oldParameters.analyseEMGChannelFlag,
+				oldParameters.rules, oldParameters.analyseEMGChannelFlag,
 				oldParameters.analyseEEGChannelsFlag,
 				oldParameters.primaryHypnogramFlag,
 				new NewStagerParameterThresholds(
@@ -245,6 +301,15 @@ public class NewStagerSignalStatsStep extends
 				thresholds.deltaThreshold.amplitude.getMin(),
 				thresholds.spindleThreshold.amplitude.getMin(),
 				thresholds.toneEMG);
+	}
+
+	private int getBlockCount() {
+		if (this.blockCount == null) {
+			this.blockCount = new Integer(PluginSignalHelper.GetBlockCount(
+					this.data.stagerData.getSampleSource(),
+					this.data.constants.getBlockLength()));
+		}
+		return this.blockCount;
 	}
 
 }

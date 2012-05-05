@@ -1,6 +1,7 @@
 package org.signalml.plugin.newstager.logic.book;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -38,6 +39,17 @@ public class NewStagerBookDataProvider {
 		}
 		
 		return this.bookData.bookInfo;
+	}
+	
+	public NewStagerBookInfo tryGetBookInfo() {
+		boolean readyFlag = false;
+		
+		try {
+			readyFlag = this.event.await(0, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+			//do nothing
+		}
+		return readyFlag ? this.bookData.bookInfo : null; 
 	}
 	
 	public NewStagerBookSample getNextBookAtoms() throws InterruptedException {

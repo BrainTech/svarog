@@ -2,7 +2,6 @@ package org.signalml.plugin.method.logic;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
 
@@ -17,60 +16,6 @@ import org.signalml.plugin.exception.PluginToolInterruptedException;
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	protected static final Logger logger = Logger
 			.getLogger(PluginComputationMgr.class);
-
-	protected class CheckedThreadGroup extends ThreadGroup {
-
-		private Thread parentThread;
-
-		private boolean isShutdownStarted;
-		private Throwable cause;
-		private Thread causingThread;
-
-		public CheckedThreadGroup() {
-			super(Thread.currentThread().getThreadGroup(),
-					"PluginComputationGroup");
-
-			this.parentThread = Thread.currentThread();
-
-			this.isShutdownStarted = false;
-			this.cause = null;
-			this.causingThread = null;
-		}
-
-		@Override
-		public void uncaughtException(Thread t, Throwable e) {
-			logger.debug("uncaughtException: " + t + ", " + e);
-
-			synchronized (this) {
-				if (this.isShutdownStarted) {
-					super.uncaughtException(t, e);
-				} else {
-					this.isShutdownStarted = true;
-					this.cause = e;
-					this.causingThread = t;
-
-					this.parentThread.interrupt();
-				}
-
-			}
-		}
-
-		public boolean isShutdownStarted() {
-			return this.isShutdownStarted;
-		}
-
-		public Throwable getCause() {
-			synchronized (this) {
-				return this.cause;
-			}
-		}
-
-		public Thread getCausingThread() {
-			synchronized (this) {
-				return this.causingThread;
-			}
-		}
-	}
 
 	private class CheckedThreadFactory implements ThreadFactory {
 
@@ -94,7 +39,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	protected Map<IPluginComputationMgrStep, PluginComputationMgrStepResult> stepResults;
 
 	private ThreadFactory threadFactory;
-	private CheckedThreadGroup threadGroup;
+	private PluginCheckedThreadGroup threadGroup;
 
 	public Result compute(Data data, MethodExecutionTracker tracker)
 			throws ComputationException {
@@ -121,9 +66,9 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 		return this.threadFactory;
 	}
 
-	protected CheckedThreadGroup getThreadGroup() {
+	protected PluginCheckedThreadGroup getThreadGroup() {
 		if (this.threadGroup == null) {
-			this.threadGroup = new CheckedThreadGroup();
+			this.threadGroup = new PluginCheckedThreadGroup();
 		}
 
 		return this.threadGroup;
@@ -136,7 +81,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 
 		Collection<IPluginComputationMgrStep> steps = this.prepareStepChain();
 
-		Map<IPluginComputationMgrStep, Integer> tickMap = new LinkedHashMap<IPluginComputationMgrStep, Integer>(
+		Map<IPluginComputationMgrStep, Integer> tickMap = new HashMap<IPluginComputationMgrStep, Integer>(
 				steps.size());
 		for (IPluginComputationMgrStep step : steps) {
 			step.initialize();
