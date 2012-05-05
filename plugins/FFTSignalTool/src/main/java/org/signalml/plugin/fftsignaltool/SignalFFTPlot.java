@@ -3,6 +3,9 @@
  */
 package org.signalml.plugin.fftsignaltool;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,17 +32,15 @@ import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.math.fft.FourierTransform;
+import org.signalml.math.fft.WindowType;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
-import org.signalml.plugin.fft.export.FourierTransform;
-import org.signalml.plugin.fft.export.WindowType;
 import org.signalml.util.FormatUtils;
 import org.signalml.util.Util;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
 
 /**
  * Plot on which the power spectrum of the signal (fragment near cursor) is
@@ -154,13 +155,15 @@ public class SignalFFTPlot extends JComponent {
 	private double[] samples = null;
 
 	/**
-	 * the calculated power spectrum - the array with two rows:
-	 * <ul>
-	 * <li>first row ({@code powerSpectrum[0][i]} - frequencies,</li>
-	 * <li>second row ({@code powerSpectrum[1][i]}) - estimates of the
-	 * power spectrum for these frequencies</li>
+	 * the calculated power spectrum - estimates of the
+	 * power spectrum for these frequencies.
 	 */
-	private double[][] powerSpectrum;
+	private double[] powerSpectrum;
+
+	/**
+	 * the frequencies for the powerSpectrum values
+	 */
+	private double[] frequencies;
 
 	/**
 	 * the axis with frequencies
@@ -278,17 +281,15 @@ public class SignalFFTPlot extends JComponent {
 			logger.debug("Samples requested [" + sampleCnt + "] array size ["
 						 + samples.length + "]");
 
-			FourierTransform fourierTransform = new FourierTransform();
-			fourierTransform.setWindowType(windowType, windowParameter);
+			FourierTransform fourierTransform = new FourierTransform(windowType, windowParameter);
 
-			powerSpectrum = fourierTransform.powerSpectrumReal(samples,
-							((float) 1) / channelSamples.getSamplingFrequency());
+			powerSpectrum = fourierTransform.calculatePowerSpectrum(samples);
+			frequencies = fourierTransform.getFrequencies(samples, channelSamples.getSamplingFrequency());
+
 			if (powerSpectrum == null) {
 				throw new NullPointerException("Null spectrum returned");
 			}
-
-			logger.debug("PS[0] size [" + powerSpectrum[0].length
-						 + "] PS[1] size [" + powerSpectrum[1].length + "]");
+			logger.debug("powerSpectrum length = " + powerSpectrum.length);
 
 		} catch (RuntimeException ex) {
 			setVisible(false);
@@ -344,11 +345,11 @@ public class SignalFFTPlot extends JComponent {
 		powerSpectrumChart.setAntiAlias(antialias);
 
 		int startIndex = LEFT_CUTOFF;
-		int endIndex = powerSpectrum[1].length;
+		int endIndex = powerSpectrum.length;
 
 		{
 			// FIXME: check
-			double rangeStart = powerSpectrum[0][LEFT_CUTOFF];
+			double rangeStart = frequencies[LEFT_CUTOFF];
 			double rangeEnd = channelSamples.getSamplingFrequency() / 2.0D;
 			double rangeSize = rangeEnd - rangeStart;
 
@@ -380,8 +381,8 @@ public class SignalFFTPlot extends JComponent {
 		double min = Double.MAX_VALUE;
 		if (fftSettings.isAutoScaleYAxis()){
 			for (int i = startIndex; i < endIndex; i++) {
-				max = Math.max(max, powerSpectrum[1][i]);
-				min = Math.min(min, powerSpectrum[1][i]);
+				max = Math.max(max, powerSpectrum[i]);
+				min = Math.min(min, powerSpectrum[i]);
 			}
 			max *= 1.15; // scale up by 15% as per ZFB request (related to spline
 							// overshooting points).
@@ -413,7 +414,7 @@ public class SignalFFTPlot extends JComponent {
 		}
 
 		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", powerSpectrum);
+		dataset.addSeries("data", new double[][] {frequencies, powerSpectrum});
 		powerSpectrumPlot.setDataset(dataset);
 
 	}

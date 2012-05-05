@@ -1,7 +1,6 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.awt.Component;
-
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -15,14 +14,14 @@ import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
+import org.signalml.math.fft.FourierTransform;
 import org.signalml.plugin.export.SvarogAccess;
+import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
 import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
-import org.signalml.plugin.fft.export.FourierTransform;
-import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
-import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}

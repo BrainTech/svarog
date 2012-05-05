@@ -1,5 +1,6 @@
 package org.signalml.math.fft;
 
+
 /**
  * This class is capable of applying window functions ({@link WindowType})
  * to the given signal.
@@ -22,6 +23,11 @@ public class WindowFunction {
 	 * the signal is multiplied by these weights to obtain windowed data
 	 */
 	protected double[] windowWeights = null;
+
+	/**
+	 * the calculated sum of squares of {@link #windowWeights weights}
+	 */
+	private double windowWeightsSqueredSum = 0;
 
 	/**
 	 * Sets the {@link WindowType type} of the window, the parameter and if any
@@ -101,6 +107,17 @@ public class WindowFunction {
 			}
 			break;
 		}
+		windowWeightsSqueredSum = 0;
+		for (int i = 0; i < windowWeights.length; ++i)
+			windowWeightsSqueredSum += square(windowWeights[i]);
+	}
+
+	/**
+	 * Returns the sum of squares of window weights.
+	 * @return
+	 */
+	public double getWindowWeightsSqueredSum() {
+		return windowWeightsSqueredSum;
 	}
 
 	/**

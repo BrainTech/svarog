@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.fftsignaltool;
 
-import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.math.fft.WindowType;
 
 /**
  * Interface which allows to get and set the parameters of the window function,

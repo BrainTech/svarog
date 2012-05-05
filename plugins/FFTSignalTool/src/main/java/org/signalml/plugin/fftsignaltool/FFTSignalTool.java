@@ -1,7 +1,6 @@
 package org.signalml.plugin.fftsignaltool;
 
 import java.io.File;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +12,6 @@ import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import org.signalml.plugin.fft.FFT;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialogAction;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListener;
@@ -28,7 +26,6 @@ import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListene
  * <li>the settings that are stored in the configuration file,</li>
  * </ul>
  * <p>
- * To calculate the FFT, the {@link FFT} plug-in is used.
  *
  * @author Marcin Szumski
  */

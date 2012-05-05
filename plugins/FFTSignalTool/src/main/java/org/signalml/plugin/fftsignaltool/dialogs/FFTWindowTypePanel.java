@@ -3,6 +3,9 @@
  */
 package org.signalml.plugin.fftsignaltool.dialogs;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool.i18n;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -18,12 +21,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.math.fft.WindowType;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.fftsignaltool.FFTWindowTypeSettings;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool.i18n;
-
-import org.springframework.validation.Errors;
 
 /**
  * Panel to select the {@link WindowType type} of the FFT Window and the

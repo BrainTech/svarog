@@ -6,6 +6,7 @@ package org.signalml.math.iirdesigner;
 import org.apache.log4j.Logger;
 
 import org.apache.commons.math.complex.Complex;
+import org.signalml.math.ArrayOperations;
 import org.signalml.math.fft.FourierTransform;
 import org.signalml.math.iirdesigner.math.SpecialMath;
 

@@ -4,7 +4,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.junit.Test;
-import org.signalml.math.iirdesigner.ArrayOperations;
+import org.signalml.math.ArrayOperations;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.FilterFrequencyResponse;
 import org.signalml.math.iirdesigner.FilterFrequencyResponseCalculator;
