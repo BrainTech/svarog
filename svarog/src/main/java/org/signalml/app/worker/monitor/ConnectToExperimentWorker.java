@@ -16,6 +16,8 @@ import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
+import org.signalml.app.worker.monitor.messages.GetPeerParametersValuesRequest;
+import org.signalml.app.worker.monitor.messages.GetPeerParametersValuesResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
@@ -52,6 +54,8 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		showBusyDialog();
 		if (experimentDescriptor.getStatus() == ExperimentStatus.NEW) {
 			if (!startNewExperiment())
+				return null;
+			if (!waitForExperimentToStart())
 				return null;
 		}
 
@@ -90,6 +94,33 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		experimentDescriptor.setExperimentPort(response.getExperimentPort());
 
 		return response != null;
+	}
+
+	protected boolean waitForExperimentToStart() {
+
+		GetPeerParametersValuesRequest request = new GetPeerParametersValuesRequest();
+		request.setPeerId("amplifier");
+
+		try {
+			for (int i = 0; i < TRYOUT_COUNT; i++) {
+
+				GetPeerParametersValuesResponse response =
+						(GetPeerParametersValuesResponse) Helper.sendRequestAndParseResponse(request,
+						experimentDescriptor.getExperimentIPAddress(),
+						experimentDescriptor.getExperimentPort(),
+						MessageType.GET_PEER_PARAMETERS_VALUES_RESPONSE);
+
+				if (response.isAmplifierStarted())
+					break;
+				else
+					Thread.sleep(1000);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 
 	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException {

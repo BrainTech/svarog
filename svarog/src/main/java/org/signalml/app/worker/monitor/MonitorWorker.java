@@ -76,10 +76,25 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	protected Void doInBackground() {
 
 		MultiplexerMessage sampleMsg;
+		boolean wasFirstSampleReceived = false;
 
 		while (!isCancelled()) {
 			try {
-				IncomingMessageData msgData = client.receive(TIMEOUT_MILIS);
+				IncomingMessageData msgData;
+
+				if (wasFirstSampleReceived)
+					msgData = client.receive(TIMEOUT_MILIS);
+				else {
+					/**
+					 * The first sample to be received is the most problematic
+					 * - sometimes (when starting new experiments) the multiplexer
+					 * has not been started yet at this point, so the receive
+					 * timeout should longer in order to wait for the multiplexer
+					 * to fully start to operate.
+					 */
+					msgData = client.receive();
+					wasFirstSampleReceived = true;
+				}
 
 				if (isCancelled()) {
 					//it might have been cancelled while waiting on the client.receive()
@@ -91,8 +106,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 					Dialogs.showError(_("Multiplexer disconnected!"));
 					break;
 				}
-				else
+				else {
 					sampleMsg = msgData.getMessage();
+				}
 			} catch (InterruptedException e) {
 				logger.error("receive failed", e);
 				return null;
