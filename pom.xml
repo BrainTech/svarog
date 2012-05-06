@@ -1,397 +1,397 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>org.signalml</groupId>
-    <artifactId>svarog-top</artifactId>
-    <packaging>pom</packaging>
-    <version>0.5.0-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.signalml</groupId>
+	<artifactId>svarog-top</artifactId>
+	<packaging>pom</packaging>
+	<version>0.5.0-SNAPSHOT</version>
 
-    <name>Svarog-top</name>
+	<name>Svarog-top</name>
 
-    <description>Signal Viewer, Analyzer and Recorder on GPL</description>
-    <organization>
-        <name>Department of Biomedical Physics, Warsaw University and The Svarog Team</name>
-        <url>http://brain.fuw.edu.pl/</url>
-    </organization>
-    <url>https://bci.fuw.edu.pl/wiki/Svarog</url>
-    <inceptionYear>2007</inceptionYear>
+	<description>Signal Viewer, Analyzer and Recorder on GPL</description>
+	<organization>
+		<name>Department of Biomedical Physics, Warsaw University and The Svarog Team</name>
+		<url>http://brain.fuw.edu.pl/</url>
+	</organization>
+	<url>https://bci.fuw.edu.pl/wiki/Svarog</url>
+	<inceptionYear>2007</inceptionYear>
 
-    <modules>
-        <module>svarog</module>
-        <module>plugins/FFTSignalTool</module>
-        <module>plugins/PluginToolCommon</module>
-        <module>plugins/Artifact</module>
-    </modules>
+	<modules>
+		<module>svarog</module>
+		<module>plugins/FFTSignalTool</module>
+		<module>plugins/PluginToolCommon</module>
+		<module>plugins/Artifact</module>
+	</modules>
 
-    <profiles>
-        <profile>
-            <id>installer</id>
-            <modules>
-                <module>svarog</module>
-                <module>plugins/FFTSignalTool</module>
-                <module>plugins/PluginToolCommon</module>
-                <module>plugins/Artifact</module>
-                <module>izpack</module>
-            </modules>
-        </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>installer</id>
+			<modules>
+				<module>svarog</module>
+				<module>plugins/FFTSignalTool</module>
+				<module>plugins/PluginToolCommon</module>
+				<module>plugins/Artifact</module>
+				<module>izpack</module>
+			</modules>
+		</profile>
+	</profiles>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.jdk_version>1.6</project.jdk_version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.jdk_version>1.6</project.jdk_version>
 
 
-        <springframework.version>2.0.7</springframework.version>
-    </properties>
+		<springframework.version>2.0.7</springframework.version>
+	</properties>
 
-    <repositories>
-        <repository>
-            <id>signalml.org</id>
-            <name>SignalML Maven Repository</name>
-            <url>https://escher.fuw.edu.pl/maven/repository</url>
-        </repository>
+	<repositories>
+		<repository>
+			<id>signalml.org</id>
+			<name>SignalML Maven Repository</name>
+			<url>https://escher.fuw.edu.pl/maven/repository</url>
+		</repository>
 
-        <repository>
-            <id>apache</id>
-            <name>Apache Commons</name>
-            <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
-        </repository>
+		<repository>
+			<id>apache</id>
+			<name>Apache Commons</name>
+			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+		</repository>
 
-        <repository>
-            <id>gettext-commons</id>
-            <name>gettext-commons</name>
-            <url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
-        </repository>
-    </repositories>
+		<repository>
+			<id>gettext-commons</id>
+			<name>gettext-commons</name>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
+		</repository>
+	</repositories>
 
-    <pluginRepositories>
-        <pluginRepository>
-            <id>onejar-maven-plugin.googlecode.com</id>
-            <url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>signalml.org</id>
-            <name>SignalML Maven Repository</name>
-            <url>http://escher.fuw.edu.pl/maven/repository</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>gettext-commons</id>
-            <url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
-        </pluginRepository>
-    </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>onejar-maven-plugin.googlecode.com</id>
+			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>signalml.org</id>
+			<name>SignalML Maven Repository</name>
+			<url>http://escher.fuw.edu.pl/maven/repository</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>gettext-commons</id>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
+		</pluginRepository>
+	</pluginRepositories>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.5</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.5</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
-    <scm>
-        <connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
-        <developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
-        <url>http://escher.fuw.edu.pl/git/svarog</url>
-    </scm>
+	<scm>
+		<connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
+		<developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
+		<url>http://escher.fuw.edu.pl/git/svarog</url>
+	</scm>
 
-    <reporting>
-        <plugins>
+	<reporting>
+		<plugins>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.4</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>summary</report>
-                            <report>license</report>
-                            <report>project-team</report>
-                            <report>mailing-list</report>
-                            <report>scm</report>
-                            <report>dependencies</report>
-                            <report>issue-tracking</report>
-                            <report>plugins</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>2.4</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>summary</report>
+							<report>license</report>
+							<report>project-team</report>
+							<report>mailing-list</report>
+							<report>scm</report>
+							<report>dependencies</report>
+							<report>issue-tracking</report>
+							<report>plugins</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>2.12</version>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.12</version>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jxr-plugin</artifactId>
-                <version>2.3</version>
-                <configuration>
-                    <aggregate>true</aggregate>
-                    <linkJavadoc>true</linkJavadoc>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<aggregate>true</aggregate>
+					<linkJavadoc>true</linkJavadoc>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8.1</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>javadoc</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
-                <configuration>
-                    <show>private</show>
-                    <nohelp>false</nohelp>
-                    <stylesheetfile>javadoc.css</stylesheetfile>
-                    <javaApiLinks>
-                        <property>
-                            <name>api_1.6</name>
-                            <value>http://download.oracle.com/javase/6/docs/api/</value>
-                        </property>
-                    </javaApiLinks>
-                    <links>
-                        <link>http://static.springsource.org/spring/docs/${springframework.version}/api</link>
-                    </links>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>javadoc</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+				<configuration>
+					<show>private</show>
+					<nohelp>false</nohelp>
+					<stylesheetfile>javadoc.css</stylesheetfile>
+					<javaApiLinks>
+						<property>
+							<name>api_1.6</name>
+							<value>http://download.oracle.com/javase/6/docs/api/</value>
+						</property>
+					</javaApiLinks>
+					<links>
+						<link>http://static.springsource.org/spring/docs/${springframework.version}/api</link>
+					</links>
+				</configuration>
+			</plugin>
 
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <version>2.4</version>
-            </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>cobertura-maven-plugin</artifactId>
+				<version>2.4</version>
+			</plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <version>2.5</version>
-                <configuration>
-                    <targetJdk>${project.jdk_version}</targetJdk>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<targetJdk>${project.jdk_version}</targetJdk>
+				</configuration>
+			</plugin>
 
-                        <plugin>
-                                <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>findbugs-maven-plugin</artifactId>
-                                <version>1.2</version>
-                                <configuration>
-                                        <findbugsXmlOutput>true</findbugsXmlOutput>
-                                        <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
-                                        <xmlOutput>true</xmlOutput>
-                                </configuration>
-                        </plugin>
-        </plugins>
-    </reporting>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
-    <mailingLists>
-        <mailingList>
-            <name>signalml</name>
-            <post>signalml@googlegroups.com</post>
-            <archive>http://groups.google.com/group/signalml</archive>
-            <subscribe>signalml-subscribe@googlegroups.com</subscribe>
-            <unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
-        </mailingList>
-    </mailingLists>
+	<mailingLists>
+		<mailingList>
+			<name>signalml</name>
+			<post>signalml@googlegroups.com</post>
+			<archive>http://groups.google.com/group/signalml</archive>
+			<subscribe>signalml-subscribe@googlegroups.com</subscribe>
+			<unsubscribe>signalml-unsubscribe@googlegroups.com</unsubscribe>
+		</mailingList>
+	</mailingLists>
 
-    <issueManagement>
-        <system>Trac</system>
-        <url>http://bci.fuw.edu.pl/trac/report/22</url>
-    </issueManagement>
+	<issueManagement>
+		<system>Trac</system>
+		<url>http://bci.fuw.edu.pl/trac/report/22</url>
+	</issueManagement>
 
-    <licenses>
-        <license>
-            <name>GNU General Public License, Version 3</name>
-            <distribution>repo</distribution>
-            <url>http://www.gnu.org/licenses/gpl.txt</url>
-        </license>
-    </licenses>
+	<licenses>
+		<license>
+			<name>GNU General Public License, Version 3</name>
+			<distribution>repo</distribution>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+		</license>
+	</licenses>
 
-    <developers>
-        <developer>
-            <name>Michał Dobaczewski</name>
-            <email>michal (dot) d08 (at) "Google mail"</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Dobiesław Ircha</name>
-            <organization>ZFB</organization>
-            <roles>
-                <role>Developer</role>
-                <role>Mp5 developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Piotr Durka</name>
-            <url>http://durka.info/</url>
-            <organization>ZFB</organization>
-            <roles>
-                <role>DBF Contact Person</role>
-                <role>signalml.org Coordinator</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Zbyszek Jędrzejewski-Szmek</name>
-            <roles>
-                <role>Infrastructure admin</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Mateusz Kruszyński</name>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Piotr Szachewicz</name>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Tomasz Sawicki</name>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Hubert Klekowicz</name>
-            <organization>ZFB</organization>
-            <roles>
-                <role>Matlab integration</role>
-                <role>Artifact developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Rafał Kuś</name>
-            <organization>ZFB</organization>
-            <roles>
-                <role>Mp5 developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Ula Malinowska</name>
-            <organization>ZFB</organization>
-            <roles>
-                <role>Stager developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Stanisław Findeisen</name>
-            <organization>eisenbits</organization>
-            <roles>
-                <role>Documentation</role>
-                <role>Plugin system developer</role>
-            </roles>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Marcin Szumski</name>
-            <organization>eisenbits</organization>
-            <timezone>+1</timezone>
-            <roles>
-                <role>Documentation</role>
-                <role>Plugin system developer</role>
-            </roles>
-        </developer>
-        <developer>
-            <name>Mateusz Dzwonek</name>
-            <organization>eisenbits</organization>
-            <timezone>+1</timezone>
-            <roles>
-                <role>Documentation</role>
-            </roles>
-        </developer>
-        <developer>
-            <name>Konrad Durnoga</name>
-            <organization>MIMUW</organization>
-            <timezone>+1</timezone>
-            <roles>
-                <role>Artifact &amp; Stager plugins</role>
-            </roles>
-        </developer>
-        <developer>
-            <name>Paweł Kordowski</name>
-            <organization>ZFB</organization>
-            <timezone>+1</timezone>
-        </developer>
-        <developer>
-            <name>Joanna Jędrzejewska-Szmek</name>
-            <organization>ZFB</organization>
-            <timezone>+1</timezone>
-            <roles>
-                <role>Documentation</role>
-            </roles>
-        </developer>
-    </developers>
+	<developers>
+		<developer>
+			<name>Michał Dobaczewski</name>
+			<email>michal (dot) d08 (at) "Google mail"</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Dobiesław Ircha</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Developer</role>
+				<role>Mp5 developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Piotr Durka</name>
+			<url>http://durka.info/</url>
+			<organization>ZFB</organization>
+			<roles>
+				<role>DBF Contact Person</role>
+				<role>signalml.org Coordinator</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Zbyszek Jędrzejewski-Szmek</name>
+			<roles>
+				<role>Infrastructure admin</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Mateusz Kruszyński</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Piotr Szachewicz</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Tomasz Sawicki</name>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Hubert Klekowicz</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Matlab integration</role>
+				<role>Artifact developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Rafał Kuś</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Mp5 developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Ula Malinowska</name>
+			<organization>ZFB</organization>
+			<roles>
+				<role>Stager developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Stanisław Findeisen</name>
+			<organization>eisenbits</organization>
+			<roles>
+				<role>Documentation</role>
+				<role>Plugin system developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Marcin Szumski</name>
+			<organization>eisenbits</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+				<role>Plugin system developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Mateusz Dzwonek</name>
+			<organization>eisenbits</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Konrad Durnoga</name>
+			<organization>MIMUW</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Artifact &amp; Stager plugins</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Paweł Kordowski</name>
+			<organization>ZFB</organization>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Joanna Jędrzejewska-Szmek</name>
+			<organization>ZFB</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+			</roles>
+		</developer>
+	</developers>
 
-    <distributionManagement>
-        <repository>
-            <id>signalml.org</id>
-            <url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
-        </repository>
-        <snapshotRepository>
-            <id>signalml.org</id>
-            <url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
-        </snapshotRepository>
-    </distributionManagement>
+	<distributionManagement>
+		<repository>
+			<id>signalml.org</id>
+			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
+		</repository>
+		<snapshotRepository>
+			<id>signalml.org</id>
+			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
+		</snapshotRepository>
+	</distributionManagement>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>${project.jdk_version}</source>
-                        <target>${project.jdk_version}</target>
-                        <encoding>${project.build.sourceEncoding}</encoding>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>1.7</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.xnap.commons</groupId>
-                    <artifactId>maven-gettext-plugin</artifactId>
-                    <version>1.2.3</version>
-                    <configuration>
-                        <keywords>
-                            --keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user --sort-output
-                        </keywords>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${project.jdk_version}</source>
+						<target>${project.jdk_version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.xnap.commons</groupId>
+					<artifactId>maven-gettext-plugin</artifactId>
+					<version>1.2.3</version>
+					<configuration>
+						<keywords>
+							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user --sort-output
+						</keywords>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
-        <extensions>
-            <extension>
-                <groupId>org.apache.maven.wagon</groupId>
-                <artifactId>wagon-ssh-external</artifactId>
-                <version>1.0-beta-6</version>
-            </extension>
-        </extensions>
-    </build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>1.0-beta-6</version>
+			</extension>
+		</extensions>
+	</build>
 </project>

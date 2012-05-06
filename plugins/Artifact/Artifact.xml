@@ -1,16 +1,16 @@
 <plugin>
-    <name>Artifact Detection</name>
-    <version>1.0</version>
-    <jar-file>Artifact.jar</jar-file>
-    <starting-class>org.signalml.plugin.newartifact.NewArtifactPlugin</starting-class>
-    <dependencies>
-        <dependency>
-            <name>Svarog API</name>
-            <version>0.5</version>
-        </dependency>
-        <dependency>
-            <name>Plugin Common Tools</name>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
+	<name>Artifact Detection</name>
+	<version>1.0</version>
+	<jar-file>Artifact.jar</jar-file>
+	<starting-class>org.signalml.plugin.newartifact.NewArtifactPlugin</starting-class>
+	<dependencies>
+		<dependency>
+			<name>Svarog API</name>
+			<version>0.5</version>
+		</dependency>
+		<dependency>
+			<name>Plugin Common Tools</name>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
 </plugin>

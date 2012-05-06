@@ -1,84 +1,84 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.signalml.plugin</groupId>
-    <artifactId>FFTSignalTool</artifactId>
-    <version>0.1</version>
-    <packaging>jar</packaging>
+	<groupId>org.signalml.plugin</groupId>
+	<artifactId>FFTSignalTool</artifactId>
+	<version>0.1</version>
+	<packaging>jar</packaging>
 
-    <name>FFTSignalTool</name>
-    <parent>
-        <groupId>org.signalml</groupId>
-        <artifactId>svarog-top</artifactId>
-        <version>0.5.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
+	<name>FFTSignalTool</name>
+	<parent>
+		<groupId>org.signalml</groupId>
+		<artifactId>svarog-top</artifactId>
+		<version>0.5.0-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.build.i18n.resources>src/main/resources/i18n/</project.build.i18n.resources>
-    </properties>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.i18n.resources>src/main/resources/i18n/</project.build.i18n.resources>
+	</properties>
 
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>copy-xml</id>
-                        <phase>package</phase>
-                        <configuration>
-                            <target>
-                                <copy file="FFTSignalTool.xml" tofile="target/FFTSignalTool.xml"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>copy-xml</id>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<copy file="FFTSignalTool.xml" tofile="target/FFTSignalTool.xml"/>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
-            <plugin>
-                <groupId>org.xnap.commons</groupId>
-                <artifactId>maven-gettext-plugin</artifactId>
-                <version>1.2.3</version>
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+				<version>1.2.3</version>
 
-                <configuration>
-                    <poDirectory>${project.build.i18n.resources}</poDirectory>
-                    <targetBundle>org.signalml.plugin.fftsignaltool</targetBundle>
-                </configuration>
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.plugin.fftsignaltool</targetBundle>
+				</configuration>
 
-                <executions>
-                    <execution>
-                        <id>gettext-dist</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>dist</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+				<executions>
+					<execution>
+						<id>gettext-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>dist</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.signalml</groupId>
-            <artifactId>svarog</artifactId>
-            <version>0.5.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+	<dependencies>
+		<dependency>
+			<groupId>org.signalml</groupId>
+			<artifactId>svarog</artifactId>
+			<version>0.5.0-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 
-        <!-- dependencies below are specified in util/maven/pom.xml -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-    </dependencies>
+		<!-- dependencies below are specified in util/maven/pom.xml -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
 </project>

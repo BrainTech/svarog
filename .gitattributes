@@ -1,5 +1,6 @@
-*.xml	diff=html whitespace=tab-in-indent
-*.xsd	diff=html whitespace=tab-in-indent
+*		tabwidth=4
+*.xml	diff=html
+*.xsd	diff=html
 *.el	whitespace=tab-in-indent
 /.project diff=html
 /.classpath diff=html
