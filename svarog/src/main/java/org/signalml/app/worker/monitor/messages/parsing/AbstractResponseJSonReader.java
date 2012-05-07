@@ -72,6 +72,15 @@ public abstract class AbstractResponseJSonReader {
 			double offset = (Double) channelInfo.get("offset");
 			channel.setCalibrationGain((float)gain);
 			channel.setCalibrationOffset((float)offset);
+
+			/*
+			 * Sometimes the idle field is interpreted as Long, sometimes - Integer.
+			 * We actually need it to be double, so it's safer to trasform it to String
+			 * and then parse.
+			 */
+			String idleString = ((Object) channelInfo.get("idle")).toString();
+			channel.setIdle(Double.parseDouble(idleString));
+
 			channel.setSelected(false);
 			amplifier.getChannels().add(channel);
 			i++;

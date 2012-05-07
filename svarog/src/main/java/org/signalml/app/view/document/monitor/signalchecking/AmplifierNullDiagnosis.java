@@ -5,7 +5,10 @@
 package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.util.HashMap;
+import java.util.List;
+
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 
 /**
  * A {@link GenericAmplifierDiagnosis} class that checks whether signal value
@@ -56,10 +59,10 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
 		testTolerance = Double.parseDouble(getParameters().get(TEST_TOLERANCE).toString());
 
 		maxAmpC = new double[getChannelCount()];
-		double ampNull = getMonitorSignalDocument().getAmplifierNull();
+		List<AmplifierChannel> channels = getMonitorSignalDocument().getExperimentDescriptor().getAmplifier().getSelectedChannels();
 
 		for (int i = 0; i < getChannelCount(); i++)
-			maxAmpC[i] = testTolerance * Math.abs(ampNull);
+			maxAmpC[i] = testTolerance * Math.abs(channels.get(i).getIdle());
 
 	}
 

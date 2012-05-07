@@ -1,9 +1,10 @@
 package org.signalml.app.model.document.opensignal.elements;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * An amplifier channel description for the select ChannelsSelectTable in the
@@ -48,6 +49,7 @@ public class AmplifierChannel {
 
 	private float calibrationGain;
 	private float calibrationOffset;
+	private double idle;
 
 	public AmplifierChannel(AmplifierChannel channel) {
 		this.selected = channel.selected;
@@ -128,6 +130,14 @@ public class AmplifierChannel {
 	}
 	public String getOriginalName() {
 		return originalName;
+	}
+
+	public double getIdle() {
+		return idle;
+	}
+
+	public void setIdle(double idle) {
+		this.idle = idle;
 	}
 
 }

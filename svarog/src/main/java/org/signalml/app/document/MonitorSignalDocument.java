@@ -10,22 +10,20 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
-import org.signalml.domain.montage.MontageMismatchException;
-import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.app.worker.monitor.DisconnectFromExperimentWorker;
 import org.signalml.app.worker.monitor.MonitorWorker;
 import org.signalml.app.worker.monitor.SignalRecorderWorker;
 import org.signalml.app.worker.monitor.TagRecorder;
+import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.DocumentView;
 
 /**
  * @author Mariusz Podsiadło
@@ -105,14 +103,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	public float[] getOffset() {
 		return descriptor.getSignalParameters().getCalibrationOffset();
-	}
-
-	/**
-	 * Returns an integer value representing amplifier's channel value for non-connected channel
-	 * @return an integer value representing amplifier's channel value for non-connected channel
-	 */
-	public double getAmplifierNull() {
-		return descriptor.getAmplifier().getAmplifierNull();
 	}
 
 	@Override

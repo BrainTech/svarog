@@ -10,7 +10,6 @@ public class Amplifier {
 	private List<Float> samplingFrequencies;
 	private List<AmplifierChannel> channels;
 
-	private double amplifierNull;
 	private Object additionalParameters;
 
 	public Amplifier(Amplifier amp) {
@@ -24,8 +23,6 @@ public class Amplifier {
 		this.channels = new ArrayList<AmplifierChannel>();
 		for (AmplifierChannel channel: amp.getChannels())
 			this.channels.add(new AmplifierChannel(channel));
-
-		this.amplifierNull = amp.amplifierNull;
 	}
 
 	public Amplifier() {
@@ -79,14 +76,6 @@ public class Amplifier {
 			channelLabels.add(channel.getLabel());
 		}
 		return channelLabels.toArray(new String[0]);
-	}
-
-	public double getAmplifierNull() {
-		return amplifierNull;
-	}
-
-	public void setAmplifierNull(double amplifierNull) {
-		this.amplifierNull = amplifierNull;
 	}
 
 	public Object getAdditionalParameters() {
