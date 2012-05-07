@@ -4,7 +4,6 @@
 package org.signalml.plugin.fftsignaltool.dialogs;
 
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool.i18n;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -157,9 +156,7 @@ public class FFTWindowTypePanel extends JPanel {
 
 		windowTypeRadioButtons = new JRadioButton[windowTypes.length];
 		for (int i = 0; i < windowTypes.length; i++) {
-			windowTypeRadioButtons[i] = new JRadioButton(
-				i18n().getMessage("fft.windowType."
-								  + windowTypes[i].toString()));
+			windowTypeRadioButtons[i] = new JRadioButton(_(windowTypes[i].toString()));
 			windowTypeButtonGroup.add(windowTypeRadioButtons[i]);
 			add(windowTypeRadioButtons[i]);
 			windowTypeRadioButtons[i].addItemListener(windowTypeListener);
