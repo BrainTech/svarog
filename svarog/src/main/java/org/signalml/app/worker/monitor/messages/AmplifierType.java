@@ -11,9 +11,16 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 @JsonSerialize(using=AmplifierTypeSerializer.class)
 public enum AmplifierType {
 
+	/*
+	 * these should be ordered from the ones that
+	 * load the fastest to the ones that are the slowest.
+	 * It is because we want the {@link FindEEGExperimentsWorker}
+	 * to send a request for the fastest ones first
+	 * and when sending the requests, it iterates over these values.
+	 */
 	VIRTUAL("virtual"),
-	BLUETOOTH("bluetooth"),
-	USB("usb");
+	USB("usb"),
+	BLUETOOTH("bluetooth");
 
 	private String code;
 
