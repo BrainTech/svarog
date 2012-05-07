@@ -11,6 +11,8 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.elements.Amplifier;
+import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 
 public abstract class AbstractResponseJSonReader {
 
@@ -43,7 +45,8 @@ public abstract class AbstractResponseJSonReader {
 				descriptor.setCorrectlyRead(true);
 				experiments.add(descriptor);
 			} catch (Exception e) {
-				logger.error("There was an error parsing an experiment: " + e.getCause());
+				logger.error("There was an error parsing an experiment: " + e.getMessage());
+				e.printStackTrace();
 			}
 		}
 
@@ -53,4 +56,38 @@ public abstract class AbstractResponseJSonReader {
 	protected abstract String getExperimentsListFieldName();
 
 	public abstract ExperimentDescriptor parseSingleExperiment(LinkedHashMap<String, Object> map);
+
+	protected void readChannelsList(List<Object> listOfChannels, ExperimentDescriptor experiment) {
+		Amplifier amplifier = experiment.getAmplifier();
+
+		amplifier.setChannels(new ArrayList<AmplifierChannel>());
+
+		int i = 0;
+		for (Object item: listOfChannels) {
+			LinkedHashMap<String, Object> channelInfo = (LinkedHashMap<String, Object>) item;
+			String channelName = (String) channelInfo.get("name");
+			AmplifierChannel channel = new AmplifierChannel(i+1, channelName);
+			channel.setOriginalName(channelName);
+			double gain = (Double) channelInfo.get("gain");
+			double offset = (Double) channelInfo.get("offset");
+			channel.setCalibrationGain((float)gain);
+			channel.setCalibrationOffset((float)offset);
+			channel.setSelected(false);
+			amplifier.getChannels().add(channel);
+			i++;
+		}
+
+		experiment.getSignalParameters().setChannelCount(i);
+	}
+
+	protected void readSamplingFrequencies(LinkedHashMap<String, Object> parameters, ExperimentDescriptor experiment) {
+		Amplifier amplifier = experiment.getAmplifier();
+
+		List<Integer> samplingFrequencies = (List<Integer>) parameters.get("sampling_rates");
+		amplifier.setSamplingFrequencies(new ArrayList<Float>());
+
+		for (Integer sf: samplingFrequencies) {
+			amplifier.getSamplingFrequencies().add(new Float(sf));
+		}
+	}
 }

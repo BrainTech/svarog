@@ -1,16 +1,14 @@
 package org.signalml.app.model.document.opensignal;
 
+import multiplexer.jmx.client.JmxClient;
+
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
-import org.signalml.domain.signal.raw.RawSignalByteOrder;
-import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.tag.StyledTagSet;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import multiplexer.jmx.client.JmxClient;
 
 @XStreamAlias(value="experiment")
 public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
@@ -18,7 +16,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private String id;
 	private String name;
 	private String path;
-	private Amplifier amplifier;
+	private Amplifier amplifier = new Amplifier();
 	private ExperimentStatus status;
 
 	private String experimentIPAddress;
@@ -54,6 +52,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
 	public ExperimentDescriptor() {
 		setBackupFrequency(10.0F);
+		signalParameters = new SignalParameters();
 	}
 
 	public String getName() {

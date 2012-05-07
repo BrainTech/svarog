@@ -1,6 +1,5 @@
 package org.signalml.app.worker.monitor.messages.parsing;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -10,7 +9,6 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
-import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 
 public class FindEEGExperimentsResponseJSonReader extends AbstractResponseJSonReader {
 
@@ -41,42 +39,17 @@ public class FindEEGExperimentsResponseJSonReader extends AbstractResponseJSonRe
 
 		//amplifier
 		LinkedHashMap<String, Object> amplifierParams = (LinkedHashMap<String, Object>) map.get("amplifier_params");
-		Amplifier amplifier = new Amplifier();
+		Amplifier amplifier = experiment.getAmplifier();
 		amplifier.setName((String) amplifierParams.get("amplifier_name"));
 		amplifier.setAmplifierNull(Double.parseDouble((String) amplifierParams.get("amplifier_null")));
 		amplifier.setSamplesPerPacket(Integer.parseInt((String) amplifierParams.get("samples_per_packet")));
 
-		List<Integer> samplingFrequencies = (List<Integer>) amplifierParams.get("sampling_rates");
-		amplifier.setSamplingFrequencies(new ArrayList<Float>());
+		readSamplingFrequencies(amplifierParams, experiment);
 
-		for (Integer sf: samplingFrequencies) {
-			amplifier.getSamplingFrequencies().add(new Float(sf));
-		}
-
-		SignalParameters signalParameters = new SignalParameters();
-		experiment.setSignalParameters(signalParameters);
-
-		signalParameters.setSamplingFrequency(new Float((String) amplifierParams.get("sampling_rate")));
+		experiment.getSignalParameters().setSamplingFrequency(new Float((String) amplifierParams.get("sampling_rate")));
 
 		List<Object> channelsInfo = (List<Object>) amplifierParams.get("channels_info");
-		amplifier.setChannels(new ArrayList<AmplifierChannel>());
-
-		int i = 0;
-		for (Object item: channelsInfo) {
-			LinkedHashMap<String, Object> channelInfo = (LinkedHashMap<String, Object>) item;
-			String channelName = (String) channelInfo.get("name");
-			AmplifierChannel channel = new AmplifierChannel(i+1, channelName);
-			channel.setOriginalName(channelName);
-			double gain = (Double) channelInfo.get("gain");
-			double offset = (Double) channelInfo.get("offset");
-			channel.setCalibrationGain((float)gain);
-			channel.setCalibrationOffset((float)offset);
-			channel.setSelected(false);
-			amplifier.getChannels().add(channel);
-			i++;
-		}
-
-		signalParameters.setChannelCount(i);
+		readChannelsList(channelsInfo, experiment);
 
 		//active channels
 		String activeChannels = (String) amplifierParams.get("active_channels");
@@ -101,14 +74,12 @@ public class FindEEGExperimentsResponseJSonReader extends AbstractResponseJSonRe
 		String channelNames = (String) amplifierParams.get("channel_names");
 		tokenizer = new StringTokenizer(channelNames, ";");
 		List<AmplifierChannel> selectedChannels = amplifier.getSelectedChannels();
-		i = 0;
+		int i = 0;
 		while (tokenizer.hasMoreTokens()) {
 			String channelName = tokenizer.nextToken();
 			selectedChannels.get(i).setLabel(channelName);
 			i++;
 		}
-
-		experiment.setAmplifier(amplifier);
 
 		List<Object> tcpAddress = (List<Object>) ((List<Object>) map.get("tcp_addrs")).get(0);
 		experiment.setExperimentIPAddress((String) tcpAddress.get(0));
