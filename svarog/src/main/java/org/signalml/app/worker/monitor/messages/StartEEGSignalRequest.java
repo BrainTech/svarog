@@ -23,13 +23,13 @@ public class StartEEGSignalRequest extends Message {
 	public StartEEGSignalRequest(ExperimentDescriptor experimentDescriptor) {
 		super(MessageType.START_EEG_SIGNAL_REQUEST);
 
-		name = getName();
+		name = createName(experimentDescriptor);
 		launchFile = experimentDescriptor.getRecommendedScenario();
 		amplifierParameters = new AmplifierParameters(experimentDescriptor);
 	}
 
 	protected String createName(ExperimentDescriptor experimentDescriptor) {
-
+		name = "Svarog online - " + experimentDescriptor.getAmplifier().getName();
 		return name;
 	}
 
