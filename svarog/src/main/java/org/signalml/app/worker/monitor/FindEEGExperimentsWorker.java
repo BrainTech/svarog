@@ -88,7 +88,13 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		if (response != null && MessageParser.checkIfResponseIsOK(response, messageType)) {
 			List<ExperimentDescriptor> result = responseReader.parseExperiments(response);
 			publish(result);
-			logln(_("OK"));
+
+			String readerLog = responseReader.getLog();
+			if (readerLog.isEmpty())
+				logln(_("OK"));
+			else
+				log(readerLog);
+
 			return result;
 		}
 		else {

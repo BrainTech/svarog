@@ -1,5 +1,7 @@
 package org.signalml.app.worker.monitor.messages.parsing;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -17,6 +19,7 @@ import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 public abstract class AbstractResponseJSonReader {
 
 	private static final Logger logger = Logger.getLogger(AbstractResponseJSonReader.class);
+	private StringBuilder log = new StringBuilder();
 
 	public List<ExperimentDescriptor> parseExperiments(String s) {
 
@@ -26,18 +29,22 @@ public abstract class AbstractResponseJSonReader {
 		try {
 			map = mapper.readValue(s.getBytes(), new TypeReference<LinkedHashMap<String, Object>>() {});
 		} catch (JsonParseException e1) {
-			// TODO Auto-generated catch block
+			log.append(_("ERROR - JsonParseException while parsing the received message!\n"));
 			e1.printStackTrace();
 		} catch (JsonMappingException e1) {
-			// TODO Auto-generated catch block
+			log.append(_("ERROR - JsonMappingException while parsing the received message!\n"));
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+			log.append(_("ERROR - IOException while parsing the received message!\n"));
 			e1.printStackTrace();
 		}
 
+		if (map == null)
+			return null;
+
 		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>) map.get(getExperimentsListFieldName());
 
+		boolean errorAlreadyOcurred = false;
 		List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 		for (LinkedHashMap<String, Object> exp: list) {
 			try {
@@ -45,6 +52,11 @@ public abstract class AbstractResponseJSonReader {
 				descriptor.setCorrectlyRead(true);
 				experiments.add(descriptor);
 			} catch (Exception e) {
+				if (!errorAlreadyOcurred) {
+					//we want this message to be appended only once!
+					log.append(_("ERROR - there was an error while parsing experiment data! (Bad message format?)\n"));
+					errorAlreadyOcurred = true;
+				}
 				logger.error("There was an error parsing an experiment: " + e.getMessage());
 				e.printStackTrace();
 			}
@@ -98,5 +110,9 @@ public abstract class AbstractResponseJSonReader {
 		for (Integer sf: samplingFrequencies) {
 			amplifier.getSamplingFrequencies().add(new Float(sf));
 		}
+	}
+
+	public String getLog() {
+		return log.toString();
 	}
 }
