@@ -102,9 +102,9 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	/**
 	 * the maximum number of labels on the X (frequencies) axis
 	 */
-	private int maxLabelCount = Integer.MAX_VALUE;
+	private int xAxisLabelCount = Integer.MAX_VALUE;
 
-	private boolean autoScaleYAxis = false;
+	private boolean autoScaleYAxis = true;
 
 	private double minPowerAxis = 0.0;
 
@@ -143,9 +143,12 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		windowWidth = 256;
 		windowType = WindowType.RECTANGULAR;
 		windowParameter = 0;
-		logarithmic = false;
+		logarithmic = true;
 		spline = false;
 		antialias = true;
+
+		frequencyAxisLabelsVisible = true;
+		xAxisLabelCount = 16;
 	}
 
 	/**
@@ -375,8 +378,8 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 * Returns the maximum number of labels on the X (frequencies) axis.
 	 * @return the maximum number of labels on the X (frequencies) axis
 	 */
-	public int getMaxLabelCount() {
-		return maxLabelCount;
+	public int getXAxisLabelCount() {
+		return xAxisLabelCount;
 	}
 
 	/**
@@ -384,8 +387,8 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 * @param maxLabelCount the maximum number of labels on the X (frequencies)
 	 * axis
 	 */
-	public void setMaxLabelCount(int maxLabelCount) {
-		this.maxLabelCount = maxLabelCount;
+	public void setXAxisLabelCount(int maxLabelCount) {
+		this.xAxisLabelCount = maxLabelCount;
 	}
 
 	/**
@@ -596,7 +599,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 				if (nodeTmp.getNodeName().equals("titleVisible"))
 					setTitleVisible(readBooleanNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("maxLabelCount"))
-					setMaxLabelCount(readIntNode(nodeTmp));
+					setXAxisLabelCount(readIntNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("visibleRangeEnd"))
 					setVisibleRangeEnd(readIntNode(nodeTmp));
 				if (nodeTmp.getNodeName().equals("visibleRangeStart"))
@@ -646,7 +649,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 			addBooleanNode(doc, root, "spline", isSpline());
 			addBooleanNode(doc, root, "titleVisible", isTitleVisible());
 			addBooleanNode(doc, root, "autoScaleY", isAutoScaleYAxis());
-			addIntNode(doc, root, "maxLabelCount", getMaxLabelCount());
+			addIntNode(doc, root, "maxLabelCount", getXAxisLabelCount());
 			addIntNode(doc, root, "visibleRangeEnd", getVisibleRangeEnd());
 			addIntNode(doc, root, "visibleRangeStart", getVisibleRangeStart());
 			addIntNode(doc, root, "windowWidth", getWindowWidth());

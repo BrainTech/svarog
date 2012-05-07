@@ -183,7 +183,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * the text field which allows to enter how many labels should be displayed
 	 * on the X axis
 	 */
-	private JTextField maxLabelCountTextField;
+	private JTextField xAxisLabelCountTextField;
 
 	private JRadioButton autoScaleYAxisRadioButton;
 
@@ -388,10 +388,10 @@ public class SignalFFTSettingsPanel extends JPanel {
 				_("X-axis label count"));
 			countPanel.add(label);
 
-			maxLabelCountTextField = new JTextField();
-			maxLabelCountTextField.setColumns(5);
-			maxLabelCountTextField.setInputVerifier(intInputVerifier);
-			countPanel.add(maxLabelCountTextField);
+			xAxisLabelCountTextField = new JTextField();
+			xAxisLabelCountTextField.setColumns(5);
+			xAxisLabelCountTextField.setInputVerifier(intInputVerifier);
+			countPanel.add(xAxisLabelCountTextField);
 			fftViewPanel.add(countPanel);
 			fftViewPanel.add(rangePanel);
 
@@ -582,10 +582,10 @@ public class SignalFFTSettingsPanel extends JPanel {
 			visibleRangeEndTextField.setText("");
 		}
 
-		if (settings.getMaxLabelCount() < Integer.MAX_VALUE) {
-			maxLabelCountTextField.setText("" + settings.getMaxLabelCount());
+		if (settings.getXAxisLabelCount() < Integer.MAX_VALUE) {
+			xAxisLabelCountTextField.setText("" + settings.getXAxisLabelCount());
 		} else {
-			maxLabelCountTextField.setText("");
+			xAxisLabelCountTextField.setText("");
 		}
 
 		autoScaleYAxisRadioButton.setSelected(settings.isAutoScaleYAxis());
@@ -688,16 +688,16 @@ public class SignalFFTSettingsPanel extends JPanel {
 		} else {
 			settings.setVisibleRangeEnd(Integer.MAX_VALUE);
 		}
-		val = maxLabelCountTextField.getText().trim();
+		val = xAxisLabelCountTextField.getText().trim();
 		if (val.length() > 0) {
 			try {
-				settings.setMaxLabelCount(Integer.parseInt(val));
+				settings.setXAxisLabelCount(Integer.parseInt(val));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				settings.setMaxLabelCount(Integer.MAX_VALUE);
+				settings.setXAxisLabelCount(Integer.MAX_VALUE);
 			}
 		} else {
-			settings.setMaxLabelCount(Integer.MAX_VALUE);
+			settings.setXAxisLabelCount(Integer.MAX_VALUE);
 		}
 		settings.setAutoScaleYAxis(autoScaleYAxisRadioButton.isSelected());
 		settings.setMaxPowerAxis(Double.parseDouble(customMaxYAxis.getText()));
@@ -763,6 +763,15 @@ public class SignalFFTSettingsPanel extends JPanel {
 			} catch (NumberFormatException ex) {
 				errors.addError(_("Bad window width. Must be an integer greater than 7"));
 			}
+		}
+
+		try {
+			int xAxisLabelCount = Integer.parseInt(xAxisLabelCountTextField.getText());
+			if (xAxisLabelCount <= 0) {
+				errors.addError(_("X-Axis label count should be greater than 0!"));
+			}
+		} catch(NumberFormatException ex) {
+			errors.addError(_("Bad X-Axis label count!"));
 		}
 
 		fftWindowTypePanel.validatePanel(errors);

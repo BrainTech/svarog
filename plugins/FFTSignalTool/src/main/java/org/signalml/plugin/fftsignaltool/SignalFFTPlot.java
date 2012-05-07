@@ -362,9 +362,9 @@ public class SignalFFTPlot extends JComponent {
 				rangeEnd = fftSettings.getVisibleRangeEnd();
 			}
 
-			if (fftSettings.getMaxLabelCount() > 0) {
+			if (fftSettings.getXAxisLabelCount() > 0) {
 				double dist = rangeEnd - rangeStart;
-				double step = dist / fftSettings.getMaxLabelCount();
+				double step = dist / fftSettings.getXAxisLabelCount();
 				if (step < 1)
 					step = 1;
 				xAxis.setTickUnit(new NumberTickUnit(Math.round(step)));
