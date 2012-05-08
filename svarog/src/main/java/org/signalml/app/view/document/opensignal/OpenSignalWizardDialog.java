@@ -184,10 +184,8 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 					super.onOkPressed();
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

@@ -1,25 +1,28 @@
 package org.signalml.app.worker.monitor;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.Container;
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.StringTokenizer;
+import java.util.concurrent.ExecutionException;
 
 import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonProcessingException;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
 import org.signalml.app.worker.monitor.messages.GetPeerParametersValuesRequest;
 import org.signalml.app.worker.monitor.messages.GetPeerParametersValuesResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalRequest;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;
@@ -53,19 +56,15 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 
 		showBusyDialog();
 		if (experimentDescriptor.getStatus() == ExperimentStatus.NEW) {
-			if (!startNewExperiment())
-				return null;
-			if (!waitForExperimentToStart())
-				return null;
+			startNewExperiment();
+			waitForExperimentToStart();
 		}
 
-		if (sendJoinExperimentRequest())
-			return connectToMultiplexer();
-
-		return null;
+		sendJoinExperimentRequest();
+		return connectToMultiplexer();
 	}
 
-	protected boolean startNewExperiment() {
+	protected void startNewExperiment() throws OpenbciCommunicationException {
 		StartEEGSignalRequest request = new StartEEGSignalRequest(experimentDescriptor);
 
 		StartEEGSignalResponse response = (StartEEGSignalResponse) Helper.sendRequestAndParseResponse(request,
@@ -73,15 +72,12 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 										  Helper.getOpenbciPort(),
 										  MessageType.START_EEG_SIGNAL_RESPONSE);
 
-		if (response == null)
-			return false;
-
 		experimentDescriptor.setId(response.getSender());
 
-		return getExperimentContact();
+		getExperimentContact();
 	}
 
-	protected boolean getExperimentContact() {
+	protected void getExperimentContact() throws OpenbciCommunicationException {
 		GetExperimentContactRequest request = new GetExperimentContactRequest(experimentDescriptor.getId());
 
 		GetExperimentContactResponse response = (GetExperimentContactResponse) Helper.sendRequestAndParseResponse(
@@ -92,48 +88,48 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 
 		experimentDescriptor.setExperimentIPAddress(response.getExperimentIPAddress());
 		experimentDescriptor.setExperimentPort(response.getExperimentPort());
-
-		return response != null;
 	}
 
-	protected boolean waitForExperimentToStart() {
+	protected void waitForExperimentToStart() throws OpenbciCommunicationException {
 
 		GetPeerParametersValuesRequest request = new GetPeerParametersValuesRequest();
 		request.setPeerId("amplifier");
 
-		try {
-			for (int i = 0; i < TRYOUT_COUNT; i++) {
+		for (int i = 0; i < TRYOUT_COUNT; i++) {
 
-				GetPeerParametersValuesResponse response =
-						(GetPeerParametersValuesResponse) Helper.sendRequestAndParseResponse(request,
-						experimentDescriptor.getExperimentIPAddress(),
-						experimentDescriptor.getExperimentPort(),
-						MessageType.GET_PEER_PARAMETERS_VALUES_RESPONSE);
+			GetPeerParametersValuesResponse response =
+					(GetPeerParametersValuesResponse) Helper.sendRequestAndParseResponse(request,
+					experimentDescriptor.getExperimentIPAddress(),
+					experimentDescriptor.getExperimentPort(),
+					MessageType.GET_PEER_PARAMETERS_VALUES_RESPONSE);
 
-				if (response.isAmplifierStarted())
-					break;
-				else
+			if (response.isAmplifierStarted())
+				break;
+			else
+				try {
 					Thread.sleep(1000);
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 		}
 
-		return true;
 	}
 
-	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException {
+	protected void sendJoinExperimentRequest() throws OpenbciCommunicationException {
 		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
 		RequestOKResponse response = null;
+		MessageType responseType = null;
+		String responseString = null;
 
 		for (int i = 0; i < TRYOUT_COUNT; i++) {
-			String responseString = Helper.sendRequestAndHandleExceptions(request,
-									experimentDescriptor.getExperimentIPAddress(),
-									experimentDescriptor.getExperimentPort());
 
-			MessageType type = MessageType.parseMessageTypeFromResponse(responseString);
-			if (type != MessageType.REQUEST_ERROR_RESPONSE) {
+			responseString = Helper.sendRequest(request,
+					experimentDescriptor.getExperimentIPAddress(),
+					experimentDescriptor.getExperimentPort(),
+					Helper.DEFAULT_RECEIVE_TIMEOUT);
+
+			responseType = MessageType.parseMessageTypeFromResponse(responseString);
+			if (responseType != MessageType.REQUEST_ERROR_RESPONSE) {
 				response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
 				break;
 			}
@@ -142,21 +138,22 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 				try {
 					Thread.sleep(TIMEOUT_MILIS);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		}
 
-		if (response == null)
-			return false;
+		if (response == null) {
+			throw new OpenbciCommunicationException(_R("There was an error while joinging to the experiment."));
+		} else if (responseType == MessageType.REQUEST_ERROR_RESPONSE) {
+			RequestErrorResponse errorResponse = (RequestErrorResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
+			throw new OpenbciCommunicationException(_R("There was an error while joinging to the experiment ({0}).", errorResponse.getErrorCode()));
+		}
 
 		String mxAddr = (String) response.getParams().get("mx_addr");
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
 		multiplexerAddress = tokenizer.nextToken();
 		multiplexerPort = Integer.parseInt(tokenizer.nextToken());
-
-		return true;
 	}
 
 	protected JmxClient connectToMultiplexer() {
@@ -179,6 +176,26 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		}
 
 		return client;
+	}
+
+	@Override
+	protected void done() {
+		super.done();
+
+		try {
+			get();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		catch (ExecutionException e) {
+			if (e.getCause() instanceof OpenbciCommunicationException) {
+				OpenbciCommunicationException exception = (OpenbciCommunicationException) e.getCause();
+				exception.showErrorDialog(_("An error occurred while connecting to experiment"));
+			}
+			else {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

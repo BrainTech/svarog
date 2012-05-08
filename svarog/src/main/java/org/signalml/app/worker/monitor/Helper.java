@@ -10,17 +10,23 @@ import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
-import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.exceptions.OpenbciConnectionException;
 import org.signalml.app.worker.monitor.messages.Message;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.Netstring;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.util.FormatUtils;
 
+/**
+ * This helper is used to send and receive messages from OpenBCI.
+ *
+ * @author Piotr Szachewicz
+ */
 public class Helper {
 
 	protected static Logger logger = Logger.getLogger(Helper.class);
@@ -28,86 +34,106 @@ public class Helper {
 	private static Socket socket;
 	private static boolean cancelled;
 
+	/**
+	 * The socket timeout used by this helper by default.
+	 */
 	public static final int DEFAULT_RECEIVE_TIMEOUT = 10000;
+
+	/**
+	 * The constant holding a value for an infinite timeout.
+	 */
 	public static final int INFINITE_TIMEOUT = 0;
 
-	protected static ApplicationConfiguration getApplicationConfiguration() {
-		return SvarogApplication.getApplicationConfiguration();
-	}
-
 	public static String getOpenBCIIpAddress() {
-		return getApplicationConfiguration().getOpenbciIPAddress();
+		return SvarogApplication.getApplicationConfiguration().getOpenbciIPAddress();
 	}
 
 	public static int getOpenbciPort() {
-		return getApplicationConfiguration().getOpenbciPort();
+		return SvarogApplication.getApplicationConfiguration().getOpenbciPort();
 	}
 
-	public static Message sendRequestAndParseResponse(Message request, String destinationIP, int destinationPort, MessageType awaitedMessageType) {
-		String responseString = sendRequestAndHandleExceptions(request, destinationIP, destinationPort);
-
-		if (!MessageParser.checkIfResponseIsOK(responseString, awaitedMessageType)) {
-			return null;
-		}
+	public static Message sendRequestAndParseResponse(Message request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
+		String responseString = sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
+		MessageParser.checkIfResponseIsOK(responseString, awaitedMessageType);
 
 		return MessageParser.parseMessageFromJSON(responseString, awaitedMessageType);
 	}
-
-	public static String sendRequestToOpenBCI(Message request) throws SocketTimeoutException, IOException {
-		return sendRequest(request, getOpenBCIIpAddress(), getOpenbciPort());
+	public static synchronized String sendRequest(Message request, String destinationIP,
+			 int destinationPort) throws OpenbciCommunicationException {
+		return sendRequest(request, destinationIP, destinationPort);
 	}
 
-	public static String sendRequestAndHandleExceptions(Message request, String destinationIP,
-			int destinationPort) {
-		return sendRequestAndHandleExceptions(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
-	}
+	public static synchronized String sendRequest(Message request, String destinationIP,
+			 int destinationPort, int timeout) throws OpenbciCommunicationException {
 
-	public static String sendRequestAndHandleExceptions(Message request, String destinationIP,
-			int destinationPort, int timeout) {
-		String responseString = null;
 		try {
-			responseString = Helper.sendRequest(request, destinationIP, destinationPort, timeout);
-		} catch (SocketTimeoutException ex) {
-			ex.printStackTrace();
-			Dialogs.showError(_("Socket timeout exceeded!"));
-		} catch (ConnectException ex) {
-			ex.printStackTrace();
-			Dialogs.showError(_R("Could not connect to {0}:{1}", destinationIP, FormatUtils.formatNoGrouping(destinationPort)));
-		} catch (IOException ex) {
-			if (!cancelled) {
+			return Helper.sendRequestWithoutHandlingExceptions(request, destinationIP, destinationPort, timeout);
+		} catch (OpenbciCommunicationException ex) {
+			if (cancelled) {
 				//cancelling receving results in throwing this exception
-				//so in this case we should not show a message about
-				//the io exception
-				ex.printStackTrace();
-				Dialogs.showError(_("Error while IO operation on socket."));
+				//so in this case we should ignore this exception.
+				return null;
 			}
 			else {
-				responseString = null;
+				ex.printStackTrace();
+				throw ex;
 			}
 		}
-		return responseString;
 	}
 
-	public static void cancelReceiving() {
-		cancelled = true;
+	private static synchronized String sendRequestWithoutHandlingExceptions(Message request, String destinationIP,
+			 int destinationPort, int timeout) throws OpenbciCommunicationException {
+
+		createSocket(destinationIP, destinationPort, timeout);
+
+		try {
+			sendMessage(request);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new OpenbciCommunicationException(_("I/O error occurred while writing to socket."));
+		}
+
+		String response;
+		try {
+			response = receiveResponse();
+		} catch (SocketTimeoutException e) {
+			e.printStackTrace();
+			throw new OpenbciCommunicationException(_("Socket timeout exceeded while waiting for response"));
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new OpenbciCommunicationException(_("I/O error occurred while reading from socket."));
+		}
+
 		try {
 			socket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new OpenbciCommunicationException(_("I/O error occurred while closing the socket."));
+		}
+
+		return response;
+	}
+
+	private static void createSocket(String destinationIP, int destinationPort, int timeout) throws OpenbciCommunicationException {
+		cancelled = false;
+		try {
+			socket = new Socket(destinationIP, destinationPort);
+			socket.setSoTimeout(timeout);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+			String message = _R("Could not connect to {0}:{1}", destinationIP, FormatUtils.formatNoGrouping(destinationPort));
+			throw new OpenbciConnectionException(message, destinationIP, destinationPort);
+		} catch (ConnectException e) {
+			e.printStackTrace();
+			String message = _R("Could not connect to {0}:{1} ({2})", destinationIP, FormatUtils.formatNoGrouping(destinationPort), e.getMessage());
+			throw new OpenbciConnectionException(message, destinationIP, destinationPort);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new OpenbciCommunicationException(_("I/O exception while creating a socket."));
 		}
 	}
 
-	public static synchronized String sendRequest(Message request, String destinationIP,
-			 int destinationPort) throws SocketTimeoutException, IOException {
-		return sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
-	}
-
-	public static synchronized String sendRequest(Message request, String destinationIP,
-			 int destinationPort, int timeout) throws SocketTimeoutException, IOException {
-		cancelled = false;
-		socket = new Socket(destinationIP, destinationPort);
-		socket.setSoTimeout(timeout);
-
+	private static void sendMessage(Message request) throws IOException {
 		PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
 		Netstring netstring = new Netstring(request);
 		logger.debug("Sending message from "
@@ -115,7 +141,9 @@ public class Helper {
 				+ " to " + socket.getInetAddress() + ":" + socket.getPort()
 				+ ": " + netstring);
 		writer.println(netstring);
+	}
 
+	private static String receiveResponse() throws SocketTimeoutException, IOException, OpenbciCommunicationException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		StringBuilder stringBuilder = new StringBuilder();
@@ -129,15 +157,25 @@ public class Helper {
 
 		String response = stringBuilder.toString();
 		if (response == null || response.isEmpty())
-			return null;
+			throw new OpenbciCommunicationException(_("Received an empty response from openBCI!"));
 
 		Netstring responseNetstring = new Netstring();
 		responseNetstring.parseNetstring(response);
 		logger.debug("Got response: " + responseNetstring);
 
-		socket.close();
-
 		return responseNetstring.getData();
+	}
+
+	/**
+	 * Cancels receiving all messages that this Helper is waiting for.
+	 */
+	public static void cancelReceiving() {
+		cancelled = true;
+		try {
+			socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
