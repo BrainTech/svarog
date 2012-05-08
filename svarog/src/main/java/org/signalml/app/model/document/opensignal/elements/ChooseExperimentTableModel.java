@@ -13,7 +13,8 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 
 	public static final int EXPERIMENT_NAME = 0;
 	public static final int AMPLIFIER_NAME = 1;
-	public static final int EXPERIMENT_STATUS = 2;
+	public static final int AMPLIFIER_TYPE = 2;
+	public static final int EXPERIMENT_STATUS = 3;
 
 	private List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
 
@@ -52,7 +53,7 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 3;
+		return 4;
 	}
 
 	@Override
@@ -66,6 +67,8 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 			return experiment.getStatus();
 		case AMPLIFIER_NAME:
 			return experiment.getAmplifier().getName();
+		case AMPLIFIER_TYPE:
+			return experiment.getAmplifier().getAmplifierType();
 		default:
 			return null;
 		}
@@ -80,6 +83,8 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 			return _("Amplifier");
 		case EXPERIMENT_STATUS:
 			return _("Status");
+		case AMPLIFIER_TYPE:
+			return _("Amplifier type");
 		default:
 			return "";
 		}

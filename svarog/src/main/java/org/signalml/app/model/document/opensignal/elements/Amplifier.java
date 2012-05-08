@@ -3,6 +3,8 @@ package org.signalml.app.model.document.opensignal.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.signalml.app.worker.monitor.messages.AmplifierType;
+
 public class Amplifier {
 
 	private String name;
@@ -10,6 +12,7 @@ public class Amplifier {
 	private List<Float> samplingFrequencies;
 	private List<AmplifierChannel> channels;
 
+	private AmplifierType amplifierType;
 	private Object additionalParameters;
 
 	public Amplifier(Amplifier amp) {
@@ -83,6 +86,13 @@ public class Amplifier {
 	}
 	public void setAdditionalParameters(Object additionalParameters) {
 		this.additionalParameters = additionalParameters;
+	}
+
+	public AmplifierType getAmplifierType() {
+		return amplifierType;
+	}
+	public void setAmplifierType(AmplifierType amplifierType) {
+		this.amplifierType = amplifierType;
 	}
 
 }

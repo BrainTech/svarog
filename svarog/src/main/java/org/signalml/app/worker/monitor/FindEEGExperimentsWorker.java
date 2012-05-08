@@ -58,7 +58,7 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		FindEEGExperimentsResponseJSonReader reader = new FindEEGExperimentsResponseJSonReader();
 		log(_("Requesting the list of running experiments..."));
 
-		getExperiments(findEEGExperimentsRequest, MessageType.EEG_EXPERIMENTS_RESPONSE, reader);
+		getExperiments(findEEGExperimentsRequest, MessageType.EEG_EXPERIMENTS_RESPONSE, reader, null);
 	}
 
 	protected void getNewExperiments(AmplifierType amplifierType) throws OpenbciCommunicationException {
@@ -66,15 +66,18 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		FindEEGAmplifiersResponseJSonReader reader = new FindEEGAmplifiersResponseJSonReader();
 		log(_R("Requesting the list of available {0} amplifiers...", amplifierType));
 
-		getExperiments(findEEGAmplifiersRequest, MessageType.EEG_AMPLIFIERS_RESPONSE, reader);
+		getExperiments(findEEGAmplifiersRequest, MessageType.EEG_AMPLIFIERS_RESPONSE, reader, amplifierType);
 	}
 
-	protected void getExperiments(Message request, MessageType messageType, AbstractResponseJSonReader responseReader) throws OpenbciCommunicationException {
+	protected void getExperiments(Message request, MessageType messageType, AbstractResponseJSonReader responseReader, AmplifierType amplifierType) throws OpenbciCommunicationException {
 		String response = Helper.sendRequest(request, openbciIpAddress, openbciPort, Helper.INFINITE_TIMEOUT);
 
 		MessageParser.checkIfResponseIsOK(response, messageType);
 
 		List<ExperimentDescriptor> result = responseReader.parseExperiments(response);
+		for (ExperimentDescriptor experimentDescriptor: result) {
+			experimentDescriptor.getAmplifier().setAmplifierType(amplifierType);
+		}
 		publish(result);
 
 		String readerLog = responseReader.getLog();
