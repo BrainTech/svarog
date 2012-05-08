@@ -51,9 +51,8 @@ public class NewStagerBookPanel extends JPanel {
 
 	private void initialize() {
 
-		CompoundBorder border = new CompoundBorder(
-				new TitledBorder(_("Choose book file")),
-				new EmptyBorder(3, 3, 3, 3));
+		CompoundBorder border = new CompoundBorder(new TitledBorder(
+				_("Choose book file")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		GroupLayout layout = new GroupLayout(this);
@@ -103,7 +102,7 @@ public class NewStagerBookPanel extends JPanel {
 	}
 
 	public void fillPanelFromModel(NewStagerParameters parameters) {
-		String path = parameters.getBookFilePath();
+		String path = parameters.bookFilePath;
 		if (path != null) {
 			bookFile = new File(path);
 			getBookTextField().setText(path);
@@ -114,12 +113,8 @@ public class NewStagerBookPanel extends JPanel {
 	}
 
 	public void fillModelFromPanel(NewStagerParameters parameters) {
-		if (bookFile == null) {
-			parameters.setBookFilePath(null);
-		} else {
-			parameters.setBookFilePath(bookFile.getAbsolutePath());
-		}
-
+		parameters.bookFilePath = bookFile == null ? null : bookFile
+				.getAbsolutePath();
 	}
 
 	public void validatePanel(ValidationErrors errors) {
@@ -138,8 +133,7 @@ public class NewStagerBookPanel extends JPanel {
 					AbstractAction.SMALL_ICON,
 					IconUtils
 							.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(
-					AbstractAction.SHORT_DESCRIPTION,
+			putValue(AbstractAction.SHORT_DESCRIPTION,
 					_("Choose a book file for this signal"));
 		}
 

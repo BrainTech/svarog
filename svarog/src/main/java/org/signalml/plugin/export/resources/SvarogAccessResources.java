@@ -1,6 +1,8 @@
 package org.signalml.plugin.export.resources;
 
 import java.io.IOException;
+import java.util.Properties;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -19,4 +21,6 @@ public interface SvarogAccessResources {
 	 * @param classpath path to resources
 	 */
 	ImageIcon loadClassPathIcon(String classpath) throws IOException;
+	
+	Properties loadPluginConfigurationDefaults(String classpath) throws IOException;
 }

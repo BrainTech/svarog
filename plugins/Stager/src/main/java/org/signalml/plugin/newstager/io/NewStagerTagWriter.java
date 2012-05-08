@@ -56,7 +56,7 @@ public class NewStagerTagWriter {
 
 	private File getTagFileName(NewStagerTagCollectionType key) {
 		String path = this.stagerData.getProjectPath();
-		String bookPath = this.stagerData.getParameters().getBookFilePath();
+		String bookPath = this.stagerData.getParameters().bookFilePath;
 		String bookName = Util.getFileNameWithoutExtension(new File(bookPath));
 		String ext = "test.tag";
 

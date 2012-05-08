@@ -63,7 +63,7 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 		this.dialog.setFileChooser(this.fileChooser);
 
 		//TODO! applicationConfig = manager.getApplicationConfig();
-
+		
 		dialog.setApplicationConfig(applicationConfig);
 
 		this.workDirConfigurer = new PluginMethodWorkingDirConfigurer(this.presetManager, new NewStagerConfiguration(), new PluginMethodWorkingDirConfigurer.PluginWorkingDirDialogGetter() {

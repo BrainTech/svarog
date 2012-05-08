@@ -246,7 +246,7 @@ public class NewStagerSignalStatsStep extends
 		double coeff = constants.amplitudeA * this.statResult.deviation
 				+ constants.amplitudeB;
 
-		return new NewStagerParameters(oldParameters.getBookFilePath(),
+		return new NewStagerParameters(oldParameters.bookFilePath,
 				oldParameters.rules, oldParameters.analyseEMGChannelFlag,
 				oldParameters.analyseEEGChannelsFlag,
 				oldParameters.primaryHypnogramFlag,

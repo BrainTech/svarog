@@ -21,10 +21,11 @@ public class NewArtifactPlugin implements Plugin {
 
 	@Override
 	public void register(SvarogAccess access) throws SignalMLException {
-		i18nDelegate = new NewArtifactI18nDelegate(access);
 		PluginAccessHelper.SetupConfig(this,
+			access,
 			"classpath:org/signalml/plugin/newartifact/resource/config.xml");
 
+		i18nDelegate = new NewArtifactI18nDelegate(access);
 		this.manager = new PluginMethodManager(access,
 			(PluginConfigForMethod) PluginResourceRepository.GetResource("config", this.getClass()));
 

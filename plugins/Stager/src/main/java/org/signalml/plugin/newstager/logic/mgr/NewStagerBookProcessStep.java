@@ -102,7 +102,7 @@ public class NewStagerBookProcessStep extends
 	protected void doInitialize() {
 		NewStagerBookReaderWorker bookReaderWorker = new NewStagerBookReaderWorker(
 				new NewStagerBookReaderWorkerData(
-						this.data.stagerData.getParameters().getBookFilePath(),
+						this.data.stagerData.getParameters().bookFilePath,
 						this.bookDataProvider));
 		this.workers.submit(bookReaderWorker);
 	}

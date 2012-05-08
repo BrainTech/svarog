@@ -38,6 +38,7 @@ import org.signalml.plugin.export.view.AbstractPluginPresetDialog;
 import org.signalml.plugin.newstager.NewStagerPlugin;
 import org.signalml.plugin.newstager.data.NewStagerApplicationData;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.helper.NewStagerConfigurationDefaultsHelper;
 import org.springframework.core.io.ClassPathResource;
 
 /**
@@ -328,8 +329,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 		public void actionPerformed(ActionEvent ev) {
 			NewStagerParameters parameters = (NewStagerParameters) getPreset();
-			//TODO!
-			//ConfigurationDefaults.setStagerParameters(parameters);
+			NewStagerConfigurationDefaultsHelper.GetSharedInstance().setDefaults(parameters);
 			setPreset(parameters);
 		}
 

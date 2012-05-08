@@ -2,6 +2,8 @@ package org.signalml.plugin.newstager.data;
 
 import java.io.Serializable;
 
+import org.signalml.plugin.newstager.helper.NewStagerConfigurationDefaultsHelper;
+
 public class NewStagerParameterThresholds implements Serializable {
 	
 	private static final long serialVersionUID = -5779920969012386681L;
@@ -23,6 +25,7 @@ public class NewStagerParameterThresholds implements Serializable {
 				NewStagerParameterThresholds.Zeros(),
 				NewStagerParameterThresholds.Zeros(),
 				NewStagerParameterThresholds.Zeros());
+		NewStagerConfigurationDefaultsHelper.GetSharedInstance().setDefaults(this);
 	}
 
 	public NewStagerParameterThresholds(double toneEMG,

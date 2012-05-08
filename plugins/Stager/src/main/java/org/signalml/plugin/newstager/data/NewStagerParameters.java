@@ -3,6 +3,7 @@ package org.signalml.plugin.newstager.data;
 import java.io.Serializable;
 
 import org.signalml.app.config.preset.Preset;
+import org.signalml.plugin.newstager.helper.NewStagerConfigurationDefaultsHelper;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -11,7 +12,7 @@ public class NewStagerParameters implements Serializable, Preset {
 
 	private static final long serialVersionUID = 1L;
 
-	private String bookFilePath;
+	public String bookFilePath;
 
 	public NewStagerRules rules;
 
@@ -27,13 +28,14 @@ public class NewStagerParameters implements Serializable, Preset {
 	public NewStagerParameters() {
 		this(null, NewStagerRules.RK, false, false, true,
 				new NewStagerParameterThresholds());
+		NewStagerConfigurationDefaultsHelper.GetSharedInstance().setDefaults(this);
 	}
 
 	public NewStagerParameters(String bookFilePath,
 			NewStagerRules rules, boolean analyseEMGChannelFlag,
 			boolean analyseEEGChannelsFlag, boolean primaryHypnogramFlag,
 			NewStagerParameterThresholds thresholds) {
-		this.setBookFilePath(bookFilePath);
+		this.bookFilePath = bookFilePath;
 
 		this.rules = rules;
 
@@ -52,13 +54,5 @@ public class NewStagerParameters implements Serializable, Preset {
 	@Override
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getBookFilePath() {
-		return bookFilePath;
-	}
-
-	public void setBookFilePath(String bookFilePath) {
-		this.bookFilePath = bookFilePath;
 	}
 }

@@ -139,7 +139,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 	private NewStagerConstants getStagerConstants(NewStagerData stagerData) throws SignalMLException {
 		BookDocument doc;
 		try {
-			doc = new BookDocument(new File(stagerData.getParameters().getBookFilePath()));
+			doc = new BookDocument(new File(stagerData.getParameters().bookFilePath));
 		} catch (IOException e) {
 			throw new SignalMLException(e);
 		}

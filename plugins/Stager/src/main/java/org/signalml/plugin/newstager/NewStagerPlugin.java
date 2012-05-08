@@ -25,11 +25,11 @@ public class NewStagerPlugin implements Plugin {
 
 	@Override
 	public void register(SvarogAccess access) throws SignalMLException {
-		i18nDelegate = new NewStagerI18nDelegate(access);
 		PluginAccessHelper
-				.SetupConfig(this,
+				.SetupConfig(this, access,
 						"classpath:org/signalml/plugin/newstager/resource/config.xml");
 
+		i18nDelegate = new NewStagerI18nDelegate(access);
 		this.manager = new PluginMethodManager(access,
 				(PluginConfigForMethod) PluginResourceRepository.GetResource(
 						"config", NewStagerPlugin.class));

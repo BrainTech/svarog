@@ -4,9 +4,6 @@
 package org.signalml.app.config;
 
 import java.awt.Dimension;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.ToolTipManager;
@@ -17,10 +14,6 @@ import org.signalml.app.view.book.RainbowMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
-import org.signalml.math.fft.WindowType;
-import org.signalml.util.MinMaxRange;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 /** ConfigurationDefaults
  *
@@ -37,15 +30,7 @@ public class ConfigurationDefaults {
 	private static final String GREYSCALE_PALETTE = "greyscale";
 
 	static {
-		properties = new Properties();
-		try {
-			InputStream is = ConfigurationDefaults.class.getResourceAsStream(
-							"signalml_defaults.properties");
-			properties.load(is);
-		} catch (IOException ex) {
-			logger.error("Failed to load default properties - i/o exception", ex);
-			throw new RuntimeException(ex);
-		}
+		properties = ConfigurationDefaultsLoader.Load(ConfigurationDefaults.class, "signalml_defaults.properties");
 	}
 
 	public static void setGeneralConfigurationDefaults(GeneralConfiguration config) {
