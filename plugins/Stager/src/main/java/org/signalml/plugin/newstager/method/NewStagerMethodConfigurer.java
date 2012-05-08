@@ -8,12 +8,12 @@ import java.awt.Window;
 import java.io.File;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.AbstractPluginDialog;
@@ -46,14 +46,14 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 	private PresetManager presetManager;
 	private Window dialogParent;
 
-	private ApplicationConfiguration applicationConfig;
 	private NewStagerToolConfigDialog configDialog;
 
 	private PluginMethodWorkingDirConfigurer workDirConfigurer;
 	
 	@Override
 	public void initialize(PluginMethodManager manager) {
-		SvarogAccessGUI guiAccess = manager.getSvarogAccess().getGUIAccess();
+		SvarogAccess access = manager.getSvarogAccess();
+		SvarogAccessGUI guiAccess = access.getGUIAccess();
 		
 		this.dialogParent = guiAccess.getDialogParent();
 		
@@ -62,9 +62,7 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 		this.dialog = new NewStagerMethodDialog(this.presetManager, dialogParent);
 		this.dialog.setFileChooser(this.fileChooser);
 
-		//TODO! applicationConfig = manager.getApplicationConfig();
-		
-		dialog.setApplicationConfig(applicationConfig);
+		dialog.setApplicationConfig(access.getConfigAccess().getSvarogConfiguration());
 
 		this.workDirConfigurer = new PluginMethodWorkingDirConfigurer(this.presetManager, new NewStagerConfiguration(), new PluginMethodWorkingDirConfigurer.PluginWorkingDirDialogGetter() {
 			

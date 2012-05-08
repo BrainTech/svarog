@@ -4,7 +4,6 @@
 
 package org.signalml.app.config;
 
-import java.io.File;
 import javax.swing.ToolTipManager;
 
 import org.signalml.app.view.book.WignerMapPalette;
@@ -113,7 +112,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int multiplexerPort;
 
 	private float monitorPageSize;
-
+	
 	public void applySystemSettings() {
 
 		// apply tooltip settings
@@ -184,6 +183,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.precalculateSignalChecksums = precalculateSignalChecksums;
 	}
 
+	@Override
 	public boolean isSaveConfigOnEveryChange() {
 		return saveConfigOnEveryChange;
 	}
@@ -659,4 +659,5 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	public void setLastPresetPath(String lastPresetPath) {
 		this.lastPresetPath = lastPresetPath;
 	}
+
 }

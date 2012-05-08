@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.components.dialogs;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -40,11 +42,9 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.config.SvarogConfiguration;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /**
  * Dialog which data can be stored in a {@link Preset preset}.
@@ -79,9 +79,9 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	protected FileChooser fileChooser;
 	
 	/**
-	 * the {@link ApplicationConfiguration configuration} of Svarog
+	 * the {@link SvarogConfiguration configuration} of Svarog
 	 */
-	protected ApplicationConfiguration applicationConfig;
+	protected SvarogConfiguration applicationConfig;
 
 	/**
 	 * the model for {@link #presetComboBox}
@@ -444,18 +444,18 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Returns the {@link ApplicationConfiguration configuration} of Svarog.
+	 * Returns the {@link SvarogConfiguration configuration} of Svarog.
 	 * @return the configuration of Svarog
 	 */
-	public ApplicationConfiguration getApplicationConfig() {
+	public SvarogConfiguration getApplicationConfig() {
 		return applicationConfig;
 	}
 
 	/**
-	 * Sets the {@link ApplicationConfiguration configuration} of Svarog. 
+	 * Sets the {@link SvarogConfiguration configuration} of Svarog. 
 	 * @param applicationConfig the configuration of Svarog
 	 */
-	public void setApplicationConfig(ApplicationConfiguration applicationConfig) {
+	public void setApplicationConfig(SvarogConfiguration applicationConfig) {
 		this.applicationConfig = applicationConfig;
 	}
 
