@@ -344,12 +344,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		if (line.hasOption("moltest"))
 			molTest = true;
 
-		_init_logging();
-
 		// system properties override file configuration
 		new PropertyConfigurator().configure(System.getProperties());
-
-		Util.dumpDebuggingInfo();
 
 		createMainStreamer();
 
@@ -369,6 +365,10 @@ public class SvarogApplication implements java.lang.Runnable {
 			initializeFirstTime(null);
 			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
 		}
+
+		_init_logging();
+
+		Util.dumpDebuggingInfo();
 
 		LocaleContextHolder.setLocale(locale);
 		Locale.setDefault(locale);
@@ -438,8 +438,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	}
 
 	private void _init_logging() {
-		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
-
 		// allow for local file config
 		final File loggingConfig = new File(startupDir, "logging.properties");
 		final String loggingPath;
@@ -575,6 +573,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			profilePath = config.getProfilePath();
 			logger.debug("Setting profile path to chosen [" + profilePath + "]");
 		}
+
+		System.getProperties().setProperty("signalml.root", profilePath);
 
 		File file = (new File(profilePath)).getAbsoluteFile();
 		if (!file.exists()) {
