@@ -122,11 +122,11 @@ public class NewStagerSignalStatsStep extends
 		this.createWorkers();
 
 		this.workers.startAll();
-		
+
 		tracker.setProgressPhase(NewStagerComputationProgressPhase.SIGNAL_STATS_SOURCE_FILE_INITIAL_READ_PHASE);
 
 		this.trackerUpdater.start(1500);
-		
+
 		while (!this.statResultReadyFlag.get()) {
 			try {
 				Thread.sleep(500);
@@ -203,12 +203,12 @@ public class NewStagerSignalStatsStep extends
 
 		final AtomicBoolean resultReadyFlag = this.statResultReadyFlag;
 		INewStagerWorkerCompletion<NewStagerStatAlgorithmResult> completion = new INewStagerWorkerCompletion<NewStagerStatAlgorithmResult>() {
-			
+
 			@Override
 			public void signalProgress(int i) {
 				progressBlockCount.incrementAndGet();
 			}
-			
+
 			@Override
 			public void completeWork(NewStagerStatAlgorithmResult result) {
 				resultReadyFlag.set(true);
@@ -255,6 +255,8 @@ public class NewStagerSignalStatsStep extends
 						thresholds.montageEEGThreshold,
 						thresholds.montageEMGThreshold,
 						thresholds.montageToneEMGThreshold,
+						thresholds.remEogDeflectionThreshold,
+						thresholds.semEogDeflectionThreshold,
 						this.convertThreshold(thresholds.alphaThreshold, coeff,
 								constants.alphaOffset), this.convertThreshold(
 								thresholds.deltaThreshold, coeff,

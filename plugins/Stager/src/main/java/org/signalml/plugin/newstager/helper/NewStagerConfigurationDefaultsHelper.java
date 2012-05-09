@@ -7,7 +7,6 @@ import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.tool.PluginConfigurationDefaultsHelper;
-import org.signalml.util.MinMaxRange;
 
 public class NewStagerConfigurationDefaultsHelper extends
 		PluginConfigurationDefaultsHelper {
@@ -59,6 +58,8 @@ public class NewStagerConfigurationDefaultsHelper extends
 			thresholds.montageEEGThreshold = double_("stager.mtEegThreshold");
 			thresholds.montageEMGThreshold = double_("stager.mtEmgThreshold");
 			thresholds.montageToneEMGThreshold = double_("stager.mtToneEmgThreshold");
+			thresholds.remEogDeflectionThreshold = double_("stager.remEogDeflectionThreshold");
+			thresholds.semEogDeflectionThreshold = double_("stager.semEogDeflectionThreshold");
 		} catch (NumberFormatException e) {
 			logger.error("Invalid default value", e);
 			return;

@@ -329,18 +329,15 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		getMtToneEmgThresholdPanel().setValue(
 				thresholds.montageToneEMGThreshold);
 
+		getRemEogDeflectionThresholdPanel().setValue(
+				thresholds.remEogDeflectionThreshold);
+		getSemEogDeflectionThresholdPanel().setValue(
+				thresholds.semEogDeflectionThreshold);
+
 		getMtEegThresholdEnabledCheckBox().setSelected(
 				parameters.analyseEEGChannelsFlag);
 		getMtArtifactsThresholdEnabledCheckBox().setSelected(
 				parameters.analyseEMGChannelFlag);
-
-		// TODO!
-		/*
-		 * getRemEogDeflectionThresholdPanel().setValue(
-		 * parameters.getRemEogDeflectionThreshold());
-		 * getSemEogDeflectionThresholdPanel().setValue(
-		 * parameters.getSemEogDeflectionThreshold());
-		 */
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
@@ -353,18 +350,15 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		thresholds.montageToneEMGThreshold = getMtToneEmgThresholdPanel()
 				.getValue();
 
+		thresholds.remEogDeflectionThreshold = getRemEogDeflectionThresholdPanel()
+				.getValue();
+		thresholds.semEogDeflectionThreshold = getSemEogDeflectionThresholdPanel()
+				.getValue();
+
 		parameters.analyseEEGChannelsFlag = getMtEegThresholdEnabledCheckBox()
 				.isSelected();
 		parameters.analyseEMGChannelFlag = getMtArtifactsThresholdEnabledCheckBox()
 				.isSelected();
-
-		/*
-		 * TODO! parameters
-		 * .setRemEogDeflectionThreshold(getRemEogDeflectionThresholdPanel()
-		 * .getValue()); parameters
-		 * .setSemEogDeflectionThreshold(getSemEogDeflectionThresholdPanel()
-		 * .getValue());
-		 */
 	}
 
 	public void validatePanel(ValidationErrors errors) {
