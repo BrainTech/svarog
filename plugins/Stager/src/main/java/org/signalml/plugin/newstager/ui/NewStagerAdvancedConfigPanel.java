@@ -20,6 +20,8 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
+import org.signalml.plugin.newstager.data.NewStagerFASPThreshold;
+import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.ui.components.MinMaxSpinnerPanel;
 
@@ -335,75 +337,75 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	}
 
 	public void fillPanelFromParameters(NewStagerParameters parameters) {
-		//TODO!
-		/*
-		getDeltaAmplitudePanel().setRange(parameters.getDeltaAmplitude());
-		getDeltaFrequencyPanel().setRange(parameters.getDeltaFrequency());
-		getDeltaScalePanel().setRange(parameters.getDeltaScale());
+		NewStagerParameterThresholds thresholds = parameters.thresholds;
+		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
+		NewStagerFASPThreshold delta = thresholds.alphaThreshold;
+		NewStagerFASPThreshold theta = thresholds.thetaThreshold;
+		NewStagerFASPThreshold spindle = thresholds.spindleThreshold;
+		NewStagerFASPThreshold kComplex = thresholds.kCThreshold;
+		
+		getDeltaAmplitudePanel().setRange(delta.amplitude);
+		getDeltaFrequencyPanel().setRange(delta.frequency);
+		getDeltaScalePanel().setRange(delta.scale);
 
-		getThetaAmplitudePanel().setRange(parameters.getThetaAmplitude());
-		getThetaFrequencyPanel().setRange(parameters.getThetaFrequency());
-		getThetaScalePanel().setRange(parameters.getThetaScale());
+		getThetaAmplitudePanel().setRange(theta.amplitude);
+		getThetaFrequencyPanel().setRange(theta.frequency);
+		getThetaScalePanel().setRange(theta.scale);
 
-		getAlphaAmplitudePanel().setRange(parameters.getAlphaAmplitude());
-		getAlphaFrequencyPanel().setRange(parameters.getAlphaFrequency());
-		getAlphaScalePanel().setRange(parameters.getAlphaScale());
+		getAlphaAmplitudePanel().setRange(alpha.amplitude);
+		getAlphaFrequencyPanel().setRange(alpha.frequency);
+		getAlphaScalePanel().setRange(alpha.scale);
 
-		getSpindleAmplitudePanel().setRange(parameters.getSpindleAmplitude());
-		getSpindleFrequencyPanel().setRange(parameters.getSpindleFrequency());
-		getSpindleScalePanel().setRange(parameters.getSpindleScale());
+		getSpindleAmplitudePanel().setRange(spindle.amplitude);
+		getSpindleFrequencyPanel().setRange(spindle.frequency);
+		getSpindleScalePanel().setRange(spindle.scale);
 
-		getKComplexAmplitudePanel().setRange(parameters.getKComplexAmplitude());
-		getKComplexFrequencyPanel().setRange(parameters.getKComplexFrequency());
-		getKComplexScalePanel().setRange(parameters.getKComplexScale());
-		getKComplexPhasePanel().setRange(parameters.getKComplexPhase());
-		*/
+		getKComplexAmplitudePanel().setRange(kComplex.amplitude);
+		getKComplexFrequencyPanel().setRange(kComplex.frequency);
+		getKComplexScalePanel().setRange(kComplex.scale);
+		getKComplexPhasePanel().setRange(kComplex.phase);
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
-		//TODO!
-		/*
-		getDeltaAmplitudePanel().getRange(parameters.getDeltaAmplitude());
-		getDeltaFrequencyPanel().getRange(parameters.getDeltaFrequency());
-		getDeltaScalePanel().getRange(parameters.getDeltaScale());
+		NewStagerParameterThresholds thresholds = parameters.thresholds;
+		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
+		NewStagerFASPThreshold delta = thresholds.alphaThreshold;
+		NewStagerFASPThreshold theta = thresholds.thetaThreshold;
+		NewStagerFASPThreshold spindle = thresholds.spindleThreshold;
+		NewStagerFASPThreshold kComplex = thresholds.kCThreshold;
 
-		getThetaAmplitudePanel().getRange(parameters.getThetaAmplitude());
-		getThetaFrequencyPanel().getRange(parameters.getThetaFrequency());
-		getThetaScalePanel().getRange(parameters.getThetaScale());
+		getDeltaAmplitudePanel().getRange(delta.amplitude);
+		getDeltaFrequencyPanel().getRange(delta.frequency);
+		getDeltaScalePanel().getRange(delta.scale);
 
-		getAlphaAmplitudePanel().getRange(parameters.getAlphaAmplitude());
-		getAlphaFrequencyPanel().getRange(parameters.getAlphaFrequency());
-		getAlphaScalePanel().getRange(parameters.getAlphaScale());
+		getThetaAmplitudePanel().getRange(theta.amplitude);
+		getThetaFrequencyPanel().getRange(theta.frequency);
+		getThetaScalePanel().getRange(theta.scale);
 
-		getSpindleAmplitudePanel().getRange(parameters.getSpindleAmplitude());
-		getSpindleFrequencyPanel().getRange(parameters.getSpindleFrequency());
-		getSpindleScalePanel().getRange(parameters.getSpindleScale());
+		getAlphaAmplitudePanel().getRange(alpha.amplitude);
+		getAlphaFrequencyPanel().getRange(alpha.frequency);
+		getAlphaScalePanel().getRange(alpha.scale);
 
-		getKComplexAmplitudePanel().getRange(parameters.getKComplexAmplitude());
-		getKComplexFrequencyPanel().getRange(parameters.getKComplexFrequency());
-		getKComplexScalePanel().getRange(parameters.getKComplexScale());
-		getKComplexPhasePanel().getRange(parameters.getKComplexPhase());
+		getSpindleAmplitudePanel().getRange(spindle.amplitude);
+		getSpindleFrequencyPanel().getRange(spindle.frequency);
+		getSpindleScalePanel().getRange(spindle.scale);
 
-		parameters.getDeltaAmplitude().normalize();
-		parameters.getDeltaFrequency().normalize();
-		parameters.getDeltaScale().normalize();
+		getKComplexAmplitudePanel().getRange(kComplex.amplitude);
+		getKComplexFrequencyPanel().getRange(kComplex.frequency);
+		getKComplexScalePanel().getRange(kComplex.scale);
+		getKComplexPhasePanel().getRange(kComplex.phase);
 
-		parameters.getThetaAmplitude().normalize();
-		parameters.getThetaFrequency().normalize();
-		parameters.getThetaScale().normalize();
+		normalize(alpha);
+		normalize(theta);
+		normalize(delta);
+		normalize(spindle);
+		normalize(kComplex);
+	}
 
-		parameters.getAlphaAmplitude().normalize();
-		parameters.getAlphaFrequency().normalize();
-		parameters.getAlphaScale().normalize();
-
-		parameters.getSpindleAmplitude().normalize();
-		parameters.getSpindleFrequency().normalize();
-		parameters.getSpindleScale().normalize();
-
-		parameters.getKComplexAmplitude().normalize();
-		parameters.getKComplexFrequency().normalize();
-		parameters.getKComplexScale().normalize();
-		 */
+	private void normalize(NewStagerFASPThreshold threshold) {
+		threshold.amplitude.normalize();
+		threshold.frequency.normalize();
+		threshold.scale.normalize();
 	}
 
 	public void validatePanel(ValidationErrors errors) {
