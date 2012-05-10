@@ -6,13 +6,12 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker.StateValue;
-
-import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.ManagedDocumentType;
@@ -34,6 +33,8 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	protected static final Logger log = Logger.getLogger(OpenSignalWizardDialog.class);
 
 	private static final long serialVersionUID = -6697344610944631342L;
+
+	private ExperimentDescriptor experimentDescriptor;
 
 	private ViewerElementManager viewerElementManager;
 	private ConnectToExperimentWorker worker;
@@ -161,7 +162,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	@Override
 	protected void onOkPressed() {
 		if (getStepOnePanel().getOpenSignalDescriptor() instanceof ExperimentDescriptor) {
-			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) getStepOnePanel().getOpenSignalDescriptor();
+			experimentDescriptor = (ExperimentDescriptor) getStepOnePanel().getOpenSignalDescriptor();
 			worker = new ConnectToExperimentWorker(this, experimentDescriptor);
 			worker.addPropertyChangeListener(this);
 			worker.execute();
@@ -174,15 +175,14 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
-			JmxClient jmxClient;
 			try {
-				jmxClient = worker.get();
+				worker.get();
 
-				if (jmxClient != null) {
-					ExperimentDescriptor experimentDescriptor = worker.getExperimentDescriptor();
-					experimentDescriptor.setJmxClient(jmxClient);
+				if (experimentDescriptor.getJmxClient() != null) {
 					super.onOkPressed();
 				}
+			} catch (CancellationException ex) {
+				logger.debug(_("Connecting to experiment cancelled."));
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {

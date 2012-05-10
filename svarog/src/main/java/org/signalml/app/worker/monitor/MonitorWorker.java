@@ -4,8 +4,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.util.List;
 
-import javax.swing.SwingWorker;
-
 import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
 import multiplexer.protocol.Protocol.MultiplexerMessage;
@@ -15,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -31,7 +30,7 @@ import com.google.protobuf.ByteString;
 /** MonitorWorker
  *
  */
-public class MonitorWorker extends SwingWorker<Void, Object> {
+public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
@@ -60,14 +59,16 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	private TagStylesGenerator stylesGenerator;
 
-	public MonitorWorker(JmxClient client, ExperimentDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
-		this.client = client;
+	public MonitorWorker(ExperimentDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
+		super(null);
+		this.client = monitorDescriptor.getJmxClient();
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
 
 		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
 		//with a real value?
 		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getSignalParameters().getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		getBusyDialog().setText(_("Waiting for the first sample..."));
 
 		logger.setLevel((Level) Level.INFO);
 	}
@@ -77,6 +78,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 		MultiplexerMessage sampleMsg;
 		boolean wasFirstSampleReceived = false;
+		showBusyDialog();
 
 		while (!isCancelled()) {
 			try {
@@ -94,6 +96,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 					 */
 					msgData = client.receive();
 					wasFirstSampleReceived = true;
+					hideBusyDialog();
 				}
 
 				if (isCancelled()) {
@@ -165,8 +168,6 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			publish(newSamplesPackage);
 		}
 	}
-
-
 
 	/**
 	 * If the given message contains tags, this method can be used
@@ -256,6 +257,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 	@Override
 	protected void done() {
+		super.done();
 		finished = true;
 		firePropertyChange("tagsRead", null, tagSet);
 	}

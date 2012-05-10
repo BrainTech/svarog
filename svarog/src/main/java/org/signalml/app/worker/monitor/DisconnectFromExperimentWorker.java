@@ -29,6 +29,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 
 	@Override
 	protected Void doInBackground() throws Exception {
+		logger.debug("Disconnecting from experiment");
 		disconnectFromMultiplexer();
 		sendLeaveExperimentRequest();
 
@@ -39,10 +40,12 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 
 	private void disconnectFromMultiplexer() {
 		JmxClient jmxClient = experimentDescriptor.getJmxClient();
+		logger.debug("Shutting down multiplexer");
 
 		if (jmxClient != null)
 			try {
 				jmxClient.shutdown();
+				logger.debug("MUltiplexer was shutdown");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

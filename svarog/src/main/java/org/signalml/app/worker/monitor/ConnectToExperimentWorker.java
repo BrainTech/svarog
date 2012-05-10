@@ -6,6 +6,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.awt.Container;
 import java.net.InetSocketAddress;
 import java.util.StringTokenizer;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
 import multiplexer.jmx.client.JmxClient;
@@ -27,7 +28,7 @@ import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.multiplexer.protocol.SvarogConstants;
 
-public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClient, Void> {
+public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, Void> {
 
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 20;
@@ -43,6 +44,8 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 	public ConnectToExperimentWorker(Container parentContainer, ExperimentDescriptor experimentDescriptor) {
 		super(parentContainer);
 		this.experimentDescriptor = experimentDescriptor;
+		getBusyDialog().setText(_("Connecting to the experiment"));
+		getBusyDialog().setCancellable(false);
 	}
 
 	public ExperimentDescriptor getExperimentDescriptor() {
@@ -50,7 +53,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 	}
 
 	@Override
-	protected JmxClient doInBackground() throws Exception {
+	protected Void doInBackground() throws Exception {
 
 		showBusyDialog();
 		if (experimentDescriptor.getStatus() == ExperimentStatus.NEW) {
@@ -58,7 +61,9 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		}
 
 		sendJoinExperimentRequest();
-		return connectToMultiplexer();
+		connectToMultiplexer();
+
+		return null;
 	}
 
 	protected void startNewExperiment() throws OpenbciCommunicationException {
@@ -127,38 +132,47 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		multiplexerPort = Integer.parseInt(tokenizer.nextToken());
 	}
 
-	protected JmxClient connectToMultiplexer() {
-		JmxClient client;
+	protected void connectToMultiplexer() {
 
+		JmxClient jmxClient = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
+		experimentDescriptor.setJmxClient(jmxClient);
 		multiplexerSocket = new InetSocketAddress(multiplexerAddress, multiplexerPort);
-		client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
-		ChannelFuture connectFuture = client.asyncConnect(multiplexerSocket);
+
+		ChannelFuture connectFuture = null;
+		connectFuture = jmxClient.asyncConnect(multiplexerSocket);
+		logger.debug("Connecting to JMX");
 
 		int i = 0;
 		while (!isCancelled() && i < TRYOUT_COUNT) {
 			i++;
 			try {
 				Thread.sleep(TIMEOUT_MILIS);
+			} catch (InterruptedException e1) {
 			}
-			catch (InterruptedException e1) {}
+
 			if ((connectFuture.isDone())) {
 				break;
-			}
+			} else
+				logger.debug("Connection to JMX failed, retrying");
 		}
-
-		return client;
 	}
 
 	@Override
 	protected void done() {
 		super.done();
 
+		boolean shouldDisconnect = false;
+
 		try {
 			get();
+		} catch (CancellationException e) {
+			shouldDisconnect = true;
+			logger.debug("Connecting to experiment cancelled");
 		} catch (InterruptedException e) {
+			shouldDisconnect = true;
 			e.printStackTrace();
-		}
-		catch (ExecutionException e) {
+		} catch (ExecutionException e) {
+			shouldDisconnect = true;
 			if (e.getCause() instanceof OpenbciCommunicationException) {
 				OpenbciCommunicationException exception = (OpenbciCommunicationException) e.getCause();
 				exception.showErrorDialog(_("An error occurred while connecting to experiment"));
@@ -166,6 +180,11 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 			else {
 				e.printStackTrace();
 			}
+		}
+
+		if (shouldDisconnect) {
+			DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(experimentDescriptor);
+			worker.execute();
 		}
 	}
 

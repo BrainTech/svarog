@@ -1,13 +1,15 @@
 package org.signalml.app.worker;
 
 import java.awt.Container;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import org.signalml.app.view.components.BusyDialog;
 
-public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> {
+public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> implements PropertyChangeListener {
 
 	private BusyDialog busyDialog;
 	/**
@@ -20,6 +22,11 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 	public SwingWorkerWithBusyDialog(Container parentContainer) {
 		super();
 		this.busyDialog = new BusyDialog(parentContainer);
+		busyDialog.addPropertyChangeListener(this);
+	}
+
+	public BusyDialog getBusyDialog() {
+		return busyDialog;
 	}
 
 	protected void showBusyDialog() {
@@ -39,6 +46,13 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 	protected void done() {
 		hideBusyDialog();
 		busyDialog.dispose();
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals(BusyDialog.CANCEL_BUTTON_PRESSED)) {
+			this.cancel(true);
+		}
 	}
 
 }
