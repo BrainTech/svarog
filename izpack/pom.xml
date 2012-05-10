@@ -16,7 +16,6 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <FFT.plugin.version>0.1</FFT.plugin.version>
         <FFTSignalTool.plugin.version>0.1</FFTSignalTool.plugin.version>
         <PluginToolCommon.plugin.version>0.1</PluginToolCommon.plugin.version>
         <Artifact.plugin.version>1.0</Artifact.plugin.version>
@@ -55,7 +54,6 @@
                         <fileset>
                             <directory>${basedir}</directory>
                             <includes>
-                                <include>plugins/FFT.jar</include>
                                 <include>plugins/FFTSignalTool.jar</include>
                                 <include>plugins/PluginToolCommon.jar</include>
                                 <include>plugins/Artifact.jar</include>
@@ -93,15 +91,6 @@
                                     <overWrite>true</overWrite>
                                     <outputDirectory>${basedir}</outputDirectory>
                                     <destFileName>svarog.jar</destFileName>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.signalml.plugin</groupId>
-                                    <version>${FFT.plugin.version}</version>
-                                    <artifactId>FFT</artifactId>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                    <outputDirectory>${basedir}/plugins</outputDirectory>
-                                    <destFileName>FFT.jar</destFileName>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.signalml.plugin</groupId>
