@@ -22,7 +22,6 @@
         <module>plugins/FFTSignalTool</module>
         <module>plugins/PluginToolCommon</module>
         <module>plugins/Artifact</module>
-        <module>modules/fft-tools</module>
     </modules>
 
     <profiles>
@@ -33,7 +32,6 @@
                 <module>plugins/FFTSignalTool</module>
                 <module>plugins/PluginToolCommon</module>
                 <module>plugins/Artifact</module>
-        	<module>modules/fft-tools</module>
                 <module>izpack</module>
             </modules>
         </profile>
