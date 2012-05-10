@@ -19,7 +19,7 @@
         <FFT.plugin.version>0.1</FFT.plugin.version>
         <FFTSignalTool.plugin.version>0.1</FFTSignalTool.plugin.version>
         <PluginToolCommon.plugin.version>0.1</PluginToolCommon.plugin.version>
-        <Artifact.plugin.version>0.1</Artifact.plugin.version>
+        <Artifact.plugin.version>1.0</Artifact.plugin.version>
     </properties>
 
     <build>
