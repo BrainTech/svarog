@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -20,6 +21,7 @@ import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.components.IntegerSpinner;
@@ -298,8 +300,14 @@ public class SignalParametersPanel extends JPanel {
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			setEnabledToAll(true);
 		}
-		else {
-			setEnabledToAll(false);
+		else if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experiment = (ExperimentDescriptor) openSignalDescriptor;
+
+			if (experiment.getStatus() == ExperimentStatus.NEW) {
+				getSamplingFrequencyComboBox().setEnabled(true);
+			} else {
+				setEnabledToAll(false);
+			}
 		}
 
 	}
@@ -325,6 +333,10 @@ public class SignalParametersPanel extends JPanel {
 				getByteOrderComboBox().setSelectedItem(rawSignalDescriptor.getByteOrder());
 			if (rawSignalDescriptor.getSampleType() != null)
 				getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
+		} else if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			List<Float> samplingFrequencies = experimentDescriptor.getAmplifier().getSamplingFrequencies();
+			getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(samplingFrequencies.toArray()));
 		}
 		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 

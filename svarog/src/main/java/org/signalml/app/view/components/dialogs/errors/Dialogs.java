@@ -9,6 +9,8 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
+import org.signalml.app.SvarogApplication;
+
 public class Dialogs {
 
 	/**
@@ -47,7 +49,8 @@ public class Dialogs {
 	public static void showError(final String message) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+				JOptionPane.showMessageDialog(dialogParent, message, _("Error"), JOptionPane.ERROR_MESSAGE);
 			}
 		});
 	}

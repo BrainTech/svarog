@@ -3,11 +3,17 @@ package org.signalml.app.view.document.opensignal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.SwingWorker.StateValue;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
@@ -17,19 +23,21 @@ import org.signalml.app.view.components.dialogs.AbstractWizardDialog;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.SignalMontagePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
 
-import org.apache.log4j.Logger;
-
-public class OpenSignalWizardDialog extends AbstractWizardDialog {
+public class OpenSignalWizardDialog extends AbstractWizardDialog implements PropertyChangeListener {
 	protected static final Logger log = Logger.getLogger(OpenSignalWizardDialog.class);
 
 	private static final long serialVersionUID = -6697344610944631342L;
 
+	private ExperimentDescriptor experimentDescriptor;
+
 	private ViewerElementManager viewerElementManager;
+	private ConnectToExperimentWorker worker;
 
 	private OpenSignalWizardStepOnePanel stepOnePanel;
 	private SignalMontagePanel stepTwoPanel;
@@ -54,6 +62,10 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 			if (openSignalDescriptor == null) {
 				Dialogs.showError(_("Please select a proper file or monitor signal source!"));
+				return false;
+			}
+			if (openSignalDescriptor.getChannelLabels().length == 0) {
+				Dialogs.showError(_("Please select some channels!"));
 				return false;
 			}
 
@@ -142,9 +154,41 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog {
 
 	@Override
 	protected void onDialogCloseWithOK() {
-		log.debug("onDialogCloseWithOK");
 		super.onDialogCloseWithOK();
 
 		this.getStepOnePanel().onDialogCloseWithOK();
 	}
+
+	@Override
+	protected void onOkPressed() {
+		if (getStepOnePanel().getOpenSignalDescriptor() instanceof ExperimentDescriptor) {
+			experimentDescriptor = (ExperimentDescriptor) getStepOnePanel().getOpenSignalDescriptor();
+			worker = new ConnectToExperimentWorker(this, experimentDescriptor);
+			worker.addPropertyChangeListener(this);
+			worker.execute();
+		}
+		else {
+			super.onOkPressed();
+		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (((StateValue) evt.getNewValue()) == StateValue.DONE) {
+			try {
+				worker.get();
+
+				if (experimentDescriptor.getJmxClient() != null) {
+					super.onOkPressed();
+				}
+			} catch (CancellationException ex) {
+				logger.debug(_("Connecting to experiment cancelled."));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 }

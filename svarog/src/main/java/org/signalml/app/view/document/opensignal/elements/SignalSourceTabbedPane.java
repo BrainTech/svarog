@@ -12,6 +12,7 @@ import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalMLDocument;
@@ -28,8 +29,6 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.util.Util;
-
-import org.apache.log4j.Logger;
 
 public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
 	protected static final Logger log = Logger.getLogger(SignalSourceTabbedPane.class);
@@ -241,7 +240,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	}
 
 	public void onDialogCloseWithOK() {
-		log.debug("onDialogCloseWithOK");
 		if (getSelectedSignalSource() == SignalSource.FILE)
 			getFileChooserPanel().getFileChooser().lastDirectoryChanged();
 	}

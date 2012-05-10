@@ -1,32 +1,38 @@
 package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
-import java.io.IOException;
-import java.net.ConnectException;
+import java.awt.Container;
 import java.net.InetSocketAddress;
-import java.net.SocketTimeoutException;
 import java.util.StringTokenizer;
-
-import javax.swing.SwingWorker;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 
 import multiplexer.jmx.client.JmxClient;
 
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.JsonProcessingException;
+import org.apache.log4j.Logger;
 import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
+import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
+import org.signalml.app.worker.monitor.messages.StartEEGSignalRequest;
+import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.multiplexer.protocol.SvarogConstants;
 
-public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
+public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, Void> {
 
 	public static final int TIMEOUT_MILIS = 500;
-	public static final int TRYOUT_COUNT = 10;
+	public static final int TRYOUT_COUNT = 20;
+	private static Logger logger = Logger.getLogger(ConnectToExperimentWorker.class);
 
 	private ExperimentDescriptor experimentDescriptor;
 
@@ -35,67 +41,151 @@ public class ConnectToExperimentWorker extends SwingWorker<JmxClient, Void> {
 
 	private InetSocketAddress multiplexerSocket;
 
-	public ConnectToExperimentWorker(ExperimentDescriptor experimentDescriptor) {
+	public ConnectToExperimentWorker(Container parentContainer, ExperimentDescriptor experimentDescriptor) {
+		super(parentContainer);
 		this.experimentDescriptor = experimentDescriptor;
+		getBusyDialog().setText(_("Connecting to the experiment"));
+		getBusyDialog().setCancellable(false);
+	}
+
+	public ExperimentDescriptor getExperimentDescriptor() {
+		return experimentDescriptor;
 	}
 
 	@Override
-	protected JmxClient doInBackground() throws Exception {
-		if (sendJoinExperimentRequest())
-			return connectToMultiplexer();
+	protected Void doInBackground() throws Exception {
+
+		showBusyDialog();
+		if (experimentDescriptor.getStatus() == ExperimentStatus.NEW) {
+			startNewExperiment();
+		}
+
+		sendJoinExperimentRequest();
+		connectToMultiplexer();
+
 		return null;
 	}
 
-	protected boolean sendJoinExperimentRequest() throws JsonParseException, JsonProcessingException, IOException {
+	protected void startNewExperiment() throws OpenbciCommunicationException {
+		StartEEGSignalRequest request = new StartEEGSignalRequest(experimentDescriptor);
+
+		StartEEGSignalResponse response = (StartEEGSignalResponse) Helper.sendRequestAndParseResponse(request,
+										  Helper.getOpenBCIIpAddress(),
+										  Helper.getOpenbciPort(),
+										  MessageType.START_EEG_SIGNAL_RESPONSE);
+
+		experimentDescriptor.setId(response.getSender());
+
+		getExperimentContact();
+	}
+
+	protected void getExperimentContact() throws OpenbciCommunicationException {
+		GetExperimentContactRequest request = new GetExperimentContactRequest(experimentDescriptor.getId());
+
+		GetExperimentContactResponse response = (GetExperimentContactResponse) Helper.sendRequestAndParseResponse(
+				request,
+				Helper.getOpenBCIIpAddress(),
+				Helper.getOpenbciPort(),
+				MessageType.GET_EXPERIMENT_CONTACT_RESPONSE);
+
+		experimentDescriptor.setExperimentIPAddress(response.getExperimentIPAddress());
+		experimentDescriptor.setExperimentPort(response.getExperimentPort());
+	}
+
+	protected void sendJoinExperimentRequest() throws OpenbciCommunicationException {
 		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
-
+		RequestOKResponse response = null;
+		MessageType responseType = null;
 		String responseString = null;
-		try {
-			responseString = Helper.sendRequest(request, experimentDescriptor.getExperimentIPAddress(), experimentDescriptor.getExperimentPort());
-		} catch (SocketTimeoutException ex) {
-			ex.printStackTrace();
-			Dialogs.showError(_("Socket timeout exceeded!"));
-			return false;
-		} catch (ConnectException ex) {
-			ex.printStackTrace();
-			Dialogs.showError(_("Could not connect to the experiment!"));
-			return false;
+
+		for (int i = 0; i < TRYOUT_COUNT; i++) {
+
+			responseString = Helper.sendRequest(request,
+					experimentDescriptor.getExperimentIPAddress(),
+					experimentDescriptor.getExperimentPort(),
+					Helper.DEFAULT_RECEIVE_TIMEOUT);
+
+			responseType = MessageType.parseMessageTypeFromResponse(responseString);
+			if (responseType != MessageType.REQUEST_ERROR_RESPONSE) {
+				response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
+				break;
+			} else {
+				logger.warn("Error while connecting to experiment, retrying");
+				try {
+					Thread.sleep(TIMEOUT_MILIS);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 
-		if (!MessageParser.checkIfResponseIsOK(responseString, MessageType.REQUEST_OK_RESPONSE)) {
-			return false;
+		if (response == null) {
+			throw new OpenbciCommunicationException(_R("There was an error while joinging to the experiment."));
+		} else if (responseType == MessageType.REQUEST_ERROR_RESPONSE) {
+			RequestErrorResponse errorResponse = (RequestErrorResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
+			throw new OpenbciCommunicationException(_R("There was an error while joinging to the experiment ({0}).", errorResponse.getErrorCode()));
 		}
-
-		RequestOKResponse response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
 
 		String mxAddr = (String) response.getParams().get("mx_addr");
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
 		multiplexerAddress = tokenizer.nextToken();
 		multiplexerPort = Integer.parseInt(tokenizer.nextToken());
-
-		return true;
 	}
 
-	protected JmxClient connectToMultiplexer() {
-		JmxClient client;
+	protected void connectToMultiplexer() {
 
+		JmxClient jmxClient = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
+		experimentDescriptor.setJmxClient(jmxClient);
 		multiplexerSocket = new InetSocketAddress(multiplexerAddress, multiplexerPort);
-		client = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
-		ChannelFuture connectFuture = client.asyncConnect(multiplexerSocket);
+
+		ChannelFuture connectFuture = null;
+		connectFuture = jmxClient.asyncConnect(multiplexerSocket);
+		logger.debug("Connecting to JMX");
 
 		int i = 0;
 		while (!isCancelled() && i < TRYOUT_COUNT) {
 			i++;
 			try {
 				Thread.sleep(TIMEOUT_MILIS);
+			} catch (InterruptedException e1) {
 			}
-			catch (InterruptedException e1) {}
+
 			if ((connectFuture.isDone())) {
 				break;
+			} else
+				logger.debug("Connection to JMX failed, retrying");
+		}
+	}
+
+	@Override
+	protected void done() {
+		super.done();
+
+		boolean shouldDisconnect = false;
+
+		try {
+			get();
+		} catch (CancellationException e) {
+			shouldDisconnect = true;
+			logger.debug("Connecting to experiment cancelled");
+		} catch (InterruptedException e) {
+			shouldDisconnect = true;
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			shouldDisconnect = true;
+			if (e.getCause() instanceof OpenbciCommunicationException) {
+				OpenbciCommunicationException exception = (OpenbciCommunicationException) e.getCause();
+				exception.showErrorDialog(_("An error occurred while connecting to experiment"));
+			}
+			else {
+				e.printStackTrace();
 			}
 		}
 
-		return client;
+		if (shouldDisconnect) {
+			DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(experimentDescriptor);
+			worker.execute();
+		}
 	}
 
 }

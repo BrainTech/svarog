@@ -1,5 +1,6 @@
 package org.signalml.app.worker.monitor.messages;
 
+import java.io.BufferedReader;
 import java.util.StringTokenizer;
 
 public class Netstring {
