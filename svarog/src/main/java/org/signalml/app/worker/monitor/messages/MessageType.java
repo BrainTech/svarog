@@ -36,9 +36,6 @@ public enum MessageType {
 	JOIN_EXPERIMENT_REQUEST("join_experiment", JoinExperimentRequest.class),
 	LEAVE_EXPERIMENT_REQUEST("leave_experiment", LeaveExperimentRequest.class),
 
-	GET_PEER_PARAMETERS_VALUES_REQUEST("get_peer_param_values", GetPeerParametersValuesRequest.class),
-	GET_PEER_PARAMETERS_VALUES_RESPONSE("peer_param_values", GetPeerParametersValuesResponse.class),
-
 	REQUEST_OK_RESPONSE("rq_ok", RequestOKResponse.class),
 	REQUEST_ERROR_RESPONSE("rq_error", RequestErrorResponse.class);
 

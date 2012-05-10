@@ -18,8 +18,6 @@ import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
-import org.signalml.app.worker.monitor.messages.GetPeerParametersValuesRequest;
-import org.signalml.app.worker.monitor.messages.GetPeerParametersValuesResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
@@ -57,7 +55,6 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		showBusyDialog();
 		if (experimentDescriptor.getStatus() == ExperimentStatus.NEW) {
 			startNewExperiment();
-			waitForExperimentToStart();
 		}
 
 		sendJoinExperimentRequest();
@@ -90,31 +87,6 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 		experimentDescriptor.setExperimentPort(response.getExperimentPort());
 	}
 
-	protected void waitForExperimentToStart() throws OpenbciCommunicationException {
-
-		GetPeerParametersValuesRequest request = new GetPeerParametersValuesRequest();
-		request.setPeerId("amplifier");
-
-		for (int i = 0; i < TRYOUT_COUNT; i++) {
-
-			GetPeerParametersValuesResponse response =
-					(GetPeerParametersValuesResponse) Helper.sendRequestAndParseResponse(request,
-					experimentDescriptor.getExperimentIPAddress(),
-					experimentDescriptor.getExperimentPort(),
-					MessageType.GET_PEER_PARAMETERS_VALUES_RESPONSE);
-
-			if (response.isAmplifierStarted())
-				break;
-			else
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-		}
-
-	}
-
 	protected void sendJoinExperimentRequest() throws OpenbciCommunicationException {
 		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
 		RequestOKResponse response = null;
@@ -132,8 +104,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<JmxClie
 			if (responseType != MessageType.REQUEST_ERROR_RESPONSE) {
 				response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
 				break;
-			}
-			else {
+			} else {
 				logger.warn("Error while connecting to experiment, retrying");
 				try {
 					Thread.sleep(TIMEOUT_MILIS);
