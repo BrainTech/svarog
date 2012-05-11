@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URLConnection;
 import java.net.JarURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -189,55 +188,39 @@ public class PluginLoaderHi {
 		}
 	}
 
+	final static FilenameFilter xml_file_filter =
+		new FilesystemFilter("xml", "Xml File", false);
+
 	/**
 	 * Scans the given directory to find plug-ins.
 	 * @param directory the directory to scan
 	 */
 	private void scanPluginDirectory(File directory) {
 		logger.debug("scanning over dir '" + directory + "'");
-		ArrayList<PluginDescription> tmpDescriptions = new ArrayList<PluginDescription>();
-		FilenameFilter filter = new FilesystemFilter("xml", "Xml File", false);
-		String[] filenames = directory.list(filter);
+		String[] filenames = directory.list(xml_file_filter);
 		for (String filename: filenames) {
-			logger.debug("scanning over '" + filename + "'");
-			PluginDescription descr = readXml(directory
-											  + File.separator + filename);
-			if (descr != null) {
-				String pluginName = descr.getName();
-				if (descriptionsByName.containsKey(pluginName)) {
-					PluginDescription pd = descriptionsByName.get(pluginName);
-					logger.warn("Duplicate plugin: (" + pd + ") and (" + descr + "). Skipping the latter.");
-				} else {
-					descriptions.add(descr);
-					tmpDescriptions.add(descr);
-					descriptionsByName.put(pluginName, descr);
-				}
+			logger.debug("looking at '" + filename + "'");
+			final PluginDescription descr = readXml(directory
+													+ File.separator + filename);
+			if (descr == null || !descr.fillURL(directory)) {
+				logger.warn("Skipping faulty plugin description: '" + descr + "'");
+				continue;
 			}
-		}
 
-		for (PluginDescription descr : tmpDescriptions) {
-			PluginState state = statesByName.get(descr.getName());
-			if (state!= null && descr.isActive()) {
-				descr.setActive(state.isActive());
+			final String pluginName = descr.getName();
+			if (descriptionsByName.containsKey(pluginName)) {
+				PluginDescription first = descriptionsByName.get(pluginName);
+				logger.warn("Duplicate plugin: '" + first + "' and '" + descr + "'."
+							+ "Skipping the latter.");
+				continue;
 			}
-			String name = null;
-			if (descr.isActive()) {
-				try {
-					name = directory.toURI().toString();
-					File jarFileTmp = new File(directory, descr.getJarFile());
-					name = name.concat(descr.getJarFile());
-					if (!jarFileTmp.exists())
-						logger.error("File '" + jarFileTmp.getAbsolutePath() +
-									 "' does not exist");
-					else if (!jarFileTmp.canRead())
-						logger.error("File '" + jarFileTmp.getAbsolutePath() +
-									 "' cannot be read.");
-					else
-						descr.setJarFileURL(new URL(name));
-				} catch (MalformedURLException e) {
-					logger.error("failed to create URL for file "+name);
-					e.printStackTrace();
-				}
+
+			descriptions.add(descr);
+			descriptionsByName.put(pluginName, descr);
+
+			final PluginState state = statesByName.get(descr.getName());
+			if (state != null && descr.isActive()) {
+				descr.setActive(state.isActive());
 			}
 		}
 	}

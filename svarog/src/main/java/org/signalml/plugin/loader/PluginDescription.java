@@ -6,6 +6,7 @@ package org.signalml.plugin.loader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -295,6 +296,36 @@ public class PluginDescription extends PluginState {
 	 */
 	public URL getJarFileURL() {
 		return jarFileURL;
+	}
+
+	/**
+	 * Set URL based on plugin description and given directory.
+	 * @return true if JAR file is found and can be read
+	 */
+	public boolean fillURL(File directory) {
+		final String name = directory.toURI().toString().concat(this.getJarFile());
+		final URL url;
+		try {
+			url = new URL(name);
+		} catch (MalformedURLException e) {
+			logger.error("failed to create URL for file "+name);
+			e.printStackTrace();
+			return false;
+		}
+
+		File file = new File(directory, this.getJarFile());
+		if (!file.exists()) {
+			logger.error("File '" + file.getAbsolutePath() +
+						 "' does not exist");
+			return false;
+		} else if (!file.canRead()) {
+			logger.error("File '" + file.getAbsolutePath() +
+						 "' cannot be read.");
+			return false;
+		} else {
+			this.setJarFileURL(url);
+			return true;
+		}
 	}
 
 	protected List<PluginDependency> getDependencies() {
