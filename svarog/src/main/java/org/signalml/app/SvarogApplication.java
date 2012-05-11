@@ -344,28 +344,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		if (line.hasOption("moltest"))
 			molTest = true;
 
-		Log4jConfigurer.setWorkingDirSystemProperty("signalml.root");
-
-		// allow for local file config
-		final File loggingConfig = new File(startupDir, "logging.properties");
-		final String loggingPath;
-		if (loggingConfig.exists()) {
-			loggingPath = "file:" + loggingConfig.getAbsolutePath();
-		} else {
-			loggingPath = "classpath:org/signalml/app/logging/log4j_app.properties";
-		}
-
-		try {
-			Log4jConfigurer.initLogging(loggingPath);
-		} catch (FileNotFoundException ex) {
-			System.err.println("Critical error: no logging configuration");
-			System.exit(1);
-		}
-
 		// system properties override file configuration
 		new PropertyConfigurator().configure(System.getProperties());
-
-		Util.dumpDebuggingInfo();
 
 		createMainStreamer();
 
@@ -385,6 +365,10 @@ public class SvarogApplication implements java.lang.Runnable {
 			initializeFirstTime(null);
 			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
 		}
+
+		_init_logging();
+
+		Util.dumpDebuggingInfo();
 
 		LocaleContextHolder.setLocale(locale);
 		Locale.setDefault(locale);
@@ -451,6 +435,24 @@ public class SvarogApplication implements java.lang.Runnable {
 		});
 
 		logger.debug("SvarogApplication._run complete!");
+	}
+
+	private void _init_logging() {
+		// allow for local file config
+		final File loggingConfig = new File(startupDir, "logging.properties");
+		final String loggingPath;
+		if (loggingConfig.exists()) {
+			loggingPath = "file:" + loggingConfig.getAbsolutePath();
+		} else {
+			loggingPath = "classpath:org/signalml/app/logging/log4j_app.properties";
+		}
+
+		try {
+			Log4jConfigurer.initLogging(loggingPath);
+		} catch (FileNotFoundException ex) {
+			System.err.println("Critical error: no logging configuration");
+			System.exit(1);
+		}
 	}
 
 	private void initializeFirstTime(final GeneralConfiguration suggested) {
@@ -571,6 +573,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			profilePath = config.getProfilePath();
 			logger.debug("Setting profile path to chosen [" + profilePath + "]");
 		}
+
+		System.getProperties().setProperty("signalml.root", profilePath);
 
 		File file = (new File(profilePath)).getAbsoluteFile();
 		if (!file.exists()) {
