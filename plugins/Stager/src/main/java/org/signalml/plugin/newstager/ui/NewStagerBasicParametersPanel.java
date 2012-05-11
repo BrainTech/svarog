@@ -48,7 +48,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	private AbstractDialog owner;
 
-	private JComboBox<NewStagerRules> rulesComboBox;
+	private JComboBox rulesComboBox;
 
 	private AutoSpinnerPanel deltaMinAmplitudePanel;
 	private AutoSpinnerPanel alphaMinAmplitudePanel;
@@ -180,15 +180,15 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	}
 
-	public JComboBox<NewStagerRules> getRulesComboBox() {
+	public JComboBox getRulesComboBox() {
 		if (rulesComboBox == null) {
-			rulesComboBox = new JComboBox<NewStagerRules>();
+			rulesComboBox = new JComboBox();
 
 			rulesComboBox.setRenderer(new DefaultListCellRenderer() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public Component getListCellRendererComponent(JList<?> list,
+				public Component getListCellRendererComponent(JList list,
 						Object value, int index, boolean isSelected,
 						boolean cellHasFocus) {
 					try {
@@ -213,7 +213,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 			});
 
-			rulesComboBox.setModel(new DefaultComboBoxModel<NewStagerRules>(
+			rulesComboBox.setModel(new DefaultComboBoxModel(
 					NewStagerRules.values()));
 		}
 		return rulesComboBox;

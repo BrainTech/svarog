@@ -54,7 +54,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 
 	private NewStagerResultTagPanel primaryTagPanel;
 
-	private JList<String> additionalTagList;
+	private JList additionalTagList;
 	private JScrollPane additionalTagScrollPane;
 
 	private JCheckBox additionalOpenInWindowCheckBox;
@@ -198,9 +198,9 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		return additionalSaveToFileCheckBox;
 	}
 
-	public JList<String> getAdditionalTagList() {
+	public JList getAdditionalTagList() {
 		if (additionalTagList == null) {
-			additionalTagList = new JList<String>();
+			additionalTagList = new JList();
 		}
 		return additionalTagList;
 	}
@@ -241,8 +241,8 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 				descriptor.isPrimarySaveToFile());
 		getPrimaryTagPanel().fillPanelFromModel(descriptor);
 
-		JList<String> list = getAdditionalTagList();
-		DefaultListModel<String> listModel = new DefaultListModel<String>();
+		JList list = getAdditionalTagList();
+		DefaultListModel listModel = new DefaultListModel();
 		ArrayList<File> additionalTags = descriptor.getAdditionalTags();
 		for (File f : additionalTags) {
 			listModel.addElement(f.getName());
@@ -289,7 +289,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 			descriptor.setPrimaryTagFile(null);
 		}
 
-		JList<String> list = getAdditionalTagList();
+		JList list = getAdditionalTagList();
 		ArrayList<File> additionalTags = descriptor.getAdditionalTags();
 
 		ArrayList<File> chosenTags = new ArrayList<File>();
