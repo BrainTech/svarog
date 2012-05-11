@@ -1,5 +1,5 @@
 /* SleepComparisonStatisticTableModel.java created 2008-03-03
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -13,13 +13,13 @@ import org.signalml.plugin.newstager.data.NewStagerSleepComparison;
 
 /**
  * SleepComparisonStatisticTableModel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewStagerSleepComparisonStatisticTableModel extends
-		AbstractTableModel {
+	AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public class NewStagerSleepComparisonStatisticTableModel extends
 		switch (columnIndex) {
 
 		case STAGE_COLUMN:
-			return String.class;
+				return String.class;
 
 		case CONCORDANCE_COLUMN:
 			return Double.class;
@@ -68,7 +68,7 @@ public class NewStagerSleepComparisonStatisticTableModel extends
 
 		default:
 			throw new SanityCheckException("Unsupported index [" + columnIndex
-					+ "]");
+										   + "]");
 
 		}
 	}
@@ -125,7 +125,7 @@ public class NewStagerSleepComparisonStatisticTableModel extends
 
 		default:
 			throw new SanityCheckException("Unsupported index [" + columnIndex
-					+ "]");
+										   + "]");
 
 		}
 	}

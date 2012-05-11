@@ -1,5 +1,5 @@
 /* NewStagerSleepComparisonStatisticTable.java created 2008-03-03
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -16,8 +16,8 @@ import org.signalml.app.view.TablePopupMenuProvider;
 
 /**
  * NewStagerSleepComparisonStatisticTable
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -28,7 +28,7 @@ public class NewStagerSleepComparisonStatisticTable extends JTable {
 	private TablePopupMenuProvider popupMenuProvider;
 
 	public NewStagerSleepComparisonStatisticTable(
-			NewStagerSleepComparisonStatisticTableModel model) {
+		NewStagerSleepComparisonStatisticTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
@@ -38,7 +38,7 @@ public class NewStagerSleepComparisonStatisticTable extends JTable {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)
-						&& (e.getClickCount() == 1)) {
+				&& (e.getClickCount() == 1)) {
 					int index = rowAtPoint(e.getPoint());
 					ListSelectionModel selectionModel = getSelectionModel();
 					if (!selectionModel.isSelectedIndex(index)) {

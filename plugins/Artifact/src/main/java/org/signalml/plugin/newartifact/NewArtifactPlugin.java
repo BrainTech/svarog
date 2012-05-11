@@ -22,34 +22,34 @@ public class NewArtifactPlugin implements Plugin {
 	@Override
 	public void register(SvarogAccess access) throws SignalMLException {
 		PluginAccessHelper.SetupConfig(this,
-			access,
-			"classpath:org/signalml/plugin/newartifact/resource/config.xml");
+									   access,
+									   "classpath:org/signalml/plugin/newartifact/resource/config.xml");
 
 		i18nDelegate = new NewArtifactI18nDelegate(access);
 		this.manager = new PluginMethodManager(access,
-			(PluginConfigForMethod) PluginResourceRepository.GetResource("config", this.getClass()));
+											   (PluginConfigForMethod) PluginResourceRepository.GetResource("config", this.getClass()));
 
 		this.setupGUI(access.getGUIAccess());
 	}
 
 	private void setupGUI(SvarogAccessGUI guiAccess)
-		throws UnsupportedOperationException, PluginException {
+	throws UnsupportedOperationException, PluginException {
 		guiAccess.addButtonToToolsMenu(new NewArtifactPluginAction(this.manager));
 	}
 
 	/**
 	 * I18n shortcut.
-	 * 
+	 *
 	 * @param msgKey message to translate (English version)
 	 * @return
 	 */
 	public static String _(String msgKey) {
 		return i18nDelegate._(msgKey);
 	}
-	
+
 	/**
 	 * I18n shortcut.
-	 * 
+	 *
 	 * @param msgKey message to translate and render (English version)
 	 * @param arguments actual values to render
 	 * @return
@@ -57,7 +57,7 @@ public class NewArtifactPlugin implements Plugin {
 	public static String _R(String msgKey, Object ... arguments) {
 		return i18nDelegate._R(msgKey, arguments);
 	}
-	
+
 	/**
 	 * Svarog i18n delegate getter.
 	 * @return the shared delegate instance

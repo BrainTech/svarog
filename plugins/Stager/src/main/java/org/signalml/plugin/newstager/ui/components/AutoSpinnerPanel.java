@@ -393,7 +393,7 @@ public class AutoSpinnerPanel extends JPanel {
 
 	/**
 	 * Sets the minimum value from {@code MinMaxRange} as the value of the
-	 * spinner. Or if the minimum value is unlimited sets the auto button. 
+	 * spinner. Or if the minimum value is unlimited sets the auto button.
 	 * @param range the range to be used
 	 */
 	public void setMinValue(MinMaxRange range) {
@@ -414,7 +414,7 @@ public class AutoSpinnerPanel extends JPanel {
 
 	/**
 	 * Sets the maximum value from {@code MinMaxRange} as the value of the
-	 * spinner. Or if the maximum value is unlimited sets the auto button. 
+	 * spinner. Or if the maximum value is unlimited sets the auto button.
 	 * @param range the range to be used
 	 */
 	public void setMaxValue(MinMaxRange range) {
@@ -435,7 +435,7 @@ public class AutoSpinnerPanel extends JPanel {
 
 	/**
 	 * Sets the minimum value from {@code MinMaxRangeFloat} as the value of the
-	 * spinner. Or if the minimum value is unlimited sets the auto button. 
+	 * spinner. Or if the minimum value is unlimited sets the auto button.
 	 * @param range the range to be used
 	 */
 	public void setMinValue(MinMaxRangeFloat range) {
@@ -456,7 +456,7 @@ public class AutoSpinnerPanel extends JPanel {
 
 	/**
 	 * Sets the maximum value from {@code MinMaxRangeFloat} as the value of the
-	 * spinner. Or if the maximum value is unlimited sets the auto button. 
+	 * spinner. Or if the maximum value is unlimited sets the auto button.
 	 * @param range the range to be used
 	 */
 	public void setMaxValue(MinMaxRangeFloat range) {
@@ -477,7 +477,7 @@ public class AutoSpinnerPanel extends JPanel {
 
 	/**
 	 * Sets the minimum value from {@code MinMaxRangeInteger} as the value of the
-	 * spinner. Or if the minimum value is unlimited sets the auto button. 
+	 * spinner. Or if the minimum value is unlimited sets the auto button.
 	 * @param range the range to be used
 	 */
 	public void setMinValue(MinMaxRangeInteger range) {
@@ -498,7 +498,7 @@ public class AutoSpinnerPanel extends JPanel {
 
 	/**
 	 * Sets the maximum value from {@code MinMaxRangeInteger} as the value of the
-	 * spinner. Or if the maximum value is unlimited sets the auto button. 
+	 * spinner. Or if the maximum value is unlimited sets the auto button.
 	 * @param range the range to be used
 	 */
 	public void setMaxValue(MinMaxRangeInteger range) {

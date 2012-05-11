@@ -1,5 +1,5 @@
 /* StagerResultDialog.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -38,8 +38,8 @@ import org.signalml.plugin.newstager.NewStagerPlugin;
 
 /**
  * StagerResultDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -96,7 +96,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Choose primary result targets")),
+					_("Choose primary result targets")),
 				new EmptyBorder(3, 3, 3, 3));
 		checkBoxPanel.setBorder(border);
 
@@ -105,18 +105,18 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 
 		JPanel additionalTagPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(new TitledBorder(
-				_("Additional result tags")), new EmptyBorder(3, 3, 3, 3));
+										_("Additional result tags")), new EmptyBorder(3, 3, 3, 3));
 		additionalTagPanel.setBorder(border);
 
 		JPanel additionalCheckBoxPanel = new JPanel();
 		additionalCheckBoxPanel.setLayout(new BoxLayout(
-				additionalCheckBoxPanel, BoxLayout.Y_AXIS));
+											  additionalCheckBoxPanel, BoxLayout.Y_AXIS));
 
 		additionalCheckBoxPanel.add(getAdditionalOpenInWindowCheckBox());
 		additionalCheckBoxPanel.add(getAdditionalSaveToFileCheckBox());
 
 		additionalTagPanel.add(getAdditionalTagScrollPane(),
-				BorderLayout.CENTER);
+							   BorderLayout.CENTER);
 		additionalTagPanel.add(additionalCheckBoxPanel, BorderLayout.SOUTH);
 
 		interfacePanel.add(checkBoxPanel, BorderLayout.NORTH);
@@ -165,7 +165,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 	public JCheckBox getAdditionalOpenInWindowCheckBox() {
 		if (additionalOpenInWindowCheckBox == null) {
 			additionalOpenInWindowCheckBox = new JCheckBox(
-					_("Open selected additional tags in the viewer"));
+				_("Open selected additional tags in the viewer"));
 
 			additionalOpenInWindowCheckBox.addItemListener(new ItemListener() {
 
@@ -183,7 +183,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 	public JCheckBox getAdditionalSaveToFileCheckBox() {
 		if (additionalSaveToFileCheckBox == null) {
 			additionalSaveToFileCheckBox = new JCheckBox(
-					_("Save selected additional tag to files"));
+				_("Save selected additional tag to files"));
 
 			additionalSaveToFileCheckBox.addItemListener(new ItemListener() {
 
@@ -217,7 +217,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 	private void updateAdditionalTagListEnabled() {
 
 		boolean enabled = (getAdditionalOpenInWindowCheckBox().isSelected() || getAdditionalSaveToFileCheckBox()
-				.isSelected());
+						   .isSelected());
 		getAdditionalTagList().setEnabled(enabled);
 
 	}
@@ -230,7 +230,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		JCheckBox openInWindowCheckBox = getPrimaryOpenInWindowCheckBox();
 		if (descriptor.isSignalAvailable()) {
 			openInWindowCheckBox
-					.setSelected(descriptor.isPrimaryOpenInWindow());
+			.setSelected(descriptor.isPrimaryOpenInWindow());
 			openInWindowCheckBox.setEnabled(true);
 		} else {
 			openInWindowCheckBox.setSelected(false);
@@ -238,7 +238,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		}
 
 		getPrimarySaveToFileCheckBox().setSelected(
-				descriptor.isPrimarySaveToFile());
+			descriptor.isPrimarySaveToFile());
 		getPrimaryTagPanel().fillPanelFromModel(descriptor);
 
 		JList list = getAdditionalTagList();
@@ -266,7 +266,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 			additionalOpenInWindowCheckBox.setEnabled(false);
 		}
 		getAdditionalSaveToFileCheckBox().setSelected(
-				descriptor.isAdditionalSaveToFile());
+			descriptor.isAdditionalSaveToFile());
 
 		updateAdditionalTagListEnabled();
 
@@ -280,7 +280,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		NewStagerResultTargetDescriptor descriptor = (NewStagerResultTargetDescriptor) model;
 
 		descriptor.setPrimaryOpenInWindow(getPrimaryOpenInWindowCheckBox()
-				.isSelected());
+										  .isSelected());
 		boolean primarySaveToFile = getPrimarySaveToFileCheckBox().isSelected();
 		descriptor.setPrimarySaveToFile(primarySaveToFile);
 		if (primarySaveToFile) {
@@ -305,16 +305,16 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		descriptor.setChosenAdditionalTags(chosenTags);
 
 		descriptor
-				.setAdditionalOpenInWindow(getAdditionalOpenInWindowCheckBox()
-						.isSelected());
+		.setAdditionalOpenInWindow(getAdditionalOpenInWindowCheckBox()
+								   .isSelected());
 		descriptor.setAdditionalSaveToFile(getAdditionalSaveToFileCheckBox()
-				.isSelected());
+										   .isSelected());
 
 	}
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-			throws SignalMLException {
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		if (getPrimarySaveToFileCheckBox().isSelected()) {
@@ -343,9 +343,9 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 		public ReviewResultAction() {
 			super(_("Review staging result"));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/reviewresult.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/reviewresult.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION, _("Inspect the results"));
 		}
 
@@ -353,7 +353,7 @@ public class NewStagerResultDialog extends AbstractPluginDialog {
 
 			if (resultReviewDialog == null) {
 				resultReviewDialog = new NewStagerResultReviewDialog(
-						NewStagerResultDialog.this, true);
+					NewStagerResultDialog.this, true);
 				resultReviewDialog.setFileChooser(fileChooser);
 			}
 

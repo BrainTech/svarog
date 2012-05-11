@@ -12,8 +12,8 @@ public class NewStagerRangeGabor {
 	}
 
 	public static double HRangeGabor(int signalSize, double signalSampling,
-			double width, double frequency, double position, double amplitude,
-			double phase) {
+									 double width, double frequency, double position, double amplitude,
+									 double phase) {
 		if (width == signalSize) {
 			return amplitude;
 		} else if (width == 0) {
@@ -22,13 +22,13 @@ public class NewStagerRangeGabor {
 			return 0.5d * amplitude;
 		} else {
 			return DoCompute(signalSize, signalSampling, width, frequency,
-					position, amplitude, phase);
+							 position, amplitude, phase);
 		}
 	}
 
 	protected static double DoCompute(int signalSize, double signalSampling,
-			double width, double frequency, double position, double amplitude,
-			double phase) {
+									  double width, double frequency, double position, double amplitude,
+									  double phase) {
 		final double p = position * signalSampling;
 		final double tb = 0.0d;
 		final double te = ((double) signalSize) * signalSampling - 1;
@@ -72,13 +72,13 @@ public class NewStagerRangeGabor {
 
 		});
 
-		return (Math.max(Math.max(hb, he), Math.max(h1[1], h2[1])) - 
+		return (Math.max(Math.max(hb, he), Math.max(h1[1], h2[1])) -
 				Math.min(Math.min(hb, he), Math.min(h1[0], h2[0])));
 	}
 
 	private static double[] ComputeRange(double phase, double p, double w,
-			double f, double a, double tp, double hn, Predicate loopCondition,
-			Step updater) {
+										 double f, double a, double tp, double hn, Predicate loopCondition,
+										 Step updater) {
 		double ho;
 		double hmin = hn;
 		double hmax = hn;
@@ -101,9 +101,9 @@ public class NewStagerRangeGabor {
 	}
 
 	private static double Coeff(double amplitude, double arg, double w,
-			double f, double phase) {
+								double f, double phase) {
 		double v = arg / w;
 		return amplitude * Math.exp(-Math.PI * v * v)
-				* Math.cos(f * arg + phase);
+			   * Math.cos(f * arg + phase);
 	}
 }

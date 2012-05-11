@@ -56,7 +56,7 @@ import org.signalml.util.Util;
  * <li>save the current preset in {@link PresetManager} and get a preset from
  * there.</li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractPresetDialog extends AbstractDialog {
@@ -72,12 +72,12 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * the {@link PresetManager manager} of {@link Preset presets}
 	 */
 	protected PresetManager presetManager;
-	
+
 	/**
 	 * the {@link FileChooser file chooser}
 	 */
 	protected FileChooser fileChooser;
-	
+
 	/**
 	 * the {@link SvarogConfiguration configuration} of Svarog
 	 */
@@ -87,7 +87,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * the model for {@link #presetComboBox}
 	 */
 	private PresetComboBoxModel presetComboBoxModel;
-	
+
 	/**
 	 * the combo box which allows to select the {@link Preset preset}
 	 */
@@ -103,12 +103,12 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * @see LoadDefaultPresetAction
 	 */
 	private Action loadDefaultPresetAction;
-	
+
 	/**
 	 * @see SaveDefaultPresetAction
 	 */
 	private Action saveDefaultPresetAction;
-	
+
 	/**
 	 * @see RemoveDefaultPresetAction
 	 */
@@ -118,12 +118,12 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * @see SavePresetAction
 	 */
 	private Action savePresetAction;
-	
+
 	/**
 	 * @see LoadPresetAction
 	 */
 	private Action loadPresetAction;
-	
+
 	/**
 	 * @see RemovePresetAction
 	 */
@@ -133,7 +133,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * @see SaveFileAction
 	 */
 	private Action saveFileAction;
-	
+
 	/**
 	 * @see LoadFileAction
 	 */
@@ -143,12 +143,12 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	 * the button for {@link #loadDefaultPresetAction}
 	 */
 	private JButton loadDefaultPresetButton;
-	
+
 	/**
 	 * the button for {@link #saveDefaultPresetAction}
 	 */
 	private JButton saveDefaultPresetButton;
-	
+
 	/**
 	 * the button for {@link #removeDefaultPresetAction}
 	 */
@@ -452,7 +452,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Sets the {@link SvarogConfiguration configuration} of Svarog. 
+	 * Sets the {@link SvarogConfiguration configuration} of Svarog.
 	 * @param applicationConfig the configuration of Svarog
 	 */
 	public void setApplicationConfig(SvarogConfiguration applicationConfig) {
@@ -869,7 +869,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 	}
 
-	
+
 	/**
 	 * Action that removes the selected preset.
 	 * If there is no selected preset does nothing.
@@ -1105,12 +1105,12 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		 * the model for a combo box that allows to select the preset
 		 */
 		private PresetComboBoxModel presetComboBoxModel;
-		
+
 		/**
 		 * the combo box that allows to select the preset
 		 */
 		protected JComboBox presetComboBox;
-		
+
 		/**
 		 * the text field to specify the name for the preset
 		 */
@@ -1179,9 +1179,9 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 
 			JPanel interfacePanel = new JPanel(new BorderLayout());
 			interfacePanel.setBorder(new CompoundBorder(
-							 new TitledBorder(_("Select preset name")),
-							 new EmptyBorder(3,3,3,3)
-			                         ));
+										 new TitledBorder(_("Select preset name")),
+										 new EmptyBorder(3,3,3,3)
+									 ));
 
 			JPanel inputPanel = new JPanel();
 			inputPanel.setBorder(new EmptyBorder(0,8,0,0));
@@ -1289,7 +1289,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog {
 		/**
 		 * Shows this dialog and returns the entered name.
 		 * @param initialName the name that (if it is not empty) will be
-		 * set as the value of {@link #getNameTextField() name text field} 
+		 * set as the value of {@link #getNameTextField() name text field}
 		 * @param editable {@code true} if the name text field should be
 		 * editable, {@code false} otherwise
 		 * @return the specified name or null if there is no name (or the name

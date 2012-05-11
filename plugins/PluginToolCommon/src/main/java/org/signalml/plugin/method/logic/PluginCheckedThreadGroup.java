@@ -4,8 +4,8 @@ import org.apache.log4j.Logger;
 
 public class PluginCheckedThreadGroup extends ThreadGroup {
 	protected static final Logger logger = Logger
-			.getLogger(PluginCheckedThreadGroup.class);
-	
+										   .getLogger(PluginCheckedThreadGroup.class);
+
 	private Thread parentThread;
 
 	private boolean isShutdownStarted;
@@ -14,7 +14,7 @@ public class PluginCheckedThreadGroup extends ThreadGroup {
 
 	public PluginCheckedThreadGroup() {
 		super(Thread.currentThread().getThreadGroup(),
-				"PluginComputationGroup");
+			  "PluginComputationGroup");
 
 		this.parentThread = Thread.currentThread();
 

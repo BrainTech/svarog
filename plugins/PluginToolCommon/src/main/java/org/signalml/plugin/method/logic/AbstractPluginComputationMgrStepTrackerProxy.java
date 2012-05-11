@@ -6,18 +6,18 @@ import java.util.Map;
 import org.signalml.method.MethodExecutionTracker;
 
 public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationProgressPhase>
-		implements
-		IPluginComputationMgrStepTrackerProxy<ComputationProgressPhase> {
+	implements
+	IPluginComputationMgrStepTrackerProxy<ComputationProgressPhase> {
 
 	protected final PluginCheckedThreadGroup threadGroup;
 	protected final MethodExecutionTracker tracker;
-	
+
 	protected final Map<IPluginComputationMgrStep, Integer> tickerLimits;
-	
+
 	protected ComputationProgressPhase phase;
 
 	public AbstractPluginComputationMgrStepTrackerProxy(
-			PluginCheckedThreadGroup threadGroup, MethodExecutionTracker tracker) {
+		PluginCheckedThreadGroup threadGroup, MethodExecutionTracker tracker) {
 		this.threadGroup = threadGroup;
 		this.tracker = tracker;
 		this.tickerLimits = new HashMap<IPluginComputationMgrStep, Integer>();
@@ -35,7 +35,7 @@ public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationPr
 		synchronized (this.tracker) {
 			result = this.tracker.isRequestingAbort();
 		}
-		
+
 		if (result) {
 			synchronized (this.tracker) {
 				int limits[] = this.tracker.getTickerLimits();
@@ -44,28 +44,28 @@ public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationPr
 				}
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public void setTickerLimit(IPluginComputationMgrStep step, int limit) {
 		int limits[] = this.tracker.getTickerLimits();
 		if (limits.length <= 0) {
 			return;
 		}
-		
+
 		Integer prevValue = this.tickerLimits.get(step);
 		int diff = prevValue == null ? limit : (limit - prevValue);
-		
+
 		this.tickerLimits.put(step, limit);
-				
+
 		this.tracker.setTickerLimit(0, limits[0] + diff);
 	}
-	
+
 	@Override
 	public void setProgressPhase(ComputationProgressPhase phase,
-			Object... arguments) {
+								 Object... arguments) {
 		this.phase = phase;
 		String message = this.getMessageForPhase(phase, arguments);
 		if (message != null) {
@@ -74,7 +74,7 @@ public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationPr
 			}
 		}
 	}
-	
+
 	protected String getMessageForPhase(ComputationProgressPhase phase, Object ... arguments) {
 		return null;
 	}

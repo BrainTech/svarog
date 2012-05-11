@@ -20,13 +20,13 @@ public class NewStagerBookProcessorWorkerData {
 	public final NewStagerSleepStats signalStatCoeffs;
 
 	public NewStagerBookProcessorWorkerData(
-			final NewStagerBookDataProvider provider,
-			final INewStagerWorkerCompletion<NewStagerBookProcessorResult> completion,
-			final NewStagerConstants constants,
-			final Map<String, Integer> channelMap,
-			final NewStagerParameters parameters,
-			final NewStagerFixedParameters fixedParameters,
-			final double muscle[], final NewStagerSleepStats signalStatCoeffs) {
+		final NewStagerBookDataProvider provider,
+		final INewStagerWorkerCompletion<NewStagerBookProcessorResult> completion,
+		final NewStagerConstants constants,
+		final Map<String, Integer> channelMap,
+		final NewStagerParameters parameters,
+		final NewStagerFixedParameters fixedParameters,
+		final double muscle[], final NewStagerSleepStats signalStatCoeffs) {
 		this.provider = provider;
 		this.completion = completion;
 		this.constants = constants;

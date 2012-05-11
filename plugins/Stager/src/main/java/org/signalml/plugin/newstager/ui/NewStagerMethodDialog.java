@@ -1,5 +1,5 @@
 /* StagerMethodDialog.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -43,8 +43,8 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * StagerMethodDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
@@ -105,7 +105,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		if (contextHelpURL == null) {
 			try {
 				contextHelpURL = (new ClassPathResource(
-						"org/signalml/help/stager.html")).getURL();
+									  "org/signalml/help/stager.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
@@ -126,25 +126,25 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		interfacePanel.add(getTabbedPane(), BorderLayout.CENTER);
 
 		getBasicConfigPanel().getEnableAdvancedConfigPanel()
-				.getEnableAdvancedCheckBox()
-				.addItemListener(new ItemListener() {
+		.getEnableAdvancedCheckBox()
+		.addItemListener(new ItemListener() {
 
-					@Override
-					public void itemStateChanged(ItemEvent e) {
-						boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
 
-						JTabbedPane pane = getTabbedPane();
-						if (!selected) {
-							if (pane.getSelectedIndex() != 0) {
-								pane.setSelectedIndex(0);
-							}
-						}
-						pane.setEnabledAt(1, selected);
-						pane.setEnabledAt(2, selected);
-
+				JTabbedPane pane = getTabbedPane();
+				if (!selected) {
+					if (pane.getSelectedIndex() != 0) {
+						pane.setSelectedIndex(0);
 					}
+				}
+				pane.setEnabledAt(1, selected);
+				pane.setEnabledAt(2, selected);
 
-				});
+			}
+
+		});
 
 		return interfacePanel;
 
@@ -175,7 +175,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP,
-					JTabbedPane.WRAP_TAB_LAYOUT);
+										 JTabbedPane.WRAP_TAB_LAYOUT);
 
 			tabbedPane.addTab(_("Basic config"), getBasicConfigPanel());
 			tabbedPane.addTab(_("Advanced config"), getAdvancedConfigPanel());
@@ -197,14 +197,14 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		String path = "?";
 		if (signalDocument instanceof FileBackedDocument) {
 			path = ((FileBackedDocument) signalDocument).getBackingFile()
-					.getAbsolutePath();
+				   .getAbsolutePath();
 		}
 		signalPanel.getSignalTextField().setText(path);
 
 		// XXX FIXME
 		if (path == null || path.compareTo("?") == 0) {
 			Dialogs.showExceptionDialog(this, new SignalMLException(
-					_("No active signal. Choose a signal tab first.")));
+											_("No active signal. Choose a signal tab first.")));
 			return;
 		} else {
 			// XXX FIXME bad place to setting this up here
@@ -287,22 +287,22 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		public EditMontageAction() {
 			super(_("Edit montage"));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/montage.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/montage.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					_("Edit channel labels and functions"));
+					 _("Edit channel labels and functions"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
 				montageDialog = new SourceMontageDialog(
-						NewStagerMethodDialog.this, true);
+					NewStagerMethodDialog.this, true);
 			}
 
 			SourceMontageDescriptor descriptor = new SourceMontageDescriptor(
-					currentMontage);
+				currentMontage);
 
 			boolean ok = montageDialog.showDialog(descriptor, true);
 			if (!ok) {
@@ -320,11 +320,11 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		public RestoreDefaultsAction() {
 			super(_("Restore defaults"));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/restoredefaults.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/restoredefaults.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					_("Restore default method configuration"));
+					 _("Restore default method configuration"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

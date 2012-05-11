@@ -10,7 +10,7 @@ import org.springframework.core.io.Resource;
 public class ConfigurationDefaultsLoader {
 
 	protected static final Logger logger = Logger.getLogger(ConfigurationDefaultsLoader.class);
-	
+
 	public static Properties Load(Class<?> klass, String classPath) {
 		Properties properties = new Properties();
 		try {

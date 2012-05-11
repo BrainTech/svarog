@@ -11,13 +11,13 @@ public class NewStagerSignalReaderWorker implements Runnable {
 	public NewStagerSignalReaderWorker(NewStagerSignalReaderWorkerData data) {
 		this.data = data;
 	}
-	
+
 	@Override
 	public void run() {
 		MultichannelSampleSource source = this.data.sampleSource;
 		IPluginDataSourceReader reader = new NewStagerSignalReader(source);
-		INewStagerStatsSynchronizer synchronizer = this.data.synchronizer; 
-		
+		INewStagerStatsSynchronizer synchronizer = this.data.synchronizer;
+
 		try {
 			while (reader.hasMoreSamples()) {
 				double buffer[][] = synchronizer.getWritableBuffer();

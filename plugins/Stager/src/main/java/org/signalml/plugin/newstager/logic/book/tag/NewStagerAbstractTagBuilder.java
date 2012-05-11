@@ -11,7 +11,7 @@ import org.signalml.plugin.newstager.data.tag.NewStagerTagCollection;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 
 public abstract class NewStagerAbstractTagBuilder implements
-		INewStagerTagBuilder {
+	INewStagerTagBuilder {
 
 	protected Collection<IPluginTagDef> tags;
 	protected NewStagerTagCollection computedResultCollection;
@@ -27,13 +27,13 @@ public abstract class NewStagerAbstractTagBuilder implements
 		boolean freshFlag = true;
 		if (this.computedResultCollection == null) {
 			this.computedResultCollection = new NewStagerTagCollection(
-					this.getTagType(), this.tags);
+				this.getTagType(), this.tags);
 		} else {
 			freshFlag = false;
 		}
-		
+
 		Map<NewStagerTagCollectionType, NewStagerTagCollection> map = new HashMap<NewStagerTagCollectionType, NewStagerTagCollection>(
-				1);
+			1);
 		map.put(this.getTagType(), this.computedResultCollection);
 		return new NewStagerTagBuilderResult(map, freshFlag);
 	}

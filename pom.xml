@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml</groupId>
@@ -163,20 +165,20 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
-					<targetJdk>${project.jdk_version}</targetJdk>
+					<targetJdk>$ {project.jdk_version}</targetJdk>
 				</configuration>
 			</plugin>
 
-                        <plugin>
-                                <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>findbugs-maven-plugin</artifactId>
-                                <version>1.2</version>
-                                <configuration>
-                                        <findbugsXmlOutput>true</findbugsXmlOutput>
-                                        <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
-                                        <xmlOutput>true</xmlOutput>
-                                </configuration>
-                        </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
 		</plugins>
 	</reporting>
 
@@ -206,7 +208,7 @@
 	<developers>
 		<developer>
 			<name>Michał Dobaczewski</name>
-			<email>michal (dot) d08 (at) "Google mail"</email>
+			<email>michal(dot) d08(at) "Google mail"</email>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -315,7 +317,8 @@
 			<organization>MIMUW</organization>
 			<timezone>+1</timezone>
 			<roles>
-				<role>Artifact &amp; Stager plugins</role>
+				<role>Artifact &amp;
+				Stager plugins</role>
 			</roles>
 		</developer>
 		<developer>
@@ -350,9 +353,9 @@
 				<plugin>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
-						<source>${project.jdk_version}</source>
-						<target>${project.jdk_version}</target>
-						<encoding>${project.build.sourceEncoding}</encoding>
+						<source>$ {project.jdk_version}</source>
+						<target>$ {project.jdk_version}</target>
+						<encoding>$ {project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>
 
@@ -362,7 +365,7 @@
 					<version>1.2.3</version>
 					<configuration>
 						<keywords>
-							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user --sort-output
+							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=$ {project.artifactId} --foreign-user --sort-output
 						</keywords>
 					</configuration>
 				</plugin>

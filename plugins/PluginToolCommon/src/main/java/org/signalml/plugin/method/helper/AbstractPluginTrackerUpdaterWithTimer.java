@@ -54,7 +54,7 @@ public abstract class AbstractPluginTrackerUpdaterWithTimer {
 
 	public AbstractPluginTrackerUpdaterWithTimer() {
 		final AbstractPluginTrackerUpdaterWithTimer parent = this;
-		
+
 		this.timer = new Timer();
 		this.task = new PluginTrackerTask() {
 

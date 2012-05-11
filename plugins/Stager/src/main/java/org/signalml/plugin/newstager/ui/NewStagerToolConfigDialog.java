@@ -1,5 +1,5 @@
 /* NewStagerToolConfigDialog.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -21,8 +21,8 @@ import org.signalml.plugin.newstager.data.NewStagerConfiguration;
 
 /**
  * NewStagerToolConfigDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -46,7 +46,7 @@ public class NewStagerToolConfigDialog extends AbstractPluginDialog {
 	protected void initialize() {
 		setTitle(_("Stager configuration"));
 		setIconImage(IconUtils
-				.loadClassPathImage(NewStagerPlugin.iconPath));
+					 .loadClassPathImage(NewStagerPlugin.iconPath));
 		setResizable(false);
 		super.initialize();
 	}
@@ -75,14 +75,14 @@ public class NewStagerToolConfigDialog extends AbstractPluginDialog {
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-			throws SignalMLException {
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		getConfigPanel().validatePanel(errors);
 
 		if (!errors.hasErrors()) {
 			File file = getConfigPanel().getWorkingDirectoryPanel()
-					.getDirectory();
+						.getDirectory();
 			if (file == null || !file.exists() || !file.canWrite()) {
 				errors.addError(_("Working directory not set or unusable"));
 			}

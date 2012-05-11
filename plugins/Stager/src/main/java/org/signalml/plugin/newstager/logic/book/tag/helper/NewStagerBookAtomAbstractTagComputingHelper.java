@@ -8,7 +8,7 @@ import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 import org.signalml.plugin.newstager.data.tag.NewStagerHelperTagSample;
 
 public abstract class NewStagerBookAtomAbstractTagComputingHelper extends
-		NewStagerBookAtomAbstractTagHelper {
+	NewStagerBookAtomAbstractTagHelper {
 
 	protected double widthCoeff;
 
@@ -16,7 +16,7 @@ public abstract class NewStagerBookAtomAbstractTagComputingHelper extends
 	private double offsetDimension;
 
 	protected NewStagerBookAtomAbstractTagComputingHelper(
-			NewStagerBookAtomTagHelperData data) {
+		NewStagerBookAtomTagHelperData data) {
 		super(data);
 		this.widthCoeff = 1.0;
 		this.offsetDimension = this.data.bookInfo.offsetDimension;
@@ -32,17 +32,17 @@ public abstract class NewStagerBookAtomAbstractTagComputingHelper extends
 
 		for (NewStagerAdaptedAtom atom : atoms) {
 			int length = (int) Math.round(this.widthCoeff * atom.scale * frequency);
-			int structOffset = (int) (offset * offsetDimension);
+			int structOffset = (int)(offset * offsetDimension);
 			double halfLength = ((double) length) / 2;
 			double pos = atom.position * frequency;
-			
+
 
 			if (pos >= halfLength) {
 				structOffset += pos - Math.round(halfLength);
 			}
 
 			if (pos + halfLength > offsetDimension) {
-				length = (int) (offsetDimension - pos + Math.round(halfLength));
+				length = (int)(offsetDimension - pos + Math.round(halfLength));
 			}
 
 			result.add(new NewStagerHelperTagSample((int) pos, structOffset, length));

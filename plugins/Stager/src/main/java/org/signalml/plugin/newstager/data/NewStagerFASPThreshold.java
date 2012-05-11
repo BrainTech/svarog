@@ -15,11 +15,11 @@ public class NewStagerFASPThreshold implements Serializable {
 
 	public NewStagerFASPThreshold() {
 		this(CreateMinMax(null, null), CreateMinMax(null, null), CreateMinMax(
-				null, null), CreateMinMax(null, null));
+				 null, null), CreateMinMax(null, null));
 	}
 
 	public NewStagerFASPThreshold(MinMaxRange amplitude, MinMaxRange frequency,
-			MinMaxRange scale, MinMaxRange phase) {
+								  MinMaxRange scale, MinMaxRange phase) {
 		this.amplitude = amplitude;
 		this.frequency = frequency;
 		this.scale = scale;
@@ -30,9 +30,9 @@ public class NewStagerFASPThreshold implements Serializable {
 			Double amplitudeMax, Double frequencyMin, Double frequencyMax,
 			Double scaleMin, Double scaleMax, Double phaseMin, Double phaseMax) {
 		return new NewStagerFASPThreshold(CreateMinMax(amplitudeMin,
-				amplitudeMax), CreateMinMax(frequencyMin, frequencyMax),
-				CreateMinMax(scaleMin, scaleMax), CreateMinMax(phaseMin,
-						phaseMax));
+										  amplitudeMax), CreateMinMax(frequencyMin, frequencyMax),
+										  CreateMinMax(scaleMin, scaleMax), CreateMinMax(phaseMin,
+												  phaseMax));
 	}
 
 	private static MinMaxRange CreateMinMax(Double min, Double max) {

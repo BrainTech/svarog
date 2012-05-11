@@ -51,8 +51,8 @@ public class BookFilterChooseTagPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Choose tag file")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose tag file")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -66,18 +66,18 @@ public class BookFilterChooseTagPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(tagFileLabel)
+			layout.createParallelGroup()
+			.addComponent(tagFileLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getTagTextField())
+			layout.createParallelGroup()
+			.addComponent(getTagTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getChooseTagButton())
+			layout.createParallelGroup()
+			.addComponent(getChooseTagButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -85,13 +85,13 @@ public class BookFilterChooseTagPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tagFileLabel)
-				.addComponent(getTagTextField())
-				.addComponent(getChooseTagButton())
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(tagFileLabel)
+			.addComponent(getTagTextField())
+			.addComponent(getChooseTagButton())
 		);
 
-		layout.setVerticalGroup(vGroup);		
+		layout.setVerticalGroup(vGroup);
 
 
 

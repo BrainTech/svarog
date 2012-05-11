@@ -7,7 +7,7 @@ import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 import org.signalml.plugin.newstager.data.tag.NewStagerHelperTagSample;
 
 public class NewStagerBookAtomPrimaryTagHelper extends NewStagerBookAtomAbstractTagComputingHelper implements
-		INewStagerBookAtomPrimaryTagHelper {
+	INewStagerBookAtomPrimaryTagHelper {
 
 	private INewStagerBookAtomFilter filter;
 	private Collection<NewStagerHelperTagSample> tags;

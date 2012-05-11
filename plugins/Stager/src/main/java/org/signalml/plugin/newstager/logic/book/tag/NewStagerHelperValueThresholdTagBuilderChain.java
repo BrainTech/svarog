@@ -8,11 +8,11 @@ public class NewStagerHelperValueThresholdTagBuilderChain extends NewStagerCondi
 
 	private double threshold;
 	private INewStagerBookAtomCoeffHelper helper;
-	
+
 	public NewStagerHelperValueThresholdTagBuilderChain(
-			NewStagerBookAtomTagBuilderData data,
-			INewStagerBookAtomCoeffHelper helper,
-			double threshold) {
+		NewStagerBookAtomTagBuilderData data,
+		INewStagerBookAtomCoeffHelper helper,
+		double threshold) {
 		super(data);
 		this.helper = helper;
 		this.threshold = threshold;
@@ -22,5 +22,5 @@ public class NewStagerHelperValueThresholdTagBuilderChain extends NewStagerCondi
 	protected boolean isConditionMet(NewStagerBookSample sample) {
 		return this.helper.convertToValue(sample) > this.threshold;
 	}
-	
+
 }

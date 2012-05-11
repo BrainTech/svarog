@@ -1,5 +1,5 @@
 /* NewStagerToolConfigPanel.java created 2008-02-08
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -13,8 +13,8 @@ import org.signalml.plugin.newstager.data.NewStagerConfiguration;
 
 /**
  * NewStagerToolConfigPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -43,7 +43,7 @@ public class NewStagerToolConfigPanel extends JPanel {
 	public NewStagerToolWorkingDirectoryConfigPanel getWorkingDirectoryPanel() {
 		if (workingDirectoryPanel == null) {
 			workingDirectoryPanel = new NewStagerToolWorkingDirectoryConfigPanel(
-					fileChooser);
+				fileChooser);
 		}
 		return workingDirectoryPanel;
 	}

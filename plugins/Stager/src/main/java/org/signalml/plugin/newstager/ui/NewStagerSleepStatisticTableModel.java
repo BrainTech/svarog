@@ -1,5 +1,5 @@
 /* SleepStatisticTableModel.java created 2008-02-23
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -17,8 +17,8 @@ import org.signalml.plugin.newstager.data.NewStagerSleepStatistic;
 
 /**
  * SleepStatisticTableModel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -78,18 +78,18 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 						|| SleepTagName.AASM_N1.equals(name)) {
 					index = 0;
 				} else if (SleepTagName.RK_2.equals(name)
-						|| SleepTagName.AASM_N2.equals(name)) {
+						   || SleepTagName.AASM_N2.equals(name)) {
 					index = 1;
 				} else if (SleepTagName.RK_3.equals(name)
-						|| SleepTagName.AASM_N3.equals(name)) {
+						   || SleepTagName.AASM_N3.equals(name)) {
 					index = 2;
 				} else if (SleepTagName.RK_4.equals(name)) {
 					index = 3;
 				} else if (SleepTagName.RK_REM.equals(name)
-						|| SleepTagName.AASM_REM.equals(name)) {
+						   || SleepTagName.AASM_REM.equals(name)) {
 					index = 5;
 				} else if (SleepTagName.RK_WAKE.equals(name)
-						|| SleepTagName.AASM_WAKE.equals(name)) {
+						   || SleepTagName.AASM_WAKE.equals(name)) {
 					index = 6;
 				} else if (SleepTagName.RK_MT.equals(name)) {
 					index = 7;
@@ -104,14 +104,14 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 				data[index].stage = style.getDescriptionOrName();
 				segmentCount = statistic.getStyleSegmentsAt(i);
 				data[index].epochs = segmentCount;
-				data[index].minutes = (((double) (segmentCount * segmentLength)) / 60.0);
+				data[index].minutes = (((double)(segmentCount * segmentLength)) / 60.0);
 				if (tst > 0) {
-					data[index].tst = (((double) (segmentCount * segmentLength) * 100) / tst);
+					data[index].tst = (((double)(segmentCount * segmentLength) * 100) / tst);
 				} else {
 					data[index].tst = 0.0;
 				}
 				if (spt > 0) {
-					data[index].spt = (((double) (segmentCount * segmentLength) * 100) / spt);
+					data[index].spt = (((double)(segmentCount * segmentLength) * 100) / spt);
 				} else {
 					data[index].spt = 0.0;
 				}
@@ -126,14 +126,14 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 			data[index].stage = _("SWS");
 			int slowSegmentCount = statistic.getSlowSegments();
 			data[index].epochs = slowSegmentCount;
-			data[index].minutes = (((double) (slowSegmentCount * segmentLength)) / 60.0);
+			data[index].minutes = (((double)(slowSegmentCount * segmentLength)) / 60.0);
 			if (tst > 0) {
-				data[index].tst = (((double) (slowSegmentCount * segmentLength) * 100) / tst);
+				data[index].tst = (((double)(slowSegmentCount * segmentLength) * 100) / tst);
 			} else {
 				data[index].tst = 0.0;
 			}
 			if (spt > 0) {
-				data[index].spt = (((double) (slowSegmentCount * segmentLength) * 100) / spt);
+				data[index].spt = (((double)(slowSegmentCount * segmentLength) * 100) / spt);
 			} else {
 				data[index].spt = 0.0;
 			}
@@ -165,7 +165,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 		switch (columnIndex) {
 
 		case STAGE_COLUMN:
-			return String.class;
+				return String.class;
 
 		case EPOCHS_COLUMN:
 			return Integer.class;
@@ -177,7 +177,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 
 		default:
 			throw new SanityCheckException("Unsupported index [" + columnIndex
-					+ "]");
+										   + "]");
 
 		}
 	}
@@ -200,7 +200,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 
 		case SPT_COLUMN:
 			return _("%SPT");
-			
+
 		default:
 			throw new SanityCheckException("Unsupported index [" + column + "]");
 
@@ -241,7 +241,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 
 		default:
 			throw new SanityCheckException("Unsupported index [" + columnIndex
-					+ "]");
+										   + "]");
 
 		}
 	}

@@ -26,7 +26,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private String[] favouriteDirs;
 	private String[] lastDirs;
-	
+
 	private String lastFileChooserPath;
 	private String lastPresetPath;
 	private String lastSaveMP5ConfigPath;
@@ -92,7 +92,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
-        private float backupFrequency;
+	private float backupFrequency;
 
 	/**
 	 * Default value for the multiplexer address. If the user changes
@@ -112,7 +112,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int multiplexerPort;
 
 	private float monitorPageSize;
-	
+
 	public void applySystemSettings() {
 
 		// apply tooltip settings
@@ -619,7 +619,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 * @param name name is the same as function name without get
 	 *
 	 */
-	public String getPath(String name){
+	public String getPath(String name) {
 		if ("LastPresetPath".equals(name))
 			return this.getLastPresetPath();
 		else if ("LastLibraryPath".equals(name))
@@ -633,10 +633,10 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 * @param name name is the same as function name without set
 	 *
 	 */
-	public void setPath(String name, String path){
+	public void setPath(String name, String path) {
 		if ("LastPresetPath".equals(name))
 			this.setLastPresetPath(path);
-		else if("LastLibraryPath".equals(name))
+		else if ("LastLibraryPath".equals(name))
 			this.setLastLibraryPath(path);
 		else
 			this.setLastFileChooserPath(path);

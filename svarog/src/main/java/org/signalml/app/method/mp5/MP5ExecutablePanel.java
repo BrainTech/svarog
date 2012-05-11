@@ -52,8 +52,8 @@ public class MP5ExecutablePanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("MP5 executable")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("MP5 executable")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -67,18 +67,18 @@ public class MP5ExecutablePanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(executableLabel)
+			layout.createParallelGroup()
+			.addComponent(executableLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getExecutableTextField())
+			layout.createParallelGroup()
+			.addComponent(getExecutableTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getChooseExecutableButton())
+			layout.createParallelGroup()
+			.addComponent(getChooseExecutableButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -86,14 +86,14 @@ public class MP5ExecutablePanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(executableLabel)
-				.addComponent(getExecutableTextField())
-				.addComponent(getChooseExecutableButton())
-			);
-				
-		layout.setVerticalGroup(vGroup);		
-						
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(executableLabel)
+			.addComponent(getExecutableTextField())
+			.addComponent(getChooseExecutableButton())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	public JTextField getExecutableTextField() {

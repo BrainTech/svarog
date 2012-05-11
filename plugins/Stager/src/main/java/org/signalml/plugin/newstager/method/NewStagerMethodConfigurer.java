@@ -1,5 +1,5 @@
 /* StagerMethodConfigurer.java created 2007-11-02
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.method;
@@ -29,17 +29,17 @@ import org.signalml.plugin.newstager.ui.NewStagerToolConfigDialog;
 
 /**
  * StagerMethodConfigurer
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
-		SvarogMethodConfigurer, // FIXME
-		PresetEquippedMethodConfigurer {
+	SvarogMethodConfigurer, // FIXME
+	PresetEquippedMethodConfigurer {
 
 	protected static final Logger logger = Logger
-			.getLogger(NewStagerMethodConfigurer.class);
+										   .getLogger(NewStagerMethodConfigurer.class);
 
 	private FileChooser fileChooser;
 	private NewStagerMethodDialog dialog;
@@ -49,23 +49,23 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 	private NewStagerToolConfigDialog configDialog;
 
 	private PluginMethodWorkingDirConfigurer workDirConfigurer;
-	
+
 	@Override
 	public void initialize(PluginMethodManager manager) {
 		SvarogAccess access = manager.getSvarogAccess();
 		SvarogAccessGUI guiAccess = access.getGUIAccess();
-		
+
 		this.dialogParent = guiAccess.getDialogParent();
-		
+
 		this.fileChooser = guiAccess.getFileChooser();
-		
+
 		this.dialog = new NewStagerMethodDialog(this.presetManager, dialogParent);
 		this.dialog.setFileChooser(this.fileChooser);
 
 		dialog.setApplicationConfig(access.getConfigAccess().getSvarogConfiguration());
 
 		this.workDirConfigurer = new PluginMethodWorkingDirConfigurer(this.presetManager, new NewStagerConfiguration(), new PluginMethodWorkingDirConfigurer.PluginWorkingDirDialogGetter() {
-			
+
 			@Override
 			public AbstractPluginDialog getDialog() {
 				if (configDialog == null) {
@@ -79,7 +79,7 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 
 	@Override
 	public boolean configure(Method method, Object methodDataObj)
-			throws SignalMLException {
+	throws SignalMLException {
 
 		File workingDirectory = this.workDirConfigurer.configureWorkDir();
 		if (workingDirectory == null) {
@@ -100,9 +100,9 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 
 			if (!projectDirectory.isDirectory()) {
 				logger.warn("A file in stager working directory is conflicting with project ["
-						+ projectDirectory.getAbsolutePath() + "]");
+							+ projectDirectory.getAbsolutePath() + "]");
 				OptionPane.showError(dialogParent,
-						"error.stager.failedToCreateProjectDirectory");
+									 "error.stager.failedToCreateProjectDirectory");
 				return false;
 			}
 
@@ -117,9 +117,9 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 					deleteOk = f.delete();
 					if (!deleteOk) {
 						logger.warn("Failed to delete file ["
-								+ f.getAbsolutePath() + "]");
+									+ f.getAbsolutePath() + "]");
 						OptionPane.showError(dialogParent,
-								"error.stager.failedToClearProjectDirectory");
+											 "error.stager.failedToClearProjectDirectory");
 						return false;
 					}
 				}
@@ -131,7 +131,7 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 			boolean createOk = projectDirectory.mkdirs();
 			if (!createOk) {
 				OptionPane.showError(dialogParent,
-						"error.stager.failedToCreateProjectDirectory");
+									 "error.stager.failedToCreateProjectDirectory");
 				return false;
 			}
 

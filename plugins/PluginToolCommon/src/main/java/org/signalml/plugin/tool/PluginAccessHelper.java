@@ -12,21 +12,21 @@ public class PluginAccessHelper {
 	private static Map<Class<? extends Plugin>, SvarogAccess> AccessMap = new HashMap<Class<? extends Plugin>, SvarogAccess>();
 
 	public static void SetupConfig(Plugin plugin, SvarogAccess svarogAccess)
-			throws PluginException {
+	throws PluginException {
 		PluginContextHelper.AddPluginContext(plugin);
 		AccessMap.put(plugin.getClass(), svarogAccess);
 	}
 
 	public static void SetupConfig(Plugin plugin, SvarogAccess svarogAccess,
-			String configResourceName) throws PluginException {
+								   String configResourceName) throws PluginException {
 		PluginResourceRepository.RegisterPlugin(plugin.getClass(),
-				configResourceName);
+												configResourceName);
 		PluginAccessHelper.SetupConfig(plugin, svarogAccess);
 	}
 
 	public static SvarogAccess GetSvarogAccess() {
 		Class<? extends Plugin> klass = PluginContextHelper
-				.FindContextPluginClass();
+										.FindContextPluginClass();
 		return AccessMap.get(klass);
 	}
 

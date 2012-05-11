@@ -27,14 +27,14 @@ public class NewStagerParameters implements Serializable, Preset {
 
 	public NewStagerParameters() {
 		this(null, NewStagerRules.RK, false, false, true,
-				new NewStagerParameterThresholds());
+			 new NewStagerParameterThresholds());
 		NewStagerConfigurationDefaultsHelper.GetSharedInstance().setDefaults(this);
 	}
 
 	public NewStagerParameters(String bookFilePath,
-			NewStagerRules rules, boolean analyseEMGChannelFlag,
-			boolean analyseEEGChannelsFlag, boolean primaryHypnogramFlag,
-			NewStagerParameterThresholds thresholds) {
+							   NewStagerRules rules, boolean analyseEMGChannelFlag,
+							   boolean analyseEEGChannelsFlag, boolean primaryHypnogramFlag,
+							   NewStagerParameterThresholds thresholds) {
 		this.bookFilePath = bookFilePath;
 
 		this.rules = rules;

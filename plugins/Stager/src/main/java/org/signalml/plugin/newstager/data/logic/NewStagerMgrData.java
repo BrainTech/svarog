@@ -9,7 +9,7 @@ public class NewStagerMgrData extends PluginMgrData {
 	public final NewStagerConstants constants;
 
 	public NewStagerMgrData(NewStagerData stagerData,
-			NewStagerConstants constants) {
+							NewStagerConstants constants) {
 		this.stagerData = stagerData;
 		this.constants = constants;
 	}

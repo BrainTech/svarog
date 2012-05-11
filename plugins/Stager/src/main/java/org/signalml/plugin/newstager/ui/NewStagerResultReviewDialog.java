@@ -1,5 +1,5 @@
 /* StagerResultReviewDialog.java created 2008-02-21
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -50,8 +50,8 @@ import org.signalml.plugin.newstager.data.NewStagerSleepStatistic;
 
 /**
  * StagerResultReviewDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -110,7 +110,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		JPanel expertPanel = new JPanel(new BorderLayout(3, 10));
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Compare with expert tag")), new EmptyBorder(3, 3, 3, 3));
+					_("Compare with expert tag")), new EmptyBorder(3, 3, 3, 3));
 		expertPanel.setBorder(border);
 
 		JPanel expertButtonPanel = new JPanel(new FlowLayout(
@@ -120,8 +120,9 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		expertButtonPanel.add(getCompareButton());
 
 		SwingUtils.makeButtonsSameSize(new JButton[] { getCompareButton(),
-				getExpertArtifactTagPanel().getChooseTagButton(),
-				getExpertStageTagPanel().getChooseTagButton() });
+									   getExpertArtifactTagPanel().getChooseTagButton(),
+									   getExpertStageTagPanel().getChooseTagButton()
+													 });
 
 		expertPanel.add(getExpertStageTagPanel(), BorderLayout.NORTH);
 		expertPanel.add(getExpertArtifactTagPanel(), BorderLayout.CENTER);
@@ -129,7 +130,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 
 		JPanel statisticsPanel = new JPanel(new BorderLayout());
 		border = new CompoundBorder(new TitledBorder(_("Result statistics")),
-				new EmptyBorder(3, 3, 3, 3));
+									new EmptyBorder(3, 3, 3, 3));
 		statisticsPanel.setBorder(border);
 
 		statisticsPanel.add(getTabbedPane(), BorderLayout.CENTER);
@@ -145,20 +146,20 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		if (expertStageTagPanel == null) {
 			expertStageTagPanel = new NewStagerExpertTagPanel(fileChooser);
 			expertStageTagPanel
-					.setLabelCode("stagerMethod.dialog.resultReview.expertStageTag");
+			.setLabelCode("stagerMethod.dialog.resultReview.expertStageTag");
 			expertStageTagPanel
-					.setChooseButtonToolTipCode("stagerMethod.dialog.resultReview.expertStageTagToolTip");
+			.setChooseButtonToolTipCode("stagerMethod.dialog.resultReview.expertStageTagToolTip");
 			expertStageTagPanel.initialize();
 
 			expertStageTagPanel.getTagTextField().getDocument()
-					.addDocumentListener(new AnyChangeDocumentAdapter() {
+			.addDocumentListener(new AnyChangeDocumentAdapter() {
 
-						@Override
-						public void anyUpdate(DocumentEvent e) {
-							updateActionEnabled();
-						}
+				@Override
+				public void anyUpdate(DocumentEvent e) {
+					updateActionEnabled();
+				}
 
-					});
+			});
 
 		}
 		return expertStageTagPanel;
@@ -168,20 +169,20 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		if (expertArtifactTagPanel == null) {
 			expertArtifactTagPanel = new NewStagerExpertTagPanel(fileChooser);
 			expertArtifactTagPanel
-					.setLabelCode("stagerMethod.dialog.resultReview.expertArtifactTag");
+			.setLabelCode("stagerMethod.dialog.resultReview.expertArtifactTag");
 			expertArtifactTagPanel
-					.setChooseButtonToolTipCode("stagerMethod.dialog.resultReview.expertArtifactTagToolTip");
+			.setChooseButtonToolTipCode("stagerMethod.dialog.resultReview.expertArtifactTagToolTip");
 			expertArtifactTagPanel.initialize();
 
 			expertArtifactTagPanel.getTagTextField().getDocument()
-					.addDocumentListener(new AnyChangeDocumentAdapter() {
+			.addDocumentListener(new AnyChangeDocumentAdapter() {
 
-						@Override
-						public void anyUpdate(DocumentEvent e) {
-							updateActionEnabled();
-						}
+				@Override
+				public void anyUpdate(DocumentEvent e) {
+					updateActionEnabled();
+				}
 
-					});
+			});
 
 		}
 		return expertArtifactTagPanel;
@@ -211,7 +212,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 	public JButton getCompareExcludingArtifactsButton() {
 		if (compareExcludingArtifactsButton == null) {
 			compareExcludingArtifactsButton = new JButton(
-					getCompareExcludingArtifactsAction());
+				getCompareExcludingArtifactsAction());
 		}
 		return compareExcludingArtifactsButton;
 	}
@@ -248,7 +249,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 	public NewStagerSleepStatisticTable getSleepStatisticTable() {
 		if (sleepStatisticTable == null) {
 			sleepStatisticTable = new NewStagerSleepStatisticTable(
-					getSleepStatisticTableModel());
+				getSleepStatisticTableModel());
 		}
 		return sleepStatisticTable;
 	}
@@ -265,7 +266,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP,
-					JTabbedPane.SCROLL_TAB_LAYOUT);
+										 JTabbedPane.SCROLL_TAB_LAYOUT);
 
 			tabbedPane.addTab(_("Totals"), getPropertyScrollPane());
 			tabbedPane.addTab(_("Stages"), getSleepStatisticScrollPane());
@@ -280,7 +281,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 
 		getCompareAction().setEnabled(hasStageTag);
 		getCompareExcludingArtifactsAction().setEnabled(
-				hasArtifactTag && hasStageTag);
+			hasArtifactTag && hasStageTag);
 
 	}
 
@@ -291,11 +292,11 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 
 		getExpertStageTagPanel().setTagFile(descriptor.getExpertStageTagFile());
 		getExpertArtifactTagPanel().setTagFile(
-				descriptor.getExpertArtifactTagFile());
+			descriptor.getExpertArtifactTagFile());
 
 		NewStagerSleepStatistic sleepStatistic = new NewStagerSleepStatistic(
-				descriptor.getStagerResult(), descriptor.getPrimaryTag(),
-				descriptor.getSegmentCount(), descriptor.getSegmentLength());
+			descriptor.getStagerResult(), descriptor.getPrimaryTag(),
+			descriptor.getSegmentCount(), descriptor.getSegmentLength());
 		getPropertySheetModel().setSubject(sleepStatistic);
 		getSleepStatisticTableModel().setStatistic(sleepStatistic);
 
@@ -313,13 +314,13 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 
 		descriptor.setExpertStageTagFile(getExpertStageTagPanel().getTagFile());
 		descriptor.setExpertArtifactTagFile(getExpertArtifactTagPanel()
-				.getTagFile());
+											.getTagFile());
 
 	}
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-			throws SignalMLException {
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 	}
 
@@ -351,7 +352,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 			//TODO!
 			SignalDocument signalDocument = null;
 			tagSet = importer.importLegacyTags(tagFile,
-					signalDocument.getSamplingFrequency());
+											   signalDocument.getSamplingFrequency());
 			tag = new TagDocument(tagSet);
 		} catch (SignalMLException ex) {
 			legTag = false;
@@ -363,12 +364,12 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 				tag = new TagDocument(tagFile);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to read tag file ["
-						+ tagFile.getAbsolutePath() + "]");
+							 + tagFile.getAbsolutePath() + "]");
 				Dialogs.showExceptionDialog(this, ex);
 				return null;
 			} catch (IOException ex) {
 				logger.error("Failed to read tag file ["
-						+ tagFile.getAbsolutePath() + "] - i/o exception");
+							 + tagFile.getAbsolutePath() + "] - i/o exception");
 				Dialogs.showExceptionDialog(this, ex);
 				return null;
 			}
@@ -384,17 +385,17 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		public CompareAction() {
 			super(_("Compare"));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/analyze.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/analyze.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					_("Compare staging result with expert tag"));
+					 _("Compare staging result with expert tag"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			boolean excludingArtifacts = ("compareExcludingArtifacts".equals(ev
-					.getActionCommand()));
+										  .getActionCommand()));
 
 			File expertStageTagFile = getExpertStageTagPanel().getTagFile();
 			if (expertStageTagFile == null) {
@@ -402,7 +403,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 			}
 			if (!expertStageTagFile.exists() || !expertStageTagFile.canRead()) {
 				logger.error("File [" + expertStageTagFile.getAbsolutePath()
-						+ "] doesn't exist");
+							 + "] doesn't exist");
 				//TODO!
 				//getErrorsDialog().showException(new FileNotFoundException());
 				return;
@@ -412,8 +413,8 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 
 			if (expertStageTag == null) {
 				logger.error("Failed to read tag file ["
-						+ expertStageTagFile.getAbsolutePath()
-						+ "] - i/o exception");
+							 + expertStageTagFile.getAbsolutePath()
+							 + "] - i/o exception");
 				//TODO!
 				//getErrorsDialog().showException(new IOException());
 				return;
@@ -427,7 +428,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 					//TODO!
 					//getErrorsDialog().showException(
 //									new SignalMLException(
-	//										"error.stager.result.expertTagNotCompatibleRK"));
+					//										"error.stager.result.expertTagNotCompatibleRK"));
 					return;
 				}
 
@@ -457,15 +458,15 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 			if (excludingArtifacts) {
 
 				File expertArtifactTagFile = getExpertArtifactTagPanel()
-						.getTagFile();
+											 .getTagFile();
 				if (expertArtifactTagFile == null) {
 					return;
 				}
 				if (!expertArtifactTagFile.exists()
 						|| !expertArtifactTagFile.canRead()) {
 					logger.error("File ["
-							+ expertArtifactTagFile.getAbsolutePath()
-							+ "] doesn't exist");
+								 + expertArtifactTagFile.getAbsolutePath()
+								 + "] doesn't exist");
 					//TODO!
 					//getErrorsDialog()
 					//		.showException(new FileNotFoundException());
@@ -476,8 +477,8 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 
 				if (expertStageTag == null) {
 					logger.error("Failed to read tag file ["
-							+ expertArtifactTagFile.getAbsolutePath()
-							+ "] - i/o exception");
+								 + expertArtifactTagFile.getAbsolutePath()
+								 + "] - i/o exception");
 					//TODO!
 					//getErrorsDialog().showException(new IOException());
 					return;
@@ -485,11 +486,11 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 			}
 
 			NewStagerSleepComparison comparison = new NewStagerSleepComparison(
-					currentStatistic, tag, expertStageTag, expertArtifactTag);
+				currentStatistic, tag, expertStageTag, expertArtifactTag);
 
 			if (sleepComparisonDialog == null) {
 				sleepComparisonDialog = new NewSleepComparisonDialog(
-						NewStagerResultReviewDialog.this, true);
+					NewStagerResultReviewDialog.this, true);
 			}
 
 			sleepComparisonDialog.showDialog(comparison, true);
@@ -505,18 +506,18 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		public CompareExcludingArtifactsAction() {
 			super(_("Compare no artifacts"));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/analyze.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/analyze.png"));
 			putValue(
-					AbstractAction.SHORT_DESCRIPTION,
-					_("Compare staging result with expert tag (pages without artifacts only)"));
+				AbstractAction.SHORT_DESCRIPTION,
+				_("Compare staging result with expert tag (pages without artifacts only)"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			compareAction.actionPerformed(new ActionEvent(ev.getSource(), 0,
-					"compareExcludingArtifacts"));
+										  "compareExcludingArtifacts"));
 
 		}
 

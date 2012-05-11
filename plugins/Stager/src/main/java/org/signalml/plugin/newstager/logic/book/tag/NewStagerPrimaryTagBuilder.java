@@ -16,26 +16,26 @@ public abstract class NewStagerPrimaryTagBuilder extends NewStagerAbstractTagBui
 
 	private INewStagerBookAtomPrimaryTagHelper helper;
 	private int channel;
-	
+
 	public NewStagerPrimaryTagBuilder(NewStagerBookAtomTagBuilderData data) {
 		super(data);
 		this.tags = new LinkedList<IPluginTagDef>();
-		
+
 		this.helper = this.getConverter();
-		
+
 		try {
 			this.channel = PluginChannelAccessHelper.GetChannelNumber(data.channelMap, PluginChannel.C3, null);
 		} catch (PluginAlgorithmDataException e) {
 			this.channel = -1;
 		}
 	}
-	
+
 	@Override
 	public boolean process(NewStagerBookSample sample) {
 		if (this.channel == -1) {
 			return false;
 		}
-		
+
 		Collection<NewStagerHelperTagSample> tagSamples = this.helper.convertToTagSamples(sample);
 		NewStagerBookAtomTagCreator tagCreator = data.tagCreator;
 		for (NewStagerHelperTagSample tagSample : tagSamples) {

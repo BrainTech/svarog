@@ -1,5 +1,5 @@
 /* NewStagerResultTagPanel.java created 2008-02-20
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -26,8 +26,8 @@ import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * NewStagerResultTagPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -51,8 +51,8 @@ public class NewStagerResultTagPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Choose primary result tag file")), new EmptyBorder(3, 3, 3,
-				3));
+					_("Choose primary result tag file")), new EmptyBorder(3, 3, 3,
+							3));
 		setBorder(border);
 
 		GroupLayout layout = new GroupLayout(this);
@@ -67,18 +67,18 @@ public class NewStagerResultTagPanel extends JPanel {
 		hGroup.addGroup(layout.createParallelGroup().addComponent(tagFileLabel));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(
-				getTagTextField()));
+							getTagTextField()));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(
-				getChooseTagButton()));
+							getChooseTagButton()));
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tagFileLabel).addComponent(getTagTextField())
-				.addComponent(getChooseTagButton()));
+						.addComponent(tagFileLabel).addComponent(getTagTextField())
+						.addComponent(getChooseTagButton()));
 
 		layout.setVerticalGroup(vGroup);
 
@@ -149,17 +149,17 @@ public class NewStagerResultTagPanel extends JPanel {
 		public ChooseTagFileAction() {
 			super(_("Choose..."));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/find.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					_("Choose a tag file to save"));
+					 _("Choose a tag file to save"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseSaveTag(NewStagerResultTagPanel.this
-					.getTopLevelAncestor());
+												  .getTopLevelAncestor());
 			if (file == null) {
 				return;
 			}

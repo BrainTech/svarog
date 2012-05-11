@@ -8,7 +8,7 @@ public class NewStagerTagWriteStepResult extends NewStagerComputationMgrStepResu
 	public NewStagerTagWriteStepResult(String primaryTagFilePath) {
 		this.primaryTagFilePath = primaryTagFilePath;
 	}
-	
-	
+
+
 
 }

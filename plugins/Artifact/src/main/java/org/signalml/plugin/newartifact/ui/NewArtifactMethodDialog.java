@@ -65,7 +65,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	private int[][] currentExclusion;
 
 	public NewArtifactMethodDialog(
-				       PresetManager presetManager, Window w) {
+		PresetManager presetManager, Window w) {
 		super(presetManager, w, true);
 	}
 
@@ -82,7 +82,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		if (contextHelpURL == null) {
 			try {
 				contextHelpURL = (new ClassPathResource(
-							  "org/signalml/help/artifact.html")).getURL();
+									  "org/signalml/help/artifact.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
@@ -121,7 +121,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		String path = "?";
 		if (signalDocument instanceof FileBackedDocument) {
 			path = ((FileBackedDocument) signalDocument).getBackingFile()
-			       .getAbsolutePath();
+				   .getAbsolutePath();
 		}
 		signalPanel.getSignalTextField().setText(path);
 
@@ -291,7 +291,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 
 			if (montageDialog == null) {
 				montageDialog = new SourceMontageDialog(
-									NewArtifactMethodDialog.this, true);
+					NewArtifactMethodDialog.this, true);
 			}
 
 			SourceMontageDescriptor descriptor = new SourceMontageDescriptor(
@@ -328,7 +328,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 
 			if (exclusionDialog == null) {
 				exclusionDialog = new NewArtifactExclusionDialog(
-						NewArtifactMethodDialog.this, true);
+					NewArtifactMethodDialog.this, true);
 			}
 
 			NewArtifactExclusionDescriptor descriptor = new NewArtifactExclusionDescriptor(

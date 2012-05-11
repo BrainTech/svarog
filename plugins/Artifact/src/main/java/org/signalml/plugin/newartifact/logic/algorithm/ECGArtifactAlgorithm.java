@@ -38,11 +38,11 @@ public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
 
 		final int tailLength = data.constants.getPaddingLength();
 		final int blockLength = data.constants.getBlockLength();
-		
+
 		double signalData[] = this.getChannelData(data, PluginChannel.ECG);
-		
+
 		double ecgChannel[] = Arrays.copyOfRange(signalData,
-				      tailLength, tailLength + blockLength);
+							  tailLength, tailLength + blockLength);
 		for (int i = 0; i < data.constants.channelCount; ++i) {
 			double channelData[] = Arrays.copyOfRange(signal[i], tailLength, tailLength + blockLength);
 			buffer[i] = Math.abs(this.correlationAlgorithm.computeCorrelation(channelData, ecgChannel));

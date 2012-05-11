@@ -15,7 +15,7 @@ import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	protected static final Logger logger = Logger
-			.getLogger(PluginComputationMgr.class);
+										   .getLogger(PluginComputationMgr.class);
 
 	private class CheckedThreadFactory implements ThreadFactory {
 
@@ -42,7 +42,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	private PluginCheckedThreadGroup threadGroup;
 
 	public Result compute(Data data, MethodExecutionTracker tracker)
-			throws ComputationException {
+	throws ComputationException {
 		this.data = data;
 		this.tracker = tracker;
 
@@ -75,14 +75,14 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	}
 
 	protected Result doCompute() throws ComputationException,
-			PluginToolInterruptedException, PluginToolAbortException {
+		PluginToolInterruptedException, PluginToolAbortException {
 
 		this.stepResults = new HashMap<IPluginComputationMgrStep, PluginComputationMgrStepResult>();
 
 		Collection<IPluginComputationMgrStep> steps = this.prepareStepChain();
 
 		Map<IPluginComputationMgrStep, Integer> tickMap = new HashMap<IPluginComputationMgrStep, Integer>(
-				steps.size());
+			steps.size());
 		for (IPluginComputationMgrStep step : steps) {
 			step.initialize();
 			tickMap.put(step, step.getStepNumberEstimate());
@@ -102,7 +102,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	protected abstract Collection<IPluginComputationMgrStep> prepareStepChain();
 
 	protected void initializeRun(
-			Map<IPluginComputationMgrStep, Integer> stepTicks) {
+		Map<IPluginComputationMgrStep, Integer> stepTicks) {
 
 	}
 
@@ -113,7 +113,7 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 			Throwable cause = this.threadGroup.getCause();
 			if (cause != null) {
 				logger.error("Error in worker thread "
-						+ this.threadGroup.getCausingThread().getId());
+							 + this.threadGroup.getCausingThread().getId());
 				throw new ComputationException(cause);
 			}
 		}

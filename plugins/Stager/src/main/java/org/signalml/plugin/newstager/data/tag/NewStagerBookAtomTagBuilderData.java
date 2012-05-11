@@ -12,9 +12,9 @@ public class NewStagerBookAtomTagBuilderData {
 	public final NewStagerBookAtomTagCreator tagCreator;
 
 	public NewStagerBookAtomTagBuilderData(
-			Map<String, Integer> channelMap,
-			NewStagerBookAtomSampleHelperSet converters,
-			NewStagerBookAtomTagCreator tagCreator) {
+		Map<String, Integer> channelMap,
+		NewStagerBookAtomSampleHelperSet converters,
+		NewStagerBookAtomTagCreator tagCreator) {
 		this.channelMap = channelMap;
 		this.helpers = converters;
 		this.tagCreator = tagCreator;

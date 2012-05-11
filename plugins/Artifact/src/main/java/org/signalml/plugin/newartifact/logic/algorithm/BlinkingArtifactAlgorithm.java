@@ -71,16 +71,16 @@ public class BlinkingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 	}
 
 	private double[] shortDiff(NewArtifactAlgorithmData data, int block,
-				   PluginChannel channel1,
-				   PluginChannel channel2) throws NewArtifactPluginException  {
+							   PluginChannel channel1,
+							   PluginChannel channel2) throws NewArtifactPluginException  {
 		final double channelData1[] = this.getChannelData(data, channel1);
 		final double channelData2[] = this.getChannelData(data, channel2);
 
 		final NewArtifactConstants constants = data.constants;
 
 		final int start = block * constants.getSmallBlockLength() + constants.getPaddingLength()
-			    - constants.getSmallPaddingLength();
-		
+						  - constants.getSmallPaddingLength();
+
 		double diff[] = new double[data.constants.getSmallBlockLengthWithPadding()];
 		for (int i = start, j = 0; i < start + constants.getSmallBlockLengthWithPadding(); ++i, ++j) {
 			diff[j] = channelData1[i] - channelData2[i];

@@ -21,14 +21,14 @@ import org.signalml.plugin.newstager.data.logic.NewStagerMgrStepData;
 import org.signalml.plugin.newstager.data.logic.NewStagerTagWriteStepResult;
 
 public class NewStagerComputationMgr extends
-		PluginComputationMgr<NewStagerMgrData, NewStagerResult> {
+	PluginComputationMgr<NewStagerMgrData, NewStagerResult> {
 
 	protected class TrackerProxy
-			extends
-			AbstractPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> {
+		extends
+		AbstractPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> {
 
 		public TrackerProxy(PluginCheckedThreadGroup threadGroup,
-				MethodExecutionTracker tracker) {
+							MethodExecutionTracker tracker) {
 			super(threadGroup, tracker);
 		}
 
@@ -48,7 +48,7 @@ public class NewStagerComputationMgr extends
 
 		@Override
 		protected String getMessageForPhase(
-				NewStagerComputationProgressPhase phase, Object... arguments) {
+			NewStagerComputationProgressPhase phase, Object... arguments) {
 			switch (phase) {
 			case SIGNAL_STATS_PREPARE_PHASE:
 				return _("Preparing");
@@ -56,7 +56,7 @@ public class NewStagerComputationMgr extends
 				return _("Reading source data");
 			case SIGNAL_STATS_BLOCK_COMPUTATION_PHASE:
 				return _R("Computing signal statistics (block {0} of {1})",
-						arguments);
+						  arguments);
 			case BOOK_FILE_INITIAL_READ_PHASE:
 				return _("Reading book file");
 			case BOOK_PROCESSING_PHASE:
@@ -84,7 +84,7 @@ public class NewStagerComputationMgr extends
 
 	private List<IPluginComputationMgrStep> steps;
 	private TrackerProxy trackerProxy;
-	
+
 	@Override
 	protected Collection<IPluginComputationMgrStep> prepareStepChain() {
 		this.steps = new LinkedList<IPluginComputationMgrStep>();
@@ -92,8 +92,8 @@ public class NewStagerComputationMgr extends
 		this.trackerProxy = new TrackerProxy(this.getThreadGroup(), tracker);
 
 		NewStagerMgrStepData data = new NewStagerMgrStepData(
-				this.data.stagerData, this.data.constants, this.trackerProxy,
-				this.getThreadFactory());
+			this.data.stagerData, this.data.constants, this.trackerProxy,
+			this.getThreadFactory());
 
 		this.steps.add(new NewStagerSignalStatsStep(data));
 		this.steps.add(new NewStagerBookProcessStep(data));
@@ -104,7 +104,7 @@ public class NewStagerComputationMgr extends
 
 	@Override
 	protected void initializeRun(
-			Map<IPluginComputationMgrStep, Integer> stepTicks) {
+		Map<IPluginComputationMgrStep, Integer> stepTicks) {
 		for (Map.Entry<IPluginComputationMgrStep, Integer> entry : stepTicks.entrySet()) {
 			this.trackerProxy.setTickerLimit(entry.getKey(), entry.getValue());
 		}
@@ -119,7 +119,7 @@ public class NewStagerComputationMgr extends
 		NewStagerTagWriteStepResult castedWriterResult;
 		try {
 			castedWriterResult = (NewStagerTagWriteStepResult) this.stepResults
-					.get(this.steps.get(2));
+								 .get(this.steps.get(2));
 		} catch (ClassCastException e) {
 			logger.error("Unexpected step result class");
 			return null;

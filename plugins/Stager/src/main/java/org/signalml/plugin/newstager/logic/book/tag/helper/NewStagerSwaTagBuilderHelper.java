@@ -7,14 +7,14 @@ import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 import org.signalml.plugin.newstager.data.tag.NewStagerHelperTagSample;
 
 public class NewStagerSwaTagBuilderHelper extends
-		NewStagerBookAtomAbstractTagHelper implements
-		INewStagerBookAtomCoeffHelper {
+	NewStagerBookAtomAbstractTagHelper implements
+	INewStagerBookAtomCoeffHelper {
 
 	private final INewStagerBookAtomPrimaryTagHelper helper;
 	private final int signalOffset;
 
 	public NewStagerSwaTagBuilderHelper(NewStagerBookAtomTagHelperData data,
-			INewStagerBookAtomPrimaryTagHelper helper, int signalOffset) {
+										INewStagerBookAtomPrimaryTagHelper helper, int signalOffset) {
 		super(data);
 		this.helper = helper;
 		this.signalOffset = signalOffset;
@@ -41,14 +41,14 @@ public class NewStagerSwaTagBuilderHelper extends
 			int offset = tagSample.offset;
 			int length = tagSample.length;
 			int end = (tagSample.position + ((double) length) / 2) > offsetDimension ? ((sample.offset + 1)
-					* offsetDimension - 1)
-					: (offset + length);
+					  * offsetDimension - 1)
+					  : (offset + length);
 
 			offset -= (sample.offset + signalOffset) * offsetDimension;
 			end -= (sample.offset + signalOffset) * offsetDimension;
 			if (offset <= offsetDimension && end >= 0) {
 				bits.set(Math.max(0, offset),
-						Math.min(offsetDimension - 1, end) + 1);
+						 Math.min(offsetDimension - 1, end) + 1);
 			}
 		}
 

@@ -1,5 +1,5 @@
 /* NewStagerAdvancedConfigPanel.java created 2008-02-14
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -27,8 +27,8 @@ import org.signalml.plugin.newstager.ui.components.MinMaxSpinnerPanel;
 
 /**
  * NewStagerAdvancedConfigPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -72,7 +72,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Parameters")), new EmptyBorder(3, 3, 3, 3));
+					_("Parameters")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		add(getParametersPanel(), BorderLayout.NORTH);
@@ -92,20 +92,20 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 			TitleLabel kComplexLabel = new TitleLabel(_("K-Compl"));
 
 			TitleLabel amplitudeLabel = new TitleLabel(
-					"<html><body><div align=\"center\">"
-							+ _("Amplitude [uv]<br />min/max")
-							+ "</div></body></html>");
+				"<html><body><div align=\"center\">"
+				+ _("Amplitude [uv]<br />min/max")
+				+ "</div></body></html>");
 			TitleLabel frequencyLabel = new TitleLabel(
-					"<html><body><div align=\"center\">"
-							+ _("Frequency [Hz]<br />min/max")
-							+ "</div></body></html>");
+				"<html><body><div align=\"center\">"
+				+ _("Frequency [Hz]<br />min/max")
+				+ "</div></body></html>");
 			TitleLabel scaleLabel = new TitleLabel(
-					"<html><body><div align=\"center\">"
-							+ _("Scale [s]<br />min/max")
-							+ "</div></body></html>");
+				"<html><body><div align=\"center\">"
+				+ _("Scale [s]<br />min/max")
+				+ "</div></body></html>");
 			TitleLabel phaseLabel = new TitleLabel(
-					"<html><body><div align=\"center\">"
-							+ _("Phase<br />min/max") + "</div></body></html>");
+				"<html><body><div align=\"center\">"
+				+ _("Phase<br />min/max") + "</div></body></html>");
 
 			TitleLabel deltaPhaseLabel = new TitleLabel("-");
 			TitleLabel thetaPhaseLabel = new TitleLabel("-");
@@ -113,8 +113,8 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 			TitleLabel spindlePhaseLabel = new TitleLabel("-");
 
 			CompactButton parametersHelpButton = SwingUtils
-					.createFieldHelpButton(owner,
-							NewStagerMethodDialog.HELP_PARAMETERS);
+												 .createFieldHelpButton(owner,
+														 NewStagerMethodDialog.HELP_PARAMETERS);
 
 			parametersPanel.add(parametersHelpButton);
 			parametersPanel.add(amplitudeLabel);
@@ -159,11 +159,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getDeltaAmplitudePanel() {
 		if (deltaAmplitudePanel == null) {
 			deltaAmplitudePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MAX_AMPLITUDE,
-					NewStagerConstants.INCR_AMPLITUDE);
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MAX_AMPLITUDE,
+				NewStagerConstants.INCR_AMPLITUDE);
 		}
 		return deltaAmplitudePanel;
 	}
@@ -171,11 +171,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getDeltaFrequencyPanel() {
 		if (deltaFrequencyPanel == null) {
 			deltaFrequencyPanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MAX_FREQUENCY,
-					NewStagerConstants.INCR_FREQUENCY);
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MAX_FREQUENCY,
+				NewStagerConstants.INCR_FREQUENCY);
 		}
 		return deltaFrequencyPanel;
 	}
@@ -183,9 +183,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getDeltaScalePanel() {
 		if (deltaScalePanel == null) {
 			deltaScalePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
-					NewStagerConstants.INCR_SCALE);
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
+				NewStagerConstants.INCR_SCALE);
 		}
 		return deltaScalePanel;
 	}
@@ -193,11 +193,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getThetaAmplitudePanel() {
 		if (thetaAmplitudePanel == null) {
 			thetaAmplitudePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MAX_AMPLITUDE,
-					NewStagerConstants.INCR_AMPLITUDE);
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MAX_AMPLITUDE,
+				NewStagerConstants.INCR_AMPLITUDE);
 		}
 		return thetaAmplitudePanel;
 	}
@@ -205,11 +205,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getThetaFrequencyPanel() {
 		if (thetaFrequencyPanel == null) {
 			thetaFrequencyPanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MAX_FREQUENCY,
-					NewStagerConstants.INCR_FREQUENCY);
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MAX_FREQUENCY,
+				NewStagerConstants.INCR_FREQUENCY);
 		}
 		return thetaFrequencyPanel;
 	}
@@ -217,9 +217,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getThetaScalePanel() {
 		if (thetaScalePanel == null) {
 			thetaScalePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
-					NewStagerConstants.INCR_SCALE);
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
+				NewStagerConstants.INCR_SCALE);
 		}
 		return thetaScalePanel;
 	}
@@ -227,11 +227,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getAlphaAmplitudePanel() {
 		if (alphaAmplitudePanel == null) {
 			alphaAmplitudePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MAX_AMPLITUDE,
-					NewStagerConstants.INCR_AMPLITUDE);
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MAX_AMPLITUDE,
+				NewStagerConstants.INCR_AMPLITUDE);
 		}
 		return alphaAmplitudePanel;
 	}
@@ -239,11 +239,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getAlphaFrequencyPanel() {
 		if (alphaFrequencyPanel == null) {
 			alphaFrequencyPanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MAX_FREQUENCY,
-					NewStagerConstants.INCR_FREQUENCY);
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MAX_FREQUENCY,
+				NewStagerConstants.INCR_FREQUENCY);
 		}
 		return alphaFrequencyPanel;
 	}
@@ -251,9 +251,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getAlphaScalePanel() {
 		if (alphaScalePanel == null) {
 			alphaScalePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
-					NewStagerConstants.INCR_SCALE);
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
+				NewStagerConstants.INCR_SCALE);
 		}
 		return alphaScalePanel;
 	}
@@ -261,11 +261,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getSpindleAmplitudePanel() {
 		if (spindleAmplitudePanel == null) {
 			spindleAmplitudePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MAX_AMPLITUDE,
-					NewStagerConstants.INCR_AMPLITUDE);
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MAX_AMPLITUDE,
+				NewStagerConstants.INCR_AMPLITUDE);
 		}
 		return spindleAmplitudePanel;
 	}
@@ -273,11 +273,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getSpindleFrequencyPanel() {
 		if (spindleFrequencyPanel == null) {
 			spindleFrequencyPanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MAX_FREQUENCY,
-					NewStagerConstants.INCR_FREQUENCY);
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MAX_FREQUENCY,
+				NewStagerConstants.INCR_FREQUENCY);
 		}
 		return spindleFrequencyPanel;
 	}
@@ -285,9 +285,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getSpindleScalePanel() {
 		if (spindleScalePanel == null) {
 			spindleScalePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
-					NewStagerConstants.INCR_SCALE);
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
+				NewStagerConstants.INCR_SCALE);
 		}
 		return spindleScalePanel;
 	}
@@ -295,11 +295,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getKComplexAmplitudePanel() {
 		if (kComplexAmplitudePanel == null) {
 			kComplexAmplitudePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MIN_AMPLITUDE,
-					NewStagerConstants.MAX_AMPLITUDE,
-					NewStagerConstants.INCR_AMPLITUDE);
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MIN_AMPLITUDE,
+				NewStagerConstants.MAX_AMPLITUDE,
+				NewStagerConstants.INCR_AMPLITUDE);
 		}
 		return kComplexAmplitudePanel;
 	}
@@ -307,11 +307,11 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getKComplexFrequencyPanel() {
 		if (kComplexFrequencyPanel == null) {
 			kComplexFrequencyPanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MIN_FREQUENCY,
-					NewStagerConstants.MAX_FREQUENCY,
-					NewStagerConstants.INCR_FREQUENCY);
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MIN_FREQUENCY,
+				NewStagerConstants.MAX_FREQUENCY,
+				NewStagerConstants.INCR_FREQUENCY);
 		}
 		return kComplexFrequencyPanel;
 	}
@@ -319,9 +319,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getKComplexScalePanel() {
 		if (kComplexScalePanel == null) {
 			kComplexScalePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
-					NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
-					NewStagerConstants.INCR_SCALE);
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MIN_SCALE,
+				NewStagerConstants.MIN_SCALE, NewStagerConstants.MAX_SCALE,
+				NewStagerConstants.INCR_SCALE);
 		}
 		return kComplexScalePanel;
 	}
@@ -329,9 +329,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public MinMaxSpinnerPanel getKComplexPhasePanel() {
 		if (kComplexPhasePanel == null) {
 			kComplexPhasePanel = new MinMaxSpinnerPanel(
-					NewStagerConstants.MIN_PHASE, NewStagerConstants.MIN_PHASE,
-					NewStagerConstants.MIN_PHASE, NewStagerConstants.MAX_PHASE,
-					NewStagerConstants.INCR_PHASE);
+				NewStagerConstants.MIN_PHASE, NewStagerConstants.MIN_PHASE,
+				NewStagerConstants.MIN_PHASE, NewStagerConstants.MAX_PHASE,
+				NewStagerConstants.INCR_PHASE);
 		}
 		return kComplexPhasePanel;
 	}
@@ -343,7 +343,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 		NewStagerFASPThreshold theta = thresholds.thetaThreshold;
 		NewStagerFASPThreshold spindle = thresholds.spindleThreshold;
 		NewStagerFASPThreshold kComplex = thresholds.kCThreshold;
-		
+
 		getDeltaAmplitudePanel().setRange(delta.amplitude);
 		getDeltaFrequencyPanel().setRange(delta.frequency);
 		getDeltaScalePanel().setRange(delta.scale);

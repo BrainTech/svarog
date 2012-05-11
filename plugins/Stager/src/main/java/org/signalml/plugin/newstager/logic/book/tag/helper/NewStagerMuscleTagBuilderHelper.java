@@ -4,10 +4,10 @@ import org.signalml.plugin.newstager.data.book.NewStagerBookSample;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 
 public class NewStagerMuscleTagBuilderHelper extends NewStagerBookAtomAbstractTagHelper implements
-		INewStagerBookAtomCoeffHelper {
+	INewStagerBookAtomCoeffHelper {
 
 	public NewStagerMuscleTagBuilderHelper(
-			NewStagerBookAtomTagHelperData data) {
+		NewStagerBookAtomTagHelperData data) {
 		super(data);
 	}
 

@@ -11,8 +11,8 @@ public class NewStagerBookProcessorStepResult extends NewStagerComputationMgrSte
 	public final boolean montage[];
 
 	public NewStagerBookProcessorStepResult(NewStagerBookInfo bookInfo,
-			Collection<NewStagerBookProcessorResult> tagResults,
-			boolean montage[]) {
+											Collection<NewStagerBookProcessorResult> tagResults,
+											boolean montage[]) {
 		this.bookInfo = bookInfo;
 		this.tagResults = tagResults;
 		this.montage = montage;

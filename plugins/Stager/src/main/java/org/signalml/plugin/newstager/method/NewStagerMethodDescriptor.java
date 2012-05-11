@@ -25,10 +25,10 @@ import org.signalml.plugin.tool.PluginResourceRepository;
 import com.thoughtworks.xstream.XStream;
 
 public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
-		implements ApplicationIterableMethodDescriptor {
+	implements ApplicationIterableMethodDescriptor {
 
 	protected static final Logger logger = Logger
-			.getLogger(NewStagerMethodDescriptor.class);
+										   .getLogger(NewStagerMethodDescriptor.class);
 
 	private NewStagerMethodConfigurer configurer;
 	private MethodPresetManager presetManager;
@@ -37,7 +37,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 
 	@Override
 	public MethodIterationResultConsumer getIterationConsumer(
-			ApplicationMethodManager methodManager) {
+		ApplicationMethodManager methodManager) {
 		return null;
 	}
 
@@ -59,7 +59,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 	@Override
 	public Object createData(ApplicationMethodManager methodManager) {
 		SvarogAccessSignal signalAccess = this.methodManager.getSvarogAccess()
-				.getSignalAccess();
+										  .getSignalAccess();
 
 		ExportedSignalDocument signalDocument;
 		try {
@@ -95,7 +95,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 
 	@Override
 	public MethodResultConsumer getConsumer(
-			ApplicationMethodManager methodManager) {
+		ApplicationMethodManager methodManager) {
 		if (consumer == null) {
 			consumer = new NewStagerMethodConsumer();
 			consumer.initialize(this.methodManager);
@@ -115,14 +115,14 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 
 	@Override
 	public MethodPresetManager getPresetManager(
-			ApplicationMethodManager methodManager, boolean existingOnly) {
+		ApplicationMethodManager methodManager, boolean existingOnly) {
 		if (presetManager == null && !existingOnly) {
 			presetManager = new MethodPresetManager(this.getMethod().getName(),
-					NewStagerParameters.class);
+													NewStagerParameters.class);
 			presetManager.setProfileDir(methodManager.getProfileDir());
 			try {
 				presetManager.setStreamer((XStream) PluginResourceRepository
-						.GetResource("streamer", NewStagerPlugin.class));
+										  .GetResource("streamer", NewStagerPlugin.class));
 			} catch (PluginException e) {
 				this.methodManager.handleException(e);
 				logger.error("Can't get proper streamer", e);
@@ -135,7 +135,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 					logger.debug("Seems like stager preset configuration doesn't exist");
 				} else {
 					logger.error(
-							"Failed to read stager presets - presets lost", ex);
+						"Failed to read stager presets - presets lost", ex);
 				}
 			}
 		}

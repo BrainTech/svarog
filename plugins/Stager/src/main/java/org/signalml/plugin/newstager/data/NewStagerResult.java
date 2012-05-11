@@ -1,5 +1,5 @@
 /* NewStagerResult.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.data;
@@ -9,16 +9,16 @@ import java.io.Serializable;
 
 /**
  * NewStagerResult
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class NewStagerResult implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	private File tagFile;
 
 	private double deltaThr;

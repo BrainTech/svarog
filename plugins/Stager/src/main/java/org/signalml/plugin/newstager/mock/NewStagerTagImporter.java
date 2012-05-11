@@ -22,7 +22,7 @@ public class NewStagerTagImporter {
 	public static void main(String[] args) {
 		LegacyTagImporter importer = new LegacyTagImporter();
 		StyledTagSet tags;
-		
+
 		File sourceFile = new File(path);
 		try {
 			tags = importer.importLegacyTags(sourceFile, samplingFrequency);
@@ -32,7 +32,7 @@ public class NewStagerTagImporter {
 		}
 
 		File outputFile = new File(sourceFile.getParent(), Util.getFileNameWithoutExtension(sourceFile) + "conv.xml");
-		
+
 		TagDocument d;
 		try {
 			d = new TagDocument(tags);
@@ -40,7 +40,7 @@ public class NewStagerTagImporter {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		d.setBackingFile(outputFile);
 		try {
 			d.saveDocument();

@@ -5,13 +5,13 @@ import org.signalml.plugin.newstager.data.book.NewStagerBookSample;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 
 public class NewStagerKCTagBuilderHelper extends
-		NewStagerBookAtomAbstractTagHelper implements
-		INewStagerBookAtomCoeffHelper {
+	NewStagerBookAtomAbstractTagHelper implements
+	INewStagerBookAtomCoeffHelper {
 
 	private static final double THRESHOLD = 1.4d;
 
 	private INewStagerBookAtomFilter kcGaborFilter;
-	
+
 	private NewStagerBookSample sample;
 
 	private double result;
@@ -28,7 +28,7 @@ public class NewStagerKCTagBuilderHelper extends
 			this.sample = sample;
 			this.computeResult(sample);
 		}
-		
+
 		return this.result;
 	}
 
@@ -42,7 +42,7 @@ public class NewStagerKCTagBuilderHelper extends
 			ampli[i] = amplitude;
 		}
 		mean /= length;
-		
+
 		int count = 0;
 		for (NewStagerAdaptedAtom atom : this.kcGaborFilter.filter(sample.atoms)) {
 			boolean selected = true;
@@ -52,7 +52,7 @@ public class NewStagerKCTagBuilderHelper extends
 					break;
 				}
 			}
-			
+
 			if (selected) {
 				if (atom.amplitude > THRESHOLD * (mean - atom.amplitude / 3)) {
 					++count;
@@ -62,9 +62,9 @@ public class NewStagerKCTagBuilderHelper extends
 					++count;
 				}
 			}
-			
+
 		}
-		
+
 		this.result = (double) count;
 	}
 

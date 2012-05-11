@@ -18,7 +18,7 @@ import org.signalml.plugin.tool.PluginResourceRepository;
 public class NewStagerPlugin implements Plugin {
 
 	public static final String iconPath = "org/signalml/app/icon/runmethod.png"; //TODO move this elsewhere
-	
+
 	private PluginMethodManager manager;
 
 	private static NewStagerI18nDelegate i18nDelegate;
@@ -26,13 +26,13 @@ public class NewStagerPlugin implements Plugin {
 	@Override
 	public void register(SvarogAccess access) throws SignalMLException {
 		PluginAccessHelper
-				.SetupConfig(this, access,
-						"classpath:org/signalml/plugin/newstager/resource/config.xml");
+		.SetupConfig(this, access,
+					 "classpath:org/signalml/plugin/newstager/resource/config.xml");
 
 		i18nDelegate = new NewStagerI18nDelegate(access);
 		this.manager = new PluginMethodManager(access,
-				(PluginConfigForMethod) PluginResourceRepository.GetResource(
-						"config", NewStagerPlugin.class));
+											   (PluginConfigForMethod) PluginResourceRepository.GetResource(
+													   "config", NewStagerPlugin.class));
 
 		this.setupGUI(access.getGUIAccess());
 		// PluginAccessHelper.SetupGUI(access.getGUIAccess(), this.createGUI());
@@ -45,10 +45,10 @@ public class NewStagerPlugin implements Plugin {
 	public static String _R(String msgKey, Object ... arguments) {
 		return i18nDelegate._R(msgKey, arguments);
 	}
-	
+
 	private void setupGUI(SvarogAccessGUI guiAccess)
-			throws UnsupportedOperationException, PluginException {
+	throws UnsupportedOperationException, PluginException {
 		guiAccess
-				.addButtonToToolsMenu(new NewStagerPluginAction(this.manager));
+		.addButtonToToolsMenu(new NewStagerPluginAction(this.manager));
 	}
 }

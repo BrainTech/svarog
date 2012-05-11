@@ -28,10 +28,10 @@ public class NewStagerStatAlgorithm {
 		this.data = data;
 
 		NewStagerArtifactAlgorithmData algorithmData = new NewStagerArtifactAlgorithmData(
-				data.channels, data.constants, data.parameters);
+			data.channels, data.constants, data.parameters);
 
 		this.montageAnalyser = new NewStagerArtifactMontageAlgorithm(
-				algorithmData);
+			algorithmData);
 		this.emgAnalyser = new NewStagerArtifactToneEMGAlgorithm(algorithmData);
 
 		this.montageArtifacts = new LinkedList<Boolean>();
@@ -48,14 +48,14 @@ public class NewStagerStatAlgorithm {
 		double c3[], a2[];
 		try {
 			c3 = PluginChannelAccessHelper.GetChannelSignal(
-					this.data.channels, PluginChannel.C3, signal);
+					 this.data.channels, PluginChannel.C3, signal);
 			a2 = PluginChannelAccessHelper.GetChannelSignal(
-					this.data.channels, PluginChannel.A2, signal);
+					 this.data.channels, PluginChannel.A2, signal);
 		} catch (PluginAlgorithmDataException e) {
 			throw new NewStagerPluginException(e);
 		}
 
-		assert (c3.length == a2.length);
+		assert(c3.length == a2.length);
 		for (int i = 0; i < c3.length; ++i) {
 			double diff = c3[i] - a2[i];
 			this.c3a2diff += diff;
@@ -65,7 +65,7 @@ public class NewStagerStatAlgorithm {
 
 	public NewStagerStatAlgorithmResult getResult() {
 		int length = this.emgArtifacts.size();
-		assert (length == this.montageArtifacts.size());
+		assert(length == this.montageArtifacts.size());
 		double muscle[] = new double[length];
 		boolean montage[] = new boolean[length];
 
@@ -84,9 +84,9 @@ public class NewStagerStatAlgorithm {
 		int count = length * this.data.constants.getBlockLength();
 		double mean = this.c3a2diff / count;
 		double dev = this.c3a2diffSquare - 2 * mean * this.c3a2diff + mean
-				* mean * count;
+					 * mean * count;
 
 		return new NewStagerStatAlgorithmResult(Math.sqrt(dev / (count - 1)),
-				muscle, montage);
+												muscle, montage);
 	}
 }

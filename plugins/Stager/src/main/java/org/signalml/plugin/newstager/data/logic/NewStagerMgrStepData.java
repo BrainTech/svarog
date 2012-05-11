@@ -13,9 +13,9 @@ public class NewStagerMgrStepData extends PluginComputationMgrStepData<NewStager
 	public final NewStagerConstants constants;
 
 	public NewStagerMgrStepData(NewStagerData stagerData,
-			NewStagerConstants constants,
-			IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
-			ThreadFactory threadFactory) {
+								NewStagerConstants constants,
+								IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
+								ThreadFactory threadFactory) {
 		super(tracker, threadFactory);
 		this.stagerData = stagerData;
 		this.constants = constants;

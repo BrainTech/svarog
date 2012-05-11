@@ -12,20 +12,20 @@ import org.signalml.plugin.newstager.data.book.NewStagerBookSample;
 public class NewStagerBookDataProvider {
 
 	private CountDownLatch event;
-	private AtomicBoolean shutdownFlag; 
-	
+	private AtomicBoolean shutdownFlag;
+
 	private NewStagerBookData bookData;
-	
+
 	private AtomicInteger position;
-	
+
 	public NewStagerBookDataProvider() {
 		this.event = new CountDownLatch(1);
 		this.position = new AtomicInteger();
 		this.shutdownFlag = new AtomicBoolean(false);
-		
+
 		this.bookData = null;
 	}
-	
+
 
 	public void setBookData(NewStagerBookData bookData) {
 		this.bookData = bookData;
@@ -37,37 +37,37 @@ public class NewStagerBookDataProvider {
 		if (this.shutdownFlag.get()) {
 			return null;
 		}
-		
+
 		return this.bookData.bookInfo;
 	}
-	
+
 	public NewStagerBookInfo tryGetBookInfo() {
 		boolean readyFlag = false;
-		
+
 		try {
 			readyFlag = this.event.await(0, TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
 			//do nothing
 		}
-		return readyFlag ? this.bookData.bookInfo : null; 
+		return readyFlag ? this.bookData.bookInfo : null;
 	}
-	
+
 	public NewStagerBookSample getNextBookAtoms() throws InterruptedException {
 		this.event.await();
 		if (this.shutdownFlag.get()) {
 			return null;
 		}
-		
+
 		int current = this.position.getAndIncrement();
 		if (current >= this.bookData.atoms.length) {
 			return null;
 		}
 		return new NewStagerBookSample(current, this.bookData.atoms[current], this.bookData.bookInfo);
 	}
-	
+
 	public void shutdown() {
 		this.shutdownFlag.set(true);
 		this.event.countDown();
 	}
-	
+
 }

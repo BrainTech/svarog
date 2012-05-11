@@ -1,5 +1,5 @@
 /* NewStagerSleepStatisticTable.java created 2007-02-23
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -16,8 +16,8 @@ import org.signalml.app.view.TablePopupMenuProvider;
 
 /**
  * NewStagerSleepStatisticTable
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -37,7 +37,7 @@ public class NewStagerSleepStatisticTable extends JTable {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if (SwingUtilities.isRightMouseButton(e)
-						&& (e.getClickCount() == 1)) {
+				&& (e.getClickCount() == 1)) {
 					int index = rowAtPoint(e.getPoint());
 					ListSelectionModel selectionModel = getSelectionModel();
 					if (!selectionModel.isSelectedIndex(index)) {

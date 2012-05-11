@@ -12,25 +12,25 @@ public class PluginMethodWorkingDirConfigurer {
 	public interface PluginWorkingDirDialogGetter {
 		public AbstractPluginDialog getDialog();
 	}
-	
+
 	protected static final Logger logger = Logger
-			.getLogger(PluginMethodWorkingDirConfigurer.class);
-	
+										   .getLogger(PluginMethodWorkingDirConfigurer.class);
+
 	private PresetManager presetManager;
 	private PluginMethodWithWorkDirConfiguration defaultConfig;
 	private PluginWorkingDirDialogGetter dialogGetter;
-	
+
 	private boolean firstRunFlag;
 
 	public PluginMethodWorkingDirConfigurer(PresetManager presetManager,
-			PluginMethodWithWorkDirConfiguration defaultConfig,
-			PluginWorkingDirDialogGetter dialogGetter) {
+											PluginMethodWithWorkDirConfiguration defaultConfig,
+											PluginWorkingDirDialogGetter dialogGetter) {
 		this.defaultConfig = defaultConfig;
 		this.presetManager = presetManager;
 		this.dialogGetter = dialogGetter;
 		this.firstRunFlag = true;
 	}
-	
+
 	public File configureWorkDir() {
 		File workingDirectory = null;
 		String workingDirectoryPath;
@@ -43,7 +43,7 @@ public class PluginMethodWorkingDirConfigurer {
 		if (this.presetManager != null) {
 			try {
 				config = (PluginMethodWithWorkDirConfiguration) this.presetManager
-						.getPresetByName(this.defaultConfig.getName());
+						 .getPresetByName(this.defaultConfig.getName());
 			} catch (ClassCastException e) {
 				logger.warn("Incorrect config type", e);
 
@@ -60,7 +60,7 @@ public class PluginMethodWorkingDirConfigurer {
 			if (workingDirectoryPath != null) {
 
 				workingDirectory = (new File(workingDirectoryPath))
-						.getAbsoluteFile();
+								   .getAbsoluteFile();
 
 				if (workingDirectory.exists()) {
 					if (workingDirectory.isDirectory()
@@ -93,5 +93,5 @@ public class PluginMethodWorkingDirConfigurer {
 
 		return workingDirectory;
 	}
-	
+
 }

@@ -11,8 +11,8 @@ public class NewStagerBookProcessorResult {
 	public Map<NewStagerTagCollectionType, NewStagerTagCollection> tagCollectionMap;
 
 	public NewStagerBookProcessorResult(
-			NewStagerBookInfo bookInfo,
-			Map<NewStagerTagCollectionType, NewStagerTagCollection> tagCollectionMap) {
+		NewStagerBookInfo bookInfo,
+		Map<NewStagerTagCollectionType, NewStagerTagCollection> tagCollectionMap) {
 		this.tagCollectionMap = tagCollectionMap;
 	}
 

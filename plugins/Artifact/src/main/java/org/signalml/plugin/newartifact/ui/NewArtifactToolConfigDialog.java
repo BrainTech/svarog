@@ -21,8 +21,8 @@ import org.signalml.plugin.newartifact.data.NewArtifactConfiguration;
 
 /**
  * NewArtifactToolConfigDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -74,14 +74,14 @@ public class NewArtifactToolConfigDialog extends AbstractPluginDialog {
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-			throws SignalMLException {
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		getConfigPanel().validatePanel(errors);
 
 		if (!errors.hasErrors()) {
 			File file = getConfigPanel().getWorkingDirectoryPanel()
-					.getDirectory();
+						.getDirectory();
 			if (file == null || !file.exists() || !file.canWrite()) {
 				errors.addError(_("Working directory not set or unusable"));
 			}

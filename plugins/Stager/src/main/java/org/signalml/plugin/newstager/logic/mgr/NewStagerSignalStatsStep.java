@@ -34,7 +34,7 @@ import org.signalml.plugin.signal.PluginSignalHelper;
 import org.signalml.util.MinMaxRange;
 
 public class NewStagerSignalStatsStep extends
-		AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
+	AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
 
 	private class TrackerUpdater extends AbstractPluginTrackerUpdaterWithTimer {
 
@@ -43,9 +43,9 @@ public class NewStagerSignalStatsStep extends
 		private final int blockCount;
 
 		public TrackerUpdater(
-				NewStagerSignalStatsStep step,
-				IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
-				int blockCount) {
+			NewStagerSignalStatsStep step,
+			IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker,
+			int blockCount) {
 			this.step = step;
 			this.tracker = tracker;
 			this.blockCount = blockCount;
@@ -55,11 +55,11 @@ public class NewStagerSignalStatsStep extends
 		public void update(int progress, int prevProgress) {
 			if (progress < this.blockCount) {
 				this.tracker.advance(this.step,
-						Math.max(progress - prevProgress, 0));
+									 Math.max(progress - prevProgress, 0));
 				this.tracker
-						.setProgressPhase(
-								NewStagerComputationProgressPhase.SIGNAL_STATS_BLOCK_COMPUTATION_PHASE,
-								progress, this.blockCount);
+				.setProgressPhase(
+					NewStagerComputationProgressPhase.SIGNAL_STATS_BLOCK_COMPUTATION_PHASE,
+					progress, this.blockCount);
 			}
 		}
 
@@ -105,15 +105,15 @@ public class NewStagerSignalStatsStep extends
 		NewStagerParameters parameters = this.computeNewParameters();
 
 		return new NewStagerSignalStatsResult(
-				this.getSignalStatCoeffs(parameters), parameters,
-				this.statResult.muscle, this.statResult.montage);
+				   this.getSignalStatCoeffs(parameters), parameters,
+				   this.statResult.muscle, this.statResult.montage);
 	}
 
 	@Override
 	protected PluginComputationMgrStepResult doRun(
-			PluginComputationMgrStepResult prevStepResult)
-			throws PluginToolAbortException, PluginToolInterruptedException,
-			ComputationException {
+		PluginComputationMgrStepResult prevStepResult)
+	throws PluginToolAbortException, PluginToolInterruptedException,
+		ComputationException {
 
 		IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker = this.data.tracker;
 
@@ -149,17 +149,17 @@ public class NewStagerSignalStatsStep extends
 
 	private void createWorkers() {
 		MultichannelSampleSource source = this.data.stagerData
-				.getSampleSource();
+										  .getSampleSource();
 
 		final BlockingQueue<double[][]> freeBufferQueue = new ArrayBlockingQueue<double[][]>(
-				BUFFER_QUEUE_SIZE);
+			BUFFER_QUEUE_SIZE);
 		final BlockingQueue<double[][]> readyBufferQueue = new ArrayBlockingQueue<double[][]>(
-				BUFFER_QUEUE_SIZE);
+			BUFFER_QUEUE_SIZE);
 
 		for (int i = 0; i < BUFFER_QUEUE_SIZE; ++i) {
 			freeBufferQueue
-					.add(new double[source.getChannelCount()][this.data.constants
-							.getBlockLength()]);
+			.add(new double[source.getChannelCount()][this.data.constants
+					.getBlockLength()]);
 		}
 
 		INewStagerStatsSynchronizer synchronizer = new INewStagerStatsSynchronizer() {
@@ -168,7 +168,7 @@ public class NewStagerSignalStatsStep extends
 
 			@Override
 			public void markBufferAsReady(double[][] buffer)
-					throws InterruptedException {
+			throws InterruptedException {
 				readyBufferQueue.add(buffer);
 			}
 
@@ -191,7 +191,7 @@ public class NewStagerSignalStatsStep extends
 
 			@Override
 			public void markBufferAsProcessed(double buffer[][])
-					throws InterruptedException {
+			throws InterruptedException {
 				freeBufferQueue.add(buffer);
 			}
 
@@ -218,12 +218,12 @@ public class NewStagerSignalStatsStep extends
 		};
 
 		Runnable readerWorker = new NewStagerSignalReaderWorker(
-				new NewStagerSignalReaderWorkerData(source, synchronizer));
+			new NewStagerSignalReaderWorkerData(source, synchronizer));
 		Runnable statWorker = new NewStagerStatWorker(
-				new NewStagerStatWorkerData(synchronizer, completion,
-						this.data.constants,
-						this.data.stagerData.getParameters(),
-						this.data.stagerData.getChannelMap()));
+			new NewStagerStatWorkerData(synchronizer, completion,
+										this.data.constants,
+										this.data.stagerData.getParameters(),
+										this.data.stagerData.getChannelMap()));
 
 		this.workers.add(readerWorker);
 		this.workers.add(statWorker);
@@ -235,7 +235,7 @@ public class NewStagerSignalStatsStep extends
 
 	private NewStagerParameters computeNewParameters() {
 		NewStagerParameters oldParameters = this.data.stagerData
-				.getParameters();
+											.getParameters();
 		if (!this.statResultReadyFlag.get()) {
 			return oldParameters;
 		}
@@ -244,37 +244,37 @@ public class NewStagerSignalStatsStep extends
 		NewStagerConstants constants = this.data.constants;
 
 		double coeff = constants.amplitudeA * this.statResult.deviation
-				+ constants.amplitudeB;
+					   + constants.amplitudeB;
 
 		return new NewStagerParameters(oldParameters.bookFilePath,
-				oldParameters.rules, oldParameters.analyseEMGChannelFlag,
-				oldParameters.analyseEEGChannelsFlag,
-				oldParameters.primaryHypnogramFlag,
-				new NewStagerParameterThresholds(
-						this.computeMontageToneEMGThreshold(),
-						thresholds.montageEEGThreshold,
-						thresholds.montageEMGThreshold,
-						thresholds.montageToneEMGThreshold,
-						thresholds.remEogDeflectionThreshold,
-						thresholds.semEogDeflectionThreshold,
-						this.convertThreshold(thresholds.alphaThreshold, coeff,
-								constants.alphaOffset), this.convertThreshold(
-								thresholds.deltaThreshold, coeff,
-								constants.deltaOffset), this.convertThreshold(
-								thresholds.spindleThreshold, coeff,
-								constants.spindleOffset),
-						thresholds.thetaThreshold, thresholds.kCThreshold));
+									   oldParameters.rules, oldParameters.analyseEMGChannelFlag,
+									   oldParameters.analyseEEGChannelsFlag,
+									   oldParameters.primaryHypnogramFlag,
+									   new NewStagerParameterThresholds(
+										   this.computeMontageToneEMGThreshold(),
+										   thresholds.montageEEGThreshold,
+										   thresholds.montageEMGThreshold,
+										   thresholds.montageToneEMGThreshold,
+										   thresholds.remEogDeflectionThreshold,
+										   thresholds.semEogDeflectionThreshold,
+										   this.convertThreshold(thresholds.alphaThreshold, coeff,
+												   constants.alphaOffset), this.convertThreshold(
+											   thresholds.deltaThreshold, coeff,
+											   constants.deltaOffset), this.convertThreshold(
+											   thresholds.spindleThreshold, coeff,
+											   constants.spindleOffset),
+										   thresholds.thetaThreshold, thresholds.kCThreshold));
 	}
 
 	private NewStagerFASPThreshold convertThreshold(
-			NewStagerFASPThreshold threshold, double coeff, double offset) {
+		NewStagerFASPThreshold threshold, double coeff, double offset) {
 		if (threshold.amplitude.getMin() == MinMaxRange.AUTO) {
 			MinMaxRange amplitude = threshold.amplitude;
 			return new NewStagerFASPThreshold(new MinMaxRange(
-					amplitude.getUnlimitedValue(), coeff - offset,
-					amplitude.getMax(), amplitude.isMinUnlimited(),
-					amplitude.isMaxUnlimited()), threshold.frequency,
-					threshold.scale, threshold.phase);
+												  amplitude.getUnlimitedValue(), coeff - offset,
+												  amplitude.getMax(), amplitude.isMinUnlimited(),
+												  amplitude.isMaxUnlimited()), threshold.frequency,
+											  threshold.scale, threshold.phase);
 		}
 		return threshold;
 	}
@@ -289,27 +289,27 @@ public class NewStagerSignalStatsStep extends
 			}
 			mean /= t.length;
 			return (mean > this.data.constants.muscleThreshold) ? this.data.constants.muscleThreshold
-					: mean / this.data.constants.muscleThresholdRate;
+				   : mean / this.data.constants.muscleThresholdRate;
 		} else {
 			return oldThreshold;
 		}
 	}
 
 	private NewStagerSleepStats getSignalStatCoeffs(
-			NewStagerParameters parameters) {
+		NewStagerParameters parameters) {
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		return new NewStagerSleepStats(
-				thresholds.alphaThreshold.amplitude.getMin(),
-				thresholds.deltaThreshold.amplitude.getMin(),
-				thresholds.spindleThreshold.amplitude.getMin(),
-				thresholds.toneEMG);
+				   thresholds.alphaThreshold.amplitude.getMin(),
+				   thresholds.deltaThreshold.amplitude.getMin(),
+				   thresholds.spindleThreshold.amplitude.getMin(),
+				   thresholds.toneEMG);
 	}
 
 	private int getBlockCount() {
 		if (this.blockCount == null) {
 			this.blockCount = new Integer(PluginSignalHelper.GetBlockCount(
-					this.data.stagerData.getSampleSource(),
-					this.data.constants.getBlockLength()));
+											  this.data.stagerData.getSampleSource(),
+											  this.data.constants.getBlockLength()));
 		}
 		return this.blockCount;
 	}

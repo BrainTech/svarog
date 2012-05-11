@@ -1,5 +1,5 @@
 /* NewStagerExpertTagPanel.java created 2008-02-21
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -25,8 +25,8 @@ import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * NewStagerExpertTagPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -68,19 +68,19 @@ public class NewStagerExpertTagPanel extends JPanel {
 		hGroup.addGroup(layout.createParallelGroup().addComponent(glue));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(
-				getTagTextField()));
+							getTagTextField()));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(
-				getChooseTagButton()));
+							getChooseTagButton()));
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tagFileLabel).addComponent(glue)
-				.addComponent(getTagTextField())
-				.addComponent(getChooseTagButton()));
+						.addComponent(tagFileLabel).addComponent(glue)
+						.addComponent(getTagTextField())
+						.addComponent(getChooseTagButton()));
 
 		layout.setVerticalGroup(vGroup);
 
@@ -152,20 +152,20 @@ public class NewStagerExpertTagPanel extends JPanel {
 		public ChooseTagFileAction() {
 			super(_("Choose..."));
 			putValue(
-					AbstractAction.SMALL_ICON,
-					IconUtils
-							.loadClassPathIcon("org/signalml/app/icon/find.png"));
+				AbstractAction.SMALL_ICON,
+				IconUtils
+				.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					"FIXME");
-					//TODO!
-					//messageSource.getMessage(chooseButtonToolTipCode));
+					 "FIXME");
+			//TODO!
+			//messageSource.getMessage(chooseButtonToolTipCode));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser
-					.chooseExpertTag(NewStagerExpertTagPanel.this
-							.getTopLevelAncestor());
+						.chooseExpertTag(NewStagerExpertTagPanel.this
+										 .getTopLevelAncestor());
 			if (file == null) {
 				return;
 			}

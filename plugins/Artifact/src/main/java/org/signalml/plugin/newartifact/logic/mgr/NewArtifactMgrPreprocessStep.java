@@ -42,10 +42,10 @@ import org.signalml.plugin.signal.PluginSignalHelper;
 
 /**
  * @author kdr
- * 
+ *
  */
 public class NewArtifactMgrPreprocessStep extends
-		AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
+	AbstractPluginComputationMgrStep<NewArtifactMgrStepData> {
 
 	private final int INPUT_BUFFER_QUEUE_SIZE = 40;
 
@@ -65,13 +65,13 @@ public class NewArtifactMgrPreprocessStep extends
 		public void addBuffer(double buffer[][]);
 
 		public double[][] getNextBufferForObject(Object sender)
-				throws InterruptedException;
+		throws InterruptedException;
 
 		public void markCurrentBufferAsProcessed(Object sender);
 	}
 
 	private class NewArtifactAlgorithmBufferSynchronizer implements
-			INewArtifactAlgorithmBufferSynchronizer {
+		INewArtifactAlgorithmBufferSynchronizer {
 		private final List<double[][]> bufferList = new LinkedList<double[][]>();
 		private final Map<double[][], Integer> useCount = new HashMap<double[][], Integer>();
 		private final Map<Object, Integer> nextBuffer = new HashMap<Object, Integer>();
@@ -80,8 +80,8 @@ public class NewArtifactMgrPreprocessStep extends
 		private final AtomicBoolean shutdownFlag;
 
 		public NewArtifactAlgorithmBufferSynchronizer(
-				BlockingQueue<double[][]> freeBuffersQueue,
-				AtomicBoolean shutdownFlag) {
+			BlockingQueue<double[][]> freeBuffersQueue,
+			AtomicBoolean shutdownFlag) {
 			this.freeBuffersQueue = freeBuffersQueue;
 			this.shutdownFlag = shutdownFlag;
 		}
@@ -99,7 +99,7 @@ public class NewArtifactMgrPreprocessStep extends
 
 		@Override
 		public double[][] getNextBufferForObject(Object sender)
-				throws InterruptedException {
+		throws InterruptedException {
 			final Semaphore s;
 			synchronized (this) {
 				if (!waitSemaphore.containsKey(sender)) {
@@ -162,13 +162,13 @@ public class NewArtifactMgrPreprocessStep extends
 	}
 
 	private class NewArtifactAlgorithmDataSource implements
-			IPluginDataSourceReader {
+		IPluginDataSourceReader {
 
 		private INewArtifactAlgorithmBufferSynchronizer synchronizer;
 		private double currentBuffer[][];
 
 		public NewArtifactAlgorithmDataSource(
-				INewArtifactAlgorithmBufferSynchronizer synchronizer) {
+			INewArtifactAlgorithmBufferSynchronizer synchronizer) {
 			this.synchronizer = synchronizer;
 			this.currentBuffer = null;
 		}
@@ -201,7 +201,7 @@ public class NewArtifactMgrPreprocessStep extends
 		private void copyChunk(double buffer[][]) {
 			for (int i = 0; i < buffer.length; ++i) {
 				buffer[i] = Arrays.copyOf(this.currentBuffer[i],
-						buffer[i].length); // TODO
+										  buffer[i].length); // TODO
 			}
 
 		}
@@ -209,7 +209,7 @@ public class NewArtifactMgrPreprocessStep extends
 	}
 
 	private class NewArtifactSignalReaderWorkerData implements
-			INewArtifactSignalReaderWorkerData {
+		INewArtifactSignalReaderWorkerData {
 
 		private BlockingQueue<double[][]> inputQueue;
 		private BlockingQueue<double[][]> outputQueue;
@@ -217,10 +217,10 @@ public class NewArtifactMgrPreprocessStep extends
 		private NewArtifactConstants constants;
 
 		public NewArtifactSignalReaderWorkerData(
-				MultichannelSampleSource source,
-				NewArtifactConstants constants,
-				BlockingQueue<double[][]> inputQueue,
-				BlockingQueue<double[][]> outputQueue) {
+			MultichannelSampleSource source,
+			NewArtifactConstants constants,
+			BlockingQueue<double[][]> inputQueue,
+			BlockingQueue<double[][]> outputQueue) {
 			this.source = source;
 			this.constants = constants;
 			this.inputQueue = inputQueue;
@@ -234,7 +234,7 @@ public class NewArtifactMgrPreprocessStep extends
 
 		@Override
 		public void markBufferAsReady(double[][] buffer)
-				throws InterruptedException {
+		throws InterruptedException {
 			this.outputQueue.put(buffer);
 		}
 
@@ -261,9 +261,9 @@ public class NewArtifactMgrPreprocessStep extends
 		private final int blockCount;
 
 		public TrackerUpdater(
-				NewArtifactMgrPreprocessStep step,
-				IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker,
-				int blockCount) {
+			NewArtifactMgrPreprocessStep step,
+			IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker,
+			int blockCount) {
 			this.step = step;
 			this.tracker = tracker;
 			this.blockCount = blockCount;
@@ -272,11 +272,11 @@ public class NewArtifactMgrPreprocessStep extends
 		@Override
 		public void update(int progress, int prevProgress) {
 			this.tracker.advance(this.step,
-					Math.max(progress - prevProgress, 0));
+								 Math.max(progress - prevProgress, 0));
 			this.tracker
-					.setProgressPhase(
-							NewArtifactComputationProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
-							progress, this.blockCount);
+			.setProgressPhase(
+				NewArtifactComputationProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
+				progress, this.blockCount);
 
 		}
 
@@ -288,9 +288,9 @@ public class NewArtifactMgrPreprocessStep extends
 		this.blockCount = null;
 
 		this.freeBuffersQueue = new ArrayBlockingQueue<double[][]>(
-				this.INPUT_BUFFER_QUEUE_SIZE);
+			this.INPUT_BUFFER_QUEUE_SIZE);
 		this.readyBuffersQueue = new ArrayBlockingQueue<double[][]>(
-				this.INPUT_BUFFER_QUEUE_SIZE);
+			this.INPUT_BUFFER_QUEUE_SIZE);
 
 		this.shutdownFlag = new AtomicBoolean(false);
 
@@ -307,9 +307,9 @@ public class NewArtifactMgrPreprocessStep extends
 
 	@Override
 	public PluginComputationMgrStepResult doRun(
-			PluginComputationMgrStepResult prevStepResult)
-			throws ComputationException, PluginToolInterruptedException,
-			PluginToolAbortException {
+		PluginComputationMgrStepResult prevStepResult)
+	throws ComputationException, PluginToolInterruptedException,
+		PluginToolAbortException {
 		final IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker = this.data.tracker;
 
 		this.checkAbortState();
@@ -351,7 +351,7 @@ public class NewArtifactMgrPreprocessStep extends
 
 	private void prepareWorkers() throws ComputationException {
 		int channelCount = this.data.artifactData.getSampleSource()
-				.getChannelCount();
+						   .getChannelCount();
 		int blockLength = this.data.constants.getBlockLengthWithPadding();
 
 		double[][][] inputBuffer = new double[this.INPUT_BUFFER_QUEUE_SIZE][channelCount][blockLength];
@@ -361,26 +361,26 @@ public class NewArtifactMgrPreprocessStep extends
 		}
 
 		this.synchronizer = new NewArtifactAlgorithmBufferSynchronizer(
-				this.freeBuffersQueue, this.shutdownFlag);
+			this.freeBuffersQueue, this.shutdownFlag);
 
 		NewArtifactSignalReaderWorker reader = new NewArtifactSignalReaderWorker(
-				new NewArtifactSignalReaderWorkerData(
-						this.data.artifactData.getSampleSource(),
-						this.data.constants, this.freeBuffersQueue,
-						this.readyBuffersQueue));
+			new NewArtifactSignalReaderWorkerData(
+				this.data.artifactData.getSampleSource(),
+				this.data.constants, this.freeBuffersQueue,
+				this.readyBuffersQueue));
 
 		for (NewArtifactComputationType algorithmType : NewArtifactComputationType
 				.values()) {
 			INewArtifactAlgorithmWriter writer = this
-					.createResultWriterForAlgorithm(algorithmType);
+												 .createResultWriterForAlgorithm(algorithmType);
 			if (writer != null) {
 				this.writers.add(writer);
 				this.workers.add(new NewArtifactAlgorithmWorker(
-						new NewArtifactAlgorithmDataSource(synchronizer),
-						new NewArtifactAlgorithmFactory(algorithmType,
-								this.data.constants), writer,
-						new NewArtifactAlgorithmWorkerData(
-								this.data.artifactData, this.data.constants)));
+									 new NewArtifactAlgorithmDataSource(synchronizer),
+									 new NewArtifactAlgorithmFactory(algorithmType,
+											 this.data.constants), writer,
+									 new NewArtifactAlgorithmWorkerData(
+										 this.data.artifactData, this.data.constants)));
 			}
 		}
 		this.workers.add(reader);
@@ -415,11 +415,11 @@ public class NewArtifactMgrPreprocessStep extends
 			this.trackerUpdater.stop();
 
 			this.data.tracker
-					.setProgressPhase(
-							NewArtifactComputationProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
-							this.getBlockCount(), this.getBlockCount());
+			.setProgressPhase(
+				NewArtifactComputationProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
+				this.getBlockCount(), this.getBlockCount());
 			int advance = this.getBlockCount()
-					- this.trackerUpdater.getProgress() + 1;
+						  - this.trackerUpdater.getProgress() + 1;
 			if (advance > 0) {
 				this.data.tracker.advance(this, advance);
 			}
@@ -442,15 +442,15 @@ public class NewArtifactMgrPreprocessStep extends
 	}
 
 	private INewArtifactAlgorithmWriter createResultWriterForAlgorithm(
-			NewArtifactComputationType algorithmType)
-			throws ComputationException {
+		NewArtifactComputationType algorithmType)
+	throws ComputationException {
 		if (!NewArtifactParameterHelper.IsParameterEnabled(algorithmType,
 				this.data.artifactData)) {
 			return null;
 		}
 
 		String fileNames[] = this.data.pathConstructor
-				.getIntermediateFileNamesForAlgorithm(algorithmType);
+							 .getIntermediateFileNamesForAlgorithm(algorithmType);
 		String workDirName = this.data.pathConstructor.getPathToWorkDir();
 
 		try {
@@ -458,8 +458,8 @@ public class NewArtifactMgrPreprocessStep extends
 			case MUSCLE_PLUS_POWER:
 				assert fileNames.length == 2;
 				return new NewArtifactDoubleFileAlgorithmWriter(new File(
-						workDirName, fileNames[0]), new File(workDirName,
-						fileNames[1]));
+							workDirName, fileNames[0]), new File(workDirName,
+									fileNames[1]));
 			case MUSCLE_ACTIVITY:
 			case POWER:
 				return null;
@@ -471,7 +471,7 @@ public class NewArtifactMgrPreprocessStep extends
 			default:
 				assert fileNames.length == 1;
 				return new NewArtifactAlgorithmWriter(new File(workDirName,
-						fileNames[0]));
+													  fileNames[0]));
 			}
 		} catch (SignalMLException e) {
 			throw new ComputationException(e);
@@ -481,8 +481,8 @@ public class NewArtifactMgrPreprocessStep extends
 	private int getBlockCount() {
 		if (this.blockCount == null) {
 			this.blockCount = new Integer(PluginSignalHelper.GetBlockCount(
-					this.data.artifactData.getSampleSource(),
-					this.data.constants.getBlockLength()));
+											  this.data.artifactData.getSampleSource(),
+											  this.data.constants.getBlockLength()));
 		}
 		return this.blockCount;
 	}

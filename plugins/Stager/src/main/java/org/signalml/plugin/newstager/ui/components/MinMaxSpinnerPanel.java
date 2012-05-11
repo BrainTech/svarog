@@ -1,5 +1,5 @@
 /* MinMaxSpinnerPanel.java created 2008-02-14
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui.components;
@@ -13,8 +13,8 @@ import org.signalml.util.MinMaxRange;
 
 /**
  * MinMaxSpinnerPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -26,7 +26,7 @@ public class MinMaxSpinnerPanel extends JPanel {
 	private UnlimitedSpinnerPanel maxPanel;
 
 	public MinMaxSpinnerPanel(double minValue, double maxValue, double min,
-			double max, double step) {
+							  double max, double step) {
 		super();
 		setLayout(new GridLayout(2, 1, 0, 3));
 

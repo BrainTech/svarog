@@ -1,5 +1,5 @@
 /* SleepComparison.java created 2008-02-27
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.data;
@@ -31,15 +31,15 @@ import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * SleepComparison
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewStagerSleepComparison implements PropertyProvider {
 
 	protected static final Logger logger = Logger
-			.getLogger(NewStagerSleepComparison.class);
+										   .getLogger(NewStagerSleepComparison.class);
 
 	private NewStagerSleepStatistic statistic;
 	private ExportedTagDocument tag;
@@ -64,8 +64,8 @@ public class NewStagerSleepComparison implements PropertyProvider {
 	private int total;
 
 	public NewStagerSleepComparison(NewStagerSleepStatistic statistic,
-			ExportedTagDocument tagDocument, TagDocument expertTag,
-			TagDocument artifactTag) {
+									ExportedTagDocument tagDocument, TagDocument expertTag,
+									TagDocument artifactTag) {
 		this.statistic = statistic;
 		this.tag = tagDocument;
 		this.expertTag = expertTag;
@@ -82,15 +82,15 @@ public class NewStagerSleepComparison implements PropertyProvider {
 
 		if (SleepTagName.isValidRKSleepTag(tagDocument)) {
 			styles.addAll(this.getSleepStyles(tagStylesSet,
-					SleepTagName.RK_WAKE, SleepTagName.RK_1, SleepTagName.RK_2,
-					SleepTagName.RK_3, SleepTagName.RK_4, SleepTagName.RK_REM,
-					SleepTagName.RK_MT));
+											  SleepTagName.RK_WAKE, SleepTagName.RK_1, SleepTagName.RK_2,
+											  SleepTagName.RK_3, SleepTagName.RK_4, SleepTagName.RK_REM,
+											  SleepTagName.RK_MT));
 
 		} else if (SleepTagName.isValidAASMSleepTag(tagDocument)) {
 			styles.addAll(this.getSleepStyles(tagStylesSet,
-					SleepTagName.AASM_WAKE, SleepTagName.AASM_N1,
-					SleepTagName.AASM_N2, SleepTagName.AASM_N3,
-					SleepTagName.AASM_REM));
+											  SleepTagName.AASM_WAKE, SleepTagName.AASM_N1,
+											  SleepTagName.AASM_N2, SleepTagName.AASM_N3,
+											  SleepTagName.AASM_REM));
 
 		} else {
 			throw new SanityCheckException("Unsupported stage tag type");
@@ -145,7 +145,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 					tag = null;
 				} else if (position < expectedTime) {
 					logger.warn("Extra tag [" + style.getName()
-							+ "] found at [" + position + "]");
+								+ "] found at [" + position + "]");
 					tag = null;
 				} else if (tag.getLength() != segmentLength) {
 					logger.warn("Bad tag length [" + tag.getLength() + "]");
@@ -154,7 +154,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 					index = styles.indexOf(style);
 					if (index < 0) {
 						logger.warn("Unknown page style [" + style.getName()
-								+ "]");
+									+ "]");
 						tag = null;
 					}
 				}
@@ -177,7 +177,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 				if (artifactTagSet != null) {
 
 					artifactTags = artifactTagSet.getTagsBetween(expectedTime,
-							expectedTime + segmentLength);
+								   expectedTime + segmentLength);
 					artifactIt = artifactTags.iterator();
 					while (artifactIt.hasNext()) {
 
@@ -185,7 +185,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 
 						if (artifact.overlaps(tag)) {
 							logger.info("Artifacts at position ["
-									+ expectedTime + "]");
+										+ expectedTime + "]");
 							tag = null;
 							break;
 						}
@@ -199,7 +199,7 @@ public class NewStagerSleepComparison implements PropertyProvider {
 				}
 
 				expertTags = expertTagSet.getTagsBetween(expectedTime,
-						expectedTime + segmentLength);
+							 expectedTime + segmentLength);
 				expert = null;
 				expertIt = expertTags.iterator();
 				while (expert == null && expertIt.hasNext()) {
@@ -211,14 +211,14 @@ public class NewStagerSleepComparison implements PropertyProvider {
 						expert = null;
 					} else if (expert.getLength() != segmentLength) {
 						logger.warn("Bad expert tag length ["
-								+ expert.getLength() + "]");
+									+ expert.getLength() + "]");
 						expert = null;
 					}
 				}
 
 				if (expert == null) {
 					logger.warn("No corresponding expert tag found for location ["
-							+ expectedTime + "]");
+								+ expectedTime + "]");
 					styleOverlay[index][styleCount]++;
 					tag = null;
 					continue;
@@ -228,8 +228,8 @@ public class NewStagerSleepComparison implements PropertyProvider {
 				int expertIndex = (idx != null ? idx.intValue() : -1);
 				if (expertIndex < 0) {
 					logger.warn("Unrecognized expert style ["
-							+ expertStyle.getName() + "] at position ["
-							+ expectedTime + "]");
+								+ expertStyle.getName() + "] at position ["
+								+ expectedTime + "]");
 					styleOverlay[index][styleCount]++;
 					tag = null;
 					continue;
@@ -265,9 +265,9 @@ public class NewStagerSleepComparison implements PropertyProvider {
 
 	/*
 	 * public ExportedTagDocument getTag() { return tag; }
-	 * 
+	 *
 	 * public TagDocument getExpertTag() { return expertTag; }
-	 * 
+	 *
 	 * public TagDocument getArtifactTag() { return artifactTag; }
 	 */
 
@@ -383,8 +383,8 @@ public class NewStagerSleepComparison implements PropertyProvider {
 			return "-";
 		} else {
 			return (new Double(
-					((double) Math.round(totalConcordance * 100)) / 100))
-					.toString();
+						((double) Math.round(totalConcordance * 100)) / 100))
+				   .toString();
 		}
 	}
 
@@ -394,34 +394,34 @@ public class NewStagerSleepComparison implements PropertyProvider {
 			return "-";
 		} else {
 			return (new Double(((double) Math.round(cohensKappa * 100)) / 100))
-					.toString();
+				   .toString();
 		}
 	}
 
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList()
-			throws IntrospectionException {
+	throws IntrospectionException {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
 		list.add(new LabelledPropertyDescriptor(
-				"property.sleepComparison.totalConcordance",
-				"totalConcordancePretty", NewStagerSleepComparison.class,
-				"getTotalConcordancePretty", null));
+					 "property.sleepComparison.totalConcordance",
+					 "totalConcordancePretty", NewStagerSleepComparison.class,
+					 "getTotalConcordancePretty", null));
 		list.add(new LabelledPropertyDescriptor(
-				"property.sleepComparison.cohensKappa", "cohensKappaPretty",
-				NewStagerSleepComparison.class, "getCohensKappaPretty", null));
+					 "property.sleepComparison.cohensKappa", "cohensKappaPretty",
+					 NewStagerSleepComparison.class, "getCohensKappaPretty", null));
 
 		return list;
 
 	}
 
 	private Collection<ExportedTagStyle> getSleepStyles(
-			Set<ExportedTagStyle> tagStylesSet, String... styleNames) {
+		Set<ExportedTagStyle> tagStylesSet, String... styleNames) {
 		Set<ExportedTagStyle> result = new HashSet<ExportedTagStyle>();
 
 		Set<String> styleNamesSet = new HashSet<String>(
-				Arrays.asList(styleNames));
+			Arrays.asList(styleNames));
 		for (ExportedTagStyle style : tagStylesSet) {
 			String styleName = style.getName();
 			if (styleNamesSet.contains(styleName)) {

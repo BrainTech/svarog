@@ -129,13 +129,13 @@ public class NewStagerMain {
 		XMLSignalMLCodec codec;
 		try {
 			codec = new XMLSignalMLCodec(
-					new File(codecSourceFile).getAbsoluteFile(), null);
+				new File(codecSourceFile).getAbsoluteFile(), null);
 			SignalMLCodecReader reader = codec.createReader();
 			reader.open(sourceSignalFilePath);
 			// SignalMLCodecSampleSource source = new SignalMLCodecSampleSource(
 			// reader);
 			FastMultichannelSampleSource source = new FastMultichannelSampleSource(
-					reader);
+				reader);
 
 			NewStagerComputationMgr mgr = new NewStagerComputationMgr();
 			NewStagerData stagerData = new NewStagerData();
@@ -179,42 +179,42 @@ public class NewStagerMain {
 			// System.out.println(b.getSegmentCount());
 
 			NewStagerFASPThreshold alphaThreshold = NewStagerFASPThreshold
-					.CreateThreshold(4.0, Double.POSITIVE_INFINITY, 8.0, 12.0,
-							1.5, Double.POSITIVE_INFINITY, null, null);
+													.CreateThreshold(4.0, Double.POSITIVE_INFINITY, 8.0, 12.0,
+															1.5, Double.POSITIVE_INFINITY, null, null);
 			NewStagerFASPThreshold deltaThreshold = NewStagerFASPThreshold
-					.CreateThreshold(65.0, Double.POSITIVE_INFINITY, 0.2, 4.0,
-							0.5, 6.0, null, null);
+													.CreateThreshold(65.0, Double.POSITIVE_INFINITY, 0.2, 4.0,
+															0.5, 6.0, null, null);
 			NewStagerFASPThreshold spindleThreshold = NewStagerFASPThreshold
 					.CreateThreshold(13.0, Double.POSITIVE_INFINITY, 11.0,
-							15.0, 0.4, 2.5, null, null);
+									 15.0, 0.4, 2.5, null, null);
 			NewStagerFASPThreshold thetaThreshold = NewStagerFASPThreshold
-					.CreateThreshold(30.0, Double.POSITIVE_INFINITY, 4.0, 8.0,
-							0.1, Double.POSITIVE_INFINITY, null, null);
+													.CreateThreshold(30.0, Double.POSITIVE_INFINITY, 4.0, 8.0,
+															0.1, Double.POSITIVE_INFINITY, null, null);
 			NewStagerFASPThreshold KCThreshold = NewStagerFASPThreshold
-					.CreateThreshold(100.0, Double.POSITIVE_INFINITY, 0.03,
-							2.5, 0.3, 1.5, -0.5, 0.5);
+												 .CreateThreshold(100.0, Double.POSITIVE_INFINITY, 0.03,
+														 2.5, 0.3, 1.5, -0.5, 0.5);
 
 			NewStagerParameterThresholds thresholds = new NewStagerParameterThresholds(
-					25, 40, 300, 50, 100, 20, alphaThreshold, deltaThreshold,
-					spindleThreshold, thetaThreshold, KCThreshold);
+				25, 40, 300, 50, 100, 20, alphaThreshold, deltaThreshold,
+				spindleThreshold, thetaThreshold, KCThreshold);
 
 			stagerData.setParameters(new NewStagerParameters(bookFilePath,
-					NewStagerRules.RK, true, true, true, thresholds));
+									 NewStagerRules.RK, true, true, true, thresholds));
 			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d,
-					0.75d, 0.5d, -0.85d, -0.7d));
+										  0.75d, 0.5d, -0.85d, -0.7d));
 
 			mgr.compute(
-					new NewStagerMgrData(stagerData, new NewStagerConstants(b
-							.getSamplingFrequency(), (int) b.getCalibration(),
-							b.getSegmentCount(),
-							NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
-							NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
-							NewStagerConstants.DEFAULT_AMPLITUDE_A,
-							NewStagerConstants.DEFAULT_AMPLITUDE_B,
-							NewStagerConstants.DEFAULT_ALPHA_OFFSET,
-							NewStagerConstants.DEFAULT_DELTA_OFFSET,
-							NewStagerConstants.DEFAULT_SPINDLE_OFFSET)),
-					new Tracker());
+				new NewStagerMgrData(stagerData, new NewStagerConstants(b
+									 .getSamplingFrequency(), (int) b.getCalibration(),
+									 b.getSegmentCount(),
+									 NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
+									 NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
+									 NewStagerConstants.DEFAULT_AMPLITUDE_A,
+									 NewStagerConstants.DEFAULT_AMPLITUDE_B,
+									 NewStagerConstants.DEFAULT_ALPHA_OFFSET,
+									 NewStagerConstants.DEFAULT_DELTA_OFFSET,
+									 NewStagerConstants.DEFAULT_SPINDLE_OFFSET)),
+				new Tracker());
 
 		} catch (Exception e) {
 			e.printStackTrace();

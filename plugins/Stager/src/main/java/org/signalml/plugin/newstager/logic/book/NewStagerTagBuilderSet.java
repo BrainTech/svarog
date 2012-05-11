@@ -23,7 +23,7 @@ public class NewStagerTagBuilderSet {
 	public NewStagerTagBuilderSet() {
 		this.builders = new LinkedList<INewStagerTagBuilder>();
 	}
-	
+
 	public NewStagerTagBuilderSet(Collection<INewStagerTagBuilder> builders) {
 		this.builders = new LinkedList<INewStagerTagBuilder>(builders);
 	}
@@ -57,10 +57,10 @@ public class NewStagerTagBuilderSet {
 			if (builderResult == null || !builderResult.freshResult) {
 				continue;
 			}
-			
+
 			for (NewStagerTagCollection collection : builderResult.tagMap.values()) {
 				all.addAll(collection.tags);
-				
+
 				NewStagerTagCollection existingCollection = result.get(collection.type);
 				if (existingCollection == null) {
 					result.put(collection.type, collection);
@@ -72,7 +72,7 @@ public class NewStagerTagBuilderSet {
 				}
 			}
 		}
-		
+
 		return result;
 	}
 }

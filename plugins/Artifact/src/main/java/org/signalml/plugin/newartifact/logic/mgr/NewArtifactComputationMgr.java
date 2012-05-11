@@ -23,16 +23,16 @@ import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepResult;
 import org.signalml.plugin.newartifact.method.NewArtifactMethod;
 
 public class NewArtifactComputationMgr extends
-		PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
+	PluginComputationMgr<NewArtifactMgrData, NewArtifactResult> {
 	protected static final Logger logger = Logger
-			.getLogger(NewArtifactMethod.class);
+										   .getLogger(NewArtifactMethod.class);
 
 	private class TrackerProxy
-			extends
-			AbstractPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> {
+		extends
+		AbstractPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> {
 
 		public TrackerProxy(PluginCheckedThreadGroup threadGroup,
-				MethodExecutionTracker tracker) {
+							MethodExecutionTracker tracker) {
 			super(threadGroup, tracker);
 		}
 
@@ -45,7 +45,7 @@ public class NewArtifactComputationMgr extends
 
 		@Override
 		public void setProgressPhase(NewArtifactComputationProgressPhase phase,
-				Object... arguments) {
+									 Object... arguments) {
 			if (this.phase == NewArtifactComputationProgressPhase.ABORT_PHASE) {
 				return;
 			}
@@ -63,7 +63,7 @@ public class NewArtifactComputationMgr extends
 
 		@Override
 		protected String getMessageForPhase(
-				NewArtifactComputationProgressPhase phase, Object... arguments) {
+			NewArtifactComputationProgressPhase phase, Object... arguments) {
 			switch (phase) {
 			case PREPROCESS_PREPARE_PHASE:
 				return _("Preparing");
@@ -71,7 +71,7 @@ public class NewArtifactComputationMgr extends
 				return _("Reading source data");
 			case INTERMEDIATE_COMPUTATION_PHASE:
 				return _R("Computing intermediate data (block {0} of {1})",
-						arguments);
+						  arguments);
 			case TAGGER_PREPARE_PHASE:
 				return _("Preparing tagger");
 			case TAGGING_PHASE:
@@ -94,13 +94,13 @@ public class NewArtifactComputationMgr extends
 		this.steps = new LinkedList<IPluginComputationMgrStep>();
 
 		this.trackerProxy = new TrackerProxy(this.getThreadGroup(),
-				this.tracker);
+											 this.tracker);
 
 		NewArtifactMgrStepData stepData = new NewArtifactMgrStepData(
-				data.artifactData, data.constants,
-				new NewArtifactIntermediateFilesPathConstructor(
-						data.artifactData), this.trackerProxy,
-				this.getThreadFactory());
+			data.artifactData, data.constants,
+			new NewArtifactIntermediateFilesPathConstructor(
+				data.artifactData), this.trackerProxy,
+			this.getThreadFactory());
 
 		this.steps.add(new NewArtifactMgrPreprocessStep(stepData));
 		this.steps.add(new NewArtifactMgrTagStep(stepData));

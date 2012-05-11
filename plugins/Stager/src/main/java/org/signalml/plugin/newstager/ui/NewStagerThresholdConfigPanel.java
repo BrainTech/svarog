@@ -1,5 +1,5 @@
 /* NewStagerThresholdConfigPanel.java created 2008-02-14
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -33,8 +33,8 @@ import org.signalml.plugin.newstager.ui.components.SpinnerWithSliderPanel;
 
 /**
  * NewStagerThresholdConfigPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -66,7 +66,7 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Thresholds")), new EmptyBorder(3, 3, 3, 3));
+					_("Thresholds")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		add(getThresholdsPanel(), BorderLayout.NORTH);
@@ -95,11 +95,11 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 			JLabel mtEegThresholdLabel = new JLabel(_("MT artifacts in EEG"));
 			JLabel mtEmgThresholdLabel = new JLabel(_("MT artifacts in EMG"));
 			JLabel mtToneEmgThresholdLabel = new JLabel(
-					_("MT artifacts in tone EMG"));
+				_("MT artifacts in tone EMG"));
 			JLabel remEogDeflectionThresholdLabel = new JLabel(
-					_("EOG deflection for rapid eye movement [%]"));
+				_("EOG deflection for rapid eye movement [%]"));
 			JLabel semEogDeflectionThresholdLabel = new JLabel(
-					_("EOG deflection for slow eye movement [%]"));
+				_("EOG deflection for slow eye movement [%]"));
 
 			Component glue1 = Box.createHorizontalGlue();
 			Component glue2 = Box.createHorizontalGlue();
@@ -110,103 +110,103 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 
 			CompactButton emgToneThresholdHelpButton = SwingUtils
 					.createFieldHelpButton(owner,
-							NewStagerMethodDialog.HELP_EMG_TONE_THRESHOLD);
+										   NewStagerMethodDialog.HELP_EMG_TONE_THRESHOLD);
 			CompactButton mtEegThresholdHelpButton = SwingUtils
 					.createFieldHelpButton(owner,
-							NewStagerMethodDialog.HELP_MT_EEG_THRESHOLD);
+										   NewStagerMethodDialog.HELP_MT_EEG_THRESHOLD);
 			CompactButton mtEmgThresholdHelpButton = SwingUtils
 					.createFieldHelpButton(owner,
-							NewStagerMethodDialog.HELP_MT_EMG_THRESHOLD);
+										   NewStagerMethodDialog.HELP_MT_EMG_THRESHOLD);
 			CompactButton mtToneEmgThresholdHelpButton = SwingUtils
 					.createFieldHelpButton(owner,
-							NewStagerMethodDialog.HELP_MT_TONE_EMG_THRESHOLD);
+										   NewStagerMethodDialog.HELP_MT_TONE_EMG_THRESHOLD);
 			CompactButton remEogDeflectionThresholdHelpButton = SwingUtils
 					.createFieldHelpButton(
-							owner,
-							NewStagerMethodDialog.HELP_REM_EOG_DEFLECTION_THRESHOLD);
+						owner,
+						NewStagerMethodDialog.HELP_REM_EOG_DEFLECTION_THRESHOLD);
 			CompactButton semEogDeflectionThresholdHelpButton = SwingUtils
 					.createFieldHelpButton(
-							owner,
-							NewStagerMethodDialog.HELP_SEM_EOG_DEFLECTION_THRESHOLD);
+						owner,
+						NewStagerMethodDialog.HELP_SEM_EOG_DEFLECTION_THRESHOLD);
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(layout.createParallelGroup().addComponent(filler1)
-					.addComponent(getMtEegThresholdEnabledCheckBox())
-					.addComponent(getMtArtifactsThresholdEnabledCheckBox())
-					.addComponent(filler4).addComponent(filler5)
-					.addComponent(filler6));
+							.addComponent(getMtEegThresholdEnabledCheckBox())
+							.addComponent(getMtArtifactsThresholdEnabledCheckBox())
+							.addComponent(filler4).addComponent(filler5)
+							.addComponent(filler6));
 
 			hGroup.addGroup(layout.createParallelGroup()
-					.addComponent(emgToneThresholdLabel)
-					.addComponent(mtEegThresholdLabel)
-					.addComponent(mtEmgThresholdLabel)
-					.addComponent(mtToneEmgThresholdLabel)
-					.addComponent(remEogDeflectionThresholdLabel)
-					.addComponent(semEogDeflectionThresholdLabel));
+							.addComponent(emgToneThresholdLabel)
+							.addComponent(mtEegThresholdLabel)
+							.addComponent(mtEmgThresholdLabel)
+							.addComponent(mtToneEmgThresholdLabel)
+							.addComponent(remEogDeflectionThresholdLabel)
+							.addComponent(semEogDeflectionThresholdLabel));
 
 			hGroup.addGroup(layout.createParallelGroup().addComponent(glue1)
-					.addComponent(glue2).addComponent(glue3)
-					.addComponent(glue4).addComponent(glue5)
-					.addComponent(glue6));
+							.addComponent(glue2).addComponent(glue3)
+							.addComponent(glue4).addComponent(glue5)
+							.addComponent(glue6));
 
 			hGroup.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-					.addComponent(getEmgToneThresholdPanel())
-					.addComponent(getMtEegThresholdPanel())
-					.addComponent(getMtEmgThresholdPanel())
-					.addComponent(getMtToneEmgThresholdPanel())
-					.addComponent(getRemEogDeflectionThresholdPanel())
-					.addComponent(getSemEogDeflectionThresholdPanel()));
+							.addComponent(getEmgToneThresholdPanel())
+							.addComponent(getMtEegThresholdPanel())
+							.addComponent(getMtEmgThresholdPanel())
+							.addComponent(getMtToneEmgThresholdPanel())
+							.addComponent(getRemEogDeflectionThresholdPanel())
+							.addComponent(getSemEogDeflectionThresholdPanel()));
 
 			hGroup.addGroup(layout.createParallelGroup()
-					.addComponent(emgToneThresholdHelpButton)
-					.addComponent(mtEegThresholdHelpButton)
-					.addComponent(mtEmgThresholdHelpButton)
-					.addComponent(mtToneEmgThresholdHelpButton)
-					.addComponent(remEogDeflectionThresholdHelpButton)
-					.addComponent(semEogDeflectionThresholdHelpButton));
+							.addComponent(emgToneThresholdHelpButton)
+							.addComponent(mtEegThresholdHelpButton)
+							.addComponent(mtEmgThresholdHelpButton)
+							.addComponent(mtToneEmgThresholdHelpButton)
+							.addComponent(remEogDeflectionThresholdHelpButton)
+							.addComponent(semEogDeflectionThresholdHelpButton));
 
 			layout.setHorizontalGroup(hGroup);
 
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-					.addComponent(filler1).addComponent(emgToneThresholdLabel)
-					.addComponent(glue1)
-					.addComponent(getEmgToneThresholdPanel())
-					.addComponent(emgToneThresholdHelpButton));
+							.addComponent(filler1).addComponent(emgToneThresholdLabel)
+							.addComponent(glue1)
+							.addComponent(getEmgToneThresholdPanel())
+							.addComponent(emgToneThresholdHelpButton));
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-					.addComponent(getMtEegThresholdEnabledCheckBox())
-					.addComponent(mtEegThresholdLabel).addComponent(glue2)
-					.addComponent(getMtEegThresholdPanel())
-					.addComponent(mtEegThresholdHelpButton));
+							.addComponent(getMtEegThresholdEnabledCheckBox())
+							.addComponent(mtEegThresholdLabel).addComponent(glue2)
+							.addComponent(getMtEegThresholdPanel())
+							.addComponent(mtEegThresholdHelpButton));
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-					.addComponent(getMtArtifactsThresholdEnabledCheckBox())
-					.addComponent(mtEmgThresholdLabel).addComponent(glue3)
-					.addComponent(getMtEmgThresholdPanel())
-					.addComponent(mtEmgThresholdHelpButton));
+							.addComponent(getMtArtifactsThresholdEnabledCheckBox())
+							.addComponent(mtEmgThresholdLabel).addComponent(glue3)
+							.addComponent(getMtEmgThresholdPanel())
+							.addComponent(mtEmgThresholdHelpButton));
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-					.addComponent(filler4)
-					.addComponent(mtToneEmgThresholdLabel).addComponent(glue4)
-					.addComponent(getMtToneEmgThresholdPanel())
-					.addComponent(mtToneEmgThresholdHelpButton));
+							.addComponent(filler4)
+							.addComponent(mtToneEmgThresholdLabel).addComponent(glue4)
+							.addComponent(getMtToneEmgThresholdPanel())
+							.addComponent(mtToneEmgThresholdHelpButton));
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-					.addComponent(filler5)
-					.addComponent(remEogDeflectionThresholdLabel)
-					.addComponent(glue5)
-					.addComponent(getRemEogDeflectionThresholdPanel())
-					.addComponent(remEogDeflectionThresholdHelpButton));
+							.addComponent(filler5)
+							.addComponent(remEogDeflectionThresholdLabel)
+							.addComponent(glue5)
+							.addComponent(getRemEogDeflectionThresholdPanel())
+							.addComponent(remEogDeflectionThresholdHelpButton));
 
 			vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-					.addComponent(filler6)
-					.addComponent(semEogDeflectionThresholdLabel)
-					.addComponent(glue6)
-					.addComponent(getSemEogDeflectionThresholdPanel())
-					.addComponent(semEogDeflectionThresholdHelpButton));
+							.addComponent(filler6)
+							.addComponent(semEogDeflectionThresholdLabel)
+							.addComponent(glue6)
+							.addComponent(getSemEogDeflectionThresholdPanel())
+							.addComponent(semEogDeflectionThresholdHelpButton));
 
 			layout.setVerticalGroup(vGroup);
 
@@ -217,9 +217,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	public AutoSpinnerWithSliderPanel getEmgToneThresholdPanel() {
 		if (emgToneThresholdPanel == null) {
 			emgToneThresholdPanel = new AutoSpinnerWithSliderPanel(
-					NewStagerConstants.MIN_EMG_TONE_THRESHOLD,
-					NewStagerConstants.MIN_EMG_TONE_THRESHOLD,
-					NewStagerConstants.MAX_EMG_TONE_THRESHOLD, 1, false);
+				NewStagerConstants.MIN_EMG_TONE_THRESHOLD,
+				NewStagerConstants.MIN_EMG_TONE_THRESHOLD,
+				NewStagerConstants.MAX_EMG_TONE_THRESHOLD, 1, false);
 		}
 		return emgToneThresholdPanel;
 	}
@@ -227,9 +227,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	public SpinnerWithSliderPanel getMtEegThresholdPanel() {
 		if (mtEegThresholdPanel == null) {
 			mtEegThresholdPanel = new SpinnerWithSliderPanel(
-					NewStagerConstants.MIN_MT_EEG_THRESHOLD,
-					NewStagerConstants.MIN_MT_EEG_THRESHOLD,
-					NewStagerConstants.MAX_MT_EEG_THRESHOLD, 1);
+				NewStagerConstants.MIN_MT_EEG_THRESHOLD,
+				NewStagerConstants.MIN_MT_EEG_THRESHOLD,
+				NewStagerConstants.MAX_MT_EEG_THRESHOLD, 1);
 		}
 		return mtEegThresholdPanel;
 	}
@@ -244,7 +244,7 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 				public void itemStateChanged(ItemEvent e) {
 
 					getMtEegThresholdPanel().setEnabled(
-							mtEegThresholdEnabledCheckBox.isSelected());
+						mtEegThresholdEnabledCheckBox.isSelected());
 
 				}
 
@@ -259,21 +259,21 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 			mtArtifactsThresholdEnabledCheckBox = new JCheckBox();
 
 			mtArtifactsThresholdEnabledCheckBox
-					.addItemListener(new ItemListener() {
+			.addItemListener(new ItemListener() {
 
-						@Override
-						public void itemStateChanged(ItemEvent e) {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
 
-							getMtEmgThresholdPanel().setEnabled(
-									mtArtifactsThresholdEnabledCheckBox
-											.isSelected());
-							getMtToneEmgThresholdPanel().setEnabled(
-									mtArtifactsThresholdEnabledCheckBox
-											.isSelected());
+					getMtEmgThresholdPanel().setEnabled(
+						mtArtifactsThresholdEnabledCheckBox
+						.isSelected());
+					getMtToneEmgThresholdPanel().setEnabled(
+						mtArtifactsThresholdEnabledCheckBox
+						.isSelected());
 
-						}
+				}
 
-					});
+			});
 
 		}
 		return mtArtifactsThresholdEnabledCheckBox;
@@ -282,9 +282,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	public SpinnerWithSliderPanel getMtEmgThresholdPanel() {
 		if (mtEmgThresholdPanel == null) {
 			mtEmgThresholdPanel = new SpinnerWithSliderPanel(
-					NewStagerConstants.MIN_MT_EMG_THRESHOLD,
-					NewStagerConstants.MIN_MT_EMG_THRESHOLD,
-					NewStagerConstants.MAX_MT_EMG_THRESHOLD, 1);
+				NewStagerConstants.MIN_MT_EMG_THRESHOLD,
+				NewStagerConstants.MIN_MT_EMG_THRESHOLD,
+				NewStagerConstants.MAX_MT_EMG_THRESHOLD, 1);
 		}
 		return mtEmgThresholdPanel;
 	}
@@ -292,9 +292,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	public SpinnerWithSliderPanel getMtToneEmgThresholdPanel() {
 		if (mtToneEmgThresholdPanel == null) {
 			mtToneEmgThresholdPanel = new SpinnerWithSliderPanel(
-					NewStagerConstants.MIN_MT_TONE_EMG_THRESHOLD,
-					NewStagerConstants.MIN_MT_TONE_EMG_THRESHOLD,
-					NewStagerConstants.MAX_MT_TONE_EMG_THRESHOLD, 1);
+				NewStagerConstants.MIN_MT_TONE_EMG_THRESHOLD,
+				NewStagerConstants.MIN_MT_TONE_EMG_THRESHOLD,
+				NewStagerConstants.MAX_MT_TONE_EMG_THRESHOLD, 1);
 		}
 		return mtToneEmgThresholdPanel;
 	}
@@ -302,9 +302,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	public SpinnerWithSliderPanel getRemEogDeflectionThresholdPanel() {
 		if (remEogDeflectionThresholdPanel == null) {
 			remEogDeflectionThresholdPanel = new SpinnerWithSliderPanel(
-					NewStagerConstants.MIN_REM_EOG_DEFLECTION_THRESHOLD,
-					NewStagerConstants.MIN_REM_EOG_DEFLECTION_THRESHOLD,
-					NewStagerConstants.MAX_REM_EOG_DEFLECTION_THRESHOLD, 1);
+				NewStagerConstants.MIN_REM_EOG_DEFLECTION_THRESHOLD,
+				NewStagerConstants.MIN_REM_EOG_DEFLECTION_THRESHOLD,
+				NewStagerConstants.MAX_REM_EOG_DEFLECTION_THRESHOLD, 1);
 		}
 		return remEogDeflectionThresholdPanel;
 	}
@@ -312,9 +312,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 	public SpinnerWithSliderPanel getSemEogDeflectionThresholdPanel() {
 		if (semEogDeflectionThresholdPanel == null) {
 			semEogDeflectionThresholdPanel = new SpinnerWithSliderPanel(
-					NewStagerConstants.MIN_SEM_EOG_DEFLECTION_THRESHOLD,
-					NewStagerConstants.MIN_SEM_EOG_DEFLECTION_THRESHOLD,
-					NewStagerConstants.MAX_SEM_EOG_DEFLECTION_THRESHOLD, 1);
+				NewStagerConstants.MIN_SEM_EOG_DEFLECTION_THRESHOLD,
+				NewStagerConstants.MIN_SEM_EOG_DEFLECTION_THRESHOLD,
+				NewStagerConstants.MAX_SEM_EOG_DEFLECTION_THRESHOLD, 1);
 		}
 		return semEogDeflectionThresholdPanel;
 	}
@@ -327,17 +327,17 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		getMtEegThresholdPanel().setValue(thresholds.montageEEGThreshold);
 		getMtEmgThresholdPanel().setValue(thresholds.montageEMGThreshold);
 		getMtToneEmgThresholdPanel().setValue(
-				thresholds.montageToneEMGThreshold);
+			thresholds.montageToneEMGThreshold);
 
 		getRemEogDeflectionThresholdPanel().setValue(
-				thresholds.remEogDeflectionThreshold);
+			thresholds.remEogDeflectionThreshold);
 		getSemEogDeflectionThresholdPanel().setValue(
-				thresholds.semEogDeflectionThreshold);
+			thresholds.semEogDeflectionThreshold);
 
 		getMtEegThresholdEnabledCheckBox().setSelected(
-				parameters.analyseEEGChannelsFlag);
+			parameters.analyseEEGChannelsFlag);
 		getMtArtifactsThresholdEnabledCheckBox().setSelected(
-				parameters.analyseEMGChannelFlag);
+			parameters.analyseEMGChannelFlag);
 	}
 
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
@@ -348,17 +348,17 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		thresholds.montageEEGThreshold = getMtEegThresholdPanel().getValue();
 		thresholds.montageEMGThreshold = getMtEmgThresholdPanel().getValue();
 		thresholds.montageToneEMGThreshold = getMtToneEmgThresholdPanel()
-				.getValue();
+											 .getValue();
 
 		thresholds.remEogDeflectionThreshold = getRemEogDeflectionThresholdPanel()
-				.getValue();
+											   .getValue();
 		thresholds.semEogDeflectionThreshold = getSemEogDeflectionThresholdPanel()
-				.getValue();
+											   .getValue();
 
 		parameters.analyseEEGChannelsFlag = getMtEegThresholdEnabledCheckBox()
-				.isSelected();
+											.isSelected();
 		parameters.analyseEMGChannelFlag = getMtArtifactsThresholdEnabledCheckBox()
-				.isSelected();
+										   .isSelected();
 	}
 
 	public void validatePanel(ValidationErrors errors) {

@@ -14,12 +14,12 @@ import org.signalml.util.MinMaxRange;
 public class PluginConfigurationDefaultsHelper {
 
 	protected static final Logger logger = Logger
-			.getLogger(ConfigurationDefaultsLoader.class);
+										   .getLogger(ConfigurationDefaultsLoader.class);
 
 	protected class ConfigurationDefaultsException extends PluginException {
 
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class PluginConfigurationDefaultsHelper {
 	public Properties getProperties() throws ConfigurationDefaultsException {
 		if (this.properties == null) {
 			Class<? extends Plugin> pluginClass = PluginContextHelper
-					.FindContextPluginClass();
+												  .FindContextPluginClass();
 			if (pluginClass == null) {
 				throw new ConfigurationDefaultsException();
 			}
@@ -49,7 +49,7 @@ public class PluginConfigurationDefaultsHelper {
 	}
 
 	private Properties loadProperties(Class<? extends Plugin> pluginClass)
-			throws ConfigurationDefaultsException {
+	throws ConfigurationDefaultsException {
 		SvarogAccess access = PluginAccessHelper.GetSvarogAccess();
 		if (access == null) {
 			throw new ConfigurationDefaultsException();
@@ -74,7 +74,7 @@ public class PluginConfigurationDefaultsHelper {
 	}
 
 	protected String getConfigurationDefaultsPath(
-			Class<? extends Plugin> pluginClass) {
+		Class<? extends Plugin> pluginClass) {
 		return null;
 	}
 
@@ -90,15 +90,15 @@ public class PluginConfigurationDefaultsHelper {
 	protected String get(String key) throws ConfigurationDefaultsException {
 		return this.getProperties().getProperty(key);
 	}
-	
+
 	protected boolean bool_(String key) throws ConfigurationDefaultsException {
 		return Boolean.parseBoolean(this.get(key));
 	}
-	
+
 	protected double double_(String key) throws NumberFormatException, ConfigurationDefaultsException {
 		return Double.parseDouble(this.get(key));
 	}
-	
+
 	protected void setRange(MinMaxRange range, String key) throws NumberFormatException, ConfigurationDefaultsException {
 		range.setMin(double_(key + "Min"));
 		range.setMinUnlimited(bool_(key + "MinUnlimited"));

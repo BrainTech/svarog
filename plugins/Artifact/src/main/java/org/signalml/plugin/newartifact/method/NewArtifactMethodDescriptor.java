@@ -28,7 +28,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	ApplicationIterableMethodDescriptor {
 
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethodDescriptor.class);
+										   .getLogger(NewArtifactMethodDescriptor.class);
 
 	private NewArtifactMethodConfigurer configurer;
 	private MethodPresetManager presetManager;
@@ -59,7 +59,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 	@Override
 	public Object createData(ApplicationMethodManager methodManager) {
 		SvarogAccessSignal signalAccess = this.methodManager.getSvarogAccess().getSignalAccess();
-		
+
 		ExportedSignalDocument signalDocument;
 		try {
 			signalDocument = signalAccess.getActiveSignalDocument();
@@ -114,11 +114,11 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 		ApplicationMethodManager methodManager, boolean existingOnly) {
 		if (presetManager == null && !existingOnly) {
 			presetManager = new MethodPresetManager(this.getMethod().getName(),
-								NewArtifactParameters.class);
+													NewArtifactParameters.class);
 			presetManager.setProfileDir(methodManager.getProfileDir());
 			try {
 				presetManager.setStreamer((XStream) PluginResourceRepository
-							  .GetResource("streamer", NewArtifactPlugin.class));
+										  .GetResource("streamer", NewArtifactPlugin.class));
 			} catch (PluginException e) {
 				logger.error("Can't get proper streamer", e);
 				this.methodManager.handleException(e);

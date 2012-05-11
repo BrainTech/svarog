@@ -7,7 +7,7 @@ import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 public abstract class NewStagerConditionTagBuilderChain extends NewStagerAtomTagBuilderChain {
 
 	public NewStagerConditionTagBuilderChain(
-			NewStagerBookAtomTagBuilderData data) {
+		NewStagerBookAtomTagBuilderData data) {
 		super(data);
 	}
 
@@ -25,6 +25,6 @@ public abstract class NewStagerConditionTagBuilderChain extends NewStagerAtomTag
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	protected abstract boolean isConditionMet(NewStagerBookSample sample);
 }

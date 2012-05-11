@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.signal;
 
@@ -99,10 +99,10 @@ public interface ExportedSignalSelection {
 	boolean equals(ExportedSignalSelection s);
 
 
-	 /**
-     * Checks if intersection of current SignalSelection with another SignalSelection is nonempty
-     * @param selection the SignalSelection that the current SignalSelection is to be intersect with
-     * @return true if the two SignalSelection objects overlap, otherwise false.
-     */
+	/**
+	* Checks if intersection of current SignalSelection with another SignalSelection is nonempty
+	* @param selection the SignalSelection that the current SignalSelection is to be intersect with
+	* @return true if the two SignalSelection objects overlap, otherwise false.
+	*/
 	boolean overlaps(ExportedSignalSelection s);
 }

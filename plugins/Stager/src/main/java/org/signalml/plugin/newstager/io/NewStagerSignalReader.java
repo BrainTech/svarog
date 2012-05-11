@@ -9,7 +9,7 @@ public class NewStagerSignalReader implements IPluginDataSourceReader {
 	private int channelCount;
 	private int samplesCount;
 	private int signalOffset;
-	
+
 
 	public NewStagerSignalReader(MultichannelSampleSource sampleSource) {
 		this.source = sampleSource;
@@ -26,8 +26,8 @@ public class NewStagerSignalReader implements IPluginDataSourceReader {
 
 	@Override
 	public void getSample(double[][] buffer) throws InterruptedException {
-		assert (buffer.length == this.channelCount);
-		
+		assert(buffer.length == this.channelCount);
+
 		for (int i = 0; i < buffer.length; ++i) {
 			this.source.getSamples(i, buffer[i], this.signalOffset, buffer[i].length, 0);
 		}
@@ -44,5 +44,5 @@ public class NewStagerSignalReader implements IPluginDataSourceReader {
 		}
 		return result;
 	}
-	
+
 }

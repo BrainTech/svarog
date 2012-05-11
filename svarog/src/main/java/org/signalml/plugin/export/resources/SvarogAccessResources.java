@@ -21,6 +21,6 @@ public interface SvarogAccessResources {
 	 * @param classpath path to resources
 	 */
 	ImageIcon loadClassPathIcon(String classpath) throws IOException;
-	
+
 	Properties loadPluginConfigurationDefaults(String classpath) throws IOException;
 }

@@ -12,7 +12,7 @@ public class NewStagerStatData {
 	public final Map<String, Integer> channels;
 
 	public NewStagerStatData(NewStagerConstants constants,
-			NewStagerParameters parameters, Map<String, Integer> channels) {
+							 NewStagerParameters parameters, Map<String, Integer> channels) {
 		this.constants = constants;
 		this.parameters = parameters;
 		this.channels = channels;

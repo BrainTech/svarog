@@ -10,7 +10,7 @@ public class NewStagerBookAtom {
 	public final float phase;
 
 	public NewStagerBookAtom(float modulus, float amplitude, float position,
-			float scale, float frequency, float phase) {
+							 float scale, float frequency, float phase) {
 		this.modulus = modulus;
 		this.amplitude = amplitude;
 		this.position = position;
@@ -23,25 +23,25 @@ public class NewStagerBookAtom {
 			float amplitude, float position, float scale, float frequency,
 			float phase) {
 		return new NewStagerBookAtom(modulus, amplitude, position, scale,
-				frequency, phase);
+									 frequency, phase);
 	}
 
 	public static NewStagerBookAtom CreateDiracDelta(float modulus,
 			float amplitude, float position) {
 		return new NewStagerBookAtom(modulus, amplitude, position, 0.0F, 0.0F,
-				0.0F);
+									 0.0F);
 	}
 
 	public static NewStagerBookAtom CreateGaussFunction(float modulus,
 			float amplitude, float position, float scale) {
 		return new NewStagerBookAtom(modulus, amplitude, position, scale, 0.0F,
-				0.0F);
+									 0.0F);
 	}
 
 	public static NewStagerBookAtom CreateSinCosWave(float modulus,
 			float amplitude, float frequency, float phase) {
 		return new NewStagerBookAtom(modulus, amplitude, 0.0F, 0.0F, frequency,
-				phase);
+									 phase);
 	}
 
 }

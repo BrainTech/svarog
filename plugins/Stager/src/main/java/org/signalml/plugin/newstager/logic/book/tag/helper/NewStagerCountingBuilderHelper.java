@@ -4,8 +4,8 @@ import org.signalml.plugin.newstager.data.book.NewStagerBookSample;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 
 public class NewStagerCountingBuilderHelper extends
-		NewStagerBookAtomAbstractTagHelper implements
-		INewStagerBookAtomCoeffHelper {
+	NewStagerBookAtomAbstractTagHelper implements
+	INewStagerBookAtomCoeffHelper {
 
 	private INewStagerBookAtomFilter filter;
 	private NewStagerBookSample sample;
@@ -14,7 +14,7 @@ public class NewStagerCountingBuilderHelper extends
 	public NewStagerCountingBuilderHelper(NewStagerBookAtomTagHelperData data, INewStagerBookAtomFilter filter) {
 		super(data);
 		this.filter = filter;
-		
+
 		this.sample = null;
 	}
 

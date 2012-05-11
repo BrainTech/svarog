@@ -22,44 +22,44 @@ import org.signalml.util.Util;
  */
 public class TagStatistic implements WriterExportableTable {
 
-        /**
-         * total length of all {@link Tag tagged selections}
-         */
+	/**
+	 * total length of all {@link Tag tagged selections}
+	 */
 	protected double totalLength;
 
-        /**
-         * an array of {@link ExportedTagStyle styles} of {@link Tag tagged selections}
-         */
+	/**
+	 * an array of {@link ExportedTagStyle styles} of {@link Tag tagged selections}
+	 */
 	protected ExportedTagStyle[] tagStyles;
 
-        /**
-         * Hash map associating {@link ExportedTagStyle styles} with their indexes
-         * in a {@link #tagStyles <i>tagStyles</i> array}
-         */
+	/**
+	 * Hash map associating {@link ExportedTagStyle styles} with their indexes
+	 * in a {@link #tagStyles <i>tagStyles</i> array}
+	 */
 	protected HashMap<ExportedTagStyle, Integer> styleIndices;
 
-        /**
-         * An array of {@link Tag tagged selections} lengths.
-         * For each {@link ExportedTagStyle style} (index in a
-         * {@link #tagStyles <i>tagStyles</i> array}) holds the length
-         * of all tagged selections of this type.
-         */
+	/**
+	 * An array of {@link Tag tagged selections} lengths.
+	 * For each {@link ExportedTagStyle style} (index in a
+	 * {@link #tagStyles <i>tagStyles</i> array}) holds the length
+	 * of all tagged selections of this type.
+	 */
 	protected double[] styleTimes;
 
-        /**
-         * Constructor. Creates an empty TagStatistic.
-         */
+	/**
+	 * Constructor. Creates an empty TagStatistic.
+	 */
 	protected TagStatistic() {
 
 	}
 
-        /**
-         * Initialises attributes using given values.
-         * Creates all necessary structures.
-         * @param tagStyles an array of {@link ExportedTagStyle tag styles}
-         * @param totalLength the total length of all
-         * {@link Tag tagged selections}.
-         */
+	/**
+	 * Initialises attributes using given values.
+	 * Creates all necessary structures.
+	 * @param tagStyles an array of {@link ExportedTagStyle tag styles}
+	 * @param totalLength the total length of all
+	 * {@link Tag tagged selections}.
+	 */
 	protected void init(ExportedTagStyle[] tagStyles, double totalLength) {
 
 		this.tagStyles = tagStyles;
@@ -75,58 +75,58 @@ public class TagStatistic implements WriterExportableTable {
 
 	}
 
-        /**
-         * Constructor. Creates a TagStatistic object and initialises its
-         * attributes using given values.
-         * @param tagStyles an array of {@link ExportedTagStyle tag styles}
-         * @param topTotalLength the total length of all
-         * {@link Tag tagged selections}.
-         */
+	/**
+	 * Constructor. Creates a TagStatistic object and initialises its
+	 * attributes using given values.
+	 * @param tagStyles an array of {@link ExportedTagStyle tag styles}
+	 * @param topTotalLength the total length of all
+	 * {@link Tag tagged selections}.
+	 */
 	public TagStatistic(ExportedTagStyle[] tagStyles, double topTotalLength) {
 		init(tagStyles, topTotalLength);
 	}
 
-        /**
-         * Returns the total length of all {@link Tag tagged selections}.
-         * @return the total length of all tagged selections
-         */
+	/**
+	 * Returns the total length of all {@link Tag tagged selections}.
+	 * @return the total length of all tagged selections
+	 */
 	public double getTotalLength() {
 		return totalLength;
 	}
 
-        /**
-         * Returns the total length of all {@link Tag tagged selections} in
-         * the form of strings.
-         * @return the total length of all tagged selections in the form of
-         * string
-         */
+	/**
+	 * Returns the total length of all {@link Tag tagged selections} in
+	 * the form of strings.
+	 * @return the total length of all tagged selections in the form of
+	 * string
+	 */
 	public String getTotalLengthPretty() {
 		return Util.getPrettyTimeString(totalLength);
 	}
 
-        /**
-         * Returns the number of {@link ExportedTagStyle tag styles}.
-         * @return the number of tag styles
-         */
+	/**
+	 * Returns the number of {@link ExportedTagStyle tag styles}.
+	 * @return the number of tag styles
+	 */
 	public int getStyleCount() {
 		return tagStyles.length;
 	}
 
-        /**
-         * Returns the {@link ExportedTagStyle tag style} of a given index in
-         * the {@link #tagStyles tagStyles array}.
-         * @param index the index of a tag style
-         * @return the tag style of a given index
-         */
+	/**
+	 * Returns the {@link ExportedTagStyle tag style} of a given index in
+	 * the {@link #tagStyles tagStyles array}.
+	 * @param index the index of a tag style
+	 * @return the tag style of a given index
+	 */
 	public ExportedTagStyle getStyleAt(int index) {
 		return tagStyles[index];
 	}
 
-        /**
-         * Returns the index of a given {@link ExportedTagStyle tag style}.
-         * @param style the tag style which index is to be found
-         * @return the index of a given tag style
-         */
+	/**
+	 * Returns the index of a given {@link ExportedTagStyle tag style}.
+	 * @param style the tag style which index is to be found
+	 * @return the index of a given tag style
+	 */
 	public int indexOf(ExportedTagStyle style) {
 		Integer idx = styleIndices.get(style);
 		if (idx == null) {
@@ -135,42 +135,42 @@ public class TagStatistic implements WriterExportableTable {
 		return idx.intValue();
 	}
 
-        /**
-         * Returns the length of {@link Tag tagged selections} of the
-         * given {@link ExportedTagStyle style}.
-         * @param index the index of the style
-         * @return the length of tagged selections of the given style
-         */
+	/**
+	 * Returns the length of {@link Tag tagged selections} of the
+	 * given {@link ExportedTagStyle style}.
+	 * @param index the index of the style
+	 * @return the length of tagged selections of the given style
+	 */
 	public double getStyleTime(int index) {
 		return styleTimes[index+1];
 	}
 
-        /**
-         * Sets the length of {@link Tag tagged selections} of the
-         * given {@link ExportedTagStyle style}.
-         * @param index the index of the style
-         * @param time the length of tagged selections to be set
-         */
+	/**
+	 * Sets the length of {@link Tag tagged selections} of the
+	 * given {@link ExportedTagStyle style}.
+	 * @param index the index of the style
+	 * @param time the length of tagged selections to be set
+	 */
 	public void setStyleTime(int index, double time) {
 		styleTimes[index+1] = time;
 	}
 
-        /**
-         * Adds a given value to the length of {@link Tag tagged selections}
-         * of the given {@link ExportedTagStyle style}.
-         * @param index the index of the style
-         * @param time the length of tagged selections to be added
-         */
+	/**
+	 * Adds a given value to the length of {@link Tag tagged selections}
+	 * of the given {@link ExportedTagStyle style}.
+	 * @param index the index of the style
+	 * @param time the length of tagged selections to be added
+	 */
 	public void addStyleTime(int index, double time) {
 		styleTimes[index+1] += time;
 	}
 
-        /**
-         * Returns the length of {@link Tag tagged selections} of the
-         * given {@link ExportedTagStyle style}
-         * @param style the tag style
-         * @return the length of tagged selections of the given style
-         */
+	/**
+	 * Returns the length of {@link Tag tagged selections} of the
+	 * given {@link ExportedTagStyle style}
+	 * @param style the tag style
+	 * @return the length of tagged selections of the given style
+	 */
 	public double getStyleTime(ExportedTagStyle style) {
 		if (style == null) {
 			return styleTimes[0];
@@ -182,12 +182,12 @@ public class TagStatistic implements WriterExportableTable {
 		return styleTimes[idx.intValue()+1];
 	}
 
-        /**
-         * Sets the length of {@link Tag tagged selections} of the
-         * given {@link ExportedTagStyle style}.
-         * @param style the tag style
-         * @param time the length of tagged selections to be set
-         */
+	/**
+	 * Sets the length of {@link Tag tagged selections} of the
+	 * given {@link ExportedTagStyle style}.
+	 * @param style the tag style
+	 * @param time the length of tagged selections to be set
+	 */
 	public void setStyleTime(ExportedTagStyle style, double time) {
 		if (style == null) {
 			styleTimes[0] = time;
@@ -199,13 +199,13 @@ public class TagStatistic implements WriterExportableTable {
 		styleTimes[idx.intValue()+1] = time;
 	}
 
-        /**
-         * Adds a given value to the length of {@link Tag tagged selections}
-         * of the* given {@link ExportedTagStyle style}.
-         * of the given style
-         * @param style the tag style
-         * @param time the length of tagged selections to be added
-         */
+	/**
+	 * Adds a given value to the length of {@link Tag tagged selections}
+	 * of the* given {@link ExportedTagStyle style}.
+	 * of the given style
+	 * @param style the tag style
+	 * @param time the length of tagged selections to be added
+	 */
 	public void addStyleTime(ExportedTagStyle style, double time) {
 		if (style == null) {
 			styleTimes[0] += time;
@@ -217,16 +217,16 @@ public class TagStatistic implements WriterExportableTable {
 		styleTimes[idx.intValue()+1] += time;
 	}
 
-        /**
-         * Writes parameters of this statistic to a given {@link Writer writer}
-         * using given column and row separator.
-         * @param writer the writer to which current object parameters will be
-         * written
-         * @param columnSeparator a string used to separate columns
-         * @param rowSeparator a string used to separate rows
-         * @param userObject not used
-         * @throws IOException if an I/O error occurs
-         */
+	/**
+	 * Writes parameters of this statistic to a given {@link Writer writer}
+	 * using given column and row separator.
+	 * @param writer the writer to which current object parameters will be
+	 * written
+	 * @param columnSeparator a string used to separate columns
+	 * @param rowSeparator a string used to separate rows
+	 * @param userObject not used
+	 * @throws IOException if an I/O error occurs
+	 */
 	public void export(Writer writer, String columnSeparator, String rowSeparator, Object userObject) throws IOException {
 
 		writer.append("(none)");

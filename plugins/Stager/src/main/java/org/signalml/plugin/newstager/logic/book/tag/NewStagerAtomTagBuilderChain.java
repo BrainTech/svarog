@@ -15,7 +15,7 @@ public class NewStagerAtomTagBuilderChain extends NewStagerAbstractTagBuilder {
 
 	List<INewStagerTagBuilder> builders = new LinkedList<INewStagerTagBuilder>();
 	private NewStagerTagBuilderResult result;
-	
+
 	public NewStagerAtomTagBuilderChain(NewStagerBookAtomTagBuilderData data) {
 		super(data);
 	}
@@ -24,14 +24,14 @@ public class NewStagerAtomTagBuilderChain extends NewStagerAbstractTagBuilder {
 		builders.add(builder);
 		return this;
 	}
-	
+
 	public NewStagerAtomTagBuilderChain composeChain() {
 		NewStagerAtomTagBuilderChain chain = new NewStagerAtomTagBuilderChain(this.data);
 		this.compose(chain);
 		return chain;
 	}
 
-	
+
 	@Override
 	public boolean process(NewStagerBookSample sample) {
 		for (INewStagerTagBuilder builder : this.builders) {
@@ -47,13 +47,13 @@ public class NewStagerAtomTagBuilderChain extends NewStagerAbstractTagBuilder {
 		if (this.result != null) {
 			return new NewStagerTagBuilderResult(this.result.tagMap, false);
 		}
-		
+
 		NewStagerTagBuilderSet builderSet = new NewStagerTagBuilderSet(this.builders);
 		Map<NewStagerTagCollectionType, NewStagerTagCollection> builderSetResult = builderSet.getResult();
-		
-		
+
+
 		this.result = new NewStagerTagBuilderResult(builderSetResult, true);
-		
+
 		return this.result;
 	}
 

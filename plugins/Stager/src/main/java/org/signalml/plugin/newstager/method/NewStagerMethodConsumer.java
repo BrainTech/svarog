@@ -1,5 +1,5 @@
 /* NewStagerMethodConsumer.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.method;
@@ -33,14 +33,14 @@ import org.signalml.util.Util;
 
 /**
  * NewStagerMethodConsumer
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 
 	protected static final Logger logger = Logger
-			.getLogger(NewStagerMethodConsumer.class);
+										   .getLogger(NewStagerMethodConsumer.class);
 
 	private Window dialogParent;
 
@@ -53,17 +53,17 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		this.manager = manager;
 
 		this.dialogParent = this.manager.getSvarogAccess().getGUIAccess()
-				.getDialogParent();
+							.getDialogParent();
 
 		this.resultDialog = new NewStagerResultDialog(this.dialogParent, true);
 
 		this.resultDialog.setFileChooser(this.manager.getSvarogAccess()
-				.getGUIAccess().getFileChooser());
+										 .getGUIAccess().getFileChooser());
 	}
 
 	@Override
 	public boolean consumeResult(Method method, Object methodData,
-			Object methodResult) throws SignalMLException {
+								 Object methodResult) throws SignalMLException {
 
 		if (!(methodData instanceof NewStagerApplicationData)) {
 			logger.error("Invalid stager data");
@@ -77,7 +77,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 
 		descriptor.setStagerResult(result);
 		SvarogAccessSignal signalAccess = this.manager.getSvarogAccess()
-						  .getSignalAccess();
+										  .getSignalAccess();
 
 		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		boolean signalAvailable;
@@ -92,13 +92,13 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		MultichannelSampleSource sampleSource = data.getSampleSource();
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 		float totalLength = minSampleCount
-				/ sampleSource.getSamplingFrequency();
+							/ sampleSource.getSamplingFrequency();
 		float segmentLength = data.getPageSize();
 		int segmentCount = (int) Math.floor(totalLength / segmentLength);
 
 		descriptor.setSegmentCount(segmentCount);
 		descriptor.setSegmentLength(segmentLength);
-		
+
 		final File primaryTagFile = result.getTagFile();
 		if (primaryTagFile == null || !primaryTagFile.exists()) {
 			throw new SignalMLException("No result tag");
@@ -115,7 +115,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		descriptor.setPrimaryTag(primaryTag);
 
 		File workingDirectory = new File(data.getProjectPath(),
-						 data.getPatientName());
+										 data.getPatientName());
 		File[] additionalTagFiles = workingDirectory
 		.listFiles(new FileFilter() {
 
@@ -125,9 +125,9 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 					return false;
 				}
 				String fileExtension = Util.getFileExtension(pathname,
-						       false);
+									   false);
 				return (fileExtension != null && "tag"
-					.equalsIgnoreCase(fileExtension));
+						.equalsIgnoreCase(fileExtension));
 			}
 
 		});
@@ -168,7 +168,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		if (signalAvailable && descriptor.isPrimaryOpenInWindow()) {
 			try {
 				signalAccess.openTagDocument(primaryTag.getBackingFile(),
-							     signalDocument, true);
+											 signalDocument, true);
 			} catch (InvalidClassException ex) {
 				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
@@ -179,11 +179,11 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 		}
 
 		ArrayList<File> chosenAdditionalTags = descriptor
-						       .getChosenAdditionalTags();
+											   .getChosenAdditionalTags();
 		if (!chosenAdditionalTags.isEmpty()) {
 
 			boolean additionalOpenInWindow = descriptor
-							 .isAdditionalOpenInWindow();
+											 .isAdditionalOpenInWindow();
 			boolean additionalSaveToFile = descriptor.isAdditionalSaveToFile();
 
 			if (additionalOpenInWindow || additionalSaveToFile) {
@@ -213,7 +213,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 
 						do {
 							saveFile = this.manager.getSvarogAccess()
-									.getGUIAccess().getFileChooser().chooseSaveTag(dialogParent);
+									   .getGUIAccess().getFileChooser().chooseSaveTag(dialogParent);
 							if (saveFile == null) {
 								// file choice canceled
 								break;
@@ -224,7 +224,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 							// file exists warning
 							if (saveFile.exists()) {
 								int res = OptionPane
-									  .showFileAlreadyExists(dialogParent);
+										  .showFileAlreadyExists(dialogParent);
 								if (res != OptionPane.OK_OPTION) {
 									hasFile = false;
 								}
@@ -265,7 +265,7 @@ public class NewStagerMethodConsumer implements IPluginMethodResultConsumer {
 
 						try {
 							signalAccess.openTagDocument(file, signalDocument,
-										     false);
+														 false);
 						} catch (InvalidClassException ex) {
 							Dialogs.showExceptionDialog(
 								dialogParent, ex);

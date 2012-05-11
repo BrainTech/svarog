@@ -1,5 +1,5 @@
 /* SleepComparisonTable.java created 2008-03-03
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -29,15 +29,15 @@ import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * SleepComparisonTable
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewStagerSleepComparisonTable extends JTable {
 
 	protected static final Logger logger = Logger
-			.getLogger(NewStagerSleepComparisonTable.class);
+										   .getLogger(NewStagerSleepComparisonTable.class);
 
 	private static final long serialVersionUID = 1L;
 
@@ -51,7 +51,7 @@ public class NewStagerSleepComparisonTable extends JTable {
 	private CornerPanel cornerPanel;
 
 	public NewStagerSleepComparisonTable(
-			NewStagerSleepComparisonTableModel model) {
+		NewStagerSleepComparisonTableModel model) {
 
 		super(model);
 
@@ -109,11 +109,11 @@ public class NewStagerSleepComparisonTable extends JTable {
 					return;
 				}
 				scrollPane.setColumnHeaderView(new HeaderTable(tableModel
-						.getColumnTableModel()));
+											   .getColumnTableModel()));
 				scrollPane.setRowHeaderView(new HeaderTable(tableModel
-						.getRowTableModel()));
+											.getRowTableModel()));
 				scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER,
-						getCornerPanel());
+									 getCornerPanel());
 			}
 		}
 	}
@@ -140,7 +140,7 @@ public class NewStagerSleepComparisonTable extends JTable {
 				scrollPane.setColumnHeaderView(null);
 				scrollPane.setRowHeaderView(null);
 				scrollPane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER,
-						null);
+									 null);
 			}
 		}
 	}
@@ -170,43 +170,43 @@ public class NewStagerSleepComparisonTable extends JTable {
 	 * ExportComparisonToClipboardAction(messageSource, tableToTextExporter) );
 	 * popupMenu.add( new ExportComparisonToFileAction(messageSource,
 	 * tableToTextExporter) ); } return popupMenu; }
-	 * 
+	 *
 	 * protected class ExportComparisonToClipboardAction extends
 	 * ExportToClipboardAction {
-	 * 
+	 *
 	 * private static final long serialVersionUID = 1L;
-	 * 
+	 *
 	 * public ExportComparisonToClipboardAction(MessageSourceAccessor
 	 * messageSource, TableToTextExporter tableToTextExporter) {
 	 * super(messageSource, tableToTextExporter); }
-	 * 
+	 *
 	 * @Override protected Object getUserObject() { TagComparisonTableModel
 	 * model = getModel(); if( model != null ) { return model.isShowPercent(); }
 	 * return null; }
-	 * 
+	 *
 	 * @Override protected WriterExportableTable getExportableTable() {
 	 * TagComparisonTableModel model = getModel(); if( model != null ) { return
 	 * model.getResult(); } return null; }
-	 * 
+	 *
 	 * }
-	 * 
+	 *
 	 * protected class ExportComparisonToFileAction extends ExportToFileAction {
-	 * 
+	 *
 	 * private static final long serialVersionUID = 1L;
-	 * 
+	 *
 	 * private ExportComparisonToFileAction(MessageSourceAccessor messageSource,
 	 * TableToTextExporter tableToTextExporter) { super(messageSource,
 	 * tableToTextExporter); setFileChooser(fileChooser);
 	 * setOptionPaneParent(SleepComparisonTable.this); }
-	 * 
+	 *
 	 * @Override protected Object getUserObject() { TagComparisonTableModel
 	 * model = getModel(); if( model != null ) { return model.isShowPercent(); }
 	 * return null; }
-	 * 
+	 *
 	 * @Override protected WriterExportableTable getExportableTable() {
 	 * TagComparisonTableModel model = getModel(); if( model != null ) { return
 	 * model.getResult(); } return null; }
-	 * 
+	 *
 	 * }
 	 */
 
@@ -225,7 +225,7 @@ public class NewStagerSleepComparisonTable extends JTable {
 			 * label = new JLabel();
 			 * label.setHorizontalAlignment(JLabel.CENTER);
 			 * label.setVerticalAlignment(JLabel.CENTER);
-			 * 
+			 *
 			 * add( label, BorderLayout.CENTER );
 			 */
 
@@ -244,7 +244,7 @@ public class NewStagerSleepComparisonTable extends JTable {
 
 		/*
 		 * public JLabel getLabel() { return label; }
-		 * 
+		 *
 		 * @Override public JPopupMenu getComponentPopupMenu() { return
 		 * SleepComparisonTable.this.getComponentPopupMenu(); }
 		 */
@@ -297,7 +297,7 @@ public class NewStagerSleepComparisonTable extends JTable {
 		@Override
 		public Dimension getPreferredSize() {
 			return new Dimension(getColumnCount() * CELL_SIZE, getRowCount()
-					* CELL_SIZE);
+								 * CELL_SIZE);
 		}
 
 		@Override

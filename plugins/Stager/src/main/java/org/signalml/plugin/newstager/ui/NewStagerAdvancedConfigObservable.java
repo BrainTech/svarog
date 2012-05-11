@@ -5,7 +5,7 @@ import java.util.Observable;
 public class NewStagerAdvancedConfigObservable extends Observable {
 
 	private boolean flag;
-	
+
 	public void setEnabled(boolean flag) {
 		if (this.flag != flag) {
 			this.flag = flag;
@@ -13,7 +13,7 @@ public class NewStagerAdvancedConfigObservable extends Observable {
 			this.notifyObservers();
 		}
 	}
-	
+
 	public boolean getEnabled() {
 		return this.flag;
 	}

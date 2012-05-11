@@ -37,17 +37,17 @@ import com.thoughtworks.xstream.XStreamException;
 
 /**
  * ArtifactMethodConfigurer
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
-		SvarogMethodConfigurer, // FIXME
-		PresetEquippedMethodConfigurer {
+	SvarogMethodConfigurer, // FIXME
+	PresetEquippedMethodConfigurer {
 
 	protected static final Logger logger = Logger
-			.getLogger(NewArtifactMethodConfigurer.class);
+										   .getLogger(NewArtifactMethodConfigurer.class);
 
 	private FileChooser fileChooser;
 	private NewArtifactMethodDialog dialog;
@@ -62,34 +62,34 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 	public void initialize(PluginMethodManager manager) {
 		SvarogAccessGUI guiAccess = manager.getSvarogAccess().getGUIAccess();
 		this.dialogParent = guiAccess.getDialogParent();
-		
+
 		this.fileChooser = guiAccess.getFileChooser();
 		this.dialog = new NewArtifactMethodDialog(this.presetManager,
 				this.dialogParent);
 		// TODO remove this nasty cast
 		this.dialog.setApplicationConfig((ApplicationConfiguration) manager
-				.getSvarogAccess().getConfigAccess().getSvarogConfiguration());
+										 .getSvarogAccess().getConfigAccess().getSvarogConfiguration());
 
 		this.workDirConfigurer = new PluginMethodWorkingDirConfigurer(
-				this.presetManager,
-				new NewArtifactConfiguration(),
-				new PluginMethodWorkingDirConfigurer.PluginWorkingDirDialogGetter() {
+			this.presetManager,
+			new NewArtifactConfiguration(),
+		new PluginMethodWorkingDirConfigurer.PluginWorkingDirDialogGetter() {
 
-					@Override
-					public AbstractPluginDialog getDialog() {
-						if (configDialog == null) {
-							configDialog = new NewArtifactToolConfigDialog(
-									dialogParent, true);
-							configDialog.setFileChooser(fileChooser);
-						}
-						return configDialog;
-					}
-				});
+			@Override
+			public AbstractPluginDialog getDialog() {
+				if (configDialog == null) {
+					configDialog = new NewArtifactToolConfigDialog(
+						dialogParent, true);
+					configDialog.setFileChooser(fileChooser);
+				}
+				return configDialog;
+			}
+		});
 	}
 
 	@Override
 	public boolean configure(Method method, Object methodDataObj)
-			throws SignalMLException {
+	throws SignalMLException {
 
 		NewArtifactApplicationData data = (NewArtifactApplicationData) methodDataObj;
 
@@ -110,9 +110,9 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 			if (!projectDirectory.isDirectory()) {
 				logger.warn("A file in artifact working directory is conflicting with project ["
-						+ projectDirectory.getAbsolutePath() + "]");
+							+ projectDirectory.getAbsolutePath() + "]");
 				OptionPane.showError(dialogParent,
-						"error.artifact.failedToCreateProjectDirectory");
+									 "error.artifact.failedToCreateProjectDirectory");
 				return false;
 			}
 
@@ -127,17 +127,17 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 			if (lockFiles.length > 0) {
 				logger.warn("Failed to use directory ["
-						+ projectDirectory.getAbsolutePath() + "]");
+							+ projectDirectory.getAbsolutePath() + "]");
 				OptionPane.showError(dialogParent,
-						"error.artifact.projectDirectoryLocked",
-						new Object[] { projectDirectory.getAbsolutePath() });
+									 "error.artifact.projectDirectoryLocked",
+									 new Object[] { projectDirectory.getAbsolutePath() });
 				return false;
 			}
 
 			int ans = OptionPane.showReuseReplaceOption(
-					dialogParent,
-					NewArtifactPlugin.i18n()._R(
-							"Project [{0}] exists. Reuse or replace?", name));
+						  dialogParent,
+						  NewArtifactPlugin.i18n()._R(
+							  "Project [{0}] exists. Reuse or replace?", name));
 			if (ans == OptionPane.CANCEL_OPTION) {
 				return false;
 			} else if (ans == OptionPane.NO_OPTION) {
@@ -148,9 +148,9 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 					deleteOk = f.delete();
 					if (!deleteOk) {
 						logger.warn("Failed to delete file ["
-								+ f.getAbsolutePath() + "]");
+									+ f.getAbsolutePath() + "]");
 						OptionPane.showError(dialogParent,
-								"error.artifact.failedToClearProjectDirectory");
+											 "error.artifact.failedToClearProjectDirectory");
 						return false;
 					}
 				}
@@ -162,7 +162,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 			boolean createOk = projectDirectory.mkdirs();
 			if (!createOk) {
 				OptionPane.showError(dialogParent,
-						"error.artifact.failedToCreateProjectDirectory");
+									 "error.artifact.failedToCreateProjectDirectory");
 				return false;
 			}
 
@@ -175,8 +175,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 		if (projectFile.exists()) {
 			try {
 				XMLUtils.objectFromFile(data, projectFile,
-						(XStream) PluginResourceRepository.GetResource(
-								"streamer", NewArtifactPlugin.class));
+										(XStream) PluginResourceRepository.GetResource(
+											"streamer", NewArtifactPlugin.class));
 				existingProject = data.isExistingProject();
 			} catch (XStreamException ex) {
 				logger.warn("Incompatible project data", ex);
@@ -196,8 +196,8 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 		try {
 			XMLUtils.objectToFile(data, projectFile,
-					(XStream) PluginResourceRepository.GetResource("streamer",
-							NewArtifactPlugin.class));
+								  (XStream) PluginResourceRepository.GetResource("streamer",
+										  NewArtifactPlugin.class));
 		} catch (IOException ex) {
 			logger.error("Failed to write project", ex);
 			throw new SignalMLException(ex);

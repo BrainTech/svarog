@@ -1,5 +1,5 @@
 /* StagerBasicConfigPanel.java created 2008-02-14
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -15,8 +15,8 @@ import org.signalml.plugin.newstager.data.NewStagerParameters;
 
 /**
  * StagerBasicConfigPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -26,21 +26,21 @@ public class NewStagerBasicConfigPanel extends JPanel {
 
 	private AbstractDialog owner;
 	private FileChooser fileChooser;
-	
+
 	private NewStagerBookPanel bookPanel;
 	private NewStagerBasicParametersPanel parametersPanel;
 	private NewStagerEnableAdvancedConfigPanel enableAdvancedConfigPanel;
 
 	private NewStagerAdvancedConfigObservable advancedConfigObservable;
-	
+
 	public NewStagerBasicConfigPanel(FileChooser fileChooser,
-			AbstractDialog owner) {
+									 AbstractDialog owner) {
 		super();
 		this.fileChooser = fileChooser;
 		this.owner = owner;
-		
+
 		this.advancedConfigObservable = new NewStagerAdvancedConfigObservable();
-		
+
 		initialize();
 	}
 

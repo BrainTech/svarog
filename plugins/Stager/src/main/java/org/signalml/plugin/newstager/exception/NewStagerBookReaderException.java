@@ -3,7 +3,7 @@ package org.signalml.plugin.newstager.exception;
 public class NewStagerBookReaderException extends NewStagerPluginException {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -8286369404520390602L;
 

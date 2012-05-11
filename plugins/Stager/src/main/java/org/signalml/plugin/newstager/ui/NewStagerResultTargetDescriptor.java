@@ -1,5 +1,5 @@
 /* NewStagerResultTargetDescriptor.java created 2008-02-20
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -12,33 +12,33 @@ import org.signalml.plugin.newstager.data.NewStagerResult;
 
 /** NewStagerResultTargetDescriptor
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class NewStagerResultTargetDescriptor {
 
 	private boolean signalAvailable;
-	
+
 	private int segmentCount;
 	private float segmentLength;
-	
+
 	private ExportedTagDocument primaryTag;
-	
+
 	private NewStagerResult stagerResult;
 
 	private boolean primaryOpenInWindow;
 	private boolean primarySaveToFile;
-	
+
 	private File primaryTagFile;
-	
+
 	private ArrayList<File> additionalTags;
 	private ArrayList<File> chosenAdditionalTags;
 	private boolean additionalOpenInWindow;
 	private boolean additionalSaveToFile;
-	
+
 	private File expertStageTagFile;
-	private File expertArtifactTagFile;	
-	
+	private File expertArtifactTagFile;
+
 	public boolean isSignalAvailable() {
 		return signalAvailable;
 	}
@@ -46,7 +46,7 @@ public class NewStagerResultTargetDescriptor {
 	public void setSignalAvailable(boolean signalAvailable) {
 		this.signalAvailable = signalAvailable;
 	}
-	
+
 	public int getSegmentCount() {
 		return segmentCount;
 	}
@@ -65,8 +65,8 @@ public class NewStagerResultTargetDescriptor {
 
 	public ExportedTagDocument getPrimaryTag() {
 		return primaryTag;
-	}	
-	
+	}
+
 	public void setPrimaryTag(ExportedTagDocument primaryTag) {
 		this.primaryTag = primaryTag;
 	}
@@ -150,5 +150,5 @@ public class NewStagerResultTargetDescriptor {
 	public void setStagerResult(NewStagerResult stagerResult) {
 		this.stagerResult = stagerResult;
 	}
-	
+
 }

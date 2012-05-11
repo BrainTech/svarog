@@ -24,24 +24,24 @@ public class NewStagerParameterThresholds implements Serializable {
 
 	public NewStagerParameterThresholds() {
 		this(0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				NewStagerParameterThresholds.Zeros(),
-				NewStagerParameterThresholds.Zeros(),
-				NewStagerParameterThresholds.Zeros(),
-				NewStagerParameterThresholds.Zeros(),
-				NewStagerParameterThresholds.Zeros());
+			 NewStagerParameterThresholds.Zeros(),
+			 NewStagerParameterThresholds.Zeros(),
+			 NewStagerParameterThresholds.Zeros(),
+			 NewStagerParameterThresholds.Zeros(),
+			 NewStagerParameterThresholds.Zeros());
 		NewStagerConfigurationDefaultsHelper.GetSharedInstance().setDefaults(
-				this);
+			this);
 	}
 
 	public NewStagerParameterThresholds(double toneEMG,
-			double montageEEGThreshold, double montageEMGThreshold,
-			double montageToneEMGThreshold, double remEogDeflectionThreshold,
-			double semEogDeflectionThreshold,
-			NewStagerFASPThreshold alphaThreshold,
-			NewStagerFASPThreshold deltaThreshold,
-			NewStagerFASPThreshold spindleThreshold,
-			NewStagerFASPThreshold thetaThreshold,
-			NewStagerFASPThreshold KCThreshold) {
+										double montageEEGThreshold, double montageEMGThreshold,
+										double montageToneEMGThreshold, double remEogDeflectionThreshold,
+										double semEogDeflectionThreshold,
+										NewStagerFASPThreshold alphaThreshold,
+										NewStagerFASPThreshold deltaThreshold,
+										NewStagerFASPThreshold spindleThreshold,
+										NewStagerFASPThreshold thetaThreshold,
+										NewStagerFASPThreshold KCThreshold) {
 		this.toneEMG = toneEMG;
 		this.montageEEGThreshold = montageEEGThreshold;
 		this.montageEMGThreshold = montageEMGThreshold;

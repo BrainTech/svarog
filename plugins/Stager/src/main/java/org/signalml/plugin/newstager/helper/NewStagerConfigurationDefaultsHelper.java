@@ -9,7 +9,7 @@ import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.tool.PluginConfigurationDefaultsHelper;
 
 public class NewStagerConfigurationDefaultsHelper extends
-		PluginConfigurationDefaultsHelper {
+	PluginConfigurationDefaultsHelper {
 
 	private static NewStagerConfigurationDefaultsHelper SharedInstance = new NewStagerConfigurationDefaultsHelper();
 
@@ -18,13 +18,13 @@ public class NewStagerConfigurationDefaultsHelper extends
 	}
 
 	public static void SetSharedInstance(
-			NewStagerConfigurationDefaultsHelper helper) {
+		NewStagerConfigurationDefaultsHelper helper) {
 		SharedInstance = helper;
 	}
 
 	@Override
 	protected String getConfigurationDefaultsPath(
-			Class<? extends Plugin> pluginClass) {
+		Class<? extends Plugin> pluginClass) {
 		if (pluginClass != NewStagerPlugin.class) {
 			return null;
 		}
@@ -66,7 +66,7 @@ public class NewStagerConfigurationDefaultsHelper extends
 		} catch (ConfigurationDefaultsException e) {
 			return;
 		}
-		
+
 		this.setDefaults(thresholds.alphaThreshold, "alpha", false);
 		this.setDefaults(thresholds.deltaThreshold, "delta", false);
 		this.setDefaults(thresholds.thetaThreshold, "theta", false);
@@ -88,7 +88,7 @@ public class NewStagerConfigurationDefaultsHelper extends
 		} catch (ConfigurationDefaultsException e) {
 			return;
 		}
-		
+
 	}
-	
+
 }

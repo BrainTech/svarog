@@ -8,7 +8,7 @@ public class NewStagerSignalReaderWorkerData {
 	public final INewStagerStatsSynchronizer synchronizer;
 
 	public NewStagerSignalReaderWorkerData(MultichannelSampleSource sampleSource,
-			INewStagerStatsSynchronizer synchronizer) {
+										   INewStagerStatsSynchronizer synchronizer) {
 		this.sampleSource = sampleSource;
 		this.synchronizer = synchronizer;
 	}

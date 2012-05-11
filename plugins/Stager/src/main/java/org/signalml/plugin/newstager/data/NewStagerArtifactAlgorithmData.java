@@ -8,9 +8,9 @@ public class NewStagerArtifactAlgorithmData {
 	public final NewStagerParameters parameters;
 
 	public NewStagerArtifactAlgorithmData(
-			final Map<String, Integer> channels,
-			final NewStagerConstants constants,
-			final NewStagerParameters parameters) {
+		final Map<String, Integer> channels,
+		final NewStagerConstants constants,
+		final NewStagerParameters parameters) {
 		this.channels = channels;
 		this.constants = constants;
 		this.parameters = parameters;

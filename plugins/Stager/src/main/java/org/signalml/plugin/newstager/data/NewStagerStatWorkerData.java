@@ -15,10 +15,10 @@ public class NewStagerStatWorkerData {
 	public final Map<String, Integer> channelMap;
 
 	public NewStagerStatWorkerData(
-			INewStagerStatsSynchronizer synchronizer,
-			INewStagerWorkerCompletion<NewStagerStatAlgorithmResult> completion,
-			NewStagerConstants constants, NewStagerParameters parameters,
-			Map<String, Integer> channelMap) {
+		INewStagerStatsSynchronizer synchronizer,
+		INewStagerWorkerCompletion<NewStagerStatAlgorithmResult> completion,
+		NewStagerConstants constants, NewStagerParameters parameters,
+		Map<String, Integer> channelMap) {
 		this.synchronizer = synchronizer;
 		this.completion = completion;
 		this.constants = constants;

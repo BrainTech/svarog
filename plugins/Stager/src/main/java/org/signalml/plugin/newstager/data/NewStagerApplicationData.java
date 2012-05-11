@@ -1,5 +1,5 @@
 /* NewStagerApplicationData.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.data;
@@ -19,8 +19,8 @@ import org.signalml.plugin.io.PluginSampleSourceAdapter;
 
 /**
  * NewStagerApplicationData
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -48,11 +48,11 @@ public class NewStagerApplicationData extends NewStagerData {
 
 		this.setMontage(this.createMontage(signalDocument));
 	}
-	
+
 	public void setSignalAccess(SvarogAccessSignal signalAccess) {
 		this.signalAccess = signalAccess;
 	}
-	
+
 	private SourceMontage createMontage(ExportedSignalDocument document) {
 		return new SourceMontage((SignalDocument) document); //FIXME
 	}
@@ -93,13 +93,13 @@ public class NewStagerApplicationData extends NewStagerData {
 			if (channel == null) {
 				continue;
 			}
-			
+
 			IChannelFunction function = channel.getFunction();
 
 			if (channel.isChannelType(ChannelType.PRIMARY)) {
 				eegChannels.add(i);
 			}
-			
+
 			if (function != null) {
 				if (NewStagerData.keyChannelSet.contains(function)) {
 					keyChannelMap.put(function.getName(), i);
@@ -109,7 +109,7 @@ public class NewStagerApplicationData extends NewStagerData {
 
 
 		setSampleSource(new PluginSampleSourceAdapter(signalAccess,
-				signalDocument));
+						signalDocument));
 
 		setPageSize((int) signalDocument.getPageSize());
 	}

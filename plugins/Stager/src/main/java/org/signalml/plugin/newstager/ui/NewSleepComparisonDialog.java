@@ -1,5 +1,5 @@
 /* NewSleepComparisonDialog.java created 2008-02-27
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.ui;
@@ -28,8 +28,8 @@ import org.signalml.plugin.newstager.data.NewStagerSleepComparison;
 
 /**
  * NewSleepComparisonDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -82,7 +82,7 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 		interfacePanel.setBorder(new CompoundBorder(new TitledBorder(
-				_("Comparison data")), new EmptyBorder(3, 3, 3, 3)));
+									 _("Comparison data")), new EmptyBorder(3, 3, 3, 3)));
 
 		interfacePanel.add(getTabbedPane(), BorderLayout.CENTER);
 
@@ -100,7 +100,7 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 	public NewStagerSleepComparisonTable getSleepComparisonTable() {
 		if (sleepComparisonTable == null) {
 			sleepComparisonTable = new NewStagerSleepComparisonTable(
-					getSleepComparisonTableModel());
+				getSleepComparisonTableModel());
 		}
 		return sleepComparisonTable;
 	}
@@ -108,7 +108,7 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 	public JScrollPane getSleepComparisonScrollPane() {
 		if (sleepComparisonScrollPane == null) {
 			sleepComparisonScrollPane = new JScrollPane(
-					getSleepComparisonTable());
+				getSleepComparisonTable());
 			sleepComparisonScrollPane.setPreferredSize(new Dimension(600, 550));
 		}
 		return sleepComparisonScrollPane;
@@ -118,10 +118,10 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 		if (sleepComparisonPanel == null) {
 			sleepComparisonPanel = new JPanel(new BorderLayout());
 			sleepComparisonPanel.setBorder(new CompoundBorder(new TitledBorder(
-					_("Stager (row) vs. expert (column) comparison")),
-					new EmptyBorder(3, 3, 3, 3)));
+											   _("Stager (row) vs. expert (column) comparison")),
+										   new EmptyBorder(3, 3, 3, 3)));
 			sleepComparisonPanel.add(getSleepComparisonScrollPane(),
-					BorderLayout.CENTER);
+									 BorderLayout.CENTER);
 		}
 		return sleepComparisonPanel;
 	}
@@ -136,7 +136,7 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 	public NewStagerSleepComparisonStatisticTable getSleepComparisonStatisticTable() {
 		if (sleepComparisonStatisticTable == null) {
 			sleepComparisonStatisticTable = new NewStagerSleepComparisonStatisticTable(
-					getSleepComparisonStatisticTableModel());
+				getSleepComparisonStatisticTableModel());
 		}
 		return sleepComparisonStatisticTable;
 	}
@@ -144,9 +144,9 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 	public JScrollPane getSleepComparisonStatisticScrollPane() {
 		if (sleepComparisonStatisticScrollPane == null) {
 			sleepComparisonStatisticScrollPane = new JScrollPane(
-					getSleepComparisonStatisticTable());
+				getSleepComparisonStatisticTable());
 			sleepComparisonStatisticScrollPane.setPreferredSize(new Dimension(
-					400, 300));
+						400, 300));
 		}
 		return sleepComparisonStatisticScrollPane;
 	}
@@ -155,12 +155,12 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 		if (sleepComparisonStatisticPanel == null) {
 			sleepComparisonStatisticPanel = new JPanel(new BorderLayout());
 			sleepComparisonStatisticPanel
-					.setBorder(new CompoundBorder(
-							new TitledBorder(_("Stages")), new EmptyBorder(3,
-									3, 3, 3)));
+			.setBorder(new CompoundBorder(
+						   new TitledBorder(_("Stages")), new EmptyBorder(3,
+								   3, 3, 3)));
 			sleepComparisonStatisticPanel.add(
-					getSleepComparisonStatisticScrollPane(),
-					BorderLayout.CENTER);
+				getSleepComparisonStatisticScrollPane(),
+				BorderLayout.CENTER);
 		}
 		return sleepComparisonStatisticPanel;
 	}
@@ -191,9 +191,9 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 		if (propertySheetPanel == null) {
 			propertySheetPanel = new JPanel(new BorderLayout());
 			propertySheetPanel.setBorder(new CompoundBorder(new TitledBorder(
-					_("Other")), new EmptyBorder(3, 3, 3, 3)));
+											 _("Other")), new EmptyBorder(3, 3, 3, 3)));
 			propertySheetPanel
-					.add(getPropertyScrollPane(), BorderLayout.CENTER);
+			.add(getPropertyScrollPane(), BorderLayout.CENTER);
 		}
 		return propertySheetPanel;
 	}
@@ -202,7 +202,7 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 		if (statisticsPanel == null) {
 			statisticsPanel = new JPanel(new BorderLayout());
 			statisticsPanel.add(getSleepComparisonStatisticPanel(),
-					BorderLayout.CENTER);
+								BorderLayout.CENTER);
 			statisticsPanel.add(getPropertySheetPanel(), BorderLayout.SOUTH);
 		}
 		return statisticsPanel;
@@ -211,7 +211,7 @@ public class NewSleepComparisonDialog extends AbstractPluginDialog {
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP,
-					JTabbedPane.WRAP_TAB_LAYOUT);
+										 JTabbedPane.WRAP_TAB_LAYOUT);
 
 			tabbedPane.addTab(_("Comparison"), getSleepComparisonPanel());
 			tabbedPane.addTab(_("Statistics"), getStatisticsPanel());

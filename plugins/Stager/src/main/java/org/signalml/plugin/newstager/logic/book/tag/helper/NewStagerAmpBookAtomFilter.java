@@ -8,7 +8,7 @@ import org.signalml.util.MinMaxRange;
 public class NewStagerAmpBookAtomFilter extends NewStagerBookAtomFilterBase {
 
 	public NewStagerAmpBookAtomFilter(
-			NewStagerBookAtomFilterData data) {
+		NewStagerBookAtomFilterData data) {
 		super(data);
 
 		MinMaxRange amplitude = data.threshold.amplitude;
@@ -17,9 +17,9 @@ public class NewStagerAmpBookAtomFilter extends NewStagerBookAtomFilterBase {
 		}
 
 		final double samplingFrequency = data.bookInfo.samplingFrequency;
-		final int signalSize = (int) (data.bookInfo.offsetDimension / samplingFrequency); //TODO maybe change to double?
-		
-		
+		final int signalSize = (int)(data.bookInfo.offsetDimension / samplingFrequency);  //TODO maybe change to double?
+
+
 		final INewStagerBookAtomSelector oldSelector = this.selector;
 		final double min = amplitude.getMin();
 
@@ -28,9 +28,9 @@ public class NewStagerAmpBookAtomFilter extends NewStagerBookAtomFilterBase {
 			@Override
 			public boolean matches(NewStagerAdaptedAtom atom) {
 				return oldSelector.matches(atom)
-						&& NewStagerRangeGabor.HRangeGabor(signalSize,
-								samplingFrequency, atom.scale, atom.frequency,
-								atom.position, atom.amplitude, atom.phase) >= min;
+					   && NewStagerRangeGabor.HRangeGabor(signalSize,
+							   samplingFrequency, atom.scale, atom.frequency,
+							   atom.position, atom.amplitude, atom.phase) >= min;
 			}
 		};
 	}

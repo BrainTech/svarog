@@ -20,7 +20,7 @@ public class NewStagerStatWorker implements Runnable {
 	public void run() {
 		INewStagerStatsSynchronizer synchronizer = this.data.synchronizer;
 		INewStagerWorkerCompletion<NewStagerStatAlgorithmResult> completion = this.data.completion;
-		
+
 		try {
 			NewStagerStatData data = new NewStagerStatData(this.data.constants,
 					this.data.parameters, this.data.channelMap);
@@ -35,19 +35,19 @@ public class NewStagerStatWorker implements Runnable {
 				}
 				channelCount = buffer.length;
 				sampleCount = buffer[0].length;
-				
+
 				stagerStat.compute(buffer);
 				synchronizer.markBufferAsProcessed(buffer);
 				completion.signalProgress(1);
 				++count;
 			}
-			
+
 			double zeroedBuffer[][] = new double[channelCount][sampleCount];
 			while (count < this.data.constants.segmentCount) {
 				stagerStat.compute(zeroedBuffer);
 				++count;
 			}
-			
+
 			completion.completeWork(stagerStat.getResult());
 		} catch (InterruptedException e) {
 			completion.completeWork(null);

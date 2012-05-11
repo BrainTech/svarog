@@ -11,7 +11,7 @@ public abstract class AbstractPluginPresetDialog extends AbstractPresetDialog {
 	public AbstractPluginPresetDialog(PresetManager presetManager) {
 		super(presetManager);
 	}
-	
+
 	protected AbstractPluginPresetDialog(PresetManager presetManager, Window w, boolean isModal) {
 		super(presetManager, w, isModal);
 	}

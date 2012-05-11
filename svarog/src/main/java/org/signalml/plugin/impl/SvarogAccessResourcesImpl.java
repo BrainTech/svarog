@@ -38,7 +38,7 @@ public class SvarogAccessResourcesImpl implements SvarogAccessResources {
 
 	@Override
 	public Properties loadPluginConfigurationDefaults(String classpath)
-			throws IOException {
+	throws IOException {
 		return ConfigurationDefaultsLoader.Load(this.klass, classpath);
 	}
 }

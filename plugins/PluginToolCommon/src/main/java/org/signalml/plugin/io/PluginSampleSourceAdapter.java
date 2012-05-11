@@ -19,7 +19,7 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 	private MultichannelSampleSource delegate;
 
 	public PluginSampleSourceAdapter(SvarogAccessSignal signalAccess,
-					     ExportedSignalDocument signalDocument) {
+									 ExportedSignalDocument signalDocument) {
 		this.signalAccess = signalAccess;
 		this.signalDocument = signalDocument;
 		this.delegate = null;
@@ -41,43 +41,43 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 	@Override
 	public boolean isSamplingFrequencyCapable() {
 		return this.delegate != null ? this.delegate
-		       .isSamplingFrequencyCapable() : true;
+			   .isSamplingFrequencyCapable() : true;
 	}
 
 	@Override
 	public boolean isChannelCountCapable() {
 		return this.delegate != null ? this.delegate.isChannelCountCapable()
-		       : true;
+			   : true;
 	}
 
 	@Override
 	public float getSamplingFrequency() {
 		return this.delegate == null ? this.signalDocument
-		       .getSamplingFrequency() : this.delegate.getSamplingFrequency();
+			   .getSamplingFrequency() : this.delegate.getSamplingFrequency();
 	}
 
 	@Override
 	public int getChannelCount() {
 		return this.delegate == null ? this.signalDocument.getChannelCount()
-		       : this.delegate.getChannelCount();
+			   : this.delegate.getChannelCount();
 	}
 
 	@Override
 	public int getSampleCount(int channel) {
 		return this.delegate == null ? (int)(this.signalDocument
-						     .getMaxSignalLength() * this.signalDocument
-						     .getSamplingFrequency()) : this.delegate
-		       .getSampleCount(channel);
+											 .getMaxSignalLength() * this.signalDocument
+											 .getSamplingFrequency()) : this.delegate
+			   .getSampleCount(channel);
 	}
 
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset,
-			       int count, int arrayOffset) {
+						   int count, int arrayOffset) {
 		if (this.delegate == null) {
 			ChannelSamples samples;
 			try {
 				samples = this.signalAccess.getRawSignalSamplesFromDocument(
-						  this.signalDocument, channel, signalOffset, count);
+							  this.signalDocument, channel, signalOffset, count);
 			} catch (InvalidClassException e) {
 				e.printStackTrace();
 				return;
@@ -86,10 +86,10 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 				return;
 			}
 			System.arraycopy(samples.getSamples(), 0, target, arrayOffset,
-					 count);
+							 count);
 		} else {
 			this.delegate.getSamples(channel, target, signalOffset, count,
-						 arrayOffset);
+									 arrayOffset);
 		}
 	}
 
@@ -101,7 +101,7 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 	@Override
 	public int getDocumentChannelIndex(int channel) {
 		return this.delegate == null ? -1 : this.delegate
-		       .getDocumentChannelIndex(channel);
+			   .getDocumentChannelIndex(channel);
 	}
 
 	@Override

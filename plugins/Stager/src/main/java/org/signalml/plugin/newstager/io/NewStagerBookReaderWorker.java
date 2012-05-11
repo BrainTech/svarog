@@ -23,7 +23,7 @@ public class NewStagerBookReaderWorker implements Runnable {
 
 		if (this.canUseFastV5BookReader()) {
 			reader = new NewStagerFastBookV5AtomReader(new File(
-					this.data.bookFilePath));
+						this.data.bookFilePath));
 		} else {
 			// TODO
 			throw new RuntimeException("Old books not supported");

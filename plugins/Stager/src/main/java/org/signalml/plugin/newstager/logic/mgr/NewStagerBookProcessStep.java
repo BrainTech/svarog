@@ -27,29 +27,29 @@ import org.signalml.plugin.newstager.logic.book.NewStagerBookProcessorWorker;
 import org.signalml.plugin.signal.PluginSignalHelper;
 
 public class NewStagerBookProcessStep extends
-		AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
+	AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
 
 	private class TrackerUpdater extends AbstractPluginTrackerUpdaterWithTimer {
 
 		private final NewStagerBookProcessStep step;
 		private final IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker;
-		
+
 		private int segmentCount;
-		
+
 		public TrackerUpdater(
-				NewStagerBookProcessStep step,
-				IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker) {
+			NewStagerBookProcessStep step,
+			IPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> tracker) {
 			this.step = step;
 			this.tracker = tracker;
 		}
-		
+
 		@Override
 		public void update(int progress, int prevProgress) {
 			int tick = Math.max(0, progress - prevProgress);
 			if (tick > 0) {
 				int segmentCount;
 				synchronized (this) {
-					segmentCount = this.segmentCount; 
+					segmentCount = this.segmentCount;
 				}
 				this.tracker.advance(this.step, tick);
 				this.tracker.setProgressPhase(NewStagerComputationProgressPhase.BOOK_PROCESSING_PHASE, progress, segmentCount);
@@ -61,7 +61,7 @@ public class NewStagerBookProcessStep extends
 				this.segmentCount = segmentCount;
 			}
 		}
-	
+
 	}
 
 	private final PluginWorkerSet workers;
@@ -69,25 +69,25 @@ public class NewStagerBookProcessStep extends
 	private final TrackerUpdater trackerUpdater;
 
 	private boolean hasExactSegmentCount;
-	
+
 	private AtomicInteger aliveWorkers;
 
 	private Collection<NewStagerBookProcessorResult> partialResults;
-	
+
 	private NewStagerSignalStatsResult signalStatResult;
 
 	public NewStagerBookProcessStep(NewStagerMgrStepData data) {
 		super(data);
 
 		this.hasExactSegmentCount = false;
-		
+
 		this.signalStatResult = null;
 
 		this.workers = new PluginWorkerSet(this.data.threadFactory);
 		this.bookDataProvider = new NewStagerBookDataProvider();
 
 		this.trackerUpdater = new TrackerUpdater(this, this.data.tracker);
-		
+
 		this.partialResults = null;
 
 		this.aliveWorkers = null;
@@ -101,9 +101,9 @@ public class NewStagerBookProcessStep extends
 	@Override
 	protected void doInitialize() {
 		NewStagerBookReaderWorker bookReaderWorker = new NewStagerBookReaderWorker(
-				new NewStagerBookReaderWorkerData(
-						this.data.stagerData.getParameters().bookFilePath,
-						this.bookDataProvider));
+			new NewStagerBookReaderWorkerData(
+				this.data.stagerData.getParameters().bookFilePath,
+				this.bookDataProvider));
 		this.workers.submit(bookReaderWorker);
 	}
 
@@ -132,9 +132,9 @@ public class NewStagerBookProcessStep extends
 
 	@Override
 	protected PluginComputationMgrStepResult doRun(
-			PluginComputationMgrStepResult prevStepResult)
-			throws PluginToolAbortException, PluginToolInterruptedException,
-			ComputationException {
+		PluginComputationMgrStepResult prevStepResult)
+	throws PluginToolAbortException, PluginToolInterruptedException,
+		ComputationException {
 
 		try {
 			this.signalStatResult = (NewStagerSignalStatsResult) prevStepResult;
@@ -143,13 +143,13 @@ public class NewStagerBookProcessStep extends
 		}
 
 		this.data.tracker.setProgressPhase(NewStagerComputationProgressPhase.BOOK_FILE_INITIAL_READ_PHASE);
-		
+
 		this.checkAbortState();
 		this.prepareWorkers();
 
 		this.trackerUpdater.setSegmentCount(this.getSegmentCount());
 		this.trackerUpdater.start(100);
-		
+
 		this.checkAbortState();
 		this.workers.startAll();
 		this.checkAbortState();
@@ -172,13 +172,13 @@ public class NewStagerBookProcessStep extends
 		}
 
 		int numberOfThreads = Math.max(1, Runtime.getRuntime()
-				.availableProcessors());
+									   .availableProcessors());
 
 		final AtomicInteger counter = this.aliveWorkers = new AtomicInteger(
-				numberOfThreads);
+			numberOfThreads);
 		final AtomicInteger processedAtomCount = new AtomicInteger();
 		final Collection<NewStagerBookProcessorResult> partialResults = this.partialResults = new ArrayList<NewStagerBookProcessorResult>(
-				numberOfThreads);
+			numberOfThreads);
 
 		INewStagerWorkerCompletion<NewStagerBookProcessorResult> completion = new INewStagerWorkerCompletion<NewStagerBookProcessorResult>() {
 
@@ -186,7 +186,7 @@ public class NewStagerBookProcessStep extends
 			public void signalProgress(int i) {
 				trackerUpdater.setProgress(processedAtomCount.addAndGet(i));
 			}
-			
+
 			@Override
 			public void completeWork(NewStagerBookProcessorResult result) {
 				try {
@@ -203,18 +203,18 @@ public class NewStagerBookProcessStep extends
 					counter.decrementAndGet();
 				}
 			}
-			
+
 		};
 
 		for (int i = 0; i < numberOfThreads; ++i) {
 			this.workers.add(new NewStagerBookProcessorWorker(
-					new NewStagerBookProcessorWorkerData(this.bookDataProvider,
-							completion, this.data.constants,
-							this.data.stagerData.getChannelMap(),
-							this.signalStatResult.newParameters,
-							this.data.stagerData.getFixedParameters(),
-							this.signalStatResult.muscle,
-							this.signalStatResult.signalStatCoeffs)));
+								 new NewStagerBookProcessorWorkerData(this.bookDataProvider,
+										 completion, this.data.constants,
+										 this.data.stagerData.getChannelMap(),
+										 this.signalStatResult.newParameters,
+										 this.data.stagerData.getFixedParameters(),
+										 this.signalStatResult.muscle,
+										 this.signalStatResult.signalStatCoeffs)));
 		}
 
 	}
@@ -225,10 +225,10 @@ public class NewStagerBookProcessStep extends
 	}
 
 	private void waitForWorkerCompletion()
-			throws PluginToolInterruptedException, PluginToolAbortException {
+	throws PluginToolInterruptedException, PluginToolAbortException {
 		while (this.aliveWorkers.get() != 0) {
 			this.updateSegmentCountIfNeeded();
-			
+
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
@@ -243,36 +243,36 @@ public class NewStagerBookProcessStep extends
 		if (this.hasExactSegmentCount) {
 			return;
 		}
-		
+
 		NewStagerBookInfo bookInfo = this.bookDataProvider.tryGetBookInfo();
 		if (bookInfo == null) {
 			return;
 		}
-		
+
 		this.trackerUpdater.setSegmentCount(bookInfo.segmentCount);
 		this.data.tracker.setTickerLimit(this, this.getAtomTickerEstimate(bookInfo.segmentCount));
-		
+
 		this.hasExactSegmentCount = true;
 	}
 
 	private int getSegmentCount() {
 		int segmentCount;
-		
+
 		NewStagerBookInfo bookInfo = this.bookDataProvider.tryGetBookInfo();
-		
+
 		if (bookInfo != null) {
 			segmentCount = bookInfo.segmentCount;
 			this.hasExactSegmentCount = true;
 		} else {
 			//very rough estimate of number of atom segments
 			segmentCount = PluginSignalHelper.GetBlockCount(
-					this.data.stagerData.getSampleSource(),
-					this.data.constants.getBlockLength()); 
+							   this.data.stagerData.getSampleSource(),
+							   this.data.constants.getBlockLength());
 		}
-		
+
 		return segmentCount;
 	}
-	
+
 	private int getAtomTickerEstimate(int segmentCount) {
 		int ratio = this.data.constants.getBlockLength() / 20;
 		return (int) Math.ceil(((double) segmentCount) / ratio);

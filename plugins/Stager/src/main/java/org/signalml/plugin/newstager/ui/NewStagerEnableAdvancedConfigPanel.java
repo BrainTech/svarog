@@ -1,5 +1,5 @@
 /* StagerEnableAdvancedConfigPanel.java created 2008-02-14
- * 
+ *
  */
 package org.signalml.plugin.newstager.ui;
 
@@ -22,8 +22,8 @@ import org.signalml.plugin.newstager.data.NewStagerParameters;
 
 /**
  * StagerEnableAdvancedConfigPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -36,8 +36,8 @@ public class NewStagerEnableAdvancedConfigPanel extends JPanel {
 	private NewStagerAdvancedConfigObservable advancedConfigEnabledObservable;
 
 	public NewStagerEnableAdvancedConfigPanel(
-			AbstractDialog owner,
-			NewStagerAdvancedConfigObservable advancedConfigEnabledObservable) {
+		AbstractDialog owner,
+		NewStagerAdvancedConfigObservable advancedConfigEnabledObservable) {
 		super();
 		this.advancedConfigEnabledObservable = advancedConfigEnabledObservable;
 		initialize();
@@ -48,7 +48,7 @@ public class NewStagerEnableAdvancedConfigPanel extends JPanel {
 		setLayout(new BorderLayout(3, 3));
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-				_("Advanced config")), new EmptyBorder(3, 3, 3, 3));
+					_("Advanced config")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		JLabel enableAdvancedLabel = new JLabel(_("Enable advanced config"));

@@ -154,7 +154,7 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		 */
 
 		setSampleSource(new PluginSampleSourceAdapter(signalAccess,
-				signalDocument));
+						signalDocument));
 
 		// TODO rethink this cast - what is the data type in matlab code?
 		setPageSize((int) signalDocument.getPageSize());

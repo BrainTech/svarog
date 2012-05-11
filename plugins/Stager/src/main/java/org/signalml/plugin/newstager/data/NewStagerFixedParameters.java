@@ -11,9 +11,9 @@ public class NewStagerFixedParameters {
 	public NewStagerFixedParameters() {
 		this(0.0d, 0.0d, 0.0d, 0.0d, 0.0d);
 	}
-	
+
 	public NewStagerFixedParameters(double swaWidthCoeff, double alphaPerc1,
-			double alphaPerc2, double corrCoeffRems, double corrCoeffSems) {
+									double alphaPerc2, double corrCoeffRems, double corrCoeffSems) {
 		this.swaWidthCoeff = swaWidthCoeff;
 		this.alphaPerc1 = alphaPerc1;
 		this.alphaPerc2 = alphaPerc2;

@@ -12,8 +12,8 @@ public class NewStagerBookAtomSimpleTagBuilder extends NewStagerAbstractTagBuild
 	private NewStagerTagCollectionType tagType;
 
 	public NewStagerBookAtomSimpleTagBuilder(
-			NewStagerBookAtomTagBuilderData data,
-			NewStagerTagCollectionType tagType) {
+		NewStagerBookAtomTagBuilderData data,
+		NewStagerTagCollectionType tagType) {
 		super(data);
 		this.tagType = tagType;
 		this.tags = new LinkedList<IPluginTagDef>();
@@ -27,7 +27,7 @@ public class NewStagerBookAtomSimpleTagBuilder extends NewStagerAbstractTagBuild
 
 	@Override
 	protected NewStagerTagCollectionType getTagType() {
-		return this.tagType; 
+		return this.tagType;
 	}
-	
+
 }

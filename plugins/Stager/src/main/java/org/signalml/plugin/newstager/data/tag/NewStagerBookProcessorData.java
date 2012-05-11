@@ -17,16 +17,16 @@ public class NewStagerBookProcessorData {
 	public final NewStagerBookInfo bookInfo;
 	public final double muscle[];
 	public final NewStagerSleepStats signalStatCoeffs;
-	
+
 
 	public NewStagerBookProcessorData(
-			final NewStagerConstants constants,
-			final Map<String, Integer> channelMap,
-			final NewStagerParameters parameters,
-			final NewStagerFixedParameters fixedParameters,
-			final double muscle[],
-			final NewStagerSleepStats signalStatCoeffs,
-			final NewStagerBookInfo bookInfo) {
+		final NewStagerConstants constants,
+		final Map<String, Integer> channelMap,
+		final NewStagerParameters parameters,
+		final NewStagerFixedParameters fixedParameters,
+		final double muscle[],
+		final NewStagerSleepStats signalStatCoeffs,
+		final NewStagerBookInfo bookInfo) {
 		this.constants = constants;
 		this.channelMap = channelMap;
 		this.parameters = parameters;

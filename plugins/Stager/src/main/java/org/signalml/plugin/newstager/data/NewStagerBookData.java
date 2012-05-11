@@ -5,7 +5,7 @@ public class NewStagerBookData {
 	public final NewStagerBookAtom atoms[][];
 
 	public NewStagerBookData(NewStagerBookInfo bookInfo,
-			NewStagerBookAtom atoms[][]) {
+							 NewStagerBookAtom atoms[][]) {
 		this.bookInfo = bookInfo;
 		this.atoms = atoms;
 	}

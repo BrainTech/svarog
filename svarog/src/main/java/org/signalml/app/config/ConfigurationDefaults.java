@@ -129,21 +129,21 @@ public class ConfigurationDefaults {
 		}
 
 		config.setScaleType(WignerMapScaleType.valueOf(getString("application.scaleType")));
-		
-		config.setSignalAntialiased( getBoolean("application.signalAntialiased") );
-		config.setOriginalSignalVisible( getBoolean("application.originalSignalVisible") );
-		config.setFullReconstructionVisible( getBoolean("application.fullReconstructionVisible") );
-		config.setReconstructionVisible( getBoolean("application.reconstructionVisible") );
-		config.setLegendVisible( getBoolean("application.legendVisible") );
-		config.setScaleVisible( getBoolean("application.scaleVisible") );
-		config.setAxesVisible( getBoolean("application.axesVisible") );
-		config.setAtomToolTipsVisible( getBoolean("application.atomToolTipsVisible") );
-		
-		config.setMapAspectRatioUp( getInt("application.mapAspectRatioUp") );
-		config.setMapAspectRatioDown( getInt("application.mapAspectRatioDown") );
-		config.setReconstructionHeight( getInt("application.reconstructionHeight") );
-		
-                config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
+
+		config.setSignalAntialiased(getBoolean("application.signalAntialiased"));
+		config.setOriginalSignalVisible(getBoolean("application.originalSignalVisible"));
+		config.setFullReconstructionVisible(getBoolean("application.fullReconstructionVisible"));
+		config.setReconstructionVisible(getBoolean("application.reconstructionVisible"));
+		config.setLegendVisible(getBoolean("application.legendVisible"));
+		config.setScaleVisible(getBoolean("application.scaleVisible"));
+		config.setAxesVisible(getBoolean("application.axesVisible"));
+		config.setAtomToolTipsVisible(getBoolean("application.atomToolTipsVisible"));
+
+		config.setMapAspectRatioUp(getInt("application.mapAspectRatioUp"));
+		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));
+		config.setReconstructionHeight(getInt("application.reconstructionHeight"));
+
+		config.setBackupFrequency(getFloat("application.signalRecording.frequency"));
 
 		setMultiplexerDefaultParameters(config);
 		setMonitorDefaultParameters(config);
@@ -159,7 +159,7 @@ public class ConfigurationDefaults {
 		settings.setChannelSwitching(getBoolean("application.zoomSettings.channelSwitching"));
 
 	}
-	
+
 	public static void setMultiplexerDefaultParameters(ApplicationConfiguration config) {
 
 		config.setMultiplexerAddress(getString("multiplexer.address"));
@@ -168,8 +168,8 @@ public class ConfigurationDefaults {
 		config.setDefaultMultiplexerPort(getInt("default.multiplexer.port"));
 
 	}
-	
-	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
+
+	public static void setMonitorDefaultParameters(ApplicationConfiguration config) {
 
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 

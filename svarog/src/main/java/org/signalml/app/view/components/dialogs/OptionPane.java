@@ -220,7 +220,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that the document is already opened and asks the
-	 * user what to do. 
+	 * user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -234,15 +234,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-				  parent,
-				  _("This document is already open. Reload?"),
-				  reloadString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {reloadString,cancelString},
-				  reloadString
-			  );
+					  parent,
+					  _("This document is already open. Reload?"),
+					  reloadString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {reloadString,cancelString},
+					  reloadString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -267,7 +267,7 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showTaskRunning(Component parent) {
 		return showProceedOption(parent,
-			_("Some running tasks will have to be aborted."));
+								 _("Some running tasks will have to be aborted."));
 	}
 
 	/**
@@ -284,12 +284,12 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showStagerProjectExists(Component parent, String name) {
 		return showReuseReplaceOption(parent,
-			_("Project [{0}] exists. Reuse or replace?"), name);
+									  _("Project [{0}] exists. Reuse or replace?"), name);
 	}
 
 	/**
 	 * Shows the information that the directory doesn't exist and asks the
-	 * user what to do. 
+	 * user what to do.
 	 * @param parent the window parent to this one
 	 * @param file the directory that doesn't exist
 	 * @return
@@ -310,15 +310,15 @@ public class OptionPane extends JOptionPane {
 		String message = _R("Directory [{0}] not found. Create?", path);
 
 		int res = showOptionDialog(
-				  parent,
-				  message,
-				  createString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {createString,cancelString},
-				  createString
-			  );
+					  parent,
+					  message,
+					  createString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {createString,cancelString},
+					  createString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -333,7 +333,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that the document has not been saved and asks the
-	 * user what to do. 
+	 * user what to do.
 	 * @param parent the window parent to this one
 	 * @param document the document that was not saved
 	 * @return
@@ -363,15 +363,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-				  parent,
-				  message,
-				  saveString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {saveString,discardString,cancelString},
-				  saveString
-			  );
+					  parent,
+					  message,
+					  saveString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {saveString,discardString,cancelString},
+					  saveString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -388,7 +388,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that the exported signal has to be normalized
-	 * and asks the user what to do. 
+	 * and asks the user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -404,15 +404,15 @@ public class OptionPane extends JOptionPane {
 		String normalizeString = _("Normalize");
 
 		int res = showOptionDialog(
-				  parent,
-				  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
-				  normalizeString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {normalizeString,cancelString},
-				  cancelString
-			  );
+					  parent,
+					  _("Signal values exceed type capacity. Normalization is necessary. Normalize?"),
+					  normalizeString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {normalizeString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -444,15 +444,15 @@ public class OptionPane extends JOptionPane {
 		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
-				  parent,
-				  message,
-				  proceedString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {proceedString,cancelString},
-				  cancelString
-			  );
+					  parent,
+					  message,
+					  proceedString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {proceedString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -486,15 +486,15 @@ public class OptionPane extends JOptionPane {
 		String proceedString = _("Proceed");
 
 		int res = showOptionDialog(
-				  parent,
-				  render(message, args),
-				  proceedString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {proceedString,cancelString},
-				  cancelString
-			  );
+					  parent,
+					  render(message, args),
+					  proceedString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {proceedString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -523,7 +523,7 @@ public class OptionPane extends JOptionPane {
 	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
 	 */
 	public static int showReuseReplaceOption(Component parent, String message,
-						 Object... args) {
+			Object... args) {
 		if (!initialized) {
 			initialize();
 		}
@@ -532,15 +532,15 @@ public class OptionPane extends JOptionPane {
 		final String replaceString = _("Replace");
 
 		int res = showOptionDialog(
-				  parent,
-				  render(message, args),
-				  reuseString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {reuseString,replaceString,cancelString},
-				  cancelString
-			  );
+					  parent,
+					  render(message, args),
+					  reuseString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {reuseString,replaceString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -575,15 +575,15 @@ public class OptionPane extends JOptionPane {
 		String abortString = _("Abort (will be lost)");
 
 		int res = showOptionDialog(
-				  parent,
-				  _("Some running tasks can be suspended and saved."),
-				  suspendString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {suspendString,abortString,cancelString},
-				  cancelString
-			  );
+					  parent,
+					  _("Some running tasks can be suspended and saved."),
+					  suspendString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {suspendString,abortString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -610,8 +610,8 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showRawConfigWillBeLost(Component parent) {
 		return showProceedOption(parent,
-			_("Changes to the raw config will be lost.")
-			+ " " + _("Are you sure?"));
+								 _("Changes to the raw config will be lost.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
@@ -626,8 +626,8 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showAbortAllTasks(Component parent) {
 		return showProceedOption(parent,
-			_("All running tasks will be aborted.")
-			+ " " + _("Are you sure?"));
+								 _("All running tasks will be aborted.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
@@ -642,8 +642,8 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showSuspendAllTasks(Component parent) {
 		return showProceedOption(parent,
-			_("All running suspendable tasks will be suspended.")
-			+ " " + _("Are you sure?"));
+								 _("All running suspendable tasks will be suspended.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
@@ -658,8 +658,8 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showResumeAllTasks(Component parent) {
 		return showProceedOption(parent,
-			_("All suspended tasks will be resumed.")
-			+ " " + _("Are you sure?"));
+								 _("All suspended tasks will be resumed.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
@@ -674,8 +674,8 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showRemoveAllTasks(Component parent) {
 		return showProceedOption(parent,
-			_("All non running tasks will be removed.")
-			+ " " + _("Are you sure?"));
+								 _("All non running tasks will be removed.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
@@ -704,8 +704,8 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showRemoveAllAbortedTasks(Component parent) {
 		return showProceedOption(parent,
-			_("All aborted tasks will be removed.")
-			+ " " + _("Are you sure?"));
+								 _("All aborted tasks will be removed.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
@@ -720,13 +720,13 @@ public class OptionPane extends JOptionPane {
 	 */
 	public static int showRemoveAllFailedTasks(Component parent) {
 		return showProceedOption(parent,
-			_("All failed tasks will be removed.")
-			+ " " + _("Are you sure?"));
+								 _("All failed tasks will be removed.")
+								 + " " + _("Are you sure?"));
 	}
 
 	/**
 	 * Shows the information that the file already exits and asks
-	 * the user what to do. 
+	 * the user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -740,15 +740,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("This file already exists. Overwrite?"),
-		                  overwriteString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {overwriteString,cancelString},
-		                  cancelString
-		          );
+					  parent,
+					  _("This file already exists. Overwrite?"),
+					  overwriteString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {overwriteString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -763,7 +763,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that the file already exits and asks
-	 * the user what to do. 
+	 * the user what to do.
 	 * @param parent the window parent to this one
 	 * @param fileName the name of the file
 	 * @return
@@ -778,15 +778,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _R("File {0} already exists. Overwrite?", fileName),
-		                  overwriteString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {overwriteString,cancelString},
-		                  cancelString
-		          );
+					  parent,
+					  _R("File {0} already exists. Overwrite?", fileName),
+					  overwriteString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {overwriteString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -801,7 +801,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that there are tasks that are restored from the
-	 * previous run and asks the user if they should be restored. 
+	 * previous run and asks the user if they should be restored.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -818,15 +818,15 @@ public class OptionPane extends JOptionPane {
 		String dontResumeString = _("Don't resume");
 
 		int res = showOptionDialog(
-				  parent,
-				  _("Suspended tasks have been restored. Do you wish to resume them?"),
-				  overwriteString + "?",
-				  JOptionPane.OK_OPTION,
-				  JOptionPane.QUESTION_MESSAGE,
-				  IconUtils.getQuestionIcon(),
-				  new Object[] {resumeString,dontResumeString},
-				  resumeString
-		          );
+					  parent,
+					  _("Suspended tasks have been restored. Do you wish to resume them?"),
+					  overwriteString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {resumeString,dontResumeString},
+					  resumeString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -841,7 +841,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that the {@link TagDocument tag document} is not
-	 * compatible with the signal and asks the user what to do. 
+	 * compatible with the signal and asks the user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -855,15 +855,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("The signal and the tag are not compatible in terms of page and block size. Are you sure?"),
-		                  openString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {openString,cancelString},
-		                  cancelString
-		          );
+					  parent,
+					  _("The signal and the tag are not compatible in terms of page and block size. Are you sure?"),
+					  openString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {openString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -878,7 +878,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that the {@link TagDocument tag document} has
-	 * different checksum than the signal and asks the user what to do. 
+	 * different checksum than the signal and asks the user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -892,15 +892,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("This tag's signature does not match the signature of the signal. Are you sure?"),
-		                  openString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {openString,cancelString},
-		                  cancelString
-		          );
+					  parent,
+					  _("This tag's signature does not match the signature of the signal. Are you sure?"),
+					  openString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {openString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -915,7 +915,7 @@ public class OptionPane extends JOptionPane {
 
 	/**
 	 * Shows the information that there are other document dependent on the
-	 * closed one and asks the user whether to close them. 
+	 * closed one and asks the user whether to close them.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -929,15 +929,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Other documents depend on this one. Close all?"),
-		                  closeString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {closeString,cancelString},
-		                  closeString
-		          );
+					  parent,
+					  _("Other documents depend on this one. Close all?"),
+					  closeString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {closeString,cancelString},
+					  closeString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -961,14 +961,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("This path is used by another open document. Choose another."),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("This path is used by another open document. Choose another."),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -996,14 +996,14 @@ public class OptionPane extends JOptionPane {
 		}
 
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1031,14 +1031,14 @@ public class OptionPane extends JOptionPane {
 		}
 
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1066,14 +1066,14 @@ public class OptionPane extends JOptionPane {
 		}
 
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1101,14 +1101,14 @@ public class OptionPane extends JOptionPane {
 		}
 
 		showOptionDialog(
-		        parent,
-		        message,
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			message,
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1123,14 +1123,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("The default montage is not compatible with this signal and cannot be loaded. Please use the montage editor."),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("The default montage is not compatible with this signal and cannot be loaded. Please use the montage editor."),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1145,14 +1145,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("This preset is not compatible with current signal and had to be altered accordingly. Please review settings."),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.WARNING_MESSAGE,
-		        IconUtils.getWarningIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("This preset is not compatible with current signal and had to be altered accordingly. Please review settings."),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			IconUtils.getWarningIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1167,20 +1167,20 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("This tag style is in use and cannot be removed."),
-		        errorString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.ERROR_MESSAGE,
-		        IconUtils.getErrorIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("This tag style is in use and cannot be removed."),
+			errorString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.ERROR_MESSAGE,
+			IconUtils.getErrorIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
 	/**
 	 * Shows the information that the {@link TagStyle tag style} has been
-	 * modified and asks the user whether to apply changes. 
+	 * modified and asks the user whether to apply changes.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -1195,15 +1195,15 @@ public class OptionPane extends JOptionPane {
 		}
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("Tag style has been modified. Apply changes?"),
-		                  applyString + "?",
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {applyString,discardString,cancelString},
-		                  applyString
-		          );
+					  parent,
+					  _("Tag style has been modified. Apply changes?"),
+					  applyString + "?",
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {applyString,discardString,cancelString},
+					  applyString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -1222,7 +1222,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the information that the {@link Montage montage} in the {@link
 	 * TagDocument tag document} is different from the current montage (when
 	 * the document is to be saved) and asks
-	 * the user what to do. 
+	 * the user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -1243,15 +1243,15 @@ public class OptionPane extends JOptionPane {
 		String saveCurrentString = _("Replace with current");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("This tag document's montage is different from current montage"),
-		                  _("Choose montage to save"),
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {saveOriginalString,saveCurrentString,cancelString},
-		                  cancelString
-		          );
+					  parent,
+					  _("This tag document's montage is different from current montage"),
+					  _("Choose montage to save"),
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {saveOriginalString,saveCurrentString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -1270,7 +1270,7 @@ public class OptionPane extends JOptionPane {
 	 * Shows the information that the {@link Montage montage} in the {@link
 	 * TagDocument tag document} is different from the current montage (when
 	 * the document is to be loaded) and asks
-	 * the user what to do. 
+	 * the user what to do.
 	 * @param parent the window parent to this one
 	 * @return
 	 * <ul>
@@ -1290,15 +1290,15 @@ public class OptionPane extends JOptionPane {
 		String keepCurrentString = _("Keep current");
 
 		int res = showOptionDialog(
-		                  parent,
-		                  _("This tag document's montage is different from current montage"),
-		                  _("Choose montage"),
-		                  JOptionPane.OK_OPTION,
-		                  JOptionPane.QUESTION_MESSAGE,
-		                  IconUtils.getQuestionIcon(),
-		                  new Object[] {loadFromTagString,keepCurrentString,cancelString},
-		                  cancelString
-		          );
+					  parent,
+					  _("This tag document's montage is different from current montage"),
+					  _("Choose montage"),
+					  JOptionPane.OK_OPTION,
+					  JOptionPane.QUESTION_MESSAGE,
+					  IconUtils.getQuestionIcon(),
+					  new Object[] {loadFromTagString,keepCurrentString,cancelString},
+					  cancelString
+				  );
 
 		switch (res) {
 		case 0 :
@@ -1324,14 +1324,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("No active signal. Choose a signal tab first."),
-		        warningString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.WARNING_MESSAGE,
-		        IconUtils.getWarningIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("No active signal. Choose a signal tab first."),
+			warningString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			IconUtils.getWarningIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1346,14 +1346,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("No active book. Choose a book tab first."),
-		        warningString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.WARNING_MESSAGE,
-		        IconUtils.getWarningIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("No active book. Choose a book tab first."),
+			warningString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			IconUtils.getWarningIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1368,14 +1368,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("No active tag. Open a tag document first."),
-		        warningString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.WARNING_MESSAGE,
-		        IconUtils.getWarningIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("No active tag. Open a tag document first."),
+			warningString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			IconUtils.getWarningIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1390,14 +1390,14 @@ public class OptionPane extends JOptionPane {
 			initialize();
 		}
 		showOptionDialog(
-		        parent,
-		        _("No signal selection. Choose a signal fragment first."),
-		        warningString,
-		        JOptionPane.OK_OPTION,
-		        JOptionPane.WARNING_MESSAGE,
-		        IconUtils.getWarningIcon(),
-		        new Object[] {okString},
-		        okString
+			parent,
+			_("No signal selection. Choose a signal fragment first."),
+			warningString,
+			JOptionPane.OK_OPTION,
+			JOptionPane.WARNING_MESSAGE,
+			IconUtils.getWarningIcon(),
+			new Object[] {okString},
+			okString
 		);
 	}
 
@@ -1428,14 +1428,14 @@ public class OptionPane extends JOptionPane {
 			defaultPossibility = possibilities[0];
 		}
 		PrettyStringLocaleWrapper s = (PrettyStringLocaleWrapper) showInputDialog(
-				null,
-				"",
-				SvarogConstants.NAME,
-				JOptionPane.QUESTION_MESSAGE,
-				IconUtils.getQuestionIcon(),
-				possibilities,
-				defaultPossibility
-			 );
+										  null,
+										  "",
+										  SvarogConstants.NAME,
+										  JOptionPane.QUESTION_MESSAGE,
+										  IconUtils.getQuestionIcon(),
+										  possibilities,
+										  defaultPossibility
+									  );
 		if (s == null) {
 			return null;
 		}
@@ -1455,14 +1455,14 @@ public class OptionPane extends JOptionPane {
 		}
 
 		String s = (String) showInputDialog(
-				parent,
-				_("Name"),
-				_("Set preset name"),
-				JOptionPane.QUESTION_MESSAGE,
-				IconUtils.getQuestionIcon(),
-				null,
-				name
-		);
+					   parent,
+					   _("Name"),
+					   _("Set preset name"),
+					   JOptionPane.QUESTION_MESSAGE,
+					   IconUtils.getQuestionIcon(),
+					   null,
+					   name
+				   );
 
 		return s;
 

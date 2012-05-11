@@ -5,14 +5,14 @@ import java.io.File;
 
 /**
  * {@link org.signalml.app.view.workspace.ViewerFileChooser} wrapper to be used by plugins.
- * 
+ *
  * @author Stanislaw Findeisen
  */
 public interface FileChooser {
-    File chooseWorkingDirectory(Component parent, File currentDirectory);
-    File chooseExportSignalFile(Component parent, File signalFile);
-    File chooseSaveTag(Component parent);
-    File chooseOpenTag(Component parent);
+	File chooseWorkingDirectory(Component parent, File currentDirectory);
+	File chooseExportSignalFile(Component parent, File signalFile);
+	File chooseSaveTag(Component parent);
+	File chooseOpenTag(Component parent);
 	File chooseExpertTag(Component parent);
 	File chooseImportTag(Component parent);
 	File chooseExportTag(Component parent);

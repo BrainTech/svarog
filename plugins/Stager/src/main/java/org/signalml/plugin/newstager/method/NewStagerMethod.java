@@ -1,5 +1,5 @@
 /* StagerMethod.java created 2008-02-08
- * 
+ *
  */
 
 package org.signalml.plugin.newstager.method;
@@ -31,30 +31,30 @@ import org.springframework.validation.Errors;
 
 /**
  * StagerMethod
- * 
+ *
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z
  *         o.o.
  */
 
 public class NewStagerMethod extends PluginAbstractMethod implements
-		TrackableMethod, IterableMethod {
+	TrackableMethod, IterableMethod {
 
 	private static final String UID = "3c5b3e3d-c6b5-467b-8c20-fee30874889c";
 	private static final int[] VERSION = new int[] { 1, 0 };
 
 	@Override
 	public Object doComputation(Object data, MethodExecutionTracker tracker)
-			throws ComputationException {
+	throws ComputationException {
 		NewStagerData stagerData;
 		try {
 			stagerData = (NewStagerData) data;
 		} catch (ClassCastException e) {
 			throw new ComputationException(e);
 		}
-		
-		
+
+
 		NewStagerComputationMgr mgr = new NewStagerComputationMgr();
-		
+
 		try {
 			return mgr.compute(new NewStagerMgrData(stagerData, this.getStagerConstants(stagerData)), tracker);
 		} catch (SignalMLException e) {
@@ -90,7 +90,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		try {
 			return ((PluginConfigForMethod) PluginResourceRepository
 					.GetResource("config", NewStagerPlugin.class))
-					.getMethodConfig().getMethodName();
+				   .getMethodConfig().getMethodName();
 		} catch (PluginException e) {
 			return "";
 		}
@@ -134,8 +134,8 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}
 	}
-	
-	
+
+
 	private NewStagerConstants getStagerConstants(NewStagerData stagerData) throws SignalMLException {
 		BookDocument doc;
 		try {
@@ -144,17 +144,17 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 			throw new SignalMLException(e);
 		}
 		StandardBook book = doc.getBook();
-		
+
 		return new NewStagerConstants(book.getSamplingFrequency(),
-					(int) book.getCalibration(),
-					book.getSegmentCount(),
-					NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
-					NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
-					NewStagerConstants.DEFAULT_AMPLITUDE_A,
-					NewStagerConstants.DEFAULT_AMPLITUDE_B,
-					NewStagerConstants.DEFAULT_ALPHA_OFFSET,
-					NewStagerConstants.DEFAULT_DELTA_OFFSET,
-					NewStagerConstants.DEFAULT_SPINDLE_OFFSET);
+									  (int) book.getCalibration(),
+									  book.getSegmentCount(),
+									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
+									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
+									  NewStagerConstants.DEFAULT_AMPLITUDE_A,
+									  NewStagerConstants.DEFAULT_AMPLITUDE_B,
+									  NewStagerConstants.DEFAULT_ALPHA_OFFSET,
+									  NewStagerConstants.DEFAULT_DELTA_OFFSET,
+									  NewStagerConstants.DEFAULT_SPINDLE_OFFSET);
 	}
 
 }

@@ -13,7 +13,7 @@ public class PluginContextHelper {
 	protected static Class<? extends Plugin> FindContextPluginClass() {
 		try {
 			StackTraceElement stackTrace[] = Thread.currentThread()
-					.getStackTrace();
+											 .getStackTrace();
 
 			for (int i = 1; i < stackTrace.length; ++i) {
 				StackTraceElement e = stackTrace[i];
@@ -21,10 +21,10 @@ public class PluginContextHelper {
 
 				if (klassName != null) {
 					for (int pos = klassName.length(); (pos = klassName
-							.lastIndexOf(".", pos - 1)) != -1;) {
+														.lastIndexOf(".", pos - 1)) != -1;) {
 						String packageName = klassName.substring(0, pos);
 						Class<? extends Plugin> klass = PluginPackages
-								.get(packageName);
+														.get(packageName);
 						if (klass != null) {
 							return klass;
 						}
@@ -40,7 +40,7 @@ public class PluginContextHelper {
 	}
 
 	protected static void AddPluginContext(Plugin plugin)
-			throws PluginException {
+	throws PluginException {
 		Class<? extends Plugin> klass = plugin.getClass();
 		if (klass.isAnonymousClass()) {
 			throw new PluginException("Anonymous plugin classes not supported");
@@ -58,7 +58,7 @@ public class PluginContextHelper {
 
 		if (PluginPackages.containsKey(packageName)) {
 			throw new PluginException("Plugin class " + packageName
-					+ " already registered");
+									  + " already registered");
 		}
 
 		PluginPackages.put(packageName, klass);
