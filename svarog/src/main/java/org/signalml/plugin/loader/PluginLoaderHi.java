@@ -226,10 +226,14 @@ public class PluginLoaderHi {
 					name = directory.toURI().toString();
 					File jarFileTmp = new File(directory, descr.getJarFile());
 					name = name.concat(descr.getJarFile());
-					if (jarFileTmp.exists() && jarFileTmp.canRead())
-						descr.setJarFileURL(new URL(name));
+					if (!jarFileTmp.exists())
+						logger.error("File '" + jarFileTmp.getAbsolutePath() +
+									 "' does not exist");
+					else if (!jarFileTmp.canRead())
+						logger.error("File '" + jarFileTmp.getAbsolutePath() +
+									 "' cannot be read.");
 					else
-						logger.error("File (" + jarFileTmp.getAbsolutePath() + ") does not exist or can not be read.");
+						descr.setJarFileURL(new URL(name));
 				} catch (MalformedURLException e) {
 					logger.error("failed to create URL for file "+name);
 					e.printStackTrace();
@@ -421,11 +425,12 @@ public class PluginLoaderHi {
 		final PluginLoaderLo loader = head.getLoader();
 		final Plugin plugin;
 		try {
-			logger.debug("Loading plugin: " + descr.getStartingClass());
+			logger.debug("Loading plugin " + descr.getName() +
+						 " (class " + descr.getStartingClass() + ")");
 			plugin = (Plugin)(loader.loadClass(descr.getStartingClass())).newInstance();
 		} catch (Exception exc) {
 			String errorMsg = "Failed to load plugin " + descr.getName() +
-							  " from file " + descr.getJarFile();
+							  " from " + descr.getJarFileURL();
 			logger.error(errorMsg, exc);
 
 			descr.setActive(false);
@@ -440,7 +445,7 @@ public class PluginLoaderHi {
 			plugin.register(new PluginAccessClass(head));
 		} catch (Throwable exc) {
 			String errorMsg = "Failed to initialize plugin " + descr.getName() +
-							  " from file " + descr.getJarFile();
+							  " from " + descr.getJarFileURL();
 			logger.error(errorMsg, exc);
 		}
 
