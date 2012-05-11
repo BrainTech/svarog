@@ -23,6 +23,7 @@
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
+		<module>plugins/Stager</module>
 	</modules>
 
 	<properties>
