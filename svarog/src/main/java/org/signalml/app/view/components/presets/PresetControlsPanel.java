@@ -167,14 +167,14 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * @param presetManager the preset manager to set
 	 */
 	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager) {
-		super();
-		this.presetPanel = presetPanel;
-		this.presetManager = presetManager;
-		createInterface();
+		this(presetPanel, presetManager, false);
 	}
 
-	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager, boolean showLoadSaveRemoveDefaultPresetButton) {
+	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager,
+							   boolean showLoadSaveRemoveDefaultPresetButton) {
 		super();
+		assert presetPanel != null;
+		assert presetManager != null;
 		this.presetPanel = presetPanel;
 		this.presetManager = presetManager;
 		this.showLoadSaveRemoveDefaultPresetButton = showLoadSaveRemoveDefaultPresetButton;
