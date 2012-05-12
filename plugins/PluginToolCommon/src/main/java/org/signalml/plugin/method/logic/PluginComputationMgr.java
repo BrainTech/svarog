@@ -14,8 +14,7 @@ import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
 
 public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
-	protected static final Logger logger = Logger
-										   .getLogger(PluginComputationMgr.class);
+	protected static final Logger log = Logger.getLogger(PluginComputationMgr.class);
 
 	private class CheckedThreadFactory implements ThreadFactory {
 
@@ -112,8 +111,8 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 		if (this.threadGroup != null) {
 			Throwable cause = this.threadGroup.getCause();
 			if (cause != null) {
-				logger.error("Error in worker thread "
-							 + this.threadGroup.getCausingThread().getId());
+				log.error("Error in worker thread "
+						  + this.threadGroup.getCausingThread().getId());
 				throw new ComputationException(cause);
 			}
 		}
