@@ -38,8 +38,8 @@ import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
 
 /**
@@ -66,9 +66,9 @@ public class PresetControlsPanel extends AbstractPanel {
 	protected PresetManager presetManager;
 
 	/**
-	 * the {@link ViewerFileChooser file chooser}
+	 * the {@link FileChooser file chooser}
 	 */
-	protected ViewerFileChooser fileChooser;
+	protected FileChooser fileChooser;
 
 	/**
 	 * the model for {@link #presetComboBox}
@@ -291,18 +291,18 @@ public class PresetControlsPanel extends AbstractPanel {
 	}
 
 	/**
-	 * Returns the {@link ViewerFileChooser file chooser}.
+	 * Returns the {@link FileChooser file chooser}.
 	 * @return the file chooser
 	 */
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
 	/**
-	 * Sets the {@link ViewerFileChooser file chooser}.
+	 * Sets the {@link FileChooser file chooser}.
 	 * @param fileChooser the file chooser to set
 	 */
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

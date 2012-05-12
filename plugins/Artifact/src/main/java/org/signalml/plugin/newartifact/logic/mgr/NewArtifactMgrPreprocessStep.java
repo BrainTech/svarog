@@ -7,14 +7,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Semaphore;
@@ -27,6 +24,7 @@ import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.io.IPluginDataSourceReader;
+import org.signalml.plugin.method.helper.AbstractPluginTrackerUpdaterWithTimer;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.method.logic.PluginWorkerSet;
@@ -57,8 +55,10 @@ public class NewArtifactMgrPreprocessStep extends
 	private final BlockingQueue<double[][]> readyBuffersQueue;
 	private final BlockingQueue<double[][]> freeBuffersQueue;
 	private final AtomicBoolean shutdownFlag;
-	private Timer timer;
-	private TrackerUpdater updater;
+
+	private AbstractPluginTrackerUpdaterWithTimer trackerUpdater;
+
+	private Integer blockCount;
 
 	private interface INewArtifactAlgorithmBufferSynchronizer {
 
@@ -254,49 +254,38 @@ public class NewArtifactMgrPreprocessStep extends
 		}
 	}
 
-	private class TrackerUpdater extends TimerTask {
+	private class TrackerUpdater extends AbstractPluginTrackerUpdaterWithTimer {
 
-		final private IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker;
-		volatile private int current;
-		volatile private int last;
-		public final Integer blockCount;
+		private final IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker;
+		private final NewArtifactMgrPreprocessStep step;
+		private final int blockCount;
 
 		public TrackerUpdater(
-			final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker,
+			NewArtifactMgrPreprocessStep step,
+			IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker,
 			int blockCount) {
+			this.step = step;
 			this.tracker = tracker;
-			this.current = 0;
-			this.last = 0;
-			this.blockCount = new Integer(blockCount);
-		}
-
-		public void setCurrent(int current) {
-			synchronized (this) {
-				this.current = current;
-			}
+			this.blockCount = blockCount;
 		}
 
 		@Override
-		public void run() {
-			int value;
-			synchronized (this) {
-				value = this.current;
-			}
+		public void update(int progress, int prevProgress) {
+			this.tracker.advance(this.step,
+								 Math.max(progress - prevProgress, 0));
+			this.tracker
+			.setProgressPhase(
+				NewArtifactComputationProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
+				progress, this.blockCount);
 
-			tracker.advance(value - this.last);
-			tracker.setProgressPhase(
-				NewArtifactProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
-				new Integer(value), this.blockCount);
-			this.last = value;
 		}
 
-		public int getLast() {
-			return this.current;
-		}
-	};
+	}
 
 	public NewArtifactMgrPreprocessStep(NewArtifactMgrStepData data) {
 		super(data);
+
+		this.blockCount = null;
 
 		this.freeBuffersQueue = new ArrayBlockingQueue<double[][]>(
 			this.INPUT_BUFFER_QUEUE_SIZE);
@@ -307,7 +296,8 @@ public class NewArtifactMgrPreprocessStep extends
 
 		this.workers = new PluginWorkerSet(this.data.threadFactory);
 		this.writers = new LinkedList<INewArtifactAlgorithmWriter>();
-		this.timer = new Timer();
+		this.trackerUpdater = new TrackerUpdater(this, this.data.tracker,
+				this.getBlockCount());
 	}
 
 	@Override
@@ -320,23 +310,23 @@ public class NewArtifactMgrPreprocessStep extends
 		PluginComputationMgrStepResult prevStepResult)
 	throws ComputationException, PluginToolInterruptedException,
 		PluginToolAbortException {
-		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
+		final IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker = this.data.tracker;
 
 		this.checkAbortState();
-		tracker.setProgressPhase(NewArtifactProgressPhase.PREPROCESS_PREPARE_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.PREPROCESS_PREPARE_PHASE);
 
 		this.prepareWorkers();
 		this.checkAbortState();
-		tracker.advance(1);
+		tracker.advance(this, 1);
 
 		int current = 0;
 
-		this.timer.scheduleAtFixedRate(this.updater, new Date(), 1500);
+		this.trackerUpdater.start(1500);
 
 		this.workers.startAll();
 
 		this.checkAbortState();
-		tracker.setProgressPhase(NewArtifactProgressPhase.SOURCE_FILE_INITIAL_READ_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.SOURCE_FILE_INITIAL_READ_PHASE);
 
 		double buffer[][] = null;
 		do {
@@ -351,7 +341,7 @@ public class NewArtifactMgrPreprocessStep extends
 			if (current % 100 == 0) {
 				this.checkAbortState();
 			}
-			updater.setCurrent(current);
+			this.trackerUpdater.setProgress(current);
 		} while (buffer != null && buffer.length != 0);
 
 		this.checkAbortState();
@@ -395,8 +385,8 @@ public class NewArtifactMgrPreprocessStep extends
 		}
 		this.workers.add(reader);
 
-		this.updater = new TrackerUpdater(this.data.tracker,
-										  this.getBlockCount());
+		this.trackerUpdater = new TrackerUpdater(this, this.data.tracker,
+				this.getBlockCount());
 	}
 
 	@Override
@@ -407,6 +397,7 @@ public class NewArtifactMgrPreprocessStep extends
 	@Override
 	protected void cleanup() {
 		super.cleanup();
+		this.trackerUpdater.stop();
 		this.stopWorkers();
 	}
 
@@ -421,14 +412,16 @@ public class NewArtifactMgrPreprocessStep extends
 			this.freeBuffersQueue.clear();
 			this.freeBuffersQueue.add(new double[0][]);
 
-			this.timer.cancel();
+			this.trackerUpdater.stop();
 
-			this.data.tracker.setProgressPhase(
-				NewArtifactProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
-				this.updater.blockCount, this.updater.blockCount);
-			int advance = this.updater.blockCount - this.updater.getLast() + 1;
+			this.data.tracker
+			.setProgressPhase(
+				NewArtifactComputationProgressPhase.INTERMEDIATE_COMPUTATION_PHASE,
+				this.getBlockCount(), this.getBlockCount());
+			int advance = this.getBlockCount()
+						  - this.trackerUpdater.getProgress() + 1;
 			if (advance > 0) {
-				this.data.tracker.advance(advance);
+				this.data.tracker.advance(this, advance);
 			}
 		} finally {
 			this.terminateWorkers();
@@ -486,9 +479,12 @@ public class NewArtifactMgrPreprocessStep extends
 	}
 
 	private int getBlockCount() {
-		return PluginSignalHelper.GetBlockCount(
-				   this.data.artifactData.getSampleSource(),
-				   this.data.constants.getBlockLength());
+		if (this.blockCount == null) {
+			this.blockCount = new Integer(PluginSignalHelper.GetBlockCount(
+											  this.data.artifactData.getSampleSource(),
+											  this.data.constants.getBlockLength()));
+		}
+		return this.blockCount;
 	}
 
 }

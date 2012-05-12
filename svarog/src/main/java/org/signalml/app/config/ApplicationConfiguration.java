@@ -4,7 +4,6 @@
 
 package org.signalml.app.config;
 
-import java.io.File;
 import javax.swing.ToolTipManager;
 
 import org.signalml.app.view.book.WignerMapPalette;
@@ -168,6 +167,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.precalculateSignalChecksums = precalculateSignalChecksums;
 	}
 
+	@Override
 	public boolean isSaveConfigOnEveryChange() {
 		return saveConfigOnEveryChange;
 	}

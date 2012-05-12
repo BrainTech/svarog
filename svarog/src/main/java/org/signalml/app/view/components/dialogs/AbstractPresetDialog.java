@@ -17,12 +17,12 @@ import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.SvarogApplication;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.view.components.presets.PresetControlsPanel;
 import org.signalml.app.view.components.presets.PresetableView;
-import org.signalml.app.view.workspace.ViewerFileChooser;
+import org.signalml.plugin.export.config.SvarogConfiguration;
+import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * Dialog which data can be stored in a {@link Preset preset}.
@@ -74,11 +74,11 @@ public abstract class AbstractPresetDialog extends AbstractDialog implements Pre
 		this.presetManager = presetManager;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		getPresetControlsPanel().setFileChooser(fileChooser);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return getPresetControlsPanel().getFileChooser();
 	}
 
@@ -179,10 +179,10 @@ public abstract class AbstractPresetDialog extends AbstractDialog implements Pre
 	}
 
 	/**
-	 * Returns the {@link ApplicationConfiguration configuration} of Svarog.
+	 * Returns the {@link SvarogConfiguration configuration} of Svarog.
 	 * @return the configuration of Svarog
 	 */
-	public ApplicationConfiguration getApplicationConfig() {
+	public SvarogConfiguration getApplicationConfig() {
 		return SvarogApplication.getApplicationConfiguration();
 	}
 

@@ -1,9 +1,9 @@
 <plugin>
-	<name>Sleep Staging</name>
-	<version>0.1</version>
-	<jar-file>Stager.jar</jar-file>
-	<starting-class>org.signalml.plugin.newstager.NewStagerPlugin</starting-class>
-	<dependencies>
+    <name>Sleep Staging</name>
+    <version>0.9</version>
+    <jar-file>Stager.jar</jar-file>
+    <starting-class>org.signalml.plugin.newstager.NewStagerPlugin</starting-class>
+    <dependencies>
 		<dependency>
 			<name>Svarog API</name>
 			<version>0.5</version>

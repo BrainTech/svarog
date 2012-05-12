@@ -1,12 +1,16 @@
 package org.signalml.plugin.impl;
 
 import java.io.IOException;
+import java.util.Properties;
+
 import javax.swing.ImageIcon;
+
+import org.apache.log4j.Logger;
+import org.signalml.app.config.ConfigurationDefaultsLoader;
+import org.signalml.plugin.export.Plugin;
+import org.signalml.plugin.export.resources.SvarogAccessResources;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import org.signalml.plugin.export.resources.SvarogAccessResources;
-import org.apache.log4j.Logger;
 
 /**
  * {@link SvarogAccessResources} implementation using org.springframework.context.
@@ -15,9 +19,9 @@ import org.apache.log4j.Logger;
 public class SvarogAccessResourcesImpl implements SvarogAccessResources {
 	protected static final Logger log = Logger.getLogger(SvarogAccessResources.class);
 
-	private final Class klass;
+	private final Class<? extends Plugin> klass;
 
-	public SvarogAccessResourcesImpl(Class klass) {
+	public SvarogAccessResourcesImpl(Class<? extends Plugin> klass) {
 		this.klass = klass;
 	}
 
@@ -30,5 +34,11 @@ public class SvarogAccessResourcesImpl implements SvarogAccessResources {
 			log.error("WARNING: failed to open icon recource [" + icon + "]", ex);
 			throw ex;
 		}
+	}
+
+	@Override
+	public Properties loadPluginConfigurationDefaults(String classpath)
+	throws IOException {
+		return ConfigurationDefaultsLoader.Load(this.klass, classpath);
 	}
 }

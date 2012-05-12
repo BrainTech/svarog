@@ -17,10 +17,10 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.method.PluginAbstractMethodDescriptor;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.signalml.plugin.newartifact.NewArtifactPlugin;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -106,7 +106,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public String getName() {
-		return "xxx";
+		return "FIXME";	//FIXME
 	}
 
 	@Override
@@ -121,7 +121,8 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 										  .GetResource("streamer", NewArtifactPlugin.class));
 			} catch (PluginException e) {
 				logger.error("Can't get proper streamer", e);
-				return presetManager;
+				this.methodManager.handleException(e);
+				return null;
 			}
 			try {
 				presetManager.readFromPersistence(null);
@@ -132,6 +133,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 					logger.error(
 						"Failed to read artifact presets - presets lost", e);
 				}
+				return null;
 			}
 		}
 		return presetManager;

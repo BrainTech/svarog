@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+							 <beans xmlns="http://www.springframework.org/schema/beans"
+									 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+											 xsi:schemaLocation="http://www.springframework.org/schema/beans
+													 http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+
+													 <bean id="config"
+															 class="org.signalml.plugin.newstager.data.NewStagerPluginConfig">
+																		 <constructor-arg type="java.lang.Class">
+																				 <value>org.signalml.plugin.newstager.NewStagerPlugin</value>
+																				 </constructor-arg>
+																				 <property name="methodConfig" ref="stagerMethodConfig">
+																						 </property>
+																						 </bean>
+
+																						 <bean id="streamCreator" class="org.signalml.plugin.tool.PluginStreamCreator">
+																									 </bean>
+
+																									 <bean id="stagerMethodConfig" class="org.signalml.plugin.data.PluginConfigMethodData">
+																												 <property name="methodName">
+																														 <value>new-stager</value>
+																														 </property>
+																														 <property name="methodDescriptor" ref="stagerMethodDescriptor">
+																																 </property>
+																																 <property name="method" ref="stagerMethod">
+																																		 </property>
+																																		 </bean>
+
+																																		 <bean id="stagerMethodDescriptor" class="org.signalml.plugin.newstager.method.NewStagerMethodDescriptor">
+
+																																					 </bean>
+
+																																					 <bean id="stagerMethod" class="org.signalml.plugin.newstager.method.NewStagerMethod">
+
+																																								 </bean>
+
+																																								 <bean id="streamer" class="com.thoughtworks.xstream.XStream"
+																																											 factory-bean="streamCreator" factory-method="createInstance">
+																																													 <constructor-arg ref="config"></constructor-arg>
+																																															 <constructor-arg>
+																																															 <list>
+																																															 <value>org.signalml.app.method.MethodPresetManager</value>
+																																															 </list>
+																																															 </constructor-arg>
+																																															 </bean>
+
+																																															 </beans>

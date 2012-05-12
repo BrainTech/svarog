@@ -4,9 +4,7 @@
 
 package org.signalml.plugin.newartifact.data;
 
-import java.io.Serializable;
-
-import org.signalml.app.config.preset.Preset;
+import org.signalml.plugin.data.method.PluginMethodWithWorkDirConfiguration;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -17,21 +15,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 
 @XStreamAlias("artifactConfiguration")
-public class NewArtifactConfiguration implements Serializable, Preset {
+public class NewArtifactConfiguration extends PluginMethodWithWorkDirConfiguration {
 
 	private static final long serialVersionUID = -1858366458174508013L;
 
 	public static final String NAME = "artifactConfig";
-
-	private String workingDirectoryPath;
-
-	public String getWorkingDirectoryPath() {
-		return workingDirectoryPath;
-	}
-
-	public void setWorkingDirectoryPath(String workingDirectoryPath) {
-		this.workingDirectoryPath = workingDirectoryPath;
-	}
 
 	@Override
 	public String getName() {

@@ -55,6 +55,7 @@ import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.document.ExportSignalWorker;
 import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
@@ -776,7 +777,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				File file = null;
 				do {
 
-					file = getFileChooser().chooseSaveMP5ConfigFile(MP5MethodDialog.this);
+					file = ((ViewerFileChooser) getFileChooser()).chooseSaveMP5ConfigFile(MP5MethodDialog.this); //TODO remove cast
 					if (file == null) {
 						return;
 					}

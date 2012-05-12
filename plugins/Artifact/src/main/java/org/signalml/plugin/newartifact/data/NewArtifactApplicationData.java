@@ -14,6 +14,7 @@ import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.io.PluginSampleSourceAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -81,8 +82,6 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 	public void calculate() throws SignalMLException {
 
-		int i;
-
 		Map<String, Integer> keyChannelMap = getKeyChannelMap();
 		ArrayList<Integer> eegChannels = getEegChannels();
 		Map<String, Integer> channelMap = getChannelMap();
@@ -93,7 +92,7 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 		int cnt = montage.getSourceChannelCount();
 		SourceChannel channel;
-		for (i = 0; i < cnt; i++) {
+		for (int i = 0; i < cnt; i++) {
 			channelMap.put(montage.getSourceChannelLabelAt(i), i);
 
 			channel = montage.getSourceChannelAt(i);
@@ -154,15 +153,12 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		 * plot.getPageSize(), plot.getBlockSize()); }
 		 */
 
-		setSampleSource(new NewArtifactPluginSampleSource(signalAccess,
+		setSampleSource(new PluginSampleSourceAdapter(signalAccess,
 						signalDocument));
 
 		// TODO rethink this cast - what is the data type in matlab code?
 		setPageSize((int) signalDocument.getPageSize());
 		setBlocksPerPage(signalDocument.getBlocksPerPage());
-
-		setSignalFormat(NewArtifactSignalFormat.FLOAT);
-
 	}
 
 }

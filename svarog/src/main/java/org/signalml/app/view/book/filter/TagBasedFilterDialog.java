@@ -47,6 +47,7 @@ import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.FileChooser;
 
 import org.springframework.validation.Errors;
 
@@ -59,7 +60,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private BookFilterChooseTagPanel chooseTagPanel;
 
@@ -435,11 +436,11 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 		getMarkerStyleCellRenderer().setTagIconProducer(tagIconProducer);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

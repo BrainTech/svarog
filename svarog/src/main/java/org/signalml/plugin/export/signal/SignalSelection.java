@@ -283,14 +283,15 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	 * @param selection the SignalSelection that the current SignalSelection is to be intersect with
 	 * @return true if the two SignalSelection objects overlap, otherwise false.
 	 */
-	public boolean overlaps(SignalSelection selection) {
+	public boolean overlaps(ExportedSignalSelection selection) {
 
-		double sEndPosition = selection.position + selection.length;
-		if (selection.position <= position && sEndPosition <= position) {
+		double sPosition = selection.getPosition();
+		double sEndPosition = sPosition + selection.getLength();
+		if (sPosition <= position && sEndPosition <= position) {
 			return false;
 		}
 		double endPosition = position + length;
-		if (selection.position >= endPosition && sEndPosition >= endPosition) {
+		if (sPosition >= endPosition && sEndPosition >= endPosition) {
 			return false;
 		}
 
