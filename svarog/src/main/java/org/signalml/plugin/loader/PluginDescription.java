@@ -324,6 +324,7 @@ public class PluginDescription extends PluginState {
 			return false;
 		} else {
 			this.setJarFileURL(url);
+			logger.info(this.toString() + " will use " + url);
 			return true;
 		}
 	}
