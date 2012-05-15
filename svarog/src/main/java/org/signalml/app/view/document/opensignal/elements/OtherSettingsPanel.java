@@ -18,8 +18,10 @@ import javax.swing.JPanel;
 
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
@@ -178,6 +180,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			TagPresetComboBoxModel model = new TagPresetComboBoxModel(
 				viewerElementManager.getStyledTagSetPresetManager());
 			tagPresetComboBox = new JComboBox(model);
+			tagPresetComboBox.setSelectedIndex(0);
 		}
 		return tagPresetComboBox;
 	}
@@ -287,12 +290,27 @@ public class OtherSettingsPanel extends AbstractPanel {
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		this.openSignalDescriptor = openSignalDescriptor;
 		setEnabledAsNeeded(openSignalDescriptor);
-		if (openSignalDescriptor instanceof RawSignalDescriptor) {
-			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
-			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
 
-			if (eegSystemName != null)
-				setEegSystemByName(eegSystemName);
+		if (openSignalDescriptor == null)
+			return;
+
+		EegSystemName eegSystemName = openSignalDescriptor.getEegSystemName();
+		if (eegSystemName != null)
+			setEegSystemByName(eegSystemName);
+
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			String tagStylesName = experimentDescriptor.getTagStylesName();
+
+			if (StyledTagSetPresetManager.EMPTY_PRESET_NAME.equals(tagStylesName)) {
+				getTagPresetComboBox().setSelectedIndex(0);
+			} else {
+				StyledTagSetPresetManager styledTagSetPresetManager = viewerElementManager.getStyledTagSetPresetManager();
+				Preset preset = styledTagSetPresetManager.getPresetByName(tagStylesName);
+
+				if (preset != null)
+					getTagPresetComboBox().setSelectedItem(preset);
+			}
 		}
 	}
 
@@ -300,7 +318,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		if (descriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) descriptor;
 			StyledTagSet selectedStylesPreset = (StyledTagSet) getTagPresetComboBox().getSelectedItem();
-			experimentDescriptor.setTagStyles(selectedStylesPreset);
+			experimentDescriptor.setTagStyles(selectedStylesPreset == null ? null : selectedStylesPreset.clone());
 		}
 		descriptor.setEegSystem(getSelectedEegSystem());
 		fillSignalParametersGainAndOffset(openSignalDescriptor);

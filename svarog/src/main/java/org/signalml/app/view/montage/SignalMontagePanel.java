@@ -22,8 +22,8 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
-import org.signalml.app.view.components.presets.AbstractPresetPanel;
-import org.signalml.app.view.components.presets.PresetControlsPanel;
+import org.signalml.app.view.components.presets.AbstractPanelWithPresets;
+import org.signalml.app.view.components.presets.ComplexPresetControlsPanel;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
@@ -38,7 +38,7 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
-public class SignalMontagePanel extends AbstractPresetPanel {
+public class SignalMontagePanel extends AbstractPanelWithPresets {
 
 	/**
 	 * This dialog is used when edititing
@@ -122,9 +122,9 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 	}
 
 	@Override
-	protected PresetControlsPanel getPresetControlsPanel() {
+	protected ComplexPresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null)
-			presetControlsPanel = new PresetControlsPanel(this, presetManager, true);
+			presetControlsPanel = new ComplexPresetControlsPanel(this, presetManager, true);
 		return presetControlsPanel;
 	}
 

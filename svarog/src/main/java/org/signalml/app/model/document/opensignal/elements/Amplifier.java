@@ -16,16 +16,23 @@ public class Amplifier {
 	private Object additionalParameters;
 
 	public Amplifier(Amplifier amp) {
-		this.name = amp.name;
-		this.samplesPerPacket = amp.samplesPerPacket;
+		copyFromPreset(amp);
+	}
+
+	public void copyFromPreset(Amplifier presetAmplifier) {
+		this.name = presetAmplifier.name;
+		this.samplesPerPacket = presetAmplifier.samplesPerPacket;
 
 		this.samplingFrequencies = new ArrayList<Float>();
-		for (Float samplingFrequency: amp.getSamplingFrequencies())
+		for (Float samplingFrequency: presetAmplifier.getSamplingFrequencies())
 			this.samplingFrequencies.add(samplingFrequency);
 
 		this.channels = new ArrayList<AmplifierChannel>();
-		for (AmplifierChannel channel: amp.getChannels())
+		for (AmplifierChannel channel: presetAmplifier.getChannels())
 			this.channels.add(new AmplifierChannel(channel));
+
+		//watch out - not everything is copied - e.g. - additionalParameters
+		//need to stay in the previous version.
 	}
 
 	public Amplifier() {

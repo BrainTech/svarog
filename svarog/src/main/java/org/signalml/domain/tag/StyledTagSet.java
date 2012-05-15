@@ -5,11 +5,12 @@
 package org.signalml.domain.tag;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -18,21 +19,19 @@ import javax.swing.KeyStroke;
 import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.config.preset.Preset;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.domain.montage.Montage;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
-import java.util.HashSet;
-import java.util.List;
-import org.signalml.app.config.preset.Preset;
-import org.signalml.app.model.document.opensignal.elements.SignalParameters;
-import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
-import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
  * This class represents a set of
@@ -1393,6 +1392,7 @@ public class StyledTagSet implements Serializable, Preset {
 	@Override
 	public StyledTagSet clone() {
 		StyledTagSet newTagSet = new StyledTagSet(styles);
+		newTagSet.setName(name);
 		return newTagSet;
 	}
 
@@ -1506,5 +1506,15 @@ public class StyledTagSet implements Serializable, Preset {
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+
+		if (obj instanceof StyledTagSet) {
+			StyledTagSet sts = (StyledTagSet) obj;
+			return sts.getName().equals(this.getName());
+		}
+		return false;
 	}
 }

@@ -3,12 +3,17 @@ package org.signalml.app.model.document.opensignal;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.montage.system.EegSystemName;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 public abstract class AbstractOpenSignalDescriptor {
 
 	protected SignalParameters signalParameters = new SignalParameters();
+
+	@XStreamOmitField
 	protected EegSystem eegSystem;
+	protected EegSystemName eegSystemName;
 
 	/**
 	 * an array of labels of signal channels
@@ -28,6 +33,7 @@ public abstract class AbstractOpenSignalDescriptor {
 
 	public void setEegSystem(EegSystem eegSystem) {
 		this.eegSystem = eegSystem;
+		this.eegSystemName = eegSystem.getEegSystemName();
 	}
 
 	public SignalParameters getSignalParameters() {
@@ -74,6 +80,23 @@ public abstract class AbstractOpenSignalDescriptor {
 	 */
 	public void setChannelLabels(String[] channelLabels) {
 		this.channelLabels = channelLabels;
+	}
+
+	/**
+	 * Returns the name of the {@link EegSystem EEG system} that
+	 * is used for this signal.
+	 * @return the name of the EEG system
+	 */
+	public EegSystemName getEegSystemName() {
+		return eegSystemName;
+	}
+
+	/**
+	 * Sets the name of the {@link EegSystem} that is used for this signal.
+	 * @param eegSystemName the name of the EEG system
+	 */
+	public void setEegSystemName(EegSystemName eegSystemName) {
+		this.eegSystemName = eegSystemName;
 	}
 
 	public void setCorrectlyRead(boolean correctlyRead) {

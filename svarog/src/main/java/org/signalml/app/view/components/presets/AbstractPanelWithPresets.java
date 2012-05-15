@@ -11,7 +11,7 @@ import org.signalml.app.view.workspace.ViewerFileChooser;
  *
  * @author Piotr Szachewicz
  */
-public abstract class AbstractPresetPanel extends AbstractPanel implements PresetableView {
+public abstract class AbstractPanelWithPresets extends AbstractPanel implements PresetableView {
 
 	static final long serialVersionUID = 1L;
 
@@ -25,7 +25,7 @@ public abstract class AbstractPresetPanel extends AbstractPanel implements Prese
 	 */
 	protected ViewerFileChooser fileChooser;
 
-	protected PresetControlsPanel presetControlsPanel;
+	protected ComplexPresetControlsPanel presetControlsPanel;
 
 	protected PresetManager presetManager;
 
@@ -34,14 +34,14 @@ public abstract class AbstractPresetPanel extends AbstractPanel implements Prese
 	 * manager}.
 	 * @param presetManager the preset manager to set
 	 */
-	public AbstractPresetPanel(PresetManager presetManager) {
+	public AbstractPanelWithPresets(PresetManager presetManager) {
 		super();
 		this.presetManager = presetManager;
 	}
 
-	protected PresetControlsPanel getPresetControlsPanel() {
+	protected ComplexPresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null) {
-			presetControlsPanel = new PresetControlsPanel(this, presetManager);
+			presetControlsPanel = new ComplexPresetControlsPanel(this, presetManager);
 		}
 		return presetControlsPanel;
 	}

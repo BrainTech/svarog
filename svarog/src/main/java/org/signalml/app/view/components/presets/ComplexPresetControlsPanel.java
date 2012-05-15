@@ -49,7 +49,7 @@ import org.signalml.util.Util;
  *
  * @author Piotr Szachewicz
  */
-public class PresetControlsPanel extends AbstractPanel {
+public class ComplexPresetControlsPanel extends AbstractPanel {
 
 	static final long serialVersionUID = 1L;
 
@@ -166,11 +166,11 @@ public class PresetControlsPanel extends AbstractPanel {
 	 * manager}.
 	 * @param presetManager the preset manager to set
 	 */
-	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager) {
+	public ComplexPresetControlsPanel(PresetableView presetPanel, PresetManager presetManager) {
 		this(presetPanel, presetManager, false);
 	}
 
-	public PresetControlsPanel(PresetableView presetPanel, PresetManager presetManager,
+	public ComplexPresetControlsPanel(PresetableView presetPanel, PresetManager presetManager,
 							   boolean showLoadSaveRemoveDefaultPresetButton) {
 		super();
 		assert presetPanel != null;
@@ -444,7 +444,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				preset = getPresetFromMainPanel();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to get preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this, ex);
 				return;
 			}
 			if (preset == null) {
@@ -516,7 +516,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				setPresetToMainPanel(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this, ex);
 				return;
 			}
 
@@ -606,7 +606,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				preset = getPresetFromMainPanel();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to get preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this, ex);
 				return;
 			}
 			if (preset == null) {
@@ -695,7 +695,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				setPresetToMainPanel(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this, ex);
 				return;
 			}
 
@@ -795,7 +795,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				preset = getPresetFromMainPanel();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to get preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this, ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this, ex);
 				return;
 			}
 			if (preset == null) {
@@ -810,7 +810,7 @@ public class PresetControlsPanel extends AbstractPanel {
 			File file = null;
 			do {
 
-				file = fileChooser.chooseSavePresetFile(PresetControlsPanel.this.getParentWindow());
+				file = fileChooser.chooseSavePresetFile(ComplexPresetControlsPanel.this.getParentWindow());
 				if (file == null) {
 					return;
 				}
@@ -818,7 +818,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				hasFile = true;
 
 				if (file.exists()) {
-					int res = OptionPane.showFileAlreadyExists(PresetControlsPanel.this.getParentWindow());
+					int res = OptionPane.showFileAlreadyExists(ComplexPresetControlsPanel.this.getParentWindow());
 					if (res != OptionPane.OK_OPTION) {
 						hasFile = false;
 					}
@@ -830,7 +830,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				presetManager.writeToFile(file, preset);
 			} catch (IOException ex) {
 				logger.error("Exception when writing file", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this.getParentWindow(), ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this.getParentWindow(), ex);
 				return;
 			}
 
@@ -876,7 +876,7 @@ public class PresetControlsPanel extends AbstractPanel {
 		 */
 		public void actionPerformed(ActionEvent ev) {
 
-			File file = fileChooser.chooseLoadPresetFile(PresetControlsPanel.this.getParentWindow());
+			File file = fileChooser.chooseLoadPresetFile(ComplexPresetControlsPanel.this.getParentWindow());
 			if (file == null) {
 				return;
 			}
@@ -886,7 +886,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				preset = presetManager.readFromFile(file);
 			} catch (IOException ex) {
 				logger.error("Exception when reading file", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this.getParentWindow(), ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this.getParentWindow(), ex);
 				return;
 			}
 
@@ -894,7 +894,7 @@ public class PresetControlsPanel extends AbstractPanel {
 				setPresetToMainPanel(preset);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set preset", ex);
-				Dialogs.showExceptionDialog(PresetControlsPanel.this.getParentWindow(), ex);
+				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this.getParentWindow(), ex);
 				return;
 			}
 
@@ -957,7 +957,7 @@ public class PresetControlsPanel extends AbstractPanel {
 		 * uses the enclosing class as the parent window to this dialog.
 		 */
 		protected ChoosePresetDialog() {
-			super(PresetControlsPanel.this.getParentWindow(), true);
+			super(ComplexPresetControlsPanel.this.getParentWindow(), true);
 		}
 
 		/**

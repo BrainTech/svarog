@@ -75,6 +75,7 @@ import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.app.config.preset.ExperimentsSettingsPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
@@ -177,6 +178,8 @@ public class ViewerElementManager {
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
 	private OpenBCIModulePresetManager openBCIModulePresetManager;
+	private ExperimentsSettingsPresetManager experimentsSettingsPresetManager;
+
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -539,6 +542,14 @@ public class ViewerElementManager {
 
 	public void setOpenBCIModulePresetManager(OpenBCIModulePresetManager openBCIModulePresetManager) {
 		this.openBCIModulePresetManager = openBCIModulePresetManager;
+	}
+
+	public ExperimentsSettingsPresetManager getExperimentsSettingsPresetManager() {
+		return experimentsSettingsPresetManager;
+	}
+
+	public void setExperimentsSettingsPresetManager(ExperimentsSettingsPresetManager experimentsSettingsPresetManager) {
+		this.experimentsSettingsPresetManager = experimentsSettingsPresetManager;
 	}
 
 	/**

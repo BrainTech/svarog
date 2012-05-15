@@ -51,12 +51,17 @@ public class AmplifierChannel {
 	private float calibrationOffset;
 	private double idle;
 
+	public AmplifierChannel() {
+	}
+
 	public AmplifierChannel(AmplifierChannel channel) {
 		this.selected = channel.selected;
 		this.number = channel.number;
 		this.label = channel.label;
 		this.calibrationGain = channel.calibrationGain;
 		this.calibrationOffset = channel.calibrationOffset;
+		this.originalName = channel.originalName;
+		this.idle = channel.idle;
 	}
 
 	/**

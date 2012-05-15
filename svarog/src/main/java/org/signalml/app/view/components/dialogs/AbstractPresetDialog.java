@@ -19,7 +19,7 @@ import javax.swing.border.EmptyBorder;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.view.components.presets.PresetControlsPanel;
+import org.signalml.app.view.components.presets.ComplexPresetControlsPanel;
 import org.signalml.app.view.components.presets.PresetableView;
 import org.signalml.plugin.export.config.SvarogConfiguration;
 import org.signalml.plugin.export.view.FileChooser;
@@ -49,7 +49,7 @@ public abstract class AbstractPresetDialog extends AbstractDialog implements Pre
 	/**
 	 * The panel with all the controls to load/save presets.
 	 */
-	protected PresetControlsPanel presetControlsPanel;
+	protected ComplexPresetControlsPanel presetControlsPanel;
 	private PresetManager presetManager;
 
 	/**
@@ -82,9 +82,9 @@ public abstract class AbstractPresetDialog extends AbstractDialog implements Pre
 		return getPresetControlsPanel().getFileChooser();
 	}
 
-	protected PresetControlsPanel getPresetControlsPanel() {
+	protected ComplexPresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null) {
-			presetControlsPanel = new PresetControlsPanel(this, presetManager);
+			presetControlsPanel = new ComplexPresetControlsPanel(this, presetManager);
 		}
 		return presetControlsPanel;
 	}

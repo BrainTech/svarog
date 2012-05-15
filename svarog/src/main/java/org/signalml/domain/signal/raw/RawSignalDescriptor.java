@@ -10,7 +10,6 @@ import java.util.Date;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.montage.system.EegSystemName;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -76,12 +75,6 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 	private RawSignalSampleType sampleType;
 	private RawSignalByteOrder byteOrder;
-
-	/**
-	 * The name of the {@link EegSystem EEG system} that is used
-	 * for this signal.
-	 */
-	private EegSystemName eegSystemName;
 
 	/**
 	 * the position (in seconds) of the marker in the described
@@ -388,23 +381,6 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 	public void setBlocksPerPage(int blocksPerPage) {
 		signalParameters.setBlocksPerPage(blocksPerPage);
-	}
-
-	/**
-	 * Returns the name of the {@link EegSystem EEG system} that
-	 * is used for this signal.
-	 * @return the name of the EEG system
-	 */
-	public EegSystemName getEegSystemName() {
-		return eegSystemName;
-	}
-
-	/**
-	 * Sets the name of the {@link EegSystem} that is used for this signal.
-	 * @param eegSystemName the name of the EEG system
-	 */
-	public void setEegSystemName(EegSystemName eegSystemName) {
-		this.eegSystemName = eegSystemName;
 	}
 
 	/**

@@ -2,6 +2,7 @@ package org.signalml.app.model.document.opensignal;
 
 import multiplexer.jmx.client.JmxClient;
 
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
@@ -9,9 +10,10 @@ import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 @XStreamAlias(value="experiment")
-public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
+public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implements Preset {
 
 	private String id;
 	private String name;
@@ -29,7 +31,10 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 	private Float backupFrequency;
 	private MonitorRecordingDescriptor monitorRecordingDescriptor = new MonitorRecordingDescriptor();
 
+	@XStreamOmitField
 	private StyledTagSet tagStyles;
+	private String tagStylesName;
+
 	private String peerId;
 
 	private String recommendedScenario;
@@ -47,12 +52,22 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 
 		this.backupFrequency = other.backupFrequency;
 
+		this.eegSystemName = other.eegSystemName;
+		this.tagStylesName = other.tagStylesName;
+
 		//other fields should be filled after sending "join_experiment" request
 	}
 
 	public ExperimentDescriptor() {
 		setBackupFrequency(10.0F);
 		signalParameters = new SignalParameters();
+	}
+
+	public void copyFromPreset(ExperimentDescriptor other) {
+		this.amplifier.copyFromPreset(other.getAmplifier());
+		this.signalParameters = new SignalParameters(other.signalParameters);
+		this.eegSystemName = other.eegSystemName;
+		this.tagStylesName = other.tagStylesName;
 	}
 
 	public String getName() {
@@ -124,8 +139,13 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 		return tagStyles;
 	}
 
+	public String getTagStylesName() {
+		return tagStylesName;
+	}
+
 	public void setTagStyles(StyledTagSet tagStyles) {
 		this.tagStyles = tagStyles;
+		this.tagStylesName = tagStyles == null ? null : tagStyles.getName();
 	}
 
 	public MonitorRecordingDescriptor getMonitorRecordingDescriptor() {
@@ -164,10 +184,9 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor {
 		this.recommendedScenario = recommendedScenario;
 	}
 
-	/**
-	 * Multiplexer client to get signal from it.
-	 * może nie powinno tego tu być, tylko gdzie indziej.
-	 */
-	//private JmxClient jmxClient;
+	@Override
+	public String toString() {
+		return getName();
+	}
 
 }

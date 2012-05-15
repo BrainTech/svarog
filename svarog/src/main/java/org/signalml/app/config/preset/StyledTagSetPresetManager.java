@@ -4,9 +4,11 @@
 
 package org.signalml.app.config.preset;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.signal.TagStyle;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
@@ -26,6 +28,8 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
  */
 @XStreamAlias("styledTagSets")
 public class StyledTagSetPresetManager extends AbstractPresetManager {
+
+	public static String EMPTY_PRESET_NAME = _("< Empty preset - no styles defined >");
 
 	@Override
 	public String getStandardFilename() {
@@ -88,7 +92,7 @@ public class StyledTagSetPresetManager extends AbstractPresetManager {
 	public Preset[] getPresetsWithEmptyOption() {
 
 		StyledTagSet emptyPreset = new StyledTagSet();
-		emptyPreset.setName("< Empty preset - no styles defined >");
+		emptyPreset.setName(EMPTY_PRESET_NAME);
 
 		Preset[] nonEmptyPresets = getPresets();
 		Preset[] allPresets = new Preset[nonEmptyPresets.length + 1];

@@ -37,6 +37,7 @@ import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.app.config.preset.ExperimentsSettingsPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
@@ -132,6 +133,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private SignalExportPresetManager signalExportPresetManager = null;
 	private FFTSampleFilterPresetManager fftFilterPresetManager = null;
 	private OpenBCIModulePresetManager openBCIModulePresetManager = null;
+	private ExperimentsSettingsPresetManager experimentsSettingsPresetManager = null;
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -816,6 +818,16 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read OpenBCI modules configuration - will use defaults", ex);
 		}
 
+		experimentsSettingsPresetManager = new ExperimentsSettingsPresetManager();
+		experimentsSettingsPresetManager.setProfileDir(profileDir);
+		try {
+			experimentsSettingsPresetManager.readFromPersistence(null);
+		} catch (FileNotFoundException ex) {
+			logger.debug("Experiments settings not found - will start off with an empty list");
+		} catch (Exception ex) {
+			logger.error("Failed to read OpenBCI modules configuration - will start with an empty list", ex);
+		}
+
 		timeDomainSampleFilterPresetManager = new TimeDomainSampleFilterPresetManager();
 		timeDomainSampleFilterPresetManager.setProfileDir(profileDir);
 
@@ -992,6 +1004,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
 		elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
+		elementManager.setExperimentsSettingsPresetManager(experimentsSettingsPresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
 		elementManager.setStyledTagSetPresetManager(styledTagSetPresetManager);
@@ -1107,6 +1120,12 @@ public class SvarogApplication implements java.lang.Runnable {
 			openBCIModulePresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write OpenBCI modules configuration", ex);
+		}
+
+		try {
+			experimentsSettingsPresetManager.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write new experiments settings presets to file", ex);
 		}
 
 		try {
