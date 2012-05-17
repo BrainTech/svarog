@@ -131,7 +131,6 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
@@ -177,9 +176,7 @@ public class ViewerElementManager {
 	private BookFilterPresetManager bookFilterPresetManager;
 	private SignalExportPresetManager signalExportPresetManager;
 	private FFTSampleFilterPresetManager fftFilterPresetManager;
-	private OpenBCIModulePresetManager openBCIModulePresetManager;
 	private ExperimentsSettingsPresetManager experimentsSettingsPresetManager;
-
 
 	/**
 	 * A {@link PresetManager} managing the user-defined
@@ -534,14 +531,6 @@ public class ViewerElementManager {
 
 	public void setFftFilterPresetManager(FFTSampleFilterPresetManager fftFilterPresetManager) {
 		this.fftFilterPresetManager = fftFilterPresetManager;
-	}
-
-	public OpenBCIModulePresetManager getOpenBCIModulePresetManager() {
-		return openBCIModulePresetManager;
-	}
-
-	public void setOpenBCIModulePresetManager(OpenBCIModulePresetManager openBCIModulePresetManager) {
-		this.openBCIModulePresetManager = openBCIModulePresetManager;
 	}
 
 	public ExperimentsSettingsPresetManager getExperimentsSettingsPresetManager() {

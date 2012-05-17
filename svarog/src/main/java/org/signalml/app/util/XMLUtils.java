@@ -14,8 +14,10 @@ import java.io.OutputStream;
 
 import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
+import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
@@ -26,13 +28,13 @@ import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;
-import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.generators.RawMontageGenerator;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.XStream;
@@ -41,11 +43,6 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.codehaus.janino.Java.AnonymousClassDeclaration;
-import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
-import org.signalml.app.worker.processes.OpenBCIModule;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
 /** XMLUtils
  *
@@ -100,19 +97,6 @@ public abstract class XMLUtils {
 			streamer,
 			FFTSampleFilterPresetManager.class,
 			FFTSampleFilter.class
-		);
-	}
-
-	/**
-	 * Configures the given {@link XStream XStreamer} for {@link OpenBCIModule}
-	 * streaming.
-	 * @param streamer a streamer to be configured
-	 */
-	public static void configureStreamerForOpenBCIModule(XStream streamer) {
-		Annotations.configureAliases(
-			streamer,
-			OpenBCIModulePresetManager.class,
-			OpenBCIModule.class
 		);
 	}
 

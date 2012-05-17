@@ -73,8 +73,6 @@ import org.signalml.app.view.components.dialogs.ProfilePathDialog;
 import org.signalml.app.view.components.dialogs.SplashScreen;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
-import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
@@ -131,7 +129,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private BookFilterPresetManager bookFilterPresetManager = null;
 	private SignalExportPresetManager signalExportPresetManager = null;
 	private FFTSampleFilterPresetManager fftFilterPresetManager = null;
-	private OpenBCIModulePresetManager openBCIModulePresetManager = null;
 	private ExperimentsSettingsPresetManager experimentsSettingsPresetManager = null;
 
 	/**
@@ -788,17 +785,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
 		}
 
-		openBCIModulePresetManager = new OpenBCIModulePresetManager();
-		openBCIModulePresetManager.setProfileDir(profileDir);
-
-		try {
-			openBCIModulePresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("OpenBCI modules preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read OpenBCI modules configuration - will use defaults", ex);
-		}
-
 		experimentsSettingsPresetManager = new ExperimentsSettingsPresetManager();
 		experimentsSettingsPresetManager.setProfileDir(profileDir);
 		try {
@@ -984,7 +970,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
 		elementManager.setSignalExportPresetManager(signalExportPresetManager);
 		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
-		elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
 		elementManager.setExperimentsSettingsPresetManager(experimentsSettingsPresetManager);
 		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
 		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
@@ -1098,12 +1083,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 
 		try {
-			openBCIModulePresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write OpenBCI modules configuration", ex);
-		}
-
-		try {
 			experimentsSettingsPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write new experiments settings presets to file", ex);
@@ -1135,8 +1114,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		} catch (Exception ex) {
 			logger.error("Failed to write MP5 executor manager configuration", ex);
 		}
-
-		ProcessManager.getInstance().killAll();
 
 		Method[] methods = methodManager.getMethods();
 		ApplicationMethodDescriptor descriptor;
