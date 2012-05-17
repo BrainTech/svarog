@@ -12,12 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.signalml.app.config.preset.BookFilterPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
-import org.signalml.app.config.preset.SignalExportPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.BookFilterPresetManager;
+import org.signalml.app.config.preset.managers.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.managers.SignalExportPresetManager;
+import org.signalml.app.config.preset.managers.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.book.filter.AbstractAtomFilter;

@@ -1,8 +1,10 @@
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegElectrode;

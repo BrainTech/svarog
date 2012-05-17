@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.signalml.app.config.AbstractXMLConfiguration;
+import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 

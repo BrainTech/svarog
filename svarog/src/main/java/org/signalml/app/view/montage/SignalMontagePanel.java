@@ -10,12 +10,12 @@ import java.net.URL;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
+import org.signalml.app.config.preset.managers.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.managers.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;

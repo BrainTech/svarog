@@ -1,4 +1,4 @@
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;

@@ -1,4 +1,4 @@
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import java.io.File;
 import java.io.FileNotFoundException;

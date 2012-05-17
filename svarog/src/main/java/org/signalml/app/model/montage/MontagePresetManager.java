@@ -6,9 +6,9 @@ package org.signalml.app.model.montage;
 
 import java.io.File;
 import java.io.IOException;
-import org.signalml.app.config.preset.AbstractPresetManager;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.managers.AbstractPresetManager;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;

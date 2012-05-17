@@ -1,47 +1,47 @@
-/* FFTSignalFilterPresetManager.java created 2008-01-26
+/* BookFilterPresetManager.java created 2008-03-04
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import org.signalml.app.util.XMLUtils;
-import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.book.filter.AtomFilterChain;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** FFTSignalFilterPresetManager
+/** BookFilterPresetManager
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-@XStreamAlias("fftfilters")
-public class FFTSampleFilterPresetManager extends AbstractPresetManager {
+@XStreamAlias("bookfilters")
+public class BookFilterPresetManager extends AbstractPresetManager {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getStandardFilename() {
-		return "fft-filters.xml";
+		return "bookfilters.xml";
 	}
 
 	@Override
 	public Class<?> getPresetClass() {
-		return FFTSampleFilter.class;
+		return AtomFilterChain.class;
 	}
 
 	@Override
 	public XStream getStreamer() {
 		if (streamer == null) {
-			streamer = createFFTSampleFilterPresetStreamer();
+			streamer = createBookFilterPresetStreamer();
 		}
 		return streamer;
 	}
 
-	private XStream createFFTSampleFilterPresetStreamer() {
+	private XStream createBookFilterPresetStreamer() {
 		XStream streamer = XMLUtils.getDefaultStreamer();
-		XMLUtils.configureStreamerForFFTSampleFilter(streamer);
-		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
+		XMLUtils.configureStreamerForBookFilter(streamer);
+		streamer.setMode(XStream.ID_REFERENCES);
 
 		return streamer;
 	}

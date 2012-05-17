@@ -3,7 +3,7 @@ package org.signalml.app.view.document.opensignal.elements;
 import java.awt.BorderLayout;
 
 import org.signalml.app.SvarogApplication;
-import org.signalml.app.config.preset.ExperimentsSettingsPresetManager;
+import org.signalml.app.config.preset.managers.ExperimentsSettingsPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;

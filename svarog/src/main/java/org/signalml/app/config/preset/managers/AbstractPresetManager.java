@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,10 @@ import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.AbstractXMLConfiguration;
+import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.config.preset.PresetManagerEvent;
+import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.util.XMLUtils;
 
 /** AbstractPresetManager

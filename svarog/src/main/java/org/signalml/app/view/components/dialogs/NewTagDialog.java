@@ -13,7 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.NewTagDescriptor;

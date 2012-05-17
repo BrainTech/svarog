@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config;
+package org.signalml.app.config.workspace;
 
 import java.io.IOException;
 import java.util.Date;

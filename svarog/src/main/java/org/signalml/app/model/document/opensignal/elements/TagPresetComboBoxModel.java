@@ -7,7 +7,7 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
 
 /**
  * A model for handling a combo box containing the list of available tag style

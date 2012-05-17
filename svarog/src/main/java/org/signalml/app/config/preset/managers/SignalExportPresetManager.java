@@ -1,47 +1,47 @@
-/* BookFilterPresetManager.java created 2008-03-04
+/* SignalExportPresetManager.java created 2008-01-26
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.XMLUtils;
-import org.signalml.domain.book.filter.AtomFilterChain;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** BookFilterPresetManager
+/** SignalExportPresetManager
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-@XStreamAlias("bookfilters")
-public class BookFilterPresetManager extends AbstractPresetManager {
+@XStreamAlias("signalexports")
+public class SignalExportPresetManager extends AbstractPresetManager {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getStandardFilename() {
-		return "bookfilters.xml";
+		return "signal-export.xml";
 	}
 
 	@Override
 	public Class<?> getPresetClass() {
-		return AtomFilterChain.class;
+		return SignalExportDescriptor.class;
 	}
 
 	@Override
 	public XStream getStreamer() {
 		if (streamer == null) {
-			streamer = createBookFilterPresetStreamer();
+			streamer = createSignalExportPresetStreamer();
 		}
 		return streamer;
 	}
 
-	private XStream createBookFilterPresetStreamer() {
+	private XStream createSignalExportPresetStreamer() {
 		XStream streamer = XMLUtils.getDefaultStreamer();
-		XMLUtils.configureStreamerForBookFilter(streamer);
-		streamer.setMode(XStream.ID_REFERENCES);
+		XMLUtils.configureStreamerForSignalExport(streamer);
+		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
 
 		return streamer;
 	}

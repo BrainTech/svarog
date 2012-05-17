@@ -1,7 +1,7 @@
 /* TimeDomainSampleFiltersConfiguration.java created 2010-11-25
  *
  */
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;

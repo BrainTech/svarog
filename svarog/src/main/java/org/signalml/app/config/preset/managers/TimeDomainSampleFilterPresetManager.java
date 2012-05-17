@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;

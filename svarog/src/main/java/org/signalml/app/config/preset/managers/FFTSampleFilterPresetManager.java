@@ -1,46 +1,46 @@
-/* SignalExportPresetManager.java created 2008-01-26
+/* FFTSignalFilterPresetManager.java created 2008-01-26
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
-import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.XMLUtils;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-/** SignalExportPresetManager
+/** FFTSignalFilterPresetManager
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-@XStreamAlias("signalexports")
-public class SignalExportPresetManager extends AbstractPresetManager {
+@XStreamAlias("fftfilters")
+public class FFTSampleFilterPresetManager extends AbstractPresetManager {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String getStandardFilename() {
-		return "signal-export.xml";
+		return "fft-filters.xml";
 	}
 
 	@Override
 	public Class<?> getPresetClass() {
-		return SignalExportDescriptor.class;
+		return FFTSampleFilter.class;
 	}
 
 	@Override
 	public XStream getStreamer() {
 		if (streamer == null) {
-			streamer = createSignalExportPresetStreamer();
+			streamer = createFFTSampleFilterPresetStreamer();
 		}
 		return streamer;
 	}
 
-	private XStream createSignalExportPresetStreamer() {
+	private XStream createFFTSampleFilterPresetStreamer() {
 		XStream streamer = XMLUtils.getDefaultStreamer();
-		XMLUtils.configureStreamerForSignalExport(streamer);
+		XMLUtils.configureStreamerForFFTSampleFilter(streamer);
 		streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
 
 		return streamer;

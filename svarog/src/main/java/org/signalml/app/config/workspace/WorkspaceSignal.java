@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config;
+package org.signalml.app.config.workspace;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +37,9 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
+
+import org.signalml.app.config.ZoomSignalSettings;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.domain.montage.system.EegSystem;
 
 /** WorkspaceSignal

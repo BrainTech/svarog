@@ -2,10 +2,12 @@
  *
  */
 
-package org.signalml.app.config.preset;
+package org.signalml.app.config.preset.managers;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.TagStyle;

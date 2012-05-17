@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config;
+package org.signalml.app.config.workspace;
 
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.GrayscaleMapPalette;

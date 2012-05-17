@@ -36,7 +36,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.montage.MontageFilterExclusionTableModel;
 import org.signalml.app.model.montage.MontageFiltersTableModel;

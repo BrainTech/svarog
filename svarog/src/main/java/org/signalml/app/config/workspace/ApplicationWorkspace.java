@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.config;
+package org.signalml.app.config.workspace;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -25,7 +25,9 @@ import org.signalml.plugin.export.signal.Document;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
+
+import org.signalml.app.config.AbstractXMLConfiguration;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 
 /** ApplicationWorkspace
  *
