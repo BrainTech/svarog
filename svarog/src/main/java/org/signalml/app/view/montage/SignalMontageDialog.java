@@ -64,7 +64,7 @@ public class SignalMontageDialog extends AbstractDialog {
 
 	public SignalMontagePanel getSignalMontagePanel() {
 		if (signalMontagePanel == null)
-			signalMontagePanel = new SignalMontagePanel(viewerElementManager);
+			signalMontagePanel = new SignalMontagePanel(viewerElementManager.getFileChooser());
 		return signalMontagePanel;
 	}
 

@@ -46,7 +46,7 @@ public class PresetSelectionPanel extends AbstractPanel {
 
 	public CompactPresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null) {
-			ExperimentsSettingsPresetManager experimentsSettingsPresetManager = SvarogApplication.getSharedInstance().getViewerElementManager().getExperimentsSettingsPresetManager();
+			ExperimentsSettingsPresetManager experimentsSettingsPresetManager = SvarogApplication.getManagerOfPresetsManagers().getExperimentsSettingsPresetManager();
 			presetControlsPanel = new CompactPresetControlsPanel(experimentsSettingsPresetManager, openSignalWizardStepOnePanel);
 		}
 		return presetControlsPanel;

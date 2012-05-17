@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetComboBoxModel;
@@ -67,7 +68,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
-		eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
+		eegSystemsPresetManager = SvarogApplication.getManagerOfPresetsManagers().getEegSystemsPresetManager();
 		createInterface();
 	}
 
@@ -177,7 +178,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	public JComboBox getTagPresetComboBox() {
 		if (tagPresetComboBox == null) {
 			TagPresetComboBoxModel model = new TagPresetComboBoxModel(
-				viewerElementManager.getStyledTagSetPresetManager());
+					SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager());
 			tagPresetComboBox = new JComboBox(model);
 			tagPresetComboBox.setSelectedIndex(0);
 		}
@@ -267,7 +268,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			if (StyledTagSetPresetManager.EMPTY_PRESET_NAME.equals(tagStylesName)) {
 				getTagPresetComboBox().setSelectedIndex(0);
 			} else {
-				StyledTagSetPresetManager styledTagSetPresetManager = viewerElementManager.getStyledTagSetPresetManager();
+				StyledTagSetPresetManager styledTagSetPresetManager = SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager();
 				Preset preset = styledTagSetPresetManager.getPresetByName(tagStylesName);
 
 				if (preset != null)

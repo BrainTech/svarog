@@ -15,11 +15,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
@@ -29,9 +30,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.plugin.export.SignalMLException;
-
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.Errors;
 
 /**
  * This class represents a dialog for {@link TimeDomainSampleFilter
@@ -84,8 +83,8 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	 * @param isModal true if this dialog should block top-level windows,
 	 * false otherwise
 	 */
-	public EditTimeDomainSampleFilterDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+	public EditTimeDomainSampleFilterDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getTimeDomainSampleFilterPresetManager(), w, isModal);
 	}
 
 	/**

@@ -471,7 +471,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 	private void restoreWorkspace() {
 
 		ApplicationWorkspace workspace = new ApplicationWorkspace();
-		workspace.setEegSystemsPresetManager(elementManager.getEegSystemsPresetManager());
+		workspace.setEegSystemsPresetManager(SvarogApplication.getManagerOfPresetsManagers().getEegSystemsPresetManager());
 		workspace.setProfileDir(elementManager.getProfileDir());
 		workspace.maybeReadFromPersistence(
 			"Seems like workspace doesn't exist - workspace will not be restored",

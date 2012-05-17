@@ -113,7 +113,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 	protected SignalMontagePanel getSignalMontagePanel() {
 		if (stepTwoPanel == null) {
-			stepTwoPanel = new SignalMontagePanel(viewerElementManager);
+			stepTwoPanel = new SignalMontagePanel(viewerElementManager.getFileChooser());
 		}
 		return stepTwoPanel;
 	}
