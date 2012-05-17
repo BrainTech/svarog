@@ -21,7 +21,6 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
  * This class represents a panel for selecting channels which will be monitored.
@@ -68,12 +67,16 @@ public class ChannelSelectPanel extends JPanel {
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
+		add(createButtonsPanel(), BorderLayout.SOUTH);
+
+	}
+
+	protected JPanel createButtonsPanel() {
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		buttonPanel.add(getSelectAllButton());
 		buttonPanel.add(getClearSelectionButton());
 
-		add(buttonPanel, BorderLayout.SOUTH);
-
+		return buttonPanel;
 	}
 
 	/**

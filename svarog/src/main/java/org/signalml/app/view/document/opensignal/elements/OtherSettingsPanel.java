@@ -5,10 +5,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.util.List;
 
-import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -24,8 +21,6 @@ import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.StyledTagSetPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.FileTypeComboBoxModel;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
@@ -35,7 +30,6 @@ import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 
 public class OtherSettingsPanel extends AbstractPanel {
@@ -44,9 +38,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	private ViewerElementManager viewerElementManager;
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
-
-	private JButton editGainAndOffsetButton;
-	private EditGainAndOffsetDialog editGainAndOffsetDialog;
 
 	private JButton registerSignalMLCodecButton;
 
@@ -64,11 +55,11 @@ public class OtherSettingsPanel extends AbstractPanel {
 	/**
 	 * The {@link JComboBox} for EEG system selection.
 	 */
-	private JComboBox presetComboBox;
+	private JComboBox eegSystemComboBox;
 	/**
-	 * The model for the {@link EegSystemSelectionPanel#presetComboBox}.
+	 * The model for the {@link EegSystemSelectionPanel#eegSystemComboBox}.
 	 */
-	private PresetComboBoxModel eegSystemsPresetComboBoxModel;
+	private PresetComboBoxModel eegSystemsComboBoxModel;
 
 	private JComboBox fileTypeComboBox;
 
@@ -109,7 +100,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			layout.createParallelGroup()
 			.addComponent(getTagPresetComboBox())
 			.addComponent(getFileTypeComboBox())
-			.addComponent(getEegSystemsPresetComboBox())
+			.addComponent(getEegSystemComboBox())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -131,7 +122,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.BASELINE)
 			.addComponent(eegSystemsLabel)
-			.addComponent(getEegSystemsPresetComboBox())
+			.addComponent(getEegSystemComboBox())
 		);
 
 		layout.setVerticalGroup(vGroup);
@@ -142,7 +133,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 	protected JPanel createButtonsPanel() {
 		JPanel buttonsPanel = new JPanel(new FlowLayout());
 
-		buttonsPanel.add(getEditGainAndOffsetButton());
 		buttonsPanel.add(getRegisterSignalMLCodecButton());
 
 		return buttonsPanel;
@@ -191,12 +181,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 *
 	 * @return the combo box for EEG system selection
 	 */
-	protected JComboBox getEegSystemsPresetComboBox() {
-		if (presetComboBox == null) {
-			presetComboBox = new JComboBox(getPresetComboBoxModel());
-			presetComboBox.setPreferredSize(new Dimension(300, 20));
+	protected JComboBox getEegSystemComboBox() {
+		if (eegSystemComboBox == null) {
+			eegSystemComboBox = new JComboBox(getPresetComboBoxModel());
+			eegSystemComboBox.setPreferredSize(new Dimension(300, 20));
 		}
-		return presetComboBox;
+		return eegSystemComboBox;
 	}
 
 	/**
@@ -206,50 +196,14 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 * @return the ComboBoxModel for EEG system selection
 	 */
 	protected PresetComboBoxModel getPresetComboBoxModel() {
-		if (eegSystemsPresetComboBoxModel == null) {
-			eegSystemsPresetComboBoxModel = new PresetComboBoxModel(null,eegSystemsPresetManager);
-			Object firstElement = eegSystemsPresetComboBoxModel.getElementAt(0);
+		if (eegSystemsComboBoxModel == null) {
+			eegSystemsComboBoxModel = new PresetComboBoxModel(null,eegSystemsPresetManager);
+			Object firstElement = eegSystemsComboBoxModel.getElementAt(0);
 			if (firstElement != null) {
-				eegSystemsPresetComboBoxModel.setSelectedItem(firstElement);
+				eegSystemsComboBoxModel.setSelectedItem(firstElement);
 			}
 		}
-		return eegSystemsPresetComboBoxModel;
-	}
-
-	/**
-	 * Returns the edit gain and offset button.
-	 *
-	 * @return the edit gain and offset button
-	 */
-	protected JButton getEditGainAndOffsetButton() {
-
-		if (editGainAndOffsetButton == null) {
-			editGainAndOffsetButton = new JButton(new AbstractAction() {
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					fillSignalParametersGainAndOffset(openSignalDescriptor);
-					getEditGainAndOffsetDialog().showDialog(openSignalDescriptor, true);
-				}
-			});
-
-			editGainAndOffsetButton.setText(_("Edit gain and offset"));
-			editGainAndOffsetButton.setEnabled(false);
-		}
-		return editGainAndOffsetButton;
-	}
-
-	/**
-	 * Returns the edit gain and offset dialog
-	 *
-	 * @return the edit gain and offset dialog
-	 */
-	protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
-
-		if (editGainAndOffsetDialog == null) {
-			editGainAndOffsetDialog = new EditGainAndOffsetDialog(null, true);
-		}
-		return editGainAndOffsetDialog;
+		return eegSystemsComboBoxModel;
 	}
 
 	/**
@@ -258,7 +212,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 * @return the selected EEG system
 	 */
 	public EegSystem getSelectedEegSystem() {
-		return (EegSystem) eegSystemsPresetComboBoxModel.getSelectedItem();
+		return (EegSystem) eegSystemsComboBoxModel.getSelectedItem();
 	}
 
 	/**
@@ -284,12 +238,11 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 *            the EEG system to be selected
 	 */
 	public void setEegSystem(EegSystem eegSystem) {
-		eegSystemsPresetComboBoxModel.setSelectedItem(eegSystem);
+		eegSystemsComboBoxModel.setSelectedItem(eegSystem);
 	}
 
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		this.openSignalDescriptor = openSignalDescriptor;
-		setEnabledAsNeeded(openSignalDescriptor);
 
 		if (openSignalDescriptor == null)
 			return;
@@ -321,27 +274,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 			experimentDescriptor.setTagStyles(selectedStylesPreset == null ? null : selectedStylesPreset.clone());
 		}
 		descriptor.setEegSystem(getSelectedEegSystem());
-		fillSignalParametersGainAndOffset(openSignalDescriptor);
-	}
-
-	protected void fillSignalParametersGainAndOffset(AbstractOpenSignalDescriptor openSignalDescriptor) {
-		if (openSignalDescriptor instanceof ExperimentDescriptor) {
-			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
-			List<AmplifierChannel> channels = experimentDescriptor
-											  .getAmplifier().getSelectedChannels();
-
-			float[] gain = new float[channels.size()];
-			float[] offset = new float[channels.size()];
-
-			int i = 0;
-			for (AmplifierChannel channel : channels) {
-				gain[i] = channel.getCalibrationGain();
-				offset[i] = channel.getCalibrationOffset();
-				i++;
-			}
-			experimentDescriptor.getSignalParameters().setCalibrationGain(gain);
-			experimentDescriptor.getSignalParameters().setCalibrationOffset(offset);
-		}
 	}
 
 	public void preparePanelForSignalSource(SignalSource selectedSignalSource) {
@@ -353,25 +285,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 		fileTypeLabel.setVisible(!isMonitor);
 		fileTypeComboBox.setVisible(!isMonitor);
-	}
-
-	protected void setEnabledAsNeeded(AbstractOpenSignalDescriptor openSignalDescriptor) {
-
-		if (openSignalDescriptor == null) {
-			getEditGainAndOffsetButton().setEnabled(false);
-			return;
-		}
-
-		if (openSignalDescriptor instanceof RawSignalDescriptor) {
-			getEditGainAndOffsetButton().setEnabled(true);
-		}
-		else {
-			if (openSignalDescriptor instanceof SignalMLDescriptor)
-				getEditGainAndOffsetButton().setEnabled(false);
-			else
-				getEditGainAndOffsetButton().setEnabled(true);
-		}
-
 	}
 
 }

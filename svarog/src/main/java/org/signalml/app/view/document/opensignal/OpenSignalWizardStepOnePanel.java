@@ -19,7 +19,7 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.components.presets.PresetableView;
-import org.signalml.app.view.document.opensignal.elements.ChannelSelectPanel;
+import org.signalml.app.view.document.opensignal.elements.ChannelSelectWithGainEditionPanel;
 import org.signalml.app.view.document.opensignal.elements.OtherSettingsPanel;
 import org.signalml.app.view.document.opensignal.elements.PresetSelectionPanel;
 import org.signalml.app.view.document.opensignal.elements.SignalParametersPanel;
@@ -34,7 +34,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	private ViewerElementManager viewerElementManager;
 
 	private SignalParametersPanel signalParametersPanel;
-	private ChannelSelectPanel channelSelectPanel;
+	private ChannelSelectWithGainEditionPanel channelSelectPanel;
 
 	private OtherSettingsPanel otherSettingsPanel;
 	private PresetSelectionPanel presetSelectionPanel;
@@ -65,7 +65,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	protected JPanel createRightPanel() {
 		JPanel rightPanel = new JPanel(new BorderLayout());
 
-		channelSelectPanel = new ChannelSelectPanel();
+		channelSelectPanel = new ChannelSelectWithGainEditionPanel();
 		rightPanel.add(channelSelectPanel, BorderLayout.CENTER);
 
 		JPanel southPanel = new JPanel();
