@@ -69,7 +69,6 @@ import org.signalml.app.util.MatlabUtil;
 import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.app.util.logging.DebugHelpers;
-import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.ProfilePathDialog;
 import org.signalml.app.view.components.dialogs.SplashScreen;
 import org.signalml.app.view.workspace.ViewerElementManager;
@@ -460,25 +459,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private void initializeFirstTime(final GeneralConfiguration suggested) {
 
 		if (locale == null) {
-			try {
-				SwingUtilities.invokeAndWait(new Runnable() {
-
-					@Override
-					public void run() {
-						locale = OptionPane.showLanguageOption();
-					}
-				});
-			} catch (InterruptedException ex) {
-				logger.error("Language choice error", ex);
-				System.exit(1);
-			} catch (InvocationTargetException ex) {
-				logger.error("Language choice error", ex);
-				System.exit(1);
-			}
-		}
-		if (locale == null) {
-			logger.error("Language choice canceled");
-			System.exit(1);
+			locale = Locale.ENGLISH;
 		}
 
 		boolean ok = false;
