@@ -4,7 +4,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -43,6 +43,8 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
+	private JLabel registerCodecsLabel = new JLabel(_("Manage SignalML codecs"));
+	private JPanel registerSignalMLCodecPanel;
 	/**
 	 * {@link JComboBox} that displays the list of available presets.
 	 */
@@ -74,7 +76,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 		setLayout(new BorderLayout());
 
 		add(createComboBoxesPanel(), BorderLayout.CENTER);
-		add(createButtonsPanel(), BorderLayout.SOUTH);
 	}
 
 	protected JPanel createComboBoxesPanel() {
@@ -94,6 +95,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(tagStylesLabel)
 			.addComponent(fileTypeLabel)
 			.addComponent(eegSystemsLabel)
+			.addComponent(registerCodecsLabel)
 		);
 
 		hGroup.addGroup(
@@ -101,6 +103,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(getTagPresetComboBox())
 			.addComponent(getFileTypeComboBox())
 			.addComponent(getEegSystemComboBox())
+			.addComponent(getRegisterSignalMLCodecPanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -125,17 +128,23 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(getEegSystemComboBox())
 		);
 
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(registerCodecsLabel)
+				.addComponent(getRegisterSignalMLCodecPanel())
+			);
+
 		layout.setVerticalGroup(vGroup);
 
 		return comboBoxesPanel;
 	}
 
-	protected JPanel createButtonsPanel() {
-		JPanel buttonsPanel = new JPanel(new FlowLayout());
-
-		buttonsPanel.add(getRegisterSignalMLCodecButton());
-
-		return buttonsPanel;
+	protected JPanel getRegisterSignalMLCodecPanel() {
+		if (registerSignalMLCodecPanel == null) {
+			registerSignalMLCodecPanel = new JPanel(new GridLayout(1, 1));
+			registerSignalMLCodecPanel.add(getRegisterSignalMLCodecButton());
+		}
+		return registerSignalMLCodecPanel;
 	}
 
 	public JButton getRegisterSignalMLCodecButton() {
@@ -146,7 +155,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			registerCodecAction.initializeAll();
 
 			registerSignalMLCodecButton = new JButton(registerCodecAction);
-			registerSignalMLCodecButton.setText(_("Register SignalML codec"));
+			registerSignalMLCodecButton.setText(_("Register new ..."));
 		}
 		return registerSignalMLCodecButton;
 	}
@@ -281,7 +290,9 @@ public class OtherSettingsPanel extends AbstractPanel {
 		getTagPresetComboBox().setVisible(isMonitor);
 		tagStylesLabel.setVisible(isMonitor);
 
+		getRegisterSignalMLCodecPanel().setVisible(!isMonitor);
 		getRegisterSignalMLCodecButton().setVisible(!isMonitor);
+		registerCodecsLabel.setVisible(!isMonitor);
 
 		fileTypeLabel.setVisible(!isMonitor);
 		fileTypeComboBox.setVisible(!isMonitor);
