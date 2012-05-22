@@ -76,7 +76,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private WignerMapPalette palette;
 	private WignerMapScaleType scaleType;
 
-	private boolean signalAntialiased;
+	private boolean signalInBookAntialiased;
 	private boolean originalSignalVisible;
 	private boolean fullReconstructionVisible;
 	private boolean reconstructionVisible;
@@ -424,12 +424,12 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.scaleType = scaleType;
 	}
 
-	public boolean isSignalAntialiased() {
-		return signalAntialiased;
+	public boolean isSignalInBookAntialiased() {
+		return signalInBookAntialiased;
 	}
 
-	public void setSignalAntialiased(boolean signalAntialiased) {
-		this.signalAntialiased = signalAntialiased;
+	public void setSignalInBookAntialiased(boolean signalAntialiased) {
+		this.signalInBookAntialiased = signalAntialiased;
 	}
 
 	public boolean isOriginalSignalVisible() {

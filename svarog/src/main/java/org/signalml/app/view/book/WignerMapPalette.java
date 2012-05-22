@@ -1,21 +1,39 @@
-/* WigneMapPalette.java created 2008-03-03
- *
- */
-
 package org.signalml.app.view.book;
 
 import javax.swing.Icon;
 
-import org.signalml.app.view.I18nMessage;
+import pl.edu.fuw.MP.Core.Book;
+import pl.edu.fuw.MP.WignerMap.WignerMap;
 
-/** WigneMapPalette
+/**
+ * Enum holding all types of {@link IWignerMapPalette palettes} that
+ * can be used for drawing a {@link WignerMap} for a {@link Book}.
  *
- *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Piotr Szachewicz
  */
-public interface WignerMapPalette extends I18nMessage {
+public enum WignerMapPalette implements IWignerMapPalette {
+	RAINBOW(new RainbowMapPalette()),
+	GRAYSCALE(new GrayscaleMapPalette());
 
-	Icon getIcon();
+	private IWignerMapPalette implementer;
 
-	int[] getPalette();
+	private WignerMapPalette(IWignerMapPalette palette) {
+		this.implementer = palette;
+	}
+
+	@Override
+	public String i18n() {
+		return implementer.i18n();
+	}
+
+	@Override
+	public Icon getIcon() {
+		return implementer.getIcon();
+	}
+
+	@Override
+	public int[] getPalette() {
+		return implementer.getPalette();
+	}
+
 }

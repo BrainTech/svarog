@@ -272,4 +272,5 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 
 		}
 	}
+
 }

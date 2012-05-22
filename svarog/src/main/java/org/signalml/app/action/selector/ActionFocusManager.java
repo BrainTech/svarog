@@ -74,10 +74,12 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 	public void setActiveDocument(Document document) {
 		if (document != activeDocument) {
 			if (activeDocument != null) {
+				activeDocument.setActive(false);
 				activeDocument.removePropertyChangeListener(this);
 			}
 			activeDocument = document;
 			if (document != null) {
+				document.setActive(true);
 				document.addPropertyChangeListener(this);
 			}
 			afSupport.fireActionFocusChanged();

@@ -25,13 +25,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.domain.book.SegmentReconstructionProvider;
@@ -191,25 +190,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		setFocusable(true);
 
-		ApplicationConfiguration config = view.getApplicationConfig();
-
-		signalAntialiased = config.isSignalAntialiased();
-		reconstructionVisible = config.isReconstructionVisible();
-		fullReconstructionVisible = config.isFullReconstructionVisible();
-		originalSignalVisible = config.isSignalAntialiased();
-		legendVisible = config.isLegendVisible();
-		scaleVisible = config.isScaleVisible();
-		axesVisible = config.isAxesVisible();
-
-		mapAspectRatioUp = config.getMapAspectRatioUp();
-		mapAspectRatioDown = config.getMapAspectRatioDown();
-
-		mapAspectRatio = ((double) mapAspectRatioUp) / ((double) mapAspectRatioDown);
-
-		reconstructionHeight = config.getReconstructionHeight();
-
-		palette = config.getPalette();
-		setScaleType(config.getScaleType());
 		imageProvider = new WignerMapImageProvider();
 
 		addMouseListener(new MouseAdapter() {
@@ -268,6 +248,31 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		});
 
+	}
+
+	/**
+	 * Loads all plot settings from the {@link ApplicationConfiguration}.
+	 */
+	public void loadSettingsFromApplicationConfiguration() {
+		ApplicationConfiguration config = SvarogApplication.getApplicationConfiguration();
+
+		signalAntialiased = config.isSignalInBookAntialiased();
+		reconstructionVisible = config.isReconstructionVisible();
+		fullReconstructionVisible = config.isFullReconstructionVisible();
+		originalSignalVisible = config.isOriginalSignalVisible();
+		legendVisible = config.isLegendVisible();
+		scaleVisible = config.isScaleVisible();
+		axesVisible = config.isAxesVisible();
+		atomToolTipsVisible = config.isAtomToolTipsVisible();
+
+		mapAspectRatioUp = config.getMapAspectRatioUp();
+		mapAspectRatioDown = config.getMapAspectRatioDown();
+
+		mapAspectRatio = ((double) mapAspectRatioUp) / ((double) mapAspectRatioDown);
+
+		setReconstructionHeight(config.getReconstructionHeight());
+		setPalette(config.getPalette());
+		setScaleType(config.getScaleType());
 	}
 
 	@Override

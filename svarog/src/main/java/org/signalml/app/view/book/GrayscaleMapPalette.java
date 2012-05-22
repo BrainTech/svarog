@@ -16,12 +16,12 @@ import org.signalml.util.Util;
  *
  * @author Dobieslaw Ircha
  */
-public class GrayscaleMapPalette implements WignerMapPalette {
+public class GrayscaleMapPalette implements IWignerMapPalette {
 
 	private static GrayscaleMapPalette sharedInstance = null;
 	private transient int[] palette;
 
-	private GrayscaleMapPalette() {
+	public GrayscaleMapPalette() {
 
 		int i;
 		palette = new int[256];
@@ -65,4 +65,5 @@ public class GrayscaleMapPalette implements WignerMapPalette {
 	public String i18n() {
 		return _("Grayscale");
 	}
+
 }
