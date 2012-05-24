@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
-import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class SignalRecorderWorker {
 	/**
 	 * Array to store received samples in.
 	 */
-	private List<double[]> sampleList;
+	private List<float[]> sampleList;
 
 	/**
 	 * The stream to save signal to.
@@ -116,7 +116,7 @@ public class SignalRecorderWorker {
 		this.dataFilePath = dataPath;
 		this.metadataFilePath = metadataPath;
 
-		this.sampleList = new ArrayList<double[]>();
+		this.sampleList = new ArrayList<float[]>();
 		this.monitorDescriptor = experimentDescriptor;
 
 		this.backupFrequencyInMiliseconds = experimentDescriptor.getBackupFrequency() * 1000;
@@ -129,7 +129,7 @@ public class SignalRecorderWorker {
 
 		this.tagRecorder = null;
 
-		rawSignalDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
+		rawSignalDescriptor.setSampleType(RawSignalSampleType.FLOAT);
 		rawSignalDescriptor.setByteOrder(RawSignalByteOrder.LITTLE_ENDIAN);
 
 		logger.setLevel((Level) Level.INFO);
@@ -139,7 +139,7 @@ public class SignalRecorderWorker {
 	 * Adds samples to the list, and if it is time for a backup - saves them.
 	 * @param samples samples to be recorded
 	 */
-	public void offerChunk(double[] samples) {
+	public void offerChunk(float[] samples) {
 
 		synchronized (this) {
 
@@ -208,7 +208,7 @@ public class SignalRecorderWorker {
 		int position = 0;
 		for (int i = 0; i < chunkCount; i++) {
 
-			double[] chunk = sampleList.get(i);
+			float[] chunk = sampleList.get(i);
 			byte[] processedChunk = processChunk(chunk);
 
 			for (int j = 0; j < processedChunk.length; j++) {
@@ -228,12 +228,12 @@ public class SignalRecorderWorker {
 	 * @param chunk chunk to be saved
 	 * @return processed chunk
 	 */
-	private byte[] processChunk(double[] chunk) {
+	private byte[] processChunk(float[] chunk) {
 
 		byte[] byteBuffer = new byte[chunk.length * rawSignalDescriptor.getSampleType().getByteWidth()];
 
 		ByteBuffer bBuffer = ByteBuffer.wrap(byteBuffer).order(rawSignalDescriptor.getByteOrder().getByteOrder());
-		DoubleBuffer buf = bBuffer.asDoubleBuffer();
+		FloatBuffer buf = bBuffer.asFloatBuffer();
 
 		buf.clear();
 		buf.put(chunk, 0, chunk.length);

@@ -156,7 +156,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		for (int k=0; k<sampleVector.getSamplesCount(); k++) {
 			Sample sample = sampleVector.getSamples(k);
 
-			double[] newSamplesArray = new double[sample.getChannelsCount()];
+			float[] newSamplesArray = new float[sample.getChannelsCount()];
 			for (int i = 0; i < newSamplesArray.length; i++) {
 				newSamplesArray[i] = sample.getChannels(i);
 			}
@@ -220,7 +220,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 				sampleSource.lock();
 				tagSet.lock();
-				sampleSource.addSamples(data.getSampleValues());
+				sampleSource.addSamples(data.getDoubleSampleValues());
 				tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
 				sampleSource.unlock();
@@ -232,7 +232,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 				// sends chunks to the signal recorder
 				if (signalRecorderWorker != null) {
-					signalRecorderWorker.offerChunk(data.getSampleValues());
+					signalRecorderWorker.offerChunk(data.getFloatSampleValues());
 					if (!signalRecorderWorker.isFirstSampleTimestampSet())
 						signalRecorderWorker.setFirstSampleTimestamp(data.getSamplesTimestamp());
 				}
@@ -339,7 +339,9 @@ class NewSamplesData {
 	 * The values of the samples. The size of the array is equal to the number
 	 * of channels in the signal.
 	 */
-	private double[] sampleValues;
+	private float[] sampleValues;
+
+	private double[] doubleSampleValues;
 
 	/**
 	 * The timestamp of the samples represented by the sampleValues array.
@@ -351,16 +353,25 @@ class NewSamplesData {
 	 * @param sampleValues the values of the samples for each channel
 	 * @param samplesTimestamp the timestamp of the samples
 	 */
-	public NewSamplesData(double[] sampleValues, double samplesTimestamp) {
+	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
 		this.sampleValues = sampleValues;
+		doubleSampleValues = new double[sampleValues.length];
+		for (int i = 0; i < sampleValues.length; i++) {
+			doubleSampleValues[i] = sampleValues[i];
+			}
 		this.samplesTimestamp = samplesTimestamp;
 	}
 
-	public double[] getSampleValues() {
+	public float[] getFloatSampleValues() {
 		return sampleValues;
 	}
 
-	public void setSampleValues(double[] sampleValues) {
+	public double[] getDoubleSampleValues() {
+		return doubleSampleValues;
+	}
+
+
+	public void setSampleValues(float[] sampleValues) {
 		this.sampleValues = sampleValues;
 	}
 
