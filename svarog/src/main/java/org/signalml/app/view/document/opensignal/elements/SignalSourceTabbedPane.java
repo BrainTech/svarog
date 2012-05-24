@@ -104,7 +104,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		File file = fileChooserPanel.getSelectedFile();
 		String extension = Util.getFileExtension(file, false);
 
-		if (file == null) {
+		if (file == null || file.isDirectory()) {
 			openSignalDescriptor = null;
 			fireOpenSignalDescriptorChanged();
 			return;
