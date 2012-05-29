@@ -41,7 +41,6 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.WignerMapProvider;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.w3c.dom.css.Rect;
 
 /** BookPlot
  *
@@ -1175,14 +1174,15 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	}
 
 	private void paintWignerMapAndCatchOutOfMemory(Graphics2D gOrig, Rectangle mapToRepaint) {
-		if (!outOfMemoryErrorShown) {
-			try {
-				paintWignerMap(gOrig, mapToRepaint);
-			} catch(OutOfMemoryError error) {
+		try {
+			paintWignerMap(gOrig, mapToRepaint);
+			outOfMemoryErrorShown = false;
+		} catch (OutOfMemoryError error) {
+			if (!outOfMemoryErrorShown) {
 				error.printStackTrace();
-				Dialogs.showError(_("This book cannot be rendered because of lack of memory. Please close other books and reopen it."));
+				Dialogs.showError(_("This book cannot be rendered because of lack of memory. Please close other books to free some memory."));
 				outOfMemoryErrorShown = true;
-				//this error should be shown only once
+				// this error should be shown only once
 			}
 		}
 	}
