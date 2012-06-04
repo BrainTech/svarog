@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
-import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
+import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.samplesource.ChangeableMultichannelSampleSource;
@@ -79,7 +79,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	 * a given original sample source. Original source of samples is used to
 	 * detect changes in original source of signal (i.e. new samples) which
 	 * should be used to update the cached filtered signal which is stored
-	 * in {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}.
+	 * in {@link AbstractTimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}.
 	 * This is useful if the originalSource is an instance of
 	 * {@link ChangeableMultichannelSampleSource}.
 	 * @param source the source of samples
@@ -92,7 +92,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	/**
 	 * Updates the filtered signal cache in all
-	 * {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
+	 * {@link AbstractTimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
 	 * in the MultichannelSampleFilter.
 	 *
 	 * @param samplesAdded how many new samples were added to the originalSource
@@ -107,8 +107,8 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			it = (chains.get(i)).iterator();
 			while (it.hasNext()) {
 				eng = it.next();
-				if (eng instanceof TimeDomainSampleFilterEngine) {
-					((TimeDomainSampleFilterEngine)eng).updateCache(samplesAdded);
+				if (eng instanceof OnlineTimeDomainSampleFilterEngine) {
+					((OnlineTimeDomainSampleFilterEngine)eng).updateCache(samplesAdded);
 				}
 			}
 
@@ -118,7 +118,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	/**
 	 * Updates the filtered signal cache in all
-	 * {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
+	 * {@link AbstractTimeDomainSampleFilterEngine TimeDomainSampleFilterEngines}
 	 * in the MultichannelSampleFilter. Automatically detects the number of
 	 * new samples if originalSource is {@link ChangeableMultichannelSampleSource}
 	 * and runs the {@link #updateTimeDomainSampleFilterEnginesCache(int)}.
@@ -303,7 +303,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				try {
 					filterCoefficients = IIRDesigner.designDigitalFilter(tdsFilter);
 				} catch (BadFilterParametersException ex) {
-					java.util.logging.Logger.getLogger(TimeDomainSampleFilterEngine.class.getName()).log(Level.SEVERE, null, ex);
+					java.util.logging.Logger.getLogger(AbstractTimeDomainSampleFilterEngine.class.getName()).log(Level.SEVERE, null, ex);
 					continue;
 				}
 
@@ -317,8 +317,15 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 						else
 							input = chain.getLast();
 
-						TimeDomainSampleFilterEngine timeDomainSampleFilterEngine = new TimeDomainSampleFilterEngine(input, tdsFilter, filterCoefficients);
-						timeDomainSampleFilterEngine.setFiltfiltEnabled(montage.isFiltfiltEnabled());
+						AbstractTimeDomainSampleFilterEngine timeDomainSampleFilterEngine;
+
+						if (source instanceof ChangeableMultichannelSampleSource) {
+							timeDomainSampleFilterEngine = new OnlineTimeDomainSampleFilterEngine(input, tdsFilter, filterCoefficients);
+						} else {
+							timeDomainSampleFilterEngine = new OfflineTimeDomainSampleFilterEngine(input, tdsFilter, filterCoefficients);
+							((OfflineTimeDomainSampleFilterEngine)timeDomainSampleFilterEngine).setFiltfiltEnabled(montage.isFiltfiltEnabled());
+						}
+
 						addFilter(timeDomainSampleFilterEngine, e);
 
 					}

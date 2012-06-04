@@ -3,12 +3,12 @@
  */
 package org.signalml.domain.signal.filter;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import java.lang.Math.*;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceMontage;
@@ -16,8 +16,6 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.MultichannelSampleFilter;
-import org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
@@ -78,7 +76,7 @@ public class MultichannelSampleFilterTest {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
 				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
 		definition.setSamplingFrequency(128.0);
-		TimeDomainSampleFilterEngine filterEngine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
+		AbstractTimeDomainSampleFilterEngine filterEngine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
 		int i, j;
 
@@ -99,7 +97,7 @@ public class MultichannelSampleFilterTest {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
 				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
 		definition.setSamplingFrequency(128.0);
-		TimeDomainSampleFilterEngine filterEngine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
+		AbstractTimeDomainSampleFilterEngine filterEngine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
 		int i, j;
 
