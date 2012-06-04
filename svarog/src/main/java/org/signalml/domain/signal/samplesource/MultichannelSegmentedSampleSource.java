@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
 
 import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;
 

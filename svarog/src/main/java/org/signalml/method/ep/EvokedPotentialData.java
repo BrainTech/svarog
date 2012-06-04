@@ -6,7 +6,7 @@ package org.signalml.method.ep;
 
 import java.io.Serializable;
 
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialData

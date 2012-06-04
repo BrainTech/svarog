@@ -9,7 +9,7 @@ import static junit.framework.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.signal.MultichannelSampleBuffer;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.test.Util;
 
 /** MultichannelSampleBufferTest

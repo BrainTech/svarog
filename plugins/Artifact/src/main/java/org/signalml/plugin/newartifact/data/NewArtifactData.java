@@ -6,7 +6,7 @@ package org.signalml.plugin.newartifact.data;
 
 import java.io.File;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.method.AbstractData;
 import org.springframework.validation.Errors;
 

@@ -11,7 +11,7 @@ import java.nio.channels.FileLock;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;

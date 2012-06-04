@@ -1,6 +1,6 @@
 package org.signalml.plugin.newstager.data;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.method.AbstractData;
 import org.springframework.validation.Errors;
 

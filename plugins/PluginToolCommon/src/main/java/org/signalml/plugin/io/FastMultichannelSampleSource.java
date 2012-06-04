@@ -4,7 +4,7 @@ import java.beans.PropertyChangeListener;
 
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 public class FastMultichannelSampleSource implements MultichannelSampleSource {
 

@@ -6,6 +6,8 @@ package org.signalml.domain.signal;
 
 import org.signalml.app.document.MRUDEntry;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

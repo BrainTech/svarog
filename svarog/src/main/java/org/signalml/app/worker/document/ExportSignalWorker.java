@@ -12,9 +12,9 @@ import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
-import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /** ExportSignalWorker
  *

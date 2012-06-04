@@ -1,6 +1,6 @@
 package org.signalml.plugin.newstager.io;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.io.IPluginDataSourceReader;
 import org.signalml.plugin.newstager.data.NewStagerSignalReaderWorkerData;
 

@@ -11,8 +11,8 @@ import java.util.List;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalMLCodecSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.SignalMLCodecSampleSource;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

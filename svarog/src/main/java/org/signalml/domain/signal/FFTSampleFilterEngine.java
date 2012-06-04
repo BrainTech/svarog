@@ -10,6 +10,8 @@ import org.apache.commons.math.complex.Complex;
 
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.fft.FourierTransform;
 
 /**

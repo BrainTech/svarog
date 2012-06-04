@@ -4,6 +4,7 @@
 
 package org.signalml.domain.signal;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.signal.samplesource.SampleSource;
 
 /**
  * This abstract class represents the engine of a sample filter.

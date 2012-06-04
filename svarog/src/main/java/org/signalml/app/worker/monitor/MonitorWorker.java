@@ -14,7 +14,7 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
-import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
