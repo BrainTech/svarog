@@ -19,6 +19,12 @@ public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampl
 	protected static final Logger logger = Logger.getLogger(OfflineTimeDomainSampleFilterEngine.class);
 
 	/**
+	 * The signal offset of the first sample stored in the {@link AbstractTimeDomainSampleFilterEngine#filtered}
+	 * sample source. Allows to control the caching of the filtered data.
+	 */
+	private Integer filteredSignalOffset = null;
+
+	/**
 	 * True if filtfilt filtering should be used while
 	 * filtering offline data.
 	 */
@@ -52,8 +58,33 @@ public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampl
 	 */
 	@Override
 	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
-		filterOffline(signalOffset, count);
-		filtered.getSamples(target, 0, count, arrayOffset);
+		if (!isCached(signalOffset, count)) {
+			filterOffline(signalOffset, count);
+			filteredSignalOffset = signalOffset;
+			filtered.getSamples(target, 0, count, arrayOffset);
+		} else {
+			filtered.getSamples(target, signalOffset - filteredSignalOffset, count, arrayOffset);
+		}
+
+
+	}
+
+	/**
+	 * Checks whether the signal selection in question was already calculated previously
+	 * and is available in the filtered samples cache.
+	 * @param signalOffset the position (in time) in the signal starting
+	 * from which samples will be returned
+	 * @param count the number of samples to be returned
+	 * @return true if the samples are available in cache, false otherwise
+	 */
+	protected boolean isCached(int signalOffset, int count) {
+		if (filteredSignalOffset != null
+				&& filteredSignalOffset <= signalOffset
+				&& filteredSignalOffset + filtered.getSampleCount() >= signalOffset + count) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**

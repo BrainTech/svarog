@@ -319,7 +319,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 						AbstractTimeDomainSampleFilterEngine timeDomainSampleFilterEngine;
 
-						if (source instanceof ChangeableMultichannelSampleSource) {
+						if (originalSource instanceof ChangeableMultichannelSampleSource) {
 							timeDomainSampleFilterEngine = new OnlineTimeDomainSampleFilterEngine(input, tdsFilter, filterCoefficients);
 						} else {
 							timeDomainSampleFilterEngine = new OfflineTimeDomainSampleFilterEngine(input, tdsFilter, filterCoefficients);
