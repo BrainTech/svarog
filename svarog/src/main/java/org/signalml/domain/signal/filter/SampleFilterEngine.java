@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.filter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.signal.samplesource.SampleSource;
 

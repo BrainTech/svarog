@@ -1,7 +1,7 @@
 /* TimeDomainSampleFilterEngine.java created 2010-08-24
  *
  */
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.filter;
 
 import java.util.logging.Level;
 import org.apache.log4j.Logger;

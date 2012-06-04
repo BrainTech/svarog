@@ -4,7 +4,7 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.domain.signal.TimeDomainSampleFilterEngine;
+import org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine;
 
 /**
  * This class represents a calculator capable of calculating time domain responses

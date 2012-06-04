@@ -1,7 +1,7 @@
 /* TimeDomainSampleFilterEngineTest.java created 2010-08-28
  *
  */
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.filter;
 
 import static org.junit.Assert.*;
 
@@ -16,6 +16,8 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.MultichannelSampleFilter;
+import org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
@@ -69,7 +71,7 @@ public class MultichannelSampleFilterTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.MultichannelSampleFilter#addFilter(SampleFilterEngine)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.MultichannelSampleFilter#addFilter(SampleFilterEngine)}.
 	 */
 	@Test
 	public void testAddFilterAllChannels() {
@@ -90,7 +92,7 @@ public class MultichannelSampleFilterTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.MultichannelSampleFilter#addFilter(SampleFilterEngine, int[])}.
+	 * Test method for {@link org.signalml.domain.signal.filter.MultichannelSampleFilter#addFilter(SampleFilterEngine, int[])}.
 	 */
 	@Test
 	public void testAddFilterForSpecifiedChannels() {
@@ -130,7 +132,7 @@ public class MultichannelSampleFilterTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.MultichannelSampleFilter#applyMontage(Montage)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.MultichannelSampleFilter#applyMontage(Montage)}.
 	 */
 	@Test
 	public void testApplyMontage() throws MontageMismatchException {

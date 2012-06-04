@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.filter;
 
 import java.util.Arrays;
 import java.util.Iterator;

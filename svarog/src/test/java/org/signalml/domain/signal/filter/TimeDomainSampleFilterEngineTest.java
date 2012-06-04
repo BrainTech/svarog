@@ -1,7 +1,7 @@
 /* TimeDomainSampleFilterEngineTest.java created 2010-08-28
  *
  */
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.filter;
 
 import static org.junit.Assert.assertEquals;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -224,7 +225,7 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
 	 * Uses a filter that multiplies every sample by one and compares filtered
 	 * samples with unfiltered ones.
 	 */
@@ -252,7 +253,7 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
 	 * Uses a filter that applies gain to a signal.
 	 */
 	@Test
@@ -279,7 +280,7 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	/**
-	* Test method for {@link org.signalml.domain.signal.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	* Test method for {@link org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
 	* Uses high pass filter to filter out a constant from the signal and pass only high
 	* frequency component.
 	*/
@@ -321,7 +322,7 @@ public class TimeDomainSampleFilterEngineTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.TimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
 	 * Uses low pass filter to filter out a high frequency component from the
 	 * signal and pass only constant component.
 	 */
