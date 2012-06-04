@@ -3,15 +3,14 @@
  */
 package org.signalml.domain.signal;
 
+import static org.junit.Assert.assertEquals;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import java.lang.Math.*;
-
 import org.signalml.math.iirdesigner.FilterCoefficients;
-
-import static org.signalml.SignalMLAssert.*;
 
 /**
  * This class performs unit tests on the {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngine} class.
@@ -219,25 +218,6 @@ public class TimeDomainSampleFilterEngineTest {
 		newFiltered = engine.calculateNewFilteredSamples(uCache, fCache, 2);
 		assertEquals(newFiltered[0], newSamples1[0], 0.00001);
 		assertEquals(newFiltered[1], newSamples1[1], 0.000001);
-
-	}
-
-	/**
-	 * Test method for {@link TimeDomainSampleFilterEngine#updateCache()}.
-	 */
-	@Test public void testUpdateCache() {
-
-		coefficients = new FilterCoefficients(new double[] {1.0, 0.0, 0.0},
-											  new double[] {1.0, 0.0, 0.0});
-		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
-
-		double[] samples = new double[TEST_SAMPLE_COUNT];
-		for (int i = 0; i < TEST_SAMPLE_COUNT; i++)
-			samples[i] = Math.random();
-
-		source.addSamples(samples);
-		engine.updateCache(TEST_SAMPLE_COUNT);
-		double[] filtered = engine.filtered.getSamples();
 
 	}
 
