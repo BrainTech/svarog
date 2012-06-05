@@ -101,10 +101,17 @@ public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampl
 		if (signalOffset - leftPrefixCount < 0) //fix prefix if some starting area of the signal is requested
 			leftPrefixCount = signalOffset;
 
-		int filteredCount = leftPrefixCount + count;//samples to filter
+		//right prefix - it is useful only if the signal is filered using filtFilt.
+		int rightPrefixCount = useFiltFilt ? 2048 : 0;
+		if (signalOffset + count + rightPrefixCount > source.getSampleCount()) {
+			rightPrefixCount = source.getSampleCount() - signalOffset - count;
+		}
+
+		int filteredCount = leftPrefixCount + count + rightPrefixCount;//samples to filter
 
 		//get data from source and filter it
 		double[] input = new double[filteredCount];
+
 		source.getSamples(input, signalOffset - leftPrefixCount, filteredCount, 0);
 
 		double[] newFilteredSamples = calculateInitialConditionsAndFilter(input);
