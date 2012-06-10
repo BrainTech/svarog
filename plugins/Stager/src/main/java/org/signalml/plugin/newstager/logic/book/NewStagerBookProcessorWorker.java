@@ -25,6 +25,11 @@ public class NewStagerBookProcessorWorker implements Runnable {
 
 		try {
 			NewStagerBookInfo bookInfo = provider.getBookInfo();
+			if (bookInfo == null) {
+				this.data.completion.completeWork(null);
+				return;
+			}
+			
 			NewStagerSingleBookProcessor processor = new NewStagerSingleBookProcessor(
 				new NewStagerBookProcessorData(this.data.constants,
 											   this.data.channelMap,

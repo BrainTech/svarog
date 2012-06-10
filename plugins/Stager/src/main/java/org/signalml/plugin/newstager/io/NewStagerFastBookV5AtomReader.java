@@ -8,6 +8,7 @@ import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 
 	private NewStagerBookData createResult() {
 		NewStagerBookAtom atoms[][];
-
+		
 		if (this.books.size() == 1) {
 			atoms = this.books.get(0).toArray(new NewStagerBookAtom[0][]);
 		} else {
@@ -198,23 +199,23 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 
 		switch (this.lastCode) {
 		case StandardBookAtom.GABORWAVE_IDENTITY:
-			AssertSize(atomSize, 6 * FLOAT_SIZE);
+			AssertAtomSizeWorkaround(atomSize, 6 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateGaborWave(
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
 		case StandardBookAtom.DIRACDELTA_IDENTITY:
-			AssertSize(atomSize, 3 * FLOAT_SIZE);
+			AssertAtomSizeWorkaround(atomSize, 3 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateDiracDelta(
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
 					   this.fileBuffer.getFloat());
 		case StandardBookAtom.GAUSSFUNCTION_IDENTITY:
-			AssertSize(atomSize, 4 * FLOAT_SIZE);
+			AssertAtomSizeWorkaround(atomSize, 4 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateGaussFunction(
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
 		case StandardBookAtom.SINCOSWAVE_IDENTITY:
-			AssertSize(atomSize, 4 * FLOAT_SIZE);
+			AssertAtomSizeWorkaround(atomSize, 4 * FLOAT_SIZE);
 			return NewStagerBookAtom.CreateSinCosWave(
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat(),
 					   this.fileBuffer.getFloat(), this.fileBuffer.getFloat());
@@ -225,7 +226,6 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 	}
 
 	private void readFileHeader() throws NewStagerBookReaderException {
-		this.readSegmentCode();
 		if (this.lastCode != FormatComponentV5.FILE_HEADER) {
 			return;
 		}
@@ -271,6 +271,7 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 		if (this.lastCode == FormatComponentV5.COMMENT_SEGMENT_IDENTITY) {
 			this.fileBuffer.position(this.fileBuffer.getInt()
 									 + this.fileBuffer.position());
+			this.readSegmentCode();
 		}
 	}
 
@@ -278,12 +279,23 @@ public class NewStagerFastBookV5AtomReader implements INewStagerAtomReader {
 		this.lastCode = this.fileBuffer.get();
 	}
 
-	private static void AssertSize(int size, int desiredSize)
+	private static void AssertSize(int size, int... desiredSizes)
 	throws NewStagerBookReaderException {
-		if (size != desiredSize) {
-			throw new NewStagerBookReaderException("Bad field size: " + size
-												   + " expected: " + desiredSize);
+		for (int desiredSize : desiredSizes) {
+			if (size == desiredSize) {
+				return;
+			}
 		}
+		
+		throw new NewStagerBookReaderException("Bad field size: " + size
+												   + " expected one of: " + Arrays.toString(desiredSizes));
+		
 	}
+	
+	private static void AssertAtomSizeWorkaround(int atomSize, int desiredSize)
+			throws NewStagerBookReaderException {
+		AssertSize(atomSize, desiredSize + 2 * BYTE_SIZE, desiredSize);
+	}
+
 
 }
