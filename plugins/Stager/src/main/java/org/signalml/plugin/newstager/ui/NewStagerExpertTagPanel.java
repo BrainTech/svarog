@@ -40,24 +40,24 @@ public class NewStagerExpertTagPanel extends JPanel {
 	private FileChooser fileChooser;
 
 	private File tagFile;
-
-	private String labelCode;
-	private String chooseButtonToolTipCode;
+	
+	private String tooltip;
 
 	public NewStagerExpertTagPanel(FileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
+		this.tooltip = null;
 	}
 
-	public void initialize() {
-
+	public void initialize(String label, String tooltip) {
+		this.tooltip = tooltip;
+		
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		//TODO!
-		JLabel tagFileLabel = new JLabel("FIXME");//messageSource.getMessage(labelCode));
+		JLabel tagFileLabel = new JLabel(label);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -129,22 +129,6 @@ public class NewStagerExpertTagPanel extends JPanel {
 		super.setEnabled(enabled);
 	}
 
-	public String getLabelCode() {
-		return labelCode;
-	}
-
-	public void setLabelCode(String labelCode) {
-		this.labelCode = labelCode;
-	}
-
-	public String getChooseButtonToolTipCode() {
-		return chooseButtonToolTipCode;
-	}
-
-	public void setChooseButtonToolTipCode(String chooseButtonToolTipCode) {
-		this.chooseButtonToolTipCode = chooseButtonToolTipCode;
-	}
-
 	protected class ChooseTagFileAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
@@ -155,10 +139,9 @@ public class NewStagerExpertTagPanel extends JPanel {
 				AbstractAction.SMALL_ICON,
 				IconUtils
 				.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,
-					 "FIXME");
-			//TODO!
-			//messageSource.getMessage(chooseButtonToolTipCode));
+			if (tooltip != null) {
+				putValue(AbstractAction.SHORT_DESCRIPTION, tooltip);
+			}
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -173,7 +156,6 @@ public class NewStagerExpertTagPanel extends JPanel {
 			tagFile = file;
 
 			getTagTextField().setText(tagFile.getAbsolutePath());
-
 		}
 
 	}
