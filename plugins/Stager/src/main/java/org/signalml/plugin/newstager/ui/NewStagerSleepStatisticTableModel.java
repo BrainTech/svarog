@@ -7,6 +7,8 @@ package org.signalml.plugin.newstager.ui;
 import static org.signalml.plugin.newstager.NewStagerPlugin._;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -17,8 +19,8 @@ import org.signalml.plugin.newstager.data.NewStagerSleepStatistic;
 
 /**
  * SleepStatisticTableModel
- *
- *
+ * 
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -32,18 +34,32 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 	public static final int TST_COLUMN = 3;
 	public static final int SPT_COLUMN = 4;
 
+	private static final String SWS = "SWS";
+	
 	private NewStagerSleepStatistic statistic;
 
 	private class Row {
-		String stage;
-		Integer epochs;
-		Double minutes;
-		Double tst;
-		Double spt;
-		//Integer order;
+		public final String name;
+		public final String stage;
+		public final Integer epochs;
+		public final Double minutes;
+		public final Double tst;
+		public final Double spt;
+
+		public Row(String name, String stage, int segmentCount, double segmentLength,
+				double tst, double spt) {
+			this.name = name;
+			this.stage = stage;
+			this.epochs = segmentCount;
+			this.minutes = (((double) (segmentCount * segmentLength)) / 60.0);
+			this.tst = tst > 0 ? (((double) (segmentCount * segmentLength) * 100) / tst)
+					: 0.0;
+			this.spt = spt > 0 ? (((double) (segmentCount * segmentLength) * 100) / spt)
+					: 0.0;
+		}
 	}
 
-	private Row[] data;
+	private Row data[];
 
 	public NewStagerSleepStatisticTableModel() {
 		super();
@@ -57,100 +73,64 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 		if (this.statistic != statistic) {
 			this.statistic = statistic;
 
-			int styleCount = statistic.getStyleCount();
-			data = new Row[styleCount + 1];
+			LinkedList<Row> list = new LinkedList<Row>();
 
-			int index;
-			int addCnt = 0;
 			ExportedTagStyle style;
 
 			double segmentLength = statistic.getSegmentLength();
 			double tst = statistic.getTotalSleepTime();
 			double spt = statistic.getSleepPeriodTime();
-			int segmentCount;
-			int i;
 
-			for (i = 0; i < styleCount; i++) {
-
+			for (int i = 0; i < statistic.getStyleCount(); i++) {
 				style = statistic.getStyleAt(i);
-				String name = style.getName();
-				if (SleepTagName.RK_1.equals(name)
-						|| SleepTagName.AASM_N1.equals(name)) {
-					index = 0;
-				} else if (SleepTagName.RK_2.equals(name)
-						   || SleepTagName.AASM_N2.equals(name)) {
-					index = 1;
-				} else if (SleepTagName.RK_3.equals(name)
-						   || SleepTagName.AASM_N3.equals(name)) {
-					index = 2;
-				} else if (SleepTagName.RK_4.equals(name)) {
-					index = 3;
-				} else if (SleepTagName.RK_REM.equals(name)
-						   || SleepTagName.AASM_REM.equals(name)) {
-					index = 5;
-				} else if (SleepTagName.RK_WAKE.equals(name)
-						   || SleepTagName.AASM_WAKE.equals(name)) {
-					index = 6;
-				} else if (SleepTagName.RK_MT.equals(name)) {
-					index = 7;
-				} else {
-					index = 8 + addCnt;
-					addCnt++;
-				}
-
-				data[index] = new Row();
-
-				//data[index].order = index;
-				data[index].stage = style.getDescriptionOrName();
-				segmentCount = statistic.getStyleSegmentsAt(i);
-				data[index].epochs = segmentCount;
-				data[index].minutes = (((double)(segmentCount * segmentLength)) / 60.0);
-				if (tst > 0) {
-					data[index].tst = (((double)(segmentCount * segmentLength) * 100) / tst);
-				} else {
-					data[index].tst = 0.0;
-				}
-				if (spt > 0) {
-					data[index].spt = (((double)(segmentCount * segmentLength) * 100) / spt);
-				} else {
-					data[index].spt = 0.0;
-				}
-
+				
+				list.add(new Row(style.getName(), style.getDescriptionOrName(),
+							statistic.getStyleSegmentsAt(i),
+							segmentLength, tst, spt));
 			}
 
-			index = 4;
+			
 
-			data[index] = new Row();
+			list.add(new Row(SWS, _("SWS"), statistic.getSlowSegments(), segmentLength, tst, spt));
 
-			//data[index].order = index;
-			data[index].stage = _("SWS");
-			int slowSegmentCount = statistic.getSlowSegments();
-			data[index].epochs = slowSegmentCount;
-			data[index].minutes = (((double)(slowSegmentCount * segmentLength)) / 60.0);
-			if (tst > 0) {
-				data[index].tst = (((double)(slowSegmentCount * segmentLength) * 100) / tst);
-			} else {
-				data[index].tst = 0.0;
-			}
-			if (spt > 0) {
-				data[index].spt = (((double)(slowSegmentCount * segmentLength) * 100) / spt);
-			} else {
-				data[index].spt = 0.0;
-			}
+			data = list.toArray(new Row[0]);
+			Arrays.sort(data, new Comparator<Row>() {
 
-			int tgtIndex = 0;
-			for (i = 0; i < data.length; i++) {
-				if (data[i] == null) {
-					continue;
+				private int weight(Row r) {
+					String name = r.name;
+					if (SleepTagName.RK_1.equals(name) || SleepTagName.AASM_N1.equals(name)) {
+						return 0;
+					} else if (SleepTagName.RK_2.equals(name)
+							|| SleepTagName.AASM_N2.equals(name)) {
+						return 1;
+					} else if (SleepTagName.RK_3.equals(name)
+							|| SleepTagName.AASM_N3.equals(name)) {
+						return 2;
+					} else if (SleepTagName.RK_4.equals(name)) {
+						return 3;
+					} else if (name.equals(SWS)) {
+						return 4;
+					} else if (SleepTagName.RK_REM.equals(name)
+							|| SleepTagName.AASM_REM.equals(name)) {
+						return 5;
+					} else if (SleepTagName.RK_WAKE.equals(name)
+							|| SleepTagName.AASM_WAKE.equals(name)) {
+						return 6;
+					} else if (SleepTagName.RK_MT.equals(name)) {
+						return 7;
+					} else {
+						return 8;
+					}
+
 				}
-				if (tgtIndex != i) {
-					data[tgtIndex] = data[i];
+
+				
+				@Override
+				public int compare(Row r1, Row r2) {
+					return new Integer(this.weight(r1)).compareTo(this.weight(r2));
 				}
-				tgtIndex++;
-			}
-
-			data = Arrays.copyOf(data, tgtIndex);
-
+			});
+			
 			fireTableStructureChanged();
 		}
 	}
@@ -165,7 +145,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 		switch (columnIndex) {
 
 		case STAGE_COLUMN:
-				return String.class;
+			return String.class;
 
 		case EPOCHS_COLUMN:
 			return Integer.class;
@@ -177,7 +157,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 
 		default:
 			throw new SanityCheckException("Unsupported index [" + columnIndex
-										   + "]");
+					+ "]");
 
 		}
 	}
@@ -241,7 +221,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 
 		default:
 			throw new SanityCheckException("Unsupported index [" + columnIndex
-										   + "]");
+					+ "]");
 
 		}
 	}
