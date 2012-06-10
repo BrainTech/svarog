@@ -40,7 +40,7 @@ public class NewStagerTagWriter {
 				if (!tagCollection.isEmpty()) {
 					sleepTags.add(new PluginTagGroup(this
 													 .getTagNameFromType(entry.getKey()),
-													 SignalSelectionType.CHANNEL, tagCollection, 1,
+													 this.getGroupTypeFromCollectionType(tagType), tagCollection, 1,
 													 "test")); // TODO 1
 				}
 			}
@@ -106,6 +106,17 @@ public class NewStagerTagWriter {
 			return "m";
 		default:
 			return "";
+		}
+	}
+	
+	private SignalSelectionType getGroupTypeFromCollectionType(
+			NewStagerTagCollectionType tagType) {
+		switch (tagType) {
+			case CONSOLIDATED_SLEEP_PAGES:
+			case SLEEP_PAGES:
+				return SignalSelectionType.PAGE;
+			default:
+				return SignalSelectionType.CHANNEL;
 		}
 	}
 }
