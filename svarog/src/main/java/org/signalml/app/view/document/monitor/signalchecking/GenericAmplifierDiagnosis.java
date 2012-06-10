@@ -5,7 +5,7 @@ package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.util.HashMap;
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 
 /**
  * An abstract class representing an object that - when given a {@link MonitorSignalDocument}

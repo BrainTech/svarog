@@ -69,7 +69,7 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 
 		MP5ResultTargetDescriptor descriptor = new MP5ResultTargetDescriptor();
 		descriptor.setOpenInWindow(true);
-		descriptor.setSaveToFile(true);
+		descriptor.setSaveToFile(false);
 
 		boolean dialogOk = resultDialog.showDialog(descriptor, true);
 		if (!dialogOk) {

@@ -32,17 +32,11 @@ import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.GeneralConfiguration;
 import org.signalml.app.config.MRUDConfiguration;
 import org.signalml.app.config.MainFrameConfiguration;
+import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.app.config.ZoomSignalSettings;
-import org.signalml.app.config.preset.BookFilterPresetManager;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.config.preset.SignalExportPresetManager;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.DefaultDocumentManager;
 import org.signalml.app.document.DefaultMRUDRegistry;
 import org.signalml.app.document.DocumentDetector;
@@ -62,24 +56,18 @@ import org.signalml.app.method.mp5.MP5ApplicationData;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5MethodDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.MatlabUtil;
 import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.app.util.logging.DebugHelpers;
-import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.ProfilePathDialog;
 import org.signalml.app.view.components.dialogs.SplashScreen;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
-import org.signalml.app.worker.processes.ProcessManager;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.method.DisposableMethod;
 import org.signalml.method.Method;
@@ -119,7 +107,9 @@ public class SvarogApplication implements java.lang.Runnable {
 	private Locale locale = null;
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 	private File profileDir = null;
+
 	private ApplicationConfiguration applicationConfig = new ApplicationConfiguration();
+
 	private DefaultSignalMLCodecManager signalMLCodecManager = null;
 	private DefaultDocumentManager documentManager = null;
 	private DefaultMRUDRegistry mrudRegistry = null;
@@ -127,31 +117,8 @@ public class SvarogApplication implements java.lang.Runnable {
 	private ApplicationMethodManager methodManager = null;
 	private ApplicationTaskManager taskManager = null;
 	private ActionFocusManager actionFocusManager = null;
-	private MontagePresetManager montagePresetManager = null;
-	private BookFilterPresetManager bookFilterPresetManager = null;
-	private SignalExportPresetManager signalExportPresetManager = null;
-	private FFTSampleFilterPresetManager fftFilterPresetManager = null;
-	private OpenBCIModulePresetManager openBCIModulePresetManager = null;
 
-	/**
-	 * A {@link PresetManager} managing the user-defined
-	 * {@link TimeDomainSampleFilter} presets.
-	 */
-	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager = null;
-
-	/**
-	 * A {@link PresetManager} managing the predefined
-	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
-	 */
-	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = null;
-	/**
-	 * A preset manager managing the StyledTagSet presets.
-	 */
-	private StyledTagSetPresetManager styledTagSetPresetManager;
-	/**
-	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
-	 */
-	private EegSystemsPresetManager eegSystemsPresetManager;
+	private ManagerOfPresetManagers managerOfPresetManagers;
 
 	private MP5ExecutorManager mp5ExecutorManager = null;
 	private ViewerMainFrame viewerMainFrame = null;
@@ -458,25 +425,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private void initializeFirstTime(final GeneralConfiguration suggested) {
 
 		if (locale == null) {
-			try {
-				SwingUtilities.invokeAndWait(new Runnable() {
-
-					@Override
-					public void run() {
-						locale = OptionPane.showLanguageOption();
-					}
-				});
-			} catch (InterruptedException ex) {
-				logger.error("Language choice error", ex);
-				System.exit(1);
-			} catch (InvocationTargetException ex) {
-				logger.error("Language choice error", ex);
-				System.exit(1);
-			}
-		}
-		if (locale == null) {
-			logger.error("Language choice canceled");
-			System.exit(1);
+			locale = Locale.ENGLISH;
 		}
 
 		boolean ok = false;
@@ -742,111 +691,9 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		splash(_("Initializing presets"), true);
 
-		eegSystemsPresetManager = new EegSystemsPresetManager();
-		eegSystemsPresetManager.setProfileDir(profileDir);
-
-		try {
-			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
-		} catch (Exception ex) {
-			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
-		}
-
-		try {
-			eegSystemsPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("EEG systems configuration not found!");
-		} catch (Exception ex) {
-			logger.error("Failed to read eeg systems configuration", ex);
-		}
-
-		montagePresetManager = new MontagePresetManager(eegSystemsPresetManager);
-		montagePresetManager.setProfileDir(profileDir);
-
-		try {
-			montagePresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Montage preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read montage configuration - will use defaults", ex);
-		}
-
-		bookFilterPresetManager = new BookFilterPresetManager();
-		bookFilterPresetManager.setProfileDir(profileDir);
-
-		try {
-			bookFilterPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Book filter preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read book filter configuration - will use defaults", ex);
-		}
-
-		actionFocusManager.setMontagePresetManager(montagePresetManager);
-
-		signalExportPresetManager = new SignalExportPresetManager();
-		signalExportPresetManager.setProfileDir(profileDir);
-
-		try {
-			signalExportPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Signal export preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read signal export configuration - will use defaults", ex);
-		}
-
-		fftFilterPresetManager = new FFTSampleFilterPresetManager();
-		fftFilterPresetManager.setProfileDir(profileDir);
-
-		try {
-			fftFilterPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("FFT sample filter preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read FFT sample filter configuration - will use defaults", ex);
-		}
-
-		openBCIModulePresetManager = new OpenBCIModulePresetManager();
-		openBCIModulePresetManager.setProfileDir(profileDir);
-
-		try {
-			openBCIModulePresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("OpenBCI modules preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read OpenBCI modules configuration - will use defaults", ex);
-		}
-
-		timeDomainSampleFilterPresetManager = new TimeDomainSampleFilterPresetManager();
-		timeDomainSampleFilterPresetManager.setProfileDir(profileDir);
-
-		try {
-			timeDomainSampleFilterPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Time domain sample filter preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read time domain sample filter configuration - will use defaults", ex);
-		}
-
-		predefinedTimeDomainSampleFilterPresetManager = new PredefinedTimeDomainFiltersPresetManager();
-
-		try {
-			predefinedTimeDomainSampleFilterPresetManager.loadDefaults();
-		} catch (FileNotFoundException ex) {
-			logger.error("Failed to read predefined time domain sample filters - file not found", ex);
-		} catch (Exception ex) {
-			logger.error("Failed to read predefined time domain sample filters", ex);
-		}
-
-		styledTagSetPresetManager = new StyledTagSetPresetManager();
-		styledTagSetPresetManager.setProfileDir(profileDir);
-
-		try {
-			styledTagSetPresetManager.readFromPersistence(null);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Styled tag set preset config not found - will use defaults");
-		} catch (Exception ex) {
-			logger.error("Failed to read styled tag set configuration - will use defaults", ex);
-		}
+		managerOfPresetManagers = new ManagerOfPresetManagers(profileDir);
+		managerOfPresetManagers.loadPresetsFromPersistence();
+		actionFocusManager.setMontagePresetManager(managerOfPresetManagers.getMontagePresetManager());
 
 		splash(null, true);
 
@@ -987,15 +834,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		elementManager.setMethodManager(methodManager);
 		elementManager.setTaskManager(taskManager);
 		elementManager.setActionFocusManager(actionFocusManager);
-		elementManager.setMontagePresetManager(montagePresetManager);
-		elementManager.setBookFilterPresetManager(bookFilterPresetManager);
-		elementManager.setSignalExportPresetManager(signalExportPresetManager);
-		elementManager.setFftFilterPresetManager(fftFilterPresetManager);
-		elementManager.setOpenBCIModulePresetManager(openBCIModulePresetManager);
-		elementManager.setTimeDomainSampleFilterPresetManager(timeDomainSampleFilterPresetManager);
-		elementManager.setPredefinedTimeDomainFiltersPresetManager(predefinedTimeDomainSampleFilterPresetManager);
-		elementManager.setStyledTagSetPresetManager(styledTagSetPresetManager);
-		elementManager.setEegSystemsPresetManager(eegSystemsPresetManager);
+
+		elementManager.setManagerOfPresetsManagers(managerOfPresetManagers);
 
 		elementManager.setMp5ExecutorManager(mp5ExecutorManager);
 		elementManager.setPreferences(preferences);
@@ -1080,63 +920,12 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 
 		try {
-			montagePresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write montage configuration", ex);
-		}
-
-		try {
-			bookFilterPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write book filter configuration", ex);
-		}
-
-		try {
-			signalExportPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write signal export configuration", ex);
-		}
-
-		try {
-			fftFilterPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write FFT sample filter configuration", ex);
-		}
-
-		try {
-			openBCIModulePresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write OpenBCI modules configuration", ex);
-		}
-
-		try {
-			timeDomainSampleFilterPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write time domain sample filter configuration", ex);
-		}
-
-		/*TODO: if predefined filters should be ever edited and saved
-		  as presets, this lines should be uncommented.
-
-		  try {
-		  predefinedTimeDomainSampleFilterPresetManager.writeToPersistence(null);
-		  } catch (Exception ex) {
-		  logger.error("Failed to write predefined time domain sample filters configuration", ex);
-		  }*/
-
-		try {
-			styledTagSetPresetManager.writeToPersistence(null);
-		} catch (Exception ex) {
-			logger.error("Failed to write styled tag set configuration", ex);
-		}
-
-		try {
 			mp5ExecutorManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write MP5 executor manager configuration", ex);
 		}
 
-		ProcessManager.getInstance().killAll();
+		managerOfPresetManagers.writePresetsToPersistence();
 
 		Method[] methods = methodManager.getMethods();
 		ApplicationMethodDescriptor descriptor;
@@ -1200,5 +989,9 @@ public class SvarogApplication implements java.lang.Runnable {
 	 */
 	public static ApplicationConfiguration getApplicationConfiguration() {
 		return getSharedInstance().applicationConfig;
+	}
+
+	public static ManagerOfPresetManagers getManagerOfPresetsManagers() {
+		return getSharedInstance().managerOfPresetManagers;
 	}
 }

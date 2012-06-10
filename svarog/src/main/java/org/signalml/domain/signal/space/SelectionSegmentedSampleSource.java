@@ -5,8 +5,8 @@
 package org.signalml.domain.signal.space;
 
 import org.signalml.domain.signal.MultichannelSampleProcessor;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;

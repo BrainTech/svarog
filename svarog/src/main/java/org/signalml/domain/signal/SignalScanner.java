@@ -5,6 +5,7 @@
 package org.signalml.domain.signal;
 
 import org.signalml.app.view.signal.SignalScanResult;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This class allows to scan the signal for the samples of extremal values.

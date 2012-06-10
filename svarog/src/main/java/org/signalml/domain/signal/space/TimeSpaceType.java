@@ -4,7 +4,7 @@
 
 package org.signalml.domain.signal.space;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.SignalSelection;
 
 /**

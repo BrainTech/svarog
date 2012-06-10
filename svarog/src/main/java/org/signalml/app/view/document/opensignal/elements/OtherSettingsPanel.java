@@ -4,11 +4,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.util.List;
+import java.awt.GridLayout;
 
-import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -16,14 +13,15 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
+import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.FileTypeComboBoxModel;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
@@ -33,7 +31,6 @@ import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 
 public class OtherSettingsPanel extends AbstractPanel {
@@ -43,13 +40,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private ViewerElementManager viewerElementManager;
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
-	private JButton editGainAndOffsetButton;
-	private EditGainAndOffsetDialog editGainAndOffsetDialog;
-
 	private JButton registerSignalMLCodecButton;
 
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
+	private JLabel registerCodecsLabel = new JLabel(_("Manage SignalML codecs"));
+	private JPanel registerSignalMLCodecPanel;
 	/**
 	 * {@link JComboBox} that displays the list of available presets.
 	 */
@@ -62,17 +58,17 @@ public class OtherSettingsPanel extends AbstractPanel {
 	/**
 	 * The {@link JComboBox} for EEG system selection.
 	 */
-	private JComboBox presetComboBox;
+	private JComboBox eegSystemComboBox;
 	/**
-	 * The model for the {@link EegSystemSelectionPanel#presetComboBox}.
+	 * The model for the {@link EegSystemSelectionPanel#eegSystemComboBox}.
 	 */
-	private PresetComboBoxModel eegSystemsPresetComboBoxModel;
+	private PresetComboBoxModel eegSystemsComboBoxModel;
 
 	private JComboBox fileTypeComboBox;
 
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
-		eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
+		eegSystemsPresetManager = SvarogApplication.getManagerOfPresetsManagers().getEegSystemsPresetManager();
 		createInterface();
 	}
 
@@ -81,7 +77,6 @@ public class OtherSettingsPanel extends AbstractPanel {
 		setLayout(new BorderLayout());
 
 		add(createComboBoxesPanel(), BorderLayout.CENTER);
-		add(createButtonsPanel(), BorderLayout.SOUTH);
 	}
 
 	protected JPanel createComboBoxesPanel() {
@@ -101,13 +96,15 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(tagStylesLabel)
 			.addComponent(fileTypeLabel)
 			.addComponent(eegSystemsLabel)
+			.addComponent(registerCodecsLabel)
 		);
 
 		hGroup.addGroup(
 			layout.createParallelGroup()
 			.addComponent(getTagPresetComboBox())
 			.addComponent(getFileTypeComboBox())
-			.addComponent(getEegSystemsPresetComboBox())
+			.addComponent(getEegSystemComboBox())
+			.addComponent(getRegisterSignalMLCodecPanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -129,21 +126,26 @@ public class OtherSettingsPanel extends AbstractPanel {
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.BASELINE)
 			.addComponent(eegSystemsLabel)
-			.addComponent(getEegSystemsPresetComboBox())
+			.addComponent(getEegSystemComboBox())
 		);
+
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(registerCodecsLabel)
+				.addComponent(getRegisterSignalMLCodecPanel())
+			);
 
 		layout.setVerticalGroup(vGroup);
 
 		return comboBoxesPanel;
 	}
 
-	protected JPanel createButtonsPanel() {
-		JPanel buttonsPanel = new JPanel(new FlowLayout());
-
-		buttonsPanel.add(getEditGainAndOffsetButton());
-		buttonsPanel.add(getRegisterSignalMLCodecButton());
-
-		return buttonsPanel;
+	protected JPanel getRegisterSignalMLCodecPanel() {
+		if (registerSignalMLCodecPanel == null) {
+			registerSignalMLCodecPanel = new JPanel(new GridLayout(1, 1));
+			registerSignalMLCodecPanel.add(getRegisterSignalMLCodecButton());
+		}
+		return registerSignalMLCodecPanel;
 	}
 
 	public JButton getRegisterSignalMLCodecButton() {
@@ -154,7 +156,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			registerCodecAction.initializeAll();
 
 			registerSignalMLCodecButton = new JButton(registerCodecAction);
-			registerSignalMLCodecButton.setText(_("Register SignalML codec"));
+			registerSignalMLCodecButton.setText(_("Register new ..."));
 		}
 		return registerSignalMLCodecButton;
 	}
@@ -176,8 +178,9 @@ public class OtherSettingsPanel extends AbstractPanel {
 	public JComboBox getTagPresetComboBox() {
 		if (tagPresetComboBox == null) {
 			TagPresetComboBoxModel model = new TagPresetComboBoxModel(
-				viewerElementManager.getStyledTagSetPresetManager());
+					SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager());
 			tagPresetComboBox = new JComboBox(model);
+			tagPresetComboBox.setSelectedIndex(0);
 		}
 		return tagPresetComboBox;
 	}
@@ -188,12 +191,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 *
 	 * @return the combo box for EEG system selection
 	 */
-	protected JComboBox getEegSystemsPresetComboBox() {
-		if (presetComboBox == null) {
-			presetComboBox = new JComboBox(getPresetComboBoxModel());
-			presetComboBox.setPreferredSize(new Dimension(300, 20));
+	protected JComboBox getEegSystemComboBox() {
+		if (eegSystemComboBox == null) {
+			eegSystemComboBox = new JComboBox(getPresetComboBoxModel());
+			eegSystemComboBox.setPreferredSize(new Dimension(300, 20));
 		}
-		return presetComboBox;
+		return eegSystemComboBox;
 	}
 
 	/**
@@ -203,50 +206,14 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 * @return the ComboBoxModel for EEG system selection
 	 */
 	protected PresetComboBoxModel getPresetComboBoxModel() {
-		if (eegSystemsPresetComboBoxModel == null) {
-			eegSystemsPresetComboBoxModel = new PresetComboBoxModel(null,eegSystemsPresetManager);
-			Object firstElement = eegSystemsPresetComboBoxModel.getElementAt(0);
+		if (eegSystemsComboBoxModel == null) {
+			eegSystemsComboBoxModel = new PresetComboBoxModel(null,eegSystemsPresetManager);
+			Object firstElement = eegSystemsComboBoxModel.getElementAt(0);
 			if (firstElement != null) {
-				eegSystemsPresetComboBoxModel.setSelectedItem(firstElement);
+				eegSystemsComboBoxModel.setSelectedItem(firstElement);
 			}
 		}
-		return eegSystemsPresetComboBoxModel;
-	}
-
-	/**
-	 * Returns the edit gain and offset button.
-	 *
-	 * @return the edit gain and offset button
-	 */
-	protected JButton getEditGainAndOffsetButton() {
-
-		if (editGainAndOffsetButton == null) {
-			editGainAndOffsetButton = new JButton(new AbstractAction() {
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					fillSignalParametersGainAndOffset(openSignalDescriptor);
-					getEditGainAndOffsetDialog().showDialog(openSignalDescriptor, true);
-				}
-			});
-
-			editGainAndOffsetButton.setText(_("Edit gain and offset"));
-			editGainAndOffsetButton.setEnabled(false);
-		}
-		return editGainAndOffsetButton;
-	}
-
-	/**
-	 * Returns the edit gain and offset dialog
-	 *
-	 * @return the edit gain and offset dialog
-	 */
-	protected EditGainAndOffsetDialog getEditGainAndOffsetDialog() {
-
-		if (editGainAndOffsetDialog == null) {
-			editGainAndOffsetDialog = new EditGainAndOffsetDialog(null, true);
-		}
-		return editGainAndOffsetDialog;
+		return eegSystemsComboBoxModel;
 	}
 
 	/**
@@ -255,7 +222,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 * @return the selected EEG system
 	 */
 	public EegSystem getSelectedEegSystem() {
-		return (EegSystem) eegSystemsPresetComboBoxModel.getSelectedItem();
+		return (EegSystem) eegSystemsComboBoxModel.getSelectedItem();
 	}
 
 	/**
@@ -281,18 +248,32 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 *            the EEG system to be selected
 	 */
 	public void setEegSystem(EegSystem eegSystem) {
-		eegSystemsPresetComboBoxModel.setSelectedItem(eegSystem);
+		eegSystemsComboBoxModel.setSelectedItem(eegSystem);
 	}
 
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {
 		this.openSignalDescriptor = openSignalDescriptor;
-		setEnabledAsNeeded(openSignalDescriptor);
-		if (openSignalDescriptor instanceof RawSignalDescriptor) {
-			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
-			EegSystemName eegSystemName = rawSignalDescriptor.getEegSystemName();
 
-			if (eegSystemName != null)
-				setEegSystemByName(eegSystemName);
+		if (openSignalDescriptor == null)
+			return;
+
+		EegSystemName eegSystemName = openSignalDescriptor.getEegSystemName();
+		if (eegSystemName != null)
+			setEegSystemByName(eegSystemName);
+
+		if (openSignalDescriptor instanceof ExperimentDescriptor) {
+			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
+			String tagStylesName = experimentDescriptor.getTagStylesName();
+
+			if (StyledTagSetPresetManager.EMPTY_PRESET_NAME.equals(tagStylesName)) {
+				getTagPresetComboBox().setSelectedIndex(0);
+			} else {
+				StyledTagSetPresetManager styledTagSetPresetManager = SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager();
+				Preset preset = styledTagSetPresetManager.getPresetByName(tagStylesName);
+
+				if (preset != null)
+					getTagPresetComboBox().setSelectedItem(preset);
+			}
 		}
 	}
 
@@ -300,30 +281,9 @@ public class OtherSettingsPanel extends AbstractPanel {
 		if (descriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) descriptor;
 			StyledTagSet selectedStylesPreset = (StyledTagSet) getTagPresetComboBox().getSelectedItem();
-			experimentDescriptor.setTagStyles(selectedStylesPreset);
+			experimentDescriptor.setTagStyles(selectedStylesPreset == null ? null : selectedStylesPreset.clone());
 		}
 		descriptor.setEegSystem(getSelectedEegSystem());
-		fillSignalParametersGainAndOffset(openSignalDescriptor);
-	}
-
-	protected void fillSignalParametersGainAndOffset(AbstractOpenSignalDescriptor openSignalDescriptor) {
-		if (openSignalDescriptor instanceof ExperimentDescriptor) {
-			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
-			List<AmplifierChannel> channels = experimentDescriptor
-											  .getAmplifier().getSelectedChannels();
-
-			float[] gain = new float[channels.size()];
-			float[] offset = new float[channels.size()];
-
-			int i = 0;
-			for (AmplifierChannel channel : channels) {
-				gain[i] = channel.getCalibrationGain();
-				offset[i] = channel.getCalibrationOffset();
-				i++;
-			}
-			experimentDescriptor.getSignalParameters().setCalibrationGain(gain);
-			experimentDescriptor.getSignalParameters().setCalibrationOffset(offset);
-		}
 	}
 
 	public void preparePanelForSignalSource(SignalSource selectedSignalSource) {
@@ -331,29 +291,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 		getTagPresetComboBox().setVisible(isMonitor);
 		tagStylesLabel.setVisible(isMonitor);
 
+		getRegisterSignalMLCodecPanel().setVisible(!isMonitor);
 		getRegisterSignalMLCodecButton().setVisible(!isMonitor);
+		registerCodecsLabel.setVisible(!isMonitor);
 
 		fileTypeLabel.setVisible(!isMonitor);
 		fileTypeComboBox.setVisible(!isMonitor);
-	}
-
-	protected void setEnabledAsNeeded(AbstractOpenSignalDescriptor openSignalDescriptor) {
-
-		if (openSignalDescriptor == null) {
-			getEditGainAndOffsetButton().setEnabled(false);
-			return;
-		}
-
-		if (openSignalDescriptor instanceof RawSignalDescriptor) {
-			getEditGainAndOffsetButton().setEnabled(true);
-		}
-		else {
-			if (openSignalDescriptor instanceof SignalMLDescriptor)
-				getEditGainAndOffsetButton().setEnabled(false);
-			else
-				getEditGainAndOffsetButton().setEnabled(true);
-		}
-
 	}
 
 }

@@ -6,10 +6,6 @@ package org.signalml.app.view.montage.filters;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.view.components.DoubleSpinner;
-import org.signalml.app.view.components.FFTWindowTypePanel;
-import org.signalml.app.view.components.FloatSpinner;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,6 +24,7 @@ import java.text.ParseException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -41,7 +38,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -50,12 +46,16 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.FFTSampleFilterTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
+import org.signalml.app.view.components.DoubleSpinner;
+import org.signalml.app.view.components.FFTWindowTypePanel;
+import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.montage.filters.charts.FFTFilterResponseChartGroupPanel;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 import org.signalml.app.view.montage.filters.charts.elements.SelectionHighlightRenderer;
@@ -63,8 +63,6 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-
-import org.springframework.validation.Errors;
 
 /** EditFFTSampleFilterDialog
  *
@@ -110,8 +108,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
-	public EditFFTSampleFilterDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+	public EditFFTSampleFilterDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getFftFilterPresetManager(), w, isModal);
 	}
 
 	public EditFFTSampleFilterDialog(PresetManager presetManager) {

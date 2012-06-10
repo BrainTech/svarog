@@ -12,6 +12,7 @@ import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
@@ -21,7 +22,6 @@ import org.signalml.app.view.components.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -60,8 +60,8 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ExportSignalDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+	public ExportSignalDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getSignalExportPresetManager(), w, isModal);
 	}
 
 	/**

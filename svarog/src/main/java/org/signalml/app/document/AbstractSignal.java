@@ -20,7 +20,7 @@ import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;

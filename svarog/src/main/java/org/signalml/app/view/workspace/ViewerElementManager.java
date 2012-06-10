@@ -73,14 +73,7 @@ import org.signalml.app.action.workspace.tasks.RemoveAllTasksAction;
 import org.signalml.app.action.workspace.tasks.ResumeAllTasksAction;
 import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.preset.BookFilterPresetManager;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
-import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.config.preset.SignalExportPresetManager;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentDetector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -96,7 +89,6 @@ import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.model.components.TaskTableModel;
 import org.signalml.app.model.monitor.MonitorTreeModel;
-import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalTreeModel;
 import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
@@ -130,10 +122,8 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.plugin.export.SignalMLException;
@@ -172,32 +162,8 @@ public class ViewerElementManager {
 	private ApplicationMethodManager methodManager;
 	private ApplicationTaskManager taskManager;
 	private ActionFocusManager actionFocusManager;
-	private MontagePresetManager montagePresetManager;
-	private BookFilterPresetManager bookFilterPresetManager;
-	private SignalExportPresetManager signalExportPresetManager;
-	private FFTSampleFilterPresetManager fftFilterPresetManager;
-	private OpenBCIModulePresetManager openBCIModulePresetManager;
 
-	/**
-	 * A {@link PresetManager} managing the user-defined
-	 * {@link TimeDomainSampleFilter} presets.
-	 */
-	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
-
-	/**
-	 * A {@link PresetManager} managing the predefined
-	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
-	 */
-	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
-
-	/**
-	 * A {@link PresetManager} managing the stored tag styles presets.
-	 */
-	private StyledTagSetPresetManager styledTagSetPresetManager;
-	/**
-	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
-	 */
-	private EegSystemsPresetManager eegSystemsPresetManager;
+	private ManagerOfPresetManagers managerOfPresetsManagers;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -501,116 +467,12 @@ public class ViewerElementManager {
 		this.actionFocusManager = actionFocusManager;
 	}
 
-	public MontagePresetManager getMontagePresetManager() {
-		return montagePresetManager;
+	public void setManagerOfPresetsManagers(ManagerOfPresetManagers managerOfPresetsManagers) {
+		this.managerOfPresetsManagers = managerOfPresetsManagers;
 	}
 
-	public void setMontagePresetManager(MontagePresetManager montagePresetManager) {
-		this.montagePresetManager = montagePresetManager;
-	}
-
-	public BookFilterPresetManager getBookFilterPresetManager() {
-		return bookFilterPresetManager;
-	}
-
-	public void setBookFilterPresetManager(BookFilterPresetManager bookFilterPresetManager) {
-		this.bookFilterPresetManager = bookFilterPresetManager;
-	}
-
-	public SignalExportPresetManager getSignalExportPresetManager() {
-		return signalExportPresetManager;
-	}
-
-	public void setSignalExportPresetManager(SignalExportPresetManager signalExportPresetManager) {
-		this.signalExportPresetManager = signalExportPresetManager;
-	}
-
-	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
-		return fftFilterPresetManager;
-	}
-
-	public void setFftFilterPresetManager(FFTSampleFilterPresetManager fftFilterPresetManager) {
-		this.fftFilterPresetManager = fftFilterPresetManager;
-	}
-
-	public OpenBCIModulePresetManager getOpenBCIModulePresetManager() {
-		return openBCIModulePresetManager;
-	}
-
-	public void setOpenBCIModulePresetManager(OpenBCIModulePresetManager openBCIModulePresetManager) {
-		this.openBCIModulePresetManager = openBCIModulePresetManager;
-	}
-
-	/**
-	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
-	 * ViewerElementManager.
-	 * @return a {@link TimeDomainSampleFilterPresetManager} used by this
-	 * ViewerElementManager
-	 */
-	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
-		return timeDomainSampleFilterPresetManager;
-	}
-
-	/**
-	 * Sets a {@link TimeDomainSampleFilterPresetManager} to be used by this
-	 * ViewerElementManager.
-	 * @param timeDomainSampleFilterPresetManager a TimeDomainSampleFilterPresetManager
-	 * to be used
-	 */
-	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
-		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
-	}
-
-	/**
-	 * Returns a {@link PredefinedTimeDomainFiltersPresetManager} used
-	 * by this ViewerElementManager.
-	 * @return a {@link PredefinedTimeDomainFiltersPresetManager} used
-	 * by this ViewerElementManager
-	 */
-	public PredefinedTimeDomainFiltersPresetManager getPredefinedTimeDomainFiltersPresetManager() {
-		return predefinedTimeDomainFiltersPresetManager;
-	}
-
-	/**
-	 * Sets a {@link PredefinedTimeDomainFiltersPresetManager} to be used
-	 * by this ViewerElementManager
-	 * @param predefinedTimeDomainFiltersPresetManager
-	 * a {@link PredefinedTimeDomainFiltersPresetManager} to be used
-	 */
-	public void setPredefinedTimeDomainFiltersPresetManager(PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager) {
-		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
-	}
-
-	/**
-	 * Returns the {@link PresetManager} for handling tag styles presets
-	 * @return the {@link PresetManager} for handling tag styles presets
-	 */
-	public StyledTagSetPresetManager getStyledTagSetPresetManager() {
-		return styledTagSetPresetManager;
-	}
-
-	/**
-	 * Sets the {@link PresetManager} for handling tag styles presets.
-	 * @param styledTagSetPresetManager
-	 */
-	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
-		this.styledTagSetPresetManager = styledTagSetPresetManager;
-	}
-
-	/**
-	 * Returns the {@link PresetManger} handling stored EEG systems definitions.
-	 * @return the PresetManager for EEG systems
-	 */
-	public EegSystemsPresetManager getEegSystemsPresetManager() {
-		return eegSystemsPresetManager;
-	}
-
-	/**
-	 * Sets the {@link PresetManager} handling stored EEG systems.
-	 * @param eegSystemsPresetManager the PresetManager for EEG systems
-	 */
-	public void setEegSystemsPresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
-		this.eegSystemsPresetManager = eegSystemsPresetManager;
+	public ManagerOfPresetManagers getManagerOfPresetsManagers() {
+		return managerOfPresetsManagers;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -637,7 +499,7 @@ public class ViewerElementManager {
 			documentFlowIntegrator.setCodecManager(getCodecManager());
 			documentFlowIntegrator.setActionFocusManager(getActionFocusManager());
 			documentFlowIntegrator.setApplicationConfig(getApplicationConfig());
-			documentFlowIntegrator.setMontagePresetManager(getMontagePresetManager());
+			documentFlowIntegrator.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
 			documentFlowIntegrator.setOptionPaneParent(getOptionPaneParent());
 			documentFlowIntegrator.setFileChooser(getFileChooser());
 			documentFlowIntegrator.setSignalParametersDialog(getSignalParametersDialog());
@@ -1202,7 +1064,7 @@ public class ViewerElementManager {
 
 	public NewTagDialog getNewTagDialog() {
 		if (newTagDialog == null) {
-			newTagDialog = new NewTagDialog(getStyledTagSetPresetManager(), getDialogParent(), true);
+			newTagDialog = new NewTagDialog(getDialogParent(), true);
 			newTagDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return newTagDialog;
@@ -1239,7 +1101,7 @@ public class ViewerElementManager {
 
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		if (tagStylePaletteDialog == null) {
-			tagStylePaletteDialog = new TagStylePaletteDialog(getStyledTagSetPresetManager(), getDialogParent(), true);
+			tagStylePaletteDialog = new TagStylePaletteDialog(getDialogParent(), true);
 			tagStylePaletteDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePaletteDialog;
@@ -1251,7 +1113,7 @@ public class ViewerElementManager {
 	 */
 	public TagStylePresetDialog getTagStylePresetDialog() {
 		if (tagStylePresetDialog == null) {
-			tagStylePresetDialog = new TagStylePresetDialog(getStyledTagSetPresetManager(), getDialogParent(), true);
+			tagStylePresetDialog = new TagStylePresetDialog(getDialogParent(), true);
 			tagStylePresetDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePresetDialog;
@@ -1290,7 +1152,7 @@ public class ViewerElementManager {
 
 	public ExportSignalDialog getExportSignalDialog() {
 		if (exportSignalDialog == null) {
-			exportSignalDialog = new ExportSignalDialog(getSignalExportPresetManager(), getDialogParent(), true);
+			exportSignalDialog = new ExportSignalDialog(getDialogParent(), true);
 		}
 		return exportSignalDialog;
 	}
@@ -1304,7 +1166,7 @@ public class ViewerElementManager {
 
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
-			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(getFftFilterPresetManager(), getDialogParent(), true);
+			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(getDialogParent(), true);
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
@@ -1317,7 +1179,7 @@ public class ViewerElementManager {
 	 */
 	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(getTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(getDialogParent(), true);
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editTimeDomainSampleFilterDialog;
@@ -1352,7 +1214,7 @@ public class ViewerElementManager {
 
 	public BookFilterDialog getBookFilterDialog() {
 		if (bookFilterDialog == null) {
-			bookFilterDialog = new BookFilterDialog(getBookFilterPresetManager(), getDialogParent(), true);
+			bookFilterDialog = new BookFilterDialog(managerOfPresetsManagers.getBookFilterPresetManager(), getDialogParent(), true);
 			bookFilterDialog.setFileChooser(getFileChooser());
 		}
 		return bookFilterDialog;
@@ -1819,7 +1681,7 @@ public class ViewerElementManager {
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
 			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			signalView.setMontagePresetManager(getMontagePresetManager());
+			signalView.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
 			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());

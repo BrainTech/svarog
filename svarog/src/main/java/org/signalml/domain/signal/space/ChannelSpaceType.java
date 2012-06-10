@@ -4,7 +4,7 @@
 
 package org.signalml.domain.signal.space;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This enumerator says if the whole signal is in the

@@ -5,7 +5,8 @@
 package org.signalml.domain.signal.space;
 
 import java.io.Serializable;
-import org.signalml.domain.signal.MultichannelSampleSource;
+
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;

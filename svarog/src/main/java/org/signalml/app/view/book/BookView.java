@@ -200,7 +200,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 		contentPane = new JPanel(new BorderLayout());
 
-		plot = createBookPlot();
+		createBookPlot();
 
 		buildMainToolBar();
 
@@ -234,9 +234,10 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	}
 
-	private BookPlot createBookPlot() throws SignalMLException {
+	private void createBookPlot() throws SignalMLException {
 
-		BookPlot plot = new BookPlot(this);
+		plot = new BookPlot(this);
+		plot.loadSettingsFromApplicationConfiguration();
 		plot.setPleaseWaitDialog(pleaseWaitDialog);
 
 		BookPlotPopupProvider bookPlotPopupProvider = new BookPlotPopupProvider(plot);
@@ -259,8 +260,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		plot.initialize();
 
 		plot.requestFocusInWindow();
-
-		return plot;
 
 	}
 
@@ -630,7 +629,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 	public JComboBox getPaletteComboBox() {
 		if (paletteComboBox == null) {
 
-			DefaultComboBoxModel model = new DefaultComboBoxModel(new Object[] { RainbowMapPalette.getInstance(), GrayscaleMapPalette.getInstance() });
+			DefaultComboBoxModel model = new DefaultComboBoxModel(WignerMapPalette.values());
 
 			paletteComboBox = new JComboBox(model);
 			Dimension boxDimension = new Dimension(110,25);
@@ -647,9 +646,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 				public void itemStateChanged(ItemEvent e) {
 
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-
 						plot.setPalette((WignerMapPalette) paletteComboBox.getSelectedItem());
-
 					}
 
 				}
@@ -681,9 +678,8 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 				public void itemStateChanged(ItemEvent e) {
 
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-
-						plot.setScaleType((WignerMapScaleType) scaleComboBox.getSelectedItem());
-
+						WignerMapScaleType scaleType = (WignerMapScaleType) scaleComboBox.getSelectedItem();
+						plot.setScaleType(scaleType);
 					}
 
 				}
@@ -863,8 +859,17 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 		}
 
+	}
 
+	/**
+	 * Saves settings set for this view to the {@ling ApplicationConfiguration}.
+	 */
+	public void saveSettingsToApplicationConfiguration()
+	{
+		applicationConfig.setScaleType((WignerMapScaleType) scaleComboBox.getSelectedItem());
+		applicationConfig.setReconstructionHeight(reconstructionHeightSlider.getValue());
+		applicationConfig.setPalette((WignerMapPalette) paletteComboBox.getSelectedItem());
 
-
+		getPlotOptionsDialog().saveSettingsToApplicationConfiguration();
 	}
 }

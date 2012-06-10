@@ -9,9 +9,9 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JComboBox;
 
-import org.signalml.app.config.preset.EegSystemsPresetManager;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.view.components.AbstractPanel;
 import org.signalml.domain.montage.Montage;

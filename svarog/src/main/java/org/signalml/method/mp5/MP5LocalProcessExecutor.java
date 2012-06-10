@@ -11,10 +11,10 @@ import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 

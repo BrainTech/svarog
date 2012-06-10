@@ -16,8 +16,8 @@ import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
-
 import java.util.List;
+
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -31,9 +31,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-import org.signalml.app.config.preset.Preset;
-import org.signalml.app.config.preset.PresetManager;
 
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.TagStylePaletteDescriptor;
 import org.signalml.app.model.tag.TagStyleTreeModel;
@@ -41,7 +41,6 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.TagStylePropertiesPanel;
 import org.signalml.app.view.components.TagStyleTree;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.SignalMLException;
@@ -49,10 +48,6 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
-
-import org.springframework.validation.Errors;
 
 /**
  * Dialog which allows to add, remove and edit {@link TagStyle tag styles}.
@@ -196,8 +191,8 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	/**
 	 * Constructor. Sets message source.
 	 */
-	public TagStylePaletteDialog(PresetManager presetManager) {
-		super(presetManager);
+	public TagStylePaletteDialog() {
+		super(SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager());
 	}
 
 	/**
@@ -206,8 +201,8 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public TagStylePaletteDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+	public TagStylePaletteDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager(), w, isModal);
 	}
 
 	/**

@@ -4,9 +4,9 @@
 
 package org.signalml.domain.signal.space;
 
-import org.signalml.domain.signal.MultichannelSampleFilter;
 import org.signalml.domain.signal.MultichannelSampleMontage;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.filter.MultichannelSampleFilter;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This class tells if the {@link MultichannelSampleSource source} had been

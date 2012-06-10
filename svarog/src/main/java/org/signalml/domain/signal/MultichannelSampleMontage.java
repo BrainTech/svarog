@@ -17,6 +17,7 @@ import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.SignalConfigurer;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 
 /**

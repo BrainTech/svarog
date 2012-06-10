@@ -5,7 +5,7 @@
 package org.signalml.domain.signal.space;
 
 import org.signalml.domain.signal.MultichannelSampleProcessor;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This class represents the source of samples for the selected channels.

@@ -12,8 +12,10 @@ import java.io.File;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
+import org.signalml.app.config.preset.PresetManager;
+import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.NewTagDescriptor;
@@ -25,7 +27,6 @@ import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -75,9 +76,9 @@ public class NewTagDialog extends AbstractDialog  {
 	 * @param f the parent window or null if there is no parent
 	 * @param isModal dialog blocks top-level windows if true
 	 */
-	public NewTagDialog(StyledTagSetPresetManager styledTagSetPresetManager, Window f, boolean isModal) {
+	public NewTagDialog(Window f, boolean isModal) {
 		super(f, isModal);
-		this.styledTagSetPresetManager = styledTagSetPresetManager;
+		this.styledTagSetPresetManager = SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager();
 	}
 
 	/**

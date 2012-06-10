@@ -29,10 +29,9 @@ import org.signalml.app.model.document.OpenTagDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
-import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.montage.MontagePresetManager;
+import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
@@ -55,6 +54,7 @@ import org.signalml.exception.MissingCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.util.Util;
 
 /**
@@ -1171,7 +1171,14 @@ public class DocumentFlowIntegrator {
 	 * @param makeActive TODO not used
 	 */
 	private void onBookDocumentAdded(BookDocument document, boolean makeActive) {
+		Document activeDocument = this.actionFocusManager.getActiveDocument();
 
+		if (activeDocument != null) {
+			DocumentView documentView = activeDocument.getDocumentView();
+			if (documentView instanceof BookView) {
+				((BookView) documentView).saveSettingsToApplicationConfiguration();
+			}
+		}
 	}
 
 	/**

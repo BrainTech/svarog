@@ -7,6 +7,7 @@ package org.signalml.app.view.components.dialogs;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -15,13 +16,12 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
-
-import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 
 
@@ -181,14 +181,17 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 	protected JPanel createControlPane() {
 
 		JPanel controlPane = super.createControlPane();
+		controlPane.setBorder(new EmptyBorder(8, 4, 2, 4));
 
 		getOkAction().putValue(AbstractAction.NAME, _("Finish"));
+		getOkButton().setPreferredSize(new Dimension(120, 25));
 
 		controlPane.add(Box.createHorizontalStrut(5), 1);
 
 		nextAction = new NextAction();
 		nextButton = new JButton(nextAction);
 		nextButton.setHorizontalTextPosition(JButton.LEADING);
+		nextButton.setPreferredSize(new Dimension(130, 25));
 		getRootPane().setDefaultButton(nextButton);
 		controlPane.add(nextButton, 1);
 
@@ -196,6 +199,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 
 		previousAction = new PreviousAction();
 		previousButton = new JButton(previousAction);
+		previousButton.setPreferredSize(new Dimension(130, 25));
 		controlPane.add(previousButton, 1);
 		previousAction.setEnabled(false);
 

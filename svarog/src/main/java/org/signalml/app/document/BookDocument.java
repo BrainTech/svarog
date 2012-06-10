@@ -12,9 +12,10 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.components.dialogs.OptionPane;
-import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.BookFormatException;
+import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
@@ -364,6 +365,16 @@ public class BookDocument extends AbstractFileDocument {
 
 		return list;
 
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		super.setActive(active);
+
+		BookView view = (BookView) getDocumentView();
+		if (active == false) {
+			view.saveSettingsToApplicationConfiguration();
+		}
 	}
 
 }

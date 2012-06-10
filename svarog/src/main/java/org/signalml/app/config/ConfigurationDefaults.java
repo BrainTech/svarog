@@ -9,8 +9,7 @@ import java.util.Properties;
 import javax.swing.ToolTipManager;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.book.GrayscaleMapPalette;
-import org.signalml.app.view.book.RainbowMapPalette;
+import org.signalml.app.view.book.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
@@ -122,15 +121,11 @@ public class ConfigurationDefaults {
 		config.setMaxTimeScale(getDouble("application.maxTimeScale"));
 
 		final String paletteString = getString("application.palette");
-		if (GREYSCALE_PALETTE.equalsIgnoreCase(paletteString)) {
-			config.setPalette(GrayscaleMapPalette.getInstance());
-		} else {
-			config.setPalette(RainbowMapPalette.getInstance());
-		}
+		config.setPalette(WignerMapPalette.valueOf(paletteString));
 
 		config.setScaleType(WignerMapScaleType.valueOf(getString("application.scaleType")));
 
-		config.setSignalAntialiased(getBoolean("application.signalAntialiased"));
+		config.setSignalInBookAntialiased(getBoolean("application.signalInBookAntialiased"));
 		config.setOriginalSignalVisible(getBoolean("application.originalSignalVisible"));
 		config.setFullReconstructionVisible(getBoolean("application.fullReconstructionVisible"));
 		config.setReconstructionVisible(getBoolean("application.reconstructionVisible"));

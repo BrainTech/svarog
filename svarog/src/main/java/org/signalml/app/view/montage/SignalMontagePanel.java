@@ -4,29 +4,28 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Window;
-import java.net.URL;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
+import org.signalml.app.config.preset.managers.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.managers.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
-import org.signalml.app.view.components.presets.AbstractPresetPanel;
-import org.signalml.app.view.components.presets.PresetControlsPanel;
+import org.signalml.app.view.components.presets.AbstractPanelWithPresets;
+import org.signalml.app.view.components.presets.ComplexPresetControlsPanel;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
-import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
@@ -38,7 +37,7 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
-public class SignalMontagePanel extends AbstractPresetPanel {
+public class SignalMontagePanel extends AbstractPanelWithPresets {
 
 	/**
 	 * This dialog is used when edititing
@@ -84,13 +83,17 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 
 	private ValidationErrorsDialog errorsDialog;
 
-	public SignalMontagePanel(ViewerElementManager viewerElementManager) {
-		super(viewerElementManager.getMontagePresetManager());
-		this.predefinedTimeDomainSampleFilterPresetManager = viewerElementManager.getPredefinedTimeDomainFiltersPresetManager();
-		this.eegSystemsPresetManager = viewerElementManager.getEegSystemsPresetManager();
-		this.timeDomainSampleFilterPresetManager = viewerElementManager.getTimeDomainSampleFilterPresetManager();
-		this.fftFilterPresetManager = viewerElementManager.getFftFilterPresetManager();
-		setFileChooser(viewerElementManager.getFileChooser());
+	public SignalMontagePanel(ViewerFileChooser fileChooser) {
+
+		super(SvarogApplication.getManagerOfPresetsManagers().getMontagePresetManager());
+
+		ManagerOfPresetManagers managerOfPresetsManagers = SvarogApplication.getManagerOfPresetsManagers();
+		this.predefinedTimeDomainSampleFilterPresetManager = managerOfPresetsManagers.getPredefinedTimeDomainSampleFilterPresetManager();
+		this.eegSystemsPresetManager = managerOfPresetsManagers.getEegSystemsPresetManager();
+		this.timeDomainSampleFilterPresetManager = managerOfPresetsManagers.getTimeDomainSampleFilterPresetManager();
+		this.fftFilterPresetManager = managerOfPresetsManagers.getFftFilterPresetManager();
+
+		setFileChooser(fileChooser);
 
 		this.setLayout(new BorderLayout());
 		this.add(createInterface(), BorderLayout.CENTER);
@@ -122,9 +125,9 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 	}
 
 	@Override
-	protected PresetControlsPanel getPresetControlsPanel() {
+	protected ComplexPresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null)
-			presetControlsPanel = new PresetControlsPanel(this, presetManager, true);
+			presetControlsPanel = new ComplexPresetControlsPanel(this, presetManager, true);
 		return presetControlsPanel;
 	}
 
@@ -157,7 +160,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 
 	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
-			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(fftFilterPresetManager, this.getParentWindow(), true);
+			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(this.getParentWindow(), true);
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
@@ -170,7 +173,7 @@ public class SignalMontagePanel extends AbstractPresetPanel {
 	 */
 	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(timeDomainSampleFilterPresetManager, this.getParentWindow(), true);
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(this.getParentWindow(), true);
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editTimeDomainSampleFilterDialog;

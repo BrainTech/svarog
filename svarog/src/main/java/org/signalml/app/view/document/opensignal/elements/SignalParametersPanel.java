@@ -299,12 +299,14 @@ public class SignalParametersPanel extends JPanel {
 
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			setEnabledToAll(true);
+			getSamplingFrequencyComboBox().setEditable(true);
 		}
 		else if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experiment = (ExperimentDescriptor) openSignalDescriptor;
 
 			if (experiment.getStatus() == ExperimentStatus.NEW) {
 				getSamplingFrequencyComboBox().setEnabled(true);
+				getSamplingFrequencyComboBox().setEditable(false);
 			} else {
 				setEnabledToAll(false);
 			}
@@ -337,6 +339,9 @@ public class SignalParametersPanel extends JPanel {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
 			List<Float> samplingFrequencies = experimentDescriptor.getAmplifier().getSamplingFrequencies();
 			getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(samplingFrequencies.toArray()));
+
+			float samplingFrequency = experimentDescriptor.getSignalParameters().getSamplingFrequency();
+			getSampleTypeComboBox().setSelectedItem(samplingFrequency);
 		}
 		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 

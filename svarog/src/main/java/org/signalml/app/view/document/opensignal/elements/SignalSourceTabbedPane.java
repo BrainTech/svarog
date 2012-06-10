@@ -104,7 +104,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		File file = fileChooserPanel.getSelectedFile();
 		String extension = Util.getFileExtension(file, false);
 
-		if (file == null || extension == null) {
+		if (file == null || file.isDirectory()) {
 			openSignalDescriptor = null;
 			fireOpenSignalDescriptorChanged();
 			return;
@@ -127,10 +127,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	protected void autodetectFileTypeAndReadMetadata(File file) {
 		String extension = Util.getFileExtension(file, false);
-		if (extension.equalsIgnoreCase("raw") || extension.equalsIgnoreCase("bin")) {
-			readRawFileMetadata(file);
-		}
-		else {
+
+		if ("edf".equalsIgnoreCase(extension) || "d".equals(extension)){
 			String formatName = null;
 			if (extension.equalsIgnoreCase("edf")) {
 				formatName = "EDF";
@@ -138,8 +136,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			else if (extension.equalsIgnoreCase("d")) {
 				formatName = "EASYS";
 			}
-			else
-				return;
 
 			SignalMLCodecManager codecManager = viewerElementManager.getCodecManager();
 			SignalMLCodec codec = codecManager.getCodecForFormat(formatName);
@@ -152,6 +148,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			}
 
 			readSignalMLMetadata(file, codec);
+		} else {
+			readRawFileMetadata(file);
 		}
 	}
 

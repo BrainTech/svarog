@@ -5,7 +5,7 @@ import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Interface for all views (panels or dialogs) that are capable of
- * returning a preset or other {@link PresetControlsPanel} can
+ * returning a preset or other {@link ComplexPresetControlsPanel} can
  * set presets to them.
  *
  * @author Piotr Szachewicz

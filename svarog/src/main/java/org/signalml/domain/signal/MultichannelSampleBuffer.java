@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This class represents a multichannel source of signal samples with the

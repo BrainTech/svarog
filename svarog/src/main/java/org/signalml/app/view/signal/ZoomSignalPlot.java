@@ -20,7 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.util.Util;
 
 /** ZoomSignalPlot

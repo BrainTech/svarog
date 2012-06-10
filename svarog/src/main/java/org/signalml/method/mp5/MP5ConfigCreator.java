@@ -195,9 +195,6 @@ public class MP5ConfigCreator {
 
 	public void writeRuntimeConfig(MP5RuntimeParameters parameters, Formatter formatter) {
 
-		formatter.format("%s %f%n", SAMPLING_FREQUENCY, parameters.getSamplingFrequency());
-		formatter.format("%n");
-
 		formatter.format("%s %s%n", NAME_OF_DATA_FILE, parameters.getSignalFile().getName());
 
 		formatter.format("%s %.6f%n", POINTS_PER_MICROVOLT, parameters.getPointsPerMicrovolt());

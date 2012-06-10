@@ -25,8 +25,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.managers.BookFilterPresetManager;
 import org.signalml.app.model.book.BookFilterDescriptor;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;

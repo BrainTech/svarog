@@ -126,4 +126,10 @@ public abstract class AbstractDocument implements Document {
 	public PropertyChangeListener[] getPropertyChangeListeners() {
 		return pcSupport.getPropertyChangeListeners();
 	}
+
+	@Override
+	public void setActive(boolean active) {
+		//if anything should be done after this state change
+		//this method should be overriden.
+	}
 }
