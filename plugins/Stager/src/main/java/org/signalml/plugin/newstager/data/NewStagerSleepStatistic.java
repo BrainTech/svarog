@@ -4,21 +4,16 @@
 
 package org.signalml.plugin.newstager.data;
 
-import java.beans.IntrospectionException;
-import java.util.LinkedList;
-import java.util.List;
+import static org.signalml.util.FormatUtils.getPrettyTimeString;
+
 import java.util.Set;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.components.LabelledPropertyDescriptor;
-import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.domain.tag.TagStatistic;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
-
-import static org.signalml.util.FormatUtils.getPrettyTimeString;
 
 /**
  * NewStagerSleepStatistic
@@ -27,8 +22,7 @@ import static org.signalml.util.FormatUtils.getPrettyTimeString;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class NewStagerSleepStatistic extends TagStatistic implements
-	PropertyProvider {
+public class NewStagerSleepStatistic extends TagStatistic {
 
 	protected static final Logger logger = Logger
 										   .getLogger(NewStagerSleepStatistic.class);
@@ -308,63 +302,6 @@ public class NewStagerSleepStatistic extends TagStatistic implements
 
 	public String getEmgTonePretty() {
 		return new String("" + emgTone);
-	}
-
-	@Override
-	public List<LabelledPropertyDescriptor> getPropertyList()
-	throws IntrospectionException {
-
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
-
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.eegRecordingTime",
-					 "totalLengthPretty", NewStagerSleepStatistic.class,
-					 "getTotalLengthPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.sleepPeriodTime",
-					 "sleepPeriodTimePretty", NewStagerSleepStatistic.class,
-					 "getSleepPeriodTimePretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.totalSleepTime",
-					 "totalSleepTimePretty", NewStagerSleepStatistic.class,
-					 "getTotalSleepTimePretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.sleepEfficiencyIndex",
-					 "sleepEfficiencyIndexPretty", NewStagerSleepStatistic.class,
-					 "getSleepEfficiencyIndexPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.sleepOnsetLatency",
-					 "sleepOnsetLatencyPretty", NewStagerSleepStatistic.class,
-					 "getSleepOnsetLatencyPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.sleepOnsetToSWS",
-					 "sleepOnsetToSWSPretty", NewStagerSleepStatistic.class,
-					 "getSleepOnsetToSWSPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.sleepOnsetToREM",
-					 "sleepOnsetToREMPretty", NewStagerSleepStatistic.class,
-					 "getSleepOnsetToREMPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.wakePeriodsAfterSleepOnset",
-					 "wakeInsidePropperSleepTimePretty",
-					 NewStagerSleepStatistic.class,
-					 "getWakeInsidePropperSleepTimePretty", null));
-
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.deltaThr", "deltaThrPretty",
-					 NewStagerSleepStatistic.class, "deltaThrPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.alphaThr", "alphaThrPretty",
-					 NewStagerSleepStatistic.class, "alphaThrPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.spindleThr", "spindleThrPretty",
-					 NewStagerSleepStatistic.class, "spindleThrPretty", null));
-		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepStatistic.emgTone", "emgTonePretty",
-					 NewStagerSleepStatistic.class, "emgTonePretty", null));
-
-		return list;
-
 	}
 
 }

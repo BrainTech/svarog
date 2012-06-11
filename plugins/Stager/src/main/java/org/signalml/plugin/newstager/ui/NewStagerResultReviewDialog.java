@@ -29,14 +29,12 @@ import javax.swing.event.DocumentEvent;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.workspace.ViewerPropertySheet;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.SleepTagName;
 import org.signalml.domain.tag.StyledTagSet;
@@ -70,9 +68,9 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 	private JButton compareButton;
 	private JButton compareExcludingArtifactsButton;
 
-	private PropertySheetModel propertySheetModel;
-	private ViewerPropertySheet propertySheet;
-	private JScrollPane propertyScrollPane;
+	private NewStagerTotalStatisticsTableModel totalsTableModel;
+	private NewStagerTotalStatisticsTable totalsTable;
+	private JScrollPane totalsScrollPane;
 
 	private NewStagerSleepStatisticTableModel sleepStatisticTableModel;
 	private NewStagerSleepStatisticTable sleepStatisticTable;
@@ -211,26 +209,26 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		return compareExcludingArtifactsButton;
 	}
 
-	public PropertySheetModel getPropertySheetModel() {
-		if (propertySheetModel == null) {
-			propertySheetModel = new PropertySheetModel();
+	public NewStagerTotalStatisticsTableModel getTotalsTableModel() {
+		if (totalsTableModel == null) {
+			totalsTableModel = new NewStagerTotalStatisticsTableModel();
 		}
-		return propertySheetModel;
+		return totalsTableModel;
 	}
 
-	public ViewerPropertySheet getPropertySheet() {
-		if (propertySheet == null) {
-			propertySheet = new ViewerPropertySheet(getPropertySheetModel());
+	public NewStagerTotalStatisticsTable getTotalsTable() {
+		if (totalsTable == null) {
+			totalsTable = new NewStagerTotalStatisticsTable(getTotalsTableModel());
 		}
-		return propertySheet;
+		return totalsTable;
 	}
 
-	public JScrollPane getPropertyScrollPane() {
-		if (propertyScrollPane == null) {
-			propertyScrollPane = new JScrollPane(getPropertySheet());
-			propertyScrollPane.setPreferredSize(new Dimension(400, 200));
+	public JScrollPane getTotalsScrollPane() {
+		if (totalsScrollPane == null) {
+			totalsScrollPane = new JScrollPane(getTotalsTable());
+			totalsScrollPane.setPreferredSize(new Dimension(400, 200));
 		}
-		return propertyScrollPane;
+		return totalsScrollPane;
 	}
 
 	public NewStagerSleepStatisticTableModel getSleepStatisticTableModel() {
@@ -262,7 +260,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP,
 					JTabbedPane.SCROLL_TAB_LAYOUT);
 
-			tabbedPane.addTab(_("Totals"), getPropertyScrollPane());
+			tabbedPane.addTab(_("Totals"), getTotalsScrollPane());
 			tabbedPane.addTab(_("Stages"), getSleepStatisticScrollPane());
 		}
 		return tabbedPane;
@@ -291,7 +289,7 @@ public class NewStagerResultReviewDialog extends AbstractPluginDialog {
 		NewStagerSleepStatistic sleepStatistic = new NewStagerSleepStatistic(
 				descriptor.getStagerResult(), descriptor.getPrimaryTag(),
 				descriptor.getSegmentCount(), descriptor.getSegmentLength());
-		getPropertySheetModel().setSubject(sleepStatistic);
+		getTotalsTableModel().setStatistic(sleepStatistic);
 		getSleepStatisticTableModel().setStatistic(sleepStatistic);
 
 		updateActionEnabled();

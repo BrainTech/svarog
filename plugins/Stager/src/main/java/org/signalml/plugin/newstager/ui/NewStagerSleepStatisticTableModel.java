@@ -13,7 +13,6 @@ import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
 import org.signalml.domain.tag.SleepTagName;
-import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.newstager.data.NewStagerSleepStatistic;
 
@@ -156,9 +155,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 			return Double.class;
 
 		default:
-			throw new SanityCheckException("Unsupported index [" + columnIndex
-					+ "]");
-
+			return null;
 		}
 	}
 
@@ -182,8 +179,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 			return _("%SPT");
 
 		default:
-			throw new SanityCheckException("Unsupported index [" + column + "]");
-
+			return "";
 		}
 	}
 
@@ -220,9 +216,7 @@ public class NewStagerSleepStatisticTableModel extends AbstractTableModel {
 			return data[rowIndex].spt;
 
 		default:
-			throw new SanityCheckException("Unsupported index [" + columnIndex
-					+ "]");
-
+			return "";
 		}
 	}
 
