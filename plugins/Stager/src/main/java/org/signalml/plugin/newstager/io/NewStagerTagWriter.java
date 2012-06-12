@@ -28,8 +28,9 @@ public class NewStagerTagWriter {
 	}
 
 	public File writeTags(NewStagerTagCollectionType tagType,
-						  EnumSet<NewStagerTagCollectionType> stages,
-						  Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap) throws IOException, SignalMLException {
+			EnumSet<NewStagerTagCollectionType> stages,
+			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap)
+			throws IOException, SignalMLException {
 
 		List<PluginTagGroup> sleepTags = new LinkedList<PluginTagGroup>();
 		for (Entry<NewStagerTagCollectionType, Collection<IPluginTagDef>> entry : tagMap
@@ -38,17 +39,19 @@ public class NewStagerTagWriter {
 			if (stages.contains(entry.getKey())) {
 				Collection<IPluginTagDef> tagCollection = entry.getValue();
 				if (!tagCollection.isEmpty()) {
+					NewStagerTagCollectionType key = entry.getKey();
 					sleepTags.add(new PluginTagGroup(this
-													 .getTagNameFromType(entry.getKey()),
-													 this.getGroupTypeFromCollectionType(tagType), tagCollection, 1,
-													 "test")); // TODO 1
+							.getTagNameFromType(key), this
+							.getGroupTypeFromCollectionType(tagType),
+							tagCollection, 1, this
+									.getTagDescriptionFromType(key)));
 				}
 			}
 		}
 
 		File resultFile = this.getTagFileName(tagType);
-		PluginTagWriter pluginTagWriter = new PluginTagWriter(
-			resultFile, new PluginTagWriterConfig());
+		PluginTagWriter pluginTagWriter = new PluginTagWriter(resultFile,
+				new PluginTagWriterConfig());
 		pluginTagWriter.writeTags(sleepTags);
 
 		return resultFile;
@@ -97,7 +100,7 @@ public class NewStagerTagWriter {
 		case CONSOLIDATED_SLEEP_STAGE_4:
 			return "4";
 		case SLEEP_STAGE_R:
-		case CONSOLIDATED_SLEEP_STAGE_R:
+		case CONSOLIDATED_SLEEP_STAGE_REM:
 			return "r";
 		case SLEEP_STAGE_W:
 		case CONSOLIDATED_SLEEP_STAGE_W:
@@ -109,14 +112,47 @@ public class NewStagerTagWriter {
 		}
 	}
 	
+	private String getTagDescriptionFromType(NewStagerTagCollectionType tagType) {
+		switch (tagType) {
+		case HYPNO_ALPHA:
+			return "artifact";
+		case HYPNO_SPINDLE:
+			return "Stage W";
+		case SLEEP_STAGE_1:
+		case CONSOLIDATED_SLEEP_STAGE_1:
+			return "Stage 1";
+		case SLEEP_STAGE_2:
+		case CONSOLIDATED_SLEEP_STAGE_2:
+			return "Stage 2";
+		case SLEEP_STAGE_3:
+		case CONSOLIDATED_SLEEP_STAGE_3:
+			return "Stage 3";
+		case SLEEP_STAGE_4:
+		case CONSOLIDATED_SLEEP_STAGE_4:
+			return "Stage 4";
+		case SLEEP_STAGE_R:
+		case CONSOLIDATED_SLEEP_STAGE_REM:
+			return "Stage REM";
+		case SLEEP_STAGE_W:
+		case CONSOLIDATED_SLEEP_STAGE_W:
+			return "Stage W";
+		case CONSOLIDATED_SLEEP_STAGE_M:
+			return "MT";
+		default:
+			return "";
+		}
+
+	}
+
+
 	private SignalSelectionType getGroupTypeFromCollectionType(
 			NewStagerTagCollectionType tagType) {
 		switch (tagType) {
-			case CONSOLIDATED_SLEEP_PAGES:
-			case SLEEP_PAGES:
-				return SignalSelectionType.PAGE;
-			default:
-				return SignalSelectionType.CHANNEL;
+		case CONSOLIDATED_SLEEP_PAGES:
+		case SLEEP_PAGES:
+			return SignalSelectionType.PAGE;
+		default:
+			return SignalSelectionType.CHANNEL;
 		}
 	}
 }
