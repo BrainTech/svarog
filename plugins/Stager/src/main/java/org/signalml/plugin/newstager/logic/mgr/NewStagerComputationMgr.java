@@ -10,29 +10,31 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.PluginCheckedThreadGroup;
 import org.signalml.plugin.method.logic.PluginComputationMgr;
 import org.signalml.plugin.newstager.data.NewStagerResult;
+import org.signalml.plugin.newstager.data.NewStagerSignalStatsResult;
+import org.signalml.plugin.newstager.data.NewStagerSleepStats;
 import org.signalml.plugin.newstager.data.logic.NewStagerComputationProgressPhase;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrData;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrStepData;
 import org.signalml.plugin.newstager.data.logic.NewStagerTagWriteStepResult;
 
 public class NewStagerComputationMgr extends
-	PluginComputationMgr<NewStagerMgrData, NewStagerResult> {
+		PluginComputationMgr<NewStagerMgrData, NewStagerResult> {
 
-	protected static final Logger logger = Logger.getLogger(NewStagerComputationMgr.class);
+	protected static final Logger logger = Logger
+			.getLogger(NewStagerComputationMgr.class);
 
 	protected class TrackerProxy
-		extends
-		AbstractPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> {
+			extends
+			AbstractPluginComputationMgrStepTrackerProxy<NewStagerComputationProgressPhase> {
 
 		public TrackerProxy(PluginCheckedThreadGroup threadGroup,
-							MethodExecutionTracker tracker) {
+				MethodExecutionTracker tracker) {
 			super(threadGroup, tracker);
 		}
 
@@ -52,7 +54,7 @@ public class NewStagerComputationMgr extends
 
 		@Override
 		protected String getMessageForPhase(
-			NewStagerComputationProgressPhase phase, Object... arguments) {
+				NewStagerComputationProgressPhase phase, Object... arguments) {
 			switch (phase) {
 			case SIGNAL_STATS_PREPARE_PHASE:
 				return _("Preparing");
@@ -60,11 +62,12 @@ public class NewStagerComputationMgr extends
 				return _("Reading source data");
 			case SIGNAL_STATS_BLOCK_COMPUTATION_PHASE:
 				return _R("Computing signal statistics (block {0} of {1})",
-						  arguments);
+						arguments);
 			case BOOK_FILE_INITIAL_READ_PHASE:
 				return _("Reading book file");
 			case BOOK_PROCESSING_PHASE:
-				return _R("Processing book atoms (segment {0} of {1})", arguments);
+				return _R("Processing book atoms (segment {0} of {1})",
+						arguments);
 			case TAG_WRITING_PREPARE_PHASE:
 				return _("Preparing to write tag files");
 			case TAG_WRITING_ALPHA:
@@ -96,8 +99,8 @@ public class NewStagerComputationMgr extends
 		this.trackerProxy = new TrackerProxy(this.getThreadGroup(), tracker);
 
 		NewStagerMgrStepData data = new NewStagerMgrStepData(
-			this.data.stagerData, this.data.constants, this.trackerProxy,
-			this.getThreadFactory());
+				this.data.stagerData, this.data.constants, this.trackerProxy,
+				this.getThreadFactory());
 
 		this.steps.add(new NewStagerSignalStatsStep(data));
 		this.steps.add(new NewStagerBookProcessStep(data));
@@ -108,8 +111,9 @@ public class NewStagerComputationMgr extends
 
 	@Override
 	protected void initializeRun(
-		Map<IPluginComputationMgrStep, Integer> stepTicks) {
-		for (Map.Entry<IPluginComputationMgrStep, Integer> entry : stepTicks.entrySet()) {
+			Map<IPluginComputationMgrStep, Integer> stepTicks) {
+		for (Map.Entry<IPluginComputationMgrStep, Integer> entry : stepTicks
+				.entrySet()) {
 			this.trackerProxy.setTickerLimit(entry.getKey(), entry.getValue());
 		}
 	}
@@ -121,7 +125,9 @@ public class NewStagerComputationMgr extends
 		}
 
 		NewStagerTagWriteStepResult castedWriterResult;
+		NewStagerSignalStatsResult castedStatsResult;
 		try {
+			castedStatsResult = (NewStagerSignalStatsResult) this.stepResults.get(this.steps.get(0));
 			castedWriterResult = (NewStagerTagWriteStepResult) this.stepResults
 								 .get(this.steps.get(2));
 		} catch (ClassCastException e) {
@@ -129,9 +135,14 @@ public class NewStagerComputationMgr extends
 			return null;
 		}
 
+		NewStagerSleepStats thresholds = castedStatsResult.signalStatCoeffs;
+		
 		NewStagerResult result = new NewStagerResult();
 		result.setTagFile(new File(castedWriterResult.primaryTagFilePath));
+		result.setAlphaThr(thresholds.alphaThreshold);
+		result.setDeltaThr(thresholds.deltaThreshold);
+		result.setSpindleThr(thresholds.spindleThreshold);
+		result.setEmgTone(thresholds.toneMThreshold);
 		return result;
 	}
-
 }

@@ -7,7 +7,7 @@ import org.signalml.plugin.newstager.data.NewStagerArtifactAlgorithmData;
 import org.signalml.plugin.newstager.exception.NewStagerPluginException;
 
 public class NewStagerArtifactToneEMGAlgorithm extends
-	NewStagerArtifactAnalysisAlgorithmBase {
+		NewStagerArtifactAnalysisAlgorithmBase {
 
 	private final double percents[] = { 10.0d, 90.0d };
 
@@ -21,15 +21,16 @@ public class NewStagerArtifactToneEMGAlgorithm extends
 		double channelSignal[];
 
 		try {
-			channelSignal = this.getChannelData(this.data.channels, PluginChannel.EMG, signal);
+			channelSignal = this.getChannelData(this.data.channels,
+					PluginChannel.EMG, signal);
 		} catch (NewStagerPluginException e) {
 			return 0.0d;
 		}
 
 		double mean[] = this.computeItermediateMeanFiltered(channelSignal,
-						NewStagerArtifactAnalysisAlgorithmBase.butterEMGNum,
-						NewStagerArtifactAnalysisAlgorithmBase.butterEMGDen,
-						this.data.constants);
+				NewStagerArtifactAnalysisAlgorithmBase.butterEMGNum,
+				NewStagerArtifactAnalysisAlgorithmBase.butterEMGDen,
+				this.data.constants);
 
 		if (mean == null) {
 			return 0.0d;
@@ -61,8 +62,12 @@ public class NewStagerArtifactToneEMGAlgorithm extends
 		double result[] = new double[percentiles.length];
 		double percents[] = new double[source.length];
 
+		if (source.length == 0) {
+			return result;
+		}
+
 		for (int i = 0; i < source.length; ++i) {
-			percents[i] = 100.0d / source.length * ((double)(i + 1) - 0.5d);
+			percents[i] = 100.0d / source.length * ((double) (i + 1) - 0.5d);
 		}
 
 		for (int p = 0; p < percentiles.length; ++p) {
@@ -71,18 +76,20 @@ public class NewStagerArtifactToneEMGAlgorithm extends
 				k = -k - 1;
 			}
 			k = Math.max(k, 1);
-			result[p] = source[k - 1] + source.length
-						* (percentiles[p] - percents[k - 1]) / 100.d
-						* (source[k] - source[k - 1]);
+			result[p] = source[k - 1]
+					+ ((k < source.length) ? (source.length
+							* (percentiles[p] - percents[k - 1]) / 100.d * (source[k] - source[k - 1]))
+							: 0);
 		}
 
 		return result;
 	}
 
 	public static void main(String[] args) {
-		NewStagerArtifactToneEMGAlgorithm a = new NewStagerArtifactToneEMGAlgorithm(null);
+		NewStagerArtifactToneEMGAlgorithm a = new NewStagerArtifactToneEMGAlgorithm(
+				null);
 		double[] re = a.percentile(new double[] { 15, 20, 35, 40, 50 },
-								   new double[] { 10, 30, 90 });
+				new double[] { 10, 30, 90 });
 		for (int i = 0; i < re.length; i++) {
 			System.out.println(re[i]);
 		}

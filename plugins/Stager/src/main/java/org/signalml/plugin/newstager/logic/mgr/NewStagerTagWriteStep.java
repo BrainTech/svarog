@@ -137,7 +137,7 @@ public class NewStagerTagWriteStep extends
 				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_2,
 				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_3,
 				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_R,
+				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_REM,
 				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_W,
 				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M);
 	}
@@ -258,7 +258,7 @@ public class NewStagerTagWriteStep extends
 						tagTypeToCreate = NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4;
 						break;
 					case SLEEP_STAGE_R:
-						tagTypeToCreate = NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_R;
+						tagTypeToCreate = NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_REM;
 						break;
 					case SLEEP_STAGE_W:
 						tagTypeToCreate = NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_W;
