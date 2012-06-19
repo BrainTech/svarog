@@ -66,6 +66,7 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 			ASCIISignalWriter writer = new ASCIISignalWriter(signalFile, sampleSource, descriptor, this);
 			writer.writeSignal();
 		} else {
+
 			new EEGLabSignalWriter().writeSignal(signalFile, sampleSource, descriptor, signalDocument, this);
 		}
 

@@ -26,7 +26,7 @@ import com.jmatio.types.MLStructure;
 
 /**
  * Exports signal to EEGLab format.
- * 
+ *
  * @author Tomasz Sawicki
  */
 public class EEGLabSignalWriter {
@@ -35,7 +35,7 @@ public class EEGLabSignalWriter {
 
 	/**
 	 * Extracts all the tags from signal document
-	 * 
+	 *
 	 * @param signalDocument
 	 *            the signal document which has tags
 	 * @return SortedSet<Tag> all tags from this signal document
@@ -51,7 +51,7 @@ public class EEGLabSignalWriter {
 
 	/**
 	 * Writes the signal to a file in EEGLab format.
-	 * 
+	 *
 	 * @param outputPath
 	 *            output file path
 	 * @throws IOException
@@ -59,18 +59,20 @@ public class EEGLabSignalWriter {
 	 */
 	public void writeSignal(File output, MultichannelSampleSource sampleSource,
 			SignalExportDescriptor descriptor, SignalDocument signalDocument,
-			SignalWriterMonitor monitor) throws IOException {     
+			SignalWriterMonitor monitor) throws IOException {
+
         int channelCount = sampleSource.getChannelCount();
         int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
         double[][] data = new double[channelCount][sampleCount];
         String[] channelNames = new String[channelCount];
+
         int referenceChannel = 0;
 		for (int i = 0; i < channelCount; i++) {
             sampleSource.getSamples(i, data[i], 0, sampleCount, 0);
             channelNames[i] = sampleSource.getLabel(i);
 			if (sampleSource.getLabel(i).equals("Fz")) {
-
 				referenceChannel = i;
+				break;
 			}
 		}
 		double[] samplesTimes = new double[sampleCount];
@@ -78,37 +80,36 @@ public class EEGLabSignalWriter {
 		double samplingRate = sampleSource.getSamplingFrequency();
 		for (int i = 1; i < sampleCount; i++)
 			samplesTimes[i] = i * (1 / samplingRate);
-        MLStructure chanlocs = new MLStructure("chanlocs", new int[]{1, channelCount});
-        for(int i = 0; i < channelCount; ++i)
-            chanlocs.setField("labels", new MLChar("labels", channelNames[i]), i);
+
 		MLStructure eegStruct = new MLStructure("EEG", new int[] { 1, 1 });
-        eegStruct.setField("chanlocs", chanlocs);
-		String filename = output.getName();  
+		String filename = output.getName();
 		eegStruct.setField("setname", new MLChar("setname", filename.substring(0, filename.lastIndexOf("."))));
 		eegStruct.setField("filename", new MLChar("filename", filename));
-		eegStruct.setField("trials", new MLDouble("trials", new double[] { 1 },
-				1));
-		eegStruct.setField("pnts", new MLDouble("pnts",
-				new double[] { sampleCount }, 1));
-		eegStruct.setField("nbchan", new MLDouble("nbchan",
-				new double[] { channelCount }, 1));
-		eegStruct.setField("srate", new MLDouble("srate",
-				new double[] { samplingRate }, 1));
+		eegStruct.setField("trials", new MLDouble("trials", new double[] { 1 }, 1));
+		eegStruct.setField("pnts", new MLDouble("pnts", new double[] { sampleCount }, 1));
+		eegStruct.setField("nbchan", new MLDouble("nbchan", new double[] { channelCount }, 1));
+		eegStruct.setField("srate", new MLDouble("srate", new double[] { samplingRate }, 1));
 		eegStruct.setField("xmin", new MLDouble("xmin", new double[] { 0 }, 1));
-		eegStruct.setField("xmax", new MLDouble("xmax",
-				new double[] { sampleCount / samplingRate }, 1));
+		eegStruct.setField("xmax", new MLDouble("xmax", new double[] { sampleCount / samplingRate }, 1));
 		eegStruct.setField("times", new MLDouble("times", samplesTimes, 1));
-		eegStruct.setField("ref", new MLInt64("ref",
-				new long[] { referenceChannel }, 1));
+		eegStruct.setField("ref", new MLInt64("ref", new long[] { referenceChannel }, 1));
 		eegStruct.setField("saved", new MLChar("saved", "no"));
+
+		eegStruct.setField("icawinv", new MLDouble("icawinv", new double[][] { {} }));
+		eegStruct.setField("icaweights", new MLDouble("icaweights", new double[][] { {} }));
+		eegStruct.setField("icasphere", new MLDouble("icasphere", new double[][] { {} }));
+
+		eegStruct.setField("icaact", new MLDouble("icaact", new double[][] { {} }));
+
+		MLStructure chanlocs = new MLStructure("chanlocs", new int[]{1, channelCount});
+		for(int i = 0; i < channelCount; ++i)
+			 chanlocs.setField("labels", new MLChar("labels", channelNames[i]), i);
+
+		eegStruct.setField("chanlocs", chanlocs);
+
 		if (signalDocument != null && descriptor.isExportTag())
 			eegStruct.setField("event", getEventStruct(samplingRate, signalDocument));
-		eegStruct.setField("icawinv", new MLDouble("icawinv",
-				new double[][] { {} }));
-		eegStruct.setField("icaweights", new MLDouble("icaweights",
-				new double[][] { {} }));
-		eegStruct.setField("icasphere", new MLDouble("icasphere",
-				new double[][] { {} }));
+
 		eegStruct.setField("data", new MLDouble("data", data));
 		Collection<MLArray> list = new ArrayList<MLArray>();
 		list.add(eegStruct);
@@ -120,7 +121,7 @@ public class EEGLabSignalWriter {
 
 	/**
 	 * Returns event EEGLab event structure
-	 * 
+	 *
 	 * @return MLStructure event structure
 	 * @author Maciej Pawlisz
 	 */
