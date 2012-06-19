@@ -147,11 +147,14 @@
 									  resultproperty="protobuf.protoc.version.result">
 									<arg value="--version" />
 								</exec>
-								<condition property="protobuf.protoc.available"
+								<condition property="protobuf.protoc.compiler_binary"
 										   value="${protobuf.protoc}"
 										   else="true">
 									<!-- I seems very hard to do a conditional compilation. Let's
-										 then do a fake compilation instead. -->
+										 then do a fake compilation instead. If protoc is not available
+										 "true" is used instead. "true" of course doesn't do anything,
+										 so in effect, missing protoc means skipping compilation.
+									-->
 
 									<!-- protoc returns 1 on success, how lame -->
 									<equals arg1="${protobuf.protoc.version.result}" arg2="1" />
@@ -159,10 +162,10 @@
 
 								<echo message="protobuf.protoc.version.result=${protobuf.protoc.version.result}" />
 								<echo message="protobuf.protoc.version.output=${protobuf.protoc.version.output}" />
-								<echo message="protobuf.protoc.available=${protobuf.protoc.available}" />
+								<echo message="protobuf.protoc.compiler_binary=${protobuf.protoc.compiler_binary}" />
 
 								<mkdir dir="${generated_sources_dir}" />
-								<exec executable="${protobuf.protoc.available}" failonerror="true">
+								<exec executable="${protobuf.protoc.compiler_binary}" failonerror="true">
 									<arg value="-I" />
 									<arg value="${protobuf.source_dir}" />
 									<arg value="--java_out=${generated_sources_dir}"/>
