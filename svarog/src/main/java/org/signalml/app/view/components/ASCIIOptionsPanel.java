@@ -50,7 +50,7 @@ public class ASCIIOptionsPanel extends JPanel {
 		c.weightx = 100;
 		c.insets = new Insets(0, 2, 0, 2);
 		add(selectSeparatorLabel, c);
-		;
+
 		c.weightx = 1;
 		c.gridx = 1;
 		add(getSeparatorField(), c);
