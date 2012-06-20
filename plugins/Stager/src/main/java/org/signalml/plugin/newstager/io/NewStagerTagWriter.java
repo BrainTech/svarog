@@ -9,12 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.plugin.data.io.PluginTagWriterConfig;
 import org.signalml.plugin.data.tag.IPluginTagDef;
 import org.signalml.plugin.data.tag.PluginTagGroup;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.io.PluginTagWriter;
+import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerData;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 import org.signalml.util.Util;
@@ -22,9 +24,12 @@ import org.signalml.util.Util;
 public class NewStagerTagWriter {
 
 	private final NewStagerData stagerData;
+	private final NewStagerConstants constants;
 
-	public NewStagerTagWriter(final NewStagerData stagerData) {
+	public NewStagerTagWriter(final NewStagerData stagerData,
+			NewStagerConstants constants) {
 		this.stagerData = stagerData;
+		this.constants = constants;
 	}
 
 	public File writeTags(NewStagerTagCollectionType tagType,
@@ -51,7 +56,8 @@ public class NewStagerTagWriter {
 
 		File resultFile = this.getTagFileName(tagType);
 		PluginTagWriter pluginTagWriter = new PluginTagWriter(resultFile,
-				new PluginTagWriterConfig());
+				new PluginTagWriterConfig(this.constants.blockLengthInSeconds,
+						PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE));
 		pluginTagWriter.writeTags(sleepTags);
 
 		return resultFile;
@@ -111,7 +117,7 @@ public class NewStagerTagWriter {
 			return "";
 		}
 	}
-	
+
 	private String getTagDescriptionFromType(NewStagerTagCollectionType tagType) {
 		switch (tagType) {
 		case HYPNO_ALPHA:
@@ -143,7 +149,6 @@ public class NewStagerTagWriter {
 		}
 
 	}
-
 
 	private SignalSelectionType getGroupTypeFromCollectionType(
 			NewStagerTagCollectionType tagType) {
