@@ -53,13 +53,13 @@ public class TaskEvent extends EventObject {
 		this.status = status;
 	}
 
-        /**
-         * Creates new Event with specified Task source, type and  status of Event and result of Task.
-         * @param source Task which caused this Event
-         * @param type type of Event
-         * @param status status of Event
-	 * @param result result of Task
-         */
+	/**
+	 * Creates new Event with specified Task source, type and  status of Event and result of Task.
+	 * @param source Task which caused this Event
+	 * @param type type of Event
+	 * @param status status of Event
+	* @param result result of Task
+	       */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status, TaskResult result) {
 		super(source);
 		this.type = type;
@@ -67,13 +67,13 @@ public class TaskEvent extends EventObject {
 		this.result = result;
 	}
 
-        /**
-         * Creates new Event with specified Task source, type and status of Event and spacial message.
-         * @param source Task which caused this Event
-         * @param type type of Event
-         * @param status status of Event
-	 * @param message message
-         */
+	/**
+	 * Creates new Event with specified Task source, type and status of Event and spacial message.
+	 * @param source Task which caused this Event
+	 * @param type type of Event
+	 * @param status status of Event
+	* @param message message
+	       */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status, String message) {
 		super(source);
 		this.type = type;
@@ -81,15 +81,15 @@ public class TaskEvent extends EventObject {
 		this.message = message;
 	}
 
-        /**
-         * Creates new Event with specified Task source, type and status of Event and spacial message.
-	 * It also sets tickers and limit of tickers of source task.
-         * @param source Task which caused this Event
-         * @param type type of Event
-         * @param status status of Event
-         * @param tickerLimits limits of tickers of Task which caused this Event
+	/**
+	 * Creates new Event with specified Task source, type and status of Event and spacial message.
+	* It also sets tickers and limit of tickers of source task.
+	       * @param source Task which caused this Event
+	       * @param type type of Event
+	       * @param status status of Event
+	       * @param tickerLimits limits of tickers of Task which caused this Event
 	 * @param tickers tickers of Task which caused this Event
-         */
+	       */
 	public TaskEvent(Object source, TaskEventType type, TaskStatus status, int[] tickerLimits, int[] tickers) {
 		super(source);
 		this.type = type;
@@ -130,39 +130,39 @@ public class TaskEvent extends EventObject {
 		return result;
 	}
 
-        /**
-         * Retrieves the message set during construction.
-         *
-         * @return the message, might be null
-         */
+	/**
+	 * Retrieves the message set during construction.
+	 *
+	 * @return the message, might be null
+	 */
 	public String getMessage() {
 		return message;
 	}
 
-        /**
-         *  Returns the limits (maximum values) for the tickers
-         *  associated with this task. For methods which aren't
-         *  trackable an empty array should be returned. For trackable
-         *  methods the length of the array should correspond to what
-         *  is returned by {@link TrackableMethod#getTickerCount()}
-         *  for the executed method.
-         *
-         * @return the ticker limits
-         */
+	/**
+	 *  Returns the limits (maximum values) for the tickers
+	 *  associated with this task. For methods which aren't
+	 *  trackable an empty array should be returned. For trackable
+	 *  methods the length of the array should correspond to what
+	 *  is returned by {@link TrackableMethod#getTickerCount()}
+	 *  for the executed method.
+	 *
+	 * @return the ticker limits
+	 */
 	public int[] getTickerLimits() {
 		return tickerLimits;
 	}
 
-        /**
-         *  Returns the current values for the tickers associated with
-         *  this task. For methods which aren't trackable an empty
-         *  array should be returned. For trackable methods the length
-         *  of the array should correspond to what is returned by
-         *  {@link TrackableMethod#getTickerCount()} for the executed
-         *  method.
-         *
-         * @return the ticker values
-         */
+	/**
+	 *  Returns the current values for the tickers associated with
+	 *  this task. For methods which aren't trackable an empty
+	 *  array should be returned. For trackable methods the length
+	 *  of the array should correspond to what is returned by
+	 *  {@link TrackableMethod#getTickerCount()} for the executed
+	 *  method.
+	 *
+	 * @return the ticker values
+	 */
 	public int[] getTickers() {
 		return tickers;
 	}

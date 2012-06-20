@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export;
 
@@ -26,36 +26,36 @@ import org.signalml.plugin.export.resources.SvarogAccessResources;
  */
 public interface SvarogAccess {
 
-    /**
-     * Returns the interface to access Svarog i18n features.
-     * @return the interface to access Svarog i18n features
-     */
-    SvarogAccessI18n getI18nAccess();
-	
+	/**
+	 * Returns the interface to access Svarog i18n features.
+	 * @return the interface to access Svarog i18n features
+	 */
+	SvarogAccessI18n getI18nAccess();
+
 	/**
 	 * Returns the interface to access GUI features.
 	 * @return the interface to access GUI features
 	 */
 	SvarogAccessGUI getGUIAccess();
-	
+
 	/**
 	 * Returns Svarog configuration facade.
-	 * @return Svarog configuration facade 
+	 * @return Svarog configuration facade
 	 */
 	SvarogAccessConfig getConfigAccess();
 
-    /**
-     * Returns the methods and tasks in Svarog core facade.
-     * @return the methods and tasks in Svarog core facade
-     */
+	/**
+	 * Returns the methods and tasks in Svarog core facade.
+	 * @return the methods and tasks in Svarog core facade
+	 */
 	SvarogAccessMethod getMethodAccess();
-	
+
 	/**
 	 * Returns the interface to access logic features.
 	 * @return the interface to access logic features
 	 */
 	SvarogAccessSignal getSignalAccess();
-	
+
 	/**
 	 * Returns the interface to listen of changes in the program.
 	 * @return the interface to listen of changes

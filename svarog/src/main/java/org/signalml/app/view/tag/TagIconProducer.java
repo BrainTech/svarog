@@ -90,9 +90,9 @@ public class TagIconProducer {
 
 		Rectangle2D labelBounds = labelFont.getStringBounds(letter, g.getFontRenderContext());
 		g.drawString(
-		        letter,
-		        (float)((16-labelBounds.getWidth())/2),
-		        (float)(((16-labelBounds.getHeight())/2) - labelBounds.getY())
+			letter,
+			(float)((16-labelBounds.getWidth())/2),
+			(float)(((16-labelBounds.getHeight())/2) - labelBounds.getY())
 		);
 
 	}
@@ -139,9 +139,9 @@ public class TagIconProducer {
 
 		Rectangle2D labelBounds = labelFont.getStringBounds(letter, g.getFontRenderContext());
 		g.drawString(
-		        letter,
-		        (float)((16-labelBounds.getWidth())/2),
-		        (float)(((16-labelBounds.getHeight())/2) - labelBounds.getY())
+			letter,
+			(float)((16-labelBounds.getWidth())/2),
+			(float)(((16-labelBounds.getHeight())/2) - labelBounds.getY())
 		);
 
 	}

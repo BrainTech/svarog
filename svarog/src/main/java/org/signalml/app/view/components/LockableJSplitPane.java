@@ -32,88 +32,88 @@ public class LockableJSplitPane extends JSplitPane {
 	private int lockedDividerSize;
 
 	/**
-     * Creates a new <code>LockableJSplitPane</code> configured to arrange the
-     * child components side-by-side horizontally with no continuous 
-     * layout, using two buttons for the components.
-     * The initial state of this panel is {@code unlocked}.
-     */
+	 * Creates a new <code>LockableJSplitPane</code> configured to arrange the
+	 * child components side-by-side horizontally with no continuous
+	 * layout, using two buttons for the components.
+	 * The initial state of this panel is {@code unlocked}.
+	 */
 	public LockableJSplitPane() {
 		super();
 	}
 
 	/**
-     * Creates a new <code>LockableJSplitPane</code> with the specified
-     * orientation and
-     * redrawing style, and with the specified components.
-     *
-     * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
-     *                        <code>JSplitPane.VERTICAL_SPLIT</code>
-     * @param newContinuousLayout  a boolean, true for the components to 
-     *        redraw continuously as the divider changes position, false
-     *        to wait until the divider position stops changing to redraw
-     * @param newLeftComponent the <code>Component</code> that will
-     *		appear on the left
-     *        	of a horizontally-split pane, or at the top of a
-     *        	vertically-split pane
-     * @param newRightComponent the <code>Component</code> that will
-     *		appear on the right
-     *        	of a horizontally-split pane, or at the bottom of a
-     *        	vertically-split pane
-     * @exception IllegalArgumentException if <code>orientation</code>
-     *		is not one of HORIZONTAL_SPLIT or VERTICAL_SPLIT
-     */
+	 * Creates a new <code>LockableJSplitPane</code> with the specified
+	 * orientation and
+	 * redrawing style, and with the specified components.
+	 *
+	 * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
+	 *                        <code>JSplitPane.VERTICAL_SPLIT</code>
+	 * @param newContinuousLayout  a boolean, true for the components to
+	 *        redraw continuously as the divider changes position, false
+	 *        to wait until the divider position stops changing to redraw
+	 * @param newLeftComponent the <code>Component</code> that will
+	 *		appear on the left
+	 *        	of a horizontally-split pane, or at the top of a
+	 *        	vertically-split pane
+	 * @param newRightComponent the <code>Component</code> that will
+	 *		appear on the right
+	 *        	of a horizontally-split pane, or at the bottom of a
+	 *        	vertically-split pane
+	 * @exception IllegalArgumentException if <code>orientation</code>
+	 *		is not one of HORIZONTAL_SPLIT or VERTICAL_SPLIT
+	 */
 	public LockableJSplitPane(int newOrientation, boolean newContinuousLayout, Component newLeftComponent, Component newRightComponent) {
 		super(newOrientation, newContinuousLayout, newLeftComponent, newRightComponent);
 	}
 
-	 /**
-     * Creates a new <code>LockableJSplitPane</code> with the specified
-     * orientation and redrawing style.
-     *
-     * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
-     *                        <code>JSplitPane.VERTICAL_SPLIT</code>
-     * @param newContinuousLayout  a boolean, true for the components to 
-     *        redraw continuously as the divider changes position, false
-     *        to wait until the divider position stops changing to redraw
-     * @exception IllegalArgumentException if <code>orientation</code>
-     *		is not one of HORIZONTAL_SPLIT or VERTICAL_SPLIT
-     */
+	/**
+	* Creates a new <code>LockableJSplitPane</code> with the specified
+	* orientation and redrawing style.
+	*
+	* @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
+	*                        <code>JSplitPane.VERTICAL_SPLIT</code>
+	* @param newContinuousLayout  a boolean, true for the components to
+	*        redraw continuously as the divider changes position, false
+	*        to wait until the divider position stops changing to redraw
+	* @exception IllegalArgumentException if <code>orientation</code>
+	*		is not one of HORIZONTAL_SPLIT or VERTICAL_SPLIT
+	*/
 	public LockableJSplitPane(int newOrientation, boolean newContinuousLayout) {
 		super(newOrientation, newContinuousLayout);
 	}
 
 	/**
-     * Creates a new <code>LockableJSplitPane</code> with the specified
-     * orientation and
-     * with the specified components that do not do continuous
-     * redrawing.
-     *
-     * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
-     *                        <code>JSplitPane.VERTICAL_SPLIT</code>
-     * @param newLeftComponent the <code>Component</code> that will
-     *		appear on the left
-     *        	of a horizontally-split pane, or at the top of a
-     *        	vertically-split pane
-     * @param newRightComponent the <code>Component</code> that will
-     *		appear on the right
-     *        	of a horizontally-split pane, or at the bottom of a
-     *        	vertically-split pane
-     * @exception IllegalArgumentException if <code>orientation</code>
-     *		is not one of: HORIZONTAL_SPLIT or VERTICAL_SPLIT
-     */
+	 * Creates a new <code>LockableJSplitPane</code> with the specified
+	 * orientation and
+	 * with the specified components that do not do continuous
+	 * redrawing.
+	 *
+	 * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
+	 *                        <code>JSplitPane.VERTICAL_SPLIT</code>
+	 * @param newLeftComponent the <code>Component</code> that will
+	 *		appear on the left
+	 *        	of a horizontally-split pane, or at the top of a
+	 *        	vertically-split pane
+	 * @param newRightComponent the <code>Component</code> that will
+	 *		appear on the right
+	 *        	of a horizontally-split pane, or at the bottom of a
+	 *        	vertically-split pane
+	 * @exception IllegalArgumentException if <code>orientation</code>
+	 *		is not one of: HORIZONTAL_SPLIT or VERTICAL_SPLIT
+	 */
 	public LockableJSplitPane(int newOrientation, Component newLeftComponent, Component newRightComponent) {
 		super(newOrientation, newLeftComponent, newRightComponent);
 	}
 
 	/**
-     * Creates a new <code>LockableJSplitPane</code> configured with the
-     * specified orientation and no continuous layout.
-     *
-     * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
-     *                        <code>JSplitPane.VERTICAL_SPLIT</code>
-     * @exception IllegalArgumentException if <code>orientation</code>
-     *		is not one of HORIZONTAL_SPLIT or VERTICAL_SPLIT.
-     */
+	 * Creates a new <code>LockableJSplitPane</code> configured with the
+	 * specified orientation and no continuous layout.
+	 *
+	 * @param newOrientation  <code>JSplitPane.HORIZONTAL_SPLIT</code> or
+	 *                        <code>JSplitPane.VERTICAL_SPLIT</code>
+	 * @exception IllegalArgumentException if <code>orientation</code>
+	 *		is not one of HORIZONTAL_SPLIT or VERTICAL_SPLIT.
+	 */
 	public LockableJSplitPane(int newOrientation) {
 		super(newOrientation);
 	}
@@ -125,7 +125,7 @@ public class LockableJSplitPane extends JSplitPane {
 	/**
 	 * Sets if this split panel should be locked (if the user should be able to
 	 * move the divider).
-	 * 
+	 *
 	 * XXX ugly hack
 	 *
 	 * As of Swing/Java 6.0 there seems to be no other way prevent the user from moving the divider.

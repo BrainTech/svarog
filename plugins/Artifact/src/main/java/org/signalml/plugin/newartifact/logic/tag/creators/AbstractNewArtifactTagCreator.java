@@ -23,11 +23,11 @@ public abstract class AbstractNewArtifactTagCreator {
 		}
 
 		return new NewArtifactTagResult(new PluginTagGroup(
-							this.getTagName(),
-							SignalSelectionType.BLOCK,
-							tags,
-							this.getTagStretch(),
-							this.getTagDescription()));
+											this.getTagName(),
+											SignalSelectionType.BLOCK,
+											tags,
+											this.getTagStretch(),
+											this.getTagDescription()));
 	}
 
 	protected boolean[] getExclusionMatrix(NewArtifactTagData data) {
@@ -46,7 +46,7 @@ public abstract class AbstractNewArtifactTagCreator {
 	}
 
 	protected double[] getTresholdMatrix(NewArtifactTagData data,
-					     boolean exclusion[], double baseTreshold) {
+										 boolean exclusion[], double baseTreshold) {
 		double source[][] = data.source;
 		int eegChannels[] = data.eegChannels;
 		double tresholdMatrix[] = new double[eegChannels.length];
@@ -56,7 +56,7 @@ public abstract class AbstractNewArtifactTagCreator {
 				channelData = Arrays.copyOf(channelData, channelData.length);
 				Arrays.sort(channelData);
 				double median = (channelData.length % 2 != 0) ? channelData[channelData.length / 2]
-						: (channelData[(channelData.length / 2) - 1] + channelData[channelData.length / 2]) / 2.0D;
+								: (channelData[(channelData.length / 2) - 1] + channelData[channelData.length / 2]) / 2.0D;
 
 				tresholdMatrix[i] = median + (1.0 - median) * baseTreshold;
 			}

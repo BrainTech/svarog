@@ -24,7 +24,7 @@ public class SourceMontageTransferable implements Transferable {
 	 * {@link SourceChannel montage channels}
 	 */
 	private SourceChannelIndices indices;
-	
+
 	/**
 	 * he {@link SourceMontageChannelsDataFlavor flavor} the transferred data
 	 * can be provided in (the array contains only one flavor

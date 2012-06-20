@@ -14,11 +14,11 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.domain.signal.ExportFormatType;
-import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.ascii.ASCIISignalWriter;
 import org.signalml.domain.signal.eeglab.EEGLabSignalWriter;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 
 /** ExportSignalWorker
@@ -66,7 +66,6 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 			ASCIISignalWriter writer = new ASCIISignalWriter(signalFile, sampleSource, descriptor, this);
 			writer.writeSignal();
 		} else {
-
 			new EEGLabSignalWriter().writeSignal(signalFile, sampleSource, descriptor, signalDocument, this);
 		}
 

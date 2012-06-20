@@ -41,7 +41,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 		Color.BLACK
 	};
 
-        private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
+	private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
 	private static final Color ACTIVE_CHANNEL_COLOR = new Color(0, 198, 255);
 
 	private LinkedList<VisualReferenceArrow> tempArrowsToDraw = new LinkedList<VisualReferenceArrow>();
@@ -49,7 +49,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 
 	public VisualReferenceEditor(VisualReferenceModel model) {
 
-                super(model);
+		super(model);
 
 		VisualReferenceEditorMouseHandler mouseHandler = new VisualReferenceEditorMouseHandler(this);
 
@@ -79,26 +79,26 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 
 	public void paintChannel(String label, int perPrimarySize, Shape shape, Shape outlineShape, boolean source, boolean selected, Graphics2D g) {
 
-        	Color fill;
-                Color outline;
-                boolean boldBorder;
+		Color fill;
+		Color outline;
+		boolean boldBorder;
 
 		if (source) fill = INACTIVE_CHANNEL_COLOR;
 		else fill = ACTIVE_CHANNEL_COLOR;
-		
+
 		if (selected) {
 			outline = Color.RED;
 			boldBorder = true;
 		} else {
 			outline = Color.BLACK;
-                        boldBorder = false;
+			boldBorder = false;
 		}
 
 		paintGivenChannel(label, perPrimarySize, shape, outlineShape, fill, outline, boldBorder, g);
 
 	}
-        
-        @Override
+
+	@Override
 	protected void paintBinContents(VisualReferenceBin bin, Graphics2D g) {
 
 		Iterator<VisualReferenceSourceChannel> it = bin.iterator();
@@ -185,7 +185,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 
 		super.paintComponent(gOrig);
 
-        	Graphics2D g = Get2DGraphics(gOrig);
+		Graphics2D g = Get2DGraphics(gOrig);
 
 		VisualReferenceChannel selChannel = model.getActiveChannel();
 		int selChannelIndex = -1;
@@ -196,7 +196,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 		VisualReferenceArrow selArrow = model.getActiveArrow();
 		VisualReferenceArrow arrow;
 
-                tempArrowsToDraw.clear();
+		tempArrowsToDraw.clear();
 
 		int colorIndex;
 		VisualReferenceChannel toChannel;
@@ -322,12 +322,12 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 
 	}
 
-        @Override
+	@Override
 	protected Dimension calculateRequiredSize() {
 
 		Dimension retval = super.calculateRequiredSize();
 
-                positionArrows(true);
+		positionArrows(true);
 
 		return retval;
 

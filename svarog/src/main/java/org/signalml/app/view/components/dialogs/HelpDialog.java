@@ -411,7 +411,7 @@ public class HelpDialog extends AbstractDialog  {
 	}
 
 	/**
-	 * This dialog can not be canceled (has no CANCEL) button. 
+	 * This dialog can not be canceled (has no CANCEL) button.
 	 */
 	@Override
 	public boolean isCancellable() {

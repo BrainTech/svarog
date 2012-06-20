@@ -18,7 +18,7 @@ import org.signalml.app.util.SingleNameSpaceContext;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.Util;
+import org.signalml.util.FormatUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -35,14 +35,14 @@ public class RawSignalDescriptorReader {
 
 	protected static final Logger logger = Logger.getLogger(RawSignalDescriptorReader.class);
 
-        /**
-         * Converts the given document element to the
-         * {@link RawSignalDescriptor description} of a raw signal
-         * @param rawSignalEl the document element to be converted
-         * @return the created description of a raw signal
-         * @throws SignalMLException if the element doesn't contain a valid
-         * description of a raw signal
-         */
+	/**
+	 * Converts the given document element to the
+	 * {@link RawSignalDescriptor description} of a raw signal
+	 * @param rawSignalEl the document element to be converted
+	 * @return the created description of a raw signal
+	 * @throws SignalMLException if the element doesn't contain a valid
+	 * description of a raw signal
+	 */
 	public RawSignalDescriptor getDescriptor(Element rawSignalEl) throws SignalMLException {
 
 		RawSignalDescriptor descriptor = new RawSignalDescriptor();
@@ -155,7 +155,7 @@ public class RawSignalDescriptorReader {
 			if (exportDate != null && !exportDate.isEmpty()) {
 
 				try {
-					descriptor.setExportDate(Util.parseTime(exportDate));
+					descriptor.setExportDate(FormatUtils.parseTime(exportDate));
 				} catch (ParseException ex) {
 					logger.error("Bad export date", ex);
 					throw new SignalMLException("error.invalidRawSignalXML");
@@ -165,58 +165,58 @@ public class RawSignalDescriptorReader {
 
 			Element gainElems = (Element) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_GAIN, rawSignalEl, XPathConstants.NODE);
 			if (gainElems != null && gainElems.hasChildNodes()) {
-								
-				NodeList paramList = (NodeList) path.evaluate( RawSignalDocumentBuilder.CALIBRATION_PARAM, gainElems, XPathConstants.NODESET );
+
+				NodeList paramList = (NodeList) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_PARAM, gainElems, XPathConstants.NODESET);
 				if (paramList != null) {
 
 					int paramCount = paramList.getLength();
 					if (paramCount > 0) {
-				
+
 						float[] params = new float[paramCount];
-	
-						for(int i=0; i<paramCount; i++) {
-					
+
+						for (int i=0; i<paramCount; i++) {
+
 							if (i < paramCount) {
 								params[i] = Float.parseFloat(paramList.item(i).getTextContent());
 							} else {
 								params[i] = 1f;
 							}
-							
+
 						}
-						
+
 						descriptor.setCalibrationGain(params);
-						
+
 					}
 				}
-				
+
 			}
 
 			Element offsetElems = (Element) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_OFFSET, rawSignalEl, XPathConstants.NODE);
 			if (offsetElems != null && offsetElems.hasChildNodes()) {
-								
+
 				NodeList paramList = (NodeList) path.evaluate(RawSignalDocumentBuilder.CALIBRATION_PARAM, offsetElems, XPathConstants.NODESET);
 				if (paramList != null) {
 
 					int paramCount = paramList.getLength();
 					if (paramCount > 0) {
-				
+
 						float[] params = new float[paramCount];
-	
+
 						for (int i=0; i<paramCount; i++) {
-					
+
 							if (i < paramCount) {
 								params[i] = Float.parseFloat(paramList.item(i).getTextContent());
 							} else {
 								params[i] = 1f;
 							}
-							
+
 						}
-						
+
 						descriptor.setCalibrationOffset(params);
-						
+
 					}
 				}
-				
+
 			}
 			else {
 				descriptor.setCalibrationOffset(0.0F);
@@ -227,12 +227,12 @@ public class RawSignalDescriptorReader {
 				descriptor.setFirstSampleTimestamp(Double.parseDouble(firstSampleTimestamp));
 			}
 
-                        String backup = path.evaluate(RawSignalDocumentBuilder.IS_BACKUP, rawSignalEl);
-                        if (backup != null && !backup.isEmpty() && backup.equals("1")) {
-                                descriptor.setIsBackup(true);
-                        } else {
-                                descriptor.setIsBackup(false);
-                        }
+			String backup = path.evaluate(RawSignalDocumentBuilder.IS_BACKUP, rawSignalEl);
+			if (backup != null && !backup.isEmpty() && backup.equals("1")) {
+				descriptor.setIsBackup(true);
+			} else {
+				descriptor.setIsBackup(false);
+			}
 
 		} catch (XPathExpressionException ex) {
 			throw new SignalMLException("error.invalidRawSignalXML", ex);
@@ -242,16 +242,16 @@ public class RawSignalDescriptorReader {
 
 	}
 
-        /**
-         * Reads the {@link RawSignalDescriptor description} of a raw signal
-         * from the given file
-         * @param file the file with the description of a raw signal
-         * @return the created description
-         * @throws IOException if the file is not a valid xml file or some
-         * other error while reading file
-         * @throws SignalMLException if the file doesn't contain a valid
-         * description of a raw signal
-         */
+	/**
+	 * Reads the {@link RawSignalDescriptor description} of a raw signal
+	 * from the given file
+	 * @param file the file with the description of a raw signal
+	 * @return the created description
+	 * @throws IOException if the file is not a valid xml file or some
+	 * other error while reading file
+	 * @throws SignalMLException if the file doesn't contain a valid
+	 * description of a raw signal
+	 */
 	public RawSignalDescriptor readDocument(File file) throws IOException, SignalMLException {
 
 		try {

@@ -7,8 +7,8 @@ import java.text.DecimalFormat;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
-import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * Exports signal to ASCII format.

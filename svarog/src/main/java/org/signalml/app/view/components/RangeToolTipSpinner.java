@@ -24,12 +24,12 @@ public class RangeToolTipSpinner extends JSpinner implements ChangeListener {
 	private static final long serialVersionUID = 1L;
 
 	/**
-     * Constructs a spinner with an <code>Integer SpinnerNumberModel</code>
-     * with initial value 0 and no minimum or maximum limits.
-     * <p>
-     * Adds the created spinner as the listener to this spinner in order to
-     * update tool-tips.
-     */
+	 * Constructs a spinner with an <code>Integer SpinnerNumberModel</code>
+	 * with initial value 0 and no minimum or maximum limits.
+	 * <p>
+	 * Adds the created spinner as the listener to this spinner in order to
+	 * update tool-tips.
+	 */
 	public RangeToolTipSpinner() {
 		super();
 		// listen to ourselves in order to update tooltips
@@ -37,13 +37,13 @@ public class RangeToolTipSpinner extends JSpinner implements ChangeListener {
 	}
 
 	/**
-     * Constructs a complete spinner with pair of next/previous buttons
-     * and an editor for the <code>SpinnerModel</code>.
-     * <p>
-     * Adds the created spinner as the listener to this spinner in order to
-     * update tool-tips.
+	 * Constructs a complete spinner with pair of next/previous buttons
+	 * and an editor for the <code>SpinnerModel</code>.
+	 * <p>
+	 * Adds the created spinner as the listener to this spinner in order to
+	 * update tool-tips.
 	 * @param model the model for the spinner
-     */
+	 */
 	public RangeToolTipSpinner(SpinnerModel model) {
 		super(model);
 		// listen to ourselves in order to update tooltips

@@ -5,14 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
-import org.signalml.plugin.export.change.SvarogCloseListener;
+import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import org.signalml.plugin.fft.FFT;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialogAction;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListener;
@@ -27,11 +26,10 @@ import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListene
  * <li>the settings that are stored in the configuration file,</li>
  * </ul>
  * <p>
- * To calculate the FFT, the {@link FFT} plug-in is used.
- * 
+ *
  * @author Marcin Szumski
  */
-public class FFTSignalTool implements Plugin, SvarogCloseListener {
+public class FFTSignalTool implements Plugin, PluginCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
 	private static FFTSignalToolI18nDelegate i18nDelegate;
 
@@ -39,10 +37,10 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * the {@link SvarogAccessGUI} access to Svarog GUI
 	 */
 	private SvarogAccessGUI guiAccess;
-	
+
 	/** Svarog configuration facade reference. */
-    private SvarogAccessConfig configAccess;
-    	
+	private SvarogAccessConfig configAccess;
+
 	/**
 	 * the tool that is registered by this plug-in
 	 */
@@ -61,7 +59,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 * the file to which the resources of this plug-in are extracted
 	 */
 	private File resourceDirectory = null;
-	
+
 	/**
 	 * the temporary files created by this plug-in, which should be removed
 	 * when the application is closed
@@ -85,17 +83,17 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	 */
 	@Override
 	public void register(SvarogAccess access)
-		throws IOException {
+	throws IOException {
 
 		i18nDelegate = new FFTSignalToolI18nDelegate(access);
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
-		
+
 		signalFFTSettings = new SignalFFTSettings();
 		settingsFile = new File(configAccess.getProfileDirectory(), "signalFFTSettings.xml");
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
-		
+
 		//creates and adds the signal tool
 		tool = new SignalFFTTool();
 		tool.setSettings(signalFFTSettings);
@@ -103,8 +101,8 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 		listener = new SignalFFTToolButtonMouseListener();
 		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
 		guiAccess.addSignalTool(tool, icon, _("Signal FFT (for settings press and hold the mouse button here)"), listener);
-		
-		//creates and adds the action which shows the 
+
+		//creates and adds the action which shows the
 		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
 		guiAccess.addButtonToToolsMenu(action);
 	}
@@ -122,17 +120,17 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 
 	/**
 	 * I18n shortcut.
-	 * 
+	 *
 	 * @param msgKey message to translate (English version)
 	 * @return
 	 */
 	public static String _(String msgKey) {
 		return i18nDelegate._(msgKey);
 	}
-	
+
 	/**
 	 * I18n shortcut.
-	 * 
+	 *
 	 * @param msgKey message to translate (English version)
 	 * @param arguments the values to render
 	 * @return
@@ -140,7 +138,7 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public static String _R(String msgKey, Object ... arguments) {
 		return i18nDelegate._R(msgKey, arguments);
 	}
-	
+
 	/**
 	 * Svarog i18n delegate getter.
 	 * @return the shared delegate instance
@@ -148,4 +146,5 @@ public class FFTSignalTool implements Plugin, SvarogCloseListener {
 	public static FFTSignalToolI18nDelegate i18n() {
 		return i18nDelegate;
 	}
+
 }

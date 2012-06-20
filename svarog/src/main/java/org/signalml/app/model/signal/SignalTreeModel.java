@@ -46,10 +46,10 @@ public class SignalTreeModel extends AbstractTreeModel implements DocumentManage
 			SignalDocument signalDocument = (SignalDocument) parent;
 			float pageSize = signalDocument.getPageSize();
 			SignalPageTreeNode node = new SignalPageTreeNode(
-			        index+1,
-			        pageSize,
-			        index * pageSize,
-			        (index+1) * pageSize
+				index+1,
+				pageSize,
+				index * pageSize,
+				(index+1) * pageSize
 			);
 			return node;
 		}

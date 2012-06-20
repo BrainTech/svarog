@@ -24,19 +24,19 @@ public class CommonAverageMontageGenerator extends AverageReferenceMontageGenera
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * Constructor.
-         */
+	/**
+	 * Constructor.
+	 */
 	public CommonAverageMontageGenerator() {
 		super(new String[0]);
 		setName(_("Common average montage"));
 	}
 
-        /**
-         * Creates an common average reference montage from a given montage.
-         * @param montage the montage to be used
-         * @throws MontageException it is never thrown for this montage generator
-         */
+	/**
+	 * Creates an common average reference montage from a given montage.
+	 * @param montage the montage to be used
+	 * @throws MontageException it is never thrown for this montage generator
+	 */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 		int[] refChannelIndices = null;
@@ -69,14 +69,14 @@ public class CommonAverageMontageGenerator extends AverageReferenceMontageGenera
 
 	}
 
-        /**
-         * Compares a given object to this generator. Always true if an object
-         * is not null and of type CAMontageGenerator
-         * (all left ear montage generators are equal).
-         * @param obj an object to be compared with a current object
-         * @return true if obj is equal to a current object (is of type
-         * CAMontageGenerator), false otherwise
-         */
+	/**
+	 * Compares a given object to this generator. Always true if an object
+	 * is not null and of type CAMontageGenerator
+	 * (all left ear montage generators are equal).
+	 * @param obj an object to be compared with a current object
+	 * @return true if obj is equal to a current object (is of type
+	 * CAMontageGenerator), false otherwise
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {

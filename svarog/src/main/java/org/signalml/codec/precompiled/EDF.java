@@ -114,7 +114,7 @@ public class EDF extends SMLCodec {
 		return theResult;
 	}
 
-	
+
 	public String[] get_transducer_type() throws XMLCodecException {
 		int length=(get_number_of_channels())-(1)+1;
 		String theResult[]=new String[length];

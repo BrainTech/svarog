@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export;
 
@@ -12,11 +12,11 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
  * starting class.
  * Contains only one method {@link #register(SvarogAccess)}, which
  * is called right after the plug-in is loaded.
- * 
+ *
  * @author Marcin Szumski
  */
 public interface Plugin {
-	
+
 	/**
 	 * Function called when the plug-in is loaded.
 	 * It should initialize all necessary structures, add buttons, sub-menus

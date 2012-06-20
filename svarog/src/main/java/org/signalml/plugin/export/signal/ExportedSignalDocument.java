@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.signal;
 
@@ -111,7 +111,7 @@ public interface ExportedSignalDocument extends Document {
 	 * @return the active tag document
 	 */
 	ExportedTagDocument getActiveTag();
-	
+
 	/**
 	 * Returns the list of all {@link ExportedTagDocument tag documents} dependent
 	 * from this signal document.
@@ -121,14 +121,14 @@ public interface ExportedSignalDocument extends Document {
 
 	/**
 	 * Returns the array of labels of montage channels.
-	 * At a given index there is a label for the channel of this index. 
+	 * At a given index there is a label for the channel of this index.
 	 * @return the array of labels of montage channels
 	 */
 	List<String> getMontageChannelLabels();
-	
+
 	/**
 	 * Returns the array of labels of source channels.
-	 * 
+	 *
 	 * A montage is made of 'source channels' and 'montage channels'. Source
 	 * channels are channels from the source (e.g. a file). Montage
 	 * channels are user defined channels. Montage channel set is a user view
@@ -137,13 +137,13 @@ public interface ExportedSignalDocument extends Document {
 	 * have different names. Montage channel can be a linear combination of a
 	 * set of source channels in the same montage. In both channel collections
 	 * (source channels and montage channels) labels must be unique.
-	 * 
+	 *
 	 * This method returns the array of labels of source channels.
-	 * At a given index there is a label for the channel of this index. 
+	 * At a given index there is a label for the channel of this index.
 	 * @return the array of labels of source channels
 	 */
 	List<String> getSourceChannelLabels();
-	
+
 	/**
 	 * Returns a {@link ExportedSignalView signal view} for this document.
 	 * @return a signal view for this document.

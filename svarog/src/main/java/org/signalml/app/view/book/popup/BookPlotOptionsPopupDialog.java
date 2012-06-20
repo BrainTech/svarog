@@ -18,21 +18,23 @@ import java.util.List;
 
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
+import org.signalml.app.view.components.IntegerSpinner;
 import org.signalml.app.view.components.TitledCrossBorder;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
@@ -52,8 +54,17 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	private JPanel aspectRatioPanel;
 
-	private JSpinner aspectUpSpinner;
-	private JSpinner aspectDownSpinner;
+	private IntegerSpinner aspectUpSpinner;
+	private IntegerSpinner aspectDownSpinner;
+
+	private JToggleButton antialiasButton;
+	private JToggleButton originalSignalVisibleButton;
+	private JToggleButton fullReconstructionVisibleButton;
+	private JToggleButton reconstructionVisibleButton;
+	private JToggleButton legendVisibleButton;
+	private JToggleButton scaleVisibleButton;
+	private JToggleButton axesVisibleButton;
+	private JToggleButton atomToolTipsVisibleButton;
 
 	public BookPlotOptionsPopupDialog(Window w, boolean isModal) {
 		super(w, isModal);
@@ -117,13 +128,13 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.LEADING)
-		        .addComponent(aspectRatioLabel)
+			layout.createParallelGroup(Alignment.LEADING)
+			.addComponent(aspectRatioLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getAspectRatioPanel())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getAspectRatioPanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -131,10 +142,10 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(aspectRatioLabel)
-				.addComponent(getAspectRatioPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(aspectRatioLabel)
+			.addComponent(getAspectRatioPanel())
+		);
 
 		layout.setVerticalGroup(vGroup);
 
@@ -153,16 +164,16 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return aspectRatioPanel;
 	}
 
-	public JSpinner getAspectUpSpinner() {
+	public IntegerSpinner getAspectUpSpinner() {
 		if (aspectUpSpinner == null) {
-			aspectUpSpinner = new JSpinner(new SpinnerNumberModel(bookView.getPlot().getMapAspectRatioUp(), 1, BookPlot.MAX_ASPECT_RATIO_SCALE, 1));
+			aspectUpSpinner = new IntegerSpinner(new SpinnerNumberModel(bookView.getPlot().getMapAspectRatioUp(), 1, BookPlot.MAX_ASPECT_RATIO_SCALE, 1));
 			aspectUpSpinner.setPreferredSize(new Dimension(40,25));
 
 			aspectUpSpinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					bookView.getPlot().setMapAspectRatioUp(((Integer) aspectUpSpinner.getValue()).intValue());
+					bookView.getPlot().setMapAspectRatioUp(aspectUpSpinner.getValue());
 				}
 
 			});
@@ -171,16 +182,16 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return aspectUpSpinner;
 	}
 
-	public JSpinner getAspectDownSpinner() {
+	public IntegerSpinner getAspectDownSpinner() {
 		if (aspectDownSpinner == null) {
-			aspectDownSpinner = new JSpinner(new SpinnerNumberModel(bookView.getPlot().getMapAspectRatioDown(), 1, BookPlot.MAX_ASPECT_RATIO_SCALE, 1));
+			aspectDownSpinner = new IntegerSpinner(new SpinnerNumberModel(bookView.getPlot().getMapAspectRatioDown(), 1, BookPlot.MAX_ASPECT_RATIO_SCALE, 1));
 			aspectDownSpinner.setPreferredSize(new Dimension(40,25));
 
 			aspectDownSpinner.addChangeListener(new ChangeListener() {
 
 				@Override
 				public void stateChanged(ChangeEvent e) {
-					bookView.getPlot().setMapAspectRatioDown(((Integer) aspectDownSpinner.getValue()).intValue());
+					bookView.getPlot().setMapAspectRatioDown(aspectDownSpinner.getValue());
 				}
 
 			});
@@ -189,132 +200,174 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return aspectDownSpinner;
 	}
 
+	protected BookPlot getPlot() {
+		return bookView == null? null : bookView.getPlot();
+	}
+
 	private void createButtons() {
 
-		final BookPlot plot = bookView.getPlot();
-
-		final JToggleButton antialiasButton = new JToggleButton(_("Signal antialiasing"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
-		antialiasButton.setToolTipText(_("Toggle reconstruction antialiasing"));
-		antialiasButton.setSelected(plot.isSignalAntialiased());
-
-		final JToggleButton originalSignalVisibleButton = new JToggleButton(_("Show original signal"));
-		originalSignalVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/originalsignalvisible.png"));
-		originalSignalVisibleButton.setToolTipText(_("Toggle showing original signal graph"));
-		originalSignalVisibleButton.setSelected(plot.isOriginalSignalVisible());
-
-		final JToggleButton fullReconstructionVisibleButton = new JToggleButton(_("Show full reconstruction"));
-		fullReconstructionVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/fullreconstructionvisible.png"));
-		fullReconstructionVisibleButton.setToolTipText(_("Toggle showing full reconstruction graph"));
-		fullReconstructionVisibleButton.setSelected(plot.isFullReconstructionVisible());
-
-		final JToggleButton reconstructionVisibleButton = new JToggleButton(_("Show reconstruction"));
-		reconstructionVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/reconstructionvisible.png"));
-		reconstructionVisibleButton.setToolTipText(_("Toggle showing reconstruction graph"));
-		reconstructionVisibleButton.setSelected(plot.isReconstructionVisible());
-
-		final JToggleButton legendVisibleButton = new JToggleButton(_("Show legend"));
-		legendVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/legendvisible.png"));
-		legendVisibleButton.setToolTipText(_("Toggle showing reconstruction legend"));
-		legendVisibleButton.setSelected(plot.isLegendVisible());
-
-		final JToggleButton scaleVisibleButton = new JToggleButton(_("Show scale"));
-		scaleVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/scalevisible.png"));
-		scaleVisibleButton.setToolTipText(_("Toggle showing map scale"));
-		scaleVisibleButton.setSelected(plot.isScaleVisible());
-
-		final JToggleButton axesVisibleButton = new JToggleButton(_("Show axes"));
-		axesVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/axesvisible.png"));
-		axesVisibleButton.setToolTipText(_("Toggle showing map axes"));
-		axesVisibleButton.setSelected(plot.isAxesVisible());
-
-		final JToggleButton atomToolTipsVisibleButton = new JToggleButton(_("Show atom tool tips"));
-		atomToolTipsVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/atomtooltips.png"));
-		atomToolTipsVisibleButton.setToolTipText(_("Show tool tips when mouse hovers over an atom"));
-		atomToolTipsVisibleButton.setSelected(plot.isAtomToolTipsVisible());
-
-		antialiasButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setSignalAntialiased(antialiasButton.isSelected());
-			}
-
-		});
-
-		originalSignalVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setOriginalSignalVisible(originalSignalVisibleButton.isSelected());
-			}
-
-		});
-
-		fullReconstructionVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setFullReconstructionVisible(fullReconstructionVisibleButton.isSelected());
-			}
-
-		});
-
-		reconstructionVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setReconstructionVisible(reconstructionVisibleButton.isSelected());
-			}
-
-		});
-
-		legendVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setLegendVisible(legendVisibleButton.isSelected());
-			}
-
-		});
-
-		scaleVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setScaleVisible(scaleVisibleButton.isSelected());
-			}
-
-		});
-
-		axesVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setAxesVisible(axesVisibleButton.isSelected());
-			}
-
-		});
-
-		atomToolTipsVisibleButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				plot.setAtomToolTipsVisible(atomToolTipsVisibleButton.isSelected());
-			}
-
-		});
-
-		buttonPanelComponents.add(originalSignalVisibleButton);
-		buttonPanelComponents.add(fullReconstructionVisibleButton);
-		buttonPanelComponents.add(reconstructionVisibleButton);
+		buttonPanelComponents.add(getOriginalSignalVisibleButton());
+		buttonPanelComponents.add(getFullReconstructionVisibleButton());
+		buttonPanelComponents.add(getReconstructionVisibleButton());
 		buttonPanelComponents.add(Box.createRigidArea(new Dimension(1,1)));
-		buttonPanelComponents.add(legendVisibleButton);
-		buttonPanelComponents.add(scaleVisibleButton);
-		buttonPanelComponents.add(axesVisibleButton);
-		buttonPanelComponents.add(atomToolTipsVisibleButton);
+		buttonPanelComponents.add(getLegendVisibleButton());
+		buttonPanelComponents.add(getScaleVisibleButton());
+		buttonPanelComponents.add(getAxesVisibleButton());
+		buttonPanelComponents.add(getAtomToolTipsVisibleButton());
 		buttonPanelComponents.add(Box.createRigidArea(new Dimension(1,1)));
-		buttonPanelComponents.add(antialiasButton);
+		buttonPanelComponents.add(getAntialiasButton());
 
+	}
+
+	public JToggleButton getAntialiasButton() {
+		if (antialiasButton == null) {
+			antialiasButton = new JToggleButton(_("Signal antialiasing"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
+			antialiasButton.setToolTipText(_("Toggle reconstruction antialiasing"));
+			antialiasButton.setSelected(getPlot().isSignalAntialiased());
+
+			antialiasButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setSignalAntialiased(antialiasButton.isSelected());
+				}
+
+			});
+		}
+		return antialiasButton;
+	}
+
+	public JToggleButton getOriginalSignalVisibleButton() {
+		if (originalSignalVisibleButton == null) {
+			originalSignalVisibleButton = new JToggleButton(_("Show original signal"));
+			originalSignalVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/originalsignalvisible.png"));
+			originalSignalVisibleButton.setToolTipText(_("Toggle showing original signal graph"));
+			originalSignalVisibleButton.setSelected(getPlot().isOriginalSignalVisible());
+
+			originalSignalVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setOriginalSignalVisible(originalSignalVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return originalSignalVisibleButton;
+	}
+
+	public JToggleButton getFullReconstructionVisibleButton() {
+		if (fullReconstructionVisibleButton == null) {
+			fullReconstructionVisibleButton = new JToggleButton(_("Show full reconstruction"));
+			fullReconstructionVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/fullreconstructionvisible.png"));
+			fullReconstructionVisibleButton.setToolTipText(_("Toggle showing full reconstruction graph"));
+			fullReconstructionVisibleButton.setSelected(bookView.getPlot().isFullReconstructionVisible());
+
+			fullReconstructionVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setFullReconstructionVisible(fullReconstructionVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return fullReconstructionVisibleButton;
+	}
+
+	public JToggleButton getReconstructionVisibleButton() {
+		if (reconstructionVisibleButton == null) {
+			reconstructionVisibleButton = new JToggleButton(_("Show reconstruction"));
+			reconstructionVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/reconstructionvisible.png"));
+			reconstructionVisibleButton.setToolTipText(_("Toggle showing reconstruction graph"));
+			reconstructionVisibleButton.setSelected(bookView.getPlot().isReconstructionVisible());
+
+			reconstructionVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setReconstructionVisible(reconstructionVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return reconstructionVisibleButton;
+	}
+
+	public JToggleButton getLegendVisibleButton() {
+		if (legendVisibleButton == null) {
+			legendVisibleButton = new JToggleButton(_("Show legend"));
+			legendVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/legendvisible.png"));
+			legendVisibleButton.setToolTipText(_("Toggle showing reconstruction legend"));
+			legendVisibleButton.setSelected(bookView.getPlot().isLegendVisible());
+
+			legendVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setLegendVisible(legendVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return legendVisibleButton;
+	}
+
+	public JToggleButton getScaleVisibleButton() {
+		if (scaleVisibleButton == null) {
+			scaleVisibleButton = new JToggleButton(_("Show scale"));
+			scaleVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/scalevisible.png"));
+			scaleVisibleButton.setToolTipText(_("Toggle showing map scale"));
+			scaleVisibleButton.setSelected(bookView.getPlot().isScaleVisible());
+
+			scaleVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setScaleVisible(scaleVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return scaleVisibleButton;
+	}
+
+	public JToggleButton getAxesVisibleButton() {
+		if (axesVisibleButton == null) {
+			axesVisibleButton = new JToggleButton(_("Show axes"));
+			axesVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/axesvisible.png"));
+			axesVisibleButton.setToolTipText(_("Toggle showing map axes"));
+			axesVisibleButton.setSelected(bookView.getPlot().isAxesVisible());
+
+			axesVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setAxesVisible(axesVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return axesVisibleButton;
+	}
+
+	public JToggleButton getAtomToolTipsVisibleButton() {
+		if (atomToolTipsVisibleButton == null) {
+			atomToolTipsVisibleButton = new JToggleButton(_("Show atom tool tips"));
+			atomToolTipsVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/atomtooltips.png"));
+			atomToolTipsVisibleButton.setToolTipText(_("Show tool tips when mouse hovers over an atom"));
+			atomToolTipsVisibleButton.setSelected(bookView.getPlot().isAtomToolTipsVisible());
+
+			atomToolTipsVisibleButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					getPlot().setAtomToolTipsVisible(atomToolTipsVisibleButton.isSelected());
+				}
+
+			});
+		}
+		return atomToolTipsVisibleButton;
 	}
 
 	@Override
@@ -366,6 +419,25 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
+	}
+
+	/**
+	 * Saves settings set in this dialog to {@ling ApplicationConfiguration}.
+	 */
+	public void saveSettingsToApplicationConfiguration() {
+		ApplicationConfiguration applicationConfiguration = SvarogApplication.getApplicationConfiguration();
+
+		applicationConfiguration.setMapAspectRatioUp(getAspectUpSpinner().getValue());
+		applicationConfiguration.setMapAspectRatioDown(getAspectDownSpinner().getValue());
+
+		applicationConfiguration.setSignalInBookAntialiased(getAntialiasButton().isSelected());
+		applicationConfiguration.setOriginalSignalVisible(getOriginalSignalVisibleButton().isSelected());
+		applicationConfiguration.setFullReconstructionVisible(getFullReconstructionVisibleButton().isSelected());
+		applicationConfiguration.setReconstructionVisible(getReconstructionVisibleButton().isSelected());
+		applicationConfiguration.setLegendVisible(getLegendVisibleButton().isSelected());
+		applicationConfiguration.setScaleVisible(getScaleVisibleButton().isSelected());
+		applicationConfiguration.setAxesVisible(getAxesVisibleButton().isSelected());
+		applicationConfiguration.setAtomToolTipsVisible(getAtomToolTipsVisibleButton().isSelected());
 	}
 
 }

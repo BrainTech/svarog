@@ -48,9 +48,9 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout(3,3));
 		interfacePanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Configure book averaging")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Configure book averaging")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		return interfacePanel;
 

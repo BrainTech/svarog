@@ -238,16 +238,16 @@ public class TagComparisonResultPanel extends JPanel {
 
 		JPanel leftPanel = new JPanel(new BorderLayout());
 		leftPanel.setBorder(new CompoundBorder(
-		                            new TitledBorder(_("First document")),
-		                            new EmptyBorder(3,3,3,3)
-		                    ));
+								new TitledBorder(_("First document")),
+								new EmptyBorder(3,3,3,3)
+							));
 		leftPanel.add(new JScrollPane(topTable), BorderLayout.CENTER);
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
 		rightPanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(_("Second document")),
-		                             new EmptyBorder(3,3,3,3)
-		                     ));
+								 new TitledBorder(_("Second document")),
+								 new EmptyBorder(3,3,3,3)
+							 ));
 		rightPanel.add(new JScrollPane(bottomTable), BorderLayout.CENTER);
 
 		statisticPanel.add(leftPanel);
@@ -282,9 +282,9 @@ public class TagComparisonResultPanel extends JPanel {
 
 		JPanel comparisonPanel = new JPanel(new BorderLayout());
 		comparisonPanel.setBorder(new CompoundBorder(
-		                                  new TitledBorder(_("Comparison result")),
-		                                  new EmptyBorder(3,3,3,3)
-		                          ));
+									  new TitledBorder(_("Comparison result")),
+									  new EmptyBorder(3,3,3,3)
+								  ));
 		comparisonPanel.add(new JScrollPane(table), BorderLayout.CENTER);
 
 		return comparisonPanel;

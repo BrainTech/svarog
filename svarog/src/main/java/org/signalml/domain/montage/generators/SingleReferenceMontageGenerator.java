@@ -23,7 +23,7 @@ import org.springframework.validation.Errors;
  * Another popular reference is "linked ears," which is a physical or mathematical
  * average of electrodes attached to both earlobes or mastoids.
  * (source: {@code http://en.wikipedia.org/wiki/Electroencephalography})
- * 
+ *
  * This class generates montage of that type from the given "raw" montage and checks if
  * the given {@link SourceMontage montages} are valid single reference montages.
  *
@@ -33,19 +33,19 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * the label of a {@link SourceChannel source channel}
-         * which will be a reference channel
-         */
+	/**
+	 * the label of a {@link SourceChannel source channel}
+	 * which will be a reference channel
+	 */
 	protected transient String referenceChannelName;
 
-        /**
-         * Constructor. Creates a new generator based on label
-         * of a reference channel.
-         * @param refChannel label of a {@link SourceChannel source channel}
-         * that will be used as reference channel in a created
-         * {@link Montage montage}
-         */
+	/**
+	 * Constructor. Creates a new generator based on label
+	 * of a reference channel.
+	 * @param refChannel label of a {@link SourceChannel source channel}
+	 * that will be used as reference channel in a created
+	 * {@link Montage montage}
+	 */
 	public SingleReferenceMontageGenerator(String referenceChannelName) {
 		if (referenceChannelName == null) {
 			throw new NullPointerException("Channel cannot be null");
@@ -53,13 +53,13 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 		this.referenceChannelName = referenceChannelName;
 	}
 
-        /**
-         * Creates a single channel reference montage from a given
-         * {@link Montage montage}.
-         * @param montage a montage to be used
-         * @throws MontageException thrown if there is no channel having the
-	 * label equal to the reference channel label
-         */
+	/**
+	 * Creates a single channel reference montage from a given
+	 * {@link Montage montage}.
+	 * @param montage a montage to be used
+	 * @throws MontageException thrown if there is no channel having the
+	* label equal to the reference channel label
+	       */
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 
@@ -83,7 +83,7 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
 
 				if (sourceChannel.getFunction() == ChannelFunction.EEG
-					&& !sourceChannel.isChannelType(ChannelType.REFERENCE)) {
+						&& !sourceChannel.isChannelType(ChannelType.REFERENCE)) {
 					montage.setReference(index, referenceSourceChannel.getChannel(), "-1");
 				}
 			}
@@ -96,14 +96,14 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 
 	}
 
-        /**
-         * Checks if {@link Montage montage} is a valid single channel
-         * reference montage.
-         * @param sourceMontage a montage to be checked
-         * @param errors an Errors object used to report errors
-         * @return true if the montage is a valid single channel reference montage,
-         * false otherwise
-         */
+	/**
+	 * Checks if {@link Montage montage} is a valid single channel
+	 * reference montage.
+	 * @param sourceMontage a montage to be checked
+	 * @param errors an Errors object used to report errors
+	 * @return true if the montage is a valid single channel reference montage,
+	 * false otherwise
+	 */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 		SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);

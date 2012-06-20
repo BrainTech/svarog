@@ -14,10 +14,10 @@ public class PluginTagGroup {
 
 
 	public PluginTagGroup(String name,
-			      ExportedSignalSelectionType type,
-			      Collection<IPluginTagDef> tags,
-			      float stretchFactor,
-			      String description) {
+						  ExportedSignalSelectionType type,
+						  Collection<IPluginTagDef> tags,
+						  float stretchFactor,
+						  String description) {
 		this.name = name;
 		this.type = type;
 		this.tags = tags;

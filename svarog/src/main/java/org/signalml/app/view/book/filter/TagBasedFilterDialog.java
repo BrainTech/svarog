@@ -47,6 +47,7 @@ import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.view.FileChooser;
 
 import org.springframework.validation.Errors;
 
@@ -59,7 +60,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private BookFilterChooseTagPanel chooseTagPanel;
 
@@ -135,9 +136,9 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 		JPanel stylePanel = new JPanel(new BorderLayout());
 		stylePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(_("Choose styles")),
-		                             new EmptyBorder(3,3,3,3)
-		                     ));
+								 new TitledBorder(_("Choose styles")),
+								 new EmptyBorder(3,3,3,3)
+							 ));
 
 		JPanel styleButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		styleButtonPanel.add(getChannelSelectAllButton());
@@ -203,21 +204,21 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction( getStyleList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction(getStyleList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction( getStyleList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction(getStyleList()));
 		}
 		return channelSelectNoneButton;
 	}
 
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction( getStyleList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction(getStyleList()));
 		}
 		return channelSelectInvertButton;
 	}
@@ -228,9 +229,9 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			settingsPanel = new JPanel();
 
 			settingsPanel.setBorder(new CompoundBorder(
-			                                new TitledBorder(_("Settings")),
-			                                new EmptyBorder(3,3,3,3)
-			                        ));
+										new TitledBorder(_("Settings")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 			GroupLayout layout = new GroupLayout(settingsPanel);
 			settingsPanel.setLayout(layout);
@@ -243,15 +244,15 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(secondsBeforeLabel)
-			        .addComponent(secondsAfterLabel)
+				layout.createParallelGroup()
+				.addComponent(secondsBeforeLabel)
+				.addComponent(secondsAfterLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getSecondsBeforeSpinner())
-			        .addComponent(getSecondsAfterSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getSecondsBeforeSpinner())
+				.addComponent(getSecondsAfterSpinner())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -259,16 +260,16 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(secondsBeforeLabel)
-					.addComponent(getSecondsBeforeSpinner())
-				);
-			
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(secondsBeforeLabel)
+				.addComponent(getSecondsBeforeSpinner())
+			);
+
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(secondsAfterLabel)
-					.addComponent(getSecondsAfterSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(secondsAfterLabel)
+				.addComponent(getSecondsAfterSpinner())
+			);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -435,11 +436,11 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 		getMarkerStyleCellRenderer().setTagIconProducer(tagIconProducer);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

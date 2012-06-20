@@ -8,7 +8,7 @@
 	<str id="svarog.pack.linux.description" txt="Core files (required)"/>
 	<str id="svarog.pack.mac" txt="Core (required)"/>
 	<str id="svarog.pack.mac.description" txt="Core files (required)"/>
-	
+
 	<str id="svarog.pack.windows_mp5" txt="MP5"/>
 	<str id="svarog.pack.windows_mp5.description" txt="mp5 is the fifth version of the matching pursuit algorithm implemented at the University of Warsaw in C as a command-line program"/>
 	<str id="svarog.pack.linux_mp5" txt="MP5"/>
@@ -21,5 +21,5 @@
 
 	<str id="svarog.pack.codecs" txt="Codecs"/>
 	<str id="svarog.pack.codecs.description" txt="Three default SignalML codecs: EASYS, EDF and RAW"/>
-    
+
 </langpack>

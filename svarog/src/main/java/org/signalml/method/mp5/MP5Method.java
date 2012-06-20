@@ -20,9 +20,9 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.StandardBookSegmentWriter;
 import org.signalml.domain.book.StandardBookSegmentWriterImpl;
 import org.signalml.domain.book.StandardBookWriter;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.SignalProcessingChainDescriptor;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSourceDescriptor;
 import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;
 import org.signalml.domain.signal.space.SelectionSegmentedSampleSourceDescriptor;
@@ -422,12 +422,12 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		XMLUtils.configureStreamerForMontage(streamer);
 		Annotations.configureAliases(
-		        streamer,
-		        SignalProcessingChainDescriptor.class,
-		        SelectionSegmentedSampleSourceDescriptor.class,
-		        MarkerSegmentedSampleSourceDescriptor.class,
-		        MP5Data.class,
-		        MP5Parameters.class
+			streamer,
+			SignalProcessingChainDescriptor.class,
+			SelectionSegmentedSampleSourceDescriptor.class,
+			MarkerSegmentedSampleSourceDescriptor.class,
+			MP5Data.class,
+			MP5Parameters.class
 		);
 		streamer.setMode(XStream.ID_REFERENCES);
 

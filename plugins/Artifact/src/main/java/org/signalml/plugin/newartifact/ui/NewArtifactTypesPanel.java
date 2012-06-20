@@ -3,6 +3,8 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,19 +16,17 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin.i18n;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
 
@@ -201,7 +201,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		if (artifactTypeCheckBoxes == null) {
 			artifactTypeCheckBoxes = new JCheckBox[artifactTypes.length];
 			for (int i=0; i<artifactTypeCheckBoxes.length; i++) {
-				artifactTypeCheckBoxes[i] = new JCheckBox(i18n().getMessage(artifactTypes[i]));
+				artifactTypeCheckBoxes[i] = new JCheckBox(NewArtifactTypeCaptionHelper.GetCaption(artifactTypes[i]));
 			}
 		}
 		return artifactTypeCheckBoxes;

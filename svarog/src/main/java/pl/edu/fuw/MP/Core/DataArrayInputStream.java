@@ -32,15 +32,15 @@ public class DataArrayInputStream  {
 	public final float readFloat() throws IOException {
 		source.read(buffor,0,4);
 		return Float.intBitsToFloat(((buffor[0]&0xff)<<24)|
-		                            ((buffor[1]&0xff)<<16)|
-		                            ((buffor[2]&0xff)<<8) |
-		                            (buffor[3]&0xff));
+									((buffor[1]&0xff)<<16)|
+									((buffor[2]&0xff)<<8) |
+									(buffor[3]&0xff));
 	}
 
 	public final int readInt() throws IOException {
 		source.read(buffor,0,4);
 		return (((buffor[0]&0xff)<<24) | ((buffor[1]&0xff)<<16) |
-		        ((buffor[2]&0xff)<<8)  | (buffor[3]&0xff));
+				((buffor[2]&0xff)<<8)  | (buffor[3]&0xff));
 	}
 
 	public final long skipBytes(long n) throws IOException {

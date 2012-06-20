@@ -4,8 +4,8 @@
 
 package org.signalml.exception;
 
-/** 
- * Thrown to indicate that a value failed to pass sanity checks. 
+/**
+ * Thrown to indicate that a value failed to pass sanity checks.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

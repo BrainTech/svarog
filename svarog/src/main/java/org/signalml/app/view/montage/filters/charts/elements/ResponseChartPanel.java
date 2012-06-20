@@ -158,7 +158,7 @@ public abstract class ResponseChartPanel extends ChartPanel {
 	 */
 	public void setData(double[] xValues, double[] yValues) {
 		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", new double[][]{xValues, yValues});
+		dataset.addSeries("data", new double[][] {xValues, yValues});
 		getPlot().setDataset(dataset);
 	}
 

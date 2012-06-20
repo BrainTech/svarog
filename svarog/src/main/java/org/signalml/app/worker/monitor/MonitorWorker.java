@@ -1,8 +1,8 @@
 package org.signalml.app.worker.monitor;
 
-import java.util.List;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import javax.swing.SwingWorker;
+import java.util.List;
 
 import multiplexer.jmx.client.IncomingMessageData;
 import multiplexer.jmx.client.JmxClient;
@@ -10,9 +10,11 @@ import multiplexer.protocol.Protocol.MultiplexerMessage;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
-import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
+import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
@@ -28,13 +30,12 @@ import com.google.protobuf.ByteString;
 /** MonitorWorker
  *
  */
-public class MonitorWorker extends SwingWorker<Void, Object> {
+public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
-	public static final int TIMEOUT_MILIS = 50;
+	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
 	private final JmxClient client;
-	private final OpenMonitorDescriptor monitorDescriptor;
 	private final RoundBufferMultichannelSampleSource sampleSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
@@ -58,31 +59,59 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 	 */
 	private TagStylesGenerator stylesGenerator;
 
-	public MonitorWorker(JmxClient client, OpenMonitorDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
-		this.client = client;
-		this.monitorDescriptor = monitorDescriptor;
+	public MonitorWorker(ExperimentDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
+		super(null);
+		this.client = monitorDescriptor.getJmxClient();
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
 
 		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
 		//with a real value?
-		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getSignalParameters().getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		getBusyDialog().setText(_("Waiting for the first sample..."));
 
 		logger.setLevel((Level) Level.INFO);
 	}
 
 	@Override
 	protected Void doInBackground() {
-		
+
 		MultiplexerMessage sampleMsg;
-		
+		boolean wasFirstSampleReceived = false;
+		showBusyDialog();
+
 		while (!isCancelled()) {
 			try {
-				IncomingMessageData msgData = client.receive(TIMEOUT_MILIS);
-				if (msgData == null) /* timeout */
-					continue;
-				else
+				IncomingMessageData msgData;
+
+				if (wasFirstSampleReceived)
+					msgData = client.receive(TIMEOUT_MILIS);
+				else {
+					/**
+					 * The first sample to be received is the most problematic
+					 * - sometimes (when starting new experiments) the multiplexer
+					 * has not been started yet at this point, so the receive
+					 * timeout should longer in order to wait for the multiplexer
+					 * to fully start to operate.
+					 */
+					msgData = client.receive();
+					wasFirstSampleReceived = true;
+					hideBusyDialog();
+				}
+
+				if (isCancelled()) {
+					//it might have been cancelled while waiting on the client.receive()
+					return null;
+				}
+				else if (msgData == null) {
+					// timeout
+					client.shutdown();
+					Dialogs.showError(_("Multiplexer disconnected!"));
+					break;
+				}
+				else {
 					sampleMsg = msgData.getMessage();
+				}
 			} catch (InterruptedException e) {
 				logger.error("receive failed", e);
 				return null;
@@ -91,63 +120,55 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			int sampleType = sampleMsg.getType();
 			logger.debug("Worker: received message type: " + sampleType);
 
-			switch (sampleType){
-				case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
-					parseMessageWithSamples(sampleMsg.getMessage());
-					break;
-				case MessageTypes.TAG:
-					parseMessageWithTags(sampleMsg.getMessage());
-					break;
-				default:
-					final String name = MessageTypes.instance.getConstantsNames().get(sampleType);
-					logger.error("received unknown reply: " +  sampleType + "/" + name);
+			switch (sampleType) {
+			case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
+				parseMessageWithSamples(sampleMsg.getMessage());
+				break;
+			case MessageTypes.TAG:
+				parseMessageWithTags(sampleMsg.getMessage());
+				break;
+			default:
+				final String name = MessageTypes.instance.getConstantsNames().get(sampleType);
+				logger.error("received unknown reply: " +  sampleType + "/" + name);
 			}
 		}
 
 		return null;
 	}
-	
+
 	/**
 	 * If the message contains samples, this function can be used
 	 * to parse its contents.
 	 * @param sampleMsgString the content of the message
 	 */
-	private void parseMessageWithSamples(ByteString sampleMsgString) {
+	protected void parseMessageWithSamples(ByteString sampleMsgString) {
 		logger.debug("Worker: reading chunk!");
-		
-		final int plotCount = monitorDescriptor.getSelectedChannelList().length;
-		final int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-		final double[] gain = monitorDescriptor.getGain();
-		final double[] offset = monitorDescriptor.getOffset();
 
-		final SampleVector sampleVector;
+		SampleVector sampleVector;
 		try {
 			sampleVector = SampleVector.parseFrom(sampleMsgString);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return;
 		}
-		final List<Sample> samples = sampleVector.getSamplesList();
+		List<Sample> samples = sampleVector.getSamplesList();
 
-		for (int k=0; k<sampleVector.getSamplesCount();k++) {
+		for (int k=0; k<sampleVector.getSamplesCount(); k++) {
 			Sample sample = sampleVector.getSamples(k);
 
-			// Transform chunk using gain and offset
-			double[] condChunk = new double[plotCount];
-			double[] selectedChunk = new double[plotCount];
-			for (int i = 0; i < plotCount; i++) {
-				int n = selectedChannels[i];
-				condChunk[i] = gain[n] * sample.getChannels(n) + offset[n];
-				selectedChunk[i] = sample.getChannels(n);
+			double[] newSamplesArray = new double[sample.getChannelsCount()];
+			for (int i = 0; i < newSamplesArray.length; i++) {
+				newSamplesArray[i] = sample.getChannels(i);
 			}
 
 			double samplesTimestamp = samples.get(0).getTimestamp();
-			NewSamplesData newSamplesPackage = new NewSamplesData(condChunk, samplesTimestamp);
+			//System.out.println("  -- " + samplesTimestamp);
+			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
 
 			publish(newSamplesPackage);
 		}
 	}
-	
+
 	/**
 	 * If the given message contains tags, this method can be used
 	 * to parse its contents.
@@ -164,24 +185,20 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 			return;
 		}
 
-		// Create MonitorTag Object, define its style and attributes
-
-		// String channels = tagMsg.getChannels();
 		// TODO: By now we ignore field channels and assume that tag if for all channels
-
 		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 
-                        TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
+		TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
 
-                        if (style == null) {
-                            style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
-                            tagSet.addStyle(style);
-                        }
+		if (style == null) {
+			style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
+			tagSet.addStyle(style);
+		}
 
 		final MonitorTag tag = new MonitorTag(style,
-					 tagMsg.getStartTimestamp(),
-					 tagLen,
-					 -1);
+											  tagMsg.getStartTimestamp(),
+											  tagLen,
+											  -1);
 
 		for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
 			if (v.getKey().equals("annotation")) {
@@ -191,20 +208,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				tag.addAttributeToTag(v.getKey(), v.getValue());
 			}
 		}
-
-		int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-		if(isChannelSelected(tag.getChannel(), selectedChannels)) {
-			publish(tag);
-		}
-	}
-
-	private boolean isChannelSelected(final int channel, final int selectedChannels[]) {
-		if (channel == -1)
-			return true;
-		for (int selected : selectedChannels)
-			if (channel == selected)
-				return true;
-		return false;
+		publish(tag);
 	}
 
 	@Override
@@ -216,8 +220,8 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 				sampleSource.lock();
 				tagSet.lock();
-					sampleSource.addSamples(data.getSampleValues());
-					tagSet.newSample(data.getSamplesTimestamp());
+				sampleSource.addSamples(data.getSampleValues());
+				tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
 				sampleSource.unlock();
 
@@ -241,11 +245,9 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 				tagSet.unlock();
 
 				//record tag
-				int[] selectedChannels = monitorDescriptor.getSelectedChannelsIndecies();
-				if(isChannelSelected(tag.getChannel(), selectedChannels)) {
-					if (tagRecorderWorker != null) {
-						tagRecorderWorker.offerTag(tag);
-					}
+
+				if (tagRecorderWorker != null) {
+					tagRecorderWorker.offerTag(tag);
 				}
 
 				firePropertyChange("newTag", null, (MonitorTag) o);
@@ -255,6 +257,7 @@ public class MonitorWorker extends SwingWorker<Void, Object> {
 
 	@Override
 	protected void done() {
+		super.done();
 		finished = true;
 		firePropertyChange("tagsRead", null, tagSet);
 	}

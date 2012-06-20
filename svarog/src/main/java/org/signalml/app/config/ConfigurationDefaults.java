@@ -4,23 +4,15 @@
 package org.signalml.app.config;
 
 import java.awt.Dimension;
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.ToolTipManager;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.book.GrayscaleMapPalette;
-import org.signalml.app.view.book.RainbowMapPalette;
+import org.signalml.app.view.book.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
-import org.signalml.math.fft.WindowType;
-import org.signalml.util.MinMaxRange;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 /** ConfigurationDefaults
  *
@@ -37,15 +29,7 @@ public class ConfigurationDefaults {
 	private static final String GREYSCALE_PALETTE = "greyscale";
 
 	static {
-		properties = new Properties();
-		try {
-			InputStream is = ConfigurationDefaults.class.getResourceAsStream(
-							"signalml_defaults.properties");
-			properties.load(is);
-		} catch (IOException ex) {
-			logger.error("Failed to load default properties - i/o exception", ex);
-			throw new RuntimeException(ex);
-		}
+		properties = ConfigurationDefaultsLoader.Load(ConfigurationDefaults.class, "signalml_defaults.properties");
 	}
 
 	public static void setGeneralConfigurationDefaults(GeneralConfiguration config) {
@@ -137,31 +121,28 @@ public class ConfigurationDefaults {
 		config.setMaxTimeScale(getDouble("application.maxTimeScale"));
 
 		final String paletteString = getString("application.palette");
-		if (GREYSCALE_PALETTE.equalsIgnoreCase(paletteString)) {
-			config.setPalette(GrayscaleMapPalette.getInstance());
-		} else {
-			config.setPalette(RainbowMapPalette.getInstance());
-		}
+		config.setPalette(WignerMapPalette.valueOf(paletteString));
 
 		config.setScaleType(WignerMapScaleType.valueOf(getString("application.scaleType")));
-		
-		config.setSignalAntialiased( getBoolean("application.signalAntialiased") );
-		config.setOriginalSignalVisible( getBoolean("application.originalSignalVisible") );
-		config.setFullReconstructionVisible( getBoolean("application.fullReconstructionVisible") );
-		config.setReconstructionVisible( getBoolean("application.reconstructionVisible") );
-		config.setLegendVisible( getBoolean("application.legendVisible") );
-		config.setScaleVisible( getBoolean("application.scaleVisible") );
-		config.setAxesVisible( getBoolean("application.axesVisible") );
-		config.setAtomToolTipsVisible( getBoolean("application.atomToolTipsVisible") );
-		
-		config.setMapAspectRatioUp( getInt("application.mapAspectRatioUp") );
-		config.setMapAspectRatioDown( getInt("application.mapAspectRatioDown") );
-		config.setReconstructionHeight( getInt("application.reconstructionHeight") );
-		
-                config.setBackupFrequency( getFloat("application.signalRecording.frequency") );
 
-		setMultiplexerDefaultParameters(config);
-		setMonitorDefaultParameters(config);
+		config.setSignalInBookAntialiased(getBoolean("application.signalInBookAntialiased"));
+		config.setOriginalSignalVisible(getBoolean("application.originalSignalVisible"));
+		config.setFullReconstructionVisible(getBoolean("application.fullReconstructionVisible"));
+		config.setReconstructionVisible(getBoolean("application.reconstructionVisible"));
+		config.setLegendVisible(getBoolean("application.legendVisible"));
+		config.setScaleVisible(getBoolean("application.scaleVisible"));
+		config.setAxesVisible(getBoolean("application.axesVisible"));
+		config.setAtomToolTipsVisible(getBoolean("application.atomToolTipsVisible"));
+
+		config.setMapAspectRatioUp(getInt("application.mapAspectRatioUp"));
+		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));
+		config.setReconstructionHeight(getInt("application.reconstructionHeight"));
+
+		config.setBackupFrequency(getFloat("application.signalRecording.frequency"));
+
+		config.setMonitorPageSize(getFloat("monitor.pageSize"));
+		config.setOpenbciIPAddress(getString("monitor.openbciIPAddress"));
+		config.setOpenbciPort(getInt("monitor.openbciPort"));
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {
@@ -172,21 +153,6 @@ public class ConfigurationDefaults {
 
 		settings.setFactor(getFloat("application.zoomSettings.factor"));
 		settings.setChannelSwitching(getBoolean("application.zoomSettings.channelSwitching"));
-
-	}
-	
-	public static void setMultiplexerDefaultParameters(ApplicationConfiguration config) {
-
-		config.setMultiplexerAddress(getString("multiplexer.address"));
-		config.setDefaultMultiplexerAddress(getString("default.multiplexer.address"));
-		config.setMultiplexerPort(getInt("multiplexer.port"));
-		config.setDefaultMultiplexerPort(getInt("default.multiplexer.port"));
-
-	}
-	
-	public static void setMonitorDefaultParameters( ApplicationConfiguration config ) {
-
-		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 
 	}
 

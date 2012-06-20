@@ -16,20 +16,20 @@ public class MuscleActivityArtifactAlgorithm extends NewArtifactAlgorithmBase {
 		this.weights = new double[smallBlockLength];
 		for (int j = 1; j < smallBlockLength + 1; ++j) {
 			this.weights[j - 1] = (1.0d - Math.cos(2.0d * j * Math.PI
-							       / (smallBlockLength + 1))) / 2.0d;
+												   / (smallBlockLength + 1))) / 2.0d;
 		}
 
 		this.fftHelper = new FFTHelper(this.constants.getSmallBlockLength(),
-					       2 * this.constants.getSmallBlockPowerVectorLength());
+									   2 * this.constants.getSmallBlockPowerVectorLength());
 
 		this.resultBuffer = new double[2][this.constants.channelCount
-						  * this.constants.getBlockCapacity()];
+										  * this.constants.getBlockCapacity()];
 	}
 
 	@Override
 	public double[][] computeHead(NewArtifactAlgorithmData data) {
 		return this.zeros(2, this.constants.channelCount
-				  * this.constants.getBlockCapacity());
+						  * this.constants.getBlockCapacity());
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class MuscleActivityArtifactAlgorithm extends NewArtifactAlgorithmBase {
 		int smallBlockLength = this.constants.getSmallBlockLength();
 
 		double coefficient = this.constants
-				     .getFreqChangeCoefficientForSmallBlock();
+							 .getFreqChangeCoefficientForSmallBlock();
 		int lowMuscleStart = (int)(this.constants.getFm1() * coefficient);
 		int lowMuscleEnd = (int)(this.constants.getFs1() * coefficient) - 1;
 		int highMuscleStart = (int)(this.constants.getFs2() * coefficient);
@@ -57,7 +57,7 @@ public class MuscleActivityArtifactAlgorithm extends NewArtifactAlgorithmBase {
 			for (int i = 0; i < channelCount; ++i) {
 				int start = paddingLeft + k * smallBlockLength;
 				double v[] = subSignal[i] = Arrays.copyOfRange(signal[i],
-							    start, start + smallBlockLength);
+											start, start + smallBlockLength);
 				for (int j = 0; j < smallBlockLength; ++j) {
 					v[j] *= this.weights[j];
 				}
@@ -89,7 +89,7 @@ public class MuscleActivityArtifactAlgorithm extends NewArtifactAlgorithmBase {
 				}
 
 				sumAll = sumL + sumML + sumMH
-					 + MuscleActivityArtifactAlgorithm.DELTA;
+						 + MuscleActivityArtifactAlgorithm.DELTA;
 
 				this.resultBuffer[0][i + k * channelCount] = (sumML + sumMH) / sumAll;
 				this.resultBuffer[1][i + k * channelCount] = sumP / (sumAll + sumP);

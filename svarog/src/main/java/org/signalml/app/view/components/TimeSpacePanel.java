@@ -88,9 +88,9 @@ public class TimeSpacePanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(_("Time fragment selection")),
-		                  new EmptyBorder(3,3,3,3)
-		          ));
+					  new TitledBorder(_("Time fragment selection")),
+					  new EmptyBorder(3,3,3,3)
+				  ));
 
 		add(getTabbedPane());
 

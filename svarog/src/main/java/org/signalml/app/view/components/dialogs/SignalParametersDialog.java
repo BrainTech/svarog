@@ -13,8 +13,8 @@ import javax.swing.JComponent;
 import org.omg.CORBA.Request;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.components.PagingParametersPanel;
 import org.signalml.app.view.components.RequiredSignalParametersPanel;
@@ -81,13 +81,13 @@ public class SignalParametersDialog extends AbstractDialog  {
 	}
 
 	/**
-	 * Fills the sub-panels of this dialog using the given {@link SignalParameterDescriptor model}
-	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameterDescriptor) RequiredSignalParametersPanel}
+	 * Fills the sub-panels of this dialog using the given {@link SignalParameters model}
+	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameters) RequiredSignalParametersPanel}
 	 * and {@link PagingParametersPanel#fillPanelFromModel(PagingParameterDescriptor) PagingParametersPanel}).
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		SignalParameterDescriptor spd = (SignalParameterDescriptor) model;
+		SignalParameters spd = (SignalParameters) model;
 
 		panel.getRequiredSignalParamersPanel().fillPanelFromModel(spd);
 		panel.getPagingSignalParamersPanel().fillPanelFromModel(spd);
@@ -95,39 +95,39 @@ public class SignalParametersDialog extends AbstractDialog  {
 	}
 
 	/**
-	 * Fills the the given {@link SignalParameterDescriptor model} from
+	 * Fills the the given {@link SignalParameters model} from
 	 * sub-panels
-	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameterDescriptor)
+	 * ({@link RequiredSignalParametersPanel#fillPanelFromModel(SignalParameters)
 	 * RequiredSignalParametersPanel} and
 	 * {@link PagingParametersPanel#fillPanelFromModel(PagingParameterDescriptor) PagingParametersPanel}).
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		SignalParameterDescriptor spd = (SignalParameterDescriptor) model;
+		SignalParameters spd = (SignalParameters) model;
 		panel.getRequiredSignalParamersPanel().fillModelFromPanel(spd);
 		panel.getPagingSignalParamersPanel().fillModelFromPanel(spd);
 	}
 
 	/**
 	 * Validates this dialog. This dialog is valid if sub-panels are valid
-	 * ({@link RequiredSignalParametersPanel#validatePanel(SignalParameterDescriptor, Errors)
+	 * ({@link RequiredSignalParametersPanel#validatePanel(SignalParameters, Errors)
 	 * RequiredSignalParametersPanel}
 	 * and {@link PagingParametersPanel#validatePanel(Errors)
 	 * PagingParametersPanel}).
 	 */
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
-		SignalParameterDescriptor spd = (SignalParameterDescriptor) model;
+		SignalParameters spd = (SignalParameters) model;
 		panel.getRequiredSignalParamersPanel().validatePanel(spd, errors);
 		panel.getPagingSignalParamersPanel().validatePanel(errors);
 	}
 
 	/**
-	 * The model for this dialog must be of type {@link SignalParameterDescriptor}.
+	 * The model for this dialog must be of type {@link SignalParameters}.
 	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return SignalParameterDescriptor.class.isAssignableFrom(clazz);
+		return SignalParameters.class.isAssignableFrom(clazz);
 	}
 
 	@Override

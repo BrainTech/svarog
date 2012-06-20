@@ -5,6 +5,7 @@
 package org.signalml.app.document;
 
 import java.beans.IntrospectionException;
+
 import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,12 +15,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
@@ -56,20 +57,20 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	protected TagDocument activeTag;
 
 	/**
-	 * list of all {@link TagDocument tag documents} for this signal 
+	 * list of all {@link TagDocument tag documents} for this signal
 	 */
 	protected List<TagDocument> tagDocuments = new LinkedList<TagDocument>();
 
 	/**
 	 * the length of the page in seconds
 	 */
-	protected float pageSize = SignalParameterDescriptor.DEFAULT_PAGE_SIZE;
-	
+	protected float pageSize = SignalParameters.DEFAULT_PAGE_SIZE;
+
 	/**
 	 * the number of blocks in a page
 	 */
-	protected int blocksPerPage = SignalParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;
-	
+	protected int blocksPerPage = SignalParameters.DEFAULT_BLOCKS_PER_PAGE;
+
 	/**
 	 * the length of a block in seconds
 	 */
@@ -79,7 +80,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	 * the main {@link Montage montage} for this signal
 	 */
 	protected Montage montage = null;
-	
+
 	/**
 	 * the number of {@link TagDocument tag documents} for this signal
 	 * that have no backing file {@code + 1}
@@ -141,8 +142,8 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	@Override
 	public Object[] getArguments() {
 		return new Object[] {
-		               getName()
-		       };
+				   getName()
+			   };
 	}
 
 	@Override
@@ -266,6 +267,13 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 		return montage;
 	}
 
+	@Override
+	public boolean isMontageCreated() {
+		if (montage == null)
+			return false;
+		return true;
+	}
+
 	protected Montage createDefaultMontage() {
 		return SignalConfigurer.createMontage(this);
 	}
@@ -319,9 +327,9 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 		return sb.toString();
 
 	}
-	
+
 	@Override
-	public List<ExportedTagDocument> getExportedTagDocuments(){
+	public List<ExportedTagDocument> getExportedTagDocuments() {
 		List<ExportedTagDocument> exportedTagDocuments = new LinkedList<ExportedTagDocument>();
 		List<TagDocument> tagDocuments = getTagDocuments();
 		for (TagDocument tagDocument : tagDocuments)
@@ -347,29 +355,29 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 		return list;
 
 	}
-	
+
 	@Override
-	public ArrayList<String> getMontageChannelLabels(){
+	public ArrayList<String> getMontageChannelLabels() {
 		Montage montage = getMontage();
 		ArrayList<String> labels = new ArrayList<String>(montage.getMontageChannelCount());
-		for (int i = 0; i < montage.getMontageChannelCount(); ++i){
+		for (int i = 0; i < montage.getMontageChannelCount(); ++i) {
 			labels.add(montage.getMontageChannelLabelAt(i));
 		}
 		return labels;
 	}
-	
+
 	@Override
-	public ArrayList<String> getSourceChannelLabels(){
+	public ArrayList<String> getSourceChannelLabels() {
 		Montage montage = getMontage();
 		ArrayList<String> labels = new ArrayList<String>(montage.getSourceChannelCount());
-		for (int i = 0; i < montage.getSourceChannelCount(); ++i){
+		for (int i = 0; i < montage.getSourceChannelCount(); ++i) {
 			labels.add(montage.getSourceChannelLabelAt(i));
 		}
 		return labels;
 	}
 
 	@Override
-	public SignalView getSignalView() throws InvalidClassException{
+	public SignalView getSignalView() throws InvalidClassException {
 		if (!(getDocumentView() instanceof SignalView)) throw new InvalidClassException("document view for a signal document must be always of type SignalView");
 		return (SignalView) getDocumentView();
 	}

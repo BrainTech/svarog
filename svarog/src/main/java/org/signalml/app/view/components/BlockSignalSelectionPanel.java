@@ -25,7 +25,7 @@ import javax.swing.border.EmptyBorder;
  * block in the selection,</li>
  * <li>the {@link #getLengthSpinner() number} of consecutive blocks that should
  * be included in the selection.</li></ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class BlockSignalSelectionPanel extends JPanel {
@@ -90,17 +90,17 @@ public class BlockSignalSelectionPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(startPageLabel)
-		        .addComponent(startBlockLabel)
-		        .addComponent(lengthLabel)
+			layout.createParallelGroup()
+			.addComponent(startPageLabel)
+			.addComponent(startBlockLabel)
+			.addComponent(lengthLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getStartPageSpinner())
-		        .addComponent(getStartBlockSpinner())
-		        .addComponent(getLengthSpinner())
+			layout.createParallelGroup()
+			.addComponent(getStartPageSpinner())
+			.addComponent(getStartBlockSpinner())
+			.addComponent(getLengthSpinner())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -108,22 +108,22 @@ public class BlockSignalSelectionPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(startPageLabel)
-				.addComponent(getStartPageSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(startPageLabel)
+			.addComponent(getStartPageSpinner())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(startBlockLabel)
-				.addComponent(getStartBlockSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(startBlockLabel)
+			.addComponent(getStartBlockSpinner())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(lengthLabel)
-				.addComponent(getLengthSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(lengthLabel)
+			.addComponent(getLengthSpinner())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

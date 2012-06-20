@@ -24,7 +24,7 @@ import org.springframework.validation.Errors;
  * The model for this dialog is of type {@link SignalFFTTool} and the
  * parameters are stored in the {@link SignalFFTSettings settings}
  * {@link SignalFFTTool#getSettings() obtained} from it.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -48,7 +48,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
 	public SignalFFTSettingsPopupDialog(
-			Window w, boolean isModal) {
+		Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
@@ -97,7 +97,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 */
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-			throws SignalMLException {
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		signalFFTSettingsPanel.validatePanel(errors);

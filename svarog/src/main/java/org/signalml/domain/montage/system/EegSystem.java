@@ -97,8 +97,8 @@ public class EegSystem implements Preset {
 
 	@Override
 	public boolean equals(Object obj) {
-		if ( this == obj ) return true;
-		if ( !(obj instanceof EegSystem) ) return false;
+		if (this == obj) return true;
+		if (!(obj instanceof EegSystem)) return false;
 
 		EegSystem other = (EegSystem) obj;
 		if (this.eegSystemName.equals(other.eegSystemName))

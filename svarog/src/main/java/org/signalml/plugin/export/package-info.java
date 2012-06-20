@@ -7,7 +7,7 @@
  * but may help him implement some of the interfaces.
  * <p>
  * Directly this package contains two interfaces
- * ({@link org.signalml.plugin.export.Plugin} and 
+ * ({@link org.signalml.plugin.export.Plugin} and
  * {@link org.signalml.plugin.export.SvarogAccess})
  * and two classes
  * (exceptions: {@link org.signalml.plugin.export.SignalMLException} and

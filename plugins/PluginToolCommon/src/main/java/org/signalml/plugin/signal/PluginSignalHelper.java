@@ -1,6 +1,6 @@
 package org.signalml.plugin.signal;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 public class PluginSignalHelper {
 	public static int GetBlockCount(MultichannelSampleSource source, int blockLength) {

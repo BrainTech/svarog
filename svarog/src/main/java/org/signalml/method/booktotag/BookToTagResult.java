@@ -15,18 +15,18 @@ public class BookToTagResult {
 
 	private StyledTagSet tagSet;
 
-        /**
-         * Returns instance of StyledTagSet as result of computation.
-         * @return instance of StyledTagSet as result of computation
-         */
+	/**
+	 * Returns instance of StyledTagSet as result of computation.
+	 * @return instance of StyledTagSet as result of computation
+	 */
 	public StyledTagSet getTagSet() {
 		return tagSet;
 	}
 
-        /**
-         * Sets instance of StyledTagSet as result of computation.
-         * @param tagSet instance of StyledTagSet to be set as result of computation
-         */
+	/**
+	 * Sets instance of StyledTagSet as result of computation.
+	 * @param tagSet instance of StyledTagSet to be set as result of computation
+	 */
 	public void setTagSet(StyledTagSet tagSet) {
 		this.tagSet = tagSet;
 	}

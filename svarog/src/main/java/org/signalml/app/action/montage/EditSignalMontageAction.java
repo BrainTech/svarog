@@ -59,7 +59,6 @@ public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<Sig
 
 	}
 
-
 	@Override
 	public void setEnabledAsNeeded() {
 		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);

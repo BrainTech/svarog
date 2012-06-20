@@ -76,8 +76,8 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 		interfacePanel.setLayout(new GridLayout(cnt, 1, 3, 3));
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledCrossBorder(_("Choose active tag"), true),
-		        new EmptyBorder(3,3,3,3)
+			new TitledCrossBorder(_("Choose active tag"), true),
+			new EmptyBorder(3,3,3,3)
 		);
 		interfacePanel.setBorder(cb);
 

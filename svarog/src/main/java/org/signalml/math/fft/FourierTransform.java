@@ -2,7 +2,7 @@ package org.signalml.math.fft;
 
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
-import org.signalml.math.iirdesigner.ArrayOperations;
+import org.signalml.math.ArrayOperations;
 
 /**
  * This class can be used to calculate FFT of a signal.
@@ -120,16 +120,46 @@ public class FourierTransform {
 		}
 
 		return frequencies;
-		
+
 		/*/double step = samplingFrequency / N;
-        double[] result = new double[N];
-        for (int i = 0; i < (N + 1) / 2; i++) {
-                result[i] = step * i;
-        }
-        for (int i = (N + 1) / 2; i < N; i++) {
-                result[i] = -(step * (N - i));
-        }
-        return result;*/
+		double[] result = new double[N];
+		for (int i = 0; i < (N + 1) / 2; i++) {
+		        result[i] = step * i;
+		}
+		for (int i = (N + 1) / 2; i < N; i++) {
+		        result[i] = -(step * (N - i));
+		}
+		return result;*/
+	}
+
+	/**
+	 * Calculates the power spectrum of the provided real sample
+	 * data using FFT.
+	 * @param samples the data (real numbers)
+	 * @return estimates of the power spectrum
+	 */
+	public double[] calculatePowerSpectrum(double[] samples) {
+
+		Complex[] fftTransformedData = forwardFFT(samples);
+		int dataLength = samples.length;
+		int size = dataLength/2;
+
+		double[] powerSpectrum = new double[size];
+		powerSpectrum[0] = square(fftTransformedData[0].getReal()) + square(fftTransformedData[0].getImaginary());
+		for (int i = 1; i < size ; ++i) {
+			powerSpectrum[i] = square(fftTransformedData[i].getReal())
+					+ square(fftTransformedData[i].getImaginary())
+					+ square(fftTransformedData[dataLength - i].getReal())
+					+ square(fftTransformedData[dataLength-i].getImaginary());
+		}
+		for (int i = 1; i < size ; ++i) {
+			powerSpectrum[i] = 2.0D * powerSpectrum[i] / (windowFunction.getWindowWeightsSqueredSum()*dataLength);
+		}
+		return powerSpectrum;
+	}
+
+	protected double square(double x) {
+		return x*x;
 	}
 
 }

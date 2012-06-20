@@ -8,6 +8,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This class represents a multichannel source of signal samples with the
@@ -21,57 +22,57 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 
 	protected static final Logger logger = Logger.getLogger(MultichannelSampleBuffer.class);
 
-        /**
-         * the length of the buffer (number of samples)
-         */
+	/**
+	 * the length of the buffer (number of samples)
+	 */
 	private int bufferLength;
 
-        /**
-         * an array containing for each channel the in-signal index of the
-         * first sample in the buffer (in the range from 0 to signal length-1)
-         */
+	/**
+	 * an array containing for each channel the in-signal index of the
+	 * first sample in the buffer (in the range from 0 to signal length-1)
+	 */
 	private int minSample[];
 
 	/**
-         * an array containing for each channel the in-signal index of the
-         * last sample in the buffer (in the range from 0 to signal length-1)
-         */
+	     * an array containing for each channel the in-signal index of the
+	     * last sample in the buffer (in the range from 0 to signal length-1)
+	     */
 	private int maxSample[];
 
-        /**
-         * an array containing for each <code>channel</code> the index in the
-         * buffer where sample <code>minSample</code> is located
-         * (in the range from 0 to <code>bufferLength-1</code>)
-         * @see #minSample
-         */
+	/**
+	 * an array containing for each <code>channel</code> the index in the
+	 * buffer where sample <code>minSample</code> is located
+	 * (in the range from 0 to <code>bufferLength-1</code>)
+	 * @see #minSample
+	 */
 	private int boundary[];
 
 	private double[][] buffer;
 
-        /**
-         * Constructor. Creates a buffer of a given length for a given source.
-         * @param source the actual {@link MultichannelSampleSource source}
-         * of samples
-         * @param bufferLength the length of a buffer (a number of samples)
-         */
+	/**
+	 * Constructor. Creates a buffer of a given length for a given source.
+	 * @param source the actual {@link MultichannelSampleSource source}
+	 * of samples
+	 * @param bufferLength the length of a buffer (a number of samples)
+	 */
 	public MultichannelSampleBuffer(MultichannelSampleSource source, int bufferLength) {
 		super(source);
 		this.bufferLength = bufferLength;
 		reinitializeBuffers();
 	}
 
-        /**
-         * Returns the length of a buffer.
-         * @return the length of a buffer (number of samples)
-         */
+	/**
+	 * Returns the length of a buffer.
+	 * @return the length of a buffer (number of samples)
+	 */
 	public int getBufferLength() {
 		return bufferLength;
 	}
 
-        /**
-         * Sets the length of a buffer.
-         * @param bufferLength the length of a buffer
-         */
+	/**
+	 * Sets the length of a buffer.
+	 * @param bufferLength the length of a buffer
+	 */
 	public void setBufferLength(int bufferLength) {
 		this.bufferLength = bufferLength;
 		reinitializeBuffers();
@@ -79,25 +80,25 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 
 	private static int _buffer_too_small_count = 0;
 
-        /**
-         * Returns the given number of samples for a given channel starting
-         * from a given position in time.
-         * Uses buffering if possible and updates the buffer.
-         * @param channel the number of channel
-         * @param target the array to which results will be written starting
-         * from position <code>arrayOffset</code>
-         * @param signalOffset the position (in time) in the signal starting
-         * from which samples will be returned
-         * @param count the number of samples to be returned
-         * @param arrayOffset the offset in <code>target</code> array starting
-         * from which samples will be written
-         */
+	/**
+	 * Returns the given number of samples for a given channel starting
+	 * from a given position in time.
+	 * Uses buffering if possible and updates the buffer.
+	 * @param channel the number of channel
+	 * @param target the array to which results will be written starting
+	 * from position <code>arrayOffset</code>
+	 * @param signalOffset the position (in time) in the signal starting
+	 * from which samples will be returned
+	 * @param count the number of samples to be returned
+	 * @param arrayOffset the offset in <code>target</code> array starting
+	 * from which samples will be written
+	 */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {		
+	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		if (count > bufferLength) {
 			logger.warn(String.format("Unable to use buffer - buffer too small: count=%d bufferLength=%d",
-						  count, bufferLength));
-			if(this._buffer_too_small_count++ == 0)
+									  count, bufferLength));
+			if (this._buffer_too_small_count++ == 0)
 				logger.debug("Buffer too small here, writing traceback once", new Throwable());
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
 			return;
@@ -210,80 +211,80 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 
 	}
 
-        /**
-         * Clears the buffer (actually creates a new one).
-         */
+	/**
+	 * Clears the buffer (actually creates a new one).
+	 */
 	public void clear() {
 		reinitializeBuffers();
 	}
 
-        /**
-         * Returns the index in the buffer where sample <code>minSample</code>
-         * for a given channel is located.
-         * (in the range from 0 to <code>bufferLength-1</code>)
-         * @param channel the index of a channel
-         * @return the index in the buffer where sample <code>minSample</code>
-         * for a given channel is located
-         */
+	/**
+	 * Returns the index in the buffer where sample <code>minSample</code>
+	 * for a given channel is located.
+	 * (in the range from 0 to <code>bufferLength-1</code>)
+	 * @param channel the index of a channel
+	 * @return the index in the buffer where sample <code>minSample</code>
+	 * for a given channel is located
+	 */
 	public int getBoundary(int channel) {
 		return boundary[channel];
 	}
 
-        /**
-         * Returns for a given channel the in-signal index of the
-         * last sample in the buffer (in the range from 0 to signal length-1)
-         * @param channel the index of a channel
-         * @return the in-signal index of the last sample in the buffer
-         * (in the range from 0 to signal length-1)
-         */
+	/**
+	 * Returns for a given channel the in-signal index of the
+	 * last sample in the buffer (in the range from 0 to signal length-1)
+	 * @param channel the index of a channel
+	 * @return the in-signal index of the last sample in the buffer
+	 * (in the range from 0 to signal length-1)
+	 */
 	public int getMaxSample(int channel) {
 		return maxSample[channel];
 	}
 
-        /**
-         * Returns for a given channel the in-signal index of the
-         * first sample in the buffer (in the range from 0 to signal length-1)
-         * @param channel the index of a channel
-         * @return the in-signal index of the first sample in the buffer
-         * (in the range from 0 to signal length-1)
-         */
+	/**
+	 * Returns for a given channel the in-signal index of the
+	 * first sample in the buffer (in the range from 0 to signal length-1)
+	 * @param channel the index of a channel
+	 * @return the in-signal index of the first sample in the buffer
+	 * (in the range from 0 to signal length-1)
+	 */
 	public int getMinSample(int channel) {
 		return minSample[channel];
 	}
 
-        /**
-         * Returns a copy of a buffer for a given channel.
-         * @param channel the index of a channel
-         * @return a copy of a buffer for a given channel
-         */
+	/**
+	 * Returns a copy of a buffer for a given channel.
+	 * @param channel the index of a channel
+	 * @return a copy of a buffer for a given channel
+	 */
 	public double[] getBufferCopy(int channel) {
 		return Arrays.copyOf(buffer[channel], bufferLength);
 	}
 
-        /**
-         * Returns a copy of a part of a buffer for a given channel.
-         * @param channel the index of a channel
-         * @param offset the position in the buffer from which coping should
-         * start
-         * @param length the number of elements to be copied
-         * @return the created copy
-         */
+	/**
+	 * Returns a copy of a part of a buffer for a given channel.
+	 * @param channel the index of a channel
+	 * @param offset the position in the buffer from which coping should
+	 * start
+	 * @param length the number of elements to be copied
+	 * @return the created copy
+	 */
 	public double[] getBufferCopy(int channel, int offset, int length) {
 		return Arrays.copyOfRange(buffer[channel], offset, offset+length);
 	}
 
-        /**
-         * Copies <code>count</code> elements from one array to another.
-         * In the source array starts from <code>srcInx</code>, in the
-         * destination array from <code>dstInx</code>.
-         * @param src the source array
-         * @param dst the destination array
-         * @param srcIdx the index in the source array from which coping will
-         * start
-         * @param dstIdx the index in the destination array from starting from
-         * which elements will be written to the destination array
-         * @param count the number of elements to be copied
-         */
+	/**
+	 * Copies <code>count</code> elements from one array to another.
+	 * In the source array starts from <code>srcInx</code>, in the
+	 * destination array from <code>dstInx</code>.
+	 * @param src the source array
+	 * @param dst the destination array
+	 * @param srcIdx the index in the source array from which coping will
+	 * start
+	 * @param dstIdx the index in the destination array from starting from
+	 * which elements will be written to the destination array
+	 * @param count the number of elements to be copied
+	 */
 	private void arrCopy(double[] src, double[] dst, int srcIdx, int dstIdx, int count) {
 		int i,e;
 		int srcEnd = srcIdx + count;
@@ -294,9 +295,9 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 		}
 	}
 
-        /**
-         * Creates a new buffer and replaces the old one.
-         */
+	/**
+	 * Creates a new buffer and replaces the old one.
+	 */
 	private void reinitializeBuffers() {
 
 		int cnt = source.getChannelCount();
@@ -308,11 +309,11 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 
 	}
 
-        /**
-         * Fires listeners that the property has changed and reinitialises
-         * the buffer
-         * @param evt an event describing the change
-         */
+	/**
+	 * Fires listeners that the property has changed and reinitialises
+	 * the buffer
+	 * @param evt an event describing the change
+	 */
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		reinitializeBuffers();

@@ -19,13 +19,13 @@ public class ViewerConsoleAppender extends AppenderSkeleton {
 	@Override
 	protected void append(LoggingEvent ev) {
 		String message = null;
-		if(layout.ignoresThrowable()) {
+		if (layout.ignoresThrowable()) {
 			String[] s = ev.getThrowableStrRep();
 			if (s != null) {
 				StringBuilder sb = new StringBuilder();
 				sb.append(layout.format(ev));
 				int len = s.length;
-				for(int i = 0; i < len; i++) {
+				for (int i = 0; i < len; i++) {
 					sb.append(s[i]);
 					sb.append("\n");
 				}

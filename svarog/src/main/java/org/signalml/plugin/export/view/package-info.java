@@ -14,6 +14,6 @@
  * there are also some classes that developer may use but are not necessary
  * (for example {@link org.signalml.app.view.components.dialogs.AbstractDialog AbstractDialog},
  * {@link org.signalml.plugin.export.view.AbstractTreeModel AbstractTreeModel},
- * {@link org.signalml.plugin.export.view.AbstractViewerTree AbstractViewerTree}). * 
+ * {@link org.signalml.plugin.export.view.AbstractViewerTree AbstractViewerTree}). *
  */
 package org.signalml.plugin.export.view;

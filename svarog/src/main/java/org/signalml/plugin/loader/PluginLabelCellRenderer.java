@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -13,29 +13,29 @@ import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
 
 /**
- * This class represents a renderer for cells containing 
+ * This class represents a renderer for cells containing
  * labels in the {@link PluginTableModel table} of
  * plug-in {@link PluginState states}.
  * <p>
  * If plug-in has some missing {@link PluginDependency dependencies} or loading
- * of this plug-in failed the cell has red background and the tool-tip is set. 
- * 
+ * of this plug-in failed the cell has red background and the tool-tip is set.
+ *
  * @author Marcin Szumski
  */
 public class PluginLabelCellRenderer extends JLabel implements TableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * an array of plug-in {@link PluginState states}
 	 */
 	ArrayList<PluginState> descriptions;
-	
+
 	/**
 	 * Constructor.
 	 * @param descriptions an array of plug-in {@link PluginState states}
 	 */
-	public PluginLabelCellRenderer(ArrayList<PluginState> descriptions){
+	public PluginLabelCellRenderer(ArrayList<PluginState> descriptions) {
 		this.descriptions = descriptions;
 		setOpaque(true);
 	}
@@ -46,10 +46,10 @@ public class PluginLabelCellRenderer extends JLabel implements TableCellRenderer
 	public Component getTableCellRendererComponent(JTable table, Object value,
 			boolean isSelected, boolean hasFocus, int row, int column) {
 		PluginState state = descriptions.get(row);
-		if (!state.getMissingDependencies().isEmpty() || state.isFailedToLoad()){
+		if (!state.getMissingDependencies().isEmpty() || state.isFailedToLoad()) {
 			setBackground(Color.RED);
 			String message = new String();
-			if (state.isFailedToLoad()){
+			if (state.isFailedToLoad()) {
 				message += "failed to load";
 			} else {
 				message += "missing dependencies: ";

@@ -88,26 +88,26 @@ public class BookAtom implements StandardBookAtom {
 		sec=(int)(sec_time-60.0F*minute-3600.0F*hour);
 
 		return new String(Format(hour+"h"+((minute<10) ? "0"+minute : ""+minute)
-		                         +"'"+((sec<10) ? "0"+sec : ""+sec)+"\" ",9)+
-		                  Format(number_of_atom_in_book+" ",9)+
-		                  Format(position+" ",9)+
-		                  Format(Round(modulus,3)+" ",9)+
-		                  Format(Round(amplitude,3)+" ",9)+
-		                  Format(scale+" ",9)+
-		                  Format(Round(HalfTime(head),2)+"\" ",9)+
-		                  Format(Round(Frequency(head),4)+" Hz ",9)+
-		                  Format((phase>=0.0 ? " " : "")+Round(phase,4)+" ",9)+
-		                  Format((truePhase>=0.0 ? " " : "")+
-		                         Round(truePhase,4)+" ",9));
+								 +"'"+((sec<10) ? "0"+sec : ""+sec)+"\" ",9)+
+						  Format(number_of_atom_in_book+" ",9)+
+						  Format(position+" ",9)+
+						  Format(Round(modulus,3)+" ",9)+
+						  Format(Round(amplitude,3)+" ",9)+
+						  Format(scale+" ",9)+
+						  Format(Round(HalfTime(head),2)+"\" ",9)+
+						  Format(Round(Frequency(head),4)+" Hz ",9)+
+						  Format((phase>=0.0 ? " " : "")+Round(phase,4)+" ",9)+
+						  Format((truePhase>=0.0 ? " " : "")+
+								 Round(truePhase,4)+" ",9));
 	}
 
 	public String toString() {
 		return   Format(position+" ",9)+
-		         Format(Round(modulus,3)+" ",9)+
-		         Format(Round(amplitude,3)+" ",9)+
-		         Format(scale+" ",9)+
-		         Format(Round(frequency,3)+" ", 9)+
-		         Format((phase>=0.0 ? " " : "")+Round(phase,4)+" ",9);
+				 Format(Round(modulus,3)+" ",9)+
+				 Format(Round(amplitude,3)+" ",9)+
+				 Format(scale+" ",9)+
+				 Format(Round(frequency,3)+" ", 9)+
+				 Format((phase>=0.0 ? " " : "")+Round(phase,4)+" ",9);
 
 	}
 
@@ -118,7 +118,7 @@ public class BookAtom implements StandardBookAtom {
 	public int getNaturalFrequency() {
 		return (int)this.frequency;
 	}
-	
+
 	public float getFrequency() {
 		return this.frequency;
 	}

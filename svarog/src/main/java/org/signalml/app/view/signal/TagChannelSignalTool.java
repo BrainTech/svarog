@@ -117,7 +117,7 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 			Float endPosition = plot.toTimeSpace(point);
 			if (endPosition != null) {
 				if (startPosition.equals(endPosition)) {
-				    getSignalView().clearSignalSelection();
+					getSignalView().clearSignalSelection();
 				} else {
 
 					int currentChannel = plot.toChannelSpace(point);

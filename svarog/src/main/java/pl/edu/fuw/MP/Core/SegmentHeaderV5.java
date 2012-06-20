@@ -298,7 +298,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 
 	@Override
 	public float getSegmentTimeLength() {
-		return (float) (parent.getDimBase() / getSamplingFrequency());
+		return (float)(parent.getDimBase() / getSamplingFrequency());
 	}
 
 	public void setSegmentLength(int offsetDimension) {

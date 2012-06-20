@@ -132,16 +132,16 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 			passb[1] = result[1];
 
 			wn[0] = (newFrequency / 2.0 * (passb[0]-passb[1])) +
-			        Math.sqrt(newFrequency * newFrequency * Math.pow(passb[1]-passb[0], 2) / 4.0 +
-			                  passb[1] * passb[0]);
+					Math.sqrt(newFrequency * newFrequency * Math.pow(passb[1]-passb[0], 2) / 4.0 +
+							  passb[1] * passb[0]);
 			wn[1] = passb[1] * passb[0] / wn[0];
 
 		}
 		else if (type.isBandpass()) {
 
 			wn[0] = 1.0 / (2.0*newFrequency) * (passb[0] - passb[1]) +
-			        Math.sqrt((passb[1]-passb[0])*(passb[1]-passb[0]) / (4.0*newFrequency*newFrequency) +
-			                  passb[1] * passb[0]);
+					Math.sqrt((passb[1]-passb[0])*(passb[1]-passb[0]) / (4.0*newFrequency*newFrequency) +
+							  passb[1] * passb[0]);
 			wn[1] = passb[0] * passb[1] / wn[0];
 
 		}

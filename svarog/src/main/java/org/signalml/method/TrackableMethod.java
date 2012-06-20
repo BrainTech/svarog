@@ -18,14 +18,14 @@ package org.signalml.method;
 public interface TrackableMethod {
 
 	/**
-         *  Returns the number of tickers this method requires.
+	     *  Returns the number of tickers this method requires.
 	 *
 	 * @return the ticker count
 	 */
 	int getTickerCount();
 
 	/**
-         *  Returns the label for the given ticker. May use provided SvarogI18n for
+	     *  Returns the label for the given ticker. May use provided SvarogI18n for
 	 *  internationalization.
 	 *
 	 * @param ticker the number of the ticker

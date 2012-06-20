@@ -4,7 +4,6 @@
 
 package org.signalml.app.config;
 
-import java.io.File;
 import javax.swing.ToolTipManager;
 
 import org.signalml.app.view.book.WignerMapPalette;
@@ -23,11 +22,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("application")
 public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
-	private boolean dontShowDynamicCompilationWarning;
+	private String[] favouriteDirs = new String[0];
+	private String[] lastDirs = new String[0];
 
-	private String[] favouriteDirs;
-	private String[] lastDirs;
-	
 	private String lastFileChooserPath;
 	private String lastPresetPath;
 	private String lastSaveMP5ConfigPath;
@@ -79,7 +76,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private WignerMapPalette palette;
 	private WignerMapScaleType scaleType;
 
-	private boolean signalAntialiased;
+	private boolean signalInBookAntialiased;
 	private boolean originalSignalVisible;
 	private boolean fullReconstructionVisible;
 	private boolean reconstructionVisible;
@@ -93,24 +90,10 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
-        private float backupFrequency;
+	private float backupFrequency;
 
-	/**
-	 * Default value for the multiplexer address. If the user changes
-	 * multiplexer address value in the Open monitor dialog, it can be
-	 * reset to defaults stored in this variable.
-	 */
-	private String defaultMultiplexerAddress = "3";
-
-	/**
-	 * Default value for the multiplexer port. If the user changes
-	 * multiplexer port value in the Open monitor dialog, it can be
-	 * reset to defaults stored in this variable.
-	 */
-	private int defaultMultiplexerPort = 4;
-
-	private String multiplexerAddress;
-	private int multiplexerPort;
+	private String openbciIPAddress;
+	private int openbciPort;
 
 	private float monitorPageSize;
 
@@ -184,6 +167,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.precalculateSignalChecksums = precalculateSignalChecksums;
 	}
 
+	@Override
 	public boolean isSaveConfigOnEveryChange() {
 		return saveConfigOnEveryChange;
 	}
@@ -416,14 +400,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.maxTimeScale = maxTimeScale;
 	}
 
-	public boolean isDontShowDynamicCompilationWarning() {
-		return dontShowDynamicCompilationWarning;
-	}
-
-	public void setDontShowDynamicCompilationWarning(boolean dontShowDynamicCompilationWarning) {
-		this.dontShowDynamicCompilationWarning = dontShowDynamicCompilationWarning;
-	}
-
 	public String getLastLibraryPath() {
 		return lastLibraryPath;
 	}
@@ -448,12 +424,12 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.scaleType = scaleType;
 	}
 
-	public boolean isSignalAntialiased() {
-		return signalAntialiased;
+	public boolean isSignalInBookAntialiased() {
+		return signalInBookAntialiased;
 	}
 
-	public void setSignalAntialiased(boolean signalAntialiased) {
-		this.signalAntialiased = signalAntialiased;
+	public void setSignalInBookAntialiased(boolean signalAntialiased) {
+		this.signalInBookAntialiased = signalAntialiased;
 	}
 
 	public boolean isOriginalSignalVisible() {
@@ -536,75 +512,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.reconstructionHeight = reconstructionHeight;
 	}
 
-	public void setMultiplexerAddress(String multiplexerAddress) {
-		this.multiplexerAddress = multiplexerAddress;
-	}
-
-	public String getMultiplexerAddress() {
-		return multiplexerAddress;
-	}
-
-	public void setMultiplexerPort(int multiplexerPort) {
-		this.multiplexerPort = multiplexerPort;
-	}
-
-	public int getMultiplexerPort() {
-		return multiplexerPort;
-	}
-
-	/**
-	 * Returns the default value of the multiplexer address.
-	 * @return a string containing default multiplexer address.
-	 */
-	public String getDefaultMultiplexerAddress() {
-		return defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Sets the value of the defalut multiplexer address.
-	 * @param defaultMultiplexerAddress new value for default multiplexer
-	 * address.
-	 */
-	public void setDefaultMultiplexerAddress(String defaultMultiplexerAddress) {
-		this.defaultMultiplexerAddress = defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Sets the value of the default multiplexer port.
-	 * @param defaultMultiplexerPort new value for default multiplexer port.
-	 */
-	public void setDefaultMultiplexerPort(int defaultMultiplexerPort) {
-		this.defaultMultiplexerPort = defaultMultiplexerPort;
-	}
-
-	/**
-	 * Returns the default value of the multiplexer port.
-	 * @return default multiplexer port number
-	 */
-	public int getDefaultMultiplexerPort() {
-		return defaultMultiplexerPort;
-	}
-
-	/**
-	 * Resets the current value of the multiplexer address to defaults.
-	 * This method can be useful when the user changes the current
-	 * multiplexer address in the Open monitor dialog and wants to get back
-	 * the default value.
-	 */
-	public void resetMultiplexerAddressToDefaults() {
-		this.multiplexerAddress = this.defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Resets the current value of the multiplexer port to defaults.
-	 * This method can be useful when the user changes the current
-	 * multiplexer address in the Open monitor dialog and wants to get back
-	 * the default value.
-	 */
-	public void resetMultiplexerPortToDefaults() {
-		this.multiplexerPort = this.defaultMultiplexerPort;
-	}
-
 	public float getMonitorPageSize() {
 		return monitorPageSize;
 	}
@@ -619,7 +526,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 * @param name name is the same as function name without get
 	 *
 	 */
-	public String getPath(String name){
+	public String getPath(String name) {
 		if ("LastPresetPath".equals(name))
 			return this.getLastPresetPath();
 		else if ("LastLibraryPath".equals(name))
@@ -633,10 +540,10 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 * @param name name is the same as function name without set
 	 *
 	 */
-	public void setPath(String name, String path){
+	public void setPath(String name, String path) {
 		if ("LastPresetPath".equals(name))
 			this.setLastPresetPath(path);
-		else if("LastLibraryPath".equals(name))
+		else if ("LastLibraryPath".equals(name))
 			this.setLastLibraryPath(path);
 		else
 			this.setLastFileChooserPath(path);
@@ -659,4 +566,21 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	public void setLastPresetPath(String lastPresetPath) {
 		this.lastPresetPath = lastPresetPath;
 	}
+
+	public String getOpenbciIPAddress() {
+		return openbciIPAddress;
+	}
+
+	public void setOpenbciIPAddress(String openbciIPAddress) {
+		this.openbciIPAddress = openbciIPAddress;
+	}
+
+	public int getOpenbciPort() {
+		return openbciPort;
+	}
+
+	public void setOpenbciPort(int openbciPort) {
+		this.openbciPort = openbciPort;
+	}
+
 }

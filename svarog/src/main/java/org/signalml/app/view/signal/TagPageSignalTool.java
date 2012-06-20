@@ -89,7 +89,7 @@ public class TagPageSignalTool extends AbstractSignalTool implements TaggingSign
 		if (startPage != null) {
 			Integer endPage = plot.toPageSpace(point);
 			if (endPage != null) {
-			    getSignalView().setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
+				getSignalView().setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
 			}
 		}
 	}

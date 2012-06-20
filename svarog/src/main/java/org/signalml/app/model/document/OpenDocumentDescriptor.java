@@ -8,8 +8,8 @@ import java.io.File;
 
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.book.OpenBookDescriptor;
-import org.signalml.app.model.document.opensignal.OpenSignalDescriptor;
-import org.signalml.app.model.document.opensignal.OpenTagDescriptor;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /** OpenDocumentDescriptor
  *
@@ -20,12 +20,12 @@ public class OpenDocumentDescriptor {
 
 	private File file;
 	private ManagedDocumentType type;
-	private boolean makeActive;
+	private boolean makeActive = true;
 
 	/**
 	 * Descriptor determining a signal to be opened.
 	 */
-	private OpenSignalDescriptor openSignalDescriptor = new OpenSignalDescriptor();
+	private AbstractOpenSignalDescriptor openSignalDescriptor = new RawSignalDescriptor();
 	private OpenTagDescriptor tagOptions = new OpenTagDescriptor();
 	private OpenBookDescriptor bookOptions = new OpenBookDescriptor();
 
@@ -58,8 +58,12 @@ public class OpenDocumentDescriptor {
 	 * (from a file or monitor)
 	 * @return descriptor of the signal to be opened
 	 */
-	public OpenSignalDescriptor getOpenSignalDescriptor() {
+	public AbstractOpenSignalDescriptor getOpenSignalDescriptor() {
 		return openSignalDescriptor;
+	}
+
+	public void setOpenSignalDescriptor(AbstractOpenSignalDescriptor openSignalDescriptor) {
+		this.openSignalDescriptor = openSignalDescriptor;
 	}
 
 	public OpenTagDescriptor getTagOptions() {

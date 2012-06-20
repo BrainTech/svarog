@@ -29,10 +29,10 @@ public class RawMontageGenerator extends AbstractMontageGenerator {
 		setName(_("Raw signal"));
 	}
 
-        /**
-         * Creates a raw {@link Montage montage} from a given montage.
-         * @param montage a montage to be used
-         */
+	/**
+	 * Creates a raw {@link Montage montage} from a given montage.
+	 * @param montage a montage to be used
+	 */
 	@Override
 	public void createMontage(Montage montage) {
 
@@ -56,27 +56,27 @@ public class RawMontageGenerator extends AbstractMontageGenerator {
 
 	}
 
-        /**
-         * Checks if a {@link SourceMontage montage} is a valid raw montage.
-         * True for all montages.
-         * @param sourceMontage a montage to be checked
-         * @param errors an Errors object used to report errors (here never)
-         * @return true if a montage is a valid raw montage, false otherwise
-         * (here never)
-         */
+	/**
+	 * Checks if a {@link SourceMontage montage} is a valid raw montage.
+	 * True for all montages.
+	 * @param sourceMontage a montage to be checked
+	 * @param errors an Errors object used to report errors (here never)
+	 * @return true if a montage is a valid raw montage, false otherwise
+	 * (here never)
+	 */
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 		// ok for any montage
 		return true;
 	}
 
-        /**
-         * Compares a given object to this generator. Always true if an object
-         * is of type RawMontageGenerator (all raw montage generators are equal).
-         * @param obj an object to be compared with a current object
-         * @return true if obj is equal to this generator (is of type
-         * RawMontageGenerator), false otherwise
-         */
+	/**
+	 * Compares a given object to this generator. Always true if an object
+	 * is of type RawMontageGenerator (all raw montage generators are equal).
+	 * @param obj an object to be compared with a current object
+	 * @return true if obj is equal to this generator (is of type
+	 * RawMontageGenerator), false otherwise
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {

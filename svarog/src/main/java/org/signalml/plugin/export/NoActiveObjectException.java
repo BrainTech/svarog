@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export;
 
@@ -19,10 +19,10 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
  * <li>if there is no active tab for function
  * {@link SvarogAccessGUI#getSelectedMainTab()}.</li>
  * </ul>
- * 
+ *
  * @author Marcin Szumski
  */
-public class NoActiveObjectException extends SignalMLException{
+public class NoActiveObjectException extends SignalMLException {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,18 +30,18 @@ public class NoActiveObjectException extends SignalMLException{
 	 * Empty constructor.
 	 * @see Exception#Exception()
 	 */
-	public NoActiveObjectException(){
-		
+	public NoActiveObjectException() {
+
 	}
-	
+
 	/**
 	 * Constructor.
-     * @see Exception#Exception(String)
-     */
-	public NoActiveObjectException(String message){
+	 * @see Exception#Exception(String)
+	 */
+	public NoActiveObjectException(String message) {
 		super(message);
 	}
-	
+
 	/**
 	 * Constructor.
 	 * @see Exception#Exception(Throwable)
@@ -57,6 +57,6 @@ public class NoActiveObjectException extends SignalMLException{
 	public NoActiveObjectException(String message, Throwable cause) {
 		super(message, cause);
 	}
-	
-	
+
+
 }

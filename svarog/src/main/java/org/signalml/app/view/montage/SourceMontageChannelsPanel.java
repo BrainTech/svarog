@@ -41,8 +41,8 @@ public class SourceMontageChannelsPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Source montage")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Source montage")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

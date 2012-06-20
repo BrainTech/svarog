@@ -177,7 +177,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 */
 	private JLabel statusTextLabel;
 	/**
-	 * 
+	 *
 	 */
 	private JLabel messageLabel;
 
@@ -218,7 +218,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 	 * Constructor. Creates this dialog and sets the {@link
 	 * SignalMLOperationMode mode} in which Svarog is operating and the
 	 * {@link Task task} to which this dialog is attached.
-	 * @param task the mode in which Svarog is operating 
+	 * @param task the mode in which Svarog is operating
 	 * @param mode the task to which this dialog is attached
 	 */
 	public TaskStatusDialog(Task task, SignalMLOperationMode mode) {
@@ -293,7 +293,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 			resumeTaskAction.setTaskManager(taskManager);
 		}
 
-		getTaskResultAction = new GetTaskResultAction( this, new DialogResultListener() {
+		getTaskResultAction = new GetTaskResultAction(this, new DialogResultListener() {
 			@Override
 			public void dialogCompleted(boolean success) {
 				if (success && closeAction != null) {
@@ -311,7 +311,7 @@ public class TaskStatusDialog extends JDialog implements TaskEventListener, Task
 			progressCnt = trackableMethod.getTickerCount();
 			progressTitles = new String[progressCnt];
 			for (int i=0; i<progressCnt; i++) {
-				progressTitles[i] = trackableMethod.getTickerLabel( i);
+				progressTitles[i] = trackableMethod.getTickerLabel(i);
 			}
 			lastETAUpdateMillis = new long[progressCnt];
 		} else {

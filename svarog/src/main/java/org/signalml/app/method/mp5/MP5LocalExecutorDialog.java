@@ -23,6 +23,7 @@ import org.signalml.app.view.components.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
 
 import org.springframework.validation.Errors;
@@ -36,7 +37,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private JTextField nameTextField;
 
@@ -66,8 +67,8 @@ public class MP5LocalExecutorDialog extends AbstractDialog  {
 		JPanel namePanel = new JPanel(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Executor name")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Executor name")),
+			new EmptyBorder(3,3,3,3)
 		);
 		namePanel.setBorder(border);
 
@@ -141,11 +142,11 @@ public class MP5LocalExecutorDialog extends AbstractDialog  {
 		return MP5LocalProcessExecutor.class.isAssignableFrom(clazz);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

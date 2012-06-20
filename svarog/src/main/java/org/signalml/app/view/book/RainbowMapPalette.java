@@ -4,26 +4,26 @@
 
 package org.signalml.app.view.book;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import javax.swing.Icon;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.util.Util;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 /** RainbowMapPalette
  *
  *
  * @author Dobieslaw Ircha
  */
-public class RainbowMapPalette implements WignerMapPalette {
+public class RainbowMapPalette implements IWignerMapPalette {
 
 	protected static final Logger logger = Logger.getLogger(RainbowMapPalette.class);
 	private static RainbowMapPalette sharedInstance = null;
 	private transient int[] palette;
 
-	private RainbowMapPalette() {
+	public RainbowMapPalette() {
 
 		double hh=255.0;
 		double ww=1.0F/(74.0*75.0);
@@ -48,10 +48,10 @@ public class RainbowMapPalette implements WignerMapPalette {
 
 	public static RainbowMapPalette getInstance() {
 		if (sharedInstance == null) {
-		    synchronized (RainbowMapPalette.class) {
-		        if (sharedInstance == null)
-		            sharedInstance = new RainbowMapPalette();
-		    }
+			synchronized (RainbowMapPalette.class) {
+				if (sharedInstance == null)
+					sharedInstance = new RainbowMapPalette();
+			}
 		}
 
 		return sharedInstance;
@@ -69,7 +69,7 @@ public class RainbowMapPalette implements WignerMapPalette {
 
 	/**
 	 * Returns the name of this palette [i18n].
-	 * 
+	 *
 	 * @return the name of this palette
 	 */
 	public String i18n() {

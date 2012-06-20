@@ -35,13 +35,13 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.ScanSignalWorker;
 import org.signalml.app.worker.document.ExportSignalWorker;
-import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
@@ -157,7 +157,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			return;
 
 		if (signalExportDescriptor.isSaveXML())
-			if(saveDescriptor(sampleSource, signalExportDescriptor, masterPlot, exportFiles) == false)
+			if (saveDescriptor(sampleSource, signalExportDescriptor, masterPlot, exportFiles) == false)
 				return;
 
 	}
@@ -349,85 +349,85 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	 * @return true if succeeded, false otherwise
 	 */
 	public boolean saveDescriptor(MultichannelSampleSource sampleSource, SignalExportDescriptor signalExportDescriptor, SignalPlot masterPlot, ExportFiles exportFiles) {
-			if (descriptorWriter == null) {
-				descriptorWriter = new RawSignalDescriptorWriter();
+		if (descriptorWriter == null) {
+			descriptorWriter = new RawSignalDescriptorWriter();
+		}
+
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+		SignalSpace signalSpace = signalExportDescriptor.getSignalSpace();
+		RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
+
+		float samplingFrequency = sampleSource.getSamplingFrequency();
+
+		rawDescriptor.setBlocksPerPage(masterPlot.getBlocksPerPage());
+		rawDescriptor.setByteOrder(signalExportDescriptor.getByteOrder());
+		int channelCount = sampleSource.getChannelCount();
+		rawDescriptor.setChannelCount(channelCount);
+		rawDescriptor.setEegSystemName(signalDocument.getMontage().getEegSystemName());
+
+		if (signalExportDescriptor.isNormalize()) {
+			rawDescriptor.setCalibrationGain((float)(1 / signalExportDescriptor.getNormalizationFactor()));
+		} else {
+			rawDescriptor.setCalibrationGain(1F);
+		}
+		rawDescriptor.setCalibrationOffset(0);
+
+		String[] labels = new String[channelCount];
+		for (int i=0; i<channelCount; i++) {
+			labels[i] = sampleSource.getLabel(i);
+		}
+		rawDescriptor.setChannelLabels(labels);
+		rawDescriptor.setExportDate(new Date());
+		rawDescriptor.setExportFileName(exportFiles.getSignalFile().getName());
+
+		TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
+		if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
+
+			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
+
+			rawDescriptor.setMarkerOffset(markerTimeSpace.getSecondsBefore());
+			rawDescriptor.setPageSize((float)(markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()));
+
+		} else {
+
+			rawDescriptor.setMarkerOffset(0);
+			rawDescriptor.setPageSize(masterPlot.getPageSize());
+
+		}
+
+		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
+		rawDescriptor.setSampleCount(minSampleCount);
+		rawDescriptor.setSampleType(signalExportDescriptor.getSampleType());
+		rawDescriptor.setSamplingFrequency(samplingFrequency);
+		if (signalDocument instanceof FileBackedDocument) {
+			File sourceFile = ((FileBackedDocument) signalDocument).getBackingFile();
+			if (sourceFile != null) {
+				rawDescriptor.setSourceFileName(sourceFile.getName());
 			}
+		}
 
-			SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-			SignalSpace signalSpace = signalExportDescriptor.getSignalSpace();
-			RawSignalDescriptor rawDescriptor = new RawSignalDescriptor();
+		if (signalDocument instanceof SignalMLDocument) {
 
-			float samplingFrequency = sampleSource.getSamplingFrequency();
+			SignalMLDocument signalMLDocument = (SignalMLDocument) signalDocument;
 
-			rawDescriptor.setBlocksPerPage(masterPlot.getBlocksPerPage());
-			rawDescriptor.setByteOrder(signalExportDescriptor.getByteOrder());
-			int channelCount = sampleSource.getChannelCount();
-			rawDescriptor.setChannelCount(channelCount);
-			rawDescriptor.setEegSystemName(signalDocument.getMontage().getEegSystemName());
+			rawDescriptor.setSourceSignalType(SourceSignalType.SIGNALML);
+			rawDescriptor.setSourceSignalMLFormat(signalMLDocument.getFormatName());
+			rawDescriptor.setSourceSignalMLSourceUID(signalMLDocument.getSourceUID());
 
-			if (signalExportDescriptor.isNormalize()) {
-				rawDescriptor.setCalibrationGain((float)(1 / signalExportDescriptor.getNormalizationFactor()));
-			} else {
-				rawDescriptor.setCalibrationGain(1F);
-			}
-			rawDescriptor.setCalibrationOffset(0);
+		} else {
 
-			String[] labels = new String[channelCount];
-			for (int i=0; i<channelCount; i++) {
-				labels[i] = sampleSource.getLabel(i);
-			}
-			rawDescriptor.setChannelLabels(labels);
-			rawDescriptor.setExportDate(new Date());
-			rawDescriptor.setExportFileName(exportFiles.getSignalFile().getName());
+			rawDescriptor.setSourceSignalType(SourceSignalType.RAW);
 
-			TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
-			if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
+		}
 
-				MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-
-				rawDescriptor.setMarkerOffset(markerTimeSpace.getSecondsBefore());
-				rawDescriptor.setPageSize((float)(markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()));
-
-			} else {
-
-				rawDescriptor.setMarkerOffset(0);
-				rawDescriptor.setPageSize(masterPlot.getPageSize());
-
-			}
-
-			int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
-			rawDescriptor.setSampleCount(minSampleCount);
-			rawDescriptor.setSampleType(signalExportDescriptor.getSampleType());
-			rawDescriptor.setSamplingFrequency(samplingFrequency);
-			if (signalDocument instanceof FileBackedDocument) {
-				File sourceFile = ((FileBackedDocument) signalDocument).getBackingFile();
-				if (sourceFile != null) {
-					rawDescriptor.setSourceFileName(sourceFile.getName());
-				}
-			}
-
-			if (signalDocument instanceof SignalMLDocument) {
-
-				SignalMLDocument signalMLDocument = (SignalMLDocument) signalDocument;
-
-				rawDescriptor.setSourceSignalType(SourceSignalType.SIGNALML);
-				rawDescriptor.setSourceSignalMLFormat(signalMLDocument.getFormatName());
-				rawDescriptor.setSourceSignalMLSourceUID(signalMLDocument.getSourceUID());
-
-			} else {
-
-				rawDescriptor.setSourceSignalType(SourceSignalType.RAW);
-
-			}
-
-			try {
-				descriptorWriter.writeDocument(rawDescriptor, exportFiles.getXmlFile());
-			} catch (IOException ex) {
-				logger.error("Worker failed to save xml", ex);
-				Dialogs.showExceptionDialog((Window) null, ex);
-				return false;
-			}
-			return true;
+		try {
+			descriptorWriter.writeDocument(rawDescriptor, exportFiles.getXmlFile());
+		} catch (IOException ex) {
+			logger.error("Worker failed to save xml", ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
+			return false;
+		}
+		return true;
 
 	}
 

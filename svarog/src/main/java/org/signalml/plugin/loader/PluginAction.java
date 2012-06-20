@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -27,16 +27,16 @@ public class PluginAction extends AbstractAction {
 	 * an array of plug-in {@link PluginState states}
 	 */
 	private ArrayList<PluginState> descriptions;
-	
+
 	/**
-	 * Constructor. 
+	 * Constructor.
 	 * @param descriptions an array of plug-in {@link PluginState states}
 	 */
-	public PluginAction(ArrayList<PluginState> descriptions){
+	public PluginAction(ArrayList<PluginState> descriptions) {
 		super("Plugins options");
 		this.descriptions = descriptions;
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */

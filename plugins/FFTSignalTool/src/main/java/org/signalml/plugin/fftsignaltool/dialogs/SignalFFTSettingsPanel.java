@@ -3,6 +3,8 @@
  */
 package org.signalml.plugin.fftsignaltool.dialogs;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
@@ -21,15 +23,15 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.math.fft.WindowType;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-
-import org.springframework.validation.Errors;
 
 /**
  * Panel which allows to select the parameters of the FFT. Contains 6
@@ -58,7 +60,7 @@ import org.springframework.validation.Errors;
  * </ul>
  * </li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -73,13 +75,14 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * the logger
 	 */
 	protected static final Logger logger = Logger
-			.getLogger(SignalFFTSettingsPanel.class);
+										   .getLogger(SignalFFTSettingsPanel.class);
 
 	/**
 	 * the array with possible sizes of FFT window (number of samples)
 	 */
 	private int[] possibleWindowWidths = new int[] { 64, 128, 256, 512, 1024,
-			2048 };
+			2048
+												   };
 
 	/**
 	 * the array with possible widths of a FFT plot (pixels)
@@ -90,7 +93,8 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * the array with possible heights of a FFT plot (pixels)
 	 */
 	private int[] possiblePlotHeights = new int[] { 200, 300, 400, 500, 600,
-			700 };
+			700
+												  };
 
 	/**
 	 * the {@link FFTWindowTypePanel panel} which allows to select the
@@ -173,21 +177,22 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * range (Hz)
 	 */
 	private JTextField visibleRangeEndTextField;
+	private JTextField customMinYAxis;
+	private JTextField customMaxYAxis;
 	/**
 	 * the text field which allows to enter how many labels should be displayed
 	 * on the X axis
 	 */
-	private JTextField maxLabelCountTextField;
-	/**
-	 * TODO
-	 */
-	private JCheckBox scaleToFFTViewCheckBox;
+	private JTextField xAxisLabelCountTextField;
+
+	private JRadioButton autoScaleYAxisRadioButton;
 
 	/**
 	 * the group of {@link #windowWidthRadioButtons radio buttons} for the FFT
 	 * window size
 	 */
 	private ButtonGroup windowWidthButtonGroup;
+	private ButtonGroup autoScaleYAxisButtonGroup;
 	/**
 	 * the group of {@link #plotWidthRadioButtons radio buttons} for the FFT
 	 * plot width (pixels)
@@ -211,16 +216,18 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 */
 	private boolean hasCloseCross;
 
+	private JRadioButton fixedYAxisRadioButton;
+
 	/**
 	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
 	 * initializes this panel.
-	 * 
+	 *
 	 * @param hasCloseCross
 	 *            {@code true} if the panel should has a cross which closes it,
 	 *            {@code false} otherwise
 	 */
 	public SignalFFTSettingsPanel(
-			boolean hasCloseCross) {
+		boolean hasCloseCross) {
 		super();
 		this.hasCloseCross = hasCloseCross;
 		initialize();
@@ -267,8 +274,8 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel windowWidthPanel = new JPanel(new GridLayout(3, 3, 3, 3));
 
 		CompoundBorder border = new CompoundBorder(new TitledCrossBorder(
-				_("FFT window width"),
-				hasCloseCross), new EmptyBorder(3, 3, 3, 3));
+					_("FFT window width"),
+					hasCloseCross), new EmptyBorder(3, 3, 3, 3));
 		windowWidthPanel.setBorder(border);
 
 		ItemListener cachingListener = new ItemListener() {
@@ -287,7 +294,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		int i;
 		for (i = 0; i < possibleWindowWidths.length; i++) {
 			windowWidthRadioButtons[i] = new JRadioButton(
-					Integer.toString(possibleWindowWidths[i]));
+				Integer.toString(possibleWindowWidths[i]));
 			windowWidthButtonGroup.add(windowWidthRadioButtons[i]);
 			windowWidthPanel.add(windowWidthRadioButtons[i]);
 			windowWidthRadioButtons[i].addItemListener(cachingListener);
@@ -296,7 +303,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		windowWidthRadioButtons[0].setSelected(true);
 
 		customWindowWidthRadioButton = new JRadioButton(
-				_("Custom"));
+			_("Custom"));
 		windowWidthButtonGroup.add(customWindowWidthRadioButton);
 		windowWidthPanel.add(customWindowWidthRadioButton);
 
@@ -315,11 +322,11 @@ public class SignalFFTSettingsPanel extends JPanel {
 					if (customWindowWidthTextField.getText().isEmpty()) {
 						if (cachedWindowWidth == null) {
 							customWindowWidthTextField
-									.setText(windowWidthRadioButtons[0]
-											.getText());
+							.setText(windowWidthRadioButtons[0]
+									 .getText());
 						} else {
 							customWindowWidthTextField
-									.setText(cachedWindowWidth);
+							.setText(cachedWindowWidth);
 						}
 					}
 				}
@@ -328,16 +335,15 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 		});
 
-		JPanel fftViewPanel = new JPanel(new GridLayout(2, 2, 3, 3));
+		JPanel fftViewPanel = new JPanel(new GridLayout(3, 2, 3, 3));
 		{
 			border = new CompoundBorder(
-					new TitledBorder(_("FFT view")),
-					new EmptyBorder(3, 3, 3, 3));
+				new TitledBorder(_("FFT view")),
+				new EmptyBorder(3, 3, 3, 3));
 			fftViewPanel.setBorder(border);
 
 			JLabel label = new JLabel(
-					_("Show fq range [Hz]"));
-			fftViewPanel.add(label);
+				_("Show fq range [Hz]"));
 
 			InputVerifier intInputVerifier = new InputVerifier() {
 				@Override
@@ -348,16 +354,16 @@ public class SignalFFTSettingsPanel extends JPanel {
 							return true;
 						else {
 							JOptionPane
-									.showMessageDialog(
-											input.getParent(),
-											_("Positive integer required"));
+							.showMessageDialog(
+								input.getParent(),
+								_("Positive integer required"));
 							return false;
 						}
 					} catch (NumberFormatException nfe) {
 						JOptionPane
-								.showMessageDialog(
-										input.getParent(),
-										_("Positive integer required"));
+						.showMessageDialog(
+							input.getParent(),
+							_("Positive integer required"));
 						return false;
 					}
 				}
@@ -370,34 +376,86 @@ public class SignalFFTSettingsPanel extends JPanel {
 			visibleRangeEndTextField = new JTextField();
 			visibleRangeEndTextField.setColumns(5);
 			visibleRangeEndTextField.setInputVerifier(intInputVerifier);
+			rangePanel.add(label);
 			rangePanel.add(visibleRangeStartTextField);
 			rangePanel.add(new JLabel("-"));
 			rangePanel.add(visibleRangeEndTextField);
-			fftViewPanel.add(rangePanel);
+
 
 			JPanel countPanel = new JPanel();
 
 			label = new JLabel(
-					_("X-axis label count"));
+				_("X-axis label count"));
 			countPanel.add(label);
 
-			maxLabelCountTextField = new JTextField();
-			maxLabelCountTextField.setColumns(5);
-			maxLabelCountTextField.setInputVerifier(intInputVerifier);
-			countPanel.add(maxLabelCountTextField);
+			xAxisLabelCountTextField = new JTextField();
+			xAxisLabelCountTextField.setColumns(5);
+			xAxisLabelCountTextField.setInputVerifier(intInputVerifier);
+			countPanel.add(xAxisLabelCountTextField);
 			fftViewPanel.add(countPanel);
+			fftViewPanel.add(rangePanel);
 
-			scaleToFFTViewCheckBox = new JCheckBox(
-					_("Scale Y-axis to view"));
-			fftViewPanel.add(scaleToFFTViewCheckBox);
+			autoScaleYAxisButtonGroup = new ButtonGroup();
 
+			autoScaleYAxisRadioButton = new JRadioButton(
+					_("Fit Y-axis to data"));
+			fixedYAxisRadioButton = new JRadioButton(
+					_("Keep Y-axis fixed"));
+			autoScaleYAxisButtonGroup.add(autoScaleYAxisRadioButton);
+			autoScaleYAxisButtonGroup.add(fixedYAxisRadioButton);
+			fixedYAxisRadioButton.setSelected(true);
+			fftViewPanel.add(autoScaleYAxisRadioButton);
+
+			InputVerifier doubleInputVerifier = new InputVerifier() {
+				@Override
+				public boolean verify(JComponent input) {
+					try {
+						String text = ((JTextField) input).getText().trim();
+						if (text.length() == 0 || Double.parseDouble(text) >= 0)
+							return true;
+						else {
+							JOptionPane
+									.showMessageDialog(
+											input.getParent(),
+											_("Positive double required"));
+							return false;
+						}
+					} catch (NumberFormatException nfe) {
+						JOptionPane
+								.showMessageDialog(
+										input.getParent(),
+										_("Positive double required"));
+						return false;
+					}
+				}
+			};
+			JPanel yAxisRangePanel = new JPanel();
+			yAxisRangePanel.add(fixedYAxisRadioButton);
+			customMinYAxis = new JTextField();
+			customMinYAxis.setColumns(5);
+			customMinYAxis.setInputVerifier(doubleInputVerifier);
+			customMaxYAxis = new JTextField();
+			customMaxYAxis.setColumns(5);
+			customMaxYAxis.setInputVerifier(doubleInputVerifier);
+			yAxisRangePanel.add(customMinYAxis);
+			yAxisRangePanel.add(new JLabel("-"));
+			yAxisRangePanel.add(customMaxYAxis);
+			fftViewPanel.add(yAxisRangePanel);
+			fixedYAxisRadioButton.addChangeListener(new ChangeListener() {
+
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					customMinYAxis.setEnabled(((JRadioButton)e.getSource()).isSelected());
+					customMaxYAxis.setEnabled(((JRadioButton)e.getSource()).isSelected());
+				}
+			});
 		}
 
 		JPanel plotWidthPanel = new JPanel(new GridLayout(1, 4, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(
-				_("Plot window width")),
-				new EmptyBorder(3, 3, 3, 3));
+										_("Plot window width")),
+									new EmptyBorder(3, 3, 3, 3));
 		plotWidthPanel.setBorder(border);
 
 		Dimension radioSize = new Dimension(50, 20);
@@ -405,7 +463,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		plotWidthRadioButtons = new JRadioButton[possiblePlotWidths.length];
 		for (i = 0; i < possiblePlotWidths.length; i++) {
 			plotWidthRadioButtons[i] = new JRadioButton(
-					Integer.toString(possiblePlotWidths[i]));
+				Integer.toString(possiblePlotWidths[i]));
 			plotWidthRadioButtons[i].setPreferredSize(radioSize);
 			plotWidthButtonGroup.add(plotWidthRadioButtons[i]);
 			plotWidthPanel.add(plotWidthRadioButtons[i]);
@@ -416,14 +474,14 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel plotHeightPanel = new JPanel(new GridLayout(1, 4, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(
-				_("Plot window height")),
-				new EmptyBorder(3, 3, 3, 3));
+										_("Plot window height")),
+									new EmptyBorder(3, 3, 3, 3));
 		plotHeightPanel.setBorder(border);
 
 		plotHeightRadioButtons = new JRadioButton[possiblePlotHeights.length];
 		for (i = 0; i < possiblePlotHeights.length; i++) {
 			plotHeightRadioButtons[i] = new JRadioButton(
-					Integer.toString(possiblePlotHeights[i]));
+				Integer.toString(possiblePlotHeights[i]));
 			plotHeightRadioButtons[i].setPreferredSize(radioSize);
 			plotHeightButtonGroup.add(plotHeightRadioButtons[i]);
 			plotHeightPanel.add(plotHeightRadioButtons[i]);
@@ -436,24 +494,24 @@ public class SignalFFTSettingsPanel extends JPanel {
 		JPanel optionsPanel = new JPanel(new GridLayout(4, 2, 3, 3));
 
 		border = new CompoundBorder(new TitledBorder(
-				_("Options")),
-				new EmptyBorder(3, 3, 3, 3));
+										_("Options")),
+									new EmptyBorder(3, 3, 3, 3));
 		optionsPanel.setBorder(border);
 
 		channelSwitchingCheckBox = new JCheckBox(
-				_("Sticky channel"));
+			_("Sticky channel"));
 		logarithmicCheckBox = new JCheckBox(
-				_("Logarithmic"));
+			_("Logarithmic"));
 		antialiasCheckBox = new JCheckBox(
-				_("Antialias"));
+			_("Antialias"));
 		splineCheckBox = new JCheckBox(
-				_("Use splines (experimental)"));
+			_("Use splines (experimental)"));
 		titleVisibleCheckBox = new JCheckBox(
-				_("Title"));
+			_("Title"));
 		frequencyAxisLabelsVisibleCheckBox = new JCheckBox(
-				_("Freq. lables"));
+			_("Freq. lables"));
 		powerAxisLabelsVisibleCheckBox = new JCheckBox(
-				_("Power labels"));
+			_("Power labels"));
 
 		optionsPanel.add(channelSwitchingCheckBox);
 		optionsPanel.add(logarithmicCheckBox);
@@ -489,7 +547,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * <li>the additional options such as if the title and labels should be
 	 * visible or the signal should be antialiased.</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param settings
 	 *            the model
 	 */
@@ -512,25 +570,27 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 		if (settings.getVisibleRangeStart() > Integer.MIN_VALUE) {
 			visibleRangeStartTextField.setText(""
-					+ settings.getVisibleRangeStart());
+											   + settings.getVisibleRangeStart());
 		} else {
 			visibleRangeStartTextField.setText("");
 		}
 
 		if (settings.getVisibleRangeEnd() < Integer.MAX_VALUE) {
 			visibleRangeEndTextField
-					.setText("" + settings.getVisibleRangeEnd());
+			.setText("" + settings.getVisibleRangeEnd());
 		} else {
 			visibleRangeEndTextField.setText("");
 		}
 
-		if (settings.getMaxLabelCount() < Integer.MAX_VALUE) {
-			maxLabelCountTextField.setText("" + settings.getMaxLabelCount());
+		if (settings.getXAxisLabelCount() < Integer.MAX_VALUE) {
+			xAxisLabelCountTextField.setText("" + settings.getXAxisLabelCount());
 		} else {
-			maxLabelCountTextField.setText("");
+			xAxisLabelCountTextField.setText("");
 		}
 
-		scaleToFFTViewCheckBox.setSelected(settings.isScaleToView());
+		autoScaleYAxisRadioButton.setSelected(settings.isAutoScaleYAxis());
+		customMaxYAxis.setText(""+settings.getMaxPowerAxis());
+		customMinYAxis.setText(""+settings.getMinPowerAxis());
 
 		Dimension plotSize = settings.getPlotSize();
 		for (i = 0; i < possiblePlotWidths.length; i++) {
@@ -580,7 +640,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * <li>the additional options such as if the title and labels should be
 	 * visible or the signal should be antialiased.</li>
 	 * </ul>
-	 * 
+	 *
 	 * @param settings
 	 *            the model
 	 */
@@ -598,7 +658,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		if (!found) {
 			if (customWindowWidthRadioButton.isSelected()) {
 				settings.setWindowWidth(Integer
-						.parseInt(customWindowWidthTextField.getText()));
+										.parseInt(customWindowWidthTextField.getText()));
 			} else {
 				throw new RuntimeException("Nothing selected");
 			}
@@ -628,18 +688,20 @@ public class SignalFFTSettingsPanel extends JPanel {
 		} else {
 			settings.setVisibleRangeEnd(Integer.MAX_VALUE);
 		}
-		val = maxLabelCountTextField.getText().trim();
+		val = xAxisLabelCountTextField.getText().trim();
 		if (val.length() > 0) {
 			try {
-				settings.setMaxLabelCount(Integer.parseInt(val));
+				settings.setXAxisLabelCount(Integer.parseInt(val));
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
-				settings.setMaxLabelCount(Integer.MAX_VALUE);
+				settings.setXAxisLabelCount(Integer.MAX_VALUE);
 			}
 		} else {
-			settings.setMaxLabelCount(Integer.MAX_VALUE);
+			settings.setXAxisLabelCount(Integer.MAX_VALUE);
 		}
-		settings.setScaleToView(scaleToFFTViewCheckBox.isSelected());
+		settings.setAutoScaleYAxis(autoScaleYAxisRadioButton.isSelected());
+		settings.setMaxPowerAxis(Double.parseDouble(customMaxYAxis.getText()));
+		settings.setMinPowerAxis(Double.parseDouble(customMinYAxis.getText()));
 
 		Dimension plotSize = new Dimension(600, 200);
 		for (i = 0; i < possiblePlotWidths.length; i++) {
@@ -675,9 +737,9 @@ public class SignalFFTSettingsPanel extends JPanel {
 		settings.setSpline(splineCheckBox.isSelected());
 		settings.setTitleVisible(titleVisibleCheckBox.isSelected());
 		settings.setFrequencyAxisLabelsVisible(frequencyAxisLabelsVisibleCheckBox
-				.isSelected());
+											   .isSelected());
 		settings.setPowerAxisLabelsVisible(powerAxisLabelsVisibleCheckBox
-				.isSelected());
+										   .isSelected());
 
 	}
 
@@ -685,7 +747,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * Validates this panel. This panel can be invalid only in the custom window
 	 * size is selected and the entered value is in bad format or to small (
 	 * {@code < 8}).
-	 * 
+	 *
 	 * @param errors
 	 *            the object in which the errors are stored
 	 */
@@ -694,7 +756,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 		if (customWindowWidthRadioButton.isSelected()) {
 			try {
 				int windowWidth = Integer.parseInt(customWindowWidthTextField
-						.getText());
+												   .getText());
 				if (windowWidth < 8) {
 					errors.addError(_("Bad window width. Must be an integer greater than 7"));
 				}
@@ -703,7 +765,24 @@ public class SignalFFTSettingsPanel extends JPanel {
 			}
 		}
 
+		try {
+			int xAxisLabelCount = Integer.parseInt(xAxisLabelCountTextField.getText());
+			if (xAxisLabelCount <= 0) {
+				errors.addError(_("X-Axis label count should be greater than 0!"));
+			}
+		} catch(NumberFormatException ex) {
+			errors.addError(_("Bad X-Axis label count!"));
+		}
+
 		fftWindowTypePanel.validatePanel(errors);
+		double maxY = Double.parseDouble(customMaxYAxis.getText());
+		double minY = Double.parseDouble(customMinYAxis.getText());
+		if (maxY <= minY)
+			errors.addError(_("Bad power axis range - min must be lower than max"));
+
+		if (fixedYAxisRadioButton.isSelected() &&
+				logarithmicCheckBox.isSelected() && minY == 0)
+			errors.addError(_("For logarithmic scale for Y axis min cannot be equal to 0."));
 
 	}
 

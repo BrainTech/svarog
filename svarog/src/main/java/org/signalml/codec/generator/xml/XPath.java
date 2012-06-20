@@ -71,8 +71,8 @@ class PathEntry {
 
 	public String toString() {
 		return "Tag: |"+is_null(this.tag)+
-		       "| Attr: |"+is_null(this.attribute)+
-		       "| Test: |"+is_null(this.attribute_test)+"|";
+			   "| Attr: |"+is_null(this.attribute)+
+			   "| Test: |"+is_null(this.attribute_test)+"|";
 	}
 }
 

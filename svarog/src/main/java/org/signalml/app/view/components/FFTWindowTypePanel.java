@@ -23,8 +23,6 @@ import org.signalml.app.config.FFTWindowTypeSettings;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.math.fft.WindowType;
 
-import org.springframework.validation.Errors;
-
 /**
  * Panel to select the {@link WindowType type} of the FFT Window and the
  * parameter for it.
@@ -57,7 +55,7 @@ public class FFTWindowTypePanel extends JPanel {
 	 * window can be entered
 	 */
 	private JTextField windowParameterTextField;
-	
+
 	/**
 	 * the group containing the buttons for different {@link WindowType types}
 	 * of windows
@@ -98,8 +96,8 @@ public class FFTWindowTypePanel extends JPanel {
 		}
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Window type")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Window type")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -141,7 +139,7 @@ public class FFTWindowTypePanel extends JPanel {
 
 		windowTypeRadioButtons = new JRadioButton[windowTypes.length];
 		for (int i=0; i<windowTypes.length; i++) {
-			windowTypeRadioButtons[i] = new JRadioButton(windowTypes[i].getDefaultMessage());
+			windowTypeRadioButtons[i] = new JRadioButton(windowTypes[i].toString());
 			windowTypeButtonGroup.add(windowTypeRadioButtons[i]);
 			add(windowTypeRadioButtons[i]);
 			windowTypeRadioButtons[i].addItemListener(windowTypeListener);

@@ -12,7 +12,7 @@ public abstract class AbstractPluginDialog extends AbstractDialog {
 	protected AbstractPluginDialog() {
 		super();
 	}
-	
+
 	protected AbstractPluginDialog(Window w, boolean isModal) {
 		super(w, isModal);
 	}

@@ -104,9 +104,9 @@ public class ChannelSpacePanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(_("Channel selection")),
-		                  new EmptyBorder(3,3,3,3)
-		          ));
+					  new TitledBorder(_("Channel selection")),
+					  new EmptyBorder(3,3,3,3)
+				  ));
 
 		JPanel channelButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		channelButtonPanel.add(getChannelSelectAllButton());
@@ -154,7 +154,7 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction( getChannelList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction(getChannelList()));
 		}
 		return channelSelectAllButton;
 	}
@@ -167,7 +167,7 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction( getChannelList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction(getChannelList()));
 		}
 		return channelSelectNoneButton;
 	}
@@ -180,7 +180,7 @@ public class ChannelSpacePanel extends JPanel {
 	 */
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction( getChannelList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction(getChannelList()));
 		}
 		return channelSelectInvertButton;
 	}

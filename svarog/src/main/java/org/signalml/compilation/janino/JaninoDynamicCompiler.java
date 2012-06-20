@@ -5,6 +5,7 @@
 package org.signalml.compilation.janino;
 
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -17,8 +18,6 @@ import org.apache.log4j.Logger;
 import org.codehaus.janino.DebuggingInformation;
 import org.codehaus.janino.JavaSourceClassLoader;
 import org.signalml.compilation.CompilationException;
-import org.signalml.compilation.CompilationRefusedException;
-import org.signalml.compilation.DynamicCompilationWarning;
 import org.signalml.compilation.DynamicCompiler;
 import org.signalml.compilation.JavaCodeProvider;
 
@@ -31,17 +30,8 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 
 	protected static final Logger logger = Logger.getLogger(JaninoDynamicCompiler.class);
 
-	private DynamicCompilationWarning warning;
-
 	@Override
 	public Class<?> compile(File srcDir, String fqClassName, JavaCodeProvider codeProvider) throws CompilationException {
-
-		if (warning != null) {
-			boolean ok = warning.warn();
-			if (!ok) {
-				throw new CompilationRefusedException("error.compilationRejected");
-			}
-		}
 
 		String[] parts = fqClassName.split("\\.");
 		boolean ok;
@@ -119,13 +109,6 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 	@Override
 	public Class<?> compile(File[] path, String fqClassName) throws CompilationException {
 
-		if (warning != null) {
-			boolean ok = warning.warn();
-			if (!ok) {
-				throw new CompilationRefusedException("error.compilationRejected");
-			}
-		}
-
 		ClassLoader parentClassLoader = this.getClass().getClassLoader();
 
 		if (logger.isDebugEnabled()) {
@@ -175,10 +158,10 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 		URLClassLoader loader = new URLClassLoader(classPath, parentClassLoader);
 
 		ClassLoader cl = new JavaSourceClassLoader(
-		        loader,  						   // parentClassLoader
-		        sourcePath,         			   // optionalSourcePath
-		        (String) null,                     // optionalCharacterEncoding
-		        DebuggingInformation.NONE          // debuggingInformation
+			loader,  						   // parentClassLoader
+			sourcePath,         			   // optionalSourcePath
+			(String) null,                     // optionalCharacterEncoding
+			DebuggingInformation.NONE          // debuggingInformation
 		);
 
 		Class<?> clazz = null;
@@ -194,14 +177,6 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 
 		return clazz;
 
-	}
-
-	public DynamicCompilationWarning getWarning() {
-		return warning;
-	}
-
-	public void setWarning(DynamicCompilationWarning warning) {
-		this.warning = warning;
 	}
 
 }

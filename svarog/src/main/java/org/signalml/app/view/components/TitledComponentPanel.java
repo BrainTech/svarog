@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 /**
  * Panel which contains the component and its title above it.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TitledComponentPanel extends JPanel {

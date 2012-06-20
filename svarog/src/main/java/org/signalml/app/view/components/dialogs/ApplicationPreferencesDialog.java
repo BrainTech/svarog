@@ -25,7 +25,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalMLCodecListModel;
 import org.signalml.app.view.components.CodecManagerConfigPanel;
 import org.signalml.app.view.components.MiscellaneousConfigPanel;
-import org.signalml.app.view.components.SignalRecordingConfigPanel;
+import org.signalml.app.view.components.MonitorConfigPanel;
 import org.signalml.app.view.components.SignalViewingConfigPanel;
 import org.signalml.app.view.components.SignalZoomSettingsPanel;
 import org.signalml.app.view.components.TaggingConfigPanel;
@@ -90,11 +90,11 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * the signal should be displayed by default
 	 */
 	private SignalViewingConfigPanel signalViewingConfigPanel;
-        /**
-         * the {@link SignalRecordingConfigPanel} which allows to configurate
-         * signal recording options
-         */
-        private SignalRecordingConfigPanel signalRecordingConfigPanel;
+	/**
+	 * the {@link MonitorConfigPanel} which allows to configurate
+	 * signal recording options
+	 */
+	private MonitorConfigPanel monitorConfigPanel;
 	/**
 	 * the {@link TaggingConfigPanel panel} with options for {@link Tag tags}
 	 */
@@ -200,7 +200,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 			};
 
 			registerCodecAction = new RegisterCodecAction();
-			registerCodecAction.setCodecManager(codecManager);
 			registerCodecAction.setRegisterCodecDialog(getRegisterCodecDialog());
 			registerCodecAction.setSelector(selector);
 			registerCodecAction.setPleaseWaitDialog(getPleaseWaitDialog());
@@ -225,8 +224,8 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * the signal should be displayed by default,</li>
 	 * <li>the {@link TaggingConfigPanel panel} with options for {@link Tag
 	 * tags},</li>
-         * <li>the {@link SignalRecordingConfigPanel} with options for
-         * signal recording,</li>
+	     * <li>the {@link MonitorConfigPanel} with options for
+	     * signal recording,</li>
 	 * <li>the {@link MiscellaneousConfigPanel panel} with various "other"
 	 * options,</li>
 	 * <li>the {@link SignalZoomSettingsPanel panel} which allows to select
@@ -248,7 +247,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		taggingConfigPanel = new TaggingConfigPanel();
 		miscellaneousConfigPanel = new MiscellaneousConfigPanel(mode);
 		signalZoomSettingsPanel = new SignalZoomSettingsPanel(false);
-                signalRecordingConfigPanel = new SignalRecordingConfigPanel();
+		monitorConfigPanel = new MonitorConfigPanel();
 
 		JPanel signalViewingContainPanel = new JPanel(new BorderLayout());
 		signalViewingContainPanel.add(signalViewingConfigPanel, BorderLayout.NORTH);
@@ -266,14 +265,14 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		zoomSettingsContainPanel.add(signalZoomSettingsPanel, BorderLayout.NORTH);
 		zoomSettingsContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
-                JPanel signalRecordingContainPanel = new JPanel(new BorderLayout());
-		signalRecordingContainPanel.add(signalRecordingConfigPanel, BorderLayout.NORTH);
+		JPanel signalRecordingContainPanel = new JPanel(new BorderLayout());
+		signalRecordingContainPanel.add(monitorConfigPanel, BorderLayout.NORTH);
 		signalRecordingContainPanel.add(Box.createVerticalGlue(), BorderLayout.CENTER);
 
 		tabbedPane.addTab(_("Signal viewing"), signalViewingContainPanel);
 		tabbedPane.addTab(_("Signal zooming"), zoomSettingsContainPanel);
 		tabbedPane.addTab(_("Tagging"), taggingContainPanel);
-                tabbedPane.addTab(_("Signal recording"), signalRecordingContainPanel);
+		tabbedPane.addTab(_("Monitor"), signalRecordingContainPanel);
 		tabbedPane.addTab(_("Miscellaneous"), miscellaneousContainPanel);
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
@@ -306,9 +305,9 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * <ul>
 	 * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
-         * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
+	     * <li>the {@link SignalViewingConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
-	 * <li>the {@link SignalRecordingConfigPanel#fillPanelFromModel(
+	 * <li>the {@link MonitorConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) tagging configuration panel},</li>
 	 * <li>the {@link MiscellaneousConfigPanel#fillPanelFromModel(
 	 * ApplicationConfiguration) panel} with "other" options,</li>
@@ -324,7 +323,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 
 		// note the "save on every change" checkbox has no immediate effect on behaviour of codec manager
 		if (mode == SignalMLOperationMode.APPLICATION) {
-			registerCodecAction.setApplicationConfig(config);
 			removeCodecAction.setApplicationConfig(config);
 
 			toolsConfigPanel.fillPanelFromModel(config);
@@ -334,7 +332,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		taggingConfigPanel.fillPanelFromModel(config);
 		miscellaneousConfigPanel.fillPanelFromModel(config);
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
-                signalRecordingConfigPanel.fillPanelFromModel(config);
+		monitorConfigPanel.fillPanelFromModel(config);
 	}
 
 	/**
@@ -343,7 +341,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	 * <ul>
 	 * <li>the {@link SignalViewingConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
-         * <li>the {@link SignalRecordingConfigPanel#fillModelFromPanel(
+	     * <li>the {@link MonitorConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) signal viewing panel},</li>
 	 * <li>the {@link TaggingConfigPanel#fillModelFromPanel(
 	 * ApplicationConfiguration) tagging configuration panel},</li>
@@ -363,7 +361,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		taggingConfigPanel.fillModelFromPanel(config);
 		miscellaneousConfigPanel.fillModelFromPanel(config);
 		signalZoomSettingsPanel.fillModelFromPanel(config.getZoomSignalSettings());
-                signalRecordingConfigPanel.fillModelFromPanel(config);
+		monitorConfigPanel.fillModelFromPanel(config);
 
 		config.applySystemSettings();
 
@@ -413,7 +411,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		signalViewingConfigPanel.validate(errors);
 		taggingConfigPanel.validate(errors);
 		miscellaneousConfigPanel.validate(errors);
-		signalRecordingConfigPanel.validate(errors);
+		monitorConfigPanel.validate(errors);
 
 		signalZoomSettingsPanel.validate(errors);
 

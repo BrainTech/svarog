@@ -66,7 +66,8 @@ public class CloseTagAction extends AbstractFocusableSignalMLAction<TagDocumentF
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveTagDocument() != null);
+		TagDocument activeTagDocument = getActionFocusSelector().getActiveTagDocument();
+		setEnabled(activeTagDocument != null && !isTagDocumentAMonitorTagDocument(activeTagDocument));
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {

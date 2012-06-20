@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml</groupId>
@@ -19,11 +21,24 @@
 
 	<modules>
 		<module>svarog</module>
-		<module>plugins/FFT</module>
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
+		<module>plugins/Stager</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>installer</id>
+			<modules>
+				<module>svarog</module>
+				<module>plugins/FFTSignalTool</module>
+				<module>plugins/PluginToolCommon</module>
+				<module>plugins/Artifact</module>
+				<module>izpack</module>
+			</modules>
+		</profile>
+	</profiles>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -168,16 +183,16 @@
 				</configuration>
 			</plugin>
 
-                        <plugin>
-                                <groupId>org.codehaus.mojo</groupId>
-                                <artifactId>findbugs-maven-plugin</artifactId>
-                                <version>1.2</version>
-                                <configuration>
-                                        <findbugsXmlOutput>true</findbugsXmlOutput>
-                                        <findbugsXmlWithMessages>true</findbugsXmlWithMessages>
-                                        <xmlOutput>true</xmlOutput>
-                                </configuration>
-                        </plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
 		</plugins>
 	</reporting>
 
@@ -207,7 +222,7 @@
 	<developers>
 		<developer>
 			<name>Michał Dobaczewski</name>
-			<email>michal (dot) d08 (at) "Google mail"</email>
+			<email>michal(dot) d08(at) "Google mail"</email>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -316,7 +331,8 @@
 			<organization>MIMUW</organization>
 			<timezone>+1</timezone>
 			<roles>
-				<role>Artifact &amp; Stager plugins</role>
+				<role>Artifact &amp;
+				Stager plugins</role>
 			</roles>
 		</developer>
 		<developer>

@@ -326,17 +326,17 @@ public class SpecialMath {
 		return Math.log(a + Math.sqrt(a * a - 1));
 	}
 
-	 /** Compute the inverse hyperbolic sine of a number.
-	 * (Note: This method is copy-pasted from
-	 * apache.commons.math.util.FastMath under Apache License v2.0.
-	 * After releasing version 3.0 of commons.math library
-	 * this code should be deleted and all calls to this method
-	 * should substituted by calls to apache.commons.math.util.FastMath
-	 * equivalent method).
-	 *
-	 * @param a number on which evaluation is done
-	 * @return inverse hyperbolic sine of a
-	 */
+	/** Compute the inverse hyperbolic sine of a number.
+	* (Note: This method is copy-pasted from
+	* apache.commons.math.util.FastMath under Apache License v2.0.
+	* After releasing version 3.0 of commons.math library
+	* this code should be deleted and all calls to this method
+	* should substituted by calls to apache.commons.math.util.FastMath
+	* equivalent method).
+	*
+	* @param a number on which evaluation is done
+	* @return inverse hyperbolic sine of a
+	*/
 	public static double asinh(double a) {
 
 		boolean negative = false;

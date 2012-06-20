@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.exampleplugin;
 
@@ -20,23 +20,23 @@ import org.signalml.plugin.export.view.AbstractDialog;
 /**
  * The dialog that allows user to input path to the book file.
  * As an initial path the path to the profile directory is set.
- * 
+ *
  * @author Marcin Szumski
  */
 public class OpenBookDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * the field in which the user inputs the location of the signal
 	 */
 	private JTextField bookLocation;
-	
+
 	/**
-	 * the {@link SvarogAccessSignal access} to signal options 
+	 * the {@link SvarogAccessSignal access} to signal options
 	 */
 	private SvarogAccessSignal signalAccess;
-	
+
 	/**
 	 * Constructor. Sets {@link SvarogAccessSignal signal access}.
 	 * @param signalAccess access to set
@@ -54,11 +54,11 @@ public class OpenBookDialog extends AbstractDialog {
 	protected JComponent createInterface() {
 		JPanel panel = new JPanel();
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder("The location of the book file"),
-		        null
+			new TitledBorder("The location of the book file"),
+			null
 		);
 		panel.setBorder(cb);
-		
+
 		bookLocation = new JTextField();
 		panel.add(bookLocation);
 		return panel;

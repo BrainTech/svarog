@@ -5,15 +5,15 @@ import java.io.IOException;
 
 public abstract class FormatComponentV5 {
 	public static final int COMMENT_SEGMENT_IDENTITY=1,
-	                        TEXT_INFO=1,
-	                        FILE_HEADER=2,
-	                        WEB_SITE_INFO=3,
-	                        DATE_INFO=4;
+							TEXT_INFO=1,
+							FILE_HEADER=2,
+							WEB_SITE_INFO=3,
+							DATE_INFO=4;
 	public static final int SIGNAL_INFO=5,
-	                        DECOMP_INFO=6;
+							DECOMP_INFO=6;
 	public static final int OFFSET_SEGMENT_IDENTITY=7,
-	                        SIGNAL_SEGMENT_IDENTITY=8,
-	                        ATOMS_SEGMENT_IDENTITY =9;
+							SIGNAL_SEGMENT_IDENTITY=8,
+							ATOMS_SEGMENT_IDENTITY =9;
 	public int  type;
 
 	public void Read(DataArrayInputStream stream)

@@ -125,7 +125,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
 		switch (columnIndex) {
-			
+
 		case INDEX_COLUMN :
 			return (rowIndex+1);
 

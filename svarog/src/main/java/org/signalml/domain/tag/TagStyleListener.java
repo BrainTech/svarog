@@ -17,25 +17,25 @@ import org.signalml.plugin.export.signal.TagStyle;
  */
 public interface TagStyleListener extends EventListener {
 
-        /**
-         * Invoked when the {@link TagStyle tag style} is added to the
-         * {@link StyledTagSet set}.
-         * @param e an event object describing the addition
-         */
+	/**
+	 * Invoked when the {@link TagStyle tag style} is added to the
+	 * {@link StyledTagSet set}.
+	 * @param e an event object describing the addition
+	 */
 	void tagStyleAdded(TagStyleEvent e);
 
-        /**
-         * Invoked when the {@link TagStyle tag style} is removed from the
-         * {@link StyledTagSet set}.
-         * @param e an event object describing the removal
-         */
+	/**
+	 * Invoked when the {@link TagStyle tag style} is removed from the
+	 * {@link StyledTagSet set}.
+	 * @param e an event object describing the removal
+	 */
 	void tagStyleRemoved(TagStyleEvent e);
 
-        /**
-         * Invoked when the {@link TagStyle tag style} is changed in the
-         * {@link StyledTagSet set}.
-         * @param e an event object describing the change
-         */
+	/**
+	 * Invoked when the {@link TagStyle tag style} is changed in the
+	 * {@link StyledTagSet set}.
+	 * @param e an event object describing the change
+	 */
 	void tagStyleChanged(TagStyleEvent e);
 
 }

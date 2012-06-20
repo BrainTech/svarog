@@ -126,7 +126,7 @@ public class ViewerSignalTree extends AbstractViewerTree implements SignalPageFo
 			documentPopupMenu.add(getActivateDocumentAction());
 			documentPopupMenu.addSeparator();
 			documentPopupMenu.add(getCloseDocumentAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToSignalTreeDocumentPopupMenu(documentPopupMenu);
 		}
 
@@ -140,7 +140,7 @@ public class ViewerSignalTree extends AbstractViewerTree implements SignalPageFo
 			signalPagePopupMenu = new JPopupMenu();
 
 			signalPagePopupMenu.add(getActivateSignalPageAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToSignalTreeSignalPagePopupMenu(signalPagePopupMenu);
 		}
 

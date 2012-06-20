@@ -44,8 +44,8 @@ public class GetTaskResultAction extends AbstractFocusableSignalMLAction<TaskFoc
 
 
 	public GetTaskResultAction(
-	                           TaskFocusSelector actionFocusSelector,
-	                           DialogResultListener dialogResultListener) {
+		TaskFocusSelector actionFocusSelector,
+		DialogResultListener dialogResultListener) {
 		this(actionFocusSelector);
 		this.dialogResultListener = dialogResultListener;
 	}

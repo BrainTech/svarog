@@ -20,16 +20,16 @@ import org.signalml.plugin.fftsignaltool.SignalFFTTool;
  * This listener, when the mouse is pressed shows the {@link
  * SignalFFTSettingsPopupDialog} after the specified time (400 ms).
  * If the user releases the mouse before that time, no action is taken.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.,
  * Marcin Szumski
  */
-public class SignalFFTToolButtonMouseListener extends MouseAdapter implements SignalToolButtonListener{
+public class SignalFFTToolButtonMouseListener extends MouseAdapter implements SignalToolButtonListener {
 
 	/**
 	 * the timer used to wait a specified time (400 s) before the
 	 * {@link SignalFFTSettingsPopupDialog dialog} with settings is shown;
-	 * the timer is stopped if the user releases the mouse button 
+	 * the timer is stopped if the user releases the mouse button
 	 */
 	private Timer timer;
 
@@ -106,7 +106,7 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 	 * <p>This listener must be associated with {@link SignalFFTTool}, so that
 	 * the {@code tool} must be of that type.
 	 * @throws RuntimeException if the {@code tool} is not of type {@link
-	 * SignalFFTTool} 
+	 * SignalFFTTool}
 	 */
 	@Override
 	public SignalToolButtonListener createCopy(SignalTool tool, JToggleButton button) {

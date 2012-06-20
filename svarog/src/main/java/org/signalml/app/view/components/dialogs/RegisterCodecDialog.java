@@ -51,7 +51,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	 * the {@link SignalMLCodecManager manager} of {@link SignalMLCodec codecs}
 	 */
 	private SignalMLCodecManager codecManager;
-	
+
 	/**
 	 * the {@link SignalMLCodec codec} read in this dialog
 	 */
@@ -156,8 +156,6 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 		if (step == 0) {
 
 			EmbeddedFileChooser fileChooser = getStepOnePanel().getFileChooser();
-
-			fileChooser.forceApproveSelection();
 			fileChooser.validateFile(errors, "sourceFile", false, false, false, false, true);
 
 			if (!errors.hasErrors()) {
@@ -255,7 +253,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {

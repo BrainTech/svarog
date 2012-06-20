@@ -78,8 +78,8 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		synchronizationPanel.setLayout(new BoxLayout(synchronizationPanel, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledCrossBorder(_("Synchronization"), true),
-		        new EmptyBorder(3,3,3,3)
+			new TitledCrossBorder(_("Synchronization"), true),
+			new EmptyBorder(3,3,3,3)
 		);
 		synchronizationPanel.setBorder(border);
 
@@ -93,8 +93,8 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		montagePanel.setLayout(new BoxLayout(montagePanel, BoxLayout.Y_AXIS));
 
 		border = new CompoundBorder(
-		        new TitledBorder(_("Montage")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Montage")),
+			new EmptyBorder(3,3,3,3)
 		);
 		montagePanel.setBorder(border);
 

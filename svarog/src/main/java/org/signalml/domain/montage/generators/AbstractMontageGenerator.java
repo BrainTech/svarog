@@ -14,7 +14,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 public abstract class AbstractMontageGenerator implements IMontageGenerator {
 
 	private String name;
-	
+
 	public String getName() {
 		return name;
 	}
@@ -31,7 +31,7 @@ public abstract class AbstractMontageGenerator implements IMontageGenerator {
 	protected void onNotFound(String channelName, ValidationErrors errors) {
 		errors.addError(_("One of required channels not identified: ") + channelName);
 	}
-	
+
 	@Override
 	public String toString() {
 		return getName();

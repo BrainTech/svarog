@@ -53,7 +53,7 @@ import org.springframework.validation.Errors;
  * <li>the {@link #getGeneratorComboBox() generator combo-box},</li>
  * <li>the {@link #getReloadButton() reload button},</li>
  * <li>the {@link #getShowErrorsButton() show errors button},</li></ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class MontageGeneratorPanel extends JPanel {
@@ -75,13 +75,13 @@ public class MontageGeneratorPanel extends JPanel {
 	 * basis of the {@link #montage old one}.
 	 */
 	private JComboBox generatorComboBox;
-	
+
 	/**
 	 * the {@link MontageGeneratorListModel model} for the
 	 * {@link #generatorComboBox}.
 	 */
 	private MontageGeneratorListModel montageGeneratorListModel;
-	
+
 	/**
 	 * the dialog with errors which is shown when:
 	 * <ul>
@@ -113,7 +113,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/** the button for {@link #getShowErrorsAction() showErrorsAction}. */
 	private CompactButton showErrorsButton;
-	
+
 	/** the button for {@link #getReloadAction() reloadAction}. */
 	private CompactButton reloadButton;
 
@@ -123,7 +123,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * {@link MontageGeneratorPanel#montage montage}.
 	 */
 	private MontagePropertyListener montagePropertyListener;
-	
+
 	/**
 	 * the listener associated with the addition/removal/change of a.
 	 * {@link SourceChannel source channel} in a {@link #getMontage() montage}
@@ -165,8 +165,8 @@ public class MontageGeneratorPanel extends JPanel {
 		choicePanel.setLayout(new BoxLayout(choicePanel, BoxLayout.X_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Choose generator")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose generator")),
+			new EmptyBorder(3,3,3,3)
 		);
 		choicePanel.setBorder(border);
 
@@ -185,7 +185,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Gets the {@link Montage montage} that is edited.
-	 * 
+	 *
 	 * @return the {@link Montage montage} that is edited
 	 */
 	public Montage getMontage() {
@@ -194,7 +194,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Sets the {@link Montage montage} that is edited.
-	 * 
+	 *
 	 * @param montage
 	 *            the new {@link Montage montage} that is edited
 	 */
@@ -222,7 +222,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * Gets the validation dialog with errors which is shown when:
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
-	 * 
+	 *
 	 * @return the {@link ExceptionDialog dialog} with errors which is shown when:
 	 *         <ul>
 	 *         <li>the {@link #getMontage() montage} can not be used to generate
@@ -236,7 +236,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * Sets the dialog with errors which is shown when:
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
-	 * 
+	 *
 	 * @param errorsDialog
 	 *            the new validation errors dialog with errors which is shown
 	 *            when:
@@ -251,7 +251,7 @@ public class MontageGeneratorPanel extends JPanel {
 	/**
 	 * Gets the {@link MontageGeneratorListModel model} for the
 	 * {@link #generatorComboBox}.
-	 * 
+	 *
 	 * @return the {@link MontageGeneratorListModel model} for the
 	 *         {@link #generatorComboBox}
 	 */
@@ -265,7 +265,7 @@ public class MontageGeneratorPanel extends JPanel {
 	/**
 	 * Gets the combo-box which allows to select the {@link MontageGenerator
 	 * montage genarator}.
-	 * 
+	 *
 	 * @return the combo-box which allows to select the {@link MontageGenerator
 	 *         montage genarator}
 	 */
@@ -308,7 +308,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Gets the {@link ShowErrorsAction action} which displays the.
-	 * 
+	 *
 	 * @return the {@link ShowErrorsAction action} which displays the
 	 */
 	public ShowErrorsAction getShowErrorsAction() {
@@ -324,7 +324,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * using a currently {@link #getGeneratorComboBox() selected}
 	 * {@link MontageGenerator} (on the basis of the {@link #montage old
 	 * montage}).
-	 * 
+	 *
 	 * @return the {@link ReloadAction action} which
 	 *         {@link #tryGenerate(MontageGenerator) generates} a new
 	 *         {@link Montage} using a currently {@link #getGeneratorComboBox()
@@ -340,7 +340,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Gets the button for {@link #getShowErrorsAction() showErrorsAction}.
-	 * 
+	 *
 	 * @return the button for {@link #getShowErrorsAction() showErrorsAction}
 	 */
 	public CompactButton getShowErrorsButton() {
@@ -352,7 +352,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Gets the button for {@link #getReloadAction() reloadAction}.
-	 * 
+	 *
 	 * @return the button for {@link #getReloadAction() reloadAction}
 	 */
 	public CompactButton getReloadButton() {
@@ -461,7 +461,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Action which displays the.
-	 * 
+	 *
 	 * {@link ExceptionDialog errors dialog} if the current {@link #getMontage()
 	 * montage} can not be used to generate a {@link Montage montage} using a
 	 * currently {@link #getGeneratorComboBox() selected}
@@ -534,7 +534,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 * MontageGeneratorPanel#tryGenerate(MontageGenerator) generates}
 		 * a new {@link Montage} using a {@link
 		 * MontageGeneratorPanel#getGeneratorComboBox() selected}
-		 * {@link MontageGenerator generator}. 
+		 * {@link MontageGenerator generator}.
 		 */
 		public void actionPerformed(ActionEvent ev) {
 
@@ -587,7 +587,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * The listener associated with the addition/removal/change of a.
-	 * 
+	 *
 	 * {@link SourceChannel source channel} in a montage.
 	 * <p>
 	 * When any of these events occurs:

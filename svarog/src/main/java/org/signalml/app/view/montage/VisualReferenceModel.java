@@ -103,8 +103,6 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 			VisualReferenceChannel channel;
 			sourceChannels.ensureCapacity(cnt);
 			channelLists.ensureCapacity(cnt);
-			IChannelFunction function;
-			ChannelType functionType;
 
 			for (i=0; i<cnt; i++) {
 				SourceChannel sourceChannel = montage.getSourceChannelAt(i);
@@ -264,6 +262,14 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 			// normal mode reaction
 			addRegularModeReference(montageIndex, sourceIndex);
 
+		}
+
+		//selects currently added arrow.
+		for (VisualReferenceArrow arrow: this.arrows) {
+			if (arrow.getSourceChannel() == sourceIndex && montageIndex == arrow.getTargetChannel()) {
+				setActiveArrow(arrow);
+				break;
+			}
 		}
 
 	}

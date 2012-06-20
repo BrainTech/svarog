@@ -16,7 +16,7 @@ import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 
-/** 
+/**
  * This class is responsible for actions regarding the menu item which stops the recording of the monitor.
  *
  * @author Piotr Szachewicz

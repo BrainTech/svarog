@@ -97,7 +97,7 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 
 	@Override
 	public void setEnabledAsNeeded() {
-		setEnabled(getActionFocusSelector().getActiveSignalDocument() != null);
+		setEnabled(isSignalDocumentOfflineSignalDocument(getActionFocusSelector().getActiveSignalDocument()));
 	}
 
 	public DocumentFlowIntegrator getDocumentFlowIntegrator() {

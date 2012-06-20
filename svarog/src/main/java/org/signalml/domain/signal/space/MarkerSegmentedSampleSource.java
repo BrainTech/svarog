@@ -8,8 +8,8 @@ import java.util.Arrays;
 
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
@@ -25,65 +25,65 @@ import org.signalml.plugin.export.signal.TagStyle;
  */
 public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor implements MultichannelSegmentedSampleSource {
 
-        /**
-         * the number of samples in the segment
-         */
+	/**
+	 * the number of samples in the segment
+	 */
 	private int segmentLength;
-        /**
-         * an array of the beginnings of segments
-         */
+	/**
+	 * an array of the beginnings of segments
+	 */
 	private int[] offsets;
 
-        /**
-         * the number of channels in this source
-         */
+	/**
+	 * the number of channels in this source
+	 */
 	private int channelCount;
-        /**
-         * an array mapping indexes in this source to the indexes of channels
-         * in the actual source
-         */
+	/**
+	 * an array mapping indexes in this source to the indexes of channels
+	 * in the actual source
+	 */
 	private int[] channelIndices;
 
-        /**
-         * the number of segments that can not be used (the required
-         * neighbourhood of the marker is not in the signal).
-         */
+	/**
+	 * the number of segments that can not be used (the required
+	 * neighbourhood of the marker is not in the signal).
+	 */
 	private int unusableSegmentCount;
-        /**
-         * the number of samples before the marker that should be included in
-         * the segment
-         */
+	/**
+	 * the number of samples before the marker that should be included in
+	 * the segment
+	 */
 	private int samplesBefore;
-        /**
-         * the number of samples after the marker that should be included in
-         * the segment
-         */
+	/**
+	 * the number of samples after the marker that should be included in
+	 * the segment
+	 */
 	private int samplesAfter;
-        /**
-         * the number of samples per second
-         */
+	/**
+	 * the number of samples per second
+	 */
 	private float samplingFrequency;
 
-        /**
-         * Constructor. Creates a source without segments
-         * @param source the actual source of samples
-         */
+	/**
+	 * Constructor. Creates a source without segments
+	 * @param source the actual source of samples
+	 */
 	protected MarkerSegmentedSampleSource(MultichannelSampleSource source) {
 		super(source);
 	}
 
-        /**
-         * Constructor. Creates the source of samples based on the given
-         * {@link MultichannelSampleSource source} of all channels.
-         * @param source the source of all samples
-         * @param tagSet the set of tags (including markers)
-         * @param markerName the name of the type of a marker
-         * @param secondsBefore the length (in seconds) before the marker that
-         * is to be included in the
-         * @param secondsAfter the length (in seconds) before the marker that
-         * is to be included in the
-         * @param channelSpace the set of channels
-         */
+	/**
+	 * Constructor. Creates the source of samples based on the given
+	 * {@link MultichannelSampleSource source} of all channels.
+	 * @param source the source of all samples
+	 * @param tagSet the set of tags (including markers)
+	 * @param markerName the name of the type of a marker
+	 * @param secondsBefore the length (in seconds) before the marker that
+	 * is to be included in the
+	 * @param secondsAfter the length (in seconds) before the marker that
+	 * is to be included in the
+	 * @param channelSpace the set of channels
+	 */
 	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, String markerName, double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
 		super(source);
 
@@ -150,13 +150,13 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 	}
 
-        /**
-         * Constructor. Creates the source of samples based on the given
-         * {@link MultichannelSampleSource source} of all channels an the given
-         * {@link MarkerSegmentedSampleSourceDescriptor descriptor}.
-         * @param source the source of samples for all channels
-         * @param descriptor the descriptor of this source
-         */
+	/**
+	 * Constructor. Creates the source of samples based on the given
+	 * {@link MultichannelSampleSource source} of all channels an the given
+	 * {@link MarkerSegmentedSampleSourceDescriptor descriptor}.
+	 * @param source the source of samples for all channels
+	 * @param descriptor the descriptor of this source
+	 */
 	public MarkerSegmentedSampleSource(MultichannelSampleSource source, MarkerSegmentedSampleSourceDescriptor descriptor) {
 		this(source);
 
@@ -171,11 +171,11 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		samplesAfter = descriptor.getSamplesAfter();
 	}
 
-        /**
-         * Creates the {@link MarkerSegmentedSampleSourceDescriptor descriptor}
-         * of this source.
-         * @return the descriptor of this source
-         */
+	/**
+	 * Creates the {@link MarkerSegmentedSampleSourceDescriptor descriptor}
+	 * of this source.
+	 * @return the descriptor of this source
+	 */
 	@Override
 	public MarkerSegmentedSampleSourceDescriptor createDescriptor() {
 
@@ -284,18 +284,18 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		return unusableSegmentCount;
 	}
 
-        /**
-         * Returns the number of samples in the segment before the marker.
-         * @return the number of samples in the segment before the marker
-         */
+	/**
+	 * Returns the number of samples in the segment before the marker.
+	 * @return the number of samples in the segment before the marker
+	 */
 	public int getSamplesBefore() {
 		return samplesBefore;
 	}
 
-        /**
-         * Returns the number of samples in the segment after the marker.
-         * @return the number of samples in the segment after the marker
-         */
+	/**
+	 * Returns the number of samples in the segment after the marker.
+	 * @return the number of samples in the segment after the marker
+	 */
 	public int getSamplesAfter() {
 		return samplesAfter;
 	}

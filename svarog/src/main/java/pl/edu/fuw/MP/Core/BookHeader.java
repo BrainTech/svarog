@@ -33,10 +33,10 @@ public class BookHeader implements StandardBookSegment {
 
 	public String getString() {
 		return new String("\nFile offset    : " + file_offset
-		                  + "\nBook size      : " + book_size + "\nSignal size    : "
-		                  + signal_size + "\nConv factor    : " + points_per_micro_V
-		                  + "\nFrequency      : " + FREQUENCY + "\nSignal energy  : "
-		                  + signal_energy + "\nBook   energy  : " + book_energy);
+						  + "\nBook size      : " + book_size + "\nSignal size    : "
+						  + signal_size + "\nConv factor    : " + points_per_micro_V
+						  + "\nFrequency      : " + FREQUENCY + "\nSignal energy  : "
+						  + signal_energy + "\nBook   energy  : " + book_energy);
 	}
 
 	public StandardBookAtom getAtomAt(int index) {

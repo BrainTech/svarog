@@ -4,18 +4,15 @@
 
 package org.signalml.method.mp5;
 
-import java.io.Serializable;
-import java.util.Iterator;
-
 import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import java.io.Serializable;
+
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import java.util.EnumMap;
-import java.util.EnumSet;
-import java.util.Set;
 
 /** MP5Parameters
  *
@@ -35,9 +32,6 @@ public class MP5Parameters implements Serializable, Preset {
 
 	public static final float MIN_DILATION_FACTOR_PERCENTAGE = 0.0F;
 	public static final float MAX_DILATION_FACTOR_PERCENTAGE = 100F;
-
-	public static final int MIN_PERIOD_DENSITY = 0;
-	public static final int MAX_PERIOD_DENSITY = 20000;
 
 	public static final int MIN_ITERATION_COUNT = 1;
 	public static final int MAX_ITERATION_COUNT = 20000;

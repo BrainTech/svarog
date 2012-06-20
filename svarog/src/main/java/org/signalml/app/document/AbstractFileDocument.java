@@ -23,7 +23,7 @@ import org.springframework.context.MessageSourceResolvable;
  * {@link FileBackedDocument backing file}.
  * Contains this file and as a {@link #getDefaultMessage() default message}
  * uses the path to it.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractFileDocument extends AbstractDocument implements FileBackedDocument, MessageSourceResolvable, PropertyProvider {
@@ -78,8 +78,8 @@ public abstract class AbstractFileDocument extends AbstractDocument implements F
 	@Override
 	public Object[] getArguments() {
 		return new Object[] {
-		               backingFile != null ? backingFile.getAbsolutePath() : "?"
-		       };
+				   backingFile != null ? backingFile.getAbsolutePath() : "?"
+			   };
 	}
 
 	@Override

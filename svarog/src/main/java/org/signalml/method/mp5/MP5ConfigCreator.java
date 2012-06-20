@@ -136,7 +136,7 @@ public class MP5ConfigCreator {
 		if (customConfigText != null && !customConfigText.isEmpty()) {
 			formatter.format("%s%n", customConfigText);
 			formatter.format("%n");
-		}		
+		}
 
 	}
 
@@ -194,9 +194,6 @@ public class MP5ConfigCreator {
 	}
 
 	public void writeRuntimeConfig(MP5RuntimeParameters parameters, Formatter formatter) {
-
-		formatter.format("%s %f%n", SAMPLING_FREQUENCY, parameters.getSamplingFrequency());
-		formatter.format("%n");
 
 		formatter.format("%s %s%n", NAME_OF_DATA_FILE, parameters.getSignalFile().getName());
 

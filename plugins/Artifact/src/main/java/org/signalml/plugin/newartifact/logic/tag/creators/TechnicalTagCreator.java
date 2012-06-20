@@ -47,13 +47,13 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(TechnicalTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(TechnicalTagCreator.CREATOR_TYPE) / 100.0;
 		final double tresholdM = TechnicalTagCreator.TRESHOLDM_A
-					 + sensitivity
-					 * (TechnicalTagCreator.TRESHOLDM_B - TechnicalTagCreator.TRESHOLDM_A);
+								 + sensitivity
+								 * (TechnicalTagCreator.TRESHOLDM_B - TechnicalTagCreator.TRESHOLDM_A);
 		final double tresholdS = TechnicalTagCreator.TRESHOLDS_A
-					 + sensitivity
-					 * (TechnicalTagCreator.TRESHOLDS_B - TechnicalTagCreator.TRESHOLDS_A);
+								 + sensitivity
+								 * (TechnicalTagCreator.TRESHOLDS_B - TechnicalTagCreator.TRESHOLDS_A);
 
 		boolean exclusions[] = this.getExclusionMatrix(data);
 		double channelDataCopy[][] = new double[3][];
@@ -89,18 +89,18 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 
 			for (int k = 0; k < 3; ++k) {
 				double sortedData[] = Arrays.copyOf(channelDataCopy[k],
-								    channelDataCopy[k].length);
+													channelDataCopy[k].length);
 				Arrays.sort(sortedData);
 				median[k] = sortedData[blockCount >> 1];
 				std[k] = this.stdDeviationAlgorithm.standardDeviation(Arrays.copyOfRange(sortedData,
-						tailLength - 1, blockCount - tailLength - 1))
-					 / TechnicalTagCreator.FACTOR;
+						 tailLength - 1, blockCount - tailLength - 1))
+						 / TechnicalTagCreator.FACTOR;
 			}
 
 			for (int i = 0; i < blockCount; ++i) {
 				for (int k = 0; k < 3; ++k) {
 					double value = exclusions[eegChannels[j]] ? 0.0
-						       : channelDataCopy[k][i];
+								   : channelDataCopy[k][i];
 					if (value > median[k] + std[k] * tresholds[k]) {
 						tags.add(i);
 						break;
@@ -113,9 +113,9 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 	}
 
 	private double[] shiftMin(double channelData[], int start, int step,
-				  double min) {
+							  double min) {
 		double channelCopy[] = new double[(channelData.length + step - 1)
-						  / step];
+										  / step];
 
 		double positiveMin = Double.POSITIVE_INFINITY;
 		for (int i = start; i < channelData.length; i += step) {
@@ -127,7 +127,7 @@ public class TechnicalTagCreator extends AbstractNewArtifactTagCreator
 		positiveMin -= min;
 		for (int j = 0, i = start; i < channelData.length; i += step, ++j) {
 			channelCopy[j] = Math.log(channelData[i] > min ? channelData[i]
-						  - min : positiveMin);
+									  - min : positiveMin);
 		}
 
 		return channelCopy;

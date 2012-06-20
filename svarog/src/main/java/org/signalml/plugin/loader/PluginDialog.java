@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -24,32 +24,32 @@ public class PluginDialog extends AbstractDialog  {
 	 * an array of plug-in {@link PluginState states}
 	 */
 	private ArrayList<PluginState> descriptions;
-	
+
 	/**
 	 * an array of directories in which plug-ins are
 	 * stored
 	 */
 	private ArrayList<File> pluginDirs;
-	
+
 	/**
 	 * Constructor.
 	 * @param w the parent window
 	 * @param isModal specifies whether dialog blocks input to other
-     * windows when shown. <code>null</code> value and unsupported modality
-     * types are equivalent to <code>MODELESS</code>
-     * @param descriptions an array of plug-in {@link PluginState states}
-     * @param pluginDirs an array of directories in which plug-ins are
+	 * windows when shown. <code>null</code> value and unsupported modality
+	 * types are equivalent to <code>MODELESS</code>
+	 * @param descriptions an array of plug-in {@link PluginState states}
+	 * @param pluginDirs an array of directories in which plug-ins are
 	 * stored
 	 */
-	public PluginDialog( Window w, boolean isModal, ArrayList<PluginState> descriptions,
-			ArrayList<File> pluginDirs) {
+	public PluginDialog(Window w, boolean isModal, ArrayList<PluginState> descriptions,
+						ArrayList<File> pluginDirs) {
 		super(w, isModal);
 		this.descriptions = descriptions;
 		this.pluginDirs = pluginDirs;
 	}
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * the actual panel with options
 	 */

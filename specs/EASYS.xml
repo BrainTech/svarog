@@ -3,7 +3,7 @@
 <header>
  <format id='EASYS'/>
 </header>
-<data_format frame_type='multiplex' offset='16*{data_offset}' sample_type='int16'/> 
+<data_format frame_type='multiplex' offset='16*{data_offset}' sample_type='int16'/>
 <parameters>
   <property id='magic' type='ascii' width='6' offset='0'/>
   <constraint test='{magic}.equals("EASREC")'/>
@@ -18,21 +18,21 @@
   <calibration_gain index='1..{number_of_channels}' evaltype='float' eval='1.0F/{_calibration_gain}' />
 
   <code language='java'>
-  
+
    private int     offset_value;
    private boolean offset_value_set=false;
-  
+
    private int easys_offset(int haveEx, int data_offset, int chn) throws XMLCodecException {
      if(offset_value_set==false) {
        if(haveEx==0) {
           throw new XMLCodecException(&#34;ex. header not found !&#34;);
        }
-       
+
        int offset=32;
        for( ; ; ) {
           char  code1=(char)read_byte(offset), code2=(char)read_byte(offset+1);
           short size=read_short(offset+2);
-          
+
           offset+=4;
           if(code1=='C' &#38;&#38; code2=='N') {
              break;
@@ -44,7 +44,7 @@
              throw new XMLCodecException(&#34;channel names not found !&#34;);
           }
        }
-       
+
        offset_value_set=true;
        offset_value=offset;
        //System.out.println(&#34; OFFSET &#34; + (16*offset));
@@ -53,13 +53,13 @@
        return offset_value;
      }
    }
-   
+
   </code>
-  
-  <channel_names type='ascii' width='4' 
+
+  <channel_names type='ascii' width='4'
                  offset='easys_offset({ext_hdr},{data_offset}, {number_of_channels})+4*({index}-1)'
                  index='1..{number_of_channels}'
                  />
-  
-</parameters> 
+
+</parameters>
 </meta_format>

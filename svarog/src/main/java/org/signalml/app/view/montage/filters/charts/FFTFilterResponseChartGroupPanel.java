@@ -146,7 +146,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 			int index;
 			for (frequency=lowFrequency; frequency<=limit; frequency += frequencyStepSize) {
 
-				index = (int) (frequency / frequencyStepSize);
+				index = (int)(frequency / frequencyStepSize);
 				coefficients[index] = coefficient;
 
 			}

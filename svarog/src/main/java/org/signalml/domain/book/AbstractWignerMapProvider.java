@@ -134,10 +134,10 @@ public abstract class AbstractWignerMapProvider {
 	public void setRange(double minFrequency, double maxFrequency, double minPosition, double maxPosition) {
 
 		if (
-		        this.minFrequency != minFrequency
-		        || this.maxFrequency != maxFrequency
-		        || this.minPosition != minPosition
-		        || this.maxPosition != maxPosition
+			this.minFrequency != minFrequency
+			|| this.maxFrequency != maxFrequency
+			|| this.minPosition != minPosition
+			|| this.maxPosition != maxPosition
 		) {
 
 			this.minFrequency = minFrequency;
@@ -159,10 +159,10 @@ public abstract class AbstractWignerMapProvider {
 			normalMap = null;
 
 		} else if (
-		        this.minFrequency != minFrequency
-		        || this.maxFrequency != maxFrequency
-		        || this.minPosition != minPosition
-		        || this.maxPosition != maxPosition
+			this.minFrequency != minFrequency
+			|| this.maxFrequency != maxFrequency
+			|| this.minPosition != minPosition
+			|| this.maxPosition != maxPosition
 		) {
 
 			mapDirty = true;

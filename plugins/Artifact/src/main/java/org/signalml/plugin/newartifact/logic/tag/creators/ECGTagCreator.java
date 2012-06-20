@@ -31,7 +31,7 @@ public class ECGTagCreator extends AbstractNewArtifactTagCreator implements
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		double sensitivity = data.parameters.getSensitivity(ECGTagCreator.CREATOR_TYPE) / 100.0;
 		final double treshold = ECGTagCreator.TRESHOLD_A + sensitivity
-					* (ECGTagCreator.TRESHOLD_B - ECGTagCreator.TRESHOLD_A);
+								* (ECGTagCreator.TRESHOLD_B - ECGTagCreator.TRESHOLD_A);
 
 		boolean exclusion[] = this.getExclusionMatrix(data);
 		double tresholdMatrix[] = this.getTresholdMatrix(data, exclusion, treshold);
@@ -40,7 +40,7 @@ public class ECGTagCreator extends AbstractNewArtifactTagCreator implements
 	}
 
 	protected double[] getTresholdMatrix(NewArtifactTagData data,
-					     boolean exclusion[], double baseTreshold) {
+										 boolean exclusion[], double baseTreshold) {
 		int eegChannels[] = data.eegChannels;
 		double tresholdMatrix[] = new double[eegChannels.length];
 		for (int i = 0; i < eegChannels.length; ++i) {

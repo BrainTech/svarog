@@ -21,7 +21,7 @@ public interface FileBackedDocument extends Document {
 	 * @return the file with which this document is backed
 	 */
 	File getBackingFile();
-	
+
 	/**
 	 * Sets the file with which this document is backed.
 	 * @param file the file with which this document is backed

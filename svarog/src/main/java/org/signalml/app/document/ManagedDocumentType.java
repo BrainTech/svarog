@@ -34,38 +34,38 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 * type for a {@link SignalDocument}
 	 */
 	SIGNAL(_("Signal"),
-	       SignalDocument.class,
-	       _("Common signal files (*.d, *.edf, *.raw, *.bin)"),
-	       new String[] { "d", "edf", "raw", "bin", "dat" },
-	       "org/signalml/app/icon/signal.png"
-	       ),
+	SignalDocument.class,
+	_("Common signal files (*.d, *.edf, *.raw, *.bin)"),
+	new String[] { "d", "edf", "raw", "bin", "dat" },
+	"org/signalml/app/icon/signal.png"
+		  ),
 
 	/**
 	 * type for a {@link MonitorSignalDocument}
 	 */
 	MONITOR(_("Monitor"),
-		MonitorSignalDocument.class
-		),
+	MonitorSignalDocument.class
+		   ),
 
 	/**
 	 * type for a {@link BookDocument}
 	 */
 	BOOK(_("Book"),
-	     BookDocument.class,
-	     _("Book files (*.b)"),
-	     new String[] { "b" },
-	     "org/signalml/app/icon/book.png"
-	     ),
+	BookDocument.class,
+	_("Book files (*.b)"),
+	new String[] { "b" },
+	"org/signalml/app/icon/book.png"
+		),
 
 	/**
 	 * type for a {@link TagDocument}
 	 */
 	TAG(_("Tag"),
-	    TagDocument.class,
-	    _("Tag files (*.xml, *.tag)"),
-	    new String[] { "xml", "tag" },
-	    "org/signalml/app/icon/tag.png"
-	    );
+	TagDocument.class,
+	_("Tag files (*.xml, *.tag)"),
+	new String[] { "xml", "tag" },
+	"org/signalml/app/icon/tag.png"
+	   );
 
 	/**
 	 * the name of this type

@@ -35,8 +35,8 @@ public class MP5AtomsInDictionaryPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Atoms to be included in the dictionary")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Atoms to be included in the dictionary")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		setBorder(border);

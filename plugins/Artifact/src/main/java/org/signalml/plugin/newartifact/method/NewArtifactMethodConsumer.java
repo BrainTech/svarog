@@ -36,7 +36,7 @@ import org.signalml.util.Util;
 public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethodConsumer.class);
+										   .getLogger(NewArtifactMethodConsumer.class);
 
 	private Window dialogParent;
 	private FileChooser fileChooser;
@@ -51,15 +51,15 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
 		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
 
-			this.resultDialog = new NewArtifactResultDialog(
-				this.dialogParent, true);
+		this.resultDialog = new NewArtifactResultDialog(
+			this.dialogParent, true);
 		this.resultDialog.setFileChooser(fileChooser);
 
 	}
 
 	@Override
 	public boolean consumeResult(Method method, Object methodData,
-				     Object methodResult) throws SignalMLException {
+								 Object methodResult) throws SignalMLException {
 
 		if (!(methodData instanceof NewArtifactApplicationData)) {
 			logger.error("Invalid artifact data");
@@ -72,7 +72,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		NewArtifactResultTargetDescriptor descriptor = new NewArtifactResultTargetDescriptor();
 
 		SvarogAccessSignal signalAccess = this.manager.getSvarogAccess()
-						  .getSignalAccess();
+										  .getSignalAccess();
 
 		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		boolean signalAvailable;
@@ -100,7 +100,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		descriptor.setPrimaryTag(primaryTag);
 
 		File workingDirectory = new File(data.getProjectPath(),
-						 data.getPatientName());
+										 data.getPatientName());
 		File[] additionalTagFiles = workingDirectory
 		.listFiles(new FileFilter() {
 
@@ -110,9 +110,9 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 					return false;
 				}
 				String fileExtension = Util.getFileExtension(pathname,
-						       false);
+									   false);
 				return (fileExtension != null && "tag"
-					.equalsIgnoreCase(fileExtension));
+						.equalsIgnoreCase(fileExtension));
 			}
 
 		});
@@ -153,7 +153,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		if (signalAvailable && descriptor.isPrimaryOpenInWindow()) {
 			try {
 				signalAccess.openTagDocument(primaryTag.getBackingFile(),
-							     signalDocument, true);
+											 signalDocument, true);
 			} catch (InvalidClassException ex) {
 				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
@@ -164,11 +164,11 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		}
 
 		ArrayList<File> chosenAdditionalTags = descriptor
-						       .getChosenAdditionalTags();
+											   .getChosenAdditionalTags();
 		if (!chosenAdditionalTags.isEmpty()) {
 
 			boolean additionalOpenInWindow = descriptor
-							 .isAdditionalOpenInWindow();
+											 .isAdditionalOpenInWindow();
 			boolean additionalSaveToFile = descriptor.isAdditionalSaveToFile();
 
 			if (additionalOpenInWindow || additionalSaveToFile) {
@@ -208,7 +208,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 							// file exists warning
 							if (saveFile.exists()) {
 								int res = OptionPane
-									  .showFileAlreadyExists(dialogParent);
+										  .showFileAlreadyExists(dialogParent);
 								if (res != OptionPane.OK_OPTION) {
 									hasFile = false;
 								}
@@ -249,7 +249,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 
 						try {
 							signalAccess.openTagDocument(file, signalDocument,
-										     false);
+														 false);
 						} catch (InvalidClassException ex) {
 							Dialogs.showExceptionDialog(
 								dialogParent, ex);

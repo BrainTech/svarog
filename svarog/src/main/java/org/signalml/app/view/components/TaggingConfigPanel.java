@@ -44,7 +44,7 @@ public class TaggingConfigPanel extends JPanel {
 	private PagingParametersPanel pagingParametersPanel;
 	/**
 	 * the check-box which tells if the full {@link Montage montage} should
-	 * be saved in the tag file 
+	 * be saved in the tag file
 	 */
 	private JCheckBox saveFullMontageWithTagCheckBox;
 
@@ -73,9 +73,9 @@ public class TaggingConfigPanel extends JPanel {
 		JPanel generalPanel = new JPanel();
 		generalPanel.setLayout(new BoxLayout(generalPanel, BoxLayout.Y_AXIS));
 		generalPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(_("General")),
-		                               new EmptyBorder(3,3,3,3)
-		                       ));
+								   new TitledBorder(_("General")),
+								   new EmptyBorder(3,3,3,3)
+							   ));
 
 		generalPanel.add(getSaveFullMontageWithTagCheckBox());
 
@@ -89,9 +89,9 @@ public class TaggingConfigPanel extends JPanel {
 	/**
 	 * Returns the check-box which tells if the full {@link Montage montage}
 	 * should be saved in the tag file.
-	 * If the check-box doesn't exist it is created.  
+	 * If the check-box doesn't exist it is created.
 	 * @return the check-box which tells if the full montage should
-	 * be saved in the tag file 
+	 * be saved in the tag file
 	 */
 	public JCheckBox getSaveFullMontageWithTagCheckBox() {
 		if (saveFullMontageWithTagCheckBox == null) {

@@ -48,25 +48,25 @@ public class CodecManagerConfigPanel extends JPanel {
 	 * the list of installed {@link SignalMLCodec codecs}
 	 */
 	private JList codecList;
-	
+
 	/**
 	 * the scroll pane with the {@link #codecList list} of installed
 	 * {@link SignalMLCodec codecs}
 	 */
 	private JScrollPane codeclListScrollPane;
-	
+
 	/**
 	 * the button which activates the {@link RegisterCodecAction registration}
 	 * of the {@link SignalMLCodec codec}
 	 */
 	private JButton registerCodecButton;
-	
+
 	/**
 	 * the button which activates the {@link RemoveCodecAction removal} of a
 	 * {@link SignalMLCodec codec}
 	 */
 	private JButton removeCodecButton;
-	
+
 	/**
 	 * the panel with {@link #registerCodecButton} and
 	 * {@link #removeCodecButton}
@@ -135,8 +135,8 @@ public class CodecManagerConfigPanel extends JPanel {
 		if (codeclListScrollPane == null) {
 			codeclListScrollPane = new JScrollPane(getCodecList(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			CompoundBorder cb = new CompoundBorder(
-			        new TitledBorder(_("Installed codecs")),
-			        new EmptyBorder(3,3,3,3)
+				new TitledBorder(_("Installed codecs")),
+				new EmptyBorder(3,3,3,3)
 			);
 			codeclListScrollPane.setBorder(cb);
 

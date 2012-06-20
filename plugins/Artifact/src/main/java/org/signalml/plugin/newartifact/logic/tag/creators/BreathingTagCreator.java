@@ -38,11 +38,11 @@ public class BreathingTagCreator extends AbstractNewArtifactTagCreator implement
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(BreathingTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(BreathingTagCreator.CREATOR_TYPE) / 100.0;
 		final double factor = BreathingTagCreator.FACTOR_A + sensitivity
-				      * (BreathingTagCreator.FACTOR_B - BreathingTagCreator.FACTOR_A);
+							  * (BreathingTagCreator.FACTOR_B - BreathingTagCreator.FACTOR_A);
 		final double treshold = BreathingTagCreator.TRESHOLD_A + sensitivity
-					* (BreathingTagCreator.TRESHOLD_B - BreathingTagCreator.TRESHOLD_A);
+								* (BreathingTagCreator.TRESHOLD_B - BreathingTagCreator.TRESHOLD_A);
 
 		double source[][] = data.source;
 		int blockCount = source[0].length;
@@ -61,11 +61,11 @@ public class BreathingTagCreator extends AbstractNewArtifactTagCreator implement
 						double channelData[] = source[eegChannels[i]];
 						if (channelData[j] > tresholdMatrix[i]) {// redundant
 							hasPrev = hasPrev
-								  || channelData[j - 1] > tresholdMatrix[i]
-								  * factor;
+									  || channelData[j - 1] > tresholdMatrix[i]
+									  * factor;
 							hasNext = hasNext
-								  || channelData[j + 1] > tresholdMatrix[i]
-								  * factor;
+									  || channelData[j + 1] > tresholdMatrix[i]
+									  * factor;
 						}
 						if (hasPrev && hasNext) {
 							break;

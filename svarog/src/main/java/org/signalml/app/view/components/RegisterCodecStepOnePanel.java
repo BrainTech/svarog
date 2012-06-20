@@ -105,8 +105,6 @@ public class RegisterCodecStepOnePanel extends JPanel {
 			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir"),"specs"));
 			fileChooser.setPreferredSize(new Dimension(500,350));
 
-			fileChooser.setInvokeDefaultButtonOnApprove(true);
-
 			// remove escape key binding to allow for dialog closing
 			KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
 			fileChooser.getInputMap(JFileChooser.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(escape, "none");

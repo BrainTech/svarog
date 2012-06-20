@@ -16,25 +16,25 @@ import org.signalml.plugin.export.signal.Tag;
  */
 public interface TagListener extends EventListener {
 
-        /**
-         * Invoked when the {@link Tag tag} is added to
-         * the {@link StyledTagSet set}.
-         * @param e an event object describing the addition
-         */
+	/**
+	 * Invoked when the {@link Tag tag} is added to
+	 * the {@link StyledTagSet set}.
+	 * @param e an event object describing the addition
+	 */
 	void tagAdded(TagEvent e);
 
-        /**
-         * Invoked when the {@link Tag tag} is removed from
-         * the {@link StyledTagSet set}.
-         * @param e an event object describing the removal
-         */
+	/**
+	 * Invoked when the {@link Tag tag} is removed from
+	 * the {@link StyledTagSet set}.
+	 * @param e an event object describing the removal
+	 */
 	void tagRemoved(TagEvent e);
 
-        /**
-         * Invoked when the {@link Tag tag} is changed in
-         * the {@link StyledTagSet set}.
-         * @param e an event object describing the change
-         */
+	/**
+	 * Invoked when the {@link Tag tag} is changed in
+	 * the {@link StyledTagSet set}.
+	 * @param e an event object describing the change
+	 */
 	void tagChanged(TagEvent e);
 
 }

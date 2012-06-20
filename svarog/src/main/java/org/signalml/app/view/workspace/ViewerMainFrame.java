@@ -31,9 +31,9 @@ import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.ApplicationWorkspace;
 import org.signalml.app.config.ConfigurationDefaults;
 import org.signalml.app.config.MainFrameConfiguration;
+import org.signalml.app.config.workspace.ApplicationWorkspace;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
@@ -442,7 +442,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			Dialogs.showExceptionDialog((Window) null, ex);
 			return;
 		}
-		
+
 		PluginLoaderHi.getInstance().onClose();
 
 		saveViewPreferences();
@@ -471,7 +471,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 	private void restoreWorkspace() {
 
 		ApplicationWorkspace workspace = new ApplicationWorkspace();
-		workspace.setEegSystemsPresetManager(elementManager.getEegSystemsPresetManager());
+		workspace.setEegSystemsPresetManager(SvarogApplication.getManagerOfPresetsManagers().getEegSystemsPresetManager());
 		workspace.setProfileDir(elementManager.getProfileDir());
 		workspace.maybeReadFromPersistence(
 			"Seems like workspace doesn't exist - workspace will not be restored",
@@ -679,7 +679,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		config.setStreamer(elementManager.getStreamer());
 		ConfigurationDefaults.setMainFrameConfigurationDefaults(config);
 		config.maybeReadFromPersistence("No mainframe configuration, will use defaults",
-						"Bad mainframe configuration, will use defaults");
+										"Bad mainframe configuration, will use defaults");
 
 		setSize(new Dimension(config.getXSize(),config.getYSize()));
 

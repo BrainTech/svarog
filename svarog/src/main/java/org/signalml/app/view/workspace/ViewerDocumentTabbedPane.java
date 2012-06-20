@@ -74,8 +74,8 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	public void documentAdded(DocumentManagerEvent e) {
 		Document document = e.getDocument();
 		if ((document instanceof SignalDocument)
-			|| (document instanceof BookDocument)
-			|| (document instanceof MonitorSignalDocument)) {
+				|| (document instanceof BookDocument)
+				|| (document instanceof MonitorSignalDocument)) {
 			addDocumentTab(document);
 		}
 	}
@@ -272,4 +272,5 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 
 		}
 	}
+
 }

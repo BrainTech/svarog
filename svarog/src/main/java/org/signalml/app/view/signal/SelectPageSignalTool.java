@@ -84,7 +84,7 @@ public class SelectPageSignalTool extends AbstractSignalTool implements Selectio
 		if (startPage != null) {
 			Integer endPage = plot.toPageSpace(point);
 			if (endPage != null) {
-			    getSignalView().setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
+				getSignalView().setSignalSelection(plot,plot.getPageSelection(startPage, endPage));
 			}
 		}
 	}

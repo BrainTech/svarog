@@ -51,7 +51,7 @@ public class WignerMap {
 	}
 
 	public static void makeCosTable(double Cos[],int start,int stop,
-	                                double freq,double phase) {
+									double freq,double phase) {
 		double sinFreq,cosFreq,sinPhase,cosPhase,newCos,oldSin,oldCos;
 
 		sinFreq=Math.sin(freq);
@@ -108,7 +108,7 @@ public class WignerMap {
 				ptr[itmp]=(double)dtmp;
 			} else if (atom.getType()==StandardBookAtom.SINCOSWAVE_IDENTITY) {
 				double freq=Math.PI*2*atom.getNaturalFrequency()/atom.getBaseLength(),
-				       phase=atom.getPhase()-freq*atom.getPosition();
+					   phase=atom.getPhase()-freq*atom.getPosition();
 
 				for (i=0,sum=0.0 ; i<DimBase ; i++) {
 					sum+=SQR(tmpsig[i]=Math.cos(freq*i+phase));
@@ -121,12 +121,12 @@ public class WignerMap {
 				}
 			} else {
 				double freq=Math.PI*2*atom.getNaturalFrequency()/atom.getBaseLength(),
-				       phase=atom.getPhase()-freq*atom.getPosition();
+					   phase=atom.getPhase()-freq*atom.getPosition();
 				int start=0,stop=DimBase-1;
 
 				MakeExpTable(Exp,Math.PI/SQR(atom.getScale()),
-				             (int)atom.getPosition(),
-				             start,stop);
+							 (int)atom.getPosition(),
+							 start,stop);
 
 				makeCosTable(Cos,start,stop,freq,phase);
 
@@ -358,7 +358,7 @@ public class WignerMap {
 	}
 
 	private void SetExp(double sig[],double alpha,int trans,
-	                    double modulus,int Max)
+						double modulus,int Max)
 	{
 		double Const=1.65*Math.sqrt(Math.log(modulus/(2.0*EPS))/(PI2M*alpha));
 
@@ -380,7 +380,7 @@ public class WignerMap {
 		if (scale!=0) {
 			double dy=Math.PI/DimBase;
 			double alphaTime=4.0*Math.PI/SQR(scale),
-			       alphaFreq=4.0*Math.PI*SQR(dy*scale/PI2M);
+				   alphaFreq=4.0*Math.PI*SQR(dy*scale/PI2M);
 
 			alphaTime*=(ATime*ATime);
 			trans=(int) Math.round(((((double)trans)-BTime)/ATime));
@@ -428,7 +428,7 @@ public class WignerMap {
 	}
 
 	public static void MakeExpTable(double ExpTab[],double alpha,int trans,
-	                                int start,int stop)
+									int start,int stop)
 	{
 		int left,right,itmp;
 		double Factor,OldExp,ConstStep;
@@ -439,8 +439,8 @@ public class WignerMap {
 			ConstStep=SQR(Factor);
 
 			for (left=trans-1,right=trans+1 ;
-			                start<=left && right<=stop ;
-			                left--,right++)
+					start<=left && right<=stop ;
+					left--,right++)
 			{
 				OldExp*=Factor;
 				ExpTab[left]=ExpTab[right]=OldExp;

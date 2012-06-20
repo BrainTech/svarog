@@ -31,7 +31,7 @@ import com.thoughtworks.xstream.XStream;
  * <li>the map associating files with the {@link MRUDEntry entries} in which
  * they are described.</li>
  * </ul>
- * This class contains also {@link MRUDRegistryListener listeners} listening 
+ * This class contains also {@link MRUDRegistryListener listeners} listening
  * for addition and removal of entries.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
@@ -42,7 +42,7 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 	 * the vector with all {@link MRUDEntry entries} in this registry
 	 */
 	private Vector<MRUDEntry> entries = new Vector<MRUDEntry>(100);
-	
+
 	/**
 	 * the map associating {@link ManagedDocumentType types} of {@link Document
 	 * documents} with vectors of {@link MRUDEntry entries} for these types
@@ -59,7 +59,7 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 	 * the number of entries that can be stored in this registry
 	 */
 	private int registrySize = 50;
-	
+
 	/**
 	 * {@link MRUDComparator comparator} of {@link MRUDEntry entries}
 	 */
@@ -74,7 +74,7 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 	 * the profile directory
 	 */
 	private File profileDir;
-	
+
 	/**
 	 * the stream used to read stored {@link MRUDEntry entires} from file
 	 */
@@ -103,7 +103,7 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 			return registrySize;
 		}
 	}
-	
+
 	/**
 	 * Sets the number of {@link MRUDEntry entries} that can be stored in this
 	 * registry.
@@ -369,13 +369,13 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 		Object[] listeners = listenerList.getListenerList();
 		MRUDRegistryEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==MRUDRegistryListener.class) {
-				 if( e == null ) {
-					 e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
-				 }
-				 ((MRUDRegistryListener)listeners[i+1]).mrudEntryRegistered(e);
-			 }
-		 }
+			if (listeners[i]==MRUDRegistryListener.class) {
+				if (e == null) {
+					e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
+				}
+				((MRUDRegistryListener)listeners[i+1]).mrudEntryRegistered(e);
+			}
+		}
 	}
 
 	/**
@@ -391,13 +391,13 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 		Object[] listeners = listenerList.getListenerList();
 		MRUDRegistryEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==MRUDRegistryListener.class) {
-				 if( e == null ) {
-					 e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
-				 }
-				 ((MRUDRegistryListener)listeners[i+1]).mrudEntryRemoved(e);
-			 }
-		 }
+			if (listeners[i]==MRUDRegistryListener.class) {
+				if (e == null) {
+					e = new MRUDRegistryEvent(this,entry,index,inTypeIndex);
+				}
+				((MRUDRegistryListener)listeners[i+1]).mrudEntryRemoved(e);
+			}
+		}
 	}
 
 	@Override

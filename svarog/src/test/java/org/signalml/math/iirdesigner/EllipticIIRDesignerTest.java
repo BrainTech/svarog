@@ -57,24 +57,24 @@ public class EllipticIIRDesignerTest {
 
 		//bandpass test
 		pythonB = new double[] {0.02114251, 0.01792455, -0.00243741,
-		                    0.0, 0.00243741, -0.01792455, -0.02114251
-		                   };
+								0.0, 0.00243741, -0.01792455, -0.02114251
+							   };
 		pythonA = new double[] {1.0, 1.73921561, 3.38814582,
-		                    3.10556401, 3.01265939, 1.35579533, 0.69028645
-		                   };
+								3.10556401, 3.01265939, 1.35579533, 0.69028645
+							   };
 
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDPASS, new double[] {0.5, 0.7}, new double[] {0.3, 0.9}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
 
 		//bandstop test
 		pythonB = new double[] {0.0987149, 0.16661581, 0.31652632,
-		                    0.30320545, 0.31652632, 0.16661581,
-		                    0.0987149
-		                   };
+								0.30320545, 0.31652632, 0.16661581,
+								0.0987149
+							   };
 		pythonA = new double[] {1.0, 0.68543316, -0.66268689,
-		                    0.05276535, 0.9103521, -0.10176143,
-		                    -0.41718278
-		                   };
+								0.05276535, 0.9103521, -0.10176143,
+								-0.41718278
+							   };
 
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDSTOP, new double[] {0.3, 0.9}, new double[] {0.5, 0.7}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);
@@ -149,17 +149,17 @@ public class EllipticIIRDesignerTest {
 
 		//elliptic test
 		BandstopObjectiveFunction bo = iirdesigner.new BandstopObjectiveFunction(0,
-		                               new double[] {0.1, 0.8}, new double[] {0.4, 0.6}, 3, 20);
+									   new double[] {0.1, 0.8}, new double[] {0.4, 0.6}, 3, 20);
 		assertEquals(2.4835659582481822, bo.value(0.0), 1e-8);
 
 		//elliptic test 2
 		bo = iirdesigner.new BandstopObjectiveFunction(0,
-		                new double[] {0.5, 0.8}, new double[] {0.55, 0.7}, 0.5, 100);
+				new double[] {0.5, 0.8}, new double[] {0.55, 0.7}, 0.5, 100);
 		assertEquals(11.571836975873939, bo.value(0.00), 1e-4);
 
 		//elliptic test 3
 		bo = iirdesigner.new BandstopObjectiveFunction(0,
-		                new double[] {0.5, 0.8}, new double[] {0.55, 0.7}, 2.5, 130);
+				new double[] {0.5, 0.8}, new double[] {0.55, 0.7}, 2.5, 130);
 		assertEquals(12.802279159652183, bo.value(0.09), 1e-4);
 
 

@@ -10,10 +10,11 @@ import java.util.List;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.SignalChecksum;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 
@@ -30,7 +31,7 @@ import org.signalml.plugin.export.signal.ExportedSignalDocument;
  * <li>calculate and get {@link SignalChecksum checksums} of the signal</li>
  * <li>get and set the {@link Montage montage}</li>
  * <li>get the {@link #getMontageInfo() information} about montages for all
- * {@link SignalPlot plots} for this signal</li> 
+ * {@link SignalPlot plots} for this signal</li>
  * <li>get the labels of source and montage channels</li>
  * </ul>
  *
@@ -50,13 +51,13 @@ public interface SignalDocument extends ExportedSignalDocument {
 
 	@Override
 	float getPageSize();
-	
+
 	@Override
 	void setPageSize(float pageSize);
 
 	@Override
 	int getBlocksPerPage();
-	
+
 	@Override
 	void setBlocksPerPage(int blocksPerPage);
 
@@ -65,25 +66,25 @@ public interface SignalDocument extends ExportedSignalDocument {
 
 	@Override
 	float getSamplingFrequency();
-	
+
 	@Override
 	public int getChannelCount();
 
 	@Override
 	public float getMinSignalLength();
-	
+
 	@Override
 	public float getMaxSignalLength();
 
 	@Override
 	public int getPageCount();
-	
+
 	@Override
 	public int getBlockCount();
 
 	/**
 	 * Gets the {@link OriginalMultichannelSampleSource source} of unprocessed
-	 * (raw) samples for the signal stored in this document. 
+	 * (raw) samples for the signal stored in this document.
 	 * @return the source of unprocessed (raw) samples for the signal stored
 	 * in this document
 	 */
@@ -95,7 +96,7 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * @return the list of all tag documents dependent from this signal document
 	 */
 	List<TagDocument> getTagDocuments();
-	
+
 	/**
 	 * Adds a given {@link TagDocument tag document} to the list of
 	 * {@link #addDependentDocument(Document) dependent documents} and
@@ -108,7 +109,7 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * @param document the tag document to add
 	 */
 	void addTagDocument(TagDocument document);
-	
+
 	/**
 	 * Removes a given {@link TagDocument tag document} from the list of
 	 * {@link #addDependentDocument(Document) dependent documents} and
@@ -124,18 +125,18 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * @return the active tag document
 	 */
 	TagDocument getActiveTag();
-	
+
 	/**
 	 * Sets the active (selected) {@link TagDocument tag document}.
 	 * @param document the tag document to be set active
 	 * @throws SanityCheckException if document is not on the list of
-	 * dependent documents 
+	 * dependent documents
 	 */
 	void setActiveTag(TagDocument document);
 
 	/**
 	 * Calculates the {@link SignalChecksum checksums} of given types.
-	 * @param types an array of the names of checksum methods 
+	 * @param types an array of the names of checksum methods
 	 * @param monitor the {@link SignalChecksumProgressMonitor monitor} of
 	 * the progress of calculation the checksums.
 	 * @return an array with calculated checksums.
@@ -152,13 +153,15 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * @return the montage for the signal in this document
 	 */
 	Montage getMontage();
-	
+
+	boolean isMontageCreated();
+
 	/**
 	 * Sets the {@link Montage} montage for the signal in this document.
 	 * @param montage montage for the signal in this document
 	 */
 	void setMontage(Montage montage);
-	
+
 	/**
 	 * Returns the description of {@link Montage montages} for all
 	 * {@link SignalPlot plots} associated with the {@link SignalView view}
@@ -167,7 +170,7 @@ public interface SignalDocument extends ExportedSignalDocument {
 	 * the view for this document
 	 */
 	String getMontageInfo();
-	
+
 	@Override
 	SignalView getSignalView() throws InvalidClassException;
 

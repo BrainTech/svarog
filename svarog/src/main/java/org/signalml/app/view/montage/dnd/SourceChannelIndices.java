@@ -36,7 +36,7 @@ public class SourceChannelIndices {
 	/**
 	 * Gets the array of indexes of {@link SourceChannel source channels} that
 	 * are stored in this "collection".
-	 * 
+	 *
 	 * @return the array of indexes of source channels
 	 */
 	public int[] getSourceChannels() {

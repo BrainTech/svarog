@@ -38,16 +38,16 @@ public class MuscleTagCreator extends AbstractNewArtifactTagCreator implements
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(MuscleTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(MuscleTagCreator.CREATOR_TYPE) / 100.0;
 		final double treshold = MuscleTagCreator.FACTOR_A + sensitivity
-					* (MuscleTagCreator.FACTOR_B - MuscleTagCreator.FACTOR_A);
+								* (MuscleTagCreator.FACTOR_B - MuscleTagCreator.FACTOR_A);
 
 		boolean exclusion[] = this.getExclusionMatrix(data);
 		int eegChannels[] = data.eegChannels;
 
 		double factorMatrix[] = new double[eegChannels.length];
 		Arrays.fill(factorMatrix, MuscleTagCreator.TRESHOLD_A + sensitivity
-			    *(MuscleTagCreator.TRESHOLD_B - MuscleTagCreator.TRESHOLD_A));
+					*(MuscleTagCreator.TRESHOLD_B - MuscleTagCreator.TRESHOLD_A));
 
 		List<Integer> tags = this.createTagsUsingTreshold(data, factorMatrix, exclusion);
 
@@ -61,7 +61,7 @@ public class MuscleTagCreator extends AbstractNewArtifactTagCreator implements
 
 	@Override
 	protected double[] getTresholdMatrix(NewArtifactTagData data,
-					     boolean exclusion[], double treshold) {
+										 boolean exclusion[], double treshold) {
 		double source[][] = data.source;
 		int blockCount = source[0].length;
 		int eegChannels[] = data.eegChannels;

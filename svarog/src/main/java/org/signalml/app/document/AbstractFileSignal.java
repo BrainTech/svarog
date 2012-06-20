@@ -32,14 +32,14 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	 * the file with which this document is backed
 	 */
 	protected File backingFile = null;
-	
+
 	/**
 	 * {@code HashMap} associating the names of the types of
 	 * {@link SignalChecksum checksums} with the calculated checksums
 	 * for this signal
 	 */
 	protected HashMap<String,SignalChecksum> checksums = new HashMap<String,SignalChecksum>();
-	
+
 	/**
 	 * the {@link SignalChecksumWorker worker} responsible for calculating
 	 * the {@link SignalChecksum checksums}

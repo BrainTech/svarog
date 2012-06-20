@@ -19,7 +19,7 @@ import javax.swing.JButton;
  * <li>the button has no border,</li>
  * <li>the state of the button (focused, unfocused) is not painted,</li>
  * <li>the button doesn't paint the content area.</li></ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class CompactButton extends JButton {
@@ -27,7 +27,7 @@ public class CompactButton extends JButton {
 	private static final long serialVersionUID = 1L;
 
 	/**
-     * Creates a button with no set text or icon and configures it.
+	 * Creates a button with no set text or icon and configures it.
 	 */
 	public CompactButton() {
 		super();
@@ -35,38 +35,38 @@ public class CompactButton extends JButton {
 	}
 
 	/**
-     * Creates a button where properties are taken from the 
-     * <code>Action</code> supplied and configures this button.
-     * @param a the <code>Action</code> used to specify the new button
-     */
+	 * Creates a button where properties are taken from the
+	 * <code>Action</code> supplied and configures this button.
+	 * @param a the <code>Action</code> used to specify the new button
+	 */
 	public CompactButton(Action a) {
 		super(a);
 		configure();
 	}
 
 	/**
-     * Creates a button with an icon and configures it.
-     * @param icon  the Icon image to display on the button
-     */
+	 * Creates a button with an icon and configures it.
+	 * @param icon  the Icon image to display on the button
+	 */
 	public CompactButton(Icon icon) {
 		super(icon);
 		configure();
 	}
 
 	/**
-     * Creates a button with initial text and an icon and configures it.
-     * @param text  the text of the button
-     * @param icon  the Icon image to display on the button
-     */
+	 * Creates a button with initial text and an icon and configures it.
+	 * @param text  the text of the button
+	 * @param icon  the Icon image to display on the button
+	 */
 	public CompactButton(String text, Icon icon) {
 		super(text, icon);
 		configure();
 	}
 
 	/**
-     * Creates a button with text and configures it.
-     * @param text  the text of the button
-     */
+	 * Creates a button with text and configures it.
+	 * @param text  the text of the button
+	 */
 	public CompactButton(String text) {
 		super(text);
 		configure();

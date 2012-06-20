@@ -25,8 +25,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.managers.BookFilterPresetManager;
 import org.signalml.app.model.book.BookFilterDescriptor;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
@@ -75,11 +75,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	protected boolean isTrackingChanges() {
-		return true;
-	}
-
-	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
 			try {
@@ -100,9 +95,9 @@ public class BookFilterDialog extends AbstractPresetDialog {
 		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3,3));
 
 		masterSwitchPanel.setBorder(new CompoundBorder(
-		                                    new TitledBorder(_("Filtering master switch")),
-		                                    new EmptyBorder(3,3,3,3)
-		                            ));
+										new TitledBorder(_("Filtering master switch")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 		JLabel filteringEnabledLabel = new JLabel(_("Enable book filtering"));
 
@@ -112,9 +107,9 @@ public class BookFilterDialog extends AbstractPresetDialog {
 		JPanel conditionPanel = new JPanel(new GridLayout(1,2,3,3));
 
 		conditionPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Condition type")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Condition type")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		conditionPanel.add(getConjunctionRadioButton());
 		conditionPanel.add(getAlternativeRadioButton());
@@ -153,7 +148,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 						boolean selected = getFilteringEnabledCheckBox().isSelected();
 						if (selected != currentChain.isFilteringEnabled()) {
 							currentChain.setFilteringEnabled(selected);
-							setChanged(true);
 						}
 					}
 				}
@@ -186,7 +180,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 						if (currentChain.isAlternative()) {
 							currentChain.setAlternative(false);
-							setChanged(true);
 						}
 
 					}
@@ -215,7 +208,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 						if (!currentChain.isAlternative()) {
 							currentChain.setAlternative(true);
-							setChanged(true);
 						}
 
 					}

@@ -7,6 +7,9 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+
+import org.signalml.app.SvarogApplication;
 
 public class Dialogs {
 
@@ -22,29 +25,34 @@ public class Dialogs {
 	 */
 	public static Dialogs.DIALOG_OPTIONS showWarningYesNoDialog(String warning) {
 		Object[] options = {_("Yes"), _("No")};
-		
+
 		int selectedIndex = JOptionPane.showOptionDialog(null,
-			warning,
-			_("Warning"),
-			JOptionPane.YES_NO_OPTION,
-			JOptionPane.WARNING_MESSAGE,
-			null,
-			options,
-			options[1]);
-		
+							warning,
+							_("Warning"),
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.WARNING_MESSAGE,
+							null,
+							options,
+							options[1]);
+
 		if (selectedIndex == 0)
 			return Dialogs.DIALOG_OPTIONS.YES;
 		else
 			return Dialogs.DIALOG_OPTIONS.NO;
-	
+
 	}
 
 	/**
 	 * Shows a simple dialog with OK button showing the specified error message.
 	 * @param message the error
 	 */
-	public static void showError(String message) {
-		JOptionPane.showMessageDialog(null, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+	public static void showError(final String message) {
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+				JOptionPane.showMessageDialog(dialogParent, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
 
 	/**
@@ -57,6 +65,7 @@ public class Dialogs {
 	public static void showExceptionDialog(final JComponent c, final Throwable t) {
 
 		Window w = null;
+
 		if (c != null) {
 			Container cont = c.getTopLevelAncestor();
 			if (cont instanceof Window) {
@@ -73,9 +82,13 @@ public class Dialogs {
 	 * @param t the exception to be displayed
 	 */
 	public static void showExceptionDialog(final Window w, final Throwable t) {
-		JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
-	
+
 	/**
 	 * Shows the {@link ExceptionDialog} with the provided exception.
 	 * The dialog is shown in the Event Dispatching Thread.
@@ -83,6 +96,10 @@ public class Dialogs {
 	 * @param t the exception to be displayed
 	 */
 	public static void showExceptionDialog(final Throwable t) {
-		JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
 	}
 }

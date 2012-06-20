@@ -186,7 +186,7 @@ public class SourceMontageTable extends JTable {
 	/**
 	 * Gets the {@link TablePopupMenuProvider popup menu provider} for this
 	 * table.
-	 * 
+	 *
 	 * @return the {@link TablePopupMenuProvider popup menu provider} for this
 	 *         table
 	 */
@@ -197,7 +197,7 @@ public class SourceMontageTable extends JTable {
 	/**
 	 * Sets the {@link TablePopupMenuProvider popup menu provider} for this
 	 * table.
-	 * 
+	 *
 	 * @param popupMenuProvider
 	 *            the new {@link TablePopupMenuProvider popup menu provider} for
 	 *            this table

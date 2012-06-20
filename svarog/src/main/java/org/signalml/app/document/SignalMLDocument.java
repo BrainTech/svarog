@@ -11,8 +11,8 @@ import java.util.List;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.SignalMLCodecSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.SignalMLCodecSampleSource;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -27,7 +27,7 @@ import org.signalml.plugin.export.SignalMLException;
  * <li>number of channels</li>
  * </ul>
  * and if it does allows to get and set them.
- * It is done by passing these functions to the 
+ * It is done by passing these functions to the
  * {@link MultichannelSampleSource source} of samples.</li>
  * </ul>
  *
@@ -35,7 +35,6 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public class SignalMLDocument extends AbstractFileSignal {
 
-	
 	/**
 	 * the {@link SignalMLCodecReader reader} of signal from the file
 	 */
@@ -163,4 +162,3 @@ public class SignalMLDocument extends AbstractFileSignal {
 	}
 
 }
-

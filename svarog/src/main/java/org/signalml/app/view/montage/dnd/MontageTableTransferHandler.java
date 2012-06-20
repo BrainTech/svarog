@@ -70,7 +70,7 @@ public class MontageTableTransferHandler extends TransferHandler {
 	 * {@link SourceChannelIndices}
 	 */
 	private SourceMontageChannelsDataFlavor sourceFlavor = new SourceMontageChannelsDataFlavor();
-	
+
 	/**
 	 * the {@link MontageChannelsDataFlavor flavor} for
 	 * {@link MontageChannelIndices}

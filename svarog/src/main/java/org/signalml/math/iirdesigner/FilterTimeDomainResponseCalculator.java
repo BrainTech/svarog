@@ -4,7 +4,7 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.domain.signal.TimeDomainSampleFilterEngine;
+import org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine;
 
 /**
  * This class represents a calculator capable of calculating time domain responses
@@ -34,7 +34,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 
 		double[] excitation = new double[excitationLength];
 
-		for(int i = 0; i < excitation.length; i++)
+		for (int i = 0; i < excitation.length; i++)
 			excitation[i] = 1.0;
 
 		return excitation;
@@ -49,7 +49,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 	public FilterTimeDomainResponse getStepResponse(int numberOfPoints) {
 
 		double[] excitation = generateStepExcitation(numberOfPoints);
-		double[] stepResponseAmplitudes = TimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
+		double[] stepResponseAmplitudes = AbstractTimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
 		return new FilterTimeDomainResponse(stepResponseAmplitudes, samplingFrequency);
 
@@ -66,7 +66,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 		double[] excitation = new double[excitationLength];
 
 		excitation[0] = 1.0;
-		for(int i = 1; i < excitation.length; i++)
+		for (int i = 1; i < excitation.length; i++)
 			excitation[i] = 0.0;
 
 		return excitation;
@@ -81,7 +81,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 	public FilterTimeDomainResponse getImpulseResponse(int numberOfPoints) {
 
 		double[] excitation = generateImpulseExcitation(numberOfPoints);
-		double[] impulseResponseAmplitudes = TimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
+		double[] impulseResponseAmplitudes = AbstractTimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
 		FilterTimeDomainResponse stepResponse = new FilterTimeDomainResponse(impulseResponseAmplitudes, samplingFrequency);
 		return stepResponse;

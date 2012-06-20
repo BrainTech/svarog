@@ -3,7 +3,7 @@
 	<version> 0.1 </version>
 	<jar-file>FFTSignalTool.jar</jar-file>
 	<starting-class>
-    org.signalml.plugin.fftsignaltool.FFTSignalTool
+		org.signalml.plugin.fftsignaltool.FFTSignalTool
 	</starting-class>
 	<dependencies>
 		<dependency>
@@ -12,6 +12,6 @@
 		</dependency>
 		<dependency>
 			<name>FFT</name>
-			<version>0.1</version></dependency>
+		<version>0.1</version></dependency>
 	</dependencies>
 </plugin>

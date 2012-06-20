@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
@@ -102,6 +103,10 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 		Document document = methodManager.getActionFocusManager().getActiveDocument();
 		if (!(document instanceof SignalDocument)) {
 			OptionPane.showNoActiveSignal(methodManager.getDialogParent());
+			return null;
+		}
+		if (document instanceof MonitorSignalDocument) {
+			OptionPane.showThisToolWorksOnlyForNonMonitorSignals(methodManager.getDialogParent());
 			return null;
 		}
 		SignalDocument signalDocument = (SignalDocument) document;

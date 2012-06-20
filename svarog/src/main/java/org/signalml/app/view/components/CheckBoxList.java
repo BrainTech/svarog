@@ -89,7 +89,7 @@ class CheckBoxListCellRenderer extends JComponent implements ListCellRenderer {
 			int index, boolean isSelected, boolean cellHasFocus) {
 
 		defaultComp.getListCellRendererComponent(list, value, index,
-			isSelected, cellHasFocus);
+				isSelected, cellHasFocus);
 		CheckBox.setSelected(isSelected);
 		CheckBox.setBackground(Color.white);
 

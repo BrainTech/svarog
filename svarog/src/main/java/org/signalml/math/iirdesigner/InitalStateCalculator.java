@@ -10,6 +10,7 @@ import org.apache.commons.math.linear.LUDecompositionImpl;
 import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealVector;
+import org.signalml.math.ArrayOperations;
 
 
 /**
@@ -73,11 +74,16 @@ public class InitalStateCalculator {
 	 * @return the initial state
 	 */
 	private double[] calculateInitialState() {
-		RealMatrix zin = calculateZIN();
-		RealVector zid = calculateZID();
-		RealVector zi = getInvertedMatrix(zin).operate(zid);
+		if (numberOfCoefficients == 1) {
+			//initial state is always numberOfCoefficients - 1.
+			return new double[0];
+		} else {
+			RealMatrix zin = calculateZIN();
+			RealVector zid = calculateZID();
+			RealVector zi = getInvertedMatrix(zin).operate(zid);
 
-		return zi.getData();
+			return zi.getData();
+		}
 	}
 
 	/**
@@ -163,12 +169,13 @@ public class InitalStateCalculator {
 		System.arraycopy(signal, 0, grownSignal, edge, signal.length);
 
 		for (int i = 0; i < edge; i++) {
+			//watch out for short signals - ArrayOutOfBounds exception here.
 			grownSignal[i] = 2 * signal[0] - signal[edge - i];
 		}
 
 		for (int i = 0; i < edge; i++) {
 			grownSignal[edge + signal.length + i] = 2 * signal[signal.length - 1]
-				- signal[signal.length - 2 - i];
+													- signal[signal.length - 2 - i];
 		}
 
 		return grownSignal;

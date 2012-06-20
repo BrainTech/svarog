@@ -44,7 +44,7 @@ import org.signalml.plugin.export.SignalMLException;
  * </ul>
  * This dialog can be shown after the specified time without it (so that maybe
  * the operation finishes before it is needed).
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class PleaseWaitDialog extends AbstractDialog  {
@@ -65,7 +65,7 @@ public class PleaseWaitDialog extends AbstractDialog  {
 	 * the timer that shows the dialog
 	 */
 	private Timer showTimer;
-	
+
 	/**
 	 * the listener for the {@link #showTimer} that shows this dialog.
 	 */
@@ -117,8 +117,8 @@ public class PleaseWaitDialog extends AbstractDialog  {
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
-		        new LineBorder(Color.LIGHT_GRAY),
-		        new EmptyBorder(10,10,10,10)
+			new LineBorder(Color.LIGHT_GRAY),
+			new EmptyBorder(10,10,10,10)
 		);
 		p.setBorder(border);
 
@@ -176,7 +176,7 @@ public class PleaseWaitDialog extends AbstractDialog  {
 	 * Initializes this dialog.
 	 * Adds a WindowListener to this dialog.
 	 * If the owner of this dialog is a {@link SwingWorker},
-	 * when the worker is done makes this dialog invisible. 
+	 * when the worker is done makes this dialog invisible.
 	 */
 	@Override
 	protected void initialize() {

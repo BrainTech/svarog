@@ -21,7 +21,7 @@
 		KdeSubstUID="false"
 		initialState="normal">
 	</shortcut>
-	
+
 	<shortcut
 		name="Uninstaller"
 		programGroup="yes"
@@ -39,6 +39,6 @@
 		encoding="UTF-8"
 		description="IzPack uninstaller">
 	</shortcut>
-	
-	
+
+
 </shortcuts>

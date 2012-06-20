@@ -25,8 +25,6 @@ import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
-import multiplexer.jmx.client.JmxClient;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.RunMethodAction;
@@ -35,15 +33,12 @@ import org.signalml.app.action.book.ExportBookAction;
 import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
-import org.signalml.app.action.document.OpenSignalAndSetMontageAction;
+import org.signalml.app.action.document.OpenSignalWizardAction;
 import org.signalml.app.action.document.SaveAllDocumentsAction;
 import org.signalml.app.action.document.SaveDocumentAction;
 import org.signalml.app.action.document.SaveDocumentAsAction;
-import org.signalml.app.action.document.monitor.AmplifierDefinitionConfigAction;
 import org.signalml.app.action.document.monitor.CheckSignalAction;
-import org.signalml.app.action.document.monitor.OpenBCIModuleConfigAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
-import org.signalml.app.action.document.monitor.StopBCIAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
 import org.signalml.app.action.montage.ApplyDefaultMontageAction;
 import org.signalml.app.action.montage.EditSignalMontageAction;
@@ -77,12 +72,7 @@ import org.signalml.app.action.workspace.tasks.RemoveAllTasksAction;
 import org.signalml.app.action.workspace.tasks.ResumeAllTasksAction;
 import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
-import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.config.preset.BookFilterPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
-import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentDetector;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -98,7 +88,6 @@ import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.model.components.TaskTableModel;
 import org.signalml.app.model.monitor.MonitorTreeModel;
-import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalTreeModel;
 import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
@@ -110,7 +99,6 @@ import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.components.LockableJSplitPane;
 import org.signalml.app.view.components.dialogs.ApplicationPreferencesDialog;
-import org.signalml.app.view.components.dialogs.DynamicCompilationWarningDialog;
 import org.signalml.app.view.components.dialogs.EditTagAnnotationDialog;
 import org.signalml.app.view.components.dialogs.EditTagDescriptionDialog;
 import org.signalml.app.view.components.dialogs.ExportSignalDialog;
@@ -122,16 +110,17 @@ import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.components.dialogs.SignalSelectionDialog;
 import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
 import org.signalml.app.view.components.dialogs.TagStylePresetDialog;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
+import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
+import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
+import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
-import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.codec.SignalMLCodecManager;
-import org.signalml.compilation.DynamicCompilationContext;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.method.Method;
 import org.signalml.method.iterator.IterableMethod;
@@ -143,15 +132,6 @@ import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.util.SvarogConstants;
 
 import com.thoughtworks.xstream.XStream;
-import org.signalml.app.config.preset.EegSystemsPresetManager;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
-import org.signalml.app.view.document.monitor.AmplifierDefinitionConfigDialog;
-import org.signalml.app.view.document.monitor.OpenBCIModuleConfigDialog;
-import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
-import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
-import org.signalml.app.view.document.opensignal.OpenSignalAndSetMontageDialog;
-import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
 
 /** ViewerElementManager
@@ -180,33 +160,8 @@ public class ViewerElementManager {
 	private ApplicationMethodManager methodManager;
 	private ApplicationTaskManager taskManager;
 	private ActionFocusManager actionFocusManager;
-	private MontagePresetManager montagePresetManager;
-	private BookFilterPresetManager bookFilterPresetManager;
-	private SignalExportPresetManager signalExportPresetManager;
-	private FFTSampleFilterPresetManager fftFilterPresetManager;
-        private AmplifierDefinitionPresetManager amplifierDefinitionPresetManager;
-        private OpenBCIModulePresetManager openBCIModulePresetManager;
 
-	/**
-	 * A {@link PresetManager} managing the user-defined
-	 * {@link TimeDomainSampleFilter} presets.
-	 */
-	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
-
-	/**
-	 * A {@link PresetManager} managing the predefined
-	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
-	 */
-	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager;
-
-	/**
-	 * A {@link PresetManager} managing the stored tag styles presets.
-	 */
-	private StyledTagSetPresetManager styledTagSetPresetManager;
-	/**
-	 * A {@link PresetManager} managing the {@link EegSystem EegSystems}.
-	 */
-	private EegSystemsPresetManager eegSystemsPresetManager;
+	private ManagerOfPresetManagers managerOfPresetsManagers;
 
 	private MP5ExecutorManager mp5ExecutorManager;
 	private Preferences preferences;
@@ -263,15 +218,13 @@ public class ViewerElementManager {
 	private ViewerTabbedPane propertyTabbedPane;
 
 	/* Dialogs */
-        private AmplifierDefinitionConfigDialog amplifierDefinitionConfigDialog;
-        private OpenBCIModuleConfigDialog openBCIModuleConfigDialog;
-        private CheckSignalDialog checkSignalDialog;
+	private CheckSignalDialog checkSignalDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
-	private OpenSignalAndSetMontageDialog openSignalAndSetMontageDialog;
+	private OpenSignalWizardDialog openSignalWizardDialog;
 	private SignalSelectionDialog signalSelectionDialog;
 	private NewTagDialog newTagDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
@@ -301,14 +254,11 @@ public class ViewerElementManager {
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
-	private DynamicCompilationWarningDialog dynamicCompilationWarningDialog;
 	private AtomTableDialog atomTableDialog;
 	private BookFilterDialog bookFilterDialog;
 
 	/* Actions */
-        private AmplifierDefinitionConfigAction amplifierDefinitionConfigAction;
-        private OpenBCIModuleConfigAction openBCIModuleConfigAction;
-        private CheckSignalAction checkSignalAction;
+	private CheckSignalAction checkSignalAction;
 	private CloseWindowAction closeWindowAction;
 	private EditPreferencesAction editPreferencesAction;
 	private HelpContentsAction helpContentsAction;
@@ -319,7 +269,6 @@ public class ViewerElementManager {
 	private ShowBottomPanelAction showBottomPanelAction;
 	private OpenBookDocumentAction openBookDocumentAction;
 	private CloseDocumentAction closeActiveDocumentAction;
-        private StopBCIAction stopBCIAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
 	private SaveDocumentAction saveActiveDocumentAction;
 	private SaveDocumentAsAction saveActiveDocumentAsAction;
@@ -346,7 +295,7 @@ public class ViewerElementManager {
 
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
-	private OpenSignalAndSetMontageAction openSignalAndSetMontageAction;
+	private OpenSignalWizardAction openSignalWizardAction;
 	private ApplyDefaultMontageAction applyDefaultMontageAction;
 	private PreciseSelectionAction preciseSelectionAction;
 	private EditTagStylesAction editTagStylesAction;
@@ -405,8 +354,6 @@ public class ViewerElementManager {
 
 	/* Other */
 	private TableToTextExporter tableToTextExporter;
-	private JmxClient jmxClient;
-	private JmxClient tagClient;
 
 	public SignalMLOperationMode getMode() {
 		return mode;
@@ -516,124 +463,12 @@ public class ViewerElementManager {
 		this.actionFocusManager = actionFocusManager;
 	}
 
-	public MontagePresetManager getMontagePresetManager() {
-		return montagePresetManager;
+	public void setManagerOfPresetsManagers(ManagerOfPresetManagers managerOfPresetsManagers) {
+		this.managerOfPresetsManagers = managerOfPresetsManagers;
 	}
 
-	public void setMontagePresetManager(MontagePresetManager montagePresetManager) {
-		this.montagePresetManager = montagePresetManager;
-	}
-
-	public BookFilterPresetManager getBookFilterPresetManager() {
-		return bookFilterPresetManager;
-	}
-
-	public void setBookFilterPresetManager(BookFilterPresetManager bookFilterPresetManager) {
-		this.bookFilterPresetManager = bookFilterPresetManager;
-	}
-
-	public SignalExportPresetManager getSignalExportPresetManager() {
-		return signalExportPresetManager;
-	}
-
-	public void setSignalExportPresetManager(SignalExportPresetManager signalExportPresetManager) {
-		this.signalExportPresetManager = signalExportPresetManager;
-	}
-
-	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
-		return fftFilterPresetManager;
-	}
-
-	public void setFftFilterPresetManager(FFTSampleFilterPresetManager fftFilterPresetManager) {
-		this.fftFilterPresetManager = fftFilterPresetManager;
-	}
-
-        public AmplifierDefinitionPresetManager getAmplifierDefinitionPresetManager() {
-                return amplifierDefinitionPresetManager;
-        }
-
-        public void setAmplifierDefinitionPresetManager(AmplifierDefinitionPresetManager amplifierDefinitionPresetManager) {
-                this.amplifierDefinitionPresetManager = amplifierDefinitionPresetManager;
-        }
-
-        public OpenBCIModulePresetManager getOpenBCIModulePresetManager() {
-                return openBCIModulePresetManager;
-        }
-
-        public void setOpenBCIModulePresetManager (OpenBCIModulePresetManager openBCIModulePresetManager) {
-                this.openBCIModulePresetManager = openBCIModulePresetManager;
-        }
-
-	/**
-	 * Returns a {@link TimeDomainSampleFilterPresetManager} used by this
-	 * ViewerElementManager.
-	 * @return a {@link TimeDomainSampleFilterPresetManager} used by this
-	 * ViewerElementManager
-	 */
-	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
-		return timeDomainSampleFilterPresetManager;
-	}
-
-	/**
-	 * Sets a {@link TimeDomainSampleFilterPresetManager} to be used by this
-	 * ViewerElementManager.
-	 * @param timeDomainSampleFilterPresetManager a TimeDomainSampleFilterPresetManager
-	 * to be used
-	 */
-	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
-		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
-	}
-
-	/**
-	 * Returns a {@link PredefinedTimeDomainFiltersPresetManager} used
-	 * by this ViewerElementManager.
-	 * @return a {@link PredefinedTimeDomainFiltersPresetManager} used
-	 * by this ViewerElementManager
-	 */
-	public PredefinedTimeDomainFiltersPresetManager getPredefinedTimeDomainFiltersPresetManager() {
-		return predefinedTimeDomainFiltersPresetManager;
-	}
-
-	/**
-	 * Sets a {@link PredefinedTimeDomainFiltersPresetManager} to be used
-	 * by this ViewerElementManager
-	 * @param predefinedTimeDomainFiltersPresetManager
-	 * a {@link PredefinedTimeDomainFiltersPresetManager} to be used
-	 */
-	public void setPredefinedTimeDomainFiltersPresetManager(PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainFiltersPresetManager) {
-		this.predefinedTimeDomainFiltersPresetManager = predefinedTimeDomainFiltersPresetManager;
-	}
-
-	/**
-	 * Returns the {@link PresetManager} for handling tag styles presets
-	 * @return the {@link PresetManager} for handling tag styles presets
-	 */
-	public StyledTagSetPresetManager getStyledTagSetPresetManager() {
-		return styledTagSetPresetManager;
-	}
-
-	/**
-	 * Sets the {@link PresetManager} for handling tag styles presets.
-	 * @param styledTagSetPresetManager
-	 */
-	public void setStyledTagSetPresetManager(StyledTagSetPresetManager styledTagSetPresetManager) {
-		this.styledTagSetPresetManager = styledTagSetPresetManager;
-	}
-
-	/**
-	 * Returns the {@link PresetManger} handling stored EEG systems definitions.
-	 * @return the PresetManager for EEG systems
-	 */
-	public EegSystemsPresetManager getEegSystemsPresetManager() {
-		return eegSystemsPresetManager;
-	}
-
-	/**
-	 * Sets the {@link PresetManager} handling stored EEG systems.
-	 * @param eegSystemsPresetManager the PresetManager for EEG systems
-	 */
-	public void setEegSystemsPresetManager(EegSystemsPresetManager eegSystemsPresetManager) {
-		this.eegSystemsPresetManager = eegSystemsPresetManager;
+	public ManagerOfPresetManagers getManagerOfPresetsManagers() {
+		return managerOfPresetsManagers;
 	}
 
 	public MP5ExecutorManager getMp5ExecutorManager() {
@@ -660,7 +495,7 @@ public class ViewerElementManager {
 			documentFlowIntegrator.setCodecManager(getCodecManager());
 			documentFlowIntegrator.setActionFocusManager(getActionFocusManager());
 			documentFlowIntegrator.setApplicationConfig(getApplicationConfig());
-			documentFlowIntegrator.setMontagePresetManager(getMontagePresetManager());
+			documentFlowIntegrator.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
 			documentFlowIntegrator.setOptionPaneParent(getOptionPaneParent());
 			documentFlowIntegrator.setFileChooser(getFileChooser());
 			documentFlowIntegrator.setSignalParametersDialog(getSignalParametersDialog());
@@ -732,7 +567,7 @@ public class ViewerElementManager {
 			statusBar.setActionFocusManager(getActionFocusManager());
 			statusBar.initialize();
 			statusBar.setStatus(_R(("Svarog v.{0} ready"),
-			                    new Object[] {SvarogConstants.VERSION}));
+								   new Object[] {SvarogConstants.VERSION}));
 			getActionFocusManager().addActionFocusListener(statusBar);
 		}
 		return statusBar;
@@ -750,7 +585,7 @@ public class ViewerElementManager {
 			fileMenu = new JMenu(_("File"));
 			fileMenu.setMnemonic(KeyEvent.VK_F);
 
-			fileMenu.add(getOpenSignalAndSetMontageAction());
+			fileMenu.add(getOpenSignalWizardAction());
 			fileMenu.add(getOpenBookDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAction());
 			fileMenu.add(getSaveActiveDocumentAsAction());
@@ -810,15 +645,11 @@ public class ViewerElementManager {
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(_("Monitor"));
-			monitorMenu.setMnemonic(KeyEvent.VK_M);
-			
-			monitorMenu.add(getCheckSignalAction());
-			monitorMenu.addSeparator();
+
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
 			monitorMenu.addSeparator();
-			monitorMenu.add(getAmplifierDefinitionConfigAction());
-			monitorMenu.add(getOpenBCIModuleConfigAction());
+			monitorMenu.add(getCheckSignalAction());
 		}
 		return monitorMenu;
 	}
@@ -865,7 +696,7 @@ public class ViewerElementManager {
 		return tagsMenu;
 	}
 
-	
+
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(_("Tools"));
@@ -923,7 +754,7 @@ public class ViewerElementManager {
 
 			mainToolBar.setFloatable(false);
 
-			mainToolBar.add(getOpenSignalAndSetMontageAction());
+			mainToolBar.add(getOpenSignalWizardAction());
 			mainToolBar.add(getSaveActiveDocumentAction());
 			mainToolBar.add(getSaveActiveDocumentAsAction());
 			mainToolBar.add(getSaveAllDocumentsAction());
@@ -1159,7 +990,7 @@ public class ViewerElementManager {
 
 	public PleaseWaitDialog getPleaseWaitDialog() {
 		if (pleaseWaitDialog == null) {
-			pleaseWaitDialog = new PleaseWaitDialog( getDialogParent());
+			pleaseWaitDialog = new PleaseWaitDialog(getDialogParent());
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
@@ -1205,23 +1036,15 @@ public class ViewerElementManager {
 	public SignalMontageDialog getSignalMontageDialog() {
 		if (signalMontageDialog == null) {
 			signalMontageDialog = new SignalMontageDialog(this, getDialogParent(), true);
-			signalMontageDialog.setFileChooser(getFileChooser());
-			signalMontageDialog.setApplicationConfig(getApplicationConfig());
-			signalMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
-			signalMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
 		}
 		return signalMontageDialog;
 	}
 
-	public OpenSignalAndSetMontageDialog getOpenSignalAndSetMontageDialog() {
-		if (openSignalAndSetMontageDialog == null) {
-			openSignalAndSetMontageDialog = new OpenSignalAndSetMontageDialog(this, getDialogParent(), true);
-			openSignalAndSetMontageDialog.setFileChooser(getFileChooser());
-			openSignalAndSetMontageDialog.setApplicationConfig(getApplicationConfig());
-			openSignalAndSetMontageDialog.setFftFilterPresetManager(getFftFilterPresetManager());
-			openSignalAndSetMontageDialog.setTimeDomainSampleFilterPresetManager(getTimeDomainSampleFilterPresetManager());
+	public OpenSignalWizardDialog getOpenSignalWizardDialog() {
+		if (openSignalWizardDialog == null) {
+			openSignalWizardDialog = new OpenSignalWizardDialog(this, getDialogParent(), true);
 		}
-		return openSignalAndSetMontageDialog;
+		return openSignalWizardDialog;
 	}
 
 	public SignalSelectionDialog getSignalSelectionDialog() {
@@ -1233,7 +1056,7 @@ public class ViewerElementManager {
 
 	public NewTagDialog getNewTagDialog() {
 		if (newTagDialog == null) {
-			newTagDialog = new NewTagDialog(getStyledTagSetPresetManager(), getDialogParent(), true);
+			newTagDialog = new NewTagDialog(getDialogParent(), true);
 			newTagDialog.setApplicationConfig(getApplicationConfig());
 		}
 		return newTagDialog;
@@ -1270,8 +1093,7 @@ public class ViewerElementManager {
 
 	public TagStylePaletteDialog getTagStylePaletteDialog() {
 		if (tagStylePaletteDialog == null) {
-			tagStylePaletteDialog = new TagStylePaletteDialog(getStyledTagSetPresetManager(), getDialogParent(), true);
-			tagStylePaletteDialog.setApplicationConfig(getApplicationConfig());
+			tagStylePaletteDialog = new TagStylePaletteDialog(getDialogParent(), true);
 			tagStylePaletteDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePaletteDialog;
@@ -1283,8 +1105,7 @@ public class ViewerElementManager {
 	 */
 	public TagStylePresetDialog getTagStylePresetDialog() {
 		if (tagStylePresetDialog == null) {
-			tagStylePresetDialog = new TagStylePresetDialog(getStyledTagSetPresetManager(), getDialogParent(), true);
-			tagStylePresetDialog.setApplicationConfig(getApplicationConfig());
+			tagStylePresetDialog = new TagStylePresetDialog(getDialogParent(), true);
 			tagStylePresetDialog.setFileChooser(getFileChooser());
 		}
 		return tagStylePresetDialog;
@@ -1323,34 +1144,14 @@ public class ViewerElementManager {
 
 	public ExportSignalDialog getExportSignalDialog() {
 		if (exportSignalDialog == null) {
-			exportSignalDialog = new ExportSignalDialog(getSignalExportPresetManager(), getDialogParent(), true);
-			exportSignalDialog.setApplicationConfig(getApplicationConfig());
+			exportSignalDialog = new ExportSignalDialog(getDialogParent(), true);
 		}
 		return exportSignalDialog;
 	}
 
-        public AmplifierDefinitionConfigDialog getAmplifierDefinitionConfigDialog() {
-                if (amplifierDefinitionConfigDialog == null) {
-                        amplifierDefinitionConfigDialog = new AmplifierDefinitionConfigDialog(getAmplifierDefinitionPresetManager(), getDialogParent(), true, this);
-			amplifierDefinitionConfigDialog.setApplicationConfig(getApplicationConfig());
-			amplifierDefinitionConfigDialog.setFileChooser(getFileChooser());
-                }
-                return amplifierDefinitionConfigDialog;
-        }
-
-        public OpenBCIModuleConfigDialog getOpenBCIModuleConfigDialog() {
-                if (openBCIModuleConfigDialog == null) {
-                        openBCIModuleConfigDialog = new OpenBCIModuleConfigDialog(getOpenBCIModulePresetManager(), getDialogParent(), true);
-                        openBCIModuleConfigDialog.setApplicationConfig(getApplicationConfig());
-                        openBCIModuleConfigDialog.setFileChooser(getFileChooser());
-                }
-                return openBCIModuleConfigDialog;
-        }
-
 	public EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
 		if (editFFTSampleFilterDialog == null) {
-			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(getFftFilterPresetManager(), getDialogParent(), true);
-			editFFTSampleFilterDialog.setApplicationConfig(getApplicationConfig());
+			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(getDialogParent(), true);
 			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editFFTSampleFilterDialog;
@@ -1363,8 +1164,7 @@ public class ViewerElementManager {
 	 */
 	public EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
 		if (editTimeDomainSampleFilterDialog == null) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(getTimeDomainSampleFilterPresetManager(), getDialogParent(), true);
-			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
+			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(getDialogParent(), true);
 			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
 		}
 		return editTimeDomainSampleFilterDialog;
@@ -1390,18 +1190,6 @@ public class ViewerElementManager {
 		return mp5LocalExecutorDialog;
 	}
 
-	public DynamicCompilationWarningDialog getDynamicCompilationWarningDialog() {
-		if (dynamicCompilationWarningDialog == null) {
-			dynamicCompilationWarningDialog = new DynamicCompilationWarningDialog(getDialogParent(), true);
-			if (mode == SignalMLOperationMode.APPLICATION) {
-				dynamicCompilationWarningDialog.setApplicationConfig(getApplicationConfig());
-			} else {
-				dynamicCompilationWarningDialog.setPreferences(getPreferences());
-			}
-		}
-		return dynamicCompilationWarningDialog;
-	}
-
 	public AtomTableDialog getAtomTableDialog() {
 		if (atomTableDialog == null) {
 			atomTableDialog = new AtomTableDialog(getDialogParent(), true);
@@ -1411,8 +1199,7 @@ public class ViewerElementManager {
 
 	public BookFilterDialog getBookFilterDialog() {
 		if (bookFilterDialog == null) {
-			bookFilterDialog = new BookFilterDialog(getBookFilterPresetManager(), getDialogParent(), true);
-			bookFilterDialog.setApplicationConfig(getApplicationConfig());
+			bookFilterDialog = new BookFilterDialog(managerOfPresetsManagers.getBookFilterPresetManager(), getDialogParent(), true);
 			bookFilterDialog.setFileChooser(getFileChooser());
 		}
 		return bookFilterDialog;
@@ -1495,6 +1282,7 @@ public class ViewerElementManager {
 		if (openBookDocumentAction == null) {
 			openBookDocumentAction = new OpenBookDocumentAction();
 			openBookDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
+			openBookDocumentAction.setFileChooser(getFileChooser());
 		}
 		return openBookDocumentAction;
 	}
@@ -1516,7 +1304,7 @@ public class ViewerElementManager {
 	 */
 	public StartMonitorRecordingAction getStartMonitorRecordingAction() {
 		if (startMonitorRecordingAction == null) {
-			startMonitorRecordingAction = new StartMonitorRecordingAction( getActionFocusManager());
+			startMonitorRecordingAction = new StartMonitorRecordingAction(getActionFocusManager());
 			startMonitorRecordingAction.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 		}
 		return startMonitorRecordingAction;
@@ -1529,21 +1317,13 @@ public class ViewerElementManager {
 	 */
 	public StopMonitorRecordingAction getStopMonitorRecordingAction() {
 		if (stopMonitorRecordingAction == null)
-			stopMonitorRecordingAction = new StopMonitorRecordingAction( getActionFocusManager());
+			stopMonitorRecordingAction = new StopMonitorRecordingAction(getActionFocusManager());
 		return stopMonitorRecordingAction;
 	}
 
-        public StopBCIAction getStopBCIAction() {
-
-                if (stopBCIAction == null) {
-                        stopBCIAction = new StopBCIAction(getActionFocusManager(), this);
-                }
-                return stopBCIAction;
-        }
-
 	public CloseDocumentAction getCloseActiveDocumentAction() {
 		if (closeActiveDocumentAction == null) {
-			closeActiveDocumentAction = new CloseDocumentAction( getActionFocusManager());
+			closeActiveDocumentAction = new CloseDocumentAction(getActionFocusManager());
 			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeActiveDocumentAction;
@@ -1559,7 +1339,7 @@ public class ViewerElementManager {
 
 	public SaveDocumentAction getSaveActiveDocumentAction() {
 		if (saveActiveDocumentAction == null) {
-			saveActiveDocumentAction = new SaveDocumentAction( getActionFocusManager());
+			saveActiveDocumentAction = new SaveDocumentAction(getActionFocusManager());
 			saveActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveActiveDocumentAction;
@@ -1567,7 +1347,7 @@ public class ViewerElementManager {
 
 	public SaveDocumentAsAction getSaveActiveDocumentAsAction() {
 		if (saveActiveDocumentAsAction == null) {
-			saveActiveDocumentAsAction = new SaveDocumentAsAction( getActionFocusManager());
+			saveActiveDocumentAsAction = new SaveDocumentAsAction(getActionFocusManager());
 			saveActiveDocumentAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveActiveDocumentAsAction;
@@ -1575,7 +1355,7 @@ public class ViewerElementManager {
 
 	public NewTagAction getNewTagAction() {
 		if (newTagAction == null) {
-			newTagAction = new NewTagAction( getActionFocusManager());
+			newTagAction = new NewTagAction(getActionFocusManager());
 			newTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			newTagAction.setNewTagDialog(getNewTagDialog());
 		}
@@ -1584,7 +1364,7 @@ public class ViewerElementManager {
 
 	public OpenTagAction getOpenTagAction() {
 		if (openTagAction == null) {
-			openTagAction = new OpenTagAction( getActionFocusManager());
+			openTagAction = new OpenTagAction(getActionFocusManager());
 			openTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			openTagAction.setFileChooser(getFileChooser());
 			openTagAction.setOptionPaneParent(getOptionPaneParent());
@@ -1594,7 +1374,7 @@ public class ViewerElementManager {
 
 	public CloseTagAction getCloseTagAction() {
 		if (closeTagAction == null) {
-			closeTagAction = new CloseTagAction( getActionFocusManager());
+			closeTagAction = new CloseTagAction(getActionFocusManager());
 			closeTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeTagAction;
@@ -1602,7 +1382,7 @@ public class ViewerElementManager {
 
 	public SaveTagAction getSaveTagAction() {
 		if (saveTagAction == null) {
-			saveTagAction = new SaveTagAction( getActionFocusManager());
+			saveTagAction = new SaveTagAction(getActionFocusManager());
 			saveTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAction;
@@ -1610,7 +1390,7 @@ public class ViewerElementManager {
 
 	public SaveTagAsAction getSaveTagAsAction() {
 		if (saveTagAsAction == null) {
-			saveTagAsAction = new SaveTagAsAction( getActionFocusManager());
+			saveTagAsAction = new SaveTagAsAction(getActionFocusManager());
 			saveTagAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAsAction;
@@ -1618,7 +1398,7 @@ public class ViewerElementManager {
 
 	public OpenTagAction getImportTagAction() {
 		if (importTagAction == null) {
-			importTagAction = new OpenTagAction( getActionFocusManager());
+			importTagAction = new OpenTagAction(getActionFocusManager());
 			importTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			importTagAction.setFileChooser(getFileChooser());
 			importTagAction.setOptionPaneParent(getOptionPaneParent());
@@ -1635,7 +1415,7 @@ public class ViewerElementManager {
 	 */
 	public ChooseActiveTagAction getChooseActiveTagAction() {
 		if (chooseActiveTagAction == null) {
-			chooseActiveTagAction = new ChooseActiveTagAction( getActionFocusManager());
+			chooseActiveTagAction = new ChooseActiveTagAction(getActionFocusManager());
 		}
 		return chooseActiveTagAction;
 	}
@@ -1648,7 +1428,7 @@ public class ViewerElementManager {
 	 */
 	public CompareTagsAction getCompareTagsAction() {
 		if (compareTagsAction == null) {
-			compareTagsAction = new CompareTagsAction( getActionFocusManager());
+			compareTagsAction = new CompareTagsAction(getActionFocusManager());
 			compareTagsAction.setTagComparisonDialog(getTagComparisonDialog());
 		}
 		return compareTagsAction;
@@ -1656,7 +1436,7 @@ public class ViewerElementManager {
 
 	public ExportEEGLabTagAction getExportEEGLabTagAction() {
 		if (exportEEGLabTagAction == null) {
-			exportEEGLabTagAction = new ExportEEGLabTagAction( getActionFocusManager());
+			exportEEGLabTagAction = new ExportEEGLabTagAction(getActionFocusManager());
 			exportEEGLabTagAction.setFileChooser(getFileChooser());
 			exportEEGLabTagAction.setOptionPaneParent(getOptionPaneParent());
 		}
@@ -1665,7 +1445,7 @@ public class ViewerElementManager {
 
 	public EditSignalParametersAction getEditSignalParametersAction() {
 		if (editSignalMontageAction == null) {
-			editSignalParametersAction = new EditSignalParametersAction( getActionFocusManager());
+			editSignalParametersAction = new EditSignalParametersAction(getActionFocusManager());
 			editSignalParametersAction.setSignalParametersDialog(getSignalParametersDialog());
 		}
 		return editSignalParametersAction;
@@ -1673,30 +1453,30 @@ public class ViewerElementManager {
 
 	public EditSignalMontageAction getEditSignalMontageAction() {
 		if (editSignalMontageAction == null) {
-			editSignalMontageAction = new EditSignalMontageAction( getActionFocusManager());
+			editSignalMontageAction = new EditSignalMontageAction(getActionFocusManager());
 			editSignalMontageAction.setSignalMontageDialog(getSignalMontageDialog());
 		}
 		return editSignalMontageAction;
 	}
 
-	public OpenSignalAndSetMontageAction getOpenSignalAndSetMontageAction() {
-		if (openSignalAndSetMontageAction == null) {
-			openSignalAndSetMontageAction = new OpenSignalAndSetMontageAction(getDocumentFlowIntegrator());
-			openSignalAndSetMontageAction.setOpenSignalAndSetMontageDialog(getOpenSignalAndSetMontageDialog());
+	public OpenSignalWizardAction getOpenSignalWizardAction() {
+		if (openSignalWizardAction == null) {
+			openSignalWizardAction = new OpenSignalWizardAction(getDocumentFlowIntegrator());
+			openSignalWizardAction.setOpenSignalWizardDialog(getOpenSignalWizardDialog());
 		}
-		return openSignalAndSetMontageAction;
+		return openSignalWizardAction;
 	}
 
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {
 		if (applyDefaultMontageAction == null) {
-			applyDefaultMontageAction = new ApplyDefaultMontageAction( getActionFocusManager());
+			applyDefaultMontageAction = new ApplyDefaultMontageAction(getActionFocusManager());
 		}
 		return applyDefaultMontageAction;
 	}
 
 	public PreciseSelectionAction getPreciseSelectionAction() {
 		if (preciseSelectionAction == null) {
-			preciseSelectionAction = new PreciseSelectionAction( getActionFocusManager());
+			preciseSelectionAction = new PreciseSelectionAction(getActionFocusManager());
 			preciseSelectionAction.setSignalSelectionDialog(getSignalSelectionDialog());
 		}
 		return preciseSelectionAction;
@@ -1704,7 +1484,7 @@ public class ViewerElementManager {
 
 	public EditTagStylesAction getEditTagStylesAction() {
 		if (editTagStylesAction == null) {
-			editTagStylesAction = new EditTagStylesAction( getActionFocusManager());
+			editTagStylesAction = new EditTagStylesAction(getActionFocusManager());
 			editTagStylesAction.setTagStylePaletteDialog(getTagStylePaletteDialog());
 		}
 		return editTagStylesAction;
@@ -1716,7 +1496,7 @@ public class ViewerElementManager {
 	 */
 	public EditTagStylePresetsAction getEditTagStylePresetsAction() {
 		if (editTagStylePresetsAction == null) {
-			editTagStylePresetsAction = new EditTagStylePresetsAction( getActionFocusManager());
+			editTagStylePresetsAction = new EditTagStylePresetsAction(getActionFocusManager());
 			editTagStylePresetsAction.setTagStylePaletteDialog(getTagStylePresetDialog());
 		}
 		return editTagStylePresetsAction;
@@ -1724,7 +1504,7 @@ public class ViewerElementManager {
 
 	public EditTagDescriptionAction getEditTagDescriptionAction() {
 		if (editTagDescriptionAction == null) {
-			editTagDescriptionAction = new EditTagDescriptionAction( getActionFocusManager());
+			editTagDescriptionAction = new EditTagDescriptionAction(getActionFocusManager());
 			editTagDescriptionAction.setEditTagDescriptionDialog(getEditTagDescriptionDialog());
 		}
 		return editTagDescriptionAction;
@@ -1732,7 +1512,7 @@ public class ViewerElementManager {
 
 	public ExportSignalAction getExportSignalAction() {
 		if (exportSignalAction == null) {
-			exportSignalAction = new ExportSignalAction( getActionFocusManager());
+			exportSignalAction = new ExportSignalAction(getActionFocusManager());
 			exportSignalAction.setExportSignalDialog(getExportSignalDialog());
 			exportSignalAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			exportSignalAction.setFileChooser(getFileChooser());
@@ -1743,29 +1523,13 @@ public class ViewerElementManager {
 
 	public ExportBookAction getExportBookAction() {
 		if (exportBookAction == null) {
-			exportBookAction = new ExportBookAction( getActionFocusManager());
+			exportBookAction = new ExportBookAction(getActionFocusManager());
 			exportBookAction.setPleaseWaitDialog(getPleaseWaitDialog());
 			exportBookAction.setFileChooser(getFileChooser());
 			exportBookAction.setOptionPaneParent(getOptionPaneParent());
 		}
 		return exportBookAction;
 	}
-
-        public AmplifierDefinitionConfigAction getAmplifierDefinitionConfigAction() {
-                if (amplifierDefinitionConfigAction == null) {
-                        amplifierDefinitionConfigAction = new AmplifierDefinitionConfigAction();
-                        amplifierDefinitionConfigAction.setConfigDialog(getAmplifierDefinitionConfigDialog());
-                }
-                return amplifierDefinitionConfigAction;
-        }
-
-        public OpenBCIModuleConfigAction getOpenBCIModuleConfigAction() {
-                if (openBCIModuleConfigAction == null) {
-                        openBCIModuleConfigAction = new OpenBCIModuleConfigAction();
-                        openBCIModuleConfigAction.setConfigDialog(getOpenBCIModuleConfigDialog());
-                }
-                return openBCIModuleConfigAction;
-        }
 
 	public AbortAllTasksAction getAbortAllTasksAction() {
 		if (abortAllTasksAction == null) {
@@ -1837,7 +1601,7 @@ public class ViewerElementManager {
 			RunMethodAction runMethodAction;
 			for (Method method : methods) {
 
-				runMethodAction = new RunMethodAction( method, getMethodManager());
+				runMethodAction = new RunMethodAction(method, getMethodManager());
 				runMethodAction.setTaskManager(getTaskManager());
 				runMethodActions.add(runMethodAction);
 
@@ -1864,7 +1628,7 @@ public class ViewerElementManager {
 			for (Method method : methods) {
 
 				if (method instanceof IterableMethod) {
-					iterateMethodAction = new IterateMethodAction( (IterableMethod) method, getMethodManager());
+					iterateMethodAction = new IterateMethodAction((IterableMethod) method, getMethodManager());
 					iterateMethodAction.setTaskManager(getTaskManager());
 					iterateMethodAction.setIterationSetupDialog(getIterationSetupDialog());
 					iterateMethodActions.add(iterateMethodAction);
@@ -1882,22 +1646,6 @@ public class ViewerElementManager {
 		return tableToTextExporter;
 	}
 
-	public JmxClient getJmxClient() {
-		return jmxClient;
-	}
-
-	public void setJmxClient(JmxClient jmxClient) {
-		this.jmxClient = jmxClient;
-	}
-
-	public JmxClient getTagClient() {
-		return tagClient;
-	}
-
-	public void setTagClient(JmxClient tagClient) {
-		this.tagClient = tagClient;
-	}
-
 	public DocumentView createDocumentViewPanel(Document document) throws SignalMLException {
 
 		DocumentView documentView = null;
@@ -1910,7 +1658,7 @@ public class ViewerElementManager {
 			signalView.setSlavePlotSettingsPopupDialog(getSlavePlotSettingsPopupDialog());
 			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			signalView.setMontagePresetManager(getMontagePresetManager());
+			signalView.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
 			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
@@ -1959,8 +1707,6 @@ public class ViewerElementManager {
 		ApplicationTaskManager localTaskManager = getTaskManager();
 		localTaskManager.setPleaseWaitDialog(getPleaseWaitDialog());
 
-		DynamicCompilationContext.getSharedInstance().getCompiler().setWarning(getDynamicCompilationWarningDialog());
-
 	}
 
 	public void configureAcceletators() {
@@ -1969,7 +1715,7 @@ public class ViewerElementManager {
 		getCloseWindowAction().setAccelerator("ctrl X");
 		getHelpContentsAction().setAccelerator("F1");
 		getViewModeAction().setAccelerator("F11");
-		getOpenSignalAndSetMontageAction().setAccelerator("ctrl O");
+		getOpenSignalWizardAction().setAccelerator("ctrl O");
 		getCloseActiveDocumentAction().setAccelerator("ctrl F4");
 		getOpenTagAction().setAccelerator("alt O");
 		getCloseTagAction().setAccelerator("ctrl alt F4");

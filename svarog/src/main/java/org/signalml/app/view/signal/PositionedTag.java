@@ -21,10 +21,10 @@ public class PositionedTag implements Comparable<PositionedTag>, ExportedPositio
 		this.tag = tag;
 		this.tagPositionIndex = tagPositionIndex;
 	}
-	
-	public PositionedTag(ExportedPositionedTag positionedTag){
+
+	public PositionedTag(ExportedPositionedTag positionedTag) {
 		Tag tag;
-		if (positionedTag.getTag() instanceof Tag){
+		if (positionedTag.getTag() instanceof Tag) {
 			tag = (Tag) positionedTag.getTag();
 		} else {
 			tag = new Tag(positionedTag.getTag());

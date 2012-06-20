@@ -40,7 +40,10 @@ public class TagStyleToggleButton extends JToggleButton implements TagStyleSelec
 
 	@Override
 	public Icon getIcon() {
-		if (cachedIcon == null) {
+		if (cachedIcon == null && tagIconProducer != null) {
+			//MAC OS Aqua L&F can somehow call this method BEFORE the constructor
+			//which resulted in a tagIconProducer == null NullPointerException
+			//compare: http://josm.openstreetmap.de/ticket/7136
 			cachedIcon = tagIconProducer.getIcon(tagStyle);
 		}
 

@@ -7,38 +7,38 @@ package org.signalml.app.view.document.monitor.signalchecking;
  */
 public class ChannelState {
 
-        /**
-         * Whether channel is valid.
-         */
-        private boolean valid;
-        /**
-         * {@link AdditionalChannelData}.
-         */
-        private AdditionalChannelData additionalChannelData;
+	/**
+	 * Whether channel is valid.
+	 */
+	private boolean valid;
+	/**
+	 * {@link AdditionalChannelData}.
+	 */
+	private AdditionalChannelData additionalChannelData;
 
-        /**
-         * Returns {@link #additionalChannelData}.
-         * @return {@link #additionalChannelData}
-         */
-        public AdditionalChannelData getAdditionalChannelData() {
-                return additionalChannelData;
-        }
+	/**
+	 * Returns {@link #additionalChannelData}.
+	 * @return {@link #additionalChannelData}
+	 */
+	public AdditionalChannelData getAdditionalChannelData() {
+		return additionalChannelData;
+	}
 
-        /**
-         * Returns {@link #valid}.
-         * @return {@link #valid}
-         */
-        public boolean isValid() {
-                return valid;
-        }
+	/**
+	 * Returns {@link #valid}.
+	 * @return {@link #valid}
+	 */
+	public boolean isValid() {
+		return valid;
+	}
 
-        /**
-         * Default constructor.
-         * @param valid {@link #valid}
-         * @param additionalChannelData {@link #additionalChannelData}
-         */
-        public ChannelState(boolean valid, AdditionalChannelData additionalChannelData) {
-                this.valid = valid;
-                this.additionalChannelData = additionalChannelData;
-        }
+	/**
+	 * Default constructor.
+	 * @param valid {@link #valid}
+	 * @param additionalChannelData {@link #additionalChannelData}
+	 */
+	public ChannelState(boolean valid, AdditionalChannelData additionalChannelData) {
+		this.valid = valid;
+		this.additionalChannelData = additionalChannelData;
+	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://maven.apache.org/XDOC/2.0"
-	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Overview</title>
@@ -13,200 +13,200 @@
     <section name="Welcome to Svarog">
 
       <div style="display: block; float: right; width: 260px; padding-left: 10px; margin-bottom: 10px; background-color: #FFFFFF;">
-	<div style="border: 1px solid gray; padding: 5px; background-color: #FFFFFF;">
-	  <p>
-	    Svarog is <a href="http://www.fsf.org/">Free Software</a>!
-	  </p>
-	  <p>
-	    You can
-	    <a href="downloads.html"><span style="white-space: nowrap;">download and use</span></a>
-	    the software for free as well as
-	    <a href="source-repository.html"><span style="white-space: nowrap;">modify it</span></a>
-	    according to the terms of the
-	    <a href="license.html"><span style="white-space: nowrap;">GNU General Public License, Version 3</span></a>.
-	  </p>
-	  <p>
-	    The latest version available is
-	    <a href="downloads.html#0.5.0"><span style="white-space: nowrap; font-weight: bold;">Svarog 0.5.0</span></a>.
-	  </p>
-	</div>
+    <div style="border: 1px solid gray; padding: 5px; background-color: #FFFFFF;">
+      <p>
+        Svarog is <a href="http://www.fsf.org/">Free Software</a>!
+      </p>
+      <p>
+        You can
+        <a href="downloads.html"><span style="white-space: nowrap;">download and use</span></a>
+        the software for free as well as
+        <a href="source-repository.html"><span style="white-space: nowrap;">modify it</span></a>
+        according to the terms of the
+        <a href="license.html"><span style="white-space: nowrap;">GNU General Public License, Version 3</span></a>.
+      </p>
+      <p>
+        The latest version available is
+        <a href="downloads.html#0.5.0"><span style="white-space: nowrap; font-weight: bold;">Svarog 0.5.0</span></a>.
+      </p>
+    </div>
       </div>
 
       <p>
-	Thanks for visiting Svarog's site. We hope you find the software
-	usefull and the information provided sufficient. If you have any questions
-	do not hesitate to ask someone from <a href="team-list.html">the team</a>.
+    Thanks for visiting Svarog's site. We hope you find the software
+    usefull and the information provided sufficient. If you have any questions
+    do not hesitate to ask someone from <a href="team-list.html">the team</a>.
       </p>
 
       <subsection name="What is Svarog?">
 
-	<p>
-	  Svarog is intended to be a signal viewer, annotator, analyzer and recorder.
-	  Support for recording is not yet implemented in any form, and exists only
-	  in plans for the future. Support for signal analysis methods is preliminary.
-	</p>
+    <p>
+      Svarog is intended to be a signal viewer, annotator, analyzer and recorder.
+      Support for recording is not yet implemented in any form, and exists only
+      in plans for the future. Support for signal analysis methods is preliminary.
+    </p>
 
-	<p>
-	  Svarog is written in Java and requires a Java virtual machine to run.
-	  Only version 1.6.0 and later are supported.
-	  We recommend you use the virtual machine distributed by Sun Microsystems.
-	  It can be obtained from <a href="http://java.sun.com/">Sun's Java site</a>.
-	</p>
+    <p>
+      Svarog is written in Java and requires a Java virtual machine to run.
+      Only version 1.6.0 and later are supported.
+      We recommend you use the virtual machine distributed by Sun Microsystems.
+      It can be obtained from <a href="http://java.sun.com/">Sun's Java site</a>.
+    </p>
 
-	<p>
-	  While some parts of the code are relatively well tested, this software
-	  as a whole <b>should be considered a beta</b>. This means that there are likely
-	  some less obvious bugs lurking in the code and that data loss is
-	  more likely than it is with stable software.
-	</p>
+    <p>
+      While some parts of the code are relatively well tested, this software
+      as a whole <b>should be considered a beta</b>. This means that there are likely
+      some less obvious bugs lurking in the code and that data loss is
+      more likely than it is with stable software.
+    </p>
 
-	<p>
-	  Svarog stands for <b>S</b>ignal <b>V</b>iever, <b>A</b>nalyzer
-	  and <b>R</b>ecorder <b>o</b>n <b>G</b>PL. It's a rather loose acronym.
-	  Svarog is also the name of a god (or deity) of the Sun and fire (and
-	  of the smiths) in the religion of the ancient Slavic peoples.
-	  Svarog used to be a prominent deity in central and eastern Europe prior to
-	  christianization in the Middle Ages.
-	</p>
+    <p>
+      Svarog stands for <b>S</b>ignal <b>V</b>iever, <b>A</b>nalyzer
+      and <b>R</b>ecorder <b>o</b>n <b>G</b>PL. It's a rather loose acronym.
+      Svarog is also the name of a god (or deity) of the Sun and fire (and
+      of the smiths) in the religion of the ancient Slavic peoples.
+      Svarog used to be a prominent deity in central and eastern Europe prior to
+      christianization in the Middle Ages.
+    </p>
 
       </subsection>
 
       <subsection name="The signals">
 
-	<p>
-	  Svarog is not intended to handle very simple signals (for example stereo
-	  sound files). It was designed with more complex signals in mind,
-	  epecially biosignals, such as
-	  <a href="http://en.wikipedia.org/wiki/Electroencephalography">EEG</a>
-	  or <a href="http://en.wikipedia.org/wiki/Magnetoencephalography">MEG</a>,
-	  where the signal has
-	  a few dozens of channels and is often up to 10 hours in length.
-	</p>
+    <p>
+      Svarog is not intended to handle very simple signals (for example stereo
+      sound files). It was designed with more complex signals in mind,
+      epecially biosignals, such as
+      <a href="http://en.wikipedia.org/wiki/Electroencephalography">EEG</a>
+      or <a href="http://en.wikipedia.org/wiki/Magnetoencephalography">MEG</a>,
+      where the signal has
+      a few dozens of channels and is often up to 10 hours in length.
+    </p>
 
       </subsection>
 
       <subsection name="Relation to SignalML">
 
-	<p>
-	  Svarog uses SignalML to load signal files. Currently only SignalML 1.0 is supported
-	  but including SignalML 2.0 support is on the roadmap.
-	</p>
+    <p>
+      Svarog uses SignalML to load signal files. Currently only SignalML 1.0 is supported
+      but including SignalML 2.0 support is on the roadmap.
+    </p>
 
       </subsection>
 
       <subsection name="Project goals">
 
-	<p>
-	  The long term goals of Svarog are (in no particular order):
-	</p>
+    <p>
+      The long term goals of Svarog are (in no particular order):
+    </p>
 
-	<p>
-	  <b>To bridge the gap between the lab</b>
-	  (software accompanying scientific publications)
-	  <b>and the clinic</b> (software used as aids in solving real-life
-	  problems) by providing software which is easy enough to use for people
-	  with little technical experience, and at the same time, flexible enough
-	  for people who experiment to develop and improve clinically applicable
-	  signal analysis methods. While such perfect marriage might be difficult
-	  to achieve completely, we believe that there is room for improvement over
-	  the current situation, in which — from our experience — these two worlds
-	  are largely separate.
-	</p>
+    <p>
+      <b>To bridge the gap between the lab</b>
+      (software accompanying scientific publications)
+      <b>and the clinic</b> (software used as aids in solving real-life
+      problems) by providing software which is easy enough to use for people
+      with little technical experience, and at the same time, flexible enough
+      for people who experiment to develop and improve clinically applicable
+      signal analysis methods. While such perfect marriage might be difficult
+      to achieve completely, we believe that there is room for improvement over
+      the current situation, in which — from our experience — these two worlds
+      are largely separate.
+    </p>
 
-	<p>
-	  <b>To provide a platform for easy exchange of data and of signal
-	  analysis methods</b> in order to enable closer cooperation between various
-	  scientists and institutions working in the field of neuroscience. As stated
-	  in the introduction, the current situation is that it is difficult for one lab
-	  to verify the results obtained at another lab, mainly due to incompatibilities
-	  in data formats and software, and often also due to licensing problems
-	  associated with software. Creators of commercial systems have little interest
-	  in addressing such problems, especially when they bundle the software
-	  with their own hardware, and promote the whole suite. We believe that
-	  this situation hampers thorough peer review of results and clinical testing
-	  of promissing signal analysis methods.
-	</p>
+    <p>
+      <b>To provide a platform for easy exchange of data and of signal
+      analysis methods</b> in order to enable closer cooperation between various
+      scientists and institutions working in the field of neuroscience. As stated
+      in the introduction, the current situation is that it is difficult for one lab
+      to verify the results obtained at another lab, mainly due to incompatibilities
+      in data formats and software, and often also due to licensing problems
+      associated with software. Creators of commercial systems have little interest
+      in addressing such problems, especially when they bundle the software
+      with their own hardware, and promote the whole suite. We believe that
+      this situation hampers thorough peer review of results and clinical testing
+      of promissing signal analysis methods.
+    </p>
 
-	<p>
-	  <b>To provide a free platform for signal recording</b>. Recording biosignals
-	  such as EEG usually requires more sophisticated equipment than,
-	  for example, recording the latest demo tape of your garage band. There
-	  is little that could be done about the cost of required hardware. There
-	  is no reason however, why a free software for registration of such signals
-	  could not exist. Considering that equipment vendors often add a significant
-	  price premium just for slapping their proprietary software on top of
-	  third party hardware (amplifier, ADC, etc.), the existence of such a free
-	  software could reduce the overall cost of installing any diagnostic (or scientific)
-	  signal recording equipment. For some less than rich countries or
-	  institutions it might make the difference between having and not having
-	  such equipment at all. While the
-	  <a href="http://bci.fuw.edu.pl/">Open BCI project</a> seeks to provide a
-	  low level interface for working with hardware, Svarog could become the
-	  high level interface in which the signal captured is viewed, preprocessed
-	  and saved to disk.
-	</p>
+    <p>
+      <b>To provide a free platform for signal recording</b>. Recording biosignals
+      such as EEG usually requires more sophisticated equipment than,
+      for example, recording the latest demo tape of your garage band. There
+      is little that could be done about the cost of required hardware. There
+      is no reason however, why a free software for registration of such signals
+      could not exist. Considering that equipment vendors often add a significant
+      price premium just for slapping their proprietary software on top of
+      third party hardware (amplifier, ADC, etc.), the existence of such a free
+      software could reduce the overall cost of installing any diagnostic (or scientific)
+      signal recording equipment. For some less than rich countries or
+      institutions it might make the difference between having and not having
+      such equipment at all. While the
+      <a href="http://bci.fuw.edu.pl/">Open BCI project</a> seeks to provide a
+      low level interface for working with hardware, Svarog could become the
+      high level interface in which the signal captured is viewed, preprocessed
+      and saved to disk.
+    </p>
 
-	<h4>Short term goals</h4>
+    <h4>Short term goals</h4>
 
-	<p>
-	  The short term goals of the project amount to a major spring cleaning effort, and are (in order):
-	</p>
+    <p>
+      The short term goals of the project amount to a major spring cleaning effort, and are (in order):
+    </p>
 
-	<ul>
-	  <li>
-	    to complete the switch to using maven and clear remaining issues
-	    with using it;
-	  </li>
-	  <li>
-	    to build and configure all the required infrastructure
-	    (repositories, bug tracker, etc.);
-	  </li>
-	  <li>
-	    to review the code inherited from <a href="history.html">signalml</a>,
-	    fix outstanding bugs and complete features which aren't fully
-	    complete or operational;
-	  </li>
-	  <li>
-	    to review the situation with Matlab Builder JA and decide if it can
-	    be used at all;
-	  </li>
-	  <li>
-	    to work towards changing Svarog from a monolithic application it is
-	    now to a more modular application. As a result of this a lot of
-	    code is going to be moved out of Svarog into modules;
-	  </li>
-	  <li>
-	    to sanitize and document the code to make it easier for other people
-	    to start participating in the project;
-	  </li>
-	  <li>
-	    to improve testability and increase the number of tests, which at this point
-	    are very few;
-	  </li>
-	</ul>
+    <ul>
+      <li>
+        to complete the switch to using maven and clear remaining issues
+        with using it;
+      </li>
+      <li>
+        to build and configure all the required infrastructure
+        (repositories, bug tracker, etc.);
+      </li>
+      <li>
+        to review the code inherited from <a href="history.html">signalml</a>,
+        fix outstanding bugs and complete features which aren't fully
+        complete or operational;
+      </li>
+      <li>
+        to review the situation with Matlab Builder JA and decide if it can
+        be used at all;
+      </li>
+      <li>
+        to work towards changing Svarog from a monolithic application it is
+        now to a more modular application. As a result of this a lot of
+        code is going to be moved out of Svarog into modules;
+      </li>
+      <li>
+        to sanitize and document the code to make it easier for other people
+        to start participating in the project;
+      </li>
+      <li>
+        to improve testability and increase the number of tests, which at this point
+        are very few;
+      </li>
+    </ul>
 
-	<p>
-	  After the above is achieved, we can work on extending the functionality of Svarog
-	  to achieve the long term goals.
-	</p>
+    <p>
+      After the above is achieved, we can work on extending the functionality of Svarog
+      to achieve the long term goals.
+    </p>
 
       </subsection>
 
       <subsection name="How can I get involved?">
 
-	<p>
-	  Svarog's team is very small given the needs, and there is a lot that you could do.
-	  <a href="faq.html#contribute-programmer-java">The FAQ</a> has a section on ways in which people can get involved.
-	</p>
+    <p>
+      Svarog's team is very small given the needs, and there is a lot that you could do.
+      <a href="faq.html#contribute-programmer-java">The FAQ</a> has a section on ways in which people can get involved.
+    </p>
 
-	<p>
-	  As a person involved in Svarog you cannot expect that your software will be used
-	  by great many people. This is a professional software targeted for a relatively
-	  narrow group of specialists: clinicists, physicians and scientists. On the other
-	  hand Svarog addresses concerns which directly relate to people's health and
-	  wellbeing. It has potential to improve the life of some people, somewhere, and
-	  as such is an important project.
-	</p>
+    <p>
+      As a person involved in Svarog you cannot expect that your software will be used
+      by great many people. This is a professional software targeted for a relatively
+      narrow group of specialists: clinicists, physicians and scientists. On the other
+      hand Svarog addresses concerns which directly relate to people's health and
+      wellbeing. It has potential to improve the life of some people, somewhere, and
+      as such is an important project.
+    </p>
 
       </subsection>
 

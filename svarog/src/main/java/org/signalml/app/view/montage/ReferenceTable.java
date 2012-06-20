@@ -37,7 +37,7 @@ import org.signalml.domain.montage.MontageChannel;
 /**
  * The table which displays the reference between {@link MontageChannel montage
  * channels} and original channels.
- * This table has: 
+ * This table has:
  * <ul>
  * <li>no header,</li>
  * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
@@ -89,10 +89,10 @@ public class ReferenceTable extends JTable implements ActionListener {
 		setRowHeight(CELL_SIZE);
 
 		setToolTipText("");
-		
+
 		//hook on 'paste' action
-	    KeyStroke paste = KeyStroke.getKeyStroke(KeyEvent.VK_V,ActionEvent.CTRL_MASK,false);
-	    this.registerKeyboardAction(this,"Paste",paste,JComponent.WHEN_FOCUSED);
+		KeyStroke paste = KeyStroke.getKeyStroke(KeyEvent.VK_V,ActionEvent.CTRL_MASK,false);
+		this.registerKeyboardAction(this,"Paste",paste,JComponent.WHEN_FOCUSED);
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class ReferenceTable extends JTable implements ActionListener {
 		 * <ul><li> the background color to {@link
 		 * ReferenceTable#DISABLED_COLOR},</li>
 		 * <li>the width and height both to {@link ReferenceTable#CELL_SIZE}.
-		 * </li></ul> 
+		 * </li></ul>
 		 */
 		public CornerPanel() {
 			super();
@@ -236,7 +236,7 @@ public class ReferenceTable extends JTable implements ActionListener {
 	 * mode,</li>
 	 * <li>{@link ReferenceTable#CELL_SIZE CELL_SIZE} as the row height and
 	 * width,</li>
-	 * <li>the values centered in the cell.</li></ul> 
+	 * <li>the values centered in the cell.</li></ul>
 	 */
 	private class HeaderTable extends JTable {
 
@@ -322,7 +322,7 @@ public class ReferenceTable extends JTable implements ActionListener {
 		//If current action is 'paste' then copy string from the clipboard and paste it to current cell
 		if (evt.getActionCommand().compareTo("Paste")==0) {
 			Clipboard system = Toolkit.getDefaultToolkit().getSystemClipboard();
-            String trstring="";
+			String trstring="";
 			try {
 				trstring = (String)(system.getContents(this).getTransferData(DataFlavor.stringFlavor));
 			} catch (UnsupportedFlavorException e) {
@@ -330,11 +330,11 @@ public class ReferenceTable extends JTable implements ActionListener {
 			} catch (IOException e) {
 				return;
 			}
-	        int[] cols = this.getSelectedColumns();
-	        int[] rows = this.getSelectedRows();
-	        for (int i = 0; i < rows.length; i++)
-	        	for (int j = 0; j < cols.length; j++)
-	        		this.setValueAt(trstring, rows[i], cols[j]);
+			int[] cols = this.getSelectedColumns();
+			int[] rows = this.getSelectedRows();
+			for (int i = 0; i < rows.length; i++)
+				for (int j = 0; j < cols.length; j++)
+					this.setValueAt(trstring, rows[i], cols[j]);
 		}
 	}
 

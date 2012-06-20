@@ -89,9 +89,9 @@ public class WholeTimeSpacePanel extends JPanel {
 	private void initialize() {
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(_("Signal parameters")),
-		                  new EmptyBorder(3,3,3,3)
-		          ));
+					  new TitledBorder(_("Signal parameters")),
+					  new EmptyBorder(3,3,3,3)
+				  ));
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
@@ -106,19 +106,19 @@ public class WholeTimeSpacePanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(signalLengthLabel)
-		        .addComponent(pageSizeLabel)
-		        .addComponent(pageCountLabel)
-		        .addComponent(completePagesLabel)
+			layout.createParallelGroup()
+			.addComponent(signalLengthLabel)
+			.addComponent(pageSizeLabel)
+			.addComponent(pageCountLabel)
+			.addComponent(completePagesLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getSignalLengthTextField())
-		        .addComponent(getPageSizeTextField())
-		        .addComponent(getPageCountTextField())
-		        .addComponent(getCompletePagesCheckBox())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getSignalLengthTextField())
+			.addComponent(getPageSizeTextField())
+			.addComponent(getPageCountTextField())
+			.addComponent(getCompletePagesCheckBox())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -126,28 +126,28 @@ public class WholeTimeSpacePanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(signalLengthLabel)
-				.addComponent(getSignalLengthTextField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(signalLengthLabel)
+			.addComponent(getSignalLengthTextField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(pageSizeLabel)
-				.addComponent(getPageSizeTextField())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(pageCountLabel)
-				.addComponent(getPageCountTextField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(pageSizeLabel)
+			.addComponent(getPageSizeTextField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(completePagesLabel)
-				.addComponent(getCompletePagesCheckBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(pageCountLabel)
+			.addComponent(getPageCountTextField())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(completePagesLabel)
+			.addComponent(getCompletePagesCheckBox())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

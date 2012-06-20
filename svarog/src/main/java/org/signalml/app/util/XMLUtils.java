@@ -12,10 +12,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.signalml.app.config.preset.BookFilterPresetManager;
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
-import org.signalml.app.config.preset.SignalExportPresetManager;
+import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
+import org.signalml.app.config.preset.managers.BookFilterPresetManager;
+import org.signalml.app.config.preset.managers.FFTSampleFilterPresetManager;
+import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
+import org.signalml.app.config.preset.managers.SignalExportPresetManager;
+import org.signalml.app.config.preset.managers.TimeDomainSampleFilterPresetManager;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
@@ -26,13 +28,13 @@ import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;
-import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.generators.RawMontageGenerator;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.XStream;
@@ -41,13 +43,6 @@ import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
 import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import org.codehaus.janino.Java.AnonymousClassDeclaration;
-import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
-import org.signalml.app.worker.amplifiers.AmplifierDefinition;
-import org.signalml.app.worker.amplifiers.AmplifierDefinitionPresetManager;
-import org.signalml.app.worker.processes.OpenBCIModule;
-import org.signalml.app.worker.processes.OpenBCIModulePresetManager;
 
 /** XMLUtils
  *
@@ -62,74 +57,48 @@ public abstract class XMLUtils {
 
 	public static void configureStreamerForMontage(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				ChannelFunction.class,
-				MontagePresetManager.class,
-				SourceChannel.class,
-				MontageChannel.class,
-				SourceMontage.class,
-				Montage.class,
-				RawMontageGenerator.class,
-				MontageSampleFilter.class,
-				SampleFilterDefinition.class,
-				FFTSampleFilter.class,
-				TimeDomainSampleFilter.class
-		);		
+			streamer,
+			ChannelFunction.class,
+			MontagePresetManager.class,
+			SourceChannel.class,
+			MontageChannel.class,
+			SourceMontage.class,
+			Montage.class,
+			RawMontageGenerator.class,
+			MontageSampleFilter.class,
+			SampleFilterDefinition.class,
+			FFTSampleFilter.class,
+			TimeDomainSampleFilter.class
+		);
 	}
 
 	public static void configureStreamerForBookFilter(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        BookFilterPresetManager.class,
-		        AtomFilterChain.class,
-		        AbstractAtomFilter.class,
-		        ParameterRangeAtomFilter.class,
-		        TagBasedAtomFilter.class,
-		        DelegatingAtomFilter.class
+			streamer,
+			BookFilterPresetManager.class,
+			AtomFilterChain.class,
+			AbstractAtomFilter.class,
+			ParameterRangeAtomFilter.class,
+			TagBasedAtomFilter.class,
+			DelegatingAtomFilter.class
 		);
 	}
 
 	public static void configureStreamerForSignalExport(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        SignalExportPresetManager.class,
-		        SignalExportDescriptor.class
+			streamer,
+			SignalExportPresetManager.class,
+			SignalExportDescriptor.class
 		);
 	}
 
 	public static void configureStreamerForFFTSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-		        streamer,
-		        FFTSampleFilterPresetManager.class,
-		        FFTSampleFilter.class
+			streamer,
+			FFTSampleFilterPresetManager.class,
+			FFTSampleFilter.class
 		);
 	}
-
-	/**
-	 * Configures the given {@link XStream XStreamer} for {@link AmplifierDefinition}
-	 * streaming.
-	 * @param streamer a streamer to be configured
-	 */
-        public static void configureStreamerForAmplifierDefinition(XStream streamer) {
-                Annotations.configureAliases(
-                        streamer,
-                        AmplifierDefinitionPresetManager.class,
-                        AmplifierDefinition.class
-                );
-        }
-
-	/**
-	 * Configures the given {@link XStream XStreamer} for {@link OpenBCIModule}
-	 * streaming.
-	 * @param streamer a streamer to be configured
-	 */
-        public static void configureStreamerForOpenBCIModule(XStream streamer) {
-                Annotations.configureAliases(
-                        streamer,
-                        OpenBCIModulePresetManager.class,
-                        OpenBCIModule.class
-                );
-        }
 
 	/**
 	 * Configures the given {@link XStream XStreamer} for {@link TimeDomainSampleFilter}
@@ -138,9 +107,9 @@ public abstract class XMLUtils {
 	 */
 	public static void configureStreamerForTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				TimeDomainSampleFilterPresetManager.class,
-				TimeDomainSampleFilter.class
+			streamer,
+			TimeDomainSampleFilterPresetManager.class,
+			TimeDomainSampleFilter.class
 		);
 	}
 
@@ -151,10 +120,10 @@ public abstract class XMLUtils {
 	 */
 	public static void configureStreamerForPredefinedTimeDomainSampleFilter(XStream streamer) {
 		Annotations.configureAliases(
-				streamer,
-				PredefinedTimeDomainFiltersPresetManager.class,
-				PredefinedFiltersConfiguration.class,
-				TimeDomainSampleFilter.class
+			streamer,
+			PredefinedTimeDomainFiltersPresetManager.class,
+			PredefinedFiltersConfiguration.class,
+			TimeDomainSampleFilter.class
 		);
 	}
 

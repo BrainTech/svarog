@@ -9,20 +9,21 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
-import org.signalml.domain.montage.MontageMismatchException;
-import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.worker.monitor.DisconnectFromExperimentWorker;
 import org.signalml.app.worker.monitor.MonitorWorker;
 import org.signalml.app.worker.monitor.SignalRecorderWorker;
 import org.signalml.app.worker.monitor.TagRecorder;
-import org.signalml.domain.signal.RoundBufferMultichannelSampleSource;
+import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.DocumentView;
 
 /**
  * @author Mariusz Podsiadło
@@ -48,7 +49,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Describes the parameters of the monitor connected to this {@link MonitorSignalDocument}.
 	 */
-	private OpenMonitorDescriptor monitorOptions;
+	private ExperimentDescriptor descriptor;
 
 	/**
 	 * This worker is responsible for receiving the monitor signal and tags.
@@ -65,64 +66,43 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	private TagRecorder tagRecorderWorker = null;
 
-        /**
-         * Tag set to which the {@link MonitorWorker} saves tags.
-         */
+	/**
+	 * Tag set to which the {@link MonitorWorker} saves tags.
+	 */
 	private StyledMonitorTagSet tagSet;
 
-        /**
-         * Whether the signal was saved.
-         */
+	/**
+	 * Whether the signal was saved.
+	 */
 	private boolean saved = true;
 
-	public MonitorSignalDocument(OpenMonitorDescriptor monitorOptions) {
+	public MonitorSignalDocument(ExperimentDescriptor descriptor) {
 
 		super();
-		this.monitorOptions = monitorOptions;
-		float freq = monitorOptions.getSamplingFrequency();
-		double ps = monitorOptions.getPageSize();
+		this.descriptor = descriptor;
+		float freq = descriptor.getSignalParameters().getSamplingFrequency();
+		double ps = descriptor.getSignalParameters().getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
-		sampleSource = new RoundBufferMultichannelSampleSource(monitorOptions.getSelectedChannelList().length, sampleCount);
-		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(monitorOptions.getSelectedChannelsLabels());
+		sampleSource = new RoundBufferMultichannelSampleSource(descriptor.getSignalParameters().getChannelCount(), sampleCount);
+
+		sampleSource.setCalibrationGain(descriptor.getSignalParameters().getCalibrationGain());
+		sampleSource.setCalibrationOffset(descriptor.getSignalParameters().getCalibrationOffset());
+
+		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(descriptor.getAmplifier().getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 		((RoundBufferMultichannelSampleSource) sampleSource).setSamplingFrequency(freq);
-
 	}
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	public float getMinValue() {
-		return monitorOptions.getMinimumValue();
+	public float[] getGain() {
+		return descriptor.getSignalParameters().getCalibrationGain();
 	}
 
-	public float getMaxValue() {
-		return monitorOptions.getMaximumValue();
-	}
-
-	public double[] getGain() {
-		double[] result = new double[monitorOptions.getChannelCount()];
-		float[] fg = monitorOptions.getCalibrationGain();
-		for (int i = 0; i < monitorOptions.getChannelCount(); i++)
-			result[i] = fg[i];
-		return result;
-	}
-
-	public double[] getOffset() {
-		double[] result = new double[monitorOptions.getChannelCount()];
-		float[] fg = monitorOptions.getCalibrationOffset();
-		for (int i = 0; i < monitorOptions.getChannelCount(); i++)
-			result[i] = fg[i];
-		return result;
-	}
-
-	/**
-	 * Returns an integer value representing amplifier's channel value for non-connected channel
-	 * @return an integer value representing amplifier's channel value for non-connected channel
-	 */
-	public double getAmplifierNull() {
-		return monitorOptions.getAmplifierNull();
+	public float[] getOffset() {
+		return descriptor.getSignalParameters().getCalibrationOffset();
 	}
 
 	@Override
@@ -150,23 +130,20 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		setSaved(true);
 
-		if (monitorOptions.getJmxClient() == null) {
+		if (descriptor.getJmxClient() == null) {
 			throw new IOException();
 		}
 
 		logger.info("Start initializing monitor data.");
-		tagSet = new StyledMonitorTagSet(monitorOptions.getPageSize(), 5, 
-						 monitorOptions.getSamplingFrequency());
-		if (monitorOptions.getTagStyles() != null) {
-			tagSet.copyStylesFrom(monitorOptions.getTagStyles());
+		tagSet = new StyledMonitorTagSet(descriptor.getSignalParameters().getPageSize(), 5,
+										 descriptor.getSignalParameters().getSamplingFrequency());
+		if (descriptor.getTagStyles() != null) {
+			tagSet.copyStylesFrom(descriptor.getTagStyles());
 		}
 
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
-		monitorWorker = new MonitorWorker(monitorOptions.getJmxClient(), monitorOptions, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
-
-		if (monitorOptions.getMonitorRecordingDescriptor().isRecordingEnabled())
-			startMonitorRecording();
+		monitorWorker = new MonitorWorker(descriptor, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
 
 		monitorWorker.execute();
 		logger.info("Monitor executed.");
@@ -196,6 +173,13 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		}
 		tagSet.stopTagsRemoving();
 
+		//disconnect from Jmx
+		DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(descriptor);
+		worker.execute();
+
+		while (!worker.isDone())
+			;
+
 		//close document
 		super.closeDocument();
 
@@ -218,7 +202,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public SignalChecksum[] getChecksums(String[] types,
-	                                     SignalChecksumProgressMonitor monitor) throws SignalMLException {
+										 SignalChecksumProgressMonitor monitor) throws SignalMLException {
 		return null;
 	}
 
@@ -317,9 +301,9 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Starts to record this monitor document samples and tags according
 	 * to the configuration (file names etc.) maintained in the
-	 * {@link OpenMonitorDescriptor} related to this MonitorSignalDocument
+	 * {@link ExperimentDescriptor} related to this MonitorSignalDocument
 	 * (this configuration can be changed by changing this object:
-	 * {@link MonitorSignalDocument#getOpenMonitorDescriptor()}.
+	 * {@link MonitorSignalDocument#getExperimentDescriptor()}.
 	 * After calling {@link MonitorSignalDocument#stopMonitorRecording()} the data
 	 * will be written to the given files.
 	 *
@@ -327,22 +311,23 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	public void startMonitorRecording() throws FileNotFoundException {
 
-		MonitorRecordingDescriptor monitorRecordingDescriptor = monitorOptions.getMonitorRecordingDescriptor();
-                boolean tagsRecordingEnabled = monitorRecordingDescriptor.isTagsRecordingEnabled();
+		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
+		boolean tagsRecordingEnabled = monitorRecordingDescriptor.isTagsRecordingEnabled();
 
-		//starting signal recorder
+		// starting signal recorder
 		String dataPath = monitorRecordingDescriptor.getSignalRecordingFilePath();
-                signalRecorderWorker = new SignalRecorderWorker(dataPath, monitorOptions);
+		signalRecorderWorker = new SignalRecorderWorker(dataPath, descriptor);
 
-                //if tags recording is enabled: starting tag recorder and connecting it to signal recorder
-		if(tagsRecordingEnabled) {
+		// if tags recording is enabled: starting tag recorder and connecting it
+		// to signal recorder
+		if (tagsRecordingEnabled) {
 
-                        String tagsPath = monitorRecordingDescriptor.getTagsRecordingFilePath();
+			String tagsPath = monitorRecordingDescriptor.getTagsRecordingFilePath();
 			tagRecorderWorker = new TagRecorder(tagsPath);
-                        signalRecorderWorker.setTagRecorder(tagRecorderWorker);
-                }
+			signalRecorderWorker.setTagRecorder(tagRecorderWorker);
+		}
 
-		//connecting recorders to the monitor worker
+		// connecting recorders to the monitor worker
 		monitorWorker.connectSignalRecorderWorker(signalRecorderWorker);
 		monitorWorker.connectTagRecorderWorker(tagRecorderWorker);
 
@@ -352,7 +337,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	/**
 	 * Stops to record data and writes the recorded data to the files set
-	 * in the {@link OpenMonitorDescriptor}.
+	 * in the {@link ExperimentDescriptor}.
 	 *
 	 * @throws IOException thrown where an error while writing the recorded
 	 * data to the given files occurs
@@ -381,7 +366,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Returns a list of properties that {@link PropertyChangeListener
 	 * PropertyChangeListeners} can handle.
-	 * 
+	 *
 	 * @return a list of properties
 	 * @throws IntrospectionException if an exception occurs during introspection
 	 */
@@ -393,15 +378,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	/**
-	 * Returns an {@link OpenMonitorDescriptor} which describes the open monitor
+	 * Returns an {@link ExperimentDescriptor} which describes the open monitor
 	 * associated with this {@link MonitorSignalDocument}.
 	 *
-	 * @return an {@link OpenMonitorDescriptor} associated with this {@link
+	 * @return an {@link ExperimentDescriptor} associated with this {@link
 	 * MonitorSignalDocument}.
 	 */
-	public OpenMonitorDescriptor getOpenMonitorDescriptor() {
-		return monitorOptions;
+	public ExperimentDescriptor getExperimentDescriptor() {
+		return descriptor;
 	}
-
 
 }

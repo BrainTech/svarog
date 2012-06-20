@@ -42,30 +42,30 @@ public class SignalConfigurer {
 	 */
 	public static final int EAR_OR_NOSE_WIDTH = 34;
 
-        /**
-         * the predefined raw MontageGenerator
-         */
+	/**
+	 * the predefined raw MontageGenerator
+	 */
 	private static final RawMontageGenerator rawMontageGenerator = new RawMontageGenerator();
 
-        /**
-         * the cached backdrop
-         */
+	/**
+	 * the cached backdrop
+	 */
 	private Image cachedBackdrop = null;
-        /**
-         * the width (pixels) of the cached backdrop
-         */
+	/**
+	 * the width (pixels) of the cached backdrop
+	 */
 	private int cachedBackdropWidth;
-        /**
-         * the height (pixels) of the cached backdrop
-         */
+	/**
+	 * the height (pixels) of the cached backdrop
+	 */
 	private int cachedBackdropHeight;
 
-         /**
-         * Creates the {@link Montage montage} with channelCount channels for
-          * a EEG signal
-         * @param channelCount the desired number of channels for the montage
-         * @return the created montage
-         */
+	/**
+	* Creates the {@link Montage montage} with channelCount channels for
+	 * a EEG signal
+	* @param channelCount the desired number of channels for the montage
+	* @return the created montage
+	*/
 	public static Montage createMontage(int channelCount) {
 
 		Montage montage = new Montage(new SourceMontage(channelCount));
@@ -74,11 +74,11 @@ public class SignalConfigurer {
 
 	}
 
-        /**
-         * Creates the {@link Montage montage} based on the
-         * {@link SignalDocument document} with a signal
-         * @return the created montage
-         */
+	/**
+	 * Creates the {@link Montage montage} based on the
+	 * {@link SignalDocument document} with a signal
+	 * @return the created montage
+	 */
 	public static Montage createMontage(SignalDocument signalDocument) {
 
 		Montage montage = new Montage(new SourceMontage(signalDocument));
@@ -87,22 +87,22 @@ public class SignalConfigurer {
 
 	}
 
-        /**
-         * Returns an {@link EegChannel eegChannel} of type 'UNKNOWN'
-         * @return EegChannel.UNKNOWN
-         */
+	/**
+	 * Returns an {@link EegChannel eegChannel} of type 'UNKNOWN'
+	 * @return EegChannel.UNKNOWN
+	 */
 	public static IChannelFunction genericChannel() {
 		return ChannelFunction.UNKNOWN;
 	}
 
-        /**
-         * Creates the backdrop for electrodes positions matrix.
-         * If backdrop parameters haven't changed and cachedBackdrop exists,
-         * it is used.
-         * @param width the width of the backdrop
-         * @param height the height of the backdrop
-         * @return an Image with backdrop for electrodes positions matrix
-         */
+	/**
+	 * Creates the backdrop for electrodes positions matrix.
+	 * If backdrop parameters haven't changed and cachedBackdrop exists,
+	 * it is used.
+	 * @param width the width of the backdrop
+	 * @param height the height of the backdrop
+	 * @return an Image with backdrop for electrodes positions matrix
+	 */
 	public Image getMatrixBackdrop(int width, int height) {
 
 		if (width < 60 || height < 60) {

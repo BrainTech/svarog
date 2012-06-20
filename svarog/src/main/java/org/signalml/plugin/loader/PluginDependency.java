@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -25,7 +25,7 @@ public class PluginDependency {
 	 * the name of this dependency
 	 */
 	private String name;
-	
+
 	/**
 	 * the minimum version of the needed plug-in.
 	 * Version is described as an array of integers.
@@ -33,29 +33,29 @@ public class PluginDependency {
 	 * {@code 1.2.1 < 2.1.2}
 	 */
 	private int[] minimumVersion;
-	
+
 	/**
 	 * the name of the main application
 	 */
 	public static String svarogName = "Svarog API";
-	
+
 	/**
 	 * the version of the main application
 	 */
-	public static int[] svarogVersion = new int[]{0,5};
-	
+	public static int[] svarogVersion = new int[] {0,5};
+
 	/**
 	 * Returns if this dependency is satisfied by a given
 	 * plug-in.
 	 * @param plugin the description of the plug-in
 	 * @return true if this dependency is satisfied by a given
-	 * plug-in, false otherwise 
+	 * plug-in, false otherwise
 	 */
-	private boolean satisfiesDependency(PluginDescription plugin){
+	private boolean satisfiesDependency(PluginDescription plugin) {
 		if (!plugin.isActive()) return false;
 		return satisfiesDependency(plugin.getName(), plugin.getVersion());
 	}
-	
+
 	/**
 	 * Returns if this dependency is satisfied by a plug-in of a given name
 	 * and version.
@@ -64,9 +64,9 @@ public class PluginDependency {
 	 * @return true if this dependency is satisfied by a plug-in of
 	 * a given name and version, false otherwise
 	 */
-	private boolean satisfiesDependency(String pluginName, int[] pluginVersion){
+	private boolean satisfiesDependency(String pluginName, int[] pluginVersion) {
 		if (!pluginName.equals(name)) return false;
-		for (int i = 0; i < minimumVersion.length; ++i){
+		for (int i = 0; i < minimumVersion.length; ++i) {
 			if (i>pluginVersion.length) return false;
 			if (pluginVersion[i] < minimumVersion[i])
 				return false;
@@ -75,7 +75,7 @@ public class PluginDependency {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Returns if this dependency is satisfied by any plug-in
 	 * from the given list.
@@ -83,14 +83,14 @@ public class PluginDependency {
 	 * @return true if this dependency is satisfied by any plug-in
 	 * from the given list, false otherwise
 	 */
-	public boolean satisfied(ArrayList<PluginDescription> plugins){
+	public boolean satisfied(ArrayList<PluginDescription> plugins) {
 		if (satisfiesDependency(svarogName, svarogVersion)) return true;
-		for (PluginDescription plugin : plugins){
+		for (PluginDescription plugin : plugins) {
 			if (satisfiesDependency(plugin)) return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Constructor. Creates the dependency of the given name
 	 * and minimum version.
@@ -98,7 +98,7 @@ public class PluginDependency {
 	 * @param minimumVersionString the minimum version of
 	 * the dependency
 	 */
-	PluginDependency(String name, String minimumVersionString){
+	PluginDependency(String name, String minimumVersionString) {
 		this.name = name;
 		int i = 0;
 		String[] splited = minimumVersionString.split("[.]");
@@ -106,23 +106,23 @@ public class PluginDependency {
 		for (String s : splited)
 			minimumVersion[i++] = Integer.parseInt(s);
 	}
-	
+
 	/**
 	 * Converts the minimum version to the textual representation.
 	 * @return the string with the textual representation
 	 * of the minimum version.
 	 */
-	private String versionToString(){
+	private String versionToString() {
 		String ver = "";
-		for (int i = 0; i < minimumVersion.length; ++i){
+		for (int i = 0; i < minimumVersion.length; ++i) {
 			ver = ver.concat(Integer.toString(minimumVersion[i]));
 			if (i < minimumVersion.length -1) ver = ver.concat(".");
 		}
 		return ver;
 	}
-	
+
 	@Override
-	public String toString(){
+	public String toString() {
 		String result = new String();
 		result += name;
 		result += " v";

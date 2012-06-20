@@ -52,7 +52,7 @@ public class SignalSelectionPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(SignalSelectionPanel.class);
 	/**
-	 * the card layout for {@link #cardPanel} 
+	 * the card layout for {@link #cardPanel}
 	 */
 	private CardLayout cardLayout;
 	/**
@@ -348,7 +348,7 @@ public class SignalSelectionPanel extends JPanel {
 				0,
 				1,
 				0 //select first channel
-				);
+			);
 		}
 
 		JSpinner startTimeSpinner = channelSignalSelectionPanel.getStartTimeSpinner();
@@ -384,7 +384,7 @@ public class SignalSelectionPanel extends JPanel {
 	 * <li>sets the {@link SignalSelection#setLength(float) length}
 	 * using the {@link PageSignalSelectionPanel#getLengthSpinner() length
 	 * spinner},</li></ul></li>
-	 * 
+	 *
 	 * <li>if the {@link SignalSelectionTypePanel#getBlockRadio() button}
 	 * for a {@link SignalSelectionType#BLOCK BLOCK} selection is selected:
 	 * <ul><li>creates the selection of that type,</li>
@@ -395,7 +395,7 @@ public class SignalSelectionPanel extends JPanel {
 	 * <li>sets the {@link SignalSelection#setLength(float) length}
 	 * using the {@link BlockSignalSelectionPanel#getLengthSpinner() length
 	 * spinner},</li></ul></li>
-	 * 
+	 *
 	 * <li>if the {@link SignalSelectionTypePanel#getChannelRadio() button}
 	 * for a {@link SignalSelectionType#CHANNEL CHANNEL} selection is selected:
 	 * <ul><li>creates the selection of that type,</li>

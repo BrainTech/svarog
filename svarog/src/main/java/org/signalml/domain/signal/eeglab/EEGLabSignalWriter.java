@@ -13,8 +13,8 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
-import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.Tag;
 
 import com.jmatio.io.MatFileWriter;
@@ -72,7 +72,6 @@ public class EEGLabSignalWriter {
             channelNames[i] = sampleSource.getLabel(i);
 			if (sampleSource.getLabel(i).equals("Fz")) {
 				referenceChannel = i;
-				break;
 			}
 		}
 		double[] samplesTimes = new double[sampleCount];

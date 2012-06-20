@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.view;
 
@@ -49,7 +49,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public JMenuItem addButtonToToolsMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of tools menu.
 	 * Can be accessed only during initialization phase.
@@ -59,7 +59,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public JMenuItem addSubmenuToToolsMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of edit menu.
 	 * Can be accessed only during initialization phase.
@@ -69,7 +69,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public JMenuItem addButtonToEditMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of tools menu.
 	 * Can be accessed only during initialization phase.
@@ -79,7 +79,7 @@ public interface SvarogAccessGUI {
 	 * not during in the initialization phase.
 	 */
 	public JMenuItem addSubmenuToEditMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the signal plot.
 	 * Can be accessed only during initialization phase.
@@ -88,7 +88,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToSignalPlotPopupMenu(Action action) throws UnsupportedOperationException;//area where the signal is displayed
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the signal plot.
 	 * Can be accessed only during initialization phase.
@@ -108,7 +108,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToWorkspaceTreeMRUDPopupMenu(Action action) throws UnsupportedOperationException;//workspace tab
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the workspace tree tab
 	 * which appears while clicking on a document node.
@@ -118,7 +118,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToWorkspaceTreeDocumentPopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the workspace tree tab
 	 * which appears while clicking on in other areas then a MRUD entry or
@@ -129,7 +129,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToWorkspaceTreeOtherPopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the workspace tree tab
 	 * which appears while clicking on a MRUD entry node.
@@ -139,7 +139,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToWorkspaceTreeMRUDPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the workspace tree tab
 	 * which appears while clicking on a document node.
@@ -149,7 +149,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToWorkspaceTreeDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the workspace tree tab
 	 * which appears while clicking on in other areas then a MRUD entry or
@@ -160,7 +160,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToWorkspaceTreeOtherPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a signal document node.
@@ -170,7 +170,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToTagTreeSignalDocumentPopupMenu(Action action) throws UnsupportedOperationException;//tag tab
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a tag document node.
@@ -180,7 +180,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToTagTreeTagDocumentPopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a tag style node.
@@ -190,7 +190,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToTagTreeTagStylePopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a tag node.
@@ -200,7 +200,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToTagTreeTagPopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a signal document node.
@@ -210,7 +210,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToTagTreeSignalDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a tag document node.
@@ -220,7 +220,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToTagTreeTagDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a tag style node.
@@ -230,7 +230,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToTagTreeTagStylePopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the tag tree tab
 	 * which appears while clicking on a tag node.
@@ -240,7 +240,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToTagTreeTagPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the signal tree tab
 	 * which appears while clicking on a document node.
@@ -250,7 +250,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToSignalTreeDocumentPopupMenu(Action action) throws UnsupportedOperationException;//signal tab
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the signal tree tab
 	 * which appears while clicking on a signal page node.
@@ -260,7 +260,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToSignalTreeSignalPagePopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the signal tree tab
 	 * which appears while clicking on a document node.
@@ -270,7 +270,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToSignalTreeDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the signal tree tab
 	 * which appears while clicking on a signal page node.
@@ -280,8 +280,8 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToSignalTreeSignalPagePopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
-	
+
+
 	/**
 	 * Adds a button at the end of popup menu in the book tree tab
 	 * which appears while clicking on a book document node.
@@ -291,7 +291,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToBookTreeBookDocumentPopupMenu(Action action) throws UnsupportedOperationException;//book tab
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the book tree tab
 	 * which appears while clicking on a book document node.
@@ -301,7 +301,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToBookTreeBookDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the hypnogram plot
 	 * (the area at the top of signal view tab).
@@ -311,7 +311,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToHypnogramPlotPopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the hypnogram plot
 	 * (the area at the top of signal view tab).
@@ -321,7 +321,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToHypnogramPlotPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a button at the end of popup menu in the column header area
 	 * (the area below hypnogram plot, above signal plot).
@@ -331,7 +331,7 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToColumnHeaderPopupMenu(Action action) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds a submenu at the end of popup menu in the column header area
 	 * (the area below hypnogram plot, above signal plot).
@@ -341,9 +341,9 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addSubMenuToColumnHeaderPopupMenu(JMenu menu) throws UnsupportedOperationException;
-	
-	
-	
+
+
+
 	/**
 	 * Adds a button to the tools button group and associates the tool
 	 * (for example FFT window) with it.
@@ -361,7 +361,7 @@ public interface SvarogAccessGUI {
 	 * @see SelectTagSignalTool
 	 */
 	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, SignalToolButtonListener buttonListener) throws UnsupportedOperationException;
-	
+
 	/**
 	 * Adds the button to the main toolbar (the top one).
 	 * Can be accessed only during initialization phase.
@@ -371,9 +371,9 @@ public interface SvarogAccessGUI {
 	 * not during the initialization phase.
 	 */
 	public void addButtonToMainToolbar(Action action) throws UnsupportedOperationException;
-	
 
-	
+
+
 	/**
 	 * Adds a tab to main panel. Tab should be associated with a document.
 	 * DocumentView should be able to return a document.
@@ -384,21 +384,21 @@ public interface SvarogAccessGUI {
 	 * @param tip the tool tip for the tab
 	 */
 	void addMainTab(DocumentView tab, String title, Icon icon, String tip);
-	
+
 	/**
 	 * Removes a tab created from a given view from main panel.
 	 * @param tab the view that was used to create the tab
 	 * @throws IllegalArgumentException if there is no such tab
 	 */
 	void removeMainTab(DocumentView tab) throws IllegalArgumentException;
-	
+
 	/**
-	 * Returns the {@link DocumentView document view} associated with an active tab. 
+	 * Returns the {@link DocumentView document view} associated with an active tab.
 	 * @return the document view associated with an active tab
 	 * @throws NoActiveObjectException if there is no active main tab
 	 */
 	DocumentView getSelectedMainTab() throws NoActiveObjectException;
-	
+
 	/**
 	 * Adds the new tab to the tree panel (the panel on the left).
 	 * @param treePane the tree panel to be added
@@ -408,41 +408,41 @@ public interface SvarogAccessGUI {
 	 * @param tip the tool tip for the tab
 	 */
 	void addTreeTab(ViewerTreePane treePane, String title, Icon icon, String tip);
-	
+
 	/**
 	 * Removes a tab created from a given tree panel from the tree panel.
 	 * @param tab the tree panel that was used to create the tab
 	 * @throws IllegalArgumentException if there is no such tab
 	 */
 	void removeTreeTab(ViewerTreePane tab) throws IllegalArgumentException;
-	
+
 	/**
 	 * Returns a panel associated with an active tab in the tree tabbed panel.
 	 * @return a panel associated with an active tab in the tree tabbed panel
 	 * @throws NoActiveObjectException if there is no active tree tab
 	 */
 	ViewerTreePane getSelectedTreeTab() throws NoActiveObjectException;
-	
+
 	/**
 	 * Adds a new property tab (on the bottom).
 	 * @param panel the panel to be added as tab.
 	 */
 	void addPropertyTab(JPanel panel);
-	
+
 	/**
 	 * Returns the active {@link ExportedSignalPlot signal plot}.
 	 * @return the active signal plot
 	 * @throws NoActiveObjectException if there is no active plot
 	 */
 	ExportedSignalPlot getActiveSignalPlot() throws NoActiveObjectException;
-	
+
 	/**
 	 * Removes a tab created from a given panel from the property tabbed panel.
 	 * @param panel the panel that ws used to create a tab
 	 * @throws IllegalArgumentException if there is no such tab
 	 */
 	void removePropertyTab(JPanel panel) throws IllegalArgumentException;
-	
+
 	/**
 	 * Returns a panel associated with an active tab in the property tabbed
 	 * panel.
@@ -452,13 +452,13 @@ public interface SvarogAccessGUI {
 	 */
 	JPanel getSelectedPropertyTab() throws NoActiveObjectException;
 
-    /**
-     * Returns a reference to the parent for all new {@link java.awt.Dialog}s.
-     */
-    java.awt.Window getDialogParent();
+	/**
+	 * Returns a reference to the parent for all new {@link java.awt.Dialog}s.
+	 */
+	java.awt.Window getDialogParent();
 
-    /**
-     * A specialized subclass of {@link javax.swing.JFileChooser} to be used by plugins.
-     */
-    FileChooser getFileChooser();
+	/**
+	 * A specialized subclass of {@link javax.swing.JFileChooser} to be used by plugins.
+	 */
+	FileChooser getFileChooser();
 }

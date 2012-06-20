@@ -9,7 +9,7 @@
  * set up in one of several ways. The representation of the EEG channels is
  * referred to as a montage.
  * <ul>
- * <li>Bipolar montage</li> 
+ * <li>Bipolar montage</li>
  * Each channel (i.e., waveform) represents the difference between two adjacent
  * electrodes. The entire montage consists of a series of these channels.
  * For example, the channel "Fp1-F3" represents the difference in voltage between
@@ -27,7 +27,7 @@
  * <li>Average reference montage</li>
  * The outputs of all of the amplifiers are summed and averaged, and this averaged
  * signal is used as the common reference for each channel.
- * 
+ *
  * This package contains Montages and structures associated
  * with them.
  * The most important are MontageGenerators, which can create

@@ -36,7 +36,7 @@ import org.signalml.app.util.DirectoryFileFilter;
  * custom location},</li>
  * <li>the {@link #getFileChooser() file chooser} which allows to select
  * the directory to be used (this chooser is visible only if appropriate
- * radio button is selected.</li></ul> 
+ * radio button is selected.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -95,7 +95,7 @@ public class ProfilePathTypePanel extends JPanel {
 	 */
 	private void initialize() {
 
-		setBorder(BorderFactory.createTitledBorder(_("Choose profile path")));
+		setBorder(BorderFactory.createTitledBorder(""));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
 		welcomeLabel = new JLabel();
@@ -129,7 +129,7 @@ public class ProfilePathTypePanel extends JPanel {
 	public JRadioButton getDefaultRadio() {
 		if (defaultRadio == null) {
 			defaultRadio = new JRadioButton();
-			defaultRadio.setText(_("signalml directory inside default home"));
+			defaultRadio.setText(_("signalml directory inside the user home directory (preferred)"));
 			defaultRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(defaultRadio);
 		}
@@ -178,7 +178,9 @@ public class ProfilePathTypePanel extends JPanel {
 		if (infoLabel == null) {
 			infoLabel = new JLabel();
 			infoLabel.setFont(infoLabel.getFont().deriveFont(Font.PLAIN, 12));
-			infoLabel.setText("<html><body><div style=\"width: 400px; text-align: justify;\">" + _("The signalml viewer needs a directory to store its configuration and files. This directory may reside inside the default user's home directory (system dependent), or you can select any directory on disk (remember that you need to select a concrete directory for SignalML files, not the directory in which you would like the later to be created - create the directory if necessary).") + "</div></body></html>");
+			infoLabel.setText("<html><body><div style=\"width: 400px; text-align: justify;\">" +
+			_("Please choose a directory in which Svarog can store its configuration files.") +
+			 "</div></body></html>");
 			infoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 //			infoLabel.setPreferredSize(new Dimension(500,90));
 			infoLabel.setBorder(new EmptyBorder(3,0,3,0));
@@ -203,9 +205,6 @@ public class ProfilePathTypePanel extends JPanel {
 			fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			fileChooser.setFileFilter(new DirectoryFileFilter(_("Directories")));
 			fileChooser.setPreferredSize(new Dimension(500,350));
-
-			fileChooser.setInvokeDefaultButtonOnApprove(true);
-
 		}
 		return fileChooser;
 	}

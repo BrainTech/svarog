@@ -63,7 +63,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	 * the stored signal should be saved to an XML file
 	 */
 	private JCheckBox saveXMLCheckBox;
-	
+
 	/**
 	 * the check-box which tells if the samples should be normalized
 	 */
@@ -107,9 +107,9 @@ public class ExportSignalOptionsPanel extends JPanel {
 	private void initialize() {
 
 		setBorder(new CompoundBorder(
-		                  new TitledBorder(_("Export options")),
-		                  new EmptyBorder(3,3,3,3)
-		          ));
+					  new TitledBorder(_("Export options")),
+					  new EmptyBorder(3,3,3,3)
+				  ));
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
@@ -124,27 +124,27 @@ public class ExportSignalOptionsPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.LEADING)
-		        .addComponent(sampleTypeLabel)
-		        .addComponent(normalizeLabel)
+			layout.createParallelGroup(Alignment.LEADING)
+			.addComponent(sampleTypeLabel)
+			.addComponent(normalizeLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getSampleTypeComboBox())
-		        .addComponent(getNormalizeCheckBox())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getSampleTypeComboBox())
+			.addComponent(getNormalizeCheckBox())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.LEADING)
-		        .addComponent(byteOrderLabel)
-		        .addComponent(saveXMLLabel)
+			layout.createParallelGroup(Alignment.LEADING)
+			.addComponent(byteOrderLabel)
+			.addComponent(saveXMLLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getByteOrderComboBox())
-		        .addComponent(getSaveXMLCheckBox())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getByteOrderComboBox())
+			.addComponent(getSaveXMLCheckBox())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -152,22 +152,22 @@ public class ExportSignalOptionsPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(sampleTypeLabel)
-				.addComponent(getSampleTypeComboBox())
-				.addComponent(byteOrderLabel)
-				.addComponent(getByteOrderComboBox())
-			);
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(sampleTypeLabel)
+			.addComponent(getSampleTypeComboBox())
+			.addComponent(byteOrderLabel)
+			.addComponent(getByteOrderComboBox())
+		);
+
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(normalizeLabel)
-				.addComponent(getNormalizeCheckBox())
-				.addComponent(saveXMLLabel)
-				.addComponent(getSaveXMLCheckBox())
-			);
-		
-		layout.setVerticalGroup(vGroup);		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(normalizeLabel)
+			.addComponent(getNormalizeCheckBox())
+			.addComponent(saveXMLLabel)
+			.addComponent(getSaveXMLCheckBox())
+		);
+
+		layout.setVerticalGroup(vGroup);
 
 	}
 

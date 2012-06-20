@@ -118,4 +118,11 @@ public interface Document {
 	 */
 	public PropertyChangeListener[] getPropertyChangeListeners();
 
+	/**
+	 * Informs the document if its becoming active.
+	 * @param active true if the document is becoming an active document
+	 * (that means it will be currently displayed) or not.
+	 */
+	public void setActive(boolean active);
+
 }

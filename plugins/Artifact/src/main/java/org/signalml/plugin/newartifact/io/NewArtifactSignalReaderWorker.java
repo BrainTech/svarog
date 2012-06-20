@@ -2,7 +2,7 @@ package org.signalml.plugin.newartifact.io;
 
 import java.util.Arrays;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.newartifact.data.INewArtifactSignalReaderWorkerData;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 

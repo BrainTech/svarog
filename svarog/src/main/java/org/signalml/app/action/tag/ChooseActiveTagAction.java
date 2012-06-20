@@ -58,11 +58,13 @@ public class ChooseActiveTagAction extends AbstractFocusableSignalMLAction<Signa
 	public void setEnabledAsNeeded() {
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
-		
-		if (signalDocument != null && signalDocument.getActiveTag() != null)
-			setEnabled(true);
-		else
+
+		if (!isSignalDocumentOfflineSignalDocument(signalDocument)
+				|| signalDocument == null
+				|| signalDocument.getActiveTag() == null)
 			setEnabled(false);
+		else
+			setEnabled(true);
 
 	}
 

@@ -33,13 +33,13 @@ public class BreathingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 
 		int length = this.constants.getBlockLengthWithPadding();
 		int powerLowStart = 2 * (int) Math.floor(this.constants.getFw1()
-				    * this.constants.getFreqChangeCoefficient());
+							* this.constants.getFreqChangeCoefficient());
 		int powerLowEnd = 2 * (int) Math.floor(this.constants.getFw2()
-						       * this.constants.getFreqChangeCoefficient());
+											   * this.constants.getFreqChangeCoefficient());
 		int powerAllStart = 2 * (int) Math.floor(this.constants.getFs1()
-				    * this.constants.getFreqChangeCoefficient());
+							* this.constants.getFreqChangeCoefficient());
 		int powerAllEnd = 2 * (int) Math.floor(this.constants.getFs2()
-						       * this.constants.getFreqChangeCoefficient());
+											   * this.constants.getFreqChangeCoefficient());
 		int j;
 		double[] y = new double[2 * length];
 		for (int i = 0; i < signal.length; ++i) {
@@ -57,7 +57,7 @@ public class BreathingArtifactAlgorithm extends NewArtifactAlgorithmBase {
 
 			try {
 				buffer[i] = sumL
-					    / (powerSum - sumA + BreathingArtifactAlgorithm.DELTA);
+							/ (powerSum - sumA + BreathingArtifactAlgorithm.DELTA);
 			} catch (ArithmeticException e) {
 				buffer[i] = 0.0;
 			}

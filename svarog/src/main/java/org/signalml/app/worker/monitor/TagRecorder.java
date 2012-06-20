@@ -43,39 +43,39 @@ public class TagRecorder {
 	 */
 	private ArrayList<MonitorTag> tagList = new ArrayList<MonitorTag>();
 
-        /**
-         * Path to the output file.
-         */
-        private String filePath;
+	/**
+	 * Path to the output file.
+	 */
+	private String filePath;
 
-        /**
-         * Whether the worker is finished.
-         */
-        private volatile boolean finished;
+	/**
+	 * Whether the worker is finished.
+	 */
+	private volatile boolean finished;
 
-        /**
-         * Ending of the file (everything after last tag).
-         */
-        private String fileEnding;
-        
-        /**
-         * Length of {@link #fileEnding} in bytes.
-         */
-        private int endingLength;
+	/**
+	 * Ending of the file (everything after last tag).
+	 */
+	private String fileEnding;
 
-        /**
-         * Default constructor.
-         * @param filePath path to output file
-         */
+	/**
+	 * Length of {@link #fileEnding} in bytes.
+	 */
+	private int endingLength;
+
+	/**
+	 * Default constructor.
+	 * @param filePath path to output file
+	 */
 	public TagRecorder(String filePath) {
 
-                if (!filePath.endsWith(".tag")) {
-                        filePath += ".tag";
-                }
-                
-                this.filePath = filePath;
-                this.finished = false;
-        }
+		if (!filePath.endsWith(".tag")) {
+			filePath += ".tag";
+		}
+
+		this.filePath = filePath;
+		this.finished = false;
+	}
 
 	/**
 	 * Records the given tag.
@@ -84,113 +84,113 @@ public class TagRecorder {
 	 */
 	public void offerTag(MonitorTag tag) {
 
-                synchronized (this) {
+		synchronized (this) {
 
-                        if (!finished) {                        
-                                tagList.add(tag);
-                        }
-                }
+			if (!finished) {
+				tagList.add(tag);
+			}
+		}
 	}
 
-        /**
-         * Saves tags received so far to the output file.
-         */
-        public void doBackup() {
+	/**
+	 * Saves tags received so far to the output file.
+	 */
+	public void doBackup() {
 
-                synchronized (this) {
+		synchronized (this) {
 
-                        doSave();
-                }
-        }
+			doSave();
+		}
+	}
 
-        /**
-         * Saves all received tags to the output file.
-         * @param styles styles to be saved
-         */
-        public void save() {
+	/**
+	 * Saves all received tags to the output file.
+	 * @param styles styles to be saved
+	 */
+	public void save() {
 
-                synchronized (this) {
+		synchronized (this) {
 
-                        doSave();
-                        finished = true;
-                }
-        }
+			doSave();
+			finished = true;
+		}
+	}
 
-        /**
-         * Does the saving.
-         * @param tagSet tag set to savetagSet
-         */
-        public void doSave() {
+	/**
+	 * Does the saving.
+	 * @param tagSet tag set to savetagSet
+	 */
+	public void doSave() {
 
-                File backingFile = new File(filePath);
-                StyledTagSet tagSet = getRecordedTagSet();
+		File backingFile = new File(filePath);
+		StyledTagSet tagSet = getRecordedTagSet();
 
-                try {
-                        // if this is the first backup - create the file normally
-                        if (!backingFile.exists()) {
-                                TagDocument tagDocument = new TagDocument(tagSet);
-                                tagDocument.setBackingFile(backingFile);
-                                tagDocument.saveDocument();
-                                findEnding(backingFile);
-                        // else - add tags at the end
-                        } else {
-                                addTags(backingFile, tagSet.getTags());
-                        }
-                        
-                        removeAllTags();
+		try {
+			// if this is the first backup - create the file normally
+			if (!backingFile.exists()) {
+				TagDocument tagDocument = new TagDocument(tagSet);
+				tagDocument.setBackingFile(backingFile);
+				tagDocument.saveDocument();
+				findEnding(backingFile);
+				// else - add tags at the end
+			} else {
+				addTags(backingFile, tagSet.getTags());
+			}
 
-                } catch (Exception ex) {
-                        Logger.getLogger(TagRecorder.class.getName()).log(Level.SEVERE, null, ex);
-                }
-        }
+			removeAllTags();
 
-        /**
-         * Finds {@link #fileEnding}.
-         * @param backingFile the file containing the tag document
-         */
-        private void findEnding(File backingFile) throws FileNotFoundException, IOException {
+		} catch (Exception ex) {
+			Logger.getLogger(TagRecorder.class.getName()).log(Level.SEVERE, null, ex);
+		}
+	}
 
-                // this is only called once, so we can load the entire file into a single String
-                byte[] buffer = new byte[(int)backingFile.length()];
-                BufferedInputStream stream = new BufferedInputStream(new FileInputStream(backingFile));
-                stream.read(buffer);
-                stream.close();
-                String content = new String(buffer, TagDocument.CHAR_SET);
+	/**
+	 * Finds {@link #fileEnding}.
+	 * @param backingFile the file containing the tag document
+	 */
+	private void findEnding(File backingFile) throws FileNotFoundException, IOException {
 
-                // closing of the tag section
-                String tagSectionClosing = "</" + StyledTagSetConverter.TAG_NODE_NAME + ">";
+		// this is only called once, so we can load the entire file into a single String
+		byte[] buffer = new byte[(int)backingFile.length()];
+		BufferedInputStream stream = new BufferedInputStream(new FileInputStream(backingFile));
+		stream.read(buffer);
+		stream.close();
+		String content = new String(buffer, TagDocument.CHAR_SET);
 
-                // get position of tag section closing, and save everything from that point to fileEnding
-                int start = content.indexOf(tagSectionClosing);
-                fileEnding = content.substring(start);
+		// closing of the tag section
+		String tagSectionClosing = "</" + StyledTagSetConverter.TAG_NODE_NAME + ">";
 
-                // length of ending in bytes
-                int lengthOfSingleChar = (int)Charset.forName(TagDocument.CHAR_SET).newEncoder().averageBytesPerChar();
-                endingLength = lengthOfSingleChar * fileEnding.length();
+		// get position of tag section closing, and save everything from that point to fileEnding
+		int start = content.indexOf(tagSectionClosing);
+		fileEnding = content.substring(start);
 
-        }
+		// length of ending in bytes
+		int lengthOfSingleChar = (int)Charset.forName(TagDocument.CHAR_SET).newEncoder().averageBytesPerChar();
+		endingLength = lengthOfSingleChar * fileEnding.length();
 
-        /**
-         * Adds given tag set to end of tag section of given file.
-         * @param backingFile file to add tags to
-         * @param tags tags to add
-         */
-        private void addTags(File backingFile, SortedSet<Tag> tags) throws IOException {
+	}
 
-                // get tags to save, and add fileEnding at the end
-                String toSave = StyledTagSetConverter.marshalTagsToString(tags);
-                if (!toSave.endsWith("\n")) {
-                        toSave += "\n";
-                }
-                toSave += fileEnding;
+	/**
+	 * Adds given tag set to end of tag section of given file.
+	 * @param backingFile file to add tags to
+	 * @param tags tags to add
+	 */
+	private void addTags(File backingFile, SortedSet<Tag> tags) throws IOException {
 
-                // Add tags to the file
-                int bytesToSkip = (int)backingFile.length() - endingLength;
-                RandomAccessFile file = new RandomAccessFile(backingFile, "rwd");
-                file.skipBytes(bytesToSkip);
-                file.write(toSave.getBytes(TagDocument.CHAR_SET));
-                file.close();
-        }
+		// get tags to save, and add fileEnding at the end
+		String toSave = StyledTagSetConverter.marshalTagsToString(tags);
+		if (!toSave.endsWith("\n")) {
+			toSave += "\n";
+		}
+		toSave += fileEnding;
+
+		// Add tags to the file
+		int bytesToSkip = (int)backingFile.length() - endingLength;
+		RandomAccessFile file = new RandomAccessFile(backingFile, "rwd");
+		file.skipBytes(bytesToSkip);
+		file.write(toSave.getBytes(TagDocument.CHAR_SET));
+		file.close();
+	}
 
 	/**
 	 * Returns the {@link StyledTagSet} containing the tags which were recorded by
@@ -215,13 +215,13 @@ public class TagRecorder {
 		return styledTagSet;
 	}
 
-        /**
-         * Should be called to remove all tags after they were saved to a file.
-         */
-        private void removeAllTags() {
+	/**
+	 * Should be called to remove all tags after they were saved to a file.
+	 */
+	private void removeAllTags() {
 
-                tagList.clear();
-        }
+		tagList.clear();
+	}
 
 	/**
 	 * Sets the timestamp relatively to which the positions of the recorded tags

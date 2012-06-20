@@ -22,10 +22,9 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
+import org.signalml.plugin.export.view.FileChooser;
 
-import org.springframework.validation.Errors;
 
 /** BookFilterChooseTagPanel
  *
@@ -39,11 +38,11 @@ public class BookFilterChooseTagPanel extends JPanel {
 	private JTextField tagTextField;
 	private JButton chooseTagButton;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private File tagFile;
 
-	public BookFilterChooseTagPanel(ViewerFileChooser fileChooser) {
+	public BookFilterChooseTagPanel(FileChooser fileChooser) {
 		super();
 		this.fileChooser = fileChooser;
 		initialize();
@@ -52,8 +51,8 @@ public class BookFilterChooseTagPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Choose tag file")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose tag file")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -67,18 +66,18 @@ public class BookFilterChooseTagPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(tagFileLabel)
+			layout.createParallelGroup()
+			.addComponent(tagFileLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getTagTextField())
+			layout.createParallelGroup()
+			.addComponent(getTagTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getChooseTagButton())
+			layout.createParallelGroup()
+			.addComponent(getChooseTagButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -86,13 +85,13 @@ public class BookFilterChooseTagPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tagFileLabel)
-				.addComponent(getTagTextField())
-				.addComponent(getChooseTagButton())
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(tagFileLabel)
+			.addComponent(getTagTextField())
+			.addComponent(getChooseTagButton())
 		);
 
-		layout.setVerticalGroup(vGroup);		
+		layout.setVerticalGroup(vGroup);
 
 
 

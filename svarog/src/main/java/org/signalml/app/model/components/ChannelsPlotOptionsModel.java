@@ -27,7 +27,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	public ChannelsPlotOptionsModel(SignalPlot p) {
 		this.plot = p;
 	}
-	
+
 	/*
 	 * Initializes model for every channel
 	 * @param numOfChannels number of channels models to be initialized
@@ -35,10 +35,10 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	public void reset(int numOfChannels) {
 		channelsOptions = new ChannelPlotOptionsModel[numOfChannels];
 		for (int i = 0; i < channelsOptions.length; i++) {
-				channelsOptions[i] = new ChannelPlotOptionsModel(this, this.plot.getValueScaleRangeModel().getValue());
+			channelsOptions[i] = new ChannelPlotOptionsModel(this, this.plot.getValueScaleRangeModel().getValue());
 		}
 	}
-	
+
 	/*
 	 * Updates child models with given scale value.
 	 * @param scaleValue parent plot's scale value
@@ -48,14 +48,14 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 			channelsOptions[i].globalScaleChanged(scaleValue);
 		}
 	}
-	
+
 	/*
 	 * Fired by child models. Sets local montage to parent plot regarding child models.
 	 */
 	public void modelChanged() {
 		plot.reset();
 	}
-	
+
 	/*
 	 * Returns channel model for given index
 	 * @param index channel's index for which the model will be returned
@@ -85,12 +85,12 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		Object source = e.getSource();
 		if (source == plot.getValueScaleRangeModel())
 			this.globalScaleChanged(plot.getValueScaleRangeModel().getValue());
-		
+
 	}
-	
+
 	/**
 	 * Returns the number of pixels for a specified channel.
-	 * If this channel uses local scale, the value calculated 
+	 * If this channel uses local scale, the value calculated
 	 * @param channel channel number
 	 * @return pixels per value for the given channel
 	 */
@@ -107,5 +107,5 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		}
 		return channelsPixelPerValue;
 	}
-	
+
 }

@@ -46,7 +46,7 @@ public class Polar3dPoint {
 	}
 
 	/**
-	 * Returns the magnitude of the line from the origin 
+	 * Returns the magnitude of the line from the origin
 	 * of the polar coordinate system to the point representing by this class.
 	 * @return
 	 */

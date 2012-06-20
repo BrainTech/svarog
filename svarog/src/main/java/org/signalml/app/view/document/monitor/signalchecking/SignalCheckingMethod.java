@@ -10,31 +10,31 @@ package org.signalml.app.view.document.monitor.signalchecking;
  */
 public enum SignalCheckingMethod {
 
-        AMPNULL,
-        DC,
-        FFT;
+	AMPNULL,
+	DC,
+	FFT;
 
-        /**
-         * Whether is amp null
-         * @return true if is amp null
-         */
-        public boolean isAmpNull() {
-                return (this == AMPNULL);
-        }
+	/**
+	 * Whether is amp null
+	 * @return true if is amp null
+	 */
+	public boolean isAmpNull() {
+		return (this == AMPNULL);
+	}
 
-        /**
-         * Whether is DC
-         * @return true if is DC
-         */
-        public boolean isDC() {
-                return (this == DC);
-        }
+	/**
+	 * Whether is DC
+	 * @return true if is DC
+	 */
+	public boolean isDC() {
+		return (this == DC);
+	}
 
-        /**
-         * Whether is FFT
-         * @return true if is FFT
-         */
-        public boolean isFFT() {
-                return (this == FFT);
-        }
+	/**
+	 * Whether is FFT
+	 * @return true if is FFT
+	 */
+	public boolean isFFT() {
+		return (this == FFT);
+	}
 }

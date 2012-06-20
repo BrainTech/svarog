@@ -84,7 +84,7 @@ public enum ChannelFunction implements IChannelFunction {
 
 	@Override
 	public String[] getCodes() {
-		return new String[]{"eegChannel." + this.toString()};
+		return new String[] {"eegChannel." + this.toString()};
 	}
 
 	@Override

@@ -4,7 +4,7 @@
 
 package org.signalml.domain.signal.space;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This enumerator says if the whole signal is in the
@@ -14,15 +14,15 @@ import org.signalml.domain.signal.MultichannelSampleSource;
  */
 public enum ChannelSpaceType {
 
-        /**
-         * the whole signal is in the
-         * {@link MultichannelSampleSource described source}
-         */
+	/**
+	 * the whole signal is in the
+	 * {@link MultichannelSampleSource described source}
+	 */
 	WHOLE_SIGNAL,
-        /**
-         * only selected channels are in the
-         * {@link MultichannelSampleSource described source}
-         */
+	/**
+	 * only selected channels are in the
+	 * {@link MultichannelSampleSource described source}
+	 */
 	SELECTED
 
 	;

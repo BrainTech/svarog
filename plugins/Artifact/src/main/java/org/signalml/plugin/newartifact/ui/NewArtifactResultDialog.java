@@ -68,7 +68,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 	}
 
 	public NewArtifactResultDialog(
-				       Window w, boolean isModal) {
+		Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
@@ -114,13 +114,13 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 
 		JPanel additionalCheckBoxPanel = new JPanel();
 		additionalCheckBoxPanel.setLayout(new BoxLayout(
-				additionalCheckBoxPanel, BoxLayout.Y_AXIS));
+											  additionalCheckBoxPanel, BoxLayout.Y_AXIS));
 
 		additionalCheckBoxPanel.add(getAdditionalOpenInWindowCheckBox());
 		additionalCheckBoxPanel.add(getAdditionalSaveToFileCheckBox());
 
 		additionalTagPanel.add(getAdditionalTagScrollPane(),
-				       BorderLayout.CENTER);
+							   BorderLayout.CENTER);
 		additionalTagPanel.add(additionalCheckBoxPanel, BorderLayout.SOUTH);
 
 		interfacePanel.add(checkBoxPanel, BorderLayout.NORTH);
@@ -165,7 +165,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 	public NewArtifactResultTagPanel getPrimaryTagPanel() {
 		if (primaryTagPanel == null) {
 			primaryTagPanel = new NewArtifactResultTagPanel(
-					fileChooser);
+				fileChooser);
 		}
 		return primaryTagPanel;
 	}
@@ -225,7 +225,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 	private void updateAdditionalTagListEnabled() {
 
 		boolean enabled = (getAdditionalOpenInWindowCheckBox().isSelected() || getAdditionalSaveToFileCheckBox()
-				   .isSelected());
+						   .isSelected());
 		getAdditionalTagList().setEnabled(enabled);
 
 	}
@@ -288,7 +288,7 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 		NewArtifactResultTargetDescriptor descriptor = (NewArtifactResultTargetDescriptor) model;
 
 		descriptor.setPrimaryOpenInWindow(getPrimaryOpenInWindowCheckBox()
-						  .isSelected());
+										  .isSelected());
 		boolean primarySaveToFile = getPrimarySaveToFileCheckBox().isSelected();
 		descriptor.setPrimarySaveToFile(primarySaveToFile);
 		if (primarySaveToFile) {
@@ -314,9 +314,9 @@ public class NewArtifactResultDialog extends org.signalml.plugin.export.view.Abs
 
 		descriptor
 		.setAdditionalOpenInWindow(getAdditionalOpenInWindowCheckBox()
-					   .isSelected());
+								   .isSelected());
 		descriptor.setAdditionalSaveToFile(getAdditionalSaveToFileCheckBox()
-						   .isSelected());
+										   .isSelected());
 
 	}
 

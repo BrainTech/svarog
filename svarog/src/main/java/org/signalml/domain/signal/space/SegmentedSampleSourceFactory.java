@@ -5,8 +5,8 @@
 package org.signalml.domain.signal.space;
 
 import org.signalml.app.view.signal.SampleSourceUtils;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelection;
@@ -24,43 +24,43 @@ public class SegmentedSampleSourceFactory {
 
 	private static SegmentedSampleSourceFactory sharedInstance = null;
 
-        /**
-         * The default constructor.
-         */
+	/**
+	 * The default constructor.
+	 */
 	protected SegmentedSampleSourceFactory() {
 
 	}
 
-        /**
-         * Returns (and if necessary also creates) the shared factory
-         * of segmented sources of samples
-         * @return the shared factory of segmented sources of samples
-         */
+	/**
+	 * Returns (and if necessary also creates) the shared factory
+	 * of segmented sources of samples
+	 * @return the shared factory of segmented sources of samples
+	 */
 	public static SegmentedSampleSourceFactory getSharedInstance() {
 		if (sharedInstance == null) {
-		    synchronized (SegmentedSampleSourceFactory.class) {
-		        if (sharedInstance == null)
-		            sharedInstance = new SegmentedSampleSourceFactory();
-		    }
+			synchronized (SegmentedSampleSourceFactory.class) {
+				if (sharedInstance == null)
+					sharedInstance = new SegmentedSampleSourceFactory();
+			}
 		}
 
 		return sharedInstance;
 	}
 
-        /**
-         * Tries to return the continuous (not segmented
-         * {@link MultichannelSampleSource source} of samples. If it is not
-         * possible returns the
-         * {@link MultichannelSegmentedSampleSource segmented one}.
-         * @param source the source of samples for the whole signal
-         * @param signalSpace the {@link SignalSpace description} of the
-         * parameters of the signal or the part of the signal in the
-         * {@link MultichannelSampleSource source}
-         * @param tagSet the set of tagged selections
-         * @param pageSize the length of the page (in seconds)
-         * @param blockSize the size of the page (in seconds)
-         * @return the created source of samples
-         */
+	/**
+	 * Tries to return the continuous (not segmented
+	 * {@link MultichannelSampleSource source} of samples. If it is not
+	 * possible returns the
+	 * {@link MultichannelSegmentedSampleSource segmented one}.
+	 * @param source the source of samples for the whole signal
+	 * @param signalSpace the {@link SignalSpace description} of the
+	 * parameters of the signal or the part of the signal in the
+	 * {@link MultichannelSampleSource source}
+	 * @param tagSet the set of tagged selections
+	 * @param pageSize the length of the page (in seconds)
+	 * @param blockSize the size of the page (in seconds)
+	 * @return the created source of samples
+	 */
 	public MultichannelSampleSource getContinuousSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
 
 		if (signalSpace.getTimeSpaceType() == TimeSpaceType.WHOLE_SIGNAL && !signalSpace.isWholeSignalCompletePagesOnly()) {
@@ -74,26 +74,26 @@ public class SegmentedSampleSourceFactory {
 
 	}
 
-        /**
-         * Creates the
-         * {@link MultichannelSegmentedSampleSource segmented source} of
-         * samples.
-         * If time space is:
-         * <ul>
-         * <li>marker based - creates {@link MarkerSegmentedSampleSource}</li>
-         * <li>selection based - creates {@link SelectionSegmentedSampleSource}</li>
-         * <li>whole signal - creates {@link SelectionSegmentedSampleSource}, but
-         * as a selection uses maximum possible page selection</li>
-         * </ul>
-         * @param source the source of samples for the whole signal
-         * @param signalSpace the {@link SignalSpace description} of the
-         * parameters of the signal or the part of the signal in the
-         * {@link MultichannelSampleSource source}
-         * @param tagSet the set of tagged selections
-         * @param pageSize the length of the page (in seconds)
-         * @param blockSize the size of the page (in seconds)
-         * @return the created source of samples
-         */
+	/**
+	 * Creates the
+	 * {@link MultichannelSegmentedSampleSource segmented source} of
+	 * samples.
+	 * If time space is:
+	 * <ul>
+	 * <li>marker based - creates {@link MarkerSegmentedSampleSource}</li>
+	 * <li>selection based - creates {@link SelectionSegmentedSampleSource}</li>
+	 * <li>whole signal - creates {@link SelectionSegmentedSampleSource}, but
+	 * as a selection uses maximum possible page selection</li>
+	 * </ul>
+	 * @param source the source of samples for the whole signal
+	 * @param signalSpace the {@link SignalSpace description} of the
+	 * parameters of the signal or the part of the signal in the
+	 * {@link MultichannelSampleSource source}
+	 * @param tagSet the set of tagged selections
+	 * @param pageSize the length of the page (in seconds)
+	 * @param blockSize the size of the page (in seconds)
+	 * @return the created source of samples
+	 */
 	public MultichannelSegmentedSampleSource getSegmentedSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
 
 		ChannelSpace channelSpace = null;

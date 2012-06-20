@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.signal;
 
@@ -11,7 +11,7 @@ package org.signalml.plugin.export.signal;
  * <li>get information about the style of this tag and if it is a marker</li>
  * <li>compare tags</li>
  * </ul>
- * 
+ *
  * @author Marcin Szumski
  */
 public interface ExportedTag extends ExportedSignalSelection, Comparable<ExportedTag> {
@@ -41,34 +41,34 @@ public interface ExportedTag extends ExportedSignalSelection, Comparable<Exporte
 	boolean isMarker();
 
 	/**
-     * Compares the current object to given.
-     * The comparison uses the following characteristics in turn:
-     * starting position, length, the channel number,
-     * and the TagStyle of this tag. The first characteristic that
-     * doesn't match determines the outcome of the comparison.
-     * @param t a tagged selection to be compared with the current object
-     * @return &gt; 0 if the current object is greater than given;
-     * &lt; 0 if current is smaller than given;
-     * 0 if the selections are equal.
-     */
+	 * Compares the current object to given.
+	 * The comparison uses the following characteristics in turn:
+	 * starting position, length, the channel number,
+	 * and the TagStyle of this tag. The first characteristic that
+	 * doesn't match determines the outcome of the comparison.
+	 * @param t a tagged selection to be compared with the current object
+	 * @return &gt; 0 if the current object is greater than given;
+	 * &lt; 0 if current is smaller than given;
+	 * 0 if the selections are equal.
+	 */
 	int compareTo(ExportedTag t);
 
 	/**
-     * @param position position where selection starts
-     */
+	 * @param position position where selection starts
+	 */
 	void setPosition(double position);
-	
+
 	/**
-    * @param length length of selection in seconds
-    */
+	* @param length length of selection in seconds
+	*/
 	void setLength(double length);
-	
+
 	/**
-    * @param channel number of selected channel
-    * CHANNEL_NULL when no channel is selected
-    */
+	* @param channel number of selected channel
+	* CHANNEL_NULL when no channel is selected
+	*/
 	void setChannel(int channel);
-	
+
 	/**
 	 * @return a String in format:
 	 * "NameOfAStyle : StartingPosition -> EndPosition"

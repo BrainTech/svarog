@@ -38,8 +38,8 @@ public class Chebyshev2IIRDesignerTest {
 		FilterZerosPolesGain zpk1 = iirdesigner.calculatePrototype(3, 3);
 		Complex[] zeros = new Complex[] {new Complex(0.0, -1.15470054), new Complex(0.0, 1.15470054)};
 		Complex[] poles = new Complex[] {new Complex(-0.17737632,-1.07757832), new Complex(-3.36188451, -1.44406328e-15),
-		                                 new Complex(-0.17737632, 1.07757832)
-		                                };
+					new Complex(-0.17737632, 1.07757832)
+		};
 
 		FilterZerosPolesGain zpk2 = new FilterZerosPolesGain(zeros, poles, 3.0071318790228005);
 
@@ -69,25 +69,25 @@ public class Chebyshev2IIRDesignerTest {
 
 		//bandpass
 		pythonB = new double[] {3.49030352e-02, 1.99241721e-02, -3.69150532e-02,
-		                    -4.45893421e-18, 3.69150532e-02, -1.99241721e-02,
-		                    -3.49030352e-02
-		                   };
+								-4.45893421e-18, 3.69150532e-02, -1.99241721e-02,
+								-3.49030352e-02
+							   };
 		pythonA = new double[] {1.0, 1.53977953, 2.54604688, 2.03168879,
-		                    1.68294636, 0.64377119, 0.27144655
-		                   };
+								1.68294636, 0.64377119, 0.27144655
+							   };
 
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDPASS, new double[] {0.5, 0.7}, new double[] {0.3, 0.9}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 
 		//bandstop
 		pythonB = new double[] {0.16237092, 0.2964514, 0.61138715,
-		                    0.59303041, 0.61138715, 0.2964514,
-		                    0.16237092
-		                   };
+								0.59303041, 0.61138715, 0.2964514,
+								0.16237092
+							   };
 		pythonA = new double[] {1.0, 0.91835019, 0.14443493,
-		                    0.16130349, 0.41398049, 0.10627954,
-		                    -0.0108993
-		                   };
+								0.16130349, 0.41398049, 0.10627954,
+								-0.0108993
+							   };
 
 		coeffs = iirdesigner.designDigitalFilter(FilterType.BANDSTOP, new double[] {0.3, 0.9}, new double[] {0.5, 0.7}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-4);

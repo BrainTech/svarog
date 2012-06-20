@@ -23,59 +23,59 @@ public class TagDifference extends SignalSelection implements Comparable<TagDiff
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * the {@link TagDifferenceType type} of the difference
-         */
+	/**
+	 * the {@link TagDifferenceType type} of the difference
+	 */
 	private TagDifferenceType differenceType;
 
-        /**
-         * Constructor. Creates the difference.
-         * @param type the {@link SignalSelectionType type} of a
-         * {@link SignalSelection signal} selection which this difference
-         * concerns
-         * @param position the position when difference begins
-         * @param length the length of the difference
-         * @param channel the index of the channel
-         * @param differenceType the {@link TagDifferenceType type} of
-         * this difference
-         */
+	/**
+	 * Constructor. Creates the difference.
+	 * @param type the {@link SignalSelectionType type} of a
+	 * {@link SignalSelection signal} selection which this difference
+	 * concerns
+	 * @param position the position when difference begins
+	 * @param length the length of the difference
+	 * @param channel the index of the channel
+	 * @param differenceType the {@link TagDifferenceType type} of
+	 * this difference
+	 */
 	public TagDifference(SignalSelectionType type, double position, double length, int channel, TagDifferenceType differenceType) {
 		super(type, position, length, channel);
 		this.differenceType = differenceType;
 	}
 
-        /**
-         * Constructor. Creates the difference.
-         * @param type the {@link SignalSelectionType type} of a
-         * {@link SignalSelection signal} selection which this difference
-         * concerns
-         * @param d the position when difference begins
-         * @param maxValue the length of the difference
-         * @param differenceType the {@link TagDifferenceType type} of
-         * this difference
-         */
+	/**
+	 * Constructor. Creates the difference.
+	 * @param type the {@link SignalSelectionType type} of a
+	 * {@link SignalSelection signal} selection which this difference
+	 * concerns
+	 * @param d the position when difference begins
+	 * @param maxValue the length of the difference
+	 * @param differenceType the {@link TagDifferenceType type} of
+	 * this difference
+	 */
 	public TagDifference(SignalSelectionType type, double d, double maxValue, TagDifferenceType differenceType) {
 		super(type, d, maxValue);
 		this.differenceType = differenceType;
 	}
 
-        /**
-         * Returns the {@link SignalSelectionType type} of this difference.
-         * @return the type of this difference.
-         */
+	/**
+	 * Returns the {@link SignalSelectionType type} of this difference.
+	 * @return the type of this difference.
+	 */
 	public TagDifferenceType getDifferenceType() {
 		return differenceType;
 	}
 
-        /**
-         * Compares this difference to another difference.
-         * Parameters used (in this order): starting position, length,
-         * number of a channel, type of selection, type of a difference
-         * @param t the difference to be compared to this reference
-         * @return grater then 0 if this difference is larger,
-         * less then 0 if this reference is smaller,
-         * 0 if references are equal
-         */
+	/**
+	 * Compares this difference to another difference.
+	 * Parameters used (in this order): starting position, length,
+	 * number of a channel, type of selection, type of a difference
+	 * @param t the difference to be compared to this reference
+	 * @return grater then 0 if this difference is larger,
+	 * less then 0 if this reference is smaller,
+	 * 0 if references are equal
+	 */
 	@Override
 	public int compareTo(TagDifference t) {
 
@@ -96,13 +96,13 @@ public class TagDifference extends SignalSelection implements Comparable<TagDiff
 
 	}
 
-        /**
-         * Checks if this reference object is equal to given.
-         * Uses {@link #compareTo}.
-         * @param obj the object to be compared with this reference
-         * @return true if the given object is equal to this reference,
-         * false otherwise
-         */
+	/**
+	 * Checks if this reference object is equal to given.
+	 * Uses {@link #compareTo}.
+	 * @param obj the object to be compared with this reference
+	 * @return true if the given object is equal to this reference,
+	 * false otherwise
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == null || !(obj instanceof TagDifference)) {

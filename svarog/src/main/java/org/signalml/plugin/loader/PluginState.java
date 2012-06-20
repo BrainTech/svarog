@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -43,14 +43,14 @@ public class PluginState {
 	 * boolean if loading the plug-in failed
 	 */
 	protected boolean failedToLoad = false;
-	
+
 	/**
 	 * Empty constructor.
 	 */
-	public PluginState(){
-		
+	public PluginState() {
+
 	}
-	
+
 	/**
 	 * Constructor. Sets the name and if plug-in
 	 * is active.
@@ -61,35 +61,35 @@ public class PluginState {
 		this.name = name;
 		this.active = active;
 	}
-	
+
 	/**
 	 * @return the name of the plug-in
 	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * @param active the information if the plug-in should be active
 	 */
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
+
 	/**
 	 * @return the information if the plug-in should be active
 	 */
 	public boolean isActive() {
 		return active;
 	}
-	
+
 	/**
 	 * @return the version of the plug-in
 	 */
 	public int[] getVersion() {
 		return version;
 	}
-	
+
 	/**
 	 * @param versionString string containing the version of
 	 * the plug-in
@@ -101,26 +101,26 @@ public class PluginState {
 		for (String s : splited)
 			version[i++] = Integer.parseInt(s);
 	}
-	
+
 	/**
 	 * Converts the version of the plug-in to textual
 	 * representation
 	 * @return the textual representation of the version
 	 * of the plug-in
 	 */
-	public String versionToString(){
+	public String versionToString() {
 		String ver = "";
-		for (int i = 0; i < version.length; ++i){
+		for (int i = 0; i < version.length; ++i) {
 			ver = ver.concat(Integer.toString(version[i]));
 			if (i < version.length -1) ver = ver.concat(".");
 		}
 		return ver;
 	}
-	
+
 	/**
 	 * @param version the version of the plug-in
 	 */
-	public void setVersion(int[] version){
+	public void setVersion(int[] version) {
 		this.version = version;
 	}
 
@@ -135,23 +135,23 @@ public class PluginState {
 
 	/**
 	 * Adds a {@link PluginDependency dependency} to the
-	 * list of missing dependencies. 
+	 * list of missing dependencies.
 	 * @param missingDependency the dependency to add
 	 */
-	public void addMissingDependency(PluginDependency missingDependency){
+	public void addMissingDependency(PluginDependency missingDependency) {
 		missingDependencies.add(missingDependency);
 	}
-	
+
 	/**
 	 * Creates a string enlisting the dependencies that are
 	 * missing.
 	 * @return a string enlisting the dependencies that are
 	 * missing
 	 */
-	public String missingDependenciesToString(){
+	public String missingDependenciesToString() {
 		String result = new String();
 		int number = missingDependencies.size();
-		for (int i = 0; i < number; ++i){
+		for (int i = 0; i < number; ++i) {
 			result+= missingDependencies.get(i).toString();
 			if (i < number - 1) result += ", ";
 		}
@@ -181,5 +181,5 @@ public class PluginState {
 	public boolean isFailedToLoad() {
 		return failedToLoad;
 	}
-	
+
 }

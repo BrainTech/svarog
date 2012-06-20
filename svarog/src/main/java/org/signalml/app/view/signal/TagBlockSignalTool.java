@@ -89,7 +89,7 @@ public class TagBlockSignalTool extends AbstractSignalTool implements TaggingSig
 		if (startBlock != null) {
 			Integer endBlock = plot.toBlockSpace(point);
 			if (endBlock != null) {
-			    getSignalView().setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
+				getSignalView().setSignalSelection(plot,plot.getBlockSelection(startBlock, endBlock));
 			}
 		}
 	}

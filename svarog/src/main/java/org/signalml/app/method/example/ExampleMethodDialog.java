@@ -84,8 +84,8 @@ public class ExampleMethodDialog extends AbstractDialog  implements Initializing
 
 		JPanel interfacePanel = new JPanel(new BorderLayout(3,3));
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(_("Configure search")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Configure search")),
+			new EmptyBorder(3,3,3,3)
 		);
 		interfacePanel.setBorder(cb);
 

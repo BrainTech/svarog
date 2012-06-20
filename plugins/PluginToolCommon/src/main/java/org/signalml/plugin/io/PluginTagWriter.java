@@ -4,10 +4,8 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeSet;
 
 import javax.swing.KeyStroke;
@@ -56,11 +54,14 @@ public class PluginTagWriter implements IPluginTagWriter {
 					throw new SanityCheckException("Inconsistent stretchFactor " + tagGroup + " (should be: " + stretchFactor + " )");
 				}
 			}
+		}
 
+		if (stretchFactor == -1) {
+			stretchFactor = 1;
 		}
 
 		StyledTagSet tagSet = new StyledTagSet(styles, documentTags, pageSize,
-						       (int)(pageSize / stretchFactor));
+											   (int)(pageSize / stretchFactor));
 		TagDocument document = new TagDocument(tagSet);
 		document.setBackingFile(this.outputFile);
 		document.saveDocument();
@@ -72,9 +73,9 @@ public class PluginTagWriter implements IPluginTagWriter {
 
 		for (PluginTagGroup tagGroup : tags) {
 			TagStyle style = new TagStyle(SignalSelectionType.typeByName(tagGroup.type.getName()),
-						      tagGroup.name, tagGroup.description, FILL_COLOR,
-						      OUTLINE_COLOR, 1, null, // solid
-						      this.createKeyStroke(tagGroup), false);
+										  tagGroup.name, tagGroup.description, FILL_COLOR,
+										  OUTLINE_COLOR, 1, null, // solid
+										  this.createKeyStroke(tagGroup), false);
 			styles.addStyle(style);
 		}
 
@@ -87,12 +88,12 @@ public class PluginTagWriter implements IPluginTagWriter {
 			return null;
 		} else {
 			return name.length() == 1 ? KeyStroke.getKeyStroke(name.charAt(0))
-			       : KeyStroke.getKeyStroke("typed " + name);
+				   : KeyStroke.getKeyStroke("typed " + name);
 		}
 	}
 
 	private Collection<Tag> createTags(Collection<PluginTagGroup> tags,
-					   TagStyles tagStyles) {
+									   TagStyles tagStyles) {
 		List<Tag> l = new LinkedList<Tag>();
 		for (PluginTagGroup tagGroup : tags) {
 			TagStyle style = tagStyles.getStyle(tagGroup.name);
@@ -106,7 +107,7 @@ public class PluginTagWriter implements IPluginTagWriter {
 
 			for (IPluginTagDef tag : sortedTags) {
 				l.add(new Tag(style, (float) tag.getOffset(), (float) tag
-					      .getLength(), tag.getChannel()));
+							  .getLength(), tag.getChannel()));
 			}
 		}
 		return l;

@@ -63,49 +63,49 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	private ChannelPlotOptionsModel model;
 
 	public ChannelOptionsPopupDialog(
-			Window w, boolean isModal) {
+		Window w, boolean isModal) {
 		super(w, isModal);
 	}
-	
+
 	@Override
 	public JComponent createInterface() {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		JPanel valueScalePanel = new JPanel();
-		
+
 		//value scale
 		valueScalePanel.setLayout(new BoxLayout(valueScalePanel, BoxLayout.Y_AXIS));
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Value scale")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Value scale")),
+			new EmptyBorder(3,3,3,3)
 		);
 		valueScalePanel.setBorder(border);
 		valueScalePanel.add(getIgnoreGlobalPanel());
 		valueScalePanel.add(Box.createVerticalStrut(3));
 		valueScalePanel.add(getValueScalePanel());
-		
+
 		//visibility
 		JPanel visibilityPanel = new JPanel();
 		visibilityPanel.setLayout(new BoxLayout(visibilityPanel, BoxLayout.Y_AXIS));
 		border = new CompoundBorder(
-		        new TitledCrossBorder(_("Visibility"), true),
-		        new EmptyBorder(3,3,3,3)
+			new TitledCrossBorder(_("Visibility"), true),
+			new EmptyBorder(3,3,3,3)
 		);
 		visibilityPanel.setBorder(border);
 		visibilityPanel.add(getVisibilityPanel());
 
-		
+
 		interfacePanel.add(visibilityPanel, BorderLayout.NORTH);
 		interfacePanel.add(valueScalePanel, BorderLayout.SOUTH);
 		return interfacePanel;
 
 	}
-	
+
 	public void setCurrentPlot(SignalPlot plot) {
 		currentPlot = plot;
 	}
-	
+
 	/*
 	 * Creates and returns a component for ignoreGlobalScale checkbox.
 	 * @returns JPanel with checkbox
@@ -116,7 +116,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		p.add(useLocalScaleCheckbox, BorderLayout.NORTH);
 		return p;
 	}
-	
+
 	/*
 	 * Creates and returns a component for HideChannel button.
 	 * @returns JPanel with HideChannel button.
@@ -128,13 +128,13 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		p.add(hideChannel, BorderLayout.NORTH);
 		return p;
 	}
-	
+
 	/*
 	 * Creates and returns an component for ValueScale scrollBar.
 	 * @returns JPanel with ValueScale scrollBar.
 	 */
 	private JPanel getValueScalePanel() {
-		
+
 		valueScaleSlider = new JSlider(new DefaultBoundedRangeModel()) {
 			private static final long serialVersionUID = 1L;
 
@@ -143,9 +143,9 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 				return getValue() + "%";
 			}
 		};
-		
+
 		DefaultBoundedRangeModel m = currentPlot.getValueScaleRangeModel();
-		this.valueScaleModel =  (DefaultBoundedRangeModel) valueScaleSlider.getModel();
+		this.valueScaleModel = (DefaultBoundedRangeModel) valueScaleSlider.getModel();
 		this.valueScaleModel.setRangeProperties(m.getValue(), m.getExtent(), m.getMinimum(), m.getMaximum(), m.getValueIsAdjusting());
 
 		Dimension d = valueScaleSlider.getPreferredSize();
@@ -154,7 +154,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		valueScaleSlider.setPreferredSize(d);
 		valueScaleSlider.setMinimumSize(d);
 		valueScaleSlider.setMaximumSize(d);
-		
+
 		this.valueScaleModel.addChangeListener(this);
 
 		TitledSliderPanel retPanel = new TitledSliderPanel(_("Value scale"), valueScaleSlider);
@@ -170,7 +170,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	private void setInitialVoltageScale(int scale) {
 		this.valueScaleModel.setValue(scale);
 	}
-	
+
 	/*
 	 * Sets channel number for which the panel will be shown.
 	 * @param ch channel number for which the panel will be shown
@@ -178,7 +178,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	public void setChannel(int ch) {
 		this.channel = ch;
 	}
-	
+
 	/*
 	 * Fills the panel with data from its parent plot. Fired on panel's appearance.
 	 * @see org.signalml.plugin.export.view.AbstractDialog#fillDialogFromModel(java.lang.Object)
@@ -186,7 +186,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		SignalPlot plot = (SignalPlot) model; 
+		SignalPlot plot = (SignalPlot) model;
 		this.model = plot.getChannelsPlotOptionsModel().getModelAt(this.channel);
 		if (!this.model.getVisible())
 			this.model.setVisible(true);
@@ -194,7 +194,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		this.setInitialVoltageScale(this.model.getVoltageScale());
 		this.useLocalScaleCheckbox.getModel().setSelected(this.model.isUseLocalScale());
 		valueScaleSlider.setEnabled(useLocalScaleCheckbox.isSelected());
-		
+
 		this.useLocalScaleCheckbox.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent arg0) {
@@ -243,7 +243,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		if (source == this.valueScaleModel) {
 			this.model.setVoltageScale(this.valueScaleModel.getValue());
 		}
-		
+
 	}
 
 	/*

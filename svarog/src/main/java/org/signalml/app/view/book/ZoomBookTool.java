@@ -243,10 +243,10 @@ public class ZoomBookTool extends BookTool {
 		if (zoomOut) {
 
 			plot.setZoom(
-			        0,
-			        plot.getSegment().getSegmentLength(),
-			        0,
-			        bookView.getDocument().getBook().getSamplingFrequency()/2
+				0,
+				plot.getSegment().getSegmentLength(),
+				0,
+				bookView.getDocument().getBook().getSamplingFrequency()/2
 			);
 
 		} else {

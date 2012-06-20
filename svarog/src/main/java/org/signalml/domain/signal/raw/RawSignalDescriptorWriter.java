@@ -36,12 +36,12 @@ import org.w3c.dom.Element;
  */
 public class RawSignalDescriptorWriter {
 
-        /**
-         * Creates the document with the description of the signal based on the
-         * given {@link RawSignalDescriptor description}
-         * @param descriptor the description of the raw signal
-         * @return the created document
-         */
+	/**
+	 * Creates the document with the description of the signal based on the
+	 * given {@link RawSignalDescriptor description}
+	 * @param descriptor the description of the raw signal
+	 * @return the created document
+	 */
 	public Document getDocument(RawSignalDescriptor descriptor) {
 
 		Document document = RawSignalDocumentBuilder.getInstance().newDocument();
@@ -182,13 +182,13 @@ public class RawSignalDescriptorWriter {
 			Formatter formatter = new Formatter();
 
 			formatter.format("%04d-%02d-%02dT%02d:%02d:%02d",
-			                 cal.get(Calendar.YEAR),
-			                 cal.get(Calendar.MONTH) + 1,
-			                 cal.get(Calendar.DAY_OF_MONTH),
-			                 cal.get(Calendar.HOUR_OF_DAY),
-			                 cal.get(Calendar.MINUTE),
-			                 cal.get(Calendar.SECOND)
-			                );
+							 cal.get(Calendar.YEAR),
+							 cal.get(Calendar.MONTH) + 1,
+							 cal.get(Calendar.DAY_OF_MONTH),
+							 cal.get(Calendar.HOUR_OF_DAY),
+							 cal.get(Calendar.MINUTE),
+							 cal.get(Calendar.SECOND)
+							);
 
 			element = document.createElement(RawSignalDocumentBuilder.EXPORT_DATE);
 			element.setTextContent(formatter.toString());
@@ -221,7 +221,7 @@ public class RawSignalDescriptorWriter {
 			for (int i=0; i<offset.length; i++) {
 
 				element = document.createElement(RawSignalDocumentBuilder.CALIBRATION_PARAM);
-				element.setTextContent(Float.toString( offset[i]));
+				element.setTextContent(Float.toString(offset[i]));
 				offsetElems.appendChild(element);
 
 			}
@@ -237,22 +237,22 @@ public class RawSignalDescriptorWriter {
 			root.appendChild(element);
 		}
 
-                element = document.createElement(RawSignalDocumentBuilder.IS_BACKUP);
-                element.setTextContent(descriptor.isBackup() ? "1" : "0");
-                root.appendChild(element);
+		element = document.createElement(RawSignalDocumentBuilder.IS_BACKUP);
+		element.setTextContent(descriptor.isBackup() ? "1" : "0");
+		root.appendChild(element);
 
 		return document;
 
 	}
 
-        /**
-         * Writes the given {@link RawSignalDescriptor description} to
-         * the given file
-         * @param descriptor the description of the raw signal
-         * @param file the file to which the description will be written
-         * @throws IOException if error while creating the file or while
-         * writing the xml to it
-         */
+	/**
+	 * Writes the given {@link RawSignalDescriptor description} to
+	 * the given file
+	 * @param descriptor the description of the raw signal
+	 * @param file the file to which the description will be written
+	 * @throws IOException if error while creating the file or while
+	 * writing the xml to it
+	 */
 	public void writeDocument(RawSignalDescriptor descriptor, File file) throws IOException {
 
 		Document document = getDocument(descriptor);

@@ -78,9 +78,9 @@ public class SplashScreen extends JDialog {
 
 		JPanel contentPanel = new JPanel(new BorderLayout());
 		contentPanel.setBorder(new CompoundBorder(
-		                               new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE.darker()),
-		                               new EmptyBorder(3,3,3,3)
-		                       ));
+								   new BevelBorder(BevelBorder.RAISED, Color.BLUE, Color.BLUE.darker()),
+								   new EmptyBorder(3,3,3,3)
+							   ));
 
 		JPanel labelPanel = new JPanel(new BorderLayout());
 		labelPanel.setBorder(new EmptyBorder(0,0,5,0));
@@ -295,7 +295,7 @@ public class SplashScreen extends JDialog {
 			stringBounds = fontMetrics.getStringBounds(SvarogConstants.VERSION, g);
 			width = (int) stringBounds.getWidth();
 			g.drawString(SvarogConstants.VERSION,
-				     (size.width-width)/2, version_height);
+						 (size.width-width)/2, version_height);
 
 			offset += (height + 95);
 

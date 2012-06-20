@@ -106,15 +106,15 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 
 		JPanel tablePanel = new JPanel(new BorderLayout());
 		tablePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(_("Target montage")),
-		                             new EmptyBorder(3,3,3,3)
-		                     ));
+								 new TitledBorder(_("Target montage")),
+								 new EmptyBorder(3,3,3,3)
+							 ));
 
 		JPanel editorPanel = new JPanel(new BorderLayout());
 		editorPanel.setBorder(new CompoundBorder(
-		                              new TitledBorder(_("Edit reference")),
-		                              new EmptyBorder(3,3,3,3)
-		                      ));
+								  new TitledBorder(_("Edit reference")),
+								  new EmptyBorder(3,3,3,3)
+							  ));
 
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.X_AXIS));

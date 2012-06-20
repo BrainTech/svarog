@@ -35,12 +35,10 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.components.FileListCellRenderer;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
-
-import org.springframework.validation.Errors;
 
 /** DelegatingFilterDialog
  *
@@ -51,7 +49,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private DefaultListModel classPathListModel;
 	private JList classPathList;
@@ -95,9 +93,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		JPanel classPathPanel = new JPanel(new BorderLayout(5,5));
 
 		classPathPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(_("Choose class path")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Choose class path")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
 
@@ -117,9 +115,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 		JPanel fqClassNamePanel = new JPanel(new BorderLayout(5,5));
 		fqClassNamePanel.setBorder(new CompoundBorder(
-		                                   new TitledBorder(_("Choose fully qualified filter class name")),
-		                                   new EmptyBorder(3,3,3,3)
-		                           ));
+									   new TitledBorder(_("Choose fully qualified filter class name")),
+									   new EmptyBorder(3,3,3,3)
+								   ));
 
 		fqClassNamePanel.add(getFqClassNameTextField(), BorderLayout.CENTER);
 		fqClassNamePanel.add(getQuickFileButton(), BorderLayout.EAST);
@@ -292,11 +290,11 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		return DelegatingAtomFilter.class.isAssignableFrom(clazz);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

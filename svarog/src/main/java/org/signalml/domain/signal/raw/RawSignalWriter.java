@@ -17,43 +17,43 @@ import java.nio.ShortBuffer;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.exception.SanityCheckException;
 
 /**
  * This class is responsible for writing the raw signal (or its part)
- * to the file or to the stream. 
+ * to the file or to the stream.
  * To determine the format uses provided {@link SignalExportDescriptor descriptor}.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class RawSignalWriter {
 
-        /**
-         * the size of the buffer (number of samples)
-         */
+	/**
+	 * the size of the buffer (number of samples)
+	 */
 	private static final int BUFFER_SIZE = 8192;
 
-        /**
-         * Writes the fragment of the signal from the specified
-         * {@link MultichannelSampleSource source} to the specified file
-         * based on the given {@link SignalExportDescriptor description}.
-         * @param signalFile the file to which the signal will written
-         * @param sampleSource the {@link MultichannelSampleSource source} of
-         * signal samples
-         * @param descriptor the {@link SignalExportDescriptor description}
-         * of the signal
-         * @param firstSample the index of the first sample that will be
-         * written to file
-         * @param sampleCount the number of samples that are to be written to
-         * file
-         * @param monitor the {@link SignalWriterMonitor monitor} which monitors
-         * the process of writing signal to file and can request its abortion
-         * @throws IOException if there is an error while writing bytes
-         * to file
-         */
+	/**
+	 * Writes the fragment of the signal from the specified
+	 * {@link MultichannelSampleSource source} to the specified file
+	 * based on the given {@link SignalExportDescriptor description}.
+	 * @param signalFile the file to which the signal will written
+	 * @param sampleSource the {@link MultichannelSampleSource source} of
+	 * signal samples
+	 * @param descriptor the {@link SignalExportDescriptor description}
+	 * of the signal
+	 * @param firstSample the index of the first sample that will be
+	 * written to file
+	 * @param sampleCount the number of samples that are to be written to
+	 * file
+	 * @param monitor the {@link SignalWriterMonitor monitor} which monitors
+	 * the process of writing signal to file and can request its abortion
+	 * @throws IOException if there is an error while writing bytes
+	 * to file
+	 */
 	public void writeSignal(File signalFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, int firstSample, int sampleCount, SignalWriterMonitor monitor) throws IOException {
 
 		OutputStream os = null;
@@ -73,25 +73,25 @@ public class RawSignalWriter {
 
 	}
 
-        /**
-         * Writes the fragment of the signal from the specified
-         * {@link MultichannelSampleSource source} to the specified stream
-         * based on the given {@link SignalExportDescriptor description}.
-         * @param os the stream to which the signal will written
-         * @param sampleSource the {@link MultichannelSampleSource source} of
-         * signal samples
-         * @param descriptor the {@link SignalExportDescriptor description}
-         * of the signal
-         * @param firstSample the index of the first sample that will be
-         * written to the stream
-         * @param sampleCount the number of samples that are to be written to
-         * the stream
-         * @param monitor the {@link SignalWriterMonitor monitor} which monitors
-         * the process of writing signal to the stream and can request its
-         * abortion
-         * @throws IOException if there is an error while writing bytes
-         * to the stream
-         */
+	/**
+	 * Writes the fragment of the signal from the specified
+	 * {@link MultichannelSampleSource source} to the specified stream
+	 * based on the given {@link SignalExportDescriptor description}.
+	 * @param os the stream to which the signal will written
+	 * @param sampleSource the {@link MultichannelSampleSource source} of
+	 * signal samples
+	 * @param descriptor the {@link SignalExportDescriptor description}
+	 * of the signal
+	 * @param firstSample the index of the first sample that will be
+	 * written to the stream
+	 * @param sampleCount the number of samples that are to be written to
+	 * the stream
+	 * @param monitor the {@link SignalWriterMonitor monitor} which monitors
+	 * the process of writing signal to the stream and can request its
+	 * abortion
+	 * @throws IOException if there is an error while writing bytes
+	 * to the stream
+	 */
 	public void writeSignal(OutputStream os, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, int firstSample, int sampleCount, SignalWriterMonitor monitor) throws IOException {
 
 		int bufferSize = Math.min(BUFFER_SIZE, sampleCount);
@@ -268,20 +268,20 @@ public class RawSignalWriter {
 
 	}
 
-        /**
-         * Writes the whole signal from the specified
-         * {@link MultichannelSampleSource source} to the specified file
-         * based on the given {@link SignalExportDescriptor description}.
-         * @param signalFile the file to which the signal will written
-         * @param sampleSource the {@link MultichannelSampleSource source} of
-         * signal samples
-         * @param descriptor the {@link SignalExportDescriptor description}
-         * of the signal
-         * @param monitor the {@link SignalWriterMonitor monitor} which monitors
-         * the process of writing signal to file and can request its abortion
-         * @throws IOException if there is an error while writing bytes
-         * to file
-         */
+	/**
+	 * Writes the whole signal from the specified
+	 * {@link MultichannelSampleSource source} to the specified file
+	 * based on the given {@link SignalExportDescriptor description}.
+	 * @param signalFile the file to which the signal will written
+	 * @param sampleSource the {@link MultichannelSampleSource source} of
+	 * signal samples
+	 * @param descriptor the {@link SignalExportDescriptor description}
+	 * of the signal
+	 * @param monitor the {@link SignalWriterMonitor monitor} which monitors
+	 * the process of writing signal to file and can request its abortion
+	 * @throws IOException if there is an error while writing bytes
+	 * to file
+	 */
 	public void writeSignal(File signalFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
 
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
@@ -290,20 +290,20 @@ public class RawSignalWriter {
 
 	}
 
-        /**
-         * Writes the whole signal from the specified
-         * {@link MultichannelSampleSource source} to the specified stream
-         * based on the given {@link SignalExportDescriptor description}.
-         * @param os the stream to which the signal will written
-         * @param sampleSource the {@link MultichannelSampleSource source} of
-         * signal samples
-         * @param descriptor the {@link SignalExportDescriptor description}
-         * of the signal
-         * @param monitor the {@link SignalWriterMonitor monitor} which monitors
-         * the process of writing signal to the stream and can request its abortion
-         * @throws IOException if there is an error while writing bytes
-         * to the stream
-         */
+	/**
+	 * Writes the whole signal from the specified
+	 * {@link MultichannelSampleSource source} to the specified stream
+	 * based on the given {@link SignalExportDescriptor description}.
+	 * @param os the stream to which the signal will written
+	 * @param sampleSource the {@link MultichannelSampleSource source} of
+	 * signal samples
+	 * @param descriptor the {@link SignalExportDescriptor description}
+	 * of the signal
+	 * @param monitor the {@link SignalWriterMonitor monitor} which monitors
+	 * the process of writing signal to the stream and can request its abortion
+	 * @throws IOException if there is an error while writing bytes
+	 * to the stream
+	 */
 	public void writeSignal(OutputStream os, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
 
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
@@ -312,21 +312,21 @@ public class RawSignalWriter {
 
 	}
 
-        /**
-         * Writes the specified segment of the signal from the specified
-         * {@link MultichannelSampleSource source} to the specified file
-         * based on the given {@link SignalExportDescriptor description}.
-         * @param signalFile the file to which the signal will written
-         * @param sampleSource the
-         * {@link MultichannelSegmentedSampleSource source} of signal samples
-         * @param descriptor the {@link SignalExportDescriptor description}
-         * of the signal
-         * @param segment the index of the segment in the source
-         * @param monitor the {@link SignalWriterMonitor monitor} which monitors
-         * the process of writing signal to file and can request its abortion
-         * @throws IOException if there is an error while writing bytes
-         * to file
-         */
+	/**
+	 * Writes the specified segment of the signal from the specified
+	 * {@link MultichannelSampleSource source} to the specified file
+	 * based on the given {@link SignalExportDescriptor description}.
+	 * @param signalFile the file to which the signal will written
+	 * @param sampleSource the
+	 * {@link MultichannelSegmentedSampleSource source} of signal samples
+	 * @param descriptor the {@link SignalExportDescriptor description}
+	 * of the signal
+	 * @param segment the index of the segment in the source
+	 * @param monitor the {@link SignalWriterMonitor monitor} which monitors
+	 * the process of writing signal to file and can request its abortion
+	 * @throws IOException if there is an error while writing bytes
+	 * to file
+	 */
 	public void writeSignal(File signalFile, MultichannelSegmentedSampleSource sampleSource, SignalExportDescriptor descriptor, int segment, SignalWriterMonitor monitor) throws IOException {
 
 		int sampleCount = sampleSource.getSegmentLength();
@@ -335,22 +335,22 @@ public class RawSignalWriter {
 
 	}
 
-        /**
-         * Writes the specified segment of the signal from the specified
-         * {@link MultichannelSampleSource source} to the specified stream
-         * based on the given {@link SignalExportDescriptor description}.
-         * @param os the stream to which the signal will written
-         * @param sampleSource the
-         * {@link MultichannelSegmentedSampleSource source} of signal samples
-         * @param descriptor the {@link SignalExportDescriptor description}
-         * of the signal
-         * @param segment the index of the segment in the source
-         * @param monitor the {@link SignalWriterMonitor monitor} which monitors
-         * the process of writing signal to the stream and can request its
-         * abortion
-         * @throws IOException if there is an error while writing bytes
-         * to the stream
-         */
+	/**
+	 * Writes the specified segment of the signal from the specified
+	 * {@link MultichannelSampleSource source} to the specified stream
+	 * based on the given {@link SignalExportDescriptor description}.
+	 * @param os the stream to which the signal will written
+	 * @param sampleSource the
+	 * {@link MultichannelSegmentedSampleSource source} of signal samples
+	 * @param descriptor the {@link SignalExportDescriptor description}
+	 * of the signal
+	 * @param segment the index of the segment in the source
+	 * @param monitor the {@link SignalWriterMonitor monitor} which monitors
+	 * the process of writing signal to the stream and can request its
+	 * abortion
+	 * @throws IOException if there is an error while writing bytes
+	 * to the stream
+	 */
 	public void writeSignal(OutputStream os, MultichannelSegmentedSampleSource sampleSource, SignalExportDescriptor descriptor, int segment, SignalWriterMonitor monitor) throws IOException {
 
 		int sampleCount = sampleSource.getSegmentLength();

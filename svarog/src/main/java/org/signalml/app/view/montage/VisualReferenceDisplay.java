@@ -85,20 +85,20 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 	protected abstract void paintBinContents(VisualReferenceBin bin, Graphics2D g);
 
-        protected void paintGivenChannel(String label, int perPrimarySize, Shape shape, Shape outlineShape, Color fill, Color outline, boolean boldBorder, Graphics2D g) {
+	protected void paintGivenChannel(String label, int perPrimarySize, Shape shape, Shape outlineShape, Color fill, Color outline, boolean boldBorder, Graphics2D g) {
 
 		g.setColor(fill);
 		g.fill(shape);
-		
+
 		g.setColor(outline);
-                if (boldBorder) g.setStroke(activeChannelStroke);
-		
+		if (boldBorder) g.setStroke(activeChannelStroke);
+
 		g.draw(outlineShape);
 		g.setStroke(defaultStroke);
 
 		g.setColor(Color.BLACK);
 		g.setFont(channelLabelFont);
-                
+
 		String abbrLabel;
 		if (label.length() > MAX_CHANNEL_LABEL_LENGTH) {
 			abbrLabel = label.substring(0,MAX_CHANNEL_LABEL_LENGTH-2) + "...";
@@ -126,7 +126,7 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 	}
 
-        protected void paintBin(VisualReferenceBin bin, Graphics2D g) {
+	protected void paintBin(VisualReferenceBin bin, Graphics2D g) {
 
 		Dimension size = bin.getSize();
 		Point location = bin.getLocation();
@@ -167,7 +167,7 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 	}
 
-        protected Graphics2D Get2DGraphics(Graphics gOrig) {
+	protected Graphics2D Get2DGraphics(Graphics gOrig) {
 
 		Graphics2D g = (Graphics2D) gOrig;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -184,9 +184,9 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 			channelLabelFontMetrics = g.getFontMetrics(channelLabelFont);
 		}
 
-        	return g;
+		return g;
 
-        }
+	}
 
 	@Override
 	protected void paintComponent(Graphics gOrig) {
@@ -303,7 +303,7 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 		return new Dimension(width, viewportSize.height);
 
 	}
-               
+
 	public VisualReferenceModel getModel() {
 		return model;
 	}
@@ -349,7 +349,7 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 
 	@Override
 	public void montageChannelsChanged(VisualReferenceEvent ev) {
-				
+
 		revalidate();
 		repaint();
 	}
@@ -369,7 +369,7 @@ public abstract class VisualReferenceDisplay extends JComponent implements Visua
 	@Override
 	public void sourceChannelsChanged(VisualReferenceEvent ev) {
 
-        	revalidate();
+		revalidate();
 		repaint();
 	}
 

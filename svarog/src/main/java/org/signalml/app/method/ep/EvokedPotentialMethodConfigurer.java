@@ -32,7 +32,6 @@ public class EvokedPotentialMethodConfigurer implements InitializingMethodConfig
 		dialogParent = manager.getDialogParent();
 		dialog = new EvokedPotentialMethodDialog(presetManager, dialogParent);
 		dialog.setFileChooser(manager.getFileChooser());
-		dialog.setApplicationConfig(manager.getApplicationConfig());
 	}
 
 	@Override

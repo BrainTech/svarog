@@ -31,9 +31,9 @@ public class UnknownTagCreator extends AbstractTresholdTagCreator implements
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(UnknownTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(UnknownTagCreator.CREATOR_TYPE) / 100.0;
 		double treshold = UnknownTagCreator.TRESHOLD_A + sensitivity
-				  * (UnknownTagCreator.TRESHOLD_B - UnknownTagCreator.TRESHOLD_A);
+						  * (UnknownTagCreator.TRESHOLD_B - UnknownTagCreator.TRESHOLD_A);
 
 		return this.constructResult(this.getTagsFromTreshold(data, treshold));
 	}

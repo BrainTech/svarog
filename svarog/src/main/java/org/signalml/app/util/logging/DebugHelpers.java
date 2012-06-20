@@ -22,7 +22,7 @@ public abstract class DebugHelpers {
 
 		log.debug("Thread groups (to root): " + buf);
 	}
-    
+
 	/** Prints simple {@link java.lang.ClassLoader} hierarchy information.
 	 */
 	public static void debugCL(Logger log) {

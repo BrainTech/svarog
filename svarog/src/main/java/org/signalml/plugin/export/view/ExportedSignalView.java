@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.view;
 
@@ -57,7 +57,7 @@ public interface ExportedSignalView {
 	 * Sets the active {@link ExportedSignalSelection selection} in
 	 * a {@link ExportedSignalPlot plot}.
 	 * There can be only one active selection in all plots,
-	 * so both the selection and the plot are remembered. 
+	 * so both the selection and the plot are remembered.
 	 * Repaints the selection on old and new plot.
 	 * @param plot the plot in which the selection is located
 	 * @param signalSelection the signal selection
@@ -81,7 +81,7 @@ public interface ExportedSignalView {
 	 * Sets the active {@link ExportedPositionedTag tag selection} in
 	 * a {@link ExportedSignalPlot plot}.
 	 * There can be only one active tag selection in all plots,
-	 * so both the selection and the plot are remembered. 
+	 * so both the selection and the plot are remembered.
 	 * Repaints the selection on old and new plot.
 	 * @param plot the plot in which the tag selection is located
 	 * @param tagSelection the tag selection
@@ -109,7 +109,7 @@ public interface ExportedSignalView {
 
 	/**
 	 * Returns the {@link SignalSelectionType type} of the currently active
-	 * tagging tool (the type in which the user can create tags).  
+	 * tagging tool (the type in which the user can create tags).
 	 * @return the type of the currently active tagging tool or null if tagging signal
 	 * tool is not active
 	 */

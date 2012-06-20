@@ -85,7 +85,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			} else {
 				channelsListModel.setEegSystem(null);
 			}
-			
+
 			fireTableDataChanged();
 		}
 	}
@@ -106,13 +106,14 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 
 		switch (columnIndex) {
-			case INDEX_COLUMN: return false;
-			default:
-				if (!montage.getSourceChannelFunctionAt(rowIndex).isMutable()) {
-					return false;
-				}
-				else
-					return true;
+		case INDEX_COLUMN:
+			return false;
+		default:
+			if (!montage.getSourceChannelFunctionAt(rowIndex).isMutable()) {
+				return false;
+			}
+			else
+				return true;
 		}
 
 	}

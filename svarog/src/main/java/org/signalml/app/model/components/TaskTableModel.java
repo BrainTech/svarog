@@ -25,13 +25,13 @@ import org.signalml.task.TaskStatusImportanceComparator;
 
 /**
  * TaskTableModel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
 public class TaskTableModel extends AbstractTableModel implements
-		TaskManagerListener, TaskEventListener {
+	TaskManagerListener, TaskEventListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -49,9 +49,9 @@ public class TaskTableModel extends AbstractTableModel implements
 		if (sorter == null) {
 			sorter = new TableRowSorter<TaskTableModel>(this);
 			sorter.setComparator(TaskTableModel.STATUS_COLUMN,
-					new TaskStatusImportanceComparator());
+								 new TaskStatusImportanceComparator());
 			sorter.setComparator(TaskTableModel.PROGRESS_COLUMN,
-					new AggregateTaskProgressComparator());
+								 new AggregateTaskProgressComparator());
 			sorter.setSortsOnUpdates(true);
 		}
 		return sorter;
@@ -63,7 +63,7 @@ public class TaskTableModel extends AbstractTableModel implements
 		switch (col) {
 
 		case STATUS_COLUMN:
-			return TaskStatus.class;
+				return TaskStatus.class;
 
 		case METHOD_NAME_COLUMN:
 			return String.class;
@@ -180,7 +180,7 @@ public class TaskTableModel extends AbstractTableModel implements
 	@Override
 	public void taskAdded(TaskManagerEvent e) {
 		taskManager.getEventProxyForTask(e.getTask())
-				.addTaskEventListener(this);
+		.addTaskEventListener(this);
 		int index = e.getIndex();
 		fireTableRowsInserted(index, index);
 	}

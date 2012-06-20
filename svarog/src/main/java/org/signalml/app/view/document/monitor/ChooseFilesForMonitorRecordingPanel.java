@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.OpenMonitorDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.view.components.FileSelectPanel;
 
@@ -86,7 +86,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 */
 	protected FileSelectPanel getSelectSignalRecordingFilePanel() {
 		if (selectSignalRecordingFilePanel == null) {
-			selectSignalRecordingFilePanel = new FileSelectPanel( _("Record signal to file"));
+			selectSignalRecordingFilePanel = new FileSelectPanel(_("Record signal to file"));
 		}
 		return selectSignalRecordingFilePanel;
 	}
@@ -99,7 +99,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 */
 	protected FileSelectPanel getSelectTagsRecordingFilePanel() {
 		if (selectTagsRecordingFilePanel == null) {
-			selectTagsRecordingFilePanel = new FileSelectPanel( _("Record tags to file"));
+			selectTagsRecordingFilePanel = new FileSelectPanel(_("Record tags to file"));
 			selectTagsRecordingFilePanel.setEnabled(false);
 		}
 		return selectTagsRecordingFilePanel;
@@ -123,7 +123,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	 * @param model the model to be filled.
 	 */
 	public void fillModelFromPanel(Object model) {
-		MonitorRecordingDescriptor monitorRecordingDescriptor = ((OpenMonitorDescriptor) model).getMonitorRecordingDescriptor();
+		MonitorRecordingDescriptor monitorRecordingDescriptor = ((ExperimentDescriptor) model).getMonitorRecordingDescriptor();
 		monitorRecordingDescriptor.setSignalRecordingFilePath(getSelectSignalRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingFilePath(getSelectTagsRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingEnabled(getEnableTagRecordingPanel().isTagRecordingEnabled());
@@ -182,7 +182,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		}
 		else if (getEnableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
 			int anwser = JOptionPane.showConfirmDialog(null,
-					    _("Tag recording target file already exists! Do you want to overwrite?"));
+						 _("Tag recording target file already exists! Do you want to overwrite?"));
 			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
 				errors.addError("");
 		}
@@ -200,7 +200,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		 * Constructor. Creates a new {@link DisableTagRecordingPanel}.
 		 */
 		public EnableTagRecordingPanel() {
-		
+
 			enableTagRecordingCheckBox = new JCheckBox();
 			enableTagRecordingCheckBox.addItemListener(new ItemListener() {
 

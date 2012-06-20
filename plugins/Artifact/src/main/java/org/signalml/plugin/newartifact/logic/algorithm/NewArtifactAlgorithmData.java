@@ -12,8 +12,8 @@ public class NewArtifactAlgorithmData {
 	public double signal[][];
 
 	public NewArtifactAlgorithmData(NewArtifactConstants constants,
-					NewArtifactParameters parameters, Map<String, Integer> channels,
-					double signal[][]) {
+									NewArtifactParameters parameters, Map<String, Integer> channels,
+									double signal[][]) {
 		this.constants = constants;
 		this.parameters = parameters;
 		this.channels = channels;

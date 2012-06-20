@@ -7,7 +7,8 @@ package org.signalml.domain.signal.space;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import org.signalml.domain.signal.MultichannelSampleSource;
+
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.SignalSelection;
 
 /**
@@ -19,33 +20,33 @@ import org.signalml.plugin.export.signal.SignalSelection;
  */
 public class ChannelSpace {
 
-        /**
-         * the set of indexes of selected channels
-         */
+	/**
+	 * the set of indexes of selected channels
+	 */
 	private LinkedHashSet<Integer> channels;
 
-        /**
-         * Constructor. Creates an empty (sub)set.
-         */
+	/**
+	 * Constructor. Creates an empty (sub)set.
+	 */
 	public ChannelSpace() {
 		channels = new LinkedHashSet<Integer>();
 	}
 
-        /**
-         * Constructor. Creates the set with the given channels.
-         * @param array an array with the indexes (in the
-         * {@link MultichannelSampleSource source}) of selected channels
-         */
+	/**
+	 * Constructor. Creates the set with the given channels.
+	 * @param array an array with the indexes (in the
+	 * {@link MultichannelSampleSource source}) of selected channels
+	 */
 	public ChannelSpace(int[] array) {
 		this();
 		replaceChannels(array);
 	}
 
-        /**
-         * Clears this set of channels and puts there provided channels.
-         * @param array an array with the indexes (in the
-         * {@link MultichannelSampleSource source}) of selected channels
-         */
+	/**
+	 * Clears this set of channels and puts there provided channels.
+	 * @param array an array with the indexes (in the
+	 * {@link MultichannelSampleSource source}) of selected channels
+	 */
 	public void replaceChannels(int[] array) {
 		channels.clear();
 		for (int i=0; i<array.length; i++) {
@@ -53,53 +54,53 @@ public class ChannelSpace {
 		}
 	}
 
-        /**
-         * Adds the channel to this set.
-         * @param channel the index (in the
-         * {@link MultichannelSampleSource source}) of the channel
-         */
+	/**
+	 * Adds the channel to this set.
+	 * @param channel the index (in the
+	 * {@link MultichannelSampleSource source}) of the channel
+	 */
 	public void addChannel(int channel) {
 		channels.add(channel);
 	}
 
-        /**
-         * Removes the channel from this set.
-         * @param channel the index (in the
-         * {@link MultichannelSampleSource source}) of the channel
-         */
+	/**
+	 * Removes the channel from this set.
+	 * @param channel the index (in the
+	 * {@link MultichannelSampleSource source}) of the channel
+	 */
 	public void removeChannel(int channel) {
 		channels.remove(new Integer(channel));
 	}
 
-        /**
-         * Clears this set.
-         */
+	/**
+	 * Clears this set.
+	 */
 	public void clear() {
 		channels.clear();
 	}
 
-        /**
-         * Returns the number of channels in this set.
-         * @return the number of channels in this set
-         */
+	/**
+	 * Returns the number of channels in this set.
+	 * @return the number of channels in this set
+	 */
 	public int size() {
 		return channels.size();
 	}
 
-        /**
-         * Checks if the given channel is in this set.
-         * @param channel the index (in the
-         * {@link MultichannelSampleSource source}) of the channel
-         * @return true if the given channel is in this set, false otherwise
-         */
+	/**
+	 * Checks if the given channel is in this set.
+	 * @param channel the index (in the
+	 * {@link MultichannelSampleSource source}) of the channel
+	 * @return true if the given channel is in this set, false otherwise
+	 */
 	public boolean isChannelSelected(int channel) {
 		return channels.contains(channel);
 	}
 
-        /**
-         * Creates an array with the channels from this set.
-         * @return an array with the channels from this set
-         */
+	/**
+	 * Creates an array with the channels from this set.
+	 * @return an array with the channels from this set
+	 */
 	public int[] getSelectedChannels() {
 		int size = channels.size();
 		int[] array = new int[size];
@@ -112,18 +113,18 @@ public class ChannelSpace {
 		Arrays.sort(array);
 		return array;
 	}
-        //TODO there is a function to create the array from collection
-        //<code>channels.toArray</code>
+	//TODO there is a function to create the array from collection
+	//<code>channels.toArray</code>
 
-        /**
-         * Returns an array saying if channels of indexes lower then
-         * <code>channelCount</code> are in the set.
-         * <code>arr[i]<code> - true if channel of index i is in the set,
-         * false otherwise
-         * @param channelCount the index of the last channel in the created
-         * array
-         * @return an array saying if channels are in the set
-         */
+	/**
+	 * Returns an array saying if channels of indexes lower then
+	 * <code>channelCount</code> are in the set.
+	 * <code>arr[i]<code> - true if channel of index i is in the set,
+	 * false otherwise
+	 * @param channelCount the index of the last channel in the created
+	 * array
+	 * @return an array saying if channels are in the set
+	 */
 	public boolean[] getChannelSelection(int channelCount) {
 
 		boolean[] selection = new boolean[channelCount];

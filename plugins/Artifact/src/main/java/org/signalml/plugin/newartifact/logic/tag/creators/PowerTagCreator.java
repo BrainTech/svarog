@@ -30,9 +30,9 @@ public class PowerTagCreator extends AbstractTresholdTagCreator implements
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(PowerTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(PowerTagCreator.CREATOR_TYPE) / 100.0;
 		double treshold = PowerTagCreator.TRESHOLD_A + sensitivity
-				  * (PowerTagCreator.TRESHOLD_B - PowerTagCreator.TRESHOLD_A);
+						  * (PowerTagCreator.TRESHOLD_B - PowerTagCreator.TRESHOLD_A);
 
 		return this.constructResult(this.getTagsFromTreshold(data, treshold));
 	}

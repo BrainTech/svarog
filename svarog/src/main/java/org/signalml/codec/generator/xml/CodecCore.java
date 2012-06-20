@@ -29,7 +29,7 @@ public class CodecCore {
 			parser=(ParserWrapper)Class.forName(DEFAULT_PARSER_NAME).newInstance();
 		} catch (Exception e) {
 			log.error("error: Unable to instantiate parser ("+DEFAULT_PARSER_NAME+")",
-				  e);
+					  e);
 			return null;
 		}
 

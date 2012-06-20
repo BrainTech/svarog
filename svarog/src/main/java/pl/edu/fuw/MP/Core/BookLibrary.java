@@ -30,9 +30,9 @@ public class BookLibrary implements BookLibraryInterface {
 			if (atoms[i].scale!=0) {
 				float freq=df*atoms[i].frequency;
 				atoms[i].phase=Utils.HmppPhase(freq,atoms[i].position,
-				                               atoms[i].phase);
+											   atoms[i].phase);
 				atoms[i].truePhase=Utils.RawPhase(freq,atoms[i].position,
-				                                  atoms[i].phase);
+												  atoms[i].phase);
 
 			}
 	}
@@ -103,8 +103,8 @@ public class BookLibrary implements BookLibraryInterface {
 			atoms[i]=new BookAtom();
 			newLib.export(atoms[i],i);
 			atoms[i].truePhase=Utils.MppPhase(df*atoms[i].frequency,
-			                                  atoms[i].position,
-			                                  atoms[i].phase);
+											  atoms[i].position,
+											  atoms[i].phase);
 			atoms[i].number_of_atom_in_book=(short)(i+1);
 		}
 	}

@@ -78,9 +78,9 @@ public class BookToTagMethodDialog extends AbstractDialog  {
 
 		JPanel channelPanel = new JPanel(new BorderLayout());
 		channelPanel.setBorder(new CompoundBorder(
-		                               new TitledBorder(_("Choose channels to include")),
-		                               new EmptyBorder(3,3,3,3)
-		                       ));
+								   new TitledBorder(_("Choose channels to include")),
+								   new EmptyBorder(3,3,3,3)
+							   ));
 
 		JPanel channelButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		channelButtonPanel.add(getChannelSelectAllButton());
@@ -93,9 +93,9 @@ public class BookToTagMethodDialog extends AbstractDialog  {
 		JPanel tagTypesPanel = new JPanel();
 		tagTypesPanel.setLayout(new BoxLayout(tagTypesPanel, BoxLayout.Y_AXIS));
 		tagTypesPanel.setBorder(new CompoundBorder(
-		                                new TitledBorder(_("Choose tag types")),
-		                                new EmptyBorder(3,3,3,3)
-		                        ));
+									new TitledBorder(_("Choose tag types")),
+									new EmptyBorder(3,3,3,3)
+								));
 
 		tagTypesPanel.add(getMakePageTagsCheckBox());
 		tagTypesPanel.add(getMakeBlockTagsCheckBox());
@@ -129,21 +129,21 @@ public class BookToTagMethodDialog extends AbstractDialog  {
 
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction( getChannelList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction(getChannelList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction( getChannelList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction(getChannelList()));
 		}
 		return channelSelectNoneButton;
 	}
 
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction( getChannelList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction(getChannelList()));
 		}
 		return channelSelectInvertButton;
 	}

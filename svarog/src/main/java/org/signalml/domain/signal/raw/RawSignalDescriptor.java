@@ -4,12 +4,14 @@
 
 package org.signalml.domain.signal.raw;
 
+import java.util.Arrays;
 import java.util.Date;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import java.util.Arrays;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.montage.system.EegSystemName;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents the descriptor of a raw signal.
@@ -21,114 +23,68 @@ import org.signalml.domain.montage.system.EegSystemName;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 @XStreamAlias("rawdescriptor")
-public class RawSignalDescriptor {
+public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 
-        /**
-         * This enumerator tells if the signal is stored as raw or described
-         * by signalML codec.
-         */
+	/**
+	 * This enumerator tells if the signal is stored as raw or described
+	 * by signalML codec.
+	 */
 	public enum SourceSignalType {
 
-                /**
-                 * the raw signal
-                 */
+		/**
+		 * the raw signal
+		 */
 		RAW,
-                /**
-                 * the signal described by signalML codec
-                 */
+		/**
+		 * the signal described by signalML codec
+		 */
 		SIGNALML
 
 	};
 
-        /**
-         * the name of the file to which the signal is exported
-         */
+	/**
+	 * the name of the file to which the signal is exported
+	 */
 	private String exportFileName;
 
-        /**
-         * the name of the original file with the signal
-         */
+	/**
+	 * the name of the original file with the signal
+	 */
 	private String sourceFileName;
-        /**
-         * the {@link SourceSignalType type} of a source signal,
-         * possible types: RAW, SIGNALML
-         */
+	/**
+	 * the {@link SourceSignalType type} of a source signal,
+	 * possible types: RAW, SIGNALML
+	 */
 	private SourceSignalType sourceSignalType;
-        /**
-         * string describing the format of the singalML source
-         */
+	/**
+	 * string describing the format of the singalML source
+	 */
 	private String sourceSignalMLFormat;
-        /**
-         * the identifier of a signalML source
-         */
+	/**
+	 * the identifier of a signalML source
+	 */
 	private String sourceSignalMLSourceUID;
 
-        /**
-         * the number of samples per second
-         */
-	private float samplingFrequency;
-        /**
-         * the number of channels in the signal
-         */
-	private int channelCount;
-        /**
-         * the number of samples in a single channel
-         */
+	/**
+	 * the number of samples in a single channel
+	 */
 	private int sampleCount;
 
 	/**
-	 * The calibration gain for the signal - the value by which each sample
-	 * value is multiplied.
+	 * the {@link RawSignalSampleType type} of the samples
 	 */
-	private float[] calibrationGain;
-
-	/**
-	 * The calibration offset for the signal - the value which is added
-	 * to each sample value.
-	 */
-	private float[] calibrationOffset;
-	private Float minimumValue;
-	private Float maximumValue;
-
-        /**
-         * the {@link RawSignalSampleType type} of the samples
-         */
 	private RawSignalSampleType sampleType;
-        /**
-         * the {@link RawSignalByteOrder order} of bytes in the file with
-         * the signal
-         */
 	private RawSignalByteOrder byteOrder;
 
-        /**
-         * the length of the page in seconds
-         */
-	private float pageSize;
-        /**
-         * the number of blocks in one page
-         */
-	private int blocksPerPage;
-
 	/**
-	 * The name of the {@link EegSystem EEG system} that is used
-	 * for this signal.
+	 * the position (in seconds) of the marker in the described
+	 * signal
 	 */
-	private EegSystemName eegSystemName;
-
-        /**
-         * an array of labels of signal channels
-         */
-	private String[] channelLabels;
-
-        /**
-         * the position (in seconds) of the marker in the described
-         * signal
-         */
 	private double markerOffset;
 
-        /**
-         * the time of exporting the signal to the file
-         */
+	/**
+	 * the time of exporting the signal to the file
+	 */
 	private Date exportDate;
 
 	/**
@@ -136,169 +92,170 @@ public class RawSignalDescriptor {
 	 */
 	private double firstSampleTimestamp = Double.NaN;
 
-        /**
-         * Whether the signal is a backup and was not saved as a result
-         * of a proper recording stop.
-         */
-        private boolean isBackup;
+	/**
+	 * Whether the signal is a backup and was not saved as a result
+	 * of a proper recording stop.
+	 */
+	private boolean isBackup;
 
-        /**
-         * Constructor. Creates an empty descriptor of a raw signal.
-         */
+	/**
+	 * Constructor. Creates an empty descriptor of a raw signal.
+	 */
 	public RawSignalDescriptor() {
 	}
 
-        /**
-         * Returns the name of the file to which the signal is exported.
-         * @return the name of the file to which the signal is exported
-         */
+	/**
+	 * Returns the name of the file to which the signal is exported.
+	 * @return the name of the file to which the signal is exported
+	 */
 	public String getExportFileName() {
 		return exportFileName;
 	}
 
-        /**
-         * Sets the name of the file to which the signal is exported.
-         * @param exportFileName the name of the file to which the signal
-         * is exported
-         */
+	/**
+	 * Sets the name of the file to which the signal is exported.
+	 * @param exportFileName the name of the file to which the signal
+	 * is exported
+	 */
 	public void setExportFileName(String exportFileName) {
 		this.exportFileName = exportFileName;
 	}
 
-        /**
-         * Returns the name of the original file with the signal.
-         * @return the name of the original file with the signal
-         */
+	/**
+	 * Returns the name of the original file with the signal.
+	 * @return the name of the original file with the signal
+	 */
 	public String getSourceFileName() {
 		return sourceFileName;
 	}
 
-        /**
-         * Sets the name of the original file with the signal
-         * @param sourceFileName the name of the original file with the signal
-         */
+	/**
+	 * Sets the name of the original file with the signal
+	 * @param sourceFileName the name of the original file with the signal
+	 */
 	public void setSourceFileName(String sourceFileName) {
 		this.sourceFileName = sourceFileName;
 	}
 
-        /**
-         * Whether the signal is a backup.
-         * @return true if signal is a backup
-         */
-        public boolean isBackup() {
-                return isBackup;
-        }
+	/**
+	 * Whether the signal is a backup.
+	 * @return true if signal is a backup
+	 */
+	public boolean isBackup() {
+		return isBackup;
+	}
 
-        /**
-         * Set backup info.
-         * @param isBackup backup info
-         */
-        public void setIsBackup(boolean isBackup) {
-                this.isBackup = isBackup;
-        }
+	/**
+	 * Set backup info.
+	 * @param isBackup backup info
+	 */
+	public void setIsBackup(boolean isBackup) {
+		this.isBackup = isBackup;
+	}
 
-        /**
-         * Returns the {@link SourceSignalType type} of a source signal
-         * @return the type of a source signal
-         */
+	/**
+	 * Returns the {@link SourceSignalType type} of a source signal
+	 * @return the type of a source signal
+	 */
 	public SourceSignalType getSourceSignalType() {
 		return sourceSignalType;
 	}
 
-        /**
-         * Sets the {@link SourceSignalType type} of a source signal
-         * @param sourceSignalType  the type of a source signal
-         */
+	/**
+	 * Sets the {@link SourceSignalType type} of a source signal
+	 * @param sourceSignalType  the type of a source signal
+	 */
 	public void setSourceSignalType(SourceSignalType sourceSignalType) {
 		this.sourceSignalType = sourceSignalType;
 	}
 
-        /**
-         * Returns the string describing the format of the singalML source
-         * @return the string describing the format of the singalML source
-         */
+	/**
+	 * Returns the string describing the format of the singalML source
+	 * @return the string describing the format of the singalML source
+	 */
 	public String getSourceSignalMLFormat() {
 		return sourceSignalMLFormat;
 	}
 
-        /**
-         * Sets the string describing the format of the singalML source
-         * @param sourceSignalMLFormat the string describing the format of
-         * the singalML source
-         */
+	/**
+	 * Sets the string describing the format of the singalML source
+	 * @param sourceSignalMLFormat the string describing the format of
+	 * the singalML source
+	 */
 	public void setSourceSignalMLFormat(String sourceSignalMLFormat) {
 		this.sourceSignalMLFormat = sourceSignalMLFormat;
 	}
 
-        /**
-         * Returns the identifier of a signalML source
-         * @return the identifier of a signalML source
-         */
+	/**
+	 * Returns the identifier of a signalML source
+	 * @return the identifier of a signalML source
+	 */
 	public String getSourceSignalMLSourceUID() {
 		return sourceSignalMLSourceUID;
 	}
 
-        /**
-         * Sets the identifier of a signalML source
-         * @param sourceSignalMLSourceUID the identifier of a signalML source
-         */
+	/**
+	 * Sets the identifier of a signalML source
+	 * @param sourceSignalMLSourceUID the identifier of a signalML source
+	 */
 	public void setSourceSignalMLSourceUID(String sourceSignalMLSourceUID) {
 		this.sourceSignalMLSourceUID = sourceSignalMLSourceUID;
 	}
 
-        /**
-         * Returns the number of samples per second
-         * @return the number of samples per second
-         */
+	/**
+	 * Returns the number of samples per second
+	 * @return the number of samples per second
+	 */
 	public float getSamplingFrequency() {
-		return samplingFrequency;
+		return signalParameters.getSamplingFrequency();
 	}
 
-        /**
-         * Sets the number of samples per second
-         * @param samplingFrequency the number of samples per second
-         */
+	/**
+	 * Sets the number of samples per second
+	 * @param samplingFrequency the number of samples per second
+	 */
 	public void setSamplingFrequency(float samplingFrequency) {
-		this.samplingFrequency = samplingFrequency;
+		signalParameters.setSamplingFrequency(samplingFrequency);
 	}
 
-        /**
-         * Returns the number of channels in the signal
-         * @return the number of channels in the signal
-         */
+	/**
+	 * Returns the number of channels in the signal
+	 * @return the number of channels in the signal
+	 */
 	public int getChannelCount() {
-		return channelCount;
+		return signalParameters.getChannelCount();
 	}
 
-        /**
-         * Sets the number of channels in the signal
-         * @param channelCount the number of channels in the signal
-         */
+	/**
+	 * Sets the number of channels in the signal
+	 * @param channelCount the number of channels in the signal
+	 */
 	public void setChannelCount(int channelCount) {
-		this.channelCount = channelCount;
+		signalParameters.setChannelCount(channelCount);
 	}
 
-        /**
-         * Returns the number of samples in a single channel
-         * @return the number of samples in a single channel
-         */
+	/**
+	 * Returns the number of samples in a single channel
+	 * @return the number of samples in a single channel
+	 */
 	public int getSampleCount() {
 		return sampleCount;
 	}
 
-        /**
-         * Sets the number of samples in a single channel
-         * @param sampleCount the number of samples in a single channel
-         */
+	/**
+	 * Sets the number of samples in a single channel
+	 * @param sampleCount the number of samples in a single channel
+	 */
 	public void setSampleCount(int sampleCount) {
 		this.sampleCount = sampleCount;
 	}
-	
+
 	public float[] getCalibrationGain() {
-		return calibrationGain;
+		return signalParameters.getCalibrationGain();
 	}
 
 	public void setCalibrationGain(float calibration) {
+		float[] calibrationGain = signalParameters.getCalibrationGain();
 		if (calibrationGain == null || getChannelCount() != calibrationGain.length) {
 			if (getChannelCount() > 0)
 				calibrationGain = new float[getChannelCount()];
@@ -306,29 +263,32 @@ public class RawSignalDescriptor {
 				calibrationGain = new float[1];
 		}
 		Arrays.fill(calibrationGain, calibration);
+		signalParameters.setCalibrationGain(calibrationGain);
 	}
 
 	public void setCalibrationGain(float[] calibrationGain) {
-		this.calibrationGain = calibrationGain;
+		signalParameters.setCalibrationGain(calibrationGain);
 	}
 
 	public float[] getCalibrationOffset() {
-		return calibrationOffset;
+		return signalParameters.getCalibrationOffset();
 	}
 
 	/**
 	 * Sets a value of calibration offset for this signal (same for every
 	 * channel.
-	 * @param calibrationOffset new value of calibration offset for
+	 * @param offset new value of calibration offset for
 	 * all channels in the signal
 	 */
-	public void setCalibrationOffset(float calibrationOffset) {
-		if (this.calibrationOffset == null || getChannelCount() != this.calibrationOffset.length)
+	public void setCalibrationOffset(float offset) {
+		float[] calibrationOffset = signalParameters.getCalibrationOffset();
+		if (calibrationOffset == null || getChannelCount() != calibrationOffset.length)
 			if (getChannelCount() > 0)
-				this.calibrationOffset = new float[getChannelCount()];
+				calibrationOffset = new float[getChannelCount()];
 			else
-				this.calibrationOffset = new float[1];
-		Arrays.fill(this.calibrationOffset, calibrationOffset);
+				calibrationOffset = new float[1];
+		Arrays.fill(calibrationOffset, offset);
+		signalParameters.setCalibrationOffset(calibrationOffset);
 	}
 
 	/**
@@ -336,158 +296,125 @@ public class RawSignalDescriptor {
 	 * @param calibrationOffset new value of calibration offset
 	 */
 	public void setCalibrationOffset(float[] calibrationOffset) {
-		this.calibrationOffset = calibrationOffset;
+		signalParameters.setCalibrationOffset(calibrationOffset);
 	}
 
 	public Float getMinimumValue() {
-		return minimumValue;
+		return signalParameters.getMinimumValue();
 	}
 
 	public void setMinimumValue(Float minimumValue) {
-		this.minimumValue = minimumValue;
+		signalParameters.setMinimumValue(minimumValue);
 	}
 
 	public Float getMaximumValue() {
-		return maximumValue;
+		return signalParameters.getMaximumValue();
 	}
 
 	public void setMaximumValue(Float maximumValue) {
-		this.maximumValue = maximumValue;
+		signalParameters.setMaximumValue(maximumValue);
 	}
 
-        /**
-         * Returns the {@link RawSignalSampleType type} of the samples
-         * @return the  type of the samples
-         */
+	/**
+	 * Returns the {@link RawSignalSampleType type} of the samples
+	 * @return the  type of the samples
+	 */
 	public RawSignalSampleType getSampleType() {
 		return sampleType;
 	}
 
-        /**
-         * Sets the {@link RawSignalSampleType type} of the samples
-         * @param sampleType the type of the samples
-         */
+	/**
+	 * Sets the {@link RawSignalSampleType type} of the samples
+	 * @param sampleType the type of the samples
+	 */
 	public void setSampleType(RawSignalSampleType sampleType) {
 		this.sampleType = sampleType;
 	}
 
-        /**
-         * Returns the {@link RawSignalByteOrder order} of bytes in the file
-         * with the signal
-         * @return the {@link RawSignalByteOrder order} of bytes in the file
-         * with the signal
-         */
+	/**
+	 * Returns the {@link RawSignalByteOrder order} of bytes in the file
+	 * with the signal
+	 * @return the {@link RawSignalByteOrder order} of bytes in the file
+	 * with the signal
+	 */
 	public RawSignalByteOrder getByteOrder() {
 		return byteOrder;
 	}
 
-        /**
-         * Sets the {@link RawSignalByteOrder order} of bytes in the file
-         * with the signal
-         * @param byteOrder the {@link RawSignalByteOrder order} of bytes in
-         * the file with the signal
-         */
+	/**
+	 * Sets the {@link RawSignalByteOrder order} of bytes in the file
+	 * with the signal
+	 * @param byteOrder the {@link RawSignalByteOrder order} of bytes in
+	 * the file with the signal
+	 */
 	public void setByteOrder(RawSignalByteOrder byteOrder) {
 		this.byteOrder = byteOrder;
 	}
 
-        /**
-         * Returns the length of the page in seconds
-         * @return the length of the page in seconds
-         */
+	/**
+	 * Returns the length of the page in seconds
+	 * @return the length of the page in seconds
+	 */
 	public float getPageSize() {
-		return pageSize;
+		return signalParameters.getPageSize();
 	}
 
-        /**
-         * Sets the length of the page in seconds
-         * @param pageSize the length of the page in seconds
-         */
+	/**
+	 * Sets the length of the page in seconds
+	 * @param pageSize the length of the page in seconds
+	 */
 	public void setPageSize(float pageSize) {
-		this.pageSize = pageSize;
+		signalParameters.setPageSize(pageSize);
 	}
 
-        /**
-         * Returns the number of blocks in one page
-         * @return the number of blocks in one page
-         */
+	/**
+	 * Returns the number of blocks in one page
+	 * @return the number of blocks in one page
+	 */
 	public int getBlocksPerPage() {
-		return blocksPerPage;
+		return signalParameters.getBlocksPerPage();
 	}
 
-        /**
-         * Sets the number of blocks in one page
-         * @param blocksPerPage the number of blocks in one page
-         */
+	/**
+	 * Sets the number of blocks in one page
+	 * @param blocksPerPage the number of blocks in one page
+	 */
 	public void setBlocksPerPage(int blocksPerPage) {
-		this.blocksPerPage = blocksPerPage;
+		signalParameters.setBlocksPerPage(blocksPerPage);
 	}
 
 	/**
-	 * Returns the name of the {@link EegSystem EEG system} that
-	 * is used for this signal.
-	 * @return the name of the EEG system
+	 * Returns the position (in seconds) of the marker in the described
+	 * signal
+	 * @return the position (in seconds) of the marker in the described
+	 * signal
 	 */
-	public EegSystemName getEegSystemName() {
-		return eegSystemName;
-	}
-
-	/**
-	 * Sets the name of the {@link EegSystem} that is used for this signal.
-	 * @param eegSystemName the name of the EEG system
-	 */
-	public void setEegSystemName(EegSystemName eegSystemName) {
-		this.eegSystemName = eegSystemName;
-	}
-
-        /**
-         * Returns an array of labels of signal channels
-         * @return an array of labels of signal channels
-         */
-	public String[] getChannelLabels() {
-		return channelLabels;
-	}
-
-        /**
-         * Sets an array of labels of signal channels
-         * @param channelLabels an array of labels of signal channels
-         */
-	public void setChannelLabels(String[] channelLabels) {
-		this.channelLabels = channelLabels;
-	}
-
-        /**
-         * Returns the position (in seconds) of the marker in the described
-         * signal
-         * @return the position (in seconds) of the marker in the described
-         * signal
-         */
 	public double getMarkerOffset() {
 		return markerOffset;
 	}
 
-        /**
-         * Sets the position (in seconds) of the marker in the described
-         * signal
-         * @param markerOffset the position (in seconds) of the marker in the
-         * described signal
-         */
+	/**
+	 * Sets the position (in seconds) of the marker in the described
+	 * signal
+	 * @param markerOffset the position (in seconds) of the marker in the
+	 * described signal
+	 */
 	public void setMarkerOffset(double markerOffset) {
 		this.markerOffset = markerOffset;
 	}
 
-        /**
-         * Returns the time of exporting the signal to the file
-         * @return the time of exporting the signal to the file
-         */
+	/**
+	 * Returns the time of exporting the signal to the file
+	 * @return the time of exporting the signal to the file
+	 */
 	public Date getExportDate() {
 		return exportDate;
 	}
 
-        /**
-         * Sets the time of exporting the signal to the file
-         * @param exportDate the time of exporting the signal to the file
-         */
+	/**
+	 * Sets the time of exporting the signal to the file
+	 * @param exportDate the time of exporting the signal to the file
+	 */
 	public void setExportDate(Date exportDate) {
 		this.exportDate = exportDate;
 	}
@@ -505,8 +432,26 @@ public class RawSignalDescriptor {
 	 * Sets the timestamp of the first sample for this signal.
 	 * @param value new value of the timestamp
 	 */
-		public void setFirstSampleTimestamp(double value) {
+	public void setFirstSampleTimestamp(double value) {
 		this.firstSampleTimestamp = value;
+	}
+
+	@Override
+	public void setMontage(Montage montage) {
+		super.setMontage(montage);
+
+		EegSystem eegSystem = montage.getEegSystem();
+		if (eegSystem != null)
+			setEegSystemName(eegSystem.getEegSystemName());
+	}
+
+	@Override
+	public void setEegSystem(EegSystem eegSystem) {
+		super.setEegSystem(eegSystem);
+		if (eegSystem != null)
+			this.setEegSystemName(eegSystem.getEegSystemName());
+		else
+			this.setEegSystemName(null);
 	}
 
 }

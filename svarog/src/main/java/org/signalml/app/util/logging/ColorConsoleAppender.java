@@ -25,29 +25,29 @@ import static java.lang.String.format;
 public class ColorConsoleAppender extends ConsoleAppender
 {
 	private static final int
-		NORMAL = 0,
-		BRIGHT = 1,
-		FOREGROUND_BLACK = 30,
-		FOREGROUND_RED = 31,
-		FOREGROUND_GREEN = 32,
-		FOREGROUND_YELLOW = 33,
-		FOREGROUND_BLUE = 34,
-		FOREGROUND_MAGENTA = 35,
-		FOREGROUND_CYAN = 36,
-		FOREGROUND_WHITE = 37;
+	NORMAL = 0,
+	BRIGHT = 1,
+	FOREGROUND_BLACK = 30,
+	FOREGROUND_RED = 31,
+	FOREGROUND_GREEN = 32,
+	FOREGROUND_YELLOW = 33,
+	FOREGROUND_BLUE = 34,
+	FOREGROUND_MAGENTA = 35,
+	FOREGROUND_CYAN = 36,
+	FOREGROUND_WHITE = 37;
 
 	private static String fmt(int bright, int color) {
 		return format("\u001b[%d;%dm", bright, color);
 	}
 
 	private static final String
-		FATAL_COLOR = fmt(BRIGHT, FOREGROUND_RED),
-		ERROR_COLOR = fmt(NORMAL, FOREGROUND_RED),
-		WARN_COLOR = fmt(NORMAL , FOREGROUND_YELLOW),
-		INFO_COLOR = fmt(NORMAL, FOREGROUND_GREEN),
-		DEBUG_COLOR = fmt(NORMAL, FOREGROUND_CYAN),
-		TRACE_COLOR = fmt(NORMAL, FOREGROUND_BLUE),
-		END_COLOR = "\u001b[m";
+	FATAL_COLOR = fmt(BRIGHT, FOREGROUND_RED),
+	ERROR_COLOR = fmt(NORMAL, FOREGROUND_RED),
+	WARN_COLOR = fmt(NORMAL , FOREGROUND_YELLOW),
+	INFO_COLOR = fmt(NORMAL, FOREGROUND_GREEN),
+	DEBUG_COLOR = fmt(NORMAL, FOREGROUND_CYAN),
+	TRACE_COLOR = fmt(NORMAL, FOREGROUND_BLUE),
+	END_COLOR = "\u001b[m";
 
 	private static final Map<Integer, String> colors = new HashMap<Integer, String>();
 	static {

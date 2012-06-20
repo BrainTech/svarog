@@ -20,11 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
-import org.signalml.app.config.preset.StyledTagSetPresetManager;
+
+import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
 
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.document.opensignal.TagPresetComboBoxModel;
+import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**
@@ -264,8 +265,6 @@ public class NewTagPanel extends JPanel {
 				fileChooser.addChoosableFileFilter(f);
 			}
 			fileChooser.setPreferredSize(new Dimension(500,350));
-
-			fileChooser.setInvokeDefaultButtonOnApprove(true);
 
 		}
 		return fileChooser;

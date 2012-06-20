@@ -43,13 +43,13 @@ public class UnknownArtifactAlgorithm extends NewArtifactAlgorithmBase {
 					prevIdx = j - tailLength;
 				} else {
 					maxIdxShiftDiff = Math.max(maxIdxShiftDiff, j - tailLength
-								   - prevShiftIdx);
+											   - prevShiftIdx);
 					prevShiftIdx = j - tailLength;
 				}
 			}
 			maxIdxDiff = Math.max(maxIdxDiff, blockLength - 1 - prevIdx);
 			maxIdxShiftDiff = Math.max(maxIdxShiftDiff, blockLength
-						   - prevShiftIdx);
+									   - prevShiftIdx);
 
 			buffer[i] = Math.max(maxIdxDiff, maxIdxShiftDiff);
 		}

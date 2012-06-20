@@ -511,9 +511,9 @@ public class SignalPlotColumnHeader extends JComponent {
 			return null;
 		}
 		String locationMessage = _R("T: {0} [P: {1}, B: {2}]",
-					    plot.toTimeSpace(p),
-					    plot.toPageSpace(p),
-					    plot.toBlockSpace(p));
+									plot.toTimeSpace(p),
+									plot.toPageSpace(p),
+									plot.toBlockSpace(p));
 		return plot.getTagToolTip(locationMessage, tag);
 	}
 

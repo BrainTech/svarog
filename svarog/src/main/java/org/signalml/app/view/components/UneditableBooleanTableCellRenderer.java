@@ -21,7 +21,7 @@ import javax.swing.table.TableModel;
  * <ul>
  * <li>the border depending on the fact if the cell is focused,</li>
  * <li>the background and foreground colors depending on the fact if the
- * cell is selected.</li></ul> 
+ * cell is selected.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

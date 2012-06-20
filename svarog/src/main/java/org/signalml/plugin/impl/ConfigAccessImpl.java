@@ -13,7 +13,7 @@ import org.signalml.plugin.loader.PluginLoaderHi;
  * @author Stanislaw Findeisen
  */
 public class ConfigAccessImpl extends AbstractAccess implements SvarogAccessConfig {
-    
+
 	private ConfigAccessImpl() { }
 
 	private static final ConfigAccessImpl _instance = new ConfigAccessImpl();
@@ -26,7 +26,7 @@ public class ConfigAccessImpl extends AbstractAccess implements SvarogAccessConf
 	public SvarogConfiguration getSvarogConfiguration() {
 		return getViewerElementManager().getApplicationConfig();
 	}
-    
+
 	@Override
 	public File getProfileDirectory() {
 		return new File(getViewerElementManager().getProfileDir().getAbsolutePath());
@@ -39,7 +39,7 @@ public class ConfigAccessImpl extends AbstractAccess implements SvarogAccessConf
 		if (files == null) throw new RuntimeException("no profile directories stored");
 		File[] filesArray = new File[files.size()];
 		int i = 0;
-		for (File file : files){
+		for (File file : files) {
 			filesArray[i++] = new File(file.getAbsolutePath());
 		}
 		return filesArray;

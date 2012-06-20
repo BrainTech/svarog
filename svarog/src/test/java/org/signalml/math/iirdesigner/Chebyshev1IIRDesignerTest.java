@@ -37,8 +37,8 @@ public class Chebyshev1IIRDesignerTest {
 		FilterZerosPolesGain zpk1 = iirdesigner.calculatePrototype(3, 3);
 		Complex[] zeros = new Complex[0];
 		Complex[] poles = new Complex[] {new Complex(-0.14931010, 9.03814429e-01), new Complex(-0.29862021, 6.39042136e-17),
-		                                 new Complex(-0.14931010, -9.03814429e-01)
-		                                };
+					new Complex(-0.14931010, -9.03814429e-01)
+		};
 		FilterZerosPolesGain zpk2 = new FilterZerosPolesGain(zeros, poles, 0.25059432325190018);
 
 		assertEquals(zpk1, zpk2);
@@ -57,11 +57,11 @@ public class Chebyshev1IIRDesignerTest {
 
 		//lowpass test
 		pythonB = new double[] {7.02019760e-05, 2.80807904e-04, 4.21211856e-04,
-		                    2.80807904e-04, 7.02019760e-05
-		                   };
+								2.80807904e-04, 7.02019760e-05
+							   };
 		pythonA = new double[] {1.0, -3.72214229, 5.29043743,
-		                    -3.39981985, 0.83311132
-		                   };
+								-3.39981985, 0.83311132
+							   };
 		coeffs = iirdesigner.designDigitalFilter(FilterType.LOWPASS, new double[] {0.1}, new double[] {0.2}, 3.0, 40.0);
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 

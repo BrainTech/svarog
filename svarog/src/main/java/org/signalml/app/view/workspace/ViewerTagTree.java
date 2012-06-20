@@ -174,7 +174,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			signalDocumentPopupMenu.add(getActivateDocumentAction());
 			signalDocumentPopupMenu.addSeparator();
 			signalDocumentPopupMenu.add(getCloseDocumentAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToTagTreeSignalDocumentPopupMenu(signalDocumentPopupMenu);
 		}
 
@@ -193,7 +193,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagDocumentPopupMenu.add(getEditTagDescriptionAction());
 			tagDocumentPopupMenu.addSeparator();
 			tagDocumentPopupMenu.add(getCloseDocumentAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToTagTreeTagDocumentPopupMenu(tagDocumentPopupMenu);
 		}
 
@@ -207,7 +207,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagStylePopupMenu = new JPopupMenu();
 
 			tagStylePopupMenu.add(getEditTagStylesAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToTagTreeTagStylePopupMenu(tagStylePopupMenu);
 		}
 
@@ -225,7 +225,7 @@ public class ViewerTagTree extends AbstractViewerTree implements TagFocusSelecto
 			tagPopupMenu.add(getEditTagAnnotationAction());
 			tagPopupMenu.addSeparator();
 			tagPopupMenu.add(getRemoveTagAction());
-			
+
 			PluginAccessClass.getGUIImpl().addToTagTreeTagPopupMenu(tagPopupMenu);
 		}
 

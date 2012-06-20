@@ -1,5 +1,5 @@
 /**
- * This package is responsible for 
+ * This package is responsible for
  * {@link org.signalml.plugin.loader.PluginLoader loading} plug-ins, checking
  * their {@link org.signalml.plugin.loader.PluginDependency dependencies}
  * and managing their {@link org.signalml.plugin.loader.PluginState states}.

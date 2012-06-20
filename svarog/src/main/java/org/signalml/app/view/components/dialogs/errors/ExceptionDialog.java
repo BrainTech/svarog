@@ -48,9 +48,9 @@ public class ExceptionDialog extends AbstractErrorsDialog  {
 	 */
 	@Override
 	protected void fillDialogFromModel(Object model) throws SignalMLException {
-		
+
 		Throwable exception = (Throwable) model;
-		
+
 		DefaultListModel listModel = new DefaultListModel();
 		listModel.addElement(exception.getMessage());
 		errorList.setModel(listModel);

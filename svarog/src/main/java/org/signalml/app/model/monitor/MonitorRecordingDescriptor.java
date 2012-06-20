@@ -31,7 +31,7 @@ public class MonitorRecordingDescriptor {
 	 * @param isTagsRecordingDisabled determines if the tags should be recorded
 	 */
 	public MonitorRecordingDescriptor(String signalRecordingFilePath,
-		String tagsRecordingFilePath, boolean isTagsRecordingDisabled) {
+									  String tagsRecordingFilePath, boolean isTagsRecordingDisabled) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
 		this.tagsRecordingFilePath = tagsRecordingFilePath;
 		this.tagsRecordingEnabled = isTagsRecordingDisabled;

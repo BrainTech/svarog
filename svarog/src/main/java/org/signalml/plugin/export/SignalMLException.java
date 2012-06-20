@@ -20,8 +20,8 @@ public class SignalMLException extends Exception {
 
 	/**
 	 * Constructor.
-     * @see Exception#Exception(String)
-     */
+	 * @see Exception#Exception(String)
+	 */
 	public SignalMLException(String message) {
 		super(message);
 	}

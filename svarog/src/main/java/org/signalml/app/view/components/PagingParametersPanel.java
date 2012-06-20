@@ -35,7 +35,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class PagingParametersPanel extends AbstractSignalMLPanel {
+public class PagingParametersPanel extends AbstractPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 * the text field with the size of the page of signal in seconds
 	 */
 	private JTextField pageSizeField;
-	
+
 	/**
 	 * the text field with the number of blocks that fit into one page of
 	 * the signal
@@ -57,7 +57,7 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 */
 	public PagingParametersPanel() {
 		super();
-		initialize();
+		createInterface();
 	}
 
 	/**
@@ -76,11 +76,11 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 	 * This group positions elements in rows.</li>
 	 * </ul>
 	 */
-	protected void initialize() {
+	protected void createInterface() {
 
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(_("Page & block parameters")),
-		        new EmptyBorder(2,2,2,2)
+			new TitledBorder(_("Page & block parameters")),
+			new EmptyBorder(2,2,2,2)
 		);
 
 		setBorder(cb);
@@ -96,15 +96,15 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(pageSizeLabel)
-		        .addComponent(blocksPerPageLabel)
+			layout.createParallelGroup()
+			.addComponent(pageSizeLabel)
+			.addComponent(blocksPerPageLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getPageSizeField())
-		        .addComponent(getBlocksPerPageField())
+			layout.createParallelGroup()
+			.addComponent(getPageSizeField())
+			.addComponent(getBlocksPerPageField())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -112,16 +112,16 @@ public class PagingParametersPanel extends AbstractSignalMLPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(pageSizeLabel)
-				.addComponent(getPageSizeField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(pageSizeLabel)
+			.addComponent(getPageSizeField())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(blocksPerPageLabel)
-				.addComponent(getBlocksPerPageField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(blocksPerPageLabel)
+			.addComponent(getBlocksPerPageField())
+		);
 
 		layout.setVerticalGroup(vGroup);
 

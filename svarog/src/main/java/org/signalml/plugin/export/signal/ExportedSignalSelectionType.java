@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.signal;
 
@@ -15,7 +15,7 @@ public interface ExportedSignalSelectionType {
 	 * selections contains whole pages (all channels)
 	 */
 	String PAGE = "page";
-	
+
 	/**
 	 * selection contains whole blocks but not necessarily pages
 	 * (all channels)
@@ -25,7 +25,7 @@ public interface ExportedSignalSelectionType {
 	 * selection contains the custom part of a channel
 	 */
 	String CHANNEL = "channel";
-	
+
 	/**
 	 * Returns the name of this type of a selection.
 	 * @return the name of this type

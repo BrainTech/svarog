@@ -102,17 +102,17 @@ public class RocDialog extends AbstractDialog  {
 
 		JPanel chartContainPanel = new JPanel(new BorderLayout());
 		chartContainPanel.setBorder(new CompoundBorder(
-		                                    new TitledBorder(_("Roc curve chart")),
-		                                    new EmptyBorder(3,3,3,3)
-		                            ));
+										new TitledBorder(_("Roc curve chart")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 		chartContainPanel.add(getChartPanel(), BorderLayout.CENTER);
 
 		JPanel tablePanel = new JPanel(new BorderLayout());
 		tablePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(_("Roc parameters")),
-		                             new EmptyBorder(3,3,3,3)
-		                     ));
+								 new TitledBorder(_("Roc parameters")),
+								 new EmptyBorder(3,3,3,3)
+							 ));
 
 		JScrollPane scrollPane = new JScrollPane(getRocTable());
 		tablePanel.add(scrollPane, BorderLayout.CENTER);
@@ -128,18 +128,18 @@ public class RocDialog extends AbstractDialog  {
 
 		JPanel rocDataPropertyPanel = new JPanel(new BorderLayout());
 		rocDataPropertyPanel.setBorder(new CompoundBorder(
-		                                       new TitledBorder(_("Roc properties")),
-		                                       new EmptyBorder(3,3,3,3)
-		                               ));
+										   new TitledBorder(_("Roc properties")),
+										   new EmptyBorder(3,3,3,3)
+									   ));
 		JScrollPane rocDataPropertySheetScrollPane = new JScrollPane(getRocDataPropertySheet());
 		rocDataPropertySheetScrollPane.setPreferredSize(new Dimension(400,220));
 		rocDataPropertyPanel.add(rocDataPropertySheetScrollPane, BorderLayout.CENTER);
 
 		JPanel rocDataPointPropertyPanel = new JPanel(new BorderLayout());
 		rocDataPointPropertyPanel.setBorder(new CompoundBorder(
-		                new TitledBorder(_("Roc point properties")),
-		                new EmptyBorder(3,3,3,3)
-		                                    ));
+												new TitledBorder(_("Roc point properties")),
+												new EmptyBorder(3,3,3,3)
+											));
 		JScrollPane rocDataPointPropertySheetScrollPane = new JScrollPane(getRocDataPointPropertySheet());
 		rocDataPointPropertySheetScrollPane.setPreferredSize(new Dimension(400,220));
 		rocDataPointPropertyPanel.add(rocDataPointPropertySheetScrollPane, BorderLayout.CENTER);

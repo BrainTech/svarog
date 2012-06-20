@@ -11,9 +11,9 @@ import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.signal.SignalScanResult;
-import org.signalml.domain.signal.MultichannelSampleSource;
 import org.signalml.domain.signal.SignalScanner;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /** ScanSignalWorker
  *

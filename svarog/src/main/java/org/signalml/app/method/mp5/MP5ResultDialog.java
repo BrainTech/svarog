@@ -68,8 +68,8 @@ public class MP5ResultDialog extends AbstractDialog  {
 		checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(_("Choose result targets")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose result targets")),
+			new EmptyBorder(3,3,3,3)
 		);
 		checkBoxPanel.setBorder(border);
 

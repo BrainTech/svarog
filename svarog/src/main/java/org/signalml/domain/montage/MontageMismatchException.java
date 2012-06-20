@@ -17,36 +17,36 @@ public class MontageMismatchException extends SignalMLException {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * Constructor. Creates an empty montage mismatch exception.
-         */
+	/**
+	 * Constructor. Creates an empty montage mismatch exception.
+	 */
 	public MontageMismatchException() {
 		super();
 	}
 
-        /**
-         * Constructor.
-         * @param message a String with an exception message
-         * @param cause the cause of an exception or null if the cause is
-         * nonexistent or unknown
-         */
+	/**
+	 * Constructor.
+	 * @param message a String with an exception message
+	 * @param cause the cause of an exception or null if the cause is
+	 * nonexistent or unknown
+	 */
 	public MontageMismatchException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-        /**
-         * Constructor. Creates an exception with the specified message.
-         * @param message String with an exception message
-         */
+	/**
+	 * Constructor. Creates an exception with the specified message.
+	 * @param message String with an exception message
+	 */
 	public MontageMismatchException(String message) {
 		super(message);
 	}
 
-        /**
-         * Constructor. Creates an exception based on a given Throwable object.
-         * Message of an exception is cause.toString().
-         * @param cause a throwable object used as a cause for an event
-         */
+	/**
+	 * Constructor. Creates an exception based on a given Throwable object.
+	 * Message of an exception is cause.toString().
+	 * @param cause a throwable object used as a cause for an event
+	 */
 	public MontageMismatchException(Throwable cause) {
 		super(cause);
 	}

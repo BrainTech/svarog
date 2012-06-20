@@ -429,12 +429,12 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 		currentFilter.setFilterType((FilterType) getFilterTypeComboBox().getSelectedItem());
 		currentFilter.setApproximationFunctionType((ApproximationFunctionType) getFilterFamilyComboBox().getSelectedItem());
 		currentFilter.setPassbandEdgeFrequencies(
-			new double[]{
+			new double[] {
 				getPassbandEdgeFrequency1Spinner().getValue(),
 				getPassbandEdgeFrequency2Spinner().getValue()
 			});
 		currentFilter.setStopbandEdgeFrequencies(
-			new double[]{
+			new double[] {
 				getStopbandEdgeFrequency1Spinner().getValue(),
 				getStopbandEdgeFrequency2Spinner().getValue()
 			});

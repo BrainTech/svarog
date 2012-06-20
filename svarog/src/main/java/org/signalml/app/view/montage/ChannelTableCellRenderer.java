@@ -14,7 +14,7 @@ import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * Cell renderer for tables with signal channel, which displays the
- * {@link Channel function} of the channel. 
+ * {@link Channel function} of the channel.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

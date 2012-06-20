@@ -6,6 +6,7 @@ package org.signalml.math.iirdesigner;
 import org.apache.log4j.Logger;
 
 import org.apache.commons.math.complex.Complex;
+import org.signalml.math.ArrayOperations;
 import org.signalml.math.fft.FourierTransform;
 import org.signalml.math.iirdesigner.math.SpecialMath;
 
@@ -144,8 +145,8 @@ public class FilterFrequencyResponseCalculator extends FilterResponseCalculator 
 		int oa = filterCoefficients.getACoefficients().length - 1; //order of a(z)
 		int oc = oa + filterCoefficients.getBCoefficients().length - 1; //order of c(z)
 		double[] c = ArrayOperations.convolve(
-			filterCoefficients.getBCoefficients(),
-			ArrayOperations.reverse(filterCoefficients.getACoefficients())); //c(z) = b(z)*a(1/z)*z^(-oa)
+						 filterCoefficients.getBCoefficients(),
+						 ArrayOperations.reverse(filterCoefficients.getACoefficients())); //c(z) = b(z)*a(1/z)*z^(-oa)
 
 		double[] cr = new double[oc + 1]; //derivative of c wrt 1/z
 		for (i = 0; i < cr.length; i++) {

@@ -102,9 +102,9 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	}
 
 	public int getNaturalFrequency() {
-		return (int) (this.frequency * getBaseLength() / 2.0);
+		return (int)(this.frequency * getBaseLength() / 2.0);
 	}
-	
+
 	public float getFrequency() {
 		return this.frequency;
 	}

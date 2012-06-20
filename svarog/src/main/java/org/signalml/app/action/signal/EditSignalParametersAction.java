@@ -14,11 +14,11 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.model.signal.SignalParameterDescriptor;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 
 /** EditSignalParametersAction
  *
@@ -52,7 +52,7 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 
-		SignalParameterDescriptor spd = new SignalParameterDescriptor();
+		SignalParameters spd = new SignalParameters();
 
 		spd.setPageSize(signalDocument.getPageSize());
 		spd.setBlocksPerPage(signalDocument.getBlocksPerPage());
@@ -68,31 +68,14 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		OriginalMultichannelSampleSource mss = signalDocument.getSampleSource();
 
 		spd.setSamplingFrequency(mss.getSamplingFrequency());
-		if (mss.isSamplingFrequencyCapable()) {
-			spd.setSamplingFrequency(mss.getSamplingFrequency());
-			spd.setSamplingFrequencyEditable(false);
-		} else {
-			spd.setSamplingFrequency(null);
-			spd.setSamplingFrequencyEditable(true);
-		}
 
 		spd.setChannelCount(mss.getChannelCount());
 		if (mss.isChannelCountCapable()) {
 			spd.setChannelCount(mss.getChannelCount());
 			spd.setChannelCountEditable(false);
 		} else {
-			spd.setChannelCount(null);
+			spd.setChannelCount(0);
 			spd.setChannelCountEditable(true);
-		}
-
-		if (mss.isCalibrationCapable()) {
-			spd.setCalibrationGain(mss.getSingleCalibrationGain());
-			spd.setCalibrationOffset(mss.getSingleCalibrationOffset());
-			spd.setCalibrationEditable(true);
-		} else {
-			spd.setCalibrationGain(null);
-			spd.setCalibrationOffset(null);
-			spd.setCalibrationEditable(false);
 		}
 
 		boolean ok = signalParametersDialog.showDialog(spd,true);
@@ -110,11 +93,6 @@ public class EditSignalParametersAction extends AbstractFocusableSignalMLAction<
 		}
 		if (mss.isChannelCountCapable() && spd.isChannelCountEditable()) {
 			mss.setChannelCount(spd.getChannelCount());
-		}
-
-		if (mss.isCalibrationCapable()) {
-			mss.setCalibrationGain(spd.getCalibrationGain());
-			mss.setCalibrationOffset(spd.getCalibrationOffset());
 		}
 
 		signalView.clearSignalSelection();

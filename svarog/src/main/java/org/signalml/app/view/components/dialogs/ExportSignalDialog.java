@@ -12,6 +12,7 @@ import java.awt.Window;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
@@ -21,7 +22,6 @@ import org.signalml.app.view.components.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -46,7 +46,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * such as the time interval, level of processing and selected channels
 	 */
 	private SignalSpacePanel signalSpacePanel;
-	
+
 	/**
 	 * the {@link ExportSignalOptionsPanel panel} to select the format in
 	 * which the signal will be stored
@@ -60,8 +60,8 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ExportSignalDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+	public ExportSignalDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getSignalExportPresetManager(), w, isModal);
 	}
 
 	/**
@@ -182,7 +182,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 
 	/**
 	 * Validates this dialog.
-	 * This dialog is valid if sub-panels ({@link 
+	 * This dialog is valid if sub-panels ({@link
 	 * SignalSpacePanel#validatePanel(Errors) signal space} and
 	 * {@link ExportSignalOptionsPanel#validatePanel(Errors) options}) are
 	 * valid.
@@ -221,7 +221,6 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	public void setPreset(Preset preset, boolean includeSpace) throws SignalMLException {
 
 		SignalExportDescriptor descriptor = (SignalExportDescriptor) preset;
-
 		fillDialogFromModel(descriptor, includeSpace);
 
 	}

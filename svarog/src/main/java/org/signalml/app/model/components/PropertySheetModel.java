@@ -26,7 +26,7 @@ import javax.swing.tree.TreePath;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.workspace.ViewerTabbedPane;
 import org.signalml.plugin.export.view.ViewerTreePane;
-import org.signalml.util.Util;
+import org.signalml.util.FormatUtils;
 import org.springframework.context.MessageSourceResolvable;
 
 /** PropertySheetModel
@@ -127,7 +127,7 @@ public class PropertySheetModel extends AbstractTableModel implements TreeSelect
 					}
 				}
 				if (value instanceof Date) {
-					return Util.formatTime((Date) value);
+					return FormatUtils.formatTime((Date) value);
 				}
 				if (value instanceof File) {
 					return ((File) value).getAbsolutePath();

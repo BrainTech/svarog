@@ -6,10 +6,6 @@ package org.signalml.app.view.montage.filters;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.view.components.DoubleSpinner;
-import org.signalml.app.view.components.FFTWindowTypePanel;
-import org.signalml.app.view.components.FloatSpinner;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -28,6 +24,7 @@ import java.text.ParseException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -41,7 +38,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -50,12 +46,16 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.FFTSampleFilterTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
+import org.signalml.app.view.components.DoubleSpinner;
+import org.signalml.app.view.components.FFTWindowTypePanel;
+import org.signalml.app.view.components.FloatSpinner;
 import org.signalml.app.view.montage.filters.charts.FFTFilterResponseChartGroupPanel;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 import org.signalml.app.view.montage.filters.charts.elements.SelectionHighlightRenderer;
@@ -63,8 +63,6 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-
-import org.springframework.validation.Errors;
 
 /** EditFFTSampleFilterDialog
  *
@@ -110,8 +108,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
-	public EditFFTSampleFilterDialog(PresetManager presetManager, Window w, boolean isModal) {
-		super(presetManager, w, isModal);
+	public EditFFTSampleFilterDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getFftFilterPresetManager(), w, isModal);
 	}
 
 	public EditFFTSampleFilterDialog(PresetManager presetManager) {
@@ -160,8 +158,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(_("Ranges")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Ranges")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
 
@@ -321,39 +319,39 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(fromFrequencyLabel)
-			        .addComponent(coefficientLabel)
+				layout.createParallelGroup()
+				.addComponent(fromFrequencyLabel)
+				.addComponent(coefficientLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getFromFrequencySpinner())
-			        .addComponent(getCoefficientSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getFromFrequencySpinner())
+				.addComponent(getCoefficientSpinner())
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(toFrequencyLabel)
-			        .addComponent(filler1)
+				layout.createParallelGroup()
+				.addComponent(toFrequencyLabel)
+				.addComponent(filler1)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getToFrequencySpinner())
-			        .addComponent(filler2)
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getToFrequencySpinner())
+				.addComponent(filler2)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(unlimitedLabel)
-			        .addComponent(multiplyLabel)
+				layout.createParallelGroup()
+				.addComponent(unlimitedLabel)
+				.addComponent(multiplyLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getUnlimitedCheckBox())
-			        .addComponent(getMultiplyCheckBox())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getUnlimitedCheckBox())
+				.addComponent(getMultiplyCheckBox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -361,23 +359,23 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(fromFrequencyLabel)
-			        .addComponent(getFromFrequencySpinner())
-			        .addComponent(toFrequencyLabel)
-			        .addComponent(getToFrequencySpinner())
-			        .addComponent(unlimitedLabel)
-			        .addComponent(getUnlimitedCheckBox())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(fromFrequencyLabel)
+				.addComponent(getFromFrequencySpinner())
+				.addComponent(toFrequencyLabel)
+				.addComponent(getToFrequencySpinner())
+				.addComponent(unlimitedLabel)
+				.addComponent(getUnlimitedCheckBox())
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(coefficientLabel)
-			        .addComponent(getCoefficientSpinner())
-			        .addComponent(filler1)
-			        .addComponent(filler2)
-			        .addComponent(multiplyLabel)
-			        .addComponent(getMultiplyCheckBox())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(coefficientLabel)
+				.addComponent(getCoefficientSpinner())
+				.addComponent(filler1)
+				.addComponent(filler2)
+				.addComponent(multiplyLabel)
+				.addComponent(getMultiplyCheckBox())
 			);
 
 			layout.setVerticalGroup(vGroup);
@@ -476,7 +474,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			coefficientSpinner = new DoubleSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
 			coefficientSpinner.setPreferredSize(new Dimension(80, 25));
 
-			final JTextField editor = ((JTextField) ((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
+			final JTextField editor = ((JTextField)((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
 
 			KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
 			editor.getInputMap(JComponent.WHEN_FOCUSED).put(enter, "add");

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.view;
 
@@ -10,7 +10,7 @@ import org.signalml.plugin.export.signal.ExportedTagDocument;
  * Interface for a positioned tag.
  * Allows to return a {@link ExportedTag tag} and an index of
  * a {@link ExportedTagDocument document} in which this tag is stored.
- * 
+ *
  * @author Marcin Szumski
  */
 public interface ExportedPositionedTag {
