@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
 
 /**
  * This class represents a {@link MultichannelSampleSource source} for

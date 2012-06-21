@@ -4,9 +4,9 @@ import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 
 import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
-import org.signalml.domain.signal.SignalMLCodecSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.SignalMLCodecSampleSource;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.signal.ChannelSamples;

@@ -7,7 +7,7 @@ package org.signalml.domain.signal.space;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.SourceChannel;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**

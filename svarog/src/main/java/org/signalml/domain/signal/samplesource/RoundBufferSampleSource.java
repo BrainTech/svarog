@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
 
 /**
  * Round buffer which can be used for samples storage/caching.
@@ -105,7 +105,7 @@ public class RoundBufferSampleSource {
 	 * Returns an array containing samples in this buffer.
 	 * @return an array containing samples in this buffer
 	 */
-	double[] getSamples() {
+	public double[] getSamples() {
 		return this.samples;
 	}
 

@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.components.dialogs.errors.Dialogs;
 import org.signalml.domain.book.SegmentReconstructionProvider;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;
@@ -157,6 +158,13 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	private int pointMinPosition;
 
 	private int pointMaxPosition;
+
+	/**
+	 * True, if this book plot already shown a message explaining
+	 * that an out of memory error had happened. In that case
+	 * this book shouldn't be redrawn.
+	 */
+	private boolean outOfMemoryErrorShown;
 
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
@@ -878,7 +886,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		if (mapRectangle != null) {
 			Rectangle mapToRepaint = clip.intersection(mapRectangle);
 			if (!mapToRepaint.isEmpty()) {
-				paintWignerMap(g, mapToRepaint);
+				paintWignerMapAndCatchOutOfMemory(g, mapToRepaint);
 			}
 		}
 
@@ -1163,6 +1171,20 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		}
 
+	}
+
+	private void paintWignerMapAndCatchOutOfMemory(Graphics2D gOrig, Rectangle mapToRepaint) {
+		try {
+			paintWignerMap(gOrig, mapToRepaint);
+			outOfMemoryErrorShown = false;
+		} catch (OutOfMemoryError error) {
+			if (!outOfMemoryErrorShown) {
+				error.printStackTrace();
+				Dialogs.showError(_("This book cannot be rendered because of lack of memory. Please close other books to free some memory."));
+				outOfMemoryErrorShown = true;
+				// this error should be shown only once
+			}
+		}
 	}
 
 	private void paintWignerMap(Graphics2D gOrig, Rectangle mapToRepaint) {

@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
 
 /**
  * This is an interface for an abstract source of samples.

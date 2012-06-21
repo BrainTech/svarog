@@ -6,8 +6,8 @@ package org.signalml.domain.signal.space;
 
 import java.io.Serializable;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 
 /**
  * This is an interface for a descriptor of the

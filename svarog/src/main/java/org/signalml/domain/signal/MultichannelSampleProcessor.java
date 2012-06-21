@@ -7,6 +7,8 @@ package org.signalml.domain.signal;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import org.signalml.domain.signal.samplesource.AbstractMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.ChannelSubsetSampleSource;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.domain.signal.space.SelectionSegmentedSampleSource;

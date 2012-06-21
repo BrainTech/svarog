@@ -18,7 +18,7 @@ import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.view.components.dialogs.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 
 /** EditSignalParametersAction
  *

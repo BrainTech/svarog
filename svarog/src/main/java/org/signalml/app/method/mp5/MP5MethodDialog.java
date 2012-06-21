@@ -57,11 +57,11 @@ import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.document.ExportSignalWorker;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -72,16 +72,12 @@ import org.signalml.method.mp5.MP5ConfigCreator;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.method.mp5.MP5RuntimeParameters;
-import org.signalml.method.mp5.MP5SignalFormatType;
 import org.signalml.method.mp5.MP5WritingModeType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
-
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 
 /** MP5MethodDialog
  *
@@ -473,19 +469,16 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	private void fillParametersFromDialog(MP5Parameters parameters) {
 
+		getSignalSpacePanel().fillModelFromPanel(parameters.getSignalSpace());
+
 		if (rawMode) {
-
 			getRawConfigPanel().fillParametersFromPanel(parameters);
-
 		} else {
-
-			getSignalSpacePanel().fillModelFromPanel(parameters.getSignalSpace());
 			getBasicConfigPanel().fillParametersFromPanel(parameters);
 			getAdvancedConfigPanel().fillParametersFromPanel(parameters);
 			getExpertConfigPanel().fillParametersFromPanel(parameters);
 
 			parameters.setRawConfigText(null);
-
 		}
 
 	}

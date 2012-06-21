@@ -2,12 +2,14 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
 
 import java.util.Arrays;
 import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
+import org.signalml.domain.signal.MultichannelSignalResampler;
+import org.signalml.domain.signal.NaiveMultichannelSignalResampler;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.util.Util;

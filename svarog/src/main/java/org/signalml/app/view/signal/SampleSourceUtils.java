@@ -4,7 +4,7 @@
 
 package org.signalml.app.view.signal;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /** SampleSourceUtils
  *

@@ -9,8 +9,8 @@ import java.io.Serializable;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChainDescriptor;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;
 import org.springframework.validation.Errors;
 

@@ -2,7 +2,9 @@
  *
  */
 
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
+
+import org.signalml.domain.signal.MultichannelSignalResampler;
 
 /**
  * This interface represents the source of samples that can be

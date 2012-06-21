@@ -4,6 +4,8 @@
 
 package org.signalml.domain.signal;
 
+import org.signalml.domain.signal.samplesource.ResamplableSampleSource;
+
 /**
  * This class is an implementation of the naive resampler of the signal.
  * Samples are not interpolated but the nearest (to this point of time) sample

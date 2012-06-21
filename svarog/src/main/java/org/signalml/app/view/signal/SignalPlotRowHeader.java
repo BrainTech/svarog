@@ -30,7 +30,7 @@ import org.signalml.app.view.components.CompactButton;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /** SignalPlotRowHeader
  *

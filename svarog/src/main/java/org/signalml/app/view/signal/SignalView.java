@@ -119,7 +119,7 @@ import org.signalml.app.view.tag.TagStyleSelector;
 import org.signalml.app.view.tag.TagStyleToolBar;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagDifference;

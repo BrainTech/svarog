@@ -15,8 +15,8 @@ import java.nio.ShortBuffer;
 import java.util.Arrays;
 
 import org.apache.log4j.Logger;
-import org.signalml.domain.signal.AbstractMultichannelSampleSource;
-import org.signalml.domain.signal.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.AbstractMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;

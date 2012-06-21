@@ -1,10 +1,11 @@
-package org.signalml.domain.signal;
+package org.signalml.domain.signal.samplesource;
 
 import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 
 /**
  * @author Mariusz Podsiadło
@@ -33,7 +34,7 @@ public class RoundBufferMultichannelSampleSourceTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.RoundBufferMultichannelSampleSource#incrNextInsertPos()}.
+	 * Test method for {@link org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource#incrNextInsertPos()}.
 	 */
 	@Test
 	public void testIncrNextInsertPos() {
@@ -48,7 +49,7 @@ public class RoundBufferMultichannelSampleSourceTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.RoundBufferMultichannelSampleSource#addSamples(double[])}.
+	 * Test method for {@link org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource#addSamples(double[])}.
 	 */
 	@Test
 	public void testAddSamples() {
@@ -122,7 +123,7 @@ public class RoundBufferMultichannelSampleSourceTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.RoundBufferMultichannelSampleSource#getSamples(int, double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource#getSamples(int, double[], int, int, int)}.
 	 */
 	@Test
 	public void testGetSamples() {

@@ -16,7 +16,7 @@ import com.jmatio.types.MLInt64;
 import com.jmatio.types.MLStructure;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.Tag;
 
 /**

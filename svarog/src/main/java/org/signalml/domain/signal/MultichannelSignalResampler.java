@@ -4,6 +4,8 @@
 
 package org.signalml.domain.signal;
 
+import org.signalml.domain.signal.samplesource.ResamplableSampleSource;
+
 /**
  * This interface represents the resampler of the signal.
  * Allows to create an array of samples that would be between given indexes
