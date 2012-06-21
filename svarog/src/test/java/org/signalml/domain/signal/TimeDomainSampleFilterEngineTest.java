@@ -3,15 +3,14 @@
  */
 package org.signalml.domain.signal;
 
+import static org.junit.Assert.assertEquals;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import java.lang.Math.*;
-
 import org.signalml.math.iirdesigner.FilterCoefficients;
-
-import static org.signalml.SignalMLAssert.*;
 
 /**
  * This class performs unit tests on the {@link TimeDomainSampleFilterEngine TimeDomainSampleFilterEngine} class.
@@ -82,13 +81,13 @@ public class TimeDomainSampleFilterEngineTest {
 		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), coefficients);
 
 		//testing empty then full
-		double[] samples = new double[TEST_SAMPLE_COUNT];
+		float[] samples = new float[TEST_SAMPLE_COUNT];
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++) {
-			samples[i] = Math.random();
+			samples[i] = (float) Math.random();
 		}
 
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {samples[i]});
+			source.addSamples(new float[] {samples[i]});
 
 		double[] uCache = engine.getUnfilteredSamplesCache(source.getSampleCount(0));
 		//System.out.println("uCache.length="+uCache.length);
@@ -100,9 +99,9 @@ public class TimeDomainSampleFilterEngineTest {
 		}
 
 		//adding 2 samples
-		double[] newSamples = new double[] {Math.random(), Math.random()};
-		source.addSamples(new double[] {newSamples[0]});
-		source.addSamples(new double[] {newSamples[1]});
+		float[] newSamples = new float[] {(float) Math.random(), (float) Math.random()};
+		source.addSamples(new float[] {newSamples[0]});
+		source.addSamples(new float[] {newSamples[1]});
 
 		uCache = engine.getUnfilteredSamplesCache(2);
 
@@ -113,7 +112,7 @@ public class TimeDomainSampleFilterEngineTest {
 		assertEquals(uCache[4], newSamples[1], 0.00001);
 
 		//one more sample added
-		double[] newNewSamples = new double[] {Math.random()};
+		float[] newNewSamples = new float[] {(float) Math.random()};
 		source.addSamples(newNewSamples);
 		uCache = engine.getUnfilteredSamplesCache(1);
 
@@ -197,10 +196,10 @@ public class TimeDomainSampleFilterEngineTest {
 		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
 		//adding whole at once
-		double[] samples = new double[TEST_SAMPLE_COUNT];
+		float[] samples = new float[TEST_SAMPLE_COUNT];
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++) {
-			samples[i] = Math.random();
-			source.addSamples(new double[] {samples[i]});
+			samples[i] = (float) Math.random();
+			source.addSamples(new float[] {samples[i]});
 		}
 
 		double[] uCache = engine.getUnfilteredSamplesCache(source.getSampleCount(0));
@@ -211,9 +210,9 @@ public class TimeDomainSampleFilterEngineTest {
 			assertEquals(newFiltered[i], samples[i], 0.0001);
 
 		//two more samples
-		double[] newSamples1 = new double[] {Math.random(), Math.random()};
-		source.addSamples(new double[] {newSamples1[0]});
-		source.addSamples(new double[] {newSamples1[1]});
+		float[] newSamples1 = new float[] {(float) Math.random(), (float) Math.random()};
+		source.addSamples(new float[] {newSamples1[0]});
+		source.addSamples(new float[] {newSamples1[1]});
 		uCache = engine.getUnfilteredSamplesCache(2);
 		fCache = engine.getFilteredSamplesCache(2);
 		newFiltered = engine.calculateNewFilteredSamples(uCache, fCache, 2);
@@ -231,9 +230,9 @@ public class TimeDomainSampleFilterEngineTest {
 											  new double[] {1.0, 0.0, 0.0});
 		engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
 
-		double[] samples = new double[TEST_SAMPLE_COUNT];
+		float[] samples = new float[TEST_SAMPLE_COUNT];
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++)
-			samples[i] = Math.random();
+			samples[i] = (float) Math.random();
 
 		source.addSamples(samples);
 		engine.updateCache(TEST_SAMPLE_COUNT);
@@ -259,7 +258,7 @@ public class TimeDomainSampleFilterEngineTest {
 		int i;
 
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {Math.random()});
+			source.addSamples(new float[] {(float) Math.random()});
 
 		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
 		engine.updateCache(source.getSampleCount(0));
@@ -286,7 +285,7 @@ public class TimeDomainSampleFilterEngineTest {
 		int i;
 
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {Math.random()});
+			source.addSamples(new float[] {(float) Math.random()});
 
 		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
 		engine.updateCache(source.getSampleCount(0));
@@ -327,7 +326,7 @@ public class TimeDomainSampleFilterEngineTest {
 		 * -0.5, 0.5, -0.5, 0.5, ...
 		 */
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {1.0 + (i % 2)});
+			source.addSamples(new float[] {1.0F + (i % 2)});
 
 		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
 		engine.updateCache(source.getSampleCount(0));
@@ -367,7 +366,7 @@ public class TimeDomainSampleFilterEngineTest {
 		 * 1.5,1.5,1.5,1.5,...
 		 */
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {1.0 + (i % 2)});
+			source.addSamples(new float[] {1.0F + (i % 2)});
 
 		engine.updateCache(source.getSampleCount(0));
 		engine.getSamples(target2, 0, TEST_SAMPLE_COUNT, 0);
@@ -452,47 +451,47 @@ public class TimeDomainSampleFilterEngineTest {
 	@Test
 	public void testFiltfiltFilter() {
 
-		double[] signal = new double[] {
-			-0.84293027, -0.92374498, -0.88684131, -0.84391936, -0.87729384,
-			-0.76973675, -0.77477867, -0.77924067, -0.68329653, -0.68361526,
-			-0.58494503, -0.73579347, -0.72676736, -0.61426226, -0.7348077 ,
-			-0.63514914, -0.61154161, -0.5558349 , -0.53932159, -0.51812691,
-			-0.47357742, -0.45951363, -0.48207101, -0.40786034, -0.36886221,
-			-0.32913236, -0.22319939, -0.30716421, -0.29695674, -0.30282762,
-			-0.1731335 , -0.29801377, -0.04960099, -0.10052872, -0.05416476,
-			-0.10317313, -0.03252693,  0.08046697,  0.00968778,  0.06494295,
-			0.17597787,  0.18829966,  0.20641445,  0.21274386,  0.30567242,
-			0.27605571,  0.33610845,  0.31463937,  0.4237753 ,  0.41912496,
-			0.44247043,  0.3916358 ,  0.42717395,  0.48115014,  0.45252122,
-			0.55205897,  0.55208584,  0.66123419,  0.64181315,  0.61917795,
-			0.67897751,  0.64475711,  0.72066436,  0.63571739,  0.7383402 ,
-			0.79417899,  0.83192426,  0.77532409,  0.91190394,  0.80264458,
-			0.79057825,  0.77675767,  0.89988457,  0.87274363,  0.88678747,
-			0.91419218,  0.96141022,  1.01311011,  0.92736388,  0.91391746,
-			0.95243786,  1.03433971,  1.01932166,  0.99894765,  0.99653726,
-			0.92062706,  0.998096  ,  1.02234326,  0.97227623,  1.00515578,
-			0.9319138 ,  1.08820863,  1.01866496,  1.02534453,  1.00618392,
-			0.93251842,  0.91639443,  0.94900511,  0.91605305,  0.8429076 ,
-			0.89504872,  0.86893234,  0.88900493,  0.91816885,  0.84181857,
-			0.86106255,  0.79748276,  0.84929295,  0.74823918,  0.74976467,
-			0.77188246,  0.80976024,  0.67571691,  0.66339871,  0.57172218,
-			0.65688144,  0.64465204,  0.64092486,  0.5693963 ,  0.47568057,
-			0.51252357,  0.48183309,  0.41538183,  0.30359699,  0.33846401,
-			0.28923601,  0.35550002,  0.38384619,  0.23790202,  0.29952727,
-			0.28788653,  0.15992514,  0.15815129,  0.07504026,  0.04761541,
-			0.00324624, -0.06015726,  0.02733409, -0.0738976 , -0.08329257,
-			-0.0741636 , -0.1902963 , -0.22090859, -0.21896887, -0.30650592,
-			-0.23625535, -0.36714351, -0.24848854, -0.36644736, -0.33915488,
-			-0.32429195, -0.40328664, -0.47266171, -0.44345919, -0.63605137,
-			-0.47284301, -0.55770832, -0.62602078, -0.67200793, -0.64251889,
-			-0.69300218, -0.71162561, -0.6715638 , -0.70928254, -0.69294485,
-			-0.86424337, -0.85437643, -0.76778759, -0.85093356, -0.95956528,
-			-0.84909291, -0.85227192, -0.93660553, -0.94901385, -0.92753206,
-			-0.97013603, -0.9075739 , -1.00017777, -0.98782556, -0.87511115,
-			-0.8862636 , -0.93658539, -0.96675933, -0.97582854, -1.0147617 ,
-			-0.95277905, -1.01121291, -0.926366  , -0.95798097, -0.95136035,
-			-0.9205005 , -0.91926882, -0.95904834, -1.01419572, -1.0597947 ,
-			-0.90336143, -0.96378908, -0.95913645, -0.88863453, -0.91757912
+		float[] signal = new float[] {
+			-0.84293027F, -0.92374498F, -0.88684131F, -0.84391936F, -0.87729384F,
+			-0.76973675F, -0.77477867F, -0.77924067F, -0.68329653F, -0.68361526F,
+			-0.58494503F, -0.73579347F, -0.72676736F, -0.61426226F, -0.7348077F,
+			-0.63514914F, -0.61154161F, -0.5558349F, -0.53932159F, -0.51812691F,
+			-0.47357742F, -0.45951363F, -0.48207101F, -0.40786034F, -0.36886221F,
+			-0.32913236F, -0.22319939F, -0.30716421F, -0.29695674F, -0.30282762F,
+			-0.1731335F, -0.29801377F, -0.04960099F, -0.10052872F, -0.05416476F,
+			-0.10317313F, -0.03252693F,  0.08046697F,  0.00968778F,  0.06494295F,
+			0.17597787F,  0.18829966F,  0.20641445F,  0.21274386F,  0.30567242F,
+			0.27605571F,  0.33610845F,  0.31463937F,  0.4237753F,  0.41912496F,
+			0.44247043F,  0.3916358F,  0.42717395F,  0.48115014F,  0.45252122F,
+			0.55205897F,  0.55208584F,  0.66123419F,  0.64181315F,  0.61917795F,
+			0.67897751F,  0.64475711F,  0.72066436F,  0.63571739F,  0.7383402F,
+			0.79417899F,  0.83192426F,  0.77532409F,  0.91190394F,  0.80264458F,
+			0.79057825F,  0.77675767F,  0.89988457F,  0.87274363F,  0.88678747F,
+			0.91419218F,  0.96141022F,  1.01311011F,  0.92736388F,  0.91391746F,
+			0.95243786F,  1.03433971F,  1.01932166F,  0.99894765F,  0.99653726F,
+			0.92062706F,  0.998096F,  1.02234326F,  0.97227623F,  1.00515578F,
+			0.9319138F,  1.08820863F,  1.01866496F,  1.02534453F,  1.00618392F,
+			0.93251842F,  0.91639443F,  0.94900511F,  0.91605305F,  0.8429076F,
+			0.89504872F,  0.86893234F,  0.88900493F,  0.91816885F,  0.84181857F,
+			0.86106255F,  0.79748276F,  0.84929295F,  0.74823918F,  0.74976467F,
+			0.77188246F,  0.80976024F,  0.67571691F,  0.66339871F,  0.57172218F,
+			0.65688144F,  0.64465204F,  0.64092486F,  0.5693963F,  0.47568057F,
+			0.51252357F,  0.48183309F,  0.41538183F,  0.30359699F,  0.33846401F,
+			0.28923601F,  0.35550002F,  0.38384619F,  0.23790202F,  0.29952727F,
+			0.28788653F,  0.15992514F,  0.15815129F,  0.07504026F,  0.04761541F,
+			0.00324624F, -0.06015726F,  0.02733409F, -0.0738976F, -0.08329257F,
+			-0.0741636F, -0.1902963F, -0.22090859F, -0.21896887F, -0.30650592F,
+			-0.23625535F, -0.36714351F, -0.24848854F, -0.36644736F, -0.33915488F,
+			-0.32429195F, -0.40328664F, -0.47266171F, -0.44345919F, -0.63605137F,
+			-0.47284301F, -0.55770832F, -0.62602078F, -0.67200793F, -0.64251889F,
+			-0.69300218F, -0.71162561F, -0.6715638F, -0.70928254F, -0.69294485F,
+			-0.86424337F, -0.85437643F, -0.76778759F, -0.85093356F, -0.95956528F,
+			-0.84909291F, -0.85227192F, -0.93660553F, -0.94901385F, -0.92753206F,
+			-0.97013603F, -0.9075739F, -1.00017777F, -0.98782556F, -0.87511115F,
+			-0.8862636F, -0.93658539F, -0.96675933F, -0.97582854F, -1.0147617F,
+			-0.95277905F, -1.01121291F, -0.926366F, -0.95798097F, -0.95136035F,
+			-0.9205005F, -0.91926882F, -0.95904834F, -1.01419572F, -1.0597947F,
+			-0.90336143F, -0.96378908F, -0.95913645F, -0.88863453F, -0.91757912F
 		};
 
 		double[] bCoefficients = new double[]
@@ -544,7 +543,7 @@ public class TimeDomainSampleFilterEngineTest {
 
 		source = new RoundBufferMultichannelSampleSource(1, signal.length);
 		for (int i = 0; i < signal.length; i++)
-			source.addSamples(new double[] {signal[i]});
+			source.addSamples(new float[] {signal[i]});
 
 		FilterCoefficients coefficients = new FilterCoefficients(bCoefficients, aCoefficients);
 		TimeDomainSampleFilterEngine engine = new TimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);

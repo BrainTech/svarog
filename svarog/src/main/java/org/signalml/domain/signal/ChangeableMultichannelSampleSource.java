@@ -28,11 +28,11 @@ public interface ChangeableMultichannelSampleSource {
 	 */
 	void clearNewSamplesCount();
 
-	void addSampleChunk(double[] newSamples);
+	void addSampleChunk(float[] newSamples);
 
-	void addSamples(List<double[]> newSamples);
+	void addSamples(List<float[]> newSamples);
 
-	void addSamples(double[] newSamples);
+	void addSamples(float[] newSamples);
 
 	/**
 	 * Acquires the built in binary semaphore. It does not prevent other threads
