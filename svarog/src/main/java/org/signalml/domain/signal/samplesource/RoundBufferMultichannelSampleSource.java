@@ -107,7 +107,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	}
 
 	@Override
-	public synchronized void addSampleChunk(double[] newSamples) {
+	public synchronized void addSampleChunk(float[] newSamples) {
 
 		for (int i = 0; i < channelCount; i++) {
 			samples[i][nextInsertPos] = newSamples[i];
@@ -119,7 +119,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	}
 
 	@Override
-	public synchronized void addSamples(double[] newSamples) {
+	public synchronized void addSamples(float[] newSamples) {
 
 		addSampleChunk(newSamples);
 		if (documentView != null && ((SignalView) documentView).getPlots() != null) {
@@ -131,9 +131,9 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	}
 
 	@Override
-	public synchronized void addSamples(List<double[]> newSamples) {
+	public synchronized void addSamples(List<float[]> newSamples) {
 
-		for (Iterator< double[]> i = newSamples.iterator(); i.hasNext();)
+		for (Iterator< float[]> i = newSamples.iterator(); i.hasNext();)
 			addSampleChunk(i.next());
 		if (documentView != null && ((SignalView) documentView).getPlots() != null) {
 			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)

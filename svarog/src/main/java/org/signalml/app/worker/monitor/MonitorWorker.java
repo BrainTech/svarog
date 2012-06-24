@@ -220,7 +220,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 				sampleSource.lock();
 				tagSet.lock();
-				sampleSource.addSamples(data.getDoubleSampleValues());
+				sampleSource.addSamples(data.getSampleValues());
 				tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
 				sampleSource.unlock();
@@ -232,7 +232,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 				// sends chunks to the signal recorder
 				if (signalRecorderWorker != null) {
-					signalRecorderWorker.offerChunk(data.getFloatSampleValues());
+					signalRecorderWorker.offerChunk(data.getSampleValues());
 					if (!signalRecorderWorker.isFirstSampleTimestampSet())
 						signalRecorderWorker.setFirstSampleTimestamp(data.getSamplesTimestamp());
 				}
@@ -341,8 +341,6 @@ class NewSamplesData {
 	 */
 	private float[] sampleValues;
 
-	private double[] doubleSampleValues;
-
 	/**
 	 * The timestamp of the samples represented by the sampleValues array.
 	 */
@@ -355,21 +353,12 @@ class NewSamplesData {
 	 */
 	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
 		this.sampleValues = sampleValues;
-		doubleSampleValues = new double[sampleValues.length];
-		for (int i = 0; i < sampleValues.length; i++) {
-			doubleSampleValues[i] = sampleValues[i];
-			}
 		this.samplesTimestamp = samplesTimestamp;
 	}
 
-	public float[] getFloatSampleValues() {
+	public float[] getSampleValues() {
 		return sampleValues;
 	}
-
-	public double[] getDoubleSampleValues() {
-		return doubleSampleValues;
-	}
-
 
 	public void setSampleValues(float[] sampleValues) {
 		this.sampleValues = sampleValues;

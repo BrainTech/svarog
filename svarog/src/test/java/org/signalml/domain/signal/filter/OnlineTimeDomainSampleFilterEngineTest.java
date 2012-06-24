@@ -32,13 +32,13 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 		engine = getEngine(source, coefficients);
 
 		//testing empty then full
-		double[] samples = new double[TEST_SAMPLE_COUNT];
+		float[] samples = new float[TEST_SAMPLE_COUNT];
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++) {
-			samples[i] = Math.random();
+			samples[i] = (float) Math.random();
 		}
 
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {samples[i]});
+			source.addSamples(new float[] {samples[i]});
 
 		double[] uCache = engine.getUnfilteredSamplesCache(source.getSampleCount(0));
 		//System.out.println("uCache.length="+uCache.length);
@@ -50,9 +50,9 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 		}
 
 		//adding 2 samples
-		double[] newSamples = new double[] {Math.random(), Math.random()};
-		source.addSamples(new double[] {newSamples[0]});
-		source.addSamples(new double[] {newSamples[1]});
+		float[] newSamples = new float[] {(float) Math.random(), (float) Math.random()};
+		source.addSamples(new float[] {newSamples[0]});
+		source.addSamples(new float[] {newSamples[1]});
 
 		uCache = engine.getUnfilteredSamplesCache(2);
 
@@ -63,7 +63,7 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 		assertEquals(uCache[4], newSamples[1], 0.00001);
 
 		//one more sample added
-		double[] newNewSamples = new double[] {Math.random()};
+		float[] newNewSamples = new float[] {(float) Math.random()};
 		source.addSamples(newNewSamples);
 		uCache = engine.getUnfilteredSamplesCache(1);
 
@@ -150,7 +150,7 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 		double[] samples = new double[TEST_SAMPLE_COUNT];
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++) {
 			samples[i] = Math.random();
-			source.addSamples(new double[] {samples[i]});
+			source.addSamples(new float[] {(float) samples[i]});
 		}
 
 		double[] uCache = engine.getUnfilteredSamplesCache(source.getSampleCount(0));
@@ -162,8 +162,8 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 
 		//two more samples
 		double[] newSamples1 = new double[] {Math.random(), Math.random()};
-		source.addSamples(new double[] {newSamples1[0]});
-		source.addSamples(new double[] {newSamples1[1]});
+		source.addSamples(new float[] {(float) newSamples1[0]});
+		source.addSamples(new float[] {(float) newSamples1[1]});
 		uCache = engine.getUnfilteredSamplesCache(2);
 		fCache = engine.getFilteredSamplesCache(2);
 		newFiltered = engine.calculateNewFilteredSamples(uCache, fCache, 2);

@@ -90,7 +90,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 		int i;
 
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {Math.random()});
+			source.addSamples(new float[] {(float) Math.random()});
 
 		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
 
@@ -123,7 +123,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 		int i;
 
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {Math.random()});
+			source.addSamples(new float[] {(float) Math.random()});
 
 		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
 		updateCacheIfNecessary();
@@ -164,7 +164,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 		 * -0.5, 0.5, -0.5, 0.5, ...
 		 */
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {1.0 + (i % 2)});
+			source.addSamples(new float[] {(float) (1.0 + (i % 2))});
 
 		source.getSamples(0, target1, 0, TEST_SAMPLE_COUNT, 0);
 		updateCacheIfNecessary();
@@ -204,7 +204,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 		 * 1.5,1.5,1.5,1.5,...
 		 */
 		for (i = 0; i < TEST_SAMPLE_COUNT; i++)
-			source.addSamples(new double[] {1.0 + (i % 2)});
+			source.addSamples(new float[] {(float) (1.0 + (i % 2))});
 
 		updateCacheIfNecessary();
 		engine.getSamples(target2, 0, TEST_SAMPLE_COUNT, 0);

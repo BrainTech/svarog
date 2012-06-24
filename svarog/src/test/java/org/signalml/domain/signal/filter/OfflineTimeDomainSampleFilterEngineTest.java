@@ -148,7 +148,7 @@ public class OfflineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainS
 
 		source = new RoundBufferMultichannelSampleSource(1, signal.length);
 		for (int i = 0; i < signal.length; i++)
-			source.addSamples(new double[] {signal[i]});
+			source.addSamples(new float[] {(float) signal[i]});
 
 		FilterCoefficients coefficients = new FilterCoefficients(bCoefficients, aCoefficients);
 		OfflineTimeDomainSampleFilterEngine engine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
