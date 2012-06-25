@@ -18,7 +18,7 @@ public enum DataType implements IMatFileElement {
 	MI_UTF8(16, 1),
 	MI_INT64(12, 8),
 	MI_UINT64(13, 8),
-	MI_MATRIX(14); //number of bytes includes padding
+	MI_MATRIX(14);
 
 	int value;
 	int sizeInBytes;

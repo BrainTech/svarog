@@ -8,27 +8,25 @@ import org.signalml.util.matfiles.types.DataType;
 
 public abstract class GenericArray<T extends Object> extends AbstractArray {
 
-	protected T[] values;
+	protected T[][] values;
 
-	public GenericArray(ArrayClass arrayClass, String arrayName, T[] values) {
+	public GenericArray(ArrayClass arrayClass, String arrayName, T[][] values) {
 		super(arrayClass, arrayName);
-
-		dimensionsArray = new DimensionsArray(new int[] {values.length, 1});
-		this.values = values;
+		setValues(values);
 	}
 
 	public GenericArray(ArrayClass arrayClass, String arrayName) {
 		super(arrayClass, arrayName);
 	}
 
-	public void setValues(T[] values) {
-		dimensionsArray = new DimensionsArray(new int[] {1, values.length});
+	protected void setValues(T[][] values) {
+		dimensionsArray = new DimensionsArray(new int[] { values.length, values[0].length });
 		this.values = values;
 	}
 
 	@Override
 	protected int getNumberOfElements() {
-		return values.length;
+		return values.length * values[0].length;
 	}
 
 	@Override
@@ -39,18 +37,22 @@ public abstract class GenericArray<T extends Object> extends AbstractArray {
 		dimensionsArray.write(dataOutputStream);
 		arrayName.write(dataOutputStream);
 
-		//size and type
+		// size and type
 		DataType arrayDataType = arrayClass.getArrayElementDataType();
 		arrayDataType.write(dataOutputStream);
 
 		dataOutputStream.writeInt(getNumberOfElements() * arrayDataType.getDataTypeSizeInBytes());
 
-		//data
 		writeData(dataOutputStream);
-
 		writePadding(dataOutputStream);
 	}
 
-	protected abstract void writeData(DataOutputStream dataOutputStream) throws IOException;
+	protected void writeData(DataOutputStream dataOutputStream) throws IOException {
+		for (int j = 0; j < values[0].length; j++)
+			for (int i = 0; i < values.length; i++)
+				writeDataChunk(dataOutputStream, i, j);
+	}
+
+	protected abstract void writeDataChunk(DataOutputStream dataOutputStream, int i, int j) throws IOException;
 
 }

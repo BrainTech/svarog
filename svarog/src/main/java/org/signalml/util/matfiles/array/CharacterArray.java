@@ -10,17 +10,16 @@ public class CharacterArray extends GenericArray<Character>{
 	public CharacterArray(String arrayName, String value) {
 		super(ArrayClass.MX_CHAR_CLASS, arrayName);
 
-		values = new Character[value.length()];
+		values = new Character[1][value.length()];
 		for (int i = 0; i < value.length(); i++) {
-			values[i] = value.charAt(i);
+			values[0][i] = value.charAt(i);
 		}
 		setValues(values);
 	}
 
 	@Override
-	protected void writeData(DataOutputStream dataOutputStream) throws IOException {
-		for (Character c: values)
-			dataOutputStream.writeByte(c);
+	protected void writeDataChunk(DataOutputStream dataOutputStream, int i, int j) throws IOException {
+		dataOutputStream.writeByte(values[i][j]);
 	}
 
 }

@@ -22,9 +22,30 @@ public class Structure extends AbstractArray {
 		dimensionsArray = new DimensionsArray(new int[] {1, 1});
 	}
 
-	public void addElement(String key, AbstractArray array) {
+	/**
+	 * Makes this structure to be a structure array.
+	 * See: {@link http://www.mathworks.com/help/techdoc/ref/struct.html}
+	 * @param keys
+	 * @param arrays
+	 */
+	public void setFieldsForStructureArray(List<String> keys, List<AbstractArray> arrays) {
+		this.keys = keys;
+		this.arrays = arrays;
+		dimensionsArray = new DimensionsArray(new int[] {1, arrays.size() / keys.size()});
+
+		refreshFieldNames();
+	}
+
+	public void setField(String key, AbstractArray array) {
 		keys.add(key);
 		arrays.add(array);
+
+		refreshFieldNames();
+	}
+
+	protected void refreshFieldNames() {
+		fieldNameLength = new FieldNameLength(keys);
+		fieldNames = new FieldNames(keys, fieldNameLength.getFieldNameMaximumSize());
 	}
 
 	@Override
@@ -50,9 +71,6 @@ public class Structure extends AbstractArray {
 
 	@Override
 	public void write(DataOutputStream dataOutputStream) throws IOException {
-		fieldNameLength = new FieldNameLength(keys);
-		fieldNames = new FieldNames(keys, fieldNameLength.getFieldNameMaximumSize());
-
 		super.write(dataOutputStream);
 
 		arrayFlags.write(dataOutputStream);
