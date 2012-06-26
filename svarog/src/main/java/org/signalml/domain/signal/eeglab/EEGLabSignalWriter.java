@@ -15,6 +15,7 @@ import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.Tag;
+import org.signalml.util.matfiles.CompressedMatlabFileWriter;
 import org.signalml.util.matfiles.MatlabFileWriter;
 import org.signalml.util.matfiles.array.AbstractArray;
 import org.signalml.util.matfiles.array.CharacterArray;
@@ -60,12 +61,10 @@ public class EEGLabSignalWriter {
 
 		int channelCount = sampleSource.getChannelCount();
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
-		double[][] data = new double[channelCount][sampleCount];
 		String[] channelNames = new String[channelCount];
 
 		int referenceChannel = 0;
 		for (int i = 0; i < channelCount; i++) {
-			sampleSource.getSamples(i, data[i], 0, sampleCount, 0);
 			channelNames[i] = sampleSource.getLabel(i);
 			if (sampleSource.getLabel(i).equals("Fz")) {
 				referenceChannel = i;
@@ -111,7 +110,7 @@ public class EEGLabSignalWriter {
 			eegStruct.setField("event", getEventStruct(samplingRate, signalDocument));
 
 		eegStruct.setField("data", new LazyExportDoubleArray("data", new LazySampleProvider(sampleSource)));
-		MatlabFileWriter writer = new MatlabFileWriter(output);
+		MatlabFileWriter writer = new CompressedMatlabFileWriter(output);
 		writer.addElement(eegStruct);
 		writer.write();
 
