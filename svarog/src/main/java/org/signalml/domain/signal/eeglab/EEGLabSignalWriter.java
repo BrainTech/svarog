@@ -109,7 +109,9 @@ public class EEGLabSignalWriter {
 		if (signalDocument != null && descriptor.isExportTags())
 			eegStruct.setField("event", getEventStruct(samplingRate, signalDocument));
 
-		eegStruct.setField("data", new LazyExportDoubleArray("data", new LazySampleProvider(sampleSource)));
+		LazySampleProvider lazySampleProvider = new LazySampleProvider(sampleSource);
+		lazySampleProvider.setSignalWriterMonitor(monitor);
+		eegStruct.setField("data", new LazyExportDoubleArray("data", lazySampleProvider));
 		MatlabFileWriter writer = new CompressedMatlabFileWriter(output);
 		writer.addElement(eegStruct);
 		writer.write();
