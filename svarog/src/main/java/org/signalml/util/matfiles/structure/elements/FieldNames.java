@@ -1,25 +1,17 @@
-package org.signalml.util.matfiles.structure;
+package org.signalml.util.matfiles.structure.elements;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.signalml.util.matfiles.DataElement;
+import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.DataType;
 
 public class FieldNames extends DataElement {
 
 	private List<String> fieldNames = new ArrayList<String>();
-
 	private int fieldNameMaximumSize;
-
-//	public FieldNames(List<String> fieldNames) {
-//		super(DataType.MI_UTF8);
-//		this.fieldNames = fieldNames;
-//
-//		sizeInBytes = fieldNames.size() * FieldNameLength.MAXIMUM_FIELD_NAME_LENGTH;
-//	}
 
 	public FieldNames(List<String> fieldNames, int fieldNameMaximumSize) {
 		super(DataType.MI_INT8);

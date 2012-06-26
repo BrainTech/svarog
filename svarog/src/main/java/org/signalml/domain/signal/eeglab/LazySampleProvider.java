@@ -1,8 +1,9 @@
 package org.signalml.domain.signal.eeglab;
 
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.util.matfiles.array.lazy.ILazyDoubleArrayDataProvider;
 
-public class LazySampleProvider {
+public class LazySampleProvider implements ILazyDoubleArrayDataProvider {
 
 	private MultichannelSampleSource sampleSource;
 
@@ -10,7 +11,7 @@ public class LazySampleProvider {
 		this.sampleSource = sampleSource;
 	}
 
-	public double[][] getSampleChunk(int i, int length) {
+	public double[][] getDataChunk(int i, int length) {
 		double[][] target = new double[sampleSource.getChannelCount()][length];
 
 		for (int channel = 0; channel < sampleSource.getChannelCount(); channel++) {

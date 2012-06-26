@@ -1,9 +1,9 @@
-package org.signalml.util.matfiles.array;
+package org.signalml.util.matfiles.array.elements;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import org.signalml.util.matfiles.DataElement;
+import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.ArrayClass;
 import org.signalml.util.matfiles.types.DataType;
 

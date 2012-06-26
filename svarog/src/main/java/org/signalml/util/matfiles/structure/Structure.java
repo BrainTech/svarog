@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.signalml.util.matfiles.array.AbstractArray;
-import org.signalml.util.matfiles.array.DimensionsArray;
+import org.signalml.util.matfiles.array.elements.DimensionsArray;
+import org.signalml.util.matfiles.structure.elements.FieldNameLength;
+import org.signalml.util.matfiles.structure.elements.FieldNames;
 import org.signalml.util.matfiles.types.ArrayClass;
 
 public class Structure extends AbstractArray {
@@ -72,16 +74,6 @@ public class Structure extends AbstractArray {
 	@Override
 	public void write(DataOutputStream dataOutputStream) throws IOException {
 		super.write(dataOutputStream);
-
-		arrayFlags.write(dataOutputStream);
-		dimensionsArray.write(dataOutputStream);
-		arrayName.write(dataOutputStream);
-
-//		//size and type
-//		DataType arrayDataType = arrayClass.getArrayElementDataType();
-//		arrayDataType.write(dataOutputStream);
-//
-//		dataOutputStream.writeInt(getNumberOfElements() * arrayDataType.getTypeSizeInBytes());
 
 		//data
 		fieldNameLength.write(dataOutputStream);

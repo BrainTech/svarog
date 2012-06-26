@@ -1,4 +1,4 @@
-package org.signalml.util.matfiles;
+package org.signalml.util.matfiles.elements;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

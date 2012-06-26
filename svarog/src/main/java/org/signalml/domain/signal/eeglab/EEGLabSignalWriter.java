@@ -21,7 +21,7 @@ import org.signalml.util.matfiles.array.AbstractArray;
 import org.signalml.util.matfiles.array.CharacterArray;
 import org.signalml.util.matfiles.array.DoubleArray;
 import org.signalml.util.matfiles.array.IntegerArray;
-import org.signalml.util.matfiles.array.LazyExportDoubleArray;
+import org.signalml.util.matfiles.array.lazy.LazyExportDoubleArray;
 import org.signalml.util.matfiles.structure.Structure;
 
 /**

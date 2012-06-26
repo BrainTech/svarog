@@ -1,6 +1,12 @@
 package org.signalml.util.matfiles.array;
 
-import org.signalml.util.matfiles.DataElement;
+import java.io.DataOutputStream;
+import java.io.IOException;
+
+import org.signalml.util.matfiles.array.elements.ArrayFlags;
+import org.signalml.util.matfiles.array.elements.ArrayName;
+import org.signalml.util.matfiles.array.elements.DimensionsArray;
+import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.ArrayClass;
 import org.signalml.util.matfiles.types.DataType;
 
@@ -37,6 +43,15 @@ public abstract class AbstractArray extends DataElement {
 		int paddingSize = getPaddingSizeInBytes();
 
 		return sizeInBytes + paddingSize;
+	}
+
+	@Override
+	public void write(DataOutputStream dataOutputStream) throws IOException {
+		super.write(dataOutputStream);
+
+		arrayFlags.write(dataOutputStream);
+		dimensionsArray.write(dataOutputStream);
+		arrayName.write(dataOutputStream);
 	}
 
 	@Override

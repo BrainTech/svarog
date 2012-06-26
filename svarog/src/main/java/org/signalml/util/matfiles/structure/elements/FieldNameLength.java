@@ -1,19 +1,13 @@
-package org.signalml.util.matfiles.structure;
+package org.signalml.util.matfiles.structure.elements;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import org.signalml.util.matfiles.DataElement;
+import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.DataType;
 
 public class FieldNameLength extends DataElement {
-
-	public static int MAXIMUM_FIELD_NAME_LENGTH = 32;
-
-//	public FieldNameLength() {
-//		super(DataType.MI_INT32, MAXIMUM_FIELD_NAME_LENGTH);
-//	}
 
 	private int maximumSize;
 

@@ -3,6 +3,7 @@ package org.signalml.util.matfiles.array;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import org.signalml.util.matfiles.array.elements.DimensionsArray;
 import org.signalml.util.matfiles.types.ArrayClass;
 import org.signalml.util.matfiles.types.DataType;
 
@@ -32,10 +33,6 @@ public abstract class GenericArray<T extends Object> extends AbstractArray {
 	@Override
 	public void write(DataOutputStream dataOutputStream) throws IOException {
 		super.write(dataOutputStream);
-
-		arrayFlags.write(dataOutputStream);
-		dimensionsArray.write(dataOutputStream);
-		arrayName.write(dataOutputStream);
 
 		// size and type
 		DataType arrayDataType = arrayClass.getArrayElementDataType();
