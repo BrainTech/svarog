@@ -9,7 +9,6 @@ import java.awt.Insets;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
-import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 
 /**
@@ -20,20 +19,13 @@ import org.signalml.app.model.signal.SignalExportDescriptor;
  */
 public class EEGLabOptionsPanel extends JPanel {
 
-	private static final long serialVersionUID = 1L;
-	protected static final Logger logger = Logger
-			.getLogger(ASCIIOptionsPanel.class);
-
-	private JCheckBox tagExportField;
-
-	private String selectTagPrompt;
+	private JCheckBox exportTagsCheckbox;
 
 	/**
 	 * This is the default constructor
 	 */
-	public EEGLabOptionsPanel(String selectTagPrompt) {
+	public EEGLabOptionsPanel() {
 		super();
-		this.selectTagPrompt = selectTagPrompt;
 		initialize();
 	}
 
@@ -54,26 +46,18 @@ public class EEGLabOptionsPanel extends JPanel {
 	}
 
 	protected JCheckBox getTagExportField() {
-		if (tagExportField == null) {
-			tagExportField = new JCheckBox(_(selectTagPrompt));
+		if (exportTagsCheckbox == null) {
+			exportTagsCheckbox = new JCheckBox(_("Export tags"));
 		}
-		return tagExportField;
-	}
-
-	public void setTagExport(boolean checked) {
-		this.tagExportField.setSelected(checked);
-	}
-
-	public boolean isTagExport() {
-		return this.tagExportField.isSelected();
+		return exportTagsCheckbox;
 	}
 
 	public void fillPanelFromModel(SignalExportDescriptor descriptor) {
-		setTagExport(descriptor.isExportTag());
+		exportTagsCheckbox.setSelected(descriptor.isExportTags());
 	}
 
 	public void fillModelFromPanel(SignalExportDescriptor descriptor) {
-		descriptor.setExportTag(isTagExport());
+		descriptor.setExportTags(exportTagsCheckbox.isSelected());
 		descriptor.setSaveXML(false);
 	}
 }

@@ -29,7 +29,7 @@ public class SignalExportDescriptor implements Preset {
 
 	private ExportFormatType formatType;
 
-	private boolean exportTag;
+	private boolean exportTags;
 
 	private transient StyledTagSet tagSet;
 	private transient float pageSize;
@@ -52,6 +52,7 @@ public class SignalExportDescriptor implements Preset {
 		byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
 		saveXML = true;
 		normalize = false;
+		exportTags = true;
 	}
 
 	@Override
@@ -64,12 +65,12 @@ public class SignalExportDescriptor implements Preset {
 		this.name = name;
 	}
 
-	public boolean isExportTag(){
-		return exportTag;
+	public boolean isExportTags(){
+		return exportTags;
 	}
 
-	public void setExportTag(boolean exportTag){
-		this.exportTag = exportTag;
+	public void setExportTags(boolean exportTags){
+		this.exportTags = exportTags;
 	}
 
 	public String getSeparator(){

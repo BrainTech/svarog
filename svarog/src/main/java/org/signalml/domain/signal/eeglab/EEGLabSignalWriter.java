@@ -106,7 +106,7 @@ public class EEGLabSignalWriter {
 		chanlocs.setFieldsForStructureArray(keys, arrays);
 		eegStruct.setField("chanlocs", chanlocs);
 
-		if (signalDocument != null && descriptor.isExportTag())
+		if (signalDocument != null && descriptor.isExportTags())
 			eegStruct.setField("event", getEventStruct(samplingRate, signalDocument));
 
 		eegStruct.setField("data", new LazyExportDoubleArray("data", new LazySampleProvider(sampleSource)));

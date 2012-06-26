@@ -5,32 +5,23 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 public enum ExportFormatType {
 
 	RAW(_("RAW")),
-
 	ASCII(_("ASCII")),
-
 	EEGLab(_("EEGLab"));
 
-	private String s;
+	/**
+	 * Value which is displayed in GUI when
+	 * the user needs to choose one of these
+	 * export types.
+	 */
+	private String displayValue;
 
-	ExportFormatType(String s) {
-		this.s = s;
+	private ExportFormatType(String displayValue) {
+		this.displayValue = displayValue;
 	}
 
 	@Override
 	public String toString() {
-		return s;
-	}
-
-	public Object[] getArguments() {
-		return new Object[0];
-	}
-
-	public String[] getCodes() {
-		return new String[] { "formatType." + name() };
-	}
-
-	public String getDefaultMessage() {
-		return name();
+		return displayValue;
 	}
 
 }

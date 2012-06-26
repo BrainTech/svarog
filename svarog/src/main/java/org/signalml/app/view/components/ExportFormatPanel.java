@@ -24,8 +24,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.signal.ExportFormatType;
-import org.signalml.app.view.components.ExportSignalOptionsPanel;
-import org.signalml.app.view.components.ResolvableComboBox;
 
 public class ExportFormatPanel extends JPanel {
 
@@ -100,7 +98,7 @@ public class ExportFormatPanel extends JPanel {
 
 	public EEGLabOptionsPanel getEEGLabOptionsPanel() {
 		if (eegLabOptionsPanel == null) {
-			eegLabOptionsPanel = new EEGLabOptionsPanel(_("Export tags"));
+			eegLabOptionsPanel = new EEGLabOptionsPanel();
 		}
 		return eegLabOptionsPanel;
 	}
@@ -108,12 +106,9 @@ public class ExportFormatPanel extends JPanel {
 	public JPanel getOptionsPanel() {
 		if (optionsPanel == null) {
 			optionsPanel = new JPanel(new CardLayout());
-			optionsPanel.add(getRawOptionsPanel(),
-					ExportFormatType.RAW.toString());
-			optionsPanel.add(getASCIIOptionsPanel(),
-					ExportFormatType.ASCII.toString());
-			optionsPanel.add(getEEGLabOptionsPanel(),
-					ExportFormatType.EEGLab.toString());
+			optionsPanel.add(getRawOptionsPanel(), ExportFormatType.RAW.toString());
+			optionsPanel.add(getASCIIOptionsPanel(), ExportFormatType.ASCII.toString());
+			optionsPanel.add(getEEGLabOptionsPanel(), ExportFormatType.EEGLab.toString());
 		}
 		return optionsPanel;
 	}
@@ -121,8 +116,7 @@ public class ExportFormatPanel extends JPanel {
 	public ResolvableComboBox getFormatComboBox() {
 		if (formatComboBox == null) {
 			formatComboBox = new ResolvableComboBox();
-			formatComboBox.setModel(new DefaultComboBoxModel(ExportFormatType
-					.values()));
+			formatComboBox.setModel(new DefaultComboBoxModel(ExportFormatType.values()));
 			formatComboBox.setPreferredSize(new Dimension(80, 25));
 			formatComboBox.addItemListener(new ItemListener() {
 
@@ -142,12 +136,14 @@ public class ExportFormatPanel extends JPanel {
 	/**
 	 * Fills the fields of this panel from the given
 	 * {@link SignalExportDescriptor export descriptor}.
-	 * 
+	 *
 	 * @param descriptor
 	 *            the export descriptor
 	 */
 	public void fillPanelFromModel(SignalExportDescriptor descriptor) {
 		getFormatComboBox().setSelectedItem(descriptor.getFormatType());
+
+		getEEGLabOptionsPanel().fillPanelFromModel(descriptor);
 		getASCIIOptionsPanel().fillPanelFromModel(descriptor);
 		getRawOptionsPanel().fillPanelFromModel(descriptor);
 	}
@@ -155,7 +151,7 @@ public class ExportFormatPanel extends JPanel {
 	/**
 	 * Fills the given {@link SignalExportDescriptor export descriptor} with the
 	 * user input from this panel.
-	 * 
+	 *
 	 * @param descriptor
 	 *            the descriptor to be filled
 	 */
@@ -163,12 +159,12 @@ public class ExportFormatPanel extends JPanel {
 		ExportFormatType selectedFormatType = (ExportFormatType) getFormatComboBox()
 				.getSelectedItem();
 		descriptor.setFormatType(selectedFormatType);
-		if (ExportFormatType.ASCII == selectedFormatType)
-			getASCIIOptionsPanel().fillModelFromPanel(descriptor);
-		else if (ExportFormatType.RAW == selectedFormatType)
-			getRawOptionsPanel().fillModelFromPanel(descriptor);
-		else
-			getEEGLabOptionsPanel().fillModelFromPanel(descriptor);
+
+		switch(selectedFormatType) {
+			case ASCII: getASCIIOptionsPanel().fillModelFromPanel(descriptor); break;
+			case RAW: getRawOptionsPanel().fillModelFromPanel(descriptor); break;
+			case EEGLab: getEEGLabOptionsPanel().fillModelFromPanel(descriptor); break;
+		}
 
 	}
 
@@ -178,7 +174,7 @@ public class ExportFormatPanel extends JPanel {
 
 	/**
 	 * Validates this panel. Panel is always valid.
-	 * 
+	 *
 	 * @param errors
 	 *            the object in which errors should be stored
 	 */
