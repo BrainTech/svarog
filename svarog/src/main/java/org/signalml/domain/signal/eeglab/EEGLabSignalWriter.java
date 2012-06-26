@@ -70,11 +70,7 @@ public class EEGLabSignalWriter {
 				referenceChannel = i;
 			}
 		}
-		double[] samplesTimes = new double[sampleCount];
-		samplesTimes[0] = 0.0;
 		double samplingRate = sampleSource.getSamplingFrequency();
-		for (int i = 1; i < sampleCount; i++)
-			samplesTimes[i] = i * (1 / samplingRate);
 
 		Structure eegStruct = new Structure("EEG");
 		String filename = output.getName();
@@ -86,7 +82,6 @@ public class EEGLabSignalWriter {
 		eegStruct.setField("srate", new DoubleArray("srate", new double[] { samplingRate }));
 		eegStruct.setField("xmin", new DoubleArray("xmin", new double[] { 0.0 }));
 		eegStruct.setField("xmax", new DoubleArray("xmax", new double[] { sampleCount / samplingRate }));
-		eegStruct.setField("times", new DoubleArray("times", samplesTimes));
 		eegStruct.setField("ref", new IntegerArray("ref", new Integer[] { referenceChannel }));
 		eegStruct.setField("saved", new CharacterArray("saved", "no"));
 
