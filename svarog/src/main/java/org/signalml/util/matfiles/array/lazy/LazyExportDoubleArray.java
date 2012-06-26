@@ -24,8 +24,14 @@ public class LazyExportDoubleArray extends GenericArray<Double> {
 
 	@Override
 	protected void writeData(DataOutputStream dataOutputStream) throws IOException {
-		for (int x = 0; x < lazyDataProvider.getWidth(); x++) {
-			double[][] sampleChunk = lazyDataProvider.getDataChunk(x, 1);
+		int samplesToGet = 1024;
+		for (int x = 0; x < lazyDataProvider.getWidth(); x += samplesToGet) {
+
+			if (x + samplesToGet > lazyDataProvider.getWidth()) {
+				samplesToGet = lazyDataProvider.getWidth() - x;
+			}
+
+			double[][] sampleChunk = lazyDataProvider.getDataChunk(x, samplesToGet);
 
 			for (int j = 0; j < sampleChunk[0].length; j++)
 				for (int i = 0; i < sampleChunk.length; i++)
