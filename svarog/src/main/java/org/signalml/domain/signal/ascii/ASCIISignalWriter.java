@@ -95,7 +95,6 @@ public class ASCIISignalWriter {
 	protected boolean writeSingleChannel(int channelNumber) throws IOException {
 
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
-		System.out.println("Exporting Channel " + channelNumber + " sample count = " + sampleCount);
 		int numberOfSamplesToGet = 0;
 
 		for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {
@@ -113,7 +112,9 @@ public class ASCIISignalWriter {
 			}
 
 			if (monitor != null) {
-				monitor.setProcessedSampleCount(channelNumber * sampleCount + sampleNumber);
+				double processedSampleCount = channelNumber * sampleCount + sampleNumber + numberOfSamplesToGet;
+				processedSampleCount = Math.ceil(processedSampleCount / channelCount);
+				monitor.setProcessedSampleCount((int) processedSampleCount);
 			}
 		}
 		return true;
