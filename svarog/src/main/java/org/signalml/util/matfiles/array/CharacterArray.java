@@ -5,6 +5,12 @@ import java.io.IOException;
 
 import org.signalml.util.matfiles.types.ArrayClass;
 
+/**
+ * This class can store an array of characters in a MAT-file.
+ * An array of characters is represented in Matlab as a string.
+ *
+ * @author Piotr Szachewicz
+ */
 public class CharacterArray extends GenericArray<Character>{
 
 	public CharacterArray(String arrayName, String value) {

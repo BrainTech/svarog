@@ -11,12 +11,34 @@ import org.signalml.util.matfiles.structure.elements.FieldNameLength;
 import org.signalml.util.matfiles.structure.elements.FieldNames;
 import org.signalml.util.matfiles.types.ArrayClass;
 
+/**
+ * This class holds the data of a Matlab structure.
+ * A Matlab structure consists of a list of named
+ * fields each holding a value.
+ *
+ * @author Piotr Szachewicz
+ */
 public class Structure extends AbstractArray {
 
+	/**
+	 * This list of field names for each field.
+	 */
 	private List<String> keys = new ArrayList<String>();
-	private List<AbstractArray> arrays = new ArrayList<AbstractArray>();
 
+	/**
+	 * The list of fields. Their names are stored in the
+	 */
+	private List<AbstractArray> fields = new ArrayList<AbstractArray>();
+
+	/**
+	 * This field represents the maximum size of a field name.
+	 */
 	private FieldNameLength fieldNameLength;
+
+	/**
+	 * This field is the element of the MAT file holding the
+	 * list of field names.
+	 */
 	private FieldNames fieldNames;
 
 	public Structure(String structureName) {
@@ -27,20 +49,25 @@ public class Structure extends AbstractArray {
 	/**
 	 * Makes this structure to be a structure array.
 	 * See: {@link http://www.mathworks.com/help/techdoc/ref/struct.html}
-	 * @param keys
-	 * @param arrays
+	 * @param keys list of field names
+	 * @param arrays list of field values.
 	 */
 	public void setFieldsForStructureArray(List<String> keys, List<AbstractArray> arrays) {
 		this.keys = keys;
-		this.arrays = arrays;
+		this.fields = arrays;
 		dimensionsArray = new DimensionsArray(new int[] {1, arrays.size() / keys.size()});
 
 		refreshFieldNames();
 	}
 
+	/**
+	 * Sets the field value in the structure.
+	 * @param key field name
+	 * @param array field value
+	 */
 	public void setField(String key, AbstractArray array) {
 		keys.add(key);
-		arrays.add(array);
+		fields.add(array);
 
 		refreshFieldNames();
 	}
@@ -64,7 +91,7 @@ public class Structure extends AbstractArray {
 		sizeInBytes += fieldNameLength.getTotalSizeInBytes();
 		sizeInBytes += fieldNames.getTotalSizeInBytes();
 
-		for (AbstractArray array: arrays) {
+		for (AbstractArray array: fields) {
 			sizeInBytes += array.getTotalSizeInBytes();
 		}
 
@@ -79,7 +106,7 @@ public class Structure extends AbstractArray {
 		fieldNameLength.write(dataOutputStream);
 		fieldNames.write(dataOutputStream);
 
-		for (AbstractArray array: arrays) {
+		for (AbstractArray array: fields) {
 			array.write(dataOutputStream);
 		}
 

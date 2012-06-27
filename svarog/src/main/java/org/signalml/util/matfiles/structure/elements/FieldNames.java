@@ -8,6 +8,13 @@ import java.util.List;
 import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.DataType;
 
+/**
+ * This class is responsible for writing the field names
+ * structure subelement to the MAT file. It contains all
+ * field names that are used in the structure.
+ *
+ * @author Piotr Szachewicz
+ */
 public class FieldNames extends DataElement {
 
 	private List<String> fieldNames = new ArrayList<String>();

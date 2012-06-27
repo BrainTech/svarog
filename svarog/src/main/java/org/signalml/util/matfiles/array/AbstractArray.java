@@ -10,12 +10,31 @@ import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.ArrayClass;
 import org.signalml.util.matfiles.types.DataType;
 
+/**
+ * This class represents an array of elements in a MAT-file.
+ *
+ * @author Piotr Szachewicz
+ */
 public abstract class AbstractArray extends DataElement {
 
+	/**
+	 * The class of this array.
+	 */
 	protected ArrayClass arrayClass;
 
+	/**
+	 * The array flags subelement of this array.
+	 */
 	protected ArrayFlags arrayFlags;
+
+	/**
+	 * The array containing the dimensions of this array.
+	 */
 	protected DimensionsArray dimensionsArray;
+
+	/**
+	 * The name of this array subelement.
+	 */
 	protected ArrayName arrayName;
 
 	public AbstractArray(ArrayClass arrayClass, String arrayName) {
@@ -26,6 +45,11 @@ public abstract class AbstractArray extends DataElement {
 		this.arrayName = new ArrayName(arrayName);
 	}
 
+	/**
+	 * Returns the size of this array without counting the padding
+	 * in.
+	 * @return the size of this array without padding.
+	 */
 	protected int getSizeInBytesWithoutPadding() {
 		int sizeInBytes =
 				arrayFlags.getTotalSizeInBytes()
@@ -59,8 +83,13 @@ public abstract class AbstractArray extends DataElement {
 		return calculatePaddingSizeInBytes(getSizeInBytesWithoutPadding());
 	}
 
+	/**
+	 * Returns the total number of elements that this array contains.
+	 * @return the number of elements in this array
+	 */
 	protected abstract int getNumberOfElements();
 
+	@Override
 	public int getTotalSizeInBytes() {
 		return 8 + getSizeInBytes();
 	}

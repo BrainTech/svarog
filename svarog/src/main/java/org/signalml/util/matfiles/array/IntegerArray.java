@@ -5,6 +5,11 @@ import java.io.IOException;
 
 import org.signalml.util.matfiles.types.ArrayClass;
 
+/**
+ * This class can write an array of integers to a MAT-file.
+ *
+ * @author Piotr Szachewicz
+ */
 public class IntegerArray extends GenericArray<Integer> {
 
 	public IntegerArray(String arrayName, Integer[][] values) {

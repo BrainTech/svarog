@@ -5,6 +5,14 @@ import java.io.IOException;
 
 import org.signalml.util.matfiles.elements.IMatFileElement;
 
+/**
+ * A class of array.
+ *
+ * This class represents the type of array (cell/struct/object)
+ * or the type of values that can be stored in it.
+ *
+ * @author Piotr Szachewicz
+ */
 public enum ArrayClass implements IMatFileElement {
 
 	MX_CELL_CLASS(1),
@@ -21,7 +29,15 @@ public enum ArrayClass implements IMatFileElement {
 	MX_INT32_CLASS(12, DataType.MI_INT32),
 	MX_UINT32_CLASS(13, DataType.MI_UINT32);
 
+	/**
+	 * The value representing each {@link ArrayClass} in the MAT file.
+	 */
 	private int value;
+
+	/**
+	 * The {@link DataType} which can be stored in the array of the
+	 * given {@link ArrayClass}.
+	 */
 	private DataType arrayElementDataType;
 
 	private ArrayClass(int value) {
@@ -37,6 +53,12 @@ public enum ArrayClass implements IMatFileElement {
 		this.arrayElementDataType = dataType;
 	}
 
+	/**
+	 * Returns the value representing each
+	 * {@link ArrayClass} in the MAT file.
+	 * @return the value that will be written to the MAT
+	 * file to represent this {@link ArrayClass}.
+	 */
 	public int getValue() {
 		return value;
 	}
