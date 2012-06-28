@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.eeglab;
+package org.signalml.domain.signal.export.eeglab;
 
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;

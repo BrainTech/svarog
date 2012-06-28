@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.ascii;
+package org.signalml.domain.signal.export.ascii;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.export.ISignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
@@ -15,7 +16,7 @@ import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
  *
  * @author Paweł Kordowski, Piotr Szachewicz
  */
-public class ASCIISignalWriter {
+public class ASCIISignalWriter implements ISignalWriter {
 
 	/**
 	 * Maximum size of buffer used to write the signal to file.
@@ -28,42 +29,9 @@ public class ASCIISignalWriter {
 	private DecimalFormat formatter = new DecimalFormat("#####0.0##############");
 
 	/**
-	 * The {@link FileWriter} to which the samples will be written.
-	 */
-	private FileWriter output;
-
-	/**
-	 * Samples source from which the samples will be exported.
-	 */
-	private MultichannelSampleSource sampleSource;
-
-	/**
-	 * The parameters of this signal export.
-	 */
-	private SignalExportDescriptor descriptor;
-
-	/**
-	 * Monitors the progress of this writer.
-	 */
-	private SignalWriterMonitor monitor;
-
-	/**
 	 * Number of channels that will be written to the file.
 	 */
 	private int channelCount;
-
-	public ASCIISignalWriter(File outputFile,
-			MultichannelSampleSource sampleSource,
-			SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
-
-		this.sampleSource = sampleSource;
-		this.output = new FileWriter(outputFile);
-		this.monitor = monitor;
-		this.descriptor = descriptor;
-
-		this.channelCount = sampleSource.getChannelCount();
-
-	}
 
 	/**
 	 * Writes the signal to a file in ASCII format.
@@ -73,17 +41,20 @@ public class ASCIISignalWriter {
 	 * @throws IOException
 	 *             when the file cannot be written
 	 */
-	public void writeSignal()
-			throws IOException {
+	@Override
+	public void writeSignal(File outputFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
+
+		FileWriter fileWriter = new FileWriter(outputFile);
+		this.channelCount = sampleSource.getChannelCount();
 
 		for (int channelNumber = 0; channelNumber < channelCount; channelNumber++) {
-			if(!writeSingleChannel(channelNumber))
+			if(!writeSingleChannel(fileWriter, sampleSource, descriptor, monitor, channelNumber))
 				return;
 
 			if (channelNumber < sampleSource.getChannelCount()-1)
-				output.write("\n");
+				fileWriter.write("\n");
 		}
-		output.close();
+		fileWriter.close();
 	}
 
 	/**
@@ -92,7 +63,10 @@ public class ASCIISignalWriter {
 	 * @return false if writing data was cancelled, true if continuing is ok.
 	 * @throws IOException
 	 */
-	protected boolean writeSingleChannel(int channelNumber) throws IOException {
+	protected boolean writeSingleChannel(
+			FileWriter output, MultichannelSampleSource sampleSource,
+			SignalExportDescriptor descriptor, SignalWriterMonitor monitor,
+			int channelNumber) throws IOException {
 
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 		int numberOfSamplesToGet = 0;

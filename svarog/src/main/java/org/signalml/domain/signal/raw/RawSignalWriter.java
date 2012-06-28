@@ -18,6 +18,7 @@ import java.nio.ShortBuffer;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.export.ISignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.exception.SanityCheckException;
@@ -29,7 +30,7 @@ import org.signalml.exception.SanityCheckException;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class RawSignalWriter {
+public class RawSignalWriter implements ISignalWriter {
 
 	/**
 	 * the size of the buffer (number of samples)

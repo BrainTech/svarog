@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.eeglab;
+package org.signalml.domain.signal.export.eeglab;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.export.ISignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.matfiles.CompressedMatlabFileWriter;
@@ -29,9 +30,15 @@ import org.signalml.util.matfiles.structure.Structure;
  *
  * @author Tomasz Sawicki
  */
-public class EEGLabSignalWriter {
+public class EEGLabSignalWriter implements ISignalWriter {
 
 	private SortedSet<Tag> allTags;
+
+	private SignalDocument signalDocument;
+
+	public void setSignalDocument(SignalDocument signalDocument) {
+		this.signalDocument = signalDocument;
+	}
 
 	/**
 	 * Extracts all the tags from signal document
@@ -57,7 +64,7 @@ public class EEGLabSignalWriter {
 	 * @throws IOException
 	 *             when the file cannot be writen
 	 */
-	public void writeSignal(File output, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalDocument signalDocument, SignalWriterMonitor monitor) throws IOException {
+	public void writeSignal(File output, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
 
 		int channelCount = sampleSource.getChannelCount();
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
@@ -102,7 +109,7 @@ public class EEGLabSignalWriter {
 		eegStruct.setField("chanlocs", chanlocs);
 
 		if (signalDocument != null && descriptor.isExportTags())
-			eegStruct.setField("event", getEventStruct(samplingRate, signalDocument));
+			eegStruct.setField("event", getEventStruct(samplingRate));
 
 		LazySampleProvider lazySampleProvider = new LazySampleProvider(sampleSource);
 		lazySampleProvider.setSignalWriterMonitor(monitor);
@@ -122,7 +129,7 @@ public class EEGLabSignalWriter {
 	 * @return MLStructure event structure
 	 * @author Maciej Pawlisz
 	 */
-	private Structure getEventStruct(double samplingRate, SignalDocument signalDocument) {
+	private Structure getEventStruct(double samplingRate) {
 		allTags = extractTags(signalDocument);
 
 		List<String> keys = new ArrayList<String>();
@@ -147,4 +154,5 @@ public class EEGLabSignalWriter {
 		eventStruct.setFieldsForStructureArray(keys, arrays);
 		return eventStruct;
 	}
+
 }
