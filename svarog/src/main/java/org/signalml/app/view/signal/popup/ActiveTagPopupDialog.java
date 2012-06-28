@@ -25,7 +25,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;

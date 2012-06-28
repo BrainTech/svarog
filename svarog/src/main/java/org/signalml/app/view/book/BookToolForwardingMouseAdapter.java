@@ -10,6 +10,9 @@ import java.awt.event.MouseWheelEvent;
 
 import javax.swing.SwingUtilities;
 
+import org.signalml.app.view.book.tools.BookTool;
+import org.signalml.app.view.book.tools.SelectAtomBookTool;
+
 /** BookToolForwardingMouseAdapter
  *
  *

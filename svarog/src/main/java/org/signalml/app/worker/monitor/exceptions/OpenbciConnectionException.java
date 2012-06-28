@@ -5,7 +5,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 
 public class OpenbciConnectionException extends OpenbciCommunicationException {
 

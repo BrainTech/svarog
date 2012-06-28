@@ -7,7 +7,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
-import org.signalml.app.view.components.BusyDialog;
+import org.signalml.app.view.common.dialogs.BusyDialog;
 
 public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> implements PropertyChangeListener {
 

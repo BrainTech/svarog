@@ -8,7 +8,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import org.signalml.app.view.components.UnlimitedSpinnerPanel;
+import org.signalml.app.view.common.components.panels.UnlimitedSpinnerPanel;
 import org.signalml.util.MinMaxRange;
 
 /**

@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagStyleFocusSelector;
 import org.signalml.app.model.tag.TagStylePaletteDescriptor;
-import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
+import org.signalml.app.view.tag.TagStylePaletteDialog;
 
 /**
  * An action opening the dialog for creating and editing tag styles presets.

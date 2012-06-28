@@ -18,7 +18,7 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
 import org.signalml.app.view.document.monitor.ChannelDefinitionsTable;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;

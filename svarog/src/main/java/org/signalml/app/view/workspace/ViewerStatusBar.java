@@ -37,7 +37,7 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.components.AntialiasedLabel;
+import org.signalml.app.view.common.components.AntialiasedLabel;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

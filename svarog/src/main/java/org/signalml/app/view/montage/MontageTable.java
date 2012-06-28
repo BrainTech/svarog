@@ -18,7 +18,7 @@ import javax.swing.table.TableColumnModel;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.montage.MontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.components.GrayTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.MontageTableTransferHandler;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.SourceChannel;

@@ -17,8 +17,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.components.ChannelComboBox;
-import org.signalml.app.view.components.GrayTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.SourceMontageTableTransferHandler;
 import org.signalml.domain.montage.SourceChannel;
 

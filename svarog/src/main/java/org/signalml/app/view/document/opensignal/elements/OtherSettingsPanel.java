@@ -26,7 +26,7 @@ import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.FileTypeComboBoxModel;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
-import org.signalml.app.view.components.AbstractPanel;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;

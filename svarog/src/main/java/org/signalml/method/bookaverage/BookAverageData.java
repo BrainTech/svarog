@@ -6,7 +6,7 @@ package org.signalml.method.bookaverage;
 
 import java.util.LinkedHashSet;
 
-import org.signalml.app.view.book.IWignerMapPalette;
+import org.signalml.app.view.book.palette.IWignerMapPalette;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.WignerMapScaleType;
 

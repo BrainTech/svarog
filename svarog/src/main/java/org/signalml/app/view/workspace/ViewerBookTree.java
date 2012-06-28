@@ -19,7 +19,7 @@ import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.model.book.BookTreeModel;
-import org.signalml.app.view.BookTreeCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.BookTreeCellRenderer;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.plugin.impl.PluginAccessClass;

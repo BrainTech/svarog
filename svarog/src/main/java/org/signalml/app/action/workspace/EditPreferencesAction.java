@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** EditPreferencesAction

@@ -13,7 +13,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.domain.book.BookFormatException;
 import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.StandardBook;

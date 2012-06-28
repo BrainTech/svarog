@@ -3,7 +3,7 @@ package org.signalml.app;
 import java.awt.Window;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 
 /**
  * Svarog exception handler.

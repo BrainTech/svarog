@@ -32,8 +32,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.ResolvableComboBox;
-import org.signalml.app.view.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.ResolvableComboBox;
+import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

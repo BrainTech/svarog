@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Executor;
 

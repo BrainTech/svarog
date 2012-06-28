@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.MontageFocusSelector;
 import org.signalml.app.document.SignalDocument;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.domain.montage.Montage;
 
 /** ApplyDefaultMontageAction

@@ -16,7 +16,7 @@ import org.signalml.app.action.components.ExportToClipboardAction;
 import org.signalml.app.action.document.ExportToFileAction;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.model.components.WriterExportableTable;
-import org.signalml.app.view.components.CenteringTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.signal.TagStyle;

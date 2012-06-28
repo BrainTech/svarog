@@ -26,7 +26,7 @@ import javax.swing.SwingUtilities;
 
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;

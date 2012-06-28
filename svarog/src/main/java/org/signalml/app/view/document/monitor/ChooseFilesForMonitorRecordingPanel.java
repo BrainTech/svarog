@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
-import org.signalml.app.view.components.FileSelectPanel;
+import org.signalml.app.view.common.components.filechooser.FileSelectPanel;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 

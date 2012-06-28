@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TaskFocusSelector;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskResult;
 

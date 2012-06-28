@@ -24,7 +24,7 @@ import javax.swing.table.TableModel;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.TableToTextExporter;
-import org.signalml.app.view.components.CenteringTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
 import org.signalml.plugin.export.view.FileChooser;
 
 /**

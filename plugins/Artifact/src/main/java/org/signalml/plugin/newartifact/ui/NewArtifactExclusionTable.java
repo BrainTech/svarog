@@ -20,7 +20,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
 
-import org.signalml.app.view.components.CenteringTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
 
 /** ArtifactExclusionTable
  *

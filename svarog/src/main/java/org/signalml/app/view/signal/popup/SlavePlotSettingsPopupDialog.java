@@ -30,7 +30,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;

@@ -5,7 +5,7 @@
 package org.signalml.app.config.workspace;
 
 import org.signalml.app.view.book.BookPlot;
-import org.signalml.app.view.book.WignerMapPalette;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.domain.book.WignerMapScaleType;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;

@@ -8,10 +8,14 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Window;
 import java.awt.Dimension;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -22,21 +26,16 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.EnumMap;
-
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.plugin.export.SignalMLException;
-import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.SourceMontage;
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.montage.ElectrodeType;
 import org.signalml.app.model.montage.MontageDescriptor;
-import org.signalml.app.view.components.TitledPanelWithABorder;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
-import org.signalml.app.view.montage.VisualReferenceModel;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.SourceMontage;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Checks and represents the signal state.
@@ -123,7 +122,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3, 3, 3, 3)));
 		editorPanel.add(editorScrollPane, BorderLayout.CENTER);
 
-		JPanel parametersPanel = new TitledPanelWithABorder(_("Electrodes type"));
+		JPanel parametersPanel = new AbstractPanel(_("Electrodes type"));
 		electrodeTypeComboBox = new JComboBox(ElectrodeType.values());
 		electrodeTypeComboBox.addActionListener(new ActionListener() {
 			@Override

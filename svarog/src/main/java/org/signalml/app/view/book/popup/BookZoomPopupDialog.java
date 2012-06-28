@@ -9,7 +9,7 @@ import java.awt.Window;
 import javax.swing.JComponent;
 
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.components.BookZoomSettingsPanel;
+import org.signalml.app.view.book.BookZoomSettingsPanel;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 

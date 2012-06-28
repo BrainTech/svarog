@@ -18,8 +18,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.view.components.EmbeddedFileChooserFavorites;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooserFavorites;
+import org.signalml.app.view.common.dialogs.OptionPane;
 
 /** ViewerFileChooser
  *

@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;

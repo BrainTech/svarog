@@ -23,7 +23,7 @@ import org.signalml.app.method.InputSignalPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
+import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.montage.SourceMontageDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceChannel;

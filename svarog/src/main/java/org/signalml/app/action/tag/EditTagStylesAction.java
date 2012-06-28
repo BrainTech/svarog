@@ -14,7 +14,7 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagStyleFocusSelector;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.tag.TagStylePaletteDescriptor;
-import org.signalml.app.view.components.dialogs.TagStylePaletteDialog;
+import org.signalml.app.view.tag.TagStylePaletteDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;

@@ -13,7 +13,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.CompactButton;
+import org.signalml.app.view.common.components.CompactButton;
 
 /** MasterSignalPlotCorner
  *

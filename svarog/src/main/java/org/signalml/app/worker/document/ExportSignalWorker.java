@@ -12,7 +12,7 @@ import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.export.ISignalWriter;

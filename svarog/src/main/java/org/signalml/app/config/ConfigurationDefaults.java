@@ -9,7 +9,7 @@ import java.util.Properties;
 import javax.swing.ToolTipManager;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.book.WignerMapPalette;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
