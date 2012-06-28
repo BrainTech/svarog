@@ -1,7 +1,7 @@
 /* ExportSignalOptionsPanel.java created 2008-01-27
  *
  */
-package org.signalml.app.view.components;
+package org.signalml.app.view.components.export;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -11,21 +11,16 @@ import java.awt.event.ItemListener;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
-
-import org.springframework.validation.Errors;
 
 
 /**
@@ -41,11 +36,11 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ExportSignalOptionsPanel extends JPanel {
+public class RawExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final Logger logger = Logger.getLogger(ExportSignalOptionsPanel.class);
+	protected static final Logger logger = Logger.getLogger(RawExportOptionsPanel.class);
 
 	/**
 	 * the combo-box which allows to select the {@link RawSignalSampleType type}
@@ -77,7 +72,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	/**
 	 * Constructor. Initializes the panel.
 	 */
-	public ExportSignalOptionsPanel() {
+	public RawExportOptionsPanel() {
 		super();
 		initialize();
 	}
@@ -105,11 +100,6 @@ public class ExportSignalOptionsPanel extends JPanel {
 	 * samples should be normalized.</li></ul></ul>
 	 */
 	private void initialize() {
-
-		setBorder(new CompoundBorder(
-					  new TitledBorder(_("Export options")),
-					  new EmptyBorder(3,3,3,3)
-				  ));
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
@@ -263,11 +253,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 		return normalizeCheckBox;
 	}
 
-	/**
-	 * Fills the fields of this panel from the given
-	 * {@link SignalExportDescriptor export descriptor}.
-	 * @param descriptor the export descriptor
-	 */
+	@Override
 	public void fillPanelFromModel(SignalExportDescriptor descriptor) {
 
 		getSampleTypeComboBox().setSelectedItem(descriptor.getSampleType());
@@ -278,11 +264,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 
 	}
 
-	/**
-	 * Fills the given {@link SignalExportDescriptor export descriptor}
-	 * with the user input from this panel.
-	 * @param descriptor the descriptor to be filled
-	 */
+	@Override
 	public void fillModelFromPanel(SignalExportDescriptor descriptor) {
 
 		descriptor.setSampleType((RawSignalSampleType) getSampleTypeComboBox().getSelectedItem());
@@ -299,9 +281,7 @@ public class ExportSignalOptionsPanel extends JPanel {
 	 * @param errors the object in which errors should be stored
 	 */
 	public void validatePanel(ValidationErrors errors) {
-
 		// nothing to do
-
 	}
 
 }

@@ -426,11 +426,6 @@
 			<version>2.9.1</version>
 		</dependency>
 		<dependency>
-			<groupId>jmatio</groupId>
-			<artifactId>jmatio</artifactId>
-			<version>0.1-alpha</version>
-		</dependency>
-		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>eega-tag-library</artifactId>
 			<version>1.0.0</version>

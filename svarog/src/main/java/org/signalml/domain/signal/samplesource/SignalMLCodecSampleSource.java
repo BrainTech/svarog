@@ -5,6 +5,7 @@
 package org.signalml.domain.signal.samplesource;
 
 import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
@@ -391,7 +392,7 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 					}
 				}
 				float offset = this.getCalibrationOffset()[channel];
-				logger.debug(String.format("[%d] gain=%f offset=%f", channel, gain, offset));
+				//logger.debug(String.format("[%d] gain=%f offset=%f", channel, gain, offset));
 				for (int i=0; i<count; i++) {
 					target[arrayOffset + i] *= gain;
 					target[arrayOffset + i] += offset;

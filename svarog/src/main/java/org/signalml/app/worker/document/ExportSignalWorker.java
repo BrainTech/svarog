@@ -10,11 +10,15 @@ import java.util.List;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.SignalWriterMonitor;
-import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.export.ISignalWriter;
+import org.signalml.domain.signal.export.eeglab.EEGLabSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+
 
 /** ExportSignalWorker
  *
@@ -29,6 +33,8 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 	private File signalFile;
 	private SignalExportDescriptor descriptor;
 
+	private SignalDocument signalDocument;
+
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	private volatile boolean requestingAbort;
@@ -42,15 +48,27 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 		this.pleaseWaitDialog = pleaseWaitDialog;
 	}
 
+	public ExportSignalWorker(MultichannelSampleSource sampleSource, File signalFile, SignalExportDescriptor descriptor, PleaseWaitDialog pleaseWaitDialog, SignalDocument signalDocument) {
+		this.sampleSource = sampleSource;
+		this.signalFile = signalFile;
+		this.descriptor = descriptor;
+		this.pleaseWaitDialog = pleaseWaitDialog;
+		this.signalDocument = signalDocument;
+	}
+
 	@Override
 	protected Void doInBackground() throws Exception {
 
-		RawSignalWriter rawSignalWriter = new RawSignalWriter();
+		ExportFormatType formatType = descriptor.getFormatType();
+		ISignalWriter signalWriter = formatType.getSignalWriter();
 
-		rawSignalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
+		if (formatType == ExportFormatType.EEGLab) {
+			((EEGLabSignalWriter) signalWriter).setSignalDocument(signalDocument);
+		}
+
+		signalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
 
 		return null;
-
 	}
 
 
