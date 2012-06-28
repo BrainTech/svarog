@@ -156,7 +156,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		if (saveSignal(sampleSource, exportFiles.getSignalFile(), signalExportDescriptor) == false)
 			return;
 
-		if (signalExportDescriptor.isSaveXML())
+		if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW
+				&& signalExportDescriptor.isSaveXML())
 			if (saveDescriptor(sampleSource, signalExportDescriptor, masterPlot, exportFiles) == false)
 				return;
 
@@ -185,32 +186,33 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab
 					   && !"set".equals(extension)) {
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "set");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.MATLAB
+						   && !"mat".equals(extension)) {
+						fileSuggestion = Util.changeOrAddFileExtension(originalFile, "mat");
 				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII
 						   && !"ascii".equals(extension)){
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "ascii");
 				}
 			}
 		}
-		File file;
+		File file = null;
 		File xmlFile = null;
 		boolean hasFile = false;
 		do {
-			if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW)
-				file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion);
-			else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab)
-				file = fileChooser.chooseExportEEGLabSignalFile(optionPaneParent, fileSuggestion);
-			else
-				file = fileChooser.chooseExportASCIISignalFile(optionPaneParent, fileSuggestion);
+			switch(signalExportDescriptor.getFormatType()) {
+			case RAW: file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion); break;
+			case EEGLab: file = fileChooser.chooseExportEEGLabSignalFile(optionPaneParent, fileSuggestion); break;
+			case ASCII: file = fileChooser.chooseExportASCIISignalFile(optionPaneParent, fileSuggestion); break;
+			case MATLAB: file = fileChooser.chooseExportMatlabSignalFile(optionPaneParent, fileSuggestion); break;
+			}
+
 			if (file == null) {
 				return null;
 			}
-			String ext = Util.getFileExtension(file,false);
-			if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW && ext == null) {
-				file = new File(file.getAbsolutePath() + ".bin");
-				hasFile = true;
-			} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab && (ext == null || !"set".equals(ext))) {
-				file = new File(Util.changeOrAddFileExtension(file, "set").getAbsolutePath());
-				hasFile = true;
+			String defaultExtension = signalExportDescriptor.getFormatType().getDefaultExtension();
+			file = new File(Util.changeOrAddFileExtension(file, defaultExtension).getAbsolutePath());
+
+			hasFile = true;
 
 			if (file.exists()) {
 				int res = OptionPane.showFileAlreadyExists(optionPaneParent, file.getName());
@@ -229,11 +231,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 					}
 				}
 			}
-			} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII && ext == null ){
-				file = new File(Util.changeOrAddFileExtension(file, "ascii").getAbsolutePath());
-				hasFile = true;
-			} else
-				hasFile = true;
+
 		} while (!hasFile);
 
 		return new ExportFiles(file, xmlFile);

@@ -44,7 +44,8 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
 		FileFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
 		FileFilter ascii = new FileNameExtensionFilter(_("ASCII files (*.ascii)"), "ascii");
-		FileFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab dataset (*.set)"), "set");
+		FileFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab datasets (*.set)"), "set");
+		FileFilter matlab = new FileNameExtensionFilter(_("MATLAB MAT-files (*.mat)"), "mat");
 		FileFilter xml = new FileNameExtensionFilter(_("XML files (*.xml)"), "xml");
 		FileFilter book = new FileNameExtensionFilter(_("Book files (*.b)"), "b");
 		FileFilter png = new FileNameExtensionFilter(_("PNG graphic files (*.png)"), "png");
@@ -71,6 +72,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		OptionSet.exportSignal.setFilters(binary);
 		OptionSet.exportASCIISignal.setFilters(ascii);
 		OptionSet.exportEEGLabSignal.setFilters(eeglabDataset);
+		OptionSet.exportMatlabSignal.setFilters(matlab);
 		OptionSet.exportBook.setFilters(book);
 		OptionSet.openBook.setFilters(book);
 		OptionSet.savePreset.setFilters(xml);
@@ -192,6 +194,10 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	public synchronized File chooseExportEEGLabSignalFile(Component parent, File fileSuggestion) {
 		return chooseFile(parent, OptionSet.exportEEGLabSignal, fileSuggestion);
+	}
+
+	public synchronized File chooseExportMatlabSignalFile(Component parent, File fileSuggestion) {
+		return chooseFile(parent, OptionSet.exportMatlabSignal, fileSuggestion);
 	}
 
 	public synchronized File chooseExportBookFile(Component parent, File fileSuggestion) {
@@ -447,10 +453,9 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 				      false, false, FILES_ONLY),
 		exportSignal(Operation.save, _("Choose file to save to"),
 			     null, _("Export")),
-		exportASCIISignal(Operation.save, _("Choose file to save to"),
-				null, _("Export")),
-		exportEEGLabSignal(Operation.save, _("Choose file to save to"),
-				null, _("Export")),
+		exportASCIISignal(Operation.save, _("Choose file to save to"), null, _("Export")),
+		exportEEGLabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
+		exportMatlabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportBook(Operation.save, _("Export book"),
 		null, _("Export")),
 		readXMLManifest(Operation.open, _("Read XML manifest"),

@@ -109,6 +109,7 @@ public class ExportFormatPanel extends JPanel {
 			optionsPanel.add(getRawOptionsPanel(), ExportFormatType.RAW.toString());
 			optionsPanel.add(getASCIIOptionsPanel(), ExportFormatType.ASCII.toString());
 			optionsPanel.add(getEEGLabOptionsPanel(), ExportFormatType.EEGLab.toString());
+			optionsPanel.add(new JPanel(), ExportFormatType.MATLAB.toString());
 		}
 		return optionsPanel;
 	}

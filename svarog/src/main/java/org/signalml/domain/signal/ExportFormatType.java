@@ -4,9 +4,10 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public enum ExportFormatType {
 
-	RAW(_("RAW")),
-	ASCII(_("ASCII")),
-	EEGLab(_("EEGLab"));
+	RAW(_("RAW"), "bin"),
+	ASCII(_("ASCII"), "ascii"),
+	MATLAB(_("MATLAB"), "mat"),
+	EEGLab(_("EEGLab"), "set");
 
 	/**
 	 * Value which is displayed in GUI when
@@ -15,8 +16,15 @@ public enum ExportFormatType {
 	 */
 	private String displayValue;
 
-	private ExportFormatType(String displayValue) {
+	private String defaultExtension;
+
+	private ExportFormatType(String displayValue, String defaultExtension) {
 		this.displayValue = displayValue;
+		this.defaultExtension = defaultExtension;
+	}
+
+	public String getDefaultExtension() {
+		return defaultExtension;
 	}
 
 	@Override

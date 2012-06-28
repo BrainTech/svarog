@@ -13,10 +13,10 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
-import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.ascii.ASCIISignalWriter;
 import org.signalml.domain.signal.eeglab.EEGLabSignalWriter;
+import org.signalml.domain.signal.eeglab.MatlabSignalWriter;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
@@ -59,18 +59,25 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 
 	@Override
 	protected Void doInBackground() throws Exception {
-		if (descriptor == null || descriptor.getFormatType() == ExportFormatType.RAW){
-			RawSignalWriter rawSignalWriter = new RawSignalWriter();
- 			rawSignalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
-		} else if (descriptor.getFormatType() == ExportFormatType.ASCII){
+
+		switch(descriptor.getFormatType()) {
+		case ASCII:
 			ASCIISignalWriter writer = new ASCIISignalWriter(signalFile, sampleSource, descriptor, this);
 			writer.writeSignal();
-		} else {
+			break;
+		case MATLAB:
+			new MatlabSignalWriter().writeSignal(signalFile, sampleSource, descriptor, signalDocument, this);
+			break;
+		case EEGLab:
 			new EEGLabSignalWriter().writeSignal(signalFile, sampleSource, descriptor, signalDocument, this);
+			break;
+		case RAW:
+		default:
+			RawSignalWriter rawSignalWriter = new RawSignalWriter();
+ 			rawSignalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
 		}
 
 		return null;
-
 	}
 
 
