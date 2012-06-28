@@ -44,7 +44,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
 		FileFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
 		FileFilter ascii = new FileNameExtensionFilter(_("ASCII files (*.ascii)"), "ascii");
-		FileFilter matlab = new FileNameExtensionFilter(_("MATLAB files (*.mat)"), "mat");
+		FileFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab dataset (*.set)"), "set");
 		FileFilter xml = new FileNameExtensionFilter(_("XML files (*.xml)"), "xml");
 		FileFilter book = new FileNameExtensionFilter(_("Book files (*.b)"), "b");
 		FileFilter png = new FileNameExtensionFilter(_("PNG graphic files (*.png)"), "png");
@@ -70,7 +70,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		OptionSet.readXMLManifest.setFilters(xml);
 		OptionSet.exportSignal.setFilters(binary);
 		OptionSet.exportASCIISignal.setFilters(ascii);
-		OptionSet.exportEEGLabSignal.setFilters(matlab);
+		OptionSet.exportEEGLabSignal.setFilters(eeglabDataset);
 		OptionSet.exportBook.setFilters(book);
 		OptionSet.openBook.setFilters(book);
 		OptionSet.savePreset.setFilters(xml);

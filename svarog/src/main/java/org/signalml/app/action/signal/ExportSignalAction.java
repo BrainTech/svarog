@@ -35,12 +35,12 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.ScanSignalWorker;
 import org.signalml.app.worker.document.ExportSignalWorker;
-import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.ExportFormatType;
+import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
-import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
@@ -171,7 +171,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	 * files
 	 */
 	protected ExportFiles chooseFiles(SignalExportDescriptor signalExportDescriptor) {
-		
+
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		File fileSuggestion = null;
 		if (signalDocument instanceof FileBackedDocument) {
@@ -179,13 +179,13 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			if (originalFile != null) {
 				originalFile = new File(originalFile.getName());
 				String extension = Util.getFileExtension(originalFile, false);
- 				if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW 
+ 				if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW
 				    && !"bin".equals(extension)) {
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "bin");
-				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab 
-					   && !"mat".equals(extension)) {
-					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "mat");
-				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII 
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab
+					   && !"set".equals(extension)) {
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "set");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII
 						   && !"ascii".equals(extension)){
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "ascii");
 				}
@@ -208,10 +208,10 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW && ext == null) {
 				file = new File(file.getAbsolutePath() + ".bin");
 				hasFile = true;
-			} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab && (ext == null || !"mat".equals(ext))) {
-				file = new File(Util.changeOrAddFileExtension(file, "mat").getAbsolutePath());
+			} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab && (ext == null || !"set".equals(ext))) {
+				file = new File(Util.changeOrAddFileExtension(file, "set").getAbsolutePath());
 				hasFile = true;
-			
+
 			if (file.exists()) {
 				int res = OptionPane.showFileAlreadyExists(optionPaneParent, file.getName());
 				if (res != OptionPane.OK_OPTION) {
