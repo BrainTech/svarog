@@ -17,8 +17,8 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.ExportFormatPanel;
 import org.signalml.app.view.components.SignalSpacePanel;
+import org.signalml.app.view.components.export.ExportFormatPanel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
@@ -31,7 +31,7 @@ import org.springframework.validation.Errors;
  * <li>the {@link #getSignalSpacePanel() panel} to select parameters of the
  * signal, such as the time interval, level of processing and selected
  * channels,</li>
- * <li>the {@link ExportSignalOptionsPanel panel} to select the format in
+ * <li>the {@link RawExportOptionsPanel panel} to select the format in
  * which the signal will be stored.</li>
  * </ul>
  *
@@ -48,7 +48,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	private SignalSpacePanel signalSpacePanel;
 
 	/**
-	 * the {@link ExportSignalOptionsPanel panel} to select the format in
+	 * the {@link RawExportOptionsPanel panel} to select the format in
 	 * which the signal will be stored
 	 */
 	private ExportFormatPanel formatPanel;
@@ -86,7 +86,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * <li>the {@link #getSignalSpacePanel() panel} to select parameters of the
 	 * signal, such as the time interval, level of processing and selected
 	 * channels,</li>
-	 * <li>the {@link ExportSignalOptionsPanel panel} to select the format in
+	 * <li>the {@link RawExportOptionsPanel panel} to select the format in
 	 * which the signal will be stored.</li>
 	 * </ul>
 	 */
@@ -144,7 +144,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * <li>If the {@link SignalSpace signal space} is included in this dialog
 	 * - the {@link SignalSpacePanel#fillPanelFromModel(SignalSpace) signal
 	 * space panel}<li>
-	 * <li>the {@link ExportSignalOptionsPanel#fillPanelFromModel(
+	 * <li>the {@link RawExportOptionsPanel#fillPanelFromModel(
 	 * SignalExportDescriptor) signal options panel}</li></ul>
 	 * @param model the model to be used
 	 * @param includeSpace if the signal space panel should be filled
@@ -167,7 +167,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * <ul>
 	 * <li>from {@link SignalSpacePanel#fillModelFromPanel(SignalSpace) signal
 	 * space panel},</li>
-	 * <li>from {@link ExportSignalOptionsPanel#fillModelFromPanel(
+	 * <li>from {@link RawExportOptionsPanel#fillModelFromPanel(
 	 * SignalExportDescriptor) options panel}.</li></ul>
 	 */
 	@Override
@@ -184,7 +184,7 @@ public class ExportSignalDialog extends AbstractSignalSpaceAwarePresetDialog {
 	 * Validates this dialog.
 	 * This dialog is valid if sub-panels ({@link
 	 * SignalSpacePanel#validatePanel(Errors) signal space} and
-	 * {@link ExportSignalOptionsPanel#validatePanel(Errors) options}) are
+	 * {@link RawExportOptionsPanel#validatePanel(Errors) options}) are
 	 * valid.
 	 */
 	@Override

@@ -1,20 +1,18 @@
 package org.signalml.app.view.components;
 
 import java.awt.Component;
-import java.awt.Window;
-
 import java.awt.Container;
+import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import javax.swing.JPanel;
 
+import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.components.validation.ValidationErrors;
 
 /**
  * All panels in Svarog should extend this panel. Contains an instance of
@@ -40,6 +38,12 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 	public AbstractPanel() {
 		super();
 		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
+
+	public AbstractPanel(String panelTitle) {
+		super();
+		propertyChangeSupport = new PropertyChangeSupport(this);
+		setTitledBorder(panelTitle);
 	}
 
 	public Window getParentWindow() {

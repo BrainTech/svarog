@@ -1,7 +1,7 @@
 /* ExportSignalOptionsPanel.java created 2008-01-27
  *
  */
-package org.signalml.app.view.components;
+package org.signalml.app.view.components.export;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -23,6 +23,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.view.components.ResolvableComboBox;
 import org.signalml.domain.signal.ExportFormatType;
 
 public class ExportFormatPanel extends JPanel {
@@ -36,11 +37,11 @@ public class ExportFormatPanel extends JPanel {
 
 	private JPanel optionsPanel;
 
-	private ExportSignalOptionsPanel rawOptionsPanel;
+	private RawExportOptionsPanel rawOptionsPanel;
 
-	private ASCIIOptionsPanel asciiOptionsPanel;
+	private ASCIIExportOptionsPanel asciiOptionsPanel;
 
-	private EEGLabOptionsPanel eegLabOptionsPanel;
+	private EEGLabExportOptionsPanel eegLabOptionsPanel;
 
 	/**
 	 * Constructor. Initializes the panel.
@@ -82,23 +83,23 @@ public class ExportFormatPanel extends JPanel {
 
 	}
 
-	public ExportSignalOptionsPanel getRawOptionsPanel() {
+	public RawExportOptionsPanel getRawOptionsPanel() {
 		if (rawOptionsPanel == null) {
-			rawOptionsPanel = new ExportSignalOptionsPanel();
+			rawOptionsPanel = new RawExportOptionsPanel();
 		}
 		return rawOptionsPanel;
 	}
 
-	public ASCIIOptionsPanel getASCIIOptionsPanel() {
+	public ASCIIExportOptionsPanel getASCIIOptionsPanel() {
 		if (asciiOptionsPanel == null) {
-			asciiOptionsPanel = new ASCIIOptionsPanel(_("Separator: "));
+			asciiOptionsPanel = new ASCIIExportOptionsPanel(_("Separator: "));
 		}
 		return asciiOptionsPanel;
 	}
 
-	public EEGLabOptionsPanel getEEGLabOptionsPanel() {
+	public EEGLabExportOptionsPanel getEEGLabOptionsPanel() {
 		if (eegLabOptionsPanel == null) {
-			eegLabOptionsPanel = new EEGLabOptionsPanel();
+			eegLabOptionsPanel = new EEGLabExportOptionsPanel();
 		}
 		return eegLabOptionsPanel;
 	}

@@ -1,4 +1,4 @@
-package org.signalml.app.view.components;
+package org.signalml.app.view.components.export;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -7,7 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JCheckBox;
-import javax.swing.JPanel;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
 
@@ -17,14 +16,14 @@ import org.signalml.app.model.signal.SignalExportDescriptor;
  * can be set in the constructor) and a button which opens a dialog using which
  * a file path can be selected more conveniently.
  */
-public class EEGLabOptionsPanel extends JPanel {
+public class EEGLabExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	private JCheckBox exportTagsCheckbox;
 
 	/**
 	 * This is the default constructor
 	 */
-	public EEGLabOptionsPanel() {
+	public EEGLabExportOptionsPanel() {
 		super();
 		initialize();
 	}
@@ -52,10 +51,12 @@ public class EEGLabOptionsPanel extends JPanel {
 		return exportTagsCheckbox;
 	}
 
+	@Override
 	public void fillPanelFromModel(SignalExportDescriptor descriptor) {
 		exportTagsCheckbox.setSelected(descriptor.isExportTags());
 	}
 
+	@Override
 	public void fillModelFromPanel(SignalExportDescriptor descriptor) {
 		descriptor.setExportTags(exportTagsCheckbox.isSelected());
 		descriptor.setSaveXML(false);

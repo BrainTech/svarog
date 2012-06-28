@@ -1,11 +1,10 @@
-package org.signalml.app.view.components;
+package org.signalml.app.view.components.export;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
@@ -17,11 +16,11 @@ import org.signalml.app.model.signal.SignalExportDescriptor;
  * can be set in the constructor) and a button which opens a dialog using which
  * a file path can be selected more conveniently.
  */
-public class ASCIIOptionsPanel extends JPanel {
+public class ASCIIExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger
-			.getLogger(ASCIIOptionsPanel.class);
+			.getLogger(ASCIIExportOptionsPanel.class);
 
 	private JLabel selectSeparatorLabel;
 
@@ -30,7 +29,7 @@ public class ASCIIOptionsPanel extends JPanel {
 	/**
 	 * This is the default constructor
 	 */
-	public ASCIIOptionsPanel(String selectSeparatorPrompt) {
+	public ASCIIExportOptionsPanel(String selectSeparatorPrompt) {
 		super();
 		this.selectSeparatorLabel = new JLabel(selectSeparatorPrompt);
 		initialize();
@@ -76,10 +75,12 @@ public class ASCIIOptionsPanel extends JPanel {
 		return t != null && !"".equals(t);
 	}
 
+	@Override
 	public void fillPanelFromModel(SignalExportDescriptor descriptor) {
 		separatorField.setText(descriptor.getSeparator());
 	}
 
+	@Override
 	public void fillModelFromPanel(SignalExportDescriptor descriptor) {
 		descriptor.setSeparator(separatorField.getText());
 		descriptor.setSaveXML(false);
