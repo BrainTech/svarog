@@ -11,8 +11,6 @@ import java.util.logging.Level;
 
 import javax.swing.event.EventListenerList;
 
-import org.signalml.app.view.signal.SignalPlot;
-import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
 import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
@@ -122,10 +120,6 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	public synchronized void addSamples(float[] newSamples) {
 
 		addSampleChunk(newSamples);
-		if (documentView != null && ((SignalView) documentView).getPlots() != null) {
-			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)
-				i.next().repaint();
-		}
 		fireNewSamplesAddedEvent();
 
 	}
@@ -135,10 +129,6 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 		for (Iterator< float[]> i = newSamples.iterator(); i.hasNext();)
 			addSampleChunk(i.next());
-		if (documentView != null && ((SignalView) documentView).getPlots() != null) {
-			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)
-				i.next().repaint();
-		}
 		fireNewSamplesAddedEvent();
 	}
 
@@ -296,6 +286,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	 * Returns the number of samples per second
 	 * @return the number of samples per second = 128
 	 */
+	@Override
 	public float getSamplingFrequency() {
 		return this.samplingFrequency;
 	}
@@ -305,6 +296,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	 * @param sampling - sampling frequency
 	 * @return Null
 	 */
+	@Override
 	public void setSamplingFrequency(float sampling) {
 		this.samplingFrequency = sampling;
 	}
