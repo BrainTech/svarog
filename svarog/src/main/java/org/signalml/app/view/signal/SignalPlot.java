@@ -43,7 +43,6 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
@@ -55,6 +54,8 @@ import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
+import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
@@ -73,9 +74,6 @@ import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
-import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.SourceChannel;
 import org.signalml.util.Util;
 
 /** SignalPlot
@@ -942,7 +940,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			}
 
-			for (i=1; i<length; i++) {
+			//there are 1.0/timeZoomFactor samples for each
+			//x-value pixel to be drawn. For performace
+			//reasons we don't want to draw that many
+			//overlapping lines (see: GeneralPath)
+			//so we draw only 1 in n samples.
+			int n = (int) Math.floor(0.5 / timeZoomFactor);
+
+			for (i=1; i<length; i += n) {
 
 				y = samples[i] * pixelPerValueForChannel;
 
@@ -2388,6 +2393,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	@Override
 	public double getTimeZoomFactor() {
 		return timeZoomFactor;
 	}
@@ -2577,6 +2583,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return blockSize;
 	}
 
+	@Override
 	public float getSamplingFrequency() {
 		return signalChain.getSamplingFrequency();
 	}
