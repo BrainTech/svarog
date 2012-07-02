@@ -331,7 +331,6 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
 		monitorConfigPanel.fillPanelFromModel(config);
 
-		System.out.println("Size = " + this.getSize().getWidth() + " h=" + this.getSize().getHeight());
 	}
 
 	/**
