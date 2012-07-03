@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.timedomain.IIRFilter;
 import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
@@ -107,13 +108,8 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @return filtered input data
 	 */
 	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
-		int size = Math.max(bCoefficients.length, aCoefficients.length) - 1;
-		double[] initialConditions = new double[size];
-
-		for (int i = 0; i < initialConditions.length; i++) {
-			initialConditions[i] = 0;
-		}
-		return filter(bCoefficients, aCoefficients, input, initialConditions);
+		IIRFilter iirFilter = new IIRFilter(bCoefficients, aCoefficients);
+		return iirFilter.filter(input);
 	}
 
 	/**
@@ -126,41 +122,8 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @return the input signal after filtering
 	 */
 	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input, double[] initialConditions) {
-		/**
-		 * The filter function is implemented as a direct II transposed structure.
-		 * It is implemented as the lfilter function in the Scipy library.
-		 * Compare with Scipy source code: scipy/signal/lfilter.c#@NAME@_filt
-		 */
-
-		int bi, ai, zi;
-		double[] filtered = new double[input.length];
-
-		for (int n = 0; n < input.length; n++) {
-			bi = 0;
-			ai = 0;
-			zi = 0;
-
-			if (bCoefficients.length > 1) {
-				filtered[n] = initialConditions[zi] + bCoefficients[bi] / aCoefficients[0] * input[n];
-				bi++;
-				ai++;
-
-				for (; zi < bCoefficients.length - 2; zi++) {
-					initialConditions[zi] = initialConditions[zi + 1]
-											+ input[n] * bCoefficients[bi] / aCoefficients[0]
-											- filtered[n] * aCoefficients[ai] / aCoefficients[0];
-
-					bi++;
-					ai++;
-				}
-				initialConditions[zi] = input[n] * bCoefficients[bi] / aCoefficients[0]
-										- filtered[n] * aCoefficients[ai] / aCoefficients[0];
-			} else {
-				filtered[n] = input[n] * bCoefficients[bi] / aCoefficients[0];
-			}
-		}
-
-		return filtered;
+		IIRFilter iirFilter = new IIRFilter(bCoefficients, aCoefficients, initialConditions);
+		return iirFilter.filter(input);
 	}
 
 	/**

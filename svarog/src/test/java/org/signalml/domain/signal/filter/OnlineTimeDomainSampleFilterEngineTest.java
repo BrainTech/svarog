@@ -207,7 +207,7 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 			-5.55987815e-01,  -5.25304624e-01
 		};
 
-		filtered = OnlineTimeDomainSampleFilterEngine.filterUsingCache(bCoefficients, aCoefficients, shortSignal);
+		filtered = OnlineTimeDomainSampleFilterEngine.filterUsingCache(bCoefficients, aCoefficients, TestingSignals.SHORT_SIGNAL);
 		assertArrayEquals(expected, filtered, 1e-4);
 	}
 
@@ -234,7 +234,7 @@ public class OnlineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSa
 		double[] initialState = new double[] {
 			-0.9496770216294348, 1.603555227411396, -0.6941059685801035
 		};
-		double[] actualFilteringResult = AbstractTimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, shortSignal, initialState);
+		double[] actualFilteringResult = AbstractTimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, TestingSignals.SHORT_SIGNAL, initialState);
 
 		assertArrayEquals(expectedFilteringResult, actualFilteringResult, 1e-4);
 

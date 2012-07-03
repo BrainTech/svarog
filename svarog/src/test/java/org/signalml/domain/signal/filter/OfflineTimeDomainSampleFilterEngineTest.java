@@ -43,7 +43,7 @@ public class OfflineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainS
 		double[] initialState = new double[] {
 			-0.9496770216294348, 1.603555227411396, -0.6941059685801035
 		};
-		double[] actualFilteringResult = AbstractTimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, shortSignal, initialState);
+		double[] actualFilteringResult = AbstractTimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, TestingSignals.SHORT_SIGNAL, initialState);
 
 		assertArrayEquals(expectedFilteringResult, actualFilteringResult, 1e-4);
 
