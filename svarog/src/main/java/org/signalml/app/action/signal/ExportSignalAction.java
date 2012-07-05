@@ -35,6 +35,7 @@ import org.signalml.app.view.signal.export.ExportSignalDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.ScanSignalWorker;
 import org.signalml.app.worker.document.ExportSignalWorker;
+import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
@@ -44,6 +45,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
+import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.signal.space.TimeSpaceType;
@@ -150,6 +152,11 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
+
+		if (signalSpace.getSignalSourceLevel() == SignalSourceLevel.FILTERED) {
+			Montage montage = signalDocument.getMontage();
+			//TODO - connect MultichannelPreciseFilteringForExportSampleSource
+		}
 
 		normalizeSamplesIfNeeded(sampleSource, signalExportDescriptor);
 

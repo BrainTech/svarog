@@ -74,7 +74,7 @@ public class MultichannelSampleFilterTest {
 	@Test
 	public void testAddFilterAllChannels() {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
+				new double[] {20, 0}, new double[] {40, 0}, 3.0, 20.0);
 		definition.setSamplingFrequency(128.0);
 		AbstractTimeDomainSampleFilterEngine filterEngine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
 
