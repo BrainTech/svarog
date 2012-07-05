@@ -6,8 +6,8 @@ package org.signalml.domain.signal.filter;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import org.apache.commons.math.complex.Complex;
 
+import org.apache.commons.math.complex.Complex;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
@@ -140,63 +140,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 				// transform
 				Complex[] transformed = fourierTransform.forwardFFT(cache);
 
-				// we know an even number of points was used
-				int segCount = (transformed.length/2) + 1;
-				double hzPerSegment = samplingFrequency / transformed.length;
-
-				Iterator<Range> it = ((FFTSampleFilter)definition).getRangeIterator();
-				int lowSeg;
-				int highSeg;
-				float lowFrequency;
-				float highFrequency;
-				boolean end = false;
-				double coefficient;
-
-				while (!end && it.hasNext()) {
-
-					Range range = it.next();
-					coefficient = range.getCoefficient();
-
-					// optymization
-					if (coefficient == 1) {
-						continue;
-					}
-
-					lowFrequency = range.getLowFrequency();
-					highFrequency = range.getHighFrequency();
-
-					lowSeg = (int) Math.floor(lowFrequency / hzPerSegment);
-					if (lowSeg >= segCount) {
-						break;
-					}
-
-					if (highFrequency <= lowFrequency) {
-						highSeg = segCount;
-					} else {
-						highSeg = (int) Math.floor(highFrequency / hzPerSegment);
-						if (highSeg > segCount) {
-							highSeg = segCount;
-							end = true;
-						}
-					}
-
-					if (lowSeg == 0) {
-						transformed[0] = transformed[0].multiply(coefficient);
-						lowSeg++;
-					}
-
-					if (highSeg == segCount) {
-						transformed[segCount - 1] = transformed[segCount - 1].multiply(coefficient);
-						highSeg--;
-					}
-
-					// max extent of i is from 1 to N/2-1
-					for (i = lowSeg; i < highSeg; i++) {
-						transformed[i] = transformed[i].multiply(coefficient);
-						transformed[transformed.length - i] = transformed[transformed.length - i].multiply(coefficient);
-					}
-
-				}
+				multiplyFFTByFFTSampleFilter(transformed, (FFTSampleFilter) definition, samplingFrequency);
 
 				// inverse
 				filtered = fourierTransform.inverseFFT(transformed);
@@ -215,6 +159,66 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 			for (i = 0; i < count; i++) {
 				target[arrayOffset + i] =  filtered[filteredIdx];
 				filteredIdx++;
+			}
+
+		}
+	}
+
+	public static void multiplyFFTByFFTSampleFilter(Complex[] transformed, FFTSampleFilter definition, double samplingFrequency) {
+		// we know an even number of points was used
+		int segCount = (transformed.length/2) + 1;
+		double hzPerSegment = samplingFrequency / transformed.length;
+
+		Iterator<Range> it = ((FFTSampleFilter)definition).getRangeIterator();
+		int lowSeg;
+		int highSeg;
+		float lowFrequency;
+		float highFrequency;
+		boolean end = false;
+		double coefficient;
+
+		while (!end && it.hasNext()) {
+
+			Range range = it.next();
+			coefficient = range.getCoefficient();
+
+			// optymization
+			if (coefficient == 1) {
+				continue;
+			}
+
+			lowFrequency = range.getLowFrequency();
+			highFrequency = range.getHighFrequency();
+
+			lowSeg = (int) Math.floor(lowFrequency / hzPerSegment);
+			if (lowSeg >= segCount) {
+				break;
+			}
+
+			if (highFrequency <= lowFrequency) {
+				highSeg = segCount;
+			} else {
+				highSeg = (int) Math.floor(highFrequency / hzPerSegment);
+				if (highSeg > segCount) {
+					highSeg = segCount;
+					end = true;
+				}
+			}
+
+			if (lowSeg == 0) {
+				transformed[0] = transformed[0].multiply(coefficient);
+				lowSeg++;
+			}
+
+			if (highSeg == segCount) {
+				transformed[segCount - 1] = transformed[segCount - 1].multiply(coefficient);
+				highSeg--;
+			}
+
+			// max extent of i is from 1 to N/2-1
+			for (int i = lowSeg; i < highSeg; i++) {
+				transformed[i] = transformed[i].multiply(coefficient);
+				transformed[transformed.length - i] = transformed[transformed.length - i].multiply(coefficient);
 			}
 
 		}
