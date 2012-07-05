@@ -7,29 +7,28 @@ import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.MultichannelSampleProcessor;
+import org.signalml.domain.signal.filter.MultichannelSampleFilter;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
-public class ExportFilteredSignalSampleSource extends MultichannelSampleProcessor {
+public class ExportFilteredSignalSampleSource extends MultichannelSampleFilter {
 
-	private Montage montage;
 	private RawSignalSampleSource resultSampleSource;
 
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
 
 	public ExportFilteredSignalSampleSource(MultichannelSampleSource source, Montage montage) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
 		super(source);
-		this.montage = montage;
+		this.currentMontage = montage;
 
 		filterData();
 	}
 
 	ExportFilteredSignalSampleSource(MultichannelSampleSource source, Montage montage, RawSignalWriter rawSignalWriter) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
 		super(source);
-		this.montage = montage;
+		this.currentMontage = montage;
 		this.rawSignalWriter = rawSignalWriter;
 
 		filterData();
@@ -40,16 +39,17 @@ public class ExportFilteredSignalSampleSource extends MultichannelSampleProcesso
 	}
 
 	protected void filterData() throws BadFilterParametersException, IOException {
+
 		MultichannelSampleSource inputSource = source;
 
 		File inputFile = new File("export2.bin.tmp");
 		File outputFile = new File("export1.bin.tmp");
 
-		for (int i = 0; i < montage.getSampleFilterCount(); i++) {
-			if (!montage.isFilterEnabled(i))
+		for (int i = 0; i < currentMontage.getSampleFilterCount(); i++) {
+			if (!currentMontage.isFilterEnabled(i))
 				continue;
 
-			SampleFilterDefinition sampleFilter = montage.getSampleFilterAt(i);
+			SampleFilterDefinition sampleFilter = currentMontage.getSampleFilterAt(i);
 
 			if (sampleFilter instanceof TimeDomainSampleFilter) {
 
@@ -65,14 +65,14 @@ public class ExportFilteredSignalSampleSource extends MultichannelSampleProcesso
 				}
 
 				MultichannelExportTimeDomainSampleFilter filter = new MultichannelExportTimeDomainSampleFilter(inputSource,
-						timeDomainSampleFilter, montage.getFilterExclusionArray(i));
+						timeDomainSampleFilter, currentMontage.getFilterExclusionArray(i));
 
 				//switch files
 				rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), null);
 			}
 		}
 
-		if (montage.getSampleFilterCount() > 0) {
+		if (currentMontage.getSampleFilterCount() > 0) {
 			inputFile.delete();
 			resultSampleSource = createRawSignalSampleSource(outputFile);
 		}
@@ -101,7 +101,8 @@ public class ExportFilteredSignalSampleSource extends MultichannelSampleProcesso
 
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		if (montage.getSampleFilterCount() > 0) {
+
+		if (currentMontage.getSampleFilterCount() > 0) {
 			resultSampleSource.getSamples(channel, target, signalOffset, count, arrayOffset);
 		} else {
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);

@@ -156,7 +156,7 @@ public class SignalSourceLevelPanel extends JPanel {
 			getAssembledRadioButton().setSelected(true);
 			break;
 
-		case FILTERED:
+		case FILTERED_FOR_EXPORT:
 			getFilteredRadioButton().setSelected(true);
 			break;
 
@@ -178,7 +178,7 @@ public class SignalSourceLevelPanel extends JPanel {
 	public void fillModelFromPanel(SignalSpace space) {
 
 		if (getFilteredRadioButton().isSelected()) {
-			space.setSignalSourceLevel(SignalSourceLevel.FILTERED);
+			space.setSignalSourceLevel(SignalSourceLevel.FILTERED_FOR_EXPORT);
 		}
 		else if (getAssembledRadioButton().isSelected()) {
 			space.setSignalSourceLevel(SignalSourceLevel.ASSEMBLED);

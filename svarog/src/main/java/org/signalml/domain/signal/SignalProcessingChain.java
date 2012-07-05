@@ -18,7 +18,6 @@ import org.signalml.app.document.RawSignalDocument;
 import org.signalml.app.document.RawSignalMRUDEntry;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.SignalMLMRUDEntry;
-import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.codec.SignalMLCodec;
@@ -27,7 +26,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.filter.MultichannelSampleFilter;
-import org.signalml.domain.signal.raw.RawSignalByteOrder;
+import org.signalml.domain.signal.filter.timedomain.ExportFilteredSignalSampleSource;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.samplesource.AbstractMultichannelSampleSource;
@@ -37,6 +36,7 @@ import org.signalml.domain.signal.samplesource.SignalMLCodecSampleSource;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.exception.MissingCodecException;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -507,6 +507,38 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 	}
 
+	protected SignalProcessingChain createFilteredForExportLevelChain(OriginalMultichannelSampleSource sampleSource) throws SignalMLException {
+
+		SignalProcessingChain chain = new SignalProcessingChain(sampleSource);
+		chain.sourceBuffer = new MultichannelSampleBuffer(chain.source, MultichannelSampleBuffer.INITIAL_BUFFER_SIZE);
+		chain.montage = new MultichannelSampleMontage(chain.sourceBuffer);
+		// no montage buffer is used
+
+		MultichannelSampleMontage baseMontage = this.getMontage();
+		if (baseMontage != null) {
+			Montage currentBaseMontage = baseMontage.getCurrentMontage();
+			chain.montage.setCurrentMontage(currentBaseMontage);
+
+			try {
+				chain.filter = new ExportFilteredSignalSampleSource(chain.montage, currentBaseMontage);
+			} catch (BadFilterParametersException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//chain.filter.setCurrentMontage(currentBaseMontage);
+		}
+
+		chain.output = chain.filter;
+
+		chain.configureOutput();
+
+		return chain;
+
+	}
+
 	/**
 	 * Creates the chain:
 	 * <code>original source = source -> buffer -> montage
@@ -546,6 +578,15 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 
 		OriginalMultichannelSampleSource sampleSource = this.getSource().duplicate();
 		SignalProcessingChain chain = createFilteredLevelChain(sampleSource);
+		chain.createdSource = true;
+		return chain;
+
+	}
+
+	public SignalProcessingChain createFilteredForExportLevelCopyChain() throws SignalMLException {
+
+		OriginalMultichannelSampleSource sampleSource = this.getSource().duplicate();
+		SignalProcessingChain chain = createFilteredForExportLevelChain(sampleSource);
 		chain.createdSource = true;
 		return chain;
 
@@ -618,6 +659,9 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	public SignalProcessingChain createLevelCopyChain(SignalSourceLevel level) throws SignalMLException {
 
 		switch (level) {
+
+		case FILTERED_FOR_EXPORT:
+			return createFilteredForExportLevelCopyChain();
 
 		case FILTERED :
 			return createFilteredLevelCopyChain();

@@ -45,7 +45,8 @@ public class ExportFilteredSignalSampleSourceTest {
 		DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(originalSamples, channelCount, sampleCount);
 
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
-		rawSignalWriter.writeSignal(new File("output.bin"), sampleSource, new SignalExportDescriptor(), null);
+		SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
+		rawSignalWriter.writeSignal(new File("output.bin"), sampleSource, signalExportDescriptor, null);
 
 		createFilters();
 		createRawSignalDocument();
@@ -93,12 +94,12 @@ public class ExportFilteredSignalSampleSourceTest {
 		rawSignalWriter.setMaximumBufferSize(10);
 		ExportFilteredSignalSampleSource filteredSampleSource = new ExportFilteredSignalSampleSource(originalSamplesRawSignalDocument.getSampleSource(), originalSamplesRawSignalDocument.getMontage(), rawSignalWriter);
 
-		originalSamplesRawSignalDocument.closeDocument();
-
 		//export
 		double[][] filteredExportSamples = new double[channelCount][sampleCount];
 		filteredSampleSource.getSamples(0, filteredExportSamples[0], 0, sampleCount, 0);
 		filteredSampleSource.getSamples(1, filteredExportSamples[1], 0, sampleCount, 0);
+
+		originalSamplesRawSignalDocument.closeDocument();
 
 		//normal
 		FilterCoefficients coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter1);
@@ -124,12 +125,12 @@ public class ExportFilteredSignalSampleSourceTest {
 		rawSignalWriter.setMaximumBufferSize(10);
 		ExportFilteredSignalSampleSource filteredSampleSource = new ExportFilteredSignalSampleSource(originalSamplesRawSignalDocument.getSampleSource(), originalSamplesRawSignalDocument.getMontage(), rawSignalWriter);
 
-		originalSamplesRawSignalDocument.closeDocument();
-
 		//export
 		double[][] filteredExportSamples = new double[channelCount][sampleCount];
 		filteredSampleSource.getSamples(0, filteredExportSamples[0], 0, sampleCount, 0);
 		filteredSampleSource.getSamples(1, filteredExportSamples[1], 0, sampleCount, 0);
+
+		originalSamplesRawSignalDocument.closeDocument();
 
 		//filter 1
 		FilterCoefficients coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter1);

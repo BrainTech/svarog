@@ -51,7 +51,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	/**
 	 * the {@link Montage montage} with which this filter is associated
 	 */
-	private Montage currentMontage = null;
+	protected Montage currentMontage = null;
 
 	/**
 	 * A boolean indicating if montage has just changed.
