@@ -4,21 +4,22 @@
 
 package org.signalml.domain.signal.filter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.signal.filter.fft.FFTSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.SampleSource;
 
 /**
  * This abstract class represents the engine of a sample filter.
  * Implements {@link SampleSource} by mapping functions from the actual source.
- * @see FFTSampleFilterEngine
+ * @see FFTSinglechannelSampleFilter
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class SampleFilterEngine implements SampleSource {
+public abstract class SinglechannelSampleFilter implements SampleSource {
 
 	/*
 	 * the {@link SampleFilterDefinition definition} of the filter
 	 */
-	SampleFilterDefinition definition;
+	protected SampleFilterDefinition definition;
 
 	/**
 	 * the {@link SampleSource source} of samples
@@ -30,7 +31,7 @@ public abstract class SampleFilterEngine implements SampleSource {
 	 * {@link SampleSource source} of samples.
 	 * @param source the source of samples
 	 */
-	public SampleFilterEngine(SampleSource source) {
+	public SinglechannelSampleFilter(SampleSource source) {
 		this.source = source;
 	}
 

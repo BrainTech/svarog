@@ -1,27 +1,30 @@
-package org.signalml.domain.signal.filter;
+package org.signalml.domain.signal.filter.iir;
 
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
+import org.signalml.domain.signal.filter.TestingSignals;
+import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 
 /**
- * This class performs unit tests on the {@link OfflineTimeDomainSampleFilterEngineTest} class.
+ * This class performs unit tests on the {@link OfflineIIRSinglechannelSampleFilterTest} class.
  *
  * @author Piotr Szachewicz
  */
-public class OfflineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainSampleFilterEngineTest {
+public class OfflineIIRSinglechannelSampleFilterTest extends AbstractIIRSinglechannelSampleFilterTest {
 
 	@Override
-	protected AbstractTimeDomainSampleFilterEngine getEngine(MultichannelSampleSource source, FilterCoefficients coefficients) {
-		return new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), coefficients);
+	protected AbstractIIRSinglechannelSampleFilter getEngine(MultichannelSampleSource source, FilterCoefficients coefficients) {
+		return new OfflineIIRSinglechannelSampleFilter(new ChannelSelectorSampleSource(source,0), coefficients);
 	}
 
 	/**
-	 * Test method for {@link AbstractTimeDomainSampleFilterEngine#filter(double[], double[], double[], double[]) }
+	 * Test method for {@link AbstractIIRSinglechannelSampleFilter#filter(double[], double[], double[], double[]) }
 	 */
 	@Test
 	public void testFilterWithInitialState() {
@@ -43,14 +46,14 @@ public class OfflineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainS
 		double[] initialState = new double[] {
 			-0.9496770216294348, 1.603555227411396, -0.6941059685801035
 		};
-		double[] actualFilteringResult = AbstractTimeDomainSampleFilterEngine.filter(bCoefficients, aCoefficients, TestingSignals.SHORT_SIGNAL, initialState);
+		double[] actualFilteringResult = AbstractIIRSinglechannelSampleFilter.filter(bCoefficients, aCoefficients, TestingSignals.SHORT_SIGNAL, initialState);
 
 		assertArrayEquals(expectedFilteringResult, actualFilteringResult, 1e-4);
 
 	}
 
 	/**
-	 * Test method for {@link AbstractTimeDomainSampleFilterEngine#filterOffline(int, int) }
+	 * Test method for {@link AbstractIIRSinglechannelSampleFilter#filterOffline(int, int) }
 	 * (with filtfilt enabled).
 	 */
 	@Test
@@ -151,7 +154,7 @@ public class OfflineTimeDomainSampleFilterEngineTest extends AbstractTimeDomainS
 			source.addSamples(new float[] {(float) signal[i]});
 
 		FilterCoefficients coefficients = new FilterCoefficients(bCoefficients, aCoefficients);
-		OfflineTimeDomainSampleFilterEngine engine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source, 0), coefficients);
+		OfflineIIRSinglechannelSampleFilter engine = new OfflineIIRSinglechannelSampleFilter(new ChannelSelectorSampleSource(source, 0), coefficients);
 		engine.setFiltfiltEnabled(true);
 
 		double[] actualFilteringResult = new double[expectedFilteringResult.length];

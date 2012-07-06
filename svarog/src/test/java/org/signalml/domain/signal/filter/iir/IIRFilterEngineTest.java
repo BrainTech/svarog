@@ -1,11 +1,12 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.iir;
 
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
 import org.signalml.domain.signal.filter.TestingSignals;
+import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
 
-public class IIRFilterTest {
+public class IIRFilterEngineTest {
 
 	@Test
 	public void testFilter() {
@@ -21,7 +22,7 @@ public class IIRFilterTest {
 				{1.        , -2.6861574 ,  2.41965511, -0.73016535};
 
 		//whole at once
-		IIRFilter iirFilter = new IIRFilter(bCoefficients, aCoefficients);
+		IIRFilterEngine iirFilter = new IIRFilterEngine(bCoefficients, aCoefficients);
 		double[] resultWhole = iirFilter.filter(TestingSignals.SHORT_SIGNAL);
 
 		//in two parts
@@ -30,7 +31,7 @@ public class IIRFilterTest {
 		System.arraycopy(TestingSignals.SHORT_SIGNAL, 0, firstInput, 0, firstInput.length);
 		System.arraycopy(TestingSignals.SHORT_SIGNAL, firstInput.length, secondInput, 0, secondInput.length);
 
-		iirFilter = new IIRFilter(bCoefficients, aCoefficients);
+		iirFilter = new IIRFilterEngine(bCoefficients, aCoefficients);
 		double[] firstResult = iirFilter.filter(firstInput);
 		double[] secondResult = iirFilter.filter(secondInput);
 

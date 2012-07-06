@@ -1,20 +1,19 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.fft;
 
 import org.apache.commons.math.complex.Complex;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.signalml.domain.signal.filter.FFTSampleFilterEngine;
-import org.signalml.domain.signal.filter.SampleFilterEngine;
+import org.signalml.domain.signal.filter.SinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.fft.FourierTransform;
 
-public class FFTFilterOverlapAddEngine extends SampleFilterEngine {
+public class FFTFilterEngineForExport extends SinglechannelSampleFilter {
 
 	private FFTSampleFilter fftSampleFilter;
 
 	private double[] overlapBuffer;
 
-	public FFTFilterOverlapAddEngine(SampleSource source, FFTSampleFilter filter) {
+	public FFTFilterEngineForExport(SampleSource source, FFTSampleFilter filter) {
 		super(source);
 		this.fftSampleFilter = filter;
 	}
@@ -27,7 +26,7 @@ public class FFTFilterOverlapAddEngine extends SampleFilterEngine {
 
 		FourierTransform fourierTransform = new FourierTransform();
 		Complex[] samplesFFT = fourierTransform.forwardFFT(samples);
-		FFTSampleFilterEngine.multiplyFFTByFFTSampleFilter(samplesFFT, fftSampleFilter, source.getSamplingFrequency());
+		FFTSinglechannelSampleFilter.multiplyFFTByFFTSampleFilter(samplesFFT, fftSampleFilter, source.getSamplingFrequency());
 		double[] filteredSignal = fourierTransform.inverseFFT(samplesFFT);
 
 		if (overlapBuffer != null) {

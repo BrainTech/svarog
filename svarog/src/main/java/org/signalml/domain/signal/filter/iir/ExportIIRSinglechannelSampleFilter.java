@@ -1,17 +1,16 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.iir;
 
-import org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 
-public class TimeDomainSampleFilterExportEngine  extends AbstractTimeDomainSampleFilterEngine {
+public class ExportIIRSinglechannelSampleFilter  extends AbstractIIRSinglechannelSampleFilter {
 
-	private IIRFilter iirFilter;
+	private IIRFilterEngine iirFilter;
 
-	public TimeDomainSampleFilterExportEngine(SampleSource source, FilterCoefficients coefficients) {
+	public ExportIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
 		super(source, coefficients);
 
-		iirFilter = new IIRFilter(bCoefficients, aCoefficients);
+		iirFilter = new IIRFilterEngine(bCoefficients, aCoefficients);
 	}
 
 	@Override

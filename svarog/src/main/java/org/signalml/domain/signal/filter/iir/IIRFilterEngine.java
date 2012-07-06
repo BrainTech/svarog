@@ -1,18 +1,19 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.iir;
+
 
 /**
  * This class represents a single IIR filter implemented as
  * direct II transposed structure.
  *
- * Between calling the {@link IIRFilter#filter(double[])} method
+ * Between calling the {@link IIRFilterEngine#filter(double[])} method
  * it remembers its state, so calling this method on whole signal
  * gives the same results as calling it first on one half of the
- * signal and then on the second. (See {@link IIRFilterTest} for
+ * signal and then on the second. (See {@link IIRFilterEngineTest} for
  * reference}).
  *
  * @author Piotr Szachewicz
  */
-public class IIRFilter {
+public class IIRFilterEngine {
 
 	/**
 	 * feedforward coefficients of the filter
@@ -36,7 +37,7 @@ public class IIRFilter {
 	 * @param aCoefficients feedback coefficients of the filter
 	 * @param initialConditions initial conditions of the filter delays
 	 */
-	public IIRFilter(double[] bCoefficients, double[] aCoefficients, double[] initialConditions) {
+	public IIRFilterEngine(double[] bCoefficients, double[] aCoefficients, double[] initialConditions) {
 		super();
 		this.initialConditions = initialConditions;
 		this.bCoefficients = bCoefficients;
@@ -49,7 +50,7 @@ public class IIRFilter {
 	 * @param bCoefficients feedforward coefficients of the filter
 	 * @param aCoefficients feedback coeffcients of the filter
 	 */
-	public IIRFilter(double[] bCoefficients, double[] aCoefficients) {
+	public IIRFilterEngine(double[] bCoefficients, double[] aCoefficients) {
 		super();
 		this.bCoefficients = bCoefficients;
 		this.aCoefficients = aCoefficients;

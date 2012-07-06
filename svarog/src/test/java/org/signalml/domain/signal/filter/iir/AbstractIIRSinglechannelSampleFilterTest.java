@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.filter;
+package org.signalml.domain.signal.filter.iir;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,17 +6,19 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.iir.OnlineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 
 /**
  * This is an abstract class for testing subclasses of
- * {@link AbstractTimeDomainSampleFilterEngine}.
+ * {@link AbstractIIRSinglechannelSampleFilter}.
  *
  * @author Piotr Szachewicz
  */
-public abstract class AbstractTimeDomainSampleFilterEngineTest {
+public abstract class AbstractIIRSinglechannelSampleFilterTest {
 
 	/**
 	 * the number of samples used for the tests
@@ -37,7 +39,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 	/**
 	 * the engine used to filter the samples taken from the source
 	 */
-	private AbstractTimeDomainSampleFilterEngine engine;
+	private AbstractIIRSinglechannelSampleFilter engine;
 
 	/**
 	 * Sets everything up for the tests.
@@ -56,10 +58,10 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 		coefficients = null;
 	}
 
-	protected abstract AbstractTimeDomainSampleFilterEngine getEngine(MultichannelSampleSource source, FilterCoefficients coefficients);
+	protected abstract AbstractIIRSinglechannelSampleFilter getEngine(MultichannelSampleSource source, FilterCoefficients coefficients);
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter#getSamples(double[], int, int, int)}.
 	 * Uses a filter that multiplies every sample by one and compares filtered
 	 * samples with unfiltered ones.
 	 */
@@ -89,12 +91,12 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 	}
 
 	protected void updateCacheIfNecessary() {
-		if (engine instanceof OnlineTimeDomainSampleFilterEngine)
-			((OnlineTimeDomainSampleFilterEngine)engine).updateCache(source.getSampleCount(0));
+		if (engine instanceof OnlineIIRSinglechannelSampleFilter)
+			((OnlineIIRSinglechannelSampleFilter)engine).updateCache(source.getSampleCount(0));
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter#getSamples(double[], int, int, int)}.
 	 * Uses a filter that applies gain to a signal.
 	 */
 	@Test
@@ -121,7 +123,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 	}
 
 	/**
-	* Test method for {@link org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	* Test method for {@link org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter#getSamples(double[], int, int, int)}.
 	* Uses high pass filter to filter out a constant from the signal and pass only high
 	* frequency component.
 	*/
@@ -163,7 +165,7 @@ public abstract class AbstractTimeDomainSampleFilterEngineTest {
 	}
 
 	/**
-	 * Test method for {@link org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine#getSamples(double[], int, int, int)}.
+	 * Test method for {@link org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter#getSamples(double[], int, int, int)}.
 	 * Uses low pass filter to filter out a high frequency component from the
 	 * signal and pass only constant component.
 	 */

@@ -1,10 +1,10 @@
-package org.signalml.domain.signal.filter;
+package org.signalml.domain.signal.filter.iir;
 
 import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.timedomain.IIRFilter;
+import org.signalml.domain.signal.filter.SinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
@@ -14,15 +14,15 @@ import org.signalml.math.iirdesigner.IIRDesigner;
 /**
  * This class represents a Time Domain (IIR or FIR) filter of samples.
  * Allows to return the filtered samples based on the given source.
- * There are two subclasses for this engine: {@link OfflineTimeDomainSampleFilterEngine}
- * for filtering offline signals and {@link OnlineTimeDomainSampleFilterEngine}
+ * There are two subclasses for this engine: {@link OfflineIIRSinglechannelSampleFilter}
+ * for filtering offline signals and {@link OnlineIIRSinglechannelSampleFilter}
  * for filtering online signals.
  *
  * @author Piotr Szachewicz
  */
-public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterEngine {
+public abstract class AbstractIIRSinglechannelSampleFilter extends SinglechannelSampleFilter {
 
-	protected static final Logger logger = Logger.getLogger(AbstractTimeDomainSampleFilterEngine.class);
+	protected static final Logger logger = Logger.getLogger(AbstractIIRSinglechannelSampleFilter.class);
 
 	/**
 	 * Round buffer used to store filtered samples of the signal.
@@ -51,7 +51,7 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @param definition the {@link TimeDomainSampleFilter definition} of the
 	 * filter
 	 */
-	public AbstractTimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition) {
+	public AbstractIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition) {
 
 		super(source);
 
@@ -66,7 +66,7 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 			filtered = null;
 
 		} catch (BadFilterParametersException ex) {
-			java.util.logging.Logger.getLogger(AbstractTimeDomainSampleFilterEngine.class.getName()).log(Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(AbstractIIRSinglechannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
 		}
 
 	}
@@ -80,7 +80,7 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @param coefficients the {@link FilterCoefficients coefficients} for which
 	 * the engine will operate
 	 */
-	public AbstractTimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
+	public AbstractIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
 		this(source, coefficients);
 		this.definition = definition;
 	}
@@ -92,7 +92,7 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @param coefficients the {@link FilterCoefficients coefficients} for which
 	 * the engine will operate
 	 */
-	public AbstractTimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
+	public AbstractIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
 		super(source);
 		aCoefficients = coefficients.getACoefficients();
 		bCoefficients = coefficients.getBCoefficients();
@@ -108,7 +108,7 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @return filtered input data
 	 */
 	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input) {
-		IIRFilter iirFilter = new IIRFilter(bCoefficients, aCoefficients);
+		IIRFilterEngine iirFilter = new IIRFilterEngine(bCoefficients, aCoefficients);
 		return iirFilter.filter(input);
 	}
 
@@ -122,7 +122,7 @@ public abstract class AbstractTimeDomainSampleFilterEngine extends SampleFilterE
 	 * @return the input signal after filtering
 	 */
 	public static double[] filter(double[] bCoefficients, double[] aCoefficients, double[] input, double[] initialConditions) {
-		IIRFilter iirFilter = new IIRFilter(bCoefficients, aCoefficients, initialConditions);
+		IIRFilterEngine iirFilter = new IIRFilterEngine(bCoefficients, aCoefficients, initialConditions);
 		return iirFilter.filter(input);
 	}
 

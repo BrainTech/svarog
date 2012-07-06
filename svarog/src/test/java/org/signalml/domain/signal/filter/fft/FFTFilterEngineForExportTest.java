@@ -1,11 +1,12 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.fft;
 
 import org.junit.Test;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.signal.filter.fft.FFTFilterEngineForExport;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 
-public class FFTFilterOverlapAddEngineTest {
+public class FFTFilterEngineForExportTest {
 
 	@Test
 	public void testFiltering() {
@@ -25,7 +26,7 @@ public class FFTFilterOverlapAddEngineTest {
 		FFTSampleFilter fftFilter = new FFTSampleFilter(true);
 		fftFilter.setRange(fftFilter.new Range(50.0F, 128.0F, 0.0));
 
-		FFTFilterOverlapAddEngine engine = new FFTFilterOverlapAddEngine(channelOneSampleSource, fftFilter);
+		FFTFilterEngineForExport engine = new FFTFilterEngineForExport(channelOneSampleSource, fftFilter);
 
 		double[] filteringResult = new double[sampleCount];
 		engine.getSamples(filteringResult, 0, sampleCount, 0);

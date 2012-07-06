@@ -26,7 +26,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.filter.MultichannelSampleFilter;
-import org.signalml.domain.signal.filter.timedomain.ExportFilteredSignalSampleSource;
+import org.signalml.domain.signal.filter.export.MultichannelSampleFilterForExport;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.samplesource.AbstractMultichannelSampleSource;
@@ -520,7 +520,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			chain.montage.setCurrentMontage(currentBaseMontage);
 
 			try {
-				chain.filter = new ExportFilteredSignalSampleSource(chain.montage, currentBaseMontage);
+				chain.filter = new MultichannelSampleFilterForExport(chain.montage, currentBaseMontage);
 			} catch (BadFilterParametersException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

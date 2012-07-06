@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.export;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,20 +12,20 @@ import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
-public class ExportFilteredSignalSampleSource extends MultichannelSampleFilter {
+public class MultichannelSampleFilterForExport extends MultichannelSampleFilter {
 
 	private RawSignalSampleSource resultSampleSource;
 
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
 
-	public ExportFilteredSignalSampleSource(MultichannelSampleSource source, Montage montage) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
+	public MultichannelSampleFilterForExport(MultichannelSampleSource source, Montage montage) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
 		super(source);
 		this.currentMontage = montage;
 
 		filterData();
 	}
 
-	ExportFilteredSignalSampleSource(MultichannelSampleSource source, Montage montage, RawSignalWriter rawSignalWriter) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
+	MultichannelSampleFilterForExport(MultichannelSampleSource source, Montage montage, RawSignalWriter rawSignalWriter) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
 		super(source);
 		this.currentMontage = montage;
 		this.rawSignalWriter = rawSignalWriter;
@@ -59,7 +59,7 @@ public class ExportFilteredSignalSampleSource extends MultichannelSampleFilter {
 				inputSource = createRawSignalSampleSource(inputFile);
 			}
 
-			MultichannelExportTimeDomainSampleFilter filter = new MultichannelExportTimeDomainSampleFilter(inputSource,
+			MultichannelSingleFilterForExport filter = new MultichannelSingleFilterForExport(inputSource,
 					sampleFilter, currentMontage.getFilterExclusionArray(i));
 
 			//switch files

@@ -1,29 +1,31 @@
-package org.signalml.domain.signal.filter.timedomain;
+package org.signalml.domain.signal.filter.export;
 
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
-import org.signalml.domain.signal.filter.SampleFilterEngine;
+import org.signalml.domain.signal.filter.SinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.fft.FFTFilterEngineForExport;
+import org.signalml.domain.signal.filter.iir.ExportIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.IIRDesigner;
 
-public class MultichannelExportTimeDomainSampleFilter extends MultichannelSampleProcessor {
+public class MultichannelSingleFilterForExport extends MultichannelSampleProcessor {
 
-	private SampleFilterEngine[] timeDomainFilterEngines;
+	private SinglechannelSampleFilter[] timeDomainFilterEngines;
 	private SampleFilterDefinition definition;
 
 	private FilterCoefficients coefficients;
 
-	public MultichannelExportTimeDomainSampleFilter(MultichannelSampleSource source, SampleFilterDefinition definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
+	public MultichannelSingleFilterForExport(MultichannelSampleSource source, SampleFilterDefinition definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
 		super(source);
 
 		this.definition = definition;
 
-		timeDomainFilterEngines = new SampleFilterEngine[source.getChannelCount()];
+		timeDomainFilterEngines = new SinglechannelSampleFilter[source.getChannelCount()];
 		for (int channelNumber = 0; channelNumber < source.getChannelCount(); channelNumber++) {
 			createEngine(channelNumber, filterExclusionArray);
 		}
@@ -34,9 +36,9 @@ public class MultichannelExportTimeDomainSampleFilter extends MultichannelSample
 			ChannelSelectorSampleSource input = new ChannelSelectorSampleSource(source, channelNumber);
 
 			if (definition instanceof TimeDomainSampleFilter) {
-				timeDomainFilterEngines[channelNumber] = new TimeDomainSampleFilterExportEngine(input, getFilterCoefficients());
+				timeDomainFilterEngines[channelNumber] = new ExportIIRSinglechannelSampleFilter(input, getFilterCoefficients());
 			} else {
-				timeDomainFilterEngines[channelNumber] = new FFTFilterOverlapAddEngine(input, (FFTSampleFilter) definition);
+				timeDomainFilterEngines[channelNumber] = new FFTFilterEngineForExport(input, (FFTSampleFilter) definition);
 			}
 		}
 	}
@@ -51,7 +53,7 @@ public class MultichannelExportTimeDomainSampleFilter extends MultichannelSample
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
-		SampleFilterEngine engine = timeDomainFilterEngines[channel];
+		SinglechannelSampleFilter engine = timeDomainFilterEngines[channel];
 
 		if (engine == null)
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
