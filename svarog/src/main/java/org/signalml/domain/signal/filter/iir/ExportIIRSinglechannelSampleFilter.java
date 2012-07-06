@@ -10,7 +10,7 @@ public class ExportIIRSinglechannelSampleFilter  extends AbstractIIRSinglechanne
 	public ExportIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
 		super(source, coefficients);
 
-		iirFilter = new IIRFilterEngine(bCoefficients, aCoefficients);
+		iirFilter = new IIRFilterEngineStabilized(bCoefficients, aCoefficients);
 	}
 
 	@Override

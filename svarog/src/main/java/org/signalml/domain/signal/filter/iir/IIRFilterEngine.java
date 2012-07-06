@@ -18,17 +18,17 @@ public class IIRFilterEngine {
 	/**
 	 * feedforward coefficients of the filter
 	 */
-	private double[] bCoefficients;
+	protected double[] bCoefficients;
 
 	/**
 	 * feedback coefficients of the filter
 	 */
-	private double[] aCoefficients;
+	protected double[] aCoefficients;
 
 	/**
 	 * The state of the filter delays.
 	 */
-	private double[] initialConditions;
+	protected double[] initialConditions;
 
 	/**
 	 * Creates this filter.
