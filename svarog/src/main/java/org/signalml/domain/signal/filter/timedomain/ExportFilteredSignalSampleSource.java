@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.MultichannelSampleFilter;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.raw.RawSignalWriter;
@@ -51,25 +50,21 @@ public class ExportFilteredSignalSampleSource extends MultichannelSampleFilter {
 
 			SampleFilterDefinition sampleFilter = currentMontage.getSampleFilterAt(i);
 
-			if (sampleFilter instanceof TimeDomainSampleFilter) {
+			if (i > 0) {
+				//swapFiles
+				File tmp = inputFile;
+				inputFile = outputFile;
+				outputFile = tmp;
 
-				TimeDomainSampleFilter timeDomainSampleFilter = (TimeDomainSampleFilter) sampleFilter;
-
-				if (i > 0) {
-					//swapFiles
-					File tmp = inputFile;
-					inputFile = outputFile;
-					outputFile = tmp;
-
-					inputSource = createRawSignalSampleSource(inputFile);
-				}
-
-				MultichannelExportTimeDomainSampleFilter filter = new MultichannelExportTimeDomainSampleFilter(inputSource,
-						timeDomainSampleFilter, currentMontage.getFilterExclusionArray(i));
-
-				//switch files
-				rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), null);
+				inputSource = createRawSignalSampleSource(inputFile);
 			}
+
+			MultichannelExportTimeDomainSampleFilter filter = new MultichannelExportTimeDomainSampleFilter(inputSource,
+					sampleFilter, currentMontage.getFilterExclusionArray(i));
+
+			//switch files
+			rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), null);
+
 		}
 
 		if (currentMontage.getSampleFilterCount() > 0) {

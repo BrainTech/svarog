@@ -25,11 +25,6 @@ import org.signalml.math.fft.FourierTransform;
  */
 public class FFTSampleFilterEngine extends SampleFilterEngine {
 
-	/**
-	 * the object performing the Fourier transform
-	 */
-	private FourierTransform fourierTransform;
-
 	private double[] cache = null;
 	/**
 	 * the buffer of already filtered samples
@@ -60,7 +55,6 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 	public FFTSampleFilterEngine(SampleSource source, FFTSampleFilter definition) {
 		super(source);
 		this.definition = new FFTSampleFilter(definition);
-		fourierTransform = new FourierTransform(definition.getWindowType(), definition.getWindowParameter());
 	}
 
 	@Override
@@ -138,14 +132,7 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 				}
 
 				// transform
-				Complex[] transformed = fourierTransform.forwardFFT(cache);
-
-				multiplyFFTByFFTSampleFilter(transformed, (FFTSampleFilter) definition, samplingFrequency);
-
-				// inverse
-				filtered = fourierTransform.inverseFFT(transformed);
-
-				//filtered = fourierTransform.getTransformedDataAsAlternate();
+				filtered = filterWithFFTFilter(cache, (FFTSampleFilter) definition, samplingFrequency);
 
 				minFilteredSample = signalOffset - leftPadding;
 				minFilteredSampleAt = leftOffsetToCopy - leftPadding;
@@ -162,6 +149,14 @@ public class FFTSampleFilterEngine extends SampleFilterEngine {
 			}
 
 		}
+	}
+
+	public static double[] filterWithFFTFilter(double[] signal, FFTSampleFilter filterDefinition, double samplingFrequency) {
+		FourierTransform fourierTransform = new FourierTransform(filterDefinition.getWindowType(), filterDefinition.getWindowParameter());
+		Complex[] transformed = fourierTransform.forwardFFT(signal);
+		multiplyFFTByFFTSampleFilter(transformed, filterDefinition, samplingFrequency);
+
+		return fourierTransform.inverseFFT(transformed);
 	}
 
 	public static void multiplyFFTByFFTSampleFilter(Complex[] transformed, FFTSampleFilter definition, double samplingFrequency) {

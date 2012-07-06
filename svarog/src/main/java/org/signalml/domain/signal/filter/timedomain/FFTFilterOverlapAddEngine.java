@@ -27,10 +27,9 @@ public class FFTFilterOverlapAddEngine extends SampleFilterEngine {
 
 		FourierTransform fourierTransform = new FourierTransform();
 		Complex[] samplesFFT = fourierTransform.forwardFFT(samples);
-
 		FFTSampleFilterEngine.multiplyFFTByFFTSampleFilter(samplesFFT, fftSampleFilter, source.getSamplingFrequency());
-
 		double[] filteredSignal = fourierTransform.inverseFFT(samplesFFT);
+
 		if (overlapBuffer != null) {
 			for (int i = 0; i < overlapBuffer.length; i++) {
 				filteredSignal[i] += overlapBuffer[i];
