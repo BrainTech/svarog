@@ -37,7 +37,7 @@ import org.signalml.plugin.newstager.logic.book.tag.NewStagerBookAtomTagCreator;
 import org.signalml.plugin.signal.PluginSignalHelper;
 
 public class NewStagerTagWriteStep extends
-	AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
+		AbstractPluginComputationMgrStep<NewStagerMgrStepData> {
 
 	private File primaryTagFile;
 	private Integer signalBlockCount;
@@ -59,14 +59,14 @@ public class NewStagerTagWriteStep extends
 		}
 
 		return new NewStagerTagWriteStepResult(
-				   this.primaryTagFile.getAbsolutePath());
+				this.primaryTagFile.getAbsolutePath());
 	}
 
 	@Override
 	protected PluginComputationMgrStepResult doRun(
-		PluginComputationMgrStepResult prevStepResult)
-	throws PluginToolAbortException, PluginToolInterruptedException,
-		ComputationException {
+			PluginComputationMgrStepResult prevStepResult)
+			throws PluginToolAbortException, PluginToolInterruptedException,
+			ComputationException {
 
 		NewStagerBookProcessorStepResult tagResult;
 		try {
@@ -76,7 +76,7 @@ public class NewStagerTagWriteStep extends
 		}
 
 		this.data.tracker
-		.setProgressPhase(NewStagerComputationProgressPhase.TAG_WRITING_PREPARE_PHASE);
+				.setProgressPhase(NewStagerComputationProgressPhase.TAG_WRITING_PREPARE_PHASE);
 
 		Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tags = this
 				.mergeTags(tagResult);
@@ -93,63 +93,64 @@ public class NewStagerTagWriteStep extends
 	}
 
 	private void writeTagsToFile(
-		Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap)
-	throws IOException, SignalMLException {
-		NewStagerTagWriter writer = new NewStagerTagWriter(this.data.stagerData);
+			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap)
+			throws IOException, SignalMLException {
+		NewStagerTagWriter writer = new NewStagerTagWriter(
+				this.data.stagerData, this.data.constants);
 
 		if (this.data.stagerData.getParameters().primaryHypnogramFlag) {
 			this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_ALPHA);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_ALPHA,
-							 EnumSet.of(NewStagerTagCollectionType.HYPNO_ALPHA), tagMap);
+					EnumSet.of(NewStagerTagCollectionType.HYPNO_ALPHA), tagMap);
 
 			this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_DELTA);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_DELTA,
-							 EnumSet.of(NewStagerTagCollectionType.HYPNO_DELTA), tagMap);
+					EnumSet.of(NewStagerTagCollectionType.HYPNO_DELTA), tagMap);
 
 			this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_SPINDLE);
 			writer.writeTags(NewStagerTagCollectionType.HYPNO_SPINDLE,
-							 EnumSet.of(NewStagerTagCollectionType.HYPNO_SPINDLE),
-							 tagMap);
+					EnumSet.of(NewStagerTagCollectionType.HYPNO_SPINDLE),
+					tagMap);
 		}
 
 		this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_SLEEP_PAGES);
 		writer.writeTags(NewStagerTagCollectionType.SLEEP_PAGES,
-						 this.getSleepStages(), tagMap);
+				this.getSleepStages(), tagMap);
 
 		this.updateTracker(NewStagerComputationProgressPhase.TAG_WRITING_CONSOLIDATED_SLEEP_PAGES);
 		this.primaryTagFile = writer.writeTags(
-								  NewStagerTagCollectionType.CONSOLIDATED_SLEEP_PAGES,
-								  this.getConsolidatedSleepStages(), tagMap);
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_PAGES,
+				this.getConsolidatedSleepStages(), tagMap);
 	}
 
 	private EnumSet<NewStagerTagCollectionType> getSleepStages() {
 		return EnumSet.of(NewStagerTagCollectionType.SLEEP_STAGE_1,
-						  NewStagerTagCollectionType.SLEEP_STAGE_2,
-						  NewStagerTagCollectionType.SLEEP_STAGE_3,
-						  NewStagerTagCollectionType.SLEEP_STAGE_4,
-						  NewStagerTagCollectionType.SLEEP_STAGE_R,
-						  NewStagerTagCollectionType.SLEEP_STAGE_W);
+				NewStagerTagCollectionType.SLEEP_STAGE_2,
+				NewStagerTagCollectionType.SLEEP_STAGE_3,
+				NewStagerTagCollectionType.SLEEP_STAGE_4,
+				NewStagerTagCollectionType.SLEEP_STAGE_R,
+				NewStagerTagCollectionType.SLEEP_STAGE_W);
 	}
 
 	private EnumSet<NewStagerTagCollectionType> getConsolidatedSleepStages() {
 		return EnumSet.of(
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_1,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_2,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_3,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_REM,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_W,
-				   NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M);
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_1,
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_2,
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_3,
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_4,
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_REM,
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_W,
+				NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M);
 	}
 
 	private Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> mergeTags(
-		NewStagerBookProcessorStepResult stepTagResult) {
+			NewStagerBookProcessorStepResult stepTagResult) {
 		Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> map = new HashMap<NewStagerTagCollectionType, Collection<IPluginTagDef>>();
 		Comparator<IPluginTagDef> comparator = new PluginTagDefRangeComparator();
 
 		Set<NewStagerTagCollectionType> sleepStages = this.getSleepStages();
 		SortedSet<IPluginTagDef> allSleepPageTags = new TreeSet<IPluginTagDef>(
-			comparator);
+				comparator);
 		for (NewStagerBookProcessorResult tagCollection : stepTagResult.tagResults) {
 			for (Entry<NewStagerTagCollectionType, NewStagerTagCollection> entry : tagCollection.tagCollectionMap
 					.entrySet()) {
@@ -172,15 +173,15 @@ public class NewStagerTagWriteStep extends
 		}
 
 		this.consolidateTags(map, allSleepPageTags, stepTagResult.bookInfo,
-							 stepTagResult.montage);
+				stepTagResult.montage);
 
 		return map;
 	}
 
 	private void consolidateTags(
-		Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> map,
-		SortedSet<IPluginTagDef> allSleepPageTags,
-		NewStagerBookInfo bookInfo, boolean montage[]) {
+			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> map,
+			SortedSet<IPluginTagDef> allSleepPageTags,
+			NewStagerBookInfo bookInfo, boolean montage[]) {
 
 		if (allSleepPageTags.size() == 0) {
 			return;
@@ -206,8 +207,8 @@ public class NewStagerTagWriteStep extends
 		}
 
 		NewStagerBookAtomTagCreator tagCreator = new NewStagerBookAtomTagCreator(
-			new NewStagerBookAtomTagCreatorData(this.data.constants,
-												bookInfo));
+				new NewStagerBookAtomTagCreatorData(this.data.constants,
+						bookInfo));
 
 		Iterator<IPluginTagDef> it = allSleepPageTags.iterator();
 		if (!it.hasNext()) {
@@ -216,7 +217,7 @@ public class NewStagerTagWriteStep extends
 
 		IPluginTagDef prevTag = it.next();
 		map.get(NewStagerTagCollectionType.CONSOLIDATED_SLEEP_STAGE_M).add(
-			tagCreator.createPageTag(prevTag.getOffset()));
+				tagCreator.createPageTag(prevTag.getOffset()));
 
 		if (!it.hasNext()) {
 			return;
@@ -269,8 +270,8 @@ public class NewStagerTagWriteStep extends
 				}
 
 				map.get(tagTypeToCreate).add(
-					tagCreator.createPageTag(tag.getOffset()
-											 / tag.getLength()));
+						tagCreator.createPageTag(tag.getOffset()
+								/ tag.getLength()));
 			}
 
 			prevKey = key;
@@ -281,8 +282,8 @@ public class NewStagerTagWriteStep extends
 	private int getSignalBlockCount() {
 		if (this.signalBlockCount == null) {
 			this.signalBlockCount = PluginSignalHelper.GetBlockCount(
-										this.data.stagerData.getSampleSource(),
-										this.data.constants.getBlockLength());
+					this.data.stagerData.getSampleSource(),
+					this.data.constants.getBlockLength());
 		}
 
 		return this.signalBlockCount;
@@ -318,13 +319,15 @@ public class NewStagerTagWriteStep extends
 		}
 
 		int blockCount = this.getSignalBlockCountScaled();
-		this.data.tracker.advance(this, (int)(((double) pos) / numberOfFiles * blockCount - ((double) pos - 1) / numberOfFiles * blockCount));
+		this.data.tracker
+				.advance(this, (int) (((double) pos) / numberOfFiles
+						* blockCount - ((double) pos - 1) / numberOfFiles
+						* blockCount));
 	}
 
 	private int getNumberOfOutputFiles() {
 		boolean primaryFlag = this.data.stagerData.getParameters().primaryHypnogramFlag;
 		return primaryFlag ? 5 : 2;
 	}
-
 
 }

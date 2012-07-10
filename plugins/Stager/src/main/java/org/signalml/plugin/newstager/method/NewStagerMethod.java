@@ -19,6 +19,7 @@ import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.method.PluginAbstractMethod;
 import org.signalml.plugin.newstager.NewStagerPlugin;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
@@ -26,6 +27,7 @@ import org.signalml.plugin.newstager.data.NewStagerData;
 import org.signalml.plugin.newstager.data.NewStagerResult;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrData;
 import org.signalml.plugin.newstager.logic.mgr.NewStagerComputationMgr;
+import org.signalml.plugin.tool.PluginAccessHelper;
 import org.signalml.plugin.tool.PluginResourceRepository;
 import org.springframework.validation.Errors;
 
@@ -137,6 +139,11 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 
 
 	private NewStagerConstants getStagerConstants(NewStagerData stagerData) throws SignalMLException {
+		SvarogAccess access = PluginAccessHelper.GetSvarogAccess();
+		if (access == null) {
+			throw new SignalMLException();
+		}
+		
 		BookDocument doc;
 		try {
 			doc = new BookDocument(new File(stagerData.getParameters().bookFilePath));
@@ -146,7 +153,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		StandardBook book = doc.getBook();
 
 		return new NewStagerConstants(book.getSamplingFrequency(),
-									  (int) book.getCalibration(),
+									  (int) access.getSignalAccess().getActiveSignalDocument().getPageSize(),
 									  book.getSegmentCount(),
 									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
 									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,
