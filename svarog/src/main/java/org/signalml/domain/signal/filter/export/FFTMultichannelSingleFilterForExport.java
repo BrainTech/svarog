@@ -10,6 +10,7 @@ public class FFTMultichannelSingleFilterForExport extends AbstractMultichannelSi
 
 	public FFTMultichannelSingleFilterForExport(MultichannelSampleSource source, FFTSampleFilter definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
 		super(source, definition, filterExclusionArray);
+		createEngines(filterExclusionArray);
 	}
 
 	@Override

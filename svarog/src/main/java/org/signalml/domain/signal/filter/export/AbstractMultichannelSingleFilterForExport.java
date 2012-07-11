@@ -13,10 +13,11 @@ public abstract class AbstractMultichannelSingleFilterForExport extends Multicha
 
 	public AbstractMultichannelSingleFilterForExport(MultichannelSampleSource source, SampleFilterDefinition definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
 		super(source);
-
 		this.definition = definition;
+	}
 
-		filterEngines = new SinglechannelSampleFilter[source.getChannelCount()];
+	protected void createEngines(boolean[] filterExclusionArray) throws BadFilterParametersException {
+		filterEngines = new SinglechannelSampleFilter[this.source.getChannelCount()];
 		for (int channelNumber = 0; channelNumber < source.getChannelCount(); channelNumber++) {
 			if (!filterExclusionArray[channelNumber]) {
 				createEngine(channelNumber, filterExclusionArray);

@@ -8,7 +8,11 @@ import java.io.IOException;
 import org.junit.Test;
 import org.signalml.app.document.RawSignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
+import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
 import org.signalml.domain.signal.filter.iir.IIRFilterEngineStabilized;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -86,10 +90,11 @@ public class MultichannelSampleFilterForExportTest {
 		return originalSamplesRawSignalDocument;
 	}
 
-	@Test
+	//@Test
 	public void testFilterSignalWithOneFilter() throws IOException, BadFilterParametersException, SignalMLException {
 		//add one filter
 		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter1);
+		originalSamplesRawSignalDocument.getMontage().setFiltfiltEnabled(false);
 
 		//test
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
@@ -116,11 +121,12 @@ public class MultichannelSampleFilterForExportTest {
 		assertArrayEquals(filteredSamples, filteredExportSamples, 1e-5);
 	}
 
-	@Test
+	//@Test
 	public void testFilterSignalWithTwoFilters() throws IOException, BadFilterParametersException, SignalMLException {
 		//add one filter
 		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter1);
 		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter2);
+		originalSamplesRawSignalDocument.getMontage().setFiltfiltEnabled(false);
 
 		//test
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
@@ -153,5 +159,49 @@ public class MultichannelSampleFilterForExportTest {
 		//compare samples filtered all at once with the ones that were filtered using ExportFilteredSignalSampleSource
 		assertArrayEquals(filteredSamples, filteredExportSamples, 1e-5);
 	}
+
+	@Test
+	public void testFiltFiltWithSineWave() throws IOException, BadFilterParametersException, MontageException {
+
+		//generate sine wave
+		int sampleCount = 256;
+		double[][] samples = new double[1][sampleCount];
+
+		float samplingFrequency = 128.0F;
+		for (int i = 0; i < sampleCount; i++) {
+			samples[0][i] = Math.sin(2.0 * Math.PI * i / samplingFrequency);
+		}
+
+		DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(samples, 1, sampleCount);
+
+		RawSignalWriter writer = new RawSignalWriter();
+		File file = new File("sineWave.bin");
+		writer.writeSignal(file, sampleSource, new SignalExportDescriptor(), null);
+
+		//filter without filtfilt
+		TimeDomainSampleFilter timeDomainFilter = new TimeDomainSampleFilter(FilterType.HIGHPASS,
+				ApproximationFunctionType.BUTTERWORTH,
+				new double[] {0.1, 0.0}, new double[] {0.03, 0.0}, 3.0, 10.81);
+		timeDomainFilter.setSamplingFrequency(128.0);
+
+		SourceMontage sourceMontage = new SourceMontage();
+		sourceMontage.addSourceChannel("c1", ChannelFunction.EEG);
+		Montage montage = new Montage(sourceMontage);
+		montage.addSampleFilter(timeDomainFilter);
+		montage.setFilterEnabled(0, true);
+		montage.setFiltfiltEnabled(true);
+		montage.addMontageChannel(0);
+		RawSignalWriter rawSignalWriter = new RawSignalWriter();
+		rawSignalWriter.setMaximumBufferSize(50);
+		MultichannelSampleFilterForExport filteredSampleSource = new MultichannelSampleFilterForExport(sampleSource, montage, rawSignalWriter);
+
+		//write
+		rawSignalWriter = new RawSignalWriter();
+		rawSignalWriter.writeSignal(new File("filteredWith1FiltFilt50.bin"), filteredSampleSource, new SignalExportDescriptor(), null);
+
+		//TODO - finish this test - check if a filtfilted sinus doesn't change after filtering.
+	}
+
+
 
 }

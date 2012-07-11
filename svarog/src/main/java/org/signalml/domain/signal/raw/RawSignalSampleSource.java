@@ -402,7 +402,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case DOUBLE :
 				DoubleBuffer doubleBuffer = bBuffer.asDoubleBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (doubleBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
+					target[arrayOffset+i] = performCalibration(channel, doubleBuffer.get(targetOffset+sample));
 					sample += channelCount;
 				}
 				break;
@@ -410,7 +410,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case FLOAT :
 				FloatBuffer floatBuffer = bBuffer.asFloatBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (floatBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
+					target[arrayOffset+i] = performCalibration(channel, floatBuffer.get(targetOffset+sample));
 					sample += channelCount;
 				}
 				break;
@@ -418,7 +418,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case INT :
 				IntBuffer intBuffer = bBuffer.asIntBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (intBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
+					target[arrayOffset+i] = performCalibration(channel, intBuffer.get(targetOffset+sample));
 					sample += channelCount;
 				}
 				break;
@@ -426,7 +426,7 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 			case SHORT :
 				ShortBuffer shortBuffer = bBuffer.asShortBuffer();
 				for (i=0; i<count; i++) {
-					target[arrayOffset+i] = (shortBuffer.get(targetOffset+sample) * calibrationGain[channel] + calibrationOffset[channel]);
+					target[arrayOffset+i] = performCalibration(channel, shortBuffer.get(targetOffset+sample));
 					sample += channelCount;
 				}
 				break;
@@ -435,6 +435,17 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 
 		}
 
+	}
+
+	protected double performCalibration(int channelNumber, double sample) {
+
+		if (calibrationGain != null && calibrationOffset != null) {
+			Float gain = calibrationGain[channelNumber];
+			Float offset = calibrationOffset[channelNumber];
+			return sample * gain + offset;
+		}
+		else
+			return sample;
 	}
 
 	/**
