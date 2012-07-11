@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.signalml.app.document.RawSignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.export.MultichannelSampleFilterForExport;
 import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
+import org.signalml.domain.signal.filter.iir.IIRFilterEngineStabilized;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -107,9 +107,9 @@ public class MultichannelSampleFilterForExportTest {
 		FilterCoefficients coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter1);
 
 		double[][] filteredSamples = new double[channelCount][sampleCount];
-		IIRFilterEngine iirFilter = new IIRFilterEngine(coefficients.getBCoefficients(), coefficients.getACoefficients());
+		IIRFilterEngineStabilized iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
 		filteredSamples[0] = iirFilter.filter(originalSamples[0]);
-		iirFilter = new IIRFilterEngine(coefficients.getBCoefficients(), coefficients.getACoefficients());
+		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
 		filteredSamples[1] = iirFilter.filter(originalSamples[1]);
 
 		//compare samples filtered all at once with the ones that were filtered using ExportFilteredSignalSampleSource
@@ -138,16 +138,16 @@ public class MultichannelSampleFilterForExportTest {
 		FilterCoefficients coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter1);
 
 		double[][] filteredSamples = new double[channelCount][sampleCount];
-		IIRFilterEngine iirFilter = new IIRFilterEngine(coefficients.getBCoefficients(), coefficients.getACoefficients());
+		IIRFilterEngine iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
 		filteredSamples[0] = iirFilter.filter(originalSamples[0]);
-		iirFilter = new IIRFilterEngine(coefficients.getBCoefficients(), coefficients.getACoefficients());
+		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
 		filteredSamples[1] = iirFilter.filter(originalSamples[1]);
 
 		//filter 2
 		coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter2);
-		iirFilter = new IIRFilterEngine(coefficients.getBCoefficients(), coefficients.getACoefficients());
+		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
 		filteredSamples[0] = iirFilter.filter(filteredSamples[0]);
-		iirFilter = new IIRFilterEngine(coefficients.getBCoefficients(), coefficients.getACoefficients());
+		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
 		filteredSamples[1] = iirFilter.filter(filteredSamples[1]);
 
 		//compare samples filtered all at once with the ones that were filtered using ExportFilteredSignalSampleSource

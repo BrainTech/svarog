@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.MultichannelSampleFilter;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.raw.RawSignalWriter;
@@ -56,11 +58,14 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 				inputFile = outputFile;
 				outputFile = tmp;
 
-				inputSource = createRawSignalSampleSource(inputFile);
+				inputSource = createRawSignalSampleSource(inputFile, source);
 			}
 
-			MultichannelSingleFilterForExport filter = new MultichannelSingleFilterForExport(inputSource,
-					sampleFilter, currentMontage.getFilterExclusionArray(i));
+			AbstractMultichannelSingleFilterForExport filter;
+			if (sampleFilter instanceof FFTSampleFilter)
+				filter = new FFTMultichannelSingleFilterForExport(inputSource, (FFTSampleFilter) sampleFilter, currentMontage.getFilterExclusionArray(i));
+			else
+				filter = new IIRMultichannelSingleFilterForExport(inputSource, (TimeDomainSampleFilter) sampleFilter, currentMontage.getFilterExclusionArray(i));
 
 			//switch files
 			rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), null);
@@ -69,11 +74,11 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 
 		if (currentMontage.getSampleFilterCount() > 0) {
 			inputFile.delete();
-			resultSampleSource = createRawSignalSampleSource(outputFile);
+			resultSampleSource = createRawSignalSampleSource(outputFile, source);
 		}
 	}
 
-	protected RawSignalSampleSource createRawSignalSampleSource(File file) throws IOException {
+	protected static RawSignalSampleSource createRawSignalSampleSource(File file, MultichannelSampleSource source) throws IOException {
 		RawSignalSampleSource rawSignalSampleSource = new RawSignalSampleSource(file, source.getChannelCount(), source.getSamplingFrequency(), getSignalExportDescriptor().getSampleType(), getSignalExportDescriptor().getByteOrder());
 
 		int channelCount = source.getChannelCount();
@@ -90,7 +95,7 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 		return rawSignalSampleSource;
 	}
 
-	protected SignalExportDescriptor getSignalExportDescriptor() {
+	protected static SignalExportDescriptor getSignalExportDescriptor() {
 		return new SignalExportDescriptor();
 	}
 
