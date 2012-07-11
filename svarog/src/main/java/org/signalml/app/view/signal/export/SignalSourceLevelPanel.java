@@ -81,8 +81,7 @@ public class SignalSourceLevelPanel extends JPanel {
 
 		setBorder(new TitledBorder(_("Signal source level")));
 
-		//removed - m 0006280
-		//add( getRawRadioButton() );
+		add(getRawRadioButton());
 		add(getAssembledRadioButton());
 		add(getFilteredRadioButton());
 
