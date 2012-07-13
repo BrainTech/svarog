@@ -7,28 +7,19 @@ import org.signalml.math.iirdesigner.InitialStateCalculator;
 public class ExportIIRSinglechannelSampleFilter  extends AbstractIIRSinglechannelSampleFilter {
 
 	private IIRFilterEngine iirFilter;
-	private FilterCoefficients filterCoefficients;
-
-	public ExportIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
-		super(source, coefficients);
-		this.filterCoefficients = coefficients;
-
-		iirFilter = new IIRFilterEngineStabilized(bCoefficients, aCoefficients);
-	}
+	private boolean firstRun = true;
 
 	public ExportIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients, boolean grow) {
 		super(source, coefficients);
-		this.filterCoefficients = coefficients;
 
 		if (grow) {
 			this.source = new GrowSignalSampleSource(source, coefficients);
 		}
 
-
 		InitialStateCalculator initalStateCalculator = new InitialStateCalculator(coefficients);
 		double[] initialState = initalStateCalculator.getInitialState();
 
-		//right-wise
+		//calculate intial state
 		double[] initialStateRightwise = new double[initialState.length];
 		for (int i = 0; i < initialStateRightwise.length; i++) {
 			double[] firstSample = new double[1];
@@ -41,6 +32,16 @@ public class ExportIIRSinglechannelSampleFilter  extends AbstractIIRSinglechanne
 
 	@Override
 	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+		if (firstRun) {
+			firstRun = false;
+			if (signalOffset != 0) {
+				//so that initial state is used for the first samples.
+				double[] samples = new double[signalOffset];
+				source.getSamples(samples, 0, signalOffset, 0);
+				iirFilter.filter(samples);
+			}
+		}
+
 		double[] samples = new double[count];
 		source.getSamples(samples, signalOffset, count, 0);
 

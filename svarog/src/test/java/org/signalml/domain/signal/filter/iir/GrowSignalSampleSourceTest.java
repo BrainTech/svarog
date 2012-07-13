@@ -4,9 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.TestingSignals;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
+import org.signalml.math.iirdesigner.FilterType;
+import org.signalml.math.iirdesigner.IIRDesigner;
+import org.signalml.math.iirdesigner.InitialStateCalculator;
 
 public class GrowSignalSampleSourceTest {
 
@@ -17,7 +24,6 @@ public class GrowSignalSampleSourceTest {
 				{{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
 
 		DoubleArraySampleSource multichannelSampleSource = new DoubleArraySampleSource(samples, samples.length, samples[0].length);
-
 		ChannelSelectorSampleSource channelSampleSource = new ChannelSelectorSampleSource(multichannelSampleSource, 0);
 
 		FilterCoefficients filterCoefficients = new FilterCoefficients(new double[] {1.0, 0.3}, new double[] {1.0});
@@ -124,8 +130,33 @@ public class GrowSignalSampleSourceTest {
 		actualGrownSignal = new double[growSignalSampleSource.getSampleCount()];
 		growSignalSampleSource.getSamples(actualGrownSignal, 0, actualGrownSignal.length, 0);
 		assertArrayEquals(iscSignal, actualGrownSignal, 1e-6);*/
+	}
 
+	@Test
+	public void compareGrowing() throws BadFilterParametersException {
+		double[][] samples = new double[1][];
+		samples[0] = TestingSignals.SHORT_SIGNAL;
 
+		DoubleArraySampleSource multichannelSampleSource = new DoubleArraySampleSource(samples, samples.length, samples[0].length);
+		ChannelSelectorSampleSource channelSampleSource = new ChannelSelectorSampleSource(multichannelSampleSource, 0);
+
+		TimeDomainSampleFilter timeDomainFilter = new TimeDomainSampleFilter(FilterType.HIGHPASS,
+				ApproximationFunctionType.BUTTERWORTH,
+				new double[] {5.0, 0.0}, new double[] {1.5, 0.0}, 3.0, 10.00);
+		timeDomainFilter.setSamplingFrequency(128.0);
+		FilterCoefficients filterCoefficients = IIRDesigner.designDigitalFilter(timeDomainFilter);
+
+		//grown
+		GrowSignalSampleSource growSampleSource = new GrowSignalSampleSource(channelSampleSource, filterCoefficients);
+
+		double[] grownSamples = new double[growSampleSource.getSampleCount()];
+		growSampleSource.getSamples(grownSamples, 0, grownSamples.length, 0);
+
+		//initial state
+		InitialStateCalculator initialStateCalculator = new InitialStateCalculator(filterCoefficients);
+		double[] grownSamples2 = initialStateCalculator.growSignal(samples[0]);
+
+		assertArrayEquals(grownSamples, grownSamples2, 1e-4);
 	}
 
 

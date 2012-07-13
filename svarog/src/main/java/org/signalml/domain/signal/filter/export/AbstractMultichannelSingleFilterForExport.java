@@ -4,11 +4,12 @@ import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.filter.SinglechannelSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.SampleSourceEngine;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
 public abstract class AbstractMultichannelSingleFilterForExport extends MultichannelSampleProcessor {
 
-	protected SinglechannelSampleFilterEngine[] filterEngines;
+	protected SampleSourceEngine[] filterEngines;
 	protected SampleFilterDefinition definition;
 
 	public AbstractMultichannelSingleFilterForExport(MultichannelSampleSource source, SampleFilterDefinition definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
@@ -30,7 +31,7 @@ public abstract class AbstractMultichannelSingleFilterForExport extends Multicha
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
-		SinglechannelSampleFilterEngine engine = filterEngines[channel];
+		SampleSourceEngine engine = filterEngines[channel];
 
 		if (engine == null)
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
@@ -41,7 +42,7 @@ public abstract class AbstractMultichannelSingleFilterForExport extends Multicha
 	@Override
 	public int getSampleCount(int channel) {
 
-		SinglechannelSampleFilterEngine engine = filterEngines[channel];
+		SampleSourceEngine engine = filterEngines[channel];
 
 		if (engine == null)
 			return source.getSampleCount(channel);

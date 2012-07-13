@@ -14,7 +14,7 @@ public class TrimSignalSampleSourceTest {
 				{{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14}};
 		DoubleArraySampleSource multichannelSampleSource = new DoubleArraySampleSource(samples, samples.length, samples[0].length);
 
-		TrimSignalSampleSource trimmedSampleSource = new TrimSignalSampleSource(multichannelSampleSource, 3, 10);
+		TrimSignalMultichannelSampleSource trimmedSampleSource = new TrimSignalMultichannelSampleSource(multichannelSampleSource, 3, 10);
 
 		//test1
 		double[] expected = new double[]{4, 5, 6, 7, 8, 9, 10};

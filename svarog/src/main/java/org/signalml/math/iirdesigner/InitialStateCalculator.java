@@ -164,7 +164,7 @@ public class InitialStateCalculator {
 	 */
 	public double[] growSignal(double[] signal, boolean leftOnly) {
 		int ntaps = Math.max(aCoefficients.length, bCoefficients.length);
-		int edge = ntaps * 3; //TODO wroc
+		int edge = ntaps * 3;
 
 		int grownSignalSize = edge + signal.length + (leftOnly?0:edge);
 		double[] grownSignal = new double[grownSignalSize];

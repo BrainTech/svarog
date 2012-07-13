@@ -9,16 +9,14 @@ import org.junit.Test;
 import org.signalml.app.document.RawSignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.MontageException;
-import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
-import org.signalml.domain.signal.filter.iir.IIRFilterEngineStabilized;
+import org.signalml.domain.signal.filter.MultichannelSampleFilter;
+import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
@@ -90,7 +88,7 @@ public class MultichannelSampleFilterForExportTest {
 		return originalSamplesRawSignalDocument;
 	}
 
-	//@Test
+	@Test
 	public void testFilterSignalWithOneFilter() throws IOException, BadFilterParametersException, SignalMLException {
 		//add one filter
 		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter1);
@@ -106,22 +104,25 @@ public class MultichannelSampleFilterForExportTest {
 		filteredSampleSource.getSamples(0, filteredExportSamples[0], 0, sampleCount, 0);
 		filteredSampleSource.getSamples(1, filteredExportSamples[1], 0, sampleCount, 0);
 
-		originalSamplesRawSignalDocument.closeDocument();
-
 		//normal
 		FilterCoefficients coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter1);
 
+		ChannelSelectorSampleSource channel0SampleSource = new ChannelSelectorSampleSource(originalSamplesRawSignalDocument.getSampleSource(), 0);
+		OfflineIIRSinglechannelSampleFilter offlineSampleFilter = new OfflineIIRSinglechannelSampleFilter(channel0SampleSource, coefficients);
 		double[][] filteredSamples = new double[channelCount][sampleCount];
-		IIRFilterEngineStabilized iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
-		filteredSamples[0] = iirFilter.filter(originalSamples[0]);
-		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
-		filteredSamples[1] = iirFilter.filter(originalSamples[1]);
+		offlineSampleFilter.getSamples(filteredSamples[0], 0, sampleCount, 0);
+
+		ChannelSelectorSampleSource channel1SampleSource = new ChannelSelectorSampleSource(originalSamplesRawSignalDocument.getSampleSource(), 1);
+		offlineSampleFilter = new OfflineIIRSinglechannelSampleFilter(channel1SampleSource, coefficients);
+		offlineSampleFilter.getSamples(filteredSamples[1], 0, sampleCount, 0);
 
 		//compare samples filtered all at once with the ones that were filtered using ExportFilteredSignalSampleSource
 		assertArrayEquals(filteredSamples, filteredExportSamples, 1e-5);
+
+		originalSamplesRawSignalDocument.closeDocument();
 	}
 
-	//@Test
+	@Test
 	public void testFilterSignalWithTwoFilters() throws IOException, BadFilterParametersException, SignalMLException {
 		//add one filter
 		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter1);
@@ -138,70 +139,19 @@ public class MultichannelSampleFilterForExportTest {
 		filteredSampleSource.getSamples(0, filteredExportSamples[0], 0, sampleCount, 0);
 		filteredSampleSource.getSamples(1, filteredExportSamples[1], 0, sampleCount, 0);
 
-		originalSamplesRawSignalDocument.closeDocument();
-
-		//filter 1
-		FilterCoefficients coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter1);
+		//offline
+		MultichannelSampleFilter filter = new MultichannelSampleFilter(originalSamplesRawSignalDocument.getSampleSource());
+		Montage filteredMontage = new Montage(originalSamplesRawSignalDocument.getMontage());
+		filter.setCurrentMontage(filteredMontage);
 
 		double[][] filteredSamples = new double[channelCount][sampleCount];
-		IIRFilterEngine iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
-		filteredSamples[0] = iirFilter.filter(originalSamples[0]);
-		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
-		filteredSamples[1] = iirFilter.filter(originalSamples[1]);
-
-		//filter 2
-		coefficients = IIRDesigner.designDigitalFilter(timeDomainFilter2);
-		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
-		filteredSamples[0] = iirFilter.filter(filteredSamples[0]);
-		iirFilter = new IIRFilterEngineStabilized(coefficients.getBCoefficients(), coefficients.getACoefficients());
-		filteredSamples[1] = iirFilter.filter(filteredSamples[1]);
+		filter.getSamples(0, filteredSamples[0], 0, sampleCount, 0);
+		filter.getSamples(1, filteredSamples[1], 0, sampleCount, 0);
 
 		//compare samples filtered all at once with the ones that were filtered using ExportFilteredSignalSampleSource
 		assertArrayEquals(filteredSamples, filteredExportSamples, 1e-5);
+
+		originalSamplesRawSignalDocument.closeDocument();
 	}
-
-	@Test
-	public void testFiltFiltWithSineWave() throws IOException, BadFilterParametersException, MontageException {
-
-		//generate sine wave
-		int sampleCount = 256;
-		double[][] samples = new double[1][sampleCount];
-
-		float samplingFrequency = 128.0F;
-		for (int i = 0; i < sampleCount; i++) {
-			samples[0][i] = Math.sin(2.0 * Math.PI * i / samplingFrequency);
-		}
-
-		DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(samples, 1, sampleCount);
-
-		RawSignalWriter writer = new RawSignalWriter();
-		File file = new File("sineWave.bin");
-		writer.writeSignal(file, sampleSource, new SignalExportDescriptor(), null);
-
-		//filter without filtfilt
-		TimeDomainSampleFilter timeDomainFilter = new TimeDomainSampleFilter(FilterType.HIGHPASS,
-				ApproximationFunctionType.BUTTERWORTH,
-				new double[] {0.1, 0.0}, new double[] {0.03, 0.0}, 3.0, 10.81);
-		timeDomainFilter.setSamplingFrequency(128.0);
-
-		SourceMontage sourceMontage = new SourceMontage();
-		sourceMontage.addSourceChannel("c1", ChannelFunction.EEG);
-		Montage montage = new Montage(sourceMontage);
-		montage.addSampleFilter(timeDomainFilter);
-		montage.setFilterEnabled(0, true);
-		montage.setFiltfiltEnabled(true);
-		montage.addMontageChannel(0);
-		RawSignalWriter rawSignalWriter = new RawSignalWriter();
-		rawSignalWriter.setMaximumBufferSize(50);
-		MultichannelSampleFilterForExport filteredSampleSource = new MultichannelSampleFilterForExport(sampleSource, montage, rawSignalWriter);
-
-		//write
-		rawSignalWriter = new RawSignalWriter();
-		rawSignalWriter.writeSignal(new File("filteredWith1FiltFilt50.bin"), filteredSampleSource, new SignalExportDescriptor(), null);
-
-		//TODO - finish this test - check if a filtfilted sinus doesn't change after filtering.
-	}
-
-
 
 }
