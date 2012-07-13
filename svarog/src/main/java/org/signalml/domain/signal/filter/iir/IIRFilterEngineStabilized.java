@@ -1,7 +1,7 @@
 package org.signalml.domain.signal.filter.iir;
 
 import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.InitalStateCalculator;
+import org.signalml.math.iirdesigner.InitialStateCalculator;
 
 public class IIRFilterEngineStabilized extends IIRFilterEngine {
 
@@ -16,7 +16,7 @@ public class IIRFilterEngineStabilized extends IIRFilterEngine {
 		if (firstInvokeOfFilter) {
 			firstInvokeOfFilter = false;
 
-			InitalStateCalculator initalStateCalculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
+			InitialStateCalculator initalStateCalculator = new InitialStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
 			double[] initialState = initalStateCalculator.getInitialState();
 			double[] grownSignal = initalStateCalculator.growSignal(input, true);
 			double[] filteredSamples;

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import org.apache.commons.math.complex.Complex;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
-import org.signalml.domain.signal.filter.SinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.SinglechannelSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.fft.FourierTransform;
@@ -24,7 +24,7 @@ import org.signalml.math.fft.FourierTransform;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class FFTSinglechannelSampleFilter extends SinglechannelSampleFilter {
+public class FFTSinglechannelSampleFilter extends SinglechannelSampleFilterEngine {
 
 	private double[] cache = null;
 	/**

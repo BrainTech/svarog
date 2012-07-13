@@ -12,7 +12,6 @@ import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealVector;
 import org.signalml.math.ArrayOperations;
 
-
 /**
  * This class calculates the initial state parameters for a filter.
  * These initial state can be used to perform filtfilt with
@@ -20,7 +19,7 @@ import org.signalml.math.ArrayOperations;
  *
  * @author Piotr Szachewicz
  */
-public class InitalStateCalculator {
+public class InitialStateCalculator {
 	/**
 	 * Implemented as in http://www.scipy.org/Cookbook/FiltFilt (Python).
 	 */
@@ -50,7 +49,7 @@ public class InitalStateCalculator {
 	 * @param filterCoefficients the coefficients of the filter for which
 	 * this calculator calculates the initial state
 	 */
-	public InitalStateCalculator(FilterCoefficients filterCoefficients) {
+	public InitialStateCalculator(FilterCoefficients filterCoefficients) {
 		this.aCoefficients = filterCoefficients.getACoefficients();
 		this.bCoefficients = filterCoefficients.getBCoefficients();
 		makeCoefficientArraysEqualLength();
@@ -165,7 +164,7 @@ public class InitalStateCalculator {
 	 */
 	public double[] growSignal(double[] signal, boolean leftOnly) {
 		int ntaps = Math.max(aCoefficients.length, bCoefficients.length);
-		int edge = ntaps * 3 - 1;
+		int edge = ntaps * 3; //TODO wroc
 
 		int grownSignalSize = edge + signal.length + (leftOnly?0:edge);
 		double[] grownSignal = new double[grownSignalSize];

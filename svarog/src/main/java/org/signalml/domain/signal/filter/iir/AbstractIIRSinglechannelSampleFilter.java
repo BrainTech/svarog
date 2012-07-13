@@ -4,7 +4,7 @@ import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.SinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.SinglechannelSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
@@ -20,7 +20,7 @@ import org.signalml.math.iirdesigner.IIRDesigner;
  *
  * @author Piotr Szachewicz
  */
-public abstract class AbstractIIRSinglechannelSampleFilter extends SinglechannelSampleFilter {
+public abstract class AbstractIIRSinglechannelSampleFilter extends SinglechannelSampleFilterEngine {
 
 	protected static final Logger logger = Logger.getLogger(AbstractIIRSinglechannelSampleFilter.class);
 

@@ -10,25 +10,25 @@ import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealVector;
 import org.junit.Test;
 import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.InitalStateCalculator;
+import org.signalml.math.iirdesigner.InitialStateCalculator;
 
 import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 /**
- * This class performs unit tests on {@link InitalStateCalculator}.
+ * This class performs unit tests on {@link InitialStateCalculator}.
  *
  * @author Piotr Szachewicz
  */
 public class InitialStateCalculatorTest {
 
 	/**
-	 * Test method for {@link InitalStateCalculator#calculateZID() }.
+	 * Test method for {@link InitialStateCalculator#calculateZID() }.
 	 */
 	@Test
 	public void testCalculateZID() {
 
 		//coefficients 1
-		InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
+		InitialStateCalculator calculator = new InitialStateCalculator(getSampleFilterCoefficients1());
 		RealVector actual = calculator.calculateZID();
 
 		RealVector expected = new ArrayRealVector(new double[] {0.00236855, 0.00024174, 0.00072069});
@@ -36,7 +36,7 @@ public class InitialStateCalculatorTest {
 		assertVectorEquals(expected, actual, 1e-7);
 
 		//coefficients 2
-		calculator = new InitalStateCalculator(getSampleFilterCoefficients2());
+		calculator = new InitialStateCalculator(getSampleFilterCoefficients2());
 		actual = calculator.calculateZID();
 
 		expected = new ArrayRealVector(new double[] {0.389, 0.35, 0.1, 0.7, 0.4});
@@ -68,13 +68,13 @@ public class InitialStateCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link InitalStateCalculator#calculateZIN() }.
+	 * Test method for {@link InitialStateCalculator#calculateZIN() }.
 	 */
 	@Test
 	public void testCalculateZIN() {
 
 		//coefficients 1
-		InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
+		InitialStateCalculator calculator = new InitialStateCalculator(getSampleFilterCoefficients1());
 		RealMatrix actual = calculator.calculateZIN();
 
 		RealMatrix expected = new Array2DRowRealMatrix(new double[][] {
@@ -86,7 +86,7 @@ public class InitialStateCalculatorTest {
 		assertMatrixEquals(expected, actual, 1e-7);
 
 		//coefficients 2
-		calculator = new InitalStateCalculator(getSampleFilterCoefficients2());
+		calculator = new InitialStateCalculator(getSampleFilterCoefficients2());
 		actual = calculator.calculateZIN();
 
 		expected = new Array2DRowRealMatrix(new double[][] {
@@ -101,13 +101,13 @@ public class InitialStateCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link InitalStateCalculator#calculateSubtrahendForZIN() }.
+	 * Test method for {@link InitialStateCalculator#calculateSubtrahendForZIN() }.
 	 */
 	@Test
 	public void testCalculateSubtrahendForZIN() {
 
 		//coefficients 1
-		InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
+		InitialStateCalculator calculator = new InitialStateCalculator(getSampleFilterCoefficients1());
 		RealMatrix actual = calculator.calculateSubtrahendForZIN();
 
 		RealMatrix expected = new Array2DRowRealMatrix(new double[][] {
@@ -119,7 +119,7 @@ public class InitialStateCalculatorTest {
 		assertMatrixEquals(expected, actual, 1e-7);
 
 		//coefficients 2
-		calculator = new InitalStateCalculator(getSampleFilterCoefficients2());
+		calculator = new InitialStateCalculator(getSampleFilterCoefficients2());
 		actual = calculator.calculateSubtrahendForZIN();
 
 		expected = new Array2DRowRealMatrix(new double[][] {
@@ -134,13 +134,13 @@ public class InitialStateCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link InitalStateCalculator#getInitialState() }.
+	 * Test method for {@link InitialStateCalculator#getInitialState() }.
 	 */
 	@Test
 	public void testGetInitialState() {
 
 		//coefficients 1
-		InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
+		InitialStateCalculator calculator = new InitialStateCalculator(getSampleFilterCoefficients1());
 		double[] actual = calculator.getInitialState();
 
 		double[] expected = new double[] {0.99958345, -1.68782358,  0.73058189};
@@ -148,7 +148,7 @@ public class InitialStateCalculatorTest {
 		assertArrayEquals(expected, actual, 1e-4);
 
 		//coefficients 2
-		calculator = new InitalStateCalculator(getSampleFilterCoefficients2());
+		calculator = new InitialStateCalculator(getSampleFilterCoefficients2());
 		actual = calculator.getInitialState();
 
 		expected = new double[] {3.17868852, 3.13934426, 1.2, 1.1, 0.4};
@@ -158,7 +158,7 @@ public class InitialStateCalculatorTest {
 	}
 
 	/**
-	 * Test method for {@link InitalStateCalculator#growSignal(double[])  }.
+	 * Test method for {@link InitialStateCalculator#growSignal(double[])  }.
 	 */
 	@Test
 	public void testGrowSignal() {
@@ -167,7 +167,7 @@ public class InitialStateCalculatorTest {
 			signal[i] = i + 1;
 		}
 
-		InitalStateCalculator calculator = new InitalStateCalculator(getSampleFilterCoefficients1());
+		InitialStateCalculator calculator = new InitialStateCalculator(getSampleFilterCoefficients1());
 		double[] grownSignal = calculator.growSignal(signal);
 		double[] expected = new double[] {-10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2,
 										  3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
@@ -214,7 +214,7 @@ public class InitialStateCalculatorTest {
 		double[] aCoefficients = new double[]
 		{1.        , -2.6861574 ,  2.41965511, -0.73016535};
 
-		InitalStateCalculator calculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
+		InitialStateCalculator calculator = new InitialStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
 
 		double[] actual = calculator.getInitialState();
 		double[] expected = new double[] {0.99958345, -1.68782358, 0.73058189};

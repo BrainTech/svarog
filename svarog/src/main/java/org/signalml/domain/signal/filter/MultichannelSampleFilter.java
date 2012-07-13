@@ -35,7 +35,7 @@ import org.signalml.math.iirdesigner.IIRDesigner;
 
 /**
  * This abstract class represents a filter of samples for multichannel signal.
- * It contains the list of {@link SinglechannelSampleFilter engines} for every channel
+ * It contains the list of {@link SinglechannelSampleFilterEngine engines} for every channel
  * and uses them to filter samples.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
@@ -48,9 +48,9 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 	/**
 	 * a vector that at each index (being also the index of a channel) holds
-	 * a chain (list) of {@link SinglechannelSampleFilter engines}.
+	 * a chain (list) of {@link SinglechannelSampleFilterEngine engines}.
 	 */
-	protected Vector<LinkedList<SinglechannelSampleFilter>> chains;
+	protected Vector<LinkedList<SinglechannelSampleFilterEngine>> chains;
 
 	/**
 	 * the {@link Montage montage} with which this filter is associated
@@ -104,8 +104,8 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	 */
 	private void updateTimeDomainSampleFilterEnginesCache(int samplesAdded) {
 
-		SinglechannelSampleFilter eng;
-		Iterator<SinglechannelSampleFilter> it;
+		SinglechannelSampleFilterEngine eng;
+		Iterator<SinglechannelSampleFilterEngine> it;
 		for (int i = 0; i < chains.size(); i++) {
 
 			it = (chains.get(i)).iterator();
@@ -167,12 +167,12 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				updateTimeDomainSampleFilterEnginesCache();
 			semaphore.acquire();
 
-			LinkedList<SinglechannelSampleFilter> chain = chains.get(channel);
+			LinkedList<SinglechannelSampleFilterEngine> chain = chains.get(channel);
 			if (chain.isEmpty()) {
 				source.getSamples(channel, target, signalOffset, count, arrayOffset);
 			} else {
-				ListIterator<SinglechannelSampleFilter> it = chain.listIterator(chain.size());
-				SinglechannelSampleFilter last = it.previous();
+				ListIterator<SinglechannelSampleFilterEngine> it = chain.listIterator(chain.size());
+				SinglechannelSampleFilterEngine last = it.previous();
 				last.getSamples(target, signalOffset, count, arrayOffset);
 			}
 		}
@@ -186,13 +186,13 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	/**
-	 * Adds the filter {@link SinglechannelSampleFilter engine} for all
+	 * Adds the filter {@link SinglechannelSampleFilterEngine engine} for all
 	 * channels.
 	 * @param filter the filter engine to be added
 	 */
-	public void addFilter(SinglechannelSampleFilter filter) {
+	public void addFilter(SinglechannelSampleFilterEngine filter) {
 		int cnt = chains.size();
-		LinkedList<SinglechannelSampleFilter> chain;
+		LinkedList<SinglechannelSampleFilterEngine> chain;
 		for (int i=0; i<cnt; i++) {
 			chain = chains.get(i);
 			chain.add(filter);
@@ -200,14 +200,14 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	/**
-	 * Adds the filter {@link SinglechannelSampleFilter engine} for specified
+	 * Adds the filter {@link SinglechannelSampleFilterEngine engine} for specified
 	 * channels.
 	 * @param filter the filter engine to be added
 	 * @param channels array of indexes of channels for which filter engine
 	 * is to be added
 	 */
-	public void addFilter(SinglechannelSampleFilter filter, int[] channels) {
-		LinkedList<SinglechannelSampleFilter> chain;
+	public void addFilter(SinglechannelSampleFilterEngine filter, int[] channels) {
+		LinkedList<SinglechannelSampleFilterEngine> chain;
 		for (int i=0; i<channels.length; i++) {
 			chain = chains.get(channels[i]);
 			chain.add(filter);
@@ -215,14 +215,14 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	/**
-	 * Adds the filter {@link SinglechannelSampleFilter engine} for the
+	 * Adds the filter {@link SinglechannelSampleFilterEngine engine} for the
 	 * specified channel.
 	 * @param filter the filter engine to be added
 	 * @param channel the number of the channel for which filter engine
 	 * is to be added
 	 */
-	public void addFilter(SinglechannelSampleFilter filter, int channel) {
-		LinkedList<SinglechannelSampleFilter> chain;
+	public void addFilter(SinglechannelSampleFilterEngine filter, int channel) {
+		LinkedList<SinglechannelSampleFilterEngine> chain;
 		chain = chains.get(channel);
 		chain.add(filter);
 	}
@@ -243,16 +243,16 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	/**
-	 * Clears the list of filter {@link SinglechannelSampleFilter engines}.
+	 * Clears the list of filter {@link SinglechannelSampleFilterEngine engines}.
 	 * It is done by creating new and replacing.
 	 */
 	public void reinitFilterChains() {
 
 		int cnt = source.getChannelCount();
-		chains = new Vector<LinkedList<SinglechannelSampleFilter>>(cnt);
-		LinkedList<SinglechannelSampleFilter> chain;
+		chains = new Vector<LinkedList<SinglechannelSampleFilterEngine>>(cnt);
+		LinkedList<SinglechannelSampleFilterEngine> chain;
 		for (int i=0; i<cnt; i++) {
-			chain = new LinkedList<SinglechannelSampleFilter>();
+			chain = new LinkedList<SinglechannelSampleFilterEngine>();
 			chains.add(chain);
 		}
 
@@ -288,7 +288,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		int filterCount = montage.getSampleFilterCount();
 		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
 		TimeDomainSampleFilter tdsFilter;
-		LinkedList<SinglechannelSampleFilter> chain;
+		LinkedList<SinglechannelSampleFilterEngine> chain;
 
 		SampleSource input;//input for the next filter in the list
 
@@ -353,7 +353,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 		int channelCount = montage.getMontageChannelCount();
 		int filterCount = montage.getSampleFilterCount();
 		SampleFilterDefinition[] definitions = new SampleFilterDefinition[filterCount];
-		LinkedList<SinglechannelSampleFilter> chain;
+		LinkedList<SinglechannelSampleFilterEngine> chain;
 
 		FFTSampleFilter fftFilter;
 		FFTSampleFilter[] summaryFFTFilters = new FFTSampleFilter[channelCount];
@@ -404,8 +404,8 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	/**
-	 * Clears the filter {@link SinglechannelSampleFilter engines} and initializes
-	 * them creating {@link SinglechannelSampleFilter filter engines}
+	 * Clears the filter {@link SinglechannelSampleFilterEngine engines} and initializes
+	 * them creating {@link SinglechannelSampleFilterEngine filter engines}
 	 * based on {@link SampleFilterDefinition sample filters} (both FFT and Time Domain) from a given montage.
 	 * @param montage the montage used to create new engines
 	 * @throws MontageMismatchException never thrown

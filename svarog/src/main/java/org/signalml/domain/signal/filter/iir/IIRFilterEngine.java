@@ -1,6 +1,7 @@
 package org.signalml.domain.signal.filter.iir;
 
 
+
 /**
  * This class represents a single IIR filter implemented as
  * direct II transposed structure.
@@ -55,13 +56,13 @@ public class IIRFilterEngine {
 		this.bCoefficients = bCoefficients;
 		this.aCoefficients = aCoefficients;
 
-		resetInitialConditions();
+		resetInitialConditionsToZero();
 	}
 
 	/**
 	 * Resets the state of the filter delays to zeros.
 	 */
-	protected void resetInitialConditions() {
+	protected void resetInitialConditionsToZero() {
 		int size = Math.max(bCoefficients.length, aCoefficients.length) - 1;
 		initialConditions = new double[size];
 

@@ -109,4 +109,13 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 		}
 	}
 
+	@Override
+	public int getSampleCount(int channel) {
+		if (currentMontage.getSampleFilterCount() > 0) {
+			return resultSampleSource.getSampleCount();
+		} else {
+			return source.getSampleCount(channel);
+		}
+	}
+
 }

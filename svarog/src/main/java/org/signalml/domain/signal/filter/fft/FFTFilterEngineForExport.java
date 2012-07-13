@@ -3,11 +3,11 @@ package org.signalml.domain.signal.filter.fft;
 import org.apache.commons.math.complex.Complex;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.signalml.domain.signal.filter.SinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.SinglechannelSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.fft.FourierTransform;
 
-public class FFTFilterEngineForExport extends SinglechannelSampleFilter {
+public class FFTFilterEngineForExport extends SinglechannelSampleFilterEngine {
 
 	private FFTSampleFilter fftSampleFilter;
 
