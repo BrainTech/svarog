@@ -9,12 +9,8 @@ public class ExportIIRSinglechannelSampleFilter  extends AbstractIIRSinglechanne
 	private IIRFilterEngine iirFilter;
 	private boolean firstRun = true;
 
-	public ExportIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients, boolean grow) {
+	public ExportIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
 		super(source, coefficients);
-
-		if (grow) {
-			this.source = new GrowSignalSampleSource(source, coefficients);
-		}
 
 		InitialStateCalculator initalStateCalculator = new InitialStateCalculator(coefficients);
 		double[] initialState = initalStateCalculator.getInitialState();

@@ -63,9 +63,9 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 
 			AbstractMultichannelSingleFilterForExport filter;
 			if (sampleFilter instanceof FFTSampleFilter)
-				filter = new FFTMultichannelSingleFilterForExport(inputSource, (FFTSampleFilter) sampleFilter, currentMontage.getFilterExclusionArray(i));
+				filter = new FFTMultichannelSingleFilterForExport(inputSource, (FFTSampleFilter) sampleFilter, currentMontage.getFilteringExclusionArray(i));
 			else
-				filter = new IIRMultichannelSingleFilterForExport(inputSource, (TimeDomainSampleFilter) sampleFilter, currentMontage.getFilterExclusionArray(i), currentMontage.isFiltfiltEnabled());
+				filter = new IIRMultichannelSingleFilterForExport(inputSource, (TimeDomainSampleFilter) sampleFilter, currentMontage.getFilteringExclusionArray(i), currentMontage.isFiltfiltEnabled());
 
 			//switch files
 			rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), null);
