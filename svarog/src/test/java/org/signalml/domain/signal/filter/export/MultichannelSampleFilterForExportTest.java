@@ -125,9 +125,12 @@ public class MultichannelSampleFilterForExportTest {
 	@Test
 	public void testFilterSignalWithTwoFilters() throws IOException, BadFilterParametersException, SignalMLException {
 		//add one filter
-		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter1);
-		originalSamplesRawSignalDocument.getMontage().addSampleFilter(timeDomainFilter2);
-		originalSamplesRawSignalDocument.getMontage().setFiltfiltEnabled(false);
+		Montage montage = originalSamplesRawSignalDocument.getMontage();
+		montage.addSampleFilter(timeDomainFilter1);
+		montage.addSampleFilter(timeDomainFilter2);
+		montage.setFilterChannelExcluded(1, 1, true);
+
+		montage.setFiltfiltEnabled(true);
 
 		//test
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();

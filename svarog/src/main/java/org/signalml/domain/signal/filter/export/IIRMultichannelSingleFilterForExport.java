@@ -20,15 +20,16 @@ import org.signalml.math.iirdesigner.IIRDesigner;
 
 public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSingleFilterForExport {
 
-	private FilterCoefficients coefficients;
+	private File temporaryFile1 = new File("exportsub1.bin.tmp");
+	private File temporaryFile2 = new File("exportsub2.bin.tmp");
 
+	private FilterCoefficients coefficients;
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
+
+	private boolean filteringDone = false;
 
 	public IIRMultichannelSingleFilterForExport(MultichannelSampleSource inputSource, TimeDomainSampleFilter definition, boolean[] filterExclusionArray, boolean filtFiltEnabled) throws BadFilterParametersException, IOException {
 		super(inputSource, definition, filterExclusionArray);
-
-		File file1 = new File("export_11.bin.tmp");
-		File file2 = new File("export_22.bin.tmp");
 
 		int startIndex = 0;
 		int endIndex = inputSource.getSampleCount(0);
@@ -56,10 +57,10 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 					filterEngines[channelNumber] = new TrimSignalSampleSource(filterEngines[channelNumber], startIndex, endIndex);
 			}
 		} else {
-			rawSignalWriter.writeSignal(file1, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), null);
+			rawSignalWriter.writeSignal(temporaryFile1, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), null);
 
 			//step 2 - filtering leftwise
-			source = createFileSampleSource(file1);
+			source = createFileSampleSource(temporaryFile1);
 			filterEngines = new SampleSourceEngine[this.source.getChannelCount()];
 			for (int channelNumber = 0; channelNumber < source.getChannelCount(); channelNumber++) {
 				if (!filterExclusionArray[channelNumber]) {
@@ -68,10 +69,10 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 					filterEngines[channelNumber] = new ExportIIRSinglechannelSampleFilter(reversedSampleSource, getFilterCoefficients());
 				}
 			}
-			rawSignalWriter.writeSignal(file2, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), null);
+			rawSignalWriter.writeSignal(temporaryFile2, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), null);
 
 			//step 3 - reverse samples
-			source = createFileSampleSource(file2);
+			source = createFileSampleSource(temporaryFile2);
 			filterEngines = new SampleSourceEngine[this.source.getChannelCount()]; //all of them are null
 			for (int channelNumber = 0; channelNumber < source.getChannelCount(); channelNumber++) {
 				SampleSource input = new ChannelSelectorSampleSource(source, channelNumber);
@@ -81,6 +82,8 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 				filterEngines[channelNumber] = new TrimSignalSampleSource(input, startIndex, endIndex);
 			}
 		}
+
+		filteringDone = true;
 	}
 
 	protected MultichannelSampleSource createFileSampleSource(File file) throws IOException {
@@ -93,6 +96,17 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 			coefficients = IIRDesigner.designDigitalFilter((TimeDomainSampleFilter) definition);
 		}
 		return coefficients;
+	}
+
+	@Override
+	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+		super.getSamples(channel, target, signalOffset, count, arrayOffset);
+
+		if (signalOffset + count == this.getSampleCount(channel) && filteringDone) {
+			//after writing the last samples delete these files
+			temporaryFile1.delete();
+			temporaryFile2.delete();
+		}
 	}
 
 	@Override

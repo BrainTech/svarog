@@ -16,8 +16,10 @@ import org.signalml.math.iirdesigner.BadFilterParametersException;
 
 public class MultichannelSampleFilterForExport extends MultichannelSampleFilter {
 
-	private RawSignalSampleSource resultSampleSource;
+	private File inputFile = new File("export2.bin.tmp");
+	private File outputFile = new File("export1.bin.tmp");
 
+	private RawSignalSampleSource resultSampleSource;
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
 
 	public MultichannelSampleFilterForExport(MultichannelSampleSource source, Montage montage) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
@@ -42,9 +44,6 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	protected void filterData() throws BadFilterParametersException, IOException {
 
 		MultichannelSampleSource inputSource = source;
-
-		File inputFile = new File("export2.bin.tmp");
-		File outputFile = new File("export1.bin.tmp");
 
 		for (int i = 0; i < currentMontage.getSampleFilterCount(); i++) {
 			if (!currentMontage.isFilterEnabled(i))
@@ -106,6 +105,12 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 			resultSampleSource.getSamples(channel, target, signalOffset, count, arrayOffset);
 		} else {
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
+		}
+
+		if (signalOffset + count == this.getSampleCount(channel)) {
+			//after writing the last samples delete these files
+			inputFile.delete();
+			outputFile.delete();
 		}
 	}
 
