@@ -7,11 +7,31 @@ import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSourceEngine;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
+/**
+ * A sample source which is able to filter a multichannel sample source with a single
+ * filter.
+ *
+ * @author Piotr Szachewicz
+ */
 public abstract class AbstractMultichannelSingleFilterForExport extends MultichannelSampleProcessor {
 
+	/**
+	 * Engines for filtering each channel of the sample source.
+	 */
 	protected SampleSourceEngine[] filterEngines;
+
+	/**
+	 * The filter that should be used to filter the data.
+	 */
 	protected SampleFilterDefinition definition;
 
+	/**
+	 * Constructor.
+	 * @param source the sample source to be filtered.
+	 * @param definition the definition of the filter to be used.
+	 * @param filterExclusionArray determines which channels should not be filtered.
+	 * @throws BadFilterParametersException
+	 */
 	public AbstractMultichannelSingleFilterForExport(MultichannelSampleSource source, SampleFilterDefinition definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
 		super(source);
 		this.definition = definition;

@@ -19,16 +19,43 @@ import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.IIRDesigner;
 
+/**
+ * This class is able to filter a {@link MultichannelSampleSource} with a single IIR filter.
+ *
+ * @author Piotr Szachewicz
+ */
 public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSingleFilterForExport implements SignalWriterMonitor {
 
+	/**
+	 * Files that are used to store temporary filtering results.
+	 */
 	private File temporaryFile1 = new File("exportsub1.bin.tmp");
 	private File temporaryFile2 = new File("exportsub2.bin.tmp");
 
-	private FilterCoefficients coefficients;
+	/**
+	 * A {@link RawSignalWriter} for writing the temporary results to files.
+	 */
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
 
+	/**
+	 * The coefficients of the filter that will be used to filter the original sample source.
+	 */
+	private FilterCoefficients coefficients;
+
+	/**
+	 * True if the filtering was done and the filtered samples could be
+	 * obtained through the getSamples method.
+	 */
 	private boolean filteringDone = false;
+
+	/**
+	 * The number of temporary files that were written.
+	 */
 	private int temporaryFilesWritten = 0;
+
+	/**
+	 * This object monitors the progress made while filtering the data.
+	 */
 	private SignalWriterMonitor signalWriterMonitor;
 
 	private boolean[] filterExclusionArray;

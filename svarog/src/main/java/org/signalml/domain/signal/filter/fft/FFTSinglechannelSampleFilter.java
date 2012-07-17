@@ -1,7 +1,3 @@
-/* FFTSampleFilterEngine.java created 2008-02-04
- *
- */
-
 package org.signalml.domain.signal.filter.fft;
 
 import java.util.Arrays;

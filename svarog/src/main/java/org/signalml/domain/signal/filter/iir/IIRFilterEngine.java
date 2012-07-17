@@ -1,7 +1,5 @@
 package org.signalml.domain.signal.filter.iir;
 
-
-
 /**
  * This class represents a single IIR filter implemented as
  * direct II transposed structure.

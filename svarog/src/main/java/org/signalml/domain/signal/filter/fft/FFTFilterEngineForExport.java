@@ -7,10 +7,23 @@ import org.signalml.domain.signal.filter.SinglechannelSampleFilterEngine;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.fft.FourierTransform;
 
+/**
+ * This engine can be used to filter very long signals in order to export them to a file.
+ * It uses the overlap-add to filter the data.
+ *
+ * @author Piotr Szachewicz
+ */
 public class FFTFilterEngineForExport extends SinglechannelSampleFilterEngine {
 
+	/**
+	 * The sample filter used to filter the data.
+	 */
 	private FFTSampleFilter fftSampleFilter;
-
+	/**
+	 * Buffer to store the overlapping part of the previously filtered sequence.
+	 * See {@link http://en.wikipedia.org/wiki/Overlap%E2%80%93add_method#The_algorithm}
+	 * for reference.
+	 */
 	private double[] overlapBuffer;
 
 	public FFTFilterEngineForExport(SampleSource source, FFTSampleFilter filter) {

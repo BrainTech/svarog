@@ -4,7 +4,13 @@ import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.InitialStateCalculator;
 
-public class ExportIIRSinglechannelSampleFilter  extends AbstractIIRSinglechannelSampleFilter {
+/**
+ * This class is able to filter a sample source with a given IIR filter.
+ * It could be used to filter a very long signal.
+ *
+ * @author Piotr Szachewicz
+ */
+public class ExportIIRSinglechannelSampleFilter extends AbstractIIRSinglechannelSampleFilter {
 
 	private IIRFilterEngine iirFilter;
 	private boolean firstRun = true;

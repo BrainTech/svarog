@@ -81,6 +81,11 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 		return null;
 	}
 
+	/**
+	 * Filters the data before exporting it.
+	 * @throws BadFilterParametersException
+	 * @throws IOException
+	 */
 	protected void prepareFilteredData() throws BadFilterParametersException, IOException {
 		MultichannelSampleProcessor channelSubsetSampleSource = ((MultichannelSampleProcessor)sampleSource);
 		SignalProcessingChain signalProcessingChain = ((SignalProcessingChain)channelSubsetSampleSource.getSource());

@@ -15,13 +15,30 @@ import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
+/**
+ * A multichannel filter which is able to filter the data more appropriately
+ * than the {@link MultichannelSampleFilter}. This should be used to export
+ * filtered signals to file.
+ *
+ * @author Piotr Szachewicz
+ */
 public class MultichannelSampleFilterForExport extends MultichannelSampleFilter implements SignalWriterMonitor {
 
+	/**
+	 * Files storing the temporary results of the filtering.
+	 */
 	private File inputFile = new File("export2.bin.tmp");
 	private File outputFile = new File("export1.bin.tmp");
-
-	private RawSignalSampleSource resultSampleSource;
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
+
+	/**
+	 * This sample source stores the filtered samples after the filtering is done.
+	 */
+	private RawSignalSampleSource resultSampleSource;
+
+	/**
+	 * Monitors the progress made by this filter while exporting.
+	 */
 	private SignalWriterMonitor signalWriterMonitor;
 
 	private int filteringState = 0;
@@ -48,6 +65,12 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 		this.signalWriterMonitor = signalWriterMonitor;
 	}
 
+	/**
+	 * Prepares the filtered data so that {@link MultichannelSampleFilterForExport#resultSampleSource}
+	 * is filled with the already filtered samples.
+	 * @throws BadFilterParametersException
+	 * @throws IOException
+	 */
 	public void prepareFilteredData() throws BadFilterParametersException, IOException {
 
 		MultichannelSampleSource inputSource = source;

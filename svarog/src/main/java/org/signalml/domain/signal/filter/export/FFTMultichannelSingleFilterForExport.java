@@ -6,6 +6,12 @@ import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
+/**
+ * A sample processor that is able to filter a multichannel sample source with a single
+ * FFT filter.
+ *
+ * @author Piotr Szachewicz
+ */
 public class FFTMultichannelSingleFilterForExport extends AbstractMultichannelSingleFilterForExport {
 
 	public FFTMultichannelSingleFilterForExport(MultichannelSampleSource source, FFTSampleFilter definition, boolean[] filterExclusionArray) throws BadFilterParametersException {
