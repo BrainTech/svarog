@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.filter.iir;
+package org.signalml.domain.signal.filter.iir.helper;
 
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.domain.signal.samplesource.SampleSourceEngine;

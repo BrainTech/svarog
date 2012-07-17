@@ -91,20 +91,7 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	}
 
 	protected static RawSignalSampleSource createRawSignalSampleSource(File file, MultichannelSampleSource source) throws IOException {
-		RawSignalSampleSource rawSignalSampleSource = new RawSignalSampleSource(file, source.getChannelCount(), source.getSamplingFrequency(), getSignalExportDescriptor().getSampleType(), getSignalExportDescriptor().getByteOrder());
-
-		int channelCount = source.getChannelCount();
-		float[] gain = new float[channelCount];
-		float[] offset = new float[channelCount];
-
-		for (int i = 0; i < channelCount; i++) {
-			gain[i] = 1.0F;
-			offset[i] = 0.0F;
-		}
-		rawSignalSampleSource.setCalibrationGain(gain);
-		rawSignalSampleSource.setCalibrationOffset(offset);
-
-		return rawSignalSampleSource;
+		return new RawSignalSampleSource(file, source.getChannelCount(), source.getSamplingFrequency(), getSignalExportDescriptor().getSampleType(), getSignalExportDescriptor().getByteOrder());
 	}
 
 	protected static SignalExportDescriptor getSignalExportDescriptor() {
