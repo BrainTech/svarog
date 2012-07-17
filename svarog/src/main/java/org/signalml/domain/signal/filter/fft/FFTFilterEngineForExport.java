@@ -37,7 +37,7 @@ public class FFTFilterEngineForExport extends SinglechannelSampleFilterEngine {
 		double[] samples = new double[count];
 		source.getSamples(samples, signalOffset, count, 0);
 
-		FourierTransform fourierTransform = new FourierTransform();
+		FourierTransform fourierTransform = new FourierTransform(fftSampleFilter.getWindowType(), fftSampleFilter.getWindowParameter());
 		Complex[] samplesFFT = fourierTransform.forwardFFT(samples);
 		FFTSinglechannelSampleFilter.multiplyFFTByFFTSampleFilter(samplesFFT, fftSampleFilter, source.getSamplingFrequency());
 		double[] filteredSignal = fourierTransform.inverseFFT(samplesFFT);
