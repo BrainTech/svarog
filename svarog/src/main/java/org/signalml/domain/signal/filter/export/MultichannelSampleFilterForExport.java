@@ -8,40 +8,46 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.filter.MultichannelSampleFilter;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 
-public class MultichannelSampleFilterForExport extends MultichannelSampleFilter {
+public class MultichannelSampleFilterForExport extends MultichannelSampleFilter implements SignalWriterMonitor {
 
 	private File inputFile = new File("export2.bin.tmp");
 	private File outputFile = new File("export1.bin.tmp");
 
 	private RawSignalSampleSource resultSampleSource;
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
+	private SignalWriterMonitor signalWriterMonitor;
+
+	private int filteringState = 0;
+	private boolean isFiltFiltEnabled;
 
 	public MultichannelSampleFilterForExport(MultichannelSampleSource source, Montage montage) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
 		super(source);
 		this.currentMontage = montage;
-
-		filterData();
+		this.isFiltFiltEnabled = montage.isFiltfiltEnabled();
 	}
 
 	MultichannelSampleFilterForExport(MultichannelSampleSource source, Montage montage, RawSignalWriter rawSignalWriter) throws BadFilterParametersException, IOException { //assume its ASSEMBLED sampleSource
 		super(source);
 		this.currentMontage = montage;
 		this.rawSignalWriter = rawSignalWriter;
-
-		filterData();
 	}
 
 	public RawSignalWriter getRawSignalWriter() {
 		return rawSignalWriter;
 	}
 
-	protected void filterData() throws BadFilterParametersException, IOException {
+	public void setSignalWriterMonitor(SignalWriterMonitor signalWriterMonitor) {
+		this.signalWriterMonitor = signalWriterMonitor;
+	}
+
+	public void prepareFilteredData() throws BadFilterParametersException, IOException {
 
 		MultichannelSampleSource inputSource = source;
 
@@ -62,12 +68,18 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 
 			AbstractMultichannelSingleFilterForExport filter;
 			if (sampleFilter instanceof FFTSampleFilter)
-				filter = new FFTMultichannelSingleFilterForExport(inputSource, (FFTSampleFilter) sampleFilter, currentMontage.getFilteringExclusionArray(i));
+				filter = new FFTMultichannelSingleFilterForExport(inputSource, (FFTSampleFilter) sampleFilter,
+						currentMontage.getFilteringExclusionArray(i));
 			else
-				filter = new IIRMultichannelSingleFilterForExport(inputSource, (TimeDomainSampleFilter) sampleFilter, currentMontage.getFilteringExclusionArray(i), currentMontage.isFiltfiltEnabled());
+				filter = new IIRMultichannelSingleFilterForExport(inputSource, (TimeDomainSampleFilter) sampleFilter,
+						currentMontage.getFilteringExclusionArray(i), isFiltFiltEnabled,
+						this);
+
+			filteringState++;
 
 			//switch files
-			rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), null);
+			rawSignalWriter.writeSignal(outputFile, filter, getSignalExportDescriptor(), this);
+			filteringState++;
 
 		}
 
@@ -115,12 +127,22 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	}
 
 	@Override
-	public int getSampleCount(int channel) {
-		if (currentMontage.getSampleFilterCount() > 0) {
-			return resultSampleSource.getSampleCount();
-		} else {
-			return source.getSampleCount(channel);
-		}
+	public void setProcessedSampleCount(int sampleCount) {
+		float realSampleCount = (float)(source.getSampleCount(0) * filteringState + sampleCount);
+		realSampleCount = realSampleCount / (2 * currentMontage.getSampleFilterCount());
+		signalWriterMonitor.setProcessedSampleCount((int)realSampleCount);
+	}
+
+	@Override
+	public void abort() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isRequestingAbort() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -29,7 +29,7 @@ public class IIRMultichannelSingleFilterForExportTest {
 		 signal[0] = TestingSignals.SHORT_SIGNAL;
 
 		 DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(signal, 1, signal[0].length);
-		 IIRMultichannelSingleFilterForExport filterForExport = new IIRMultichannelSingleFilterForExport(sampleSource, timeDomainFilter, new boolean[] { false}, false);
+		 IIRMultichannelSingleFilterForExport filterForExport = new IIRMultichannelSingleFilterForExport(sampleSource, timeDomainFilter, new boolean[] { false}, false, null);
 
 		 //export
 		 double[] exportResults = new double[filterForExport.getSampleCount(0)];

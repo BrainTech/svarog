@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.filter.iir.ExportIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.filter.iir.GrowSignalSampleSource;
 import org.signalml.domain.signal.filter.iir.TrimSignalSampleSource;
@@ -18,7 +19,7 @@ import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.IIRDesigner;
 
-public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSingleFilterForExport {
+public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSingleFilterForExport implements SignalWriterMonitor {
 
 	private File temporaryFile1 = new File("exportsub1.bin.tmp");
 	private File temporaryFile2 = new File("exportsub2.bin.tmp");
@@ -27,10 +28,22 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
 
 	private boolean filteringDone = false;
+	private int temporaryFilesWritten = 0;
+	private SignalWriterMonitor signalWriterMonitor;
 
-	public IIRMultichannelSingleFilterForExport(MultichannelSampleSource inputSource, TimeDomainSampleFilter definition, boolean[] filterExclusionArray, boolean filtFiltEnabled) throws BadFilterParametersException, IOException {
+	private boolean[] filterExclusionArray;
+	private boolean filtFiltEnabled;
+
+	public IIRMultichannelSingleFilterForExport(MultichannelSampleSource inputSource, TimeDomainSampleFilter definition, boolean[] filterExclusionArray, boolean filtFiltEnabled, SignalWriterMonitor signalWriterMonitor) throws BadFilterParametersException, IOException {
 		super(inputSource, definition, filterExclusionArray);
+		this.signalWriterMonitor = signalWriterMonitor;
+		this.filterExclusionArray = filterExclusionArray;
+		this.filtFiltEnabled = filtFiltEnabled;
 
+		prepareFilteredData(inputSource);
+	}
+
+	protected void prepareFilteredData(MultichannelSampleSource inputSource) throws BadFilterParametersException, IOException {
 		int startIndex = 0;
 		int endIndex = inputSource.getSampleCount(0);
 
@@ -57,7 +70,8 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 					filterEngines[channelNumber] = new TrimSignalSampleSource(filterEngines[channelNumber], startIndex, endIndex);
 			}
 		} else {
-			rawSignalWriter.writeSignal(temporaryFile1, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), null);
+			rawSignalWriter.writeSignal(temporaryFile1, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), this);
+			temporaryFilesWritten++;
 
 			//step 2 - filtering leftwise
 			source = createFileSampleSource(temporaryFile1);
@@ -69,7 +83,8 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 					filterEngines[channelNumber] = new ExportIIRSinglechannelSampleFilter(reversedSampleSource, getFilterCoefficients());
 				}
 			}
-			rawSignalWriter.writeSignal(temporaryFile2, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), null);
+			rawSignalWriter.writeSignal(temporaryFile2, this, MultichannelSampleFilterForExport.getSignalExportDescriptor(), this);
+			temporaryFilesWritten++;
 
 			//step 3 - reverse samples
 			source = createFileSampleSource(temporaryFile2);
@@ -82,7 +97,6 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 				filterEngines[channelNumber] = new TrimSignalSampleSource(input, startIndex, endIndex);
 			}
 		}
-
 		filteringDone = true;
 	}
 
@@ -112,6 +126,24 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 	@Override
 	protected void createEngine(int channelNumber, boolean[] filterExclusionArray) throws BadFilterParametersException {
 		//do nothing
+	}
+
+	@Override
+	public void setProcessedSampleCount(int sampleCount) {
+		float realSampleCount = (float)(source.getSampleCount(0) * temporaryFilesWritten + sampleCount);
+		realSampleCount = realSampleCount / 2;
+		if (signalWriterMonitor != null)
+			signalWriterMonitor.setProcessedSampleCount((int)realSampleCount);
+	}
+
+	@Override
+	public void abort() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean isRequestingAbort() {
+		return false;
 	}
 
 }

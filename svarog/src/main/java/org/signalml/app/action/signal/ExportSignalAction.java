@@ -319,7 +319,6 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(_("exporting signal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
