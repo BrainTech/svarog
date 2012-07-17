@@ -37,6 +37,7 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 		super(source);
 		this.currentMontage = montage;
 		this.rawSignalWriter = rawSignalWriter;
+		this.isFiltFiltEnabled = montage.isFiltfiltEnabled();
 	}
 
 	public RawSignalWriter getRawSignalWriter() {
@@ -130,7 +131,8 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	public void setProcessedSampleCount(int sampleCount) {
 		float realSampleCount = (float)(source.getSampleCount(0) * filteringState + sampleCount);
 		realSampleCount = realSampleCount / (2 * currentMontage.getSampleFilterCount());
-		signalWriterMonitor.setProcessedSampleCount((int)realSampleCount);
+		if (signalWriterMonitor != null	)
+			signalWriterMonitor.setProcessedSampleCount((int)realSampleCount);
 	}
 
 	@Override

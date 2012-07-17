@@ -98,6 +98,7 @@ public class MultichannelSampleFilterForExportTest {
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
 		rawSignalWriter.setMaximumBufferSize(10);
 		MultichannelSampleFilterForExport filteredSampleSource = new MultichannelSampleFilterForExport(originalSamplesRawSignalDocument.getSampleSource(), originalSamplesRawSignalDocument.getMontage(), rawSignalWriter);
+		filteredSampleSource.prepareFilteredData();
 
 		//export
 		double[][] filteredExportSamples = new double[channelCount][sampleCount];
@@ -136,6 +137,7 @@ public class MultichannelSampleFilterForExportTest {
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
 		rawSignalWriter.setMaximumBufferSize(10);
 		MultichannelSampleFilterForExport filteredSampleSource = new MultichannelSampleFilterForExport(originalSamplesRawSignalDocument.getSampleSource(), originalSamplesRawSignalDocument.getMontage(), rawSignalWriter);
+		filteredSampleSource.prepareFilteredData();
 
 		//export
 		double[][] filteredExportSamples = new double[channelCount][sampleCount];
