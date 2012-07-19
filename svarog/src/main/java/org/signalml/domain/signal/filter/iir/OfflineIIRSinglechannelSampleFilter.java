@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.filter;
+package org.signalml.domain.signal.filter.iir;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
@@ -6,7 +6,7 @@ import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.ArrayOperations;
 import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.InitalStateCalculator;
+import org.signalml.math.iirdesigner.InitialStateCalculator;
 
 /**
  * This class represents a Time Domain (IIR or FIR) engine for filtering the samples.
@@ -14,12 +14,12 @@ import org.signalml.math.iirdesigner.InitalStateCalculator;
  *
  * @author Piotr Szachewicz
  */
-public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampleFilterEngine {
+public class OfflineIIRSinglechannelSampleFilter extends AbstractIIRSinglechannelSampleFilter {
 
-	protected static final Logger logger = Logger.getLogger(OfflineTimeDomainSampleFilterEngine.class);
+	protected static final Logger logger = Logger.getLogger(OfflineIIRSinglechannelSampleFilter.class);
 
 	/**
-	 * The signal offset of the first sample stored in the {@link AbstractTimeDomainSampleFilterEngine#filtered}
+	 * The signal offset of the first sample stored in the {@link AbstractIIRSinglechannelSampleFilter#filtered}
 	 * sample source. Allows to control the caching of the filtered data.
 	 */
 	private Integer filteredSignalOffset = null;
@@ -30,21 +30,21 @@ public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampl
 	 */
 	protected boolean useFiltFilt = false;
 
-	public OfflineTimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition) {
+	public OfflineIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition) {
 		super(source, definition);
 	}
 
-	public OfflineTimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
+	public OfflineIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
 		super(source, definition, coefficients);
 	}
 
-	public OfflineTimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
+	public OfflineIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
 		super(source, coefficients);
 	}
 
 	/**
 	 * Returns the given number of the filtered samples starting from
-	 * the given position in time. {@link OfflineTimeDomainSampleFilterEngine#updateCache(int)}
+	 * the given position in time. {@link OfflineIIRSinglechannelSampleFilter#updateCache(int)}
 	 * must be run before running this method if new samples were added or
 	 * cache was never updated before.
 	 *
@@ -131,7 +131,7 @@ public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampl
 	 * @return the filtered signal
 	 */
 	private double[] calculateInitialConditionsAndFilter(double[] signal) {
-		InitalStateCalculator initalStateCalculator = new InitalStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
+		InitialStateCalculator initalStateCalculator = new InitialStateCalculator(new FilterCoefficients(bCoefficients, aCoefficients));
 		double[] initialState = initalStateCalculator.getInitialState();
 		double[] grownSignal = initalStateCalculator.growSignal(signal);
 		double[] filteredSamples;
@@ -149,7 +149,7 @@ public class OfflineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampl
 			//left-wise
 			double[] initialStateLeftwise = new double[initialState.length];
 			for (int i = 0; i < initialStateLeftwise.length; i++) {
-				initialStateLeftwise[i] = initialState[i] * filteredSamples[filteredSamples.length - 1];
+				initialStateLeftwise[i] = initialState[i] * filteredSamples[0];
 			}
 			filteredSamples = filter(bCoefficients, aCoefficients, filteredSamples, initialStateLeftwise);
 

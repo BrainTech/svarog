@@ -1,4 +1,4 @@
-package org.signalml.domain.signal.filter;
+package org.signalml.domain.signal.filter.iir;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
@@ -12,19 +12,19 @@ import org.signalml.math.iirdesigner.FilterCoefficients;
  *
  * @author Piotr Szachewicz
  */
-public class OnlineTimeDomainSampleFilterEngine extends AbstractTimeDomainSampleFilterEngine {
+public class OnlineIIRSinglechannelSampleFilter extends AbstractIIRSinglechannelSampleFilter {
 
-	protected static final Logger logger = Logger.getLogger(OnlineTimeDomainSampleFilterEngine.class);
+	protected static final Logger logger = Logger.getLogger(OnlineIIRSinglechannelSampleFilter.class);
 
-	public OnlineTimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition) {
+	public OnlineIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition) {
 		super(source, definition);
 	}
 
-	public OnlineTimeDomainSampleFilterEngine(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
+	public OnlineIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition, FilterCoefficients coefficients) {
 		super(source, definition, coefficients);
 	}
 
-	public OnlineTimeDomainSampleFilterEngine(SampleSource source, FilterCoefficients coefficients) {
+	public OnlineIIRSinglechannelSampleFilter(SampleSource source, FilterCoefficients coefficients) {
 		super(source, coefficients);
 	}
 
@@ -189,7 +189,7 @@ public class OnlineTimeDomainSampleFilterEngine extends AbstractTimeDomainSample
 
 	/**
 	 * Returns the given number of the filtered samples starting from
-	 * the given position in time. {@link OnlineTimeDomainSampleFilterEngine#updateCache(int)}
+	 * the given position in time. {@link OnlineIIRSinglechannelSampleFilter#updateCache(int)}
 	 * must be run before running this method if new samples were added or
 	 * cache was never updated before.
 	 *

@@ -35,7 +35,11 @@ public class RawSignalWriter implements ISignalWriter {
 	/**
 	 * the size of the buffer (number of samples)
 	 */
-	private static final int BUFFER_SIZE = 8192;
+	private int maximumBufferSize = 8192;
+
+	public void setMaximumBufferSize(int maximumBufferSize) {
+		this.maximumBufferSize = maximumBufferSize;
+	}
 
 	/**
 	 * Writes the fragment of the signal from the specified
@@ -95,7 +99,7 @@ public class RawSignalWriter implements ISignalWriter {
 	 */
 	public void writeSignal(OutputStream os, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, int firstSample, int sampleCount, SignalWriterMonitor monitor) throws IOException {
 
-		int bufferSize = Math.min(BUFFER_SIZE, sampleCount);
+		int bufferSize = Math.min(maximumBufferSize, sampleCount);
 
 		RawSignalSampleType sampleType = descriptor.getSampleType();
 		int sampleByteSize = sampleType.getByteWidth();
@@ -283,6 +287,7 @@ public class RawSignalWriter implements ISignalWriter {
 	 * @throws IOException if there is an error while writing bytes
 	 * to file
 	 */
+	@Override
 	public void writeSignal(File signalFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
 
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
