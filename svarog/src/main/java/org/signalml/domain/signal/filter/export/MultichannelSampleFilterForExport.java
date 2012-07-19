@@ -125,6 +125,17 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
 		if (currentMontage.getSampleFilterCount() > 0) {
+			if (filteringState == 0) {
+				try {
+					prepareFilteredData();
+				} catch (BadFilterParametersException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			resultSampleSource.getSamples(channel, target, signalOffset, count, arrayOffset);
 		} else {
 			source.getSamples(channel, target, signalOffset, count, arrayOffset);
