@@ -93,6 +93,10 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 			MultichannelSampleFilterForExport multichannelSampleFilterForExport = (MultichannelSampleFilterForExport) signalProcessingChain.getOutput();
 			multichannelSampleFilterForExport.setSignalWriterMonitor(this);
 			pleaseWaitDialog.setActivity(_("filtering data"));
+
+			int maximumSampleCount = signalProcessingChain.getSampleCount(0);
+			pleaseWaitDialog.configureForDeterminate(0, maximumSampleCount, 0);
+
 			multichannelSampleFilterForExport.prepareFilteredData();
 		}
 	}
