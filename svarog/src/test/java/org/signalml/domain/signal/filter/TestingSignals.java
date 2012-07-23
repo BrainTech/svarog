@@ -1,10 +1,13 @@
 package org.signalml.domain.signal.filter;
 
+import org.junit.Ignore;
+
 /**
  * Signals that can be used for testing.
  *
  * @author Piotr Szachewicz
  */
+@Ignore
 public class TestingSignals {
 
 	/**
