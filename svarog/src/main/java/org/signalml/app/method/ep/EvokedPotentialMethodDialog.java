@@ -15,6 +15,7 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.method.ep.view.ArtifactRejectionPanel;
 import org.signalml.app.method.ep.view.EvokedPotentialSettingsPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
@@ -44,6 +45,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	private SignalSpacePanel signalSpacePanel;
 	private EvokedPotentialSettingsPanel evokedPotentialSettingsPanel;
+	private ArtifactRejectionPanel artifactRejectionPanel;
 
 	public EvokedPotentialMethodDialog(PresetManager presetManager, Window w) {
 		super(presetManager, w, true);
@@ -63,6 +65,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		tabbedPane = new JTabbedPane();
 		tabbedPane.add("Signal selection", getSignalSpacePanel());
 		tabbedPane.add("ERP settings", getEvokedPotentialSettingsPanel());
+		tabbedPane.add("Artifact rejection", getArtifactRejectionPanel());
 
 		return tabbedPane;
 	}
@@ -78,6 +81,12 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		if (evokedPotentialSettingsPanel == null)
 			evokedPotentialSettingsPanel = new EvokedPotentialSettingsPanel();
 		return evokedPotentialSettingsPanel;
+	}
+
+	public ArtifactRejectionPanel getArtifactRejectionPanel() {
+		if (artifactRejectionPanel == null)
+			artifactRejectionPanel = new ArtifactRejectionPanel();
+		return artifactRejectionPanel;
 	}
 
 	@Override
@@ -129,6 +138,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 		fillDialogFromParameters(parameters);
 		getEvokedPotentialSettingsPanel().fillPanelFromModel(data);
+		getArtifactRejectionPanel().fillPanelFromModel(data);
 
 	}
 
