@@ -4,24 +4,14 @@
 
 package org.signalml.app.view.document.opensignal.elements;
 
-import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
-
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableModel;
 
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ChannelSelectTableModel;
-import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
-import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
-import org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader;
 
 /**
  * A JTable for selecting channels to be received from an amplifier.
@@ -45,7 +35,7 @@ public class ChannelSelectTable extends JTable {
 		for (int i = 0; i < getColumnCount(); i++) {
 			column = getColumnModel().getColumn(i);
 			if (i == ChannelSelectTableModel.LABEL_COLUMN) {
-				column.setPreferredWidth(100); //column with a name is bigger
+				column.setPreferredWidth(100); //column containing the name is bigger
 			} else {
 				column.setPreferredWidth(10);
 			}

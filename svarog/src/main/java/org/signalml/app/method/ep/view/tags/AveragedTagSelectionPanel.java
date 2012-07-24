@@ -1,0 +1,88 @@
+package org.signalml.app.method.ep.view.tags;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+public class AveragedTagSelectionPanel extends TagSelectionPanel implements ListSelectionListener {
+
+	private JButton groupTagsButton;
+	private JButton ungroupTagsButton;
+
+	public AveragedTagSelectionPanel() {
+		super(_("Averaged tags"));
+
+		getTable().getSelectionModel().addListSelectionListener(this);
+	}
+
+	public JButton getGroupTagsButton() {
+		if (groupTagsButton == null) {
+			groupTagsButton = new JButton(new AbstractAction(_("Group")) {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					TagSelectionTableModel model = (TagSelectionTableModel) getTableModel();
+					model.createGroup(table.getSelectedRows());
+				}
+			});
+			groupTagsButton.setEnabled(false);
+		}
+		return groupTagsButton;
+	}
+
+	public JButton getUngroupTagsButton() {
+		if (ungroupTagsButton == null) {
+			ungroupTagsButton = new JButton(new AbstractAction(_("Ungroup")) {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					TagSelectionTableModel model = (TagSelectionTableModel) getTableModel();
+					model.deleteGroups(table.getSelectedRows());
+				}
+			});
+			ungroupTagsButton.setEnabled(false);
+		}
+		return ungroupTagsButton;
+	}
+
+	@Override
+	protected JPanel createButtonsPanel() {
+		JPanel buttonsPanel = new JPanel(new BorderLayout());
+		buttonsPanel.add(super.createButtonsPanel(), BorderLayout.WEST);
+		buttonsPanel.add(createRightButtonsPanel(), BorderLayout.EAST);
+		return buttonsPanel;
+	}
+
+	protected JPanel createRightButtonsPanel() {
+		JPanel rightButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		rightButtons.add(getGroupTagsButton());
+		rightButtons.add(getUngroupTagsButton());
+		return rightButtons;
+	}
+
+	@Override
+	public void valueChanged(ListSelectionEvent event) {
+		int[] selectedRows = table.getSelectedRows();
+		getGroupTagsButton().setEnabled(selectedRows.length > 1);
+
+		int realGroupsCount = 0;
+		for (int row: selectedRows) {
+			TagSelectionTableModel model = ((TagSelectionTableModel)getTableModel());
+
+			TagStyleGroup group = (TagStyleGroup) model.getValueAt(row, TagSelectionTableModel.TAG_STYLE_NAME_COLUMN_NUMBER);
+
+			if (group.getTagStyles().size() > 1)
+				realGroupsCount++;
+		}
+		getUngroupTagsButton().setEnabled(realGroupsCount > 0);
+	}
+
+}

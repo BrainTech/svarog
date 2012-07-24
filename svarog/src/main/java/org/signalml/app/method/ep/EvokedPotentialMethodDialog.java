@@ -9,11 +9,13 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Window;
 
 import javax.swing.JComponent;
+import javax.swing.JTabbedPane;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.method.ep.view.EvokedPotentialSettingsPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
@@ -28,8 +30,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
 
-import org.springframework.validation.Errors;
-
 /** EvokedPotentialMethodDialog
  *
  *
@@ -40,7 +40,10 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	private static final long serialVersionUID = 1L;
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 
+	private JTabbedPane tabbedPane;
+
 	private SignalSpacePanel signalSpacePanel;
+	private EvokedPotentialSettingsPanel evokedPotentialSettingsPanel;
 
 	public EvokedPotentialMethodDialog(PresetManager presetManager, Window w) {
 		super(presetManager, w, true);
@@ -57,8 +60,11 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	@Override
 	public JComponent createInterface() {
 
-		return getSignalSpacePanel();
+		tabbedPane = new JTabbedPane();
+		tabbedPane.add("Signal selection", getSignalSpacePanel());
+		tabbedPane.add("ERP settings", getEvokedPotentialSettingsPanel());
 
+		return tabbedPane;
 	}
 
 	public SignalSpacePanel getSignalSpacePanel() {
@@ -66,6 +72,12 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 			signalSpacePanel = new SignalSpacePanel();
 		}
 		return signalSpacePanel;
+	}
+
+	public EvokedPotentialSettingsPanel getEvokedPotentialSettingsPanel() {
+		if (evokedPotentialSettingsPanel == null)
+			evokedPotentialSettingsPanel = new EvokedPotentialSettingsPanel();
+		return evokedPotentialSettingsPanel;
 	}
 
 	@Override
@@ -116,6 +128,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		space.configureFromSelections(signalSelection, tag);
 
 		fillDialogFromParameters(parameters);
+		getEvokedPotentialSettingsPanel().fillPanelFromModel(data);
 
 	}
 

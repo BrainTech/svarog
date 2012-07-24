@@ -95,7 +95,7 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 		setTitledBorder(this, label);
 	}
 
-	protected void setTitledBorder(JPanel panel, String label) {
+	protected static void setTitledBorder(JPanel panel, String label) {
 		CompoundBorder cb = new CompoundBorder(
 			new TitledBorder(label),
 			new EmptyBorder(3,3,3,3)

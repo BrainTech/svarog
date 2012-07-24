@@ -15,20 +15,19 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.domain.tag.TagStyles;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
