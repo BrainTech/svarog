@@ -8,8 +8,8 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
-import org.signalml.app.view.components.AbstractPanel;
-import org.signalml.app.view.components.presets.CompactPresetControlsPanel;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.common.components.presets.CompactPresetControlsPanel;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardStepOnePanel;
 
 public class PresetSelectionPanel extends AbstractPanel {

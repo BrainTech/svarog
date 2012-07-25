@@ -19,7 +19,7 @@ import org.signalml.app.method.ApplicationSerializableMethodDescriptor;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.plugin.export.method.BaseMethodData;

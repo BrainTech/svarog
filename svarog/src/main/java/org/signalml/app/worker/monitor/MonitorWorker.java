@@ -12,7 +12,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
@@ -156,7 +156,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		for (int k=0; k<sampleVector.getSamplesCount(); k++) {
 			Sample sample = sampleVector.getSamples(k);
 
-			double[] newSamplesArray = new double[sample.getChannelsCount()];
+			float[] newSamplesArray = new float[sample.getChannelsCount()];
 			for (int i = 0; i < newSamplesArray.length; i++) {
 				newSamplesArray[i] = sample.getChannels(i);
 			}
@@ -339,7 +339,7 @@ class NewSamplesData {
 	 * The values of the samples. The size of the array is equal to the number
 	 * of channels in the signal.
 	 */
-	private double[] sampleValues;
+	private float[] sampleValues;
 
 	/**
 	 * The timestamp of the samples represented by the sampleValues array.
@@ -351,16 +351,16 @@ class NewSamplesData {
 	 * @param sampleValues the values of the samples for each channel
 	 * @param samplesTimestamp the timestamp of the samples
 	 */
-	public NewSamplesData(double[] sampleValues, double samplesTimestamp) {
+	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
 		this.sampleValues = sampleValues;
 		this.samplesTimestamp = samplesTimestamp;
 	}
 
-	public double[] getSampleValues() {
+	public float[] getSampleValues() {
 		return sampleValues;
 	}
 
-	public void setSampleValues(double[] sampleValues) {
+	public void setSampleValues(float[] sampleValues) {
 		this.sampleValues = sampleValues;
 	}
 

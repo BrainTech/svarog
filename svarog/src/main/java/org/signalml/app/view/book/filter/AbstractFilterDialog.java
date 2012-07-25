@@ -17,7 +17,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;

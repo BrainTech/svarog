@@ -19,7 +19,7 @@ import javax.swing.border.TitledBorder;
 
 import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
-import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;
 
 /** ArtifactOptionsPanel

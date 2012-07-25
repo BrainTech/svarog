@@ -18,7 +18,7 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.plugin.export.method.BaseMethodData;

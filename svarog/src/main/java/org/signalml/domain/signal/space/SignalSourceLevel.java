@@ -28,8 +28,9 @@ public enum SignalSourceLevel {
 	/**
 	 * the signal is assembled and filtered
 	 */
-	FILTERED
+	FILTERED,
 
+	FILTERED_FOR_EXPORT
 	;
 
 }

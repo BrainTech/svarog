@@ -8,27 +8,25 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import org.apache.log4j.Logger;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.domain.tag.TagStyles;
-
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -362,19 +360,15 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
-		Collection<TagStyle> channelStyles = getTagSet().getChannelStyles();
-		Iterator<TagStyle> it = channelStyles.iterator();
-		while (it.hasNext()) {
-			if (!it.next().isMarker()) {
-				it.remove();
+		List<TagStyle> markerStyles = new ArrayList<TagStyle>();
+
+		for (TagStyle style: getTagSet().getChannelStyles()) {
+			if (style.isMarker()) {
+				markerStyles.add(style);
 			}
 		}
 
-		TagStyle[] markerStyles = new TagStyle[channelStyles.size()];
-		channelStyles.toArray(markerStyles);
-
-		constraints.setMarkerStyles(markerStyles);
-
+		constraints.setMarkerStyles(markerStyles.toArray(new TagStyle[0]));
 	}
 
 	@Override

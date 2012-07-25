@@ -3,7 +3,7 @@ package org.signalml.plugin.export.view;
 import java.awt.Window;
 
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
+import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 
 public abstract class AbstractPluginPresetDialog extends AbstractPresetDialog {
 	private static final long serialVersionUID = 1L;

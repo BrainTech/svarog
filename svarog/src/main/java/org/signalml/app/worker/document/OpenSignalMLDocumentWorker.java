@@ -11,7 +11,7 @@ import javax.swing.SwingWorker;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.domain.montage.SignalConfigurer;

@@ -30,7 +30,7 @@ import org.signalml.app.config.preset.managers.BookFilterPresetManager;
 import org.signalml.app.model.book.BookFilterDescriptor;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
+import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
 

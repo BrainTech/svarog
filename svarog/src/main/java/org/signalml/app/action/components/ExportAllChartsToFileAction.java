@@ -19,8 +19,8 @@ import javax.imageio.ImageIO;
 
 import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
-import org.signalml.app.view.components.dialogs.OptionPane;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;

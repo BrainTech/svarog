@@ -34,8 +34,8 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.components.IntegerSpinner;
-import org.signalml.app.view.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.spinners.IntegerSpinner;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 

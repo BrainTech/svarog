@@ -6,8 +6,8 @@ package org.signalml.app.view.montage.filters;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.view.components.DoubleSpinner;
-import org.signalml.app.view.components.ResolvableComboBox;
+import org.signalml.app.view.common.components.ResolvableComboBox;
+import org.signalml.app.view.common.components.spinners.DoubleSpinner;
 
 import java.awt.Dimension;
 import java.awt.Font;

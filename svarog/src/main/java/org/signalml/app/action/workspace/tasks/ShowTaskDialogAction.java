@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TaskFocusSelector;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.components.dialogs.TaskStatusDialog;
+import org.signalml.app.view.common.dialogs.TaskStatusDialog;
 import org.signalml.task.Task;
 
 /** ShowTaskDialogAction

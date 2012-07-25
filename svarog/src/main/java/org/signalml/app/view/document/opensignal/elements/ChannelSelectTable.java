@@ -20,7 +20,7 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ChannelSelectTableModel;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
-import org.signalml.app.view.components.GrayTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
 import org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader;
 
 /**

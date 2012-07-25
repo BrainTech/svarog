@@ -13,7 +13,7 @@ import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
-import org.signalml.app.view.components.AbstractPanel;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;

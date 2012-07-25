@@ -29,7 +29,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.components.dialogs.AbstractPresetDialog;
+import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;

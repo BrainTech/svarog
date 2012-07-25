@@ -12,7 +12,7 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;

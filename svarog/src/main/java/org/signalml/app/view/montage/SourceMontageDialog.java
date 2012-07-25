@@ -13,7 +13,7 @@ import javax.swing.JComponent;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
 

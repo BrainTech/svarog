@@ -4,17 +4,28 @@
 
 package org.signalml.app.worker.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
+import org.signalml.domain.signal.ExportFormatType;
+import org.signalml.domain.signal.MultichannelSampleProcessor;
+import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.SignalWriterMonitor;
-import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.export.ISignalWriter;
+import org.signalml.domain.signal.export.eeglab.EEGLabSignalWriter;
+import org.signalml.domain.signal.filter.export.MultichannelSampleFilterForExport;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
+
 
 /** ExportSignalWorker
  *
@@ -29,6 +40,8 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 	private File signalFile;
 	private SignalExportDescriptor descriptor;
 
+	private SignalDocument signalDocument;
+
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	private volatile boolean requestingAbort;
@@ -42,17 +55,51 @@ public class ExportSignalWorker extends SwingWorker<Void,Integer> implements Sig
 		this.pleaseWaitDialog = pleaseWaitDialog;
 	}
 
+	public ExportSignalWorker(MultichannelSampleSource sampleSource, File signalFile, SignalExportDescriptor descriptor, PleaseWaitDialog pleaseWaitDialog, SignalDocument signalDocument) {
+		this.sampleSource = sampleSource;
+		this.signalFile = signalFile;
+		this.descriptor = descriptor;
+		this.pleaseWaitDialog = pleaseWaitDialog;
+		this.signalDocument = signalDocument;
+	}
+
 	@Override
 	protected Void doInBackground() throws Exception {
 
-		RawSignalWriter rawSignalWriter = new RawSignalWriter();
+		ExportFormatType formatType = descriptor.getFormatType();
+		ISignalWriter signalWriter = formatType.getSignalWriter();
 
-		rawSignalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
+		if (formatType == ExportFormatType.EEGLab) {
+			((EEGLabSignalWriter) signalWriter).setSignalDocument(signalDocument);
+		}
+
+		prepareFilteredData();
+
+		pleaseWaitDialog.setActivity(_("exporting signal"));
+		signalWriter.writeSignal(signalFile, sampleSource, descriptor, this);
 
 		return null;
-
 	}
 
+	/**
+	 * Filters the data before exporting it.
+	 * @throws BadFilterParametersException
+	 * @throws IOException
+	 */
+	protected void prepareFilteredData() throws BadFilterParametersException, IOException {
+		MultichannelSampleProcessor channelSubsetSampleSource = ((MultichannelSampleProcessor)sampleSource);
+		SignalProcessingChain signalProcessingChain = ((SignalProcessingChain)channelSubsetSampleSource.getSource());
+		if (signalProcessingChain.getOutput() instanceof MultichannelSampleFilterForExport) {
+			MultichannelSampleFilterForExport multichannelSampleFilterForExport = (MultichannelSampleFilterForExport) signalProcessingChain.getOutput();
+			multichannelSampleFilterForExport.setSignalWriterMonitor(this);
+			pleaseWaitDialog.setActivity(_("filtering data"));
+
+			int maximumSampleCount = signalProcessingChain.getSampleCount(0);
+			pleaseWaitDialog.configureForDeterminate(0, maximumSampleCount, 0);
+
+			multichannelSampleFilterForExport.prepareFilteredData();
+		}
+	}
 
 	public int getProcessedSampleCount() {
 		return processedSampleCount;

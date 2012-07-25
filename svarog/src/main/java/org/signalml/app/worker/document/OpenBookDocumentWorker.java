@@ -7,7 +7,7 @@ import javax.swing.SwingWorker;
 
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 
 /** OpenBookDocumentWorker
  *

@@ -11,7 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.border.Border;
 
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.view.components.AbstractPanel;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.plugin.export.signal.Document;
 
 /**

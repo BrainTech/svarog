@@ -33,7 +33,7 @@ import org.apache.log4j.PatternLayout;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.logging.ViewerConsoleAppender;
 import org.signalml.app.view.Console;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 
 /** ViewerConsolePane
  *

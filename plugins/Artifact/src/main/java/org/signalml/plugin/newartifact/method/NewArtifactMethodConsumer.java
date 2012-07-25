@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.components.dialogs.OptionPane;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;

@@ -21,8 +21,8 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor.NewTagTypeMode;
-import org.signalml.app.view.components.dialogs.NewTagDialog;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.tag.NewTagDialog;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 

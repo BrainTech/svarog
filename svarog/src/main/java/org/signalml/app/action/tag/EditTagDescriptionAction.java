@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.components.dialogs.EditTagDescriptionDialog;
+import org.signalml.app.view.tag.EditTagDescriptionDialog;
 
 /** EditTagDescriptionAction
  *

@@ -10,7 +10,7 @@ import org.signalml.app.document.BookDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.method.booktotag.BookToTagMethod;
 import org.signalml.plugin.export.method.BaseMethodData;

@@ -10,8 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.dialogs.HelpDialog;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.HelpDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

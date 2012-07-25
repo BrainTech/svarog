@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;

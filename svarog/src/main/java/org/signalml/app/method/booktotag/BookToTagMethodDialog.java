@@ -30,7 +30,7 @@ import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.plugin.export.SignalMLException;

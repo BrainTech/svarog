@@ -31,7 +31,7 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.exception.SanityCheckException;

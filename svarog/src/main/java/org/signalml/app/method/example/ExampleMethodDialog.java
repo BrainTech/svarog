@@ -23,7 +23,7 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.Method;
 import org.signalml.method.example.ExampleData;
 import org.signalml.plugin.export.SignalMLException;

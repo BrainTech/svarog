@@ -10,7 +10,7 @@ import multiplexer.jmx.client.JmxClient;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.KillExperimentRequest;
 import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;

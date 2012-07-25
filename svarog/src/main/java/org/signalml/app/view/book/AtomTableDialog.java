@@ -25,7 +25,7 @@ import javax.swing.border.CompoundBorder;
 
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.plugin.export.SignalMLException;

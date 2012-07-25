@@ -4,6 +4,9 @@
 
 package org.signalml.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -20,8 +23,12 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.StandardBookSegmentWriter;
 import org.signalml.domain.book.StandardBookSegmentWriterImpl;
 import org.signalml.domain.book.StandardBookWriter;
+import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.SignalProcessingChainDescriptor;
+import org.signalml.domain.signal.SignalWriterMonitor;
+import org.signalml.domain.signal.filter.export.MultichannelSampleFilterForExport;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSourceDescriptor;
 import org.signalml.domain.signal.space.SegmentedSampleSourceDescriptor;
@@ -35,22 +42,19 @@ import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.util.Util;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import org.springframework.validation.Errors;
+
+import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
 
 /** MP5Method
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5Method extends AbstractMethod implements TrackableMethod, SerializableMethod, CleanupMethod {
+public class MP5Method extends AbstractMethod implements TrackableMethod, SerializableMethod, CleanupMethod, SignalWriterMonitor {
 
 	protected static final Logger logger = Logger.getLogger(MP5Method.class);
 
@@ -63,6 +67,8 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	private MP5ExecutorConfigurer executorConfigurer;
 
 	private XStream streamer;
+
+	private MethodExecutionTracker tracker;
 
 	public MP5Method() throws SignalMLException {
 		super();
@@ -95,6 +101,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	@Override
 	public Object doComputation(Object dataObj, final MethodExecutionTracker tracker) throws ComputationException {
 
+		this.tracker = tracker;
 		logger.debug("Beginning computation of MP5");
 
 		MP5Data data = (MP5Data) dataObj;
@@ -114,8 +121,8 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		}
 
 		synchronized (tracker) {
-			tracker.setTickerLimits(new int[] { totalSegmentCount, 1, 1, 1 });
-			tracker.setTickers(new int[] { segment, 0, 0, 0 });
+			tracker.setTickerLimits(new int[] { totalSegmentCount, 1, 1, 1, 1 });
+			tracker.setTickers(new int[] { segment, 0, 0, 0, 0 });
 		}
 
 		MP5Executor executor = executorLocator.findExecutor(data.getExecutorUID());
@@ -130,6 +137,8 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		File segmentBookFile;
 		boolean segmentOk;
+
+		prepareFiltering(sampleSource);
 
 		while (segment < totalSegmentCount) {
 
@@ -259,6 +268,17 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 	}
 
+	private void prepareFiltering(MultichannelSampleSource sampleSource) {
+		MultichannelSampleProcessor channelSubsetSampleSource = ((MultichannelSampleProcessor)sampleSource);
+		SignalProcessingChain signalProcessingChain = ((SignalProcessingChain)channelSubsetSampleSource.getSource());
+		if (signalProcessingChain.getOutput() instanceof MultichannelSampleFilterForExport) {
+			MultichannelSampleFilterForExport multichannelSampleFilterForExport = (MultichannelSampleFilterForExport) signalProcessingChain.getOutput();
+			int maximumSampleCount = signalProcessingChain.getSampleCount(0);
+			tracker.setTickerLimit(4, maximumSampleCount);
+			multichannelSampleFilterForExport.setSignalWriterMonitor(this);
+		}
+	}
+
 	private boolean testAbortSuspend(MethodExecutionTracker tracker, MP5Data data, int segment) {
 
 		if (tracker.isRequestingAbort()) {
@@ -316,7 +336,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 	@Override
 	public int getTickerCount() {
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -330,6 +350,8 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 			return _("Atom (non-linear progress)");
 		case 3 :
 			return _("Current atom matching progress");
+		case 4:
+			return _("Data filtering");
 		default :
 			throw new IndexOutOfBoundsException();
 		}
@@ -458,6 +480,22 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 			}
 		}
 
+	}
+
+	@Override
+	public void setProcessedSampleCount(int sampleCount) {
+		if (tracker != null)
+			tracker.setTicker(4, sampleCount);
+	}
+
+	@Override
+	public void abort() {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public boolean isRequestingAbort() {
+		return false;
 	}
 
 }

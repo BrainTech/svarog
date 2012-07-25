@@ -14,8 +14,8 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.dialogs.OptionPane;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;

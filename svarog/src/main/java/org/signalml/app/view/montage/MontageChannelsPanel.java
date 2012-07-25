@@ -36,7 +36,7 @@ import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
 import org.signalml.app.view.montage.dnd.MontageWasteBasketTransferHandler;
 import org.signalml.domain.montage.Montage;

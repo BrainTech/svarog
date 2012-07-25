@@ -24,7 +24,7 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
-import org.signalml.app.view.components.AbstractPanel;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.worker.monitor.FindEEGExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

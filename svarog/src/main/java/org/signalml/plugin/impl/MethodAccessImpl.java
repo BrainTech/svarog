@@ -1,6 +1,6 @@
 package org.signalml.plugin.impl;
 
-import org.signalml.app.view.components.dialogs.TaskStatusDialog;
+import org.signalml.app.view.common.dialogs.TaskStatusDialog;
 import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.method.SvarogMethod;

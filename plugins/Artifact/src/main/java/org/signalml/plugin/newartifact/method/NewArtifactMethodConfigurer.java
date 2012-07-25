@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.util.XMLUtils;
-import org.signalml.app.view.components.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;

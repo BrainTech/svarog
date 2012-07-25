@@ -1,6 +1,8 @@
 package org.signalml.domain.signal.samplesource;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.After;
 import org.junit.Before;
@@ -54,52 +56,52 @@ public class RoundBufferMultichannelSampleSourceTest {
 	@Test
 	public void testAddSamples() {
 		assertEquals(0, theSource.getNextInsertPos());
-		double[] samples = null;
-		samples = new double[] {1.0, 2.0, 3.0, 4.0};
+		float[] samples = null;
+		samples = new float[] {1.0F, 2.0F, 3.0F, 4.0F};
 		theSource.addSamples(samples);
 		assertEquals(1, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {11.0, 12.0, 13.0, 14.0};
+		samples = new float[] {11.0F, 12.0F, 13.0F, 14.0F};
 		theSource.addSamples(samples);
 		assertEquals(2, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {21.0, 22.0, 23.0, 24.0};
+		samples = new float[] {21.0F, 22.0F, 23.0F, 24.0F};
 		theSource.addSamples(samples);
 		assertEquals(3, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {31.0, 32.0, 33.0, 34.0};
+		samples = new float[] {31.0F, 32.0F, 33.0F, 34.0F};
 		theSource.addSamples(samples);
 		assertEquals(4, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {41.0, 42.0, 43.0, 44.0};
+		samples = new float[] {41.0F, 42.0F, 43.0F, 44.0F};
 		theSource.addSamples(samples);
 		assertEquals(5, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {51.0, 52.0, 53.0, 54.0};
+		samples = new float[] {51.0F, 52.0F, 53.0F, 54.0F};
 		theSource.addSamples(samples);
 		assertEquals(6, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {61.0, 62.0, 63.0, 64.0};
+		samples = new float[] {61.0F, 62.0F, 63.0F, 64.0F};
 		theSource.addSamples(samples);
 		assertEquals(7, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {71.0, 72.0, 73.0, 74.0};
+		samples = new float[] {71.0F, 72.0F, 73.0F, 74.0F};
 		theSource.addSamples(samples);
 		assertEquals(8, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {81.0, 82.0, 83.0, 84.0};
+		samples = new float[] {81.0F, 82.0F, 83.0F, 84.0F};
 		theSource.addSamples(samples);
 		assertEquals(9, theSource.getNextInsertPos());
 		assertFalse(theSource.isFull());
-		samples = new double[] {91.0, 92.0, 93.0, 94.0};
+		samples = new float[] {91.0F, 92.0F, 93.0F, 94.0F};
 		theSource.addSamples(samples);
 		assertEquals(0, theSource.getNextInsertPos());
 		assertTrue(theSource.isFull());
-		samples = new double[] {101.0, 102.0, 103.0, 104.0};
+		samples = new float[] {101.0F, 102.0F, 103.0F, 104.0F};
 		theSource.addSamples(samples);
 		assertEquals(1, theSource.getNextInsertPos());
 		assertTrue(theSource.isFull());
-		samples = new double[] {111.0, 112.0, 113.0, 114.0};
+		samples = new float[] {111.0F, 112.0F, 113.0F, 114.0F};
 		theSource.addSamples(samples);
 		assertEquals(2, theSource.getNextInsertPos());
 		assertTrue(theSource.isFull());
@@ -133,9 +135,9 @@ public class RoundBufferMultichannelSampleSourceTest {
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++) {
 			assertEquals(0.0, target[i], 0.1);
 		}
-		theSource.addSamples(new double[] {1.0, 2.0, 3.0, 4.0});
-		theSource.addSamples(new double[] {11.0, 12.0, 13.0, 14.0});
-		theSource.addSamples(new double[] {21.0, 22.0, 23.0, 24.0});
+		theSource.addSamples(new float[] {1.0F, 2.0F, 3.0F, 4.0F});
+		theSource.addSamples(new float[] {11.0F, 12.0F, 13.0F, 14.0F});
+		theSource.addSamples(new float[] {21.0F, 22.0F, 23.0F, 24.0F});
 		theSource.getSamples(0 , target, 0, TEST_SAMPLE_COUNT, 0);
 		int i = 0;
 		for (; i < TEST_SAMPLE_COUNT - 3; i++) {
@@ -144,16 +146,16 @@ public class RoundBufferMultichannelSampleSourceTest {
 		assertEquals(1.0, target[i++], 0.1);
 		assertEquals(11.0, target[i++], 0.1);
 		assertEquals(21.0, target[i++], 0.1);
-		theSource.addSamples(new double[] {31.0, 32.0, 33.0, 34.0});
-		theSource.addSamples(new double[] {41.0, 42.0, 43.0, 44.0});
-		theSource.addSamples(new double[] {51.0, 52.0, 53.0, 54.0});
-		theSource.addSamples(new double[] {61.0, 62.0, 63.0, 64.0});
-		theSource.addSamples(new double[] {71.0, 72.0, 73.0, 74.0});
-		theSource.addSamples(new double[] {81.0, 82.0, 83.0, 84.0});
-		theSource.addSamples(new double[] {91.0, 92.0, 93.0, 94.0});
-		theSource.addSamples(new double[] {101.0, 102.0, 103.0, 104.0});
-		theSource.addSamples(new double[] {111.0, 112.0, 113.0, 114.0});
-		theSource.addSamples(new double[] {121.0, 122.0, 123.0, 124.0});
+		theSource.addSamples(new float[] {31.0F, 32.0F, 33.0F, 34.0F});
+		theSource.addSamples(new float[] {41.0F, 42.0F, 43.0F, 44.0F});
+		theSource.addSamples(new float[] {51.0F, 52.0F, 53.0F, 54.0F});
+		theSource.addSamples(new float[] {61.0F, 62.0F, 63.0F, 64.0F});
+		theSource.addSamples(new float[] {71.0F, 72.0F, 73.0F, 74.0F});
+		theSource.addSamples(new float[] {81.0F, 82.0F, 83.0F, 84.0F});
+		theSource.addSamples(new float[] {91.0F, 92.0F, 93.0F, 94.0F});
+		theSource.addSamples(new float[] {101.0F, 102.0F, 103.0F, 104.0F});
+		theSource.addSamples(new float[] {111.0F, 112.0F, 113.0F, 114.0F});
+		theSource.addSamples(new float[] {121.0F, 122.0F, 123.0F, 124.0F});
 		theSource.getSamples(0 , target, 0, TEST_SAMPLE_COUNT, 0);
 
 	}

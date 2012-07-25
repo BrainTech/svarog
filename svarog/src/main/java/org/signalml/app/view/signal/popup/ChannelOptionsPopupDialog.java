@@ -25,8 +25,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
-import org.signalml.app.view.components.TitledCrossBorder;
-import org.signalml.app.view.components.TitledSliderPanel;
+import org.signalml.app.view.common.components.TitledCrossBorder;
+import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceChannel;

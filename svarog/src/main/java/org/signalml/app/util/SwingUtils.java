@@ -18,8 +18,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.components.CompactButton;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.components.CompactButton;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 
 import org.springframework.core.io.ClassPathResource;
 

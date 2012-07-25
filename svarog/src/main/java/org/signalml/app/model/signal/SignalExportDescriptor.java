@@ -5,6 +5,7 @@
 package org.signalml.app.model.signal;
 
 import org.signalml.app.config.preset.Preset;
+import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.space.SignalSpace;
@@ -20,12 +21,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("signalexport")
 public class SignalExportDescriptor implements Preset {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 1L;
 
 	private String name;
+
+	private String separator;
+
+	private ExportFormatType formatType;
+
+	private boolean exportTags;
 
 	private transient StyledTagSet tagSet;
 	private transient float pageSize;
@@ -42,10 +46,13 @@ public class SignalExportDescriptor implements Preset {
 
 	public SignalExportDescriptor() {
 		signalSpace = new SignalSpace();
+		formatType = ExportFormatType.RAW;
+		separator = " ";
 		sampleType = RawSignalSampleType.FLOAT;
 		byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
 		saveXML = true;
 		normalize = false;
+		exportTags = true;
 	}
 
 	@Override
@@ -56,6 +63,30 @@ public class SignalExportDescriptor implements Preset {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isExportTags(){
+		return exportTags;
+	}
+
+	public void setExportTags(boolean exportTags){
+		this.exportTags = exportTags;
+	}
+
+	public String getSeparator(){
+		return separator;
+	}
+
+	public void setSeparator(String separator){
+		this.separator = separator;
+	}
+
+	public ExportFormatType getFormatType(){
+		return formatType;
+	}
+
+	public void setFormatType(ExportFormatType formatType){
+		this.formatType = formatType;
 	}
 
 	public SignalSpace getSignalSpace() {

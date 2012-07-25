@@ -3,9 +3,10 @@ package org.signalml.app.view.montage;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 
-import org.signalml.app.view.components.AbstractPanel;
-import org.signalml.app.view.components.dialogs.errors.ExceptionDialog;
-import org.signalml.app.view.components.dialogs.errors.ValidationErrorsDialog;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
+import org.signalml.app.view.common.dialogs.errors.ValidationErrorsDialog;
+import org.signalml.app.view.montage.visualreference.VisualReferenceEditorPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 

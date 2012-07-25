@@ -20,10 +20,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.signalml.app.view.montage.VisualReferenceBin;
-import org.signalml.app.view.montage.VisualReferenceDisplay;
-import org.signalml.app.view.montage.VisualReferenceModel;
-import org.signalml.app.view.montage.VisualReferenceSourceChannel;
+import org.signalml.app.view.montage.visualreference.VisualReferenceBin;
+import org.signalml.app.view.montage.visualreference.VisualReferenceDisplay;
+import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
+import org.signalml.app.view.montage.visualreference.VisualReferenceSourceChannel;
 
 /**
  * A component which - based on information from a {@link VisualReferenceModel} object

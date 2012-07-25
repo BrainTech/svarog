@@ -13,8 +13,8 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagFocusSelector;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.components.dialogs.EditTagAnnotationDialog;
 import org.signalml.app.view.signal.PositionedTag;
+import org.signalml.app.view.tag.EditTagAnnotationDialog;
 import org.signalml.domain.tag.StyledTagSet;
 
 /** EditTagAnnotationAction

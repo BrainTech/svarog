@@ -23,23 +23,24 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.components.dialogs.ExportSignalDialog;
-import org.signalml.app.view.components.dialogs.OptionPane;
-import org.signalml.app.view.components.dialogs.PleaseWaitDialog;
-import org.signalml.app.view.components.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalScanResult;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.signal.export.ExportSignalDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.worker.ScanSignalWorker;
 import org.signalml.app.worker.document.ExportSignalWorker;
+import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
-import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
@@ -71,9 +72,9 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	public ExportSignalAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
-		setText(_("Export Signal..."));
-		setToolTip(_("Export signal to simple binary format"));
-		setMnemonic(KeyEvent.VK_S);
+		setText(_("Export Signal"));
+		setToolTip(_("Export signal to simple binary, ASCII or EEGLab format"));
+		setMnemonic(KeyEvent.VK_E);
 	}
 
 	@Override
@@ -155,7 +156,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		if (saveSignal(sampleSource, exportFiles.getSignalFile(), signalExportDescriptor) == false)
 			return;
 
-		if (signalExportDescriptor.isSaveXML())
+		if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW
+				&& signalExportDescriptor.isSaveXML())
 			if (saveDescriptor(sampleSource, signalExportDescriptor, masterPlot, exportFiles) == false)
 				return;
 
@@ -178,24 +180,37 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			if (originalFile != null) {
 				originalFile = new File(originalFile.getName());
 				String extension = Util.getFileExtension(originalFile, false);
-				if (extension == null || ! "bin".equals(extension)) {
+ 				if (signalExportDescriptor.getFormatType() == ExportFormatType.RAW
+				    && !"bin".equals(extension)) {
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "bin");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab
+					   && !"set".equals(extension)) {
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "set");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.MATLAB
+						   && !"mat".equals(extension)) {
+						fileSuggestion = Util.changeOrAddFileExtension(originalFile, "mat");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII
+						   && !"ascii".equals(extension)){
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "ascii");
 				}
 			}
 		}
-
-		File file;
+		File file = null;
 		File xmlFile = null;
 		boolean hasFile = false;
 		do {
-			file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion);
+			switch(signalExportDescriptor.getFormatType()) {
+			case RAW: file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion); break;
+			case EEGLab: file = fileChooser.chooseExportEEGLabSignalFile(optionPaneParent, fileSuggestion); break;
+			case ASCII: file = fileChooser.chooseExportASCIISignalFile(optionPaneParent, fileSuggestion); break;
+			case MATLAB: file = fileChooser.chooseExportMatlabSignalFile(optionPaneParent, fileSuggestion); break;
+			}
+
 			if (file == null) {
 				return null;
 			}
-			String ext = Util.getFileExtension(file,false);
-			if (ext == null) {
-				file = new File(file.getAbsolutePath() + ".bin");
-			}
+			String defaultExtension = signalExportDescriptor.getFormatType().getDefaultExtension();
+			file = new File(Util.changeOrAddFileExtension(file, defaultExtension).getAbsolutePath());
 
 			hasFile = true;
 
@@ -300,11 +315,10 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	public boolean saveSignal(MultichannelSampleSource sampleSource, File signalFile, SignalExportDescriptor signalExportDescriptor) {
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 
-		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, signalFile, signalExportDescriptor, pleaseWaitDialog);
+		ExportSignalWorker worker = new ExportSignalWorker(sampleSource, signalFile, signalExportDescriptor, pleaseWaitDialog, getActionFocusSelector().getActiveSignalDocument());
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(_("exporting signal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 

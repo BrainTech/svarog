@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 
-import org.signalml.app.view.components.TextPanePanel;
+import org.signalml.app.view.common.components.panels.TextPanePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.util.Util;
 

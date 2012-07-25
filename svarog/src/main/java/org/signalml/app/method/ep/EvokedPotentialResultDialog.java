@@ -22,7 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.components.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.view.workspace.ViewerPropertySheet;
 import org.signalml.method.ep.EvokedPotentialResult;

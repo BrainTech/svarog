@@ -2,7 +2,7 @@ package org.signalml.app.view.tag.styles.attributes;
 
 import javax.swing.table.AbstractTableModel;
 
-import org.signalml.app.view.components.TagStylePropertiesPanel;
+import org.signalml.app.view.tag.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 
