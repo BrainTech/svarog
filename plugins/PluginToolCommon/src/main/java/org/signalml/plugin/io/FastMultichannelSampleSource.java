@@ -26,15 +26,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	}
 
 	@Override
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-
-	}
-
-	@Override
-	public void destroy() {
-	}
-
-	@Override
 	public int getChannelCount() {
 		try {
 			return this.delegate.get_number_of_channels();
@@ -133,9 +124,20 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	}
 
 	@Override
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		//do nothing
 	}
+	
+	@Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		//do nothing
+	}
+	
+	@Override
+	public void destroy() {
+		this.buffer = null;
+		this.delegate.close();
+	}
+
 
 }

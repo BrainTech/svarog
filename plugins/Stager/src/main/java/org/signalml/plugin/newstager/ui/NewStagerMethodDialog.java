@@ -20,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.WindowConstants;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
@@ -82,6 +83,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 	public NewStagerMethodDialog(PresetManager presetManager, Window w) {
 		super(presetManager, w, true);
+		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
 	@Override

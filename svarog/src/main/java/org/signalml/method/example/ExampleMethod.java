@@ -17,6 +17,7 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -92,7 +93,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new ExampleData();
 	}
 

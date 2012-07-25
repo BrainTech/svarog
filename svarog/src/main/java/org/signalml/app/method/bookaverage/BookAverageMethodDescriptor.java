@@ -10,6 +10,7 @@ import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.method.bookaverage.BookAverageMethod;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** BookAverageMethodDescriptor
  *
@@ -68,7 +69,7 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 		// TODO may not be enough
 		return method.createData();
 	}

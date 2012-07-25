@@ -14,6 +14,7 @@ import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.Method;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.method.PluginAbstractMethodDescriptor;
@@ -57,7 +58,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 		SvarogAccessSignal signalAccess = this.methodManager.getSvarogAccess()
 										  .getSignalAccess();
 
@@ -110,7 +111,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 
 	@Override
 	public String getName() {
-		return "xxx";
+		return "";
 	}
 
 	@Override

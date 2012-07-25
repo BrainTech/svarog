@@ -14,6 +14,7 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -174,7 +175,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new EvokedPotentialData();
 	}
 

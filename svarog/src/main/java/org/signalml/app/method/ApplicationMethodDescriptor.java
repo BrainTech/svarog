@@ -5,6 +5,7 @@
 package org.signalml.app.method;
 
 import org.signalml.method.Method;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** ApplicationMethodDescriptor
  *
@@ -23,6 +24,6 @@ public interface ApplicationMethodDescriptor {
 	MethodConfigurer getConfigurer(ApplicationMethodManager methodManager);
 	MethodResultConsumer getConsumer(ApplicationMethodManager methodManager);
 
-	Object createData(ApplicationMethodManager methodManager);
+	BaseMethodData createData(ApplicationMethodManager methodManager);
 
 }

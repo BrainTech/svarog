@@ -1,6 +1,7 @@
 package org.signalml.plugin.impl;
 
 import org.signalml.app.view.components.dialogs.TaskStatusDialog;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.method.SvarogMethod;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;
@@ -58,7 +59,7 @@ public class MethodAccessImpl extends AbstractAccess implements SvarogAccessMeth
 	}
 
 	@Override
-	public Object createData(SvarogMethodDescriptor descriptor) {
+	public BaseMethodData createData(SvarogMethodDescriptor descriptor) {
 		return descriptor.createData(getViewerElementManager().getMethodManager());
 	}
 }

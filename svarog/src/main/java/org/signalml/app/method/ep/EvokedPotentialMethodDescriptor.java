@@ -21,6 +21,7 @@ import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.components.dialogs.OptionPane;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.Document;
 
 /** EvokedPotentialMethodDescriptor
@@ -98,7 +99,7 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 
 		Document document = methodManager.getActionFocusManager().getActiveDocument();
 		if (!(document instanceof SignalDocument)) {

@@ -7,6 +7,7 @@ package org.signalml.method.ep;
 import java.io.Serializable;
 
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialData
@@ -14,7 +15,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class EvokedPotentialData implements Serializable {
+public class EvokedPotentialData extends BaseMethodData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

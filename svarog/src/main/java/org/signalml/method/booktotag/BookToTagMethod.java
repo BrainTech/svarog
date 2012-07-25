@@ -19,6 +19,7 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -76,7 +77,7 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new BookToTagData();
 	}
 

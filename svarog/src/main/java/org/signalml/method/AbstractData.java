@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /**
  * This is abstract class which should be extended by classes acting as data
@@ -19,7 +20,7 @@ import org.signalml.domain.montage.system.ChannelFunction;
  * @author Oskar Kapala &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  *
  */
-public class AbstractData implements Serializable {
+public class AbstractData extends BaseMethodData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

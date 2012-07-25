@@ -16,6 +16,7 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** IteratorMethod
  *
@@ -100,7 +101,7 @@ public class MethodIteratorMethod extends AbstractMethod implements Initializing
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new MethodIteratorData();
 	}
 
