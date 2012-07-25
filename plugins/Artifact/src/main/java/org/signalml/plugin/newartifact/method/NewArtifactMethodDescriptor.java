@@ -1,8 +1,5 @@
 package org.signalml.plugin.newartifact.method;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -12,24 +9,21 @@ import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.Method;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.method.PluginAbstractMethodDescriptor;
+import org.signalml.plugin.method.helper.PluginPresetManagerHelper;
 import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
-import org.signalml.plugin.tool.PluginResourceRepository;
 
-import com.thoughtworks.xstream.XStream;
-
-public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor implements
-	ApplicationIterableMethodDescriptor {
+public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor
+		implements ApplicationIterableMethodDescriptor {
 
 	protected static final Logger logger = Logger
-										   .getLogger(NewArtifactMethodDescriptor.class);
+			.getLogger(NewArtifactMethodDescriptor.class);
 
 	private NewArtifactMethodConfigurer configurer;
 	private MethodPresetManager presetManager;
@@ -38,7 +32,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public MethodIterationResultConsumer getIterationConsumer(
-		ApplicationMethodManager methodManager) {
+			ApplicationMethodManager methodManager) {
 		return null;
 	}
 
@@ -59,7 +53,8 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public BaseMethodData createData(ApplicationMethodManager methodManager) {
-		SvarogAccessSignal signalAccess = this.methodManager.getSvarogAccess().getSignalAccess();
+		SvarogAccessSignal signalAccess = this.methodManager.getSvarogAccess()
+				.getSignalAccess();
 
 		ExportedSignalDocument signalDocument;
 		try {
@@ -92,7 +87,7 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public MethodResultConsumer getConsumer(
-		ApplicationMethodManager methodManager) {
+			ApplicationMethodManager methodManager) {
 		if (consumer == null) {
 			consumer = new NewArtifactMethodConsumer();
 			consumer.initialize(this.methodManager);
@@ -107,35 +102,16 @@ public class NewArtifactMethodDescriptor extends PluginAbstractMethodDescriptor 
 
 	@Override
 	public String getName() {
-		return "FIXME";	//FIXME
+		return "FIXME"; // FIXME
 	}
 
 	@Override
 	public MethodPresetManager getPresetManager(
-		ApplicationMethodManager methodManager, boolean existingOnly) {
+			ApplicationMethodManager methodManager, boolean existingOnly) {
 		if (presetManager == null && !existingOnly) {
-			presetManager = new MethodPresetManager(this.getMethod().getName(),
-													NewArtifactParameters.class);
-			presetManager.setProfileDir(methodManager.getProfileDir());
-			try {
-				presetManager.setStreamer((XStream) PluginResourceRepository
-										  .GetResource("streamer", NewArtifactPlugin.class));
-			} catch (PluginException e) {
-				logger.error("Can't get proper streamer", e);
-				this.methodManager.handleException(e);
-				return null;
-			}
-			try {
-				presetManager.readFromPersistence(null);
-			} catch (IOException e) {
-				if (e instanceof FileNotFoundException) {
-					logger.debug("Seems like artifact preset configuration doesn't exist");
-				} else {
-					logger.error(
-						"Failed to read artifact presets - presets lost", e);
-				}
-				return null;
-			}
+			presetManager = PluginPresetManagerHelper.GetPresetForMethod(
+					methodManager, this.methodManager, this.getMethod()
+							.getName(), NewArtifactParameters.class);
 		}
 		return presetManager;
 	}
