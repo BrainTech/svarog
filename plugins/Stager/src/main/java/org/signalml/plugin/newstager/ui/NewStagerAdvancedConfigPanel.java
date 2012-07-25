@@ -339,7 +339,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public void fillPanelFromParameters(NewStagerParameters parameters) {
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
-		NewStagerFASPThreshold delta = thresholds.alphaThreshold;
+		NewStagerFASPThreshold delta = thresholds.deltaThreshold;
 		NewStagerFASPThreshold theta = thresholds.thetaThreshold;
 		NewStagerFASPThreshold spindle = thresholds.spindleThreshold;
 		NewStagerFASPThreshold kComplex = thresholds.kCThreshold;
@@ -369,7 +369,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 	public void fillParametersFromPanel(NewStagerParameters parameters) {
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
-		NewStagerFASPThreshold delta = thresholds.alphaThreshold;
+		NewStagerFASPThreshold delta = thresholds.deltaThreshold;
 		NewStagerFASPThreshold theta = thresholds.thetaThreshold;
 		NewStagerFASPThreshold spindle = thresholds.spindleThreshold;
 		NewStagerFASPThreshold kComplex = thresholds.kCThreshold;
