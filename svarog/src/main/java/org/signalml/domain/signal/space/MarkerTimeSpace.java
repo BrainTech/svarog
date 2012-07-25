@@ -4,6 +4,9 @@
 
 package org.signalml.domain.signal.space;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
@@ -24,7 +27,7 @@ public class MarkerTimeSpace {
 	/**
 	 * the name of the type (style) of a marker
 	 */
-	private String markerStyleName;
+	private List<String> markerStyleNames;
 
 	/**
 	 * the length (in seconds) before the marker that should be included in
@@ -61,7 +64,15 @@ public class MarkerTimeSpace {
 	 * @return the name of the type (style) of a marker
 	 */
 	public String getMarkerStyleName() {
-		return markerStyleName;
+		return markerStyleNames.get(0);
+	}
+
+	public List<String> getMarkerStyleNames() {
+		return markerStyleNames;
+	}
+
+	public void setMarkerStyleNames(List<String> markerStyleNames) {
+		this.markerStyleNames = markerStyleNames;
 	}
 
 	/**
@@ -69,7 +80,8 @@ public class MarkerTimeSpace {
 	 * @param markerStyleName the name of the type (style) of a marker
 	 */
 	public void setMarkerStyleName(String markerStyleName) {
-		this.markerStyleName = markerStyleName;
+		this.markerStyleNames = new ArrayList<String>();
+		this.markerStyleNames.add(markerStyleName);
 	}
 
 	/**

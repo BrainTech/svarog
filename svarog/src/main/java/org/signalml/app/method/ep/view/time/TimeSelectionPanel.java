@@ -23,7 +23,7 @@ public class TimeSelectionPanel extends LabeledComponentsPanel {
 
 	protected FloatSpinner getStartTimeSpinner() {
 		if (startTimeSpinner == null) {
-			startTimeSpinner = new FloatSpinner(new SpinnerNumberModel(-1.0, -100.0, 100.0, 0.1));
+			startTimeSpinner = new FloatSpinner(new SpinnerNumberModel(1.0, -100.0, 100.0, 0.1));
 		}
 		return startTimeSpinner;
 	}

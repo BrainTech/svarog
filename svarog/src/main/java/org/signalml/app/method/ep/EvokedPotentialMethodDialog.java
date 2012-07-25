@@ -17,13 +17,13 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.ArtifactRejectionPanel;
 import org.signalml.app.method.ep.view.EvokedPotentialSettingsPanel;
+import org.signalml.app.method.ep.view.signalspace.ERPSignalSpacePanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.view.signal.signalselection.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.method.ep.EvokedPotentialParameters;
@@ -43,7 +43,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	private JTabbedPane tabbedPane;
 
-	private SignalSpacePanel signalSpacePanel;
+	private ERPSignalSpacePanel signalSpacePanel;
 	private EvokedPotentialSettingsPanel evokedPotentialSettingsPanel;
 	private ArtifactRejectionPanel artifactRejectionPanel;
 
@@ -70,9 +70,9 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		return tabbedPane;
 	}
 
-	public SignalSpacePanel getSignalSpacePanel() {
+	public ERPSignalSpacePanel getSignalSpacePanel() {
 		if (signalSpacePanel == null) {
-			signalSpacePanel = new SignalSpacePanel();
+			signalSpacePanel = new ERPSignalSpacePanel();
 		}
 		return signalSpacePanel;
 	}
@@ -121,7 +121,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 			parameters = (EvokedPotentialParameters) preset;
 		}
 
-		SignalSpace space = parameters.getSignalSpace();
+		SignalSpace space = parameters.getWholeSignalSpace();
 
 		SignalSelection signalSelection = signalView.getSignalSelection(masterPlot);
 		Tag tag = null;
@@ -144,7 +144,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	protected void fillDialogFromParameters(EvokedPotentialParameters parameters) {
 
-		SignalSpace space = parameters.getSignalSpace();
+		SignalSpace space = parameters.getWholeSignalSpace();
 
 		getSignalSpacePanel().fillPanelFromModel(space);
 
@@ -163,7 +163,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	protected void fillParametersFromDialog(EvokedPotentialParameters parameters) {
 
-		SignalSpace space = parameters.getSignalSpace();
+		SignalSpace space = parameters.getWholeSignalSpace();
 
 		getSignalSpacePanel().fillModelFromPanel(space);
 		getEvokedPotentialSettingsPanel().fillModelFromPanel(parameters);
@@ -195,6 +195,8 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		getSignalSpacePanel().validatePanel(errors);
+		getEvokedPotentialSettingsPanel().validatePanel(errors);
+
 
 	}
 

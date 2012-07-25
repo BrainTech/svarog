@@ -5,6 +5,8 @@
 package org.signalml.method.ep;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /** EvokedPotentialResult
  *
@@ -23,7 +25,7 @@ public class EvokedPotentialResult implements Serializable {
 	private float samplingFrequency;
 
 	private String[] labels;
-	private double[][] averageSamples;
+	private List<double[][]> averageSamples = new ArrayList<double[][]>();;
 
 	private int skippedCount;
 	private int averagedCount;
@@ -71,12 +73,21 @@ public class EvokedPotentialResult implements Serializable {
 		this.labels = labels;
 	}
 
-	public double[][] getAverageSamples() {
+	public double[][] getSingleChannelAverageSamples() {
+		return averageSamples.get(0);
+	}
+
+	public List<double[][]> getAverageSamples() {
 		return averageSamples;
 	}
 
 	public void setAverageSamples(double[][] averageSamples) {
-		this.averageSamples = averageSamples;
+		this.averageSamples = new ArrayList<double[][]>();
+		this.averageSamples.add(averageSamples);
+	}
+
+	public void addAverageSamples(double[][] averageSamples) {
+		this.averageSamples.add(averageSamples);
 	}
 
 	public int getSkippedCount() {

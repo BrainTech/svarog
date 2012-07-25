@@ -4,7 +4,9 @@
 
 package org.signalml.domain.signal.space;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
@@ -77,14 +79,16 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	 * {@link MultichannelSampleSource source} of all channels.
 	 * @param source the source of all samples
 	 * @param tagSet the set of tags (including markers)
-	 * @param markerName the name of the type of a marker
+	 * @param markerStyleNames the name of the type of a marker
 	 * @param secondsBefore the length (in seconds) before the marker that
 	 * is to be included in the
 	 * @param secondsAfter the length (in seconds) before the marker that
 	 * is to be included in the
 	 * @param channelSpace the set of channels
 	 */
-	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, String markerName, double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
+	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, List<String> markerStyleNames,
+			double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
+
 		super(source);
 
 		if (channelSpace != null) {
@@ -107,7 +111,12 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		samplesAfter = (int) Math.ceil(samplingFrequency * secondsAfter);
 		segmentLength = samplesBefore + samplesAfter;
 
-		TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, markerName);
+		List<TagStyle> tagStyles = new ArrayList<TagStyle>();
+		for (String styleName: markerStyleNames) {
+			TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, styleName);
+			tagStyles.add(markerStyle);
+		}
+
 		int channelTagCount = tagSet.getChannelTagCount();
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(source);
@@ -122,9 +131,9 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 		for (i=0; i<channelTagCount; i++) {
 			tag = tagSet.getChannelTagAt(i);
-			if (tag.isMarker() && tag.getStyle().equals(markerStyle)) {
+			if (tagStyles.contains(tag.getStyle())) {
 
-				markerSample = (int) Math.floor(samplingFrequency * tag.getCenterPosition());
+				markerSample = (int) Math.floor(samplingFrequency * tag.getPosition());
 
 				if ((markerSample-1) < samplesBefore) {  // samplesBefore samples from markerSample inclusive
 					// not enough samples before

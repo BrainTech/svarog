@@ -111,7 +111,7 @@ public class SegmentedSampleSourceFactory {
 		case MARKER_BASED :
 
 			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-			sampleSource = new MarkerSegmentedSampleSource(source, tagSet, markerTimeSpace.getMarkerStyleName(), markerTimeSpace.getSecondsBefore(), markerTimeSpace.getSecondsAfter(), channelSpace);
+			sampleSource = new MarkerSegmentedSampleSource(source, tagSet, markerTimeSpace.getMarkerStyleNames(), markerTimeSpace.getSecondsBefore(), markerTimeSpace.getSecondsAfter(), channelSpace);
 			break;
 
 		case SELECTION_BASED :

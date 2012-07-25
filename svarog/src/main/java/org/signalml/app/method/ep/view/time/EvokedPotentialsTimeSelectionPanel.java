@@ -11,8 +11,8 @@ public class EvokedPotentialsTimeSelectionPanel extends TimeSelectionPanel {
 	}
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
-		parameters.setAveragingSelectionStart(getStartTimeSpinner().getValue());
-		parameters.setAveragingSelectionEnd(getEndTimeSpinner().getValue());
+		parameters.setAveragingTimeBefore(getStartTimeSpinner().getValue());
+		parameters.setAveragingTimeAfter(getEndTimeSpinner().getValue());
 	}
 
 }

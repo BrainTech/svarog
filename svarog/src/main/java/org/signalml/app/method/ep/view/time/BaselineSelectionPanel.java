@@ -11,8 +11,8 @@ public class BaselineSelectionPanel extends TimeSelectionPanel {
 	}
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
-		parameters.setBaselineSelectionStart(getStartTimeSpinner().getValue());
-		parameters.setBaselineSelectionEnd(getEndTimeSpinner().getValue());
+		parameters.setBaselineTimeBefore(getStartTimeSpinner().getValue());
+		parameters.setBaselineTimeAfter(getEndTimeSpinner().getValue());
 	}
 
 }

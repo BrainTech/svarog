@@ -28,20 +28,20 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	private String name;
 
 	private List<TagStyleGroup> averagedTagStyles = new ArrayList<TagStyleGroup>();
-	private float averagingSelectionStart;
-	private float averagingSelectionEnd;
+	private float averagingTimeBefore;
+	private float averagingTimeAfter;
 
-	private float baselineSelectionStart;
-	private float baselineSelectionEnd;
+	private float baselineTimeBefore;
+	private float baselineTimeAfter;
 
 	private boolean filteringEnabled;
 	private float filterCutOffFrequency;
 	private List<TagStyleGroup> artifactTagStyles = new ArrayList<TagStyleGroup>();
 
-	private SignalSpace signalSpace;
+	private SignalSpace wholeSignalSpace;
 
 	public EvokedPotentialParameters() {
-		signalSpace = new SignalSpace();
+		wholeSignalSpace = new SignalSpace();
 	}
 
 	@Override
@@ -54,12 +54,12 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 		this.name = name;
 	}
 
-	public SignalSpace getSignalSpace() {
-		return signalSpace;
+	public SignalSpace getWholeSignalSpace() {
+		return wholeSignalSpace;
 	}
 
 	public void setSignalSpace(SignalSpace signalSpace) {
-		this.signalSpace = signalSpace;
+		this.wholeSignalSpace = signalSpace;
 	}
 
 	public List<TagStyleGroup> getAveragedTagStyles() {
@@ -70,36 +70,36 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 		this.averagedTagStyles = list;
 	}
 
-	public float getAveragingSelectionStart() {
-		return averagingSelectionStart;
+	public float getAveragingTimeBefore() {
+		return averagingTimeBefore;
 	}
 
-	public void setAveragingSelectionStart(float averagingSelectionStart) {
-		this.averagingSelectionStart = averagingSelectionStart;
+	public void setAveragingTimeBefore(float averagingTimeBefore) {
+		this.averagingTimeBefore = averagingTimeBefore;
 	}
 
-	public float getAveragingSelectionEnd() {
-		return averagingSelectionEnd;
+	public float getAveragingTimeAfter() {
+		return averagingTimeAfter;
 	}
 
-	public void setAveragingSelectionEnd(float averagingSelectionEnd) {
-		this.averagingSelectionEnd = averagingSelectionEnd;
+	public void setAveragingTimeAfter(float averagingTimeAfter) {
+		this.averagingTimeAfter = averagingTimeAfter;
 	}
 
-	public float getBaselineSelectionStart() {
-		return baselineSelectionStart;
+	public float getBaselineTimeBefore() {
+		return baselineTimeBefore;
 	}
 
-	public void setBaselineSelectionStart(float baselineSelectionStart) {
-		this.baselineSelectionStart = baselineSelectionStart;
+	public void setBaselineTimeBefore(float baselineTimeBefore) {
+		this.baselineTimeBefore = baselineTimeBefore;
 	}
 
-	public float getBaselineSelectionEnd() {
-		return baselineSelectionEnd;
+	public float getBaselineTimeAfter() {
+		return baselineTimeAfter;
 	}
 
-	public void setBaselineSelectionEnd(float baselineSelectionEnd) {
-		this.baselineSelectionEnd = baselineSelectionEnd;
+	public void setBaselineTimeAfter(float baselineTimeAfter) {
+		this.baselineTimeAfter = baselineTimeAfter;
 	}
 
 	public boolean isFilteringEnabled() {

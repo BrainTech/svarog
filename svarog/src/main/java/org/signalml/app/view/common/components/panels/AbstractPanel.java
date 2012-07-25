@@ -13,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.model.components.validation.ValidationErrors;
 
 /**
  * All panels in Svarog should extend this panel. Contains an instance of
@@ -117,6 +118,10 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
 		if (propertyChangeSupport != null)
 			propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+	}
+
+	public void validatePanel(ValidationErrors errors) {
+		//do nothing
 	}
 
 }

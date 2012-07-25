@@ -10,6 +10,7 @@ import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.AveragedTagSelectionPanel;
 import org.signalml.app.method.ep.view.time.BaselineSelectionPanel;
 import org.signalml.app.method.ep.view.time.EvokedPotentialsTimeSelectionPanel;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
@@ -86,6 +87,15 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 		getAveragedTimeSelectionPanel().fillModelFromPanel(parameters);
 		getBaselineSelectionPanel().fillModelFromPanel(parameters);
 		getFilterPanel().fillModelFromPanel(parameters);
+
+	}
+
+	@Override
+	public void validatePanel(ValidationErrors errors) {
+		getAveragedTagSelectionPanel().validatePanel(errors);
+		getAveragedTimeSelectionPanel().validatePanel(errors);
+		getBaselineSelectionPanel().validatePanel(errors);
+		getFilterPanel().validatePanel(errors);
 
 	}
 

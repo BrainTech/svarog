@@ -5,6 +5,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
 public class AveragedTagSelectionPanel extends TagSelectionPanel implements ListSelectionListener {
@@ -90,6 +92,16 @@ public class AveragedTagSelectionPanel extends TagSelectionPanel implements List
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
 		parameters.setAveragedTagStyles(getTableModel().getSelectedElements());
+	}
+
+	@Override
+	public void validatePanel(ValidationErrors errors) {
+		List<TagStyleGroup> selectedElements = getTableModel().getSelectedElements();
+
+		if (selectedElements.size() == 0) {
+			errors.addError(_("Please select at least one tag to average."));
+		}
+
 	}
 
 }

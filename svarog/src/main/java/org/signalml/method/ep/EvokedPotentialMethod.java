@@ -4,19 +4,15 @@
 
 package org.signalml.method.ep;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.apache.log4j.Logger;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
-import org.signalml.domain.signal.space.MarkerTimeSpace;
-import org.signalml.domain.signal.space.SignalSpace;
-import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialMethod
@@ -45,84 +41,34 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		tracker.setMessage(_("Preparing"));
 
-		MultichannelSegmentedSampleSource sampleSource = data.getSampleSource();
+		MultichannelSegmentedSampleSource sampleSource = data.getSampleSources().get(0);
 
 		int sampleCount = sampleSource.getSegmentLength();
 		int segmentCount = sampleSource.getSegmentCount();
 		int channelCount = sampleSource.getChannelCount();
 		float samplingFrequency = sampleSource.getSamplingFrequency();
 
-		int i;
-		int e;
-		int j;
-
-		double[] samples = new double[sampleCount];
-		double[][] averageSamples = new double[channelCount][sampleCount];
-
 		String[] labels = new String[channelCount];
-		for (i=0; i<channelCount; i++) {
-			labels[i] = sampleSource.getLabel(i);
+		for (int segment=0; segment<channelCount; segment++) {
+			labels[segment] = sampleSource.getLabel(segment);
 		}
 
 		EvokedPotentialResult result = new EvokedPotentialResult(data);
 
-		SignalSpace signalSpace = data.getParameters().getSignalSpace();
-
-		TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
-		if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
-
-			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-
-			result.setSecondsBefore(markerTimeSpace.getSecondsBefore());
-			result.setSecondsAfter(markerTimeSpace.getSecondsAfter());
-
-		} else {
-
-			// marker placed at the beginning of the segment
-			result.setSecondsAfter(((double) sampleCount) / samplingFrequency);
-			result.setSecondsBefore(0);
-
-		}
+		EvokedPotentialParameters parameters = data.getParameters();
+		result.setSecondsBefore(parameters.getAveragingTimeBefore());
+		result.setSecondsAfter(parameters.getAveragingTimeAfter());
 
 		tracker.setMessage(_("Summing"));
 		tracker.setTickerLimit(0, segmentCount);
 
-		for (i=0; i<segmentCount; i++) {
-
-			for (e=0; e<channelCount; e++) {
-
-				if (tracker.isRequestingAbort()) {
-					return null;
-				}
-
-				sampleSource.getSegmentSamples(e, samples, i);
-
-				for (j=0; j<sampleCount; j++) {
-					averageSamples[e][j] += samples[j];
-				}
-
-			}
-
-			if (i % 10 == 0) {
-				tracker.tick(0, 10);
-			}
-
+		for (MultichannelSegmentedSampleSource segmentedSampleSource: data.getSampleSources()) {
+			double[][] averageSamples = average(segmentedSampleSource, tracker);
+			if (averageSamples == null)
+				return null;
+			result.addAverageSamples(averageSamples);
 		}
 
-		tracker.setMessage(_("Averaging"));
-		tracker.setTicker(0, 0);
-		tracker.setTickerLimit(0, channelCount);
-
-		// markers have been summed, now divide to get the average
-
-		for (e=0; e<channelCount; e++) {
-			for (j=0; j<sampleCount; j++) {
-				averageSamples[e][j] /= segmentCount;
-			}
-			tracker.tick(0);
-		}
-
-		result.setAverageSamples(averageSamples);
 		result.setLabels(labels);
 		result.setSampleCount(sampleCount);
 		result.setChannelCount(channelCount);
@@ -134,6 +80,51 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		return result;
 
+	}
+
+	protected double[][] average(MultichannelSegmentedSampleSource sampleSource, MethodExecutionTracker tracker) {
+		int sampleCount = sampleSource.getSegmentLength();
+		int segmentCount = sampleSource.getSegmentCount();
+		int channelCount = sampleSource.getChannelCount();
+
+		double[] samples = new double[sampleCount];
+		double[][] averageSamples = new double[channelCount][sampleCount];
+
+		for (int segment=0; segment<segmentCount; segment++) {
+
+			for (int channel=0; channel<channelCount; channel++) {
+
+				if (tracker.isRequestingAbort()) {
+					return null;
+				}
+
+				sampleSource.getSegmentSamples(channel, samples, segment);
+
+				for (int j=0; j<sampleCount; j++) {
+					averageSamples[channel][j] += samples[j];
+				}
+
+			}
+
+			if (segment % 10 == 0) {
+				tracker.tick(0, 10);
+			}
+
+		}
+
+		tracker.setMessage(_("Averaging"));
+		tracker.setTicker(0, 0);
+		tracker.setTickerLimit(0, channelCount);
+
+		// markers have been summed, now divide to get the average
+		for (int channel=0; channel<channelCount; channel++) {
+			for (int j=0; j<sampleCount; j++) {
+				averageSamples[channel][j] /= segmentCount;
+			}
+			tracker.tick(0);
+		}
+
+		return averageSamples;
 	}
 
 	@Override

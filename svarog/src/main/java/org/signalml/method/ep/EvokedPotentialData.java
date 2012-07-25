@@ -5,6 +5,7 @@
 package org.signalml.method.ep;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.springframework.validation.Errors;
@@ -19,7 +20,7 @@ public class EvokedPotentialData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private EvokedPotentialParameters parameters;
-	private MultichannelSegmentedSampleSource sampleSource;
+	private List<MultichannelSegmentedSampleSource> sampleSources;
 
 	public EvokedPotentialData() {
 		parameters = new EvokedPotentialParameters();
@@ -29,12 +30,12 @@ public class EvokedPotentialData implements Serializable {
 		this.parameters = parameters;
 	}
 
-	public MultichannelSegmentedSampleSource getSampleSource() {
-		return sampleSource;
+	public void setSampleSource(List<MultichannelSegmentedSampleSource> sampleSources) {
+		this.sampleSources = sampleSources;
 	}
 
-	public void setSampleSource(MultichannelSegmentedSampleSource sampleSource) {
-		this.sampleSource = sampleSource;
+	public List<MultichannelSegmentedSampleSource> getSampleSources() {
+		return sampleSources;
 	}
 
 	public EvokedPotentialParameters getParameters() {
@@ -43,7 +44,7 @@ public class EvokedPotentialData implements Serializable {
 
 	public void validate(Errors errors) {
 
-		if (sampleSource == null) {
+		if (sampleSources == null) {
 			errors.reject("error.evokedPotential.noSampleSource");
 		}
 

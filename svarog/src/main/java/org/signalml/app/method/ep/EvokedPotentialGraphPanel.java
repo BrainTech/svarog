@@ -17,6 +17,8 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
@@ -250,7 +252,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	private void createCharts() {
 
-		int i, e;
+		int channel, e;
 
 		int channelCount = result.getChannelCount();
 		int sampleCount = result.getSampleCount();
@@ -260,21 +262,21 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		globalMin = Double.MAX_VALUE;
 		globalMax = Double.MIN_VALUE;
 
-		double[][] samples = result.getAverageSamples();
+		for (double[][] samples: result.getAverageSamples()) {
 
-		for (i=0; i<channelCount; i++) {
+			for (channel=0; channel<channelCount; channel++) {
+				for (e=0; e<sampleCount; e++) {
 
-			for (e=0; e<sampleCount; e++) {
+					if (samples[channel][e] < globalMin) {
+						globalMin = samples[channel][e];
+					}
+					if (samples[channel][e] > globalMax) {
+						globalMax = samples[channel][e];
+					}
 
-				if (samples[i][e] < globalMin) {
-					globalMin = samples[i][e];
-				}
-				if (samples[i][e] > globalMax) {
-					globalMax = samples[i][e];
 				}
 
 			}
-
 		}
 
 		timeValues = new double[sampleCount];
@@ -284,15 +286,21 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			timeValues[e] = (((double) e) / samplingFrequency) - result.getSecondsBefore();
 		}
 
-		for (i=0; i<channelCount; i++) {
+		for (channel=0; channel<channelCount; channel++) {
+			List<double[]> channelSamples = new ArrayList<double[]>();
 
-			if (i == channelCount-1) {
-				charts[i] = createChart(new double[][] { timeValues, samples[i] }, globalMin, globalMax, result.getLabels()[i], ChartType.BOTTOM);
+			for (int i = 0; i < result.getAverageSamples().size(); i++) {
+				double[][] data = result.getAverageSamples().get(i);
+				channelSamples.add(data[channel]);
 			}
-			else if (i == 0 && channelCount != 1) {
-				charts[i] = createChart(new double[][] { timeValues, samples[i] }, globalMin, globalMax, result.getLabels()[i], ChartType.TOP);
+
+			if (channel == channelCount-1) {
+				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.BOTTOM);
+			}
+			else if (channel == 0 && channelCount != 1) {
+				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.TOP);
 			} else {
-				charts[i] = createChart(new double[][] { timeValues, samples[i] }, globalMin, globalMax, result.getLabels()[i], ChartType.STRIPPED);
+				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.STRIPPED);
 			}
 
 		}
@@ -331,10 +339,10 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	}
 
-	JFreeChart createChart(double[][] data, double minY, double maxY, String label, ChartType type) {
+	JFreeChart createChart(double[] timeValues, List<double[]> data, double minY, double maxY, String label, ChartType type) {
 
-		double minTime = data[0][0];
-		double maxTime = data[0][data[0].length-1];
+		double minTime = timeValues[0];
+		double maxTime = timeValues[timeValues.length-1];
 
 		NumberAxis xAxis;
 		NumberAxis yAxis;
@@ -360,7 +368,10 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		yAxis.setRange(minY, maxY);
 
 		dataset = new DefaultXYDataset();
-		dataset.addSeries("data", data);
+		for (int i = 0; i < data.size(); i++) {
+			//double[][] data = dataList.get(i);
+			dataset.addSeries("data" + i, new double[][] { timeValues, data.get(i) } );
+		}
 		dataset.addSeries("redline", new double[][] { {0,0}, {minY, maxY} });
 
 		plot = new XYPlot(dataset, xAxis, yAxis, normalRenderer);
@@ -498,7 +509,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		@Override
 		protected JFreeChart getChart() {
-			return createChart(new double[][] { timeValues, result.getAverageSamples()[focusedChartIndex] }, globalMin, globalMax, result.getLabels()[focusedChartIndex], ChartType.NORMAL);
+			return null;
+			//return createChart(new double[][] { timeValues, result.getAverageSamples()[focusedChartIndex] }, globalMin, globalMax, result.getLabels()[focusedChartIndex], ChartType.NORMAL);
 		}
 
 		@Override
@@ -538,7 +550,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			}
 			double[][] samples = new double[2][];
 			samples[0] = timeValues;
-			samples[1] = result.getAverageSamples()[focusedChartIndex];
+			samples[1] = result.getSingleChannelAverageSamples()[focusedChartIndex];
 			return samples;
 		}
 
@@ -572,7 +584,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		@Override
 		protected JFreeChart getChart() {
-			return createChart(new double[][] { timeValues, result.getAverageSamples()[focusedChartIndex] }, globalMin, globalMax, result.getLabels()[focusedChartIndex], ChartType.NORMAL);
+			return null;
+			//return createChart(new double[][] { timeValues, result.getAverageSamples()[focusedChartIndex] }, globalMin, globalMax, result.getLabels()[focusedChartIndex], ChartType.NORMAL);
 		}
 
 		@Override
@@ -610,7 +623,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			}
 			double[][] samples = new double[2][];
 			samples[0] = timeValues;
-			samples[1] = result.getAverageSamples()[focusedChartIndex];
+			samples[1] = result.getSingleChannelAverageSamples()[focusedChartIndex];
 			return samples;
 		}
 
@@ -693,7 +706,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			int channelCount = result.getChannelCount();
 			double[][] samples = new double[1+channelCount][];
 			samples[0] = timeValues;
-			double[][] averageSamples = result.getAverageSamples();
+			double[][] averageSamples = result.getSingleChannelAverageSamples();
 			for (int i=0; i<channelCount; i++) {
 				samples[i+1] = averageSamples[i];
 			}
@@ -783,7 +796,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			int channelCount = result.getChannelCount();
 			double[][] samples = new double[1+channelCount][];
 			samples[0] = timeValues;
-			double[][] averageSamples = result.getAverageSamples();
+			double[][] averageSamples = result.getSingleChannelAverageSamples();
 			for (int i=0; i<channelCount; i++) {
 				samples[i+1] = averageSamples[i];
 			}
@@ -833,7 +846,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			if (result == null) {
 				return null;
 			}
-			return result.getAverageSamples();
+			return result.getSingleChannelAverageSamples();
 		}
 
 		@Override
