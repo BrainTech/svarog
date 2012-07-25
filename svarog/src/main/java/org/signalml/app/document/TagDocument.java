@@ -8,8 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -361,19 +360,15 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
-		Collection<TagStyle> channelStyles = getTagSet().getChannelStyles();
-		Iterator<TagStyle> it = channelStyles.iterator();
-		while (it.hasNext()) {
-			if (!it.next().isMarker()) {
-				it.remove();
+		List<TagStyle> markerStyles = new ArrayList<TagStyle>();
+
+		for (TagStyle style: getTagSet().getChannelStyles()) {
+			if (style.isMarker()) {
+				markerStyles.add(style);
 			}
 		}
 
-		TagStyle[] markerStyles = new TagStyle[channelStyles.size()];
-		channelStyles.toArray(markerStyles);
-
-		constraints.setMarkerStyles(markerStyles);
-
+		constraints.setMarkerStyles(markerStyles.toArray(new TagStyle[0]));
 	}
 
 	@Override
