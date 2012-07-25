@@ -11,11 +11,12 @@ import org.signalml.app.method.ep.view.tags.AveragedTagSelectionPanel;
 import org.signalml.app.method.ep.view.time.BaselineSelectionPanel;
 import org.signalml.app.method.ep.view.time.EvokedPotentialsTimeSelectionPanel;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.method.ep.EvokedPotentialParameters;
 
 public class EvokedPotentialSettingsPanel extends AbstractPanel {
 
 	private AveragedTagSelectionPanel averageedTagSelectionPanel;
-	private EvokedPotentialsTimeSelectionPanel timeSelectionPanel;
+	private EvokedPotentialsTimeSelectionPanel averagedTimeSelectionPanel;
 	private BaselineSelectionPanel baselineSelectionPanel;
 	private FilterPanel filterPanel;
 
@@ -40,7 +41,7 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 		JPanel controlsPanel = new JPanel();
 		controlsPanel.setLayout(new BoxLayout(controlsPanel, BoxLayout.Y_AXIS));
 
-		controlsPanel.add(getTimeSelectionPanel());
+		controlsPanel.add(getAveragedTimeSelectionPanel());
 		controlsPanel.add(getBaselineSelectionPanel());
 		controlsPanel.add(getFilterPanel());
 
@@ -57,10 +58,10 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 		return averageedTagSelectionPanel;
 	}
 
-	public EvokedPotentialsTimeSelectionPanel getTimeSelectionPanel() {
-		if (timeSelectionPanel == null)
-			timeSelectionPanel = new EvokedPotentialsTimeSelectionPanel();
-		return timeSelectionPanel;
+	public EvokedPotentialsTimeSelectionPanel getAveragedTimeSelectionPanel() {
+		if (averagedTimeSelectionPanel == null)
+			averagedTimeSelectionPanel = new EvokedPotentialsTimeSelectionPanel();
+		return averagedTimeSelectionPanel;
 	}
 
 	public BaselineSelectionPanel getBaselineSelectionPanel() {
@@ -77,6 +78,15 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 
 	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
 		getAveragedTagSelectionPanel().fillPanelFromModel(data);
+	}
+
+	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
+
+		getAveragedTagSelectionPanel().fillModelFromPanel(parameters);
+		getAveragedTimeSelectionPanel().fillModelFromPanel(parameters);
+		getBaselineSelectionPanel().fillModelFromPanel(parameters);
+		getFilterPanel().fillModelFromPanel(parameters);
+
 	}
 
 }

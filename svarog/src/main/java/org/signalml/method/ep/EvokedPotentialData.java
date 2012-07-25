@@ -19,7 +19,6 @@ public class EvokedPotentialData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private EvokedPotentialParameters parameters;
-
 	private MultichannelSegmentedSampleSource sampleSource;
 
 	public EvokedPotentialData() {

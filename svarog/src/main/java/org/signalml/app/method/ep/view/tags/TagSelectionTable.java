@@ -33,7 +33,7 @@ public class TagSelectionTable extends JTable {
 		TableColumn column;
 		for (int i = 0; i < getColumnCount(); i++) {
 			column = getColumnModel().getColumn(i);
-			if (i == TagSelectionTableModel.TAG_CHECKBOX_COLUMN_NUMBER) {
+			if (i == AbstractSelectionTableModel.CHECKBOX_COLUMN_NUMBER) {
 				column.setPreferredWidth(10);
 			} else {
 				column.setPreferredWidth(300);
@@ -43,7 +43,7 @@ public class TagSelectionTable extends JTable {
 
 	@Override
 	public TableCellRenderer getCellRenderer(int row, int column) {
-		if (column == TagSelectionTableModel.TAG_STYLE_NAME_COLUMN_NUMBER)
+		if (column == AbstractSelectionTableModel.ELEMENT_NAME_COLUMN_NUMBER)
 			return new TagRenderer(tagIconProducer);
 		else
 			return super.getCellRenderer(row, column);

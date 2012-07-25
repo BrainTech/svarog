@@ -144,7 +144,6 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 	protected void fillDialogFromParameters(EvokedPotentialParameters parameters) {
 
-
 		SignalSpace space = parameters.getSignalSpace();
 
 		getSignalSpacePanel().fillPanelFromModel(space);
@@ -167,6 +166,8 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		SignalSpace space = parameters.getSignalSpace();
 
 		getSignalSpacePanel().fillModelFromPanel(space);
+		getEvokedPotentialSettingsPanel().fillModelFromPanel(parameters);
+		getArtifactRejectionPanel().fillModelFromPanel(parameters);
 
 	}
 

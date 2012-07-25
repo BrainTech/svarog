@@ -58,7 +58,8 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 		SignalProcessingChain copyChain = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSegmentedSampleSource segmentedSampleSource = factory.getSegmentedSampleSource(copyChain, signalSpace, tagDocument != null ? tagDocument.getTagSet() : null, plot.getPageSize(), plot.getBlockSize());
+		MultichannelSegmentedSampleSource segmentedSampleSource = factory.getSegmentedSampleSource(copyChain, signalSpace,
+				tagDocument != null ? tagDocument.getTagSet() : null, plot.getPageSize(), plot.getBlockSize());
 
 		setSampleSource(segmentedSampleSource);
 

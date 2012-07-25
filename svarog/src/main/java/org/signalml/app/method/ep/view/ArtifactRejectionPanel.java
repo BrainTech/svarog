@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.ArtifactTagsSelectionPanel;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.method.ep.EvokedPotentialParameters;
 
 public class ArtifactRejectionPanel extends AbstractPanel {
 
@@ -43,6 +44,10 @@ public class ArtifactRejectionPanel extends AbstractPanel {
 
 	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
 		getArtifactTagsSelectionPanel().fillPanelFromModel(data);
+	}
+
+	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
+		getArtifactTagsSelectionPanel().fillModelFromPanel(parameters);
 	}
 
 }

@@ -21,14 +21,14 @@ public class TimeSelectionPanel extends LabeledComponentsPanel {
 		super(label);
 	}
 
-	public FloatSpinner getStartTimeSpinner() {
+	protected FloatSpinner getStartTimeSpinner() {
 		if (startTimeSpinner == null) {
 			startTimeSpinner = new FloatSpinner(new SpinnerNumberModel(-1.0, -100.0, 100.0, 0.1));
 		}
 		return startTimeSpinner;
 	}
 
-	public FloatSpinner getEndTimeSpinner() {
+	protected FloatSpinner getEndTimeSpinner() {
 		if (endTimeSpinner == null) {
 			endTimeSpinner = new FloatSpinner(new SpinnerNumberModel(2.0, -100.0, 100.0, 0.1));
 		}

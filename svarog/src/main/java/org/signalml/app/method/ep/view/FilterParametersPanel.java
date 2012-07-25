@@ -11,6 +11,7 @@ import javax.swing.SpinnerNumberModel;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 import org.signalml.app.view.common.components.spinners.FloatSpinner;
+import org.signalml.method.ep.EvokedPotentialParameters;
 
 public class FilterParametersPanel extends LabeledComponentsPanel {
 
@@ -36,6 +37,10 @@ public class FilterParametersPanel extends LabeledComponentsPanel {
 	@Override
 	protected int getNumberOfColumns() {
 		return 1;
+	}
+
+	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
+		parameters.setFilterCutOffFrequency(getCutoffFrequencySpinner().getValue());
 	}
 
 }

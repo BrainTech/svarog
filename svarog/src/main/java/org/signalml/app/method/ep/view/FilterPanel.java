@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 
 import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.method.ep.EvokedPotentialParameters;
 
 public class FilterPanel extends AbstractPanel implements ActionListener {
 
@@ -49,6 +50,11 @@ public class FilterPanel extends AbstractPanel implements ActionListener {
 		boolean filteringEnabled = getEnableFilteringCheckbox().isSelected();
 
 		getFilterParametersPanel().setEnabledAll(filteringEnabled);
+	}
+
+	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
+		parameters.setFilteringEnabled(getEnableFilteringCheckbox().isSelected());
+		getFilterParametersPanel().fillModelFromPanel(parameters);
 	}
 
 }

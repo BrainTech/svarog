@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.model.components.table.AbstractSelectionTableModel;
+import org.signalml.method.ep.EvokedPotentialParameters;
+
 public class AveragedTagSelectionPanel extends TagSelectionPanel implements ListSelectionListener {
 
 	private JButton groupTagsButton;
@@ -75,14 +78,18 @@ public class AveragedTagSelectionPanel extends TagSelectionPanel implements List
 
 		int realGroupsCount = 0;
 		for (int row: selectedRows) {
-			TagSelectionTableModel model = ((TagSelectionTableModel)getTableModel());
+			TagSelectionTableModel model = getTableModel();
 
-			TagStyleGroup group = (TagStyleGroup) model.getValueAt(row, TagSelectionTableModel.TAG_STYLE_NAME_COLUMN_NUMBER);
+			TagStyleGroup group = (TagStyleGroup) model.getValueAt(row, AbstractSelectionTableModel.ELEMENT_NAME_COLUMN_NUMBER);
 
 			if (group.getTagStyles().size() > 1)
 				realGroupsCount++;
 		}
 		getUngroupTagsButton().setEnabled(realGroupsCount > 0);
+	}
+
+	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
+		parameters.setAveragedTagStyles(getTableModel().getSelectedElements());
 	}
 
 }

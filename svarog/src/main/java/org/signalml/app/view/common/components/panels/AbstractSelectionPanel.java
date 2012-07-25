@@ -16,7 +16,9 @@ import javax.swing.JTable;
 
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 
-public abstract class AbstractSelectionPanel extends AbstractPanel {
+public abstract class AbstractSelectionPanel<T extends AbstractSelectionTableModel> extends AbstractPanel {
+
+	protected T tableModel;
 
 	/**
 	 * A list on which selections can be made.
@@ -53,7 +55,7 @@ public abstract class AbstractSelectionPanel extends AbstractPanel {
 		return buttonPanel;
 	}
 
-	public abstract AbstractSelectionTableModel getTableModel();
+	public abstract T getTableModel();
 
 	/**
 	 * Returns the list of channels which were selected using this panel.
