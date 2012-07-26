@@ -3,6 +3,8 @@
  */
 package org.signalml.method;
 
+import org.signalml.plugin.export.method.BaseMethodData;
+
 /**
  *  This interface must be implemented by classes acting as data processing methods
  *  for SignalML. A method class instance should be able to act as a singleton, whose
@@ -49,9 +51,9 @@ public interface Method {
 	 *  Implementations that call methods may choose not to use this method and pass
 	 *  another object instead as long as it's class is accepted by supportsDataClass.
 	 *
-	 * @return an empty data Object
+	 * @return an empty data BaseMethodData
 	 */
-	Object createData();
+	BaseMethodData createData();
 
 	/**
 	     *  Returns the class of the result object returned from compute.

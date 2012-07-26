@@ -22,6 +22,7 @@ import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.Document;
 
 /** MP5MethodDescriptor
@@ -101,7 +102,7 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 
 		Document document = methodManager.getActionFocusManager().getActiveDocument();
 		if (!(document instanceof SignalDocument)) {

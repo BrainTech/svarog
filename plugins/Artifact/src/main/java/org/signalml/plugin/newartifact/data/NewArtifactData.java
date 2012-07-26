@@ -34,7 +34,7 @@ public class NewArtifactData extends AbstractData {
 	private int blocksPerPage;
 
 	@XStreamOmitField
-	private MultichannelSampleSource sampleSource;
+	private transient MultichannelSampleSource sampleSource;
 
 	@XStreamOmitField
 	private File projectFile;

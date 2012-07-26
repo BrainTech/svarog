@@ -11,6 +11,7 @@ import org.signalml.app.document.SignalDocument;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
@@ -32,13 +33,13 @@ public class NewArtifactApplicationData extends NewArtifactData {
 	private static final long serialVersionUID = 1L;
 
 	@XStreamOmitField
-	private ExportedSignalDocument signalDocument;
+	private transient ExportedSignalDocument signalDocument;
 
 	@XStreamOmitField
 	private boolean existingProject;
 
 	@XStreamOmitField
-	private SvarogAccessSignal signalAccess;
+	private transient SvarogAccessSignal signalAccess;
 
 	private SourceMontage montage;
 
@@ -153,12 +154,21 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		 * plot.getPageSize(), plot.getBlockSize()); }
 		 */
 
-		setSampleSource(new PluginSampleSourceAdapter(signalAccess,
-						signalDocument));
+		this.resetSampleSource();
 
-		// TODO rethink this cast - what is the data type in matlab code?
-		setPageSize((int) signalDocument.getPageSize());
-		setBlocksPerPage(signalDocument.getBlocksPerPage());
+		this.setPageSize((int) signalDocument.getPageSize());
+		this.setBlocksPerPage(signalDocument.getBlocksPerPage());
+	}
+	
+	private void resetSampleSource() {
+		this.setSampleSource(new PluginSampleSourceAdapter(signalAccess,
+				signalDocument));
+	}
+	
+	@Override
+	public void dispose() {
+		this.resetSampleSource();
 	}
 
+	
 }

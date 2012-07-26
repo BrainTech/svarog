@@ -116,7 +116,10 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 
 	@Override
 	public void destroy() {
-		// do nothing
+		if (this.delegate != null) {
+			this.delegate.destroy();
+		}
 	}
+	
 
 }

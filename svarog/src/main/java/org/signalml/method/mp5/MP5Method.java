@@ -40,6 +40,7 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.SerializableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.util.Util;
 import org.springframework.validation.Errors;
 
@@ -372,7 +373,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new MP5Data();
 	}
 

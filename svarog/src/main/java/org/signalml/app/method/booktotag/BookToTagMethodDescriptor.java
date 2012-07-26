@@ -13,6 +13,7 @@ import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.method.booktotag.BookToTagMethod;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.Document;
 
 /** BookToTagMethodDescriptor
@@ -72,7 +73,7 @@ public class BookToTagMethodDescriptor implements ApplicationMethodDescriptor {
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 
 		Document document = methodManager.getActionFocusManager().getActiveDocument();
 		if (!(document instanceof BookDocument)) {

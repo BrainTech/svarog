@@ -9,13 +9,14 @@ import java.util.LinkedHashSet;
 import org.signalml.app.view.book.palette.IWignerMapPalette;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.WignerMapScaleType;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** BookAverageData
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class BookAverageData {
+public class BookAverageData extends BaseMethodData {
 
 	private StandardBook book;
 

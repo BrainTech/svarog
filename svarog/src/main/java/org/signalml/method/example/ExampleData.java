@@ -5,6 +5,7 @@ package org.signalml.method.example;
 
 import org.signalml.method.Method;
 import org.signalml.method.MethodExecutionTracker;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /**
  * ExampleData - an example data object.
@@ -12,7 +13,7 @@ import org.signalml.method.MethodExecutionTracker;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ExampleData {
+public class ExampleData extends BaseMethodData {
 
 	private Integer count;
 	private boolean noWait;

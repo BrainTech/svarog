@@ -16,6 +16,7 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 import org.springframework.validation.Errors;
 
@@ -49,7 +50,7 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new BookAverageData();
 	}
 

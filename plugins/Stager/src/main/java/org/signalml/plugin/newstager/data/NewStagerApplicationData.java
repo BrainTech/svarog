@@ -12,6 +12,7 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.IChannelFunction;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
@@ -19,8 +20,8 @@ import org.signalml.plugin.io.PluginSampleSourceAdapter;
 
 /**
  * NewStagerApplicationData
- *
- *
+ * 
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -28,12 +29,12 @@ public class NewStagerApplicationData extends NewStagerData {
 
 	private static final long serialVersionUID = 1L;
 
-	private ExportedSignalDocument signalDocument;
+	private transient ExportedSignalDocument signalDocument;
 	private float pageSize;
 
 	private SourceMontage montage;
 
-	private SvarogAccessSignal signalAccess;
+	private transient SvarogAccessSignal signalAccess;
 
 	public NewStagerApplicationData() {
 		super();
@@ -54,7 +55,7 @@ public class NewStagerApplicationData extends NewStagerData {
 	}
 
 	private SourceMontage createMontage(ExportedSignalDocument document) {
-		return new SourceMontage((SignalDocument) document); //FIXME
+		return new SourceMontage((SignalDocument) document); // FIXME
 	}
 
 	public float getPageSize() {
@@ -107,11 +108,18 @@ public class NewStagerApplicationData extends NewStagerData {
 			}
 		}
 
+		this.resetSampleSource();
 
-		setSampleSource(new PluginSampleSourceAdapter(signalAccess,
-						signalDocument));
-
-		setPageSize((int) signalDocument.getPageSize());
+		this.setPageSize((int) signalDocument.getPageSize());
 	}
 
+	private void resetSampleSource() {
+		this.setSampleSource(new PluginSampleSourceAdapter(signalAccess,
+				signalDocument));
+	}
+
+	@Override
+	public void dispose() {
+		this.resetSampleSource();
+	}
 }

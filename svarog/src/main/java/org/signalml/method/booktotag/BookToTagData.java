@@ -7,13 +7,14 @@ package org.signalml.method.booktotag;
 import java.util.LinkedHashSet;
 
 import org.signalml.domain.book.StandardBook;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /**
  * BookToTagData class provides data to be processed by BookToTagMethod.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class BookToTagData {
+public class BookToTagData extends BaseMethodData {
 
 	private StandardBook book;
 

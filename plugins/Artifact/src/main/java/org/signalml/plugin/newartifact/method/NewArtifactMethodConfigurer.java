@@ -10,7 +10,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.util.XMLUtils;
