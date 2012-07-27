@@ -11,6 +11,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -31,6 +33,7 @@ import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
+import org.signalml.plugin.method.helper.PluginPresetManagerFilter;
 import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
 import org.signalml.plugin.newartifact.data.NewArtifactExclusionDescriptor;
@@ -41,8 +44,8 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * ArtifactMethodDialog
- *
- *
+ * 
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
@@ -64,9 +67,9 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 	private SourceMontage currentMontage;
 	private int[][] currentExclusion;
 
-	public NewArtifactMethodDialog(
-		PresetManager presetManager, Window w) {
-		super(presetManager, w, true);
+	public NewArtifactMethodDialog(PresetManager presetManager, Window w) {
+		super(new PluginPresetManagerFilter(presetManager,
+				NewArtifactMethodDialog.GetPresetClasses()), w, true);
 	}
 
 	@Override
@@ -82,7 +85,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		if (contextHelpURL == null) {
 			try {
 				contextHelpURL = (new ClassPathResource(
-									  "org/signalml/help/artifact.html")).getURL();
+						"org/signalml/help/artifact.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
@@ -121,7 +124,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		String path = "?";
 		if (signalDocument instanceof FileBackedDocument) {
 			path = ((FileBackedDocument) signalDocument).getBackingFile()
-				   .getAbsolutePath();
+					.getAbsolutePath();
 		}
 		signalPanel.getSignalTextField().setText(path);
 
@@ -210,13 +213,18 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 
 	@Override
 	public void setPreset(Preset preset) throws SignalMLException {
-		NewArtifactParameters parameters = (NewArtifactParameters) preset;
+		NewArtifactParameters parameters;
+		try {
+			 parameters = (NewArtifactParameters) preset;
+		} catch (ClassCastException e) {
+			return;
+		}
 		fillDialogFromParameters(parameters);
 	}
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
-	throws SignalMLException {
+			throws SignalMLException {
 
 		// dialog doesn't need any additional validation
 
@@ -236,13 +244,14 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		SourceChannel t4 = currentMontage.getSourceChannelByLabel("T4");
 		SourceChannel eogl = currentMontage.getSourceChannelByLabel("EOGL");
 		SourceChannel eogp = currentMontage.getSourceChannelByLabel("EOGP");
-		int[] ecg = currentMontage.getSourceChannelsByFunction(ChannelFunction.ECG);
+		int[] ecg = currentMontage
+				.getSourceChannelsByFunction(ChannelFunction.ECG);
 
 		boolean noECG = (ecg == null) || (ecg.length == 0);
 		typesPanel.setLockOnType(NewArtifactType.ECG, noECG);
 
-		if ((f3 == null) || (f4 == null) || (c3 == null) || (c4 == null) || (fp1 == null)
-				|| (fp2 == null)) {
+		if ((f3 == null) || (f4 == null) || (c3 == null) || (c4 == null)
+				|| (fp1 == null) || (fp2 == null)) {
 			typesPanel.setLockOnType(NewArtifactType.EYEBLINKS, true);
 		} else {
 			typesPanel.setLockOnType(NewArtifactType.EYEBLINKS, false);
@@ -279,23 +288,22 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		public EditMontageAction() {
 			super(_("Edit montage"));
 			putValue(
-				AbstractAction.SMALL_ICON,
-				IconUtils
-				.loadClassPathIcon("org/signalml/app/icon/montage.png"));
-			putValue(
-				AbstractAction.SHORT_DESCRIPTION,
-				_("Edit channel labels and functions"));
+					AbstractAction.SMALL_ICON,
+					IconUtils
+							.loadClassPathIcon("org/signalml/app/icon/montage.png"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,
+					_("Edit channel labels and functions"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
 				montageDialog = new SourceMontageDialog(
-					NewArtifactMethodDialog.this, true);
+						NewArtifactMethodDialog.this, true);
 			}
 
 			SourceMontageDescriptor descriptor = new SourceMontageDescriptor(
-				currentMontage);
+					currentMontage);
 
 			boolean ok = montageDialog.showDialog(descriptor, true);
 			if (!ok) {
@@ -316,28 +324,33 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		public EditExclusionAction() {
 			super(_("Select excluded derivations"));
 			putValue(
-				AbstractAction.SMALL_ICON,
-				IconUtils
-				.loadClassPathIcon("org/signalml/app/icon/editexclusion.png"));
-			putValue(
-				AbstractAction.SHORT_DESCRIPTION,
-				_("Select excluded derivations"));
+					AbstractAction.SMALL_ICON,
+					IconUtils
+							.loadClassPathIcon("org/signalml/app/icon/editexclusion.png"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,
+					_("Select excluded derivations"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			if (exclusionDialog == null) {
 				exclusionDialog = new NewArtifactExclusionDialog(
-					NewArtifactMethodDialog.this, true);
+						NewArtifactMethodDialog.this, true);
 			}
 
 			NewArtifactExclusionDescriptor descriptor = new NewArtifactExclusionDescriptor(
-				currentMontage, currentExclusion);
+					currentMontage, currentExclusion);
 
 			exclusionDialog.showDialog(descriptor, true);
 
 		}
 
+	}
+	
+	private static Collection<Class<? extends Preset>> GetPresetClasses() {
+		Collection<Class<? extends Preset>> l = new ArrayList<Class<? extends Preset>>();
+		l.add(NewArtifactParameters.class);
+		return l;
 	}
 
 }

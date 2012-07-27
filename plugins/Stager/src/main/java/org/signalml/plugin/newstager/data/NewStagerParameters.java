@@ -7,10 +7,7 @@ import org.signalml.plugin.newstager.helper.NewStagerConfigurationDefaultsHelper
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
-@XStreamAlias("stagerparameters")
-public class NewStagerParameters implements Serializable, Preset {
-
-	private static final long serialVersionUID = 1L;
+public class NewStagerParameters {
 
 	public String bookFilePath;
 
@@ -23,7 +20,6 @@ public class NewStagerParameters implements Serializable, Preset {
 
 	public NewStagerParameterThresholds thresholds;
 
-	private String name;
 
 	public NewStagerParameters() {
 		this(null, NewStagerRules.RK, false, false, true,
@@ -46,13 +42,4 @@ public class NewStagerParameters implements Serializable, Preset {
 		this.thresholds = thresholds;
 	}
 
-	@Override
-	public String getName() {
-		return this.name;
-	}
-
-	@Override
-	public void setName(String name) {
-		this.name = name;
-	}
 }

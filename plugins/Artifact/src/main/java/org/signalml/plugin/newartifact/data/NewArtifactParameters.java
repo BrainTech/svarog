@@ -90,7 +90,7 @@ public class NewArtifactParameters implements Serializable, Preset {
 
 	@Override
 	public String toString() {
-		return name;
+		return this.getName();
 	}
 
 }

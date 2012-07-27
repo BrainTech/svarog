@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
-import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 
 /**
  * StagerEnableAdvancedConfigPanel
@@ -74,14 +74,12 @@ public class NewStagerEnableAdvancedConfigPanel extends JPanel {
 		return enableAdvancedCheckBox;
 	}
 
-	public void fillPanelFromParameters(NewStagerParameters parameters) {
-		// TODO!
-		// getEnableAdvancedCheckBox().setSelected(parameters.isAdvancedConfig());
+	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
+		getEnableAdvancedCheckBox().setSelected(parametersPreset.enableAdvancedParameters);
 	}
 
-	public void fillParametersFromPanel(NewStagerParameters parameters) {
-		// TODO!
-		// parameters.setAdvancedConfig(getEnableAdvancedCheckBox().isSelected());
+	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
+		parametersPreset.enableAdvancedParameters = getEnableAdvancedCheckBox().isSelected();
 	}
 
 	public void validatePanel(ValidationErrors errors) {

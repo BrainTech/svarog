@@ -12,6 +12,7 @@ import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.tool.PluginResourceRepository;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamException;
 
 public class PluginPresetManagerHelper {
 
@@ -31,7 +32,7 @@ public class PluginPresetManagerHelper {
 					.GetResource("streamer"));
 		} catch (PluginException e) {
 			pluginMethodManager.handleException(e);
-			logger.error("Can't get proper streamer (method: " + methodName
+			logger.warn("Can't get proper streamer (method: " + methodName
 					+ ")", e);
 			return presetManager;
 		}
@@ -39,12 +40,15 @@ public class PluginPresetManagerHelper {
 			presetManager.readFromPersistence(null);
 		} catch (IOException ex) {
 			if (ex instanceof FileNotFoundException) {
-				logger.debug("Seems like preset configuration doesn't exist (method: "
+				logger.warn("Seems like preset configuration doesn't exist (method: "
 						+ methodName + ")");
 			} else {
-				logger.error("Failed to read presets - presets lost (method: "
+				logger.warn("Failed to read presets - presets lost (method: "
 						+ methodName + ")", ex);
 			}
+		} catch (XStreamException ex) {
+			logger.warn("Failed to convert presets - presets lost (method: "
+					+ methodName + ")", ex);
 		}
 
 		return presetManager;

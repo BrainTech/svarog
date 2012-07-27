@@ -13,6 +13,8 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -21,6 +23,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.WindowConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
@@ -36,16 +40,17 @@ import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.view.AbstractPluginPresetDialog;
+import org.signalml.plugin.method.helper.PluginPresetManagerFilter;
 import org.signalml.plugin.newstager.NewStagerPlugin;
 import org.signalml.plugin.newstager.data.NewStagerApplicationData;
-import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 import org.signalml.plugin.newstager.helper.NewStagerConfigurationDefaultsHelper;
 import org.springframework.core.io.ClassPathResource;
 
 /**
  * StagerMethodDialog
- *
- *
+ * 
+ * 
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
@@ -68,11 +73,18 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 	public static final String HELP_REM_EOG_DEFLECTION_THRESHOLD = "org/signalml/help/stager.html#remEogDeflectionThreshold";
 	public static final String HELP_SEM_EOG_DEFLECTION_THRESHOLD = "org/signalml/help/stager.html#semEogDeflectionThreshold";
 
+	private static final int BASIC_PARAMETERS_TAB = 0;
+	private static final int ADVANCED_PARAMETERS_TAB = 1;
+	private static final int THRESHOLD_TAB = 2;
+
 	private URL contextHelpURL = null;
 
 	private InputSignalPanel signalPanel;
 
 	private JTabbedPane tabbedPane;
+
+	private int currentPane;
+
 	private NewStagerBasicConfigPanel basicConfigPanel;
 	private NewStagerAdvancedConfigPanel advancedConfigPanel;
 	private NewStagerThresholdConfigPanel thresholdConfigPanel;
@@ -81,8 +93,13 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 	SourceMontage currentMontage;
 
+	private NewStagerParametersPreset currentParametersPreset;
+
+	protected boolean advancedParametersEnabled;
+
 	public NewStagerMethodDialog(PresetManager presetManager, Window w) {
-		super(presetManager, w, true);
+		super(new PluginPresetManagerFilter(presetManager,
+				NewStagerMethodDialog.GetPresetClasses()), w, true);
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 	}
 
@@ -107,7 +124,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		if (contextHelpURL == null) {
 			try {
 				contextHelpURL = (new ClassPathResource(
-									  "org/signalml/help/stager.html")).getURL();
+						"org/signalml/help/stager.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
@@ -128,25 +145,26 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		interfacePanel.add(getTabbedPane(), BorderLayout.CENTER);
 
 		getBasicConfigPanel().getEnableAdvancedConfigPanel()
-		.getEnableAdvancedCheckBox()
-		.addItemListener(new ItemListener() {
+				.getEnableAdvancedCheckBox()
+				.addItemListener(new ItemListener() {
 
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
+					@Override
+					public void itemStateChanged(ItemEvent e) {
+						boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
 
-				JTabbedPane pane = getTabbedPane();
-				if (!selected) {
-					if (pane.getSelectedIndex() != 0) {
-						pane.setSelectedIndex(0);
+						JTabbedPane pane = getTabbedPane();
+						if (!selected) {
+							if (pane.getSelectedIndex() != 0) {
+								pane.setSelectedIndex(0);
+							}
+						}
+						pane.setEnabledAt(1, selected);
+						pane.setEnabledAt(2, selected);
+
+						advancedParametersEnabled = selected;
 					}
-				}
-				pane.setEnabledAt(1, selected);
-				pane.setEnabledAt(2, selected);
 
-			}
-
-		});
+				});
 
 		return interfacePanel;
 
@@ -177,15 +195,26 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 			tabbedPane = new JTabbedPane(JTabbedPane.TOP,
-										 JTabbedPane.WRAP_TAB_LAYOUT);
+					JTabbedPane.WRAP_TAB_LAYOUT);
 
 			tabbedPane.addTab(_("Basic config"), getBasicConfigPanel());
 			tabbedPane.addTab(_("Advanced config"), getAdvancedConfigPanel());
 			tabbedPane.addTab(_("Threshold config"), getThresholdConfigPanel());
 
-			tabbedPane.setEnabledAt(1, false);
-			tabbedPane.setEnabledAt(2, false);
+			tabbedPane.setEnabledAt(ADVANCED_PARAMETERS_TAB, false);
+			tabbedPane.setEnabledAt(THRESHOLD_TAB, false);
 
+			this.currentPane = tabbedPane.getModel().getSelectedIndex();
+			this.advancedParametersEnabled = false;
+			
+			tabbedPane.getModel().addChangeListener(new ChangeListener() {
+
+				@Override
+				public void stateChanged(ChangeEvent e) {
+					updateCurrentPreset();
+					currentPane = tabbedPane.getModel().getSelectedIndex();
+				}
+			});
 		}
 		return tabbedPane;
 	}
@@ -199,67 +228,96 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		String path = "?";
 		if (signalDocument instanceof FileBackedDocument) {
 			path = ((FileBackedDocument) signalDocument).getBackingFile()
-				   .getAbsolutePath();
+					.getAbsolutePath();
 		}
 		signalPanel.getSignalTextField().setText(path);
 
 		// XXX FIXME
 		if (path == null || path.compareTo("?") == 0) {
 			Dialogs.showExceptionDialog(this, new SignalMLException(
-											_("No active signal. Choose a signal tab first.")));
+					_("No active signal. Choose a signal tab first.")));
 			return;
 		} else {
 			// XXX FIXME bad place to setting this up here
-			//TODO!
-			//data.getParameters().setSignalPath(path);
+			// TODO!
+			// data.getParameters().setSignalPath(path);
 		}
 
 		Preset preset = getPresetManager().getDefaultPreset();
 		if (preset != null) {
 			setPreset(preset);
 		} else {
-			fillDialogFromParameters(data.getParameters());
+			fillDialogFromParameters(new NewStagerParametersPreset(
+					data.getParameters(), false));
 		}
 
 		currentMontage = new Montage(data.getMontage());
 
 	}
 
-	private void fillDialogFromParameters(NewStagerParameters parameters) {
-		getBasicConfigPanel().fillPanelFromParameters(parameters);
-		getAdvancedConfigPanel().fillPanelFromParameters(parameters);
-		getThresholdConfigPanel().fillPanelFromParameters(parameters);
+	private void fillDialogFromParameters(
+			NewStagerParametersPreset parametersPreset) {
+		this.advancedParametersEnabled = parametersPreset.enableAdvancedParameters;
+		
+		getBasicConfigPanel().fillPanelFromParameters(parametersPreset);
+		getAdvancedConfigPanel().fillPanelFromParameters(parametersPreset);
+		getThresholdConfigPanel().fillPanelFromParameters(parametersPreset);
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-
 		NewStagerApplicationData data = (NewStagerApplicationData) model;
 		data.setMontage(currentMontage);
 
-		fillParametersFromDialog(data.getParameters());
+		fillParametersFromDialog(new NewStagerParametersPreset(
+				data.getParameters(), true));
 
 		data.calculate();
-
 	}
 
-	private void fillParametersFromDialog(NewStagerParameters parameters) {
-		getBasicConfigPanel().fillParametersFromPanel(parameters);
-		getAdvancedConfigPanel().fillParametersFromPanel(parameters);
-		getThresholdConfigPanel().fillParametersFromPanel(parameters);
+	private void fillParametersFromDialog(
+			NewStagerParametersPreset parametersPreset) {
+		NewStagerBasicConfigPanel basicPanel = getBasicConfigPanel();
+		NewStagerAdvancedConfigPanel advancedPanel = getAdvancedConfigPanel();
+		
+		if (this.advancedParametersEnabled) {
+			if (this.currentParametersPreset != null) {
+				this.fillDialogFromParameters(this.getParametersPreset());
+			}
+			switch (this.getTabbedPane().getSelectedIndex()) {
+			case BASIC_PARAMETERS_TAB:
+				advancedPanel.fillParametersFromPanel(parametersPreset);
+				basicPanel.fillParametersFromPanel(parametersPreset);
+			default:
+				basicPanel.fillParametersFromPanel(parametersPreset);
+				advancedPanel.fillParametersFromPanel(parametersPreset);
+			}
+		} else {
+			basicPanel.fillParametersFromPanel(parametersPreset);
+		}
+		getThresholdConfigPanel().fillParametersFromPanel(parametersPreset);
 	}
 
 	@Override
 	public Preset getPreset() {
-		NewStagerParameters parameters = new NewStagerParameters();
-		fillParametersFromDialog(parameters);
-		return parameters;
+		NewStagerParametersPreset parametersPreset = new NewStagerParametersPreset();
+		fillParametersFromDialog(parametersPreset);
+		return parametersPreset;
 	}
 
 	@Override
 	public void setPreset(Preset preset) {
-		NewStagerParameters parameters = (NewStagerParameters) preset;
-		fillDialogFromParameters(parameters);
+		NewStagerParametersPreset parametersPreset;
+
+		try {
+			parametersPreset = (NewStagerParametersPreset) preset;
+		} catch (ClassCastException e) {
+			return;
+		}
+
+		fillDialogFromParameters(parametersPreset);
+		
+		this.currentParametersPreset = parametersPreset;
 	}
 
 	@Override
@@ -289,22 +347,22 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		public EditMontageAction() {
 			super(_("Edit montage"));
 			putValue(
-				AbstractAction.SMALL_ICON,
-				IconUtils
-				.loadClassPathIcon("org/signalml/app/icon/montage.png"));
+					AbstractAction.SMALL_ICON,
+					IconUtils
+							.loadClassPathIcon("org/signalml/app/icon/montage.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					 _("Edit channel labels and functions"));
+					_("Edit channel labels and functions"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
 				montageDialog = new SourceMontageDialog(
-					NewStagerMethodDialog.this, true);
+						NewStagerMethodDialog.this, true);
 			}
 
 			SourceMontageDescriptor descriptor = new SourceMontageDescriptor(
-				currentMontage);
+					currentMontage);
 
 			boolean ok = montageDialog.showDialog(descriptor, true);
 			if (!ok) {
@@ -322,18 +380,88 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		public RestoreDefaultsAction() {
 			super(_("Restore defaults"));
 			putValue(
-				AbstractAction.SMALL_ICON,
-				IconUtils
-				.loadClassPathIcon("org/signalml/app/icon/restoredefaults.png"));
+					AbstractAction.SMALL_ICON,
+					IconUtils
+							.loadClassPathIcon("org/signalml/app/icon/restoredefaults.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					 _("Restore default method configuration"));
+					_("Restore default method configuration"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
-			NewStagerParameters parameters = (NewStagerParameters) getPreset();
-			NewStagerConfigurationDefaultsHelper.GetSharedInstance().setDefaults(parameters);
-			setPreset(parameters);
+			NewStagerParametersPreset parametersPreset;
+			Preset preset = getPreset();
+
+			try {
+				parametersPreset = (NewStagerParametersPreset) preset;
+			} catch (ClassCastException e) {
+				return;
+			}
+
+			NewStagerConfigurationDefaultsHelper.GetSharedInstance()
+					.setDefaults(parametersPreset.parameters);
+			parametersPreset.enableAdvancedParameters = false;
+			setPreset(parametersPreset);
 		}
 
 	}
+
+	protected void updateCurrentPreset() {
+		NewStagerParametersPreset parametersPreset = this.getParametersPreset();
+
+		switch (this.currentPane) {
+		case BASIC_PARAMETERS_TAB:
+			getBasicConfigPanel().fillParametersFromPanel(parametersPreset);
+			break;
+		case ADVANCED_PARAMETERS_TAB:
+			getAdvancedConfigPanel().fillParametersFromPanel(parametersPreset);
+			break;
+		case THRESHOLD_TAB:
+			getThresholdConfigPanel().fillParametersFromPanel(parametersPreset);
+			break;
+		default:
+			return;
+		}
+
+		switch (this.tabbedPane.getModel().getSelectedIndex()) {
+		case BASIC_PARAMETERS_TAB:
+			getBasicConfigPanel().fillPanelFromParameters(parametersPreset);
+			break;
+		case ADVANCED_PARAMETERS_TAB:
+			getAdvancedConfigPanel().fillPanelFromParameters(parametersPreset);
+			break;
+		case THRESHOLD_TAB:
+			getThresholdConfigPanel().fillPanelFromParameters(parametersPreset);
+			break;
+		default:
+			return;
+		}
+	}
+
+	private NewStagerParametersPreset getParametersPreset() {
+		if (this.currentParametersPreset != null) {
+			return this.currentParametersPreset;
+		}
+		
+		NewStagerParametersPreset parametersPreset;
+		Preset preset = getPresetManager().getDefaultPreset();
+
+		if (preset == null) {
+			preset = getPreset();
+		}
+
+		try {
+			parametersPreset = (NewStagerParametersPreset) preset;
+		} catch (ClassCastException e) {
+			parametersPreset = new NewStagerParametersPreset();
+		}
+
+		return parametersPreset;
+	}
+
+	private static Collection<Class<? extends Preset>> GetPresetClasses() {
+		Collection<Class<? extends Preset>> l = new ArrayList<Class<? extends Preset>>();
+		l.add(NewStagerParametersPreset.class);
+		return l;
+	}
+
 }
