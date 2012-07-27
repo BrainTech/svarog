@@ -25,7 +25,7 @@ public class BaselineSelectionPanel extends PanelWithEnablingCheckbox<TimeSelect
 	@Override
 	protected TimeSelectionPanel getPanel() {
 		if (panel == null) {
-			panel = new TimeSelectionPanel(_("Parameters"));
+			panel = new TimeSelectionPanel("");
 		}
 		return panel;
 	}
