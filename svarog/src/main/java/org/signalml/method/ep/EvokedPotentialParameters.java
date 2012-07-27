@@ -31,6 +31,7 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	private float averagingTimeBefore;
 	private float averagingTimeAfter;
 
+	private boolean baselineCorrectionEnabled;
 	private float baselineTimeBefore;
 	private float baselineTimeAfter;
 
@@ -100,6 +101,14 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 
 	public void setBaselineTimeAfter(float baselineTimeAfter) {
 		this.baselineTimeAfter = baselineTimeAfter;
+	}
+
+	public boolean isBaselineCorrectionEnabled() {
+		return baselineCorrectionEnabled;
+	}
+
+	public void setBaselineCorrectionEnabled(boolean baselineCorrectionEnabled) {
+		this.baselineCorrectionEnabled = baselineCorrectionEnabled;
 	}
 
 	public boolean isFilteringEnabled() {

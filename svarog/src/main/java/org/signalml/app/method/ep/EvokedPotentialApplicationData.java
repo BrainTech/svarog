@@ -69,6 +69,7 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 		}
 
 		List<MultichannelSegmentedSampleSource> averagedSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
+		List<MultichannelSegmentedSampleSource> baselineSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
 		for (TagStyleGroup tagStyleGroup: getParameters().getAveragedTagStyles()) {
 
 			List<String> styleNames = new ArrayList<String>();
@@ -83,14 +84,23 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 			}
 
 			MarkerSegmentedSampleSource segmentedSampleSource = new MarkerSegmentedSampleSource(
-							sampleSource, startAveragingTime, endAveragingTime, tagDocument != null ? tagDocument.getTagSet() : null,
+							sampleSource, startAveragingTime, endAveragingTime,
+							tagDocument != null ? tagDocument.getTagSet() : null,
 							styleNames, artifactTagStyleNames,
 							getParameters().getAveragingTimeBefore(), getParameters().getAveragingTimeAfter(), signalSpace.getChannelSpace());
 
+			MarkerSegmentedSampleSource baselineSampleSource = new MarkerSegmentedSampleSource(
+					sampleSource, startAveragingTime, endAveragingTime,
+					tagDocument != null ? tagDocument.getTagSet() : null,
+					styleNames, artifactTagStyleNames,
+					getParameters().getBaselineTimeBefore(), getParameters().getBaselineTimeAfter(), signalSpace.getChannelSpace());
+
 			averagedSampleSources.add(segmentedSampleSource);
+			baselineSampleSources.add(baselineSampleSource);
 		}
 
 		setSampleSource(averagedSampleSources);
+		setBaselineSampleSources(baselineSampleSources);
 	}
 
 }

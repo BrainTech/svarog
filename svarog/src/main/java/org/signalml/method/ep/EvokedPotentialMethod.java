@@ -69,6 +69,9 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 			result.addAverageSamples(averageSamples);
 		}
 
+		if (data.getParameters().isBaselineCorrectionEnabled())
+			performBaselineCorrection(result, data);
+
 		result.setLabels(labels);
 		result.setSampleCount(sampleCount);
 		result.setChannelCount(channelCount);
@@ -80,6 +83,29 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		return result;
 
+	}
+
+	protected void performBaselineCorrection(EvokedPotentialResult result, EvokedPotentialData data) {
+		int sampleSourceNumber = 0;
+		for (MultichannelSegmentedSampleSource segmentedSampleSource: data.getBaselineSampleSources()) {
+			double[] baselineSamples = new double[segmentedSampleSource.getSegmentLength()];
+			for (int channel = 0; channel < segmentedSampleSource.getChannelCount(); channel++) {
+				double sum = 0.0;
+				for (int segment = 0; segment < segmentedSampleSource.getSegmentCount(); segment++) {
+					segmentedSampleSource.getSegmentSamples(channel, baselineSamples, segment);
+
+					for (double sample: baselineSamples) {
+						sum += sample;
+					}
+				}
+				double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLength());
+
+				double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
+				for (int i = 0; i < samples.length; i++)
+					samples[i] = samples[i] - baseline;
+			}
+			sampleSourceNumber++;
+		}
 	}
 
 	protected double[][] average(MultichannelSegmentedSampleSource sampleSource, MethodExecutionTracker tracker) {

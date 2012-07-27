@@ -21,6 +21,7 @@ public class EvokedPotentialData implements Serializable {
 
 	private EvokedPotentialParameters parameters;
 	private List<MultichannelSegmentedSampleSource> sampleSources;
+	private List<MultichannelSegmentedSampleSource> baselineSampleSources;
 
 	public EvokedPotentialData() {
 		parameters = new EvokedPotentialParameters();
@@ -36,6 +37,14 @@ public class EvokedPotentialData implements Serializable {
 
 	public List<MultichannelSegmentedSampleSource> getSampleSources() {
 		return sampleSources;
+	}
+
+	public List<MultichannelSegmentedSampleSource> getBaselineSampleSources() {
+		return baselineSampleSources;
+	}
+
+	public void setBaselineSampleSources(List<MultichannelSegmentedSampleSource> baselineSampleSources) {
+		this.baselineSampleSources = baselineSampleSources;
 	}
 
 	public EvokedPotentialParameters getParameters() {

@@ -77,10 +77,9 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, List<String> markerStyleNames,
 			double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
-		this(source, 0, source.getSampleCount(0), tagSet, markerStyleNames,
+		this(source, null, null, tagSet, markerStyleNames,
 				new ArrayList<String>(), secondsBefore, secondsAfter, channelSpace);
 	}
-
 
 	/**
 	 * Constructor. Creates the source of samples based on the given
