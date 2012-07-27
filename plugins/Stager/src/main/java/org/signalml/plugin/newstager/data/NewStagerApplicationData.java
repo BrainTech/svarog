@@ -12,7 +12,6 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
