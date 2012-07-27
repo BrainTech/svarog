@@ -21,15 +21,11 @@ import org.signalml.app.method.ep.view.signalspace.ERPSignalSpacePanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
-import org.signalml.app.view.signal.PositionedTag;
-import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.SignalSelection;
-import org.signalml.plugin.export.signal.Tag;
 
 /** EvokedPotentialMethodDialog
  *
@@ -110,8 +106,6 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 		// test for active selections and use them if possible
 
-		SignalPlot masterPlot = signalView.getMasterPlot();
-
 		EvokedPotentialParameters parameters;
 
 		Preset preset = getPresetManager().getDefaultPreset();
@@ -120,21 +114,6 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		} else {
 			parameters = (EvokedPotentialParameters) preset;
 		}
-
-		SignalSpace space = parameters.getWholeSignalSpace();
-
-		SignalSelection signalSelection = signalView.getSignalSelection(masterPlot);
-		Tag tag = null;
-		if (tagDocument != null) {
-			PositionedTag tagSelection = signalView.getTagSelection(masterPlot);
-			if (tagSelection != null) {
-				if (tagSelection.getTagPositionIndex() == signalDocument.getTagDocuments().indexOf(tagDocument)) {
-					tag = tagSelection.getTag();
-				}
-			}
-		}
-
-		space.configureFromSelections(signalSelection, tag);
 
 		fillDialogFromParameters(parameters);
 		getEvokedPotentialSettingsPanel().fillPanelFromModel(data);

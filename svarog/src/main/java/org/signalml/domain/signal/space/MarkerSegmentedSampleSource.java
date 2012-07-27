@@ -13,6 +13,7 @@ import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -74,6 +75,13 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		super(source);
 	}
 
+	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, List<String> markerStyleNames,
+			double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
+		this(source, 0, source.getSampleCount(0), tagSet, markerStyleNames,
+				new ArrayList<String>(), secondsBefore, secondsAfter, channelSpace);
+	}
+
+
 	/**
 	 * Constructor. Creates the source of samples based on the given
 	 * {@link MultichannelSampleSource source} of all channels.
@@ -86,7 +94,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	 * is to be included in the
 	 * @param channelSpace the set of channels
 	 */
-	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, List<String> markerStyleNames,
+	public MarkerSegmentedSampleSource(MultichannelSampleSource source,
+			Double startAveragingTime, Double stopAveragingTime,
+			StyledTagSet tagSet, List<String> markerStyleNames,
+			List<String> artifactStyleNames,
 			double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
 
 		super(source);
@@ -111,26 +122,17 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		samplesAfter = (int) Math.ceil(samplingFrequency * secondsAfter);
 		segmentLength = samplesBefore + samplesAfter;
 
-		List<TagStyle> tagStyles = new ArrayList<TagStyle>();
-		for (String styleName: markerStyleNames) {
-			TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, styleName);
-			tagStyles.add(markerStyle);
-		}
-
-		int channelTagCount = tagSet.getChannelTagCount();
+		List<TagStyle> tagStyles = getTagStyles(markerStyleNames, tagSet);
+		List<TagStyle> artifactStyles = getTagStyles(artifactStyleNames, tagSet);
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(source);
-		int i;
 
-		Tag tag;
 		int markerSample;
-
 		int averagedCount = 0;
 
-		int[] offsetArr = new int[channelTagCount];
+		int[] offsetArr = new int[tagSet.getTagCount()];
 
-		for (i=0; i<channelTagCount; i++) {
-			tag = tagSet.getChannelTagAt(i);
+		for (Tag tag: tagSet.getTags()) {
 			if (tagStyles.contains(tag.getStyle())) {
 
 				markerSample = (int) Math.floor(samplingFrequency * tag.getPosition());
@@ -146,8 +148,15 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 					continue;
 				}
 
-				// sample is ok
+				if (startAveragingTime != null && stopAveragingTime != null &&
+						tag.getPosition() < startAveragingTime || tag.getPosition() > stopAveragingTime)
+					//we don't use samples from outside the <firstSample, lastSample> range
+					continue;
 
+				if (overlapsWithArtifactTag(tagSet, tag, artifactStyles, secondsBefore, secondsAfter))
+					continue;
+
+				// sample is ok
 				offsetArr[averagedCount] = markerSample - (samplesBefore-1);
 				averagedCount++;
 
@@ -157,6 +166,26 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 		offsets = Arrays.copyOf(offsetArr, averagedCount);
 
+	}
+
+	protected boolean overlapsWithArtifactTag(StyledTagSet tagSet, Tag tag, List<TagStyle> artifactStyles, double secondsBefore, double secondsAfter) {
+		SignalSelection averagingSelection = new SignalSelection(SignalSelectionType.CHANNEL, tag.getPosition() - secondsBefore, secondsBefore + secondsAfter);
+		for (Tag artTag: tagSet.getTags()) {
+			if (artifactStyles.contains(artTag.getStyle())) {
+				if (artTag.overlaps(averagingSelection))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	protected List<TagStyle> getTagStyles(List<String> styleNames, StyledTagSet tagSet) {
+		List<TagStyle> tagStyles = new ArrayList<TagStyle>();
+		for (String styleName: styleNames) {
+			TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, styleName);
+			tagStyles.add(markerStyle);
+		}
+		return tagStyles;
 	}
 
 	/**

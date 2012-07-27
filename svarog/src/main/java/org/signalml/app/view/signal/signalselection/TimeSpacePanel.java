@@ -186,8 +186,13 @@ public class TimeSpacePanel extends JPanel {
 		getSelectedTimeSpacePanel().fillPanelFromModel(space);
 		getMarkedTimeSpacePanel().fillPanelFromModel(space);
 
-		TimeSpaceType timeSpaceType = space.getTimeSpaceType();
+		enableTabsAsNeeded(space);
 
+	}
+
+	protected void enableTabsAsNeeded(SignalSpace space) {
+
+		TimeSpaceType timeSpaceType = space.getTimeSpaceType();
 		JTabbedPane tPane = getTabbedPane();
 
 		switch (timeSpaceType) {
@@ -210,7 +215,6 @@ public class TimeSpacePanel extends JPanel {
 			break;
 
 		}
-
 	}
 
 	/**

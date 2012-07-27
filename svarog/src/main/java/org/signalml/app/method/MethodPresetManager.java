@@ -39,10 +39,12 @@ public class MethodPresetManager extends AbstractPresetManager {
 		return parameterClass;
 	}
 
+	@Override
 	public Preset getDefaultPreset() {
 		return defaultPreset;
 	}
 
+	@Override
 	public void setDefaultPreset(Preset defaultPreset) {
 		this.defaultPreset = defaultPreset;
 	}

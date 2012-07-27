@@ -10,13 +10,10 @@ import java.util.List;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
-import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.SignalProcessingChain;
-import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
-import org.signalml.domain.signal.space.MarkerTimeSpace;
-import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
+import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.method.ep.EvokedPotentialData;
@@ -58,38 +55,37 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 	public void calculate() throws SignalMLException {
 
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
-		SignalPlot plot = signalView.getMasterPlot();
 
-		SignalProcessingChain signalChain = plot.getSignalChain();
+		SignalProcessingChain signalChain = signalView.getMasterPlot().getSignalChain();
 		SignalSpace signalSpace = getParameters().getWholeSignalSpace();
 
-		SignalProcessingChain copyChain = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
+		SignalProcessingChain sampleSource = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
 
-		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(copyChain, signalSpace,
-				null, plot.getPageSize(), plot.getBlockSize());
+		List<String> artifactTagStyleNames = new ArrayList<String>();
+		for (TagStyleGroup styleGroup: getParameters().getArtifactTagStyles()) {
+			for (TagStyle tagStyle: styleGroup.getTagStyles()) {
+				artifactTagStyleNames.add(tagStyle.getName());
+			}
+		}
 
 		List<MultichannelSegmentedSampleSource> averagedSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
 		for (TagStyleGroup tagStyleGroup: getParameters().getAveragedTagStyles()) {
-			MarkerTimeSpace markerTimeSpace = new MarkerTimeSpace();
 
 			List<String> styleNames = new ArrayList<String>();
 			for (TagStyle style: tagStyleGroup.getTagStyles()) {
 				styleNames.add(style.getName());
 			}
 
-			markerTimeSpace.setMarkerStyleNames(styleNames);
-			markerTimeSpace.setSecondsBefore(getParameters().getAveragingTimeBefore());
-			markerTimeSpace.setSecondsAfter(getParameters().getAveragingTimeAfter());
+			Double startAveragingTime = null, endAveragingTime = null;
+			if (signalSpace.getTimeSpaceType() == TimeSpaceType.SELECTION_BASED) {
+				startAveragingTime = signalSpace.getSelectionTimeSpace().getPosition();
+				endAveragingTime = startAveragingTime + signalSpace.getSelectionTimeSpace().getLength();
+			}
 
-			SignalSpace averagedSignalSpace = new SignalSpace();
-
-			averagedSignalSpace.setMarkerTimeSpace(markerTimeSpace);
-			averagedSignalSpace.setTimeSpaceType(TimeSpaceType.MARKER_BASED);
-
-			MultichannelSegmentedSampleSource segmentedSampleSource = factory.getSegmentedSampleSource(sampleSource, averagedSignalSpace,
-					tagDocument != null ? tagDocument.getTagSet() : null, plot.getPageSize(), plot.getBlockSize());
+			MarkerSegmentedSampleSource segmentedSampleSource = new MarkerSegmentedSampleSource(
+							sampleSource, startAveragingTime, endAveragingTime, tagDocument != null ? tagDocument.getTagSet() : null,
+							styleNames, artifactTagStyleNames,
+							getParameters().getAveragingTimeBefore(), getParameters().getAveragingTimeAfter(), signalSpace.getChannelSpace());
 
 			averagedSampleSources.add(segmentedSampleSource);
 		}

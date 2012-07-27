@@ -149,7 +149,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
+		MultichannelSampleSource sampleSource = factory.getContinuousOrSegmentedSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
 
 		normalizeSamplesIfNeeded(sampleSource, signalExportDescriptor);
 
