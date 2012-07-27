@@ -115,6 +115,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 			parameters = (EvokedPotentialParameters) preset;
 		}
 
+		data.setParameters(parameters);
 		fillDialogFromParameters(parameters);
 		getEvokedPotentialSettingsPanel().fillPanelFromModel(data);
 		getArtifactRejectionPanel().fillPanelFromModel(data);

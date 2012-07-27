@@ -28,15 +28,15 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	private String name;
 
 	private List<TagStyleGroup> averagedTagStyles = new ArrayList<TagStyleGroup>();
-	private float averagingTimeBefore;
-	private float averagingTimeAfter;
+	private float averagingTimeBefore = 2;
+	private float averagingTimeAfter = 3;
 
-	private boolean baselineCorrectionEnabled;
-	private float baselineTimeBefore;
-	private float baselineTimeAfter;
+	private boolean baselineCorrectionEnabled = true;
+	private float baselineTimeBefore = 2;
+	private float baselineTimeAfter = -1;
 
-	private boolean filteringEnabled;
-	private float filterCutOffFrequency;
+	private boolean filteringEnabled = true;
+	private float filterCutOffFrequency = 20;
 	private List<TagStyleGroup> artifactTagStyles = new ArrayList<TagStyleGroup>();
 
 	private SignalSpace wholeSignalSpace;

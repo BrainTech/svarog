@@ -51,6 +51,10 @@ public class EvokedPotentialData implements Serializable {
 		return parameters;
 	}
 
+	public void setParameters(EvokedPotentialParameters parameters) {
+		this.parameters = parameters;
+	}
+
 	public void validate(Errors errors) {
 
 		if (sampleSources == null) {

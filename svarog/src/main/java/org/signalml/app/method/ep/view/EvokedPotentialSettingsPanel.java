@@ -79,6 +79,9 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 
 	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
 		getAveragedTagSelectionPanel().fillPanelFromModel(data);
+		getAveragedTimeSelectionPanel().fillPanelFromModel(data);
+		getBaselineSelectionPanel().fillPanelFromModel(data);
+		getFilterPanel().fillPanelFromModel(data);
 	}
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {

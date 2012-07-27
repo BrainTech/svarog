@@ -179,11 +179,13 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		tracker.setTickerLimit(0, channelCount);
 
 		// markers have been summed, now divide to get the average
-		for (int channel=0; channel<channelCount; channel++) {
-			for (int j=0; j<sampleCount; j++) {
-				averageSamples[channel][j] /= segmentCount;
+		if (segmentCount >0 ) {
+			for (int channel=0; channel<channelCount; channel++) {
+				for (int j=0; j<sampleCount; j++) {
+					averageSamples[channel][j] /= segmentCount;
+				}
+				tracker.tick(0);
 			}
-			tracker.tick(0);
 		}
 
 		return averageSamples;

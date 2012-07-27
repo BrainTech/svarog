@@ -148,7 +148,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 				}
 
 				if (startAveragingTime != null && stopAveragingTime != null &&
-						tag.getPosition() < startAveragingTime || tag.getPosition() > stopAveragingTime)
+						(tag.getPosition() < startAveragingTime || tag.getPosition() > stopAveragingTime))
 					//we don't use samples from outside the <firstSample, lastSample> range
 					continue;
 

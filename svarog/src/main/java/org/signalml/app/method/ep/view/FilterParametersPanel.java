@@ -43,4 +43,8 @@ public class FilterParametersPanel extends LabeledComponentsPanel {
 		parameters.setFilterCutOffFrequency(getCutoffFrequencySpinner().getValue());
 	}
 
+	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
+		getCutoffFrequencySpinner().setValue(parameters.getFilterCutOffFrequency());
+	}
+
 }

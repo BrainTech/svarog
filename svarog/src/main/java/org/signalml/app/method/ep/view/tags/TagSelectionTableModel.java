@@ -3,6 +3,7 @@ package org.signalml.app.method.ep.view.tags;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 import org.signalml.domain.tag.StyledTagSet;
@@ -10,7 +11,13 @@ import org.signalml.plugin.export.signal.TagStyle;
 
 public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyleGroup> {
 
+	private StyledTagSet tagSet;
+
 	public void setStyledTagSet(StyledTagSet styledTagSet) {
+
+		if (tagSet == styledTagSet)
+			return;
+		this.tagSet = styledTagSet;
 
 		elements = new ArrayList<TagStyleGroup>();
 		for (TagStyle tagStyle: styledTagSet.getListOfStyles()) {
@@ -24,6 +31,16 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 			selectionStatus.add(false);
 
 		fireTableDataChanged();
+	}
+
+	public void setSelectedTagStyles(List<TagStyleGroup> tagStyleGroups) {
+		for (TagStyleGroup group: tagStyleGroups) {
+			for (int i = 0; i < elements.size(); i++) {
+				if (elements.get(i).equals(group)) {
+					selectionStatus.set(i, true);
+				}
+			}
+		}
 	}
 
 	public void createGroup(int[] rows) {

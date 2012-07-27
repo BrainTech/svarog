@@ -33,4 +33,20 @@ public class TagStyleGroup {
 		return tagStyles.size();
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof TagStyleGroup))
+			return false;
+
+		TagStyleGroup otherGroup = (TagStyleGroup) obj;
+		if (otherGroup.getNumberOfTagStyles() != getNumberOfTagStyles())
+			return false;
+
+		for (int i = 0; i < otherGroup.getNumberOfTagStyles(); i++) {
+			if (!otherGroup.getTagStyles().get(i).equals(getTagStyles().get(i)))
+				return false;
+		}
+		return true;
+	}
+
 }
