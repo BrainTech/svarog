@@ -24,6 +24,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 
 /**
  * StagerBookPanel
@@ -52,7 +53,7 @@ public class NewStagerBookPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-					_("Choose book file")), new EmptyBorder(3, 3, 3, 3));
+				_("Choose book file")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		GroupLayout layout = new GroupLayout(this);
@@ -65,21 +66,21 @@ public class NewStagerBookPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(layout.createParallelGroup()
-						.addComponent(bookFileLabel));
+				.addComponent(bookFileLabel));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(
-							getBookTextField()));
+				getBookTextField()));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(
-							getChooseBookButton()));
+				getChooseBookButton()));
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(bookFileLabel).addComponent(getBookTextField())
-						.addComponent(getChooseBookButton()));
+				.addComponent(bookFileLabel).addComponent(getBookTextField())
+				.addComponent(getChooseBookButton()));
 
 		layout.setVerticalGroup(vGroup);
 
@@ -101,7 +102,9 @@ public class NewStagerBookPanel extends JPanel {
 		return chooseBookButton;
 	}
 
-	public void fillPanelFromModel(NewStagerParameters parameters) {
+	public void fillPanelFromModel(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		String path = parameters.bookFilePath;
 		if (path != null) {
 			bookFile = new File(path);
@@ -112,9 +115,9 @@ public class NewStagerBookPanel extends JPanel {
 		}
 	}
 
-	public void fillModelFromPanel(NewStagerParameters parameters) {
-		parameters.bookFilePath = bookFile == null ? null : bookFile
-								  .getAbsolutePath();
+	public void fillModelFromPanel(NewStagerParametersPreset parametersPreset) {
+		parametersPreset.parameters.bookFilePath = bookFile == null ? null
+				: bookFile.getAbsolutePath();
 	}
 
 	public void validatePanel(ValidationErrors errors) {
@@ -130,17 +133,17 @@ public class NewStagerBookPanel extends JPanel {
 		public ChooseBookFileAction() {
 			super(_("Choose..."));
 			putValue(
-				AbstractAction.SMALL_ICON,
-				IconUtils
-				.loadClassPathIcon("org/signalml/app/icon/find.png"));
+					AbstractAction.SMALL_ICON,
+					IconUtils
+							.loadClassPathIcon("org/signalml/app/icon/find.png"));
 			putValue(AbstractAction.SHORT_DESCRIPTION,
-					 _("Choose a book file for this signal"));
+					_("Choose a book file for this signal"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseBookFile(NewStagerBookPanel.this
-												   .getTopLevelAncestor());
+					.getTopLevelAncestor());
 			if (file == null) {
 				return;
 			}

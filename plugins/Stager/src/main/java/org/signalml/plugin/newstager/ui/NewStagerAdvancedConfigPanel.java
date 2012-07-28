@@ -23,6 +23,7 @@ import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerFASPThreshold;
 import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 import org.signalml.plugin.newstager.ui.components.MinMaxSpinnerPanel;
 
 /**
@@ -336,7 +337,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 		return kComplexPhasePanel;
 	}
 
-	public void fillPanelFromParameters(NewStagerParameters parameters) {
+	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
 		NewStagerFASPThreshold delta = thresholds.deltaThreshold;
@@ -366,7 +369,9 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 		getKComplexPhasePanel().setRange(kComplex.phase);
 	}
 
-	public void fillParametersFromPanel(NewStagerParameters parameters) {
+	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
 		NewStagerFASPThreshold delta = thresholds.deltaThreshold;

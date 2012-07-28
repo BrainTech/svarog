@@ -17,7 +17,7 @@ import org.signalml.plugin.method.PluginAbstractMethodDescriptor;
 import org.signalml.plugin.method.helper.PluginPresetManagerHelper;
 import org.signalml.plugin.newstager.NewStagerPlugin;
 import org.signalml.plugin.newstager.data.NewStagerApplicationData;
-import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 
 public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 		implements ApplicationIterableMethodDescriptor {
@@ -114,7 +114,7 @@ public class NewStagerMethodDescriptor extends PluginAbstractMethodDescriptor
 		if (presetManager == null && !existingOnly) {
 			presetManager = PluginPresetManagerHelper.GetPresetForMethod(
 					methodManager, this.methodManager, this.getMethod()
-							.getName(), NewStagerParameters.class);
+							.getName(), NewStagerParametersPreset.class);
 		}
 		return presetManager;
 	}

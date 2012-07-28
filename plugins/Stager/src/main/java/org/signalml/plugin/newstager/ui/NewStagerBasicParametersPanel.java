@@ -32,6 +32,7 @@ import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.newstager.ui.components.AutoSpinnerPanel;
 
@@ -260,7 +261,9 @@ public class NewStagerBasicParametersPanel extends JPanel {
 		return primaryHypnogramCheckBox;
 	}
 
-	public void fillPanelFromParameters(NewStagerParameters parameters) {
+	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		getRulesComboBox().setSelectedItem(parameters.rules);
 
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
@@ -276,7 +279,9 @@ public class NewStagerBasicParametersPanel extends JPanel {
 			parameters.primaryHypnogramFlag);
 	}
 
-	public void fillParametersFromPanel(NewStagerParameters parameters) {
+	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		parameters.rules = (NewStagerRules) getRulesComboBox()
 						   .getSelectedItem();
 
