@@ -28,8 +28,8 @@ import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 
 /**
  * StagerBookPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */

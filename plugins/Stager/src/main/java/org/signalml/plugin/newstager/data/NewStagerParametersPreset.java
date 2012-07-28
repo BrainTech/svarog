@@ -10,16 +10,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public class NewStagerParametersPreset implements Serializable, Preset {
 
 	private static final long serialVersionUID = 3226385997881292812L;
-	
+
 	public NewStagerParameters parameters;
 	public boolean enableAdvancedParameters;
-	
+
 	private String name;
 
 	public NewStagerParametersPreset() {
 		this(new NewStagerParameters(), false);
 	}
-	
+
 	public NewStagerParametersPreset(NewStagerParameters stagerParameters,
 			boolean enableAdvancedParameters) {
 		this.parameters = stagerParameters;

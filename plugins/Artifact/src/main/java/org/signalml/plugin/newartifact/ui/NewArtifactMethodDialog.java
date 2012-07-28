@@ -44,8 +44,8 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * ArtifactMethodDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
@@ -346,7 +346,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		}
 
 	}
-	
+
 	private static Collection<Class<? extends Preset>> GetPresetClasses() {
 		Collection<Class<? extends Preset>> l = new ArrayList<Class<? extends Preset>>();
 		l.add(NewArtifactParameters.class);

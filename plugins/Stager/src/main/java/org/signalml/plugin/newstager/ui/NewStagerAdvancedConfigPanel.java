@@ -339,7 +339,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 
 	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
 		NewStagerParameters parameters = parametersPreset.parameters;
-		
+
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
 		NewStagerFASPThreshold delta = thresholds.deltaThreshold;
@@ -371,7 +371,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 
 	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
 		NewStagerParameters parameters = parametersPreset.parameters;
-		
+
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
 		NewStagerFASPThreshold delta = thresholds.deltaThreshold;

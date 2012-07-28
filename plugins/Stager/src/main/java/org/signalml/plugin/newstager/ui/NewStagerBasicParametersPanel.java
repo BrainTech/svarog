@@ -263,7 +263,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
 		NewStagerParameters parameters = parametersPreset.parameters;
-		
+
 		getRulesComboBox().setSelectedItem(parameters.rules);
 
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
@@ -281,7 +281,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
 		NewStagerParameters parameters = parametersPreset.parameters;
-		
+
 		parameters.rules = (NewStagerRules) getRulesComboBox()
 						   .getSelectedItem();
 
