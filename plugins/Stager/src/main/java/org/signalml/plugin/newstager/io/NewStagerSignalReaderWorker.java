@@ -6,7 +6,7 @@ import org.signalml.plugin.newstager.data.NewStagerSignalReaderWorkerData;
 
 public class NewStagerSignalReaderWorker implements Runnable {
 
-	private NewStagerSignalReaderWorkerData data;
+	private final NewStagerSignalReaderWorkerData data;
 
 	public NewStagerSignalReaderWorker(NewStagerSignalReaderWorkerData data) {
 		this.data = data;
