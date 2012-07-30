@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
+import org.signalml.domain.tag.StyledTagSet;
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialData
@@ -22,6 +23,7 @@ public class EvokedPotentialData implements Serializable {
 	private EvokedPotentialParameters parameters;
 	private List<MultichannelSegmentedSampleSource> sampleSources;
 	private List<MultichannelSegmentedSampleSource> baselineSampleSources;
+	private StyledTagSet styledTagSet;
 
 	public EvokedPotentialData() {
 		parameters = new EvokedPotentialParameters();
@@ -65,6 +67,14 @@ public class EvokedPotentialData implements Serializable {
 		parameters.validate(errors);
 		errors.popNestedPath();
 
+	}
+
+	public void setStyledTagSet(StyledTagSet styledTagSet) {
+		this.styledTagSet = styledTagSet;
+	}
+
+	public StyledTagSet getStyledTagSet() {
+		return styledTagSet;
 	}
 
 }

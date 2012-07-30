@@ -24,12 +24,16 @@ import javax.swing.JComponent;
 import javax.swing.Scrollable;
 
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.LegendItemCollection;
+import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.ui.HorizontalAlignment;
@@ -48,8 +52,10 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 
@@ -208,13 +214,15 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 				channelSamples.add(data[channel]);
 			}
 
+			boolean showLegend = (channel == 0);
+
 			if (channel == channelCount-1) {
-				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.BOTTOM);
+				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.BOTTOM, showLegend);
 			}
 			else if (channel == 0 && channelCount != 1) {
-				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.TOP);
+				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.TOP, showLegend);
 			} else {
-				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.STRIPPED);
+				charts[channel] = createChart(timeValues, channelSamples, globalMin, globalMax, result.getLabels()[channel], ChartType.STRIPPED, showLegend);
 			}
 
 		}
@@ -253,7 +261,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	}
 
-	JFreeChart createChart(double[] timeValues, List<double[]> data, double minY, double maxY, String label, ChartType type) {
+	JFreeChart createChart(double[] timeValues, List<double[]> data, double minY, double maxY, String label, ChartType type, boolean showLegend) {
 
 		double minTime = timeValues[0];
 		double maxTime = timeValues[timeValues.length-1];
@@ -283,13 +291,15 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		dataset = new DefaultXYDataset();
 		for (int i = 0; i < data.size(); i++) {
-			//double[][] data = dataList.get(i);
-			dataset.addSeries("data" + i, new double[][] { timeValues, data.get(i) } );
+			TagStyleGroup tagStyleGroup = result.getData().getParameters().getAveragedTagStyles().get(i);
+			dataset.addSeries(tagStyleGroup.toString(), new double[][] { timeValues, data.get(i) } );
 		}
-		dataset.addSeries("redline", new double[][] { {0,0}, {minY, maxY} });
+		dataset.addSeries("", new double[][] { {0,0}, {minY, maxY} });
 
 		plot = new XYPlot(dataset, xAxis, yAxis, normalRenderer);
 		title = new TextTitle(label, titleFont, Color.BLACK, RectangleEdge.LEFT, HorizontalAlignment.LEFT, VerticalAlignment.CENTER, new RectangleInsets(0,0,0,0));
+
+		setColorsForSeries(plot);
 
 		switch (type) {
 
@@ -326,14 +336,73 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		}
 
-		chart = new JFreeChart(null, null, plot, false);
+		chart = new JFreeChart(null, null, plot, showLegend);
 		chart.setTitle(title);
 		chart.setBorderVisible(false);
 		chart.setBackgroundPaint(Color.WHITE);
 		chart.setPadding(new RectangleInsets(0,0,0,6));
+		if (chart.getLegend() != null) {
+			int itemToRemove = chart.getPlot().getLegendItems().getItemCount() - 1;
+			removeItemFromLegend(itemToRemove, chart);
+
+			chart.getLegend().setPosition(RectangleEdge.TOP);
+			chart.getLegend().setBorder(1, 1, 1, 1);
+		}
 
 		return chart;
 
+	}
+
+	protected void removeItemFromLegend(int itemToRemove, JFreeChart chart) {
+
+		LegendItemCollection legendItems = chart.getPlot().getLegendItems();
+		final LegendItemCollection newLegendItems = new LegendItemCollection();
+
+		for (int i = 0; i < legendItems.getItemCount(); i++) {
+			if (itemToRemove != i)
+				newLegendItems.add(legendItems.get(i));
+		}
+
+		LegendItemSource source = new LegendItemSource() {
+
+			@Override
+			public LegendItemCollection getLegendItems() {
+				return newLegendItems;
+			}
+		};
+
+		chart.removeLegend();
+		chart.addLegend(new LegendTitle(source));
+	}
+
+	protected void setColorsForSeries(XYPlot plot) {
+		List<TagStyleGroup> averagedTagStyles = result.getData().getParameters().getAveragedTagStyles();
+		StyledTagSet styledTagSet = result.getData().getStyledTagSet();
+		XYItemRenderer renderer = plot.getRenderer();
+
+		for (int i = 0; i < averagedTagStyles.size(); i++) {
+			TagStyleGroup tagStyleGroup = averagedTagStyles.get(i);
+
+			//mix colors
+			int r = 0, g = 0, b = 0;
+			for (int j = 0; j < tagStyleGroup.getNumberOfTagStyles(); j++) {
+				TagStyle style = styledTagSet.getStyle(null, tagStyleGroup.getTagStyleNames().get(j));
+
+				Color color = style.getFillColor();
+
+				r += color.getRed();
+				g += color.getGreen();
+				b += color.getBlue();
+			}
+
+			r /= tagStyleGroup.getNumberOfTagStyles();
+			g /= tagStyleGroup.getNumberOfTagStyles();
+			b /= tagStyleGroup.getNumberOfTagStyles();
+
+			Color mixedColor = new Color(r, g, b);
+
+			renderer.setSeriesPaint(i, mixedColor);
+		}
 	}
 
 	@Override
@@ -460,6 +529,9 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			TagStyleGroup selectedGroup = averagedTagStyles.get(0);
 			if (averagedTagStyles.size() > 1)
 				selectedGroup = showTagStyleGroupSelection();
+
+			if (selectedGroup == null)
+				return;
 
 			//selected index
 			int i;

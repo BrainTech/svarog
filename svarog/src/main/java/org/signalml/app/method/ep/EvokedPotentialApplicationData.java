@@ -53,6 +53,8 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 
 	public void calculate() throws SignalMLException {
 
+		this.setStyledTagSet(tagDocument != null ? tagDocument.getTagSet() : null);
+
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 
 		SignalProcessingChain signalChain = signalView.getMasterPlot().getSignalChain();
@@ -79,13 +81,13 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 
 			MarkerSegmentedSampleSource segmentedSampleSource = new MarkerSegmentedSampleSource(
 							sampleSource, startAveragingTime, endAveragingTime,
-							tagDocument != null ? tagDocument.getTagSet() : null,
+							getStyledTagSet(),
 							styleNames, artifactTagStyleNames,
 							getParameters().getAveragingTimeBefore(), getParameters().getAveragingTimeAfter(), signalSpace.getChannelSpace());
 
 			MarkerSegmentedSampleSource baselineSampleSource = new MarkerSegmentedSampleSource(
 					sampleSource, startAveragingTime, endAveragingTime,
-					tagDocument != null ? tagDocument.getTagSet() : null,
+					getStyledTagSet(),
 					styleNames, artifactTagStyleNames,
 					getParameters().getBaselineTimeBefore(), getParameters().getBaselineTimeAfter(), signalSpace.getChannelSpace());
 
@@ -95,6 +97,7 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 
 		setSampleSource(averagedSampleSources);
 		setBaselineSampleSources(baselineSampleSources);
+
 	}
 
 }
