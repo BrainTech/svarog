@@ -73,8 +73,8 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	/**
 	 * the {@link RawSignalSampleType type} of the samples
 	 */
-	private RawSignalSampleType sampleType;
-	private RawSignalByteOrder byteOrder;
+	private RawSignalSampleType sampleType = RawSignalSampleType.FLOAT;
+	private RawSignalByteOrder byteOrder = RawSignalByteOrder.LITTLE_ENDIAN;
 
 	/**
 	 * the position (in seconds) of the marker in the described
@@ -102,6 +102,7 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 * Constructor. Creates an empty descriptor of a raw signal.
 	 */
 	public RawSignalDescriptor() {
+		sourceSignalType = SourceSignalType.RAW;
 	}
 
 	/**

@@ -55,4 +55,15 @@ public class TagStyleGroup {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < tagStyleNames.size(); i++) {
+			sb.append(tagStyleNames.get(i));
+			if (i < tagStyleNames.size()-1)
+				sb.append(" & ");
+		}
+		return sb.toString();
+	}
+
 }

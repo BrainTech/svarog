@@ -49,11 +49,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 	private JPanel buttonPanel;
 
-	private JButton copyChartsToClipboardButton;
-	private JButton copySamplesToClipboardButton;
 	private JButton saveChartsToFileButton;
-	private JButton saveSamplesToFileButton;
-
 	private JButton saveSamplesToFloatFileButton;
 
 	private JLabel skippedMarkersLabelTitle;
@@ -176,35 +172,14 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 	public JPanel getButtonPanel() {
 		if (buttonPanel == null) {
 
-			buttonPanel = new JPanel(new GridLayout(2, 3, 3, 3));
+			buttonPanel = new JPanel(new GridLayout(1, 2, 3, 3));
 			buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
 
-			buttonPanel.add(getCopyChartsToClipboardButton());
-			buttonPanel.add(getCopySamplesToClipboardButton());
-			buttonPanel.add(getSaveSamplesToFloatFileButton());
-
 			buttonPanel.add(getSaveChartsToFileButton());
-			buttonPanel.add(getSaveSamplesToFileButton());
-
+			buttonPanel.add(getSaveSamplesToFloatFileButton());
 
 		}
 		return buttonPanel;
-	}
-
-	public JButton getCopyChartsToClipboardButton() {
-		if (copyChartsToClipboardButton == null) {
-			copyChartsToClipboardButton = new JButton(getGraphPanel().getExportAllEPChartsToClipboardAction());
-			copyChartsToClipboardButton.setHorizontalAlignment(JButton.LEFT);
-		}
-		return copyChartsToClipboardButton;
-	}
-
-	public JButton getCopySamplesToClipboardButton() {
-		if (copySamplesToClipboardButton == null) {
-			copySamplesToClipboardButton = new JButton(getGraphPanel().getExportAllEPSamplesToClipboardAction());
-			copySamplesToClipboardButton.setHorizontalAlignment(JButton.LEFT);
-		}
-		return copySamplesToClipboardButton;
 	}
 
 	public JButton getSaveChartsToFileButton() {
@@ -213,14 +188,6 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 			saveChartsToFileButton.setHorizontalAlignment(JButton.LEFT);
 		}
 		return saveChartsToFileButton;
-	}
-
-	public JButton getSaveSamplesToFileButton() {
-		if (saveSamplesToFileButton == null) {
-			saveSamplesToFileButton = new JButton(getGraphPanel().getExportAllEPSamplesToFileAction());
-			saveSamplesToFileButton.setHorizontalAlignment(JButton.LEFT);
-		}
-		return saveSamplesToFileButton;
 	}
 
 	public JButton getSaveSamplesToFloatFileButton() {

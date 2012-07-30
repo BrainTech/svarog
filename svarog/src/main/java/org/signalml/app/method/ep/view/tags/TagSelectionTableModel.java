@@ -15,8 +15,6 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 
 	public void setStyledTagSet(StyledTagSet styledTagSet) {
 
-		if (tagSet == styledTagSet)
-			return;
 		this.tagSet = styledTagSet;
 
 		elements = new ArrayList<TagStyleGroup>();

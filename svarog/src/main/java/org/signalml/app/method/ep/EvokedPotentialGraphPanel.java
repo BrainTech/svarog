@@ -1,11 +1,8 @@
-/* EvokedPotentialGraphPanel.java created 2008-01-14
- *
- */
-
 package org.signalml.app.method.ep;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,16 +10,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JMenu;
-import javax.swing.JPopupMenu;
 import javax.swing.Scrollable;
 
 import org.jfree.chart.JFreeChart;
@@ -38,15 +36,22 @@ import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
-import org.signalml.app.action.ExportSamplesToFileAction;
-import org.signalml.app.action.ExportSamplesToMultiplexedFloatFileAction;
-import org.signalml.app.action.components.ExportAllChartsToClipboardAction;
 import org.signalml.app.action.components.ExportAllChartsToFileAction;
-import org.signalml.app.action.components.ExportChartToClipboardAction;
-import org.signalml.app.action.components.ExportChartToFileAction;
-import org.signalml.app.action.components.ExportSamplesToClipboardAction;
+import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
+import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.method.ep.EvokedPotentialResult;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import org.signalml.util.Util;
 
 /** EvokedPotentialGraphPanel
  *
@@ -83,20 +88,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 	double globalMin;
 	double globalMax;
 
-	private JPopupMenu popupMenu;
-
-	private ExportEPChartToClipboardAction exportChartToClipboardAction;
-	private ExportEPChartToFileAction exportChartToFileAction;
-
-	private ExportAllEPChartsToClipboardAction exportAllEPChartsToClipboardAction;
 	private ExportAllEPChartsToFileAction exportAllEPChartsToFileAction;
-
-	private ExportAllEPSamplesToClipboardAction exportAllEPSamplesToClipboardAction;
-	private ExportAllEPSamplesToFileAction exportAllEPSamplesToFileAction;
-
-	private ExportEPSamplesToClipboardAction exportEPSamplesToClipboardAction;
-	private ExportEPSamplesToFileAction exportEPSamplesToFileAction;
-
 	private ExportAllEPSamplesToFloatFileAction exportAllEPSamplesToFloatFileAction;
 
 	public EvokedPotentialGraphPanel(ViewerFileChooser fileChooser) {
@@ -108,38 +100,8 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		normalRenderer.setSeriesPaint(0, Color.BLUE);
 		normalRenderer.setSeriesPaint(1, Color.RED);
 
-		exportChartToClipboardAction = new ExportEPChartToClipboardAction();
-		exportChartToFileAction = new ExportEPChartToFileAction();
-		exportEPSamplesToClipboardAction = new ExportEPSamplesToClipboardAction();
-		exportEPSamplesToFileAction = new ExportEPSamplesToFileAction();
-		exportAllEPChartsToClipboardAction = new ExportAllEPChartsToClipboardAction();
 		exportAllEPChartsToFileAction = new ExportAllEPChartsToFileAction();
-		exportAllEPSamplesToClipboardAction = new ExportAllEPSamplesToClipboardAction();
-		exportAllEPSamplesToFileAction = new ExportAllEPSamplesToFileAction();
 		exportAllEPSamplesToFloatFileAction = new ExportAllEPSamplesToFloatFileAction();
-
-		addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				focusedChartIndex = getChartIndexAtPoint(e.getPoint());
-				maybeShowPopupMenu(e);
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				maybeShowPopupMenu(e);
-			}
-
-			private void maybeShowPopupMenu(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					JPopupMenu popupMenu = getPanelPopupMenu();
-					if (popupMenu != null) {
-						popupMenu.show(e.getComponent(),e.getX(),e.getY());
-					}
-				}
-			}
-
-		});
 
 		addComponentListener(new ComponentAdapter() {
 
@@ -161,10 +123,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			this.result = result;
 			charts = null;
 
-			exportAllEPChartsToClipboardAction.setEnabledAsNeeded();
 			exportAllEPChartsToFileAction.setEnabledAsNeeded();
-			exportAllEPSamplesToClipboardAction.setEnabledAsNeeded();
-			exportAllEPSamplesToFileAction.setEnabledAsNeeded();
 			exportAllEPSamplesToFloatFileAction.setEnabledAsNeeded();
 
 			revalidate();
@@ -180,57 +139,12 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		return focusedChartIndex;
 	}
 
-	public ExportAllEPChartsToClipboardAction getExportAllEPChartsToClipboardAction() {
-		return exportAllEPChartsToClipboardAction;
-	}
-
 	public ExportAllEPChartsToFileAction getExportAllEPChartsToFileAction() {
 		return exportAllEPChartsToFileAction;
 	}
 
-	public ExportAllEPSamplesToClipboardAction getExportAllEPSamplesToClipboardAction() {
-		return exportAllEPSamplesToClipboardAction;
-	}
-
-	public ExportAllEPSamplesToFileAction getExportAllEPSamplesToFileAction() {
-		return exportAllEPSamplesToFileAction;
-	}
-
 	public ExportAllEPSamplesToFloatFileAction getExportAllEPSamplesToFloatFileAction() {
 		return exportAllEPSamplesToFloatFileAction;
-	}
-
-	public JPopupMenu getPanelPopupMenu() {
-
-		if (popupMenu == null) {
-
-			popupMenu = new JPopupMenu();
-			popupMenu.add(exportChartToClipboardAction);
-			popupMenu.add(exportChartToFileAction);
-			popupMenu.add(exportEPSamplesToClipboardAction);
-			popupMenu.add(exportEPSamplesToFileAction);
-			popupMenu.addSeparator();
-
-			JMenu allMenu = new JMenu(_("All channels"));
-
-			allMenu.add(exportAllEPChartsToClipboardAction);
-			allMenu.add(exportAllEPChartsToFileAction);
-			allMenu.add(exportAllEPSamplesToClipboardAction);
-			allMenu.add(exportAllEPSamplesToFileAction);
-			allMenu.addSeparator();
-			allMenu.add(exportAllEPSamplesToFloatFileAction);
-
-			popupMenu.add(allMenu);
-
-		}
-
-		exportChartToClipboardAction.setEnabledAsNeeded();
-		exportChartToFileAction.setEnabledAsNeeded();
-		exportEPSamplesToClipboardAction.setEnabledAsNeeded();
-		exportEPSamplesToFileAction.setEnabledAsNeeded();
-
-		return popupMenu;
-
 	}
 
 	int getChartIndexAtPoint(Point point) {
@@ -412,7 +326,6 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		}
 
-
 		chart = new JFreeChart(null, null, plot, false);
 		chart.setTitle(title);
 		chart.setBorderVisible(false);
@@ -460,7 +373,6 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	}
 
-
 	@Override
 	public Dimension getPreferredSize() {
 		if (result == null) {
@@ -495,242 +407,6 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 	@Override
 	public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
 		return CHART_HEIGHT / 10;
-	}
-
-	protected class ExportEPChartToFileAction extends ExportChartToFileAction {
-
-		private static final long serialVersionUID = 1L;
-
-		ExportEPChartToFileAction() {
-			super();
-			setFileChooser(fileChooser);
-			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
-		}
-
-		@Override
-		protected JFreeChart getChart() {
-			return null;
-			//return createChart(new double[][] { timeValues, result.getAverageSamples()[focusedChartIndex] }, globalMin, globalMax, result.getLabels()[focusedChartIndex], ChartType.NORMAL);
-		}
-
-		@Override
-		protected Dimension getImageSize() {
-			return new Dimension(bounds[focusedChartIndex].width, AXIS_SPACE + CHART_HEIGHT);
-		}
-
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(focusedChartIndex >= 0);
-		}
-
-	}
-
-	protected class ExportEPSamplesToFileAction extends ExportSamplesToFileAction {
-
-		private static final long serialVersionUID = 1L;
-
-		ExportEPSamplesToFileAction() {
-			super();
-			setFileChooser(fileChooser);
-			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
-		}
-
-		@Override
-		protected int getSampleCount() {
-			if (result == null) {
-				return 0;
-			}
-			return result.getSampleCount();
-		}
-
-		@Override
-		protected double[][] getSamples() {
-			if (result == null || focusedChartIndex < 0) {
-				return null;
-			}
-			double[][] samples = new double[2][];
-			samples[0] = timeValues;
-			samples[1] = result.getSingleChannelAverageSamples()[focusedChartIndex];
-			return samples;
-		}
-
-		@Override
-		protected boolean isWithLabels() {
-			return true;
-		}
-
-		@Override
-		protected String getLabel(int index) {
-			if (index == 0) {
-				return "T";
-			}
-			return result.getLabels()[focusedChartIndex];
-		}
-
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(focusedChartIndex >= 0);
-		}
-
-	}
-
-	protected class ExportEPChartToClipboardAction extends ExportChartToClipboardAction {
-
-		private static final long serialVersionUID = 1L;
-
-		ExportEPChartToClipboardAction() {
-			super();
-		}
-
-		@Override
-		protected JFreeChart getChart() {
-			return null;
-			//return createChart(new double[][] { timeValues, result.getAverageSamples()[focusedChartIndex] }, globalMin, globalMax, result.getLabels()[focusedChartIndex], ChartType.NORMAL);
-		}
-
-		@Override
-		protected Dimension getImageSize() {
-			return new Dimension(bounds[focusedChartIndex].width, AXIS_SPACE + CHART_HEIGHT);
-		}
-
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(focusedChartIndex >= 0);
-		}
-
-	}
-
-	protected class ExportEPSamplesToClipboardAction extends ExportSamplesToClipboardAction {
-
-		private static final long serialVersionUID = 1L;
-
-		ExportEPSamplesToClipboardAction() {
-			super();
-		}
-
-		@Override
-		protected int getSampleCount() {
-			if (result == null) {
-				return 0;
-			}
-			return result.getSampleCount();
-		}
-
-		@Override
-		protected double[][] getSamples() {
-			if (result == null || focusedChartIndex < 0) {
-				return null;
-			}
-			double[][] samples = new double[2][];
-			samples[0] = timeValues;
-			samples[1] = result.getSingleChannelAverageSamples()[focusedChartIndex];
-			return samples;
-		}
-
-		@Override
-		protected boolean isWithLabels() {
-			return true;
-		}
-
-		@Override
-		protected String getLabel(int index) {
-			if (index == 0) {
-				return "T";
-			}
-			return result.getLabels()[focusedChartIndex];
-		}
-
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(focusedChartIndex >= 0);
-		}
-
-	}
-
-	protected class ExportAllEPChartsToClipboardAction extends ExportAllChartsToClipboardAction {
-
-		private static final long serialVersionUID = 1L;
-
-		ExportAllEPChartsToClipboardAction() {
-			super();
-		}
-
-		@Override
-		protected JFreeChart getChart(int index) {
-			return charts[index];
-		}
-
-		@Override
-		protected Rectangle getChartBounds(int index) {
-			return bounds[index];
-		}
-
-		@Override
-		protected int getChartCount() {
-			if (result == null) {
-				return 0;
-			}
-			return result.getChannelCount();
-		}
-
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(result != null);
-		}
-
-	}
-
-	protected class ExportAllEPSamplesToClipboardAction extends ExportSamplesToClipboardAction {
-
-		private static final long serialVersionUID = 1L;
-
-		ExportAllEPSamplesToClipboardAction() {
-			super();
-			setText(_("Copy all samples to clipboard"));
-			setToolTip(_("Copy all samples to clipboard"));
-		}
-
-		@Override
-		protected int getSampleCount() {
-			if (result == null) {
-				return 0;
-			}
-			return result.getSampleCount();
-		}
-
-		@Override
-		protected double[][] getSamples() {
-			if (result == null) {
-				return null;
-			}
-			int channelCount = result.getChannelCount();
-			double[][] samples = new double[1+channelCount][];
-			samples[0] = timeValues;
-			double[][] averageSamples = result.getSingleChannelAverageSamples();
-			for (int i=0; i<channelCount; i++) {
-				samples[i+1] = averageSamples[i];
-			}
-			return samples;
-		}
-
-		@Override
-		protected boolean isWithLabels() {
-			return true;
-		}
-
-		@Override
-		protected String getLabel(int index) {
-			if (index == 0) {
-				return "T";
-			}
-			return result.getLabels()[index-1];
-		}
-
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(result != null);
-		}
-
 	}
 
 	protected class ExportAllEPChartsToFileAction extends ExportAllChartsToFileAction {
@@ -768,52 +444,105 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	}
 
-	protected class ExportAllEPSamplesToFileAction extends ExportSamplesToFileAction {
+	protected class ExportAllEPSamplesToFloatFileAction extends AbstractSignalMLAction {
 
-		private static final long serialVersionUID = 1L;
-
-		ExportAllEPSamplesToFileAction() {
+		public ExportAllEPSamplesToFloatFileAction() {
 			super();
 			setText(_("Save all samples as txt file"));
 			setToolTip(_("Save all samples as one TXT file"));
-			setFileChooser(fileChooser);
-			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
+			setIconPath("org/signalml/app/icon/script_save.png");
 		}
 
 		@Override
-		protected int getSampleCount() {
-			if (result == null) {
-				return 0;
+		public void actionPerformed(ActionEvent event) {
+
+			List<TagStyleGroup> averagedTagStyles = result.getData().getParameters().getAveragedTagStyles();
+			TagStyleGroup selectedGroup = averagedTagStyles.get(0);
+			if (averagedTagStyles.size() > 1)
+				selectedGroup = showTagStyleGroupSelection();
+
+			//selected index
+			int i;
+			for (i = 0; i < averagedTagStyles.size(); i++) {
+				if (averagedTagStyles.get(i).equals(selectedGroup))
+					break;
 			}
-			return result.getSampleCount();
+
+			// file selection
+			File file = showFileChooserDialog();
+			if (file == null)
+				return;
+
+			try {
+				writeData(file, i);
+			} catch (IOException e) {
+				Dialogs.showExceptionDialog(e);
+				e.printStackTrace();
+				return;
+			}
+
 		}
 
-		@Override
-		protected double[][] getSamples() {
-			if (result == null) {
+		protected TagStyleGroup showTagStyleGroupSelection() {
+			SelectTagGroupDialog dialog = new SelectTagGroupDialog();
+			List<TagStyleGroup> averagedTagStyles = result.getData().getParameters().getAveragedTagStyles();
+			List<TagStyleGroup> selectedGroups = new ArrayList<TagStyleGroup>();
+			selectedGroups.addAll(averagedTagStyles);
+
+			boolean okPressed = dialog.showDialog(selectedGroups);
+
+			if (!okPressed)
 				return null;
-			}
-			int channelCount = result.getChannelCount();
-			double[][] samples = new double[1+channelCount][];
-			samples[0] = timeValues;
-			double[][] averageSamples = result.getSingleChannelAverageSamples();
-			for (int i=0; i<channelCount; i++) {
-				samples[i+1] = averageSamples[i];
-			}
-			return samples;
+
+			return selectedGroups.get(0);
 		}
 
-		@Override
-		protected boolean isWithLabels() {
-			return true;
+		protected File showFileChooserDialog() {
+			File file;
+			boolean hasFile = false;
+			do {
+				file = fileChooser.chooseSamplesSaveAsTextFile(null);
+				if (file == null) {
+					return null;
+				}
+				String ext = Util.getFileExtension(file, false);
+				if (ext == null) {
+					file = new File(file.getAbsolutePath() + ".bin");
+				}
+
+				hasFile = true;
+
+				if (file.exists()) {
+					int res = OptionPane.showFileAlreadyExists(null);
+					if (res != OptionPane.OK_OPTION) {
+						hasFile = false;
+					}
+				}
+
+			} while (!hasFile);
+
+			return file;
 		}
 
-		@Override
-		protected String getLabel(int index) {
-			if (index == 0) {
-				return "T";
-			}
-			return result.getLabels()[index-1];
+		protected void writeData(File file, int groupIndex) throws IOException {
+			double[][] samples = result.getAverageSamples().get(groupIndex);
+			int channelCount = samples.length;
+			int sampleCount = samples[0].length;
+			DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(samples, channelCount, sampleCount);
+
+			RawSignalWriter rawSignalWriter = new RawSignalWriter();
+			SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
+			rawSignalWriter.writeSignal(file, sampleSource, signalExportDescriptor, null);
+
+			RawSignalDescriptorWriter descriptorWriter = new RawSignalDescriptorWriter();
+			RawSignalDescriptor descriptor = new RawSignalDescriptor();
+			descriptor.setSampleCount(sampleCount);
+			descriptor.setChannelCount(channelCount);
+			descriptor.setExportFileName(file.getName());
+			descriptor.setChannelLabels(result.getLabels());
+
+			File xmlFile = Util.changeOrAddFileExtension(file, "xml");
+			descriptorWriter.writeDocument(descriptor, xmlFile);
 		}
 
 		@Override
@@ -823,37 +552,49 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 	}
 
-	protected class ExportAllEPSamplesToFloatFileAction extends ExportSamplesToMultiplexedFloatFileAction {
+}
 
-		private static final long serialVersionUID = 1L;
+class SelectTagGroupDialog extends AbstractDialog {
 
-		ExportAllEPSamplesToFloatFileAction() {
-			super();
-			setFileChooser(fileChooser);
-			setOptionPaneParent(EvokedPotentialGraphPanel.this.getTopLevelAncestor());
+	private JComboBox selectTagGroupComboBox;
+
+	public SelectTagGroupDialog() {
+		super();
+		setModal(true);
+		setLocationRelativeTo(null);
+	}
+
+	@Override
+	protected JComponent createInterface() {
+		AbstractPanel panel = new AbstractPanel(_("Select tag group"));
+		panel.setLayout(new BorderLayout());
+		panel.add(getSelectTagGroupComboBox(), BorderLayout.CENTER);
+		return panel;
+	}
+
+	public JComboBox getSelectTagGroupComboBox() {
+		if (selectTagGroupComboBox == null) {
+			selectTagGroupComboBox = new JComboBox();
 		}
+		return selectTagGroupComboBox;
+	}
 
-		@Override
-		protected int getSampleCount() {
-			if (result == null) {
-				return 0;
-			}
-			return result.getSampleCount();
-		}
+	@Override
+	public boolean supportsModelClass(Class<?> clazz) {
+		return true;
+	}
 
-		@Override
-		protected double[][] getSamples() {
-			if (result == null) {
-				return null;
-			}
-			return result.getSingleChannelAverageSamples();
-		}
+	@Override
+	protected void fillDialogFromModel(Object model) throws SignalMLException {
+		List<TagStyleGroup> groups = (List<TagStyleGroup>) model;
+		getSelectTagGroupComboBox().setModel(new DefaultComboBoxModel(groups.toArray(new TagStyleGroup[0])));
+	}
 
-		@Override
-		public void setEnabledAsNeeded() {
-			setEnabled(result != null);
-		}
-
+	@Override
+	public void fillModelFromDialog(Object model) throws SignalMLException {
+		List<TagStyleGroup> groups = (List<TagStyleGroup>) model;
+		groups.clear();
+		groups.add((TagStyleGroup) selectTagGroupComboBox.getSelectedItem());
 	}
 
 }

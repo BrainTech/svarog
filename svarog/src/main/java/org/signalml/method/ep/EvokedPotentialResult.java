@@ -73,10 +73,6 @@ public class EvokedPotentialResult implements Serializable {
 		this.labels = labels;
 	}
 
-	public double[][] getSingleChannelAverageSamples() {
-		return averageSamples.get(0);
-	}
-
 	public List<double[][]> getAverageSamples() {
 		return averageSamples;
 	}
