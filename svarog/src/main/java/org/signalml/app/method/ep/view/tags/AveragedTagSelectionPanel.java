@@ -84,7 +84,7 @@ public class AveragedTagSelectionPanel extends TagSelectionPanel implements List
 
 			TagStyleGroup group = (TagStyleGroup) model.getValueAt(row, AbstractSelectionTableModel.ELEMENT_NAME_COLUMN_NUMBER);
 
-			if (group.getTagStyles().size() > 1)
+			if (group.getTagStyleNames().size() > 1)
 				realGroupsCount++;
 		}
 		getUngroupTagsButton().setEnabled(realGroupsCount > 0);
@@ -102,6 +102,10 @@ public class AveragedTagSelectionPanel extends TagSelectionPanel implements List
 			errors.addError(_("Please select at least one tag to average."));
 		}
 
+	}
+
+	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
+		getTableModel().setSelectedTagStyles(parameters.getAveragedTagStyles());
 	}
 
 }

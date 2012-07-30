@@ -5,7 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import org.signalml.app.method.ep.EvokedPotentialApplicationData;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.ArtifactTagsSelectionPanel;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.method.ep.EvokedPotentialParameters;
@@ -42,12 +42,16 @@ public class ArtifactRejectionPanel extends AbstractPanel {
 		return artifactTagsSelectionPanel;
 	}
 
-	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
-		getArtifactTagsSelectionPanel().fillPanelFromModel(data);
+	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
+		getArtifactTagsSelectionPanel().getTableModel().setSelectedTagStyles(parameters.getArtifactTagStyles());
 	}
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
 		getArtifactTagsSelectionPanel().fillModelFromPanel(parameters);
+	}
+
+	public void setTagDocument(TagDocument tagDocument) {
+		getArtifactTagsSelectionPanel().setTagDocument(tagDocument);
 	}
 
 }

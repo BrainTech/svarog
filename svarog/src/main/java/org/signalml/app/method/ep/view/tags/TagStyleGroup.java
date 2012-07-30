@@ -3,34 +3,40 @@ package org.signalml.app.method.ep.view.tags;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.signalml.plugin.export.signal.TagStyle;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+@XStreamAlias("tagStyleGroup")
 public class TagStyleGroup {
 
-	private List<TagStyle> tagStyles = new ArrayList<TagStyle>();
+	private List<String> tagStyleNames = new ArrayList<String>();
 
 	public TagStyleGroup() {
 	}
 
-	public void addTagStyle(TagStyle tagStyle) {
-		if (!contains(tagStyle))
-			tagStyles.add(tagStyle);
+	public TagStyleGroup(String tagName) {
+		addTagStyle(tagName);
 	}
 
-	protected boolean contains(TagStyle tagStyle) {
-		for (TagStyle addedTagStyle: tagStyles) {
+	public void addTagStyle(String tagStyle) {
+		if (!contains(tagStyle)) {
+			tagStyleNames.add(tagStyle);
+		}
+	}
+
+	protected boolean contains(String tagStyle) {
+		for (String addedTagStyle: tagStyleNames) {
 			if (addedTagStyle.equals(tagStyle))
 				return true;
 		}
 		return false;
 	}
 
-	public List<TagStyle> getTagStyles() {
-		return tagStyles;
+	public List<String> getTagStyleNames() {
+		return tagStyleNames;
 	}
 
 	public int getNumberOfTagStyles() {
-		return tagStyles.size();
+		return tagStyleNames.size();
 	}
 
 	@Override
@@ -43,7 +49,7 @@ public class TagStyleGroup {
 			return false;
 
 		for (int i = 0; i < otherGroup.getNumberOfTagStyles(); i++) {
-			if (!otherGroup.getTagStyles().get(i).equals(getTagStyles().get(i)))
+			if (!otherGroup.getTagStyleNames().get(i).equals(getTagStyleNames().get(i)))
 				return false;
 		}
 		return true;

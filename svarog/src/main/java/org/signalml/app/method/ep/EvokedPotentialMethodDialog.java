@@ -115,11 +115,10 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 			parameters = (EvokedPotentialParameters) preset;
 		}
 
+		getEvokedPotentialSettingsPanel().setTagDocument(tagDocument);
+		getArtifactRejectionPanel().setTagDocument(tagDocument);
 		data.setParameters(parameters);
 		fillDialogFromParameters(parameters);
-		getEvokedPotentialSettingsPanel().fillPanelFromModel(data);
-		getArtifactRejectionPanel().fillPanelFromModel(data);
-
 	}
 
 	protected void fillDialogFromParameters(EvokedPotentialParameters parameters) {
@@ -127,6 +126,8 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		SignalSpace space = parameters.getWholeSignalSpace();
 
 		getSignalSpacePanel().fillPanelFromModel(space);
+		getEvokedPotentialSettingsPanel().fillPanelFromModel(parameters);
+		getArtifactRejectionPanel().fillPanelFromModel(parameters);
 
 	}
 

@@ -14,11 +14,13 @@ import javax.swing.table.TableColumn;
 
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 import org.signalml.app.view.tag.TagIconProducer;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.TagStyle;
 
 public class TagSelectionTable extends JTable {
 
 	private TagIconProducer tagIconProducer = new TagIconProducer();
+	private StyledTagSet styledTagSet;
 
 	public TagSelectionTable(AbstractSelectionTableModel tableModel) {
 		super(tableModel);
@@ -27,6 +29,10 @@ public class TagSelectionTable extends JTable {
 		setColumnsPreferredSizes();
 
 		this.getTableHeader().setReorderingAllowed(false);
+	}
+
+	public void setStyledTagSet(StyledTagSet styledTagSet) {
+		this.styledTagSet = styledTagSet;
 	}
 
 	private void setColumnsPreferredSizes() {
@@ -44,7 +50,7 @@ public class TagSelectionTable extends JTable {
 	@Override
 	public TableCellRenderer getCellRenderer(int row, int column) {
 		if (column == AbstractSelectionTableModel.ELEMENT_NAME_COLUMN_NUMBER)
-			return new TagRenderer(tagIconProducer);
+			return new TagRenderer(tagIconProducer, styledTagSet);
 		else
 			return super.getCellRenderer(row, column);
 	}
@@ -54,9 +60,11 @@ public class TagSelectionTable extends JTable {
 class TagRenderer extends DefaultTableCellRenderer {
 
 	private TagIconProducer iconProducer;
+	private StyledTagSet styledTagSet;
 
-	public TagRenderer(TagIconProducer tagIconProducer) {
+	public TagRenderer(TagIconProducer tagIconProducer, StyledTagSet styledTagSet) {
 		this.iconProducer = tagIconProducer;
+		this.styledTagSet = styledTagSet;
 	}
 
 	@Override
@@ -74,12 +82,16 @@ class TagRenderer extends DefaultTableCellRenderer {
 
 		if (value instanceof TagStyleGroup) {
 			TagStyleGroup group = (TagStyleGroup) value;
-			List<TagStyle> tagStyles = group.getTagStyles();
+			List<String> tagStyles = group.getTagStyleNames();
 
 			for (int i = 0; i < group.getNumberOfTagStyles(); i++) {
-				TagStyle tagStyle = tagStyles.get(i);
-				JLabel label = new JLabel(tagStyle.getName());
-				label.setIcon(iconProducer.getIcon(tagStyle));
+				String styleName = tagStyles.get(i);
+
+				JLabel label = new JLabel(styleName);
+				if (styledTagSet != null) {
+					TagStyle style = styledTagSet.getStyle(null, styleName);
+					label.setIcon(iconProducer.getIcon(style));
+				}
 				panel.add(label);
 
 				if (i < group.getNumberOfTagStyles()-1) {

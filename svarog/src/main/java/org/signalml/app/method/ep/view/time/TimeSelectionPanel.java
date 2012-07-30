@@ -39,7 +39,7 @@ public class TimeSelectionPanel extends LabeledComponentsPanel {
 	protected List<ComponentWithLabel> createComponents() {
 		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
 
-		components.add(new ComponentWithLabel(new JLabel(_("Seconds after [sec]")), getStartTimeSpinner()));
+		components.add(new ComponentWithLabel(new JLabel(_("Seconds before [sec]")), getStartTimeSpinner()));
 		components.add(new ComponentWithLabel(new JLabel(_("Seconds after [sec]")), getEndTimeSpinner()));
 
 		return components;

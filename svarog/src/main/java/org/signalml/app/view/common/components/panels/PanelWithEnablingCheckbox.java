@@ -8,7 +8,7 @@ import javax.swing.JCheckBox;
 
 public abstract class PanelWithEnablingCheckbox<T extends AbstractPanel> extends AbstractPanel implements ActionListener {
 
-	private JCheckBox enableFilteringCheckbox;
+	private JCheckBox checkbox;
 	protected T panel;
 
 	public PanelWithEnablingCheckbox(String title) {
@@ -19,18 +19,18 @@ public abstract class PanelWithEnablingCheckbox<T extends AbstractPanel> extends
 
 	protected void createInterface() {
 		setLayout(new BorderLayout());
-		add(getEnableFilteringCheckbox(), BorderLayout.NORTH);
+		add(getCheckbox(), BorderLayout.NORTH);
 		add(getPanel(), BorderLayout.CENTER);
 	}
 
-	public JCheckBox getEnableFilteringCheckbox() {
-		if (enableFilteringCheckbox == null) {
-			enableFilteringCheckbox = new JCheckBox(getEnableCheckboxText());
+	private JCheckBox getCheckbox() {
+		if (checkbox == null) {
+			checkbox = new JCheckBox(getEnableCheckboxText());
 
-			enableFilteringCheckbox.addActionListener(this);
+			checkbox.addActionListener(this);
 			actionPerformed(null);
 		}
-		return enableFilteringCheckbox;
+		return checkbox;
 	}
 
 	protected abstract String getEnableCheckboxText();
@@ -42,7 +42,12 @@ public abstract class PanelWithEnablingCheckbox<T extends AbstractPanel> extends
 	}
 
 	protected boolean isCheckboxSelected() {
-		return getEnableFilteringCheckbox().isSelected();
+		return getCheckbox().isSelected();
+	}
+
+	public void setCheckboxSelected(boolean selected) {
+		getCheckbox().setSelected(selected);
+		actionPerformed(null);
 	}
 
 }

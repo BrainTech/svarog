@@ -6,7 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import org.signalml.app.method.ep.EvokedPotentialApplicationData;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.AveragedTagSelectionPanel;
 import org.signalml.app.method.ep.view.time.BaselineSelectionPanel;
 import org.signalml.app.method.ep.view.time.EvokedPotentialsTimeSelectionPanel;
@@ -77,11 +77,11 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 		return filterPanel;
 	}
 
-	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
-		getAveragedTagSelectionPanel().fillPanelFromModel(data);
-		getAveragedTimeSelectionPanel().fillPanelFromModel(data);
-		getBaselineSelectionPanel().fillPanelFromModel(data);
-		getFilterPanel().fillPanelFromModel(data);
+	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
+		getAveragedTagSelectionPanel().fillPanelFromModel(parameters);
+		getAveragedTimeSelectionPanel().fillPanelFromModel(parameters);
+		getBaselineSelectionPanel().fillPanelFromModel(parameters);
+		getFilterPanel().fillPanelFromModel(parameters);
 	}
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
@@ -99,7 +99,10 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 		getAveragedTimeSelectionPanel().validatePanel(errors);
 		getBaselineSelectionPanel().validatePanel(errors);
 		getFilterPanel().validatePanel(errors);
+	}
 
+	public void setTagDocument(TagDocument tagDocument) {
+		getAveragedTagSelectionPanel().setTagDocument(tagDocument);
 	}
 
 }

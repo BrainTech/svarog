@@ -18,7 +18,6 @@ import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.method.ep.EvokedPotentialData;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.TagStyle;
 
 /** EvokedPotentialApplicationData
  *
@@ -63,19 +62,14 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 
 		List<String> artifactTagStyleNames = new ArrayList<String>();
 		for (TagStyleGroup styleGroup: getParameters().getArtifactTagStyles()) {
-			for (TagStyle tagStyle: styleGroup.getTagStyles()) {
-				artifactTagStyleNames.add(tagStyle.getName());
-			}
+			artifactTagStyleNames.addAll(styleGroup.getTagStyleNames());
 		}
 
 		List<MultichannelSegmentedSampleSource> averagedSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
 		List<MultichannelSegmentedSampleSource> baselineSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
 		for (TagStyleGroup tagStyleGroup: getParameters().getAveragedTagStyles()) {
 
-			List<String> styleNames = new ArrayList<String>();
-			for (TagStyle style: tagStyleGroup.getTagStyles()) {
-				styleNames.add(style.getName());
-			}
+			List<String> styleNames = tagStyleGroup.getTagStyleNames();
 
 			Double startAveragingTime = null, endAveragingTime = null;
 			if (signalSpace.getTimeSpaceType() == TimeSpaceType.SELECTION_BASED) {

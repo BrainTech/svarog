@@ -22,7 +22,7 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 		elements = new ArrayList<TagStyleGroup>();
 		for (TagStyle tagStyle: styledTagSet.getListOfStyles()) {
 			TagStyleGroup group = new TagStyleGroup();
-			group.addTagStyle(tagStyle);
+			group.addTagStyle(tagStyle.getName());
 			elements.add(group);
 		}
 
@@ -34,19 +34,51 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 	}
 
 	public void setSelectedTagStyles(List<TagStyleGroup> tagStyleGroups) {
+		setAllSelected(false);
+
 		for (TagStyleGroup group: tagStyleGroups) {
-			for (int i = 0; i < elements.size(); i++) {
-				if (elements.get(i).equals(group)) {
-					selectionStatus.set(i, true);
-				}
+			Integer index = findGroup(group);
+			if (index != null) {
+				selectionStatus.set(index, true);
+			} else {
+				Integer newGroupIndex = createGroupIfTagsAreAvailable(group);
+				if (newGroupIndex != null)
+					selectionStatus.set(newGroupIndex, true);
 			}
 		}
+		fireTableDataChanged();
 	}
 
-	public void createGroup(int[] rows) {
+	protected Integer findGroup(TagStyleGroup group) {
+		for (int i = 0; i < elements.size(); i++) {
+			if (elements.get(i).equals(group)) {
+				return i;
+			}
+		}
+		return null;
+	}
+
+	protected Integer createGroupIfTagsAreAvailable(TagStyleGroup group) {
+		if (group.getNumberOfTagStyles() == 1)
+			return null;
+
+		List<String> tagStyleNames = group.getTagStyleNames();
+		int[] indices = new int[tagStyleNames.size()];
+		for (int i = 0; i < tagStyleNames.size(); i++) {
+			String tagStyleName = tagStyleNames.get(i);
+			Integer index = findGroup(new TagStyleGroup(tagStyleName));
+			if (index == null)
+				return null;
+			indices[i] = index;
+		}
+
+		return createGroup(indices);
+	}
+
+	public Integer createGroup(int[] rows) {
 		TagStyleGroup tagStyleGroup = new TagStyleGroup();
 		for (int row: rows) {
-			for (TagStyle tagStyle: elements.get(row).getTagStyles()) {
+			for (String tagStyle: elements.get(row).getTagStyleNames()) {
 				tagStyleGroup.addTagStyle(tagStyle);
 			}
 		}
@@ -54,6 +86,7 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 		elements.add(tagStyleGroup);
 		selectionStatus.add(false);
 		fireTableDataChanged();
+		return elements.size()-1;
 	}
 
 	public void deleteGroups(int[] selectedRows) {

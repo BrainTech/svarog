@@ -2,13 +2,11 @@ package org.signalml.app.method.ep.view.tags;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import java.util.List;
-
 import javax.swing.JTable;
 
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.view.common.components.panels.AbstractSelectionPanel;
+import org.signalml.domain.tag.StyledTagSet;
 
 public class TagSelectionPanel extends AbstractSelectionPanel<TagSelectionTableModel> {
 
@@ -35,16 +33,13 @@ public class TagSelectionPanel extends AbstractSelectionPanel<TagSelectionTableM
 		return tableModel;
 	}
 
-	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
-		TagDocument tagDocument = data.getTagDocument();
-
-		TagSelectionTableModel model = (TagSelectionTableModel)getTableModel();
-		if (tagDocument != null)
-			model.setStyledTagSet(tagDocument.getTagSet());
-
-		List<TagStyleGroup> averagedTagStyles = data.getParameters().getAveragedTagStyles();
-		model.setSelectedTagStyles(averagedTagStyles);
-
+	public void setTagDocument(TagDocument tagDocument) {
+		StyledTagSet tagSet = new StyledTagSet();
+		if (tagDocument != null) {
+			tagSet = tagDocument.getTagSet();
+			((TagSelectionTable) getTable()).setStyledTagSet(tagSet);
+		}
+		getTableModel().setStyledTagSet(tagSet);
 	}
 
 }

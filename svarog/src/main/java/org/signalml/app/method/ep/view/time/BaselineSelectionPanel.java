@@ -2,7 +2,6 @@ package org.signalml.app.method.ep.view.time;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.view.common.components.panels.PanelWithEnablingCheckbox;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
@@ -31,8 +30,8 @@ public class BaselineSelectionPanel extends PanelWithEnablingCheckbox<TimeSelect
 		return panel;
 	}
 
-	public void fillPanelFromModel(EvokedPotentialApplicationData data) {
-		EvokedPotentialParameters parameters = data.getParameters();
+	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
+		setCheckboxSelected(parameters.isBaselineCorrectionEnabled());
 		getPanel().getStartTimeSpinner().setValue(parameters.getBaselineTimeBefore());
 		getPanel().getEndTimeSpinner().setValue(parameters.getBaselineTimeAfter());
 	}
