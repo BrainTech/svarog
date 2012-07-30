@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.newstager.ui;
 
-import static org.signalml.plugin.newstager.NewStagerPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.Component;
 import java.awt.Dimension;
