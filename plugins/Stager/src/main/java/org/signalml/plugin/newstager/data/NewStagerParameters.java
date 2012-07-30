@@ -1,11 +1,6 @@
 package org.signalml.plugin.newstager.data;
 
-import java.io.Serializable;
-
-import org.signalml.app.config.preset.Preset;
 import org.signalml.plugin.newstager.helper.NewStagerConfigurationDefaultsHelper;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 public class NewStagerParameters {
 
