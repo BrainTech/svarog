@@ -9,12 +9,12 @@ import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 
 public class NewStagerBookAtomSimpleTagBuilder extends NewStagerAbstractTagBuilder {
 
-	private NewStagerTagCollectionType tagType;
+	private final NewStagerTagCollectionType tagType;
 
 	public NewStagerBookAtomSimpleTagBuilder(
 		NewStagerBookAtomTagBuilderData data,
 		NewStagerTagCollectionType tagType) {
-		super(data);
+		super(data, tagType.toString());
 		this.tagType = tagType;
 		this.tags = new LinkedList<IPluginTagDef>();
 	}

@@ -19,6 +19,10 @@ public class NewStagerAtomTagBuilderChain extends NewStagerAbstractTagBuilder {
 	public NewStagerAtomTagBuilderChain(NewStagerBookAtomTagBuilderData data) {
 		super(data);
 	}
+	
+	public NewStagerAtomTagBuilderChain(NewStagerBookAtomTagBuilderData data, String description) {
+		super(data, description);
+	}
 
 	public NewStagerAtomTagBuilderChain compose(INewStagerTagBuilder builder) {
 		builders.add(builder);
@@ -26,7 +30,11 @@ public class NewStagerAtomTagBuilderChain extends NewStagerAbstractTagBuilder {
 	}
 
 	public NewStagerAtomTagBuilderChain composeChain() {
-		NewStagerAtomTagBuilderChain chain = new NewStagerAtomTagBuilderChain(this.data);
+		return this.composeChain(null);
+	}
+	
+	public NewStagerAtomTagBuilderChain composeChain(String description) {
+		NewStagerAtomTagBuilderChain chain = new NewStagerAtomTagBuilderChain(this.data, description);
 		this.compose(chain);
 		return chain;
 	}

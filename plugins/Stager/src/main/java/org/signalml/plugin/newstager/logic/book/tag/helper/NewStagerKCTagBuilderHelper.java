@@ -47,7 +47,7 @@ public class NewStagerKCTagBuilderHelper extends
 		for (NewStagerAdaptedAtom atom : this.kcGaborFilter.filter(sample.atoms)) {
 			boolean selected = true;
 			for (int i = 0; i < 3; ++i) {
-				if (atom.amplitude != ampli[i]) {
+				if (atom.position != ampli[i]) {	//FIXME compare amplitude with position?
 					selected = false;
 					break;
 				}
@@ -65,7 +65,7 @@ public class NewStagerKCTagBuilderHelper extends
 
 		}
 
-		this.result = (double) count;
+		this.result = count;
 	}
 
 }

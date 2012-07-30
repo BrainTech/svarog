@@ -11,15 +11,13 @@ import org.signalml.util.MinMaxRange;
 
 import com.google.common.collect.Lists;
 
-public class NewStagerBookAtomFilterBase implements
-	INewStagerBookAtomFilter {
+public class NewStagerBookAtomFilterBase implements INewStagerBookAtomFilter {
 
 	protected NewStagerBookAtomFilterData data;
 	protected INewStagerBookAtomSelector selector;
 
 	private NewStagerAdaptedAtom atoms[];
 	private Collection<NewStagerAdaptedAtom> result;
-
 
 	public NewStagerBookAtomFilterBase(NewStagerBookAtomFilterData data) {
 		this.data = data;
@@ -33,15 +31,19 @@ public class NewStagerBookAtomFilterBase implements
 
 			@Override
 			public boolean matches(NewStagerAdaptedAtom atom) {
-				return (amplitude == null || (atom.amplitude >= amplitude
-											  .getMin() && atom.amplitude <= amplitude.getMax()))
-					   && (frequency == null || (atom.frequency >= frequency
-												 .getMin() && atom.frequency <= frequency
-												 .getMax()))
-					   && (phase == null || (atom.phase <= phase.getMin() || atom.phase >= phase
-											 .getMax()))
-					   && (scale == null || (atom.scale >= scale.getMin() && atom.scale <= scale
-											 .getMax()));
+				return (compare(amplitude, atom.amplitude)
+						&& compare(frequency, atom.frequency)
+						&& (phase == null || ((phase.isMinUnlimited() || phase
+								.getMin() >= atom.phase) || ((phase
+								.isMaxUnlimited() || phase.getMax() <= atom.phase))))
+						&& compare(scale, atom.scale));
+			}
+
+			private boolean compare(MinMaxRange thresholdRange, double atomValue) {
+				return thresholdRange == null
+						|| ((thresholdRange.isMinUnlimited() || thresholdRange
+								.getMin() <= atomValue) && ((thresholdRange
+								.isMaxUnlimited() || thresholdRange.getMax() >= atomValue)));
 			}
 		};
 	}
@@ -50,13 +52,14 @@ public class NewStagerBookAtomFilterBase implements
 	public Collection<NewStagerAdaptedAtom> filter(NewStagerAdaptedAtom atoms[]) {
 		if (this.atoms != atoms || this.result == null) {
 			this.atoms = atoms;
-			this.result = Lists.newArrayList(this.filterWhen(atoms, this.selector));
+			this.result = Lists.newArrayList(this.filterWhen(atoms,
+					this.selector));
 		}
 		return this.result;
 	}
 
 	protected Collection<NewStagerAdaptedAtom> filterWhen(
-		NewStagerAdaptedAtom atoms[], INewStagerBookAtomSelector selector) {
+			NewStagerAdaptedAtom atoms[], INewStagerBookAtomSelector selector) {
 
 		final NewStagerAdaptedAtom array[] = atoms;
 		final INewStagerBookAtomSelector atomSelector = selector;
@@ -110,7 +113,7 @@ public class NewStagerBookAtomFilterBase implements
 					private void advance() {
 						while (this.currentIdx < array.length
 								&& !atomSelector
-						.matches(array[this.currentIdx])) {
+										.matches(array[this.currentIdx])) {
 							++this.currentIdx;
 						}
 
