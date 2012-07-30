@@ -26,7 +26,7 @@ public class NewStagerArtifactMontageAlgorithm extends
 	private int c3a2Count;
 	private int c4a1Count;
 
-	private NewStagerArtifactAlgorithmData data;
+	private final NewStagerArtifactAlgorithmData data;
 
 	public NewStagerArtifactMontageAlgorithm(NewStagerArtifactAlgorithmData data) {
 		this.data = data;
@@ -121,7 +121,7 @@ public class NewStagerArtifactMontageAlgorithm extends
 		double channelSignalDifference[] = new double[length];
 
 		for (int i = 0; i < length; ++i) {
-			channelSignalDifference[i] = (channelSignal1[i] - channelSignal2[i])
+			channelSignalDifference[i] = channelSignal1[i] - channelSignal2[i]
 										 / NewStagerArtifactMontageAlgorithm.NORMALIZING_FACTOR;
 		}
 
