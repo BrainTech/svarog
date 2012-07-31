@@ -4,11 +4,17 @@ import org.signalml.plugin.newstager.data.book.NewStagerBookSample;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagBuilderData;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 
-public abstract class NewStagerConditionTagBuilderChain extends NewStagerAtomTagBuilderChain {
+public abstract class NewStagerConditionTagBuilderChain extends
+		NewStagerAtomTagBuilderChain {
 
 	public NewStagerConditionTagBuilderChain(
-		NewStagerBookAtomTagBuilderData data) {
+			NewStagerBookAtomTagBuilderData data) {
 		super(data);
+	}
+
+	public NewStagerConditionTagBuilderChain(
+			NewStagerBookAtomTagBuilderData data, String description) {
+		super(data, description);
 	}
 
 	@Override

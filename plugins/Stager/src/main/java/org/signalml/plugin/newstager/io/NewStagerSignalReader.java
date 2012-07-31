@@ -5,9 +5,9 @@ import org.signalml.plugin.io.IPluginDataSourceReader;
 
 public class NewStagerSignalReader implements IPluginDataSourceReader {
 
-	private MultichannelSampleSource source;
-	private int channelCount;
-	private int samplesCount;
+	private final MultichannelSampleSource source;
+	private final int channelCount;
+	private final int samplesCount;
 	private int signalOffset;
 
 
@@ -18,6 +18,7 @@ public class NewStagerSignalReader implements IPluginDataSourceReader {
 		this.signalOffset = 0;
 	}
 
+	@Override
 	public boolean hasMoreSamples() throws InterruptedException {
 		synchronized (this) {
 			return this.signalOffset < this.samplesCount;

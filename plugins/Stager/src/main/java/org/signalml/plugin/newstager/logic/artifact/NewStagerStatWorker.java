@@ -10,7 +10,7 @@ import org.signalml.plugin.newstager.io.INewStagerStatsSynchronizer;
 
 public class NewStagerStatWorker implements Runnable {
 
-	private NewStagerStatWorkerData data;
+	private final NewStagerStatWorkerData data;
 
 	public NewStagerStatWorker(NewStagerStatWorkerData data) {
 		this.data = data;
@@ -27,25 +27,20 @@ public class NewStagerStatWorker implements Runnable {
 			NewStagerStatAlgorithm stagerStat = new NewStagerStatAlgorithm(data);
 
 			int count = 0;
-			int channelCount = 0, sampleCount = 0;
-			while (true) { // TODO
+			int loopCount = this.data.constants.segmentCount;
+			while (true) {
 				double buffer[][] = synchronizer.getReadyBuffer();
 				if (buffer == null) {
 					break;
 				}
-				channelCount = buffer.length;
-				sampleCount = buffer[0].length;
 
-				stagerStat.compute(buffer);
+				if (count < loopCount) {
+					stagerStat.compute(buffer);
+					++count;
+				}
+
 				synchronizer.markBufferAsProcessed(buffer);
 				completion.signalProgress(1);
-				++count;
-			}
-
-			double zeroedBuffer[][] = new double[channelCount][sampleCount];
-			while (count < this.data.constants.segmentCount) {
-				stagerStat.compute(zeroedBuffer);
-				++count;
 			}
 
 			completion.completeWork(stagerStat.getResult());

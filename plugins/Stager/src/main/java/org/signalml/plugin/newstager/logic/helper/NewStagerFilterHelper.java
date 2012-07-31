@@ -18,7 +18,7 @@ public class NewStagerFilterHelper {
 			for (int k = 1; k < Math.min(blockCount, denLength) && k <= i; ++k) {
 				value -= den[k] * result[i - k];
 			}
-			result[i] = value;
+			result[i] = value / den[0];
 		}
 
 		return result;

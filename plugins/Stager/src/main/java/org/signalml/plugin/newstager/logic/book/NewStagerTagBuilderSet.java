@@ -18,7 +18,7 @@ import org.signalml.plugin.newstager.logic.book.tag.INewStagerTagBuilder;
 
 public class NewStagerTagBuilderSet {
 
-	private List<INewStagerTagBuilder> builders;
+	private final List<INewStagerTagBuilder> builders;
 
 	public NewStagerTagBuilderSet() {
 		this.builders = new LinkedList<INewStagerTagBuilder>();
@@ -33,9 +33,6 @@ public class NewStagerTagBuilderSet {
 	}
 
 	public void process(NewStagerBookSample sample) {
-		if (sample.offset == 1270) {
-			System.out.print("d");
-		}
 		for (INewStagerTagBuilder builder : this.builders) {
 			builder.process(sample);
 		}
