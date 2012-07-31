@@ -4,7 +4,7 @@
 
 package org.signalml.plugin.newartifact.ui;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
@@ -44,8 +44,8 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * ArtifactMethodDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
@@ -295,6 +295,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 					_("Edit channel labels and functions"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
@@ -331,6 +332,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 					_("Select excluded derivations"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (exclusionDialog == null) {
@@ -346,7 +348,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 		}
 
 	}
-	
+
 	private static Collection<Class<? extends Preset>> GetPresetClasses() {
 		Collection<Class<? extends Preset>> l = new ArrayList<Class<? extends Preset>>();
 		l.add(NewArtifactParameters.class);

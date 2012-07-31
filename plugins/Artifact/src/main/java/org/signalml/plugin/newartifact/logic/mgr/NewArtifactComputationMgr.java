@@ -1,7 +1,7 @@
 package org.signalml.plugin.newartifact.logic.mgr;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._R;
+import static org.signalml.plugin.i18n.PluginI18n._;
+import static org.signalml.plugin.i18n.PluginI18n._R;
 
 import java.io.File;
 import java.util.Collection;

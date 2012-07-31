@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -124,7 +124,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		for (int i=0; i<artifactTypes.length; i++) {
 
 			textFields[i].setText(Float.toString(sensitivities[i]));
-			scrollBars[i].setValue((int) Math.round(sensitivities[i]*SCROLLBAR_SCALE));
+			scrollBars[i].setValue(Math.round(sensitivities[i]*SCROLLBAR_SCALE));
 			checkBoxes[i].setSelected(chosenArtifactTypes[i] != 0);
 
 		}
@@ -253,7 +253,7 @@ public class NewArtifactTypesPanel extends JPanel {
 				return;
 			}
 			textField.setBackground(Color.WHITE);
-			getSensitivityScrollBars()[index].setValue((int) Math.round(value*SCROLLBAR_SCALE));
+			getSensitivityScrollBars()[index].setValue(Math.round(value*SCROLLBAR_SCALE));
 
 		}
 

@@ -3,6 +3,8 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -10,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 /** ArtifactExclusionPanel
  *
