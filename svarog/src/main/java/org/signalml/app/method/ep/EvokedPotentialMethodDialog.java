@@ -7,6 +7,7 @@ package org.signalml.app.method.ep;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
@@ -18,6 +19,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.ArtifactRejectionPanel;
 import org.signalml.app.method.ep.view.EvokedPotentialSettingsPanel;
 import org.signalml.app.method.ep.view.signalspace.ERPSignalSpacePanel;
+import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
@@ -178,6 +180,14 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		getSignalSpacePanel().validatePanel(errors);
 		getEvokedPotentialSettingsPanel().validatePanel(errors);
 
+		List<TagStyleGroup> averagedStyles = getEvokedPotentialSettingsPanel().getAveragedTagSelectionPanel().getSelectedTagStyles();
+		List<TagStyleGroup> artifactStyles = getArtifactRejectionPanel().getArtifactTagsSelectionPanel().getSelectedTagStyles();
+
+		for (TagStyleGroup avStyle: averagedStyles) {
+			if (artifactStyles.contains(avStyle))
+				errors.addError(_("The list of artifact tags cannot contain averaged tags!"));
+			return;
+		}
 
 	}
 

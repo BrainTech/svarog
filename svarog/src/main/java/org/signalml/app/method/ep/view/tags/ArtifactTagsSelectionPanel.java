@@ -13,7 +13,7 @@ public class ArtifactTagsSelectionPanel extends TagSelectionPanel {
 	}
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
-		parameters.setArtifactTagStyles(getTableModel().getSelectedElements());
+		parameters.setArtifactTagStyles(getSelectedTagStyles());
 	}
 
 }

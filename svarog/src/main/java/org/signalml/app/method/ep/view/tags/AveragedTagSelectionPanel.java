@@ -90,8 +90,10 @@ public class AveragedTagSelectionPanel extends TagSelectionPanel implements List
 		getUngroupTagsButton().setEnabled(realGroupsCount > 0);
 	}
 
+
+
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
-		parameters.setAveragedTagStyles(getTableModel().getSelectedElements());
+		parameters.setAveragedTagStyles(getSelectedTagStyles());
 	}
 
 	@Override
