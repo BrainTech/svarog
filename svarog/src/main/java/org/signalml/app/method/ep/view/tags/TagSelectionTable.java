@@ -33,6 +33,7 @@ public class TagSelectionTable extends JTable {
 
 	public void setStyledTagSet(StyledTagSet styledTagSet) {
 		this.styledTagSet = styledTagSet;
+		tagIconProducer.resetAll();
 	}
 
 	private void setColumnsPreferredSizes() {
