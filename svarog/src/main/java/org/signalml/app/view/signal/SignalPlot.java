@@ -43,7 +43,6 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
@@ -55,6 +54,8 @@ import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
+import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
@@ -73,9 +74,6 @@ import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
-import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.SourceChannel;
 import org.signalml.util.Util;
 
 /** SignalPlot
@@ -1785,15 +1783,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	/**
 	 * Transforms a given {@link SignalSelection}to a marker selection type.
 	 * The result of the transformation is a one-sample wide signal selection
-	 * positioned at the center of the original signal selection.
+	 * positioned at the beginning of the original signal selection.
 	 * @param selection the selection to be transformed
 	 * @return the result of the transformation - a one-sample wide signal
-	 * selection position at the center of the given signal selection.
+	 * selection position at the beginning of the given signal selection.
 	 */
 	protected SignalSelection transformToMarkerSelection(SignalSelection selection) {
 
-		double centerPoint = selection.getCenterPosition();
-		int sampleAtPoint = (int)(centerPoint * samplingFrequency);
+		double startPosition = selection.getPosition();
+		int sampleAtPoint = (int)(startPosition * samplingFrequency);
 		float newStartPosition = sampleAtPoint / samplingFrequency;
 
 		return getChannelSelection(newStartPosition, newStartPosition + 1/samplingFrequency, selection.getChannel());
@@ -2388,6 +2386,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	@Override
 	public double getTimeZoomFactor() {
 		return timeZoomFactor;
 	}
@@ -2577,6 +2576,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return blockSize;
 	}
 
+	@Override
 	public float getSamplingFrequency() {
 		return signalChain.getSamplingFrequency();
 	}
