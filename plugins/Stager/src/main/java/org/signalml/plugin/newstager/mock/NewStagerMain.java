@@ -199,8 +199,8 @@ public class NewStagerMain {
 				spindleThreshold, thetaThreshold, KCThreshold);
 
 			stagerData.setParameters(new NewStagerParameters(bookFilePath,
-									 NewStagerRules.RK, true, true, false, thresholds));
-			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d,
+									 NewStagerRules.RK, true, true, true, thresholds));
+			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d, 1.0d,
 										  0.75d, 0.5d, -0.85d, -0.7d));
 
 			mgr.compute(
