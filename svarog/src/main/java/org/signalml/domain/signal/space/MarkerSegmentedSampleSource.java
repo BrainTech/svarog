@@ -136,12 +136,12 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 				markerSample = (int) Math.floor(samplingFrequency * tag.getPosition());
 
-				if ((markerSample-1) < samplesBefore) {  // samplesBefore samples from markerSample inclusive
+				if (markerSample < samplesBefore) {  // samplesBefore samples from markerSample inclusive
 					// not enough samples before
 					unusableSegmentCount++;
 					continue;
 				}
-				if (minSampleCount - (markerSample+1) < samplesAfter) {  // samplesAfter samples from (markerSample+1) inclusive
+				if (minSampleCount < samplesAfter + markerSample) {  // samplesAfter samples from (markerSample+1) inclusive
 					// not enough samples after
 					unusableSegmentCount++;
 					continue;
@@ -156,7 +156,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 					continue;
 
 				// sample is ok
-				offsetArr[averagedCount] = markerSample - (samplesBefore-1);
+				offsetArr[averagedCount] = markerSample - samplesBefore;
 				averagedCount++;
 
 			}

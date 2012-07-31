@@ -32,6 +32,10 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 		this.sampleCount = sampleCount;
 	}
 
+	public DoubleArraySampleSource(double[][] samples) {
+		this(samples, samples.length, samples[0].length);
+	}
+
 	@Override
 	public int getChannelCount() {
 		return channelCount;

@@ -55,7 +55,7 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 		this.name = name;
 	}
 
-	public SignalSpace getWholeSignalSpace() {
+	public SignalSpace getSignalSpace() {
 		return wholeSignalSpace;
 	}
 

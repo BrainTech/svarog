@@ -115,11 +115,9 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 				}
 				double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLength());
 
-				if (result.getAverageSamples().size() < sampleSourceNumber) {
-					double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
-					for (int i = 0; i < samples.length; i++)
-						samples[i] = samples[i] - baseline;
-				}
+				double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
+				for (int i = 0; i < samples.length; i++)
+					samples[i] = samples[i] - baseline;
 			}
 			sampleSourceNumber++;
 		}

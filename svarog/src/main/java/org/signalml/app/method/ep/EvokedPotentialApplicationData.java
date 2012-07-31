@@ -12,6 +12,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.domain.signal.space.SignalSpace;
@@ -55,12 +56,18 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 
 		this.setStyledTagSet(tagDocument != null ? tagDocument.getTagSet() : null);
 
-		SignalView signalView = (SignalView) signalDocument.getDocumentView();
+		SignalSpace signalSpace = getParameters().getSignalSpace();
 
-		SignalProcessingChain signalChain = signalView.getMasterPlot().getSignalChain();
-		SignalSpace signalSpace = getParameters().getWholeSignalSpace();
+		MultichannelSampleSource sampleSource;
+		if (signalDocument.getDocumentView() != null) {
+			SignalView signalView = (SignalView) signalDocument.getDocumentView();
 
-		SignalProcessingChain sampleSource = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
+			SignalProcessingChain signalChain = signalView.getMasterPlot().getSignalChain();
+
+			sampleSource = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
+		} else{
+			sampleSource = signalDocument.getSampleSource();
+		}
 
 		List<String> artifactTagStyleNames = new ArrayList<String>();
 		for (TagStyleGroup styleGroup: getParameters().getArtifactTagStyles()) {
