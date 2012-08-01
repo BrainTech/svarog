@@ -1,11 +1,11 @@
 package org.signalml.app.view.tag.styles.attributes;
 
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
-import org.apache.xerces.parsers.AbstractSAXParser;
+
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.tag.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -55,6 +55,8 @@ public class TagAttributesDefinitionsEditPanel extends AbstractPanel {
 		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
+
+		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 
 		tableModel = new TagAttributesDefinitionsTableModel();
 

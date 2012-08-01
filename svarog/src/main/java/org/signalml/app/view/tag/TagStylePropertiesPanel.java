@@ -19,6 +19,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JColorChooser;
@@ -31,11 +32,9 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -48,9 +47,6 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
-
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 
 /**
  * Panel with the properties of the tag style.
@@ -554,9 +550,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	public JColorChooser getOutlineColorChooser() {
 		if (outlineColorChooser == null) {
-			outlineColorChooser = new JColorChooser();
-			outlineColorChooser.setPreviewPanel(new JPanel());
-			outlineColorChooser.setChooserPanels(new AbstractColorChooserPanel[] {outlineColorChooser.getChooserPanels()[1]});
+			outlineColorChooser = new TagColorChooser();
 
 			outlineColorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 				@Override
@@ -583,9 +577,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	public JColorChooser getFillColorChooser() {
 		if (fillColorChooser == null) {
-			fillColorChooser = new JColorChooser();
-			fillColorChooser.setPreviewPanel(new JPanel());
-			fillColorChooser.setChooserPanels(new AbstractColorChooserPanel[] {fillColorChooser.getChooserPanels()[1]});
+			fillColorChooser = new TagColorChooser();
 
 			fillColorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 				@Override
