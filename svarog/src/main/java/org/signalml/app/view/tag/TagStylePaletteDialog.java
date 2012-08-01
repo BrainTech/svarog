@@ -664,7 +664,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		ValidationErrors errors = tagStylePropertiesPanel.validateChanges();
 
 		String newName = tagStylePropertiesPanel.getNameTextField().getText();
-		TagStyle oldStyle = currentTagSet.getStyle(currentStyle.getType(), newName);
+		TagStyle oldStyle = currentTagSet.getStyle(null, newName);
 		if (oldStyle != null && oldStyle != currentStyle) {
 			errors.addError(_("Tag style name already used. Choose another."));
 		}
@@ -823,6 +823,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * PAGE} {@link TagStyle style} is added and the boolean is set that
 		 * the change has occurred.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			addNewStyle(getNewStyle(SignalSelectionType.PAGE));
@@ -854,6 +855,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * BLOCK} {@link TagStyle style} is added and the boolean is set that
 		 * the change has occurred.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			addNewStyle(getNewStyle(SignalSelectionType.BLOCK));
@@ -885,6 +887,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * CHANNEL} {@link TagStyle style} is added and the boolean is set that
 		 * the change has occurred.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			addNewStyle(getNewStyle(SignalSelectionType.CHANNEL));
@@ -919,6 +922,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * appropriate information is shown and no action is taken.
 		 * Otherwise removes that style and sets that there is no active style.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			TreePath selection = getTagStyleTree().getSelectionPath();
@@ -983,6 +987,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * When the action is performed validates and applies the changes
 		 * (user input).
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			validateAndApplyChanges();
@@ -1015,6 +1020,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 		 * activates this {@link TagStyle tag style}.
 		 * Displays the captured key stroke in the text field.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (keyStrokeCaptureDialog == null) {
