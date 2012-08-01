@@ -265,8 +265,11 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 						Object comp = path.getLastPathComponent();
 						if (comp != null && comp instanceof TagStyle) {
 							currentStyle = (TagStyle) comp;
-							tagStylePropertiesPanel.setCurrentStyle(currentStyle);
+						} else {
+							currentStyle = null;
 						}
+
+						tagStylePropertiesPanel.setCurrentStyle(currentStyle);
 					}
 
 					removeStyleAction.setEnabled(path);
