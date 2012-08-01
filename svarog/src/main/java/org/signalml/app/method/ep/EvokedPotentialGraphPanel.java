@@ -41,6 +41,7 @@ import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
 import org.signalml.app.action.components.ExportAllChartsToFileAction;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
@@ -55,6 +56,8 @@ import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
@@ -547,7 +550,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 			try {
 				writeData(file, i);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				Dialogs.showExceptionDialog(e);
 				e.printStackTrace();
 				return;
@@ -596,16 +599,18 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			return file;
 		}
 
-		protected void writeData(File file, int groupIndex) throws IOException {
+		protected void writeData(File file, int groupIndex) throws IOException, SignalMLException {
 			double[][] samples = result.getAverageSamples().get(groupIndex);
 			int channelCount = samples.length;
 			int sampleCount = samples[0].length;
 			DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(samples, channelCount, sampleCount);
 
+			//signal
 			RawSignalWriter rawSignalWriter = new RawSignalWriter();
 			SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
 			rawSignalWriter.writeSignal(file, sampleSource, signalExportDescriptor, null);
 
+			//descriptor
 			RawSignalDescriptorWriter descriptorWriter = new RawSignalDescriptorWriter();
 			RawSignalDescriptor descriptor = new RawSignalDescriptor();
 			descriptor.setSampleCount(sampleCount);
@@ -615,6 +620,21 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 			File xmlFile = Util.changeOrAddFileExtension(file, "xml");
 			descriptorWriter.writeDocument(descriptor, xmlFile);
+
+			//tag file
+			File tagFile = Util.changeOrAddFileExtension(file, "tag");
+			TagDocument tagDocument = new TagDocument();
+			tagDocument.setBackingFile(tagFile);
+			StyledTagSet tagSet = tagDocument.getTagSet();
+			TagStyle eventTagStyle = new TagStyle(SignalSelectionType.CHANNEL, "event", "", Color.red, Color.red, 0);
+			eventTagStyle.setMarker(true);
+			tagSet.addStyle(eventTagStyle);
+			double eventPosition = result.getData().getParameters().getAveragingTimeBefore();
+			tagSet.addTag(new Tag(eventTagStyle, eventPosition, 0.0));
+
+			tagDocument.saveDocument();
+			tagDocument.closeDocument();
+
 		}
 
 		@Override
