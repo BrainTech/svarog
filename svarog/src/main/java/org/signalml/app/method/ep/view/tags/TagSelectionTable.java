@@ -17,6 +17,11 @@ import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.TagStyle;
 
+/**
+ * This is a table for selecting tag styles.
+ *
+ * @author Piotr Szachewicz
+ */
 public class TagSelectionTable extends JTable {
 
 	private TagIconProducer tagIconProducer = new TagIconProducer();

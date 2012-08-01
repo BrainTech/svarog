@@ -9,13 +9,14 @@ import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.TagStyle;
 
+/**
+ * This is a table model for {@link TagSelectionTable}.
+ *
+ * @author Piotr Szachewicz
+ */
 public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyleGroup> {
 
-	private StyledTagSet tagSet;
-
 	public void setStyledTagSet(StyledTagSet styledTagSet) {
-
-		this.tagSet = styledTagSet;
 
 		elements = new ArrayList<TagStyleGroup>();
 		for (TagStyle tagStyle: styledTagSet.getListOfStyles()) {

@@ -7,6 +7,12 @@ import java.awt.event.ActionListener;
 import org.signalml.app.view.common.components.panels.PanelWithEnablingCheckbox;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
+/**
+ * This is a panel for enabling/disabling the low-pass filter
+ * and selecting its parameters.
+ *
+ * @author Piotr Szachewicz
+ */
 public class FilterPanel extends PanelWithEnablingCheckbox<FilterParametersPanel> implements ActionListener {
 
 	public FilterPanel() {

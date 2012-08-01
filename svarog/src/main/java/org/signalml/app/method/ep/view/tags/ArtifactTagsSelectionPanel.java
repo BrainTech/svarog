@@ -4,6 +4,11 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.method.ep.EvokedPotentialParameters;
 
+/**
+ * This a panel for selecting which tag styles represent artifacts.
+ *
+ * @author Piotr Szachewicz
+ */
 public class ArtifactTagsSelectionPanel extends TagSelectionPanel {
 
 	public ArtifactTagsSelectionPanel() {

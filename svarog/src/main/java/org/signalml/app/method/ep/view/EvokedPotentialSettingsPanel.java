@@ -14,6 +14,12 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
+/**
+ * This panel consists of various panel which can be used to
+ * changed the settings of evoked potentials tool.
+ *
+ * @author Piotr Szachewicz
+ */
 public class EvokedPotentialSettingsPanel extends AbstractPanel {
 
 	private AveragedTagSelectionPanel averageedTagSelectionPanel;

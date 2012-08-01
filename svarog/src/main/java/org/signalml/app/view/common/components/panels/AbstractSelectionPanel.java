@@ -16,8 +16,17 @@ import javax.swing.JTable;
 
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 
+/**
+ * This panel contains a table and select all/clear all buttons.
+ *
+ * @author Piotr Szachewicz
+ * @param <T> the table model that is used to represent data in this panel.
+ */
 public abstract class AbstractSelectionPanel<T extends AbstractSelectionTableModel> extends AbstractPanel {
 
+	/**
+	 * The table model that is used to represent data in this panel.
+	 */
 	protected T tableModel;
 
 	/**

@@ -5,6 +5,13 @@ import java.util.List;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * This class represents a group of tag style names.
+ * (This functionality is needed for evoked potentials
+ * averaging.)
+ *
+ * @author Piotr Szachewicz
+ */
 @XStreamAlias("tagStyleGroup")
 public class TagStyleGroup {
 

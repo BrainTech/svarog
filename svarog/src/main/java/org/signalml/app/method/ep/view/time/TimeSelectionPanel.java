@@ -12,6 +12,12 @@ import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 import org.signalml.app.view.common.components.spinners.FloatSpinner;
 
+/**
+ * This is a panel for selecting a time span
+ * (e.g. for selecting baseline or averaged time span).
+ *
+ * @author Piotr Szachewicz
+ */
 public class TimeSelectionPanel extends LabeledComponentsPanel {
 
 	protected FloatSpinner secondsBeforeSpinner;

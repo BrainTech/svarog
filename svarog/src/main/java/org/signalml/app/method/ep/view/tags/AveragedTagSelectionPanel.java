@@ -17,6 +17,12 @@ import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
+/**
+ * This is a panel for selecting the tag styles which should
+ * be averaged.
+ *
+ * @author Piotr Szachewicz
+ */
 public class AveragedTagSelectionPanel extends TagSelectionPanel implements ListSelectionListener {
 
 	private JButton groupTagsButton;

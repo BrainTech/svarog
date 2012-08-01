@@ -10,6 +10,11 @@ import org.signalml.app.method.ep.view.tags.ArtifactTagsSelectionPanel;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
+/**
+ * This panel is used to select tag styles which should be treated as artifacts.
+ *
+ * @author Piotr Szachewicz
+ */
 public class ArtifactRejectionPanel extends AbstractPanel {
 
 	private ArtifactTagsSelectionPanel artifactTagsSelectionPanel;

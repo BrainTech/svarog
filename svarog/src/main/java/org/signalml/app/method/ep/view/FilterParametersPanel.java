@@ -13,6 +13,13 @@ import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 import org.signalml.app.view.common.components.spinners.FloatSpinner;
 import org.signalml.method.ep.EvokedPotentialParameters;
 
+/**
+ * This is a panel for selecting the cut-off frequency of a low pass filter
+ * that will be used to filter the result of evoked potentials
+ * averaging.
+ *
+ * @author Piotr Szachewicz
+ */
 public class FilterParametersPanel extends LabeledComponentsPanel {
 
 	private FloatSpinner cutoffFrequencySpinner;
