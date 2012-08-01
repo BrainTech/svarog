@@ -41,9 +41,9 @@ public abstract class ExportAllChartsToFileAction extends AbstractSignalMLAction
 
 	public ExportAllChartsToFileAction() {
 		super();
-		setText(_("Save all charts as one PNG file"));
+		setText(_("Save charts to PNG file"));
 		setIconPath("org/signalml/app/icon/picture_save.png");
-		setToolTip(_("Save all charts as one PNG file"));
+		setToolTip(_("Save charts to PNG file"));
 	}
 
 	protected abstract int getChartCount();

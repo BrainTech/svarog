@@ -517,9 +517,9 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 
 		public ExportAllEPSamplesToFloatFileAction() {
 			super();
-			setText(_("Save all samples as txt file"));
-			setToolTip(_("Save all samples as one TXT file"));
-			setIconPath("org/signalml/app/icon/script_save.png");
+			setText(_("Save samples to file"));
+			setToolTip(_("Save samples to file"));
+			setIconPath("org/signalml/app/icon/filesave.png");
 		}
 
 		@Override
