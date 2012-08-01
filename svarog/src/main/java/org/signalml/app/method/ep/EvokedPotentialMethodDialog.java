@@ -102,8 +102,6 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 			tagDocument.updateSignalSpaceConstraints(constraints);
 		}
 
-		constraints.setRequireCompletePages(true);
-
 		getSignalSpacePanel().setConstraints(constraints);
 
 		// test for active selections and use them if possible
