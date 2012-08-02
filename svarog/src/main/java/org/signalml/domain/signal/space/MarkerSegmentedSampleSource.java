@@ -53,6 +53,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	 */
 	private int unusableSegmentCount;
 	/**
+	 * Number of segments which were rejected because artifact tags were found in them.
+	 */
+	private int artifactRejectedSegmentsCount;
+	/**
 	 * the first sample relative to the marker that should be included in
 	 * the segment
 	 */
@@ -146,8 +150,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 					//we don't use samples from outside the <firstSample, lastSample> range
 					continue;
 
-				if (overlapsWithArtifactTag(tagSet, tag, artifactStyles, startTime, length))
+				if (overlapsWithArtifactTag(tagSet, tag, artifactStyles, startTime, length)) {
+					artifactRejectedSegmentsCount++;
 					continue;
+				}
 
 				// sample is ok
 				offsetArr[averagedCount] = markerSample + startSample;
@@ -312,6 +318,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	@Override
 	public int getUnusableSegmentCount() {
 		return unusableSegmentCount;
+	}
+
+	public int getArtifactRejectedSegmentsCount() {
+		return artifactRejectedSegmentsCount;
 	}
 
 }

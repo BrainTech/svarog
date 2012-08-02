@@ -53,7 +53,6 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 	private JButton saveSamplesToFloatFileButton;
 
 	private JLabel skippedMarkersLabelTitle;
-	private JLabel skippedMarkersLabel;
 
 	public EvokedPotentialResultDialog() {
 		super();
@@ -90,15 +89,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 			splitPane.setOneTouchExpandable(true);
 
 			JPanel topPanel = new JPanel(new BorderLayout(3,3));
-
-			JPanel labelPanel = new JPanel(new BorderLayout(3,3));
-			labelPanel.setBorder(new EmptyBorder(0,3,3,3));
-
-			labelPanel.add(getSkippedMarkersLabelTitle(), BorderLayout.CENTER);
-			labelPanel.add(getSkippedMarkersLabel(), BorderLayout.EAST);
-
 			topPanel.add(getGraphScrollPane(), BorderLayout.CENTER);
-			topPanel.add(labelPanel, BorderLayout.SOUTH);
 
 			JPanel bottomPanel = new JPanel(new BorderLayout());
 
@@ -154,21 +145,6 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 		return propertySheetScrollPane;
 	}
 
-	public JLabel getSkippedMarkersLabelTitle() {
-		if (skippedMarkersLabelTitle == null) {
-			skippedMarkersLabelTitle = new JLabel(_("Number of unusable segments"));
-		}
-		return skippedMarkersLabelTitle;
-	}
-
-	public JLabel getSkippedMarkersLabel() {
-		if (skippedMarkersLabel == null) {
-			skippedMarkersLabel = new JLabel();
-			skippedMarkersLabel.setHorizontalAlignment(JLabel.RIGHT);
-		}
-		return skippedMarkersLabel;
-	}
-
 	public JPanel getButtonPanel() {
 		if (buttonPanel == null) {
 
@@ -205,19 +181,6 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 		getGraphPanel().setResult(result);
 		getPropertySheetModel().setSubject(new EvokedPotentialResultWrapper(result));
-
-		int skippedCount = result.getSkippedCount();
-		JLabel label = getSkippedMarkersLabel();
-
-		label.setText(Integer.toString(skippedCount));
-
-		if (skippedCount > 0) {
-			label.setForeground(Color.RED);
-			getSkippedMarkersLabelTitle().setForeground(Color.RED);
-		} else {
-			label.setForeground(Color.BLACK);
-			getSkippedMarkersLabelTitle().setForeground(Color.BLACK);
-		}
 
 	}
 

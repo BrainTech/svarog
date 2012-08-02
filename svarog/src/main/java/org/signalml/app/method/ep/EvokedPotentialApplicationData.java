@@ -13,7 +13,6 @@ import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
-import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.TimeSpaceType;
@@ -74,8 +73,8 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 			artifactTagStyleNames.addAll(styleGroup.getTagStyleNames());
 		}
 
-		List<MultichannelSegmentedSampleSource> averagedSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
-		List<MultichannelSegmentedSampleSource> baselineSampleSources = new ArrayList<MultichannelSegmentedSampleSource>();
+		List<MarkerSegmentedSampleSource> averagedSampleSources = new ArrayList<MarkerSegmentedSampleSource>();
+		List<MarkerSegmentedSampleSource> baselineSampleSources = new ArrayList<MarkerSegmentedSampleSource>();
 		for (TagStyleGroup tagStyleGroup: getParameters().getAveragedTagStyles()) {
 
 			List<String> styleNames = tagStyleGroup.getTagStyleNames();

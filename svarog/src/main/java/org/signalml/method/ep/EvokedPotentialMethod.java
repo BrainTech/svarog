@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -48,7 +49,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		tracker.setMessage(_("Preparing"));
 
-		MultichannelSegmentedSampleSource sampleSource = data.getSampleSources().get(0);
+		MarkerSegmentedSampleSource sampleSource = data.getSampleSources().get(0);
 
 		int sampleCount = sampleSource.getSegmentLength();
 		int segmentCount = sampleSource.getSegmentCount();
@@ -91,8 +92,12 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		result.setSampleCount(sampleCount);
 		result.setChannelCount(channelCount);
 		result.setSamplingFrequency(samplingFrequency);
-		result.setAveragedCount(segmentCount);
-		result.setSkippedCount(sampleSource.getUnusableSegmentCount());
+
+		for (MarkerSegmentedSampleSource segmentedSampleSource: data.getSampleSources()) {
+			result.getAveragedSegmentsCount().add(segmentedSampleSource.getSegmentCount());
+			result.getUnusableSegmentsCount().add(segmentedSampleSource.getUnusableSegmentCount());
+			result.getArtifactRejectedSegmentsCount().add(segmentedSampleSource.getArtifactRejectedSegmentsCount());
+		}
 
 		tracker.setMessage(_("Finished"));
 

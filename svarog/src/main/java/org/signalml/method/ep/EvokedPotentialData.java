@@ -7,7 +7,7 @@ package org.signalml.method.ep;
 import java.io.Serializable;
 import java.util.List;
 
-import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
 import org.springframework.validation.Errors;
 
@@ -21,8 +21,8 @@ public class EvokedPotentialData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private EvokedPotentialParameters parameters;
-	private List<MultichannelSegmentedSampleSource> sampleSources;
-	private List<MultichannelSegmentedSampleSource> baselineSampleSources;
+	private List<MarkerSegmentedSampleSource> sampleSources;
+	private List<MarkerSegmentedSampleSource> baselineSampleSources;
 	private StyledTagSet styledTagSet;
 
 	public EvokedPotentialData() {
@@ -33,19 +33,19 @@ public class EvokedPotentialData implements Serializable {
 		this.parameters = parameters;
 	}
 
-	public void setSampleSource(List<MultichannelSegmentedSampleSource> sampleSources) {
+	public void setSampleSource(List<MarkerSegmentedSampleSource> sampleSources) {
 		this.sampleSources = sampleSources;
 	}
 
-	public List<MultichannelSegmentedSampleSource> getSampleSources() {
+	public List<MarkerSegmentedSampleSource> getSampleSources() {
 		return sampleSources;
 	}
 
-	public List<MultichannelSegmentedSampleSource> getBaselineSampleSources() {
+	public List<MarkerSegmentedSampleSource> getBaselineSampleSources() {
 		return baselineSampleSources;
 	}
 
-	public void setBaselineSampleSources(List<MultichannelSegmentedSampleSource> baselineSampleSources) {
+	public void setBaselineSampleSources(List<MarkerSegmentedSampleSource> baselineSampleSources) {
 		this.baselineSampleSources = baselineSampleSources;
 	}
 

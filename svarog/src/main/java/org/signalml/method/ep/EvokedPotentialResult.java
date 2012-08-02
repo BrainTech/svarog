@@ -27,8 +27,9 @@ public class EvokedPotentialResult implements Serializable {
 	private String[] labels;
 	private List<double[][]> averageSamples = new ArrayList<double[][]>();;
 
-	private int skippedCount;
-	private int averagedCount;
+	private List<Integer> unusableSegmentsCount = new ArrayList<Integer>();
+	private List<Integer> averagedSegmentsCount = new ArrayList<Integer>();
+	private List<Integer> artifactRejectedSegmentsCount = new ArrayList<Integer>();
 
 	private double startTime;
 	private double segmentLength;
@@ -86,20 +87,28 @@ public class EvokedPotentialResult implements Serializable {
 		this.averageSamples.add(averageSamples);
 	}
 
-	public int getSkippedCount() {
-		return skippedCount;
+	public List<Integer> getUnusableSegmentsCount() {
+		return unusableSegmentsCount;
 	}
 
-	public void setSkippedCount(int skippedCount) {
-		this.skippedCount = skippedCount;
+	public void setUnusableSegmentsCount(List<Integer> unusableSegmentsCount) {
+		this.unusableSegmentsCount = unusableSegmentsCount;
 	}
 
-	public int getAveragedCount() {
-		return averagedCount;
+	public List<Integer> getAveragedSegmentsCount() {
+		return averagedSegmentsCount;
 	}
 
-	public void setAveragedCount(int averagedCount) {
-		this.averagedCount = averagedCount;
+	public void setAveragedSegmentsCount(List<Integer> averagedSegmentsCount) {
+		this.averagedSegmentsCount = averagedSegmentsCount;
+	}
+
+	public List<Integer> getArtifactRejectedSegmentsCount() {
+		return artifactRejectedSegmentsCount;
+	}
+
+	public void setArtifactRejectedSegmentsCount(List<Integer> artifactRejectedSegmentsCount) {
+		this.artifactRejectedSegmentsCount = artifactRejectedSegmentsCount;
 	}
 
 	public double getStartTime() {
