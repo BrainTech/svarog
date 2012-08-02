@@ -49,16 +49,12 @@ public class EvokedPotentialResultWrapper implements PropertyProvider {
 		return result.getSamplingFrequency();
 	}
 
-	public double getSecondsAfter() {
-		return result.getSecondsAfter();
-	}
-
-	public double getSecondsBefore() {
-		return result.getSecondsBefore();
-	}
-
 	public double getSegmentLength() {
-		return result.getSecondsAfter() + result.getSecondsBefore();
+		return result.getSegmentLength();
+	}
+
+	public double getStartTime() {
+		return result.getStartTime();
 	}
 
 	@Override
@@ -74,8 +70,7 @@ public class EvokedPotentialResultWrapper implements PropertyProvider {
 		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.sampleCount", "sampleCount", EvokedPotentialResultWrapper.class, "getSampleCount", null));
 		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.samplingFrequency", "samplingFrequency", EvokedPotentialResultWrapper.class, "getSamplingFrequency", null));
 		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.segmentLength", "segmentLength", EvokedPotentialResultWrapper.class, "getSegmentLength", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.secondsBefore", "secondsBefore", EvokedPotentialResultWrapper.class, "getSecondsBefore", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.secondsAfter", "secondsAfter", EvokedPotentialResultWrapper.class, "getSecondsAfter", null));
+		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.startTime", "startTime", EvokedPotentialResultWrapper.class, "getStartTime", null));
 
 		return list;
 

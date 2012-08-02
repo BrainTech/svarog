@@ -63,8 +63,8 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		EvokedPotentialResult result = new EvokedPotentialResult(data);
 
 		EvokedPotentialParameters parameters = data.getParameters();
-		result.setSecondsBefore(parameters.getAveragingTimeBefore());
-		result.setSecondsAfter(parameters.getAveragingTimeAfter());
+		result.setStartTime(parameters.getAveragingStartTime());
+		result.setSegmentLength(parameters.getAveragingTimeLength());
 
 		tracker.setMessage(_("Summing"));
 		tracker.setTickerLimit(0, segmentCount);

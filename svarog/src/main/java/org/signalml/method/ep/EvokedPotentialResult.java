@@ -30,8 +30,8 @@ public class EvokedPotentialResult implements Serializable {
 	private int skippedCount;
 	private int averagedCount;
 
-	private double secondsBefore;
-	private double secondsAfter;
+	private double startTime;
+	private double segmentLength;
 
 	public EvokedPotentialResult(EvokedPotentialData data) {
 		this.data = data;
@@ -102,20 +102,20 @@ public class EvokedPotentialResult implements Serializable {
 		this.averagedCount = averagedCount;
 	}
 
-	public double getSecondsBefore() {
-		return secondsBefore;
+	public double getStartTime() {
+		return startTime;
 	}
 
-	public void setSecondsBefore(double secondsBefore) {
-		this.secondsBefore = secondsBefore;
+	public void setStartTime(double startTime) {
+		this.startTime = startTime;
 	}
 
-	public double getSecondsAfter() {
-		return secondsAfter;
+	public double getSegmentLength() {
+		return segmentLength;
 	}
 
-	public void setSecondsAfter(double secondsAfter) {
-		this.secondsAfter = secondsAfter;
+	public void setSegmentLength(double segmentLength) {
+		this.segmentLength = segmentLength;
 	}
 
 }

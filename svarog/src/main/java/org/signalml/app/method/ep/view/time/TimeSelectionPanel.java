@@ -20,33 +20,33 @@ import org.signalml.app.view.common.components.spinners.FloatSpinner;
  */
 public class TimeSelectionPanel extends LabeledComponentsPanel {
 
-	protected FloatSpinner secondsBeforeSpinner;
-	protected FloatSpinner secondsAfterSpinner;
+	protected FloatSpinner startTimeSpinner;
+	protected FloatSpinner lengthSpinner;
 
 	public TimeSelectionPanel(String label) {
 		super(label);
 	}
 
 	protected FloatSpinner getStartTimeSpinner() {
-		if (secondsBeforeSpinner == null) {
-			secondsBeforeSpinner = new FloatSpinner(new SpinnerNumberModel(1.0, -100.0, 100.0, 0.1));
+		if (startTimeSpinner == null) {
+			startTimeSpinner = new FloatSpinner(new SpinnerNumberModel(1.0, -100.0, 100.0, 0.1));
 		}
-		return secondsBeforeSpinner;
+		return startTimeSpinner;
 	}
 
-	protected FloatSpinner getEndTimeSpinner() {
-		if (secondsAfterSpinner == null) {
-			secondsAfterSpinner = new FloatSpinner(new SpinnerNumberModel(2.0, -100.0, 100.0, 0.1));
+	protected FloatSpinner getLengthSpinner() {
+		if (lengthSpinner == null) {
+			lengthSpinner = new FloatSpinner(new SpinnerNumberModel(2.0, 0.1, 100.0, 0.1));
 		}
-		return secondsAfterSpinner;
+		return lengthSpinner;
 	}
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
 		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
 
-		components.add(new ComponentWithLabel(new JLabel(_("Seconds before [sec]")), getStartTimeSpinner()));
-		components.add(new ComponentWithLabel(new JLabel(_("Seconds after [sec]")), getEndTimeSpinner()));
+		components.add(new ComponentWithLabel(new JLabel(_("Start time [sec]")), getStartTimeSpinner()));
+		components.add(new ComponentWithLabel(new JLabel(_("Length [sec]")), getLengthSpinner()));
 
 		return components;
 	}

@@ -241,8 +241,8 @@ public class SignalSpace implements Serializable {
 					markerTimeSpace.setMarkerChannel(tagSelection.getChannel());
 					markerTimeSpace.setMarkerStyleName(tagSelection.getStyle().getName());
 
-					markerTimeSpace.setSecondsAfter(1.0);
-					markerTimeSpace.setSecondsBefore(0.0);
+					markerTimeSpace.setSegmentLength(1.0);
+					markerTimeSpace.setStartTime(0.0);
 
 					setMarkerTimeSpace(markerTimeSpace);
 

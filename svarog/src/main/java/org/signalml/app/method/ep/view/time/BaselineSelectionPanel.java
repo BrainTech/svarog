@@ -19,8 +19,8 @@ public class BaselineSelectionPanel extends PanelWithEnablingCheckbox<TimeSelect
 
 	public void fillModelFromPanel(EvokedPotentialParameters parameters) {
 		parameters.setBaselineCorrectionEnabled(isCheckboxSelected());
-		parameters.setBaselineTimeBefore(getPanel().getStartTimeSpinner().getValue());
-		parameters.setBaselineTimeAfter(getPanel().getEndTimeSpinner().getValue());
+		parameters.setBaselineTimeStart(getPanel().getStartTimeSpinner().getValue());
+		parameters.setBaselineTimeLength(getPanel().getLengthSpinner().getValue());
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class BaselineSelectionPanel extends PanelWithEnablingCheckbox<TimeSelect
 
 	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
 		setCheckboxSelected(parameters.isBaselineCorrectionEnabled());
-		getPanel().getStartTimeSpinner().setValue(parameters.getBaselineTimeBefore());
-		getPanel().getEndTimeSpinner().setValue(parameters.getBaselineTimeAfter());
+		getPanel().getStartTimeSpinner().setValue(parameters.getBaselineTimeStart());
+		getPanel().getLengthSpinner().setValue(parameters.getBaselineTimeLength());
 	}
 
 }

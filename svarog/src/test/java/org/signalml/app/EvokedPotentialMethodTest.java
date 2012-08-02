@@ -1,3 +1,4 @@
+
 package org.signalml.app;
 
 import static org.signalml.SignalMLAssert.assertArrayEquals;
@@ -35,7 +36,7 @@ import org.signalml.plugin.export.signal.TagStyle;
 public class EvokedPotentialMethodTest {
 
 	private static final int CHANNEL_COUNT = 2;
-	private static final int SAMPLE_COUNT = 128 * 10;
+	private static final int SAMPLE_COUNT = 128 * 15;
 	private double samplingFrequency = 128.0;
 
 	private double[][] samples;
@@ -51,11 +52,11 @@ public class EvokedPotentialMethodTest {
 	public EvokedPotentialMethodTest() throws Exception {
 		data.setSignalDocument(getSignalDocument());
 		data.setTagDocument(getTagDocument());
-		data.getParameters().setAveragingTimeBefore(1.0F);
-		data.getParameters().setAveragingTimeAfter(1.0F);
+		data.getParameters().setAveragingStartTime(-1.0F);
+		data.getParameters().setAveragingTimeLength(2.0F);
 
-		data.getParameters().setBaselineTimeBefore(2.0F);
-		data.getParameters().setBaselineTimeAfter(-1.0F);
+		data.getParameters().setBaselineTimeStart(-2.0F);
+		data.getParameters().setBaselineTimeLength(1.0F);
 
 		data.getParameters().setFilteringEnabled(false);
 
@@ -79,14 +80,13 @@ public class EvokedPotentialMethodTest {
 	public void testThreeTags() throws Exception {
 
 		List<Double> tagPositions = new ArrayList<Double>();
-		tagPositions.add(1.0);
-		tagPositions.add(3.0);
+		tagPositions.add(2.0);
+		tagPositions.add(4.0);
 		tagPositions.add(5.0);
 
 		data.getParameters().setBaselineCorrectionEnabled(false);
 		performTest(tagPositions);
 	}
-
 
 	@Test
 	public void testThreeTagsWithBaseline() throws Exception {
@@ -94,6 +94,7 @@ public class EvokedPotentialMethodTest {
 		List<Double> tagPositions = new ArrayList<Double>();
 		tagPositions.add(3.0);
 		tagPositions.add(5.0);
+		tagPositions.add(8.0);
 
 		data.getParameters().setBaselineCorrectionEnabled(true);
 		performTest(tagPositions);
@@ -193,26 +194,25 @@ public class EvokedPotentialMethodTest {
 		return tagDocument;
 	}
 
-	public double[] getSamples(int channel, double startPosition, double secondsBefore, double secondsAfter) {
-		int startSample = (int) ((startPosition - secondsBefore) * samplingFrequency);
+	public double[] getSamples(int channel, double markerPosition, double startTime, double lengthInSeconds) {
+		int startSample = (int) ((markerPosition + startTime) * samplingFrequency);
+		int numberOfSamples = (int) (lengthInSeconds * samplingFrequency);
 
-		int length = (int) ((secondsBefore + secondsAfter) * samplingFrequency);
-
-		double[] sampleChunk = new double[length];
+		double[] sampleChunk = new double[numberOfSamples];
 		for (int i = 0; i < sampleChunk.length; i++) {
 			sampleChunk[i] = samples[channel][startSample + i];
 		}
 		return sampleChunk;
 	}
 
-	public double[] getAveragedSamples(int channel, double startPosition) {
+	public double[] getAveragedSamples(int channel, double markerPosition) {
 		EvokedPotentialParameters parameters = data.getParameters();
-		return getSamples(channel, startPosition, parameters.getAveragingTimeBefore(), parameters.getAveragingTimeAfter());
+		return getSamples(channel, markerPosition, parameters.getAveragingStartTime(), parameters.getAveragingTimeLength());
 	}
 
 	public double[] getBaselineSamples(int channel, double startPosition) {
 		EvokedPotentialParameters parameters = data.getParameters();
-		return getSamples(channel, startPosition, parameters.getBaselineTimeBefore(), parameters.getBaselineTimeAfter());
+		return getSamples(channel, startPosition, parameters.getBaselineTimeStart(), parameters.getBaselineTimeLength());
 	}
 
 	@After

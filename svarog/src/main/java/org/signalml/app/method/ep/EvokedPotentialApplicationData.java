@@ -90,13 +90,13 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 							sampleSource, startAveragingTime, endAveragingTime,
 							getStyledTagSet(),
 							styleNames, artifactTagStyleNames,
-							getParameters().getAveragingTimeBefore(), getParameters().getAveragingTimeAfter(), signalSpace.getChannelSpace());
+							getParameters().getAveragingStartTime(), getParameters().getAveragingTimeLength(), signalSpace.getChannelSpace());
 
 			MarkerSegmentedSampleSource baselineSampleSource = new MarkerSegmentedSampleSource(
 					sampleSource, startAveragingTime, endAveragingTime,
 					getStyledTagSet(),
 					styleNames, artifactTagStyleNames,
-					getParameters().getBaselineTimeBefore(), getParameters().getBaselineTimeAfter(), signalSpace.getChannelSpace());
+					getParameters().getBaselineTimeStart(), getParameters().getBaselineTimeLength(), signalSpace.getChannelSpace());
 
 			averagedSampleSources.add(segmentedSampleSource);
 			baselineSampleSources.add(baselineSampleSource);

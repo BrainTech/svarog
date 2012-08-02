@@ -30,16 +30,15 @@ public class MarkerTimeSpace {
 	private List<String> markerStyleNames;
 
 	/**
-	 * the length (in seconds) before the marker that should be included in
-	 * the segment
+	 * The position relative to the marker, which should be included in
+	 * the segment.
 	 */
-	private double secondsBefore;
+	private double startTime;
 
 	/**
-	 * the length (in seconds) before the marker that should be included in
-	 * the segment
+	 * The length (in seconds) of the segment.
 	 */
-	private double secondsAfter;
+	private double segmentLength;
 
 	/**
 	 * Returns the index of the marker channel in the
@@ -84,44 +83,20 @@ public class MarkerTimeSpace {
 		this.markerStyleNames.add(markerStyleName);
 	}
 
-	/**
-	 * Returns the length (in seconds) before the marker that should be
-	 * included in the segment
-	 * @return the length (in seconds) before the marker that should be
-	 * included in the segment
-	 */
-	public double getSecondsBefore() {
-		return secondsBefore;
+	public double getStartTime() {
+		return startTime;
 	}
 
-	/**
-	 * Sets the length (in seconds) before the marker that should be
-	 * included in the segment
-	 * @param secondsBefore the length (in seconds) before the marker that
-	 * should be included in the segment
-	 */
-	public void setSecondsBefore(double secondsBefore) {
-		this.secondsBefore = secondsBefore;
+	public void setStartTime(double startTime) {
+		this.startTime = startTime;
 	}
 
-	/**
-	 * Returns the length (in seconds) after the marker that should be
-	 * included in the segment
-	 * @return the length (in seconds) after the marker that should be
-	 * included in the segment
-	 */
-	public double getSecondsAfter() {
-		return secondsAfter;
+	public double getSegmentLength() {
+		return segmentLength;
 	}
 
-	/**
-	 * Sets the length (in seconds) after the marker that should be
-	 * included in the segment
-	 * @param secondsAfter the length (in seconds) after the marker that
-	 * should be included in the segment
-	 */
-	public void setSecondsAfter(double secondsAfter) {
-		this.secondsAfter = secondsAfter;
+	public void setSegmentLength(double secondsAfter) {
+		this.segmentLength = secondsAfter;
 	}
 
 }

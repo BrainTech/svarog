@@ -382,8 +382,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
 
-			rawDescriptor.setMarkerOffset(markerTimeSpace.getSecondsBefore());
-			rawDescriptor.setPageSize((float)(markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()));
+			rawDescriptor.setMarkerOffset(markerTimeSpace.getStartTime());
+			rawDescriptor.setPageSize((float)(markerTimeSpace.getSegmentLength()));
 
 		} else {
 

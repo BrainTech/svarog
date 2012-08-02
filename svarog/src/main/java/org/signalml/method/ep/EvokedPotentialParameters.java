@@ -28,12 +28,12 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	private String name;
 
 	private List<TagStyleGroup> averagedTagStyles = new ArrayList<TagStyleGroup>();
-	private float averagingTimeBefore = 2;
-	private float averagingTimeAfter = 3;
+	private float averagingStartTime = 0.0F;
+	private float averagingTimeLength = 1.0F;
 
 	private boolean baselineCorrectionEnabled = true;
-	private float baselineTimeBefore = 2;
-	private float baselineTimeAfter = -1;
+	private float baselineStartTime = -0.2F;
+	private float baselineTimeLength = 0.2F;
 
 	private boolean filteringEnabled = true;
 	private float filterCutOffFrequency = 20;
@@ -71,36 +71,36 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 		this.averagedTagStyles = list;
 	}
 
-	public float getAveragingTimeBefore() {
-		return averagingTimeBefore;
+	public float getAveragingStartTime() {
+		return averagingStartTime;
 	}
 
-	public void setAveragingTimeBefore(float averagingTimeBefore) {
-		this.averagingTimeBefore = averagingTimeBefore;
+	public void setAveragingStartTime(float averagingStartTime) {
+		this.averagingStartTime = averagingStartTime;
 	}
 
-	public float getAveragingTimeAfter() {
-		return averagingTimeAfter;
+	public float getAveragingTimeLength() {
+		return averagingTimeLength;
 	}
 
-	public void setAveragingTimeAfter(float averagingTimeAfter) {
-		this.averagingTimeAfter = averagingTimeAfter;
+	public void setAveragingTimeLength(float averagingTimeLength) {
+		this.averagingTimeLength = averagingTimeLength;
 	}
 
-	public float getBaselineTimeBefore() {
-		return baselineTimeBefore;
+	public float getBaselineTimeStart() {
+		return baselineStartTime;
 	}
 
-	public void setBaselineTimeBefore(float baselineTimeBefore) {
-		this.baselineTimeBefore = baselineTimeBefore;
+	public void setBaselineTimeStart(float baselineTimeStart) {
+		this.baselineStartTime = baselineTimeStart;
 	}
 
-	public float getBaselineTimeAfter() {
-		return baselineTimeAfter;
+	public float getBaselineTimeLength() {
+		return baselineTimeLength;
 	}
 
-	public void setBaselineTimeAfter(float baselineTimeAfter) {
-		this.baselineTimeAfter = baselineTimeAfter;
+	public void setBaselineTimeLength(float baselineTimeLength) {
+		this.baselineTimeLength = baselineTimeLength;
 	}
 
 	public boolean isBaselineCorrectionEnabled() {

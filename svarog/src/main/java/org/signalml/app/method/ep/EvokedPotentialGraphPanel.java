@@ -206,7 +206,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 		float samplingFrequency = result.getSamplingFrequency();
 
 		for (e=0; e<sampleCount; e++) {
-			timeValues[e] = (((double) e) / samplingFrequency) - result.getSecondsBefore();
+			timeValues[e] = (((double) e) / samplingFrequency) + result.getStartTime();
 		}
 
 		for (channel=0; channel<channelCount; channel++) {
@@ -629,7 +629,7 @@ public class EvokedPotentialGraphPanel extends JComponent implements Scrollable 
 			TagStyle eventTagStyle = new TagStyle(SignalSelectionType.CHANNEL, "event", "", Color.red, Color.red, 0);
 			eventTagStyle.setMarker(true);
 			tagSet.addStyle(eventTagStyle);
-			double eventPosition = result.getData().getParameters().getAveragingTimeBefore();
+			double eventPosition = result.getData().getParameters().getAveragingStartTime();
 			tagSet.addTag(new Tag(eventTagStyle, eventPosition, 0.0));
 
 			tagDocument.saveDocument();
