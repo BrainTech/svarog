@@ -4,13 +4,18 @@
 
 package org.signalml.method.ep;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.space.SignalSpace;
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -36,13 +41,16 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	private float baselineTimeLength = 0.2F;
 
 	private boolean filteringEnabled = true;
-	private float filterCutOffFrequency = 20;
 	private List<TagStyleGroup> artifactTagStyles = new ArrayList<TagStyleGroup>();
+	private TimeDomainSampleFilter timeDomainSampleFilter;
 
 	private SignalSpace wholeSignalSpace;
 
 	public EvokedPotentialParameters() {
 		wholeSignalSpace = new SignalSpace();
+
+		timeDomainSampleFilter = new TimeDomainSampleFilter(FilterType.BANDPASS, ApproximationFunctionType.CHEBYSHEV2, new double[] { 1.0, 20.0 }, new double[] { 0.5, 30 }, 3.0, 40.0);
+		timeDomainSampleFilter.setDescription(_("After ERP averaging filter"));
 	}
 
 	@Override
@@ -119,12 +127,12 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 		this.filteringEnabled = filteringEnabled;
 	}
 
-	public float getFilterCutOffFrequency() {
-		return filterCutOffFrequency;
+	public TimeDomainSampleFilter getTimeDomainSampleFilter() {
+		return timeDomainSampleFilter;
 	}
 
-	public void setFilterCutOffFrequency(float filterCutOffFrequency) {
-		this.filterCutOffFrequency = filterCutOffFrequency;
+	public void setTimeDomainSampleFilter(TimeDomainSampleFilter timeDomainSampleFilter) {
+		this.timeDomainSampleFilter = timeDomainSampleFilter;
 	}
 
 	public List<TagStyleGroup> getArtifactTagStyles() {

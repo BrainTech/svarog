@@ -16,7 +16,7 @@ import org.signalml.method.ep.EvokedPotentialParameters;
 public class FilterPanel extends PanelWithEnablingCheckbox<FilterParametersPanel> implements ActionListener {
 
 	public FilterPanel() {
-		super(_("Low pass filtering"));
+		super(_("EP averaging result filtering"));
 	}
 
 	@Override
@@ -40,7 +40,10 @@ public class FilterPanel extends PanelWithEnablingCheckbox<FilterParametersPanel
 	public void fillPanelFromModel(EvokedPotentialParameters parameters) {
 		setCheckboxSelected(parameters.isFilteringEnabled());
 		getPanel().fillPanelFromModel(parameters);
+	}
 
+	public void setSamplingFrequency(float samplingFrequency) {
+		getPanel().setSamplingFrequency(samplingFrequency);
 	}
 
 }

@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
+
 public abstract class PanelWithEnablingCheckbox<T extends AbstractPanel> extends AbstractPanel implements ActionListener {
 
 	private JCheckBox checkbox;
@@ -48,6 +50,11 @@ public abstract class PanelWithEnablingCheckbox<T extends AbstractPanel> extends
 	public void setCheckboxSelected(boolean selected) {
 		getCheckbox().setSelected(selected);
 		actionPerformed(null);
+	}
+
+	@Override
+	public void validatePanel(ValidationErrors errors) {
+		getPanel().validatePanel(errors);
 	}
 
 }

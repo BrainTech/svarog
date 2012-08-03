@@ -8,13 +8,13 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
+import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
+import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
+import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
-import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.math.iirdesigner.IIRDesigner;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
@@ -85,7 +85,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 				performLowPassFiltering(result, data);
 			} catch (BadFilterParametersException exception) {
 				exception.printStackTrace();
-				throw new ComputationException(_("An error occured while designing the low pass filter."));
+				throw new ComputationException(_("An error occured while designing the signal filter."));
 			}
 
 		result.setLabels(labels);
@@ -130,21 +130,19 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 	protected void performLowPassFiltering(EvokedPotentialResult result, EvokedPotentialData data) throws BadFilterParametersException {
 
-		double cutoffFrequency = data.getParameters().getFilterCutOffFrequency();
-		double stopbandFrequency = cutoffFrequency * 2;
-
-		TimeDomainSampleFilter lowpassFilter = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-				new double[] {cutoffFrequency, 0.0}, new double[] {stopbandFrequency, 0.0}, 3.0, 30);
-		lowpassFilter.setSamplingFrequency(data.getSampleSources().get(0).getSamplingFrequency());
-
-		FilterCoefficients filterCoefficients = IIRDesigner.designDigitalFilter(lowpassFilter);
+		TimeDomainSampleFilter filter = data.getParameters().getTimeDomainSampleFilter();
+		FilterCoefficients filterCoefficients = IIRDesigner.designDigitalFilter(filter);
 
 		for (double[][] samples: result.getAverageSamples()) {
+			DoubleArraySampleSource multichannelSampleSource = new DoubleArraySampleSource(samples);
 			for (int channel = 0; channel < samples.length; channel++) {
-				IIRFilterEngine engine = new IIRFilterEngine(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients());
-				samples[channel] = engine.filter(samples[channel]);
+				ChannelSelectorSampleSource channelSampleSource = new ChannelSelectorSampleSource(multichannelSampleSource, channel);
+				OfflineIIRSinglechannelSampleFilter filterEngine = new OfflineIIRSinglechannelSampleFilter(channelSampleSource, filterCoefficients);
+				filterEngine.setFiltfiltEnabled(true);
+				filterEngine.getSamples(samples[channel], 0, samples[channel].length, 0);
 			}
 		}
+
 	}
 
 	protected double[][] average(MultichannelSegmentedSampleSource sampleSource, MethodExecutionTracker tracker) {

@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.AveragedTagSelectionPanel;
 import org.signalml.app.method.ep.view.time.BaselineSelectionPanel;
@@ -109,6 +110,10 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 
 	public void setTagDocument(TagDocument tagDocument) {
 		getAveragedTagSelectionPanel().setTagDocument(tagDocument);
+	}
+
+	public void setSignalDocument(SignalDocument signalDocument) {
+		getFilterPanel().setSamplingFrequency(signalDocument.getSamplingFrequency());
 	}
 
 }
