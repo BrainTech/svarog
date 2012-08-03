@@ -34,8 +34,6 @@ public class TagStyleListCellRenderer extends DefaultListCellRenderer {
 		noneString = _("(none)");
 	}
 
-
-
 	public TagIconProducer getTagIconProducer() {
 		return tagIconProducer;
 	}

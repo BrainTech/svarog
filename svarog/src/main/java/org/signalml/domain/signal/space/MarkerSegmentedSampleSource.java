@@ -4,13 +4,16 @@
 
 package org.signalml.domain.signal.space;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -50,15 +53,14 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	 */
 	private int unusableSegmentCount;
 	/**
-	 * the number of samples before the marker that should be included in
-	 * the segment
+	 * Number of segments which were rejected because artifact tags were found in them.
 	 */
-	private int samplesBefore;
+	private int artifactRejectedSegmentsCount;
 	/**
-	 * the number of samples after the marker that should be included in
+	 * the first sample relative to the marker that should be included in
 	 * the segment
 	 */
-	private int samplesAfter;
+	private int startSample;
 	/**
 	 * the number of samples per second
 	 */
@@ -72,19 +74,30 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		super(source);
 	}
 
+	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, List<String> markerStyleNames,
+			double startTime, double segmentLength, ChannelSpace channelSpace) {
+		this(source, null, null, tagSet, markerStyleNames,
+				new ArrayList<String>(), startTime, segmentLength, channelSpace);
+	}
+
 	/**
 	 * Constructor. Creates the source of samples based on the given
 	 * {@link MultichannelSampleSource source} of all channels.
 	 * @param source the source of all samples
 	 * @param tagSet the set of tags (including markers)
-	 * @param markerName the name of the type of a marker
-	 * @param secondsBefore the length (in seconds) before the marker that
-	 * is to be included in the
-	 * @param secondsAfter the length (in seconds) before the marker that
-	 * is to be included in the
+	 * @param markerStyleNames the name of the type of a marker
+	 * @param startTime the segment start time relative to the marker position
+	 * (e.g. if the startTime is equal to 2, each segments begins with a sample
+	 * that is 2 seconds after the selected markers).
+	 * @param length the length of each segment
 	 * @param channelSpace the set of channels
 	 */
-	public MarkerSegmentedSampleSource(MultichannelSampleSource source, StyledTagSet tagSet, String markerName, double secondsBefore, double secondsAfter, ChannelSpace channelSpace) {
+	public MarkerSegmentedSampleSource(MultichannelSampleSource source,
+			Double startMarkerSelection, Double endMarkerSelection,
+			StyledTagSet tagSet, List<String> markerStyleNames,
+			List<String> artifactStyleNames,
+			double startTime, double length, ChannelSpace channelSpace) {
+
 		super(source);
 
 		if (channelSpace != null) {
@@ -103,43 +116,47 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		}
 
 		samplingFrequency = source.getSamplingFrequency();
-		samplesBefore = (int) Math.ceil(samplingFrequency * secondsBefore);
-		samplesAfter = (int) Math.ceil(samplingFrequency * secondsAfter);
-		segmentLength = samplesBefore + samplesAfter;
+		startSample = (int) Math.ceil(samplingFrequency * startTime);
+		this.segmentLength = (int) Math.ceil(samplingFrequency * length);
 
-		TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, markerName);
-		int channelTagCount = tagSet.getChannelTagCount();
+		List<TagStyle> tagStyles = getTagStyles(markerStyleNames, tagSet);
+		List<TagStyle> artifactStyles = getTagStyles(artifactStyleNames, tagSet);
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(source);
-		int i;
 
-		Tag tag;
 		int markerSample;
-
 		int averagedCount = 0;
 
-		int[] offsetArr = new int[channelTagCount];
+		int[] offsetArr = new int[tagSet.getTagCount()];
 
-		for (i=0; i<channelTagCount; i++) {
-			tag = tagSet.getChannelTagAt(i);
-			if (tag.isMarker() && tag.getStyle().equals(markerStyle)) {
+		for (Tag tag: tagSet.getTags()) {
+			if (tagStyles.contains(tag.getStyle())) {
 
-				markerSample = (int) Math.floor(samplingFrequency * tag.getCenterPosition());
+				markerSample = (int) Math.floor(samplingFrequency * tag.getPosition());
 
-				if ((markerSample-1) < samplesBefore) {  // samplesBefore samples from markerSample inclusive
+				if (markerSample + startSample < 0) {
 					// not enough samples before
 					unusableSegmentCount++;
 					continue;
 				}
-				if (minSampleCount - (markerSample+1) < samplesAfter) {  // samplesAfter samples from (markerSample+1) inclusive
+				if (minSampleCount < markerSample - startTime + length) {
 					// not enough samples after
 					unusableSegmentCount++;
 					continue;
 				}
 
-				// sample is ok
+				if (startMarkerSelection != null && endMarkerSelection != null &&
+						(tag.getPosition() < startMarkerSelection || tag.getPosition() > endMarkerSelection))
+					//we don't use samples from outside the <firstSample, lastSample> range
+					continue;
 
-				offsetArr[averagedCount] = markerSample - (samplesBefore-1);
+				if (overlapsWithArtifactTag(tagSet, tag, artifactStyles, startTime, length)) {
+					artifactRejectedSegmentsCount++;
+					continue;
+				}
+
+				// sample is ok
+				offsetArr[averagedCount] = markerSample + startSample;
 				averagedCount++;
 
 			}
@@ -148,6 +165,26 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 		offsets = Arrays.copyOf(offsetArr, averagedCount);
 
+	}
+
+	protected boolean overlapsWithArtifactTag(StyledTagSet tagSet, Tag tag, List<TagStyle> artifactStyles, double startTime, double segmentLength) {
+		SignalSelection averagingSelection = new SignalSelection(SignalSelectionType.CHANNEL, tag.getPosition() + startTime, segmentLength);
+		for (Tag artTag: tagSet.getTags()) {
+			if (artifactStyles.contains(artTag.getStyle())) {
+				if (artTag.overlaps(averagingSelection))
+					return true;
+			}
+		}
+		return false;
+	}
+
+	protected List<TagStyle> getTagStyles(List<String> styleNames, StyledTagSet tagSet) {
+		List<TagStyle> tagStyles = new ArrayList<TagStyle>();
+		for (String styleName: styleNames) {
+			TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, styleName);
+			tagStyles.add(markerStyle);
+		}
+		return tagStyles;
 	}
 
 	/**
@@ -167,8 +204,8 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		channelIndices = descriptor.getChannelIndices();
 
 		unusableSegmentCount = descriptor.getUnusableSegmentCount();
-		samplesBefore = descriptor.getSamplesBefore();
-		samplesAfter = descriptor.getSamplesAfter();
+		startSample = descriptor.getStartTime();
+		segmentLength = descriptor.getSegmentLength();
 	}
 
 	/**
@@ -181,6 +218,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 		MarkerSegmentedSampleSourceDescriptor descriptor = new MarkerSegmentedSampleSourceDescriptor();
 
+		descriptor.setStartTime(startSample);
 		descriptor.setSegmentLength(segmentLength);
 		descriptor.setOffsets(offsets);
 
@@ -188,8 +226,6 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		descriptor.setChannelIndices(channelIndices);
 
 		descriptor.setUnusableSegmentCount(unusableSegmentCount);
-		descriptor.setSamplesBefore(samplesBefore);
-		descriptor.setSamplesAfter(samplesAfter);
 
 		return descriptor;
 
@@ -284,20 +320,8 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		return unusableSegmentCount;
 	}
 
-	/**
-	 * Returns the number of samples in the segment before the marker.
-	 * @return the number of samples in the segment before the marker
-	 */
-	public int getSamplesBefore() {
-		return samplesBefore;
-	}
-
-	/**
-	 * Returns the number of samples in the segment after the marker.
-	 * @return the number of samples in the segment after the marker
-	 */
-	public int getSamplesAfter() {
-		return samplesAfter;
+	public int getArtifactRejectedSegmentsCount() {
+		return artifactRejectedSegmentsCount;
 	}
 
 }

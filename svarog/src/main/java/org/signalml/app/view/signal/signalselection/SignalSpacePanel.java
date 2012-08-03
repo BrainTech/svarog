@@ -39,17 +39,18 @@ public class SignalSpacePanel extends JPanel {
 	 * the {@link TimeSpacePanel panel} to select the time interval of the
 	 * signal
 	 */
-	private TimeSpacePanel timeSpacePanel;
+	protected TimeSpacePanel timeSpacePanel;
 
 	/**
 	 * the {@link ChannelSpacePanel panel} to select the channels
 	 */
 	private ChannelSpacePanel channelSpacePanel;
-	       /**
-	        * the {@link SignalSourceLevelPanel panel} to select the level of
-	        * processing of the signal
-	        */
-	       private SignalSourceLevelPanel signalSourceLevelPanel;
+
+	/**
+	 * the {@link SignalSourceLevelPanel panel} to select the level of
+	 * processing of the signal
+	 */
+	private SignalSourceLevelPanel signalSourceLevelPanel;
 
 	/**
 	 * Constructor. Initializes the panel.

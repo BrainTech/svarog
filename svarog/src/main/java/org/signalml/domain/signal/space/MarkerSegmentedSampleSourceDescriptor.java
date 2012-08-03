@@ -1,7 +1,3 @@
-/* MarkerSegmentedSampleSourceDescriptor.java created 2008-02-15
- *
- */
-
 package org.signalml.domain.signal.space;
 
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
@@ -52,15 +48,10 @@ public class MarkerSegmentedSampleSourceDescriptor implements SegmentedSampleSou
 	 */
 	private int unusableSegmentCount;
 	/**
-	 * the number of samples before the marker that should be included in
+	 * the first sample relative to the marker that should be included in
 	 * the segment
 	 */
-	private int samplesBefore;
-	/**
-	 * the number of samples after the marker that should be included in
-	 * the segment
-	 */
-	private int samplesAfter;
+	private int startTime;
 
 	/**
 	 * Constructor. Creates an empty descriptor.
@@ -174,43 +165,16 @@ public class MarkerSegmentedSampleSourceDescriptor implements SegmentedSampleSou
 	}
 
 	/**
-	 * Returns the number of samples before the marker that should be
-	 * included in the segment
-	 * @return the number of samples before the marker that should be
-	 * included in the segment
+	 * Returns the first sample relative to the marker that should be included in
+	 * the segment.
+	 * @return
 	 */
-	public int getSamplesBefore() {
-		return samplesBefore;
+	public int getStartTime() {
+		return startTime;
 	}
 
-	/**
-	 * Sets the number of samples before the marker that should be included
-	 * in the segment
-	 * @param samplesBefore the number of samples before the marker that
-	 * should be included in the segment
-	 */
-	public void setSamplesBefore(int samplesBefore) {
-		this.samplesBefore = samplesBefore;
-	}
-
-	/**
-	 * Returns the number of samples after the marker that should be
-	 * included in the segment
-	 * @return the number of samples after the marker that should be
-	 * included in the segment
-	 */
-	public int getSamplesAfter() {
-		return samplesAfter;
-	}
-
-	/**
-	 * Sets the number of samples after the marker that should be included
-	 * in the segment
-	 * @param samplesAfter  the number of samples after the marker that
-	 * should be included in the segment
-	 */
-	public void setSamplesAfter(int samplesAfter) {
-		this.samplesAfter = samplesAfter;
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
 	}
 
 }

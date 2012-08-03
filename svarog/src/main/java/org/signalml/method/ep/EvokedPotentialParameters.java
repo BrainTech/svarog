@@ -4,10 +4,18 @@
 
 package org.signalml.method.ep;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.space.SignalSpace;
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 import org.springframework.validation.Errors;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
@@ -24,10 +32,25 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 
 	private String name;
 
-	private SignalSpace signalSpace;
+	private List<TagStyleGroup> averagedTagStyles = new ArrayList<TagStyleGroup>();
+	private float averagingStartTime = 0.0F;
+	private float averagingTimeLength = 1.0F;
+
+	private boolean baselineCorrectionEnabled = true;
+	private float baselineStartTime = -0.2F;
+	private float baselineTimeLength = 0.2F;
+
+	private boolean filteringEnabled = true;
+	private List<TagStyleGroup> artifactTagStyles = new ArrayList<TagStyleGroup>();
+	private TimeDomainSampleFilter timeDomainSampleFilter;
+
+	private SignalSpace wholeSignalSpace;
 
 	public EvokedPotentialParameters() {
-		signalSpace = new SignalSpace();
+		wholeSignalSpace = new SignalSpace();
+
+		timeDomainSampleFilter = new TimeDomainSampleFilter(FilterType.BANDPASS, ApproximationFunctionType.CHEBYSHEV2, new double[] { 1.0, 20.0 }, new double[] { 0.5, 30 }, 3.0, 40.0);
+		timeDomainSampleFilter.setDescription(_("After ERP averaging filter"));
 	}
 
 	@Override
@@ -41,16 +64,86 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	}
 
 	public SignalSpace getSignalSpace() {
-		return signalSpace;
+		return wholeSignalSpace;
 	}
 
 	public void setSignalSpace(SignalSpace signalSpace) {
-		this.signalSpace = signalSpace;
+		this.wholeSignalSpace = signalSpace;
+	}
+
+	public List<TagStyleGroup> getAveragedTagStyles() {
+		return averagedTagStyles;
+	}
+
+	public void setAveragedTagStyles(List<TagStyleGroup> list) {
+		this.averagedTagStyles = list;
+	}
+
+	public float getAveragingStartTime() {
+		return averagingStartTime;
+	}
+
+	public void setAveragingStartTime(float averagingStartTime) {
+		this.averagingStartTime = averagingStartTime;
+	}
+
+	public float getAveragingTimeLength() {
+		return averagingTimeLength;
+	}
+
+	public void setAveragingTimeLength(float averagingTimeLength) {
+		this.averagingTimeLength = averagingTimeLength;
+	}
+
+	public float getBaselineTimeStart() {
+		return baselineStartTime;
+	}
+
+	public void setBaselineTimeStart(float baselineTimeStart) {
+		this.baselineStartTime = baselineTimeStart;
+	}
+
+	public float getBaselineTimeLength() {
+		return baselineTimeLength;
+	}
+
+	public void setBaselineTimeLength(float baselineTimeLength) {
+		this.baselineTimeLength = baselineTimeLength;
+	}
+
+	public boolean isBaselineCorrectionEnabled() {
+		return baselineCorrectionEnabled;
+	}
+
+	public void setBaselineCorrectionEnabled(boolean baselineCorrectionEnabled) {
+		this.baselineCorrectionEnabled = baselineCorrectionEnabled;
+	}
+
+	public boolean isFilteringEnabled() {
+		return filteringEnabled;
+	}
+
+	public void setFilteringEnabled(boolean filteringEnabled) {
+		this.filteringEnabled = filteringEnabled;
+	}
+
+	public TimeDomainSampleFilter getTimeDomainSampleFilter() {
+		return timeDomainSampleFilter;
+	}
+
+	public void setTimeDomainSampleFilter(TimeDomainSampleFilter timeDomainSampleFilter) {
+		this.timeDomainSampleFilter = timeDomainSampleFilter;
+	}
+
+	public List<TagStyleGroup> getArtifactTagStyles() {
+		return artifactTagStyles;
+	}
+
+	public void setArtifactTagStyles(List<TagStyleGroup> artifactTagStyles) {
+		this.artifactTagStyles = artifactTagStyles;
 	}
 
 	public void validate(Errors errors) {
-
-
 	}
 
 	@Override

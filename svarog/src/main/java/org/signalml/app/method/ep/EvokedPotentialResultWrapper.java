@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.ep;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,40 +27,28 @@ public class EvokedPotentialResultWrapper implements PropertyProvider {
 		this.result = result;
 	}
 
-	public int getTotalCount() {
-		return result.getAveragedCount() + result.getSkippedCount();
+	public String getAveragedSegmentsCount() {
+		return convertListToString(result.getAveragedSegmentsCount());
 	}
 
-	public int getAveragedCount() {
-		return result.getAveragedCount();
+	public String getUnusableSegmentsCount() {
+		return convertListToString(result.getUnusableSegmentsCount());
 	}
 
-	public int getSkippedCount() {
-		return result.getSkippedCount();
+	public String getArtifactRejectedSegmentsCount() {
+		return convertListToString(result.getArtifactRejectedSegmentsCount());
 	}
 
-	public int getChannelCount() {
-		return result.getChannelCount();
-	}
+	public String convertListToString(List<Integer> list) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append(list.get(i));
 
-	public int getSampleCount() {
-		return result.getSampleCount();
-	}
+			if (i < list.size()-1)
+				sb.append(", ");
+		}
+		return sb.toString();
 
-	public float getSamplingFrequency() {
-		return result.getSamplingFrequency();
-	}
-
-	public double getSecondsAfter() {
-		return result.getSecondsAfter();
-	}
-
-	public double getSecondsBefore() {
-		return result.getSecondsBefore();
-	}
-
-	public double getSegmentLength() {
-		return result.getSecondsAfter() + result.getSecondsBefore();
 	}
 
 	@Override
@@ -66,16 +56,9 @@ public class EvokedPotentialResultWrapper implements PropertyProvider {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.totalCount", "totalCount", EvokedPotentialResultWrapper.class, "getTotalCount", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.averagedCount", "averagedCount", EvokedPotentialResultWrapper.class, "getAveragedCount", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.skippedCount", "skippedCount", EvokedPotentialResultWrapper.class, "getSkippedCount", null));
-
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.channelCount", "channelCount", EvokedPotentialResultWrapper.class, "getChannelCount", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.sampleCount", "sampleCount", EvokedPotentialResultWrapper.class, "getSampleCount", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.samplingFrequency", "samplingFrequency", EvokedPotentialResultWrapper.class, "getSamplingFrequency", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.segmentLength", "segmentLength", EvokedPotentialResultWrapper.class, "getSegmentLength", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.secondsBefore", "secondsBefore", EvokedPotentialResultWrapper.class, "getSecondsBefore", null));
-		list.add(new LabelledPropertyDescriptor("property.evokedPotentialResult.secondsAfter", "secondsAfter", EvokedPotentialResultWrapper.class, "getSecondsAfter", null));
+		list.add(new LabelledPropertyDescriptor(_("Number of averaged segments"), "averagedCount", EvokedPotentialResultWrapper.class, "getAveragedSegmentsCount", null));
+		list.add(new LabelledPropertyDescriptor(_("Number of unusable segments"), "unusableSegments", EvokedPotentialResultWrapper.class, "getUnusableSegmentsCount", null));
+		list.add(new LabelledPropertyDescriptor(_("Number of artifact rejected segments"), "artifactRejectedSegments", EvokedPotentialResultWrapper.class, "getArtifactRejectedSegmentsCount", null));
 
 		return list;
 

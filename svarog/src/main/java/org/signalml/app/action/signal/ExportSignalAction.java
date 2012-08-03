@@ -149,7 +149,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
+		MultichannelSampleSource sampleSource = factory.getContinuousOrSegmentedSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
 
 		normalizeSamplesIfNeeded(sampleSource, signalExportDescriptor);
 
@@ -382,8 +382,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
 
-			rawDescriptor.setMarkerOffset(markerTimeSpace.getSecondsBefore());
-			rawDescriptor.setPageSize((float)(markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()));
+			rawDescriptor.setMarkerOffset(markerTimeSpace.getStartTime());
+			rawDescriptor.setPageSize((float)(markerTimeSpace.getSegmentLength()));
 
 		} else {
 

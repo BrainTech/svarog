@@ -905,7 +905,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		}
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
+		MultichannelSampleSource sampleSource = factory.getContinuousOrSegmentedSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
 
 		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(getViewerElementManager().getDialogParent());
 		pleaseWaitDialog.initializeNow();

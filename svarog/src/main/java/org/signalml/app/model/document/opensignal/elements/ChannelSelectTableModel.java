@@ -14,7 +14,6 @@ import javax.swing.table.AbstractTableModel;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
-
 /**
  * The table model for the ChannelSelectTable.
  *
