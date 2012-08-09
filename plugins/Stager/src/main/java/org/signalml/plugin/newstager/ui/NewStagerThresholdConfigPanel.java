@@ -98,9 +98,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 			JLabel mtToneEmgThresholdLabel = new JLabel(
 				_("MT artifacts in tone EMG"));
 			JLabel remEogDeflectionThresholdLabel = new JLabel(
-				_("EOG deflection for rapid eye movement [%]"));
+				_("EOG deflection for rapid eye movement [uV]"));
 			JLabel semEogDeflectionThresholdLabel = new JLabel(
-				_("EOG deflection for slow eye movement [%]"));
+				_("EOG deflection for slow eye movement [uV]"));
 
 			Component glue1 = Box.createHorizontalGlue();
 			Component glue2 = Box.createHorizontalGlue();

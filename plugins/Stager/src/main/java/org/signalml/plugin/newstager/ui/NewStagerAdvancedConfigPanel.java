@@ -90,23 +90,24 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 			TitleLabel thetaLabel = new TitleLabel(_("Theta waves"));
 			TitleLabel alphaLabel = new TitleLabel(_("Alpha waves"));
 			TitleLabel spindleLabel = new TitleLabel(_("Sleep spindles"));
-			TitleLabel kComplexLabel = new TitleLabel(_("K-Compl"));
+			TitleLabel kComplexLabel = new TitleLabel(_("K-Complex"));
 
 			TitleLabel amplitudeLabel = new TitleLabel(
 				"<html><body><div align=\"center\">"
-				+ _("Amplitude [uv]<br />min/max")
+				+ _("Amplitude [uV]") + "<br />" + _("min/max")
 				+ "</div></body></html>");
 			TitleLabel frequencyLabel = new TitleLabel(
 				"<html><body><div align=\"center\">"
-				+ _("Frequency [Hz]<br />min/max")
+				+ _("Frequency [Hz]") + "<br />" + _("min/max")
 				+ "</div></body></html>");
 			TitleLabel scaleLabel = new TitleLabel(
 				"<html><body><div align=\"center\">"
-				+ _("Scale [s]<br />min/max")
+				+ _("Scale [s]") + "<br />" + _("min/max")
 				+ "</div></body></html>");
 			TitleLabel phaseLabel = new TitleLabel(
 				"<html><body><div align=\"center\">"
-				+ _("Phase<br />min/max") + "</div></body></html>");
+				+ _("Phase [rad]") + "<br />" + _("min/max") + "</div></body></html>");
+
 
 			TitleLabel deltaPhaseLabel = new TitleLabel("-");
 			TitleLabel thetaPhaseLabel = new TitleLabel("-");
@@ -339,7 +340,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 
 	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
 		NewStagerParameters parameters = parametersPreset.parameters;
-		
+
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
 		NewStagerFASPThreshold delta = thresholds.deltaThreshold;
@@ -371,7 +372,7 @@ public class NewStagerAdvancedConfigPanel extends JPanel {
 
 	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
 		NewStagerParameters parameters = parametersPreset.parameters;
-		
+
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 		NewStagerFASPThreshold alpha = thresholds.alphaThreshold;
 		NewStagerFASPThreshold delta = thresholds.deltaThreshold;
