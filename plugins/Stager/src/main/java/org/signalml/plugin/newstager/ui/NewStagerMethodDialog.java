@@ -49,8 +49,8 @@ import org.springframework.core.io.ClassPathResource;
 
 /**
  * StagerMethodDialog
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o. (dialog design based on work by Hubert Klekowicz)
  */
@@ -206,7 +206,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 			this.currentPane = tabbedPane.getModel().getSelectedIndex();
 			this.advancedParametersEnabled = false;
-			
+
 			tabbedPane.getModel().addChangeListener(new ChangeListener() {
 
 				@Override
@@ -258,7 +258,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 	private void fillDialogFromParameters(
 			NewStagerParametersPreset parametersPreset) {
 		this.advancedParametersEnabled = parametersPreset.enableAdvancedParameters;
-		
+
 		getBasicConfigPanel().fillPanelFromParameters(parametersPreset);
 		getAdvancedConfigPanel().fillPanelFromParameters(parametersPreset);
 		getThresholdConfigPanel().fillPanelFromParameters(parametersPreset);
@@ -279,7 +279,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 			NewStagerParametersPreset parametersPreset) {
 		NewStagerBasicConfigPanel basicPanel = getBasicConfigPanel();
 		NewStagerAdvancedConfigPanel advancedPanel = getAdvancedConfigPanel();
-		
+
 		if (this.advancedParametersEnabled) {
 			if (this.currentParametersPreset != null) {
 				this.fillDialogFromParameters(this.getParametersPreset());
@@ -316,7 +316,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		}
 
 		fillDialogFromParameters(parametersPreset);
-		
+
 		this.currentParametersPreset = parametersPreset;
 	}
 
@@ -346,6 +346,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 		public EditMontageAction() {
 			super(_("Edit montage"));
+			this.setEnabled(false);
 			putValue(
 					AbstractAction.SMALL_ICON,
 					IconUtils
@@ -354,6 +355,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 					_("Edit channel labels and functions"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
@@ -387,6 +389,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 					_("Restore default method configuration"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 			NewStagerParametersPreset parametersPreset;
 			Preset preset = getPreset();
@@ -441,7 +444,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		if (this.currentParametersPreset != null) {
 			return this.currentParametersPreset;
 		}
-		
+
 		NewStagerParametersPreset parametersPreset;
 		Preset preset = getPresetManager().getDefaultPreset();
 
