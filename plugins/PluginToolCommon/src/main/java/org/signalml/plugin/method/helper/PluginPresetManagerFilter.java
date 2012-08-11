@@ -42,28 +42,28 @@ public class PluginPresetManagerFilter implements PresetManager {
 		public void defaultPresetChanged(PresetManagerEvent ev) {
 			this.filterPresetManager.resetState();
 		}
-		
+
 	}
-	
+
 	private PresetManager delegate;
 	private Collection<Class<? extends Preset>> allowedPresetClassCollection;
 	private boolean needsRefreshFlag;
 	private Map<Preset, Integer> filteredPresetToPositionMap;
 	private List<Preset> filteredPresets;
 
-	
+
 	public PluginPresetManagerFilter(PresetManager delegate, Collection<Class<? extends Preset>> allowedPresetClassCollection) {
 		this.delegate = delegate;
 		this.allowedPresetClassCollection = allowedPresetClassCollection;
-		
+
 		this.filteredPresetToPositionMap = new HashMap<Preset, Integer>(this.delegate.getPresetCount());
 		this.filteredPresets = new ArrayList<Preset>();
-		
+
 		this.needsRefreshFlag = true;
-		
+
 		this.delegate.addPresetManagerListener(new _Listener(this));
 	}
-	
+
 	@Override
 	public Class<?> getPresetClass() {
 		return this.delegate.getPresetClass();
@@ -79,25 +79,25 @@ public class PluginPresetManagerFilter implements PresetManager {
 	@Override
 	public Preset[] getPresets() {
 		this.refreshStateIfNeeded();
-		
+
 		return this.filteredPresets.toArray(new Preset[0]);
 	}
 
 	@Override
 	public Preset getPresetAt(int index) {
 		this.refreshStateIfNeeded();
-		
+
 		if (index < 0 || index >= this.filteredPresets.size()) {
 			return null;
 		}
-		
+
 		return this.filteredPresets.get(index);
 	}
 
 	@Override
 	public Preset getPresetByName(String name) {
 		this.refreshStateIfNeeded();
-		
+
 		Preset preset = this.delegate.getPresetByName(name);
 		if (preset == null || !this.filteredPresetToPositionMap.containsKey(preset)) {
 			return null;
@@ -108,22 +108,23 @@ public class PluginPresetManagerFilter implements PresetManager {
 	@Override
 	public int setPreset(Preset preset) {
 		if (this.checkClass(preset)) {
+			this.resetState();
 			this.delegate.setPreset(preset);
-			this.refreshState();
+			this.refreshStateIfNeeded();
 			return this.filteredPresets.indexOf(preset);
 		}
-		
+
 		return -1;
 	}
 
 	@Override
 	public void removePresetAt(int index) {
 		this.refreshStateIfNeeded();
-		
+
 		if (index < 0 || index >= this.filteredPresets.size()) {
 			return;
 		}
-		
+
 		Preset preset = this.filteredPresets.get(index);
 		int position = this.filteredPresetToPositionMap.get(preset);
 		this.delegate.removePresetAt(position);
@@ -135,7 +136,7 @@ public class PluginPresetManagerFilter implements PresetManager {
 		if (preset == null) {
 			return false;
 		}
-		
+
 		return this.delegate.removePresetByName(name);
 	}
 
@@ -182,7 +183,7 @@ public class PluginPresetManagerFilter implements PresetManager {
 	private void resetState() {
 		this.needsRefreshFlag = true;
 	}
-	
+
 	private void refreshStateIfNeeded() {
 		if (this.needsRefreshFlag) {
 			this.refreshState();
@@ -191,30 +192,30 @@ public class PluginPresetManagerFilter implements PresetManager {
 
 	private void refreshState() {
 		Preset presets[] = this.delegate.getPresets();
-		
+
 		this.filteredPresetToPositionMap.clear();
 		this.filteredPresets.clear();
-		
+
 		for (int i = 0; i < presets.length; ++i) {
 			Preset preset = presets[i];
-			
+
 			if (this.checkClass(preset)) {
 				this.filteredPresetToPositionMap.put(preset, i);
 				this.filteredPresets.add(preset);
 			}
 		}
-		
+
 		this.needsRefreshFlag = false;
 	}
-	
+
 	private boolean checkClass(Preset preset) {
 		for (Class<? extends Preset> klass : this.allowedPresetClassCollection) {
 			if (klass.isInstance(preset)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 }
