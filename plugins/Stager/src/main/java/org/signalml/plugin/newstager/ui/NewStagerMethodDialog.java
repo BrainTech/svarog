@@ -9,12 +9,12 @@ import static org.signalml.plugin.i18n.PluginI18n._;
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -95,12 +95,17 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 	private NewStagerParametersPreset currentParametersPreset;
 
+	private NewStagerAdvancedConfigObservable advancedConfigObservable;
+
+	private boolean isUpdatingPreset;
+
 	protected boolean advancedParametersEnabled;
 
 	public NewStagerMethodDialog(PresetManager presetManager, Window w) {
 		super(new PluginPresetManagerFilter(presetManager,
 				NewStagerMethodDialog.GetPresetClasses()), w, true);
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.isUpdatingPreset = false;
 	}
 
 	@Override
@@ -141,30 +146,29 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 		signalPanel.getMontageButton().setAction(new EditMontageAction());
 
+		this.advancedConfigObservable = new NewStagerAdvancedConfigObservable();
+
 		interfacePanel.add(signalPanel, BorderLayout.NORTH);
 		interfacePanel.add(getTabbedPane(), BorderLayout.CENTER);
 
-		getBasicConfigPanel().getEnableAdvancedConfigPanel()
-				.getEnableAdvancedCheckBox()
-				.addItemListener(new ItemListener() {
+		this.advancedConfigObservable.addObserver(new Observer() {
 
-					@Override
-					public void itemStateChanged(ItemEvent e) {
-						boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
+			@Override
+			public void update(Observable observable, Object arg) {
+				boolean enabled = advancedConfigObservable.getEnabled();
 
-						JTabbedPane pane = getTabbedPane();
-						if (!selected) {
-							if (pane.getSelectedIndex() != 0) {
-								pane.setSelectedIndex(0);
-							}
-						}
-						pane.setEnabledAt(1, selected);
-						pane.setEnabledAt(2, selected);
-
-						advancedParametersEnabled = selected;
+				JTabbedPane pane = getTabbedPane();
+				if (!enabled) {
+					if (pane.getSelectedIndex() != BASIC_PARAMETERS_TAB) {
+						pane.setSelectedIndex(BASIC_PARAMETERS_TAB);
 					}
+				}
+				pane.setEnabledAt(ADVANCED_PARAMETERS_TAB, enabled);
+				pane.setEnabledAt(THRESHOLD_TAB, enabled);
 
-				});
+				advancedParametersEnabled = enabled;
+			}
+		});
 
 		return interfacePanel;
 
@@ -173,7 +177,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 	public NewStagerBasicConfigPanel getBasicConfigPanel() {
 		if (basicConfigPanel == null) {
 			basicConfigPanel = new NewStagerBasicConfigPanel(getFileChooser(),
-					this);
+					this, this.advancedConfigObservable);
 		}
 		return basicConfigPanel;
 	}
@@ -248,7 +252,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 			setPreset(preset);
 		} else {
 			fillDialogFromParameters(new NewStagerParametersPreset(
-					data.getParameters(), false));
+					data.getParameters(), false, true, true, true));
 		}
 
 		currentMontage = new Montage(data.getMontage());
@@ -270,7 +274,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		data.setMontage(currentMontage);
 
 		fillParametersFromDialog(new NewStagerParametersPreset(
-				data.getParameters(), true));
+				data.getParameters(), false, true, true, true));
 
 		data.calculate();
 	}
@@ -281,9 +285,11 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 		NewStagerAdvancedConfigPanel advancedPanel = getAdvancedConfigPanel();
 
 		if (this.advancedParametersEnabled) {
+			/*
 			if (this.currentParametersPreset != null) {
 				this.fillDialogFromParameters(this.getParametersPreset());
-			}
+			}*/
+
 			switch (this.getTabbedPane().getSelectedIndex()) {
 			case BASIC_PARAMETERS_TAB:
 				advancedPanel.fillParametersFromPanel(parametersPreset);
@@ -300,6 +306,7 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 	@Override
 	public Preset getPreset() {
+		this.updateCurrentPreset();
 		NewStagerParametersPreset parametersPreset = new NewStagerParametersPreset();
 		fillParametersFromDialog(parametersPreset);
 		return parametersPreset;
@@ -315,9 +322,13 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 			return;
 		}
 
-		fillDialogFromParameters(parametersPreset);
-
-		this.currentParametersPreset = parametersPreset;
+		this.isUpdatingPreset = true;
+		try {
+			fillDialogFromParameters(parametersPreset);
+			this.currentParametersPreset = parametersPreset;
+		} finally {
+			this.isUpdatingPreset = false;
+		}
 	}
 
 	@Override
@@ -391,52 +402,56 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 		@Override
 		public void actionPerformed(ActionEvent ev) {
-			NewStagerParametersPreset parametersPreset;
-			Preset preset = getPreset();
-
-			try {
-				parametersPreset = (NewStagerParametersPreset) preset;
-			} catch (ClassCastException e) {
-				return;
-			}
-
+			NewStagerParametersPreset parametersPreset = new NewStagerParametersPreset();
 			NewStagerConfigurationDefaultsHelper.GetSharedInstance()
 					.setDefaults(parametersPreset.parameters);
 			parametersPreset.enableAdvancedParameters = false;
+			parametersPreset.isAutoAlphaAmplitude = false;
+			parametersPreset.isAutoDeltaAmplitude = false;
+			parametersPreset.isAutoSpindleAmplitude = false;
 			setPreset(parametersPreset);
 		}
 
 	}
 
 	protected void updateCurrentPreset() {
-		NewStagerParametersPreset parametersPreset = this.getParametersPreset();
-
-		switch (this.currentPane) {
-		case BASIC_PARAMETERS_TAB:
-			getBasicConfigPanel().fillParametersFromPanel(parametersPreset);
-			break;
-		case ADVANCED_PARAMETERS_TAB:
-			getAdvancedConfigPanel().fillParametersFromPanel(parametersPreset);
-			break;
-		case THRESHOLD_TAB:
-			getThresholdConfigPanel().fillParametersFromPanel(parametersPreset);
-			break;
-		default:
+		if (isUpdatingPreset) {
 			return;
 		}
+		this.isUpdatingPreset = true;
+		try {
 
-		switch (this.tabbedPane.getModel().getSelectedIndex()) {
-		case BASIC_PARAMETERS_TAB:
-			getBasicConfigPanel().fillPanelFromParameters(parametersPreset);
-			break;
-		case ADVANCED_PARAMETERS_TAB:
-			getAdvancedConfigPanel().fillPanelFromParameters(parametersPreset);
-			break;
-		case THRESHOLD_TAB:
-			getThresholdConfigPanel().fillPanelFromParameters(parametersPreset);
-			break;
-		default:
-			return;
+			NewStagerParametersPreset parametersPreset = this.getParametersPreset();
+
+			switch (this.currentPane) {
+			case BASIC_PARAMETERS_TAB:
+				getBasicConfigPanel().fillParametersFromPanel(parametersPreset);
+				break;
+			case ADVANCED_PARAMETERS_TAB:
+				getAdvancedConfigPanel().fillParametersFromPanel(parametersPreset);
+				break;
+			case THRESHOLD_TAB:
+				getThresholdConfigPanel().fillParametersFromPanel(parametersPreset);
+				break;
+			default:
+				return;
+			}
+
+			switch (this.tabbedPane.getModel().getSelectedIndex()) {
+			case BASIC_PARAMETERS_TAB:
+				getBasicConfigPanel().fillPanelFromParameters(parametersPreset);
+				break;
+			case ADVANCED_PARAMETERS_TAB:
+				getAdvancedConfigPanel().fillPanelFromParameters(parametersPreset);
+				break;
+			case THRESHOLD_TAB:
+				getThresholdConfigPanel().fillPanelFromParameters(parametersPreset);
+				break;
+			default:
+				return;
+			}
+		} finally {
+			this.isUpdatingPreset = false;
 		}
 	}
 
@@ -447,10 +462,6 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 
 		NewStagerParametersPreset parametersPreset;
 		Preset preset = getPresetManager().getDefaultPreset();
-
-		if (preset == null) {
-			preset = getPreset();
-		}
 
 		try {
 			parametersPreset = (NewStagerParametersPreset) preset;

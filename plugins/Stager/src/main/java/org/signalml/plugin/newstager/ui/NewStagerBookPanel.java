@@ -28,8 +28,8 @@ import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 
 /**
  * StagerBookPanel
- * 
- * 
+ *
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -109,9 +109,6 @@ public class NewStagerBookPanel extends JPanel {
 		if (path != null) {
 			bookFile = new File(path);
 			getBookTextField().setText(path);
-		} else {
-			bookFile = null;
-			getBookTextField().setText("");
 		}
 	}
 
@@ -140,6 +137,7 @@ public class NewStagerBookPanel extends JPanel {
 					_("Choose a book file for this signal"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseBookFile(NewStagerBookPanel.this

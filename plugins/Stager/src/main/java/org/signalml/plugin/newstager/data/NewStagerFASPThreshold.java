@@ -34,13 +34,18 @@ public class NewStagerFASPThreshold implements Serializable {
 										  CreateMinMax(scaleMin, scaleMax), CreateMinMax(phaseMin,
 												  phaseMax));
 	}
-	
+
 	public static NewStagerFASPThreshold CreateThreshold(Double amplitudeMin,
 			Double amplitudeMax, Double frequencyMin, Double frequencyMax,
 			Double scaleMin, Double scaleMax) {
 		return new NewStagerFASPThreshold(CreateMinMax(amplitudeMin,
 				  amplitudeMax), CreateMinMax(frequencyMin, frequencyMax),
 				  CreateMinMax(scaleMin, scaleMax), null);
+	}
+
+	public static NewStagerFASPThreshold CreateZeroThreshold() {
+		return NewStagerFASPThreshold.CreateThreshold(0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0);
 	}
 
 	private static MinMaxRange CreateMinMax(Double min, Double max) {

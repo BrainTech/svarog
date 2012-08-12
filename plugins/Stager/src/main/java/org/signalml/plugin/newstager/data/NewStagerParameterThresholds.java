@@ -56,10 +56,9 @@ public class NewStagerParameterThresholds implements Serializable {
 	}
 
 	private static NewStagerFASPThreshold Zeros() {
-		return NewStagerFASPThreshold.CreateThreshold(0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0);
+		return NewStagerFASPThreshold.CreateZeroThreshold();
 	}
-	
+
 	private static NewStagerFASPThreshold ZerosPhase() {
 		return NewStagerFASPThreshold.CreateThreshold(0.0, 0.0, 0.0, 0.0, 0.0,
 				0.0, 0.0, 0.0);

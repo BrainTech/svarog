@@ -4,7 +4,7 @@
 
 package org.signalml.plugin.newstager.ui.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -33,7 +33,7 @@ import org.signalml.util.MinMaxRangeInteger;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class AutoSpinnerPanel extends JPanel {
+public class NewStagerAutoSpinnerPanel extends JPanel {
 
 	protected static final long serialVersionUID = 1L;
 
@@ -81,7 +81,7 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	protected  AutoSpinnerPanel(boolean compact) {
+	protected  NewStagerAutoSpinnerPanel(boolean compact) {
 		super();
 		this.compact = compact;
 	}
@@ -97,7 +97,7 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerPanel(double value, double min, double max, double step, boolean compact) {
+	public NewStagerAutoSpinnerPanel(double value, double min, double max, double step, boolean compact) {
 		this(compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
@@ -115,9 +115,9 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerPanel(float value, float min, float max, float step, boolean compact) {
+	public NewStagerAutoSpinnerPanel(float value, float min, float max, float step, boolean compact) {
 		this(compact);
-		spinner = new JSpinner(new SpinnerNumberModel((double) value, (double) min, (double) max, (double) step));
+		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit(value, min, max, step);
 	}
@@ -133,7 +133,7 @@ public class AutoSpinnerPanel extends JPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerPanel(int value, int min, int max, int step, boolean compact) {
+	public NewStagerAutoSpinnerPanel(int value, int min, int max, int step, boolean compact) {
 		this(compact);
 		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
@@ -513,6 +513,7 @@ public class AutoSpinnerPanel extends JPanel {
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
 		autoRadio.setEnabled(enabled);
+		spinnerRadio.setEnabled(enabled);
 		spinner.setEnabled(enabled);
 	}
 
