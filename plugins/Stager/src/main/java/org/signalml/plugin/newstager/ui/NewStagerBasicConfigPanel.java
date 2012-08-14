@@ -34,12 +34,13 @@ public class NewStagerBasicConfigPanel extends JPanel {
 	private NewStagerAdvancedConfigObservable advancedConfigObservable;
 
 	public NewStagerBasicConfigPanel(FileChooser fileChooser,
-									 AbstractDialog owner) {
+			AbstractDialog owner,
+			NewStagerAdvancedConfigObservable advancedConfigObservable) {
 		super();
 		this.fileChooser = fileChooser;
 		this.owner = owner;
 
-		this.advancedConfigObservable = new NewStagerAdvancedConfigObservable();
+		this.advancedConfigObservable = advancedConfigObservable;
 
 		initialize();
 	}
@@ -73,28 +74,34 @@ public class NewStagerBasicConfigPanel extends JPanel {
 
 	public NewStagerBasicParametersPanel getParametersPanel() {
 		if (parametersPanel == null) {
-			parametersPanel = new NewStagerBasicParametersPanel(owner, this.advancedConfigObservable);
+			parametersPanel = new NewStagerBasicParametersPanel(owner,
+					this.advancedConfigObservable);
 		}
 		return parametersPanel;
 	}
 
 	public NewStagerEnableAdvancedConfigPanel getEnableAdvancedConfigPanel() {
 		if (enableAdvancedConfigPanel == null) {
-			enableAdvancedConfigPanel = new NewStagerEnableAdvancedConfigPanel(owner, this.advancedConfigObservable);
+			enableAdvancedConfigPanel = new NewStagerEnableAdvancedConfigPanel(
+					owner, this.advancedConfigObservable);
 		}
 		return enableAdvancedConfigPanel;
 	}
 
-	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
+	public void fillPanelFromParameters(
+			NewStagerParametersPreset parametersPreset) {
 		getBookPanel().fillPanelFromModel(parametersPreset);
 		getParametersPanel().fillPanelFromParameters(parametersPreset);
-		getEnableAdvancedConfigPanel().fillPanelFromParameters(parametersPreset);
+		getEnableAdvancedConfigPanel()
+				.fillPanelFromParameters(parametersPreset);
 	}
 
-	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
+	public void fillParametersFromPanel(
+			NewStagerParametersPreset parametersPreset) {
 		getBookPanel().fillModelFromPanel(parametersPreset);
 		getParametersPanel().fillParametersFromPanel(parametersPreset);
-		getEnableAdvancedConfigPanel().fillParametersFromPanel(parametersPreset);
+		getEnableAdvancedConfigPanel()
+				.fillParametersFromPanel(parametersPreset);
 	}
 
 	public void validatePanel(ValidationErrors errors) {

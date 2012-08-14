@@ -49,6 +49,8 @@ public class PluginPresetManagerHelper {
 		} catch (XStreamException ex) {
 			logger.warn("Failed to convert presets - presets lost (method: "
 					+ methodName + ")", ex);
+		} catch (Exception ex) {
+			logger.error("Failed to load presets (method: " + methodName + ")", ex);
 		}
 
 		return presetManager;

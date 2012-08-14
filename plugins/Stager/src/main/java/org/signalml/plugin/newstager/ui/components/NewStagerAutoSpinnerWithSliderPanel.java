@@ -19,7 +19,7 @@ import org.signalml.util.MinMaxRange;
  * Also these values can be set as the value of the spinner/slider.
  *
  */
-public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
+public class NewStagerAutoSpinnerWithSliderPanel extends NewStagerAutoSpinnerPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -45,7 +45,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerWithSliderPanel(double value, double min, double max,
+	public NewStagerAutoSpinnerWithSliderPanel(double value, double min, double max,
 									  double step, boolean compact) {
 		super(value, min, max, step, compact);
 	}
@@ -61,7 +61,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerWithSliderPanel(float value, float min, float max,
+	public NewStagerAutoSpinnerWithSliderPanel(float value, float min, float max,
 									  float step, boolean compact) {
 		super(value, min, max, step, compact);
 	}
@@ -77,7 +77,7 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 	 * @param compact @code true} if this panel should be thinner (60 pixel),
 	 * {@code false} otherwise (150 pixel)
 	 */
-	public AutoSpinnerWithSliderPanel(int value, int min, int max, int step,
+	public NewStagerAutoSpinnerWithSliderPanel(int value, int min, int max, int step,
 									  boolean compact) {
 		super(value, min, max, step, compact);
 	}
@@ -85,8 +85,8 @@ public class AutoSpinnerWithSliderPanel extends AutoSpinnerPanel {
 
 
 	/**
-	 * Performs the same {@link AutoSpinnerPanel#commonInit(double, double,
-	 * double, double) initialization} as the {@link AutoSpinnerPanel parent}
+	 * Performs the same {@link NewStagerAutoSpinnerPanel#commonInit(double, double,
+	 * double, double) initialization} as the {@link NewStagerAutoSpinnerPanel parent}
 	 * and:
 	 * <ul>
 	 * <li>creates the slider with the given {@code value}, {@code minimum},

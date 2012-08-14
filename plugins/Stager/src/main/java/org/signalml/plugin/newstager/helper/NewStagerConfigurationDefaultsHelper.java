@@ -55,6 +55,7 @@ public class NewStagerConfigurationDefaultsHelper extends
 		}
 
 		try {
+			fixedParameters.swaWidthCoeff = double_("stager.fixed.widthCoeff");
 			fixedParameters.swaWidthCoeff = double_("stager.fixed.swaWidthCoeff");
 			fixedParameters.alphaPerc1 = double_("stager.fixed.alphaPerc1");
 			fixedParameters.alphaPerc2 = double_("stager.fixed.alphaPerc2");
@@ -84,11 +85,31 @@ public class NewStagerConfigurationDefaultsHelper extends
 			return;
 		}
 
-		this.setDefaults(thresholds.alphaThreshold, "alpha", false);
-		this.setDefaults(thresholds.deltaThreshold, "delta", false);
-		this.setDefaults(thresholds.thetaThreshold, "theta", false);
-		this.setDefaults(thresholds.spindleThreshold, "spindle", false);
-		this.setDefaults(thresholds.kCThreshold, "kComplex", true);
+		this.setAlphaThresholdDefaults(thresholds.alphaThreshold);
+		this.setDeltaThresholdDefaults(thresholds.deltaThreshold);
+		this.setThetaThresholdDefaults(thresholds.thetaThreshold);
+		this.setSpindleThresholdDefaults(thresholds.spindleThreshold);
+		this.setkCThresholdDefaults(thresholds.kCThreshold);
+	}
+
+	public void setAlphaThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "alpha", false);
+	}
+
+	public void setDeltaThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "delta", false);
+	}
+
+	public void setThetaThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "theta", false);
+	}
+
+	public void setSpindleThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "spindle", false);
+	}
+
+	public void setkCThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "kComplex", true);
 	}
 
 	private void setDefaults(NewStagerFASPThreshold threshold, String type,

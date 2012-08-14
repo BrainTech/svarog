@@ -4,7 +4,7 @@
 
 package org.signalml.plugin.newartifact.ui;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
@@ -295,6 +295,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 					_("Edit channel labels and functions"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montageDialog == null) {
@@ -331,6 +332,7 @@ public class NewArtifactMethodDialog extends AbstractPresetDialog {
 					_("Select excluded derivations"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (exclusionDialog == null) {

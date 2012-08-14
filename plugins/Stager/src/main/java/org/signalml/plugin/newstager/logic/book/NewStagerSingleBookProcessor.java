@@ -88,7 +88,7 @@ public class NewStagerSingleBookProcessor {
 
 	private void createHelpers(NewStagerBookProcessorData data) {
 		NewStagerBookAtomTagHelperData helperData = new NewStagerBookAtomTagHelperData(
-				data.bookInfo, this.helperSet, data.muscle,
+				data.bookInfo, data.fixedParameters, this.helperSet, data.muscle,
 				data.signalStatCoeffs);
 		this.helperSet.swaHelper = new NewStagerSwaTagBuilderHelper(helperData,
 				this.helperSet.gaborDeltaHelper, 0);
@@ -200,7 +200,7 @@ public class NewStagerSingleBookProcessor {
 
 	private void createPrimaryHypnogramBuilders(NewStagerBookProcessorData data) {
 		NewStagerBookAtomTagHelperData helperData = new NewStagerBookAtomTagHelperData(
-				data.bookInfo, this.helperSet, data.muscle,
+				data.bookInfo, data.fixedParameters, this.helperSet, data.muscle,
 				data.signalStatCoeffs);
 		this.helperSet.alphaPrimaryHelper = new NewStagerBookAtomPrimaryTagHelper(
 				helperData, this.helperSet.alphaFilter);

@@ -1,6 +1,6 @@
 package org.signalml.plugin.newartifact;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.event.ActionEvent;
 

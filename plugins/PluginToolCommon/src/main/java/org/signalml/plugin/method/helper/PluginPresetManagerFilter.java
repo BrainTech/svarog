@@ -108,8 +108,9 @@ public class PluginPresetManagerFilter implements PresetManager {
 	@Override
 	public int setPreset(Preset preset) {
 		if (this.checkClass(preset)) {
+			this.resetState();
 			this.delegate.setPreset(preset);
-			this.refreshState();
+			this.refreshStateIfNeeded();
 			return this.filteredPresets.indexOf(preset);
 		}
 

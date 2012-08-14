@@ -8,7 +8,6 @@ import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
-import org.signalml.app.view.common.components.panels.UnlimitedSpinnerPanel;
 import org.signalml.util.MinMaxRange;
 
 /**
@@ -18,20 +17,20 @@ import org.signalml.util.MinMaxRange;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class MinMaxSpinnerPanel extends JPanel {
+public class NewStagerMinMaxSpinnerPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private UnlimitedSpinnerPanel minPanel;
-	private UnlimitedSpinnerPanel maxPanel;
+	private NewStagerUnlimitedAutoSpinnerPanel minPanel;
+	private NewStagerUnlimitedAutoSpinnerPanel maxPanel;
 
-	public MinMaxSpinnerPanel(double minValue, double maxValue, double min,
-							  double max, double step) {
+	public NewStagerMinMaxSpinnerPanel(double minValue, double maxValue, double min,
+							  double max, double step, double minAuto, double maxAuto) {
 		super();
 		setLayout(new GridLayout(2, 1, 0, 3));
 
-		minPanel = new UnlimitedSpinnerPanel(minValue, min, max, step, true);
-		maxPanel = new UnlimitedSpinnerPanel(maxValue, min, max, step, true);
+		minPanel = new NewStagerUnlimitedAutoSpinnerPanel(minValue, min, max, step, minAuto, true, false);
+		maxPanel = new NewStagerUnlimitedAutoSpinnerPanel(maxValue, min, max, step, maxAuto, true, false);
 
 		add(minPanel);
 		add(maxPanel);
@@ -87,10 +86,22 @@ public class MinMaxSpinnerPanel extends JPanel {
 	}
 
 	public void setRange(MinMaxRange range) {
-		minPanel.setValue(range.getMin());
-		minPanel.setUnlimited(range.isMinUnlimited());
-		maxPanel.setValue(range.getMax());
-		maxPanel.setUnlimited(range.isMaxUnlimited());
+		this.setRange(range, null, null);
+	}
+
+	public void setRange(MinMaxRange range, Double autoMin, Double autoMax) {
+		this.setPanel(minPanel, range.getMin(), range.isMinUnlimited(), autoMin);
+		this.setPanel(maxPanel, range.getMax(), range.isMaxUnlimited(), autoMax);
+	}
+
+	private void setPanel(NewStagerUnlimitedAutoSpinnerPanel panel, double value, boolean unlimited, Double autoValue) {
+		panel.setValue(value);
+		panel.setUnlimited(unlimited);
+		if (autoValue != null) {
+			panel.setAuto();
+			panel.setAutoValue(autoValue);
+		}
+
 	}
 
 	public void getRange(MinMaxRange range) {
@@ -100,4 +111,11 @@ public class MinMaxSpinnerPanel extends JPanel {
 		range.setMaxUnlimited(maxPanel.isUnlimited());
 	}
 
+	public boolean isMinAuto() {
+		return minPanel.isAuto();
+	}
+
+	public boolean isMaxAuto() {
+		return maxPanel.isAuto();
+	}
 }

@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SpinnerWithSliderPanel extends JPanel {
+public class NewStagerSpinnerWithSliderPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +31,7 @@ public class SpinnerWithSliderPanel extends JPanel {
 
 	private boolean lock = false;
 
-	public SpinnerWithSliderPanel(double value, double min, double max, double step) {
+	public NewStagerSpinnerWithSliderPanel(double value, double min, double max, double step) {
 		super();
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 

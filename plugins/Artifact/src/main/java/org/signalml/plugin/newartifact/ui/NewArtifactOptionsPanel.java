@@ -3,6 +3,8 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -16,8 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
 
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.plugin.newartifact.data.NewArtifactPowerGridFrequency;

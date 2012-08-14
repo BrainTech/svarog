@@ -14,16 +14,26 @@ public class NewStagerParametersPreset implements Serializable, Preset {
 	public NewStagerParameters parameters;
 	public boolean enableAdvancedParameters;
 
+	public boolean isAutoAlphaAmplitude;
+	public boolean isAutoDeltaAmplitude;
+	public boolean isAutoSpindleAmplitude;
+
 	private String name;
 
 	public NewStagerParametersPreset() {
-		this(new NewStagerParameters(), false);
+		this(new NewStagerParameters(), false, false, false, false);
 	}
 
 	public NewStagerParametersPreset(NewStagerParameters stagerParameters,
-			boolean enableAdvancedParameters) {
+			boolean enableAdvancedParameters,
+			boolean isAutoAlphaAmplitude,
+			boolean isAutoDeltaAmplitude,
+			boolean isAutoSpindleAmplitude) {
 		this.parameters = stagerParameters;
 		this.enableAdvancedParameters = enableAdvancedParameters;
+		this.isAutoAlphaAmplitude = isAutoAlphaAmplitude;
+		this.isAutoDeltaAmplitude = isAutoDeltaAmplitude;
+		this.isAutoSpindleAmplitude = isAutoSpindleAmplitude;
 	}
 
 	@Override
