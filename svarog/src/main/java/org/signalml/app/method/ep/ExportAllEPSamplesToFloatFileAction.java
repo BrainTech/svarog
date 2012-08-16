@@ -150,7 +150,7 @@ class ExportAllEPSamplesToFloatFileAction extends AbstractSignalMLAction {
 		TagStyle eventTagStyle = new TagStyle(SignalSelectionType.CHANNEL, "event", "", Color.red, Color.red, 0);
 		eventTagStyle.setMarker(true);
 		tagSet.addStyle(eventTagStyle);
-		double eventPosition = result.getData().getParameters().getAveragingStartTime();
+		double eventPosition = -1 * result.getData().getParameters().getAveragingStartTime();
 		tagSet.addTag(new Tag(eventTagStyle, eventPosition, 0.0));
 
 		tagDocument.saveDocument();
