@@ -8,17 +8,12 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.log4j.Logger;
-import org.jfree.util.Log;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
@@ -46,6 +41,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 
 	protected static final Logger logger = Logger.getLogger(RegisterCodecAction.class);
 
+	private static boolean initialized = false;
+
 	private SignalMLCodecManager codecManager;
 	private RegisterCodecDialog registerCodecDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
@@ -65,78 +62,30 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
 
 		boolean ok = registerCodecDialog.showDialog(model, true);
-		if (!ok) {
+		if (!ok)
 			return;
-		}
 
 		createCodec(model);
-
 	}
 
 	public void initializeAll() {
 
-		if (codecManager.getCodecCount() == 0) {
+		if (initialized)
+			return;
+		initialized = true;
 
-			File specsDir = new File(System.getProperty("user.dir"),"specs");
+		File specsDir = new File(System.getProperty("user.dir"), "specs");
 
-			if (specsDir.isDirectory()) {
+		if (!specsDir.isDirectory()) {
+			logger.warn("Spec directory is not a directory: " + specsDir);
+			return;
+		}
 
-				Log.debug("Registering all available codecs in scpec directory");
-
-				File[] files = specsDir.listFiles(new XmlFileFilter());
-
-				for (File file : files) {
-
-					Log.debug("Registering codec: " + file);
-
-					register(file);
-				}
-			} else {
-
-				Log.debug("No such direcoty: " + specsDir);
-
-				specsDir.mkdir();
-
-				String urlBaseName = "http://eeg.pl:8080/applet/specs";
-
-				List<String> codecsNameList = new LinkedList<String>();
-
-				codecsNameList.add("EASYS.xml");
-				codecsNameList.add("EDF.xml");
-
-				URL url = null;
-
-				for (String codecName : codecsNameList) {
-
-					try {
-						url = new URL(urlBaseName+"/"+codecName);
-
-						InputStream inStream = url.openStream();
-
-						File file = new File(specsDir, codecName);
-
-						FileOutputStream fos = new FileOutputStream(file);
-
-						byte[] buffer = new byte[1024];
-						int bytesRead;
-
-						while ((bytesRead = inStream.read(buffer)) != -1) {
-							fos.write(buffer,0,bytesRead);
-						}
-
-						fos.close();
-						inStream.close();
-
-						register(file);
-
-					} catch (MalformedURLException e) {
-						Log.error("Cannot download codec from server: " + urlBaseName, e);
-					} catch (IOException e) {
-						Log.error("Cannot download codec from server: " + urlBaseName, e);
-					}
-
-				}
-			}
+		logger.debug("Registering all available codecs in spec directory");
+		File[] files = specsDir.listFiles(new XmlFileFilter());
+		for (File file : files) {
+			logger.info("Registering codec: " + file);
+			register(file);
 		}
 	}
 
@@ -150,7 +99,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		try {
 			model.setCodec(new XMLSignalMLCodec(file, null));
 		} catch (Exception e) {
-			Log.debug("Not a proper codec descriptor");
+			logger.warn("Not a proper codec descriptor");
+			return;
 		}
 
 		createCodec(model);
@@ -182,8 +132,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		}
 
 		if (reader == null) {
-			logger.error("Failed to create codec");
-			OptionPane.showError(null, "error.codecCompilationFailed");
+			logger.error("Failed to compile the codec");
+			OptionPane.showError(null, _("Failed to compile the codec"));
 			return;
 		}
 
