@@ -7,8 +7,8 @@ package org.signalml.app.method.ep;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.SignalProcessingChain;

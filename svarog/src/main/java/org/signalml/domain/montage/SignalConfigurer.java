@@ -14,7 +14,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.system.ChannelFunction;

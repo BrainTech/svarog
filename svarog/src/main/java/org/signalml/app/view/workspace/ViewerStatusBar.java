@@ -33,7 +33,7 @@ import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.workspace.ViewModeAction;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;

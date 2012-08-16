@@ -18,8 +18,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;

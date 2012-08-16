@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.signal.SignalWriterMonitor;

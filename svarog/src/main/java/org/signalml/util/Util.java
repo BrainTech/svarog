@@ -29,7 +29,7 @@ import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.SignalChecksumProgressMonitor;
+import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;

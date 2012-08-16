@@ -16,6 +16,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;

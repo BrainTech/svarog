@@ -12,7 +12,7 @@ import java.awt.event.KeyEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.montage.SignalMontageDialog;
 

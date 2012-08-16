@@ -4,8 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.SignalProcessingChain;

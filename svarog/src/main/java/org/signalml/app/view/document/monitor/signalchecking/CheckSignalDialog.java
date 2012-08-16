@@ -27,7 +27,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.ElectrodeType;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.common.components.panels.AbstractPanel;

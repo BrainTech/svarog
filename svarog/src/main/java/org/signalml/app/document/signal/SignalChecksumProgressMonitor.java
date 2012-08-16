@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.signal;
 
 import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.domain.signal.SignalChecksum;

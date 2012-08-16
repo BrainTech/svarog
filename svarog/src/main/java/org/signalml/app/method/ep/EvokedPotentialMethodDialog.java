@@ -14,8 +14,8 @@ import javax.swing.JTabbedPane;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.view.ArtifactRejectionPanel;
 import org.signalml.app.method.ep.view.EvokedPotentialSettingsPanel;
 import org.signalml.app.method.ep.view.signalspace.ERPSignalSpacePanel;

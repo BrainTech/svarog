@@ -1,7 +1,9 @@
 /* MRUDRegistry.java created 2007-09-12
  *
  */
-package org.signalml.app.document;
+package org.signalml.app.document.mrud;
+
+import org.signalml.app.document.ManagedDocumentType;
 
 /**
  * Interface for a cache of {@link MRUDEntry file descriptions}.

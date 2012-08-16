@@ -16,7 +16,7 @@ import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.config.preset.managers.FFTSampleFilterPresetManager;
 import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.config.preset.managers.TimeDomainSampleFilterPresetManager;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.montage.MontageDescriptor;

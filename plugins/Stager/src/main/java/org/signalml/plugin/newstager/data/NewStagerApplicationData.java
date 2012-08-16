@@ -7,7 +7,7 @@ package org.signalml.plugin.newstager.data;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelType;

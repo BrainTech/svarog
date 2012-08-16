@@ -4,7 +4,7 @@
 
 package org.signalml.app.model.montage;
 
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.montage.Montage;
 
 /** MontageDescriptor

@@ -27,8 +27,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.util.IconUtils;

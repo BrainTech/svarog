@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.signal;
 
 import java.beans.IntrospectionException;
 import java.io.File;
@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.worker.SignalChecksumWorker;
 import org.signalml.domain.montage.Montage;

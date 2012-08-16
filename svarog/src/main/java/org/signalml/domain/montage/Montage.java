@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.signalml.app.config.preset.Preset;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;

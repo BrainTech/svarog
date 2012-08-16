@@ -8,7 +8,7 @@ import java.io.File;
 
 import javax.swing.SwingWorker;
 
-import org.signalml.app.document.SignalMLDocument;
+import org.signalml.app.document.signal.SignalMLDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;

@@ -8,11 +8,11 @@ import javax.swing.tree.TreePath;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
-import org.signalml.app.document.MRUDEntry;
-import org.signalml.app.document.MRUDRegistry;
-import org.signalml.app.document.MRUDRegistryEvent;
-import org.signalml.app.document.MRUDRegistryListener;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.mrud.MRUDEntry;
+import org.signalml.app.document.mrud.MRUDRegistry;
+import org.signalml.app.document.mrud.MRUDRegistryEvent;
+import org.signalml.app.document.mrud.MRUDRegistryListener;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractTreeModel;
 

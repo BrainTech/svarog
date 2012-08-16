@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.Document;
 

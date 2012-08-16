@@ -12,7 +12,7 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.ApplicationSerializableMethodDescriptor;
