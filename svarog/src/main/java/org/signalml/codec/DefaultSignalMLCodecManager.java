@@ -70,6 +70,7 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 		synchronized (this) {
 
 			if (codecs.contains(codec)) {
+				logger.warn("ignoring duplicate codec: " + codec);
 				return;
 			}
 
@@ -82,6 +83,7 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 	private int registerSignalMLCodecInternal(SignalMLCodec codec) {
 
 		String registerAsFormatName = codec.getFormatName();
+		logger.info("registering codec " + registerAsFormatName + ": " + codec);
 
 		SignalMLCodec uidCodec = codecsByUID.get(codec.getSourceUID());
 		if (uidCodec != null && uidCodec != codec) {
@@ -113,6 +115,7 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 
 	@Override
 	public void removeSignalMLCodec(SignalMLCodec codec) {
+		logger.info("unregistering codec " + codec.getFormatName());
 		synchronized (this) {
 			if (!codecs.contains(codec)) {
 				return;
