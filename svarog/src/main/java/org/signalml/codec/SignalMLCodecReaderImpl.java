@@ -6,6 +6,9 @@ package org.signalml.codec;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
+import java.nio.BufferUnderflowException;
 
 import org.apache.log4j.Logger;
 import org.signalml.codec.generator.xml.XMLCodecException;
@@ -360,15 +363,27 @@ public class SignalMLCodecReaderImpl implements SignalMLCodecReader {
 		}
 	}
 
-	public short[] getSamples(long offset, int length) throws SignalMLCodecException {
-		if (delegate != null) {
-			try {
-				return delegate.read_short_array(16 * this.get_data_offset() + 2 * offset, length);
-			} catch (Exception e) {
-				throw new SignalMLCodecException(e);
-			}
-		} else {
-			throw new SignalMLCodecException("object is null");
+	@Override
+	public void getSamples(FloatBuffer dst, int chn, long sample)
+		throws SignalMLCodecException
+	{
+		try{
+			while(dst.hasRemaining())
+				dst.put(this.getChannelSample(sample++, chn));
+		} catch(BufferUnderflowException e) {
+			throw new SignalMLCodecException("empty", e);
+		}
+	}
+
+	@Override
+	public void getSamples(DoubleBuffer dst, int chn, long sample)
+		throws SignalMLCodecException
+	{
+		try{
+			while(dst.hasRemaining())
+				dst.put(this.getChannelSample(sample++, chn));
+		} catch(BufferUnderflowException e) {
+			throw new SignalMLCodecException("empty", e);
 		}
 	}
 

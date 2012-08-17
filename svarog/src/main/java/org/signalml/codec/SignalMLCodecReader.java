@@ -1,5 +1,8 @@
 package org.signalml.codec;
 
+import java.nio.FloatBuffer;
+import java.nio.DoubleBuffer;
+
 public interface SignalMLCodecReader {
 	public SignalMLCodec getCodec();
 
@@ -43,4 +46,11 @@ public interface SignalMLCodecReader {
 	public String getCurrentFilename();
 
 	public float getChannelSample(long offset, int chn) throws SignalMLCodecException;
+
+	public void getSamples(FloatBuffer dst, int chn, long sample)
+		throws SignalMLCodecException;
+
+	@Deprecated
+	public void getSamples(DoubleBuffer dst, int chn, long sample)
+		throws SignalMLCodecException;
 }
