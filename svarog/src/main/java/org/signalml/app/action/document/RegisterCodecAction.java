@@ -28,6 +28,7 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.codec.XMLSignalMLCodec;
+import org.signalml.codec.StaticCodec;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** RegisterCodecAction
@@ -81,15 +82,18 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 			return;
 		}
 
+		logger.debug("Registering static codecs");
+		register(org.signalml.codec.precompiled.EASYS.class);
+		register(org.signalml.codec.precompiled.M4D.class);
+
 		logger.debug("Registering all available codecs in spec directory");
 		File[] files = specsDir.listFiles(new XmlFileFilter());
-		for (File file : files) {
-			logger.info("Registering codec: " + file);
+		for (File file : files)
 			register(file);
-		}
 	}
 
 	private void register(File file) {
+		logger.info("Registering codec: " + file);
 
 		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
 
@@ -103,6 +107,18 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 			return;
 		}
 
+		createCodec(model);
+	}
+
+	private void register(Class<? extends jsignalml.Source> source) {
+		logger.info("Registering codec: " + source.getCanonicalName());
+
+		SignalMLCodec codec = new StaticCodec(source);
+
+		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
+		model.setCodec(codec);
+		model.setSourceFile(new File(""));
+		model.setFormatName(codec.getFormatName()); //  + "  [precompiled]");
 		createCodec(model);
 	}
 

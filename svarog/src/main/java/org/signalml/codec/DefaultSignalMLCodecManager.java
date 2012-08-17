@@ -84,6 +84,7 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 
 		String registerAsFormatName = codec.getFormatName();
 		logger.info("registering codec " + registerAsFormatName + ": " + codec);
+		assert registerAsFormatName != null;
 
 		SignalMLCodec uidCodec = codecsByUID.get(codec.getSourceUID());
 		if (uidCodec != null && uidCodec != codec) {
