@@ -14,7 +14,12 @@ import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
-class SelectTagGroupDialog extends AbstractDialog {
+/**
+ * A dialog for selecting which tag group should be exported.
+ *
+ * @author Piotr Szachewicz
+ */
+public class SelectTagGroupDialog extends AbstractDialog {
 
 	private JComboBox selectTagGroupComboBox;
 

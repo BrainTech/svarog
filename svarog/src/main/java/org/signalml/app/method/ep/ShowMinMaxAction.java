@@ -8,6 +8,7 @@ import javax.swing.AbstractAction;
 
 import org.signalml.app.method.ep.view.minmax.MinMaxDialog;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -18,18 +19,20 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  */
 public class ShowMinMaxAction extends AbstractSignalMLAction {
 
+	private ViewerFileChooser fileChooser;
 	private MinMaxDialog minMaxDialog;
 	private EvokedPotentialResult result;
 
-	public ShowMinMaxAction() {
+	public ShowMinMaxAction(ViewerFileChooser fileChooser) {
 		super();
+		this.fileChooser = fileChooser;
 		setText(_("Show min/max"));
 		putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/minmax_table.png"));
 	}
 
 	public MinMaxDialog getMinMaxDialog() {
 		if (minMaxDialog == null)
-			minMaxDialog = new MinMaxDialog();
+			minMaxDialog = new MinMaxDialog(fileChooser);
 		return minMaxDialog;
 	}
 

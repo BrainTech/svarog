@@ -1,4 +1,4 @@
-package org.signalml.app.method.ep;
+package org.signalml.app.method.ep.action;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.method.ep.SelectTagGroupDialog;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.common.dialogs.OptionPane;
@@ -20,30 +21,24 @@ import org.signalml.domain.signal.raw.RawSignalDescriptorWriter;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 
-class ExportAllEPSamplesToFloatFileAction extends AbstractSignalMLAction {
-
-	private static final long serialVersionUID = 6557948924050838190L;
-	private EvokedPotentialResult result;
-	private ViewerFileChooser fileChooser;
+/**
+ * An action for saving evoked potentials to a a float file.
+ *
+ * @author Piotr Szachewicz
+ */
+public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 
 	public ExportAllEPSamplesToFloatFileAction(ViewerFileChooser fileChooser) {
-		super();
-		this.fileChooser = fileChooser;
+		super(fileChooser);
 		setText(_("Save samples to file"));
 		setToolTip(_("Save samples to file"));
 		setIconPath("org/signalml/app/icon/filesave.png");
-	}
-
-	public void setResult(EvokedPotentialResult result) {
-		this.result = result;
 	}
 
 	@Override

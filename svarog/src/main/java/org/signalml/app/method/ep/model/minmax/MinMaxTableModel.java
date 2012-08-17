@@ -35,6 +35,10 @@ public class MinMaxTableModel extends AbstractTableModel {
 		fireTableDataChanged();
 	}
 
+	public List<ChannelStatistics> getStatistics() {
+		return statistics;
+	}
+
 	@Override
 	public int getRowCount() {
 		if (statistics == null)
