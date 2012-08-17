@@ -22,8 +22,13 @@ public class FormatUtils {
 	 * Number format with two digits
 	 */
 	private static DecimalFormat twoPlaceFormat = new DecimalFormat("00");
+	private static DecimalFormat twoDecimalFormat = new DecimalFormat("#.##");
 
 	private static Pattern datePattern = null;
+
+	public static String format(double number) {
+		return twoDecimalFormat.format(number);
+	}
 
 	public static NumberFormat getIntegerFormatNoGrouping() {
 		NumberFormat format = NumberFormat.getIntegerInstance();

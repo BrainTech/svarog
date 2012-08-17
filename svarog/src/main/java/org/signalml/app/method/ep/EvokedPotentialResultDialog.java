@@ -50,9 +50,11 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 	private JButton saveChartsToFileButton;
 	private JButton saveSamplesToFloatFileButton;
+	private JButton showMinMaxButton;
 
 	private ExportAllEPChartsToFileAction exportAllEPChartsToFileAction;
 	private ExportAllEPSamplesToFloatFileAction exportAllEPSamplesToFileAction;
+	private ShowMinMaxAction showMinMaxAction;
 
 	public EvokedPotentialResultDialog() {
 		super();
@@ -148,11 +150,12 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 	public JPanel getButtonPanel() {
 		if (buttonPanel == null) {
 
-			buttonPanel = new JPanel(new GridLayout(1, 2, 3, 3));
+			buttonPanel = new JPanel(new GridLayout(1, 3, 3, 3));
 			buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
 
 			buttonPanel.add(getSaveChartsToFileButton());
 			buttonPanel.add(getSaveSamplesToFloatFileButton());
+			buttonPanel.add(getShowMinMaxButton());
 
 		}
 		return buttonPanel;
@@ -177,11 +180,25 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 		return exportAllEPSamplesToFileAction;
 	}
 
+	public ShowMinMaxAction getShowMinMaxAction() {
+		if (showMinMaxAction == null) {
+			showMinMaxAction = new ShowMinMaxAction();
+		}
+		return showMinMaxAction;
+	}
+
 	public JButton getSaveSamplesToFloatFileButton() {
 		if (saveSamplesToFloatFileButton == null) {
 			saveSamplesToFloatFileButton = new JButton(getExportAllEPSamplesToFloatFileAction());
 		}
 		return saveSamplesToFloatFileButton;
+	}
+
+	public JButton getShowMinMaxButton() {
+		if (showMinMaxButton == null) {
+			showMinMaxButton = new JButton(getShowMinMaxAction());
+		}
+		return showMinMaxButton;
 	}
 
 	@Override
@@ -193,6 +210,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 		getPropertySheetModel().setSubject(new EvokedPotentialResultWrapper(result));
 		getExportAllEPSamplesToFloatFileAction().setResult(result);
 		getExportAllEPChartsToFileAction().setResult(result);
+		getShowMinMaxAction().setResult(result);
 
 	}
 
