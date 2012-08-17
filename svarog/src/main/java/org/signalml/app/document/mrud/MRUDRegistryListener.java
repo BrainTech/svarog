@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.mrud;
 
 import java.util.EventListener;
 

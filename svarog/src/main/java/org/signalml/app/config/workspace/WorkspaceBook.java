@@ -9,8 +9,8 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.domain.book.filter.AtomFilterChain;

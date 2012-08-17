@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import org.jfree.chart.ChartPanel;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 
@@ -109,7 +110,5 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 		if (selectionHighlightRenderer != null)
 			selectionHighlightRenderer.updateSelectionToScaleChange();
 	}
-
-
 
 }

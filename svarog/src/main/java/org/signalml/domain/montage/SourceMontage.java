@@ -17,7 +17,7 @@ import java.util.LinkedList;
 import javax.swing.event.EventListenerList;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;

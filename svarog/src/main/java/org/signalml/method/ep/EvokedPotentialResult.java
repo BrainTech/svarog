@@ -24,6 +24,9 @@ public class EvokedPotentialResult implements Serializable {
 
 	private float samplingFrequency;
 
+	/**
+	 * Channel labels.
+	 */
 	private String[] labels;
 	private List<double[][]> averageSamples = new ArrayList<double[][]>();;
 

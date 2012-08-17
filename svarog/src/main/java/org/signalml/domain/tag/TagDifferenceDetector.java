@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.SignalSelection;

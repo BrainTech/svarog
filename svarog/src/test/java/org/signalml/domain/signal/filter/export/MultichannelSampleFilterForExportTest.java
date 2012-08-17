@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
-import org.signalml.app.document.RawSignalDocument;
+import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;

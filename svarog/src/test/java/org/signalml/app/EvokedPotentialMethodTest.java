@@ -11,9 +11,9 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Test;
-import org.signalml.app.document.RawSignalDocument;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.RawSignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.signal.SignalExportDescriptor;

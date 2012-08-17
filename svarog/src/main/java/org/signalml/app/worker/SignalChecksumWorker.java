@@ -9,8 +9,8 @@ import java.util.List;
 import javax.swing.SwingWorker;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.document.SignalChecksumProgressMonitor;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.domain.signal.SignalChecksum;
 

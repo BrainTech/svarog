@@ -2,11 +2,12 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.signal;
 
 import java.io.InvalidClassException;
 import java.util.List;
 
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;

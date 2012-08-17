@@ -2,8 +2,10 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.signal;
 
+import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.codec.SignalMLCodec;
 

@@ -12,12 +12,12 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
-import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.RawSignalDocument;
-import org.signalml.app.document.RawSignalMRUDEntry;
-import org.signalml.app.document.SignalMLDocument;
-import org.signalml.app.document.SignalMLMRUDEntry;
+import org.signalml.app.document.mrud.MRUDEntry;
+import org.signalml.app.document.signal.RawSignalDocument;
+import org.signalml.app.document.signal.RawSignalMRUDEntry;
+import org.signalml.app.document.signal.SignalMLDocument;
+import org.signalml.app.document.signal.SignalMLMRUDEntry;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.codec.SignalMLCodec;

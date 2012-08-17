@@ -8,7 +8,7 @@ import java.beans.PropertyEditorSupport;
 
 import javax.swing.tree.TreePath;
 
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 
 /** ChannelPropertyEditor
  *

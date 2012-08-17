@@ -14,12 +14,13 @@ import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
 
+import org.signalml.app.method.ep.action.ExportAllEPChartsToFileAction;
+import org.signalml.app.method.ep.action.ExportAllEPSamplesToFloatFileAction;
 import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
@@ -51,8 +52,11 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 	private JButton saveChartsToFileButton;
 	private JButton saveSamplesToFloatFileButton;
+	private JButton showMinMaxButton;
 
-	private JLabel skippedMarkersLabelTitle;
+	private ExportAllEPChartsToFileAction exportAllEPChartsToFileAction;
+	private ExportAllEPSamplesToFloatFileAction exportAllEPSamplesToFileAction;
+	private ShowMinMaxAction showMinMaxAction;
 
 	public EvokedPotentialResultDialog() {
 		super();
@@ -117,7 +121,7 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 	public EvokedPotentialGraphPanel getGraphPanel() {
 		if (graphPanel == null) {
-			graphPanel = new EvokedPotentialGraphPanel(fileChooser);
+			graphPanel = new EvokedPotentialGraphPanel();
 		}
 		return graphPanel;
 	}
@@ -148,11 +152,12 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 	public JPanel getButtonPanel() {
 		if (buttonPanel == null) {
 
-			buttonPanel = new JPanel(new GridLayout(1, 2, 3, 3));
+			buttonPanel = new JPanel(new GridLayout(1, 3, 3, 3));
 			buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
 
 			buttonPanel.add(getSaveChartsToFileButton());
 			buttonPanel.add(getSaveSamplesToFloatFileButton());
+			buttonPanel.add(getShowMinMaxButton());
 
 		}
 		return buttonPanel;
@@ -160,18 +165,42 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 	public JButton getSaveChartsToFileButton() {
 		if (saveChartsToFileButton == null) {
-			saveChartsToFileButton = new JButton(getGraphPanel().getExportAllEPChartsToFileAction());
-			saveChartsToFileButton.setHorizontalAlignment(JButton.LEFT);
+			saveChartsToFileButton = new JButton(getExportAllEPChartsToFileAction());
 		}
 		return saveChartsToFileButton;
 	}
 
+	public ExportAllEPChartsToFileAction getExportAllEPChartsToFileAction() {
+		if (exportAllEPChartsToFileAction == null)
+			exportAllEPChartsToFileAction = new ExportAllEPChartsToFileAction(getFileChooser(), getGraphPanel());
+		return exportAllEPChartsToFileAction;
+	}
+
+	public ExportAllEPSamplesToFloatFileAction getExportAllEPSamplesToFloatFileAction() {
+		if (exportAllEPSamplesToFileAction == null)
+			exportAllEPSamplesToFileAction = new ExportAllEPSamplesToFloatFileAction(getFileChooser());
+		return exportAllEPSamplesToFileAction;
+	}
+
+	public ShowMinMaxAction getShowMinMaxAction() {
+		if (showMinMaxAction == null) {
+			showMinMaxAction = new ShowMinMaxAction(getFileChooser());
+		}
+		return showMinMaxAction;
+	}
+
 	public JButton getSaveSamplesToFloatFileButton() {
 		if (saveSamplesToFloatFileButton == null) {
-			saveSamplesToFloatFileButton = new JButton(getGraphPanel().getExportAllEPSamplesToFloatFileAction());
-			saveSamplesToFloatFileButton.setHorizontalAlignment(JButton.LEFT);
+			saveSamplesToFloatFileButton = new JButton(getExportAllEPSamplesToFloatFileAction());
 		}
 		return saveSamplesToFloatFileButton;
+	}
+
+	public JButton getShowMinMaxButton() {
+		if (showMinMaxButton == null) {
+			showMinMaxButton = new JButton(getShowMinMaxAction());
+		}
+		return showMinMaxButton;
 	}
 
 	@Override
@@ -181,14 +210,15 @@ public class EvokedPotentialResultDialog extends AbstractDialog  {
 
 		getGraphPanel().setResult(result);
 		getPropertySheetModel().setSubject(new EvokedPotentialResultWrapper(result));
+		getExportAllEPSamplesToFloatFileAction().setResult(result);
+		getExportAllEPChartsToFileAction().setResult(result);
+		getShowMinMaxAction().setResult(result);
 
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-
 		// nothing to do
-
 	}
 
 	@Override

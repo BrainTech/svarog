@@ -6,8 +6,8 @@ import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.view.tags.AveragedTagSelectionPanel;
 import org.signalml.app.method.ep.view.time.BaselineSelectionPanel;
 import org.signalml.app.method.ep.view.time.EvokedPotentialsTimeSelectionPanel;

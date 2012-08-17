@@ -10,8 +10,8 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.tag.StyledTagSet;
@@ -20,7 +20,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 /**
  * This is an abstract class representing an action for exporting tags to some other format.
  * All actions for exporting tags should extend this class and override its
- * {@link ExportTagAction#doExport(org.signalml.domain.tag.StyledTagSet, java.io.File, org.signalml.app.document.SignalDocument)}
+ * {@link ExportTagAction#doExport(org.signalml.domain.tag.StyledTagSet, java.io.File, org.signalml.app.document.signal.SignalDocument)}
  * method. Also the constructor should be overriden and the name of the specific
  * action should be set with the {@link AbstractSignalMLAction#setText(java.lang.String)}.
  * For reference and example please see {@link ExportEEGLabTagAction}.

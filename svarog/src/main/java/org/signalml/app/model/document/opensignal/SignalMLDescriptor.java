@@ -1,6 +1,6 @@
 package org.signalml.app.model.document.opensignal;
 
-import org.signalml.app.document.SignalMLDocument;
+import org.signalml.app.document.signal.SignalMLDocument;
 import org.signalml.codec.SignalMLCodec;
 
 /**

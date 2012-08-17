@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.signal;
 
 import java.beans.IntrospectionException;
 import java.io.IOException;

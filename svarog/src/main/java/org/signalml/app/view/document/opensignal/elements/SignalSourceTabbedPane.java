@@ -15,7 +15,7 @@ import javax.swing.JTabbedPane;
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalMLDocument;
+import org.signalml.app.document.signal.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;

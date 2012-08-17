@@ -1,7 +1,7 @@
 /* DefaultMRUDRegistry.java created 2007-09-12
  *
  */
-package org.signalml.app.document;
+package org.signalml.app.document.mrud;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,7 @@ import java.util.Vector;
 import javax.swing.event.EventListenerList;
 
 import org.signalml.app.config.MRUDConfiguration;
+import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.plugin.export.signal.Document;
 
 import com.thoughtworks.xstream.XStream;

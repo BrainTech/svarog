@@ -16,7 +16,7 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;

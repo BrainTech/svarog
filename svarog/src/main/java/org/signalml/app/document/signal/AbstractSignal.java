@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.document;
+package org.signalml.app.document.signal;
 
 import java.beans.IntrospectionException;
 
@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
