@@ -62,7 +62,11 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 
 	@Override
 	public SignalMLCodec getCodecByUID(String uid) {
-		return codecsByUID.get(uid);
+		SignalMLCodec ret = codecsByUID.get(uid);
+		if (ret == null && uid.startsWith("org.signalml.codec.precompiled.")) {
+			ret = StaticCodec.forSourceName(uid);
+		}
+		return ret;
 	}
 
 	@Override

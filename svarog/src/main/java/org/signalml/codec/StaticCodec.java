@@ -50,4 +50,16 @@ public class StaticCodec implements SignalMLCodec {
 
 		return new JsignalmlReader(source, this);
 	}
+
+	public static StaticCodec forSourceName(String codec_name) {
+		log.info("Trying to open class: " + codec_name);
+		final Class<? extends jsignalml.Source> source_class;
+		try {
+			source_class =
+				Class.forName(codec_name).asSubclass(jsignalml.Source.class);
+		} catch(ClassNotFoundException ex) {
+			throw new ClassCastException();
+		}
+		return new StaticCodec(source_class);
+	}
 }
