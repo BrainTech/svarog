@@ -16,7 +16,6 @@ import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.SignalMLException;
 
 /** SaveTagAction

@@ -57,6 +57,7 @@ import org.signalml.app.action.tag.NewTagAction;
 import org.signalml.app.action.tag.OpenTagAction;
 import org.signalml.app.action.tag.SaveTagAction;
 import org.signalml.app.action.tag.SaveTagAsAction;
+import org.signalml.app.action.tag.SynchronizeTagsWithTriggerAction;
 import org.signalml.app.action.workspace.EditPreferencesAction;
 import org.signalml.app.action.workspace.IterateMethodAction;
 import org.signalml.app.action.workspace.ShowBottomPanelAction;
@@ -292,6 +293,7 @@ public class ViewerElementManager {
 	 * using which tag documents can be compared.
 	 */
 	private CompareTagsAction compareTagsAction;
+	private SynchronizeTagsWithTriggerAction synchronizeTagsWithTriggerAction;
 
 	private EditSignalParametersAction editSignalParametersAction;
 	private EditSignalMontageAction editSignalMontageAction;
@@ -691,6 +693,7 @@ public class ViewerElementManager {
 			tagsMenu.addSeparator();
 
 			tagsMenu.add(getCompareTagsAction());
+			tagsMenu.add(getSynchronizeTagsWithTriggerAction());
 
 		}
 		return tagsMenu;
@@ -1432,6 +1435,13 @@ public class ViewerElementManager {
 			compareTagsAction.setTagComparisonDialog(getTagComparisonDialog());
 		}
 		return compareTagsAction;
+	}
+
+	public SynchronizeTagsWithTriggerAction getSynchronizeTagsWithTriggerAction() {
+		if (synchronizeTagsWithTriggerAction == null) {
+			synchronizeTagsWithTriggerAction = new SynchronizeTagsWithTriggerAction(getActionFocusManager());
+		}
+		return synchronizeTagsWithTriggerAction;
 	}
 
 	public ExportEEGLabTagAction getExportEEGLabTagAction() {
