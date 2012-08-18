@@ -3,7 +3,6 @@ package org.signalml.app.action.tag;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
-import java.util.concurrent.ExecutionException;
 
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
@@ -44,16 +43,6 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 
 		SynchronizeTagsWithTriggerWorker worker = new SynchronizeTagsWithTriggerWorker(model);
 		worker.execute();
-
-		try {
-			worker.get();
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ExecutionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 
 	}
 

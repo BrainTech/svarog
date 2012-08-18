@@ -1,6 +1,6 @@
 package org.signalml.app.worker;
 
-import javax.swing.SwingWorker;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
@@ -13,7 +13,7 @@ import org.signalml.plugin.export.signal.Tag;
  *
  * @author Piotr Szachewicz
  */
-public class SynchronizeTagsWithTriggerWorker extends SwingWorker<Void, Void>{
+public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 	private static final int BUFFER_SIZE = 1024;
 
@@ -24,16 +24,20 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorker<Void, Void>{
 	private StyledTagSet tagSet;
 
 	public SynchronizeTagsWithTriggerWorker(SynchronizeTagsWithTriggerParameters model) {
-		super();
+		super(null);
 		this.signalDocument = model.getSignalDocument();
 		this.threshold = model.getThresholdValue();
 		this.triggerChannel = model.getTriggerChannel();
 
 		this.tagSet = signalDocument.getActiveTag().getTagSet();
+
+		getBusyDialog().setText(_("Synchronizing tags with trigger."));
+		getBusyDialog().setCancellable(false);
 	}
 
 	@Override
 	protected Void doInBackground() throws Exception {
+		showBusyDialog();
 		OriginalMultichannelSampleSource sampleSource = signalDocument.getSampleSource();
 
 		double[] samples = new double[BUFFER_SIZE];
