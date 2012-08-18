@@ -96,7 +96,7 @@ public class TagBasedAtomFilter extends AbstractAtomFilter {
 			style = tag.getStyle();
 			if (styleNames.contains(style.getName())) {
 				if (style.isMarker()) {
-					markerPosition = tag.getCenterPosition();
+					markerPosition = tag.getPosition();
 					if (position >= (markerPosition-secondsBefore) && position <= (markerPosition+secondsAfter)) {
 						logger.debug("Atom @ [" + segment.getSegmentTime() + ":" + atom.getTimePosition() + "] accepted by marker [" + tag.toString() + "]");
 						return true;

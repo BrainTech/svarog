@@ -1547,22 +1547,18 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		if (marker) {
 
-			int center = (int) Math.round(tag.getCenterPosition() * pixelPerSecond);
 			int rWidth = pixelPerChannel / (3 * tagCnt); // 1/3 of the height for this tag
 			if (rWidth > 50) {
 				rWidth = 50;
 			} else if (rWidth < 5) {
 				rWidth = 5;
 			}
-
-			rect.x = center - (rWidth / 2);
+			rect.x = (int)(tag.getPosition() * pixelPerSecond) - rWidth/2;
 			rect.width = rWidth;
 
 		} else {
-
 			rect.x = (int)(tag.getPosition() * pixelPerSecond);
 			rect.width = (int)(tag.getLength() * pixelPerSecond);
-
 		}
 
 		return rect;
@@ -2050,7 +2046,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			if (tag.isMarker()) {
 				return _R("{0} [{1} in channel {2}]",
 						  tag.getStyle().getDescriptionOrName(),
-						  tag.getCenterPosition(),
+						  tag.getPosition(),
 						  signalChain.getPrimaryLabel(tag.getChannel()));
 			} else {
 				return _R("{0} [{1}->{3} in channel {4}]",
