@@ -11,6 +11,7 @@ public class SynchronizeTagsWithTriggerParameters {
 	private SignalDocument signalDocument;
 	private double thresholdValue;
 	private int triggerChannel;
+	private SlopeType slopeType;
 
 	public SignalDocument getSignalDocument() {
 		return signalDocument;
@@ -29,6 +30,12 @@ public class SynchronizeTagsWithTriggerParameters {
 	}
 	public void setTriggerChannel(int triggerChannel) {
 		this.triggerChannel = triggerChannel;
+	}
+	public void setSlopeType(SlopeType slopeType) {
+		this.slopeType = slopeType;
+	}
+	public SlopeType getSlopeType() {
+		return slopeType;
 	}
 
 }

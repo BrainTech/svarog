@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
 
+import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
@@ -25,6 +26,7 @@ public class SynchronizeTagsWithTriggerPanel extends LabeledComponentsPanel {
 
 	private DoubleSpinner thresholdSpinner;
 	private JComboBox channelComboBox;
+	private JComboBox slopeSelectionComboBox;
 
 	public SynchronizeTagsWithTriggerPanel() {
 		super(_("Parameters"));
@@ -38,6 +40,9 @@ public class SynchronizeTagsWithTriggerPanel extends LabeledComponentsPanel {
 		components.add(componentWithLabel);
 
 		componentWithLabel = new ComponentWithLabel(new JLabel(_("Trigger channel")), getChannelComboBox());
+		components.add(componentWithLabel);
+
+		componentWithLabel = new ComponentWithLabel(new JLabel(_("Slope")), getSlopeSelectionComboBox());
 		components.add(componentWithLabel);
 
 		return components;
@@ -55,6 +60,13 @@ public class SynchronizeTagsWithTriggerPanel extends LabeledComponentsPanel {
 			channelComboBox = new JComboBox();
 		}
 		return channelComboBox;
+	}
+
+	public JComboBox getSlopeSelectionComboBox() {
+		if (slopeSelectionComboBox == null) {
+			slopeSelectionComboBox = new JComboBox(SlopeType.values());
+		}
+		return slopeSelectionComboBox;
 	}
 
 	@Override
@@ -79,6 +91,7 @@ public class SynchronizeTagsWithTriggerPanel extends LabeledComponentsPanel {
 	public void fillModelFromDialog(SynchronizeTagsWithTriggerParameters model) {
 		model.setThresholdValue(getThresholdSpinner().getValue());
 		model.setTriggerChannel(getChannelComboBox().getSelectedIndex());
+		model.setSlopeType((SlopeType) getSlopeSelectionComboBox().getSelectedItem());
 	}
 
 }

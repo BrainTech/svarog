@@ -3,6 +3,7 @@ package org.signalml.app.worker;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
@@ -17,18 +18,16 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 
 	private static final int BUFFER_SIZE = 1024;
 
-	private SignalDocument signalDocument;
+	private SynchronizeTagsWithTriggerParameters parameters;
 	private double threshold;
-	private int triggerChannel;
-
+	private SignalDocument signalDocument;
 	private StyledTagSet tagSet;
 
 	public SynchronizeTagsWithTriggerWorker(SynchronizeTagsWithTriggerParameters model) {
 		super(null);
-		this.signalDocument = model.getSignalDocument();
+		this.parameters = model;
 		this.threshold = model.getThresholdValue();
-		this.triggerChannel = model.getTriggerChannel();
-
+		this.signalDocument = model.getSignalDocument();
 		this.tagSet = signalDocument.getActiveTag().getTagSet();
 
 		getBusyDialog().setText(_("Synchronizing tags with trigger."));
@@ -53,11 +52,11 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 				if (currentSample + bufferSize > sampleCount)
 					bufferSize = sampleCount - currentSample;
 
-				sampleSource.getSamples(triggerChannel, samples, currentSample, bufferSize, 0);
+				sampleSource.getSamples(parameters.getTriggerChannel(), samples, currentSample, bufferSize, 0);
 
 				int i = 1;
 				for (; i < samples.length-1; i++) {
-					if (samples[i+1] >= threshold && samples[i] < threshold) {
+					if (isSlopeActivating(samples[i], samples[i+1])) {
 						double time = ((double)currentSample + i) / signalDocument.getSamplingFrequency();
 						tag.setPosition(time);
 						tagRepositioned = true;
@@ -72,6 +71,28 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 		}
 
 		return null;
+	}
+
+	protected boolean isSlopeActivating(double currentSample, double nextSample) {
+		SlopeType slopeType = parameters.getSlopeType();
+
+		switch(slopeType) {
+		case ASCENDING: return isSlopeAscending(currentSample, nextSample);
+		case DESCENDING: return isSlopeDescending(currentSample, nextSample);
+		case BOTH:
+			return isSlopeAscending(currentSample, nextSample)
+				|| isSlopeDescending(currentSample, nextSample);
+		}
+		return false;
+
+	}
+
+	protected boolean isSlopeAscending(double currentSample, double nextSample) {
+		return (nextSample >= threshold && currentSample < threshold);
+	}
+
+	protected boolean isSlopeDescending(double currentSample, double nextSample) {
+		return (nextSample < threshold && currentSample >= threshold);
 	}
 
 }
