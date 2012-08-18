@@ -14,7 +14,7 @@ public class MonitorRecordingDescriptor {
 	private boolean recordingEnabled = false;
 	private String signalRecordingFilePath;
 	private String tagsRecordingFilePath;
-	private boolean tagsRecordingEnabled;
+	private boolean tagsRecordingEnabled = true;
 
 	/**
 	 * Creates an empty {@link MonitorRecordingDescriptor} - all values are

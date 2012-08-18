@@ -7,6 +7,7 @@ package org.signalml.app.view.document.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
+
 import javax.swing.JComponent;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
@@ -14,15 +15,13 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
 
-import org.springframework.validation.Errors;
-
 /**
  * Represents a dialog shown when the user choose to start monitor recording.
  * Contains a panel to select files to which signal and tags will be recorded.
  *
  * @author Piotr Szachewicz
  */
-public class StartMonitorRecordingDialog extends AbstractDialog  {
+public class StartMonitorRecordingDialog extends AbstractDialog {
 
 	protected ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel;
 
@@ -69,7 +68,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog  {
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		//do nothing
+		getChooseFilesForMonitorRecordingPanel().fillPanelFromModel(model);
 	}
 
 	/**
