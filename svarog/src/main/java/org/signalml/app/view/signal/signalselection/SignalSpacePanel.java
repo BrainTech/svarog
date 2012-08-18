@@ -11,10 +11,10 @@ import javax.swing.JPanel;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.view.signal.export.SignalSourceLevelPanel;
 import org.signalml.domain.signal.space.SignalSourceLevel;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-
 import org.springframework.validation.Errors;
 
 
@@ -39,12 +39,18 @@ public class SignalSpacePanel extends JPanel {
 	 * the {@link TimeSpacePanel panel} to select the time interval of the
 	 * signal
 	 */
-	private TimeSpacePanel timeSpacePanel;
+	protected TimeSpacePanel timeSpacePanel;
 
 	/**
 	 * the {@link ChannelSpacePanel panel} to select the channels
 	 */
 	private ChannelSpacePanel channelSpacePanel;
+
+	/**
+	 * the {@link SignalSourceLevelPanel panel} to select the level of
+	 * processing of the signal
+	 */
+	private SignalSourceLevelPanel signalSourceLevelPanel;
 
 	/**
 	 * Constructor. Initializes the panel.
@@ -67,9 +73,40 @@ public class SignalSpacePanel extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		add(getTimeSpacePanel(), BorderLayout.WEST);
+		JPanel westPanel = new JPanel(new BorderLayout());
+
+		westPanel.add(getTimeSpacePanel(), BorderLayout.CENTER);
+		final SignalSourceLevelPanel sourceLevelPanel = getSignalSourceLevelPanel();
+		westPanel.add(sourceLevelPanel, BorderLayout.SOUTH);
+
+		add(westPanel, BorderLayout.CENTER);
 		add(getChannelSpacePanel(), BorderLayout.EAST);
 
+		ItemListener itemListener = new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+
+				boolean selected = (e.getStateChange() == ItemEvent.SELECTED);
+				if (selected) {
+
+					if (sourceLevelPanel.getFilteredRadioButton().isSelected()) {
+						getChannelSpacePanel().setCurrentLevel(SignalSourceLevel.FILTERED);
+					}
+					else if (sourceLevelPanel.getAssembledRadioButton().isSelected()) {
+						getChannelSpacePanel().setCurrentLevel(SignalSourceLevel.ASSEMBLED);
+					} else {
+						getChannelSpacePanel().setCurrentLevel(SignalSourceLevel.RAW);
+					}
+
+				}
+			}
+
+		};
+
+		sourceLevelPanel.getRawRadioButton().addItemListener(itemListener);
+		sourceLevelPanel.getAssembledRadioButton().addItemListener(itemListener);
+		sourceLevelPanel.getFilteredRadioButton().addItemListener(itemListener);
 	}
 
 	/**
@@ -99,6 +136,21 @@ public class SignalSpacePanel extends JPanel {
 	}
 
 	/**
+        * Returns the {@link SignalSourceLevelPanel panel} to select the level of
+        * processing of the signal.
+        * If the panel doesn't exist, it is created.
+        * @return the panel to select the level of
+        * processing of the signal
+        */
+       public SignalSourceLevelPanel getSignalSourceLevelPanel() {
+               if (signalSourceLevelPanel == null) {
+                       signalSourceLevelPanel = new SignalSourceLevelPanel();
+               }
+               return signalSourceLevelPanel;
+       }
+
+
+	/**
 	 * Fills fields of dependent panels
 	 * ({@link TimeSpacePanel#fillPanelFromModel(SignalSpace) TimeSpacePanel},
 	 * {@link SignalSourceLevelPanel#fillPanelFromModel(SignalSpace)
@@ -111,6 +163,7 @@ public class SignalSpacePanel extends JPanel {
 
 		getTimeSpacePanel().fillPanelFromModel(space);
 		getChannelSpacePanel().fillPanelFromModel(space);
+		getSignalSourceLevelPanel().fillPanelFromModel(space);
 
 	}
 
@@ -127,6 +180,7 @@ public class SignalSpacePanel extends JPanel {
 
 		getTimeSpacePanel().fillModelFromPanel(space);
 		getChannelSpacePanel().fillModelFromPanel(space);
+		getSignalSourceLevelPanel().fillModelFromPanel(space);
 
 	}
 
@@ -159,6 +213,7 @@ public class SignalSpacePanel extends JPanel {
 
 		getTimeSpacePanel().validatePanel(errors);
 		getChannelSpacePanel().validatePanel(errors);
+		getSignalSourceLevelPanel().validatePanel(errors);
 
 	}
 

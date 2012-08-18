@@ -10,10 +10,16 @@ public class NewStagerNonEmptyHelperConditionBuilderChain extends NewStagerCondi
 
 	public NewStagerNonEmptyHelperConditionBuilderChain(NewStagerBookAtomTagBuilderData data,
 			INewStagerBookAtomPrimaryTagHelper helper) {
-		super(data);
+		this(data, helper, null);
+	}
+
+	public NewStagerNonEmptyHelperConditionBuilderChain(NewStagerBookAtomTagBuilderData data,
+			INewStagerBookAtomPrimaryTagHelper helper, String description) {
+		super(data, description);
 		this.helper = helper;
 	}
 
+	
 	@Override
 	protected boolean isConditionMet(NewStagerBookSample sample) {
 		return this.helper.convertToTagSamples(sample).size() > 0;

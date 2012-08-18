@@ -215,4 +215,5 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 		return true;
 	}
+
 }

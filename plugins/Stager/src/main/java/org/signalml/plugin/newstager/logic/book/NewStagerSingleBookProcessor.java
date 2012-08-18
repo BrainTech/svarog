@@ -14,7 +14,6 @@ import org.signalml.plugin.newstager.data.tag.NewStagerBookAtomTagHelperData;
 import org.signalml.plugin.newstager.data.tag.NewStagerBookProcessorData;
 import org.signalml.plugin.newstager.data.tag.NewStagerTagCollectionType;
 import org.signalml.plugin.newstager.logic.book.tag.INewStagerTagBuilder;
-import org.signalml.plugin.newstager.logic.book.tag.NewStagerAmpTagBuilderChain;
 import org.signalml.plugin.newstager.logic.book.tag.NewStagerAtomTagBuilderChain;
 import org.signalml.plugin.newstager.logic.book.tag.NewStagerBookAtomSimpleTagBuilder;
 import org.signalml.plugin.newstager.logic.book.tag.NewStagerBookAtomTagCreator;
@@ -35,15 +34,15 @@ public class NewStagerSingleBookProcessor {
 
 	protected NewStagerTagBuilderSet builderSet;
 	protected NewStagerBookAtomSampleHelperSet helperSet;
-	private NewStagerBookAtomTagCreator tagCreator;
-	private NewStagerBookInfo bookInfo;
+	private final NewStagerBookAtomTagCreator tagCreator;
+	private final NewStagerBookInfo bookInfo;
 
 	protected class Pair
-		extends
-		PluginPair<NewStagerTagCollectionType, INewStagerBookAtomPrimaryTagHelper> {
+			extends
+			PluginPair<NewStagerTagCollectionType, INewStagerBookAtomPrimaryTagHelper> {
 
 		public Pair(NewStagerTagCollectionType x,
-					INewStagerBookAtomPrimaryTagHelper y) {
+				INewStagerBookAtomPrimaryTagHelper y) {
 			super(x, y);
 		}
 
@@ -57,27 +56,27 @@ public class NewStagerSingleBookProcessor {
 		NewStagerParameterThresholds thresholds = data.parameters.thresholds;
 		NewStagerBookInfo bookInfo = data.bookInfo;
 		this.helperSet.alphaFilter = new NewStagerBookAtomFilterBase(
-			new NewStagerBookAtomFilterData(bookInfo,
-											thresholds.alphaThreshold, this.helperSet));
+				new NewStagerBookAtomFilterData(bookInfo,
+						thresholds.alphaThreshold, this.helperSet));
 		this.helperSet.deltaFilter = new NewStagerBookAtomFilterBase(
-			new NewStagerBookAtomFilterData(bookInfo,
-											thresholds.deltaThreshold, this.helperSet));
+				new NewStagerBookAtomFilterData(bookInfo,
+						thresholds.deltaThreshold, this.helperSet));
 		this.helperSet.gaborDeltaFilter = new NewStagerAmpBookAtomFilter(
-			new NewStagerBookAtomFilterData(bookInfo,
-											thresholds.deltaThreshold, this.helperSet));
+				new NewStagerBookAtomFilterData(bookInfo,
+						thresholds.deltaThreshold, this.helperSet));
 		this.helperSet.spindleFilter = new NewStagerBookAtomFilterBase(
-			new NewStagerBookAtomFilterData(bookInfo,
-											thresholds.spindleThreshold, this.helperSet));
+				new NewStagerBookAtomFilterData(bookInfo,
+						thresholds.spindleThreshold, this.helperSet));
 		this.helperSet.kcFilter = new NewStagerAmpBookAtomFilter(
-			new NewStagerBookAtomFilterData(bookInfo,
-											thresholds.kCThreshold, this.helperSet));
+				new NewStagerBookAtomFilterData(bookInfo,
+						thresholds.kCThreshold, this.helperSet));
 		this.helperSet.thetaGaborFilter = new NewStagerAmpBookAtomFilter(
-			new NewStagerBookAtomFilterData(bookInfo,
-											thresholds.thetaThreshold, this.helperSet));
+				new NewStagerBookAtomFilterData(bookInfo,
+						thresholds.thetaThreshold, this.helperSet));
 
 		this.tagCreator = new NewStagerBookAtomTagCreator(
-			new NewStagerBookAtomTagCreatorData(data.constants,
-												data.bookInfo));
+				new NewStagerBookAtomTagCreatorData(data.constants,
+						data.bookInfo));
 
 		this.builderSet = new NewStagerTagBuilderSet();
 
@@ -89,106 +88,106 @@ public class NewStagerSingleBookProcessor {
 
 	private void createHelpers(NewStagerBookProcessorData data) {
 		NewStagerBookAtomTagHelperData helperData = new NewStagerBookAtomTagHelperData(
-			data.bookInfo, this.helperSet, data.muscle,
-			data.signalStatCoeffs);
+				data.bookInfo, data.fixedParameters, this.helperSet, data.muscle,
+				data.signalStatCoeffs);
 		this.helperSet.swaHelper = new NewStagerSwaTagBuilderHelper(helperData,
 				this.helperSet.gaborDeltaHelper, 0);
 		this.helperSet.alphaHelper = new NewStagerSwaTagBuilderHelper(
-			helperData, this.helperSet.alphaPrimaryHelper, 1);
+				helperData, this.helperSet.alphaPrimaryHelper, 1);
 		this.helperSet.spindleHelper = new NewStagerSwaTagBuilderHelper(
-			helperData, this.helperSet.spindlePrimaryHelper, 0);
+				helperData, this.helperSet.spindlePrimaryHelper, 0);
 		this.helperSet.kcHelper = new NewStagerKCTagBuilderHelper(helperData,
 				this.helperSet.kcFilter);
 		this.helperSet.thetaHelper = new NewStagerCountingBuilderHelper(
-			helperData, this.helperSet.thetaGaborFilter);
+				helperData, this.helperSet.thetaGaborFilter);
 		this.helperSet.muscleHelper = new NewStagerMuscleTagBuilderHelper(
-			helperData);
+				helperData);
 	}
 
 	private void createMainBuilders(NewStagerBookProcessorData data) {
 		NewStagerBookAtomTagBuilderData chainData = new NewStagerBookAtomTagBuilderData(
-			data.channelMap,
-			this.helperSet, this.tagCreator);
+				data.channelMap, this.helperSet, this.tagCreator);
 
 		INewStagerTagBuilder stadium1Builder = new NewStagerBookAtomSimpleTagBuilder(
-			chainData, NewStagerTagCollectionType.SLEEP_STAGE_1);
+				chainData, NewStagerTagCollectionType.SLEEP_STAGE_1);
 		INewStagerTagBuilder stadium2Builder = new NewStagerBookAtomSimpleTagBuilder(
-			chainData, NewStagerTagCollectionType.SLEEP_STAGE_2);
+				chainData, NewStagerTagCollectionType.SLEEP_STAGE_2);
 		INewStagerTagBuilder stadium3Builder = new NewStagerBookAtomSimpleTagBuilder(
-			chainData, NewStagerTagCollectionType.SLEEP_STAGE_3);
+				chainData, NewStagerTagCollectionType.SLEEP_STAGE_3);
 		INewStagerTagBuilder stadium4Builder = new NewStagerBookAtomSimpleTagBuilder(
-			chainData, NewStagerTagCollectionType.SLEEP_STAGE_4);
+				chainData, NewStagerTagCollectionType.SLEEP_STAGE_4);
 		INewStagerTagBuilder stadiumRBuilder = new NewStagerBookAtomSimpleTagBuilder(
-			chainData, NewStagerTagCollectionType.SLEEP_STAGE_R);
+				chainData, NewStagerTagCollectionType.SLEEP_STAGE_R);
 		INewStagerTagBuilder stadiumWBuilder = new NewStagerBookAtomSimpleTagBuilder(
-			chainData, NewStagerTagCollectionType.SLEEP_STAGE_W);
+				chainData, NewStagerTagCollectionType.SLEEP_STAGE_W);
 
 		NewStagerAtomTagBuilderChain mainChain = new NewStagerAtomTagBuilderChain(
-			chainData);
+				chainData, "mainLoop");
 
-		NewStagerAtomTagBuilderChain ampChain = new NewStagerAmpTagBuilderChain(
-			chainData);
+		NewStagerAtomTagBuilderChain ampChain = new NewStagerNonEmptyHelperConditionBuilderChain(
+				chainData, this.helperSet.deltaPrimaryHelper, "SWA > 0");
 
 		mainChain.compose(ampChain);
-		NewStagerAtomTagBuilderChain spindleTopChain = mainChain.composeChain(); // OK
+		NewStagerAtomTagBuilderChain spindleTopChain = mainChain
+				.composeChain("spindle check"); // OK
 
 		NewStagerNonEmptyHelperConditionBuilderChain spindleChain = new NewStagerNonEmptyHelperConditionBuilderChain(
-			chainData, this.helperSet.spindlePrimaryHelper);
+				chainData, this.helperSet.spindlePrimaryHelper);
 
 		NewStagerNonEmptyHelperConditionBuilderChain swaChain = new NewStagerNonEmptyHelperConditionBuilderChain(
-			chainData, this.helperSet.gaborDeltaHelper);
+				chainData, this.helperSet.gaborDeltaHelper, "spindle > 0");
 		swaChain.compose(new NewStagerHelperValueThresholdTagBuilderChain(
-							 chainData, this.helperSet.swaHelper, 0.5d)
-						 .compose(stadium4Builder));
+				chainData, this.helperSet.swaHelper, 0.5d)
+				.compose(stadium4Builder));
 		swaChain.compose(new NewStagerHelperValueThresholdTagBuilderChain(
-							 chainData, this.helperSet.swaHelper, 0.2d)
-						 .compose(stadium3Builder));
+				chainData, this.helperSet.swaHelper, 0.2d)
+				.compose(stadium3Builder));
 
 		swaChain.compose(spindleTopChain);
 
 		NewStagerAtomTagBuilderChain spindleSubChain = new NewStagerAtomTagBuilderChain(
-			chainData);
+				chainData);
 		NewStagerHelperValueThresholdTagBuilderChain alphaChain = new NewStagerHelperValueThresholdTagBuilderChain(
-			chainData, this.helperSet.spindleHelper,
-			data.fixedParameters.alphaPerc1);
+				chainData, this.helperSet.spindleHelper,
+				data.fixedParameters.alphaPerc1);
 		spindleSubChain.compose(alphaChain);
 		spindleSubChain.compose(stadium2Builder);
 		NewStagerAtomTagBuilderChain muscleChain = new NewStagerHelperValueThresholdTagBuilderChain(
-			chainData, this.helperSet.muscleHelper,
-			data.signalStatCoeffs.toneMThreshold).compose(stadiumWBuilder)
-		.compose(stadiumRBuilder);
+				chainData, this.helperSet.muscleHelper,
+				data.signalStatCoeffs.toneMThreshold).compose(stadiumWBuilder)
+				.compose(stadiumRBuilder);
 		alphaChain.compose(muscleChain);
 
 		spindleChain.compose(spindleSubChain);
 		NewStagerAtomTagBuilderChain kcTopChain = spindleChain.composeChain();
 
 		NewStagerAtomTagBuilderChain thetaTopChain = new NewStagerAtomTagBuilderChain(
-			chainData);
+				chainData);
 		NewStagerHelperValueThresholdTagBuilderChain thetaChain = new NewStagerHelperValueThresholdTagBuilderChain(
-			chainData, this.helperSet.muscleHelper,
-			data.signalStatCoeffs.toneMThreshold);
+				chainData, this.helperSet.muscleHelper,
+				data.signalStatCoeffs.toneMThreshold);
 		NewStagerAtomTagBuilderChain thetaMuscleChain = new NewStagerAtomTagBuilderChain(
-			chainData);
+				chainData);
 		thetaMuscleChain.compose(stadiumRBuilder);
 		thetaChain
-		.compose(
-			new NewStagerHelperValueThresholdTagBuilderChain(
-				chainData, this.helperSet.thetaHelper, 0)
-			.compose(stadium1Builder)).compose(
-				stadiumWBuilder);
+				.compose(
+						new NewStagerHelperValueThresholdTagBuilderChain(
+								chainData, this.helperSet.thetaHelper, 0)
+								.compose(stadium1Builder)).compose(
+						stadiumWBuilder);
 		thetaTopChain.compose(thetaChain).compose(thetaMuscleChain);
 
 		NewStagerHelperValueThresholdTagBuilderChain spindleSubChain2 = new NewStagerHelperValueThresholdTagBuilderChain(
-			chainData, this.helperSet.alphaHelper,
-			data.fixedParameters.alphaPerc2);
+				chainData, this.helperSet.alphaHelper,
+				data.fixedParameters.alphaPerc2);
 		spindleSubChain2.compose(muscleChain);
 
 		kcTopChain
-		.compose(new NewStagerHelperValueThresholdTagBuilderChain(
-					 chainData, this.helperSet.kcHelper, 0)
-				 .compose(stadium2Builder));
+				.compose(new NewStagerHelperValueThresholdTagBuilderChain(
+						chainData, this.helperSet.kcHelper, 0)
+						.compose(stadium2Builder));
 		kcTopChain.composeChain().compose(spindleSubChain2)
-		.compose(thetaTopChain);
+				.compose(thetaTopChain);
 
 		ampChain.compose(swaChain);
 		ampChain.compose(spindleTopChain);
@@ -201,43 +200,42 @@ public class NewStagerSingleBookProcessor {
 
 	private void createPrimaryHypnogramBuilders(NewStagerBookProcessorData data) {
 		NewStagerBookAtomTagHelperData helperData = new NewStagerBookAtomTagHelperData(
-			data.bookInfo, this.helperSet, data.muscle,
-			data.signalStatCoeffs);
+				data.bookInfo, data.fixedParameters, this.helperSet, data.muscle,
+				data.signalStatCoeffs);
 		this.helperSet.alphaPrimaryHelper = new NewStagerBookAtomPrimaryTagHelper(
-			helperData, this.helperSet.alphaFilter);
+				helperData, this.helperSet.alphaFilter);
 		this.helperSet.deltaPrimaryHelper = new NewStagerBookAtomPrimaryTagHelper(
-			helperData, this.helperSet.deltaFilter);
+				helperData, this.helperSet.deltaFilter);
 		this.helperSet.spindlePrimaryHelper = new NewStagerBookAtomPrimaryTagHelper(
-			helperData, this.helperSet.spindleFilter);
+				helperData, this.helperSet.spindleFilter);
 		this.helperSet.gaborDeltaHelper = new NewStagerBookAtomPrimaryTagHelper(
-			helperData, this.helperSet.gaborDeltaFilter);
+				helperData, this.helperSet.gaborDeltaFilter);
 
 		if (data.parameters.primaryHypnogramFlag) {
 
 			NewStagerBookAtomTagBuilderData builderData = new NewStagerBookAtomTagBuilderData(
-				data.channelMap,
-				this.helperSet, this.tagCreator);
+					data.channelMap, this.helperSet, this.tagCreator);
 
 			for (final Pair p : Arrays.asList(new Pair(
-												  NewStagerTagCollectionType.HYPNO_ALPHA,
-												  this.helperSet.alphaPrimaryHelper), new Pair(
-												  NewStagerTagCollectionType.HYPNO_DELTA,
-												  this.helperSet.gaborDeltaHelper), new Pair(
-												  NewStagerTagCollectionType.HYPNO_SPINDLE,
-												  this.helperSet.spindlePrimaryHelper))) {
+					NewStagerTagCollectionType.HYPNO_ALPHA,
+					this.helperSet.alphaPrimaryHelper), new Pair(
+					NewStagerTagCollectionType.HYPNO_DELTA,
+					this.helperSet.gaborDeltaHelper), new Pair(
+					NewStagerTagCollectionType.HYPNO_SPINDLE,
+					this.helperSet.spindlePrimaryHelper))) {
 				this.builderSet
-				.add(new NewStagerPrimaryTagBuilder(builderData) {
+						.add(new NewStagerPrimaryTagBuilder(builderData) {
 
-					@Override
-					protected INewStagerBookAtomPrimaryTagHelper getConverter() {
-						return p.y;
-					}
+							@Override
+							protected INewStagerBookAtomPrimaryTagHelper getConverter() {
+								return p.y;
+							}
 
-					@Override
-					protected NewStagerTagCollectionType getTagType() {
-						return p.x;
-					}
-				});
+							@Override
+							protected NewStagerTagCollectionType getTagType() {
+								return p.x;
+							}
+						});
 			}
 		}
 	}
@@ -247,9 +245,8 @@ public class NewStagerSingleBookProcessor {
 	}
 
 	public NewStagerBookProcessorResult getResult() {
-		return new NewStagerBookProcessorResult(
-				   this.bookInfo,
-				   this.builderSet.getResult());
+		return new NewStagerBookProcessorResult(this.bookInfo,
+				this.builderSet.getResult());
 	}
 
 }

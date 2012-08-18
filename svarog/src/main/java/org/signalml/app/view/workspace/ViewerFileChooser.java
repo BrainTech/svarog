@@ -42,6 +42,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	public void initialize() {
 		FileFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
+		FileFilter csv = new FileNameExtensionFilter(_("Comma-separated values (*.csv)"), "csv");
 		FileFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
 		FileFilter ascii = new FileNameExtensionFilter(_("ASCII files (*.ascii)"), "ascii");
 		FileFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab datasets (*.set)"), "set");
@@ -52,10 +53,10 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileFilter config = new FileNameExtensionFilter(_("Config files (*.cfg)"), "cfg");
 		FileFilter exe = new FileNameExtensionFilter(_("Executable files (*.exe)"), "exe");
 		FileFilter jar = new FileNameExtensionFilter(_("Jar files (*.jar)"), "jar");
-		FileFilter jar_class = new FileNameExtensionFilter(_("Code files (*.java, *.class)"),
-				"java", "class");
+		FileFilter jar_class = new FileNameExtensionFilter(_("Code files (*.java, *.class)"), "java", "class");
 
 		OptionSet.consoleSaveAsText.setFilters(text);
+		OptionSet.saveAsCSV.setFilters(csv);
 		OptionSet.tableSaveAsText.setFilters(text);
 		OptionSet.samplesSaveAsText.setFilters(text);
 		OptionSet.samplesSaveAsFloat.setFilters(binary);
@@ -172,6 +173,10 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return chooseFile(parent, OptionSet.consoleSaveAsText);
 	}
 
+	public synchronized File chooseSaveAsCSVFile(Component parent) {
+		return chooseFile(parent, OptionSet.saveAsCSV);
+	}
+
 	public synchronized File chooseTableSaveAsTextFile(Component parent) {
 		return chooseFile(parent, OptionSet.tableSaveAsText);
 	}
@@ -184,6 +189,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return chooseFile(parent, OptionSet.samplesSaveAsFloat);
 	}
 
+	@Override
 	public synchronized File chooseExportSignalFile(Component parent, File fileSuggestion) {
 		return chooseFile(parent, OptionSet.exportSignal, fileSuggestion);
 	}
@@ -235,22 +241,27 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return chooseFile(parent, OptionSet.saveDocument);
 	}
 
+	@Override
 	public synchronized File chooseSaveTag(Component parent) {
 		return chooseFile(parent, OptionSet.saveTag);
 	}
 
+	@Override
 	public synchronized File chooseOpenTag(Component parent) {
 		return chooseFile(parent, OptionSet.openTag);
 	}
 
+	@Override
 	public synchronized File chooseExpertTag(Component parent) {
 		return chooseFile(parent, OptionSet.expertTag);
 	}
 
+	@Override
 	public synchronized File chooseImportTag(Component parent) {
 		return chooseFile(parent, OptionSet.importTag);
 	}
 
+	@Override
 	public synchronized File chooseExportTag(Component parent) {
 		return chooseFile(parent, OptionSet.exportTag);
 	}
@@ -264,10 +275,12 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 						  fileSuggestion, directory);
 	}
 
+	@Override
 	public synchronized File chooseSavePresetFile(Component parent) {
 		return chooseFile(parent, OptionSet.savePreset);
 	}
 
+	@Override
 	public synchronized File chooseLoadPresetFile(Component parent) {
 		return chooseFile(parent, OptionSet.loadPreset);
 	}
@@ -276,6 +289,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return chooseFile(parent, OptionSet.artifactProjectPreset);
 	}
 
+	@Override
 	public synchronized File chooseExecutableFile(Component parent) {
 		setSelectedFile(new File(""));
 		setCurrentDirectory(new File(System.getProperty("user.dir")));
@@ -283,6 +297,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return chooseForReadOrWrite(parent, OptionSet.executablePreset);
 	}
 
+	@Override
 	public synchronized File chooseBookFile(Component parent) {
 		return chooseFile(parent, OptionSet.bookFilePreset);
 	}
@@ -291,6 +306,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return chooseFile(parent, OptionSet.bookSavePreset);
 	}
 
+	@Override
 	public synchronized File chooseWorkingDirectory(Component parent, File currentDirectory) {
 		boolean dirSet = false;
 		if (currentDirectory != null) {
@@ -316,14 +332,17 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return file;
 	}
 
+	@Override
 	public synchronized File[] chooseClassPathDirectories(Component parent) {
 		return chooseFiles(parent, OptionSet.classPathDirectoryPreset);
 	}
 
+	@Override
 	public synchronized File[] chooseJarFiles(Component parent) {
 		return chooseFiles(parent, OptionSet.classPathDirectoryPreset);
 	}
 
+	@Override
 	public synchronized File chooseCodeFile(Component parent) {
 		return chooseFile(parent, OptionSet.codeFilePreset);
 	}
@@ -412,6 +431,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	protected enum OptionSet {
 		consoleSaveAsText(Operation.save, _("Choose text file to save"),
 		null, _("Save")),
+		saveAsCSV(Operation.save, _("Choose CSV file to save"), null, _("Save")),
 		tableSaveAsText(Operation.save, _("Choose text file to save"),
 		null, _("Save")),
 		samplesSaveAsText(Operation.save, _("Choose text file to save"),

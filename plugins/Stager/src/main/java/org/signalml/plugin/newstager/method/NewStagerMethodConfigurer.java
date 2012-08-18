@@ -138,7 +138,7 @@ public class NewStagerMethodConfigurer implements IPluginMethodConfigurer,
 		data.setProjectPath(workingDirectory.getAbsolutePath());
 		data.setPatientName(name);
 
-		boolean dialogOk = dialog.showDialog(data, true);
+		boolean dialogOk = this.dialog.showDialog(data, true);
 		if (!dialogOk) {
 			return false;
 		}

@@ -16,10 +16,17 @@ public abstract class NewStagerAbstractTagBuilder implements
 	protected Collection<IPluginTagDef> tags;
 	protected NewStagerTagCollection computedResultCollection;
 	protected final NewStagerBookAtomTagBuilderData data;
+	
+	protected String description;
 
 	public NewStagerAbstractTagBuilder(NewStagerBookAtomTagBuilderData data) {
 		this.data = data;
 		this.computedResultCollection = null;
+	}
+	
+	public NewStagerAbstractTagBuilder(NewStagerBookAtomTagBuilderData data, String description) {
+		this(data);
+		this.description = description;
 	}
 
 	@Override
@@ -38,5 +45,10 @@ public abstract class NewStagerAbstractTagBuilder implements
 		return new NewStagerTagBuilderResult(map, freshFlag);
 	}
 
-	protected abstract NewStagerTagCollectionType getTagType();
+	@Override
+	public String toString() {
+		return this.description != null ? this.description : super.toString();
+	}
+	
+	protected abstract NewStagerTagCollectionType getTagType();	
 }

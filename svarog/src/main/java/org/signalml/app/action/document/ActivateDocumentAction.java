@@ -13,8 +13,8 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.DocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.plugin.export.signal.Document;
 
 /** ActivateDocumentAction

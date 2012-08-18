@@ -38,10 +38,11 @@ public class PluginTagWriter implements IPluginTagWriter {
 
 	@Override
 	public void writeTags(Collection<PluginTagGroup> tags) throws IOException,
-		SignalMLException {
+			SignalMLException {
 
 		TagStyles styles = this.createStyles(tags);
-		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags, styles));
+		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags,
+				styles));
 
 		float pageSize = this.config.pageSize;
 		float stretchFactor = -1;
@@ -51,7 +52,9 @@ public class PluginTagWriter implements IPluginTagWriter {
 				stretchFactor = tagGroup.stretchFactor;
 			} else {
 				if (stretchFactor != tagGroup.stretchFactor) {
-					throw new SanityCheckException("Inconsistent stretchFactor " + tagGroup + " (should be: " + stretchFactor + " )");
+					throw new SanityCheckException(
+							"Inconsistent stretchFactor " + tagGroup
+									+ " (should be: " + stretchFactor + " )");
 				}
 			}
 		}
@@ -61,21 +64,21 @@ public class PluginTagWriter implements IPluginTagWriter {
 		}
 
 		StyledTagSet tagSet = new StyledTagSet(styles, documentTags, pageSize,
-											   (int)(pageSize / stretchFactor));
+				(int) (pageSize / stretchFactor));
 		TagDocument document = new TagDocument(tagSet);
 		document.setBackingFile(this.outputFile);
 		document.saveDocument();
 	}
 
-	private TagStyles createStyles(
-		Collection<PluginTagGroup> tags) {
+	private TagStyles createStyles(Collection<PluginTagGroup> tags) {
 		TagStyles styles = new TagStyles();
 
 		for (PluginTagGroup tagGroup : tags) {
-			TagStyle style = new TagStyle(SignalSelectionType.typeByName(tagGroup.type.getName()),
-										  tagGroup.name, tagGroup.description, FILL_COLOR,
-										  OUTLINE_COLOR, 1, null, // solid
-										  this.createKeyStroke(tagGroup), false);
+			TagStyle style = new TagStyle(
+					SignalSelectionType.typeByName(tagGroup.type.getName()),
+					tagGroup.name, tagGroup.description, FILL_COLOR,
+					OUTLINE_COLOR, 1, null, // solid
+					this.createKeyStroke(tagGroup), false);
 			styles.addStyle(style);
 		}
 
@@ -88,12 +91,12 @@ public class PluginTagWriter implements IPluginTagWriter {
 			return null;
 		} else {
 			return name.length() == 1 ? KeyStroke.getKeyStroke(name.charAt(0))
-				   : KeyStroke.getKeyStroke("typed " + name);
+					: KeyStroke.getKeyStroke("typed " + name);
 		}
 	}
 
 	private Collection<Tag> createTags(Collection<PluginTagGroup> tags,
-									   TagStyles tagStyles) {
+			TagStyles tagStyles) {
 		List<Tag> l = new LinkedList<Tag>();
 		for (PluginTagGroup tagGroup : tags) {
 			TagStyle style = tagStyles.getStyle(tagGroup.name);
@@ -102,12 +105,12 @@ public class PluginTagWriter implements IPluginTagWriter {
 			}
 
 			TreeSet<IPluginTagDef> sortedTags = new TreeSet<IPluginTagDef>(
-				new PluginTagDefRangeComparator());
+					new PluginTagDefRangeComparator());
 			sortedTags.addAll(tagGroup.tags);
 
 			for (IPluginTagDef tag : sortedTags) {
-				l.add(new Tag(style, (float) tag.getOffset(), (float) tag
-							  .getLength(), tag.getChannel()));
+				l.add(new Tag(style, tag.getOffset(), tag.getLength(), tag
+						.getChannel()));
 			}
 		}
 		return l;

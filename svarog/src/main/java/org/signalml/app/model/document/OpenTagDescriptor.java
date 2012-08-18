@@ -4,8 +4,8 @@
 
 package org.signalml.app.model.document;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 
 /** OpenTagDescriptor
  *

@@ -10,12 +10,12 @@ import java.awt.Dimension;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -28,8 +28,6 @@ import org.signalml.domain.signal.space.MarkerTimeSpace;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.signal.TagStyle;
-
-import org.springframework.validation.Errors;
 
 
 
@@ -78,15 +76,15 @@ public class MarkedTimeSpacePanel extends JPanel {
 	private JComboBox markerStyleComboBox;
 
 	/**
-	 * the spinner which allows to select how many seconds before the marker
-	 * should be used
+	 * the spinner which allows to select when, comparing to the marker tag,
+	 * the time selection starts.
 	 */
-	private JSpinner secondsBeforeSpinner;
+	private JSpinner startTimeSpinner;
 	/**
-	 * the spinner which allows to select how many seconds after the marker
-	 * should be used
+	 * the spinner which allows to select how many seconds the time selection
+	 * lasts.
 	 */
-	private JSpinner secondsAfterSpinner;
+	private JSpinner lengthSpinner;
 
 	/**
 	 * the names of channels,
@@ -276,21 +274,21 @@ public class MarkedTimeSpacePanel extends JPanel {
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel secondsBeforeLabel = new JLabel(_("Seconds before"));
-			JLabel secondsAfterLabel = new JLabel(_("Seconds after"));
+			JLabel startTimeLabel = new JLabel(_("Start time"));
+			JLabel segmentLengthLabel = new JLabel(_("Length"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
 				layout.createParallelGroup()
-				.addComponent(secondsBeforeLabel)
-				.addComponent(secondsAfterLabel)
+				.addComponent(startTimeLabel)
+				.addComponent(segmentLengthLabel)
 			);
 
 			hGroup.addGroup(
 				layout.createParallelGroup(Alignment.TRAILING)
-				.addComponent(getSecondsBeforeSpinner())
-				.addComponent(getSecondsAfterSpinner())
+				.addComponent(getStartTimeSpinner())
+				.addComponent(getLengthSpinner())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -299,14 +297,14 @@ public class MarkedTimeSpacePanel extends JPanel {
 
 			vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(secondsBeforeLabel)
-				.addComponent(getSecondsBeforeSpinner())
+				.addComponent(startTimeLabel)
+				.addComponent(getStartTimeSpinner())
 			);
 
 			vGroup.addGroup(
 				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(secondsAfterLabel)
-				.addComponent(getSecondsAfterSpinner())
+				.addComponent(segmentLengthLabel)
+				.addComponent(getLengthSpinner())
 			);
 
 			layout.setVerticalGroup(vGroup);
@@ -314,34 +312,22 @@ public class MarkedTimeSpacePanel extends JPanel {
 		return settingsPanel;
 	}
 
-	/**
-	 * Returns the spinner which allows to select how many seconds before the
-	 * marker should be used.
-	 * @return the spinner which allows to select how many seconds before the
-	 * marker should be used
-	 */
-	public JSpinner getSecondsBeforeSpinner() {
-		if (secondsBeforeSpinner == null) {
-			secondsBeforeSpinner = new JSpinner(new SpinnerNumberModel(1.0,0.0,3600,0.1));
+	public JSpinner getStartTimeSpinner() {
+		if (startTimeSpinner == null) {
+			startTimeSpinner = new JSpinner(new SpinnerNumberModel(1.0,-3600.0,3600,0.1));
 			Dimension fixedSize = new Dimension(200,25);
-			secondsBeforeSpinner.setPreferredSize(fixedSize);
+			startTimeSpinner.setPreferredSize(fixedSize);
 		}
-		return secondsBeforeSpinner;
+		return startTimeSpinner;
 	}
 
-	/**
-	 * Returns the spinner which allows to select how many seconds after the
-	 * marker should be used.
-	 * @return the spinner which allows to select how many seconds after the
-	 * marker should be used
-	 */
-	public JSpinner getSecondsAfterSpinner() {
-		if (secondsAfterSpinner == null) {
-			secondsAfterSpinner = new JSpinner(new SpinnerNumberModel(1.0,0.0,3600,0.1));
+	public JSpinner getLengthSpinner() {
+		if (lengthSpinner == null) {
+			lengthSpinner = new JSpinner(new SpinnerNumberModel(1.0,0.1,3600,0.1));
 			Dimension fixedSize = new Dimension(200,25);
-			secondsAfterSpinner.setPreferredSize(fixedSize);
+			lengthSpinner.setPreferredSize(fixedSize);
 		}
-		return secondsAfterSpinner;
+		return lengthSpinner;
 	}
 
 	/**
@@ -356,8 +342,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 * {@link MarkerTimeSpace#getMarkerChannel() active} one is set,</li>
 	 * <li>if {@link #getMarkerStyles() marker styles} exist the
 	 * {@link MarkerTimeSpace#getMarkerStyleName() active} one is set,</li>
-	 * </li>number of seconds {@link MarkerTimeSpace#getSecondsBefore() before}
-	 * and {@link MarkerTimeSpace#getSecondsAfter() after} the marker is set
+	 * </li>number of seconds {@link MarkerTimeSpace#getStartTime() before}
+	 * and {@link MarkerTimeSpace#getSegmentLength() after} the marker is set
 	 * to spinners.</li>
 	 * </ul>
 	 * @param space the signal space
@@ -376,8 +362,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 				styleBox.setSelectedIndex(0);
 			}
 
-			getSecondsAfterSpinner().setValue(new Double(1));
-			getSecondsBeforeSpinner().setValue(new Double(0));
+			getLengthSpinner().setValue(new Double(1));
+			getStartTimeSpinner().setValue(new Double(0));
 
 		} else {
 
@@ -404,8 +390,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 				}
 			}
 
-			getSecondsBeforeSpinner().setValue(markerTimeSpace.getSecondsBefore());
-			getSecondsAfterSpinner().setValue(markerTimeSpace.getSecondsAfter());
+			getStartTimeSpinner().setValue(markerTimeSpace.getStartTime());
+			getLengthSpinner().setValue(markerTimeSpace.getSegmentLength());
 
 		}
 
@@ -421,8 +407,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 	 * and the {@link MarkerTimeSpace#setMarkerStyleName(String) name} of the
 	 * {@link TagStyle style}</li>
 	 * <li>sets the number of seconds
-	 * {@link MarkerTimeSpace#setSecondsBefore(double) before} and
-	 * {@link MarkerTimeSpace#setSecondsAfter(double) after} the marker.</li>
+	 * {@link MarkerTimeSpace#setStartTime(double) before} and
+	 * {@link MarkerTimeSpace#setSegmentLength(double) after} the marker.</li>
 	 * </ul>
 	 * @param space the singal space in which the data will be stored
 	 */
@@ -441,8 +427,8 @@ public class MarkedTimeSpacePanel extends JPanel {
 			markerTimeSpace.setMarkerStyleName(((TagStyle) getMarkerStyleComboBox().getSelectedItem()).getName());
 		}
 
-		markerTimeSpace.setSecondsBefore(((Double) getSecondsBeforeSpinner().getValue()).doubleValue());
-		markerTimeSpace.setSecondsAfter(((Double) getSecondsAfterSpinner().getValue()).doubleValue());
+		markerTimeSpace.setStartTime(((Double) getStartTimeSpinner().getValue()).doubleValue());
+		markerTimeSpace.setSegmentLength(((Double) getLengthSpinner().getValue()).doubleValue());
 
 		space.setMarkerTimeSpace(markerTimeSpace);
 
@@ -527,19 +513,9 @@ public class MarkedTimeSpacePanel extends JPanel {
 
 	/**
 	 * Validates this panel.
-	 * This panel is valid if either the number of included seconds before or
-	 * after the marker is positive.
 	 * @param errors the object in which the errors are stored.
 	 */
 	public void validatePanel(ValidationErrors errors) {
-
-		double secondsBefore = ((Double) getSecondsBeforeSpinner().getValue()).doubleValue();
-		double secondsAfter = ((Double) getSecondsAfterSpinner().getValue()).doubleValue();
-
-		if (secondsBefore == 0 && secondsAfter == 0) {
-			errors.addError(_("Either seconds after or seconds before must be > 0"));
-		}
-
 	}
 
 }

@@ -4,6 +4,8 @@
 
 package org.signalml.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
@@ -17,8 +19,6 @@ import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

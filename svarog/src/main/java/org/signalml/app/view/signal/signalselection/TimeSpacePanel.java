@@ -22,8 +22,6 @@ import org.signalml.domain.signal.space.TimeSpaceType;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.TagStyle;
 
-import org.springframework.validation.Errors;
-
 /**
  * Panel which allows to select the time fragment of the signal:
  * <ul>
@@ -37,6 +35,10 @@ import org.springframework.validation.Errors;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class TimeSpacePanel extends JPanel {
+
+	public static final int WHOLE_SIGNAL_TAB_INDEX = 0;
+	public static final int SIGNAL_SELECTION_TAB_INDEX = 1;
+	public static final int MARKER_SELECTION_TAB_INDEX = 2;
 
 	private static final long serialVersionUID = 1L;
 
@@ -53,7 +55,7 @@ public class TimeSpacePanel extends JPanel {
 	 * - {@link #markedTimeSpacePanel},</li>
 	 * </ul>
 	 */
-	private JTabbedPane tabbedPane;
+	protected JTabbedPane tabbedPane;
 
 	/**
 	 * the {@link WholeTimeSpacePanel panel} which allows to select the whole
@@ -184,31 +186,35 @@ public class TimeSpacePanel extends JPanel {
 		getSelectedTimeSpacePanel().fillPanelFromModel(space);
 		getMarkedTimeSpacePanel().fillPanelFromModel(space);
 
-		TimeSpaceType timeSpaceType = space.getTimeSpaceType();
+		enableTabsAsNeeded(space);
 
+	}
+
+	protected void enableTabsAsNeeded(SignalSpace space) {
+
+		TimeSpaceType timeSpaceType = space.getTimeSpaceType();
 		JTabbedPane tPane = getTabbedPane();
 
 		switch (timeSpaceType) {
 
 		case MARKER_BASED :
-			if (tPane.isEnabledAt(2)) {
-				tPane.setSelectedIndex(2);
+			if (tPane.isEnabledAt(MARKER_SELECTION_TAB_INDEX)) {
+				tPane.setSelectedIndex(MARKER_SELECTION_TAB_INDEX);
 			} else {
-				tPane.setSelectedIndex(0);
+				tPane.setSelectedIndex(WHOLE_SIGNAL_TAB_INDEX);
 			}
 			break;
 
 		case SELECTION_BASED :
-			tPane.setSelectedIndex(1);
+			tPane.setSelectedIndex(SIGNAL_SELECTION_TAB_INDEX);
 			break;
 
 		case WHOLE_SIGNAL :
 		default :
-			tPane.setSelectedIndex(0);
+			tPane.setSelectedIndex(WHOLE_SIGNAL_TAB_INDEX);
 			break;
 
 		}
-
 	}
 
 	/**
@@ -245,19 +251,19 @@ public class TimeSpacePanel extends JPanel {
 
 		switch (index) {
 
-		case 2 :
+		case MARKER_SELECTION_TAB_INDEX :
 			space.setTimeSpaceType(TimeSpaceType.MARKER_BASED);
 			getMarkedTimeSpacePanel().fillModelFromPanel(space);
 			space.setSelectionTimeSpace(null);
 			break;
 
-		case 1 :
+		case SIGNAL_SELECTION_TAB_INDEX :
 			space.setTimeSpaceType(TimeSpaceType.SELECTION_BASED);
 			getSelectedTimeSpacePanel().fillModelFromPanel(space);
 			space.setMarkerTimeSpace(null);
 			break;
 
-		case 0 :
+		case WHOLE_SIGNAL_TAB_INDEX :
 		default :
 			space.setTimeSpaceType(TimeSpaceType.WHOLE_SIGNAL);
 			getWholeTimeSpacePanel().fillModelFromPanel(space);
@@ -288,22 +294,25 @@ public class TimeSpacePanel extends JPanel {
 
 		getWholeTimeSpacePanel().setConstraints(constraints);
 		getSelectedTimeSpacePanel().setConstraints(constraints);
-		MarkedTimeSpacePanel markerPanel = getMarkedTimeSpacePanel();
+		getMarkedTimeSpacePanel().setConstraints(constraints);
 
 		JTabbedPane tabbedPane = getTabbedPane();
 
-		markerPanel.setConstraints(constraints);
-
 		TagStyle[] markerStyles = constraints.getMarkerStyles();
 		if (markerStyles != null && markerStyles.length > 0) {
-			tabbedPane.setEnabledAt(2, true);
+			setEnabled(MARKER_SELECTION_TAB_INDEX, true);
 		} else {
-			if (tabbedPane.getSelectedIndex() == 2) {
-				tabbedPane.setSelectedIndex(0);
+			if (tabbedPane.getSelectedIndex() == MARKER_SELECTION_TAB_INDEX) {
+				tabbedPane.setSelectedIndex(WHOLE_SIGNAL_TAB_INDEX);
 			}
-			tabbedPane.setEnabledAt(2, false);
+			setEnabled(MARKER_SELECTION_TAB_INDEX, false);
 		}
 
+	}
+
+	protected void setEnabled(int index, boolean enabled) {
+		if (getTabbedPane().getTabCount() > index)
+			tabbedPane.setEnabledAt(index, enabled);
 	}
 
 	/**
@@ -317,15 +326,15 @@ public class TimeSpacePanel extends JPanel {
 
 		switch (index) {
 
-		case 2 :
+		case MARKER_SELECTION_TAB_INDEX :
 			getMarkedTimeSpacePanel().validatePanel(errors);
 			break;
 
-		case 1 :
+		case SIGNAL_SELECTION_TAB_INDEX :
 			getSelectedTimeSpacePanel().validatePanel(errors);
 			break;
 
-		case 0 :
+		case WHOLE_SIGNAL_TAB_INDEX :
 		default :
 			// do nothing
 			break;

@@ -51,7 +51,7 @@ public class UnlimitedSpinnerPanel extends JPanel {
 
 	public UnlimitedSpinnerPanel(float value, float min, float max, float step, boolean compact) {
 		this(compact);
-		spinner = new JSpinner(new SpinnerNumberModel((double) value, (double) min, (double) max, (double) step));
+		spinner = new JSpinner(new SpinnerNumberModel(value, min, max, step));
 
 		commonInit();
 	}
@@ -109,6 +109,22 @@ public class UnlimitedSpinnerPanel extends JPanel {
 
 		spinnerRadio.setSelected(true);
 
+	}
+
+	protected JSpinner getSpinner() {
+		return this.spinner;
+	}
+
+	protected JRadioButton getUnlimitedRadio() {
+		return this.unlimitedRadio;
+	}
+
+	protected JRadioButton getSpinnerRadio() {
+		return this.spinnerRadio;
+	}
+
+	protected ButtonGroup getButtonGroup() {
+		return this.buttonGroup;
 	}
 
 	public double getValue() {

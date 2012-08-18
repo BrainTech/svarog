@@ -1,6 +1,7 @@
 package org.signalml.plugin.export.method;
 
 
+
 /**
  * Methods and tasks in Svarog core (facade for Svarog plugins).
  *
@@ -11,7 +12,7 @@ public interface SvarogAccessMethod {
 	void setMethodDescriptor(SvarogMethod method, SvarogMethodDescriptor methodDescriptor);
 	SvarogMethodDescriptor getMethodDescriptor(SvarogMethod method);
 	SvarogMethodConfigurer getConfigurer(SvarogMethodDescriptor descriptor);
-	Object createData(SvarogMethodDescriptor descriptor);
+	BaseMethodData createData(SvarogMethodDescriptor descriptor);
 
 	void addTask(SvarogTask task);
 	void startTask(SvarogTask task);

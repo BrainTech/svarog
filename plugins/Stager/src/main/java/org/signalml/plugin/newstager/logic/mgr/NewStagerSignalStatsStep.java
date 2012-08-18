@@ -71,8 +71,8 @@ public class NewStagerSignalStatsStep extends
 
 	private final TrackerUpdater trackerUpdater;
 
-	private AtomicInteger progressBlockCount;
-	private AtomicBoolean statResultReadyFlag;
+	private final AtomicInteger progressBlockCount;
+	private final AtomicBoolean statResultReadyFlag;
 
 	private Integer blockCount;
 
@@ -279,15 +279,18 @@ public class NewStagerSignalStatsStep extends
 		return threshold;
 	}
 
-	private Double computeMontageToneEMGThreshold() {
+	private double computeMontageToneEMGThreshold() {
 		Double oldThreshold = this.data.stagerData.getParameters().thresholds.toneEMG;
-		if (oldThreshold == null) {
+		if (oldThreshold.isNaN()) {
 			double t[] = this.statResult.muscle;
 			double mean = 0.0d;
-			for (int i = 0; i < t.length; ++i) {
+
+			int length = Math.max(t.length - 1, 0); //for some reason we discard the last element
+
+			for (int i = 0; i < length; ++i) {
 				mean += t[i];
 			}
-			mean /= t.length;
+			mean /= t.length;	// this is not the actual mean
 			return (mean > this.data.constants.muscleThreshold) ? this.data.constants.muscleThreshold
 				   : mean / this.data.constants.muscleThresholdRate;
 		} else {

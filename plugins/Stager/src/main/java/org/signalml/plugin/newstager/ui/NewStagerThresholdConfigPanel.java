@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.newstager.ui;
 
-import static org.signalml.plugin.newstager.NewStagerPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -28,8 +28,9 @@ import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
 import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
-import org.signalml.plugin.newstager.ui.components.AutoSpinnerWithSliderPanel;
-import org.signalml.plugin.newstager.ui.components.SpinnerWithSliderPanel;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
+import org.signalml.plugin.newstager.ui.components.NewStagerAutoSpinnerWithSliderPanel;
+import org.signalml.plugin.newstager.ui.components.NewStagerSpinnerWithSliderPanel;
 
 /**
  * NewStagerThresholdConfigPanel
@@ -46,14 +47,14 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 
 	private JPanel thresholdsPanel;
 
-	private AutoSpinnerWithSliderPanel emgToneThresholdPanel;
-	private SpinnerWithSliderPanel mtEegThresholdPanel;
+	private NewStagerAutoSpinnerWithSliderPanel emgToneThresholdPanel;
+	private NewStagerSpinnerWithSliderPanel mtEegThresholdPanel;
 	private JCheckBox mtArtifactsThresholdEnabledCheckBox;
 	private JCheckBox mtEegThresholdEnabledCheckBox;
-	private SpinnerWithSliderPanel mtEmgThresholdPanel;
-	private SpinnerWithSliderPanel mtToneEmgThresholdPanel;
-	private SpinnerWithSliderPanel remEogDeflectionThresholdPanel;
-	private SpinnerWithSliderPanel semEogDeflectionThresholdPanel;
+	private NewStagerSpinnerWithSliderPanel mtEmgThresholdPanel;
+	private NewStagerSpinnerWithSliderPanel mtToneEmgThresholdPanel;
+	private NewStagerSpinnerWithSliderPanel remEogDeflectionThresholdPanel;
+	private NewStagerSpinnerWithSliderPanel semEogDeflectionThresholdPanel;
 
 	public NewStagerThresholdConfigPanel(AbstractDialog owner) {
 		super();
@@ -97,9 +98,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 			JLabel mtToneEmgThresholdLabel = new JLabel(
 				_("MT artifacts in tone EMG"));
 			JLabel remEogDeflectionThresholdLabel = new JLabel(
-				_("EOG deflection for rapid eye movement [%]"));
+				_("EOG deflection for rapid eye movement [uV]"));
 			JLabel semEogDeflectionThresholdLabel = new JLabel(
-				_("EOG deflection for slow eye movement [%]"));
+				_("EOG deflection for slow eye movement [uV]"));
 
 			Component glue1 = Box.createHorizontalGlue();
 			Component glue2 = Box.createHorizontalGlue();
@@ -214,9 +215,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return thresholdsPanel;
 	}
 
-	public AutoSpinnerWithSliderPanel getEmgToneThresholdPanel() {
+	public NewStagerAutoSpinnerWithSliderPanel getEmgToneThresholdPanel() {
 		if (emgToneThresholdPanel == null) {
-			emgToneThresholdPanel = new AutoSpinnerWithSliderPanel(
+			emgToneThresholdPanel = new NewStagerAutoSpinnerWithSliderPanel(
 				NewStagerConstants.MIN_EMG_TONE_THRESHOLD,
 				NewStagerConstants.MIN_EMG_TONE_THRESHOLD,
 				NewStagerConstants.MAX_EMG_TONE_THRESHOLD, 1, false);
@@ -224,9 +225,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return emgToneThresholdPanel;
 	}
 
-	public SpinnerWithSliderPanel getMtEegThresholdPanel() {
+	public NewStagerSpinnerWithSliderPanel getMtEegThresholdPanel() {
 		if (mtEegThresholdPanel == null) {
-			mtEegThresholdPanel = new SpinnerWithSliderPanel(
+			mtEegThresholdPanel = new NewStagerSpinnerWithSliderPanel(
 				NewStagerConstants.MIN_MT_EEG_THRESHOLD,
 				NewStagerConstants.MIN_MT_EEG_THRESHOLD,
 				NewStagerConstants.MAX_MT_EEG_THRESHOLD, 1);
@@ -279,9 +280,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return mtArtifactsThresholdEnabledCheckBox;
 	}
 
-	public SpinnerWithSliderPanel getMtEmgThresholdPanel() {
+	public NewStagerSpinnerWithSliderPanel getMtEmgThresholdPanel() {
 		if (mtEmgThresholdPanel == null) {
-			mtEmgThresholdPanel = new SpinnerWithSliderPanel(
+			mtEmgThresholdPanel = new NewStagerSpinnerWithSliderPanel(
 				NewStagerConstants.MIN_MT_EMG_THRESHOLD,
 				NewStagerConstants.MIN_MT_EMG_THRESHOLD,
 				NewStagerConstants.MAX_MT_EMG_THRESHOLD, 1);
@@ -289,9 +290,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return mtEmgThresholdPanel;
 	}
 
-	public SpinnerWithSliderPanel getMtToneEmgThresholdPanel() {
+	public NewStagerSpinnerWithSliderPanel getMtToneEmgThresholdPanel() {
 		if (mtToneEmgThresholdPanel == null) {
-			mtToneEmgThresholdPanel = new SpinnerWithSliderPanel(
+			mtToneEmgThresholdPanel = new NewStagerSpinnerWithSliderPanel(
 				NewStagerConstants.MIN_MT_TONE_EMG_THRESHOLD,
 				NewStagerConstants.MIN_MT_TONE_EMG_THRESHOLD,
 				NewStagerConstants.MAX_MT_TONE_EMG_THRESHOLD, 1);
@@ -299,9 +300,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return mtToneEmgThresholdPanel;
 	}
 
-	public SpinnerWithSliderPanel getRemEogDeflectionThresholdPanel() {
+	public NewStagerSpinnerWithSliderPanel getRemEogDeflectionThresholdPanel() {
 		if (remEogDeflectionThresholdPanel == null) {
-			remEogDeflectionThresholdPanel = new SpinnerWithSliderPanel(
+			remEogDeflectionThresholdPanel = new NewStagerSpinnerWithSliderPanel(
 				NewStagerConstants.MIN_REM_EOG_DEFLECTION_THRESHOLD,
 				NewStagerConstants.MIN_REM_EOG_DEFLECTION_THRESHOLD,
 				NewStagerConstants.MAX_REM_EOG_DEFLECTION_THRESHOLD, 1);
@@ -309,9 +310,9 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return remEogDeflectionThresholdPanel;
 	}
 
-	public SpinnerWithSliderPanel getSemEogDeflectionThresholdPanel() {
+	public NewStagerSpinnerWithSliderPanel getSemEogDeflectionThresholdPanel() {
 		if (semEogDeflectionThresholdPanel == null) {
-			semEogDeflectionThresholdPanel = new SpinnerWithSliderPanel(
+			semEogDeflectionThresholdPanel = new NewStagerSpinnerWithSliderPanel(
 				NewStagerConstants.MIN_SEM_EOG_DEFLECTION_THRESHOLD,
 				NewStagerConstants.MIN_SEM_EOG_DEFLECTION_THRESHOLD,
 				NewStagerConstants.MAX_SEM_EOG_DEFLECTION_THRESHOLD, 1);
@@ -319,7 +320,8 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 		return semEogDeflectionThresholdPanel;
 	}
 
-	public void fillPanelFromParameters(NewStagerParameters parameters) {
+	public void fillPanelFromParameters(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
 
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 
@@ -340,7 +342,8 @@ public class NewStagerThresholdConfigPanel extends JPanel {
 			parameters.analyseEMGChannelFlag);
 	}
 
-	public void fillParametersFromPanel(NewStagerParameters parameters) {
+	public void fillParametersFromPanel(NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
 
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 

@@ -16,6 +16,8 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
+import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
@@ -74,9 +76,9 @@ public class MultichannelSampleFilterTest {
 	@Test
 	public void testAddFilterAllChannels() {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
-				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
+				new double[] {20, 0}, new double[] {40, 0}, 3.0, 20.0);
 		definition.setSamplingFrequency(128.0);
-		AbstractTimeDomainSampleFilterEngine filterEngine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
+		AbstractIIRSinglechannelSampleFilter filterEngine = new OfflineIIRSinglechannelSampleFilter(new ChannelSelectorSampleSource(source,0), definition);
 
 		int i, j;
 
@@ -97,7 +99,7 @@ public class MultichannelSampleFilterTest {
 		TimeDomainSampleFilter definition = new TimeDomainSampleFilter(FilterType.LOWPASS, ApproximationFunctionType.BUTTERWORTH,
 				new double[] {20, 0}, new double[] {30, 8}, 5.0, 20.0);
 		definition.setSamplingFrequency(128.0);
-		AbstractTimeDomainSampleFilterEngine filterEngine = new OfflineTimeDomainSampleFilterEngine(new ChannelSelectorSampleSource(source,0), definition);
+		AbstractIIRSinglechannelSampleFilter filterEngine = new OfflineIIRSinglechannelSampleFilter(new ChannelSelectorSampleSource(source,0), definition);
 
 		int i, j;
 

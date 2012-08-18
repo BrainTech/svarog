@@ -12,6 +12,7 @@ import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.view.signal.roc.RocDialog;
 import org.signalml.method.example.ExampleMethod;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** ExampleMethodDescriptor
  *
@@ -98,7 +99,7 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 		return method.createData();
 	}
 

@@ -4,7 +4,7 @@
 
 package org.signalml.app.config.workspace;
 
-import org.signalml.app.document.MRUDEntry;
+import org.signalml.app.document.mrud.MRUDEntry;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

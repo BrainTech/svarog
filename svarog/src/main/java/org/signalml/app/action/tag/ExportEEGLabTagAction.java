@@ -8,7 +8,7 @@ import java.io.File;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.domain.tag.EEGLabTagExporter;
 import org.signalml.domain.tag.StyledTagSet;

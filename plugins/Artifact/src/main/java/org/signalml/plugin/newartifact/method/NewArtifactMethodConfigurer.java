@@ -4,13 +4,14 @@
 
 package org.signalml.plugin.newartifact.method;
 
+import static org.signalml.plugin.i18n.PluginI18n._R;
+
 import java.awt.Window;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.util.XMLUtils;
@@ -133,8 +134,7 @@ public class NewArtifactMethodConfigurer implements IPluginMethodConfigurer,
 
 			int ans = OptionPane.showReuseReplaceOption(
 						  dialogParent,
-						  NewArtifactPlugin.i18n()._R(
-							  "Project [{0}] exists. Reuse or replace?", name));
+						  _R("Project [{0}] exists. Reuse or replace?", name));
 			if (ans == OptionPane.CANCEL_OPTION) {
 				return false;
 			} else if (ans == OptionPane.NO_OPTION) {

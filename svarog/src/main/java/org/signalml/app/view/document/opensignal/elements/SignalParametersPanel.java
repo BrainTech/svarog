@@ -39,6 +39,7 @@ import org.signalml.domain.signal.raw.RawSignalSampleType;
 public class SignalParametersPanel extends JPanel {
 
 	public static final String NUMBER_OF_CHANNELS_PROPERTY = "numberOfChannelsChangedProperty";
+	public static final int CHANNEL_COUNT_MAX = 1024;
 
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
@@ -196,7 +197,7 @@ public class SignalParametersPanel extends JPanel {
 
 		if (channelCountSpinner == null) {
 			channelCountSpinner = new IntegerSpinner(new SpinnerNumberModel(4,
-					1, 50, 1));
+					1, CHANNEL_COUNT_MAX, 1));
 			channelCountSpinner.addChangeListener(new ChangeListener() {
 
 				@Override

@@ -19,9 +19,9 @@ import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.FileBackedDocument;
-import org.signalml.app.document.SignalDocument;
-import org.signalml.app.document.SignalMLDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.document.signal.SignalMLDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
@@ -149,7 +149,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 		}
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
+		MultichannelSampleSource sampleSource = factory.getContinuousOrSegmentedSampleSource(signalChain, signalSpace, signalExportDescriptor.getTagSet(), signalExportDescriptor.getPageSize(), signalExportDescriptor.getBlockSize());
 
 		normalizeSamplesIfNeeded(sampleSource, signalExportDescriptor);
 
@@ -319,7 +319,6 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 		worker.execute();
 
-		pleaseWaitDialog.setActivity(_("exporting signal"));
 		pleaseWaitDialog.configureForDeterminate(0, minSampleCount, 0);
 		pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -383,8 +382,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
 
-			rawDescriptor.setMarkerOffset(markerTimeSpace.getSecondsBefore());
-			rawDescriptor.setPageSize((float)(markerTimeSpace.getSecondsBefore() + markerTimeSpace.getSecondsAfter()));
+			rawDescriptor.setMarkerOffset(markerTimeSpace.getStartTime());
+			rawDescriptor.setPageSize((float)(markerTimeSpace.getSegmentLength()));
 
 		} else {
 

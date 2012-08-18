@@ -134,6 +134,8 @@ public abstract class AbstractDialog extends JDialog {
 	 */
 	public AbstractDialog() {
 		super();
+		setModal(true);
+		setLocationRelativeTo(null);
 	}
 
 	/**
@@ -783,6 +785,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * the dialog, {@link AbstractDialog#fillModelFromDialog(Object) fills}
 		 * the model from it and sets the dialog to be invisible.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 			onOkPressed();
 		}
@@ -813,6 +816,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * sets the dialog to be invisible and performs
 		 * {@link AbstractDialog#onDialogClose() closing operations}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			boolean ok = onCancel();
@@ -859,6 +863,7 @@ public abstract class AbstractDialog extends JDialog {
 		 * Creates the {@link HelpDialog help dialog} with the given URL to
 		 * the help.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 			HelpDialog helpDialog = getHelpDialog();
 			helpDialog.reset();

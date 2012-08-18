@@ -6,6 +6,7 @@ package org.signalml.app.view.preferences;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.io.File;
 
@@ -33,7 +34,6 @@ import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -173,6 +173,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	protected void initialize() {
 
 		setTitle(_("Preferences"));
+		setMinimumSize(new Dimension(745, 470));
 
 		super.initialize();
 
@@ -329,6 +330,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		miscellaneousConfigPanel.fillPanelFromModel(config);
 		signalZoomSettingsPanel.fillPanelFromModel(config.getZoomSignalSettings());
 		monitorConfigPanel.fillPanelFromModel(config);
+
 	}
 
 	/**

@@ -23,8 +23,8 @@ import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
@@ -905,7 +905,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		}
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
-		MultichannelSampleSource sampleSource = factory.getContinuousSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
+		MultichannelSampleSource sampleSource = factory.getContinuousOrSegmentedSampleSource(signalChain, signalSpace, descriptor.getTagSet(), descriptor.getPageSize(), descriptor.getBlockSize());
 
 		PleaseWaitDialog pleaseWaitDialog = new PleaseWaitDialog(getViewerElementManager().getDialogParent());
 		pleaseWaitDialog.initializeNow();

@@ -1,6 +1,7 @@
 package org.signalml.plugin.newstager.mock;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.signalml.app.document.BookDocument;
@@ -38,8 +39,7 @@ class Tracker implements MethodExecutionTracker {
 
 	@Override
 	public int[] getTickerLimits() {
-		// TODO Auto-generated method stub
-		return null;
+		return new int[0];
 	}
 
 	@Override
@@ -114,8 +114,8 @@ public class NewStagerMain {
 
 	private static String codecSourceFile = "../../specs/EASYS.xml";
 	// private static String bookFilePath = "../../../../book_20sec_a1.3_smp.b";
-	private static String bookFilePath = "E:/book_20sec_a1.3_smp.b";
-	private static String sourceSignalFilePath = "E:/inb14.d";
+	private static String bookFilePath = "E:/nowedane/inb14_20sec_a1.3_smp.b";
+	private static String sourceSignalFilePath = "E:/nowedane/inb14.d";
 	// private static String sourceSignalFilePath = "../../../../inb14.d";
 
 	private static String PATH = "E:/";
@@ -179,13 +179,13 @@ public class NewStagerMain {
 			// System.out.println(b.getSegmentCount());
 
 			NewStagerFASPThreshold alphaThreshold = NewStagerFASPThreshold
-													.CreateThreshold(4.0, Double.POSITIVE_INFINITY, 8.0, 12.0,
+													.CreateThreshold(5.0, Double.POSITIVE_INFINITY, 8.0, 12.0,
 															1.5, Double.POSITIVE_INFINITY, null, null);
 			NewStagerFASPThreshold deltaThreshold = NewStagerFASPThreshold
 													.CreateThreshold(65.0, Double.POSITIVE_INFINITY, 0.2, 4.0,
 															0.5, 6.0, null, null);
 			NewStagerFASPThreshold spindleThreshold = NewStagerFASPThreshold
-					.CreateThreshold(13.0, Double.POSITIVE_INFINITY, 11.0,
+					.CreateThreshold(12.0, Double.POSITIVE_INFINITY, 11.0,
 									 15.0, 0.4, 2.5, null, null);
 			NewStagerFASPThreshold thetaThreshold = NewStagerFASPThreshold
 													.CreateThreshold(30.0, Double.POSITIVE_INFINITY, 4.0, 8.0,
@@ -195,12 +195,12 @@ public class NewStagerMain {
 														 2.5, 0.3, 1.5, -0.5, 0.5);
 
 			NewStagerParameterThresholds thresholds = new NewStagerParameterThresholds(
-				25, 40, 300, 50, 100, 20, alphaThreshold, deltaThreshold,
+				-1111d, 40, 300, 50, 100, 20, alphaThreshold, deltaThreshold,
 				spindleThreshold, thetaThreshold, KCThreshold);
 
 			stagerData.setParameters(new NewStagerParameters(bookFilePath,
 									 NewStagerRules.RK, true, true, true, thresholds));
-			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d,
+			stagerData.setFixedParameters(new NewStagerFixedParameters(1.0d, 1.0d,
 										  0.75d, 0.5d, -0.85d, -0.7d));
 
 			mgr.compute(

@@ -10,6 +10,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.signal.AbstractSignal;
+import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;

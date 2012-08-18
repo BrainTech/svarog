@@ -1,7 +1,7 @@
 package org.signalml.plugin.newstager.ui;
 
-import static org.signalml.plugin.newstager.NewStagerPlugin._;
-import static org.signalml.plugin.newstager.NewStagerPlugin._R;
+import static org.signalml.plugin.i18n.PluginI18n._;
+import static org.signalml.plugin.i18n.PluginI18n._R;
 
 import java.util.LinkedList;
 import java.util.List;

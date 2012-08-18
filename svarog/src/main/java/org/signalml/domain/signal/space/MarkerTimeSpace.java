@@ -4,6 +4,9 @@
 
 package org.signalml.domain.signal.space;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
@@ -24,19 +27,18 @@ public class MarkerTimeSpace {
 	/**
 	 * the name of the type (style) of a marker
 	 */
-	private String markerStyleName;
+	private List<String> markerStyleNames;
 
 	/**
-	 * the length (in seconds) before the marker that should be included in
-	 * the segment
+	 * The position relative to the marker, which should be included in
+	 * the segment.
 	 */
-	private double secondsBefore;
+	private double startTime;
 
 	/**
-	 * the length (in seconds) before the marker that should be included in
-	 * the segment
+	 * The length (in seconds) of the segment.
 	 */
-	private double secondsAfter;
+	private double segmentLength;
 
 	/**
 	 * Returns the index of the marker channel in the
@@ -61,7 +63,15 @@ public class MarkerTimeSpace {
 	 * @return the name of the type (style) of a marker
 	 */
 	public String getMarkerStyleName() {
-		return markerStyleName;
+		return markerStyleNames.get(0);
+	}
+
+	public List<String> getMarkerStyleNames() {
+		return markerStyleNames;
+	}
+
+	public void setMarkerStyleNames(List<String> markerStyleNames) {
+		this.markerStyleNames = markerStyleNames;
 	}
 
 	/**
@@ -69,47 +79,24 @@ public class MarkerTimeSpace {
 	 * @param markerStyleName the name of the type (style) of a marker
 	 */
 	public void setMarkerStyleName(String markerStyleName) {
-		this.markerStyleName = markerStyleName;
+		this.markerStyleNames = new ArrayList<String>();
+		this.markerStyleNames.add(markerStyleName);
 	}
 
-	/**
-	 * Returns the length (in seconds) before the marker that should be
-	 * included in the segment
-	 * @return the length (in seconds) before the marker that should be
-	 * included in the segment
-	 */
-	public double getSecondsBefore() {
-		return secondsBefore;
+	public double getStartTime() {
+		return startTime;
 	}
 
-	/**
-	 * Sets the length (in seconds) before the marker that should be
-	 * included in the segment
-	 * @param secondsBefore the length (in seconds) before the marker that
-	 * should be included in the segment
-	 */
-	public void setSecondsBefore(double secondsBefore) {
-		this.secondsBefore = secondsBefore;
+	public void setStartTime(double startTime) {
+		this.startTime = startTime;
 	}
 
-	/**
-	 * Returns the length (in seconds) after the marker that should be
-	 * included in the segment
-	 * @return the length (in seconds) after the marker that should be
-	 * included in the segment
-	 */
-	public double getSecondsAfter() {
-		return secondsAfter;
+	public double getSegmentLength() {
+		return segmentLength;
 	}
 
-	/**
-	 * Sets the length (in seconds) after the marker that should be
-	 * included in the segment
-	 * @param secondsAfter the length (in seconds) after the marker that
-	 * should be included in the segment
-	 */
-	public void setSecondsAfter(double secondsAfter) {
-		this.secondsAfter = secondsAfter;
+	public void setSegmentLength(double secondsAfter) {
+		this.segmentLength = secondsAfter;
 	}
 
 }

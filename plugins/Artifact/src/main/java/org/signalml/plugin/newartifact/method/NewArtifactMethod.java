@@ -1,6 +1,6 @@
 package org.signalml.plugin.newartifact.method;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +19,7 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.method.PluginAbstractMethod;
 import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
@@ -166,26 +167,9 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return null;
 	}
-
-	/*
-	 * @Override public Object createData(PluginMethodManager manager) {
-	 * ExportedSignalDocument signalDocument; try { signalDocument =
-	 * manager.getSvarogAccess() .getSignalAccess().getActiveSignalDocument(); }
-	 * catch (NoActiveObjectException e) { signalDocument = null; }
-	 *
-	 * if (signalDocument == null) {
-	 * OptionPane.showNoActiveSignal(manager.getSvarogAccess()
-	 * .getGUIAccess().getManager().getOptionPaneParent()); return null; }
-	 *
-	 * NewArtifactApplicationData data = new NewArtifactApplicationData();
-	 * data.setSignalDocument(signalDocument);
-	 * data.setSignalAccess(manager.getSvarogAccess().getSignalAccess());
-	 *
-	 * return data; }
-	 */
 
 	@Override
 	public String getName() {

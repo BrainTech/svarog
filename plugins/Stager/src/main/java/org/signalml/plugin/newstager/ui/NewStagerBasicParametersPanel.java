@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.newstager.ui;
 
-import static org.signalml.plugin.newstager.NewStagerPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -30,10 +30,13 @@ import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.newstager.data.NewStagerConstants;
+import org.signalml.plugin.newstager.data.NewStagerFASPThreshold;
 import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
+import org.signalml.plugin.newstager.data.NewStagerParametersPreset;
 import org.signalml.plugin.newstager.data.NewStagerRules;
-import org.signalml.plugin.newstager.ui.components.AutoSpinnerPanel;
+import org.signalml.plugin.newstager.helper.NewStagerAutoParametersHelper;
+import org.signalml.plugin.newstager.ui.components.NewStagerAutoSpinnerPanel;
 
 /**
  * NewStagerBasicParametersPanel
@@ -50,14 +53,14 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 	private JComboBox rulesComboBox;
 
-	private AutoSpinnerPanel deltaMinAmplitudePanel;
-	private AutoSpinnerPanel alphaMinAmplitudePanel;
-	private AutoSpinnerPanel spindleMinAmplitudePanel;
+	private NewStagerAutoSpinnerPanel deltaMinAmplitudePanel;
+	private NewStagerAutoSpinnerPanel alphaMinAmplitudePanel;
+	private NewStagerAutoSpinnerPanel spindleMinAmplitudePanel;
 
 	private JCheckBox primaryHypnogramCheckBox;
 
 	public NewStagerBasicParametersPanel(AbstractDialog owner,
-										 NewStagerAdvancedConfigObservable advancedConfigObservable) {
+			NewStagerAdvancedConfigObservable advancedConfigObservable) {
 		super();
 		this.owner = owner;
 		initialize();
@@ -67,7 +70,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 			@Override
 			public void update(Observable o, Object arg) {
-				boolean flag = observable.getEnabled();
+				boolean flag = !observable.getEnabled();
 
 				getDeltaMinAmplitudePanel().setEnabled(flag);
 				getAlphaMinAmplitudePanel().setEnabled(flag);
@@ -81,7 +84,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(new TitledBorder(
-					_("Key parameters")), new EmptyBorder(3, 3, 3, 3));
+				_("Key parameters")), new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
 		GroupLayout layout = new GroupLayout(this);
@@ -91,13 +94,13 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 		JLabel rulesLabel = new JLabel(_("Scoring criteria"));
 		JLabel deltaMinAmplitudeLabel = new JLabel(
-			_("Amplitude threshold for delta waves [uV]"));
+				_("Amplitude threshold for delta waves [uV]"));
 		JLabel alphaMinAmplitudeLabel = new JLabel(
-			_("Amplitude threshold for alpha waves [uV]"));
+				_("Amplitude threshold for alpha waves [uV]"));
 		JLabel spindleMinAmplitudeLabel = new JLabel(
-			_("Amplitude threshold for sleep spindles [uV]"));
+				_("Amplitude threshold for sleep spindles [uV]"));
 		JLabel primaryHypnogramLabel = new JLabel(
-			_("Show primary hypnogram and markers of waveforms in result"));
+				_("Show primary hypnogram and markers of waveforms in result"));
 		primaryHypnogramLabel.setMinimumSize(new Dimension(25, 35));
 		primaryHypnogramLabel.setVerticalAlignment(JLabel.CENTER);
 
@@ -108,73 +111,73 @@ public class NewStagerBasicParametersPanel extends JPanel {
 		Component glue5 = Box.createHorizontalGlue();
 
 		CompactButton rulesHelpButton = SwingUtils.createFieldHelpButton(owner,
-										NewStagerMethodDialog.HELP_RULES);
+				NewStagerMethodDialog.HELP_RULES);
 		CompactButton deltaMinAmplitudeHelpButton = SwingUtils
 				.createFieldHelpButton(owner,
-									   NewStagerMethodDialog.HELP_DELTA_MIN_AMPLITUDE);
+						NewStagerMethodDialog.HELP_DELTA_MIN_AMPLITUDE);
 		CompactButton alphaMinAmplitudeHelpButton = SwingUtils
 				.createFieldHelpButton(owner,
-									   NewStagerMethodDialog.HELP_ALPHA_MIN_AMPLITUDE);
+						NewStagerMethodDialog.HELP_ALPHA_MIN_AMPLITUDE);
 		CompactButton spindleMinAmplitudeHelpButton = SwingUtils
 				.createFieldHelpButton(owner,
-									   NewStagerMethodDialog.HELP_SPINDLE_MIN_AMPLITUDE);
+						NewStagerMethodDialog.HELP_SPINDLE_MIN_AMPLITUDE);
 		CompactButton primaryHypnogramHelpButton = SwingUtils
 				.createFieldHelpButton(owner,
-									   NewStagerMethodDialog.HELP_PRIMARY_HYPNOGRAM);
+						NewStagerMethodDialog.HELP_PRIMARY_HYPNOGRAM);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(rulesLabel)
-						.addComponent(deltaMinAmplitudeLabel)
-						.addComponent(alphaMinAmplitudeLabel)
-						.addComponent(spindleMinAmplitudeLabel)
-						.addComponent(primaryHypnogramLabel));
+				.addComponent(deltaMinAmplitudeLabel)
+				.addComponent(alphaMinAmplitudeLabel)
+				.addComponent(spindleMinAmplitudeLabel)
+				.addComponent(primaryHypnogramLabel));
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(glue1)
-						.addComponent(glue2).addComponent(glue3).addComponent(glue4)
-						.addComponent(glue5));
+				.addComponent(glue2).addComponent(glue3).addComponent(glue4)
+				.addComponent(glue5));
 
 		hGroup.addGroup(layout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(getRulesComboBox())
-						.addComponent(getDeltaMinAmplitudePanel())
-						.addComponent(getAlphaMinAmplitudePanel())
-						.addComponent(getSpindleMinAmplitudePanel())
-						.addComponent(getPrimaryHypnogramCheckBox()));
+				.addComponent(getRulesComboBox())
+				.addComponent(getDeltaMinAmplitudePanel())
+				.addComponent(getAlphaMinAmplitudePanel())
+				.addComponent(getSpindleMinAmplitudePanel())
+				.addComponent(getPrimaryHypnogramCheckBox()));
 
 		hGroup.addGroup(layout.createParallelGroup()
-						.addComponent(rulesHelpButton)
-						.addComponent(deltaMinAmplitudeHelpButton)
-						.addComponent(alphaMinAmplitudeHelpButton)
-						.addComponent(spindleMinAmplitudeHelpButton)
-						.addComponent(primaryHypnogramHelpButton));
+				.addComponent(rulesHelpButton)
+				.addComponent(deltaMinAmplitudeHelpButton)
+				.addComponent(alphaMinAmplitudeHelpButton)
+				.addComponent(spindleMinAmplitudeHelpButton)
+				.addComponent(primaryHypnogramHelpButton));
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-						.addComponent(rulesLabel).addComponent(glue1)
-						.addComponent(getRulesComboBox()).addComponent(rulesHelpButton));
+				.addComponent(rulesLabel).addComponent(glue1)
+				.addComponent(getRulesComboBox()).addComponent(rulesHelpButton));
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-						.addComponent(deltaMinAmplitudeLabel).addComponent(glue2)
-						.addComponent(getDeltaMinAmplitudePanel())
-						.addComponent(deltaMinAmplitudeHelpButton));
+				.addComponent(deltaMinAmplitudeLabel).addComponent(glue2)
+				.addComponent(getDeltaMinAmplitudePanel())
+				.addComponent(deltaMinAmplitudeHelpButton));
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-						.addComponent(alphaMinAmplitudeLabel).addComponent(glue3)
-						.addComponent(getAlphaMinAmplitudePanel())
-						.addComponent(alphaMinAmplitudeHelpButton));
+				.addComponent(alphaMinAmplitudeLabel).addComponent(glue3)
+				.addComponent(getAlphaMinAmplitudePanel())
+				.addComponent(alphaMinAmplitudeHelpButton));
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-						.addComponent(spindleMinAmplitudeLabel).addComponent(glue4)
-						.addComponent(getSpindleMinAmplitudePanel())
-						.addComponent(spindleMinAmplitudeHelpButton));
+				.addComponent(spindleMinAmplitudeLabel).addComponent(glue4)
+				.addComponent(getSpindleMinAmplitudePanel())
+				.addComponent(spindleMinAmplitudeHelpButton));
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.CENTER)
-						.addComponent(primaryHypnogramLabel).addComponent(glue5)
-						.addComponent(getPrimaryHypnogramCheckBox())
-						.addComponent(primaryHypnogramHelpButton));
+				.addComponent(primaryHypnogramLabel).addComponent(glue5)
+				.addComponent(getPrimaryHypnogramCheckBox())
+				.addComponent(primaryHypnogramHelpButton));
 
 		layout.setVerticalGroup(vGroup);
 
@@ -190,7 +193,7 @@ public class NewStagerBasicParametersPanel extends JPanel {
 				@Override
 				public Component getListCellRendererComponent(JList list,
 						Object value, int index, boolean isSelected,
-				boolean cellHasFocus) {
+						boolean cellHasFocus) {
 					try {
 						NewStagerRules rulesValue = (NewStagerRules) value;
 						switch (rulesValue) {
@@ -213,41 +216,41 @@ public class NewStagerBasicParametersPanel extends JPanel {
 
 			});
 
-			rulesComboBox.setModel(new DefaultComboBoxModel(
-									   NewStagerRules.values()));
+			rulesComboBox.setModel(new DefaultComboBoxModel(NewStagerRules
+					.values()));
 		}
 		return rulesComboBox;
 	}
 
-	public AutoSpinnerPanel getDeltaMinAmplitudePanel() {
+	public NewStagerAutoSpinnerPanel getDeltaMinAmplitudePanel() {
 		if (deltaMinAmplitudePanel == null) {
-			deltaMinAmplitudePanel = new AutoSpinnerPanel(
-				NewStagerConstants.MIN_AMPLITUDE,
-				NewStagerConstants.MIN_AMPLITUDE,
-				NewStagerConstants.MAX_AMPLITUDE,
-				NewStagerConstants.INCR_AMPLITUDE, false);
+			deltaMinAmplitudePanel = new NewStagerAutoSpinnerPanel(
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MAX_AMPLITUDE,
+					NewStagerConstants.INCR_AMPLITUDE, false);
 		}
 		return deltaMinAmplitudePanel;
 	}
 
-	public AutoSpinnerPanel getAlphaMinAmplitudePanel() {
+	public NewStagerAutoSpinnerPanel getAlphaMinAmplitudePanel() {
 		if (alphaMinAmplitudePanel == null) {
-			alphaMinAmplitudePanel = new AutoSpinnerPanel(
-				NewStagerConstants.MIN_AMPLITUDE,
-				NewStagerConstants.MIN_AMPLITUDE,
-				NewStagerConstants.MAX_AMPLITUDE,
-				NewStagerConstants.INCR_AMPLITUDE, false);
+			alphaMinAmplitudePanel = new NewStagerAutoSpinnerPanel(
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MAX_AMPLITUDE,
+					NewStagerConstants.INCR_AMPLITUDE, false);
 		}
 		return alphaMinAmplitudePanel;
 	}
 
-	public AutoSpinnerPanel getSpindleMinAmplitudePanel() {
+	public NewStagerAutoSpinnerPanel getSpindleMinAmplitudePanel() {
 		if (spindleMinAmplitudePanel == null) {
-			spindleMinAmplitudePanel = new AutoSpinnerPanel(
-				NewStagerConstants.MIN_AMPLITUDE,
-				NewStagerConstants.MIN_AMPLITUDE,
-				NewStagerConstants.MAX_AMPLITUDE,
-				NewStagerConstants.INCR_AMPLITUDE, false);
+			spindleMinAmplitudePanel = new NewStagerAutoSpinnerPanel(
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MIN_AMPLITUDE,
+					NewStagerConstants.MAX_AMPLITUDE,
+					NewStagerConstants.INCR_AMPLITUDE, false);
 		}
 		return spindleMinAmplitudePanel;
 	}
@@ -260,44 +263,90 @@ public class NewStagerBasicParametersPanel extends JPanel {
 		return primaryHypnogramCheckBox;
 	}
 
-	public void fillPanelFromParameters(NewStagerParameters parameters) {
+	public void fillPanelFromParameters(
+			NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		getRulesComboBox().setSelectedItem(parameters.rules);
 
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 
-		getDeltaMinAmplitudePanel().setValueWithAuto(
-			thresholds.deltaThreshold.amplitude.getMinWithUnlimited());
-		getAlphaMinAmplitudePanel().setValueWithAuto(
-			thresholds.alphaThreshold.amplitude.getMinWithUnlimited());
-		getSpindleMinAmplitudePanel().setValueWithAuto(
-			thresholds.spindleThreshold.amplitude.getMinWithUnlimited());
+		this.setPanelAmplitude(
+				getDeltaMinAmplitudePanel(),
+				thresholds.deltaThreshold,
+				parametersPreset.isAutoDeltaAmplitude ? NewStagerAutoParametersHelper
+						.GetAutoDeltaAmplitude() : null);
+		this.setPanelAmplitude(
+				getAlphaMinAmplitudePanel(),
+				thresholds.alphaThreshold,
+				parametersPreset.isAutoAlphaAmplitude ? NewStagerAutoParametersHelper
+						.GetAutoAlphaAmplitude() : null);
+		this.setPanelAmplitude(
+				getSpindleMinAmplitudePanel(),
+				thresholds.spindleThreshold,
+				parametersPreset.isAutoSpindleAmplitude ? NewStagerAutoParametersHelper
+						.GetAutoSpindleAmplitude() : null);
 
 		getPrimaryHypnogramCheckBox().setSelected(
-			parameters.primaryHypnogramFlag);
+				parameters.primaryHypnogramFlag);
 	}
 
-	public void fillParametersFromPanel(NewStagerParameters parameters) {
+	public void fillParametersFromPanel(
+			NewStagerParametersPreset parametersPreset) {
+		NewStagerParameters parameters = parametersPreset.parameters;
+
 		parameters.rules = (NewStagerRules) getRulesComboBox()
-						   .getSelectedItem();
+				.getSelectedItem();
 
 		NewStagerParameterThresholds thresholds = parameters.thresholds;
 
-		thresholds.deltaThreshold.amplitude
-		.setMinWithUnlimited(getDeltaMinAmplitudePanel()
-							 .getValueWithAuto());
-		thresholds.alphaThreshold.amplitude
-		.setMinWithUnlimited(getAlphaMinAmplitudePanel()
-							 .getValueWithAuto());
-		thresholds.spindleThreshold.amplitude
-		.setMinWithUnlimited(getSpindleMinAmplitudePanel()
-							 .getValueWithAuto());
+		parametersPreset.isAutoDeltaAmplitude = this.setAmplitude(
+				getDeltaMinAmplitudePanel(), thresholds.deltaThreshold);
+		parametersPreset.isAutoAlphaAmplitude = this.setAmplitude(
+				getAlphaMinAmplitudePanel(), thresholds.alphaThreshold);
+		parametersPreset.isAutoSpindleAmplitude = this.setAmplitude(
+				getSpindleMinAmplitudePanel(), thresholds.spindleThreshold);
+
+		if (parametersPreset.isAutoDeltaAmplitude) {
+			thresholds.deltaThreshold.amplitude
+					.setMinWithUnlimited(NewStagerAutoParametersHelper
+							.GetAutoDeltaAmplitude());
+		}
+		if (parametersPreset.isAutoAlphaAmplitude) {
+			thresholds.alphaThreshold.amplitude
+					.setMinWithUnlimited(NewStagerAutoParametersHelper
+							.GetAutoAlphaAmplitude());
+		}
+		if (parametersPreset.isAutoSpindleAmplitude) {
+			thresholds.spindleThreshold.amplitude
+					.setMinWithUnlimited(NewStagerAutoParametersHelper
+							.GetAutoSpindleAmplitude());
+		}
 
 		parameters.primaryHypnogramFlag = getPrimaryHypnogramCheckBox()
-										  .isSelected();
+				.isSelected();
 	}
 
 	public void validatePanel(ValidationErrors errors) {
 		// nothing to do
+	}
+
+	private boolean setAmplitude(NewStagerAutoSpinnerPanel amplitudePanel,
+			NewStagerFASPThreshold threshold) {
+		threshold.amplitude.setMinWithUnlimited(amplitudePanel
+				.getValueWithAuto());
+		return amplitudePanel.isUnlimited();
+	}
+
+	private void setPanelAmplitude(NewStagerAutoSpinnerPanel amplitudePanel,
+			NewStagerFASPThreshold threshold, Double autoValue) {
+		if (autoValue == null) {
+			amplitudePanel.setValueWithAuto(threshold.amplitude
+					.getMinWithUnlimited());
+		} else {
+			amplitudePanel.setValueWithAuto(autoValue);
+			amplitudePanel.setAuto(true);
+		}
 	}
 
 }

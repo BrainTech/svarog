@@ -8,6 +8,7 @@ import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.data.PluginConfigMethodData;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.SvarogAccess;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.method.SvarogMethodConfigurer;
 import org.signalml.plugin.export.method.SvarogMethodDescriptor;
@@ -42,7 +43,7 @@ public class PluginMethodManager {
 		SvarogAccessMethod methodManager = this.svarogAccess.getMethodAccess();
 		SvarogMethodDescriptor descriptor = methodManager.getMethodDescriptor(this.method);
 		SvarogMethodConfigurer configurer = null;
-		Object data = null;
+		BaseMethodData data = null;
 
 		if (descriptor != null) {
 			configurer = methodManager.getConfigurer(descriptor);
@@ -67,7 +68,8 @@ public class PluginMethodManager {
 
 		SvarogTask task = new LocalTask(this.method, data,
 										(method instanceof TrackableMethod));
-
+		task.addTaskEventListener(new PluginTaskMethodEvent(data));
+		
 		SvarogAccessMethod svarogMethods = this.svarogAccess.getMethodAccess();
 		svarogMethods.addTask(task);
 		svarogMethods.startTask(task);

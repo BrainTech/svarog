@@ -18,7 +18,7 @@ public abstract class NewStagerBookAtomAbstractTagComputingHelper extends
 	protected NewStagerBookAtomAbstractTagComputingHelper(
 		NewStagerBookAtomTagHelperData data) {
 		super(data);
-		this.widthCoeff = 1.0;
+		this.widthCoeff = data.fixedParameters.widthCoeff;
 		this.offsetDimension = this.data.bookInfo.offsetDimension;
 		this.samplingFrequency = this.data.bookInfo.samplingFrequency;
 	}

@@ -4,9 +4,9 @@
 
 package org.signalml.app.config.workspace;
 
-import org.signalml.app.document.MRUDEntry;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.mrud.MRUDEntry;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 

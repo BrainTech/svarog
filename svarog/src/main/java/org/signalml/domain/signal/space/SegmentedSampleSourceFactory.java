@@ -61,17 +61,19 @@ public class SegmentedSampleSourceFactory {
 	 * @param blockSize the size of the page (in seconds)
 	 * @return the created source of samples
 	 */
-	public MultichannelSampleSource getContinuousSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
+	public MultichannelSampleSource getContinuousOrSegmentedSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
 
 		if (signalSpace.getTimeSpaceType() == TimeSpaceType.WHOLE_SIGNAL && !signalSpace.isWholeSignalCompletePagesOnly()) {
-
-			ChannelSpaceType channelSpaceType = signalSpace.getChannelSpaceType();
-			return new ChannelSubsetSampleSource(source, channelSpaceType == ChannelSpaceType.WHOLE_SIGNAL ? null : signalSpace.getChannelSpace());
-
+			return getContinuousSampleSource(source, signalSpace, tagSet, pageSize, blockSize);
 		}
 
 		return getSegmentedSampleSource(source, signalSpace, tagSet, pageSize, blockSize);
 
+	}
+
+	public MultichannelSampleSource getContinuousSampleSource(MultichannelSampleSource source, SignalSpace signalSpace, StyledTagSet tagSet, float pageSize, float blockSize) {
+		ChannelSpaceType channelSpaceType = signalSpace.getChannelSpaceType();
+		return new ChannelSubsetSampleSource(source, channelSpaceType == ChannelSpaceType.WHOLE_SIGNAL ? null : signalSpace.getChannelSpace());
 	}
 
 	/**
@@ -111,7 +113,7 @@ public class SegmentedSampleSourceFactory {
 		case MARKER_BASED :
 
 			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-			sampleSource = new MarkerSegmentedSampleSource(source, tagSet, markerTimeSpace.getMarkerStyleName(), markerTimeSpace.getSecondsBefore(), markerTimeSpace.getSecondsAfter(), channelSpace);
+			sampleSource = new MarkerSegmentedSampleSource(source, tagSet, markerTimeSpace.getMarkerStyleNames(), markerTimeSpace.getStartTime(), markerTimeSpace.getSegmentLength(), channelSpace);
 			break;
 
 		case SELECTION_BASED :

@@ -4,7 +4,7 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.domain.signal.filter.AbstractTimeDomainSampleFilterEngine;
+import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
 
 /**
  * This class represents a calculator capable of calculating time domain responses
@@ -49,7 +49,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 	public FilterTimeDomainResponse getStepResponse(int numberOfPoints) {
 
 		double[] excitation = generateStepExcitation(numberOfPoints);
-		double[] stepResponseAmplitudes = AbstractTimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
+		double[] stepResponseAmplitudes = AbstractIIRSinglechannelSampleFilter.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
 		return new FilterTimeDomainResponse(stepResponseAmplitudes, samplingFrequency);
 
@@ -81,7 +81,7 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 	public FilterTimeDomainResponse getImpulseResponse(int numberOfPoints) {
 
 		double[] excitation = generateImpulseExcitation(numberOfPoints);
-		double[] impulseResponseAmplitudes = AbstractTimeDomainSampleFilterEngine.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
+		double[] impulseResponseAmplitudes = AbstractIIRSinglechannelSampleFilter.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
 		FilterTimeDomainResponse stepResponse = new FilterTimeDomainResponse(impulseResponseAmplitudes, samplingFrequency);
 		return stepResponse;

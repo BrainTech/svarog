@@ -19,7 +19,7 @@ import org.signalml.app.action.selector.ActionFocusSupport;
 import org.signalml.app.action.selector.SignalPageFocusSelector;
 import org.signalml.app.action.workspace.ActivateSignalPageAction;
 import org.signalml.app.document.DocumentFlowIntegrator;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.signal.SignalPageTreeNode;
 import org.signalml.app.model.signal.SignalTreeModel;
 import org.signalml.plugin.export.signal.Document;

@@ -11,8 +11,8 @@ import java.io.IOException;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.MonitorSignalDocument;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
@@ -21,6 +21,7 @@ import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.Document;
 
 /** EvokedPotentialMethodDescriptor
@@ -98,7 +99,7 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 
 		Document document = methodManager.getActionFocusManager().getActiveDocument();
 		if (!(document instanceof SignalDocument)) {

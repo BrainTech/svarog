@@ -3,13 +3,14 @@ package org.signalml.plugin.newstager.helper;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.newstager.NewStagerPlugin;
 import org.signalml.plugin.newstager.data.NewStagerFASPThreshold;
+import org.signalml.plugin.newstager.data.NewStagerFixedParameters;
 import org.signalml.plugin.newstager.data.NewStagerParameterThresholds;
 import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.tool.PluginConfigurationDefaultsHelper;
 
 public class NewStagerConfigurationDefaultsHelper extends
-	PluginConfigurationDefaultsHelper {
+		PluginConfigurationDefaultsHelper {
 
 	private static NewStagerConfigurationDefaultsHelper SharedInstance = new NewStagerConfigurationDefaultsHelper();
 
@@ -18,13 +19,13 @@ public class NewStagerConfigurationDefaultsHelper extends
 	}
 
 	public static void SetSharedInstance(
-		NewStagerConfigurationDefaultsHelper helper) {
+			NewStagerConfigurationDefaultsHelper helper) {
 		SharedInstance = helper;
 	}
 
 	@Override
 	protected String getConfigurationDefaultsPath(
-		Class<? extends Plugin> pluginClass) {
+			Class<? extends Plugin> pluginClass) {
 		if (pluginClass != NewStagerPlugin.class) {
 			return null;
 		}
@@ -48,6 +49,23 @@ public class NewStagerConfigurationDefaultsHelper extends
 		this.setDefaults(parameters.thresholds);
 	}
 
+	public void setDefaults(NewStagerFixedParameters fixedParameters) {
+		if (!this.hasProperties()) {
+			return;
+		}
+
+		try {
+			fixedParameters.swaWidthCoeff = double_("stager.fixed.widthCoeff");
+			fixedParameters.swaWidthCoeff = double_("stager.fixed.swaWidthCoeff");
+			fixedParameters.alphaPerc1 = double_("stager.fixed.alphaPerc1");
+			fixedParameters.alphaPerc2 = double_("stager.fixed.alphaPerc2");
+			fixedParameters.corrCoeffRems = double_("stager.fixed.corrCoeffRems");
+			fixedParameters.corrCoeffSems = double_("stager.fixed.corrCoeffSems");
+		} catch (ConfigurationDefaultsException e) {
+			return;
+		}
+	}
+
 	public void setDefaults(NewStagerParameterThresholds thresholds) {
 		if (!this.hasProperties()) {
 			return;
@@ -67,19 +85,40 @@ public class NewStagerConfigurationDefaultsHelper extends
 			return;
 		}
 
-		this.setDefaults(thresholds.alphaThreshold, "alpha", false);
-		this.setDefaults(thresholds.deltaThreshold, "delta", false);
-		this.setDefaults(thresholds.thetaThreshold, "theta", false);
-		this.setDefaults(thresholds.spindleThreshold, "spindle", false);
-		this.setDefaults(thresholds.kCThreshold, "kComplex", true);
+		this.setAlphaThresholdDefaults(thresholds.alphaThreshold);
+		this.setDeltaThresholdDefaults(thresholds.deltaThreshold);
+		this.setThetaThresholdDefaults(thresholds.thetaThreshold);
+		this.setSpindleThresholdDefaults(thresholds.spindleThreshold);
+		this.setkCThresholdDefaults(thresholds.kCThreshold);
 	}
 
-	private void setDefaults(NewStagerFASPThreshold threshold, String type, boolean parsePhase) {
+	public void setAlphaThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "alpha", false);
+	}
+
+	public void setDeltaThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "delta", false);
+	}
+
+	public void setThetaThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "theta", false);
+	}
+
+	public void setSpindleThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "spindle", false);
+	}
+
+	public void setkCThresholdDefaults(NewStagerFASPThreshold threshold) {
+		this.setDefaults(threshold, "kComplex", true);
+	}
+
+	private void setDefaults(NewStagerFASPThreshold threshold, String type,
+			boolean parsePhase) {
 		try {
 			setRange(threshold.amplitude, "stager." + type + "Amplitude");
 			setRange(threshold.frequency, "stager." + type + "Frequency");
 			setRange(threshold.scale, "stager." + type + "Scale");
-			if (parsePhase) {
+			if (parsePhase && threshold.phase != null) {
 				setRange(threshold.phase, "stager." + type + "Phase");
 			}
 		} catch (NumberFormatException e) {

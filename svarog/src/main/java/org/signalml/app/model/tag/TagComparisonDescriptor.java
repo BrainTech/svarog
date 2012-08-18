@@ -4,8 +4,8 @@
 
 package org.signalml.app.model.tag;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.tag.TagIconProducer;
 
 /** TagComparisonDescriptor

@@ -3,28 +3,26 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import static org.signalml.plugin.newartifact.NewArtifactPlugin._;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.FileChooser;
-
-import org.springframework.validation.Errors;
 
 /** StagerResultTagPanel
  *
@@ -163,6 +161,7 @@ public class NewArtifactResultTagPanel extends JPanel {
 			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose a tag file to save"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseSaveTag(NewArtifactResultTagPanel.this.getTopLevelAncestor());

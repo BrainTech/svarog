@@ -4,7 +4,7 @@
 
 package org.signalml.plugin.newstager.ui;
 
-import static org.signalml.plugin.newstager.NewStagerPlugin._;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -27,8 +27,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.util.IconUtils;

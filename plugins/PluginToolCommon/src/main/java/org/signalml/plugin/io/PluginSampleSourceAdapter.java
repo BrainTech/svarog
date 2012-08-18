@@ -3,7 +3,7 @@ package org.signalml.plugin.io;
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.SignalMLCodecSampleSource;
@@ -116,7 +116,10 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 
 	@Override
 	public void destroy() {
-		// do nothing
+		if (this.delegate != null) {
+			this.delegate.destroy();
+		}
 	}
+	
 
 }

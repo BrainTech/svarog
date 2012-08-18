@@ -7,7 +7,6 @@ package org.signalml.domain.signal.space;
 import java.io.Serializable;
 
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
-
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
 
@@ -68,7 +67,7 @@ public class SignalSpace implements Serializable {
 	 * source of samples.
 	 */
 	public SignalSpace() {
-		signalSourceLevel = SignalSourceLevel.FILTERED;
+		signalSourceLevel = SignalSourceLevel.FILTERED_FOR_EXPORT;
 		timeSpaceType = TimeSpaceType.WHOLE_SIGNAL;
 		channelSpaceType = ChannelSpaceType.WHOLE_SIGNAL;
 		wholeSignalCompletePagesOnly = false;
@@ -242,8 +241,8 @@ public class SignalSpace implements Serializable {
 					markerTimeSpace.setMarkerChannel(tagSelection.getChannel());
 					markerTimeSpace.setMarkerStyleName(tagSelection.getStyle().getName());
 
-					markerTimeSpace.setSecondsAfter(1.0);
-					markerTimeSpace.setSecondsBefore(0.0);
+					markerTimeSpace.setSegmentLength(1.0);
+					markerTimeSpace.setStartTime(0.0);
 
 					setMarkerTimeSpace(markerTimeSpace);
 
