@@ -2,13 +2,15 @@ package org.signalml.app.view.signal.export;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 
 /**
  * This class represents a panel which may be used to select a file. It contains
@@ -25,28 +27,11 @@ public class EEGLabExportOptionsPanel extends AbstractExportOptionsPanel {
 	 */
 	public EEGLabExportOptionsPanel() {
 		super();
-		initialize();
-	}
-
-	/**
-	 * Initializes this panel.
-	 */
-	private void initialize() {
-
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 0;
-		c.weightx = 100;
-		c.insets = new Insets(0, 2, 0, 2);
-		add(getTagExportField(), c);
 	}
 
 	protected JCheckBox getTagExportField() {
 		if (exportTagsCheckbox == null) {
-			exportTagsCheckbox = new JCheckBox(_("Export tags"));
+			exportTagsCheckbox = new JCheckBox();
 		}
 		return exportTagsCheckbox;
 	}
@@ -60,5 +45,19 @@ public class EEGLabExportOptionsPanel extends AbstractExportOptionsPanel {
 	public void fillModelFromPanel(SignalExportDescriptor descriptor) {
 		descriptor.setExportTags(exportTagsCheckbox.isSelected());
 		descriptor.setSaveXML(false);
+	}
+
+	@Override
+	protected List<ComponentWithLabel> createComponents() {
+		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+
+		components.add(new ComponentWithLabel(new JLabel(_("Export tags")), getTagExportField()));
+		components.add(new ComponentWithLabel(new JLabel(""), new JPanel()));
+		return components;
+	}
+
+	@Override
+	protected int getNumberOfColumns() {
+		return 2;
 	}
 }
