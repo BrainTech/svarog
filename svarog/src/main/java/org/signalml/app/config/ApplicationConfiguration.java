@@ -96,6 +96,11 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int openbciPort;
 
 	private float monitorPageSize;
+	/**
+	 * Determines if a highpass filter should be added to each
+	 * signal automatically.
+	 */
+	private boolean autoAddHighpassFilter;
 
 	public void applySystemSettings() {
 
@@ -581,6 +586,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setOpenbciPort(int openbciPort) {
 		this.openbciPort = openbciPort;
+	}
+
+	public boolean isAutoAddHighpassFilter() {
+		return autoAddHighpassFilter;
+	}
+
+	public void setAutoAddHighpassFilter(boolean autoAddHighpassFilter) {
+		this.autoAddHighpassFilter = autoAddHighpassFilter;
 	}
 
 }

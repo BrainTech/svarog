@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingWorker.StateValue;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
@@ -26,7 +28,9 @@ import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SignalConfigurer;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.plugin.export.SignalMLException;
 
 public class OpenSignalWizardDialog extends AbstractWizardDialog implements PropertyChangeListener {
@@ -71,6 +75,14 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 			SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
 			Montage createdMontage = SignalConfigurer.createMontage(signalParameters.getChannelCount());
+			PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager = SvarogApplication.getManagerOfPresetsManagers().getPredefinedTimeDomainSampleFilterPresetManager();
+
+			if (SvarogApplication.getApplicationConfiguration().isAutoAddHighpassFilter()) {
+				float samplingFrequency = openSignalDescriptor.getSignalParameters().getSamplingFrequency();
+				TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilter(samplingFrequency, FilterType.HIGHPASS, 1.0, 0.0);
+				if (filter != null)
+					createdMontage.addSampleFilter(filter);
+			}
 
 			EegSystem selectedEegSystem = getStepOnePanel().getOtherSettingsPanel().getSelectedEegSystem();
 			createdMontage.setEegSystem(selectedEegSystem);

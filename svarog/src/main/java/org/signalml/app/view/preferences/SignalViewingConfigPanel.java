@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -20,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -34,8 +34,6 @@ import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.plugin.export.signal.Tag;
-
-import org.springframework.validation.Errors;
 
 /**
  * Panel which allows to select how the signal should be displayed by default.
@@ -66,6 +64,12 @@ public class SignalViewingConfigPanel extends JPanel {
 	 * be loaded automatically when the signal is opened
 	 */
 	private JCheckBox autoLoadDefaultMontageCheckBox;
+
+	/**
+	 * the check-box which tells if a highpass filter should be added to each
+	 * signal by default.
+	 */
+	private JCheckBox autoAddHighpassFilter;
 
 	/**
 	 * the check-box which tells if the {@link SignalChecksum checksum} should
@@ -267,6 +271,13 @@ public class SignalViewingConfigPanel extends JPanel {
 			autoLoadDefaultMontageCheckBox = new JCheckBox(_("Automatically load default montage when opening signals (if defined)"));
 		}
 		return autoLoadDefaultMontageCheckBox;
+	}
+
+	public JCheckBox getAutoAddHighpassFilter() {
+		if (autoAddHighpassFilter == null) {
+			autoAddHighpassFilter = new JCheckBox(_("Automatically add a high-pass filter to each signal"));
+		}
+		return autoAddHighpassFilter;
 	}
 
 	/**
@@ -485,6 +496,7 @@ public class SignalViewingConfigPanel extends JPanel {
 								   ));
 
 			generalPanel.add(getAutoLoadDefaultMontageCheckBox());
+			generalPanel.add(getAutoAddHighpassFilter());
 			generalPanel.add(getRightClickPagesForwardCheckBox());
 			generalPanel.add(getPrecalculateSignalChecksumsCheckBox());
 		}
@@ -741,6 +753,7 @@ public class SignalViewingConfigPanel extends JPanel {
 
 		getRightClickPagesForwardCheckBox().setSelected(applicationConfig.isRightClickPagesForward());
 		getAutoLoadDefaultMontageCheckBox().setSelected(applicationConfig.isAutoLoadDefaultMontage());
+		getAutoAddHighpassFilter().setSelected(applicationConfig.isAutoAddHighpassFilter());
 		getPrecalculateSignalChecksumsCheckBox().setSelected(applicationConfig.isPrecalculateSignalChecksums());
 
 		getPageLinesVisibleCheckBox().setSelected(applicationConfig.isPageLinesVisible());
@@ -775,6 +788,7 @@ public class SignalViewingConfigPanel extends JPanel {
 
 		applicationConfig.setRightClickPagesForward(getRightClickPagesForwardCheckBox().isSelected());
 		applicationConfig.setAutoLoadDefaultMontage(getAutoLoadDefaultMontageCheckBox().isSelected());
+		applicationConfig.setAutoAddHighpassFilter(getAutoAddHighpassFilter().isSelected());
 		applicationConfig.setPrecalculateSignalChecksums(getPrecalculateSignalChecksumsCheckBox().isSelected());
 
 		applicationConfig.setPageLinesVisible(getPageLinesVisibleCheckBox().isSelected());

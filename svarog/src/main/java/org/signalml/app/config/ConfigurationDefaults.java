@@ -78,6 +78,7 @@ public class ConfigurationDefaults {
 
 		config.setRightClickPagesForward(getBoolean("application.rightClickPagesForward"));
 		config.setAutoLoadDefaultMontage(getBoolean("application.autoLoadDefaultMontage"));
+		config.setAutoAddHighpassFilter(getBoolean("application.autoAddHighpassFilter"));
 		config.setPrecalculateSignalChecksums(getBoolean("application.precalculateSignalChecksums"));
 
 		config.setSaveConfigOnEveryChange(getBoolean("application.saveConfigOnEveryChange"));

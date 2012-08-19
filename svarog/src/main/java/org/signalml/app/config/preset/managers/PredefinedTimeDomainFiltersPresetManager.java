@@ -3,10 +3,7 @@
  */
 package org.signalml.app.config.preset.managers;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.BufferedInputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -14,9 +11,12 @@ import java.util.List;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-
+import org.signalml.math.iirdesigner.FilterType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class holds presets a list of predefined {@link TimeDomainSampleFilter filters}
@@ -90,6 +90,30 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	@Override
 	public TimeDomainSampleFilter getPredefinedFilterAt(double samplingFrequency, int index) {
 		return (TimeDomainSampleFilter) super.getPredefinedFilterAt(samplingFrequency, index);
+	}
+
+	/**
+	 * Returns the filter which fulfills the given criteria.
+	 * @param samplingFrequency the sampling frequency of the filter
+	 * @param filterType the type of the filter
+	 * @param cutoffFrequency1 the first passband edge frequency
+	 * @param cutoffFrequency2 the second passband edge frequency
+	 * @return
+	 */
+	public TimeDomainSampleFilter getPredefinedFilter(double samplingFrequency, FilterType filterType, double cutoffFrequency1, double cutoffFrequency2) {
+
+		for (SampleFilterDefinition filter: getPredefinedFilters(samplingFrequency)) {
+			TimeDomainSampleFilter tdFilter = (TimeDomainSampleFilter) filter;
+
+			if (tdFilter.getFilterType() == filterType
+					&& tdFilter.getPassbandEdgeFrequencies()[0] == cutoffFrequency1
+					&& tdFilter.getPassbandEdgeFrequencies()[1] == cutoffFrequency2) {
+				return tdFilter;
+			}
+
+		}
+
+		return null;
 	}
 
 	/**
