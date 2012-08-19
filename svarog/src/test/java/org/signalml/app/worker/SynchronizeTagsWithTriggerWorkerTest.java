@@ -71,6 +71,7 @@ public class SynchronizeTagsWithTriggerWorkerTest {
 		parameters.setSlopeType(slopeType);
 
 		SynchronizeTagsWithTriggerWorker worker = new SynchronizeTagsWithTriggerWorker(parameters);
+		worker.setBusyDialogShouldBeShown(false);
 		worker.execute();
 		worker.get();
 

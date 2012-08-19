@@ -18,6 +18,11 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 	 * busyDialog.setVisible(true).
 	 */
 	private boolean busyDialogVisible = true;
+	/**
+	 * This variable determines if this SwingWorker should show
+	 * the busy dialog.
+	 */
+	private boolean busyDialogShouldBeShown = true;
 
 	public SwingWorkerWithBusyDialog(Container parentContainer) {
 		super();
@@ -30,7 +35,11 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 	}
 
 	protected void showBusyDialog() {
+		if (!busyDialogShouldBeShown)
+			return;
+
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				busyDialog.setVisible(busyDialogVisible);
 			}
@@ -53,6 +62,17 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 		if (evt.getPropertyName().equals(BusyDialog.CANCEL_BUTTON_PRESSED)) {
 			this.cancel(true);
 		}
+	}
+
+	/**
+	 * If this method is used to set that the busy dialog should not be shown,
+	 * it is not shown even if the {@link SwingWorkerWithBusyDialog#showBusyDialog()}
+	 * is invoked.
+	 * @param busyDialogShouldBeShown a variable determining if the busy dialog
+	 * should be shown.
+	 */
+	public void setBusyDialogShouldBeShown(boolean busyDialogShouldBeShown) {
+		this.busyDialogShouldBeShown = busyDialogShouldBeShown;
 	}
 
 }
