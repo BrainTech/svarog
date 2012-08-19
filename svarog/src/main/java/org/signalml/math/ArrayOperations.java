@@ -133,4 +133,17 @@ public class ArrayOperations {
 		return result;
 	}
 
+	/**
+	 * Fills the arrray with a given value from the startIndex (incl.) to the endIndex (excl.).
+	 * @param array the array to be filled with the value
+	 * @param value the value that will be written to given range of the array
+	 * @param startIndex first index to which the value will be written
+	 * @param endIndex first index to which the value will not be written
+	 */
+	public static void fillArrayWithValue(double[] array, double value, int startIndex, int endIndex) {
+		for (int i = startIndex; i < endIndex; i++) {
+			array[i] = value;
+		}
+	}
+
 }

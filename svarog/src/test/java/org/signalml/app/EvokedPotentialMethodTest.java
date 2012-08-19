@@ -1,4 +1,3 @@
-
 package org.signalml.app;
 
 import static org.signalml.SignalMLAssert.assertArrayEquals;

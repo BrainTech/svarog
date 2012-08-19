@@ -55,7 +55,7 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 				int i = 0;
 				for (; i < samples.length-1; i++) {
 					if (isSlopeActivating(samples[i], samples[i+1])) {
-						double time = ((double)currentSample + i) / sampleSource.getSamplingFrequency();
+						double time = ((double)currentSample + i + 1) / sampleSource.getSamplingFrequency();
 						tag.setPosition(time);
 						tagRepositioned = true;
 						tagSet.editTag(tag);

@@ -17,6 +17,8 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	protected int channelCount;
 	protected int sampleCount;
 
+	private float samplingFrequency;
+
 	/**
 	 * Constructor. Creates a <code>DoubleArraySampleSource</code> with a
 	 * given number of channels, a given number of samples and a given array
@@ -88,7 +90,7 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	 */
 	@Override
 	public boolean isSamplingFrequencyCapable() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -98,7 +100,11 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 
 	@Override
 	public float getSamplingFrequency() {
-		return 0.0F;
+		return samplingFrequency;
+	}
+
+	public void setSamplingFrequency(float samplingFrequency) {
+		this.samplingFrequency = samplingFrequency;
 	}
 
 }
