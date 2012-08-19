@@ -2,10 +2,9 @@ package org.signalml.app.worker;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
-import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.Tag;
 
@@ -20,15 +19,15 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 
 	private SynchronizeTagsWithTriggerParameters parameters;
 	private double threshold;
-	private SignalDocument signalDocument;
+	private MultichannelSampleSource sampleSource;
 	private StyledTagSet tagSet;
 
 	public SynchronizeTagsWithTriggerWorker(SynchronizeTagsWithTriggerParameters parameters) {
 		super(null);
 		this.parameters = parameters;
 		this.threshold = parameters.getThresholdValue();
-		this.signalDocument = parameters.getSignalDocument();
-		this.tagSet = signalDocument.getActiveTag().getTagSet();
+		this.sampleSource = parameters.getSampleSource();
+		this.tagSet = parameters.getTagSet();
 
 		getBusyDialog().setText(_("Synchronizing tags with trigger."));
 		getBusyDialog().setCancellable(false);
@@ -37,7 +36,6 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 	@Override
 	protected Void doInBackground() throws Exception {
 		showBusyDialog();
-		OriginalMultichannelSampleSource sampleSource = signalDocument.getSampleSource();
 
 		double[] samples = new double[BUFFER_SIZE];
 		int sampleCount = sampleSource.getSampleCount(0);
@@ -57,7 +55,7 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 				int i = 0;
 				for (; i < samples.length-1; i++) {
 					if (isSlopeActivating(samples[i], samples[i+1])) {
-						double time = ((double)currentSample + i) / signalDocument.getSamplingFrequency();
+						double time = ((double)currentSample + i) / sampleSource.getSamplingFrequency();
 						tag.setPosition(time);
 						tagRepositioned = true;
 						tagSet.editTag(tag);

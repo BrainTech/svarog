@@ -75,7 +75,7 @@ public class SynchronizeTagsWithTriggerPanel extends LabeledComponentsPanel {
 	}
 
 	public void fillPanelFromModel(SynchronizeTagsWithTriggerParameters model) {
-		List<String> channelLabels = model.getSignalDocument().getMontageChannelLabels();
+		List<String> channelLabels = model.getChannelLabels();
 		getChannelComboBox().setModel(new DefaultComboBoxModel(channelLabels.toArray(new String[0])));
 
 		Pattern pattern = Pattern.compile("trig");

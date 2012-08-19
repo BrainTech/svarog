@@ -3,11 +3,18 @@ package org.signalml.app.action.tag;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.io.InvalidClassException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.tag.synchronize.SynchronizeTagsWithTriggerDialog;
-import org.signalml.app.worker.SynchronizeTagsWithTriggerWorkerTest;
+import org.signalml.app.worker.SynchronizeTagsWithTriggerWorker;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * An action for synchronizing tags with a trigger channel.
@@ -33,7 +40,18 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		SynchronizeTagsWithTriggerParameters model = new SynchronizeTagsWithTriggerParameters();
-		model.setSignalDocument(getActionFocusSelector().getActiveSignalDocument());
+		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
+
+		try {
+			SignalPlot masterPlot = signalDocument.getSignalView().getMasterPlot();
+			model.setSampleSource(masterPlot.getSignalOutput());
+			model.setTagSet(signalDocument.getActiveTag().getTagSet());
+			model.setChannelLabels(getChannelLabels(masterPlot.getSignalOutput()));
+		} catch (InvalidClassException e1) {
+			e1.printStackTrace();
+			Dialogs.showExceptionDialog(e1);
+			return;
+		}
 
 		boolean showDialog = getSynchronizeDialog().showDialog(model, true);
 
@@ -41,8 +59,19 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 			return;
 		}
 
-		SynchronizeTagsWithTriggerWorkerTest worker = new SynchronizeTagsWithTriggerWorkerTest(model);
+		SynchronizeTagsWithTriggerWorker worker = new SynchronizeTagsWithTriggerWorker(model);
 		worker.execute();
+
+	}
+
+	protected List<String> getChannelLabels(MultichannelSampleSource sampleSource) {
+
+		List<String> channelLabels = new ArrayList<String>();
+
+		for (int i = 0; i < sampleSource.getChannelCount(); i++) {
+			channelLabels.add(sampleSource.getLabel(i));
+		}
+		return channelLabels;
 
 	}
 
