@@ -6,6 +6,7 @@
 				<eegSystemSymbol>EEG 10_20 Cap19</eegSystemSymbol>
 				<eegSystemType>adults</eegSystemType>
 			</eegSystemName>
+			<isDefault>true</isDefault>
 			<electrodes>
 				<eegElectrode>
 					<label>Fp1</label>

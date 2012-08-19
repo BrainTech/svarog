@@ -27,7 +27,6 @@ import org.signalml.app.model.document.opensignal.elements.FileTypeComboBoxModel
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
-import org.signalml.app.view.montage.EegSystemSelectionPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
@@ -60,7 +59,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 */
 	private JComboBox eegSystemComboBox;
 	/**
-	 * The model for the {@link EegSystemSelectionPanel#eegSystemComboBox}.
+	 * The model for the {@link OtherSettingsPanel#eegSystemComboBox}.
 	 */
 	private PresetComboBoxModel eegSystemsComboBoxModel;
 
@@ -193,7 +192,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 */
 	protected JComboBox getEegSystemComboBox() {
 		if (eegSystemComboBox == null) {
-			eegSystemComboBox = new JComboBox(getPresetComboBoxModel());
+			eegSystemComboBox = new JComboBox(getEegSystemComboBoxModel());
 			eegSystemComboBox.setPreferredSize(new Dimension(300, 20));
 		}
 		return eegSystemComboBox;
@@ -205,13 +204,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 	 *
 	 * @return the ComboBoxModel for EEG system selection
 	 */
-	protected PresetComboBoxModel getPresetComboBoxModel() {
+	protected PresetComboBoxModel getEegSystemComboBoxModel() {
 		if (eegSystemsComboBoxModel == null) {
 			eegSystemsComboBoxModel = new PresetComboBoxModel(null,eegSystemsPresetManager);
-			Object firstElement = eegSystemsComboBoxModel.getElementAt(0);
-			if (firstElement != null) {
-				eegSystemsComboBoxModel.setSelectedItem(firstElement);
-			}
+
+			Preset defaultPreset = eegSystemsPresetManager.getDefaultPreset();
+			eegSystemsComboBoxModel.setSelectedItem(defaultPreset);
 		}
 		return eegSystemsComboBoxModel;
 	}

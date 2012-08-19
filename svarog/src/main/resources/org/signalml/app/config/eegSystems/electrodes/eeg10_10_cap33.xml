@@ -6,6 +6,7 @@
 				<eegSystemSymbol>EEG 10_10 Cap33</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
+			<isDefault>false</isDefault>
 			<electrodes>
 				<eegElectrode>
 					<label>Fp1</label>

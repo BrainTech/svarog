@@ -1,6 +1,5 @@
 package org.signalml.app.config.preset.managers;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,6 +10,8 @@ import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.montage.system.MontageGenerators;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This {@link PresetManager} manages the available EEG systems definitions which
@@ -116,6 +117,16 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 		for (Preset preset: presets) {
 			EegSystem eegSystem = (EegSystem) preset;
 			if (eegSystem.getEegSystemName().equals(eegSystemName))
+				return eegSystem;
+		}
+		return null;
+	}
+
+	@Override
+	public Preset getDefaultPreset() {
+		for (Preset preset: presets) {
+			EegSystem eegSystem = (EegSystem) preset;
+			if (eegSystem.isDefault())
 				return eegSystem;
 		}
 		return null;

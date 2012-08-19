@@ -1,10 +1,12 @@
 package org.signalml.domain.montage.system;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.montage.generators.IMontageGenerator;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents an EEG system (e.g. 'EEG 10_20' or 'EEG 10_10').
@@ -21,6 +23,12 @@ public class EegSystem implements Preset {
 	 * The unique name of this EEG system.
 	 */
 	private EegSystemName eegSystemName;
+
+	/**
+	 * This variable holds if this eeg system is the default EEG system that should
+	 * be used.
+	 */
+	private boolean isDefault;
 
 	/**
 	 * The list of {@link EegElectrode EEG electrodes} that belong to the
@@ -140,6 +148,14 @@ public class EegSystem implements Preset {
 	 */
 	public EegSystemName getEegSystemName() {
 		return eegSystemName;
+	}
+
+	public boolean isDefault() {
+		return isDefault;
+	}
+
+	public void setDefault(boolean isDefault) {
+		this.isDefault = isDefault;
 	}
 
 }
