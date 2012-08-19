@@ -4,9 +4,6 @@
 
 package org.signalml.domain.montage;
 
-import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.generators.IMontageGenerator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -16,9 +13,12 @@ import java.util.LinkedList;
 
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.generators.IMontageGenerator;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
