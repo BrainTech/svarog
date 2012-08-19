@@ -92,7 +92,7 @@ public class ExportFormatPanel extends JPanel {
 
 	public ASCIIExportOptionsPanel getASCIIOptionsPanel() {
 		if (asciiOptionsPanel == null) {
-			asciiOptionsPanel = new ASCIIExportOptionsPanel(_("Separator: "));
+			asciiOptionsPanel = new ASCIIExportOptionsPanel();
 		}
 		return asciiOptionsPanel;
 	}

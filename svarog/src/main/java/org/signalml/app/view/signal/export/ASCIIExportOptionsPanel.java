@@ -1,14 +1,17 @@
 package org.signalml.app.view.signal.export;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 
 /**
  * This class represents a panel which may be used to select a file. It contains
@@ -22,37 +25,13 @@ public class ASCIIExportOptionsPanel extends AbstractExportOptionsPanel {
 	protected static final Logger logger = Logger
 			.getLogger(ASCIIExportOptionsPanel.class);
 
-	private JLabel selectSeparatorLabel;
-
 	private JTextField separatorField;
 
 	/**
 	 * This is the default constructor
 	 */
-	public ASCIIExportOptionsPanel(String selectSeparatorPrompt) {
+	public ASCIIExportOptionsPanel() {
 		super();
-		this.selectSeparatorLabel = new JLabel(selectSeparatorPrompt);
-		initialize();
-	}
-
-	/**
-	 * Initializes this panel.
-	 */
-	private void initialize() {
-
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.anchor = GridBagConstraints.WEST;
-		c.gridx = 0;
-		c.weightx = 100;
-		c.insets = new Insets(0, 2, 0, 2);
-		add(selectSeparatorLabel, c);
-
-		c.weightx = 1;
-		c.gridx = 1;
-		add(getSeparatorField(), c);
 	}
 
 	protected JTextField getSeparatorField() {
@@ -84,5 +63,19 @@ public class ASCIIExportOptionsPanel extends AbstractExportOptionsPanel {
 	public void fillModelFromPanel(SignalExportDescriptor descriptor) {
 		descriptor.setSeparator(separatorField.getText());
 		descriptor.setSaveXML(false);
+	}
+
+	@Override
+	protected List<ComponentWithLabel> createComponents() {
+		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+
+		components.add(new ComponentWithLabel(new JLabel(_("Separator: ")), getSeparatorField()));
+		components.add(new ComponentWithLabel(new JLabel(""), new JPanel()));
+		return components;
+	}
+
+	@Override
+	protected int getNumberOfColumns() {
+		return 2;
 	}
 }

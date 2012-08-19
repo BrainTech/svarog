@@ -3,14 +3,14 @@ package org.signalml.app.view.signal.export;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 
 /**
  * An abstract class for all panels containing the export options.
  *
  * @author Piotr Szachewicz
  */
-public abstract class AbstractExportOptionsPanel extends AbstractPanel {
+public abstract class AbstractExportOptionsPanel extends LabeledComponentsPanel {
 
 	public AbstractExportOptionsPanel() {
 		super(_("Export options"));

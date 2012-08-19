@@ -6,8 +6,9 @@ package org.signalml.domain.tag;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.KeyStroke;
@@ -20,6 +21,8 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.util.ColorConverter;
 import org.signalml.util.FloatArrayConverter;
 import org.signalml.util.KeyStrokeConverter;
@@ -33,10 +36,6 @@ import com.thoughtworks.xstream.converters.basic.IntConverter;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
-import java.io.StringWriter;
-import java.util.SortedSet;
-import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
-import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}

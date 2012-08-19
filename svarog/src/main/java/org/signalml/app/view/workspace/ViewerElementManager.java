@@ -871,7 +871,7 @@ public class ViewerElementManager {
 
 	public ViewerTreePane getMonitorTreePane() {
 		if (monitorTreePane == null) {
-			monitorTreePane = new ViewerTreePane(getSignalTree());
+			monitorTreePane = new ViewerTreePane(getMonitorTree());
 		}
 		return monitorTreePane;
 	}

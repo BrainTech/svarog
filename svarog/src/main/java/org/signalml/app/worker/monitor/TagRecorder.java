@@ -8,6 +8,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
@@ -15,12 +16,12 @@ import java.util.ArrayList;
 import java.util.SortedSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import org.signalml.app.document.TagDocument;
-import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.Tag;
 import org.signalml.domain.tag.MonitorTag;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.StyledTagSetConverter;
+import org.signalml.plugin.export.signal.Tag;
 
 /**
  * This class allows to record tags from a {@link MonitorWorker}. To start recording
@@ -157,11 +158,20 @@ public class TagRecorder {
 		stream.close();
 		String content = new String(buffer, TagDocument.CHAR_SET);
 
+		//replace <tags/> with <tags></tags>
+		String previousTagsTag = "<" + StyledTagSetConverter.TAG_NODE_NAME + "/>";
+		String currentTagsTag = "<" + StyledTagSetConverter.TAG_NODE_NAME + ">" + "</" + StyledTagSetConverter.TAG_NODE_NAME + ">";
+		content = content.replace(previousTagsTag, currentTagsTag);
+		FileWriter fileWriter = new FileWriter(backingFile);
+		fileWriter.write(content);
+		fileWriter.close();
+
 		// closing of the tag section
 		String tagSectionClosing = "</" + StyledTagSetConverter.TAG_NODE_NAME + ">";
 
 		// get position of tag section closing, and save everything from that point to fileEnding
 		int start = content.indexOf(tagSectionClosing);
+
 		fileEnding = content.substring(start);
 
 		// length of ending in bytes
@@ -179,7 +189,7 @@ public class TagRecorder {
 
 		// get tags to save, and add fileEnding at the end
 		String toSave = StyledTagSetConverter.marshalTagsToString(tags);
-		if (!toSave.endsWith("\n")) {
+		if (!toSave.isEmpty() && !toSave.endsWith("\n")) {
 			toSave += "\n";
 		}
 		toSave += fileEnding;

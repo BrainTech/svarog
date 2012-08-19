@@ -3,34 +3,36 @@
  */
 package org.signalml.app.view.document.monitor;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.view.common.components.filechooser.FileSelectPanel;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.springframework.validation.Errors;
-
 /**
  * Represents a panel for selecting files used to record monitor.
  *
  * @author Piotr Szachewicz
  */
-public class ChooseFilesForMonitorRecordingPanel extends JPanel {
+public class ChooseFilesForMonitorRecordingPanel extends JPanel implements DocumentListener {
 
 	/**
 	 * A {@link FileSelectPanel} for selecting a signal recording target file
@@ -87,6 +89,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 	protected FileSelectPanel getSelectSignalRecordingFilePanel() {
 		if (selectSignalRecordingFilePanel == null) {
 			selectSignalRecordingFilePanel = new FileSelectPanel(_("Record signal to file"));
+			selectSignalRecordingFilePanel.getFileNameField().getDocument().addDocumentListener(this);
 		}
 		return selectSignalRecordingFilePanel;
 	}
@@ -127,6 +130,14 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		monitorRecordingDescriptor.setSignalRecordingFilePath(getSelectSignalRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingFilePath(getSelectTagsRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingEnabled(getEnableTagRecordingPanel().isTagRecordingEnabled());
+	}
+
+
+	public void fillPanelFromModel(Object model) {
+		MonitorRecordingDescriptor monitorRecordingDescriptor = ((ExperimentDescriptor) model).getMonitorRecordingDescriptor();
+		getEnableTagRecordingPanel().setTagRecordingEnabled(monitorRecordingDescriptor.isTagsRecordingEnabled());
+		getSelectSignalRecordingFilePanel().setFileName(monitorRecordingDescriptor.getSignalRecordingFilePath());
+		getSelectTagsRecordingFilePanel().setFileName(monitorRecordingDescriptor.getTagsRecordingFilePath());
 	}
 
 	/**
@@ -254,6 +265,26 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel {
 		public void setTagRecordingEnabled(boolean enable) {
 			enableTagRecordingCheckBox.setSelected(enable);
 		}
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		updateTagNameToFitSignalName();
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		updateTagNameToFitSignalName();
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		updateTagNameToFitSignalName();
+	}
+
+	public void updateTagNameToFitSignalName() {
+		String fileName = getSelectSignalRecordingFilePanel().getFileName();
+		getSelectTagsRecordingFilePanel().setFileName(fileName);
 	}
 
 }

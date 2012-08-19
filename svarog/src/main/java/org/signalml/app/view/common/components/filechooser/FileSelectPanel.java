@@ -116,7 +116,7 @@ public class FileSelectPanel extends JPanel {
 	 * a file name.
 	 * @return the {@link JTextField} used in this panel
 	 */
-	protected JTextField getFileNameField() {
+	public JTextField getFileNameField() {
 		if (fileNameField == null) {
 			fileNameField = new JTextField(18);
 		}
@@ -335,4 +335,5 @@ public class FileSelectPanel extends JPanel {
 
 		}
 	}
+
 }
