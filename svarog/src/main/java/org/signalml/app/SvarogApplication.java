@@ -60,6 +60,7 @@ import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.MatlabUtil;
 import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.util.logging.DebugHelpers;
 import org.signalml.app.view.common.dialogs.SplashScreen;
 import org.signalml.app.view.preferences.ProfilePathDialog;
@@ -339,6 +340,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		LocaleContextHolder.setLocale(locale);
 		Locale.setDefault(locale);
+		SvarogI18n.setLocale(locale);
 
 		logger.debug("Locale set to [" + locale.toString() + "]");
 		logger.debug("Application starting");

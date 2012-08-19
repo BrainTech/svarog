@@ -1,13 +1,12 @@
 package org.signalml.app.util.i18n;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 
-import org.signalml.app.util.i18n.SvarogI18n;
+import org.apache.log4j.Logger;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.util.SvarogConstants;
-
 import org.springframework.context.MessageSourceResolvable;
-import org.apache.log4j.Logger;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
@@ -168,5 +167,13 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 */
 	public static String render(String pattern, Object ... arguments) {
 		return MessageFormat.format(pattern, arguments);
+	}
+
+	/**
+	 * Sets the locale that will be used by this I18N module.
+	 * @param locale the locale to be used.
+	 */
+	public static void setLocale(Locale locale) {
+		SvarogI18n.getInstance().i18n.setLocale(locale);
 	}
 }
