@@ -940,7 +940,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			}
 
-			for (i=1; i<length; i++) {
+			//there are 1.0/timeZoomFactor samples for each
+			//x-value pixel to be drawn. For performace
+			//reasons we don't want to draw that many
+			//overlapping lines (see: GeneralPath)
+			//so we draw only 1 in n samples.
+			int n = (int) Math.floor(0.5 / timeZoomFactor);
+
+			for (i=1; i<length; i += n) {
 
 				y = samples[i] * pixelPerValueForChannel;
 

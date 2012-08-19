@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.AbstractSignal;
@@ -78,6 +80,18 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	private boolean saved = true;
 
+	/**
+	 * How often (in milliseconds) should {@link SignalPlot signal plots} be
+	 * refreshed by the {@link RefreshPlotsTimerTask}.
+	 */
+	private static long refreshPlotsInterval = 50;
+
+	/**
+	 * A timer used to refresh {@link SignalPlot signal plots} after new samples
+	 * have been added.
+	 */
+	private Timer refreshPlotsTimer;
+
 	public MonitorSignalDocument(ExperimentDescriptor descriptor) {
 
 		super();
@@ -93,6 +107,9 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		((RoundBufferMultichannelSampleSource) sampleSource).setLabels(descriptor.getAmplifier().getSelectedChannelsLabels());
 		((RoundBufferMultichannelSampleSource) sampleSource).setDocumentView(getDocumentView());
 		((RoundBufferMultichannelSampleSource) sampleSource).setSamplingFrequency(freq);
+
+		refreshPlotsTimer = new Timer();
+		refreshPlotsTimer.schedule(new RefreshPlotsTimerTask(), 0, refreshPlotsInterval);
 	}
 
 	public void setName(String name) {
@@ -154,6 +171,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public void closeDocument() throws SignalMLException {
+
+		refreshPlotsTimer.cancel();
 
 		//stop recording
 		try {
@@ -388,6 +407,21 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	public ExperimentDescriptor getExperimentDescriptor() {
 		return descriptor;
+	}
+
+	class RefreshPlotsTimerTask extends TimerTask {
+
+		@Override
+		public void run() {
+
+			//logger.debug("refreshig plot - curent timestamp: " + System.currentTimeMillis());
+			if (documentView != null && ((SignalView) documentView).getPlots() != null) {
+				for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();)
+					i.next().repaint();
+			}
+
+		}
+
 	}
 
 }
