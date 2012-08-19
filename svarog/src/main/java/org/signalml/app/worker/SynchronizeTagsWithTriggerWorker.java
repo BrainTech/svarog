@@ -23,11 +23,11 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 	private SignalDocument signalDocument;
 	private StyledTagSet tagSet;
 
-	public SynchronizeTagsWithTriggerWorker(SynchronizeTagsWithTriggerParameters model) {
+	public SynchronizeTagsWithTriggerWorker(SynchronizeTagsWithTriggerParameters parameters) {
 		super(null);
-		this.parameters = model;
-		this.threshold = model.getThresholdValue();
-		this.signalDocument = model.getSignalDocument();
+		this.parameters = parameters;
+		this.threshold = parameters.getThresholdValue();
+		this.signalDocument = parameters.getSignalDocument();
 		this.tagSet = signalDocument.getActiveTag().getTagSet();
 
 		getBusyDialog().setText(_("Synchronizing tags with trigger."));
@@ -54,7 +54,7 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 
 				sampleSource.getSamples(parameters.getTriggerChannel(), samples, currentSample, bufferSize, 0);
 
-				int i = 1;
+				int i = 0;
 				for (; i < samples.length-1; i++) {
 					if (isSlopeActivating(samples[i], samples[i+1])) {
 						double time = ((double)currentSample + i) / signalDocument.getSamplingFrequency();
@@ -64,7 +64,10 @@ public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<
 						break;
 					}
 				}
-				currentSample += i+1;
+				currentSample += i;
+				if (tagRepositioned)
+					//we don't want the previous activating slope to activate again.
+					currentSample++;
 
 			}
 

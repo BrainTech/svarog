@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.app.view.tag.synchronize.SynchronizeTagsWithTriggerDialog;
-import org.signalml.app.worker.SynchronizeTagsWithTriggerWorker;
+import org.signalml.app.worker.SynchronizeTagsWithTriggerWorkerTest;
 
 /**
  * An action for synchronizing tags with a trigger channel.
@@ -41,7 +41,7 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 			return;
 		}
 
-		SynchronizeTagsWithTriggerWorker worker = new SynchronizeTagsWithTriggerWorker(model);
+		SynchronizeTagsWithTriggerWorkerTest worker = new SynchronizeTagsWithTriggerWorkerTest(model);
 		worker.execute();
 
 	}
