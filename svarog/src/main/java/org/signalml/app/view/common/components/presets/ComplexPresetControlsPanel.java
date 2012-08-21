@@ -230,6 +230,8 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		add(loadFileButton);
 		add(Box.createHorizontalStrut(3));
 		add(saveFileButton);
+
+		setEnableds();
 	}
 
 	/**
@@ -437,6 +439,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * as the default one.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset;
@@ -505,6 +508,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * from the preset.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset = presetManager.getDefaultPreset();
@@ -549,6 +553,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * preset.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset = presetManager.getDefaultPreset();
@@ -599,6 +604,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * <li>saves the preset to the {@link PresetManager}.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset;
@@ -676,6 +682,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * as the active one (fills the dialog with the data from it).</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			int index = getPresetComboBox().getSelectedIndex();
@@ -733,6 +740,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * <li>removes the selected preset.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			String name = getChoosePresetDialog().getName(null, false);
@@ -788,6 +796,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * to the selected file.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Preset preset;
@@ -874,6 +883,7 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		 * <li>saves the preset to the {@link PresetManager}.</li>
 		 * </ul>
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseLoadPresetFile(ComplexPresetControlsPanel.this.getParentWindow());
