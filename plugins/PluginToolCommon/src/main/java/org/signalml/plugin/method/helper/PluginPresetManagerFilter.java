@@ -127,6 +127,7 @@ public class PluginPresetManagerFilter implements PresetManager {
 
 		Preset preset = this.filteredPresets.get(index);
 		int position = this.filteredPresetToPositionMap.get(preset);
+		this.resetState();
 		this.delegate.removePresetAt(position);
 	}
 
@@ -137,6 +138,7 @@ public class PluginPresetManagerFilter implements PresetManager {
 			return false;
 		}
 
+		this.resetState();
 		return this.delegate.removePresetByName(name);
 	}
 
