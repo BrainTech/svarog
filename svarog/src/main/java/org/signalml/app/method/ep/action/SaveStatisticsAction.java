@@ -36,10 +36,11 @@ public class SaveStatisticsAction extends AbstractSaveAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		File file = fileChooser.chooseSaveAsCSVFile(null);
-		file = Util.changeOrAddFileExtension(file, "csv");
 
 		if (file == null)
 			return;
+
+		file = Util.changeOrAddFileExtension(file, "csv");
 
 		try {
 			writeData(file);
