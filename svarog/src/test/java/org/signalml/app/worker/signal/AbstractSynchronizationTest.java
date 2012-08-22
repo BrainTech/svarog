@@ -1,12 +1,7 @@
-package org.signalml.app.worker;
-
-import static org.junit.Assert.assertEquals;
+package org.signalml.app.worker.signal;
 
 import java.awt.Color;
-import java.util.concurrent.ExecutionException;
 
-import org.junit.Test;
-import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
@@ -16,15 +11,15 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
-public class SynchronizeTagsWithTriggerWorkerTest {
+public abstract class AbstractSynchronizationTest {
 
-	private SynchronizeTagsWithTriggerParameters parameters;
+	protected SynchronizeTagsWithTriggerParameters parameters;
 
 	private final int sampleCount = 3000;
-	private final int[] ascendingSlopes = new int[] { 10, 1034, 1500, 2523, 2550, 2600, 2800, 2901 };
-	private final int[] descendingSlopes = new int[] { 15, 1400, 1600, 2524, 2551, 2700, 2900, 2950 };
+	protected final Integer[] ascendingSlopes = new Integer[] { 10, 1034, 1500, 2523, 2550, 2600, 2800, 2901 };
+	protected final Integer[] descendingSlopes = new Integer[] { 15, 1400, 1600, 2524, 2551, 2700, 2900, 2950 };
 
-	public SynchronizeTagsWithTriggerWorkerTest() {
+	public AbstractSynchronizationTest() {
 		parameters = new SynchronizeTagsWithTriggerParameters();
 
 		parameters.setSampleSource(createSampleSource());
@@ -67,43 +62,15 @@ public class SynchronizeTagsWithTriggerWorkerTest {
 
 	}
 
-	public void testSlope(SlopeType slopeType, int[] expectedPositions) throws InterruptedException, ExecutionException {
-		parameters.setSlopeType(slopeType);
-
-		SynchronizeTagsWithTriggerWorker worker = new SynchronizeTagsWithTriggerWorker(parameters);
-		worker.setBusyDialogShouldBeShown(false);
-		worker.execute();
-		worker.get();
-
-		StyledTagSet tagSet = parameters.getTagSet();
-		int i = 0;
-		for (Tag tag: tagSet.getTags()) {
-			double position = tag.getPosition() * parameters.getSampleSource().getSamplingFrequency();
-			assertEquals(expectedPositions[i], position, 1e-5);
-			i++;
-		}
-	}
-
-	@Test
-	public void testSynchronizeAscendingSlope() throws InterruptedException, ExecutionException {
-		testSlope(SlopeType.ASCENDING, ascendingSlopes);
-	}
-
-	@Test
-	public void testSynchronizeDescendingSlope() throws InterruptedException, ExecutionException {
-		testSlope(SlopeType.DESCENDING, descendingSlopes);
-	}
-
-	@Test
-	public void testSynchronizeToBothSlopes() throws InterruptedException, ExecutionException {
-		int[] slopePositions = new int[ascendingSlopes.length*2];
+	protected Integer[] getBothSlopePositions() {
+		Integer[] slopePositions = new Integer[ascendingSlopes.length*2];
 
 		for (int i = 0; i < ascendingSlopes.length; i++) {
 			slopePositions[2*i] = ascendingSlopes[i];
 			slopePositions[2*i + 1] = descendingSlopes[i];
 		}
 
-		testSlope(SlopeType.BOTH, slopePositions);
+		return slopePositions;
 	}
 
 }

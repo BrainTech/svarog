@@ -48,9 +48,40 @@ public class Dialogs {
 	 */
 	public static void showError(final String message) {
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
 				JOptionPane.showMessageDialog(dialogParent, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+			}
+		});
+	}
+
+	/**
+	 * Shows a simple dialog showing the specified information message.
+	 * @param title the title of the dialog
+	 * @param message the message shown in the dialog
+	 */
+	public static void showMessage(final String title, final String message) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+				JOptionPane.showMessageDialog(dialogParent, message, title, JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
+	}
+
+	/**
+	 * Shows a simple dialog showing the specified warning message.
+	 * @param title the title of the dialog
+	 * @param message the message shown in the dialog
+	 */
+	public static void showWarningMessage(final String message) {
+		SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+				JOptionPane.showMessageDialog(dialogParent, message, _("Warning"), JOptionPane.WARNING_MESSAGE);
 			}
 		});
 	}
@@ -83,6 +114,7 @@ public class Dialogs {
 	 */
 	public static void showExceptionDialog(final Window w, final Throwable t) {
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
 			}
@@ -97,6 +129,7 @@ public class Dialogs {
 	 */
 	public static void showExceptionDialog(final Throwable t) {
 		SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
 			}

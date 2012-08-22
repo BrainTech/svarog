@@ -1,77 +1,68 @@
-package org.signalml.app.worker;
+package org.signalml.app.worker.signal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
-import org.signalml.domain.tag.StyledTagSet;
-import org.signalml.plugin.export.signal.Tag;
 
 /**
- * A worker which synchronizes tags with trigger for a given document.
+ * This worker is responsible for finding a specific type of {@link SlopeType slopes}
+ * throught the signal.
  *
  * @author Piotr Szachewicz
  */
-public class SynchronizeTagsWithTriggerWorker extends SwingWorkerWithBusyDialog<Void, Object> {
+public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[], Void> {
 
 	private static final int BUFFER_SIZE = 1024;
 
 	private SynchronizeTagsWithTriggerParameters parameters;
 	private double threshold;
 	private MultichannelSampleSource sampleSource;
-	private StyledTagSet tagSet;
 
-	public SynchronizeTagsWithTriggerWorker(SynchronizeTagsWithTriggerParameters parameters) {
+	public FindSignalSlopesWorker(SynchronizeTagsWithTriggerParameters parameters) {
 		super(null);
 		this.parameters = parameters;
 		this.threshold = parameters.getThresholdValue();
 		this.sampleSource = parameters.getSampleSource();
-		this.tagSet = parameters.getTagSet();
 
-		getBusyDialog().setText(_("Synchronizing tags with trigger."));
+		getBusyDialog().setText(_("Finding trigger activating slopes."));
 		getBusyDialog().setCancellable(false);
 	}
 
 	@Override
-	protected Void doInBackground() throws Exception {
+	protected Integer[] doInBackground() throws Exception {
 		showBusyDialog();
 
-		double[] samples = new double[BUFFER_SIZE];
+		List<Integer> slopePositions = new ArrayList<Integer>();
 		int sampleCount = sampleSource.getSampleCount(0);
-
 		int currentSample = 0;
-		for (Tag tag: tagSet.getTags()) {
-			boolean tagRepositioned = false;
+		while(currentSample < sampleCount) {
 
-			while(!tagRepositioned && currentSample < sampleCount) {
+			int bufferSize = BUFFER_SIZE;
+			if (currentSample + bufferSize > sampleCount)
+				bufferSize = sampleCount - currentSample;
 
-				int bufferSize = BUFFER_SIZE;
-				if (currentSample + bufferSize > sampleCount)
-					bufferSize = sampleCount - currentSample;
+			double[] samples = new double[bufferSize];
 
-				sampleSource.getSamples(parameters.getTriggerChannel(), samples, currentSample, bufferSize, 0);
+			sampleSource.getSamples(parameters.getTriggerChannel(), samples, currentSample, bufferSize, 0);
 
-				int i = 0;
-				for (; i < samples.length-1; i++) {
-					if (isSlopeActivating(samples[i], samples[i+1])) {
-						double time = ((double)currentSample + i + 1) / sampleSource.getSamplingFrequency();
-						tag.setPosition(time);
-						tagRepositioned = true;
-						tagSet.editTag(tag);
-						break;
-					}
+			int i = 0;
+			for (; i < samples.length-1; i++) {
+				if (isSlopeActivating(samples[i], samples[i+1])) {
+					slopePositions.add(currentSample + i + 1);
 				}
-				currentSample += i;
-				if (tagRepositioned)
-					//we don't want the previous activating slope to activate again.
-					currentSample++;
-
 			}
+
+			currentSample += i + 1;
 
 		}
 
-		return null;
+		return slopePositions.toArray(new Integer[0]);
 	}
 
 	protected boolean isSlopeActivating(double currentSample, double nextSample) {

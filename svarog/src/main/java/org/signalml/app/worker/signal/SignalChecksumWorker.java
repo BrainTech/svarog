@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.app.worker;
+package org.signalml.app.worker.signal;
 
 import java.util.List;
 

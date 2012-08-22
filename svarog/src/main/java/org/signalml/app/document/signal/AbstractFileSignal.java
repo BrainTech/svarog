@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
-import org.signalml.app.worker.SignalChecksumWorker;
+import org.signalml.app.worker.signal.SignalChecksumWorker;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.plugin.export.SignalMLException;
