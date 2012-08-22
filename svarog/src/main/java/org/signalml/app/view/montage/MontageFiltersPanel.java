@@ -5,8 +5,6 @@ package org.signalml.app.view.montage;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
-import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -16,7 +14,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -44,13 +41,15 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.common.components.ResolvableComboBox;
+import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
+import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.SampleFilterType;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.exception.SanityCheckException;
 
 
@@ -790,7 +789,8 @@ public class MontageFiltersPanel extends JPanel {
 		DefaultComboBoxModel model = new DefaultComboBoxModel(arr);
 		JComboBox comboBox = getTimeDomainFilterTypeComboBox();
 		comboBox.setModel(model);
-		comboBox.setSelectedIndex(0);
+		if (model.getSize() > 0)
+			comboBox.setSelectedIndex(0);
 		comboBox.repaint();
 	}
 
@@ -975,6 +975,7 @@ public class MontageFiltersPanel extends JPanel {
 		 * {@link MontageFiltersPanel#getFftFilterTypeComboBox() selected}
 		 * type and adds it to the {@link MontageFiltersPanel#montage montage}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montage == null) {
@@ -1036,6 +1037,7 @@ public class MontageFiltersPanel extends JPanel {
 		 * After the dialog is closed with OK button updates the filter in
 		 * the {@link MontageFiltersPanel#montage montage}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montage == null) {
@@ -1109,6 +1111,7 @@ public class MontageFiltersPanel extends JPanel {
 		 * selected and {@link Montage#removeSampleFilter(int) removes} it from
 		 * the {@link MontageFiltersPanel#montage montage}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montage == null) {
@@ -1154,6 +1157,7 @@ public class MontageFiltersPanel extends JPanel {
 		 * {@link Montage#setExcludeAllFilters(int, boolean) excludes all
 		 * filters}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (montage == null) {

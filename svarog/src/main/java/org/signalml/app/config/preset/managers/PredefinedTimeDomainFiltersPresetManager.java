@@ -102,7 +102,11 @@ public class PredefinedTimeDomainFiltersPresetManager extends PredefinedFiltersP
 	 */
 	public TimeDomainSampleFilter getPredefinedFilter(double samplingFrequency, FilterType filterType, double cutoffFrequency1, double cutoffFrequency2) {
 
-		for (SampleFilterDefinition filter: getPredefinedFilters(samplingFrequency)) {
+		List<SampleFilterDefinition> predefinedFilters = getPredefinedFilters(samplingFrequency);
+		if (predefinedFilters == null)
+			return null;
+
+		for (SampleFilterDefinition filter: predefinedFilters) {
 			TimeDomainSampleFilter tdFilter = (TimeDomainSampleFilter) filter;
 
 			if (tdFilter.getFilterType() == filterType
