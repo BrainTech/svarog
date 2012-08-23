@@ -209,7 +209,10 @@ public class OtherSettingsPanel extends AbstractPanel {
 			eegSystemsComboBoxModel = new PresetComboBoxModel(null,eegSystemsPresetManager);
 
 			Preset defaultPreset = eegSystemsPresetManager.getDefaultPreset();
-			eegSystemsComboBoxModel.setSelectedItem(defaultPreset);
+			if (defaultPreset != null)
+				eegSystemsComboBoxModel.setSelectedItem(defaultPreset);
+			else if (eegSystemsComboBoxModel.getSize() > 0)
+				eegSystemsComboBoxModel.setSelectedItem(eegSystemsComboBoxModel.getElementAt(0));
 		}
 		return eegSystemsComboBoxModel;
 	}
