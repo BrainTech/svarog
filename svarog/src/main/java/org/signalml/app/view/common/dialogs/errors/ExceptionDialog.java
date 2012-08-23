@@ -6,20 +6,30 @@ package org.signalml.app.view.common.dialogs.errors;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Window;
 
-import javax.swing.DefaultListModel;
+import javax.swing.Icon;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
-import org.signalml.domain.montage.MontageException;
+import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.common.dialogs.AbstractMessageDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
+import org.springframework.validation.Errors;
 
 /**
  * Dialog for showing an exception.
  *
  * @author Piotr Szachewicz
  */
-public class ExceptionDialog extends AbstractErrorsDialog  {
+public class ExceptionDialog extends AbstractMessageDialog  {
+
+	private Icon icon;
+	private JTextArea stacktraceTextArea;
 
 	/**
 	 * Constructor. Sets parent window and if this dialog
@@ -27,33 +37,15 @@ public class ExceptionDialog extends AbstractErrorsDialog  {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public ExceptionDialog(Window w, boolean isModal) {
-		super(w, isModal);
+	public ExceptionDialog(Window w) {
+		super(w, true);
 		setTitle(_("Exception occurred!"));
-	}
+		setMinimumSize(new Dimension(450, 220));
+		setLocationRelativeTo(null);
+		setResizable(true);
 
-	/**
-	 * Depending on the type of the {@code model}:
-	 * <ul>
-	 * <li>for {@link Errors}:<ul>
-	 * <li>obtains the list of errors and converts it to an array,</li>
-	 * <li>using this array creates the {@link ErrorListModel model} for the
-	 * list of errors and sets it,</li></ul></li>
-	 * <li>for {@link MessageSourceResolvable}:
-	 * <ul>
-	 * <li>creates the array containing one element - this model,</li>
-	 * <li>using this array creates the {@link ErrorListModel model} for the
-	 * list of errors and sets it.</li></ul></li>
-	 * </ul>
-	 */
-	@Override
-	protected void fillDialogFromModel(Object model) throws SignalMLException {
+		icon = IconUtils.getErrorIcon();
 
-		Throwable exception = (Throwable) model;
-
-		DefaultListModel listModel = new DefaultListModel();
-		listModel.addElement(exception.getMessage());
-		errorList.setModel(listModel);
 	}
 
 	/**
@@ -63,6 +55,56 @@ public class ExceptionDialog extends AbstractErrorsDialog  {
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return Throwable.class.isAssignableFrom(clazz);
+	}
+
+	@Override
+	public JPanel getMessagePanel() {
+		if (messagePanel == null) {
+			messagePanel = new JPanel(new BorderLayout());
+			messagePanel.add(getMessageLabel(), BorderLayout.NORTH);
+			getMessageLabel().setIcon(icon);
+
+			JScrollPane scrollPane = new JScrollPane(getStacktraceTextArea());
+		    messagePanel.add(scrollPane, BorderLayout.CENTER);
+		}
+		return messagePanel;
+	}
+
+	public JTextArea getStacktraceTextArea() {
+		if (stacktraceTextArea == null) {
+			stacktraceTextArea = new JTextArea(4, 10);
+			stacktraceTextArea.setEditable(false);
+		}
+		return stacktraceTextArea;
+	}
+
+	@Override
+	public void fillDialogFromModel(Object model) throws SignalMLException {
+		Throwable throwable = (Throwable) model;
+
+		String errorMsg = _("An unexpected error occurred. ");
+		if (throwable.getLocalizedMessage() != null) {
+			errorMsg += "(" + throwable.getLocalizedMessage() + ").";
+		}
+
+		getMessageLabel().setText(errorMsg);
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < throwable.getStackTrace().length; i++) {
+			sb.append(throwable.getStackTrace()[i].toString());
+			sb.append("\n");
+		}
+		getStacktraceTextArea().setText(sb.toString());
+		getStacktraceTextArea().setCaretPosition(0);
+	}
+
+	@Override
+	public void fillModelFromDialog(Object model) throws SignalMLException {
+	}
+
+	@Override
+	public boolean isCancellable() {
+		return false;
 	}
 
 }

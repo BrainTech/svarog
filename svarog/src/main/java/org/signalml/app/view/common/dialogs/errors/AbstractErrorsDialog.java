@@ -39,7 +39,7 @@ public abstract class AbstractErrorsDialog extends AbstractDialog {
 	 * the code to obtain the title for this dialog from the source of messages;
 	 * if the code is {@code null} the default title is used
 	 */
-	private String titleCode = null;
+	private String title = null;
 
 	/**
 	 * Constructor. Sets parent window and if this dialog
@@ -56,12 +56,12 @@ public abstract class AbstractErrorsDialog extends AbstractDialog {
 	 * blocks top-level windows.
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
-	 * @param titleCode  the code to obtain the title for this dialog from the
+	 * @param title  the code to obtain the title for this dialog from the
 	 * source of messages; if the code is {@code null} the default title is used
 	 */
-	public AbstractErrorsDialog(Window w, boolean isModal, String titleCode) {
+	public AbstractErrorsDialog(Window w, boolean isModal, String title) {
 		super(w, isModal);
-		this.titleCode = titleCode;
+		this.title = title;
 	}
 
 	/**
@@ -73,10 +73,10 @@ public abstract class AbstractErrorsDialog extends AbstractDialog {
 	@Override
 	protected void initialize() {
 
-		if (titleCode == null) {
+		if (title == null) {
 			setTitle(_("Error!"));
 		} else {
-			setTitle(titleCode);
+			setTitle(title);
 		}
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/error.png"));
 
