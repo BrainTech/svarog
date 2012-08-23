@@ -82,20 +82,35 @@ public class ExceptionDialog extends AbstractMessageDialog  {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		Throwable throwable = (Throwable) model;
 
-		String errorMsg = _("An unexpected error occurred. ");
-		if (throwable.getLocalizedMessage() != null) {
-			errorMsg += "(" + throwable.getLocalizedMessage() + ").";
-		}
+		getMessageLabel().setText(getErrorMessage(throwable));
+		getStacktraceTextArea().setText(getStackTraceReport(throwable));
+		getStacktraceTextArea().setCaretPosition(0);
+	}
 
-		getMessageLabel().setText(errorMsg);
-
+	protected String getErrorMessage(Throwable throwable) {
 		StringBuilder sb = new StringBuilder();
+
+		sb.append(_("An unexpected error occurred "));
+		sb.append("(");
+		sb.append(throwable.getClass().getSimpleName());
+
+		if (throwable.getLocalizedMessage() != null) {
+			sb.append(": " + throwable.getLocalizedMessage());
+		}
+		sb.append(").");
+
+		return sb.toString();
+	}
+
+	protected String getStackTraceReport(Throwable throwable) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(throwable.getClass().toString());
+		sb.append("\n");
 		for (int i = 0; i < throwable.getStackTrace().length; i++) {
 			sb.append(throwable.getStackTrace()[i].toString());
 			sb.append("\n");
 		}
-		getStacktraceTextArea().setText(sb.toString());
-		getStacktraceTextArea().setCaretPosition(0);
+		return sb.toString();
 	}
 
 	@Override
