@@ -144,6 +144,15 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 		chooseExperimentTable.clearSelection();
 	}
 
+	/**
+	 * Deletes all experiments from this panel.
+	 */
+	public void clearExperiments() {
+		if (chooseExperimentTableModel != null)
+			chooseExperimentTableModel.clearExperiments();
+		getLogTextField().setText("");
+	}
+
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
 		private boolean executing = false;
 

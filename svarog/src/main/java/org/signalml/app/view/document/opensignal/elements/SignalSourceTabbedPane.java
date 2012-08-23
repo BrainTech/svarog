@@ -66,7 +66,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		return fileChooserPanel;
 	}
 
-	protected ChooseExperimentPanel getChooseExperimentPanel() {
+	public ChooseExperimentPanel getChooseExperimentPanel() {
 		if (chooseExperimentPanel == null) {
 			chooseExperimentPanel = new ChooseExperimentPanel();
 			chooseExperimentPanel.addPropertyChangeListener(this);
