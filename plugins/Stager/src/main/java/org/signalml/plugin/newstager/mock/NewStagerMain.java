@@ -119,7 +119,6 @@ public class NewStagerMain {
 	// private static String sourceSignalFilePath = "../../../../inb14.d";
 
 	private static String PATH = "E:/";
-	// private static String PATH = "C:/Users/kdr/";
 
 	private static float FREQUENCY = 128.0f;
 	private static int OFFSET_DIMENSION = 20;
@@ -132,8 +131,6 @@ public class NewStagerMain {
 				new File(codecSourceFile).getAbsoluteFile(), null);
 			SignalMLCodecReader reader = codec.createReader();
 			reader.open(sourceSignalFilePath);
-			// SignalMLCodecSampleSource source = new SignalMLCodecSampleSource(
-			// reader);
 			FastMultichannelSampleSource source = new FastMultichannelSampleSource(
 				reader);
 
@@ -163,20 +160,11 @@ public class NewStagerMain {
 
 			stagerData.setChannelMap(channelMap);
 
-			// double t[] = new double[200];
-			// source.getSamples(1, t, 400, 200, 0);
-			// System.out.println(t[0]);
-			// System.out.println(source.getSampleCount(1) / (20 * 128));
-
 			Utils.loggingFlag = false;
 
 			BookDocument doc = new BookDocument(new File(bookFilePath));
-			// MPBookStore store = new MPBookStore();
-			// store.Open(bookFilePath);
-			// StandardBookSegment[] seg = store.getSegmentAt(0);
 			doc.openDocument();
 			StandardBook b = doc.getBook();
-			// System.out.println(b.getSegmentCount());
 
 			NewStagerFASPThreshold alphaThreshold = NewStagerFASPThreshold
 													.CreateThreshold(5.0, Double.POSITIVE_INFINITY, 8.0, 12.0,

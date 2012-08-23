@@ -55,7 +55,7 @@ public class NewStagerConfigurationDefaultsHelper extends
 		}
 
 		try {
-			fixedParameters.swaWidthCoeff = double_("stager.fixed.widthCoeff");
+			fixedParameters.widthCoeff = double_("stager.fixed.widthCoeff");
 			fixedParameters.swaWidthCoeff = double_("stager.fixed.swaWidthCoeff");
 			fixedParameters.alphaPerc1 = double_("stager.fixed.alphaPerc1");
 			fixedParameters.alphaPerc2 = double_("stager.fixed.alphaPerc2");

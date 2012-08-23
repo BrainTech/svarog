@@ -460,12 +460,16 @@ public class NewStagerMethodDialog extends AbstractPluginPresetDialog {
 			return this.currentParametersPreset;
 		}
 
-		NewStagerParametersPreset parametersPreset;
+		NewStagerParametersPreset parametersPreset = null;
 		Preset preset = getPresetManager().getDefaultPreset();
 
 		try {
 			parametersPreset = (NewStagerParametersPreset) preset;
 		} catch (ClassCastException e) {
+			//do nothing
+		}
+
+		if (parametersPreset == null) {
 			parametersPreset = new NewStagerParametersPreset();
 		}
 

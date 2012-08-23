@@ -230,6 +230,8 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 		add(loadFileButton);
 		add(Box.createHorizontalStrut(3));
 		add(saveFileButton);
+
+		setEnableds();
 	}
 
 	/**
