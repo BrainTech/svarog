@@ -99,8 +99,10 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 	}
 
 	protected JButton getCancelButton() {
-		if (cancelButton == null)
+		if (cancelButton == null) {
 			cancelButton = new JButton(new CancelButtonAction());
+			cancelButton.setEnabled(false);
+		}
 		return cancelButton;
 	}
 
