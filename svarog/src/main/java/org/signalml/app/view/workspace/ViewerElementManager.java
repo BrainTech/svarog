@@ -647,6 +647,7 @@ public class ViewerElementManager {
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(_("Monitor"));
+			monitorMenu.setMnemonic(KeyEvent.VK_R);
 
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
