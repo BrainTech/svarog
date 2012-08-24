@@ -2,6 +2,7 @@ package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import multiplexer.jmx.client.IncomingMessageData;
@@ -12,6 +13,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
@@ -32,6 +34,7 @@ import com.google.protobuf.ByteString;
  */
 public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
+	public static String OPENING_MONITOR_CANCELLED = "openingMonitorCanceled";
 	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
@@ -77,14 +80,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	protected Void doInBackground() {
 
 		MultiplexerMessage sampleMsg;
-		boolean wasFirstSampleReceived = false;
+		boolean firstSampleReceived = false;
 		showBusyDialog();
 
 		while (!isCancelled()) {
 			try {
 				IncomingMessageData msgData;
 
-				if (wasFirstSampleReceived)
+				if (firstSampleReceived)
 					msgData = client.receive(TIMEOUT_MILIS);
 				else {
 					/**
@@ -95,7 +98,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					 * to fully start to operate.
 					 */
 					msgData = client.receive();
-					wasFirstSampleReceived = true;
+					firstSampleReceived = true;
 					hideBusyDialog();
 				}
 
@@ -312,6 +315,16 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 */
 	public void disconnectSignalRecorderWorker() {
 		this.signalRecorderWorker = null;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
+
+		if (BusyDialog.CANCEL_BUTTON_PRESSED.equals(evt.getPropertyName())) {
+			cancel(true);
+			firePropertyChange(MonitorWorker.OPENING_MONITOR_CANCELLED, false, true);
+		}
 	}
 
 	/**

@@ -4,17 +4,25 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
+import org.signalml.app.worker.monitor.MonitorWorker;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
-public class OpenSignalWizardAction extends AbstractSignalMLAction {
+public class OpenSignalWizardAction extends AbstractSignalMLAction implements PropertyChangeListener {
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private OpenSignalWizardDialog openSignalWizardDialog;
 	private OpenDocumentDescriptor openDocumentDescriptor;
+
+	private MonitorSignalDocument monitorSignalDocument;
 
 	/**
 	 * Constructor.
@@ -43,7 +51,24 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction {
 			return;
 		}
 		openDocumentDescriptor.getOpenSignalDescriptor();
-		documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+		monitorSignalDocument = (MonitorSignalDocument) documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+
+		MonitorWorker monitorWorker = monitorSignalDocument.getMonitorWorker();
+		monitorWorker.addPropertyChangeListener(this);
+
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (monitorSignalDocument != null && MonitorWorker.OPENING_MONITOR_CANCELLED.equals(evt.getPropertyName())) {
+			try {
+				documentFlowIntegrator.closeDocument(monitorSignalDocument, true, true);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (SignalMLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

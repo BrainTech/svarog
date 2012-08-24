@@ -39,7 +39,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * A property describing whether this document is recording its signal.
 	 */
 	public static String IS_RECORDING_PROPERTY = "isRecording";
-
 	/**
 	 * A logger to save history of execution at.
 	 */
@@ -163,7 +162,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		TagDocument tagDoc = new TagDocument(tagSet);
 		tagDoc.setParent(this);
 		monitorWorker = new MonitorWorker(descriptor, (RoundBufferMultichannelSampleSource) sampleSource, tagSet);
-
 		monitorWorker.execute();
 		logger.info("Monitor executed.");
 
@@ -422,6 +420,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		}
 
+	}
+
+	public MonitorWorker getMonitorWorker() {
+		return monitorWorker;
 	}
 
 }

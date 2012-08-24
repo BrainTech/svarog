@@ -27,7 +27,6 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
-import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.common.dialogs.OptionPane;
@@ -639,7 +638,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		descriptor.setBlocksPerPage(blocksPerPage);
 		ofd.setOpenSignalDescriptor(descriptor);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
-		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
 			throw new SignalMLException("failed to open document");
 	}
 
@@ -684,7 +683,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		//if (documentFlowIntegrator == null) return false;
-		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
 			throw new SignalMLException("failed to open document");
 	}
 
@@ -770,7 +769,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 			spd.setPageSize(pageSize);
 		}
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
-		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
 			throw new SignalMLException("failed to open document");
 	}
 
@@ -806,7 +805,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.BOOK);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
-		if (!documentFlowIntegrator.maybeOpenDocument(ofd))
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
 			throw new SignalMLException("failed to open book document");
 	}
 
