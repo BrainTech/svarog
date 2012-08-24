@@ -92,6 +92,10 @@ public class SignalViewingConfigPanel extends JPanel {
 	 */
 	private JCheckBox offscreenChannelsDrawnCheckBox;
 	/**
+	 * the check-box which tells if some of the samples should not be drawn.
+	 */
+	private JCheckBox optimizeSignalDisplayCheckBox;
+	/**
 	 * the check-box which tells if the tool-tips should by default appear
 	 * when mouse cursor is over {@link Tag tags}
 	 */
@@ -336,6 +340,13 @@ public class SignalViewingConfigPanel extends JPanel {
 		return offscreenChannelsDrawnCheckBox;
 	}
 
+	public JCheckBox getOptimizeSignalDisplayCheckBox() {
+		if (optimizeSignalDisplayCheckBox == null) {
+			optimizeSignalDisplayCheckBox = new JCheckBox(_("Default optimize signal displaying"));
+		}
+		return optimizeSignalDisplayCheckBox;
+	}
+
 	/**
 	 * Returns the check-box which tells if the tool-tips should by default
 	 * appear when mouse cursor is over a {@link Tag tag}.
@@ -550,7 +561,7 @@ public class SignalViewingConfigPanel extends JPanel {
 										   new EmptyBorder(3,3,3,3)
 									   ));
 
-			JPanel plotOptionsLeftPanel = new JPanel(new GridLayout(7, 1, 0, 0));
+			JPanel plotOptionsLeftPanel = new JPanel(new GridLayout(8, 1, 0, 0));
 
 			plotOptionsLeftPanel.add(getPageLinesVisibleCheckBox());
 			plotOptionsLeftPanel.add(getBlockLinesVisibleCheckBox());
@@ -559,6 +570,7 @@ public class SignalViewingConfigPanel extends JPanel {
 			plotOptionsLeftPanel.add(getAntialiasedCheckBox());
 			plotOptionsLeftPanel.add(getClampedCheckBox());
 			plotOptionsLeftPanel.add(getOffscreenChannelsDrawnCheckBox());
+			plotOptionsLeftPanel.add(getOptimizeSignalDisplayCheckBox());
 
 			JPanel plotOptionsRightPanel = new JPanel();
 			plotOptionsRightPanel.setBorder(new EmptyBorder(3,3,3,3));
@@ -763,6 +775,7 @@ public class SignalViewingConfigPanel extends JPanel {
 		getAntialiasedCheckBox().setSelected(applicationConfig.isAntialiased());
 		getClampedCheckBox().setSelected(applicationConfig.isClamped());
 		getOffscreenChannelsDrawnCheckBox().setSelected(applicationConfig.isOffscreenChannelsDrawn());
+		getOptimizeSignalDisplayCheckBox().setSelected(applicationConfig.isOptimizeSignalDisplay());
 
 		getTagPaintModeComboBox().setSelectedItem(applicationConfig.getTagPaintMode());
 		getSignalColorComboBox().setSelectedItem(applicationConfig.getSignalColor());
@@ -798,6 +811,7 @@ public class SignalViewingConfigPanel extends JPanel {
 		applicationConfig.setAntialiased(getAntialiasedCheckBox().isSelected());
 		applicationConfig.setClamped(getClampedCheckBox().isSelected());
 		applicationConfig.setOffscreenChannelsDrawn(getOffscreenChannelsDrawnCheckBox().isSelected());
+		applicationConfig.setOptimizeSignalDisplay(getOptimizeSignalDisplayCheckBox().isSelected());
 
 		applicationConfig.setTagPaintMode((TagPaintMode) getTagPaintModeComboBox().getSelectedItem());
 		applicationConfig.setSignalColor((SignalColor) getSignalColorComboBox().getSelectedItem());

@@ -21,6 +21,7 @@ import java.util.List;
 import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -28,7 +29,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.app.util.IconUtils;
@@ -259,6 +259,11 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		tagToolTipsVisibleButton.setToolTipText(_("Show tool tips when mouse hovers over a tag"));
 		tagToolTipsVisibleButton.setSelected(plot.isTagToolTipsVisible());
 
+		final JToggleButton optimizeDisplayingButton = new JToggleButton(_("Optimize signal displaying"));
+		optimizeDisplayingButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/waiting.png"));
+		optimizeDisplayingButton.setToolTipText(_("Does not draw all of the signal samples"));
+		optimizeDisplayingButton.setSelected(plot.isOptimizeSignalDisplaying());
+
 		antialiasButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -336,6 +341,16 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		});
 
+		optimizeDisplayingButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (SignalPlot plot : signalView.getPlots()) {
+					plot.setOptimizeSignalDisplaying(optimizeDisplayingButton.isSelected());
+				}
+			}
+		});
+
 		buttonPanelComponents.add(pageLinesVisibleButton);
 		buttonPanelComponents.add(blockLinesVisibleButton);
 		buttonPanelComponents.add(channelLinesVisibleButton);
@@ -344,6 +359,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		buttonPanelComponents.add(antialiasButton);
 		buttonPanelComponents.add(clampButton);
 		buttonPanelComponents.add(offscreenChannelsDrawnButton);
+		buttonPanelComponents.add(optimizeDisplayingButton);
 
 	}
 

@@ -41,6 +41,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
+	private boolean optimizeSignalDisplay;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -211,6 +212,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setTagToolTipsVisible(boolean tagToolTipsVisible) {
 		this.tagToolTipsVisible = tagToolTipsVisible;
+	}
+
+	public boolean isOptimizeSignalDisplay() {
+		return optimizeSignalDisplay;
+	}
+
+	public void setOptimizeSignalDisplay(boolean optimizeSignalDisplay) {
+		this.optimizeSignalDisplay = optimizeSignalDisplay;
 	}
 
 	public boolean isPageLinesVisible() {
