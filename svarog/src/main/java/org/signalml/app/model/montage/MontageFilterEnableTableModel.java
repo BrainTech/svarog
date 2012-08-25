@@ -20,18 +20,18 @@ import org.signalml.domain.montage.MontageSampleFilterListener;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MontageFilterExclusionTableModel extends AbstractTableModel implements MontageListener, MontageSampleFilterListener {
+public class MontageFilterEnableTableModel extends AbstractTableModel implements MontageListener, MontageSampleFilterListener {
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final Logger logger = Logger.getLogger(MontageFilterExclusionTableModel.class);
+	protected static final Logger logger = Logger.getLogger(MontageFilterEnableTableModel.class);
 
 	private Montage montage;
 
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
 
-	public MontageFilterExclusionTableModel() {
+	public MontageFilterEnableTableModel() {
 	}
 
 	public ColumnTableModel getColumnTableModel() {

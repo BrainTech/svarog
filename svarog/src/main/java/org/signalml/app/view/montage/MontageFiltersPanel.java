@@ -35,7 +35,7 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.app.model.montage.MontageFilterExclusionTableModel;
+import org.signalml.app.model.montage.MontageFilterEnableTableModel;
 import org.signalml.app.model.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
@@ -149,17 +149,17 @@ public class MontageFiltersPanel extends JPanel {
 	private JScrollPane filtersScrollPane;
 
 	/**
-	 * the {@link MontageFilterExclusionTableModel model} for the.
+	 * the {@link MontageFilterEnableTableModel model} for the.
 	 * {@link #getFilterExclusionTable() filter exclusion table}
 	 */
-	private MontageFilterExclusionTableModel filterExclusionTableModel;
+	private MontageFilterEnableTableModel filterExclusionTableModel;
 
 	/**
 	 * the table which allows to select which {@link MontageChannel montage
 	 * channels} should not be {@link MontageSampleFilter filtered} by which
 	 * filter.
 	 */
-	private MontageFilterExclusionTable filterExclusionTable;
+	private MontageFilterEnableTable filterExclusionTable;
 
 	/**
 	 * the scroll pane for the {@link #getFilterExclusionTable() filter
@@ -539,13 +539,13 @@ public class MontageFiltersPanel extends JPanel {
 	}
 
 	/**
-	 * Gets the {@link MontageFilterExclusionTableModel model} for the.
+	 * Gets the {@link MontageFilterEnableTableModel model} for the.
 	 *
-	 * @return the {@link MontageFilterExclusionTableModel model} for the
+	 * @return the {@link MontageFilterEnableTableModel model} for the
 	 */
-	public MontageFilterExclusionTableModel getFilterExclusionTableModel() {
+	public MontageFilterEnableTableModel getFilterExclusionTableModel() {
 		if (filterExclusionTableModel == null) {
-			filterExclusionTableModel = new MontageFilterExclusionTableModel();
+			filterExclusionTableModel = new MontageFilterEnableTableModel();
 		}
 		return filterExclusionTableModel;
 	}
@@ -559,9 +559,9 @@ public class MontageFiltersPanel extends JPanel {
 	 *         montage channels} should not be {@link MontageSampleFilter
 	 *         filtered} by which filter
 	 */
-	public MontageFilterExclusionTable getFilterExclusionTable() {
+	public MontageFilterEnableTable getFilterExclusionTable() {
 		if (filterExclusionTable == null) {
-			filterExclusionTable = new MontageFilterExclusionTable(getFilterExclusionTableModel());
+			filterExclusionTable = new MontageFilterEnableTable(getFilterExclusionTableModel());
 		}
 		return filterExclusionTable;
 	}

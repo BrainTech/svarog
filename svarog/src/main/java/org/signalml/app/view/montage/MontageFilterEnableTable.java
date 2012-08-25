@@ -20,7 +20,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
 
-import org.signalml.app.model.montage.MontageFilterExclusionTableModel;
+import org.signalml.app.model.montage.MontageFilterEnableTableModel;
 import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
 import org.signalml.app.view.common.components.cellrenderers.UneditableBooleanTableCellRenderer;
 import org.signalml.domain.montage.MontageChannel;
@@ -28,7 +28,7 @@ import org.signalml.domain.montage.MontageSampleFilter;
 
 /**
  * The table which allows to check which {@link MontageChannel montage channels}
- * should not be {@link MontageSampleFilter filtered} by which filter.
+ * should be {@link MontageSampleFilter filtered} by which filter.
  * This table has:
  * <ul>
  * <li>no header,</li>
@@ -39,11 +39,11 @@ import org.signalml.domain.montage.MontageSampleFilter;
  * <li>{@link RowHeaderTable} at the headers of rows,</li>
  * <li>{@link ColumnHeaderTable} at the headers of columns,</li>
  * <li>{@link CornerPanel} at the upper left corner,</li>
- * <li>{@link MontageFilterExclusionTableModel} as the model.</li></ul>
+ * <li>{@link MontageFilterEnableTableModel} as the model.</li></ul>
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MontageFilterExclusionTable extends JTable {
+public class MontageFilterEnableTable extends JTable {
 
 	/**
 	 * the default serialization constant
@@ -67,11 +67,11 @@ public class MontageFilterExclusionTable extends JTable {
 
 	/**
 	 * Constructor. Creates the table with the given
-	 * {@link MontageFilterExclusionTableModel model}, single selection mode
+	 * {@link MontageFilterEnableTableModel model}, single selection mode
 	 * and {@link #ROW_SIZE specified} row height.
 	 * @param model the model for this table
 	 */
-	public MontageFilterExclusionTable(MontageFilterExclusionTableModel model) {
+	public MontageFilterEnableTable(MontageFilterEnableTableModel model) {
 
 		super(model);
 
@@ -87,12 +87,12 @@ public class MontageFilterExclusionTable extends JTable {
 	}
 
 	/**
-	 * @return the {@link MontageFilterExclusionTableModel model} for this
+	 * @return the {@link MontageFilterEnableTableModel model} for this
 	 * table
 	 */
 	@Override
-	public MontageFilterExclusionTableModel getModel() {
-		return (MontageFilterExclusionTableModel) super.getModel();
+	public MontageFilterEnableTableModel getModel() {
+		return (MontageFilterEnableTableModel) super.getModel();
 	}
 
 	/**
@@ -110,10 +110,10 @@ public class MontageFilterExclusionTable extends JTable {
 		super.configureEnclosingScrollPane();
 
 		TableModel model = getModel();
-		if (!(model instanceof MontageFilterExclusionTableModel)) {
+		if (!(model instanceof MontageFilterEnableTableModel)) {
 			return;
 		}
-		MontageFilterExclusionTableModel tableModel = (MontageFilterExclusionTableModel) model;
+		MontageFilterEnableTableModel tableModel = (MontageFilterEnableTableModel) model;
 
 		Container p = getParent();
 		if (p instanceof JViewport) {
@@ -163,7 +163,7 @@ public class MontageFilterExclusionTable extends JTable {
 	/**
 	 * Does the same as {@link JTable#columnAdded(TableColumnModelEvent)} and
 	 * sets the preferred width of the cell to {@link
-	 * MontageFilterExclusionTable#COLUMN_SIZE}.
+	 * MontageFilterEnableTable#COLUMN_SIZE}.
 	 */
 	@Override
 	public void columnAdded(TableColumnModelEvent e) {
@@ -173,8 +173,8 @@ public class MontageFilterExclusionTable extends JTable {
 	}
 
 	/**
-	 * The panel used at the corner of the {@link MontageFilterExclusionTable}.
-	 * It is a square with {@link MontageFilterExclusionTable#DISABLED_COLOR}
+	 * The panel used at the corner of the {@link MontageFilterEnableTable}.
+	 * It is a square with {@link MontageFilterEnableTable#DISABLED_COLOR}
 	 * background and two lines that separate it from other cells.
 	 */
 	private class CornerPanel extends JPanel {
@@ -187,9 +187,9 @@ public class MontageFilterExclusionTable extends JTable {
 		/**
 		 * Constructor. Sets:
 		 * <ul><li> the background color to {@link
-		 * MontageFilterExclusionTable#DISABLED_COLOR},</li>
-		 * <li>the width to {@link MontageFilterExclusionTable#ROW_SIZE} and
-		 * the height to {@link MontageFilterExclusionTable#COLUMN_SIZE}.
+		 * MontageFilterEnableTable#DISABLED_COLOR},</li>
+		 * <li>the width to {@link MontageFilterEnableTable#ROW_SIZE} and
+		 * the height to {@link MontageFilterEnableTable#COLUMN_SIZE}.
 		 * </li></ul>
 		 */
 		public CornerPanel() {
@@ -216,16 +216,16 @@ public class MontageFilterExclusionTable extends JTable {
 	}
 
 	/**
-	 * The table used at the column headers in {@link MontageFilterExclusionTable}.
+	 * The table used at the column headers in {@link MontageFilterEnableTable}.
 	 * It has:
 	 * <ul>
-	 * <li>{@link MontageFilterExclusionTable#DISABLED_COLOR} as background
+	 * <li>{@link MontageFilterEnableTable#DISABLED_COLOR} as background
 	 * color,</li>
 	 * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
 	 * mode,</li>
-	 * <li>{@link MontageFilterExclusionTable#ROW_SIZE ROW_SIZE} as the row
+	 * <li>{@link MontageFilterEnableTable#ROW_SIZE ROW_SIZE} as the row
 	 * height,</li>
-	 * <li>{@link MontageFilterExclusionTable#COLUMN_SIZE COLUMN_SIZE}
+	 * <li>{@link MontageFilterEnableTable#COLUMN_SIZE COLUMN_SIZE}
 	 * as the column width,</li>
 	 * <li>the values centered in the cell.</li></ul>
 	 */
@@ -240,12 +240,12 @@ public class MontageFilterExclusionTable extends JTable {
 		/**
 		 * Constructor. Sets:
 		 * <ul>
-		 * <li>{@link MontageFilterExclusionTable#DISABLED_COLOR} as background
+		 * <li>{@link MontageFilterEnableTable#DISABLED_COLOR} as background
 		 * color,</li>
 		 * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
 		 * mode,</li>
 		 * <li>that the values are centered,</li>
-		 * <li>the row height to {@link MontageFilterExclusionTable#ROW_SIZE
+		 * <li>the row height to {@link MontageFilterEnableTable#ROW_SIZE
 		 * ROW_SIZE} and no autoresize.</li>
 		 * </ul>
 		 * @param dm the data model for the table
@@ -268,7 +268,7 @@ public class MontageFilterExclusionTable extends JTable {
 		/**
 		 * Does the same as {@link JTable#columnAdded(TableColumnModelEvent)}
 		 * and sets the preferred width of the cell to {@link
-		 * MontageFilterExclusionTable#COLUMN_SIZE}.
+		 * MontageFilterEnableTable#COLUMN_SIZE}.
 		 */
 		@Override
 		public void columnAdded(TableColumnModelEvent e) {
@@ -295,8 +295,8 @@ public class MontageFilterExclusionTable extends JTable {
 
 		/**
 		 * Returns the preferred size of this table as:
-		 * {@link MontageFilterExclusionTable#COLUMN_SIZE COLUMN_SIZE}{@code
-		 * *column_count x}{@link MontageFilterExclusionTable#ROW_SIZE}{@code
+		 * {@link MontageFilterEnableTable#COLUMN_SIZE COLUMN_SIZE}{@code
+		 * *column_count x}{@link MontageFilterEnableTable#ROW_SIZE}{@code
 		 * *row_count}
 		 */
 		@Override
@@ -312,16 +312,16 @@ public class MontageFilterExclusionTable extends JTable {
 	}
 
 	/**
-	 * The table used at the row headers in {@link MontageFilterExclusionTable}.
+	 * The table used at the row headers in {@link MontageFilterEnableTable}.
 	 * It has:
 	 * <ul>
-	 * <li>{@link MontageFilterExclusionTable#DISABLED_COLOR} as background
+	 * <li>{@link MontageFilterEnableTable#DISABLED_COLOR} as background
 	 * color,</li>
 	 * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
 	 * mode,</li>
-	 * <li>{@link MontageFilterExclusionTable#ROW_SIZE ROW_SIZE} as the row
+	 * <li>{@link MontageFilterEnableTable#ROW_SIZE ROW_SIZE} as the row
 	 * height,</li>
-	 * <li>{@link MontageFilterExclusionTable#COLUMN_SIZE COLUMN_SIZE}
+	 * <li>{@link MontageFilterEnableTable#COLUMN_SIZE COLUMN_SIZE}
 	 * as the column width,</li>
 	 * <li>the values centered in the cell.</li></ul>
 	 */
@@ -335,12 +335,12 @@ public class MontageFilterExclusionTable extends JTable {
 		/**
 		 * Constructor. Sets:
 		 * <ul>
-		 * <li>{@link MontageFilterExclusionTable#DISABLED_COLOR} as background
+		 * <li>{@link MontageFilterEnableTable#DISABLED_COLOR} as background
 		 * color,</li>
 		 * <li>{@link ListSelectionModel#SINGLE_SELECTION single selection}
 		 * mode,</li>
 		 * <li>that the values are centered,</li>
-		 * <li>the row height to {@link MontageFilterExclusionTable#ROW_SIZE
+		 * <li>the row height to {@link MontageFilterEnableTable#ROW_SIZE
 		 * ROW_SIZE} and no autoresize.</li>
 		 * </ul>
 		 * @param dm the data model for the table
@@ -364,7 +364,7 @@ public class MontageFilterExclusionTable extends JTable {
 		/**
 		 * Does the same as {@link JTable#columnAdded(TableColumnModelEvent)}
 		 * and sets the preferred width of the cell to {@link
-		 * MontageFilterExclusionTable#COLUMN_SIZE}.
+		 * MontageFilterEnableTable#COLUMN_SIZE}.
 		 */
 		@Override
 		public void columnAdded(TableColumnModelEvent e) {
