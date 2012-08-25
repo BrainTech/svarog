@@ -215,11 +215,9 @@ public class MontageFiltersPanel extends JPanel {
 	private RemoveFilterAction removeFilterAction;
 
 	/**
-	 * action which removes the exclusions of the filters and is invoked after
-	 * pressing the {@link #getClearFilterExclusionButton()
-	 * clearFilterExclusionButton}.
+	 * action which removes the exclusions of the filters.
 	 */
-	private ClearFilterExclusionAction clearFilterExclusionAction;
+	private SelectAllFiltersAction selectAllFiltersAction;
 
 	/**
 	 * a button which can be used to add a predefined
@@ -251,7 +249,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * a button allowing to clear all selections in the.
 	 * {@link #getFilterExclusionTable() filterExclusionTable}
 	 */
-	private JButton clearFilterExclusionButton;
+	private JButton selectAllFiltersButton;
 
 	/**
 	 * the manager at which predefined {@link TimeDomainSampleFilter
@@ -302,7 +300,7 @@ public class MontageFiltersPanel extends JPanel {
 		addFFTFilterAction = new AddFFTFilterAction();
 		editFilterAction = new EditFilterAction();
 		removeFilterAction = new RemoveFilterAction();
-		clearFilterExclusionAction = new ClearFilterExclusionAction();
+		selectAllFiltersAction = new SelectAllFiltersAction();
 
 		editFilterAction.setEnabled(false);
 		removeFilterAction.setEnabled(false);
@@ -376,7 +374,7 @@ public class MontageFiltersPanel extends JPanel {
 
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 		border = new CompoundBorder(
-			new TitledBorder(_("Filter channel exclusion")),
+			new TitledBorder(_("Filter enable table")),
 			new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
@@ -692,10 +690,10 @@ public class MontageFiltersPanel extends JPanel {
 	 * @return the a button allowing to clear all selections in the
 	 */
 	public JButton getClearFilterExclusionButton() {
-		if (clearFilterExclusionButton == null) {
-			clearFilterExclusionButton = new JButton(clearFilterExclusionAction);
+		if (selectAllFiltersButton == null) {
+			selectAllFiltersButton = new JButton(selectAllFiltersAction);
 		}
-		return clearFilterExclusionButton;
+		return selectAllFiltersButton;
 	}
 
 	/**
@@ -1134,7 +1132,7 @@ public class MontageFiltersPanel extends JPanel {
 	 * exclusions} of the channels from the {@link MontageSampleFilter
 	 * sample filters}.
 	 */
-	protected class ClearFilterExclusionAction extends AbstractAction {
+	protected class SelectAllFiltersAction extends AbstractAction {
 
 		/** the default serialization constant. */
 		private static final long serialVersionUID = 1L;
@@ -1143,9 +1141,9 @@ public class MontageFiltersPanel extends JPanel {
 		 * Constructor. Creates a new action and sets a label
 		 * and an icon for the button associated with this action.
 		 */
-		public ClearFilterExclusionAction() {
-			super(_("Clear exclusion"));
-			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/clearfilterexclusion.png"));
+		public SelectAllFiltersAction() {
+			super(_("Enable all filters"));
+			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/selectall.png"));
 		}
 
 		/**
