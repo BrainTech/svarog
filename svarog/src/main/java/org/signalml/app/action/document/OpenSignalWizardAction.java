@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
 import org.signalml.app.worker.monitor.MonitorWorker;
@@ -22,7 +23,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	private OpenSignalWizardDialog openSignalWizardDialog;
 	private OpenDocumentDescriptor openDocumentDescriptor;
 
-	private MonitorSignalDocument monitorSignalDocument;
+	private SignalDocument signalDocument;
 
 	/**
 	 * Constructor.
@@ -51,18 +52,21 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 			return;
 		}
 		openDocumentDescriptor.getOpenSignalDescriptor();
-		monitorSignalDocument = (MonitorSignalDocument) documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
+		signalDocument = (SignalDocument) documentFlowIntegrator.maybeOpenDocument(openDocumentDescriptor);
 
-		MonitorWorker monitorWorker = monitorSignalDocument.getMonitorWorker();
-		monitorWorker.addPropertyChangeListener(this);
+		if (signalDocument instanceof MonitorSignalDocument) {
+			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
+			MonitorWorker monitorWorker = monitorSignalDocument.getMonitorWorker();
+			monitorWorker.addPropertyChangeListener(this);
+		}
 
 	}
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (monitorSignalDocument != null && MonitorWorker.OPENING_MONITOR_CANCELLED.equals(evt.getPropertyName())) {
+		if (signalDocument != null && MonitorWorker.OPENING_MONITOR_CANCELLED.equals(evt.getPropertyName())) {
 			try {
-				documentFlowIntegrator.closeDocument(monitorSignalDocument, true, true);
+				documentFlowIntegrator.closeDocument(signalDocument, true, true);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (SignalMLException e) {
