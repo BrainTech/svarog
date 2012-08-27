@@ -316,7 +316,7 @@ public class BookDocument extends AbstractFileDocument {
 	 */
 	public String getTextInfo() {
 		String textInfo = book.getTextInfo();
-		if (textInfo.length() > 100) {
+		if (textInfo != null && textInfo.length() > 100) {
 			return textInfo.substring(0, 100) + "...";
 		}
 		return textInfo;
@@ -338,7 +338,7 @@ public class BookDocument extends AbstractFileDocument {
 	 */
 	public String getWebSiteInfo() {
 		String webSiteInfo = book.getWebSiteInfo();
-		if (webSiteInfo.length() > 100) {
+		if (webSiteInfo != null && webSiteInfo.length() > 100) {
 			return webSiteInfo.substring(0, 100) + "...";
 		}
 		return webSiteInfo;
