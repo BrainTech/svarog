@@ -14,6 +14,7 @@ import javax.swing.JTabbedPane;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
+import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.signal.SignalMLDocument;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
@@ -83,7 +84,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	@Override
 	public void propertyChange(PropertyChangeEvent event) {
 		String propertyName = event.getPropertyName();
-		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)) {
+		if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(propertyName)
+				|| RegisterCodecAction.CODEC_REGISTERED.equals(propertyName)) {
 			updatedSelectedFile();
 		}
 		else if (JFileChooser.DIRECTORY_CHANGED_PROPERTY.equals(propertyName)) {
@@ -102,7 +104,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	protected void updatedSelectedFile() {
 		File file = fileChooserPanel.getSelectedFile();
-		String extension = Util.getFileExtension(file, false);
 
 		if (file == null || file.isDirectory()) {
 			openSignalDescriptor = null;
@@ -143,7 +144,6 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			if (codec == null) {
 				Dialogs.showError(_("No SignalML codec was found to open this file!"));
 				fireOpenSignalDescriptorChanged();
-				fileChooserPanel.getFileChooser().setSelectedFile(null);
 				return;
 			}
 

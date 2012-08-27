@@ -40,6 +40,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	protected AbstractOpenSignalDescriptor openSignalDescriptor;
 
 	private JButton registerSignalMLCodecButton;
+	private RegisterCodecAction registerCodecAction;
 
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
@@ -149,15 +150,20 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	public JButton getRegisterSignalMLCodecButton() {
 		if (registerSignalMLCodecButton == null) {
-			RegisterCodecAction registerCodecAction = new RegisterCodecAction();
-			registerCodecAction.setRegisterCodecDialog(viewerElementManager.getRegisterCodecDialog());
-			registerCodecAction.setPleaseWaitDialog(viewerElementManager.getPleaseWaitDialog());
-			registerCodecAction.initializeAll();
-
-			registerSignalMLCodecButton = new JButton(registerCodecAction);
+			registerSignalMLCodecButton = new JButton(getRegisterCodecAction());
 			registerSignalMLCodecButton.setText(_("Register new ..."));
 		}
 		return registerSignalMLCodecButton;
+	}
+
+	public RegisterCodecAction getRegisterCodecAction() {
+		if (registerCodecAction == null) {
+			registerCodecAction = new RegisterCodecAction();
+			registerCodecAction.setRegisterCodecDialog(viewerElementManager.getRegisterCodecDialog());
+			registerCodecAction.setPleaseWaitDialog(viewerElementManager.getPleaseWaitDialog());
+			registerCodecAction.initializeAll();
+		}
+		return registerCodecAction;
 	}
 
 	public JComboBox getFileTypeComboBox() {
