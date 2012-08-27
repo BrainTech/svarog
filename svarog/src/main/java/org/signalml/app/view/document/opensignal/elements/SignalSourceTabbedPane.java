@@ -172,6 +172,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		} catch (Exception e) {
 			Dialogs.showError(_R("There was an error while loading the file - did you select a correct SignalML file?"));
 			e.printStackTrace();
+			openSignalDescriptor = null;
 		}
 	}
 
@@ -234,6 +235,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	public void itemStateChanged(ItemEvent event) {
 		if (event.getStateChange() == ItemEvent.SELECTED) {
 			fileTypeMethod = event.getItem();
+			fireStateChanged();
 		}
 	}
 
