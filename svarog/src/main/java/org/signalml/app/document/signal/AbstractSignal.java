@@ -4,8 +4,9 @@
 
 package org.signalml.app.document.signal;
 
-import java.beans.IntrospectionException;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.beans.IntrospectionException;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,8 +22,8 @@ import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.montage.SignalConfigurer;
+import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.AbstractDocument;
@@ -292,6 +293,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 		}
 	}
 
+	@Override
 	public String getMontageInfo() {
 
 		StringBuilder sb = new StringBuilder();
@@ -343,15 +345,15 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.samplingFrequency", "samplingFrequency", SignalMLDocument.class));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.channelCount", "channelCount", SignalMLDocument.class));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.pageSize", "pageSize", SignalMLDocument.class));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.blocksPerPage", "blocksPerPage", SignalMLDocument.class));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.blockSize", "blockSize", SignalMLDocument.class, "getBlockSize", null));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.minSignalLength", "minSignalLength", SignalMLDocument.class, "getMinSignalLength", null));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.maxSignalLength", "maxSignalLength", SignalMLDocument.class, "getMaxSignalLength", null));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.pageCount", "pageCount", SignalMLDocument.class, "getPageCount", null));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.blockCount", "blockCount", SignalMLDocument.class, "getBlockCount", null));
+		list.add(new LabelledPropertyDescriptor(_("sampling frequency"), "samplingFrequency", SignalMLDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("channel count"), "channelCount", SignalMLDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("page size"), "pageSize", SignalMLDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("blocks per page"), "blocksPerPage", SignalMLDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("block size"), "blockSize", SignalMLDocument.class, "getBlockSize", null));
+		list.add(new LabelledPropertyDescriptor(_("minimum signal length"), "minSignalLength", SignalMLDocument.class, "getMinSignalLength", null));
+		list.add(new LabelledPropertyDescriptor(_("maximum signal length"), "maxSignalLength", SignalMLDocument.class, "getMaxSignalLength", null));
+		list.add(new LabelledPropertyDescriptor(_("page count"), "pageCount", SignalMLDocument.class, "getPageCount", null));
+		list.add(new LabelledPropertyDescriptor(_("block count"), "blockCount", SignalMLDocument.class, "getBlockCount", null));
 
 		return list;
 

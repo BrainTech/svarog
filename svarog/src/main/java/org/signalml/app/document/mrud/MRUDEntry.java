@@ -3,6 +3,8 @@
  */
 package org.signalml.app.document.mrud;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.util.Date;
@@ -175,9 +177,9 @@ public class MRUDEntry implements MessageSourceResolvable, PropertyProvider {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.mrud.path", "path", MRUDEntry.class, "getPath", null));
-		list.add(new LabelledPropertyDescriptor("property.mrud.documentType", "documentType", MRUDEntry.class, "getDocumentType", null));
-		list.add(new LabelledPropertyDescriptor("property.mrud.lastTimeOpened", "lastTimeOpened", MRUDEntry.class));
+		list.add(new LabelledPropertyDescriptor(_("path"), "path", MRUDEntry.class, "getPath", null));
+		list.add(new LabelledPropertyDescriptor(_("document type"), "documentType", MRUDEntry.class, "getDocumentType", null));
+		list.add(new LabelledPropertyDescriptor(_("last time opened"), "lastTimeOpened", MRUDEntry.class));
 
 		return list;
 

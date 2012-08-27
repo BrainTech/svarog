@@ -4,6 +4,8 @@
 
 package org.signalml.plugin.export.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Stroke;
@@ -475,19 +477,19 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 
 		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.type", "type", TagStyle.class, "getType", null));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.name", "name", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.description", "description", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.fillColor", "fillColor", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineColor", "outlineColor", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineWidth", "outlineWidth", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineDash", "outlineDash", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.keyStroke", "keyStroke", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.visibility", "visibility", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("type"), "type", TagStyle.class, "getType", null));
+		list.add(new LabelledPropertyDescriptor(_("name"), "name", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("description"), "description", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("fill color"), "fillColor", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("outline color"), "outlineColor", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("outline width"), "outlineWidth", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("outline dash"), "outlineDash", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("key stroke"), "keyStroke", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("visibility"), "visibility", TagStyle.class));
 
 		if (getType() == SignalSelectionType.CHANNEL) {
 
-			list.add(new LabelledPropertyDescriptor("property.tagStyle.marker", "marker", TagStyle.class));
+			list.add(new LabelledPropertyDescriptor(_("marker"), "marker", TagStyle.class));
 
 		}
 

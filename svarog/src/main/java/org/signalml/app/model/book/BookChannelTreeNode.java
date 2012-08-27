@@ -4,6 +4,8 @@
 
 package org.signalml.app.model.book;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,8 +50,8 @@ public class BookChannelTreeNode implements PropertyProvider, MessageSourceResol
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.bookChannel.channelIndex", "channelIndex", BookChannelTreeNode.class, "getChannelIndex", null));
-		list.add(new LabelledPropertyDescriptor("property.bookChannel.label", "label", BookChannelTreeNode.class, "getLabel", null));
+		list.add(new LabelledPropertyDescriptor(_("channel index"), "channelIndex", BookChannelTreeNode.class, "getChannelIndex", null));
+		list.add(new LabelledPropertyDescriptor(_("label"), "label", BookChannelTreeNode.class, "getLabel", null));
 
 		return list;
 

@@ -4,6 +4,8 @@
 
 package org.signalml.app.model.book;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
@@ -74,14 +76,14 @@ public class BookAtomTreeNode implements PropertyProvider, MessageSourceResolvab
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.iteration", "iteration", BookAtomTreeNode.class, "getIteration", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.type", "type", BookAtomTreeNode.class, "getType", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.modulus", "modulus", BookAtomTreeNode.class, "getModulus", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.amplitude", "amplitude", BookAtomTreeNode.class, "getAmplitude", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.position", "position", BookAtomTreeNode.class, "getPosition", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.scale", "scale", BookAtomTreeNode.class, "getScale", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.frequency", "frequency", BookAtomTreeNode.class, "getFrequency", null));
-		list.add(new LabelledPropertyDescriptor("property.bookAtom.phase", "phase", BookAtomTreeNode.class, "getPhase", null));
+		list.add(new LabelledPropertyDescriptor(_("iteration"), "iteration", BookAtomTreeNode.class, "getIteration", null));
+		list.add(new LabelledPropertyDescriptor(_("type"), "type", BookAtomTreeNode.class, "getType", null));
+		list.add(new LabelledPropertyDescriptor(_("modulus"), "modulus", BookAtomTreeNode.class, "getModulus", null));
+		list.add(new LabelledPropertyDescriptor(_("amplitude"), "amplitude", BookAtomTreeNode.class, "getAmplitude", null));
+		list.add(new LabelledPropertyDescriptor(_("position"), "position", BookAtomTreeNode.class, "getPosition", null));
+		list.add(new LabelledPropertyDescriptor(_("scale"), "scale", BookAtomTreeNode.class, "getScale", null));
+		list.add(new LabelledPropertyDescriptor(_("frequency"), "frequency", BookAtomTreeNode.class, "getFrequency", null));
+		list.add(new LabelledPropertyDescriptor(_("phase"), "phase", BookAtomTreeNode.class, "getPhase", null));
 
 		return list;
 

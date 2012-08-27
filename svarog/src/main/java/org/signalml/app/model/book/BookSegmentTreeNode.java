@@ -4,6 +4,8 @@
 
 package org.signalml.app.model.book;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
@@ -100,16 +102,16 @@ public class BookSegmentTreeNode implements PropertyProvider, MessageSourceResol
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.channelIndex", "channelIndex", BookSegmentTreeNode.class, "getChannelIndex", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.segmentIndex", "segmentIndex", BookSegmentTreeNode.class, "getSegmentIndex", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.size", "size", BookSegmentTreeNode.class, "getSize", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.startTime", "startTime", BookSegmentTreeNode.class, "getStartTime", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.endTime", "endTime", BookSegmentTreeNode.class, "getEndTime", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.atomCount", "atomCount", BookSegmentTreeNode.class, "getAtomCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.hasSignal", "signal", BookSegmentTreeNode.class, "hasSignal", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.signalLength", "signalLength", BookSegmentTreeNode.class, "getSignalLength", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.signalEnergy", "signalEnergy", BookSegmentTreeNode.class, "getSignalEnergy", null));
-		list.add(new LabelledPropertyDescriptor("property.bookSegment.decompositionEnergy", "decompositionEnergy", BookSegmentTreeNode.class, "getDecompositionEnergy", null));
+		list.add(new LabelledPropertyDescriptor(_("channel index"), "channelIndex", BookSegmentTreeNode.class, "getChannelIndex", null));
+		list.add(new LabelledPropertyDescriptor(_("segment index"), "segmentIndex", BookSegmentTreeNode.class, "getSegmentIndex", null));
+		list.add(new LabelledPropertyDescriptor(_("size"), "size", BookSegmentTreeNode.class, "getSize", null));
+		list.add(new LabelledPropertyDescriptor(_("start time"), "startTime", BookSegmentTreeNode.class, "getStartTime", null));
+		list.add(new LabelledPropertyDescriptor(_("end time"), "endTime", BookSegmentTreeNode.class, "getEndTime", null));
+		list.add(new LabelledPropertyDescriptor(_("atom count"), "atomCount", BookSegmentTreeNode.class, "getAtomCount", null));
+		list.add(new LabelledPropertyDescriptor(_("has signal"), "signal", BookSegmentTreeNode.class, "hasSignal", null));
+		list.add(new LabelledPropertyDescriptor(_("signal length"), "signalLength", BookSegmentTreeNode.class, "getSignalLength", null));
+		list.add(new LabelledPropertyDescriptor(_("signal energy"), "signalEnergy", BookSegmentTreeNode.class, "getSignalEnergy", null));
+		list.add(new LabelledPropertyDescriptor(_("decomposition energy"), "decompositionEnergy", BookSegmentTreeNode.class, "getDecompositionEnergy", null));
 
 		return list;
 

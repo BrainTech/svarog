@@ -3,6 +3,8 @@
  */
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
@@ -377,8 +379,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.tagDocument.tagStyleCount", "tagStyleCount", TagDocument.class, "getTagStyleCount", null));
-		list.add(new LabelledPropertyDescriptor("property.tagDocument.tagCount", "tagCount", TagDocument.class, "getTagCount", null));
+		list.add(new LabelledPropertyDescriptor(_("tag style count"), "tagStyleCount", TagDocument.class, "getTagStyleCount", null));
+		list.add(new LabelledPropertyDescriptor(_("tag count"), "tagCount", TagDocument.class, "getTagCount", null));
 
 		return list;
 

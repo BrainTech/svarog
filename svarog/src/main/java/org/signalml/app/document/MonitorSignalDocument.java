@@ -1,5 +1,7 @@
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeListener;
 import java.io.FileNotFoundException;
@@ -392,7 +394,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
-		list.add(new LabelledPropertyDescriptor("property.monitorsignaldocument."+IS_RECORDING_PROPERTY, IS_RECORDING_PROPERTY, MonitorSignalDocument.class, "isRecording", null));
+		list.add(new LabelledPropertyDescriptor(_("is recording"), IS_RECORDING_PROPERTY, MonitorSignalDocument.class, "isRecording", null));
 		return list;
 	}
 
