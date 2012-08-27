@@ -142,6 +142,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			SignalMLCodec codec = codecManager.getCodecForFormat(formatName);
 
 			if (codec == null) {
+				openSignalDescriptor = null;
 				Dialogs.showError(_("No SignalML codec was found to open this file!"));
 				fireOpenSignalDescriptorChanged();
 				return;
