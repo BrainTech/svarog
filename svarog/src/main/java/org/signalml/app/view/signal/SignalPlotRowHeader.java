@@ -157,7 +157,11 @@ public class SignalPlotRowHeader extends JComponent {
 
 			//calculate scaling
 			m = this.plot.getChannelsPlotOptionsModel().getModelAt(i);
-			if ((m.getVoltageScale() != globalScale) && (m.getVisible())) {
+
+			double localPixelsPerValue = this.plot.getChannelsPlotOptionsModel().getPixelsPerValue(i);
+			double globalPixelPerValue = this.plot.getPixelPerValue();
+
+			if ((localPixelsPerValue != globalPixelPerValue) && (m.getVisible())) {
 				pixelPerRowUnitForChannels[i] = this.plot.getPixelPerChannel() * m.getVoltageScale() * this.plot.getVoltageZoomFactorRatioFor(i);
 				sb = new StringBuilder("1");
 				if (pixelPerRowUnitForChannels[i] <= 0.0) {
@@ -457,6 +461,7 @@ public class SignalPlotRowHeader extends JComponent {
 		 * Initializes channelOptions dialog and set it to appropriate channel.
 		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Container ancestor = getTopLevelAncestor();
