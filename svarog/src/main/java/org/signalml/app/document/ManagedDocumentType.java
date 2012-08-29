@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Icon;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.signalml.app.document.signal.SignalDocument;
@@ -188,9 +187,9 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 * {@link #getFileFilterExtensions() extensions} of the files.
 	 * @return the created filters
 	 */
-	public FileFilter[] getFileFilters() {
+	public FileNameExtensionFilter[] getFileFilters() {
 		int len = Math.min(fileFilterCodes.length, fileFilterExtensions.length);
-		FileFilter[] filters = new FileFilter[len];
+		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[len];
 		for (int i=0; i<len; i++) {
 			filters[i] = new FileNameExtensionFilter(fileFilterCodes[i], fileFilterExtensions[i]);
 		}

@@ -429,7 +429,7 @@ public class DocumentFlowIntegrator {
 
 						do {
 
-							file = fileChooser.chooseSaveDocument(optionPaneParent, filters);
+							file = fileChooser.chooseSaveDocument(optionPaneParent, document, filters);
 							if (file == null) {
 								// file choice canceled
 								return false;

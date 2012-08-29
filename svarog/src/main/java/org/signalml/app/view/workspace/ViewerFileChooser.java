@@ -18,8 +18,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooserFavorites;
 import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.util.Util;
 
 /** ViewerFileChooser
  *
@@ -41,19 +44,19 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	}
 
 	public void initialize() {
-		FileFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
-		FileFilter csv = new FileNameExtensionFilter(_("Comma-separated values (*.csv)"), "csv");
-		FileFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
-		FileFilter ascii = new FileNameExtensionFilter(_("ASCII files (*.ascii)"), "ascii");
-		FileFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab datasets (*.set)"), "set");
-		FileFilter matlab = new FileNameExtensionFilter(_("MATLAB MAT-files (*.mat)"), "mat");
-		FileFilter xml = new FileNameExtensionFilter(_("XML files (*.xml)"), "xml");
-		FileFilter book = new FileNameExtensionFilter(_("Book files (*.b)"), "b");
-		FileFilter png = new FileNameExtensionFilter(_("PNG graphic files (*.png)"), "png");
-		FileFilter config = new FileNameExtensionFilter(_("Config files (*.cfg)"), "cfg");
-		FileFilter exe = new FileNameExtensionFilter(_("Executable files (*.exe)"), "exe");
-		FileFilter jar = new FileNameExtensionFilter(_("Jar files (*.jar)"), "jar");
-		FileFilter jar_class = new FileNameExtensionFilter(_("Code files (*.java, *.class)"), "java", "class");
+		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
+		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("Comma-separated values (*.csv)"), "csv");
+		FileNameExtensionFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
+		FileNameExtensionFilter ascii = new FileNameExtensionFilter(_("ASCII files (*.ascii)"), "ascii");
+		FileNameExtensionFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab datasets (*.set)"), "set");
+		FileNameExtensionFilter matlab = new FileNameExtensionFilter(_("MATLAB MAT-files (*.mat)"), "mat");
+		FileNameExtensionFilter xml = new FileNameExtensionFilter(_("XML files (*.xml)"), "xml");
+		FileNameExtensionFilter book = new FileNameExtensionFilter(_("Book files (*.b)"), "b");
+		FileNameExtensionFilter png = new FileNameExtensionFilter(_("PNG graphic files (*.png)"), "png");
+		FileNameExtensionFilter config = new FileNameExtensionFilter(_("Config files (*.cfg)"), "cfg");
+		FileNameExtensionFilter exe = new FileNameExtensionFilter(_("Executable files (*.exe)"), "exe");
+		FileNameExtensionFilter jar = new FileNameExtensionFilter(_("Jar files (*.jar)"), "jar");
+		FileNameExtensionFilter jar_class = new FileNameExtensionFilter(_("Code files (*.java, *.class)"), "java", "class");
 
 		OptionSet.consoleSaveAsText.setFilters(text);
 		OptionSet.saveAsCSV.setFilters(csv);
@@ -64,7 +67,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		OptionSet.saveMP5Config.setFilters(config);
 		OptionSet.saveMP5Signal.setFilters(binary);
 
-		FileFilter managedTagFilters[] = ManagedDocumentType.TAG.getFileFilters();
+		FileNameExtensionFilter managedTagFilters[] = ManagedDocumentType.TAG.getFileFilters();
 		OptionSet.saveTag.setFilters(managedTagFilters);
 		OptionSet.openTag.setFilters(managedTagFilters);
 		OptionSet.saveTag.setFilters(managedTagFilters);
@@ -105,6 +108,8 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			boolean good = options.operation.verify(parent, file);
 			if (!good)
 				continue;
+
+			file = options.fixExtensionIfNecessary(this, file);
 
 			return file;
 		} while (true);
@@ -237,8 +242,11 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		return file;
 	}
 
-	public synchronized File chooseSaveDocument(Component parent, FileFilter[] filters) {
+	public synchronized File chooseSaveDocument(Component parent, Document document, FileFilter[] filters) {
 		// XXX: filters?
+		if (document instanceof TagDocument) {
+			return chooseSaveTag(parent);
+		}
 		return chooseFile(parent, OptionSet.saveDocument);
 	}
 
@@ -364,21 +372,27 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	}
 
 	protected static abstract class Operation {
-		abstract boolean verify(Component parent, File file);
+		public abstract boolean verify(Component parent, File file);
+		public abstract File fixExtensionIfNecessary(JFileChooser fileChooser, File file);
 
 		private static class Open extends Operation {
 			@Override
-			boolean verify(Component parent, File file) {
+			public boolean verify(Component parent, File file) {
 				boolean good = file.exists() && file.canRead();
 				if (!good)
 					OptionPane.showFileNotFound(parent, file);
 				return good;
 			}
+
+			@Override
+			public File fixExtensionIfNecessary(JFileChooser fileChooser, File file) {
+				return file;
+			}
 		}
 
 		private static class Save extends Operation {
 			@Override
-			boolean verify(Component parent, File file) {
+			public boolean verify(Component parent, File file) {
 				File dir = file.getParentFile();
 				boolean good = dir != null &&
 							   dir.exists() && dir.canRead() && dir.canWrite();
@@ -387,22 +401,44 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 					OptionPane.showDirectoryNotFound(parent, dir);
 				return good;
 			}
+
+			@Override
+			public File fixExtensionIfNecessary(JFileChooser fileChooser, File file) {
+				FileFilter selectedFilter = fileChooser.getFileFilter();
+
+				if (Util.getFileExtension(file, false) != null)
+					//the user added his own extension, let's stick to it.
+					return file;
+
+				if (selectedFilter instanceof FileNameExtensionFilter) {
+					FileNameExtensionFilter filter = (FileNameExtensionFilter) selectedFilter;
+					String extension = filter.getExtensions()[0];
+					return Util.changeOrAddFileExtension(file, extension);
+				}
+
+				return file;
+			}
 		}
 
 		private static class Execute extends Operation {
 			@Override
-			boolean verify(Component parent, File file) {
+			public boolean verify(Component parent, File file) {
 				boolean good = file.exists() && file.canRead()
 							   && file.canExecute();
 				if (!good)
 					OptionPane.showFileNotFound(parent, file);
 				return good;
 			}
+
+			@Override
+			public File fixExtensionIfNecessary(JFileChooser fileChooser, File file) {
+				return file;
+			}
 		}
 
 		private static class UseDirectory extends Operation {
 			@Override
-			boolean verify(Component parent, File file) {
+			public boolean verify(Component parent, File file) {
 				if (!file.exists()) {
 					int ans = OptionPane.showDirectoryDoesntExistCreate(parent, file);
 					if (ans != OptionPane.YES_OPTION)
@@ -419,6 +455,11 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 				if (!good)
 					OptionPane.showDirectoryNotAccessible(parent, file);
 				return good;
+			}
+
+			@Override
+			public File fixExtensionIfNecessary(JFileChooser fileChooser, File file) {
+				return file;
 			}
 		}
 
@@ -499,7 +540,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		final boolean acceptAllUsed;
 		final boolean multiSelectionEnabled;
 		final int fileSelectionMode;
-		FileFilter[] fileFilters;
+		private FileNameExtensionFilter[] fileFilters;
 
 		private OptionSet(Operation operation,
 		String title, String path, String buttonLabel,
@@ -512,11 +553,21 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			this.acceptAllUsed = acceptAllUsed;
 			this.multiSelectionEnabled = multiSelectionEnabled;
 			this.fileSelectionMode = fileSelectionMode;
-			this.fileFilters = fileFilters;
 			logger.debug("added OptionSet \"" + title + "\" (" +
 			operation.getClass().getSimpleName() +
 			" \"" + buttonLabel + "\" / " + path + ")");
 		}
+
+		/**
+		 * Changes the extension for a file to fit the selected filter.
+		 * Does so only for Save operations.
+		 * @param fileChooser
+		 * @param file
+		 */
+		public File fixExtensionIfNecessary(JFileChooser fileChooser, File file) {
+			return operation.fixExtensionIfNecessary(fileChooser, file);
+		}
+
 		private OptionSet(Operation operation,
 		String title, String path, String buttonLabel) {
 			this(operation, title, path, buttonLabel, true, false, FILES_ONLY);
@@ -538,7 +589,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			}
 		}
 
-		void setFilters(FileFilter ... fileFilters) {
+		void setFilters(FileNameExtensionFilter ... fileFilters) {
 			this.fileFilters = fileFilters;
 		}
 	}
