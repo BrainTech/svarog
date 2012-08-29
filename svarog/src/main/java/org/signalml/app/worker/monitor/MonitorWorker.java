@@ -38,7 +38,7 @@ import com.google.protobuf.ByteString;
 public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 	public static String OPENING_MONITOR_CANCELLED = "openingMonitorCanceled";
-	public static final int TIMEOUT_MILIS = 20;//5000;
+	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
 	private final JmxClient client;
