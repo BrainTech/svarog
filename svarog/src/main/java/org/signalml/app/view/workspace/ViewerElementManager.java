@@ -35,8 +35,6 @@ import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.document.OpenSignalWizardAction;
 import org.signalml.app.action.document.SaveAllDocumentsAction;
-import org.signalml.app.action.document.SaveDocumentAction;
-import org.signalml.app.action.document.SaveDocumentAsAction;
 import org.signalml.app.action.document.monitor.CheckSignalAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
@@ -271,8 +269,6 @@ public class ViewerElementManager {
 	private OpenBookDocumentAction openBookDocumentAction;
 	private CloseDocumentAction closeActiveDocumentAction;
 	private SaveAllDocumentsAction saveAllDocumentsAction;
-	private SaveDocumentAction saveActiveDocumentAction;
-	private SaveDocumentAsAction saveActiveDocumentAsAction;
 	private NewTagAction newTagAction;
 	private OpenTagAction openTagAction;
 	private CloseTagAction closeTagAction;
@@ -589,8 +585,6 @@ public class ViewerElementManager {
 
 			fileMenu.add(getOpenSignalWizardAction());
 			fileMenu.add(getOpenBookDocumentAction());
-			fileMenu.add(getSaveActiveDocumentAction());
-			fileMenu.add(getSaveActiveDocumentAsAction());
 			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 
@@ -759,8 +753,6 @@ public class ViewerElementManager {
 			mainToolBar.setFloatable(false);
 
 			mainToolBar.add(getOpenSignalWizardAction());
-			mainToolBar.add(getSaveActiveDocumentAction());
-			mainToolBar.add(getSaveActiveDocumentAsAction());
 			mainToolBar.add(getSaveAllDocumentsAction());
 			mainToolBar.add(getCloseActiveDocumentAction());
 
@@ -1341,22 +1333,6 @@ public class ViewerElementManager {
 		return saveAllDocumentsAction;
 	}
 
-	public SaveDocumentAction getSaveActiveDocumentAction() {
-		if (saveActiveDocumentAction == null) {
-			saveActiveDocumentAction = new SaveDocumentAction(getActionFocusManager());
-			saveActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-		}
-		return saveActiveDocumentAction;
-	}
-
-	public SaveDocumentAsAction getSaveActiveDocumentAsAction() {
-		if (saveActiveDocumentAsAction == null) {
-			saveActiveDocumentAsAction = new SaveDocumentAsAction(getActionFocusManager());
-			saveActiveDocumentAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-		}
-		return saveActiveDocumentAsAction;
-	}
-
 	public NewTagAction getNewTagAction() {
 		if (newTagAction == null) {
 			newTagAction = new NewTagAction(getActionFocusManager());
@@ -1731,8 +1707,6 @@ public class ViewerElementManager {
 		getOpenTagAction().setAccelerator("alt O");
 		getOpenBookDocumentAction().setAccelerator("alt B");
 		getCloseTagAction().setAccelerator("ctrl alt F4");
-		getSaveAllDocumentsAction().setAccelerator("ctrl shift S");
-		getSaveActiveDocumentAction().setAccelerator("ctrl S");
 		getSaveAllDocumentsAction().setAccelerator("ctrl alt S");
 		getSaveTagAction().setAccelerator("alt S");
 		getSaveTagAsAction().setAccelerator("ctrl alt shift S");
