@@ -64,10 +64,11 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		OptionSet.saveMP5Config.setFilters(config);
 		OptionSet.saveMP5Signal.setFilters(binary);
 
-		FileFilter managed[] = ManagedDocumentType.TAG.getFileFilters();
-		OptionSet.saveTag.setFilters(managed);
-		OptionSet.openTag.setFilters(managed);
-		OptionSet.expertTag.setFilters(managed);
+		FileFilter managedTagFilters[] = ManagedDocumentType.TAG.getFileFilters();
+		OptionSet.saveTag.setFilters(managedTagFilters);
+		OptionSet.openTag.setFilters(managedTagFilters);
+		OptionSet.saveTag.setFilters(managedTagFilters);
+		OptionSet.expertTag.setFilters(managedTagFilters);
 
 		OptionSet.readXMLManifest.setFilters(xml);
 		OptionSet.exportSignal.setFilters(binary);
@@ -528,9 +529,13 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 			chooser.resetChoosableFileFilters();
 			chooser.setMultiSelectionEnabled(this.multiSelectionEnabled);
 			chooser.setFileSelectionMode(this.fileSelectionMode);
-			if (this.fileFilters != null)
+			if (this.fileFilters != null) {
 				for (int i=this.fileFilters.length-1; i>= 0; i--)
 					chooser.addChoosableFileFilter(this.fileFilters[i]);
+
+				if (fileFilters.length > 0)
+					chooser.setFileFilter(fileFilters[0]);
+			}
 		}
 
 		void setFilters(FileFilter ... fileFilters) {
