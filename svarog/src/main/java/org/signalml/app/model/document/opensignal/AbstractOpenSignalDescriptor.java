@@ -27,6 +27,12 @@ public abstract class AbstractOpenSignalDescriptor {
 
 	private boolean correctlyRead = false;
 
+	/**
+	 * After opening this signal tries to open a tag document
+	 * having the same name but a tag extension.
+	 */
+	private boolean tryToOpenTagDocument;
+
 	public EegSystem getEegSystem() {
 		return eegSystem;
 	}
@@ -106,4 +112,13 @@ public abstract class AbstractOpenSignalDescriptor {
 	public boolean isCorrectlyRead() {
 		return correctlyRead;
 	}
+
+	public boolean isTryToOpenTagDocument() {
+		return tryToOpenTagDocument;
+	}
+
+	public void setTryToOpenTagDocument(boolean tryToOpenTagDocument) {
+		this.tryToOpenTagDocument = tryToOpenTagDocument;
+	}
+
 }

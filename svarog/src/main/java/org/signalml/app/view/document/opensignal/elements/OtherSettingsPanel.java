@@ -5,16 +5,20 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
+import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
@@ -45,6 +49,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private JLabel tagStylesLabel = new JLabel(_("Tag styles preset"));
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
 	private JLabel registerCodecsLabel = new JLabel(_("Manage SignalML codecs"));
+	private JLabel tryToOpenTagsLabel = new JLabel(_("Automatically try to open tags"));
 	private JPanel registerSignalMLCodecPanel;
 	/**
 	 * {@link JComboBox} that displays the list of available presets.
@@ -65,6 +70,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private PresetComboBoxModel eegSystemsComboBoxModel;
 
 	private JComboBox fileTypeComboBox;
+	private JCheckBox tryToOpenTagsCheckbox;
 
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
@@ -97,6 +103,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(fileTypeLabel)
 			.addComponent(eegSystemsLabel)
 			.addComponent(registerCodecsLabel)
+			.addComponent(tryToOpenTagsLabel)
 		);
 
 		hGroup.addGroup(
@@ -105,6 +112,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(getFileTypeComboBox())
 			.addComponent(getEegSystemComboBox())
 			.addComponent(getRegisterSignalMLCodecPanel())
+			.addComponent(getTryToOpenTagsCheckbox())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -133,6 +141,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(registerCodecsLabel)
 				.addComponent(getRegisterSignalMLCodecPanel())
+			);
+
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(tryToOpenTagsLabel)
+				.addComponent(getTryToOpenTagsCheckbox())
 			);
 
 		layout.setVerticalGroup(vGroup);
@@ -173,6 +187,21 @@ public class OtherSettingsPanel extends AbstractPanel {
 			fileTypeComboBox.setSelectedItem(FileOpenSignalMethod.AUTODETECT);
 		}
 		return fileTypeComboBox;
+	}
+
+	public JCheckBox getTryToOpenTagsCheckbox() {
+		if (tryToOpenTagsCheckbox == null) {
+			tryToOpenTagsCheckbox = new JCheckBox();
+			tryToOpenTagsCheckbox.setSelected(SvarogApplication.getApplicationConfiguration().isAutoTryToLoadSignalWithTags());
+			tryToOpenTagsCheckbox.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ApplicationConfiguration configuration = SvarogApplication.getApplicationConfiguration();
+					configuration.setAutoTryToLoadSignalWithTags(tryToOpenTagsCheckbox.isSelected());
+				}
+			});
+		}
+		return tryToOpenTagsCheckbox;
 	}
 
 	/**
@@ -291,6 +320,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			experimentDescriptor.setTagStyles(selectedStylesPreset == null ? null : selectedStylesPreset.clone());
 		}
 		descriptor.setEegSystem(getSelectedEegSystem());
+		descriptor.setTryToOpenTagDocument(getTryToOpenTagsCheckbox().isSelected());
 	}
 
 	public void preparePanelForSignalSource(SignalSource selectedSignalSource) {
@@ -304,6 +334,9 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 		fileTypeLabel.setVisible(!isMonitor);
 		fileTypeComboBox.setVisible(!isMonitor);
+
+		tryToOpenTagsLabel.setVisible(!isMonitor);
+		getTryToOpenTagsCheckbox().setVisible(!isMonitor);
 	}
 
 }
