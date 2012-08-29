@@ -1729,12 +1729,17 @@ public class ViewerElementManager {
 		getOpenSignalWizardAction().setAccelerator("ctrl O");
 		getCloseActiveDocumentAction().setAccelerator("ctrl F4");
 		getOpenTagAction().setAccelerator("alt O");
+		getOpenBookDocumentAction().setAccelerator("alt B");
 		getCloseTagAction().setAccelerator("ctrl alt F4");
 		getSaveAllDocumentsAction().setAccelerator("ctrl shift S");
 		getSaveActiveDocumentAction().setAccelerator("ctrl S");
 		getSaveAllDocumentsAction().setAccelerator("ctrl alt S");
 		getSaveTagAction().setAccelerator("alt S");
 		getSaveTagAsAction().setAccelerator("ctrl alt shift S");
+		getEditPreferencesAction().setAccelerator("ctrl P");
+		getExportSignalAction().setAccelerator("ctrl E");
+		getEditSignalMontageAction().setAccelerator("alt M");
+		getNewTagAction().setAccelerator("alt N");
 
 	}
 
