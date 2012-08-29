@@ -26,11 +26,8 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
@@ -46,11 +43,6 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 	protected static final Logger log = Logger.getLogger(EmbeddedFileChooserFavorites.class);
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * length (in chars) of file path visible in combo boxes
-	 */
-	static int LEN_OF_PATH = 15;
 
 	/**
 	 * number of remembered last-visited directories
@@ -141,19 +133,17 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 		if (favoritesComboBox == null) {
 			favoritesComboBox = new JComboBox();
 			favoritesComboBox.addActionListener(this);
-			favoritesComboBox.setRenderer(new ComboBoxRenderer());
 			favoritesComboBox.setMaximumRowCount(10);
-			favoritesComboBox.setSelectedItem(null);
+			favoritesComboBox.setSelectedIndex(-1);
 		}
 		return favoritesComboBox;
 	}
 
 	public JComboBox getLastDirectoriesComboBox() {
 		if (lastDirectoriesComboBox == null) {
-			lastDirectoriesComboBox =new JComboBox();
+			lastDirectoriesComboBox = new JComboBox();
 			lastDirectoriesComboBox.addActionListener(this);
-			lastDirectoriesComboBox.setRenderer(new ComboBoxRenderer());
-			lastDirectoriesComboBox.setSelectedItem(null);
+			lastDirectoriesComboBox.setSelectedIndex(-1);
 		}
 		return lastDirectoriesComboBox;
 	}
@@ -170,9 +160,10 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 	@Override
 	public void actionPerformed(ActionEvent action) {
 		// if action is combo box - set current directory (or file)
-		String path = (String) ((JComboBox) action.getSource()).getSelectedItem();
-		if (path != null) {
-			File dir = new File(path);
+		DirectoryItem item = (DirectoryItem) ((JComboBox) action.getSource()).getSelectedItem();
+
+		if (item != null && item.getFilePath() != null) {
+			File dir = new File(item.getFilePath());
 			this.fileChooser.setCurrentDirectory(dir);
 		}
 	}
@@ -200,6 +191,13 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 	public void addCurrentDirectory() {
 		String dir = this.fileChooser.getCurrentDirectory().getAbsolutePath();
 		String[] dirs = getApplicationConfiguration().getFavouriteDirs();
+
+		//check if this directory is already added.
+		for (String d: dirs) {
+			if (d.equals(dir))
+				return;
+		}
+
 		String[] new_dirs;
 		if (dirs != null) {
 			new_dirs = new String[dirs.length + 1];
@@ -211,7 +209,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 			new_dirs[0] = dir;
 		}
 		this.updateCurrentDirectories(new_dirs);
-		getFavoritesComboBox().setSelectedItem(dir);
+
+		int numberOfElements = getFavoritesComboBox().getModel().getSize();
+		getFavoritesComboBox().setSelectedIndex(numberOfElements-1);
 	}
 
 	/**
@@ -222,23 +222,33 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 	 */
 	public void updateCurrentDirectories(String[] dirs) {
 		if (dirs != null) {
-			String[] new_dirs = new String[dirs.length + 1];
-			for (int i = 1; i < new_dirs.length; i++)
-				new_dirs[i] = dirs[i - 1];
-			new_dirs[0] = null;
 			getApplicationConfiguration().setFavouriteDirs(dirs);
 
 			getFavoritesComboBox().removeAllItems();
-			DefaultComboBoxModel model = new DefaultComboBoxModel(dirs);
+			DefaultComboBoxModel model = new DefaultComboBoxModel(getDirectoryItems(dirs));
 			getFavoritesComboBox().setModel(model);
 		}
+	}
+
+	protected DirectoryItem[] getDirectoryItems(String[] dirs) {
+		DirectoryItem[] items = new DirectoryItem[dirs.length + 1];
+		for (int i = 1; i < items.length; i++)
+			items[i] = new DirectoryItem(dirs[i-1]);
+		items[0] = new DirectoryItem(null, _("<Select item>"));
+
+		return items;
 	}
 
 	/**
 	 * Gets current directory from favorites combo and remove it from favorites.
 	 */
 	public void removeCurrentDirectory() {
-		String dir = (String) getFavoritesComboBox().getSelectedItem();
+		DirectoryItem item = (DirectoryItem) getFavoritesComboBox().getSelectedItem();
+
+		if (item == null || item.getFilePath() == null)
+			return;
+
+		String dir = item.getFilePath();
 		String[] dirs = getApplicationConfiguration().getFavouriteDirs();
 		if (dirs == null || dir == null)
 			return;
@@ -287,14 +297,9 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 	 */
 	public void updateLastDirectories(String[] dirs) {
 		if (dirs != null) {
-			String[] new_dirs = new String[dirs.length + 1];
-			for (int i = 1; i < new_dirs.length; i++)
-				new_dirs[i] = dirs[i - 1];
-			new_dirs[0] = null;
-
 			getApplicationConfiguration().setLastDirs(dirs);
 			getLastDirectoriesComboBox().removeAllItems();
-			DefaultComboBoxModel model = new DefaultComboBoxModel(dirs);
+			DefaultComboBoxModel model = new DefaultComboBoxModel(getDirectoryItems(dirs));
 			getLastDirectoriesComboBox().setModel(model);
 		}
 	}
@@ -310,6 +315,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 		b.setContentAreaFilled(false);
 		final EmbeddedFileChooserFavorites fcf = this;
 		b.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				fcf.showHide();
 			}
@@ -355,6 +361,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 		addFavsButton.setToolTipText(_("Add current directory to favorites"));
 		addFavsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		addFavsButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				fcf.addCurrentDirectory();
 			}
@@ -365,6 +372,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 		removeFavsButton.setToolTipText(_("Remove from favorites"));
 		removeFavsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 		removeFavsButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				fcf.removeCurrentDirectory();
 			}
@@ -403,38 +411,49 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 		return fieldsPanel;
 	}
 
-	class ComboBoxRenderer extends BasicComboBoxRenderer {
-		private static final long serialVersionUID = 1L;
+}
 
-		public ComboBoxRenderer() {
-			setOpaque(true);
-			setHorizontalAlignment(LEFT);
-			setBorder(new EmptyBorder(0, 3, 0, 3));
-		}
+class DirectoryItem {
 
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-			Component rendererComponent = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	/**
+	 * length (in chars) of file path visible in combo boxes
+	 */
+	static int LEN_OF_PATH = 15;
 
-			String oldText = ((String) value);
-			String newText = oldText;
-			String tooltip = oldText;
+	private String filePath;
+	private String displayValue;
 
-			if (oldText != null && oldText.length() > 0) {
-				int lastInd = oldText.length();
-				int firstInd = oldText.lastIndexOf("/") + 1;
-				if (lastInd == firstInd) {
-					lastInd--;
-					firstInd = oldText.substring(0, lastInd).lastIndexOf("/") + 1;
-				}
-				newText = oldText.substring(firstInd, lastInd);
-				if (newText.length() > LEN_OF_PATH)
-					newText = "..." + newText.substring(newText.length() - LEN_OF_PATH);
-
-				setText(newText);
-				setToolTipText(tooltip);
-			}
-			return rendererComponent;
-		}
+	public DirectoryItem(String filePath) {
+		this.filePath = filePath;
 	}
 
+	public DirectoryItem(String filePath, String displayValue) {
+		this.filePath = filePath;
+		this.displayValue = displayValue;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	@Override
+	public String toString() {
+		if (displayValue != null) {
+			return displayValue;
+		}
+
+		String text = filePath;
+		if (filePath != null && filePath.length() > 0) {
+			int lastInd = filePath.length();
+			int firstInd = filePath.lastIndexOf("/") + 1;
+			if (lastInd == firstInd) {
+				lastInd--;
+				firstInd = filePath.substring(0, lastInd).lastIndexOf("/") + 1;
+			}
+			text = filePath.substring(firstInd, lastInd);
+			if (text.length() > LEN_OF_PATH)
+				text = "..." + text.substring(text.length() - LEN_OF_PATH);
+		}
+		return text;
+	}
 }
