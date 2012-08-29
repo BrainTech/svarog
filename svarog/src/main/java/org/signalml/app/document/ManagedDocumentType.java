@@ -4,6 +4,11 @@
 
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.Icon;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -11,9 +16,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.Document;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /**
@@ -63,8 +65,8 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 */
 	TAG(_("Tag"),
 	TagDocument.class,
-	_("Tag files (*.xml, *.tag)"),
-	new String[] { "xml", "tag" },
+	_("Tag files (*.tag)"),
+	new String[] {"tag" },
 	"org/signalml/app/icon/tag.png"
 	   );
 
@@ -156,6 +158,21 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 */
 	public String[][] getFileFilterExtensions() {
 		return fileFilterExtensions;
+	}
+
+	/**
+	 * Returns all extensions for a given type of document.
+	 * @return extension for the given type of document.
+	 */
+	public String[] getAllFileExtensions() {
+		List<String> extensions = new ArrayList<String>();
+		for (int i = 0; i < fileFilterExtensions.length; i++) {
+			for (String ext: fileFilterExtensions[i]) {
+				extensions.add(ext);
+			}
+		}
+
+		return extensions.toArray(new String[0]);
 	}
 
 	/**

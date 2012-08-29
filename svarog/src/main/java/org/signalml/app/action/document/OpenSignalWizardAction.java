@@ -75,11 +75,19 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	 */
 	protected void tryToOpenTagDocument() {
 		File signalFile = openDocumentDescriptor.getFile();
-		File tagFile = Util.changeOrAddFileExtension(signalFile, "tag");
+		File tagFile = null;
 
-		if (!tagFile.exists()) {
-			return;
+		boolean tagFileExists = false;
+		for (String ext: ManagedDocumentType.TAG.getAllFileExtensions()) {
+			tagFile = Util.changeOrAddFileExtension(signalFile, "tag");
+			if (tagFile.exists()) {
+				tagFileExists = true;
+				break;
+			}
 		}
+
+		if (!tagFileExists)
+			return;
 
 		OpenDocumentDescriptor tagDocumentDescriptor = new OpenDocumentDescriptor();
 		tagDocumentDescriptor.setType(ManagedDocumentType.TAG);
