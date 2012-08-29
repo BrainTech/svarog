@@ -20,7 +20,7 @@ public enum ChannelFunction implements IChannelFunction {
 	EOG_LEFT("EOG (left)", false ,true, "uV", 1000), //1-few mV
 	EOG_RIGHT("EOG (right)", false ,true, "uV", 1000),
 	TRIGGER("Trigger", false, true, "", 1),
-	EEG("EEG", false, false, "uV", 100), // 100uV
+	EEG("EEG", false, false, "uV", 20), // 100uV
 	ECG("ECG", false, true, "uV", 400), //5mV
 	EMG("EMG", false, true, "uV", 1000), //few mV
 	RESP("RESP", false, true, "", 20),
