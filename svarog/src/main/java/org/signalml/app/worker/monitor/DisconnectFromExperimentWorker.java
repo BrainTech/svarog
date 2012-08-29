@@ -30,11 +30,19 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 	@Override
 	protected Void doInBackground() throws Exception {
 		logger.debug("Disconnecting from experiment");
+
+		if (!experimentDescriptor.isConnected()) {
+			logger.debug("Experiment already disconnected - cancelling disconnection.");
+			return null;
+		}
+
 		disconnectFromMultiplexer();
 		sendLeaveExperimentRequest();
 
 		if (experimentDescriptor.getRecommendedScenario() != null)
 			sendKillExperimentRequest();
+
+		experimentDescriptor.setConnected(false);
 		return null;
 	}
 
@@ -45,7 +53,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		if (jmxClient != null)
 			try {
 				jmxClient.shutdown();
-				logger.debug("MUltiplexer was shutdown");
+				logger.debug("Multiplexer has been successfully shutdown");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

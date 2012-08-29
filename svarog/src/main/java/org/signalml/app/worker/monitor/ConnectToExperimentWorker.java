@@ -63,6 +63,8 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 		sendJoinExperimentRequest();
 		connectToMultiplexer();
 
+		experimentDescriptor.setConnected(true);
+
 		return null;
 	}
 
