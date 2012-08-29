@@ -17,16 +17,16 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 public enum ChannelFunction implements IChannelFunction {
 
 	UNKNOWN("Unknown", false, true, "", 800),
-	EOG_LEFT("EOG (left)", false ,true, "uV", 300), //1-few mV
-	EOG_RIGHT("EOG (right)", false ,true, "uV", 300),
-	TRIGGER("Trigger", false, true, "", 10),
-	EEG("EEG", false, false, "uV", 20), // 10-100uV
-	ECG("ECG", false, true, "uV", 5000),
-	EMG("EMG", false, true, "e", 20000),
-	RESP("RESP", false, true, "", 200),
+	EOG_LEFT("EOG (left)", false ,true, "uV", 1000), //1-few mV
+	EOG_RIGHT("EOG (right)", false ,true, "uV", 1000),
+	TRIGGER("Trigger", false, true, "", 1),
+	EEG("EEG", false, false, "uV", 100), // 100uV
+	ECG("ECG", false, true, "uV", 400), //5mV
+	EMG("EMG", false, true, "uV", 1000), //few mV
+	RESP("RESP", false, true, "", 20),
 	SAO2("SaO2", false, true, "%", 100),
-	SC("Skin conductance", false, true, "uS", 5), //2 - 20uS
-	SP("Skin potential", false, true, "mV", 3000), //0 -60 mV
+	SC("Skin conductance", false, true, "uS", 20), //20uS
+	SP("Skin potential", false, true, "mV", 60000), //0 -60 mV
 	ZERO("ZERO", true, false, "bit", 100),
 	ONE("ONE", true, false, "bit", 100);
 
