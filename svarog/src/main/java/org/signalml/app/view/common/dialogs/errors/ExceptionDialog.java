@@ -40,12 +40,18 @@ public class ExceptionDialog extends AbstractMessageDialog  {
 	public ExceptionDialog(Window w) {
 		super(w, true);
 		setTitle(_("Exception occurred!"));
-		setMinimumSize(new Dimension(450, 220));
+		setMinimumSize(new Dimension(470, 250));
 		setLocationRelativeTo(null);
-		setResizable(true);
 
 		icon = IconUtils.getErrorIcon();
 
+	}
+
+	@Override
+	protected void initialize() {
+		super.initialize();
+
+		setResizable(true);
 	}
 
 	/**
@@ -90,13 +96,9 @@ public class ExceptionDialog extends AbstractMessageDialog  {
 	protected String getErrorMessage(Throwable throwable) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_("An unexpected error occurred "));
-		sb.append("(");
+		sb.append(_("An unexpected error occurred"));
+		sb.append(" (");
 		sb.append(throwable.getClass().getSimpleName());
-
-		if (throwable.getLocalizedMessage() != null) {
-			sb.append(": " + throwable.getLocalizedMessage());
-		}
 		sb.append(").");
 
 		return sb.toString();
@@ -104,8 +106,14 @@ public class ExceptionDialog extends AbstractMessageDialog  {
 
 	protected String getStackTraceReport(Throwable throwable) {
 		StringBuilder sb = new StringBuilder();
+
+		if (throwable.getLocalizedMessage() != null) {
+			sb.append("message: " + throwable.getLocalizedMessage());
+		}
+		sb.append("\n");
 		sb.append(throwable.getClass().toString());
 		sb.append("\n");
+
 		for (int i = 0; i < throwable.getStackTrace().length; i++) {
 			sb.append(throwable.getStackTrace()[i].toString());
 			sb.append("\n");
