@@ -182,23 +182,20 @@ public class DocumentFlowIntegrator {
 	 * @param window the window that should be parent to errors dialog
 	 * @return true if the operation is successful, false otherwise
 	 */
-	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
+	public Document maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
 		try {
-			this.openDocument(descriptor);
-			return true;
+			return this.openDocument(descriptor);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to open document", ex);
 			Dialogs.showExceptionDialog(window, ex);
-			return false;
 		} catch (IOException ex) {
 			logger.error("Failed to open document - I/O exception", ex);
 			Dialogs.showExceptionDialog(window, ex);
-			return false;
 		} catch (ConnectException ex) {
 			logger.error("Failed to open document - connection exception", ex);
 			Dialogs.showExceptionDialog(window, ex);
-			return false;
 		}
+		return null;
 	}
 
 	/**
@@ -208,7 +205,7 @@ public class DocumentFlowIntegrator {
 	 * @param descriptor the descriptor of a document to open
 	 * @return true if the operation is successful, false otherwise
 	 */
-	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor) {
+	public Document maybeOpenDocument(OpenDocumentDescriptor descriptor) {
 		return this.maybeOpenDocument(descriptor, null);
 	}
 
@@ -432,7 +429,7 @@ public class DocumentFlowIntegrator {
 
 						do {
 
-							file = fileChooser.chooseSaveDocument(optionPaneParent, filters);
+							file = fileChooser.chooseSaveDocument(optionPaneParent, document, filters);
 							if (file == null) {
 								// file choice canceled
 								return false;

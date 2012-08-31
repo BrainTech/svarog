@@ -4,6 +4,8 @@
 
 package org.signalml.plugin.newstager.data;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -405,11 +407,11 @@ public class NewStagerSleepComparison implements PropertyProvider {
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
 		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepComparison.totalConcordance",
+					 _("total concordance"),
 					 "totalConcordancePretty", NewStagerSleepComparison.class,
 					 "getTotalConcordancePretty", null));
 		list.add(new LabelledPropertyDescriptor(
-					 "property.sleepComparison.cohensKappa", "cohensKappaPretty",
+					 _("cohens kappa"), "cohensKappaPretty",
 					 NewStagerSleepComparison.class, "getCohensKappaPretty", null));
 
 		return list;

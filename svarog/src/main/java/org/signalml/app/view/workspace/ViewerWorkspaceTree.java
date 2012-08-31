@@ -14,8 +14,6 @@ import javax.swing.tree.TreePath;
 import org.signalml.app.action.document.ActivateDocumentAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.document.OpenMRUDAction;
-import org.signalml.app.action.document.SaveDocumentAction;
-import org.signalml.app.action.document.SaveDocumentAsAction;
 import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
@@ -49,8 +47,6 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 	private ActivateDocumentAction activateDocumentAction;
 	private CloseDocumentAction closeDocumentAction;
-	private SaveDocumentAction saveDocumentAction;
-	private SaveDocumentAsAction saveDocumentAsAction;
 	private OpenMRUDAction openMRUDAction;
 
 	private Document activeDocument;
@@ -129,8 +125,6 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 
 			documentPopupMenu.add(getActivateDocumentAction());
 			documentPopupMenu.addSeparator();
-			documentPopupMenu.add(getSaveDocumentAction());
-			documentPopupMenu.add(getSaveDocumentAsAction());
 			documentPopupMenu.addSeparator();
 			documentPopupMenu.add(getCloseDocumentAction());
 
@@ -198,22 +192,6 @@ public class ViewerWorkspaceTree extends AbstractViewerTree implements ActionFoc
 			closeDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
 		}
 		return closeDocumentAction;
-	}
-
-	public SaveDocumentAction getSaveDocumentAction() {
-		if (saveDocumentAction == null) {
-			saveDocumentAction = new SaveDocumentAction(this);
-			saveDocumentAction.setDocumentFlowIntegrator(documentFlowIntegrator);
-		}
-		return saveDocumentAction;
-	}
-
-	public SaveDocumentAsAction getSaveDocumentAsAction() {
-		if (saveDocumentAsAction == null) {
-			saveDocumentAsAction = new SaveDocumentAsAction(this);
-			saveDocumentAsAction.setDocumentFlowIntegrator(documentFlowIntegrator);
-		}
-		return saveDocumentAsAction;
 	}
 
 	public OpenMRUDAction getOpenMRUDAction() {

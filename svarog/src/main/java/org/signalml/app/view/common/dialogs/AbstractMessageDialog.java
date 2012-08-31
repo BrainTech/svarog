@@ -4,21 +4,16 @@
 
 package org.signalml.app.view.common.dialogs;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Window;
 import java.util.prefs.Preferences;
 
-import javax.swing.Box;
-import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.plugin.export.SignalMLException;
 
 /**
  * Abstract dialog, which displays the message to the user.
@@ -33,15 +28,9 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the check-box which tells that this message (the dialog with the same
-	 * message as this dialog) shouldn't be shown again
-	 */
-	private JCheckBox dontShowAgainCheckBox;
-
-	/**
 	 * the panel with {@link #messageLabel}
 	 */
-	private JPanel messagePanel;
+	protected JPanel messagePanel;
 	/**
 	 * the label in which the text of the message is shown
 	 */
@@ -85,40 +74,12 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	}
 
 	/**
-	 * Calls the {@link AbstractDialog#createControlPane() creation} of the
-	 * control pane in parent and adds {@link #getDontShowAgainCheckBox()
-	 * check-box} to it.
-	 */
-	@Override
-	protected JPanel createControlPane() {
-		JPanel controlPane = super.createControlPane();
-		controlPane.add(Box.createHorizontalStrut(10), 1);
-		controlPane.add(getDontShowAgainCheckBox(), 0);
-		return controlPane;
-	}
-
-	/**
 	 * Creates the interface with only the {@link #getMessagePanel() message
 	 * panel}.
 	 */
 	@Override
 	public JComponent createInterface() {
 		return getMessagePanel();
-	}
-
-	/**
-	 * Returns the check-box which tells that this message (the dialog with
-	 * the same message as this dialog) shouldn't be shown again.
-	 * If the check-box doesn't exist it is created.
-	 * @return the check-box which tells that this message (the dialog with
-	 * the same message as this dialog) shouldn't be shown again
-	 */
-	public JCheckBox getDontShowAgainCheckBox() {
-		if (dontShowAgainCheckBox == null) {
-			dontShowAgainCheckBox = new JCheckBox(_("Don't show this message again"));
-			dontShowAgainCheckBox.setFont(dontShowAgainCheckBox.getFont().deriveFont(Font.PLAIN,10F));
-		}
-		return dontShowAgainCheckBox;
 	}
 
 	/**
@@ -155,36 +116,6 @@ public abstract class AbstractMessageDialog extends AbstractDialog {
 	 * @return {@code true} if the dialog shouldn't be shown again,
 	 * {@code false} otherwise
 	 */
-	public abstract boolean getDontShowAgain();
-
-	/**
-	 * Sets if the dialog with the same message as this dialog
-	 * should be shown again.
-	 * @param dontShow {@code true} if the dialog shouldn't be shown again,
-	 * {@code false} otherwise
-	 */
-	public abstract void setDontShowAgain(boolean dontShow);
-
-	/**
-	 * Sets the stage of {@link #getDontShowAgainCheckBox() dontShow ckeck-box}.
-	 */
-	@Override
-	public void fillDialogFromModel(Object model) throws SignalMLException {
-
-		getDontShowAgainCheckBox().setSelected(getDontShowAgain());
-
-	}
-
-	/**
-	 * {@link #setDontShowAgain(boolean) Sets} if this dialog should
-	 * be shown again (saves users decision).
-	 */
-	@Override
-	public void fillModelFromDialog(Object model) throws SignalMLException {
-
-		setDontShowAgain(getDontShowAgainCheckBox().isSelected());
-
-	}
 
 	/**
 	 * There is no model for this dialog, so the class should be null.

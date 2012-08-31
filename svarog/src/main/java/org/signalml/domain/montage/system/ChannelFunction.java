@@ -1,8 +1,9 @@
 package org.signalml.domain.montage.system;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a function of a channel - that is what kind of signal
@@ -15,15 +16,20 @@ import java.util.List;
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
 
-	UNKNOWN("Unknown", false, true, "", -800, 800),
-	TRIGGER("Trigger", false, true, "", 0, 10),
-	EEG("EEG", false, false, "uV", -20, 20),
-	ECG("ECG", false, true, "uV", -5000, 5000),
-	EMG("EMG", false, true, "e", -20000, 20000),
-	RESP("RESP", false, true, "", -200, 200),
-	SAO2("SaO2", false, true, "", -100, 100),
-	ZERO("ZERO", true, false, "bit", -100, 100),
-	ONE("ONE", true, false, "bit", -100, 100);
+	UNKNOWN("Unknown", false, true, "", 800),
+	EOG_LEFT("EOG (left)", false ,true, "uV", 1000), //1-few mV
+	EOG_RIGHT("EOG (right)", false ,true, "uV", 1000),
+	TRIGGER("Trigger", false, true, "", 1),
+	EEG("EEG", false, false, "uV", 20), // 100uV
+	ECG("ECG", false, true, "uV", 400), //5mV
+	EMG("EMG", false, true, "uV", 1000), //few mV
+	RESP("RESP", false, true, "", 20),
+	SAO2("SaO2", false, true, "%", 100),
+	SC("Skin conductance", false, true, "uS", 20), //20uS
+	SP("Skin potential", false, true, "mV", 60000), //0 -60 mV
+	ZERO("ZERO", true, false, "bit", 100),
+	ONE("ONE", true, false, "bit", 100);
+
 	/**
 	 * a name of this channel
 	 */
@@ -43,10 +49,6 @@ public enum ChannelFunction implements IChannelFunction {
 	 */
 	private String unitOfMeasurementSymbol;
 	/**
-	 * The minimum expected value of the signal.
-	 */
-	private int minValue;
-	/**
 	 * The maximum expected value value of the signal.
 	 */
 	private int maxValue;
@@ -58,12 +60,11 @@ public enum ChannelFunction implements IChannelFunction {
 	 * @param unique is the channel unique?
 	 * @param mutable is the channel mutable?
 	 */
-	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int minValue, int maxValue) {
+	private ChannelFunction(String name, boolean unique, boolean mutable, String unitOfMeasurementSymbol, int maxValue) {
 		this.name = name;
 		this.unique = unique;
 		this.mutable = mutable;
 		this.unitOfMeasurementSymbol = unitOfMeasurementSymbol;
-		this.minValue = minValue;
 		this.maxValue = maxValue;
 	}
 
@@ -95,11 +96,6 @@ public enum ChannelFunction implements IChannelFunction {
 	@Override
 	public boolean isMutable() {
 		return this.mutable;
-	}
-
-	@Override
-	public int getMinValue() {
-		return minValue;
 	}
 
 	@Override

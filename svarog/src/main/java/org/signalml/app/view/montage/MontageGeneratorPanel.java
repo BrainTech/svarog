@@ -29,17 +29,14 @@ import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.common.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
-import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
-
-import org.springframework.validation.BindException;
+import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.springframework.validation.Errors;
 
 /**
@@ -223,7 +220,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 *
-	 * @return the {@link ExceptionDialog dialog} with errors which is shown when:
+	 * @return the {@link ValidationErrorsDialog} with errors which is shown when:
 	 *         <ul>
 	 *         <li>the {@link #getMontage() montage} can not be used to generate
 	 *         the
@@ -460,9 +457,7 @@ public class MontageGeneratorPanel extends JPanel {
 	}
 
 	/**
-	 * Action which displays the.
-	 *
-	 * {@link ExceptionDialog errors dialog} if the current {@link #getMontage()
+	 * Action which displays an error dialog if the current {@link #getMontage()
 	 * montage} can not be used to generate a {@link Montage montage} using a
 	 * currently {@link #getGeneratorComboBox() selected}
 	 * {@link MontageGenerator generator}.
@@ -488,6 +483,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 * validation} of the {@link MontageGeneratorPanel#getGeneratorComboBox()
 		 * selected} {@link Montage}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Object item = getGeneratorComboBox().getSelectedItem();
@@ -536,6 +532,7 @@ public class MontageGeneratorPanel extends JPanel {
 		 * MontageGeneratorPanel#getGeneratorComboBox() selected}
 		 * {@link MontageGenerator generator}.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			Object item = getGeneratorComboBox().getSelectedItem();

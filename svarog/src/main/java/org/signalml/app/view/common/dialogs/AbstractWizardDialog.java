@@ -386,6 +386,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 		 * Otherwise parent {@link NavigationAction#actionPerformed(ActionEvent)
 		 * function} is called.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if ((currentStep + 1) >= getStepCount()) {
@@ -422,6 +423,7 @@ public abstract class AbstractWizardDialog extends AbstractDialog {
 		 * Otherwise parent {@link NavigationAction#actionPerformed(ActionEvent)
 		 * function} is called.
 		 */
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if ((currentStep + step) < 0) {

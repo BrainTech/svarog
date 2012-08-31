@@ -5,7 +5,6 @@
 package org.signalml.app.view.signal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.BorderLayout;
@@ -34,10 +33,10 @@ import java.io.InvalidClassException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -100,7 +99,6 @@ import org.signalml.app.util.ResnapToPageRunnable;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.document.monitor.MonitorRecordingDurationPanel;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
@@ -688,6 +686,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		afSupport.removeActionFocusListener(listener);
 	}
 
+	@Override
 	public SignalSelection getSignalSelection() {
 		return signalSelection;
 	}
@@ -720,10 +719,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 	}
 
+	@Override
 	public void clearSignalSelection() {
 		setSignalSelection(null,null);
 	}
 
+	@Override
 	public PositionedTag getTagSelection() {
 		return tagSelection;
 	}
@@ -759,6 +760,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 	}
 
+	@Override
 	public void clearTagSelection() {
 		setTagSelection(null, null);
 	}
@@ -1104,6 +1106,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return ((null != currentSignalTool) && (currentSignalTool.isEngaged()));
 	}
 
+	@Override
 	public SignalDocument getDocument() {
 		return document;
 	}
@@ -1414,6 +1417,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return scrollPanes.getFirst();
 	}
 
+	@Override
 	public SignalPlot getMasterPlot() {
 		return plots.getFirst();
 	}
@@ -1474,6 +1478,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return closed;
 	}
 
+	@Override
 	public SignalSelectionType getCurrentTagType() {
 		if ((currentSignalTool != null) && (currentSignalTool instanceof TaggingSignalTool)) {
 			return ((TaggingSignalTool) currentSignalTool).getTagType();
@@ -1490,6 +1495,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return null;
 	}
 
+	@Override
 	public TagStyle getCurrentTagStyle(SignalSelectionType type) {
 		if (type != null) {
 			TagStyleToolBar toolBar = getTagStyleToolBar(type);

@@ -3,6 +3,7 @@
  */
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.beans.IntrospectionException;
@@ -315,7 +316,7 @@ public class BookDocument extends AbstractFileDocument {
 	 */
 	public String getTextInfo() {
 		String textInfo = book.getTextInfo();
-		if (textInfo.length() > 100) {
+		if (textInfo != null && textInfo.length() > 100) {
 			return textInfo.substring(0, 100) + "...";
 		}
 		return textInfo;
@@ -337,7 +338,7 @@ public class BookDocument extends AbstractFileDocument {
 	 */
 	public String getWebSiteInfo() {
 		String webSiteInfo = book.getWebSiteInfo();
-		if (webSiteInfo.length() > 100) {
+		if (webSiteInfo != null && webSiteInfo.length() > 100) {
 			return webSiteInfo.substring(0, 100) + "...";
 		}
 		return webSiteInfo;
@@ -348,20 +349,20 @@ public class BookDocument extends AbstractFileDocument {
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.version", "version", BookDocument.class, "getVersion", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.channelCount", "channelCount", BookDocument.class, "getChannelCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.segmentCount", "segmentCount", BookDocument.class, "getSegmentCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.samplingFrequency", "samplingFrequency", BookDocument.class, "getSamplingFrequency", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.calibration", "calibration", BookDocument.class, "getCalibration", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.bookComment", "bookComment", BookDocument.class, "getBookComment", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.date", "date", BookDocument.class, "getDate", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.energyPercent", "energyPercent", BookDocument.class, "getEnergyPercent", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.maxIterationCount", "maxIterationCount", BookDocument.class, "getMaxIterationCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.dictionarySize", "dictionarySize", BookDocument.class, "getDictionarySize", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.dictionaryType", "dictionaryType", BookDocument.class, "getDictionaryType", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.signalChannelCount", "signalChannelCount", BookDocument.class, "getSignalChannelCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.textInfo", "textInfo", BookDocument.class, "getTextInfo", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.webSiteInfo", "webSiteInfo", BookDocument.class, "getWebSiteInfo", null));
+		list.add(new LabelledPropertyDescriptor(_("version"), "version", BookDocument.class, "getVersion", null));
+		list.add(new LabelledPropertyDescriptor(_("channel count"), "channelCount", BookDocument.class, "getChannelCount", null));
+		list.add(new LabelledPropertyDescriptor(_("segment count"), "segmentCount", BookDocument.class, "getSegmentCount", null));
+		list.add(new LabelledPropertyDescriptor(_("sampling frequency"), "samplingFrequency", BookDocument.class, "getSamplingFrequency", null));
+		list.add(new LabelledPropertyDescriptor(_("calibration"), "calibration", BookDocument.class, "getCalibration", null));
+		list.add(new LabelledPropertyDescriptor(_("book comment"), "bookComment", BookDocument.class, "getBookComment", null));
+		list.add(new LabelledPropertyDescriptor(_("date"), "date", BookDocument.class, "getDate", null));
+		list.add(new LabelledPropertyDescriptor(_("energy percent"), "energyPercent", BookDocument.class, "getEnergyPercent", null));
+		list.add(new LabelledPropertyDescriptor(_("maximum iteration count"), "maxIterationCount", BookDocument.class, "getMaxIterationCount", null));
+		list.add(new LabelledPropertyDescriptor(_("dictionary size"), "dictionarySize", BookDocument.class, "getDictionarySize", null));
+		list.add(new LabelledPropertyDescriptor(_("dictionary type"), "dictionaryType", BookDocument.class, "getDictionaryType", null));
+		list.add(new LabelledPropertyDescriptor(_("signal channel count"), "signalChannelCount", BookDocument.class, "getSignalChannelCount", null));
+		list.add(new LabelledPropertyDescriptor(_("text info"), "textInfo", BookDocument.class, "getTextInfo", null));
+		list.add(new LabelledPropertyDescriptor(_("web site info"), "webSiteInfo", BookDocument.class, "getWebSiteInfo", null));
 
 		return list;
 

@@ -42,6 +42,8 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  */
 public class RegisterCodecAction extends AbstractSignalMLAction {
 
+	public static final String CODEC_REGISTERED = "codecRegistered";
+
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(RegisterCodecAction.class);
@@ -208,6 +210,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 				logger.error("Failed to save codec configuration", ex);
 			}
 		}
+
+		firePropertyChange(CODEC_REGISTERED, null, codec);
 
 	}
 

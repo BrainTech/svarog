@@ -4,6 +4,8 @@
 
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
@@ -101,7 +103,7 @@ public abstract class AbstractFileDocument extends AbstractDocument implements F
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.document.backingFile", "backingFile", AbstractFileDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("backing file"), "backingFile", AbstractFileDocument.class));
 
 		return list;
 

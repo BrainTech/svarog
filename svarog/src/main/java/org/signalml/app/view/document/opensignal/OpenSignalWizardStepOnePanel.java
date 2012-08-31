@@ -79,8 +79,9 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 	}
 
 	public OtherSettingsPanel getOtherSettingsPanel() {
-		if (otherSettingsPanel == null)
+		if (otherSettingsPanel == null) {
 			otherSettingsPanel = new OtherSettingsPanel(viewerElementManager);
+		}
 		return otherSettingsPanel;
 	}
 
@@ -90,6 +91,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 			signalSourceTabbedPane.addChangeListener(this);
 			signalSourceTabbedPane.addPropertyChangeListener(this);
 			getOtherSettingsPanel().getFileTypeComboBox().addItemListener(signalSourceTabbedPane);
+			getOtherSettingsPanel().getRegisterCodecAction().addPropertyChangeListener(signalSourceTabbedPane);
 		}
 		return signalSourceTabbedPane;
 	}
@@ -155,6 +157,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 				channelSelectPanel.fillPanelFromModel(openSignalDescriptor);
 			}
 		}
+
 	}
 
 	public void fillPanelFromModel(AbstractOpenSignalDescriptor openSignalDescriptor) {

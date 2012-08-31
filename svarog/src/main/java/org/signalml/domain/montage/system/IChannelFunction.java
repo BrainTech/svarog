@@ -32,12 +32,6 @@ public interface IChannelFunction extends MessageSourceResolvable, Serializable 
 	boolean isMutable();
 
 	/**
-	 * Returns the minimum value that should be set on the value scale for the signal.
-	 * @return
-	 */
-	int getMinValue();
-
-	/**
 	 * Returns the maximum value that should be set on the value scale for the signal.
 	 * @return
 	 */

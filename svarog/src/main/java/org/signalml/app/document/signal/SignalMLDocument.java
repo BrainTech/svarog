@@ -4,6 +4,8 @@
 
 package org.signalml.app.document.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.util.List;
@@ -153,9 +155,9 @@ public class SignalMLDocument extends AbstractFileSignal {
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.signalmldocument.formatName", "formatName", SignalMLDocument.class, "getFormatName", null));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.calibrationCapable", "caligrationCapable", SignalMLDocument.class, "isCalibrationCapable", null));
-		list.add(new LabelledPropertyDescriptor("property.signaldocument.calibration", "calibration", SignalMLDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("format name"), "formatName", SignalMLDocument.class, "getFormatName", null));
+		list.add(new LabelledPropertyDescriptor(_("calibration capable"), "caligrationCapable", SignalMLDocument.class, "isCalibrationCapable", null));
+		list.add(new LabelledPropertyDescriptor(_("calibration"), "calibration", SignalMLDocument.class));
 
 		return list;
 

@@ -61,8 +61,7 @@ public class SignalPlotPopupProvider {
 		if (tagDocument != null) {
 			SignalSelection selection = plot.getView().getSignalSelection(plot);
 			if (selection != null) {
-				tagStyleMenu.setTagSet(tagDocument.getTagSet());
-				tagStyleMenu.setType(selection.getType());
+				tagStyleMenu.setParameters(tagDocument.getTagSet(), selection.getType());
 				tagStyleMenuEnabled = true;
 			}
 		}

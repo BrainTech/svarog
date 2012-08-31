@@ -113,6 +113,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
+	private boolean optimizeSignalDisplaying;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -231,6 +232,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			antialiased = config.isAntialiased();
 			clamped = config.isClamped();
 			offscreenChannelsDrawn = config.isOffscreenChannelsDrawn();
+			optimizeSignalDisplaying = config.isOptimizeSignalDisplay();
 
 			pageLinesVisible = config.isPageLinesVisible();
 			blockLinesVisible = config.isBlockLinesVisible();
@@ -255,6 +257,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			antialiased = masterPlot.isAntialiased();
 			clamped = masterPlot.isClamped();
 			offscreenChannelsDrawn = masterPlot.isOffscreenChannelsDrawn();
+			optimizeSignalDisplaying = masterPlot.isOptimizeSignalDisplaying();
 
 			pageLinesVisible = masterPlot.isPageLinesVisible();
 			blockLinesVisible = masterPlot.isBlockLinesVisible();
@@ -276,13 +279,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		signalPlotRowHeader.setChannelOptionsPopupDialog(view.getChannelOptionsPopupDialog());
 
 		if (masterPlot == null) {
-
 			setTagToolTipsVisible(config.isTagToolTipsVisible());
+			setOptimizeSignalDisplaying(config.isOptimizeSignalDisplay());
 
 		} else {
-
 			setTagToolTipsVisible(masterPlot.isTagToolTipsVisible());
-
+			setOptimizeSignalDisplaying(masterPlot.isOptimizeSignalDisplaying());
 		}
 
 		addMouseListener(new MouseAdapter() {
@@ -940,14 +942,17 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			}
 
-			//there are 1.0/timeZoomFactor samples for each
-			//x-value pixel to be drawn. For performace
-			//reasons we don't want to draw that many
-			//overlapping lines (see: GeneralPath)
-			//so we draw only 1 in n samples.
-			int n = (int) Math.floor(0.5 / timeZoomFactor);
+			int sampleSkip = 1;
 
-			for (i=1; i<length; i += n) {
+			if (optimizeSignalDisplaying) {
+				double samplingFrequencyRatio = samplingFrequency / 256.0;
+				if (samplingFrequencyRatio < 1)
+					samplingFrequencyRatio = 1;
+
+				sampleSkip = (int) Math.ceil(samplingFrequencyRatio  / timeZoomFactor);
+			}
+
+			for (i=1; i<length; i += sampleSkip) {
 
 				y = samples[i] * pixelPerValueForChannel;
 
@@ -1182,7 +1187,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int currentPage = (int) Math.floor(position.x / pixelPerPage);
 
-		if (masterPlot == null) {
+		if (masterPlot != null) {
 			double timeZoomFactor = ((double) extent.width) / (samplingFrequency*pageSize);
 			setTimeZoomFactor(timeZoomFactor);
 		}
@@ -2497,6 +2502,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				signalPlotColumnHeader.setToolTipText(null);
 			}
 		}
+	}
+
+	public boolean isOptimizeSignalDisplaying() {
+		return optimizeSignalDisplaying;
+	}
+
+	public void setOptimizeSignalDisplaying(boolean optimizeSignalDisplaying) {
+		this.optimizeSignalDisplaying = optimizeSignalDisplaying;
+		repaint();
 	}
 
 	@Override

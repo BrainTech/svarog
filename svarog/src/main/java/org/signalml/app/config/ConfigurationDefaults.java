@@ -79,6 +79,7 @@ public class ConfigurationDefaults {
 		config.setRightClickPagesForward(getBoolean("application.rightClickPagesForward"));
 		config.setAutoLoadDefaultMontage(getBoolean("application.autoLoadDefaultMontage"));
 		config.setAutoAddHighpassFilter(getBoolean("application.autoAddHighpassFilter"));
+		config.setAutoTryToLoadSignalWithTags(getBoolean("application.autoTryToLoadSignalWithTags"));
 		config.setPrecalculateSignalChecksums(getBoolean("application.precalculateSignalChecksums"));
 
 		config.setSaveConfigOnEveryChange(getBoolean("application.saveConfigOnEveryChange"));
@@ -88,6 +89,7 @@ public class ConfigurationDefaults {
 		config.setClamped(getBoolean("application.clamped"));
 		config.setOffscreenChannelsDrawn(getBoolean("application.offscreenChannelsDrawn"));
 		config.setTagToolTipsVisible(getBoolean("application.tagToolTipsVisible"));
+		config.setOptimizeSignalDisplay(getBoolean("application.optimizeSignalDisplay"));
 
 		config.setPageLinesVisible(getBoolean("application.pageLinesVisible"));
 		config.setBlockLinesVisible(getBoolean("application.blockLinesVisible"));

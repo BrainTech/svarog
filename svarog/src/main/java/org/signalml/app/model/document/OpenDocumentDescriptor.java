@@ -70,6 +70,10 @@ public class OpenDocumentDescriptor {
 		return tagOptions;
 	}
 
+	public void setTagOptions(OpenTagDescriptor tagOptions) {
+		this.tagOptions = tagOptions;
+	}
+
 	public OpenBookDescriptor getBookOptions() {
 		return bookOptions;
 	}

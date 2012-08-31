@@ -41,6 +41,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
+	private boolean optimizeSignalDisplay;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -101,6 +102,11 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	 * signal automatically.
 	 */
 	private boolean autoAddHighpassFilter;
+	/**
+	 * When opening a signal automatically tries to load it with tags
+	 * that have the same file name.
+	 */
+	private boolean autoTryToLoadSignalWithTags;
 
 	public void applySystemSettings() {
 
@@ -211,6 +217,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setTagToolTipsVisible(boolean tagToolTipsVisible) {
 		this.tagToolTipsVisible = tagToolTipsVisible;
+	}
+
+	public boolean isOptimizeSignalDisplay() {
+		return optimizeSignalDisplay;
+	}
+
+	public void setOptimizeSignalDisplay(boolean optimizeSignalDisplay) {
+		this.optimizeSignalDisplay = optimizeSignalDisplay;
 	}
 
 	public boolean isPageLinesVisible() {
@@ -594,6 +608,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setAutoAddHighpassFilter(boolean autoAddHighpassFilter) {
 		this.autoAddHighpassFilter = autoAddHighpassFilter;
+	}
+
+	public boolean isAutoTryToLoadSignalWithTags() {
+		return autoTryToLoadSignalWithTags;
+	}
+
+	public void setAutoTryToLoadSignalWithTags(boolean autoTryToLoadTags) {
+		this.autoTryToLoadSignalWithTags = autoTryToLoadTags;
 	}
 
 }

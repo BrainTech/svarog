@@ -39,6 +39,11 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 
 	private String recommendedScenario;
 
+	/**
+	 * This value holds information whether Svarog has connected to this experiment or not.
+	 */
+	private transient boolean connected;
+
 	public ExperimentDescriptor(ExperimentDescriptor other) {
 		this();
 
@@ -70,9 +75,11 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 		this.tagStylesName = other.tagStylesName;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
+	@Override
 	public void setName(String experimentName) {
 		this.name = experimentName;
 	}
@@ -187,6 +194,14 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	@Override
 	public String toString() {
 		return getName();
+	}
+
+	public boolean isConnected() {
+		return connected;
+	}
+
+	public void setConnected(boolean connected) {
+		this.connected = connected;
 	}
 
 }

@@ -4,6 +4,8 @@
 
 package org.signalml.app.model.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
@@ -52,10 +54,10 @@ public class SignalPageTreeNode implements PropertyProvider, MessageSourceResolv
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.signalPage.page", "page", SignalPageTreeNode.class, "getPage", null));
-		list.add(new LabelledPropertyDescriptor("property.signalPage.size", "size", SignalPageTreeNode.class, "getSize", null));
-		list.add(new LabelledPropertyDescriptor("property.signalPage.startTime", "startTime", SignalPageTreeNode.class, "getStartTime", null));
-		list.add(new LabelledPropertyDescriptor("property.signalPage.endTime", "endTime", SignalPageTreeNode.class, "getEndTime", null));
+		list.add(new LabelledPropertyDescriptor(_("page"), "page", SignalPageTreeNode.class, "getPage", null));
+		list.add(new LabelledPropertyDescriptor(_("size"), "size", SignalPageTreeNode.class, "getSize", null));
+		list.add(new LabelledPropertyDescriptor(_("start time"), "startTime", SignalPageTreeNode.class, "getStartTime", null));
+		list.add(new LabelledPropertyDescriptor(_("end time"), "endTime", SignalPageTreeNode.class, "getEndTime", null));
 
 		return list;
 

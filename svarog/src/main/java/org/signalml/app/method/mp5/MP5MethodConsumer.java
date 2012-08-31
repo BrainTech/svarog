@@ -94,7 +94,7 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 			odd.setMakeActive(true);
 			odd.setType(ManagedDocumentType.BOOK);
 
-			if (!documentFlowIntegrator.maybeOpenDocument(odd))
+			if (documentFlowIntegrator.maybeOpenDocument(odd) == null)
 				return false;
 		}
 

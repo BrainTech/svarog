@@ -453,10 +453,27 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 			unlimitedCheckBox.addItemListener(new ItemListener() {
 
+				private Float previousToFrequencyValue;
+
 				@Override
 				public void itemStateChanged(ItemEvent e) {
 					boolean unlimited = getUnlimitedCheckBox().isSelected();
+					double maximumFrequency = getCurrentSamplingFrequency() / 2;
 
+					double newToFrequencySpinnerValue;
+					if (unlimited) {
+						float toFrequencyValue = getToFrequencySpinner().getValue();
+						if (toFrequencyValue != maximumFrequency)
+							previousToFrequencyValue = toFrequencyValue;
+						newToFrequencySpinnerValue = maximumFrequency;
+					} else if (previousToFrequencyValue != null
+							&& previousToFrequencyValue != maximumFrequency) {
+						newToFrequencySpinnerValue = previousToFrequencyValue;
+					} else {
+						newToFrequencySpinnerValue = maximumFrequency - FREQUENCY_SPINNER_STEP_SIZE;
+					}
+
+					getToFrequencySpinner().setValue(newToFrequencySpinnerValue);
 					getToFrequencySpinner().setEnabled(!unlimited);
 					updateHighlights();
 				}
@@ -621,6 +638,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addfftrange.png"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (currentFilter == null) {
@@ -678,6 +696,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removefftrange.png"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (currentFilter == null) {

@@ -1,7 +1,9 @@
 package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import multiplexer.jmx.client.IncomingMessageData;
@@ -12,7 +14,9 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
@@ -24,6 +28,7 @@ import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
 import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
+import org.signalml.util.FormatUtils;
 
 import com.google.protobuf.ByteString;
 
@@ -32,6 +37,7 @@ import com.google.protobuf.ByteString;
  */
 public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
+	public static String OPENING_MONITOR_CANCELLED = "openingMonitorCanceled";
 	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
@@ -59,15 +65,18 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 */
 	private TagStylesGenerator stylesGenerator;
 
-	public MonitorWorker(ExperimentDescriptor monitorDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
+	private ExperimentDescriptor experimentDescriptor;
+
+	public MonitorWorker(ExperimentDescriptor experimentDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		super(null);
-		this.client = monitorDescriptor.getJmxClient();
+		this.experimentDescriptor = experimentDescriptor;
+		this.client = experimentDescriptor.getJmxClient();
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
 
 		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
 		//with a real value?
-		stylesGenerator = new TagStylesGenerator(monitorDescriptor.getSignalParameters().getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
+		stylesGenerator = new TagStylesGenerator(experimentDescriptor.getSignalParameters().getPageSize(), PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE);
 		getBusyDialog().setText(_("Waiting for the first sample..."));
 
 		logger.setLevel((Level) Level.INFO);
@@ -77,14 +86,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	protected Void doInBackground() {
 
 		MultiplexerMessage sampleMsg;
-		boolean wasFirstSampleReceived = false;
+		boolean firstSampleReceived = false;
 		showBusyDialog();
 
 		while (!isCancelled()) {
 			try {
 				IncomingMessageData msgData;
 
-				if (wasFirstSampleReceived)
+				if (firstSampleReceived)
 					msgData = client.receive(TIMEOUT_MILIS);
 				else {
 					/**
@@ -95,7 +104,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					 * to fully start to operate.
 					 */
 					msgData = client.receive();
-					wasFirstSampleReceived = true;
+					firstSampleReceived = true;
 					hideBusyDialog();
 				}
 
@@ -105,9 +114,16 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 				}
 				else if (msgData == null) {
 					// timeout
-					client.shutdown();
-					Dialogs.showError(_("Multiplexer disconnected!"));
-					break;
+
+					double timeoutInSeconds = ((double)TIMEOUT_MILIS) / 1000.0;
+					DIALOG_OPTIONS result = Dialogs.showWarningYesNoDialog(_R("Did not receive any samples in {0} seconds, maybe the experiment is down?\nDo you wish to wait some more? Press No to disconnect from the experiment.", FormatUtils.format(timeoutInSeconds)));
+					if (result == DIALOG_OPTIONS.YES) {
+						continue;
+					} else {
+						DisconnectFromExperimentWorker disconnectWorker = new DisconnectFromExperimentWorker(experimentDescriptor);
+						disconnectWorker.execute();
+						break;
+					}
 				}
 				else {
 					sampleMsg = msgData.getMessage();
@@ -312,6 +328,16 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 */
 	public void disconnectSignalRecorderWorker() {
 		this.signalRecorderWorker = null;
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		super.propertyChange(evt);
+
+		if (BusyDialog.CANCEL_BUTTON_PRESSED.equals(evt.getPropertyName())) {
+			cancel(true);
+			firePropertyChange(MonitorWorker.OPENING_MONITOR_CANCELLED, false, true);
+		}
 	}
 
 	/**

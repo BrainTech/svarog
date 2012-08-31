@@ -107,7 +107,7 @@ public class Dialogs {
 	}
 
 	/**
-	 * Shows the {@link ExceptionDialog} with the provided exception.
+	 * Shows an exception dialog describing the provided exception.
 	 * The dialog is shown in the Event Dispatching Thread.
 	 * @param w the parent window or null if there is no parent
 	 * @param t the exception to be displayed
@@ -116,13 +116,15 @@ public class Dialogs {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				JOptionPane.showMessageDialog(w, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
+
+				ExceptionDialog dialog = new ExceptionDialog(w);
+				dialog.showDialog(t);
 			}
 		});
 	}
 
 	/**
-	 * Shows the {@link ExceptionDialog} with the provided exception.
+	 * Shows an exception dialog describing the provided exception.
 	 * The dialog is shown in the Event Dispatching Thread.
 	 * @param w the parent window or null if there is no parent
 	 * @param t the exception to be displayed

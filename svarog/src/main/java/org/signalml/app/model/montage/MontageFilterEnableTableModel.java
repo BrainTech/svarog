@@ -20,18 +20,18 @@ import org.signalml.domain.montage.MontageSampleFilterListener;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MontageFilterExclusionTableModel extends AbstractTableModel implements MontageListener, MontageSampleFilterListener {
+public class MontageFilterEnableTableModel extends AbstractTableModel implements MontageListener, MontageSampleFilterListener {
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final Logger logger = Logger.getLogger(MontageFilterExclusionTableModel.class);
+	protected static final Logger logger = Logger.getLogger(MontageFilterEnableTableModel.class);
 
 	private Montage montage;
 
 	private ColumnTableModel columnTableModel;
 	private RowTableModel rowTableModel;
 
-	public MontageFilterExclusionTableModel() {
+	public MontageFilterEnableTableModel() {
 	}
 
 	public ColumnTableModel getColumnTableModel() {
@@ -176,12 +176,12 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 			if (rowIndex == 0) {
 				return null;
 			}
-			return montage.isExcludeAllFilters(rowIndex-1);
+			return !montage.isExcludeAllFilters(rowIndex-1);
 		}
 		else if (rowIndex == 0) {
-			return !montage.isFilterEnabled(columnIndex-1);
+			return montage.isFilterEnabled(columnIndex-1);
 		} else {
-			return montage.isFilteringExcluded(columnIndex-1, rowIndex-1);
+			return !montage.isFilteringExcluded(columnIndex-1, rowIndex-1);
 		}
 	}
 
@@ -193,26 +193,14 @@ public class MontageFilterExclusionTableModel extends AbstractTableModel impleme
 			if (rowIndex == 0) {
 				return;
 			}
-			montage.setExcludeAllFilters(rowIndex-1, (Boolean) value);
+			montage.setExcludeAllFilters(rowIndex-1, !((Boolean) value));
 
 		}
 		else if (rowIndex == 0) {
-
-			montage.setFilterEnabled(columnIndex-1, !((Boolean) value));
+			montage.setFilterEnabled(columnIndex-1, (Boolean) value);
 
 		} else {
-
-			boolean exclude = (Boolean) value;
-			if (!exclude) {
-				if (montage.isExcludeAllFilters(rowIndex-1)) {
-					montage.setExcludeAllFilters(rowIndex-1, false);
-				}
-				if (!montage.isFilterEnabled(columnIndex-1)) {
-					montage.setFilterEnabled(columnIndex-1, true);
-				}
-			}
-
-			montage.setFilterChannelExcluded(columnIndex-1, rowIndex-1, exclude);
+			montage.setFilterChannelExcluded(columnIndex-1, rowIndex-1, !((Boolean) value));
 
 		}
 

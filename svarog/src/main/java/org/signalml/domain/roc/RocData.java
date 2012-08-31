@@ -4,6 +4,8 @@
 
 package org.signalml.domain.roc;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.io.Writer;
@@ -412,14 +414,14 @@ public class RocData implements WriterExportableTable, PropertyProvider {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.rocData.areaUnderCurve", "areaUnderCurve", RocData.class, "getAreaUnderCurve", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.maxAccuracyIteration", "maxAccuracyIteration", RocData.class, "getMaxAccuracyIteration", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.maxAccuracy", "maxAccuracy", RocData.class, "getMaxAccuracy", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.pointAboveOSSIteration", "pointAboveOSSIteration", RocData.class, "getPointAboveOSSIteration", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.pointAboveOSSDistance", "pointAboveOSSDistance", RocData.class, "getPointAboveOSSDistance", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.pointBelowOSSIteration", "pointBelowOSSIteration", RocData.class, "getPointBelowOSSIteration", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.pointBelowOSSDistance", "pointBelowOSSDistance", RocData.class, "getPointBelowOSSDistance", null));
-		list.add(new LabelledPropertyDescriptor("property.rocData.ossIntersectionTP", "ossIntersectionTP", RocData.class, "getOssIntersectionTP", null));
+		list.add(new LabelledPropertyDescriptor(_("area under curve"), "areaUnderCurve", RocData.class, "getAreaUnderCurve", null));
+		list.add(new LabelledPropertyDescriptor(_("maximal accuracy iteration"), "maxAccuracyIteration", RocData.class, "getMaxAccuracyIteration", null));
+		list.add(new LabelledPropertyDescriptor(_("maximal accuracy"), "maxAccuracy", RocData.class, "getMaxAccuracy", null));
+		list.add(new LabelledPropertyDescriptor(_("point abose OSS iteration"), "pointAboveOSSIteration", RocData.class, "getPointAboveOSSIteration", null));
+		list.add(new LabelledPropertyDescriptor(_("point above OSS distance"), "pointAboveOSSDistance", RocData.class, "getPointAboveOSSDistance", null));
+		list.add(new LabelledPropertyDescriptor(_("point below OSS iteration"), "pointBelowOSSIteration", RocData.class, "getPointBelowOSSIteration", null));
+		list.add(new LabelledPropertyDescriptor(_("point below OSS distance"), "pointBelowOSSDistance", RocData.class, "getPointBelowOSSDistance", null));
+		list.add(new LabelledPropertyDescriptor(_("OSS intersection TP"), "ossIntersectionTP", RocData.class, "getOssIntersectionTP", null));
 
 		return list;
 

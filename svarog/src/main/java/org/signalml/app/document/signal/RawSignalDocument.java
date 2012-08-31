@@ -4,6 +4,8 @@
 
 package org.signalml.app.document.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.util.List;
@@ -108,8 +110,8 @@ public class RawSignalDocument extends AbstractFileSignal {
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.rawSignal.sampleType", "sampleType", RawSignalDocument.class, "getSampleType", null));
-		list.add(new LabelledPropertyDescriptor("property.rawSignal.byteOrder", "byteOrder", RawSignalDocument.class, "getByteOrder", null));
+		list.add(new LabelledPropertyDescriptor(_("sample type"), "sampleType", RawSignalDocument.class, "getSampleType", null));
+		list.add(new LabelledPropertyDescriptor(_("byte order"), "byteOrder", RawSignalDocument.class, "getByteOrder", null));
 
 		return list;
 
