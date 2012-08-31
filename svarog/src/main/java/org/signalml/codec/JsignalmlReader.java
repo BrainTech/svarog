@@ -54,7 +54,7 @@ public class JsignalmlReader implements SignalMLCodecReader {
 
 	@Override
 	public String getFormatDescription() throws SignalMLCodecException {
-		return this.source.getFormatDescription();
+		return this.source.getFormatInfo();
 	}
 
 	@Override
