@@ -128,11 +128,6 @@ public class Dialogs {
 	 * @param t the exception to be displayed
 	 */
 	public static void showExceptionDialog(final Throwable t) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				JOptionPane.showMessageDialog(null, t.getMessage(), _("Exception occurred"), JOptionPane.ERROR_MESSAGE);
-			}
-		});
+		showExceptionDialog((Window) null, t);
 	}
 }
