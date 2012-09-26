@@ -24,82 +24,82 @@ public class TaskInfo implements Serializable {
 	private Date suspendTime;
 	private Date resumeTime;
 
-        /**
-         * Returns Date of creation of this Task
-         * @return Date of creation of this Task
-         */
+	/**
+	 * Returns Date of creation of this Task
+	 * @return Date of creation of this Task
+	 */
 	public Date getCreateTime() {
 		return createTime;
 	}
 
-        /**
-         * Sets time of creation of this Task
-         * @param createTime Date to set as creation time
-         */
+	/**
+	 * Sets time of creation of this Task
+	 * @param createTime Date to set as creation time
+	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
-        /**
-         * Returns Date of end of this Task
-         * @return Date of end of this Task
-         */
+	/**
+	 * Returns Date of end of this Task
+	 * @return Date of end of this Task
+	 */
 	public Date getEndTime() {
 		return endTime;
 	}
 
-        /**
-         * Sets time of end of this Task
-         * @param endTime Date to set as end time
-         */
+	/**
+	 * Sets time of end of this Task
+	 * @param endTime Date to set as end time
+	 */
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
 
-        /**
-         * Returns Date of resumption of this Task
-         * @return Date of resumption of this Task
-         */
+	/**
+	 * Returns Date of resumption of this Task
+	 * @return Date of resumption of this Task
+	 */
 	public Date getResumeTime() {
 		return resumeTime;
 	}
 
-        /**
-         * Sets time of resumption of this Task
-         * @param resumeTime Date to set as resumption time
-         */
+	/**
+	 * Sets time of resumption of this Task
+	 * @param resumeTime Date to set as resumption time
+	 */
 	public void setResumeTime(Date resumeTime) {
 		this.resumeTime = resumeTime;
 	}
 
-        /**
-         * Returns Date of start of this Task
-         * @return Date of start of this Task
-         */
+	/**
+	 * Returns Date of start of this Task
+	 * @return Date of start of this Task
+	 */
 	public Date getStartTime() {
 		return startTime;
 	}
 
-        /**
-         * Sets time of start of this Task
-         * @param startTime Date to set as start time
-         */
+	/**
+	 * Sets time of start of this Task
+	 * @param startTime Date to set as start time
+	 */
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
 
-        /**
-         * Returns Date of suspension of this Task
-         * @return Date of suspension of this Task
-         */
+	/**
+	 * Returns Date of suspension of this Task
+	 * @return Date of suspension of this Task
+	 */
 	public Date getSuspendTime() {
 		return suspendTime;
 	}
 
-        /**
-         * Sets time of suspension of this Task
-         * @param suspendTime Date to set as suspension time
-         */
+	/**
+	 * Sets time of suspension of this Task
+	 * @param suspendTime Date to set as suspension time
+	 */
 	public void setSuspendTime(Date suspendTime) {
 		this.suspendTime = suspendTime;
 	}

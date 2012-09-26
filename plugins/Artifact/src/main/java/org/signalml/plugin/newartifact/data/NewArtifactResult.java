@@ -1,4 +1,4 @@
-/* ArtifactResult.java created 2007-11-01
+/* NewArtifactResult.java created 2007-11-01
  *
  */
 
@@ -7,12 +7,12 @@ package org.signalml.plugin.newartifact.data;
 import java.io.File;
 import java.io.Serializable;
 
-/** ArtifactResult
+/** NewArtifactResult
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class NewArtifactResult implements Serializable {
+public class NewArtifactResult  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

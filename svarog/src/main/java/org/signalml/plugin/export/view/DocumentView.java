@@ -16,7 +16,7 @@ import org.signalml.plugin.export.signal.Document;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public abstract class DocumentView extends JPanel{
+public abstract class DocumentView extends JPanel {
 
 	static final long serialVersionUID = 1L;
 
@@ -30,11 +30,11 @@ public abstract class DocumentView extends JPanel{
 	/**
 	 * Creates a new document view with <code>FlowLayout</code>.
 	 * If <code>isDoubleBuffered</code> is true, this view
-     * will use a double buffer.
+	 * will use a double buffer.
 	 * @param isDoubleBuffered true for double-buffering, which
-     * uses additional memory space to achieve fast, flicker-free 
-     * updates
-     * @see JPanel#JPanel(boolean)
+	 * uses additional memory space to achieve fast, flicker-free
+	 * updates
+	 * @see JPanel#JPanel(boolean)
 	 */
 	public DocumentView(boolean isDoubleBuffered) {
 		super(isDoubleBuffered);
@@ -43,12 +43,12 @@ public abstract class DocumentView extends JPanel{
 	/**
 	 * Creates a new document view with the specified layout manager.
 	 * If <code>isDoubleBuffered</code> is true, this view
-     * will use a double buffer.
+	 * will use a double buffer.
 	 * @param layout the LayoutManager to use
 	 * @param isDoubleBuffered true for double-buffering, which
-     * uses additional memory space to achieve fast, flicker-free 
-     * updates
-     * @see JPanel#JPanel(LayoutManager, boolean)
+	 * uses additional memory space to achieve fast, flicker-free
+	 * updates
+	 * @see JPanel#JPanel(LayoutManager, boolean)
 	 */
 	public DocumentView(LayoutManager layout, boolean isDoubleBuffered) {
 		super(layout, isDoubleBuffered);
@@ -63,7 +63,7 @@ public abstract class DocumentView extends JPanel{
 	public DocumentView(LayoutManager layout) {
 		super(layout);
 	}
-	
+
 	/**
 	 * Returns a document to which this view is attached.
 	 * @return a document to which this view is attached

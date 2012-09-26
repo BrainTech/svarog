@@ -3,13 +3,15 @@
  */
 package org.signalml.plugin.export.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.app.model.ChannelPropertyEditor;
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.ChannelPropertyEditor;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
@@ -233,20 +235,20 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 
 	@Override
 	public Object[] getArguments() {
-		return new Object[]{
-				style.getDescriptionOrName(),
-				position,
-				length,
-				position + length,
-				channel
-			};
+		return new Object[] {
+				   style.getDescriptionOrName(),
+				   position,
+				   length,
+				   position + length,
+				   channel
+			   };
 	}
 
 	@Override
 	public String[] getCodes() {
-		return new String[]{
-				(channel == CHANNEL_NULL ? "tagWithoutChannel" : "tagWithChannel")
-			};
+		return new String[] {
+				   (channel == CHANNEL_NULL ? "tagWithoutChannel" : "tagWithChannel")
+			   };
 	}
 
 	@Override
@@ -259,15 +261,15 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 
 		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.tag.style", "style", Tag.class, "getStyle", null));
-		list.add(new LabelledPropertyDescriptor("property.tag.position", "position", Tag.class));
-		list.add(new LabelledPropertyDescriptor("property.tag.length", "length", Tag.class));
+		list.add(new LabelledPropertyDescriptor(_("style"), "style", Tag.class, "getStyle", null));
+		list.add(new LabelledPropertyDescriptor(_("position"), "position", Tag.class));
+		list.add(new LabelledPropertyDescriptor(_("length"), "length", Tag.class));
 		if (channel != CHANNEL_NULL) {
-			LabelledPropertyDescriptor channel = new LabelledPropertyDescriptor("property.tag.channel", "channel", Tag.class);
+			LabelledPropertyDescriptor channel = new LabelledPropertyDescriptor(_("channel"), "channel", Tag.class);
 			channel.setPropertyEditorClass(ChannelPropertyEditor.class);
 			list.add(channel);
 		}
-		list.add(new LabelledPropertyDescriptor("property.tag.annotation", "annotation", Tag.class));
+		list.add(new LabelledPropertyDescriptor(_("annotation"), "annotation", Tag.class));
 
 		return list;
 

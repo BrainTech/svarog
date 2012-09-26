@@ -4,14 +4,17 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5ToolConfigDialog
@@ -19,7 +22,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5ToolConfigDialog extends AbstractDialog {
+public class MP5ToolConfigDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,17 +32,17 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 
 	private MP5ToolConfigPanel configPanel;
 
-	public MP5ToolConfigDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public MP5ToolConfigDialog() {
+		super();
 	}
 
-	public MP5ToolConfigDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public MP5ToolConfigDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("mp5Method.config.title"));
+		setTitle(_("MP5 configuration"));
 		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
@@ -52,7 +55,7 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 
 	public MP5ToolConfigPanel getConfigPanel() {
 		if (configPanel == null) {
-			configPanel = new MP5ToolConfigPanel(messageSource,executorManager);
+			configPanel = new MP5ToolConfigPanel(executorManager);
 			configPanel.setLocalExecutorDialog(localExecutorDialog);
 		}
 		return configPanel;
@@ -73,13 +76,13 @@ public class MP5ToolConfigDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		if (!errors.hasErrors()) {
 			int executorCount = executorManager.getExecutorCount();
 			if (executorCount == 0) {
-				errors.reject("error.mp5.executorRequired");
+				errors.addError(_("You must configure at least one executor"));
 			}
 		}
 

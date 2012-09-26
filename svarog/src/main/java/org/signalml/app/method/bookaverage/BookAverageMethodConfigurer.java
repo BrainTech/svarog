@@ -27,7 +27,7 @@ public class BookAverageMethodConfigurer implements InitializingMethodConfigurer
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
 		dialogParent = manager.getDialogParent();
-		dialog = new BookAverageMethodDialog(manager.getMessageSource(), dialogParent);
+		dialog = new BookAverageMethodDialog(dialogParent);
 	}
 
 	@Override

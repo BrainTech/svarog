@@ -4,12 +4,12 @@
 
 package org.signalml.app.method.mp5;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.method.mp5.MP5Data;
@@ -55,6 +55,7 @@ public class MP5ApplicationData extends MP5Data {
 
 		SegmentedSampleSourceFactory factory = SegmentedSampleSourceFactory.getSharedInstance();
 		MultichannelSegmentedSampleSource segmentedSampleSource = factory.getSegmentedSampleSource(copyChain, signalSpace, tagDocument != null ? tagDocument.getTagSet() : null, plot.getPageSize(), plot.getBlockSize());
+
 
 		setSampleSource(segmentedSampleSource);
 

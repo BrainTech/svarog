@@ -3,6 +3,8 @@
  */
 package org.signalml.method.booktotag;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -17,10 +19,11 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -30,73 +33,73 @@ import org.springframework.validation.Errors;
  */
 public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 
-        /**
-         * Logger to save history of execution at.
-         */
+	/**
+	 * Logger to save history of execution at.
+	 */
 	protected static final Logger logger = Logger.getLogger(BookToTagMethod.class);
 
 	private static final String UID = "10984681-2eea-42aa-b637-bc4781baf692";
 	private static final String NAME = "bookToTag";
 	private static final int[] VERSION = new int[] {1,0};
 
-        /**
-         * Creates new instance of BookToTagMethod.
-         */
+	/**
+	 * Creates new instance of BookToTagMethod.
+	 */
 	public BookToTagMethod() throws SignalMLException {
 		super();
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String getUID() {
 		return UID;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String getName() {
 		return NAME;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public int[] getVersion() {
 		return VERSION;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new BookToTagData();
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean supportsDataClass(Class<?> clazz) {
 		return BookToTagData.class.isAssignableFrom(clazz);
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Class<?> getResultClass() {
 		return BookToTagResult.class;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void validate(Object data, Errors errors) {
 		super.validate(data, errors);
@@ -105,15 +108,15 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 
 	}
 
-        /**
-         * Executes this BookToTagMethod and returns BookToTagResult containing result of computation.
-         *
-         * @param dataObj the data object
-         * @param tracker the tracker used to monitor the execution
-         * @return the result object
-         * @throws ComputationException when computation fails for
-         * reasons other than bad input data, e.g. when book is empty
-         */
+	/**
+	 * Executes this BookToTagMethod and returns BookToTagResult containing result of computation.
+	 *
+	 * @param dataObj the data object
+	 * @param tracker the tracker used to monitor the execution
+	 * @return the result object
+	 * @throws ComputationException when computation fails for
+	 * reasons other than bad input data, e.g. when book is empty
+	 */
 	@Override
 	public Object doComputation(Object dataObj, final MethodExecutionTracker tracker) throws ComputationException {
 
@@ -243,20 +246,20 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getTickerCount() {
 		return 1;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		return messageSource.getMessage("bookToTagMethod.ticker");
+	public String getTickerLabel(int ticker) {
+		return _("Segments processed");
 	}
 
 

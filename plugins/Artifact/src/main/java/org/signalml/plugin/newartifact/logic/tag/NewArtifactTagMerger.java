@@ -45,7 +45,7 @@ public class NewArtifactTagMerger {
 				double scale = stretchFactor / group.stretchFactor;
 				for (IPluginTagDef tag : group.tags) {
 					tags.add(new PluginChannelTagDef(tag.getOffset() * scale,
-									 tag.getLength() * scale, tag.getChannel()));
+													 tag.getLength() * scale, tag.getChannel()));
 				}
 			}
 
@@ -62,6 +62,6 @@ public class NewArtifactTagMerger {
 		}
 
 		return new PluginTagGroup(NewArtifactTagMerger.NAME, type, tags,
-					  stretchFactor, NewArtifactTagMerger.DESCRIPTION);
+								  stretchFactor, NewArtifactTagMerger.DESCRIPTION);
 	}
 }

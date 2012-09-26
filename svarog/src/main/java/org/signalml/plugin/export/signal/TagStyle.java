@@ -4,6 +4,8 @@
 
 package org.signalml.plugin.export.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Stroke;
@@ -14,8 +16,8 @@ import java.util.List;
 
 import javax.swing.KeyStroke;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 import org.springframework.context.MessageSourceResolvable;
@@ -32,74 +34,74 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * the {@link SignalSelectionType type} of the {@link Tag selection}
-         */
+	/**
+	 * the {@link SignalSelectionType type} of the {@link Tag selection}
+	 */
 	private SignalSelectionType type;
 
-        /**
-         * the name of this style
-         */
+	/**
+	 * the name of this style
+	 */
 	private String name;
 
-        /**
-         * the description of this style
-         */
+	/**
+	 * the description of this style
+	 */
 	private String description;
 
-        /**
-         * Colour of the fill of the {@link Tag selection}
-         */
+	/**
+	 * Colour of the fill of the {@link Tag selection}
+	 */
 	private Color fillColor;
 
 	// composite not used, not written to XML, so not propagated
 
-        /**
-         * Colour of the outline of the {@link Tag selection}
-         */
+	/**
+	 * Colour of the outline of the {@link Tag selection}
+	 */
 	private Color outlineColor;
 
-        /**
-         * width of the outline
-         */
+	/**
+	 * width of the outline
+	 */
 	private float outlineWidth;
 
-        /**
-         * the array representing the dashing pattern for the outline
-         */
+	/**
+	 * the array representing the dashing pattern for the outline
+	 */
 	private float[] outlineDash;
 
-        /**
-         * the key that will be used to start creation of a
-         * {@link Tag selection} of a given type
-         */
+	/**
+	 * the key that will be used to start creation of a
+	 * {@link Tag selection} of a given type
+	 */
 	private KeyStroke keyStroke;
 
-        /**
-         * stroke for the outline
-         */
+	/**
+	 * stroke for the outline
+	 */
 	private Stroke outlineStroke;
 
 
-        /**
-         * tells whether the {@link Tag selection} is a marker
-         */
+	/**
+	 * tells whether the {@link Tag selection} is a marker
+	 */
 	private boolean marker = false;
 
-        /**
-         * default style of a {@link Tag selection} of a page
-         */
+	/**
+	 * default style of a {@link Tag selection} of a page
+	 */
 	private static final TagStyle defaultPageStyle = new TagStyle(SignalSelectionType.PAGE, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
 
-        /**
-         * Default style of a {@link Tag selection} of a block
-         */
+	/**
+	 * Default style of a {@link Tag selection} of a block
+	 */
 	private static final TagStyle defaultBlockStyle = new TagStyle(SignalSelectionType.BLOCK, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
 
-        /**
-         * Default style of a custom {@link Tag selection} of a single
-         * {@link MontageChannel channel}
-         */
+	/**
+	 * Default style of a custom {@link Tag selection} of a single
+	 * {@link MontageChannel channel}
+	 */
 	private static final TagStyle defaultChannelStyle = new TagStyle(SignalSelectionType.CHANNEL, "?", "Unknown", Color.RED, Color.RED.darker(), 1F, null, null, false);
 	/**
 	 * The definitions of the attributes which can be set for tags having this style.
@@ -112,19 +114,19 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	 */
 	private boolean visible = true;
 
-        /**
-         * Constructor. Creates a style of a {@link Tag tagged selection}
-         * for a selection of a given {@link SignalSelectionType type}.
-         * @param type the type of a selection
-         */
+	/**
+	 * Constructor. Creates a style of a {@link Tag tagged selection}
+	 * for a selection of a given {@link SignalSelectionType type}.
+	 * @param type the type of a selection
+	 */
 	public TagStyle(SignalSelectionType type) {
 		this.type = type;
 	}
 
-        /**
-         * Copy constructor.
-         * @param style the style to be copied
-         */
+	/**
+	 * Copy constructor.
+	 * @param style the style to be copied
+	 */
 	public TagStyle(TagStyle style) {
 		this.type = style.type;
 		this.name = style.name;
@@ -156,21 +158,21 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.marker = style.isMarker();
 	}
 
-        /**
-         * Constructor. Creates a style for a {@link Tag tagged selection} using
-         * given parameters.
-         * @param type the {@link SignalSelectionType type} of a selection
-         * @param name the name of a style
-         * @param description description of a style
-         * @param fillColor the colour of the fill of the selection
-         * @param outlineColor the colour of the outline of the selection
-         * @param outlineWidth the width of the outline of the selection
-         * @param outlineDash the array representing the dashing pattern
-         * for the outline
-         * @param keyStroke the key that will be used to start creation
-         * of a selection of a given type
-         * @param marker true if the selection is a marker, false otherwise
-         */
+	/**
+	 * Constructor. Creates a style for a {@link Tag tagged selection} using
+	 * given parameters.
+	 * @param type the {@link SignalSelectionType type} of a selection
+	 * @param name the name of a style
+	 * @param description description of a style
+	 * @param fillColor the colour of the fill of the selection
+	 * @param outlineColor the colour of the outline of the selection
+	 * @param outlineWidth the width of the outline of the selection
+	 * @param outlineDash the array representing the dashing pattern
+	 * for the outline
+	 * @param keyStroke the key that will be used to start creation
+	 * of a selection of a given type
+	 * @param marker true if the selection is a marker, false otherwise
+	 */
 	public TagStyle(SignalSelectionType type, String name, String description, Color fillColor, Color outlineColor, float outlineWidth, float[] outlineDash, KeyStroke keyStroke, boolean marker) {
 		this.type = type;
 		this.name = name;
@@ -183,16 +185,16 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.marker = marker;
 	}
 
-        /**
-         * Constructor. Creates a style for a {@link Tag tagged selection} using
-         * given parameters.
-         * @param type the {@link SignalSelectionType type} of a selection
-         * @param name the name of a style
-         * @param description description of a style
-         * @param fillColor the colour of the fill of the selection
-         * @param outlineColor the colour of the outline of the selection
-         * @param outlineWidth the width of the outline of the selection
-         */
+	/**
+	 * Constructor. Creates a style for a {@link Tag tagged selection} using
+	 * given parameters.
+	 * @param type the {@link SignalSelectionType type} of a selection
+	 * @param name the name of a style
+	 * @param description description of a style
+	 * @param fillColor the colour of the fill of the selection
+	 * @param outlineColor the colour of the outline of the selection
+	 * @param outlineWidth the width of the outline of the selection
+	 */
 	public TagStyle(SignalSelectionType type, String name, String description, Color fillColor, Color outlineColor, float outlineWidth) {
 		this.type = type;
 		this.name = name;
@@ -202,19 +204,19 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineWidth = outlineWidth;
 	}
 
-        /**
-         * Sets parameters of this style to given values
-         * @param name the name of a style
-         * @param description description of this style
-         * @param fillColor the colour of the fill of the {@link Tag selection}
-         * @param outlineColor the colour of the outline of the selection
-         * @param outlineWidth the width of the outline of the selection
-         * @param outlineDash the array representing the dashing pattern
-         * for the outline
-         * @param keyStroke the key that will be used to start creation
-         * of a selection of this style
-         * @param marker true if the selection is a marker, false otherwise
-         */
+	/**
+	 * Sets parameters of this style to given values
+	 * @param name the name of a style
+	 * @param description description of this style
+	 * @param fillColor the colour of the fill of the {@link Tag selection}
+	 * @param outlineColor the colour of the outline of the selection
+	 * @param outlineWidth the width of the outline of the selection
+	 * @param outlineDash the array representing the dashing pattern
+	 * for the outline
+	 * @param keyStroke the key that will be used to start creation
+	 * of a selection of this style
+	 * @param marker true if the selection is a marker, false otherwise
+	 */
 	public void setParameters(String name, String description, Color fillColor, Color outlineColor, float outlineWidth, float[] outlineDash, KeyStroke keyStroke, boolean marker, boolean visible) {
 		this.name = name;
 		this.description = description;
@@ -229,10 +231,10 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		outlineStroke = null;
 	}
 
-        /**
-         * Copies parameters of a given TagStyle to this style.
-         * @param style TagStyle object which parameters will be copied
-         */
+	/**
+	 * Copies parameters of a given TagStyle to this style.
+	 * @param style TagStyle object which parameters will be copied
+	 */
 	public void copyFrom(TagStyle style) {
 		this.name = style.name;
 		this.description = style.description;
@@ -248,134 +250,134 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		outlineStroke = null;
 	}
 
-        /**
-         * Returns the {@link SignalSelectionType type} of a
-         * {@link Tag selection}.
-         * @return the type of a selection
-         */
+	/**
+	 * Returns the {@link SignalSelectionType type} of a
+	 * {@link Tag selection}.
+	 * @return the type of a selection
+	 */
 	@Override
 	public SignalSelectionType getType() {
 		return type;
 	}
 
-        /**
-         * Returns the name of this style.
-         * @return the name of this style
-         */
+	/**
+	 * Returns the name of this style.
+	 * @return the name of this style
+	 */
 	@Override
 	public String getName() {
 		return name;
 	}
 
-        /**
-         * Sets the name of this style.
-         * @param name the name to be set
-         */
+	/**
+	 * Sets the name of this style.
+	 * @param name the name to be set
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-        /**
-         * Returns the description of this style.
-         * @return the description of this style
-         */
+	/**
+	 * Returns the description of this style.
+	 * @return the description of this style
+	 */
 	@Override
 	public String getDescription() {
 		return description;
 	}
 
-        /**
-         * Sets the description of this style.
-         * @param description the description of this style
-         */
+	/**
+	 * Sets the description of this style.
+	 * @param description the description of this style
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-        /**
-         * Returns the description of this style or, if it doesn't exist, the name
-         * @return the description of this style or, if it doesn't exist, the name
-         */
+	/**
+	 * Returns the description of this style or, if it doesn't exist, the name
+	 * @return the description of this style or, if it doesn't exist, the name
+	 */
 	@Override
 	public String getDescriptionOrName() {
 		return ((description != null && !description.isEmpty()) ? description : name);
 	}
 
-        /**
-         * Returns the colour of the fill of the {@link Tag selection}.
-         * @return the colour of the fill of the selection
-         */
+	/**
+	 * Returns the colour of the fill of the {@link Tag selection}.
+	 * @return the colour of the fill of the selection
+	 */
 	@Override
 	public Color getFillColor() {
 		return fillColor;
 	}
 
-        /**
-         * Sets the colour of the fill of the {@link Tag selection}.
-         * @param fillColor the colour of the fill of the selection
-         */
+	/**
+	 * Sets the colour of the fill of the {@link Tag selection}.
+	 * @param fillColor the colour of the fill of the selection
+	 */
 	public void setFillColor(Color fillColor) {
 		this.fillColor = fillColor;
 	}
 
-        /**
-         * Returns the colour of the outline of the selection
-         * @return the colour of the outline of the selection
-         */
+	/**
+	 * Returns the colour of the outline of the selection
+	 * @return the colour of the outline of the selection
+	 */
 	@Override
 	public Color getOutlineColor() {
 		return outlineColor;
 	}
 
-        /**
-         * Sets the colour of the outline of the {@link Tag selection}.
-         * @param outlineColor the colour of the outline of the selection
-         */
+	/**
+	 * Sets the colour of the outline of the {@link Tag selection}.
+	 * @param outlineColor the colour of the outline of the selection
+	 */
 	public void setOutlineColor(Color outlineColor) {
 		this.outlineColor = outlineColor;
 	}
 
-        /**
-         * Returns the width of the outline.
-         * @return the width of the outline
-         */
+	/**
+	 * Returns the width of the outline.
+	 * @return the width of the outline
+	 */
 	@Override
 	public float getOutlineWidth() {
 		return outlineWidth;
 	}
 
-        /**
-         * Sets the width of the outline.
-         * @param outlineWidth the width of the outline
-         */
+	/**
+	 * Sets the width of the outline.
+	 * @param outlineWidth the width of the outline
+	 */
 	public void setOutlineWidth(float outlineWidth) {
 		this.outlineWidth = outlineWidth;
 		outlineStroke = null;
 	}
 
-        /**
-         * Returns the array representing the dashing pattern for the outline.
-         * @return the array representing the dashing pattern for the outline
-         */
+	/**
+	 * Returns the array representing the dashing pattern for the outline.
+	 * @return the array representing the dashing pattern for the outline
+	 */
 	@Override
 	public float[] getOutlineDash() {
 		return outlineDash;
 	}
 
-        /**
-         * Sets the array representing the dashing pattern for the outline.
-         * @param outlineDash the array representing the dashing pattern
-         * for the outline
-         */
+	/**
+	 * Sets the array representing the dashing pattern for the outline.
+	 * @param outlineDash the array representing the dashing pattern
+	 * for the outline
+	 */
 	public void setOutlineDash(float[] outlineDash) {
 		this.outlineDash = outlineDash;
 		outlineStroke = null;
 	}
 
-        /**
-         * Returns the stroke for the outline.
-         * @return the stroke for the outline
-         */
+	/**
+	 * Returns the stroke for the outline.
+	 * @return the stroke for the outline
+	 */
 	@Override
 	public Stroke getOutlineStroke() {
 		if (outlineStroke == null) {
@@ -384,73 +386,73 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		return outlineStroke;
 	}
 
-        /**
-         * Returns the key that will be used to start creation of a
-         * {@link Tag selection} of this style.
-         * @return the key that will be used to start creation of a selection of
-         * this style
-         */
+	/**
+	 * Returns the key that will be used to start creation of a
+	 * {@link Tag selection} of this style.
+	 * @return the key that will be used to start creation of a selection of
+	 * this style
+	 */
 	@Override
 	public KeyStroke getKeyStroke() {
 		return keyStroke;
 	}
 
-        /**
-         * Sets the key that will be used to start creation of
-         * a {@link Tag selection} of this style.
-         * @param keyStroke the key that will be used to start creation
-         * of a selection of this style
-         */
+	/**
+	 * Sets the key that will be used to start creation of
+	 * a {@link Tag selection} of this style.
+	 * @param keyStroke the key that will be used to start creation
+	 * of a selection of this style
+	 */
 	public void setKeyStroke(KeyStroke keyStroke) {
 		this.keyStroke = keyStroke;
 	}
 
-        /**
-         * Returns if the {@link Tag selection} is a marker.
-         * @return true if the selection is a marker, false otherwise
-         */
+	/**
+	 * Returns if the {@link Tag selection} is a marker.
+	 * @return true if the selection is a marker, false otherwise
+	 */
 	@Override
 	public boolean isMarker() {
 		return marker;
 	}
 
-        /**
-         * Sets if the {@link Tag selection} is a marker.
-         * @param marker true if the selection is a marker, false otherwise
-         */
+	/**
+	 * Sets if the {@link Tag selection} is a marker.
+	 * @param marker true if the selection is a marker, false otherwise
+	 */
 	public void setMarker(boolean marker) {
 		this.marker = marker;
 	}
 
-        /**
-         * Returns the default style for a {@link Tag selection}.
-         * @return the default style for a selection
-         */
+	/**
+	 * Returns the default style for a {@link Tag selection}.
+	 * @return the default style for a selection
+	 */
 	public static TagStyle getDefault() {
 		return defaultPageStyle;
 	}
 
-        /**
-         * Returns the default style for a {@link Tag selection} of a page.
-         * @return the default style for a selection of a page
-         */
+	/**
+	 * Returns the default style for a {@link Tag selection} of a page.
+	 * @return the default style for a selection of a page
+	 */
 	public static TagStyle getDefaultPage() {
 		return defaultPageStyle;
 	}
 
-        /**
-         * Returns the default style for a {@link Tag selection} of a block.
-         * @return the default style for a selection of a block
-         */
+	/**
+	 * Returns the default style for a {@link Tag selection} of a block.
+	 * @return the default style for a selection of a block
+	 */
 	public static TagStyle getDefaultBlock() {
 		return defaultBlockStyle;
 	}
 
-        /**
-         * Returns the default style for a {@link Tag selection} of a part
-         * of a channel.
-         * @return the default style for a selection of a part of a channel
-         */
+	/**
+	 * Returns the default style for a {@link Tag selection} of a part
+	 * of a channel.
+	 * @return the default style for a selection of a part of a channel
+	 */
 	public static TagStyle getDefaultChannel() {
 		return defaultChannelStyle;
 	}
@@ -475,19 +477,19 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 
 		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.type", "type", TagStyle.class, "getType", null));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.name", "name", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.description", "description", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.fillColor", "fillColor", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineColor", "outlineColor", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineWidth", "outlineWidth", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.outlineDash", "outlineDash", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.keyStroke", "keyStroke", TagStyle.class));
-		list.add(new LabelledPropertyDescriptor("property.tagStyle.visibility", "visibility", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("type"), "type", TagStyle.class, "getType", null));
+		list.add(new LabelledPropertyDescriptor(_("name"), "name", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("description"), "description", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("fill color"), "fillColor", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("outline color"), "outlineColor", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("outline width"), "outlineWidth", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("outline dash"), "outlineDash", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("key stroke"), "keyStroke", TagStyle.class));
+		list.add(new LabelledPropertyDescriptor(_("visibility"), "visibility", TagStyle.class));
 
 		if (getType() == SignalSelectionType.CHANNEL) {
 
-			list.add(new LabelledPropertyDescriptor("property.tagStyle.marker", "marker", TagStyle.class));
+			list.add(new LabelledPropertyDescriptor(_("marker"), "marker", TagStyle.class));
 
 		}
 
@@ -495,26 +497,26 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 
 	}
 
-    /**
-     * Compares a given TagStyle to this style using their the names.
-     * @param o TagStyle the style to be compared to this style
-     * @return the effect of comparison of styles names
-     */
+	/**
+	 * Compares a given TagStyle to this style using their the names.
+	 * @param o TagStyle the style to be compared to this style
+	 * @return the effect of comparison of styles names
+	 */
 	@Override
 	public int compareTo(TagStyle o) {
 		return name.compareTo(o.name);
 	}
 
-    /**
-     * Returns the name of this style.
-     * @return the name of this style
-     */
+	/**
+	 * Returns the name of this style.
+	 * @return the name of this style
+	 */
 	@Override
 	public String toString() {
 		return getName();
 	}
 
-	public boolean equals(ExportedTagStyle style){
+	public boolean equals(ExportedTagStyle style) {
 		if (this.type != SignalSelectionType.typeByName(style.getType().getName())) return false;
 		if (this.name != style.getName()) return false;
 		if (this.description != style.getDescription()) return false;

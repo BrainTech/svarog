@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tagFile formatVersion="1.0">
-  <paging pageSize="20.0" blocksPerPage="5"/>
-  <tagDefinitions>
-    <defGroup name='pageTags'>
-      <tagItem name='1' description='Stage 1' outlineColor='00cccc' fillColor='00cccc' outlineWidth='1.0' outlineDash='' keyShortcut='1'/>
-      <tagItem name='2' description='Stage 2' outlineColor='99ff00' fillColor='99ff00' outlineWidth='1.0' outlineDash='' keyShortcut='2'/>
-      <tagItem name='3' description='Stage 3' outlineColor='ffff66' fillColor='ffff66' outlineWidth='1.0' outlineDash='' keyShortcut='3'/>
-      <tagItem name='4' description='Stage 4' outlineColor='ff9966' fillColor='ff9966' outlineWidth='1.0' outlineDash='' keyShortcut='4'/>
-      <tagItem name='m' description='MUSC' outlineColor='00ff66' fillColor='00ff66' outlineWidth='1.0' outlineDash='' keyShortcut='M'/>
-      <tagItem name='r' description='REM' outlineColor='cc00cc' fillColor='cc00cc' outlineWidth='1.0' outlineDash='' keyShortcut='R'/>
-      <tagItem name='w' description='WAKE' outlineColor='ffff00' fillColor='ffff00' outlineWidth='1.0' outlineDash='' keyShortcut='W'/>
-    </defGroup>
-    <defGroup name='blockTags'>
-      <tagItem name='A' description='Artifact' outlineColor='808080' fillColor='808080' outlineWidth='1.0' outlineDash='' keyShortcut='A'/>
-    </defGroup>
-    <defGroup name='channelTags'>
-      <tagItem name='B' description='Blue selection' outlineColor='0000ff' fillColor='0000ff' outlineWidth='1.0' outlineDash='' keyShortcut='shift B'/>
-      <tagItem name='G' description='Green selection' outlineColor='00ff00' fillColor='00ff00' outlineWidth='1.0' outlineDash='' keyShortcut='shift G'/>
-      <tagItem name='R' description='Red selection' outlineColor='ff0000' fillColor='ff0000' outlineWidth='1.0' outlineDash='' keyShortcut='shift R'/>
-      <tagItem name='Y' description='Yellow selection' outlineColor='ffff00' fillColor='ffff00' outlineWidth='1.0' outlineDash='' keyShortcut='shift Y'/>
-    </defGroup>
-  </tagDefinitions>
+	<paging pageSize="20.0" blocksPerPage="5"/>
+	<tagDefinitions>
+		<defGroup name='pageTags'>
+			<tagItem name='1' description='Stage 1' outlineColor='00cccc' fillColor='00cccc' outlineWidth='1.0' outlineDash='' keyShortcut='1'/>
+			<tagItem name='2' description='Stage 2' outlineColor='99ff00' fillColor='99ff00' outlineWidth='1.0' outlineDash='' keyShortcut='2'/>
+			<tagItem name='3' description='Stage 3' outlineColor='ffff66' fillColor='ffff66' outlineWidth='1.0' outlineDash='' keyShortcut='3'/>
+			<tagItem name='4' description='Stage 4' outlineColor='ff9966' fillColor='ff9966' outlineWidth='1.0' outlineDash='' keyShortcut='4'/>
+			<tagItem name='m' description='MUSC' outlineColor='00ff66' fillColor='00ff66' outlineWidth='1.0' outlineDash='' keyShortcut='M'/>
+			<tagItem name='r' description='REM' outlineColor='cc00cc' fillColor='cc00cc' outlineWidth='1.0' outlineDash='' keyShortcut='R'/>
+			<tagItem name='w' description='WAKE' outlineColor='ffff00' fillColor='ffff00' outlineWidth='1.0' outlineDash='' keyShortcut='W'/>
+		</defGroup>
+		<defGroup name='blockTags'>
+			<tagItem name='A' description='Artifact' outlineColor='808080' fillColor='808080' outlineWidth='1.0' outlineDash='' keyShortcut='A'/>
+		</defGroup>
+		<defGroup name='channelTags'>
+			<tagItem name='B' description='Blue selection' outlineColor='0000ff' fillColor='0000ff' outlineWidth='1.0' outlineDash='' keyShortcut='shift B'/>
+			<tagItem name='G' description='Green selection' outlineColor='00ff00' fillColor='00ff00' outlineWidth='1.0' outlineDash='' keyShortcut='shift G'/>
+			<tagItem name='R' description='Red selection' outlineColor='ff0000' fillColor='ff0000' outlineWidth='1.0' outlineDash='' keyShortcut='shift R'/>
+			<tagItem name='Y' description='Yellow selection' outlineColor='ffff00' fillColor='ffff00' outlineWidth='1.0' outlineDash='' keyShortcut='shift Y'/>
+		</defGroup>
+	</tagDefinitions>
 </tagFile>

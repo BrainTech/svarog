@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
-           http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+						   http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
 
 	<bean id="config"
-		class="org.signalml.plugin.newartifact.data.NewArtifactPluginConfig">
+		  class="org.signalml.plugin.newartifact.data.NewArtifactPluginConfig">
 		<constructor-arg type="java.lang.Class">
 			<value>org.signalml.plugin.newartifact.NewArtifactPlugin</value>
 		</constructor-arg>
-		<property name="messageSourceName">
-			<value>messageSourceAccessor</value>
-		</property>
 		<property name="methodConfig" ref="artifactMethodConfig">
 		</property>
 	</bean>
@@ -20,48 +17,26 @@
 	<bean id="streamCreator" class="org.signalml.plugin.tool.PluginStreamCreator">
 	</bean>
 
-	<bean id="messageSourceCreator" class="org.signalml.plugin.i18n.PluginMessageSourceManager">
-	</bean>
-
 	<bean id="artifactMethodConfig" class="org.signalml.plugin.data.PluginConfigMethodData">
 		<property name="methodName">
 			<value>new-artifact</value>
-		</property>
-		<property name="runMethodString">
-			<value>newArtifactMethod.runMethodString</value>
-		</property>
-		<property name="iconPath">
-			<value>org/signalml/app/icon/runmethod.png</value>
 		</property>
 		<property name="methodDescriptor" ref="artifactMethodDescriptor">
 		</property>
 		<property name="method" ref="artifactMethod">
 		</property>
 	</bean>
-	
+
 	<bean id="artifactMethodDescriptor" class="org.signalml.plugin.newartifact.method.NewArtifactMethodDescriptor">
-	
-	</bean>
-	
-	<bean id="artifactMethod" class="org.signalml.plugin.newartifact.method.NewArtifactMethod">
-	
+
 	</bean>
 
-	<bean id="messageSourceAccessor"
-		class="org.springframework.context.support.MessageSourceAccessor"
-		factory-bean="messageSourceCreator" factory-method="createInstance">
-		<constructor-arg ref="config"></constructor-arg>
-		<constructor-arg>
-			<list>
-				<value>classpath:org/signalml/app/resource/message</value>
-				<value>classpath:org/signalml/plugin/newartifact/resource/message
-				</value>
-			</list>
-		</constructor-arg>
+	<bean id="artifactMethod" class="org.signalml.plugin.newartifact.method.NewArtifactMethod">
+
 	</bean>
 
 	<bean id="streamer" class="com.thoughtworks.xstream.XStream"
-		factory-bean="streamCreator" factory-method="createInstance">
+		  factory-bean="streamCreator" factory-method="createInstance">
 		<constructor-arg ref="config"></constructor-arg>
 		<constructor-arg>
 			<list>

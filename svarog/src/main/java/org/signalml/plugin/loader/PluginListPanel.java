@@ -14,12 +14,12 @@ import javax.swing.border.TitledBorder;
  * the application.
  * <p>
  * For a description of the table see {@link PluginTableModel}.
- * 
+ *
  * @author Marcin Szumski
  */
 public class PluginListPanel extends JPanel {
-	
-	
+
+
 	private static final long serialVersionUID = 1L;
 	/**
 	 * an array of plug-in {@link PluginState states}
@@ -35,21 +35,21 @@ public class PluginListPanel extends JPanel {
 	 * which plug-ins are active
 	 */
 	private JTable table;
-	
+
 	/**
 	 * Constructor.
 	 * Creates the {@link PluginTableModel table} in a scroll pane.
 	 * @param pluginDescriptions an array of plug-in
-	 * {@link PluginState states} 
+	 * {@link PluginState states}
 	 */
 	public PluginListPanel(ArrayList<PluginState> pluginDescriptions) {
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder("List of plugins"),
-		        null
+			new TitledBorder("List of plugins"),
+			null
 		);
 
 		setBorder(cb);
-		
+
 		descriptions = pluginDescriptions;
 		model = new PluginTableModel(descriptions);
 		table = new JTable(model);
@@ -59,23 +59,23 @@ public class PluginListPanel extends JPanel {
 		table.setFillsViewportHeight(true);
 		add(scrollPane);
 	}
-	
+
 	/**
 	 * Fills the table (actually the model) with the given data.
 	 * @param pluginDescriptions an array of plug-in {@link PluginState states}
 	 */
-	public void fillPanelFromModel(ArrayList<PluginState> pluginDescriptions){
+	public void fillPanelFromModel(ArrayList<PluginState> pluginDescriptions) {
 		model.fromModel(pluginDescriptions);
 	}
-	
+
 	/**
 	 * Using the given {@link PluginTableModel model} updates the
 	 * data which plug-ins are active.
 	 * @param descriptions an array of plug-in {@link PluginState states}
 	 */
-	public void fillModelFromPanel(ArrayList<PluginState> descriptions){
+	public void fillModelFromPanel(ArrayList<PluginState> descriptions) {
 		model.fillModel(descriptions);
 	}
-	
-	
+
+
 }

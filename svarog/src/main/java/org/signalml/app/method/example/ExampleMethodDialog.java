@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.example;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -21,26 +23,25 @@ import javax.swing.border.TitledBorder;
 
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.Method;
 import org.signalml.method.example.ExampleData;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExampleMethodDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ExampleMethodDialog extends AbstractDialog implements InitializingMethodConfigurer {
+public class ExampleMethodDialog extends AbstractDialog  implements InitializingMethodConfigurer {
 
 	private static final long serialVersionUID = 1L;
 
 	private JTextField textField;
 	private JCheckBox noWaitCheckBox;
 
-	public ExampleMethodDialog(MessageSourceAccessor messageSource,Window window) {
-		super(messageSource, window,true);
+	public ExampleMethodDialog(Window window) {
+		super(window,true);
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 	@Override
 	public JComponent createInterface() {
 
-		JLabel label = new JLabel(messageSource.getMessage("exampleMethod.count"));
+		JLabel label = new JLabel(_("Useless deliberation count"));
 		textField = new JTextField();
 		textField.setPreferredSize(new Dimension(150,20));
 		textField.setHorizontalAlignment(JTextField.RIGHT);
@@ -71,7 +72,7 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 		panel.add(Box.createHorizontalStrut(5));
 		panel.add(textField);
 
-		JLabel noWaitLabel = new JLabel(messageSource.getMessage("exampleMethod.noWait"));
+		JLabel noWaitLabel = new JLabel(_("Hurry up"));
 		noWaitCheckBox = new JCheckBox();
 
 		JPanel noWaitPanel = new JPanel();
@@ -83,8 +84,8 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 
 		JPanel interfacePanel = new JPanel(new BorderLayout(3,3));
 		CompoundBorder cb = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("exampleMethod.configure")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Configure search")),
+			new EmptyBorder(3,3,3,3)
 		);
 		interfacePanel.setBorder(cb);
 
@@ -102,7 +103,7 @@ public class ExampleMethodDialog extends AbstractDialog implements InitializingM
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("exampleMethod.configure"));
+		setTitle(_("Configure search"));
 		super.initialize();
 	}
 

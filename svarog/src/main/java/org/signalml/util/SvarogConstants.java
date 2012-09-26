@@ -6,6 +6,7 @@ package org.signalml.util;
 
 import java.awt.Dimension;
 import java.util.Locale;
+import java.util.Scanner;
 
 /**
  * SvarogConstants contains general project constants.
@@ -19,9 +20,11 @@ public abstract class SvarogConstants {
 	public static final String NAME = "Svarog";
 
 	/**
-	 * Actual version of the project
+	 * Actual version of the project. This is generated using git-describe.
+	 * The format is {lastest-tag}[-{commits-since-the-tag}-{sha1}[{+ if dirty}]].
 	 */
-	public static final String VERSION = "0.5.0-SNAPSHOT";
+	public static final String VERSION =
+		new Scanner(SvarogConstants.class.getResourceAsStream("/svarog/git-version")).next();
 
 	/**
 	 * Recommended minimal dimension of the screen
@@ -32,5 +35,8 @@ public abstract class SvarogConstants {
 	 * Available languages
 	 */
 	public static Locale[] AVAILABLE_LOCALES = new Locale[] {Locale.ENGLISH, new Locale("pl")};
+
+	/** resource bundle base name */
+	public static final String I18nCatalogId = "org.signalml.app";
 
 }

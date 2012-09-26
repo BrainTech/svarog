@@ -6,12 +6,14 @@ package org.signalml.method.iterator;
 
 import java.io.Serializable;
 
+import org.signalml.plugin.export.method.BaseMethodData;
+
 /** MethodIteratorData
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MethodIteratorData implements Serializable {
+public class MethodIteratorData extends BaseMethodData implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

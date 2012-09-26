@@ -6,6 +6,7 @@ package org.signalml.app.config;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.XMLUtils;
@@ -29,9 +30,6 @@ public abstract class AbstractXMLConfiguration {
 	protected XStream streamer;
 
 	@XStreamOmitField
-	protected File file;
-
-	@XStreamOmitField
 	protected File profileDir;
 
 	public void writeToXML(File f, XStream streamer) throws IOException {
@@ -47,12 +45,8 @@ public abstract class AbstractXMLConfiguration {
 	private File getUsableFile(File file) {
 		File useFile = null;
 		if (file == null) {
-			if (this.file == null) {
-				if (profileDir != null) {
-					useFile = getStandardFile(profileDir);
-				}
-			} else {
-				useFile = this.file;
+			if (profileDir != null) {
+				useFile = getStandardFile(profileDir);
 			}
 		} else {
 			useFile = file;
@@ -64,11 +58,61 @@ public abstract class AbstractXMLConfiguration {
 	}
 
 	public void writeToPersistence(File file) throws IOException {
-		writeToXML(getUsableFile(file), getStreamer());
+		File usableFile = getUsableFile(file);
+		if (usableFile.isDirectory()) {
+			/*
+			 * TODO: If this configuration was read from multiple files
+			 * it should be able to write the changes made to it
+			 * to the same files it read it from.
+			 * For now, this functionality is not needed,
+			 * so it is not implemented.
+			 */
+			throw new UnsupportedOperationException("Writing one XML configuration to multiple files is not supported yet.");
+		}
+		else {
+			writeToXML(usableFile, getStreamer());
+		}
 	}
 
 	public void readFromPersistence(File file) throws IOException {
-		readFromXML(getUsableFile(file), getStreamer());
+		File usableFile = getUsableFile(file);
+		if (usableFile.isDirectory()) {
+			File[] files = usableFile.listFiles();
+			readFromMultipleFiles(files);
+		}
+		else {
+			readFromXML(usableFile, getStreamer());
+		}
+	}
+
+	/**
+	 * Reads this configuration from multiple files and merges the data
+	 * into one configuration.
+	 * @param files the files from which this configuration should be read
+	 * @throws IOException
+	 */
+	private void readFromMultipleFiles(File[] files) throws IOException {
+		for (File f: files) {
+			if (f.isDirectory())
+				continue;
+			try {
+				AbstractXMLConfiguration config = this.getClass().newInstance();
+				XMLUtils.objectFromFile(config, f, getStreamer());
+				this.copyFrom(config);
+			} catch (InstantiationException ex) {
+				java.util.logging.Logger.getLogger(AbstractXMLConfiguration.class.getName()).log(Level.SEVERE, null, ex);
+			} catch (IllegalAccessException ex) {
+				java.util.logging.Logger.getLogger(AbstractXMLConfiguration.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+	}
+
+	/**
+	 * Copies the contents of some configuration to this configuration.
+	 * @param otherConfig the configuration from which the data shoul be copied
+	 */
+	protected void copyFrom(AbstractXMLConfiguration otherConfig) {
+		throw new UnsupportedOperationException("XML configuration from directories is not supported for this manager - please implement the copyFrom method for your XML configuration manager if you want to read one XML configuration from multiple files at once.");
 	}
 
 	public void maybeReadFromPersistence(String fnf, String oth) {
@@ -97,7 +141,7 @@ public abstract class AbstractXMLConfiguration {
 	}
 
 	public final File getStandardFile(File profileDir) {
-		return new File(profileDir.getAbsolutePath()+File.separator+getStandardFilename());
+		return new File(profileDir.getAbsolutePath() + File.separator + getStandardFilename());
 	}
 
 	public abstract String getStandardFilename();
@@ -108,14 +152,6 @@ public abstract class AbstractXMLConfiguration {
 
 	public void setStreamer(XStream streamer) {
 		this.streamer = streamer;
-	}
-
-	public File getFile() {
-		return file;
-	}
-
-	public void setFile(File file) {
-		this.file = file;
 	}
 
 	public File getProfileDir() {

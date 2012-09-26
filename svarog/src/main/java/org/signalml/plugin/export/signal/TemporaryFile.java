@@ -5,7 +5,7 @@ import java.io.File;
 /**
  * The file that is removed from the disk when this instance is destroyed
  * by Garbage Collector.
- * 
+ *
  * @author Marcin Szumski
  */
 public class TemporaryFile extends File {
@@ -30,9 +30,9 @@ public class TemporaryFile extends File {
 
 
 	private static final long serialVersionUID = 1L;
-	
 
-	
+
+
 
 	@Override
 	protected void finalize() {

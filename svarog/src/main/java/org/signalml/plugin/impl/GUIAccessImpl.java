@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl;
 
@@ -22,10 +22,10 @@ import javax.swing.JToolBar;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
-import org.signalml.app.view.ViewerDocumentTabbedPane;
-import org.signalml.app.view.ViewerElementManager;
-import org.signalml.app.view.ViewerTabbedPane;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.workspace.ViewerDocumentTabbedPane;
+import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.app.view.workspace.ViewerTabbedPane;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.signal.SignalToolButtonListener;
@@ -54,14 +54,14 @@ import org.signalml.plugin.export.view.ViewerTreePane;
  * @author Marcin Szumski
  */
 public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
-	
+
 	private static final Logger logger = Logger.getLogger(GUIAccessImpl.class);
 
 	/**
-	 * informs whether plug-in interface is in the initialization phase 
+	 * informs whether plug-in interface is in the initialization phase
 	 */
 	private boolean initializationPhase = true;
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a signal plot is right-clicked
@@ -80,7 +80,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #signalPlotPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> signalPlotPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a hypnogram plot is right-clicked
@@ -99,7 +99,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #hypnogramPlotPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> hypnogramPlotPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a column header is right-clicked
@@ -118,7 +118,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #columnHeaderPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> columnHeaderPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a MRUD entry node in the workspace tree
@@ -139,7 +139,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #workspaceTreeMRUDPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> workspaceTreeMRUDPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a document node in the workspace tree
@@ -160,10 +160,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #workspaceTreeDocumentPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> workspaceTreeDocumentPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
-	 * the pop-up menu that appears when a different place of a workspace tree tab 
+	 * the pop-up menu that appears when a different place of a workspace tree tab
 	 * (tab "workspace" in the pane on the left)
 	 * then a MRUD entry or a document node is right-clicked
 	 */
@@ -184,7 +184,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #workspaceTreeOtherPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> workspaceTreeOtherPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a signal document node in the tag tree
@@ -205,7 +205,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #tagTreeSignalDocumentPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> tagTreeSignalDocumentPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a tag document node in the tag tree
@@ -226,7 +226,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #tagTreeTagDocumentPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> tagTreeTagDocumentPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a tag style node in the tag tree
@@ -268,7 +268,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #tagTreeTagPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> tagTreeTagPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a document node in the signal tree
@@ -289,7 +289,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #signalTreeDocumentPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> signalTreeDocumentPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a signal page node in the signal tree
@@ -310,7 +310,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #signalTreeSignalPagePopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> signalTreeSignalPagePopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * actions that will be used to create buttons that will be added to
 	 * the pop-up menu that appears when a book document node in the book tree
@@ -331,12 +331,12 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * is taken, if true element from {@link #bookTreeBookDocumentPopupSubmenus} is used.
 	 */
 	private ArrayList<Boolean> bookTreeBookDocumentPopupIsSubmenu = new ArrayList<Boolean>();
-	
+
 	/**
 	 * the list of signal tools that will be copied and added to {@link SignalView}s.
 	 */
 	private ArrayList<SignalTool> signalTools = new ArrayList<SignalTool>();
-	
+
 	/**
 	 * for every signal tool the {@link ToolButtonParameters parameters} that
 	 * will be used to create buttons for it
@@ -346,16 +346,20 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * created buttons for signal tools. every view has its own button
 	 */
 	private HashMap<SignalTool, HashMap<SignalView, JToggleButton>> buttonsForTools = new HashMap<SignalTool, HashMap<SignalView,JToggleButton>>();
-	
+
 	/**
 	 * the buttons that will be added to main toolbar in signalView
 	 */
 	private ArrayList<Action> actionsToMainSignalToolbar = new ArrayList<Action>();
 
-    protected GUIAccessImpl(PluginAccessClass parent) {
-        super(parent);
-    }
-	
+	private GUIAccessImpl() { }
+
+	private static final GUIAccessImpl _instance = new GUIAccessImpl();
+
+	protected static GUIAccessImpl getInstance() {
+		return _instance;
+	}
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToToolsMenu(javax.swing.AbstractAction)
 	 */
@@ -370,7 +374,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addSubmenuToToolsMenu(javax.swing.JMenu)
 	 */
 	@Override
-	public JMenuItem addSubmenuToToolsMenu(JMenu menu){
+	public JMenuItem addSubmenuToToolsMenu(JMenu menu) {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
 		JMenu toolsMenu = getViewerElementManager().getToolsMenu();
 		return toolsMenu.add(menu);
@@ -404,12 +408,12 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * @param isSubmenu the list in which order is stored
 	 * @throws UnsupportedOperationException if it is not an initialization phase
 	 */
-	private void delayedAddButton(Action action, ArrayList<Action> actions, ArrayList<Boolean> isSubmenu) throws UnsupportedOperationException{
+	private void delayedAddButton(Action action, ArrayList<Action> actions, ArrayList<Boolean> isSubmenu) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
 		actions.add(action);
 		isSubmenu.add(false);
 	}
-	
+
 	/**
 	 * Adds a submenu to the given list and adds information that it
 	 * was a submenu to given order list.
@@ -418,17 +422,17 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * @param isSubmenu the list in which order is stored
 	 * @throws UnsupportedOperationException if it is not an initialization phase
 	 */
-	private void delayedAddSubMenu(JMenu menu, ArrayList<JMenu> submenus, ArrayList<Boolean> isSubmenu) throws UnsupportedOperationException{
+	private void delayedAddSubMenu(JMenu menu, ArrayList<JMenu> submenus, ArrayList<Boolean> isSubmenu) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
 		submenus.add(menu);
 		isSubmenu.add(true);
 	}
-	
-	private JMenu copyMenu(JMenu menu){
+
+	private JMenu copyMenu(JMenu menu) {
 		JMenu copy = new JMenu(menu.getText());
 		Component[] menuComponents = menu.getMenuComponents();
-		for (Component component : menuComponents){
-			if (component instanceof JMenuItem){
+		for (Component component : menuComponents) {
+			if (component instanceof JMenuItem) {
 				JMenuItem item = (JMenuItem) component;
 				Action action = item.getAction();
 				copy.add(action);
@@ -436,7 +440,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 		}
 		return copy;
 	}
-	
+
 	/**
 	 * Adds buttons and submenus from given lists to the given menu.
 	 * To determine the order of adding uses {@code isSubmenu} array.
@@ -447,14 +451,14 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * If successive value is false next element from {@code actions}
 	 * is taken, if true element from {@code submenus} is used.
 	 */
-	private void addToPopupMenu(JPopupMenu menu, ArrayList<Action> actions, ArrayList<JMenu> submenus, ArrayList<Boolean> isSubmenu){
+	private void addToPopupMenu(JPopupMenu menu, ArrayList<Action> actions, ArrayList<JMenu> submenus, ArrayList<Boolean> isSubmenu) {
 		try {
 			int iSubmenu=0, iButton=0;
-			if (isSubmenu.size() != (submenus.size() + actions.size())){
+			if (isSubmenu.size() != (submenus.size() + actions.size())) {
 				//throw new RuntimeException("lists for submenus and buttons are invalid");
 			}
-			for (Boolean isMenu : isSubmenu){
-				if (isMenu){
+			for (Boolean isMenu : isSubmenu) {
+				if (isMenu) {
 					menu.add(copyMenu(submenus.get(iSubmenu++)));
 				} else {
 					menu.add(actions.get(iButton++));
@@ -465,7 +469,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToSignalPlotPopupMenu(javax.swing.AbstractAction)
 	 */
@@ -481,15 +485,15 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addSubMenuToSignalPlotPopupMenu(JMenu menu) throws UnsupportedOperationException {
 		delayedAddSubMenu(menu, signalPlotPopupSubmenus, signalPlotPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to signal plot popup menu.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToSignalPlotPopupMenu(JPopupMenu menu){
+	public void addToSignalPlotPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, signalPlotPopupButtons, signalPlotPopupSubmenus, signalPlotPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToHypnogramPlotPopupMenu(javax.swing.AbstractAction)
 	 */
@@ -510,10 +514,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * Adds buttons and submenus to hypnogram plot popup menu.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToHypnogramPlotPopupMenu(JPopupMenu menu){
+	public void addToHypnogramPlotPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, hypnogramPlotPopupButtons, hypnogramPlotPopupSubmenus, hypnogramPlotPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToColumnHeaderPopupMenu(javax.swing.AbstractAction)
 	 */
@@ -529,12 +533,12 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addSubMenuToColumnHeaderPopupMenu(JMenu menu) throws UnsupportedOperationException {
 		delayedAddSubMenu(menu, columnHeaderPopupSubmenus, columnHeaderPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to column header popup menu.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToColumnHeaderPopupMenu(JPopupMenu menu){
+	public void addToColumnHeaderPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, columnHeaderPopupButtons, columnHeaderPopupSubmenus, columnHeaderPopupIsSubmenu);
 	}
 
@@ -564,10 +568,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * @param view the signal view
 	 * @return the button
 	 */
-	private JToggleButton getButtonForView(SignalTool tool, SignalView view){
+	private JToggleButton getButtonForView(SignalTool tool, SignalView view) {
 		HashMap<SignalView, JToggleButton> buttonsForViews = buttonsForTools.get(tool);
 		JToggleButton button = buttonsForViews.get(view);
-		if (null == button){
+		if (button == null) {
 			ToolButtonParameters parameters = parametersForToolButtons.get(tool);
 			button = new JToggleButton(parameters.getIcon());
 			if (parameters.getToolTipText() != null)
@@ -576,7 +580,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 		}
 		return button;
 	}
-	
+
 	/**
 	 * Performs all operations necessary to register signal tools for a signal view:
 	 * <ul>
@@ -590,15 +594,15 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * @param toolSelectionListener the listener which signal tool is selected
 	 * @param view the view for which the tools are registered
 	 */
-	public void registerSignalTools(Map<ButtonModel, SignalTool> toolMap, ButtonGroup toolButtonGroup, ActionListener toolSelectionListener, SignalView view){
+	public void registerSignalTools(Map<ButtonModel, SignalTool> toolMap, ButtonGroup toolButtonGroup, ActionListener toolSelectionListener, SignalView view) {
 		try {
-			for (SignalTool tool : signalTools){
-				try{
+			for (SignalTool tool : signalTools) {
+				try {
 					SignalTool signalTool = tool.createCopy();
 					signalTool.setSignalView(view);
 					JToggleButton button = getButtonForView(tool, view);
 					ToolButtonParameters parameters = parametersForToolButtons.get(tool);
-					if (parameters.getListener() != null){
+					if (parameters.getListener() != null) {
 						button.addMouseListener(parameters.getListener().createCopy(signalTool, button));
 					}
 					toolMap.put(button.getModel(), signalTool);
@@ -611,17 +615,18 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the registration of signal tools");
-			e.printStackTrace();		}
+			e.printStackTrace();
+		}
 	}
-	
+
 	/**
 	 * Adds buttons associated with signal tools to the main toolbar.
 	 * @param mainToolBar the main toolbar.
 	 * @param view the view for which the tools are registered
 	 */
-	public void toolsToMainMenu(JToolBar mainToolBar, SignalView view){
-		try{
-			for (SignalTool tool: signalTools){
+	public void toolsToMainMenu(JToolBar mainToolBar, SignalView view) {
+		try {
+			for (SignalTool tool: signalTools) {
 				JToggleButton button = getButtonForView(tool, view);
 				mainToolBar.add(button);
 			}
@@ -630,7 +635,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToMainToolbar(javax.swing.AbstractAction)
 	 */
@@ -644,9 +649,9 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * Adds buttons to main toolbar in the signal view.
 	 * @param mainToolBar the main toolbar.
 	 */
-	public void addToMainSignalToolBar(JToolBar mainToolBar){
-		try{
-			for (Action action : actionsToMainSignalToolbar){
+	public void addToMainSignalToolBar(JToolBar mainToolBar) {
+		try {
+			for (Action action : actionsToMainSignalToolbar) {
 				mainToolBar.add(action);
 			}
 		} catch (Exception e) {
@@ -674,7 +679,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	@Override
 	public void addPropertyTab(JPanel panel) {
 		ViewerTabbedPane pane = getViewerElementManager().getPropertyTabbedPane();
-		pane.addTab(panel.getName(), null, panel, panel.getToolTipText());
+		pane.addTab(panel.getName(), (String) null, panel, panel.getToolTipText());
 	}
 
 	/** Sets {@link #initializationPhase} to false. */
@@ -712,7 +717,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addButtonToWorkspaceTreeMRUDPopupMenu(Action action) throws UnsupportedOperationException {
 		delayedAddButton(action, workspaceTreeMRUDPopupButtons, workspaceTreeMRUDPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.PluginAccessGUI#addSubMenuToWorkspaceTreeMRUDPopupMenu(javax.swing.JMenu)
 	 */
@@ -726,10 +731,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * on a MRUD entry node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToWorkspaceTreeMRUDPopupMenu(JPopupMenu menu){
+	public void addToWorkspaceTreeMRUDPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, workspaceTreeMRUDPopupButtons, workspaceTreeMRUDPopupSubmenus, workspaceTreeMRUDPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.PluginAccessGUI#addButtonToWorkspaceTreeDocumentPopupMenu(javax.swing.Action)
 	 */
@@ -745,16 +750,16 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addSubMenuToWorkspaceTreeDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException {
 		delayedAddSubMenu(menu, workspaceTreeDocumentPopupSubmenus, workspaceTreeDocumentPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to the popup menu in workspace tree tab, which appears after clicking
 	 * on a document node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToWorkspaceTreeDocumentPopupMenu(JPopupMenu menu){
+	public void addToWorkspaceTreeDocumentPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, workspaceTreeDocumentPopupButtons, workspaceTreeDocumentPopupSubmenus, workspaceTreeDocumentPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.PluginAccessGUI#addButtonToWorkspaceTreeOtherPopupMenu(javax.swing.Action)
 	 */
@@ -776,10 +781,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * not on a MRUD entry node and not on a document node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToWorkspaceTreeOtherPopupMenu(JPopupMenu menu){
+	public void addToWorkspaceTreeOtherPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, workspaceTreeOtherPopupButtons, workspaceTreeOtherPopupSubmenus, workspaceTreeOtherPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.PluginAccessGUI#addButtonToTagTreeSignalDocumentPopupMenu(javax.swing.Action)
 	 */
@@ -849,25 +854,25 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * on a signal document node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToTagTreeSignalDocumentPopupMenu(JPopupMenu menu){
+	public void addToTagTreeSignalDocumentPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, tagTreeSignalDocumentPopupButtons, tagTreeSignalDocumentPopupSubmenus, tagTreeSignalDocumentPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to the popup menu in tag tree tab, which appears after clicking
 	 * on a tag document node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToTagTreeTagDocumentPopupMenu(JPopupMenu menu){
+	public void addToTagTreeTagDocumentPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, tagTreeTagDocumentPopupButtons, tagTreeTagDocumentPopupSubmenus, tagTreeTagDocumentPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to the popup menu in tag tree tab, which appears after clicking
 	 * on a tag style node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToTagTreeTagStylePopupMenu(JPopupMenu menu){
+	public void addToTagTreeTagStylePopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, tagTreeTagStylePopupButtons, tagTreeTagStylePopupSubmenus, tagTreeTagStylePopupIsSubmenu);
 	}
 
@@ -876,10 +881,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * on a tag node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToTagTreeTagPopupMenu(JPopupMenu menu){
+	public void addToTagTreeTagPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, tagTreeTagPopupButtons, tagTreeTagPopupSubmenus, tagTreeTagPopupIsSubmenu);
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.view.PluginAccessGUI#addButtonToSignalTreeDocumentPopupMenu(javax.swing.Action)
 	 */
@@ -911,22 +916,22 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addSubMenuToSignalTreeSignalPagePopupMenu(JMenu menu) throws UnsupportedOperationException {
 		delayedAddSubMenu(menu, signalTreeSignalPagePopupSubmenus, signalTreeSignalPagePopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to the popup menu in signal tree tab, which appears after clicking
 	 * on a signal document node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToSignalTreeDocumentPopupMenu(JPopupMenu menu){
+	public void addToSignalTreeDocumentPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, signalTreeDocumentPopupButtons, signalTreeDocumentPopupSubmenus, signalTreeDocumentPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to the popup menu in signal tree tab, which appears after clicking
 	 * on a signal page node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToSignalTreeSignalPagePopupMenu(JPopupMenu menu){
+	public void addToSignalTreeSignalPagePopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, signalTreeSignalPagePopupButtons, signalTreeSignalPagePopupSubmenus, signalTreeSignalPagePopupIsSubmenu);
 	}
 
@@ -945,13 +950,13 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addSubMenuToBookTreeBookDocumentPopupMenu(JMenu menu) throws UnsupportedOperationException {
 		delayedAddSubMenu(menu, bookTreeBookDocumentPopupSubmenus, bookTreeBookDocumentPopupIsSubmenu);
 	}
-	
+
 	/**
 	 * Adds buttons and submenus to the popup menu in book tree tab, which appears after clicking
 	 * on a document node.
 	 * @param menu the menu to which elements are added
 	 */
-	public void addToBookTreeBookDocumentPopupMenu(JPopupMenu menu){
+	public void addToBookTreeBookDocumentPopupMenu(JPopupMenu menu) {
 		addToPopupMenu(menu, bookTreeBookDocumentPopupButtons, bookTreeBookDocumentPopupSubmenus, bookTreeBookDocumentPopupIsSubmenu);
 	}
 
@@ -966,7 +971,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	public void addMainTab(DocumentView tab, String title, Icon icon, String tip) {
 		ViewerDocumentTabbedPane documentTabbedPane = getViewerElementManager().getDocumentTabbedPane();
 		String tabTitle = (title == null ? tab.getName() : title);
-		if (tip == null){
+		if (tip == null) {
 			documentTabbedPane.addTab(tabTitle, icon, tab);
 		} else {
 			documentTabbedPane.addTab(tabTitle, icon, tab, tip);
@@ -976,7 +981,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	@Override
 	public void removeMainTab(DocumentView tab) throws IllegalArgumentException {
 		ViewerDocumentTabbedPane documentTabbedPane = getViewerElementManager().getDocumentTabbedPane();
-		if (documentTabbedPane.indexOfComponent(tab) != -1){
+		if (documentTabbedPane.indexOfComponent(tab) != -1) {
 			documentTabbedPane.remove(tab);
 		} else
 			throw new IllegalArgumentException("tab with this view doesn't exist");
@@ -995,7 +1000,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	@Override
 	public void removeTreeTab(ViewerTreePane tab) throws IllegalArgumentException {
 		ViewerTabbedPane viewerTreePane = getViewerElementManager().getTreeTabbedPane();
-		if (viewerTreePane.indexOfComponent(tab) != -1){
+		if (viewerTreePane.indexOfComponent(tab) != -1) {
 			viewerTreePane.remove(tab);
 		} else
 			throw new IllegalArgumentException("tab with this panel doesn't exist");
@@ -1022,13 +1027,13 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	}
 
 	@Override
-    public java.awt.Window getDialogParent() {
-        return getViewerElementManager().getDialogParent();
-    }
+	public java.awt.Window getDialogParent() {
+		return getViewerElementManager().getDialogParent();
+	}
 
-    @Override
-    public FileChooser getFileChooser() {
-        return getViewerElementManager().getFileChooser();
-    }
+	@Override
+	public FileChooser getFileChooser() {
+		return getViewerElementManager().getFileChooser();
+	}
 
 }

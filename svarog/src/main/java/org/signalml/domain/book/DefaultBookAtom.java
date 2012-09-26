@@ -48,7 +48,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 		this.iteration = atom.getIteration();
 		this.type = atom.getType();
 		this.modulus = atom.getModulus();
-		this.frequency = atom.getFrequency();
+		this.frequency = (int) atom.getFrequency();
 		this.position = atom.getPosition();
 		this.scale = atom.getScale();
 		this.amplitude = atom.getAmplitude();
@@ -76,8 +76,13 @@ public class DefaultBookAtom implements StandardBookAtom {
 	}
 
 	@Override
-	public int getFrequency() {
+	public int getNaturalFrequency() {
 		return frequency;
+	}
+
+	@Override
+	public float getFrequency() {
+		return this.frequency;
 	}
 
 	@Override

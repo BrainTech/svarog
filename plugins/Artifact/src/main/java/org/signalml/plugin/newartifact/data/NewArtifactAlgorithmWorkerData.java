@@ -6,7 +6,7 @@ public class NewArtifactAlgorithmWorkerData {
 	public final NewArtifactData artifactData;
 
 	public NewArtifactAlgorithmWorkerData(NewArtifactData artifactData,
-					      NewArtifactConstants constants) {
+										  NewArtifactConstants constants) {
 		this.artifactData = artifactData;
 		this.constants = constants;
 	}

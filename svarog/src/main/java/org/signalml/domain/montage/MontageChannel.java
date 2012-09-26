@@ -17,7 +17,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * This class represents a channel of a {@link Montage montage}.
  * Montage channel is a difference between the voltage of the electrode
  * and voltage of some reference (may be another electrode or average of electrodes).
- * 
+ *
  * This class is composed of one selected {@link SourceChannel source channel} and
  * references to another channels.
  * It contains also exclusions for {@link MontageSampleFilter filters}.
@@ -29,21 +29,21 @@ public class MontageChannel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * primary {@link SourceChannel soruce channel} to which the current
-         * object is related
-         */
+	/**
+	 * primary {@link SourceChannel soruce channel} to which the current
+	 * object is related
+	 */
 	private SourceChannel primaryChannel;
 
-        /**
-         * label for this channel
-         */
+	/**
+	 * label for this channel
+	 */
 	private String label;
 
-        /**
-         * a HashMap associating other {@link SourceChannel soruce channels}
-         * with Strings representing their reference to the primaryChannel
-         */
+	/**
+	 * a HashMap associating other {@link SourceChannel soruce channels}
+	 * with Strings representing their reference to the primaryChannel
+	 */
 	private HashMap<SourceChannel,String> referenceMap;
 
 
@@ -51,28 +51,28 @@ public class MontageChannel implements Serializable {
 
 	private transient Boolean bipolarCache = null;
 
-        /**
-         * Constructor. Creates an empty MontageChannel.
-         */
+	/**
+	 * Constructor. Creates an empty MontageChannel.
+	 */
 	protected MontageChannel() {
 	}
 
-        /**
-         * Constructor. Creates MontageChannel with a given primary channel.
-         * No references are set.
-         * @param primaryChannel a {@link SourceChannel soruce channel}
-         * which will be primary for created object
-         */
+	/**
+	 * Constructor. Creates MontageChannel with a given primary channel.
+	 * No references are set.
+	 * @param primaryChannel a {@link SourceChannel soruce channel}
+	 * which will be primary for created object
+	 */
 	public MontageChannel(SourceChannel primaryChannel) {
 		this.primaryChannel = primaryChannel;
 		referenceMap = new HashMap<SourceChannel, String>();
 	}
 
-        /**
-         * Copy constructor.
-         * @param channel a MontageChannel object to be copied
-         * @param sourceChannels a list of source channels needed for creation
-         */
+	/**
+	 * Copy constructor.
+	 * @param channel a MontageChannel object to be copied
+	 * @param sourceChannels a list of source channels needed for creation
+	 */
 	public MontageChannel(MontageChannel channel, ArrayList<SourceChannel> sourceChannels) {
 		this.primaryChannel = sourceChannels.get(channel.primaryChannel.getChannel());
 		this.label = channel.label;
@@ -84,35 +84,35 @@ public class MontageChannel implements Serializable {
 		this.excludeAllFilters = channel.excludeAllFilters;
 	}
 
-        /**
-         * Returns the primary channel for this montage channel.
-         * @return the primary channel for this montage channel
-         */
+	/**
+	 * Returns the primary channel for this montage channel.
+	 * @return the primary channel for this montage channel
+	 */
 	public SourceChannel getPrimaryChannel() {
 		return primaryChannel;
 	}
 
-        /**
-         * Returns the label of this montage channel.
-         * @return the label of this montage channel
-         */
+	/**
+	 * Returns the label of this montage channel.
+	 * @return the label of this montage channel
+	 */
 	public String getLabel() {
 		return label;
 	}
 
-        /**
-         * Sets a label to a given value.
-         * @param label String with a label to be set
-         */
+	/**
+	 * Sets a label to a given value.
+	 * @param label String with a label to be set
+	 */
 	public void setLabel(String label) {
 		this.label = label;
 	}
 
-        /**
-         * Returns a reference to a given {@link SourceChannel source channel}.
-         * @param channel a SourceChannel to which reference is to be found
-         * @return the found reference
-         */
+	/**
+	 * Returns a reference to a given {@link SourceChannel source channel}.
+	 * @param channel a SourceChannel to which reference is to be found
+	 * @return the found reference
+	 */
 	public String getReference(SourceChannel channel) {
 		if (channel == primaryChannel) {
 			return "1";
@@ -120,14 +120,14 @@ public class MontageChannel implements Serializable {
 		return referenceMap.get(channel);
 	}
 
-        /**
-         * Sets reference to a given {@link SourceChannel source channel} to
-         * a given value.
-         * @param channel a SourceChannel to which reference is to be set
-         * @param value a value of reference to be set
-         * @throws NumberFormatException if String is not a valid
-         * reference (holds neither float value nor a fraction)
-         */
+	/**
+	 * Sets reference to a given {@link SourceChannel source channel} to
+	 * a given value.
+	 * @param channel a SourceChannel to which reference is to be set
+	 * @param value a value of reference to be set
+	 * @throws NumberFormatException if String is not a valid
+	 * reference (holds neither float value nor a fraction)
+	 */
 	public void setReference(SourceChannel channel, String value) throws NumberFormatException {
 		if (channel == primaryChannel) {
 			return;
@@ -142,39 +142,39 @@ public class MontageChannel implements Serializable {
 		}
 	}
 
-        /**
-         * Removes a reference to a given {@link SourceChannel source channel}.
-         * @param channel a source channel to which reference is to be removed
-         */
+	/**
+	 * Removes a reference to a given {@link SourceChannel source channel}.
+	 * @param channel a source channel to which reference is to be removed
+	 */
 	public void removeReference(SourceChannel channel) {
 		bipolarCache = null;
 		referenceMap.remove(channel);
 	}
 
-        /**
-         * Checks if there is a reference to a given
-         * {@link SourceChannel source channel}.
-         * @param channel a source channel to which we are looking for
-         * a reference
-         * @return true if a reference to a given source channel exists,
-         * false otherwise
-         */
+	/**
+	 * Checks if there is a reference to a given
+	 * {@link SourceChannel source channel}.
+	 * @param channel a source channel to which we are looking for
+	 * a reference
+	 * @return true if a reference to a given source channel exists,
+	 * false otherwise
+	 */
 	public boolean hasReference(SourceChannel channel) {
 		return referenceMap.containsKey(channel);
 	}
 
-        /**
-         * Checks if a current object has any reference.
-         * @return true if current object has any reference, false otherwise
-         */
+	/**
+	 * Checks if a current object has any reference.
+	 * @return true if current object has any reference, false otherwise
+	 */
 	public boolean hasReference() {
 		return !referenceMap.isEmpty();
 	}
 
-        /**
-         * Returns all references of this montage channel in the form of Strings.
-         * @param references all references of a current object
-         */
+	/**
+	 * Returns all references of this montage channel in the form of Strings.
+	 * @param references all references of a current object
+	 */
 	public void getReferences(String[] references) {
 
 		Set<Entry<SourceChannel, String>> entrySet = referenceMap.entrySet();
@@ -186,13 +186,13 @@ public class MontageChannel implements Serializable {
 
 	}
 
-        /**
-         * Returns all references of this montage channel in the form of floats.
-         * @param references an array in which references of a current object
-         * will be remembered
-         * @throws NumberFormatException if any String reference is
-         * not a valid reference (holds neither float value nor a fraction)
-         */
+	/**
+	 * Returns all references of this montage channel in the form of floats.
+	 * @param references an array in which references of a current object
+	 * will be remembered
+	 * @throws NumberFormatException if any String reference is
+	 * not a valid reference (holds neither float value nor a fraction)
+	 */
 	public void getReferencesAsFloat(float[] references) throws NumberFormatException {
 		Set<Entry<SourceChannel, String>> entrySet = referenceMap.entrySet();
 		Arrays.fill(references, 0F);
@@ -202,13 +202,13 @@ public class MontageChannel implements Serializable {
 		}
 	}
 
-        /**
-         * Sets references of this montage channel to a given values.
-         * @param references an array of Strings representing references
-         * @param sourceChannels a list of source channels
-         * @throws NumberFormatException thrown when any String reference
-         * is not a valid reference (holds neither float value nor a fraction)
-         */
+	/**
+	 * Sets references of this montage channel to a given values.
+	 * @param references an array of Strings representing references
+	 * @param sourceChannels a list of source channels
+	 * @throws NumberFormatException thrown when any String reference
+	 * is not a valid reference (holds neither float value nor a fraction)
+	 */
 	public void setReferences(String[] references, ArrayList<SourceChannel> sourceChannels) throws NumberFormatException {
 		int primaryIndex = primaryChannel.getChannel();
 		int i;
@@ -226,14 +226,14 @@ public class MontageChannel implements Serializable {
 		}
 	}
 
-        /**
-         * Parses a String with a reference and returns reference in the
-         * form of a float.
-         * @param ref a String to be parsed
-         * @return float a value of a reference
-         * @throws NumberFormatException thrown when String is not
-         * a valid reference (holds neither float value nor a fraction)
-         */
+	/**
+	 * Parses a String with a reference and returns reference in the
+	 * form of a float.
+	 * @param ref a String to be parsed
+	 * @return float a value of a reference
+	 * @throws NumberFormatException thrown when String is not
+	 * a valid reference (holds neither float value nor a fraction)
+	 */
 	public static float parseReference(String ref) throws NumberFormatException {
 
 		if (ref == null) {
@@ -265,12 +265,12 @@ public class MontageChannel implements Serializable {
 		}
 	}
 
-        /**
-         * Checks if a String is a valid reference (holds float value or
-         * a fraction).
-         * @param ref a String to be checked
-         * @return true if a String is a valid reference, false otherwise
-         */
+	/**
+	 * Checks if a String is a valid reference (holds float value or
+	 * a fraction).
+	 * @param ref a String to be checked
+	 * @return true if a String is a valid reference, false otherwise
+	 */
 	public static boolean isCorrectReference(String ref) {
 
 		try {
@@ -283,12 +283,12 @@ public class MontageChannel implements Serializable {
 
 	}
 
-        /**
-         * Returns if this montage channel has a bipolar reference
-         * (channel without references is bipolar).
-         * @return true if this montage channel has a bipolar reference,
-         * false otherwise
-         */
+	/**
+	 * Returns if this montage channel has a bipolar reference
+	 * (channel without references is bipolar).
+	 * @return true if this montage channel has a bipolar reference,
+	 * false otherwise
+	 */
 	public boolean isBipolarReference() {
 		if (bipolarCache == null) {
 			int size = referenceMap.size();
@@ -307,13 +307,13 @@ public class MontageChannel implements Serializable {
 		return bipolarCache.booleanValue();
 	}
 
-        /**
-         * Checks if the reference to a given
-         * {@link SourceChannel source channel} is symmetric.
-         * @param channel a SourceChannel object
-         * @return true if the reference is symmetric, false otherwise
-         */
-        //TODO to dla size 2 będzie symetryczne przy reference "-1/2", ale nie będzie przy "-0.5". Czy tak ma być?
+	/**
+	 * Checks if the reference to a given
+	 * {@link SourceChannel source channel} is symmetric.
+	 * @param channel a SourceChannel object
+	 * @return true if the reference is symmetric, false otherwise
+	 */
+	//TODO to dla size 2 będzie symetryczne przy reference "-1/2", ale nie będzie przy "-0.5". Czy tak ma być?
 	public boolean isSymmetricWeight(SourceChannel channel) {
 		if (channel == primaryChannel) {
 			return false;
@@ -326,14 +326,14 @@ public class MontageChannel implements Serializable {
 		return ref.equals("-1/" + size);
 	}
 
-        /**
-         * Checks if a given montage channel has the same references as
-         * this montage channel.
-         * @param channel a MontageChannel to be compared to the current object
-         * @param sourceChannels a list of source channels
-         * @return true if a given montage channel has the same references as
-         * this montage channel, false otherwise
-         */
+	/**
+	 * Checks if a given montage channel has the same references as
+	 * this montage channel.
+	 * @param channel a MontageChannel to be compared to the current object
+	 * @param sourceChannels a list of source channels
+	 * @return true if a given montage channel has the same references as
+	 * this montage channel, false otherwise
+	 */
 	public boolean isEqualReference(MontageChannel channel, ArrayList<SourceChannel> sourceChannels) {
 		int size = referenceMap.size();
 		if (size != channel.referenceMap.size()) {
@@ -350,18 +350,18 @@ public class MontageChannel implements Serializable {
 		return true;
 	}
 
-        /**
-         * Returns if all filters are excluded.
-         * @return true if all filters are excluded, false otherwise
-         */
+	/**
+	 * Returns if all filters are excluded.
+	 * @return true if all filters are excluded, false otherwise
+	 */
 	public boolean isExcludeAllFilters() {
 		return excludeAllFilters;
 	}
 
-        /**
-         * Set excludeAllFilters parameter to a given value.
-         * @param excludeAllFilters a value to be set
-         */
+	/**
+	 * Set excludeAllFilters parameter to a given value.
+	 * @param excludeAllFilters a value to be set
+	 */
 	public void setExcludeAllFilters(boolean excludeAllFilters) {
 		this.excludeAllFilters = excludeAllFilters;
 	}

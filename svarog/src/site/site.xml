@@ -3,57 +3,57 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
 
-	<bannerLeft>
-		<name>Svarog</name>
-		<src>images/svarog.png</src>
-		<href>http://signalml.org/svarog/</href>		
-	</bannerLeft>
+    <bannerLeft>
+        <name>Svarog</name>
+        <src>images/svarog.png</src>
+        <href>http://signalml.org/svarog/</href>
+    </bannerLeft>
 
-	<bannerRight>
-		<name>Warsaw University</name>
-		<src>images/orzelekUWsm.gif</src>
-		<href>http://www.fuw.edu.pl/</href>
-	</bannerRight>
+    <bannerRight>
+        <name>Warsaw University</name>
+        <src>images/orzelekUWsm.gif</src>
+        <href>http://www.fuw.edu.pl/</href>
+    </bannerRight>
 
-	<skin>
-		<groupId>org.apache.maven.skins</groupId>
-		<artifactId>maven-stylus-skin</artifactId>
-	</skin>
+    <skin>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-stylus-skin</artifactId>
+    </skin>
 
-	<body>
-	
-		<links>
-			<item name="Department of Biomedical Physics" href="http://brain.fuw.edu.pl/"/>
-	    </links>
-	
-		<breadcrumbs>
-			<item href="http://signalml.org/" name="signalml.org" />
-			<item name="${project.name}" />
-		</breadcrumbs>
-		
-		<menu name="${project.name}">
-			<item name="Overview" href="/index.html" />
-			<item name="Downloads" href="/downloads.html" />
-			<item name="Maven repository" href="../maven/repository/" />
-			<item name="Screenshots" href="/screenshots.html" />
-			<item name="FAQ" href="/faq.html" />
-		</menu>
+    <body>
 
-		<menu name="Information">
-			<item name="Documentation" href="/documentation.html" />
-			<item name="Wiki" href="/wiki.html" />
-			<item name="Mailing list" href="/mail-lists.html" />
-			<item name="Issue tracking" href="/issue-tracking.html" />
-			<item name="Source code" href="/source-repository.html" />
-			<item name="License" href="/license.html" />
-			<item name="History" href="/history.html" />
-		</menu>
-		
-		<menu ref="reports"/>
-		
-	</body>
+        <links>
+            <item name="Department of Biomedical Physics" href="http://brain.fuw.edu.pl/"/>
+        </links>
 
-	<publishDate position="right"/>
-	<version position="right" />
+        <breadcrumbs>
+            <item href="http://signalml.org/" name="signalml.org" />
+            <item name="${project.name}" />
+        </breadcrumbs>
+
+        <menu name="${project.name}">
+            <item name="Overview" href="/index.html" />
+            <item name="Downloads" href="/downloads.html" />
+            <item name="Maven repository" href="../maven/repository/" />
+            <item name="Screenshots" href="/screenshots.html" />
+            <item name="FAQ" href="/faq.html" />
+        </menu>
+
+        <menu name="Information">
+            <item name="Documentation" href="/documentation.html" />
+            <item name="Wiki" href="/wiki.html" />
+            <item name="Mailing list" href="/mail-lists.html" />
+            <item name="Issue tracking" href="/issue-tracking.html" />
+            <item name="Source code" href="/source-repository.html" />
+            <item name="License" href="/license.html" />
+            <item name="History" href="/history.html" />
+        </menu>
+
+        <menu ref="reports"/>
+
+    </body>
+
+    <publishDate position="right"/>
+    <version position="right" />
 
 </project>

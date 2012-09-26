@@ -4,12 +4,14 @@
 
 package org.signalml.domain.roc;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 
 /** RocDataPoint
  *
@@ -104,18 +106,18 @@ public class RocDataPoint implements PropertyProvider {
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.truePositiveCount", "truePositiveCount", RocDataPoint.class, "getTruePositiveCount", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.falsePositiveCount", "falsePositiveCount", RocDataPoint.class, "getFalsePositiveCount", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.trueNegativeCount", "trueNegativeCount", RocDataPoint.class, "getTrueNegativeCount", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.falseNegativeCount", "falseNegativeCount", RocDataPoint.class, "getFalseNegativeCount", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.falseRate", "falseRate", RocDataPoint.class, "getFalseRate", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.trueRate", "trueRate", RocDataPoint.class, "getTrueRate", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.sensitivity", "sensitivity", RocDataPoint.class, "getSensitivity", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.specifity", "specifity", RocDataPoint.class, "getSpecifity", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.accuracy", "accuracy", RocDataPoint.class, "getAccuracy", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.positivePredictiveValue", "positivePredictiveValue", RocDataPoint.class, "getPositivePredictiveValue", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.negativePredictiveValue", "negativePredictiveValue", RocDataPoint.class, "getNegativePredictiveValue", null));
-		list.add(new LabelledPropertyDescriptor("property.rocDataPoint.falseDiscoveryRate", "falseDiscoveryRate", RocDataPoint.class, "getFalseDiscoveryRate", null));
+		list.add(new LabelledPropertyDescriptor(_("true positive count"), "truePositiveCount", RocDataPoint.class, "getTruePositiveCount", null));
+		list.add(new LabelledPropertyDescriptor(_("false positive count"), "falsePositiveCount", RocDataPoint.class, "getFalsePositiveCount", null));
+		list.add(new LabelledPropertyDescriptor(_("true negative count"), "trueNegativeCount", RocDataPoint.class, "getTrueNegativeCount", null));
+		list.add(new LabelledPropertyDescriptor(_("false negative count"), "falseNegativeCount", RocDataPoint.class, "getFalseNegativeCount", null));
+		list.add(new LabelledPropertyDescriptor(_("false rate"), "falseRate", RocDataPoint.class, "getFalseRate", null));
+		list.add(new LabelledPropertyDescriptor(_("true rate"), "trueRate", RocDataPoint.class, "getTrueRate", null));
+		list.add(new LabelledPropertyDescriptor(_("sensitivity"), "sensitivity", RocDataPoint.class, "getSensitivity", null));
+		list.add(new LabelledPropertyDescriptor(_("specifity"), "specifity", RocDataPoint.class, "getSpecifity", null));
+		list.add(new LabelledPropertyDescriptor(_("accuracy"), "accuracy", RocDataPoint.class, "getAccuracy", null));
+		list.add(new LabelledPropertyDescriptor(_("positive predictive value"), "positivePredictiveValue", RocDataPoint.class, "getPositivePredictiveValue", null));
+		list.add(new LabelledPropertyDescriptor(_("negative predictive value"), "negativePredictiveValue", RocDataPoint.class, "getNegativePredictiveValue", null));
+		list.add(new LabelledPropertyDescriptor(_("false discovery rate"), "falseDiscoveryRate", RocDataPoint.class, "getFalseDiscoveryRate", null));
 
 		return list;
 

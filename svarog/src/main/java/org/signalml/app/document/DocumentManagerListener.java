@@ -23,21 +23,21 @@ import org.signalml.plugin.export.signal.Document;
 public interface DocumentManagerListener extends EventListener {
 
 	/**
-	 * Invoked when a document is added to the {@link DocumentManager manager}. 
+	 * Invoked when a document is added to the {@link DocumentManager manager}.
 	 * @param e the {@link DocumentManagerEvent event} with the parameters of
 	 * the change
 	 */
 	void documentAdded(DocumentManagerEvent e);
 
 	/**
-	 * Invoked when a document is removed from the {@link DocumentManager manager}. 
+	 * Invoked when a document is removed from the {@link DocumentManager manager}.
 	 * @param e the {@link DocumentManagerEvent event} with the parameters of
 	 * the change
 	 */
 	void documentRemoved(DocumentManagerEvent e);
 
 	/**
-	 * Invoked when a path to a {@link Document document} is changed. 
+	 * Invoked when a path to a {@link Document document} is changed.
 	 * @param e the {@link DocumentManagerEvent event} with the parameters of
 	 * the change
 	 */

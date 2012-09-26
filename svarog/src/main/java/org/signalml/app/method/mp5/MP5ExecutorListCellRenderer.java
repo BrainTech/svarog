@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 import java.awt.Font;
 
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import org.signalml.method.mp5.MP5Executor;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** MP5ExecutorListCellRenderer
  *
@@ -26,17 +27,13 @@ public class MP5ExecutorListCellRenderer extends DefaultListCellRenderer {
 	private MP5Executor defaultExecutor;
 	private Font normalFont;
 	private Font boldFont;
-
-	private MessageSourceAccessor messageSource;
-
 	private String defaultString;
 
-	public MP5ExecutorListCellRenderer(MessageSourceAccessor messageSource) {
+	public MP5ExecutorListCellRenderer() {
 		super();
-		this.messageSource = messageSource;
 		normalFont = getFont().deriveFont(Font.PLAIN);
 		boldFont = normalFont.deriveFont(Font.BOLD);
-		defaultString = " " + messageSource.getMessage("mp5Method.config.defaultExecutor");
+		defaultString = " " + _("(default)");
 	}
 
 	public MP5Executor getDefaultExecutor() {
@@ -53,15 +50,14 @@ public class MP5ExecutorListCellRenderer extends DefaultListCellRenderer {
 
 		if (value instanceof MP5Executor) {
 			if (defaultExecutor != null && value == defaultExecutor) {
-				label.setText(messageSource.getMessage((MP5Executor) value) + defaultString);
+				label.setText(((MP5Executor) value).getDefaultMessage() + defaultString);
 				label.setFont(boldFont);
 			} else {
-				label.setText(messageSource.getMessage((MP5Executor) value));
+				label.setText(((MP5Executor) value).getDefaultMessage());
 				label.setFont(normalFont);
 			}
 		}
 
 		return label;
 	}
-
 }

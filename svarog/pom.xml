@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml</groupId>
@@ -14,73 +14,20 @@
 		<version>0.5.0-SNAPSHOT</version>
 	</parent>
 
-	<profiles>
-		<profile>
-			<id>win32</id>
-			<activation>
-				<os>
-					<family>windows</family>
-					<arch>x86</arch>
-				</os>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<properties>
-				<org.signalml.mbfj.platform>win32</org.signalml.mbfj.platform>
-			</properties>
-		</profile>
-		<profile>
-			<id>linux</id>
-			<activation>
-				<os>
-					<name>linux</name>
-					<family>unix</family>
-					<arch>i386</arch>
-				</os>
-			</activation>
-			<properties>
-				<org.signalml.mbfj.platform>x86</org.signalml.mbfj.platform>
-			</properties>
-		</profile>
-
-		<!-- profiles below this line have not been tested -->
-
-		<profile>
-			<id>win64</id>
-			<activation>
-				<os>
-					<family>windows</family>
-					<arch>x86_64</arch>
-				</os>
-			</activation>
-			<properties>
-				<org.signalml.mbfj.platform>win64</org.signalml.mbfj.platform>
-			</properties>
-		</profile>
-		<profile>
-			<id>linux64</id>
-			<activation>
-				<os>
-					<name>linux</name>
-					<family>unix</family>
-					<arch>amd64</arch>
-				</os>
-			</activation>
-			<properties>
-				<org.signalml.mbfj.platform>x86_64</org.signalml.mbfj.platform>
-			</properties>
-		</profile>
-	</profiles>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.build.i18n.resources>src/main/resources/org/signalml/app/resource/i18n/</project.build.i18n.resources>
 		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 
 		<protobuf.protoc>protoc</protobuf.protoc>
 		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
 		<protobuf.proto_file>variables.proto</protobuf.proto_file>
 		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
-		<protobuf.generated_sources_dir>${project.build.directory}/generated-sources</protobuf.generated_sources_dir>
+		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
+		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
+
+		<git.git>git</git.git>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
 		<springframework.version>2.0.7</springframework.version>
@@ -89,16 +36,9 @@
 	<build>
 		<plugins>
 			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>2.1.2</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -110,9 +50,42 @@
 				</executions>
 			</plugin>
 			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${generated_sources_dir}</source>
+							</sources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-resource</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>add-resource</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${generated_resources_dir}</directory>
+									<targetPath>svarog</targetPath>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<!-- <version>2.2</version> -->
+				<version>2.4</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -123,26 +96,8 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<!-- <version>2.2-beta-3</version> -->
-				<configuration>
-					<descriptors>
-						<descriptor>src/main/assembly/full.xml</descriptor>
-					</descriptors>
-				</configuration>
-				<executions>
-					<execution>
-						<id>assemble-packages</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0</version>
 				<configuration>
 					<outputEncoding>UTF-8</outputEncoding>
 				</configuration>
@@ -151,14 +106,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.1</version>
-				<executions>
-					<execution>
-						<id>execute</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-					</execution>
-				</executions>
+
 				<configuration>
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
@@ -187,30 +135,43 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>generate-sources</id>
+						<id>generate-sources-check</id>
 						<phase>generate-sources</phase>
 						<configuration>
 							<target>
-								<mkdir dir="${protobuf.generated_sources_dir}"/>
-								<exec executable="${protobuf.protoc}" failonerror="true">
+								<echo message="checking for ${protobuf.protoc}" />
+
+								<exec executable="${protobuf.protoc}"
+									  failifexecutionfails="false"
+									  outputproperty="protobuf.protoc.version.output"
+									  resultproperty="protobuf.protoc.version.result">
+									<arg value="--version" />
+								</exec>
+								<condition property="protobuf.protoc.compiler_binary"
+										   value="${protobuf.protoc}"
+										   else="true">
+									<!-- I seems very hard to do a conditional compilation. Let's
+										 then do a fake compilation instead. If protoc is not available
+										 "true" is used instead. "true" of course doesn't do anything,
+										 so in effect, missing protoc means skipping compilation.
+									-->
+
+									<!-- protoc returns 1 on success, how lame -->
+									<equals arg1="${protobuf.protoc.version.result}" arg2="1" />
+								</condition>
+
+								<echo message="protobuf.protoc.version.result=${protobuf.protoc.version.result}" />
+								<echo message="protobuf.protoc.version.output=${protobuf.protoc.version.output}" />
+								<echo message="protobuf.protoc.compiler_binary=${protobuf.protoc.compiler_binary}" />
+
+								<mkdir dir="${generated_sources_dir}" />
+								<exec executable="${protobuf.protoc.compiler_binary}" failonerror="true">
 									<arg value="-I" />
 									<arg value="${protobuf.source_dir}" />
-									<arg value="--java_out=${protobuf.generated_sources_dir}"/>
+									<arg value="--java_out=${generated_sources_dir}"/>
 									<arg value="${protobuf.source_dir}/${protobuf.proto_file}" />
 								</exec>
-
-								<java classname="multiplexer.jmx.tools.CompileConstants">
-									<arg value="-input"/>
-									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
-									<arg value="-outdir"/>
-									<arg value="${protobuf.generated_sources_dir}/org/signalml/multiplexer/protocol"/>
-									<arg value="-class"/>
-									<arg value="SvarogConstants"/>
-									<arg value="-package"/>
-									<arg value="org.signalml.multiplexer.protocol"/>
-								</java>
 							</target>
-							<sourceRoot>${protobuf.generated_sources_dir}</sourceRoot>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -218,7 +179,58 @@
 					</execution>
 
 					<execution>
-						<id>compile</id>
+						<id>generate-sources-compile</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target>
+								<java classname="multiplexer.jmx.tools.CompileConstants"
+									  failonerror="true">
+									<arg value="-input"/>
+									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
+									<arg value="-outdir"/>
+									<arg value="${generated_sources_dir}/org/signalml/multiplexer/protocol"/>
+									<arg value="-class"/>
+									<arg value="SvarogConstants"/>
+									<arg value="-package"/>
+									<arg value="org.signalml.multiplexer.protocol"/>
+								</java>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>git-describe</id>
+						<phase>generate-resources</phase>
+						<configuration>
+							<target>
+								<exec executable="${git.git}"
+									  failifexecutionfails="false"
+									  outputproperty="git-describe.output"
+									  resultproperty="git-describe.result">
+									<arg value="describe" />
+									<arg value="--always" />
+									<arg value="--tags" />
+									<arg value="--dirty=+" />
+								</exec>
+								<condition property="svarog.git-version"
+										   value="${git-describe.output}"
+										   else="${project.version}">
+									<equals arg1="${git-describe.result}" arg2="0" />
+								</condition>
+								<echo message="svarog.git-version=${svarog.git-version}" />
+								<echo message="${svarog.git-version}" output="${generated_resources_dir}/git-version" />
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
+						<id>print-classpath</id>
 						<phase>compile</phase>
 						<configuration>
 							<target>
@@ -239,6 +251,7 @@
 						<version>${multiplexer.jmx.version}</version>
 					</dependency>
 				</dependencies>
+				
 			</plugin>
 
 			<plugin>
@@ -299,10 +312,37 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+				<version>1.2.3</version>
+
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.app</targetBundle>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>gettext-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>dist</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.xnap.commons</groupId>
+			<artifactId>gettext-commons</artifactId>
+			<version>0.9.6</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math</artifactId>
@@ -386,11 +426,6 @@
 			<version>2.9.1</version>
 		</dependency>
 		<dependency>
-			<groupId>jmatio</groupId>
-			<artifactId>jmatio</artifactId>
-			<version>0.1-alpha</version>
-		</dependency>
-		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>eega-tag-library</artifactId>
 			<version>1.0.0</version>
@@ -401,19 +436,19 @@
 			<version>3.1.0.GA</version>
 		</dependency>
 		<dependency>
-			 <groupId>org.freemarker</groupId>
-			 <artifactId>freemarker</artifactId>
-			 <version>2.3.15</version>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.15</version>
 		</dependency>
 		<dependency>
-				<groupId>com.google.collections</groupId>
-				<artifactId>google-collections</artifactId>
-				<version>1.0-rc2</version>
+			<groupId>com.google.collections</groupId>
+			<artifactId>google-collections</artifactId>
+			<version>1.0-rc2</version>
 		</dependency>
 		<dependency>
-				<groupId>com.google.protobuf</groupId>
-				<artifactId>protobuf-java</artifactId>
-				<version>2.4.1</version>
+			<groupId>com.google.protobuf</groupId>
+			<artifactId>protobuf-java</artifactId>
+			<version>2.4.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -424,11 +459,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>1.5.8</version>
-		</dependency>
-		<dependency>
-			<groupId>trove</groupId>
-			<artifactId>trove</artifactId>
-			<version>2.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>multiplexer</groupId>
@@ -452,6 +482,22 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20090211</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jettison</groupId>
+			<artifactId>jettison</artifactId>
+			<version>1.3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.3</version>
+		</dependency>
+
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -471,7 +517,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<!-- <version>2.1</version> -->
+				<version>2.4</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -505,124 +551,6 @@
 			<archive>https://lists.eisenbits.com/cgi-bin/mailman/private/svarog-dev/</archive>
 		</mailingList>
 	</mailingLists>
-
-	<issueManagement>
-		<system>Trac</system>
-		<url>http://bci.fuw.edu.pl/trac/</url>
-	</issueManagement>
-
-	<licenses>
-		<license>
-			<name>GNU General Public License, Version 3</name>
-			<distribution>repo</distribution>
-			<url>http://www.gnu.org/licenses/gpl.txt</url>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<name>Michał Dobaczewski</name>
-			<email>michal (dot) d08 (at) "Google mail"</email>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Dobiesław Ircha</name>
-			<organization>ZFB</organization>
-			<roles>
-				<role>Developer</role>
-				<role>Mp5 developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Piotr Durka</name>
-			<url>http://durka.info/</url>
-			<organization>ZFB</organization>
-			<roles>
-				<role>DBF Contact Person</role>
-				<role>signalml.org Coordinator</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Zbyszek Jędrzejewski-Szmek</name>
-			<roles>
-				<role>Infrastructure admin</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Mateusz Kruszyński</name>
-			<roles>
-				<role>Developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Piotr Szachewicz</name>
-			<roles>
-				<role>Developer (tags and filters?)</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Hubert Klekowicz</name>
-			<organization>ZFB</organization>
-			<roles>
-				<role>Matlab integration</role>
-				<role>Artifact developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Rafał Kuś</name>
-			<organization>ZFB</organization>
-			<roles>
-				<role>Mp5 developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Ula Malinowska</name>
-			<organization>ZFB</organization>
-			<roles>
-				<role>Stager developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Stanisław Findeisen</name>
-			<organization>eisenbits</organization>
-			<roles>
-				<role>Documentation</role>
-				<role>Plugin system developer</role>
-			</roles>
-			<timezone>+1</timezone>
-		</developer>
-		<developer>
-			<name>Marcin Szumski</name>
-			<organization>eisenbits</organization>
-			<timezone>+1</timezone>
-			<roles>
-				<role>Documentation</role>
-				<role>Plugin system developer</role>
-			</roles>
-		</developer>
-		<developer>
-			<name>Mateusz Dzwonek</name>
-			<organization>eisenbits</organization>
-			<timezone>+1</timezone>
-			<roles>
-				<role>Documentation</role>
-			</roles>
-		</developer>
-	</developers>
-
-	<contributors>
-	</contributors>
 
 	<distributionManagement>
 		<site>

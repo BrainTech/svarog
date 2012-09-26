@@ -18,29 +18,33 @@ public class SourceMontageEvent extends EventObject {
 
 	private static final long serialVersionUID = 1L;
 
-        /**
-         * an index of a {@link SourceChannel source channel} that was changed
-         */
+	/**
+	 * an index of a {@link SourceChannel source channel} that was changed
+	 */
 	private int channel;
 
-        /**
-         * Creates an event associated with change, removal or addition of
-         * a {@link SourceChannel source channel}.
-         * @param source a source montage on which the Event initially occurred.
-         * @param channel an index of a source channel that has been
-         * added/removed/changed
-         */
+	public SourceMontageEvent(Object source) {
+		super(source);
+	}
+
+	/**
+	 * Creates an event associated with change, removal or addition of
+	 * a {@link SourceChannel source channel}.
+	 * @param source a source montage on which the Event initially occurred.
+	 * @param channel an index of a source channel that has been
+	 * added/removed/changed
+	 */
 	public SourceMontageEvent(Object source, int channel) {
 		super(source);
 		this.channel = channel;
 	}
 
-        /**
-         * Returns an index of a {@link SourceChannel source channel} that
-         * is associated with this event.
-         * @return an index of a source channel that is associated with
-         * this event.
-         */
+	/**
+	 * Returns an index of a {@link SourceChannel source channel} that
+	 * is associated with this event.
+	 * @return an index of a source channel that is associated with
+	 * this event.
+	 */
 	public int getChannel() {
 		return channel;
 	}

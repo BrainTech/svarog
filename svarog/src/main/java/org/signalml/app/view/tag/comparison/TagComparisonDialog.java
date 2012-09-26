@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.tag.comparison;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -16,28 +18,27 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.model.TableToTextExporter;
-import org.signalml.app.model.TagComparisonDescriptor;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.components.TableToTextExporter;
+import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.element.ResolvableComboBox;
 import org.signalml.app.view.tag.TagIconProducer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
+import org.signalml.app.view.common.components.ResolvableComboBox;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.tag.TagComparisonResults;
 import org.signalml.domain.tag.TagDifferenceDetector;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.SvarogConstants;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagComparisonDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagComparisonDialog extends AbstractDialog {
+public class TagComparisonDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 
@@ -57,17 +58,17 @@ public class TagComparisonDialog extends AbstractDialog {
 	private TableToTextExporter tableToTextExporter;
 	private ViewerFileChooser fileChooser;
 
-	public TagComparisonDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public TagComparisonDialog() {
+		super();
 	}
 
-	public TagComparisonDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public TagComparisonDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("tagComparison.title"));
+		setTitle(_("Tag comparison"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/comparetags.png"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
@@ -105,22 +106,22 @@ public class TagComparisonDialog extends AbstractDialog {
 	@Override
 	public JComponent createInterface() {
 
-		topDocumentComboBox = new ResolvableComboBox(messageSource);
-		bottomDocumentComboBox = new ResolvableComboBox(messageSource);
+		topDocumentComboBox = new ResolvableComboBox();
+		bottomDocumentComboBox = new ResolvableComboBox();
 
 		JPanel topDocumentPanel = new JPanel(new BorderLayout());
-		topDocumentPanel.setBorder(new TitledBorder(messageSource.getMessage("tagComparison.topDocument")));
+		topDocumentPanel.setBorder(new TitledBorder(_("First document")));
 		topDocumentPanel.add(topDocumentComboBox, BorderLayout.CENTER);
 
 		JPanel bottomDocumentPanel = new JPanel(new BorderLayout());
-		bottomDocumentPanel.setBorder(new TitledBorder(messageSource.getMessage("tagComparison.bottomDocument")));
+		bottomDocumentPanel.setBorder(new TitledBorder(_("Second document")));
 		bottomDocumentPanel.add(bottomDocumentComboBox, BorderLayout.CENTER);
 
 		JPanel topPanel = new JPanel(new GridLayout(1,2,3,3));
 		topPanel.add(topDocumentPanel);
 		topPanel.add(bottomDocumentPanel);
 
-		resultPanel = new TagComparisonResultPanel(messageSource, tableToTextExporter, fileChooser);
+		resultPanel = new TagComparisonResultPanel(tableToTextExporter, fileChooser);
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
@@ -193,7 +194,6 @@ public class TagComparisonDialog extends AbstractDialog {
 		// TODO maybe needs worker - if so the detector needs progress reporting
 
 		TagComparisonResults results = detector.compare(currentTopDocument, currentBottomDocument);
-		results.setMessageSourceAccessor(messageSource);
 		results.getParametersFromSampleSource(currentSignalDocument.getSampleSource(), currentSignalDocument.getMontage());
 		resultPanel.setResults(results);
 

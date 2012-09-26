@@ -7,14 +7,15 @@ package org.signalml.plugin.newartifact.data;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.signalml.app.document.SignalDocument;
-import org.signalml.domain.montage.Channel;
-import org.signalml.domain.montage.ChannelType;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.method.AbstractData;
+import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.io.PluginSampleSourceAdapter;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -32,13 +33,13 @@ public class NewArtifactApplicationData extends NewArtifactData {
 	private static final long serialVersionUID = 1L;
 
 	@XStreamOmitField
-	private ExportedSignalDocument signalDocument;
+	private transient ExportedSignalDocument signalDocument;
 
 	@XStreamOmitField
 	private boolean existingProject;
 
 	@XStreamOmitField
-	private SvarogAccessSignal signalAccess;
+	private transient SvarogAccessSignal signalAccess;
 
 	private SourceMontage montage;
 
@@ -82,8 +83,6 @@ public class NewArtifactApplicationData extends NewArtifactData {
 
 	public void calculate() throws SignalMLException {
 
-		int i;
-
 		Map<String, Integer> keyChannelMap = getKeyChannelMap();
 		ArrayList<Integer> eegChannels = getEegChannels();
 		Map<String, Integer> channelMap = getChannelMap();
@@ -93,18 +92,19 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		channelMap.clear();
 
 		int cnt = montage.getSourceChannelCount();
-		Channel function;
-		for (i = 0; i < cnt; i++) {
+		SourceChannel channel;
+		for (int i = 0; i < cnt; i++) {
 			channelMap.put(montage.getSourceChannelLabelAt(i), i);
-			function = montage.getSourceChannelFunctionAt(i);
-			if (function != null) {
-				if (function.getType() == ChannelType.PRIMARY) {
-					eegChannels.add(i);
-				}
-				if (AbstractData.keyChannelSet.contains(function)) {
-					keyChannelMap.put(function.getName(), i);
-				}
+
+			channel = montage.getSourceChannelAt(i);
+			if (channel.getFunction() == ChannelFunction.EEG) {
+				eegChannels.add(i);
 			}
+			//TODO: IMPORTANT - fill the keyChannelMap.
+			/*
+			if (AbstractData.keyChannelSet.contains(function)) {
+				keyChannelMap.put(function.getName(), i);
+			}*/
 		}
 
 		/*
@@ -154,15 +154,21 @@ public class NewArtifactApplicationData extends NewArtifactData {
 		 * plot.getPageSize(), plot.getBlockSize()); }
 		 */
 
-		setSampleSource(new NewArtifactPluginSampleSource(signalAccess,
+		this.resetSampleSource();
+
+		this.setPageSize((int) signalDocument.getPageSize());
+		this.setBlocksPerPage(signalDocument.getBlocksPerPage());
+	}
+	
+	private void resetSampleSource() {
+		this.setSampleSource(new PluginSampleSourceAdapter(signalAccess,
 				signalDocument));
-
-		// TODO rethink this cast - what is the data type in matlab code?
-		setPageSize((int) signalDocument.getPageSize());
-		setBlocksPerPage(signalDocument.getBlocksPerPage());
-
-		setSignalFormat(NewArtifactSignalFormat.FLOAT);
-
+	}
+	
+	@Override
+	public void dispose() {
+		this.resetSampleSource();
 	}
 
+	
 }

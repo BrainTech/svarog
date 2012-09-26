@@ -4,6 +4,8 @@
 
 package org.signalml.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.Serializable;
 
 import org.signalml.app.config.preset.Preset;
@@ -28,8 +30,8 @@ public class MP5Parameters implements Serializable, Preset {
 	public static final float MIN_DILATION_FACTOR = 1F + Float.MIN_NORMAL;
 	public static final float MAX_DILATION_FACTOR = 20000F;
 
-	public static final int MIN_PERIOD_DENSITY = 0;
-	public static final int MAX_PERIOD_DENSITY = 20000;
+	public static final float MIN_DILATION_FACTOR_PERCENTAGE = 0.0F;
+	public static final float MAX_DILATION_FACTOR_PERCENTAGE = 100F;
 
 	public static final int MIN_ITERATION_COUNT = 1;
 	public static final int MAX_ITERATION_COUNT = 20000;
@@ -52,20 +54,19 @@ public class MP5Parameters implements Serializable, Preset {
 	private MP5DictionaryReinitType dictionaryReinitType = MP5DictionaryReinitType.NO_REINIT_AT_ALL;
 	private float scaleToPeriodFactor = 0.1F;
 	private float dilationFactor = 2F;
-	private int periodDensity = 1;
+	private float dilationFactorPercentage = 90.0F;
 
 	// decomposition parameters
 	private MP5Algorithm algorithm = MP5Algorithm.SMP;
 	private int maxIterationCount = 50;
 	private float energyPercent = 99F;
 
-	private boolean analyticalDotProduct;
-	private boolean bookWithSignal;
-
 	private String bookComment;
 
 	private String customConfigText;
 	private String rawConfigText;
+
+	private AtomsInDictionary atomsInDictionary = new AtomsInDictionary();
 
 //	private float dotEps = 1E-16F;
 
@@ -89,19 +90,19 @@ public class MP5Parameters implements Serializable, Preset {
 
 	public void validate(Errors errors) {
 		if (scaleToPeriodFactor < MIN_SCALE_TO_PERIOD_FACTOR || scaleToPeriodFactor > MAX_SCALE_TO_PERIOD_FACTOR) {
-			errors.rejectValue("scaleToPeriodFactor", "error.mp5.badScaleToPeriodFactor");
+			errors.rejectValue("scaleToPeriodFactor", "error.mp5.badScaleToPeriodFactor", _("Bad scale to period factor"));
 		}
 		if (dilationFactor < MIN_DILATION_FACTOR || dilationFactor > MAX_DILATION_FACTOR) {
-			errors.rejectValue("dilationFactor", "error.mp5.badDilationFactor");
+			errors.rejectValue("dilationFactor", "error.mp5.badDilationFactor", _("Bad dilation factor"));
 		}
-		if (periodDensity < MIN_PERIOD_DENSITY || periodDensity > MAX_PERIOD_DENSITY) {
-			errors.rejectValue("periodDensity", "error.mp5.badPerionDensity");
+		if (dilationFactorPercentage < MIN_DILATION_FACTOR_PERCENTAGE || dilationFactorPercentage > MAX_DILATION_FACTOR_PERCENTAGE) {
+			errors.rejectValue("dilationFactorPercentage", "error.mp5.badDilationFactor", _("Bad dilation factor"));
 		}
 		if (maxIterationCount < MIN_ITERATION_COUNT || maxIterationCount > MAX_ITERATION_COUNT) {
-			errors.rejectValue("maxIterationCount", "error.mp5.badMaxIterationCount");
+			errors.rejectValue("maxIterationCount", "error.mp5.badMaxIterationCount", _("Bad max iteration count"));
 		}
 		if (energyPercent < MIN_ENERGY_PERCENT || energyPercent > MAX_ENERGY_PERCENT) {
-			errors.rejectValue("energyPercent", "error.mp5.badEnergyPercent");
+			errors.rejectValue("energyPercent", "error.mp5.badEnergyPercent", _("Bad energy percent"));
 		}
 	}
 
@@ -121,12 +122,12 @@ public class MP5Parameters implements Serializable, Preset {
 		this.dilationFactor = dilationFactor;
 	}
 
-	public int getPeriodDensity() {
-		return periodDensity;
+	public float getDilationFactorPercentage() {
+		return dilationFactorPercentage;
 	}
 
-	public void setPeriodDensity(int periodDensity) {
-		this.periodDensity = periodDensity;
+	public void setDilationFactorPercentage(float dilationFactorPercentage) {
+		this.dilationFactorPercentage = dilationFactorPercentage;
 	}
 
 	public MP5DictionaryReinitType getDictionaryReinitType() {
@@ -169,22 +170,6 @@ public class MP5Parameters implements Serializable, Preset {
 		this.algorithm = algorithm;
 	}
 
-	public boolean isAnalyticalDotProduct() {
-		return analyticalDotProduct;
-	}
-
-	public void setAnalyticalDotProduct(boolean analyticalDotProduct) {
-		this.analyticalDotProduct = analyticalDotProduct;
-	}
-
-	public boolean isBookWithSignal() {
-		return bookWithSignal;
-	}
-
-	public void setBookWithSignal(boolean bookWithSignal) {
-		this.bookWithSignal = bookWithSignal;
-	}
-
 	public String getBookComment() {
 		return bookComment;
 	}
@@ -207,6 +192,10 @@ public class MP5Parameters implements Serializable, Preset {
 
 	public void setRawConfigText(String rawConfigText) {
 		this.rawConfigText = rawConfigText;
+	}
+
+	public AtomsInDictionary getAtomsInDictionary() {
+		return atomsInDictionary;
 	}
 
 	@Override

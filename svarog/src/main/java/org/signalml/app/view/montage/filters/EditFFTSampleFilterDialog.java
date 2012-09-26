@@ -4,8 +4,8 @@
 
 package org.signalml.app.view.montage.filters;
 
-import org.signalml.app.view.element.FloatSpinner;
-import org.signalml.app.view.element.DoubleSpinner;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -24,6 +24,7 @@ import java.text.ParseException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -37,7 +38,6 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -46,12 +46,15 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.montage.FFTSampleFilterTableModel;
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.model.montage.FFTSampleFilterTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.element.FFTWindowTypePanel;
+import org.signalml.app.view.common.components.spinners.DoubleSpinner;
+import org.signalml.app.view.common.components.spinners.FloatSpinner;
 import org.signalml.app.view.montage.filters.charts.FFTFilterResponseChartGroupPanel;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 import org.signalml.app.view.montage.filters.charts.elements.SelectionHighlightRenderer;
@@ -59,8 +62,6 @@ import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /** EditFFTSampleFilterDialog
  *
@@ -106,18 +107,18 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	 */
 	protected FFTFilterResponseChartGroupPanel graphsPanel;
 
-	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public EditFFTSampleFilterDialog(Window w, boolean isModal) {
+		super(SvarogApplication.getManagerOfPresetsManagers().getFftFilterPresetManager(), w, isModal);
 	}
 
-	public EditFFTSampleFilterDialog(MessageSourceAccessor messageSource, PresetManager presetManager) {
-		super(messageSource, presetManager);
+	public EditFFTSampleFilterDialog(PresetManager presetManager) {
+		super(presetManager);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("editFFTSampleFilter.title"));
+		setTitle(_("Edit FFT sample filter"));
 
 		addNewRangeAction = new AddNewRangeAction();
 		removeRangeAction = new RemoveRangeAction();
@@ -139,7 +140,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 		JPanel addNewRangePanel = new JPanel(new BorderLayout(3, 3));
 
-		addNewRangePanel.setBorder(new TitledBorder(messageSource.getMessage("editFFTSampleFilter.addNewRangeTitle")));
+		addNewRangePanel.setBorder(new TitledBorder(_("New range parameters")));
 
 		JPanel addNewRangeButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		addNewRangeButtonPanel.add(getAddNewRangeButton());
@@ -156,8 +157,8 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		JPanel rightPanel = new JPanel(new BorderLayout(3, 3));
 
 		border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("editFFTSampleFilter.rangesTitle")),
-		        new EmptyBorder(3, 3, 3, 3)
+			new TitledBorder(_("Ranges")),
+			new EmptyBorder(3, 3, 3, 3)
 		);
 		rightPanel.setBorder(border);
 
@@ -185,7 +186,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 		JPanel descriptionPanel = new JPanel(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("editSampleFilter.descriptionTitle")),
+			new TitledBorder(_("Filter description")),
 			new EmptyBorder(3, 3, 3, 3));
 		descriptionPanel.setBorder(border);
 
@@ -213,7 +214,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public FFTSampleFilterTableModel getTableModel() {
 
 		if (tableModel == null) {
-			tableModel = new FFTSampleFilterTableModel(messageSource);
+			tableModel = new FFTSampleFilterTableModel();
 		}
 		return tableModel;
 
@@ -222,7 +223,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	public FFTSampleFilterTable getTable() {
 
 		if (table == null) {
-			table = new FFTSampleFilterTable(getTableModel(), messageSource);
+			table = new FFTSampleFilterTable(getTableModel());
 			table.setPopupMenuProvider(new RangeTablePopupProvider());
 
 			table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -271,7 +272,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 			});
 
-			table.setToolTipText(messageSource.getMessage("editFFTSampleFilter.tableToolTip"));
+			table.setToolTipText(_("Double click a row to copy parameters to new range parameters panel"));
 
 			KeyStroke del = KeyStroke.getKeyStroke("DELETE");
 			table.getInputMap(JComponent.WHEN_FOCUSED).put(del, "remove");
@@ -305,11 +306,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel fromFrequencyLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.fromFrequency"));
-			JLabel toFrequencyLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.toFrequency"));
-			JLabel coefficientLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.coefficient"));
-			JLabel unlimitedLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.unlimited"));
-			JLabel multiplyLabel = new JLabel(messageSource.getMessage("editFFTSampleFilter.multiply"));
+			JLabel fromFrequencyLabel = new JLabel(_("From (incl.) [Hz]"));
+			JLabel toFrequencyLabel = new JLabel(_("To (excl.) [Hz]"));
+			JLabel coefficientLabel = new JLabel(_("Coefficient"));
+			JLabel unlimitedLabel = new JLabel(_("Up to Fn"));
+			JLabel multiplyLabel = new JLabel(_("Multiply"));
 
 			Component filler1 = Box.createRigidArea(new Dimension(1, 25));
 			Component filler2 = Box.createRigidArea(new Dimension(1, 25));
@@ -317,39 +318,39 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(fromFrequencyLabel)
-			        .addComponent(coefficientLabel)
+				layout.createParallelGroup()
+				.addComponent(fromFrequencyLabel)
+				.addComponent(coefficientLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getFromFrequencySpinner())
-			        .addComponent(getCoefficientSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getFromFrequencySpinner())
+				.addComponent(getCoefficientSpinner())
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(toFrequencyLabel)
-			        .addComponent(filler1)
+				layout.createParallelGroup()
+				.addComponent(toFrequencyLabel)
+				.addComponent(filler1)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getToFrequencySpinner())
-			        .addComponent(filler2)
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getToFrequencySpinner())
+				.addComponent(filler2)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(unlimitedLabel)
-			        .addComponent(multiplyLabel)
+				layout.createParallelGroup()
+				.addComponent(unlimitedLabel)
+				.addComponent(multiplyLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getUnlimitedCheckBox())
-			        .addComponent(getMultiplyCheckBox())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getUnlimitedCheckBox())
+				.addComponent(getMultiplyCheckBox())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -357,23 +358,23 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(fromFrequencyLabel)
-			        .addComponent(getFromFrequencySpinner())
-			        .addComponent(toFrequencyLabel)
-			        .addComponent(getToFrequencySpinner())
-			        .addComponent(unlimitedLabel)
-			        .addComponent(getUnlimitedCheckBox())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(fromFrequencyLabel)
+				.addComponent(getFromFrequencySpinner())
+				.addComponent(toFrequencyLabel)
+				.addComponent(getToFrequencySpinner())
+				.addComponent(unlimitedLabel)
+				.addComponent(getUnlimitedCheckBox())
 			);
 
 			vGroup.addGroup(
-			        layout.createParallelGroup(Alignment.BASELINE)
-			        .addComponent(coefficientLabel)
-			        .addComponent(getCoefficientSpinner())
-			        .addComponent(filler1)
-			        .addComponent(filler2)
-			        .addComponent(multiplyLabel)
-			        .addComponent(getMultiplyCheckBox())
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(coefficientLabel)
+				.addComponent(getCoefficientSpinner())
+				.addComponent(filler1)
+				.addComponent(filler2)
+				.addComponent(multiplyLabel)
+				.addComponent(getMultiplyCheckBox())
 			);
 
 			layout.setVerticalGroup(vGroup);
@@ -452,10 +453,27 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 			unlimitedCheckBox.addItemListener(new ItemListener() {
 
+				private Float previousToFrequencyValue;
+
 				@Override
 				public void itemStateChanged(ItemEvent e) {
 					boolean unlimited = getUnlimitedCheckBox().isSelected();
+					double maximumFrequency = getCurrentSamplingFrequency() / 2;
 
+					double newToFrequencySpinnerValue;
+					if (unlimited) {
+						float toFrequencyValue = getToFrequencySpinner().getValue();
+						if (toFrequencyValue != maximumFrequency)
+							previousToFrequencyValue = toFrequencyValue;
+						newToFrequencySpinnerValue = maximumFrequency;
+					} else if (previousToFrequencyValue != null
+							&& previousToFrequencyValue != maximumFrequency) {
+						newToFrequencySpinnerValue = previousToFrequencyValue;
+					} else {
+						newToFrequencySpinnerValue = maximumFrequency - FREQUENCY_SPINNER_STEP_SIZE;
+					}
+
+					getToFrequencySpinner().setValue(newToFrequencySpinnerValue);
 					getToFrequencySpinner().setEnabled(!unlimited);
 					updateHighlights();
 				}
@@ -472,7 +490,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 			coefficientSpinner = new DoubleSpinner(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.1));
 			coefficientSpinner.setPreferredSize(new Dimension(80, 25));
 
-			final JTextField editor = ((JTextField) ((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
+			final JTextField editor = ((JTextField)((JSpinner.NumberEditor) coefficientSpinner.getEditor()).getComponent(0));
 
 			KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
 			editor.getInputMap(JComponent.WHEN_FOCUSED).put(enter, "add");
@@ -511,7 +529,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 
 	public FFTWindowTypePanel getFFTWindowTypePanel() {
 		if (fftWindowTypePanel == null) {
-			fftWindowTypePanel = new FFTWindowTypePanel(messageSource, true);
+			fftWindowTypePanel = new FFTWindowTypePanel(true);
 		}
 		return fftWindowTypePanel;
 	}
@@ -573,15 +591,15 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 		getFFTWindowTypePanel().validatePanel(errors);
 
 		String description = getDescriptionTextField().getText();
 		if (description == null || description.isEmpty()) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionEmpty");
+			errors.addError(_("A filter must have a description"));
 		} else if (Util.hasSpecialChars(description)) {
-			errors.rejectValue("description", "error.editSampleFilter.descriptionBadChars");
+			errors.addError(_("Filter description must not contain control characters"));
 		}
 
 	}
@@ -616,10 +634,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		private static final long serialVersionUID = 1L;
 
 		public AddNewRangeAction() {
-			super(messageSource.getMessage("editFFTSampleFilter.addNewRange"));
+			super(_("Add or replace range"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addfftrange.png"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (currentFilter == null) {
@@ -673,10 +692,11 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 		private static final long serialVersionUID = 1L;
 
 		public RemoveRangeAction() {
-			super(messageSource.getMessage("editFFTSampleFilter.removeRange"));
+			super(_("Remove range"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removefftrange.png"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			if (currentFilter == null) {
@@ -747,7 +767,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	@Override
 	public FFTFilterResponseChartGroupPanel getChartGroupPanelWithABorder() {
 		if (graphsPanel == null) {
-			graphsPanel = new FFTFilterResponseChartGroupPanel(messageSource, currentFilter);
+			graphsPanel = new FFTFilterResponseChartGroupPanel(currentFilter);
 			graphsPanel.setSamplingFrequency(getCurrentSamplingFrequency());
 
 			graphsPanel.addSelectionChangedListener(this);

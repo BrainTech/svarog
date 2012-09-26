@@ -3,13 +3,15 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
 import org.jfree.chart.ChartPanel;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A class representing a {@link ChartPanel} which is used to display
@@ -27,18 +29,16 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public FrequencyResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public FrequencyResponseChartPanel() {
+		super();
 		selectionHighlightRenderer = new SelectionHighlightRenderer(this);
 		selectionHighlightRenderer.addSelectionChangedListener(this);
 	}
 
 	@Override
 	public String getDomainAxisName() {
-		return messageSource.getMessage("editSampleFilter.graphFrequencyLabel");
+		return _("Frequency [Hz]");
 	}
 
 	/**
@@ -110,7 +110,5 @@ public abstract class FrequencyResponseChartPanel extends ResponseChartPanel imp
 		if (selectionHighlightRenderer != null)
 			selectionHighlightRenderer.updateSelectionToScaleChange();
 	}
-
-
 
 }

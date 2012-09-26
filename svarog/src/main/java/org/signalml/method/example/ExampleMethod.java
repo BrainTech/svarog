@@ -17,8 +17,10 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.ResolvableString;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.plugin.export.method.BaseMethodData;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -28,9 +30,9 @@ import org.springframework.validation.Errors;
  */
 public class ExampleMethod extends AbstractMethod implements InitializingMethod, TrackableMethod, SuspendableMethod, IterableMethod {
 
-        /**
-         * Logger to save history of execution at.
-         */
+	/**
+	 * Logger to save history of execution at.
+	 */
 	protected static final Logger logger = Logger.getLogger(ExampleMethod.class);
 
 	private static final String UID = "65b7e4c7-2d3f-4e5c-a18a-7942392268ea";
@@ -42,16 +44,16 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 	private int[] numbers;
 	private boolean initialized = false;
 
-        /**
-         * Creates new uninitialized ExampleMethod instance.
-         */
+	/**
+	 * Creates new uninitialized ExampleMethod instance.
+	 */
 	public ExampleMethod() throws SignalMLException {
 		super();
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void initialize() throws SignalMLException {
 		if (!initialized) {
@@ -63,76 +65,104 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		}
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String getUID() {
 		return UID;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String getName() {
 		return NAME;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public int[] getVersion() {
 		return VERSION;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new ExampleData();
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean supportsDataClass(Class<?> clazz) {
 		return ExampleData.class.isAssignableFrom(clazz);
 	}
 
-        /**
-         * {@inheritDoc}
-         */
-        @Override
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Class<?> getResultClass() {
 		return ExampleResult.class;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void validate(Object data, Errors errors) {
 		super.validate(data, errors);
 		ExampleData eData = (ExampleData) data;
 		int count = eData.getCount();
 		if (count < 0 || count > 10000) {
-			errors.rejectValue("count", "exampleMethod.error.badCount");
+			errors.rejectValue("count", "exampleMethod.error.badCount", _("Bad count"));
 		}
 	}
 
-        /**
-         * Executes this ExampleMethod and returns null it it was aborted
-         * or ExampleResult containing result of computation if no error occured.
-         *
-         * @param data the data object
-         * @param tracker the tracker used to monitor the execution
-         * @return the result object
-         * @throws ComputationException when computation fails for reasons other than bad input data
-         */
+	private String i2processedMsg(int i) {
+		switch (i) {
+		case 0:
+			return _("Life is generally pointless");
+		case 1:
+			return _("Life sucks");
+		case 2:
+			return _("I don't know what I'm doing here");
+		case 3:
+			return _("Why should I even care?");
+		case 4:
+			return _("I'll just sit here for a while");
+		default:
+			throw new IllegalArgumentException();
+		}
+	}
+
+	private String i2tickerMsg(int i) {
+		switch (i) {
+		case 0:
+			return _("Pondering");
+		case 1:
+			return _("Deliberating");
+		default:
+			throw new IllegalArgumentException();
+		}
+	}
+
+	/**
+	 * Executes this ExampleMethod and returns null it it was aborted
+	 * or ExampleResult containing result of computation if no error occured.
+	 *
+	 * @param data the data object
+	 * @param tracker the tracker used to monitor the execution
+	 * @return the result object
+	 * @throws ComputationException when computation fails for reasons other than bad input data
+	 */
 	@Override
 	public Object doComputation(Object data, MethodExecutionTracker tracker) throws ComputationException {
 
@@ -154,9 +184,9 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 			synchronized (tracker) {
 				tracker.setTickers(counters);
 				if (i/2 == 0) {
-					tracker.setMessage(new ResolvableString("exampleMethod.start"));
+					tracker.setMessage(_("Let's find the meaning of life"));
 				} else {
-					tracker.setMessage(new ResolvableString("exampleMethod.processed"+(i/2-1)));
+					tracker.setMessage(i2processedMsg(i/2-1));
 				}
 			}
 			eData.setSuspended(false);
@@ -164,7 +194,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 		} else {
 			i = 0;
 			e = 0;
-			tracker.setMessage(new ResolvableString("exampleMethod.start"));
+			tracker.setMessage(_("Let's find the meaning of life"));
 		}
 
 		// the main "computation" loop
@@ -198,7 +228,7 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 			product *= numbers[i];
 			synchronized (tracker) {
 				tracker.tick(0);
-				tracker.setMessage(new ResolvableString("exampleMethod.processed"+(i/2)));
+				tracker.setMessage(i2processedMsg(i/2));
 			}
 			i++;
 			e=0;
@@ -212,33 +242,33 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int getTickerCount() {
 		return 2;
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		return messageSource.getMessage("exampleMethod.ticker"+ticker);
+	public String getTickerLabel(int ticker) {
+		return i2tickerMsg(ticker);
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean isDataSuspended(Object data) {
 		return ((ExampleData) data).isSuspended();
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public IterableParameter[] getIterableParameters(Object data) {
 
@@ -259,9 +289,9 @@ public class ExampleMethod extends AbstractMethod implements InitializingMethod,
 
 	}
 
-        /**
-         * {@inheritDoc}
-         */
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Object digestIterationResult(int iteration, Object result) {
 		return result;

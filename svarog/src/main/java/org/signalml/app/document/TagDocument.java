@@ -3,24 +3,27 @@
  */
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
-import org.apache.log4j.Logger;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
+import org.apache.log4j.Logger;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
@@ -37,6 +40,7 @@ import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
 import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
+import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 
 /**
  * The document with {@link Tag tags} and {@link TagStyle tag styles}.
@@ -61,14 +65,14 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
 	/**
-         * Logger to save history of execution at
-         */
+	     * Logger to save history of execution at
+	     */
 	protected static final Logger logger = Logger.getLogger(TagDocument.class);
 
-        /**
-         * Charset used to save this document. Probably shouldn't be changed.
-         */
-        public static final String CHAR_SET = "UTF-8";
+	/**
+	 * Charset used to save this document. Probably shouldn't be changed.
+	 */
+	public static final String CHAR_SET = "UTF-8";
 
 	/**
 	 * the {@link StyledTagSet set} in which the {@link Tag tags} and
@@ -155,11 +159,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		TagDocument templateDocument = new TagDocument();
 		templateDocument.readDocument(r.getInputStream());
 
-		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
-		Collection<TagStyle> templateStyles = templateDocument.getTagSet().getStyles();
-		for (TagStyle style : templateStyles) {
-			styles.put(style.getName(), style);
-		}
+		TagStyles styles = templateDocument.getTagSet().getTagStyles().clone();
 		StyledTagSet tagSet = new StyledTagSet(styles, pageSize, blocksPerPage);
 
 		TagDocument tagDocument = new TagDocument(tagSet);
@@ -182,11 +182,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public static TagDocument getStylesFromFileDocument(File file, float pageSize, int blocksPerPage) throws SignalMLException, IOException {
 		TagDocument templateDocument = new TagDocument(file);
-		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
-		Collection<TagStyle> templateStyles = templateDocument.getTagSet().getStyles();
-		for (TagStyle style : templateStyles) {
-			styles.put(style.getName(), style);
-		}
+
+		TagStyles styles = templateDocument.getTagSet().getTagStyles().clone();
 		StyledTagSet tagSet = new StyledTagSet(styles, pageSize, blocksPerPage);
 		TagDocument tagDocument = new TagDocument(tagSet);
 		return tagDocument;
@@ -201,7 +198,12 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	@Override
 	public void readDocument(InputStream is) {
 		XStream streamer = getTagStreamer();
-		tagSet = (StyledTagSet) streamer.fromXML(is);
+		try {
+			tagSet = (StyledTagSet) streamer.fromXML(is);
+		} catch (CannotResolveClassException e) {
+			throw new RuntimeException("failed to read XML, element "
+									   + e.getMessage());
+		}
 	}
 
 	@Override
@@ -272,7 +274,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	private XStream getTagStreamer() {
 
 		XStream streamer = new XStream(
-		        new PureJavaReflectionProvider(new FieldDictionary(new NativeFieldKeySorter())),
+			new PureJavaReflectionProvider(new FieldDictionary(new NativeFieldKeySorter())),
 		new DomDriver(CHAR_SET, new XmlFriendlyReplacer() {
 
 			// the classes in question don't have $'s in their names and the
@@ -288,10 +290,10 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 		}
 
-		                     ));
+						 ));
 		Annotations.configureAliases(streamer,
-		                             StyledTagSet.class
-		                            );
+									 StyledTagSet.class
+									);
 		XMLUtils.configureStreamerForMontage(streamer);
 
 		return streamer;
@@ -321,9 +323,9 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		SignalDocument document = getParent();
 		String parentName = document.getName();
 		return new Object[] {
-		               getName(),
-		               parentName
-		       };
+				   getName(),
+				   parentName
+			   };
 	}
 
 	@Override
@@ -361,19 +363,15 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
-		LinkedHashSet<TagStyle> channelStyles = getTagSet().getChannelStyles();
-		Iterator<TagStyle> it = channelStyles.iterator();
-		while (it.hasNext()) {
-			if (!it.next().isMarker()) {
-				it.remove();
+		List<TagStyle> markerStyles = new ArrayList<TagStyle>();
+
+		for (TagStyle style: getTagSet().getChannelStyles()) {
+			if (style.isMarker()) {
+				markerStyles.add(style);
 			}
 		}
 
-		TagStyle[] markerStyles = new TagStyle[channelStyles.size()];
-		channelStyles.toArray(markerStyles);
-
-		constraints.setMarkerStyles(markerStyles);
-
+		constraints.setMarkerStyles(markerStyles.toArray(new TagStyle[0]));
 	}
 
 	@Override
@@ -381,8 +379,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.tagDocument.tagStyleCount", "tagStyleCount", TagDocument.class, "getTagStyleCount", null));
-		list.add(new LabelledPropertyDescriptor("property.tagDocument.tagCount", "tagCount", TagDocument.class, "getTagCount", null));
+		list.add(new LabelledPropertyDescriptor(_("tag style count"), "tagStyleCount", TagDocument.class, "getTagStyleCount", null));
+		list.add(new LabelledPropertyDescriptor(_("tag count"), "tagCount", TagDocument.class, "getTagCount", null));
 
 		return list;
 
@@ -392,14 +390,8 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 * @see org.signalml.plugin.export.signal.ExportedTagDocument#getSetOfTags()
 	 */
 	@Override
-	public Set<ExportedTag> getSetOfTags() {
-		Set<Tag> tagSet = getTagSet().getTags();
-
-		Set<ExportedTag> exportedTagSet = new TreeSet<ExportedTag>();
-		for (Tag tag : tagSet){
-			exportedTagSet.add(tag);
-		}
-		return exportedTagSet;
+	public SortedSet<ExportedTag> getSetOfTags() {
+		return new TreeSet<ExportedTag>(getTagSet().getTags());
 	}
 
 	/* (non-Javadoc)
@@ -408,9 +400,9 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	@Override
 	public Set<ExportedTagStyle> getTagStyles() {
 		StyledTagSet tagSet = getTagSet();
-		Set<TagStyle> styles = tagSet.getStyles();
+		List<TagStyle> styles = tagSet.getListOfStyles();
 		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<ExportedTagStyle>();
-		for(TagStyle style : styles){
+		for (TagStyle style : styles) {
 			exportedStyles.add(style);
 		}
 		return exportedStyles;

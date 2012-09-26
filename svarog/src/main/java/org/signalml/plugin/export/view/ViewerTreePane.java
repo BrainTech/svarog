@@ -25,14 +25,14 @@ public class ViewerTreePane extends JPanel {
 	 */
 	private JScrollPane scrollPane;
 	/**
-	 * the tree that is displayed in this tab 
+	 * the tree that is displayed in this tab
 	 */
 	private JTree tree;
 
 	/**
 	 * Constructor.
 	 * Crates a scroll pane with a tree in it and adds
-	 * the scroll panel to this tab 
+	 * the scroll panel to this tab
 	 * @param tree a tree to be displayed in this tab
 	 */
 	public ViewerTreePane(JTree tree) {
@@ -54,7 +54,7 @@ public class ViewerTreePane extends JPanel {
 	}
 
 	/**
-	 * Returns the tree which is displayed in this tab (within a scroll pane). 
+	 * Returns the tree which is displayed in this tab (within a scroll pane).
 	 * @return the tree which is displayed in this tab (within a scroll pane)
 	 */
 	public JTree getTree() {

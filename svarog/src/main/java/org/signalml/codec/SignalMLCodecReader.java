@@ -34,7 +34,7 @@ public class SignalMLCodecReader {
 	private String currentFilename = null;
 
 	private short cached_data_offset = -1;
-	
+
 	public SignalMLCodecReader(Class<?> cobj, SignalMLCodec codec) throws SignalMLCodecException {
 		this.codec = codec;
 		this.delegateClass = cobj;
@@ -310,6 +310,14 @@ public class SignalMLCodecReader {
 		return getBoolean(getValue("is_calibration"));
 	}
 
+	public float get_calibration(int channel) throws SignalMLCodecException {
+		return getFloat(getValue("get_calibration"), channel);
+	}
+
+	public float get_calibration() throws SignalMLCodecException {
+		return getFloat(getValue("get_calibration"));
+	}
+
 	public void set_sampling_frequency(float freq) throws SignalMLCodecException {
 		setValue("set_sampling_frequency", freq);
 	}
@@ -349,7 +357,7 @@ public class SignalMLCodecReader {
 			throw new SignalMLCodecException("object is null");
 		}
 	}
-	
+
 	public short[] getSamples(long offset, int length) throws SignalMLCodecException {
 		if (delegate != null) {
 			try {
@@ -363,12 +371,12 @@ public class SignalMLCodecReader {
 	}
 
 	private short get_data_offset() throws XMLCodecException {
-	    if( cached_data_offset < 0 ) {
-	        cached_data_offset = this.delegate.read_short(28);
-	    }
-	    return cached_data_offset;
+		if (cached_data_offset < 0) {
+			cached_data_offset = this.delegate.read_short(28);
+		}
+		return cached_data_offset;
 	}
-	
+
 	public String getCurrentFilename() {
 		return currentFilename;
 	}

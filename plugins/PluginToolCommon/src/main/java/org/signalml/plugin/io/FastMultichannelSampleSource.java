@@ -4,16 +4,15 @@ import java.beans.PropertyChangeListener;
 
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 public class FastMultichannelSampleSource implements MultichannelSampleSource {
 
 	private static int BUFFER_SIZE = Math.max(1 << 20, Integer
-					 .highestOneBit(Math.min((int) Runtime.getRuntime().maxMemory(),
-							 Integer.MAX_VALUE) / 20));
+									 .highestOneBit(Math.min((int) Runtime.getRuntime().maxMemory(),
+											 Integer.MAX_VALUE) / 20));
 
 	private SignalMLCodecReader delegate;
-	private float calibration;
 	private short buffer[];
 	private int offset;
 
@@ -24,15 +23,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 		this.buffer = null;
 		this.offset = -BUFFER_SIZE - 1;
 		this.names = null;
-	}
-
-	@Override
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-
-	}
-
-	@Override
-	public void destroy() {
 	}
 
 	@Override
@@ -78,7 +68,7 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset,
-			       int count, int arrayOffset) {
+						   int count, int arrayOffset) {
 		if (count <= 0) {
 			return;
 		}
@@ -104,7 +94,7 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 			this.offset = signalOffset;
 			try {
 				this.buffer = this.delegate.getSamples(signalOffset,
-								       BUFFER_SIZE);
+													   BUFFER_SIZE);
 			} catch (SignalMLCodecException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -134,9 +124,20 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	}
 
 	@Override
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
-
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		//do nothing
 	}
+	
+	@Override
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		//do nothing
+	}
+	
+	@Override
+	public void destroy() {
+		this.buffer = null;
+		this.delegate.close();
+	}
+
 
 }

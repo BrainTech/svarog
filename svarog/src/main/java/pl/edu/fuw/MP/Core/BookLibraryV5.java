@@ -81,8 +81,8 @@ public class BookLibraryV5 implements BookLibraryInterface {
 					BookLibraryV5IndexElement y=index.elementAt(j);
 
 					if (x.channel==y.channel &&
-					                x.offset==y.offset   &&
-					                x.type!=y.type) {
+							x.offset==y.offset   &&
+							x.type!=y.type) {
 						x.parent=y;
 						y.parent=x;
 						break;
@@ -194,7 +194,7 @@ public class BookLibraryV5 implements BookLibraryInterface {
 
 	private void readBook(RandomAccessFile stream) throws IOException {
 		segment=new SegmentHeaderV5(this);
-		segment.Read(stream);
+		segment.read(stream);
 	}
 
 	private CPair[] getOffset(int segNo) {
@@ -250,7 +250,7 @@ public class BookLibraryV5 implements BookLibraryInterface {
 
 			for (; ; k++) {
 				long off=stream.getFilePointer();
-				segHead.SkipSegment(stream);
+				segHead.skipSegment(stream);
 
 				BookLibraryV5IndexElement element=new BookLibraryV5IndexElement();
 
@@ -465,15 +465,15 @@ public class BookLibraryV5 implements BookLibraryInterface {
 			mytext="(null)";
 
 		return ("\nSampling frequency: "+getSamplingFreq()+" Hz\n"+
-		        "Version           : "+getVersion()+"\n"+
-		        "Conversion        : "+getConvFactor()+" points/uV\n"+
-		        "Dictionary Type   : "+getDictionaryType()+"\n"+
-		        "Dictionary Size   : "+getDictionarySize()+"\n"+
-		        "Energy Percent    : "+getEnergyPercent()+" %\n"+
-		        "Number of channels: "+getMaxChannel()+"\n"+
-		        "Text              : "+mytext+"\n"+
-		        "Date              : "+mydate+"\n"
-		       );
+				"Version           : "+getVersion()+"\n"+
+				"Conversion        : "+getConvFactor()+" points/uV\n"+
+				"Dictionary Type   : "+getDictionaryType()+"\n"+
+				"Dictionary Size   : "+getDictionarySize()+"\n"+
+				"Energy Percent    : "+getEnergyPercent()+" %\n"+
+				"Number of channels: "+getMaxChannel()+"\n"+
+				"Text              : "+mytext+"\n"+
+				"Date              : "+mydate+"\n"
+			   );
 	}
 
 	public boolean Open(String filename, int off) throws BookFormatException {
@@ -523,11 +523,15 @@ public class BookLibraryV5 implements BookLibraryInterface {
 						readBook(streamClass);
 						seg1=segment;
 					}
+					int offSetDimension = segment.offsetDimension;
+					int offsetNumber = segment.offsetNumber;
 
 					if (p.y>=0L) {
 						streamClass.seek(p.y);
 						readBook(streamClass);
 						seg2=segment;
+						segment.offsetDimension = offSetDimension;
+						segment.offsetNumber = offsetNumber;
 					}
 
 					if (seg1!=null && seg2!=null) {

@@ -15,7 +15,7 @@ import org.signalml.plugin.export.SignalMLException;
 public interface InitializingMethod {
 
 	/**
-         * Initializes the method singleton.
+	     * Initializes the method singleton.
 	 * @throws SignalMLException on errors
 	 */
 	void initialize() throws SignalMLException;

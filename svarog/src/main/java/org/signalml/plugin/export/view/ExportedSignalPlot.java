@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.export.view;
 
@@ -28,7 +28,7 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
  * point in time and value and vice versa,</li>
  * <li>return a tag or selection,</li>
  * <li>create a tag or selection and set it,</li>
- * <li>return basic parameters of the signal, such as 
+ * <li>return basic parameters of the signal, such as
  * 	<ul>
  * 	<li>length of block/page,</li>
  * 	<li>number of channels,</li>
@@ -51,7 +51,7 @@ public interface ExportedSignalPlot {
 	 * Returns the number of pixels the view has to be moved right so that
 	 * the next page (then this that is now first in view) is first in the view.
 	 * @param position the view coordinates that appear in the upper left
-     * hand corner of the viewport
+	 * hand corner of the viewport
 	 * @return the number of pixels the view has to be moved right
 	 */
 	int getPageForwardSkip(Point position);
@@ -61,7 +61,7 @@ public interface ExportedSignalPlot {
 	 * the previous page (then this that is now first in view) is first in
 	 * the view.
 	 * @param position the view coordinates that appear in the upper left
-     * hand corner of the viewport
+	 * hand corner of the viewport
 	 * @return the number of pixels the view has to be moved left
 	 */
 	int getPageBackwardSkip(Point position);
@@ -71,7 +71,7 @@ public interface ExportedSignalPlot {
 	 * the next block (then this that is now first in view) is first in
 	 * the view.
 	 * @param position the view coordinates that appear in the upper left
-     * hand corner of the viewport
+	 * hand corner of the viewport
 	 * @return the number of pixels the view has to be moved right
 	 */
 	int getBlockForwardSkip(Point position);
@@ -81,7 +81,7 @@ public interface ExportedSignalPlot {
 	 * the previous block (then this that is now first in view) is first in
 	 * the view.
 	 * @param position the view coordinates that appear in the upper left
-     * hand corner of the viewport
+	 * hand corner of the viewport
 	 * @return the number of pixels the view has to be moved left
 	 */
 	int getBlockBackwardSkip(Point position);
@@ -100,7 +100,7 @@ public interface ExportedSignalPlot {
 
 	/**
 	 * Converts position in the view (pixel) to the position in signal
-	 * (point in time and value at this point). 
+	 * (point in time and value at this point).
 	 * @param p the position in the view
 	 * @return point in time (first dimension) and value at this point (second
 	 * dimension)
@@ -199,7 +199,7 @@ public interface ExportedSignalPlot {
 	 * @return the created signal selection
 	 */
 	ExportedSignalSelection getBlockSelection(int fromBlock, int toBlock);
-	
+
 	/**
 	 * Creates the {@link ExportedSignalSelection signal selection} that is
 	 * a channel selection and contains the time between {@code fromPosition}
@@ -233,20 +233,20 @@ public interface ExportedSignalPlot {
 	 * from Svarog (is not of type {@code TagDocument}}.
 	 */
 	void tagSelection(ExportedTagDocument tagDocument, ExportedTagStyle style,
-			ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException;
+					  ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException;
 
 	/**
-     * Removes from the given {@link ExportedTagDocument tag document}
-     * {@link ExportedTag tagged selections} that intersect with
-     * a given selection and are of the same type as given.
+	 * Removes from the given {@link ExportedTagDocument tag document}
+	 * {@link ExportedTag tagged selections} that intersect with
+	 * a given selection and are of the same type as given.
 	 * @param tagDocument the document from which the tags are to be removed
 	 * @param selection the selection to which tagged selections will be
-     * compared
+	 * compared
 	 * @throws InvalidClassException if the {@code tagDocument} is not returned
 	 * from Svarog (is not of type {@code TagDocument}}.
 	 */
 	void eraseTagsFromSelection(ExportedTagDocument tagDocument,
-			ExportedSignalSelection selection) throws InvalidClassException;
+								ExportedSignalSelection selection) throws InvalidClassException;
 
 	/**
 	 * Creates a page {@link ExportedTag tag} based on the given page selection
@@ -262,7 +262,7 @@ public interface ExportedSignalPlot {
 	 * selection or if the {@code style} is not a page style
 	 */
 	void tagPageSelection(ExportedTagDocument tagDocument, ExportedTagStyle style,
-			ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException, SanityCheckException;
+						  ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException, SanityCheckException;
 
 	/**
 	 * Creates a block {@link ExportedTag tag} based on the given block selection
@@ -278,7 +278,7 @@ public interface ExportedSignalPlot {
 	 * selection or if the {@code style} is not a block style
 	 */
 	void tagBlockSelection(ExportedTagDocument tagDocument, ExportedTagStyle style,
-			ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException, SanityCheckException;
+						   ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException, SanityCheckException;
 
 	/**
 	 * Creates a channel {@link ExportedTag tag} based on the given channel
@@ -294,7 +294,7 @@ public interface ExportedSignalPlot {
 	 * selection or if the {@code style} is not a channel style
 	 */
 	void tagChannelSelection(ExportedTagDocument tagDocument, ExportedTagStyle style,
-			ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException, SanityCheckException;
+							 ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException, SanityCheckException;
 
 	/**
 	 * Returns the height (in pixel) of one channel in the view.
@@ -309,19 +309,19 @@ public interface ExportedSignalPlot {
 	boolean isAntialiased();
 
 	/**
-	 * Returns the width (in pixels) of one second of the signal. 
+	 * Returns the width (in pixels) of one second of the signal.
 	 * @return the width (in pixels) of one second of the signal
 	 */
 	double getPixelPerSecond();
 
 	/**
-	 * Returns the width (in pixels) of one block of the signal. 
+	 * Returns the width (in pixels) of one block of the signal.
 	 * @return the width (in pixels) of one block of the signal
 	 */
 	double getPixelPerBlock();
 
 	/**
-	 * Returns the width (in pixels) of one page of the signal. 
+	 * Returns the width (in pixels) of one page of the signal.
 	 * @return the width (in pixels) of one page of the signal
 	 */
 	double getPixelPerPage();
@@ -331,12 +331,6 @@ public interface ExportedSignalPlot {
 	 * @return the height (in pixels) of one point of value
 	 */
 	double getPixelPerValue();
-
-	/**
-	 * Returns the maximal value of the signal.
-	 * @return the maximal value of the signal.
-	 */
-	double getDetectedMaxValue();
 
 	/**
 	 * Returns the number of channels in the signal.
@@ -388,14 +382,14 @@ public interface ExportedSignalPlot {
 
 	/**
 	 * Returns the {@link ExportedSignalDocument document} with which this plot
-	 * is associated. 
+	 * is associated.
 	 * @return the document with which this plot is associated
 	 */
 	ExportedSignalDocument getDocument();
 
 	/**
 	 * Returns the {@link ExportedSignalView view} with which this plot
-	 * is associated. 
+	 * is associated.
 	 * @return the view with which this plot is associated
 	 */
 	ExportedSignalView getView();
@@ -405,41 +399,41 @@ public interface ExportedSignalPlot {
 	 * @return the plot from which this plot is dependent
 	 */
 	ExportedSignalPlot getMasterPlot();
-	
+
 	/**
 	 * Returns the width and height of this component.
 	 * @return the width and height of this component
 	 */
 	Dimension getSize();
-	
+
 	/**
 	 * Returns the number of pixels per sample.
 	 * @return the number of pixels per sample
 	 */
 	double getTimeZoomFactor();
-	
+
 	/**
-     * Forwards the <code>scrollRectToVisible()</code> message to the
-     * parent. Components that can service
-     * the request, such as <code>JViewport</code>,
-     * override this method and perform the scrolling.
-     *
-     * @param aRect the visible <code>Rectangle</code>
-     * @see JViewport
-     */
+	 * Forwards the <code>scrollRectToVisible()</code> message to the
+	 * parent. Components that can service
+	 * the request, such as <code>JViewport</code>,
+	 * override this method and perform the scrolling.
+	 *
+	 * @param aRect the visible <code>Rectangle</code>
+	 * @see JViewport
+	 */
 	public void scrollRectToVisible(Rectangle aRect);
 
 	/**
-     * Returns the <code>JRootPane</code> ancestor for this component.
-     *
-     * @return the <code>JRootPane</code> that contains this component,
-     *		or <code>null</code> if no <code>JRootPane</code> is found
-     */
-    public JRootPane getRootPane();
-    
-    /**
-     * Returns the number of samples per second.
-     * @return the number of samples per second
-     */
-    public float getSamplingFrequency();
+	 * Returns the <code>JRootPane</code> ancestor for this component.
+	 *
+	 * @return the <code>JRootPane</code> that contains this component,
+	 *		or <code>null</code> if no <code>JRootPane</code> is found
+	 */
+	public JRootPane getRootPane();
+
+	/**
+	 * Returns the number of samples per second.
+	 * @return the number of samples per second
+	 */
+	public float getSamplingFrequency();
 }

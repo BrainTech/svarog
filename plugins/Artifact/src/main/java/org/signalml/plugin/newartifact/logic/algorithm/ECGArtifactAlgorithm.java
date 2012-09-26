@@ -2,7 +2,9 @@ package org.signalml.plugin.newartifact.logic.algorithm;
 
 import java.util.Arrays;
 
+import org.signalml.plugin.domain.montage.PluginChannel;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
+import org.signalml.plugin.newartifact.exception.NewArtifactPluginException;
 import org.signalml.plugin.newartifact.logic.stat.Stat;
 
 public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
@@ -28,16 +30,19 @@ public class ECGArtifactAlgorithm  extends NewArtifactAlgorithmBase {
 	}
 
 	@Override
-	public double[][] compute(NewArtifactAlgorithmData data) {
+	public double[][] compute(NewArtifactAlgorithmData data) throws NewArtifactPluginException {
 		double buffer[] = this.resultBuffer[0];
 		double signal[][] = data.signal;
 
 		PreprocessHelper.Preprocess(signal, data.constants);
 
-		int tailLength = data.constants.getPaddingLength();
-		int blockLength = data.constants.getBlockLength();
-		double ecgChannel[] = Arrays.copyOfRange(signal[data.channels.get("ECG").intValue()],
-				      tailLength, tailLength + blockLength);
+		final int tailLength = data.constants.getPaddingLength();
+		final int blockLength = data.constants.getBlockLength();
+
+		double signalData[] = this.getChannelData(data, PluginChannel.ECG);
+
+		double ecgChannel[] = Arrays.copyOfRange(signalData,
+							  tailLength, tailLength + blockLength);
 		for (int i = 0; i < data.constants.channelCount; ++i) {
 			double channelData[] = Arrays.copyOfRange(signal[i], tailLength, tailLength + blockLength);
 			buffer[i] = Math.abs(this.correlationAlgorithm.computeCorrelation(channelData, ecgChannel));

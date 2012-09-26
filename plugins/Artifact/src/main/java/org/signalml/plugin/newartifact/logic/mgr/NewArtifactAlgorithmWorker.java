@@ -13,7 +13,7 @@ import org.signalml.plugin.newartifact.logic.algorithm.NewArtifactAlgorithmData;
 
 public class NewArtifactAlgorithmWorker implements Runnable {
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactAlgorithmWorker.class);
+										   .getLogger(NewArtifactAlgorithmWorker.class);
 
 	private final NewArtifactAlgorithmFactory algorithmFactory;
 	private final IPluginDataSourceReader dataSource;
@@ -41,9 +41,9 @@ public class NewArtifactAlgorithmWorker implements Runnable {
 			double buffer[][] = new double[channelCount][blockLength];
 			NewArtifactAlgorithmData data =
 				new NewArtifactAlgorithmData(this.workerData.constants,
-							     this.workerData.artifactData.getParameters(),
-							     this.workerData.artifactData.getKeyChannelMap(),
-							     buffer);
+											 this.workerData.artifactData.getParameters(),
+											 this.workerData.artifactData.getChannelMap(), //FIXME: figure out difference between getChannelMap and getKeyChannelMap
+											 buffer);
 
 			this.resultWriter.write(algorithm.computeHead(data));
 			while (this.dataSource.hasMoreSamples()) {

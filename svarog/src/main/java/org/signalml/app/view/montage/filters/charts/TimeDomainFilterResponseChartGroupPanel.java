@@ -4,6 +4,9 @@
 
 package org.signalml.app.view.montage.filters.charts;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
@@ -16,15 +19,14 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.iirdesigner.ArrayOperations;
-import org.signalml.domain.montage.filter.iirdesigner.BadFilterParametersException;
-import org.signalml.domain.montage.filter.iirdesigner.FilterCoefficients;
-import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponse;
-import org.signalml.domain.montage.filter.iirdesigner.FilterFrequencyResponseCalculator;
-import org.signalml.domain.montage.filter.iirdesigner.FilterTimeDomainResponse;
-import org.signalml.domain.montage.filter.iirdesigner.FilterTimeDomainResponseCalculator;
-import org.signalml.domain.montage.filter.iirdesigner.IIRDesigner;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.math.ArrayOperations;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.FilterCoefficients;
+import org.signalml.math.iirdesigner.FilterFrequencyResponse;
+import org.signalml.math.iirdesigner.FilterFrequencyResponseCalculator;
+import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
+import org.signalml.math.iirdesigner.FilterTimeDomainResponseCalculator;
+import org.signalml.math.iirdesigner.IIRDesigner;
 
 /**
  * This class represents a panel containing all the components needed for visualizing
@@ -93,12 +95,10 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param currentFilter the filter to be visualized
 	 */
-	public TimeDomainFilterResponseChartGroupPanel(MessageSourceAccessor messageSource, TimeDomainSampleFilter currentFilter) {
-		super(messageSource, currentFilter);
+	public TimeDomainFilterResponseChartGroupPanel(TimeDomainSampleFilter currentFilter) {
+		super(currentFilter);
 	}
 
 	@Override
@@ -131,14 +131,14 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 */
 	protected FilterResponseChartPanelsWithGraphScaleSpinner createFrequencyResponsesPanel() {
 
-		frequencyResponseChartPanel = new TimeDomainFilterFrequencyResponseChartPanel(messageSource);
-		groupDelayResponseChartPanel = new GroupDelayResponseChartPanel(messageSource);
+		frequencyResponseChartPanel = new TimeDomainFilterFrequencyResponseChartPanel();
+		groupDelayResponseChartPanel = new GroupDelayResponseChartPanel();
 
 		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
 		chartsList.add(frequencyResponseChartPanel);
 		chartsList.add(groupDelayResponseChartPanel);
 
-		return new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, messageSource.getMessage("editSampleFilter.graphFrequencySpinnerLabel"));
+		return new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, _("Maximum graph frequency [Hz]"));
 
 	}
 
@@ -149,13 +149,13 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 */
 	protected FilterResponseChartPanelsWithGraphScaleSpinner createTimeDomainResponsesPanel() {
 
-		impulseResponseChartPanel = new ImpulseResponseChartPanel(messageSource);
-		stepResponseChartPanel = new StepResponseChartPanel(messageSource);
+		impulseResponseChartPanel = new ImpulseResponseChartPanel();
+		stepResponseChartPanel = new StepResponseChartPanel();
 
 		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
 		chartsList.add(impulseResponseChartPanel);
 		chartsList.add(stepResponseChartPanel);
-		FilterResponseChartPanelsWithGraphScaleSpinner chartPanel = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, messageSource.getMessage("editTimeDomainSampleFilter.graphTimeSpinnerLabel"));
+		FilterResponseChartPanelsWithGraphScaleSpinner chartPanel = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, _("Maximum graph time value [s]"));
 		chartPanel.setMaximumSpinnerValue(TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS);
 		chartPanel.setCurrentSpinnerValue(INITIAL_TIME_DOMAIN_RESPONSES_MAXIMUM_TIME_VALUE_IN_SECONDS);
 		return chartPanel;
@@ -195,7 +195,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		frequencyResponseChartPanel.setData(frequencies, values);
 
 		int filterOrder = frequencyResponseCalculator.getFilterCoefficients().getFilterOrder();
-		String subtitleText = messageSource.getMessage("editTimeDomainSampleFilter.filterOrderSubtitle", new Object[]{filterOrder});
+		String subtitleText = _R("filter order = {0}", filterOrder);
 
 		frequencyResponseChartPanel.setSubtitle(subtitleText);
 
@@ -241,12 +241,12 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 * domain responses
 	 */
 	protected int getNumberOfPointsForTimeDomainResponse() {
-		return (int) (TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS * samplingFrequency);
+		return (int)(TIME_DOMAIN_RESPONSES_SIZE_IN_SECONDS * samplingFrequency);
 	}
 
 	@Override
 	protected String getChartGroupPanelTitle() {
-		return messageSource.getMessage("editTimeDomainSampleFilter.graphPanelTitle");
+		return _("Filter design graphs");
 	}
 
 }

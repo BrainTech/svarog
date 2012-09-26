@@ -446,22 +446,22 @@ public class NewBookLibrary {
 			mytext="(null)";
 
 		return ("\nSampling frequency: "+getSamplingFreq()+" Hz\n"+
-		        "Version           : "+getVersion()+"\n"+
-		        "Conversion        : "+getConvFactor()+" points/uV\n"+
-		        "Dictionary Type   : "+getDictionaryType()+"\n"+
-		        "Dictionary Size   : "+getDictionarySize()+"\n"+
-		        "Energy Percent    : "+getEnergyPercent()+" %\n"+
-		        "File offset       : "+segment.file_offset+"\n"+
-		        "Book size         : "+segment.book_size+"\n"+
-		        "Signal size       : "+segment.signal_size+"\n"+
-		        "Signal energy     : "+segment.signal_energy+"\n"+
-		        "Channel           : "+segment.channel+"\n"+
-		        "Number of channels: "+getMaxChannel()+"\n"+
-		        "Book energy       : "+segment.book_energy+"\n"+
-		        "Book number       : "+getMaxBookNumber()+"\n"+
-		        "Text              : "+mytext+"\n"+
-		        "Date              : "+mydate+"\n"
-		       );
+				"Version           : "+getVersion()+"\n"+
+				"Conversion        : "+getConvFactor()+" points/uV\n"+
+				"Dictionary Type   : "+getDictionaryType()+"\n"+
+				"Dictionary Size   : "+getDictionarySize()+"\n"+
+				"Energy Percent    : "+getEnergyPercent()+" %\n"+
+				"File offset       : "+segment.file_offset+"\n"+
+				"Book size         : "+segment.book_size+"\n"+
+				"Signal size       : "+segment.signal_size+"\n"+
+				"Signal energy     : "+segment.signal_energy+"\n"+
+				"Channel           : "+segment.channel+"\n"+
+				"Number of channels: "+getMaxChannel()+"\n"+
+				"Book energy       : "+segment.book_energy+"\n"+
+				"Book number       : "+getMaxBookNumber()+"\n"+
+				"Text              : "+mytext+"\n"+
+				"Date              : "+mydate+"\n"
+			   );
 	}
 
 	public boolean Open(String filename,int Offset) {

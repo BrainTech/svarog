@@ -7,18 +7,21 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.io.InvalidClassException;
+import java.util.Calendar;
 
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
+import org.signalml.math.fft.FourierTransform;
 import org.signalml.plugin.export.SvarogAccess;
+import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
+import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
 import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
-import org.signalml.plugin.fft.export.FourierTransform;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}
@@ -27,11 +30,19 @@ import org.springframework.context.support.MessageSourceAccessor;
  * the mouse is pressed.<p>
  * The settings how the power spectrum should be displayed are stored in
  * {@link SignalFFTSettings}.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o., Marcin Szumski
  */
-public class SignalFFTTool extends AbstractSignalTool {
+public class SignalFFTTool extends AbstractSignalTool implements PluginSignalChangeListener {
+
+	protected static final Logger logger = Logger
+										   .getLogger(SignalFFTPlot.class);
+
+	/**
+	 * How often should FFT be recalculated. This is useful for online signals.
+	 */
+	private static long MILLISECONDS_BETWEEN_FFT_RECALCULATIONS = 1000;
 
 	/**
 	 * the {@link ExportedSignalPlot signal plot} for which this FFT tool is
@@ -42,10 +53,6 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * the {@link SignalFFTPlot plot} on which the power spectrum is displayed
 	 */
 	private SignalFFTPlot fftPlot;
-	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
 
 	/**
 	 * the {@link SvarogAccess access} to Svarog logic and GUI
@@ -63,13 +70,10 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created.
 	 * @param signalView the signal view
-	 * @param messageSource the source of messages
 	 */
-	public SignalFFTTool(ExportedSignalView signalView,
-			MessageSourceAccessor messageSource) {
+	public SignalFFTTool(ExportedSignalView signalView) {
 		super(signalView);
-		fftPlot = new SignalFFTPlot(messageSource);
-		// fftPlot = new SignalFFTPlot();
+		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
 	}
 
@@ -77,26 +81,16 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 * Constructor. Sets the source of messages. The {@link
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created must be set separately.
-	 * @param messageSource the source of messages
 	 */
-	public SignalFFTTool(MessageSourceAccessor messageSource) {
+	public SignalFFTTool() {
 		super();
-		fftPlot = new SignalFFTPlot(messageSource);
+		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
-		this.messageSource = messageSource;
-	}
-
-	/**
-	 * Sets the source of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	@Override
 	public SignalFFTTool createCopy() {
-		SignalFFTTool copy = new SignalFFTTool(messageSource);
+		SignalFFTTool copy = new SignalFFTTool();
 		copy.setSvarogAccess(svarogAccess);
 		copy.setSettings(getSettings());
 		return copy;
@@ -212,7 +206,7 @@ public class SignalFFTTool extends AbstractSignalTool {
 			int channel = fftPlot.getChannel();
 			int channelY = plot.channelToPixel(channel);
 			Point location = SwingUtilities.convertPoint((Component) plot,
-					new Point(point.x, channelY), layeredPane);
+							 new Point(point.x, channelY), layeredPane);
 			int y;
 			if (location.y > layeredPane.getHeight() / 2) {
 				y = location.y - size.height;
@@ -220,7 +214,7 @@ public class SignalFFTTool extends AbstractSignalTool {
 				y = location.y + plot.getPixelPerChannel();
 			}
 			fftPlot.setBounds(location.x - (size.width / 2), y, size.width,
-					size.height);
+							  size.height);
 		}
 	}
 
@@ -253,7 +247,7 @@ public class SignalFFTTool extends AbstractSignalTool {
 	/**
 	 * Draws the rectangle around point on the currently selected channel which
 	 * is nearest to the specified {@code point}.
-	 * If the point is not located on this channel, 
+	 * If the point is not located on this channel,
 	 * @param point the point
 	 */
 	private void selectAround(Point point) {
@@ -261,11 +255,11 @@ public class SignalFFTTool extends AbstractSignalTool {
 			Float centerPosition = plot.toTimeSpace(point);
 			if (centerPosition != null) {
 				double offset = (((float) settings.getWindowWidth()) / plot
-						.getSamplingFrequency()) / 2;
+								 .getSamplingFrequency()) / 2;
 				Float startPosition = new Float(centerPosition.floatValue()
-						- ((float) offset));
+												- ((float) offset));
 				Float endPosition = new Float(centerPosition.floatValue()
-						+ ((float) offset));
+											  + ((float) offset));
 				if (startPosition.equals(endPosition)) {
 					getSignalView().clearSignalSelection();
 				} else {
@@ -273,9 +267,9 @@ public class SignalFFTTool extends AbstractSignalTool {
 					if (channel != null) {
 						try {
 							getSignalView().setSignalSelection(
-									plot,
-									plot.getChannelSelection(startPosition,
-											endPosition, channel));
+								plot,
+								plot.getChannelSelection(startPosition,
+														 endPosition, channel));
 						} catch (InvalidClassException e) {
 							throw new RuntimeException("invalid plot");
 						}
@@ -292,7 +286,24 @@ public class SignalFFTTool extends AbstractSignalTool {
 	 */
 	public void setSvarogAccess(SvarogAccess access) {
 		svarogAccess = access;
+		svarogAccess.getChangeSupport().addSignalChangeListener(this);
 		fftPlot.setSvarogAccess(access);
+	}
+
+	@Override
+	public void newSamplesAdded(PluginSignalChangeEvent e) {
+		if (isEngaged()) {
+			Calendar now = Calendar.getInstance();
+			Calendar lastFFTRecalculationTime = fftPlot.getLastFFTRecalculationTime();
+			if (lastFFTRecalculationTime == null)
+				return;
+
+			long differenceInMillis = now.getTimeInMillis() - lastFFTRecalculationTime.getTimeInMillis();
+
+			if (differenceInMillis > MILLISECONDS_BETWEEN_FFT_RECALCULATIONS) {
+				fftPlot.recalculateAndRepaint();
+			}
+		}
 	}
 
 }

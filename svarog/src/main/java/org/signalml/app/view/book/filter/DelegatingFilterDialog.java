@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -29,15 +31,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.element.FileListCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.FileListCellRenderer;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /** DelegatingFilterDialog
  *
@@ -48,7 +49,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private DefaultListModel classPathListModel;
 	private JList classPathList;
@@ -66,14 +67,14 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 	private JButton addJarEntryButton;
 	private JButton removeEntryButton;
 
-	public DelegatingFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public DelegatingFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("delegatingFilter.title"));
+		setTitle(_("Custom atom filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
 
 		quickFileAction = new QuickFileAction();
@@ -92,9 +93,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		JPanel classPathPanel = new JPanel(new BorderLayout(5,5));
 
 		classPathPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(messageSource.getMessage("delegatingFilter.classPathTitle")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Choose class path")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		JPanel rightPanel = new JPanel(new BorderLayout());
 
@@ -114,9 +115,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 
 		JPanel fqClassNamePanel = new JPanel(new BorderLayout(5,5));
 		fqClassNamePanel.setBorder(new CompoundBorder(
-		                                   new TitledBorder(messageSource.getMessage("delegatingFilter.fqClassNameTitle")),
-		                                   new EmptyBorder(3,3,3,3)
-		                           ));
+									   new TitledBorder(_("Choose fully qualified filter class name")),
+									   new EmptyBorder(3,3,3,3)
+								   ));
 
 		fqClassNamePanel.add(getFqClassNameTextField(), BorderLayout.CENTER);
 		fqClassNamePanel.add(getQuickFileButton(), BorderLayout.EAST);
@@ -251,22 +252,22 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
 		if (getClassPathListModel().size() == 0) {
-			errors.rejectValue("classPath", "error.delegatingAtomFilter.noClassPath");
+			errors.addError(_("At least one class path entry is required"));
 		}
 
 		String fqClassName = getFqClassNameTextField().getText();
 		if (fqClassName == null || fqClassName.isEmpty()) {
-			errors.rejectValue("fqClassName", "error.delegatingAtomFilter.noFqClassName");
+			errors.addError(_("Fully qualified class name is required"));
 		} else {
 			fqClassName.trim();
 			getFqClassNameTextField().setText(fqClassName);
 			if (!Util.validateFqClassName(fqClassName)) {
-				errors.rejectValue("fqClassName", "error.delegatingAtomFilter.badFqClassName");
+				errors.addError(_("Invalid fully qualified class name"));
 			}
 		}
 
@@ -278,7 +279,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 				filter.initialize();
 			} catch (Throwable t) {
 				logger.error("Filter failed to initialize", t);
-				errors.reject("error.delegatingAtomFilter.failedToInitialize");
+				errors.addError(_("Failed to initialize filter. See log file for details."));
 			}
 		}
 
@@ -289,11 +290,11 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		return DelegatingAtomFilter.class.isAssignableFrom(clazz);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 
@@ -302,9 +303,9 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public QuickFileAction() {
-			super(messageSource.getMessage("delegatingFilter.quickFile"));
+			super(_("Quick file"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION, messageSource.getMessage("delegatingFilter.quickFileToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Select a single java or class file. Contained class must be in default package"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -337,7 +338,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public AddDirectoryEntryAction() {
-			super(messageSource.getMessage("delegatingFilter.addDirectoryEntry"));
+			super(_("Add directories"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/adddirectoryentry.png"));
 		}
 
@@ -362,7 +363,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public AddJarEntryAction() {
-			super(messageSource.getMessage("delegatingFilter.addJarEntry"));
+			super(_("Add jar files"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addjarentry.png"));
 		}
 
@@ -387,7 +388,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public RemoveEntryAction() {
-			super(messageSource.getMessage("delegatingFilter.removeEntry"));
+			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removeentry.png"));
 			setEnabled(false);
 		}

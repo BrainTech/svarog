@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.loader;
 
@@ -19,39 +19,39 @@ import javax.swing.table.AbstractTableModel;
  * the next start of the application.
  * Otherwise this cell can not be edited and the whole row has a red background.
  * Also the tool-tip with the description of the problem is set.
- * 
+ *
  * @author Marcin Szumski
  */
 public class PluginTableModel extends AbstractTableModel {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * the names of columns
 	 */
-	private String[] columnNames = new String[]{
-		"Name", "version", "active"	
+	private String[] columnNames = new String[] {
+		"Name", "version", "active"
 	};
 	/**
 	 * an array in which the data are stored.
 	 * first index - row numbers,
 	 * second index - column numbers.
 	 */
-    private Object[][] data;
-    
-    /**
-     * an array of plug-in {@link PluginState states}
-     */
-    private ArrayList<PluginState> descriptions;
-    
-    /**
-     * Constructor.
-     * @param descriptions an array of plug-in {@link PluginState states}
-     */
+	private Object[][] data;
+
+	/**
+	 * an array of plug-in {@link PluginState states}
+	 */
+	private ArrayList<PluginState> descriptions;
+
+	/**
+	 * Constructor.
+	 * @param descriptions an array of plug-in {@link PluginState states}
+	 */
 	public PluginTableModel(ArrayList<PluginState> descriptions) {
 		data = new Object[descriptions.size()][];
 	}
-    
+
 	@Override
 	public int getRowCount() {
 		return data.length;
@@ -64,9 +64,9 @@ public class PluginTableModel extends AbstractTableModel {
 	public int getColumnCount() {
 		return columnNames.length;
 	}
-	
+
 	@Override
-	public String getColumnName(int col){
+	public String getColumnName(int col) {
 		return columnNames[col];
 	}
 
@@ -77,46 +77,46 @@ public class PluginTableModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		return data[rowIndex][columnIndex];
 	}
-	
+
 	@Override
-	public Class getColumnClass(int col){
+	public Class getColumnClass(int col) {
 		Class clazz = data[0][col].getClass();
 		return clazz;
 	}
-	
+
 	@Override
-	public boolean isCellEditable(int rowIndex, int columnIndex){
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		if (columnIndex == 2) {
 			PluginState state = descriptions.get(rowIndex);
 			if (state.getMissingDependencies().isEmpty() && !state.isFailedToLoad()) return true;
 		}
-			
+
 		return false;
 	}
-	
+
 	@Override
 	public void setValueAt(Object value, int rowIndex, int columnIndex) {
-        data[rowIndex][columnIndex] = value;
-        fireTableCellUpdated(rowIndex, columnIndex);
-    }
-	
+		data[rowIndex][columnIndex] = value;
+		fireTableCellUpdated(rowIndex, columnIndex);
+	}
+
 	/**
 	 * Updates the plug-in states from users input.
 	 * @param descriptions the states to be updated
 	 */
-	public void fillModel(ArrayList<PluginState> descriptions){
-		for (int i = 0; i < data.length ; ++i ){
+	public void fillModel(ArrayList<PluginState> descriptions) {
+		for (int i = 0; i < data.length ; ++i) {
 			boolean active = ((Boolean) data[i][2]).booleanValue();
 			descriptions.get(i).setActive(active);
 		}
 	}
-	
+
 	/**
 	 * Fills the table with data from provided array.
 	 * @param descriptions an array of plug-in {@link PluginState states}
 	 */
-	public void fromModel(ArrayList<PluginState> descriptions){
-		for (int i = 0; i < descriptions.size(); ++i){
+	public void fromModel(ArrayList<PluginState> descriptions) {
+		for (int i = 0; i < descriptions.size(); ++i) {
 			PluginState description = descriptions.get(i);
 			if (data[i] == null) data[i] = new Object[3];
 			data[i][0] = description.getName();
@@ -126,5 +126,5 @@ public class PluginTableModel extends AbstractTableModel {
 		this.descriptions = descriptions;
 	}
 
-	
+
 }

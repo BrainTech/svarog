@@ -18,7 +18,7 @@ import org.signalml.plugin.export.view.ExportedSignalView;
  */
 public abstract class AbstractSignalTool extends MouseInputAdapter implements SignalTool {
 
-    /** {@link ExportedSignalView} this SignalTool is associated with. */
+	/** {@link ExportedSignalView} this SignalTool is associated with. */
 	private ExportedSignalView signalView;
 	/** Tells whether this SignalTool is currently processing any mouse event sequence. */
 	private boolean engaged = false;
@@ -26,10 +26,10 @@ public abstract class AbstractSignalTool extends MouseInputAdapter implements Si
 	/**
 	 * Constructs a new empty SignalTool.
 	 */
-	protected AbstractSignalTool(){
-		
+	protected AbstractSignalTool() {
+
 	}
-	
+
 	/**
 	 * Constructs a new SignalTool and associates it with the specified {@link
 	 * ExportedSignalView SignalView}.
@@ -43,10 +43,10 @@ public abstract class AbstractSignalTool extends MouseInputAdapter implements Si
 
 	@Override
 	public abstract Cursor getDefaultCursor();
-	
+
 	/**
 	 * Returns false.
-	 * 
+	 *
 	 * @return false
 	 */
 	@Override
@@ -56,49 +56,49 @@ public abstract class AbstractSignalTool extends MouseInputAdapter implements Si
 
 	/**
 	 * Returns false.
-	 * 
+	 *
 	 * @return false
 	 */
 	@Override
 	public boolean supportsRowHeader() {
 		return false;
 	}
-	
+
 	/**
 	 * Returns the {@link ExportedSignalView} associated with this SignalTool.
 	 *
 	 * @return {@link #signalView}
 	 */
 	protected ExportedSignalView getSignalView() {
-	    return signalView;
+		return signalView;
 	}
 
 	/**
 	 * Tells whether this SignalTool is currently processing any mouse event sequence.
 	 *
-	 * @return {@link #engaged} 
+	 * @return {@link #engaged}
 	 */
 	@Override
 	public boolean isEngaged() {
 		return engaged;
 	}
-	
+
 	/**
 	 * Sets mouse event sequence processing flag to the given value.
-	 * 
+	 *
 	 * @param b - new {@link #engaged} value
 	 */
 	protected void setEngaged(boolean b) {
-	    this.engaged = b;
+		this.engaged = b;
 	}
-	
+
 	@Override
-	public void setSignalView(ExportedSignalView signalView){
+	public void setSignalView(ExportedSignalView signalView) {
 		this.signalView = signalView;
 	}
-	
+
 	@Override
-	public SignalTool createCopy() throws UnsupportedOperationException{
+	public SignalTool createCopy() throws UnsupportedOperationException {
 		throw new UnsupportedOperationException("operation not supported");
 	}
 }

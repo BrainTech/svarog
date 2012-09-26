@@ -3,25 +3,26 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.view.FileChooser;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /** StagerResultTagPanel
  *
@@ -32,8 +33,6 @@ public class NewArtifactResultTagPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private JTextField tagTextField;
 	private JButton chooseTagButton;
 
@@ -41,9 +40,8 @@ public class NewArtifactResultTagPanel extends JPanel {
 
 	private File tagFile;
 
-	public NewArtifactResultTagPanel(MessageSourceAccessor messageSource, FileChooser fileChooser) {
+	public NewArtifactResultTagPanel(FileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		initialize();
 	}
@@ -51,7 +49,7 @@ public class NewArtifactResultTagPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("newArtifactMethod.dialog.result.choosePrimaryTagTitle")),
+			new TitledBorder(_("Choose primary result tag file")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -61,7 +59,7 @@ public class NewArtifactResultTagPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel tagFileLabel = new JLabel(messageSource.getMessage("newArtifactMethod.dialog.result.primaryTagFile"));
+		JLabel tagFileLabel = new JLabel(_("Primary tag file"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -133,14 +131,14 @@ public class NewArtifactResultTagPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (tagFile == null) {
-			errors.rejectValue("primaryTagFile", "error.newArtifact.result.badTagFile");
+			errors.addError(_("Tag file not chosen"));
 		} else {
 			File parent = tagFile.getParentFile();
 			if (parent == null || !parent.exists() || !parent.canWrite()) {
-				errors.rejectValue("primaryTagFile", "error.newArtifact.result.tagFileNotWritable");
+				errors.addError(_("Tag file parent directory doesn't exist or not writable"));
 			}
 		}
 
@@ -158,11 +156,12 @@ public class NewArtifactResultTagPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public ChooseTagFileAction() {
-			super(messageSource.getMessage("newArtifactMethod.dialog.result.choosePrimaryTagFile"));
+			super(_("Choose..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("newArtifactMethod.dialog.result.choosePrimaryTagFileToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose a tag file to save"));
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent ev) {
 
 			File file = fileChooser.chooseSaveTag(NewArtifactResultTagPanel.this.getTopLevelAncestor());

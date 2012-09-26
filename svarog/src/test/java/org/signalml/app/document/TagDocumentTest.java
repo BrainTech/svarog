@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.signalml.domain.tag.StyledTagSet;
 import static org.junit.Assert.*;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
@@ -43,7 +44,7 @@ public class TagDocumentTest {
 		tagDocument = new TagDocument(defaultFile);
 		sts = tagDocument.getTagSet();
 	}
-	
+
 	private void testDefaults() {
 		assertEquals(12, sts.getTagStyleCount());
 		assertEquals(7, sts.getPageStyleCount());
@@ -104,12 +105,12 @@ public class TagDocumentTest {
 	@Test
 	public void testAddTagsAndSave() throws Exception {
 
-		Tag tag = new Tag(sts.getStyle("1"), 120F, 20F, Tag.CHANNEL_NULL, null);
+		Tag tag = new Tag(sts.getStyle(SignalSelectionType.PAGE, "1"), 120F, 20F, Tag.CHANNEL_NULL, null);
 		sts.addTag(tag);
 
-		tag = new Tag(sts.getStyle("Y"), 300F, 400F, 5, "test");
+		tag = new Tag(sts.getStyle(SignalSelectionType.CHANNEL, "Y"), 300F, 400F, 5, "test");
 		TagStyleAttributeDefinition attributeDefinition = new TagStyleAttributeDefinition("testAttributeKey", "ble", true);
-		sts.getStyle("Y").getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
+		sts.getStyle(SignalSelectionType.CHANNEL, "Y").getAttributesDefinitions().addAttributeDefinition(attributeDefinition);
 		tag.setAttribute(new TagAttributeValue(attributeDefinition, "testAttributeValue"));
 		sts.addTag(tag);
 

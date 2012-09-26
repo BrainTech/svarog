@@ -6,7 +6,7 @@ package org.signalml.app.config;
 
 import javax.swing.ToolTipManager;
 
-import org.signalml.app.view.book.WignerMapPalette;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
@@ -22,27 +22,12 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("application")
 public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
-	private boolean dontShowDynamicCompilationWarning;
+	private String[] favouriteDirs = new String[0];
+	private String[] lastDirs = new String[0];
 
-	private String[] favouriteDirs;
-	private String[] lastDirs;
-	private String lastOpenTagPath;
-	private String lastImportTagPath;
-	private String lastExportTagPath;
-	private String lastExportSignalPath;
-	private String lastExportBookPath;
-	private String lastOpenDocumentPath;
-	private String lastSaveDocumentPath;
-	private String lastConsoleSaveAsTextPath;
-	private String lastTableSaveAsTextPath;
-	private String lastSamplesSaveAsTextPath;
-	private String lastSamplesSaveAsFloatPath;
-	private String lastChartSaveAsPngPath;
+	private String lastFileChooserPath;
 	private String lastPresetPath;
 	private String lastSaveMP5ConfigPath;
-	private String lastBookFilePath;
-	private String lastSaveTagPath;
-	private String lastExpertTagPath;
 	private String lastLibraryPath;
 
 	private boolean rightClickPagesForward;
@@ -56,6 +41,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
+	private boolean optimizeSignalDisplay;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -88,12 +74,10 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private ZoomSignalSettings zoomSignalSettings = new ZoomSignalSettings();
 
-	private boolean disableSeriousWarnings;
-
 	private WignerMapPalette palette;
 	private WignerMapScaleType scaleType;
 
-	private boolean signalAntialiased;
+	private boolean signalInBookAntialiased;
 	private boolean originalSignalVisible;
 	private boolean fullReconstructionVisible;
 	private boolean reconstructionVisible;
@@ -107,26 +91,22 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
-        private float backupFrequency;
+	private float backupFrequency;
 
-	/**
-	 * Default value for the multiplexer address. If the user changes
-	 * multiplexer address value in the Open monitor dialog, it can be
-	 * reset to defaults stored in this variable.
-	 */
-	private String defaultMultiplexerAddress = "3";
-
-	/**
-	 * Default value for the multiplexer port. If the user changes
-	 * multiplexer port value in the Open monitor dialog, it can be
-	 * reset to defaults stored in this variable.
-	 */
-	private int defaultMultiplexerPort = 4;
-
-	private String multiplexerAddress;
-	private int multiplexerPort;
+	private String openbciIPAddress;
+	private int openbciPort;
 
 	private float monitorPageSize;
+	/**
+	 * Determines if a highpass filter should be added to each
+	 * signal automatically.
+	 */
+	private boolean autoAddHighpassFilter;
+	/**
+	 * When opening a signal automatically tries to load it with tags
+	 * that have the same file name.
+	 */
+	private boolean autoTryToLoadSignalWithTags;
 
 	public void applySystemSettings() {
 
@@ -150,13 +130,13 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.favouriteDirs = dirs;
 	}
 
-        public float getBackupFrequency() {
-                return backupFrequency;
-        }
+	public float getBackupFrequency() {
+		return backupFrequency;
+	}
 
-        public void setBackupFrequency(float backupFrequency) {
-                this.backupFrequency = backupFrequency;
-        }
+	public void setBackupFrequency(float backupFrequency) {
+		this.backupFrequency = backupFrequency;
+	}
 
 	public String[] getLastDirs() {
 		return lastDirs;
@@ -164,70 +144,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setLastDirs(String[] dirs) {
 		this.lastDirs = dirs;
-	}
-
-	public String getLastOpenTagPath() {
-		return lastOpenTagPath;
-	}
-
-	public String getLastImportTagPath() {
-		return lastImportTagPath;
-	}
-
-	public void setLastImportTagPath(String lastImportTagPath) {
-		this.lastImportTagPath = lastImportTagPath;
-	}
-
-	public String getLastExportTagPath() {
-		return lastExportTagPath;
-	}
-
-	public void setLastExportTagPath(String lastExportTagPath) {
-		this.lastExportTagPath = lastExportTagPath;
-	}
-
-	public void setLastOpenTagPath(String lastOpenTagPath) {
-		this.lastOpenTagPath = lastOpenTagPath;
-	}
-
-	public String getLastOpenDocumentPath() {
-		return lastOpenDocumentPath;
-	}
-
-	public void setLastOpenDocumentPath(String lastOpenDocumentPath) {
-		this.lastOpenDocumentPath = lastOpenDocumentPath;
-	}
-
-	public String getLastSaveDocumentPath() {
-		return lastSaveDocumentPath;
-	}
-
-	public void setLastSaveDocumentPath(String lastSaveDocumentPath) {
-		this.lastSaveDocumentPath = lastSaveDocumentPath;
-	}
-
-	public String getLastConsoleSaveAsTextPath() {
-		return lastConsoleSaveAsTextPath;
-	}
-
-	public void setLastConsoleSaveAsTextPath(String lastConsoleSaveAsTextPath) {
-		this.lastConsoleSaveAsTextPath = lastConsoleSaveAsTextPath;
-	}
-
-	public String getLastTableSaveAsTextPath() {
-		return lastTableSaveAsTextPath;
-	}
-
-	public void setLastTableSaveAsTextPath(String lastTableSaveAsTextPath) {
-		this.lastTableSaveAsTextPath = lastTableSaveAsTextPath;
-	}
-
-	public String getLastPresetPath() {
-		return lastPresetPath;
-	}
-
-	public void setLastPresetPath(String lastPresetPath) {
-		this.lastPresetPath = lastPresetPath;
 	}
 
 	public String getLastSaveMP5ConfigPath() {
@@ -262,6 +178,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.precalculateSignalChecksums = precalculateSignalChecksums;
 	}
 
+	@Override
 	public boolean isSaveConfigOnEveryChange() {
 		return saveConfigOnEveryChange;
 	}
@@ -300,6 +217,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setTagToolTipsVisible(boolean tagToolTipsVisible) {
 		this.tagToolTipsVisible = tagToolTipsVisible;
+	}
+
+	public boolean isOptimizeSignalDisplay() {
+		return optimizeSignalDisplay;
+	}
+
+	public void setOptimizeSignalDisplay(boolean optimizeSignalDisplay) {
+		this.optimizeSignalDisplay = optimizeSignalDisplay;
 	}
 
 	public boolean isPageLinesVisible() {
@@ -446,38 +371,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.zoomSignalSettings = zoomSignalSettings;
 	}
 
-	public String getLastChartSaveAsPngPath() {
-		return lastChartSaveAsPngPath;
-	}
-
-	public void setLastChartSaveAsPngPath(String lastChartSaveAsPngPath) {
-		this.lastChartSaveAsPngPath = lastChartSaveAsPngPath;
-	}
-
-	public String getLastSamplesSaveAsTextPath() {
-		return lastSamplesSaveAsTextPath;
-	}
-
-	public void setLastSamplesSaveAsTextPath(String lastSamplesSaveAsTextPath) {
-		this.lastSamplesSaveAsTextPath = lastSamplesSaveAsTextPath;
-	}
-
-	public String getLastSamplesSaveAsFloatPath() {
-		return lastSamplesSaveAsFloatPath;
-	}
-
-	public void setLastSamplesSaveAsFloatPath(String lastSamplesSaveAsFloatPath) {
-		this.lastSamplesSaveAsFloatPath = lastSamplesSaveAsFloatPath;
-	}
-
-	public String getLastExportSignalPath() {
-		return lastExportSignalPath;
-	}
-
-	public void setLastExportSignalPath(String lastExportSignalPath) {
-		this.lastExportSignalPath = lastExportSignalPath;
-	}
-
 	public int getMinChannelHeight() {
 		return minChannelHeight;
 	}
@@ -526,46 +419,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.maxTimeScale = maxTimeScale;
 	}
 
-	public boolean isDisableSeriousWarnings() {
-		return disableSeriousWarnings;
-	}
-
-	public void setDisableSeriousWarnings(boolean disableSeriousWarnings) {
-		this.disableSeriousWarnings = disableSeriousWarnings;
-	}
-
-	public String getLastBookFilePath() {
-		return lastBookFilePath;
-	}
-
-	public void setLastBookFilePath(String lastBookFilePath) {
-		this.lastBookFilePath = lastBookFilePath;
-	}
-
-	public String getLastSaveTagPath() {
-		return lastSaveTagPath;
-	}
-
-	public void setLastSaveTagPath(String lastSaveTagPath) {
-		this.lastSaveTagPath = lastSaveTagPath;
-	}
-
-	public String getLastExpertTagPath() {
-		return lastExpertTagPath;
-	}
-
-	public void setLastExpertTagPath(String lastExpertTagPath) {
-		this.lastExpertTagPath = lastExpertTagPath;
-	}
-
-	public boolean isDontShowDynamicCompilationWarning() {
-		return dontShowDynamicCompilationWarning;
-	}
-
-	public void setDontShowDynamicCompilationWarning(boolean dontShowDynamicCompilationWarning) {
-		this.dontShowDynamicCompilationWarning = dontShowDynamicCompilationWarning;
-	}
-
 	public String getLastLibraryPath() {
 		return lastLibraryPath;
 	}
@@ -590,12 +443,12 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.scaleType = scaleType;
 	}
 
-	public boolean isSignalAntialiased() {
-		return signalAntialiased;
+	public boolean isSignalInBookAntialiased() {
+		return signalInBookAntialiased;
 	}
 
-	public void setSignalAntialiased(boolean signalAntialiased) {
-		this.signalAntialiased = signalAntialiased;
+	public void setSignalInBookAntialiased(boolean signalAntialiased) {
+		this.signalInBookAntialiased = signalAntialiased;
 	}
 
 	public boolean isOriginalSignalVisible() {
@@ -678,89 +531,91 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		this.reconstructionHeight = reconstructionHeight;
 	}
 
-	public String getLastExportBookPath() {
-		return lastExportBookPath;
-	}
-
-	public void setLastExportBookPath(String lastExportBookPath) {
-		this.lastExportBookPath = lastExportBookPath;
-	}
-
-	public void setMultiplexerAddress(String multiplexerAddress) {
-		this.multiplexerAddress = multiplexerAddress;
-	}
-
-	public String getMultiplexerAddress() {
-		return multiplexerAddress;
-	}
-
-	public void setMultiplexerPort(int multiplexerPort) {
-		this.multiplexerPort = multiplexerPort;
-	}
-
-	public int getMultiplexerPort() {
-		return multiplexerPort;
-	}
-
-	/**
-	 * Returns the default value of the multiplexer address.
-	 * @return a string containing default multiplexer address.
-	 */
-	public String getDefaultMultiplexerAddress() {
-		return defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Sets the value of the defalut multiplexer address.
-	 * @param defaultMultiplexerAddress new value for default multiplexer
-	 * address.
-	 */
-	public void setDefaultMultiplexerAddress(String defaultMultiplexerAddress) {
-		this.defaultMultiplexerAddress = defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Sets the value of the default multiplexer port.
-	 * @param defaultMultiplexerPort new value for default multiplexer port.
-	 */
-	public void setDefaultMultiplexerPort(int defaultMultiplexerPort) {
-		this.defaultMultiplexerPort = defaultMultiplexerPort;
-	}
-
-	/**
-	 * Returns the default value of the multiplexer port.
-	 * @return default multiplexer port number
-	 */
-	public int getDefaultMultiplexerPort() {
-		return defaultMultiplexerPort;
-	}
-
-	/**
-	 * Resets the current value of the multiplexer address to defaults.
-	 * This method can be useful when the user changes the current
-	 * multiplexer address in the Open monitor dialog and wants to get back
-	 * the default value.
-	 */
-	public void resetMultiplexerAddressToDefaults() {
-		this.multiplexerAddress = this.defaultMultiplexerAddress;
-	}
-
-	/**
-	 * Resets the current value of the multiplexer port to defaults.
-	 * This method can be useful when the user changes the current
-	 * multiplexer address in the Open monitor dialog and wants to get back
-	 * the default value.
-	 */
-	public void resetMultiplexerPortToDefaults() {
-		this.multiplexerPort = this.defaultMultiplexerPort;
-	}
-
 	public float getMonitorPageSize() {
 		return monitorPageSize;
 	}
 
 	public void setMonitorPageSize(float monitorPageSize) {
 		this.monitorPageSize = monitorPageSize;
+	}
+
+	/**
+	 * Query configuration of various paths by name.
+	 * @return configuration value or null
+	 * @param name name is the same as function name without get
+	 *
+	 */
+	public String getPath(String name) {
+		if ("LastPresetPath".equals(name))
+			return this.getLastPresetPath();
+		else if ("LastLibraryPath".equals(name))
+			return this.getLastLibraryPath();
+		return this.getLastFileChooserPath();
+	}
+
+	/**
+	 * Set configuration value of paths by name.
+	 * @return configuration value or null
+	 * @param name name is the same as function name without set
+	 *
+	 */
+	public void setPath(String name, String path) {
+		if ("LastPresetPath".equals(name))
+			this.setLastPresetPath(path);
+		else if ("LastLibraryPath".equals(name))
+			this.setLastLibraryPath(path);
+		else
+			this.setLastFileChooserPath(path);
+	}
+
+	public String getLastFileChooserPath() {
+		if (lastFileChooserPath == null)
+			lastFileChooserPath = System.getProperty("user.dir");
+		return lastFileChooserPath;
+	}
+
+	public void setLastFileChooserPath(String lastFileChooserPath) {
+		this.lastFileChooserPath = lastFileChooserPath;
+	}
+
+	public String getLastPresetPath() {
+		return lastPresetPath;
+	}
+
+	public void setLastPresetPath(String lastPresetPath) {
+		this.lastPresetPath = lastPresetPath;
+	}
+
+	public String getOpenbciIPAddress() {
+		return openbciIPAddress;
+	}
+
+	public void setOpenbciIPAddress(String openbciIPAddress) {
+		this.openbciIPAddress = openbciIPAddress;
+	}
+
+	public int getOpenbciPort() {
+		return openbciPort;
+	}
+
+	public void setOpenbciPort(int openbciPort) {
+		this.openbciPort = openbciPort;
+	}
+
+	public boolean isAutoAddHighpassFilter() {
+		return autoAddHighpassFilter;
+	}
+
+	public void setAutoAddHighpassFilter(boolean autoAddHighpassFilter) {
+		this.autoAddHighpassFilter = autoAddHighpassFilter;
+	}
+
+	public boolean isAutoTryToLoadSignalWithTags() {
+		return autoTryToLoadSignalWithTags;
+	}
+
+	public void setAutoTryToLoadSignalWithTags(boolean autoTryToLoadTags) {
+		this.autoTryToLoadSignalWithTags = autoTryToLoadTags;
 	}
 
 }

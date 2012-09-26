@@ -4,14 +4,15 @@
 
 package org.signalml.app.action;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
-import org.signalml.app.document.SignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SnapToPageAction
  *
@@ -24,11 +25,11 @@ public class SnapToPageAction extends AbstractFocusableSignalMLAction<SignalDocu
 
 	protected static final Logger logger = Logger.getLogger(SnapToPageAction.class);
 
-	public SnapToPageAction(MessageSourceAccessor messageSource, SignalDocumentFocusSelector signalDocumentFocusSelector) {
-		super(messageSource, signalDocumentFocusSelector);
-		setText("signalView.snapPageToView");
+	public SnapToPageAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
+		setText(_("Snap page to view"));
 		setIconPath("org/signalml/app/icon/snaptopage.png");
-		setToolTip("signalView.snapPageToViewToolTip");
+		setToolTip(_("Resize time scale so that exactly one page fits in the view & align view on page boundary"));
 	}
 
 	@Override

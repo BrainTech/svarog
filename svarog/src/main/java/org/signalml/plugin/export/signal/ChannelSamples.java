@@ -19,7 +19,7 @@ public interface ChannelSamples {
 	 * @return the samples in this channel in the form of doubles.
 	 */
 	double[] getSamples();
-	
+
 	/**
 	 * Returns the sampling frequency.
 	 * @return the number of samples per second

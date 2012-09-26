@@ -4,14 +4,18 @@
 
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.Icon;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The types of {@link Document documents} that can be managed by Svarog.
@@ -31,60 +35,56 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	/**
 	 * type for a {@link SignalDocument}
 	 */
-	SIGNAL(
-	        "signal",
-	        SignalDocument.class,
-	        "filechooser.filter.commonSignalFiles",
-		new String[] { "d", "edf", "raw", "bin", "dat" },
+	SIGNAL(_("Signal"),
+	SignalDocument.class,
+	_("Common signal files (*.d, *.edf, *.raw, *.bin)"),
+	new String[] { "d", "edf", "raw", "bin", "dat" },
 	"org/signalml/app/icon/signal.png"
-	),
+		  ),
 
 	/**
 	 * type for a {@link MonitorSignalDocument}
 	 */
-	MONITOR( 
-			"monitor", 
-			MonitorSignalDocument.class 
-	),
-	
+	MONITOR(_("Monitor"),
+	MonitorSignalDocument.class
+		   ),
+
 	/**
 	 * type for a {@link BookDocument}
 	 */
-	BOOK( 
-			"book", 
-			BookDocument.class, 
-			"filechooser.filter.bookFiles", 
-			new String[] { "b" },
-			"org/signalml/app/icon/book.png" 
-	),
+	BOOK(_("Book"),
+	BookDocument.class,
+	_("Book files (*.b)"),
+	new String[] { "b" },
+	"org/signalml/app/icon/book.png"
+		),
 
 	/**
 	 * type for a {@link TagDocument}
 	 */
-	TAG(
-	        "tag",
-	        TagDocument.class,
-	        "filechooser.filter.tagFiles",
-	new String[] { "xml", "tag" },
+	TAG(_("Tag"),
+	TagDocument.class,
+	_("Tag files (*.tag)"),
+	new String[] {"tag" },
 	"org/signalml/app/icon/tag.png"
-	);
+	   );
 
 	/**
 	 * the name of this type
 	 */
 	private String name;
-	
+
 	/**
 	 * the class that is extended/implemented by all {@link Document documents}
 	 * of this type
 	 */
 	private Class<?> baseClass;
-	
+
 	/**
 	 * the codes for a file filter
 	 */
 	private String[] fileFilterCodes = new String[0];
-	
+
 	/**
 	 * the extensions of the files for this type of the document
 	 */
@@ -160,6 +160,21 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	}
 
 	/**
+	 * Returns all extensions for a given type of document.
+	 * @return extension for the given type of document.
+	 */
+	public String[] getAllFileExtensions() {
+		List<String> extensions = new ArrayList<String>();
+		for (int i = 0; i < fileFilterExtensions.length; i++) {
+			for (String ext: fileFilterExtensions[i]) {
+				extensions.add(ext);
+			}
+		}
+
+		return extensions.toArray(new String[0]);
+	}
+
+	/**
 	 * Returns the icon of this type.
 	 * @return the icon of this type
 	 */
@@ -170,14 +185,13 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	/**
 	 * Returns the filters of the files basing on the
 	 * {@link #getFileFilterExtensions() extensions} of the files.
-	 * @param messageSource the source of messages (labels) in Svarog
 	 * @return the created filters
 	 */
-	public FileFilter[] getFileFilters(MessageSourceAccessor messageSource) {
+	public FileNameExtensionFilter[] getFileFilters() {
 		int len = Math.min(fileFilterCodes.length, fileFilterExtensions.length);
-		FileFilter[] filters = new FileFilter[len];
+		FileNameExtensionFilter[] filters = new FileNameExtensionFilter[len];
 		for (int i=0; i<len; i++) {
-			filters[i] = new FileNameExtensionFilter(messageSource.getMessage(fileFilterCodes[i]), fileFilterExtensions[i]);
+			filters[i] = new FileNameExtensionFilter(fileFilterCodes[i], fileFilterExtensions[i]);
 		}
 		return filters;
 	}
@@ -223,5 +237,4 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	public String getDefaultMessage() {
 		return name;
 	}
-
 }

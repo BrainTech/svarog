@@ -21,11 +21,11 @@ public class DynamicCompilationContext {
 	}
 
 	public static DynamicCompilationContext getSharedInstance() {
-		if (null == sharedInstance) {
-		    synchronized (DynamicCompilationContext.class) {
-		        if (null == sharedInstance)
-		            sharedInstance = new DynamicCompilationContext();
-		    }
+		if (sharedInstance == null) {
+			synchronized (DynamicCompilationContext.class) {
+				if (sharedInstance == null)
+					sharedInstance = new DynamicCompilationContext();
+			}
 		}
 
 		return sharedInstance;

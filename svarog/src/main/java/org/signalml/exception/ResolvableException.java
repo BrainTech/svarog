@@ -10,6 +10,9 @@ import java.util.List;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
+@Deprecated
 /** ResolvableException
  *
  *
@@ -79,7 +82,7 @@ public class ResolvableException extends SignalMLException implements MessageSou
 				codes.add(clazz.getName());
 				clazz = clazz.getSuperclass();
 			}
-			codes.add("error.exceptionOccured");
+			codes.add(_("Exception [{0}] with message [{1}]"));
 			this.codes = new String[codes.size()];
 			codes.toArray(this.codes);
 

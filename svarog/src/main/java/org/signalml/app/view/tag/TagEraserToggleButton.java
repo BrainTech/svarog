@@ -4,13 +4,14 @@
 
 package org.signalml.app.view.tag;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 
 import javax.swing.JToggleButton;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagEraserToggleButton
  *
@@ -23,9 +24,9 @@ public class TagEraserToggleButton extends JToggleButton implements TagStyleSele
 
 	private static final Dimension PREFERRED_SIZE = new Dimension(28,28);
 
-	public TagEraserToggleButton(MessageSourceAccessor messageSource) {
+	public TagEraserToggleButton() {
 		setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/eraser.png"));
-		setToolTipText(messageSource.getMessage("signalView.eraserToolTip"));
+		setToolTipText(_("Erase tags"));
 	}
 
 	@Override

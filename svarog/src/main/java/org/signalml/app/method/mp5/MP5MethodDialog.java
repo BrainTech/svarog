@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -35,29 +37,31 @@ import javax.swing.event.ListSelectionListener;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.FileBackedDocument;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.PresetEquippedMethodConfigurer;
-import org.signalml.app.model.SignalExportDescriptor;
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractSignalSpaceAwarePresetDialog;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
-import org.signalml.app.view.element.SignalSpacePanel;
+import org.signalml.app.view.common.dialogs.AbstractSignalSpaceAwarePresetDialog;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.worker.ExportSignalWorker;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.app.view.signal.signalselection.SignalSpacePanel;
+import org.signalml.app.view.workspace.ViewerFileChooser;
+import org.signalml.app.worker.document.ExportSignalWorker;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -68,16 +72,12 @@ import org.signalml.method.mp5.MP5ConfigCreator;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.method.mp5.MP5RuntimeParameters;
-import org.signalml.method.mp5.MP5SignalFormatType;
 import org.signalml.method.mp5.MP5WritingModeType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 
 /** MP5MethodDialog
  *
@@ -104,7 +104,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	public static final String HELP_DICTIONARY_TYPE				= "org/signalml/help/mp5.html#dictionaryType";
 	public static final String HELP_DICTIONARY_REINIT_TYPE		= "org/signalml/help/mp5.html#dictionaryReinitType";
 	public static final String HELP_SCALE_TO_PERIOD_FACTOR  	= "org/signalml/help/mp5.html#scaleToPeriodFactor";
-	public static final String HELP_PERIOD_DENSITY			  	= "org/signalml/help/mp5.html#periodDensity";
 	public static final String HELP_BOOK_WITH_SIGNAL			= "org/signalml/help/mp5.html#bookWithSignal";
 	public static final String HELP_ADDITIONAL_CONFIG			= "org/signalml/help/mp5.html#additionalConfig";
 	public static final String HELP_RAW_CONFIG					= "org/signalml/help/mp5.html#rawConfig";
@@ -145,8 +144,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	private Window dialogParent;
 
-	public MP5MethodDialog(MessageSourceAccessor messageSource, MethodPresetManager methodPresetManager, Window w) {
-		super(messageSource, methodPresetManager, w, true);
+	public MP5MethodDialog(MethodPresetManager methodPresetManager, Window w) {
+		super(methodPresetManager, w, true);
 	}
 
 	@Override
@@ -161,7 +160,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
-		setApplicationConfig(manager.getApplicationConfig());
 		setFileChooser(manager.getFileChooser());
 		executorManager = manager.getMp5ExecutorManager();
 		dialogParent = manager.getDialogParent();
@@ -169,7 +167,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("mp5Method.dialog.title"));
+		setTitle(_("MP Decomposition configuration"));
 		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
@@ -177,7 +175,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	public MP5ToolConfigDialog getConfigDialog() {
 		if (configDialog == null) {
-			configDialog = new MP5ToolConfigDialog(messageSource,dialogParent,true);
+			configDialog = new MP5ToolConfigDialog(dialogParent,true);
 			configDialog.setExecutorManager(executorManager);
 			configDialog.setLocalExecutorDialog(getLocalExecutorDialog());
 		}
@@ -241,6 +239,15 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
+		getBasicConfigPanel().getDictionaryDensityConfigPanel().getDilationFactorPercentageSpinner().addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				updateInfoFields();
+			}
+
+		});
+
 		getBasicConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(new ItemListener() {
 
 			@Override
@@ -257,35 +264,36 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	public SignalSpacePanel getSignalSpacePanel() {
 		if (signalSpacePanel == null) {
-			signalSpacePanel = new SignalSpacePanel(messageSource);
+			signalSpacePanel = new SignalSpacePanel();
+			signalSpacePanel.getChannelSpacePanel().getChannelList().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		}
 		return signalSpacePanel;
 	}
 
 	public MP5BasicConfigPanel getBasicConfigPanel() {
 		if (basicConfigPanel == null) {
-			basicConfigPanel = new MP5BasicConfigPanel(messageSource,this);
+			basicConfigPanel = new MP5BasicConfigPanel(this);
 		}
 		return basicConfigPanel;
 	}
 
 	public MP5AdvancedConfigPanel getAdvancedConfigPanel() {
 		if (advancedConfigPanel == null) {
-			advancedConfigPanel = new MP5AdvancedConfigPanel(messageSource,executorManager,this);
+			advancedConfigPanel = new MP5AdvancedConfigPanel(executorManager,this);
 		}
 		return advancedConfigPanel;
 	}
 
 	public MP5ExpertConfigPanel getExpertConfigPanel() {
 		if (expertConfigPanel == null) {
-			expertConfigPanel = new MP5ExpertConfigPanel(messageSource,this);
+			expertConfigPanel = new MP5ExpertConfigPanel(this);
 		}
 		return expertConfigPanel;
 	}
 
 	public MP5RawConfigPanel getRawConfigPanel() {
 		if (rawConfigPanel == null) {
-			rawConfigPanel = new MP5RawConfigPanel(messageSource,executorManager,this);
+			rawConfigPanel = new MP5RawConfigPanel(executorManager,this);
 		}
 		return rawConfigPanel;
 	}
@@ -304,14 +312,14 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		JTabbedPane pane = getTabbedPane();
 		pane.removeAll();
-		pane.addTab(messageSource.getMessage("mp5Method.dialog.signalSelectionTab"), getSignalSpacePanel());
+		pane.addTab(_("Signal selection"), getSignalSpacePanel());
 
 		if (rawMode) {
-			pane.addTab(messageSource.getMessage("mp5Method.dialog.rawTab"), getRawConfigPanel());
+			pane.addTab(_("Edit raw config"), getRawConfigPanel());
 		} else {
-			pane.addTab(messageSource.getMessage("mp5Method.dialog.basicTab"), getBasicConfigPanel());
-			pane.addTab(messageSource.getMessage("mp5Method.dialog.advancedTab"), getAdvancedConfigPanel());
-			pane.addTab(messageSource.getMessage("mp5Method.dialog.expertTab"), getExpertConfigPanel());
+			pane.addTab(_("Basic settings"), getBasicConfigPanel());
+			pane.addTab(_("Advanced settings"), getAdvancedConfigPanel());
+			pane.addTab(_("Expert settings"), getExpertConfigPanel());
 		}
 
 	}
@@ -330,8 +338,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			if (rawMode) {
 				// enter raw mode
 
-				modeAction.putValue(AbstractAction.NAME, messageSource.getMessage("mp5Method.dialog.switchFromRawMode"));
-				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.switchFromRawModeToolTip"));
+				modeAction.putValue(AbstractAction.NAME, _("To friendly mode"));
+				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP5 configuration with a user friendly editor"));
 
 			} else {
 				// exit raw mode
@@ -343,8 +351,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 					}
 				}
 
-				modeAction.putValue(AbstractAction.NAME, messageSource.getMessage("mp5Method.dialog.switchToRawMode"));
-				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.switchToRawModeToolTip"));
+				modeAction.putValue(AbstractAction.NAME, _("To raw mode"));
+				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP5 configuration as text"));
 
 			}
 
@@ -377,8 +385,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		if (tagDocument != null) {
 			tagDocument.updateSignalSpaceConstraints(signalSpaceConstraints);
 		}
-
-		signalSpaceConstraints.setRequireCompletePages(true);
 
 		getSignalSpacePanel().setConstraints(signalSpaceConstraints);
 		currentPageLength = (int)(signalSpaceConstraints.getPageSize() * signalSpaceConstraints.getSamplingFrequency());
@@ -463,19 +469,16 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	private void fillParametersFromDialog(MP5Parameters parameters) {
 
+		getSignalSpacePanel().fillModelFromPanel(parameters.getSignalSpace());
+
 		if (rawMode) {
-
 			getRawConfigPanel().fillParametersFromPanel(parameters);
-
 		} else {
-
-			getSignalSpacePanel().fillModelFromPanel(parameters.getSignalSpace());
 			getBasicConfigPanel().fillParametersFromPanel(parameters);
 			getAdvancedConfigPanel().fillParametersFromPanel(parameters);
 			getExpertConfigPanel().fillParametersFromPanel(parameters);
 
 			parameters.setRawConfigText(null);
-
 		}
 
 	}
@@ -503,13 +506,10 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
-		errors.pushNestedPath("parameters");
 
-		errors.pushNestedPath("signalSpace");
 		getSignalSpacePanel().validatePanel(errors);
-		errors.popNestedPath();
 
 		if (rawMode) {
 			getRawConfigPanel().validatePanel(errors);
@@ -518,8 +518,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			getAdvancedConfigPanel().validatePanel(errors);
 			getExpertConfigPanel().validatePanel(errors);
 		}
-
-		errors.popNestedPath();
 
 		if (rawMode) {
 			getRawConfigPanel().getExecutorPanel().validatePanel(errors);
@@ -534,9 +532,11 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		MP5BasicConfigPanel panel = getBasicConfigPanel();
 		MP5DictionaryDensityConfigPanel densityConfigPanel = panel.getDictionaryDensityConfigPanel();
 		double a = ((Number) densityConfigPanel.getDilationFactorSpinner().getValue()).doubleValue();
+		double percentageChosen = ((Number) densityConfigPanel.getDilationFactorPercentageSpinner().getValue()).doubleValue();
 
 		// R = 2pi * N * ln(N)/[(ln(a) *ln(0.5(a+ 1/a))]
 		double approxAtomCount = Math.ceil(2 * Math.PI * currentPageLength * Math.log(currentPageLength) / (Math.log(a) * Math.log(0.5 * (a + 1/a))));
+		approxAtomCount *= (percentageChosen / 100.0F);
 
 		MP5Algorithm algorithm = (MP5Algorithm) panel.getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();
 		int k;
@@ -625,7 +625,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	protected MP5LocalExecutorDialog getLocalExecutorDialog() {
 		if (localExecutorDialog == null) {
-			localExecutorDialog = new MP5LocalExecutorDialog(messageSource,this,true);
+			localExecutorDialog = new MP5LocalExecutorDialog(this,true);
 			localExecutorDialog.setFileChooser(getFileChooser());
 		}
 		return localExecutorDialog;
@@ -633,7 +633,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 	protected PleaseWaitDialog getPleaseWaitDialog() {
 		if (pleaseWaitDialog == null) {
-			pleaseWaitDialog = new PleaseWaitDialog(messageSource,this);
+			pleaseWaitDialog = new PleaseWaitDialog(this);
 			pleaseWaitDialog.initializeNow();
 		}
 		return pleaseWaitDialog;
@@ -649,9 +649,9 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		private static final long serialVersionUID = 1L;
 
 		public SwitchEditModeAction() {
-			super(messageSource.getMessage("mp5Method.dialog.switchToRawMode"));
+			super(_("To raw mode"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/switcheditmode.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.switchToRawModeToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP5 configuration as text"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -714,21 +714,21 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		private static final long serialVersionUID = 1L;
 
 		public SaveConfigAction() {
-			super(messageSource.getMessage("mp5Method.dialog.saveForLaterUse"));
+			super(_("Save for later use"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/saveconfig.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.saveForLaterUse"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Save for later use"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
 
 			Object currentModel = getCurrentModel();
 			if (currentModel != null) {
-				Errors errors = new BindException(currentModel, "data");
+				ValidationErrors errors = new ValidationErrors();
 				try {
 					validateDialog(currentModel,errors);
 				} catch (SignalMLException ex) {
 					logger.error("Dialog validation threw an exception", ex);
-					ErrorsDialog.showImmediateExceptionDialog(MP5MethodDialog.this, ex);
+					Dialogs.showExceptionDialog(MP5MethodDialog.this, ex);
 					return;
 				}
 
@@ -746,7 +746,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			mP5SaveForLaterUseDescriptor.setSaveConfig(true);
 
 			if (mP5SaveForLaterUseDialog == null) {
-				mP5SaveForLaterUseDialog = new MP5SaveForLaterUseDialog(messageSource, MP5MethodDialog.this, true);
+				mP5SaveForLaterUseDialog = new MP5SaveForLaterUseDialog(MP5MethodDialog.this, true);
 			}
 
 			boolean ok = mP5SaveForLaterUseDialog.showDialog(mP5SaveForLaterUseDescriptor, true);
@@ -770,7 +770,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				File file = null;
 				do {
 
-					file = getFileChooser().chooseSaveMP5ConfigFile(MP5MethodDialog.this);
+					file = ((ViewerFileChooser) getFileChooser()).chooseSaveMP5ConfigFile(MP5MethodDialog.this); //TODO remove cast
 					if (file == null) {
 						return;
 					}
@@ -842,7 +842,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				copyChain = signalChain.createLevelCopyChain(signalSpace.getSignalSourceLevel());
 			} catch (SignalMLException ex) {
 				logger.error("Failed to create signal chain", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 
@@ -869,7 +869,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				worker.execute();
 
 				PleaseWaitDialog waitDialog = getPleaseWaitDialog();
-				waitDialog.setActivity(messageSource.getMessage("activity.exportingSignal"));
+				waitDialog.setActivity(_("exporting signal"));
 				waitDialog.configureForDeterminate(0, minSampleCount, 0);
 				waitDialog.waitAndShowDialogIn(MP5MethodDialog.this.getRootPane(), 500, worker);
 
@@ -879,7 +879,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 					// ignore
 				} catch (ExecutionException ex) {
 					logger.error("Worker failed to save signal", ex.getCause());
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+					Dialogs.showExceptionDialog((Window) null, ex.getCause());
 					return;
 				}
 
@@ -894,9 +894,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				runtimeParameters.setChannelCount(sampleSource.getChannelCount());
 				runtimeParameters.setSegementSize(sampleSource.getSegmentLength());
 				runtimeParameters.setChosenChannels(null);
-				runtimeParameters.setDataFormat(MP5SignalFormatType.FLOAT);
-				runtimeParameters.setFooterSize(0);
-				runtimeParameters.setHeaderSize(0);
 				runtimeParameters.setOutputDirectory(null);
 				runtimeParameters.setPointsPerMicrovolt(1F);
 				runtimeParameters.setSamplingFrequency(sampleSource.getSamplingFrequency());
@@ -904,7 +901,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				runtimeParameters.setWritingMode(MP5WritingModeType.CREATE);
 				runtimeParameters.setMinOffset(1);
 				runtimeParameters.setMaxOffset(((int) Math.floor(minSampleCount / sampleSource.getSegmentLength())));
-				runtimeParameters.setResultFileExtension(null);
 
 				Formatter configFormatter = mp5ConfigCreator.createConfigFormatter();
 
@@ -922,7 +918,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 					mp5ConfigCreator.writeMp5Config(configFormatter, configFile);
 				} catch (IOException ex) {
 					logger.error("Failed to save config", ex);
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+					Dialogs.showExceptionDialog((Window) null, ex);
 					return;
 				}
 

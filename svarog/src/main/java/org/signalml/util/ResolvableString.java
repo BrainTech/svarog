@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import org.springframework.context.MessageSourceResolvable;
 
+@Deprecated
 /**
  * ResolvableString provides a simple localized text message in the form of a
  * MessageSourceResolvable.

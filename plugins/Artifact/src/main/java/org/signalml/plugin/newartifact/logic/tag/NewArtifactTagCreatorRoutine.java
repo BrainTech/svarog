@@ -21,8 +21,8 @@ public class NewArtifactTagCreatorRoutine implements
 	private final IPluginTagWriter writer;
 
 	public NewArtifactTagCreatorRoutine(NewArtifactTagRoutineData data,
-					    INewArtifactDataReader reader, INewArtifactTagCreator tagCreator,
-					    IPluginTagWriter writer) {
+										INewArtifactDataReader reader, INewArtifactTagCreator tagCreator,
+										IPluginTagWriter writer) {
 		this.data = data;
 		this.reader = reader;
 		this.tagCreator = tagCreator;
@@ -39,9 +39,9 @@ public class NewArtifactTagCreatorRoutine implements
 			throw new ComputationException(e);
 		}
 		NewArtifactTagResult result = this.tagCreator
-					      .tag(new NewArtifactTagData(source, this.data.constants,
-							      this.data.parameters, this.data.eegChannels,
-							      this.data.excludedChannels));
+									  .tag(new NewArtifactTagData(source, this.data.constants,
+											  this.data.parameters, this.data.eegChannels,
+											  this.data.excludedChannels));
 		this.writer.writeTags(Arrays.asList(result.tagGroup));
 		return result;
 	}

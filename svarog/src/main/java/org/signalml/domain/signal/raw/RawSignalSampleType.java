@@ -15,51 +15,51 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public enum RawSignalSampleType implements MessageSourceResolvable {
 
-        /**
-         * Samples of the length of 64 bits in the form of double
-         */
+	/**
+	 * Samples of the length of 64 bits in the form of double
+	 */
 	DOUBLE(64),
-        /**
-         * Samples of the length of 32 bits in the form of floats
-         */
+	/**
+	 * Samples of the length of 32 bits in the form of floats
+	 */
 	FLOAT(32),
-        /**
-         * Samples of the length of 32 bits in the form of integers
-         */
+	/**
+	 * Samples of the length of 32 bits in the form of integers
+	 */
 	INT(32),
-        /**
-         * Samples of the length of 16 bits in the form of integers
-         */
+	/**
+	 * Samples of the length of 16 bits in the form of integers
+	 */
 	SHORT(16)
 
 	;
 
-        /**
-         * length of a sample in bits
-         */
+	/**
+	 * length of a sample in bits
+	 */
 	private int bitWidth;
 
-        /**
-         * Constructor. Creates the type of the raw signal sample using the
-         * given length of the sample
-         * @param bitWidth length (in bits) of the sample
-         */
+	/**
+	 * Constructor. Creates the type of the raw signal sample using the
+	 * given length of the sample
+	 * @param bitWidth length (in bits) of the sample
+	 */
 	private RawSignalSampleType(int bitWidth) {
 		this.bitWidth = bitWidth;
 	}
 
-        /**
-         * Returns the size of the sample (in bits)
-         * @return the size of the sample (in bits)
-         */
+	/**
+	 * Returns the size of the sample (in bits)
+	 * @return the size of the sample (in bits)
+	 */
 	public int getBitWidth() {
 		return bitWidth;
 	}
 
-        /**
-         * Returns the size of the sample (in standard bytes)
-         * @return the size of the sample (in standard bytes)
-         */
+	/**
+	 * Returns the size of the sample (in standard bytes)
+	 * @return the size of the sample (in standard bytes)
+	 */
 	public int getByteWidth() {
 		return (int) Math.ceil(((double) bitWidth) / 8);
 	}

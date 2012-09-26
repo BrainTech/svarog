@@ -17,7 +17,7 @@ package org.signalml.method;
 public interface SuspendableMethod {
 
 	/**
-         *  Returns true if the given data object contains suspended execution state that
+	     *  Returns true if the given data object contains suspended execution state that
 	 *  is to be resumed, rather than fresh computation input data.
 	 *
 	 * @param data the data object

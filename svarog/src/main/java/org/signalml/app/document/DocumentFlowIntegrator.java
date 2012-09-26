@@ -4,6 +4,8 @@
 
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
@@ -22,25 +24,33 @@ import multiplexer.jmx.client.ConnectException;
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.model.OpenDocumentDescriptor;
-import org.signalml.app.model.OpenMonitorDescriptor;
-import org.signalml.app.model.OpenFileSignalDescriptor;
-import org.signalml.app.model.OpenTagDescriptor;
-import org.signalml.app.model.SignalParameterDescriptor;
-import org.signalml.app.montage.MontagePresetManager;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
-import org.signalml.app.view.dialog.SignalParametersDialog;
-import org.signalml.app.view.opensignal.FileOpenSignalMethod;
-import org.signalml.app.view.opensignal.SignalSource;
+import org.signalml.app.document.mrud.MRUDEntry;
+import org.signalml.app.document.mrud.MRUDRegistry;
+import org.signalml.app.document.signal.AbstractFileSignal;
+import org.signalml.app.document.signal.RawSignalDocument;
+import org.signalml.app.document.signal.RawSignalMRUDEntry;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.document.signal.SignalMLDocument;
+import org.signalml.app.document.signal.SignalMLMRUDEntry;
+import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.document.OpenTagDescriptor;
+import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
+import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import org.signalml.app.model.montage.MontagePresetManager;
+import org.signalml.app.view.book.BookView;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.signal.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.worker.OpenBookDocumentWorker;
-import org.signalml.app.worker.OpenSignalMLDocumentWorker;
-import org.signalml.app.worker.OpenTagDocumentWorker;
-import org.signalml.app.worker.SaveDocumentWorker;
-import org.signalml.app.worker.SignalChecksumWorker;
+import org.signalml.app.view.workspace.ViewerFileChooser;
+import org.signalml.app.worker.document.OpenBookDocumentWorker;
+import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
+import org.signalml.app.worker.document.OpenTagDocumentWorker;
+import org.signalml.app.worker.document.SaveDocumentWorker;
+import org.signalml.app.worker.signal.SignalChecksumWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
@@ -52,8 +62,8 @@ import org.signalml.exception.MissingCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Integrates the flow of {@link Document documents}.
@@ -81,30 +91,25 @@ public class DocumentFlowIntegrator {
 	protected static final Logger logger = Logger.getLogger(DocumentFlowIntegrator.class);
 
 	/**
-	 * the {@link MessageSourceAccessor source} of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the {@link DocumentManager manager} of {@link Document documents} in Svarog
 	 */
 	private DocumentManager documentManager;
-	
+
 	/**
 	 * the {@link MRUDRegistry cache} of {@link MRUDEntry file descriptions}
 	 */
 	private MRUDRegistry mrudRegistry;
-	
+
 	/**
 	 * the manager of {@link SignalMLCodec codecs}
 	 */
 	private SignalMLCodecManager codecManager;
-	
+
 	/**
-	 * the parent pane to all dialogs shown by this integrator 
+	 * the parent pane to all dialogs shown by this integrator
 	 */
 	private Component optionPaneParent = null;
-	
+
 	/**
 	 * the {@link ViewerFileChooser chooser} for files in Svarog
 	 */
@@ -120,12 +125,12 @@ public class DocumentFlowIntegrator {
 	 * the {@link ActionFocusManager manager} of active elements in Svarog
 	 */
 	private ActionFocusManager actionFocusManager;
-	
+
 	/**
 	 * the {@link ApplicationConfiguration configuration} of Svarog
 	 */
 	private ApplicationConfiguration applicationConfig;
-	
+
 	/**
 	 * the {@link MontagePresetManager manager} of montage presets
 	 */
@@ -137,7 +142,7 @@ public class DocumentFlowIntegrator {
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	/**
-	 * Opens a {@link Document document} described in a given 
+	 * Opens a {@link Document document} described in a given
 	 * {@link OpenDocumentDescriptor descriptor} and returns it.
 	 * Depending on a {@link ManagedDocumentType type} of a document
 	 * {@link OpenDocumentDescriptor#getType() obtained} from the descriptor
@@ -156,7 +161,8 @@ public class DocumentFlowIntegrator {
 		ManagedDocumentType type = descriptor.getType();
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 			return openSignalDocument(descriptor);
-		} if(type.equals(ManagedDocumentType.MONITOR)) {
+		}
+		if (type.equals(ManagedDocumentType.MONITOR)) {
 			return openMonitorDocument(descriptor);
 		} else if (type.equals(ManagedDocumentType.BOOK)) {
 			return openBookDocument(descriptor);
@@ -170,39 +176,36 @@ public class DocumentFlowIntegrator {
 
 	/**
 	 * Tries to {@link #openDocument(OpenDocumentDescriptor) open} a
-	 * {@link Document document}. If this operation fails the
-	 * {@link ErrorsDialog dialog} with the description of an error is shown.
+	 * {@link Document document}. If this operation fails
+	 * a dialog with the description of an error is shown.
 	 * @param descriptor the descriptor of a document to open
 	 * @param window the window that should be parent to errors dialog
 	 * @return true if the operation is successful, false otherwise
 	 */
-	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
+	public Document maybeOpenDocument(OpenDocumentDescriptor descriptor, Window window) {
 		try {
-			this.openDocument(descriptor);
-			return true;
+			return this.openDocument(descriptor);
 		} catch (SignalMLException ex) {
 			logger.error("Failed to open document", ex);
-			ErrorsDialog.showImmediateExceptionDialog(window, ex);
-			return false;
+			Dialogs.showExceptionDialog(window, ex);
 		} catch (IOException ex) {
 			logger.error("Failed to open document - I/O exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog(window, ex);
-			return false;
+			Dialogs.showExceptionDialog(window, ex);
 		} catch (ConnectException ex) {
 			logger.error("Failed to open document - connection exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog(window, ex);
-			return false;
+			Dialogs.showExceptionDialog(window, ex);
 		}
+		return null;
 	}
 
 	/**
 	 * Tries to {@link #openDocument(OpenDocumentDescriptor) open} a
-	 * {@link Document document}. If this operation fails the
-	 * {@link ErrorsDialog dialog} with the description of an error is shown.
+	 * {@link Document document}. If this operation fails a
+	 * dialog with the description of an error is shown.
 	 * @param descriptor the descriptor of a document to open
 	 * @return true if the operation is successful, false otherwise
 	 */
-	public boolean maybeOpenDocument(OpenDocumentDescriptor descriptor) {
+	public Document maybeOpenDocument(OpenDocumentDescriptor descriptor) {
 		return this.maybeOpenDocument(descriptor, null);
 	}
 
@@ -276,11 +279,11 @@ public class DocumentFlowIntegrator {
 			return true;
 		} catch (SignalMLException ex) {
 			logger.error("Failed to close document", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return false;
 		} catch (IOException ex) {
 			logger.error("Failed to close document - i/o exception", ex);
-			ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+			Dialogs.showExceptionDialog((Window) null, ex);
 			return false;
 		}
 	}
@@ -394,7 +397,7 @@ public class DocumentFlowIntegrator {
 	 * @return true if the operation was successful, false otherwise
 	 * @throws IOException TODO never thrown (???)
 	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
 	 * failed to calculate the checksum
 	 */
 	public boolean saveDocument(Document document, boolean saveAsOnly) throws IOException, SignalMLException {
@@ -419,14 +422,14 @@ public class DocumentFlowIntegrator {
 							logger.error("Unsupported class [" + document.getClass().getName() + "]");
 							throw new ClassCastException();
 						}
-						FileFilter[] filters = type.getFileFilters(messageSource);
+						FileFilter[] filters = type.getFileFilters();
 
 						boolean hasFile = false;
 						File file = null;
 
 						do {
 
-							file = fileChooser.chooseSaveDocument(optionPaneParent, filters);
+							file = fileChooser.chooseSaveDocument(optionPaneParent, document, filters);
 							if (file == null) {
 								// file choice canceled
 								return false;
@@ -465,7 +468,7 @@ public class DocumentFlowIntegrator {
 					if (type.equals(ManagedDocumentType.SIGNAL)) {
 						ok = true;
 						// do nothing
-					} else if(type.equals(ManagedDocumentType.MONITOR) ) {
+					} else if (type.equals(ManagedDocumentType.MONITOR)) {
 						ok = true;
 						// do nothing
 					} else if (type.equals(ManagedDocumentType.BOOK)) {
@@ -487,7 +490,7 @@ public class DocumentFlowIntegrator {
 
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.savingFile"));
+				pleaseWaitDialog.setActivity(_("saving document"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -515,7 +518,7 @@ public class DocumentFlowIntegrator {
 	 * {@code false} if saving any of the files failed
 	 * @throws IOException TODO never thrown (???)
 	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
 	 * failed to calculate the checksum
 	 */
 	public boolean saveAllDocuments() throws IOException, SignalMLException {
@@ -541,7 +544,7 @@ public class DocumentFlowIntegrator {
 		return allOk;
 
 	}
-		
+
 	/**
 	 * Creates a {@link OpenDocumentDescriptor descriptor} of a file based
 	 * on a given {@link MRUDEntry} and uses this descriptor to
@@ -553,7 +556,7 @@ public class DocumentFlowIntegrator {
 	 * unknown type,</li>
 	 * <li>it is a {@link TagDocument tag document} and there is no active
 	 * signal</li>
-	 * </ul> 
+	 * </ul>
 	 * @throws IOException if the file doesn't exist or is unreadable
 	 * or I/O error occurs while opening RAW signal
 	 * @throws SignalMLException if there is no {@link SignalMLCodec codec}
@@ -574,34 +577,24 @@ public class DocumentFlowIntegrator {
 
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 
-			OpenFileSignalDescriptor openFileSignalDescriptor = odd.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
-			openFileSignalDescriptor.setFile(mrud.getFile());
 			if (mrud instanceof SignalMLMRUDEntry) {
 
 				SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-				openFileSignalDescriptor.setMethod(FileOpenSignalMethod.SIGNALML);
-				SignalMLCodec codec = codecManager.getCodecByUID(smlEntry.getCodecUID());
+				SignalMLDescriptor signalmlDescriptor = smlEntry.getDescriptor();
+
+				SignalMLCodec codec = codecManager.getCodecByUID(signalmlDescriptor.getCodecUID());
+
 				if (codec == null) {
-					logger.warn("Mrud codec not found for uid [" + smlEntry.getCodecUID() + "]");
+					logger.warn("Mrud codec not found for uid [" + signalmlDescriptor.getCodecUID() + "]");
 					throw new MissingCodecException("error.mrudMissingCodecException");
 				}
-				openFileSignalDescriptor.setCodec(codec);
-
-				odd.getOpenSignalDescriptor().setSignalSource(SignalSource.FILE);
-				SignalParameterDescriptor spd = openFileSignalDescriptor.getParameters();
-
-				spd.setPageSize(smlEntry.getPageSize());
-				spd.setBlocksPerPage(smlEntry.getBlocksPerPage());
-				spd.setSamplingFrequency(smlEntry.getSamplingFrequency());
-				spd.setChannelCount(smlEntry.getChannelCount());
-				spd.setCalibrationGain(smlEntry.getCalibrationGain());
-
+				signalmlDescriptor.setCodec(codec);
+				odd.setOpenSignalDescriptor(signalmlDescriptor);
 			}
 			else if (mrud instanceof RawSignalMRUDEntry) {
 
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
-				openFileSignalDescriptor.setMethod(FileOpenSignalMethod.RAW);
-				openFileSignalDescriptor.setRawSignalDescriptor(rawEntry.getDescriptor());
+				odd.setOpenSignalDescriptor(rawEntry.getDescriptor());
 
 			} else {
 				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
@@ -670,34 +663,36 @@ public class DocumentFlowIntegrator {
 	 */
 	private SignalDocument openSignalDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
-		File file = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor().getFile();
+		File file = descriptor.getFile();
+		Montage montage = descriptor.getOpenSignalDescriptor().getMontage();
 
 		boolean fileOk = checkOpenedFile(file);
 		if (!fileOk) {
 			return null;
 		}
 
-		OpenFileSignalDescriptor signalOptions = descriptor.getOpenSignalDescriptor().getOpenFileSignalDescriptor();
-		FileOpenSignalMethod method = signalOptions.getMethod();
-		if (method == null) {
+		AbstractOpenSignalDescriptor openSignalDescriptor = descriptor.getOpenSignalDescriptor();
+		if (openSignalDescriptor == null) {
 			logger.error("No method");
 			throw new NullPointerException();
 		}
 
-		if (method.equals(FileOpenSignalMethod.SIGNALML)) {
+		if (openSignalDescriptor instanceof SignalMLDescriptor) {
 
+			SignalMLDescriptor signalMLDescriptor = (SignalMLDescriptor) openSignalDescriptor;
 			logger.debug("Opening as signal with SignalML");
-			final SignalMLCodec codec = signalOptions.getCodec();
+			final SignalMLCodec codec = signalMLDescriptor.getCodec();
 			if (codec == null) {
+				Dialogs.showError(_("SignalML Codec not found!"));
 				logger.error("No codec");
-				throw new NullPointerException();
+				return null;
 			}
 
 			OpenSignalMLDocumentWorker worker = new OpenSignalMLDocumentWorker(descriptor, pleaseWaitDialog);
 
 			worker.execute();
 
-			pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingSignalFile"));
+			pleaseWaitDialog.setActivity(_("opening signal"));
 			pleaseWaitDialog.configureForIndeterminateSimulated();
 			pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -710,11 +705,11 @@ public class DocumentFlowIntegrator {
 				logger.info("OpenSignalMLDocumentWorker interrupted", ex);
 			} catch (ExecutionException ex) {
 				logger.error("Exception during worker exectution", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return null;
 			}
 
-			SignalParameterDescriptor spd = signalOptions.getParameters();
+			SignalParameters spd = signalMLDescriptor.getSignalParameters();
 			if (spd.getPageSize() != null) {
 				signalMLDocument.setPageSize(spd.getPageSize());
 			}
@@ -741,16 +736,12 @@ public class DocumentFlowIntegrator {
 			}
 
 			if (mrudRegistry != null) {
-				SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), file.getAbsolutePath(), codec.getSourceUID(), codec.getFormatName());
+				SignalMLMRUDEntry mrud = new SignalMLMRUDEntry(ManagedDocumentType.SIGNAL, signalMLDocument.getClass(), file.getAbsolutePath(), signalMLDescriptor);
 				mrud.setLastTimeOpened(new Date());
-				mrud.setPageSize(spd.getPageSize());
-				mrud.setBlocksPerPage(spd.getBlocksPerPage());
-				mrud.setSamplingFrequency(spd.getSamplingFrequency());
-				mrud.setChannelCount(spd.getChannelCount());
-				mrud.setCalibrationGain(spd.getCalibrationGain());
 				mrudRegistry.registerMRUDEntry(mrud);
 			}
 
+			signalMLDocument.setMontage(montage);
 			onSignalDocumentAdded(signalMLDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(signalMLDocument);
 
@@ -762,20 +753,18 @@ public class DocumentFlowIntegrator {
 
 			return signalMLDocument;
 
-		} else if (method.equals(FileOpenSignalMethod.RAW)) {
+		} else if (openSignalDescriptor instanceof RawSignalDescriptor) {
 
 			logger.debug("Opening as raw signal");
 
-			RawSignalDescriptor rawDescriptor = signalOptions.getRawSignalDescriptor();
+			RawSignalDescriptor rawDescriptor = (RawSignalDescriptor) openSignalDescriptor;
 			if (rawDescriptor == null) {
 				logger.error("No descriptor");
 				throw new NullPointerException();
 			}
 
-			RawSignalDocument rawSignalDocument = new RawSignalDocument(
-			        signalOptions.getType(),
-			        rawDescriptor
-			);
+			RawSignalDocument rawSignalDocument = new RawSignalDocument(rawDescriptor);
+			rawSignalDocument.setMontage(montage);
 
 			rawSignalDocument.setBackingFile(file);
 			rawSignalDocument.openDocument();
@@ -808,35 +797,30 @@ public class DocumentFlowIntegrator {
 
 		} else {
 			// other methods are not supported now
-			logger.error("Unsupported method [" + method + "]");
+			logger.error("Unsupported method [" + openSignalDescriptor.getClass().toString() + "]");
 			throw new SignalMLException("error.invalidValue");
 		}
-					
+
 	}
 
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
 
-		OpenMonitorDescriptor monitorOptions = null;
+		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
 
-                if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.OPENBCI)) {
-                        monitorOptions = descriptor.getOpenSignalDescriptor().getOpenMonitorDescriptor();
-                } else if (descriptor.getOpenSignalDescriptor().getSignalSource().equals(SignalSource.AMPLIFIER)) {
-                        monitorOptions = descriptor.getOpenSignalDescriptor().getAmplifierConnectionDescriptor().getOpenMonitorDescriptor();
-                }
-
-                monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
+		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
+		monitorSignalDocument.setMontage(descriptor.getOpenSignalDescriptor().getMontage());
 		monitorSignalDocument.openDocument();
 
 		onSignalDocumentAdded(monitorSignalDocument, descriptor.isMakeActive());
 		onCommonDocumentAdded(monitorSignalDocument);
 
-		actionFocusManager.setActiveDocument( monitorSignalDocument);
+		actionFocusManager.setActiveDocument(monitorSignalDocument);
 
 		((SignalView) monitorSignalDocument.getDocumentView()).setSnapToPageMode(true);
 		logger.debug("monitor openned");
-		
+
 		return monitorSignalDocument;
 
 	}
@@ -862,7 +846,7 @@ public class DocumentFlowIntegrator {
 	 * </ul>
 	 * @throws IOException if the file doesn't exist or is unreadable
 	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or 
+	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
 	 * failed to calculate the checksum
 	 */
 	private BookDocument openBookDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
@@ -884,7 +868,7 @@ public class DocumentFlowIntegrator {
 
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingBookFile"));
+				pleaseWaitDialog.setActivity(_("opening book"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -894,7 +878,7 @@ public class DocumentFlowIntegrator {
 					logger.info("Worker interrupted", ex);
 				} catch (ExecutionException ex) {
 					logger.error("Exception during worker exectution", ex);
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+					Dialogs.showExceptionDialog((Window) null, ex);
 					return null;
 				}
 
@@ -973,7 +957,7 @@ public class DocumentFlowIntegrator {
 
 				worker.execute();
 
-				pleaseWaitDialog.setActivity(messageSource.getMessage("activity.openingTagFile"));
+				pleaseWaitDialog.setActivity(_("opening tag"));
 				pleaseWaitDialog.configureForIndeterminateSimulated();
 				pleaseWaitDialog.waitAndShowDialogIn(optionPaneParent, 500, worker);
 
@@ -983,7 +967,7 @@ public class DocumentFlowIntegrator {
 					// ignore
 				} catch (ExecutionException ex) {
 					logger.error("Exception during worker exectution", ex);
-					ErrorsDialog.showImmediateExceptionDialog((Window) null, ex.getCause());
+					Dialogs.showExceptionDialog((Window) null, ex);
 					return null;
 				}
 
@@ -1145,7 +1129,7 @@ public class DocumentFlowIntegrator {
 
 	}
 
-	
+
 	/**
 	 * Performs operations necessary when a {@link Document document} is added:
 	 * <ul>
@@ -1192,7 +1176,14 @@ public class DocumentFlowIntegrator {
 	 * @param makeActive TODO not used
 	 */
 	private void onBookDocumentAdded(BookDocument document, boolean makeActive) {
+		Document activeDocument = this.actionFocusManager.getActiveDocument();
 
+		if (activeDocument != null) {
+			DocumentView documentView = activeDocument.getDocumentView();
+			if (documentView instanceof BookView) {
+				((BookView) documentView).saveSettingsToApplicationConfiguration();
+			}
+		}
 	}
 
 	/**
@@ -1214,6 +1205,7 @@ public class DocumentFlowIntegrator {
 			if (!signalView.isComparingTags()) {
 				parent.setActiveTag(document);
 			}
+			signalView.repaint();
 		}
 
 	}
@@ -1319,7 +1311,7 @@ public class DocumentFlowIntegrator {
 	 * @param string TODO never used
 	 * @return the calculated checksum
 	 * @throws SignalMLException if the calculation was interrupted or
-	 * {@link SignalChecksumWorker worker} failed to calculate the checksum 
+	 * {@link SignalChecksumWorker worker} failed to calculate the checksum
 	 */
 	private SignalChecksum getSignalCheckSum(SignalDocument parent, String string) throws SignalMLException {
 
@@ -1335,7 +1327,7 @@ public class DocumentFlowIntegrator {
 
 					checksummer.setPleaseWaitDialog(pleaseWaitDialog);
 
-					pleaseWaitDialog.setActivity(messageSource.getMessage("activity.checksummingSignalFile"));
+					pleaseWaitDialog.setActivity(_("calculating checksum"));
 					if (parent instanceof FileBackedDocument) {
 						File file = ((FileBackedDocument) parent).getBackingFile();
 						pleaseWaitDialog.configureForDeterminate(0, (int) file.length(), (int) checksummer.getBytesProcessed());
@@ -1356,7 +1348,7 @@ public class DocumentFlowIntegrator {
 		checksummer = new SignalChecksumWorker(parent, pleaseWaitDialog, new String[] { "crc32" });
 		checksummer.execute();
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.checksummingSignalFile"));
+		pleaseWaitDialog.setActivity(_("calculating checksum"));
 		if (parent instanceof FileBackedDocument) {
 			File file = ((FileBackedDocument) parent).getBackingFile();
 			pleaseWaitDialog.configureForDeterminate(0, (int) file.length(), (int) checksummer.getBytesProcessed());
@@ -1461,9 +1453,12 @@ public class DocumentFlowIntegrator {
 	 */
 	private void onTagDocumentRemoved(TagDocument document) {
 
+		SignalDocument parent = document.getParent();
+		SignalView signalView = (SignalView) parent.getDocumentView();
+		signalView.repaint();
+
 		// this removes from tag list
 		document.setParent(null);
-
 	}
 
 	/**
@@ -1622,7 +1617,7 @@ public class DocumentFlowIntegrator {
 	}
 
 	/**
-	 * Fills the {@link SignalParameterDescriptor descriptor} with the data
+	 * Fills the {@link SignalParameters descriptor} with the data
 	 * from the given {@link SignalMLDocument document}:
 	 * <ul>
 	 * <li>boolean if the calibration is supported,</li>
@@ -1639,7 +1634,7 @@ public class DocumentFlowIntegrator {
 	 * or there was no need to show that dialog,<br>
 	 * {@code false} if the dialog was closed with CANCEL
 	 */
-	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameterDescriptor spd) {
+	private boolean collectRequiredSignalConfiguration(SignalMLDocument signalMLDocument, SignalParameters spd) {
 
 		spd.setCalibrationGain(null);
 		if (signalMLDocument.isCalibrationCapable()) {
@@ -1652,57 +1647,28 @@ public class DocumentFlowIntegrator {
 			spd.setChannelCount(signalMLDocument.getChannelCount());
 			spd.setChannelCountEditable(false);
 		} else {
-			spd.setChannelCount(null);
+			spd.setChannelCount(0);
 			spd.setChannelCountEditable(true);
 		}
 
-		if (signalMLDocument.isSamplingFrequencyCapable()) {
-			spd.setSamplingFrequency(signalMLDocument.getSamplingFrequency());
-			spd.setSamplingFrequencyEditable(false);
-		} else {
-			spd.setSamplingFrequency(null);
-			spd.setSamplingFrequencyEditable(true);
-		}
-
-		if (signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
+		if (!signalMLDocument.isCalibrationCapable() || !signalMLDocument.isSamplingFrequencyCapable() || !signalMLDocument.isChannelCountCapable()) {
 
 			// additional configuration required
-
 			boolean ok = signalParametersDialog.showDialog(spd, true);
 			if (!ok) {
 				return false;
-			}
-
-			if (spd.isSamplingFrequencyEditable()) {
-				signalMLDocument.setSamplingFrequency(spd.getSamplingFrequency());
 			}
 			if (spd.isChannelCountEditable()) {
 				signalMLDocument.setChannelCount(spd.getChannelCount());
 			}
 			if (spd.isCalibrationEditable()) {
-				signalMLDocument.setCalibration(spd.getCalibrationGain());
+				signalMLDocument.setCalibration(spd.getCalibrationGain()[0]);
 			}
 
 		}
 
 		return true;
 
-	}
-
-	/**
-	 * Returns the {@link MessageSourceAccessor source} of messages (labels).
-	 * @return the source of messages (labels)
-	 */
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	/**
-	 * Sets the {@link MessageSourceAccessor source} of messages (labels).
-	 * @param messageSource the source of messages (labels)
-	 */
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	/**

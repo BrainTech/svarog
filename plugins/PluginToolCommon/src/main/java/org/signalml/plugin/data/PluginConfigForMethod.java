@@ -2,7 +2,7 @@ package org.signalml.plugin.data;
 
 import org.signalml.plugin.export.Plugin;
 
-public class PluginConfigForMethod extends PluginConfigWithMessageSourceReference {
+public class PluginConfigForMethod extends PluginConfig  {
 
 	private PluginConfigMethodData methodConfig;
 

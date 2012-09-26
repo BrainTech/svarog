@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.signalml.plugin</groupId>
@@ -17,11 +17,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.i18n.resources>src/main/resources/</project.build.i18n.resources>
 		<maven.final.name>SFTestPlugin</maven.final.name>
 	</properties>
 
 	<build>
-		<finalName>${artifactId}</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -29,7 +30,7 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>copy-xml</id>
 						<phase>package</phase>
 						<configuration>
 							<target>
@@ -40,23 +41,7 @@
 							<goal>run</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
 					<execution>
 						<id>compile</id>
 						<phase>compile</phase>
@@ -69,6 +54,28 @@
 						<goals>
 							<goal>run</goal>
 						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+				<version>1.2.3</version>
+
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.plugin.sf</targetBundle>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>gettext-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>dist</goal>
+						</goals>
+						<inherited>false</inherited>
 					</execution>
 				</executions>
 			</plugin>

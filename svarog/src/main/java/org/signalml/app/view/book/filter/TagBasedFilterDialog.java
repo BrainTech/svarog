@@ -4,12 +4,15 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 
 import javax.swing.DefaultListModel;
@@ -33,16 +36,19 @@ import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.element.AnyChangeDocumentAdapter;
+import org.signalml.app.view.common.components.AnyChangeDocumentAdapter;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.plugin.export.view.FileChooser;
+
 import org.springframework.validation.Errors;
 
 /** TagBasedFilterDialog
@@ -54,7 +60,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private BookFilterChooseTagPanel chooseTagPanel;
 
@@ -75,14 +81,14 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	private TagDocument currentTagDocument;
 
-	public TagBasedFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public TagBasedFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
 
-		setTitle(messageSource.getMessage("tagBasedFilter.title"));
+		setTitle(_("Tag based atom filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
 		super.initialize();
 		setResizable(false);
@@ -104,12 +110,12 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 							document = new TagDocument(tagFile);
 						} catch (SignalMLException ex) {
 							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
-							getErrorsDialog().showException(ex);
+							Dialogs.showExceptionDialog(TagBasedFilterDialog.this, ex);
 							setCurrentTagDocument(null);
 							return;
 						} catch (IOException ex) {
 							logger.error("Failed to open tag file [" + tagFile.getAbsolutePath() + "]", ex);
-							getErrorsDialog().showException(ex);
+							Dialogs.showExceptionDialog(TagBasedFilterDialog.this, ex);
 							setCurrentTagDocument(null);
 							return;
 						}
@@ -130,9 +136,9 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 		JPanel stylePanel = new JPanel(new BorderLayout());
 		stylePanel.setBorder(new CompoundBorder(
-		                             new TitledBorder(messageSource.getMessage("tagBasedFilter.styleTitle")),
-		                             new EmptyBorder(3,3,3,3)
-		                     ));
+								 new TitledBorder(_("Choose styles")),
+								 new EmptyBorder(3,3,3,3)
+							 ));
 
 		JPanel styleButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		styleButtonPanel.add(getChannelSelectAllButton());
@@ -159,14 +165,14 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	public BookFilterChooseTagPanel getChooseTagPanel() {
 		if (chooseTagPanel == null) {
-			chooseTagPanel = new BookFilterChooseTagPanel(messageSource, fileChooser);
+			chooseTagPanel = new BookFilterChooseTagPanel(fileChooser);
 		}
 		return chooseTagPanel;
 	}
 
 	public TagStyleListCellRenderer getMarkerStyleCellRenderer() {
 		if (markerStyleCellRenderer == null) {
-			markerStyleCellRenderer = new TagStyleListCellRenderer(messageSource);
+			markerStyleCellRenderer = new TagStyleListCellRenderer();
 		}
 		return markerStyleCellRenderer;
 	}
@@ -198,21 +204,21 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 
 	public JButton getChannelSelectAllButton() {
 		if (channelSelectAllButton == null) {
-			channelSelectAllButton = new JButton(new ListSelectAllAction(messageSource, getStyleList()));
+			channelSelectAllButton = new JButton(new ListSelectAllAction(getStyleList()));
 		}
 		return channelSelectAllButton;
 	}
 
 	public JButton getChannelSelectNoneButton() {
 		if (channelSelectNoneButton == null) {
-			channelSelectNoneButton = new JButton(new ListSelectNoneAction(messageSource, getStyleList()));
+			channelSelectNoneButton = new JButton(new ListSelectNoneAction(getStyleList()));
 		}
 		return channelSelectNoneButton;
 	}
 
 	public JButton getChannelSelectInvertButton() {
 		if (channelSelectInvertButton == null) {
-			channelSelectInvertButton = new JButton(new ListSelectInvertAction(messageSource, getStyleList()));
+			channelSelectInvertButton = new JButton(new ListSelectInvertAction(getStyleList()));
 		}
 		return channelSelectInvertButton;
 	}
@@ -223,30 +229,30 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			settingsPanel = new JPanel();
 
 			settingsPanel.setBorder(new CompoundBorder(
-			                                new TitledBorder(messageSource.getMessage("signalSpace.markedTimeSpace.settingsPanel.title")),
-			                                new EmptyBorder(3,3,3,3)
-			                        ));
+										new TitledBorder(_("Settings")),
+										new EmptyBorder(3,3,3,3)
+									));
 
 			GroupLayout layout = new GroupLayout(settingsPanel);
 			settingsPanel.setLayout(layout);
 			layout.setAutoCreateContainerGaps(false);
 			layout.setAutoCreateGaps(true);
 
-			JLabel secondsBeforeLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsBefore"));
-			JLabel secondsAfterLabel = new JLabel(messageSource.getMessage("signalSpace.markedTimeSpace.secondsAfter"));
+			JLabel secondsBeforeLabel = new JLabel(_("Seconds before"));
+			JLabel secondsAfterLabel = new JLabel(_("Seconds after"));
 
 			GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 			hGroup.addGroup(
-			        layout.createParallelGroup()
-			        .addComponent(secondsBeforeLabel)
-			        .addComponent(secondsAfterLabel)
+				layout.createParallelGroup()
+				.addComponent(secondsBeforeLabel)
+				.addComponent(secondsAfterLabel)
 			);
 
 			hGroup.addGroup(
-			        layout.createParallelGroup(Alignment.TRAILING)
-			        .addComponent(getSecondsBeforeSpinner())
-			        .addComponent(getSecondsAfterSpinner())
+				layout.createParallelGroup(Alignment.TRAILING)
+				.addComponent(getSecondsBeforeSpinner())
+				.addComponent(getSecondsAfterSpinner())
 			);
 
 			layout.setHorizontalGroup(hGroup);
@@ -254,16 +260,16 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(secondsBeforeLabel)
-					.addComponent(getSecondsBeforeSpinner())
-				);
-			
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(secondsBeforeLabel)
+				.addComponent(getSecondsBeforeSpinner())
+			);
+
 			vGroup.addGroup(
-					layout.createParallelGroup(Alignment.BASELINE)
-					.addComponent(secondsAfterLabel)
-					.addComponent(getSecondsAfterSpinner())
-				);
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(secondsAfterLabel)
+				.addComponent(getSecondsAfterSpinner())
+			);
 
 			layout.setVerticalGroup(vGroup);
 
@@ -315,7 +321,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 			if (currentTagDocument != null) {
 
 				StyledTagSet tagSet = currentTagDocument.getTagSet();
-				LinkedHashSet<TagStyle> styles = tagSet.getStyles();
+				Collection<TagStyle> styles = tagSet.getListOfStyles();
 
 				for (TagStyle style : styles) {
 					listModel.addElement(style);
@@ -400,7 +406,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
@@ -414,7 +420,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 				filter.initialize();
 			} catch (Throwable t) {
 				logger.error("Filter failed to initialize", t);
-				errors.reject("error.tagBasedAtomFilter.failedToInitialize");
+				errors.addError(_("Failed to initialize filter. See log file for details."));
 			}
 		}
 
@@ -430,11 +436,11 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 		getMarkerStyleCellRenderer().setTagIconProducer(tagIconProducer);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

@@ -8,9 +8,10 @@ import java.awt.BorderLayout;
 import javax.swing.Box;
 import javax.swing.JPanel;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5AdvancedConfigPanel
@@ -21,18 +22,15 @@ import org.springframework.validation.Errors;
 public class MP5AdvancedConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private MP5ExecutorManager executorManager;
 	private AbstractDialog owner;
 
 	private MP5AdvancedDecompositionConfigPanel advancedDecompositionConfigPanel;
 	private MP5ExecutorPanel executorPanel;
-	private MP5OutputConfigPanel outputConfigPanel;
+	private MP5AtomsInDictionaryPanel outputConfigPanel;
 
-	public MP5AdvancedConfigPanel(MessageSourceAccessor messageSource, MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public MP5AdvancedConfigPanel(MP5ExecutorManager executorManager, AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.executorManager = executorManager;
 		this.owner = owner;
 		initialize();
@@ -55,21 +53,21 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	public MP5AdvancedDecompositionConfigPanel getAdvancedDecompositionConfigPanel() {
 		if (advancedDecompositionConfigPanel == null) {
-			advancedDecompositionConfigPanel = new MP5AdvancedDecompositionConfigPanel(messageSource,owner);
+			advancedDecompositionConfigPanel = new MP5AdvancedDecompositionConfigPanel(owner);
 		}
 		return advancedDecompositionConfigPanel;
 	}
 
 	public MP5ExecutorPanel getExecutorPanel() {
 		if (executorPanel == null) {
-			executorPanel = new MP5ExecutorPanel(messageSource,executorManager);
+			executorPanel = new MP5ExecutorPanel(executorManager);
 		}
 		return executorPanel;
 	}
 
-	public MP5OutputConfigPanel getOutputConfigPanel() {
+	public MP5AtomsInDictionaryPanel getOutputConfigPanel() {
 		if (outputConfigPanel == null) {
-			outputConfigPanel = new MP5OutputConfigPanel(messageSource,owner);
+			outputConfigPanel = new MP5AtomsInDictionaryPanel();
 		}
 		return outputConfigPanel;
 	}
@@ -88,7 +86,7 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		getAdvancedDecompositionConfigPanel().validatePanel(errors);
 		getOutputConfigPanel().validatePanel(errors);

@@ -14,9 +14,9 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public interface DisposableMethod {
 
-        /**
-         * Disposes some resources after use.
-         */
+	/**
+	 * Disposes some resources after use.
+	 */
 	void dispose() throws SignalMLException;
 
 }

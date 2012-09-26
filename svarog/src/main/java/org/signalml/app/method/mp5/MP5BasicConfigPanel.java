@@ -3,6 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,12 +12,13 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.element.CompactButton;
-import org.signalml.app.view.element.TextPanePanel;
+import org.signalml.app.view.common.components.CompactButton;
+import org.signalml.app.view.common.components.panels.TextPanePanel;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5BasicConfigPanel
@@ -26,8 +29,6 @@ import org.springframework.validation.Errors;
 public class MP5BasicConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private MP5AlgorithmConfigPanel algorithmConfigPanel;
@@ -36,9 +37,8 @@ public class MP5BasicConfigPanel extends JPanel {
 
 	private TextPanePanel bookCommentPanel;
 
-	public MP5BasicConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public MP5BasicConfigPanel(AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -54,9 +54,9 @@ public class MP5BasicConfigPanel extends JPanel {
 		topPanel.add(getDictionaryDensityConfigPanel(), BorderLayout.SOUTH);
 
 		JPanel bottomPanel = new JPanel(new BorderLayout(3,3));
-		bottomPanel.setBorder(new TitledBorder(messageSource.getMessage("mp5Method.dialog.bookComment")));
+		bottomPanel.setBorder(new TitledBorder(_("Book comment")));
 
-		CompactButton bookCommentHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_BOOK_COMMENT);
+		CompactButton bookCommentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_BOOK_COMMENT);
 
 		JPanel bookHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
 		bookHelpPanel.add(bookCommentHelpButton);
@@ -71,7 +71,7 @@ public class MP5BasicConfigPanel extends JPanel {
 
 	public MP5AlgorithmConfigPanel getAlgorithmConfigPanel() {
 		if (algorithmConfigPanel == null) {
-			algorithmConfigPanel = new MP5AlgorithmConfigPanel(messageSource,owner);
+			algorithmConfigPanel = new MP5AlgorithmConfigPanel(owner);
 		}
 		return algorithmConfigPanel;
 	}
@@ -86,14 +86,14 @@ public class MP5BasicConfigPanel extends JPanel {
 
 	public MP5StoppingCriteriaConfigPanel getStoppingCriteriaConfigPanel() {
 		if (stoppingCriteriaConfigPanel == null) {
-			stoppingCriteriaConfigPanel = new MP5StoppingCriteriaConfigPanel(messageSource,owner);
+			stoppingCriteriaConfigPanel = new MP5StoppingCriteriaConfigPanel(owner);
 		}
 		return stoppingCriteriaConfigPanel;
 	}
 
 	public MP5DictionaryDensityConfigPanel getDictionaryDensityConfigPanel() {
 		if (dictionaryDensityConfigPanel == null) {
-			dictionaryDensityConfigPanel = new MP5DictionaryDensityConfigPanel(messageSource,owner);
+			dictionaryDensityConfigPanel = new MP5DictionaryDensityConfigPanel(owner);
 		}
 		return dictionaryDensityConfigPanel;
 	}
@@ -118,7 +118,7 @@ public class MP5BasicConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		getAlgorithmConfigPanel().validatePanel(errors);
 		getStoppingCriteriaConfigPanel().validatePanel(errors);

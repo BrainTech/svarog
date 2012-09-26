@@ -46,7 +46,7 @@ public class NewAtom implements StandardBookAtom {
 		scale=versionIV ? stream.readFloat() : (float)stream.readInt();
 		frequency=versionIV ? stream.readFloat() : (float)stream.readInt();
 		position=(int)(0.5F+(versionIV ? stream.readFloat()
-		                     : (float)stream.readInt()));
+							 : (float)stream.readInt()));
 		modulus=stream.readFloat();
 		amplitude=stream.readFloat();
 		phase=stream.readFloat();
@@ -56,8 +56,12 @@ public class NewAtom implements StandardBookAtom {
 		return this.amplitude;
 	}
 
-	public int getFrequency() {
+	public int getNaturalFrequency() {
 		return (int)this.frequency;
+	}
+
+	public float getFrequency() {
+		return this.frequency;
 	}
 
 	public float getModulus() {
@@ -131,4 +135,5 @@ public class NewAtom implements StandardBookAtom {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 }

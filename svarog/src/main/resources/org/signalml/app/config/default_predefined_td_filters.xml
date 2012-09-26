@@ -1,891 +1,889 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <predefinedFilters>
-  <predefinedTimeDomainFilters>
-    <filterConfiguration>
+	<predefinedTimeDomainFilters>
 
-      <samplingFrequency>128.0</samplingFrequency>
-      <predefinedFilters>
-<timeDomainSampleFilter>
-  <description>High pass 0.1Hz  Fs 128Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.1</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.03</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
+		<filterConfiguration>
 
-<timeDomainSampleFilter>
-  <description>High pass 0.2Hz  Fs 128Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.2</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.06</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.0</stopbandAttenuation>
-</timeDomainSampleFilter>
+			<samplingFrequency>128.0</samplingFrequency>
 
-<timeDomainSampleFilter>
-  <description>High pass 0.5Hz  Fs 128Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.5</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>6.97</stopbandAttenuation>
-</timeDomainSampleFilter>
+			<predefinedFilters>
+				<timeDomainSampleFilter>
+					<description>High pass 0.1Hz  Fs 128Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.1</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.03</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>High pass 1Hz  Fs 128Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>1.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.28</stopbandAttenuation>
-</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 0.2Hz  Fs 128Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.2</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.06</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>High pass 2Hz  Fs 128Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>2.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.625</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.4</stopbandAttenuation>
-</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 0.5Hz  Fs 128Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.5</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>6.97</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>High pass 5Hz  Fs 128Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>5.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>1.5</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.77</stopbandAttenuation>
-</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 1Hz	Fs 128Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>1.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.28</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>Low pass 30Hz  Fs 128Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>30.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>60.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>41.9</stopbandAttenuation>
-</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 2Hz	Fs 128Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>2.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.625</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.4</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>Low pass 40Hz  Fs 128Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>40.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>50.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>11.0</stopbandAttenuation>
-</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 5Hz	Fs 128Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>5.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>1.5</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.77</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>notch 50 Hz  Fs 128Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>47.5</double>
-    <double>52.5</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>49.9</double>
-    <double>50.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 30Hz	Fs 128Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>30.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>60.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>41.9</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
-<timeDomainSampleFilter>
-  <description>notch 60 Hz  Fs 128Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-      </predefinedFilters>
-      <customFilterStartingPoint class="timeDomainSampleFilter">
-  <description>notch 60 Hz  Fs 128Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-      </customFilterStartingPoint>
-    </filterConfiguration>
+				<timeDomainSampleFilter>
+					<description>Low pass 40Hz	Fs 128Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>40.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>50.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>11.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
+				<timeDomainSampleFilter>
+					<description>notch 50 Hz  Fs 128Hz	chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>47.5</double>
+						<double>52.5</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>49.9</double>
+						<double>50.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
 
+				<timeDomainSampleFilter>
+					<description>notch 60 Hz  Fs 128Hz	chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>57.0</double>
+						<double>63.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>59.9</double>
+						<double>60.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+			</predefinedFilters>
 
+			<customFilterStartingPoint class="timeDomainSampleFilter">
+				<description>notch 60 Hz  Fs 128Hz	chebyII order 2</description>
+				<filterType>BANDSTOP</filterType>
+				<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+				<passbandEdgeFrequencies>
+					<double>57.0</double>
+					<double>63.0</double>
+				</passbandEdgeFrequencies>
+				<stopbandEdgeFrequencies>
+					<double>59.9</double>
+					<double>60.1</double>
+				</stopbandEdgeFrequencies>
+				<passbandRipple>3.0</passbandRipple>
+				<stopbandAttenuation>25.0</stopbandAttenuation>
+			</customFilterStartingPoint>
+		</filterConfiguration>
 
-    <filterConfiguration>
-      <samplingFrequency>256.0</samplingFrequency>
-      <predefinedFilters>
-<timeDomainSampleFilter>
-  <description>High pass 01Hz  Fs 256Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.1</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.03</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 02Hz  Fs 256Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.2</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.06</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 05Hz  Fs 256Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.5</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>6.97</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 1Hz  Fs 256Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>1.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.28</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 2Hz  Fs 256Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>2.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.625</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.4</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 5Hz  Fs 256Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>5.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>1.5</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.77</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 30Hz  Fs 256Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>30.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>60.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>14.9</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 40Hz  Fs 256Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>40.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>80.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>17.9</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 50 Hz  Fs 256Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>47.5</double>
-    <double>52.5</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>49.9</double>
-    <double>50.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 60 Hz  Fs 256Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-      </predefinedFilters>
+		<filterConfiguration>
 
-      <customFilterStartingPoint class="timeDomainSampleFilter">
-  <description>notch 60 Hz  Fs 256Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-      </customFilterStartingPoint>
-    </filterConfiguration>
+			<samplingFrequency>256.0</samplingFrequency>
 
+			<predefinedFilters>
+				<timeDomainSampleFilter>
+					<description>High pass 01Hz	 Fs 256Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.1</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.03</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 02Hz	 Fs 256Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.2</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.06</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 05Hz	 Fs 256Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.5</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>6.97</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 1Hz	Fs 256Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>1.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.28</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 2Hz	Fs 256Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>2.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.625</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.4</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 5Hz	Fs 256Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>5.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>1.5</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.77</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 30Hz	Fs 256Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>30.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>60.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>14.9</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 40Hz	Fs 256Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>40.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>80.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>17.9</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 50 Hz  Fs 256Hz	chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>47.5</double>
+						<double>52.5</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>49.9</double>
+						<double>50.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 60 Hz  Fs 256Hz	chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>57.0</double>
+						<double>63.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>59.9</double>
+						<double>60.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+			</predefinedFilters>
 
+			<customFilterStartingPoint class="timeDomainSampleFilter">
+				<description>notch 60 Hz  Fs 256Hz	chebyII order 2</description>
+				<filterType>BANDSTOP</filterType>
+				<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+				<passbandEdgeFrequencies>
+					<double>57.0</double>
+					<double>63.0</double>
+				</passbandEdgeFrequencies>
+				<stopbandEdgeFrequencies>
+					<double>59.9</double>
+					<double>60.1</double>
+				</stopbandEdgeFrequencies>
+				<passbandRipple>3.0</passbandRipple>
+				<stopbandAttenuation>25.0</stopbandAttenuation>
+			</customFilterStartingPoint>
 
+		</filterConfiguration>
 
-<filterConfiguration>
-<samplingFrequency>512.0</samplingFrequency>
-<predefinedFilters>
-<timeDomainSampleFilter>
-  <description>High pass 01Hz  Fs 512Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.1</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.03</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 02Hz  Fs 512Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.2</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.06</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 05Hz  Fs 512Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.5</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>6.97</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 1Hz  Fs 512Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>1.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.28</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 2Hz  Fs 512Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>2.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.625</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.4</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 5Hz  Fs 512Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>5.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>1.5</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.77</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 30Hz  Fs 512Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>30.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>60.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.8</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 40Hz  Fs 512Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>40.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>80.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>13.35</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 50 Hz  Fs 512Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>47.5</double>
-    <double>52.5</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>49.9</double>
-    <double>50.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 60 Hz  Fs 512Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-</predefinedFilters>
+		<filterConfiguration>
 
- <customFilterStartingPoint class="timeDomainSampleFilter">
-  <description>notch 60 Hz  Fs 512Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</customFilterStartingPoint>
-</filterConfiguration>
+			<samplingFrequency>512.0</samplingFrequency>
 
+			<predefinedFilters>
+				<timeDomainSampleFilter>
+					<description>High pass 01Hz	 Fs 512Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.1</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.03</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 02Hz	 Fs 512Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.2</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.06</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 05Hz	 Fs 512Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.5</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>6.97</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 1Hz	Fs 512Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>1.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.28</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 2Hz	Fs 512Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>2.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.625</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.4</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 5Hz	Fs 512Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>5.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>1.5</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.77</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 30Hz	Fs 512Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>30.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>60.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.8</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 40Hz	Fs 512Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>40.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>80.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>13.35</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 50 Hz  Fs 512Hz	chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>47.5</double>
+						<double>52.5</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>49.9</double>
+						<double>50.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 60 Hz  Fs 512Hz	chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>57.0</double>
+						<double>63.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>59.9</double>
+						<double>60.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+			</predefinedFilters>
 
+			<customFilterStartingPoint class="timeDomainSampleFilter">
+				<description>notch 60 Hz  Fs 512Hz	chebyII order 2</description>
+				<filterType>BANDSTOP</filterType>
+				<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+				<passbandEdgeFrequencies>
+					<double>57.0</double>
+					<double>63.0</double>
+				</passbandEdgeFrequencies>
+				<stopbandEdgeFrequencies>
+					<double>59.9</double>
+					<double>60.1</double>
+				</stopbandEdgeFrequencies>
+				<passbandRipple>3.0</passbandRipple>
+				<stopbandAttenuation>25.0</stopbandAttenuation>
+			</customFilterStartingPoint>
 
+		</filterConfiguration>
 
+		<filterConfiguration>
 
+			<samplingFrequency>1024.0</samplingFrequency>
 
-<filterConfiguration>
-<samplingFrequency>1024.0</samplingFrequency>
-<predefinedFilters>
-<timeDomainSampleFilter>
-  <description>High pass 01Hz  Fs 1024Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.1</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.03</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 02Hz  Fs 1024Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.2</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.06</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 05Hz  Fs 1024Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.5</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>6.97</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 1Hz  Fs 1024Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>1.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.28</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 2Hz  Fs 1024Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>2.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.625</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.4</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 5Hz  Fs 1024Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>5.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>1.5</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.77</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 30Hz  Fs 1024Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>30.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>60.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.4</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 40Hz  Fs 1024Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>40.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>80.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.450000000000001</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 50 Hz  Fs 1024Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>47.5</double>
-    <double>52.5</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>49.9</double>
-    <double>50.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 60 Hz  Fs 1024Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-</predefinedFilters>
+			<predefinedFilters>
+				<timeDomainSampleFilter>
+					<description>High pass 01Hz	 Fs 1024Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.1</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.03</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 02Hz	 Fs 1024Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.2</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.06</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 05Hz	 Fs 1024Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.5</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>6.97</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 1Hz	Fs 1024Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>1.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.28</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 2Hz	Fs 1024Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>2.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.625</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.4</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 5Hz	Fs 1024Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>5.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>1.5</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.77</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 30Hz	Fs 1024Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>30.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>60.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.4</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 40Hz	Fs 1024Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>40.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>80.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.450000000000001</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 50 Hz  Fs 1024Hz	 chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>47.5</double>
+						<double>52.5</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>49.9</double>
+						<double>50.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 60 Hz  Fs 1024Hz	 chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>57.0</double>
+						<double>63.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>59.9</double>
+						<double>60.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+			</predefinedFilters>
 
- <customFilterStartingPoint class="timeDomainSampleFilter">
-  <description>notch 60 Hz  Fs 1024Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</customFilterStartingPoint>
-</filterConfiguration>
+			<customFilterStartingPoint class="timeDomainSampleFilter">
+				<description>notch 60 Hz  Fs 1024Hz	 chebyII order 2</description>
+				<filterType>BANDSTOP</filterType>
+				<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+				<passbandEdgeFrequencies>
+					<double>57.0</double>
+					<double>63.0</double>
+				</passbandEdgeFrequencies>
+				<stopbandEdgeFrequencies>
+					<double>59.9</double>
+					<double>60.1</double>
+				</stopbandEdgeFrequencies>
+				<passbandRipple>3.0</passbandRipple>
+				<stopbandAttenuation>25.0</stopbandAttenuation>
+			</customFilterStartingPoint>
 
+		</filterConfiguration>
 
+		<filterConfiguration>
 
+			<samplingFrequency>2048.0</samplingFrequency>
 
+			<predefinedFilters>
+				<timeDomainSampleFilter>
+					<description>High pass 01Hz	 Fs 2048Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.1</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.03</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 02Hz	 Fs 2048Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.2</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.06</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.81</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 05Hz	 Fs 2048Hz	butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>0.5</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>6.97</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 1Hz	Fs 2048Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>1.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.25</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.28</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 2Hz	Fs 2048Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>2.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>0.625</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.4</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>High pass 5Hz	Fs 2048Hz  butter order 1</description>
+					<filterType>HIGHPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>5.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>1.5</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>10.77</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 30Hz	Fs 2048Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>30.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>60.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.3</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>Low pass 40Hz	Fs 2048Hz  butter order 2</description>
+					<filterType>LOWPASS</filterType>
+					<approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>40.0</double>
+						<double>0.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>80.0</double>
+						<double>0.0</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>12.25</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 50 Hz  Fs 2048Hz	 chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>47.5</double>
+						<double>52.5</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>49.9</double>
+						<double>50.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+				<timeDomainSampleFilter>
+					<description>notch 60 Hz  Fs 1024Hz	 chebyII order 2</description>
+					<filterType>BANDSTOP</filterType>
+					<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+					<passbandEdgeFrequencies>
+						<double>57.0</double>
+						<double>63.0</double>
+					</passbandEdgeFrequencies>
+					<stopbandEdgeFrequencies>
+						<double>59.9</double>
+						<double>60.1</double>
+					</stopbandEdgeFrequencies>
+					<passbandRipple>3.0</passbandRipple>
+					<stopbandAttenuation>25.0</stopbandAttenuation>
+				</timeDomainSampleFilter>
+			</predefinedFilters>
 
-<filterConfiguration>
-<samplingFrequency>2048.0</samplingFrequency>
-<predefinedFilters>
-<timeDomainSampleFilter>
-  <description>High pass 01Hz  Fs 2048Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.1</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.03</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 02Hz  Fs 2048Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.2</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.06</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.81</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 05Hz  Fs 2048Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>0.5</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>6.97</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 1Hz  Fs 2048Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>1.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.25</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.28</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 2Hz  Fs 2048Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>2.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>0.625</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.4</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>High pass 5Hz  Fs 2048Hz  butter order 1</description>
-  <filterType>HIGHPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>5.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>1.5</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>10.77</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 30Hz  Fs 2048Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>30.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>60.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.3</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>Low pass 40Hz  Fs 2048Hz  butter order 2</description>
-  <filterType>LOWPASS</filterType>
-  <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>40.0</double>
-    <double>0.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>80.0</double>
-    <double>0.0</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>12.25</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 50 Hz  Fs 2048Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>47.5</double>
-    <double>52.5</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>49.9</double>
-    <double>50.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-<timeDomainSampleFilter>
-  <description>notch 60 Hz  Fs 1024Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</timeDomainSampleFilter>
-</predefinedFilters>
+			<customFilterStartingPoint class="timeDomainSampleFilter">
+				<description>notch 60 Hz  Fs 1024Hz	 chebyII order 2</description>
+				<filterType>BANDSTOP</filterType>
+				<approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+				<passbandEdgeFrequencies>
+					<double>57.0</double>
+					<double>63.0</double>
+				</passbandEdgeFrequencies>
+				<stopbandEdgeFrequencies>
+					<double>59.9</double>
+					<double>60.1</double>
+				</stopbandEdgeFrequencies>
+				<passbandRipple>3.0</passbandRipple>
+				<stopbandAttenuation>25.0</stopbandAttenuation>
+			</customFilterStartingPoint>
 
- <customFilterStartingPoint class="timeDomainSampleFilter">
-  <description>notch 60 Hz  Fs 1024Hz  chebyII order 2</description>
-  <filterType>BANDSTOP</filterType>
-  <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
-  <passbandEdgeFrequencies>
-    <double>57.0</double>
-    <double>63.0</double>
-  </passbandEdgeFrequencies>
-  <stopbandEdgeFrequencies>
-    <double>59.9</double>
-    <double>60.1</double>
-  </stopbandEdgeFrequencies>
-  <passbandRipple>3.0</passbandRipple>
-  <stopbandAttenuation>25.0</stopbandAttenuation>
-</customFilterStartingPoint>
-</filterConfiguration>
+		</filterConfiguration>
 
-
-
-  </predefinedTimeDomainFilters>
+	</predefinedTimeDomainFilters>
 </predefinedFilters>

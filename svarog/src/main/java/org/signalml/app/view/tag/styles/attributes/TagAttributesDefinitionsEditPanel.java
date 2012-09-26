@@ -1,17 +1,16 @@
 package org.signalml.app.view.tag.styles.attributes;
 
 import java.awt.BorderLayout;
-import javax.swing.JPanel;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
-import org.apache.xerces.parsers.AbstractSAXParser;
-import org.signalml.app.view.element.AbstractSignalMLPanel;
-import org.signalml.app.view.element.TagStylePropertiesPanel;
+
+import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.tag.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The panel for editing tag attributes definitions for the current tag style.
@@ -20,7 +19,7 @@ import org.springframework.context.support.MessageSourceAccessor;
  *
  * @author Piotr Szachewicz
  */
-public class TagAttributesDefinitionsEditPanel extends AbstractSignalMLPanel {
+public class TagAttributesDefinitionsEditPanel extends AbstractPanel {
 
 	/**
 	 * The panel for editing tag styles properties. It is alarmed by this panel
@@ -38,26 +37,26 @@ public class TagAttributesDefinitionsEditPanel extends AbstractSignalMLPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source for resolving localized messages
 	 * @param tagStylePropertiesPanel panel for editing tag styled properties
 	 */
-	public TagAttributesDefinitionsEditPanel(MessageSourceAccessor messageSource, TagStylePropertiesPanel tagStylePropertiesPanel) {
-		super(messageSource);
-		this.messageSource = messageSource;
+	public TagAttributesDefinitionsEditPanel(TagStylePropertiesPanel tagStylePropertiesPanel) {
+		super();
 		this.tagStylePropertiesPanel = tagStylePropertiesPanel;
-		initialize();
+		createInterface();
 	}
 
 	/**
 	 * Creates components and adds them to this panel.
 	 */
-	private void initialize() {
+	protected void createInterface() {
 		this.setLayout(new BorderLayout(10, 10));
 		this.setBorder(new TitledBorder("Tag attributes"));
 
 		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
+
+		table.setPreferredScrollableViewportSize(table.getPreferredSize());
 
 		tableModel = new TagAttributesDefinitionsTableModel();
 

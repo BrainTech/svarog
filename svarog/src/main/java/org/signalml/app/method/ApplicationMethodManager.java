@@ -16,10 +16,9 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
-import org.signalml.app.model.TableToTextExporter;
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.model.components.TableToTextExporter;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.Method;
-import org.springframework.context.support.MessageSourceAccessor;
 
 import com.thoughtworks.xstream.XStream;
 
@@ -33,8 +32,6 @@ public class ApplicationMethodManager extends DefaultMethodManager {
 	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<Method,ApplicationMethodDescriptor>();
 
 	private List<UnavailableMethodDescriptor> unavailableMethods = new LinkedList<UnavailableMethodDescriptor>();
-
-	private MessageSourceAccessor messageSource;
 	private File profileDir;
 	private XStream streamer;
 	private ViewerFileChooser fileChooser;
@@ -76,14 +73,6 @@ public class ApplicationMethodManager extends DefaultMethodManager {
 
 	public synchronized void addUnavailableMethod(UnavailableMethodDescriptor method) {
 		unavailableMethods.add(method);
-	}
-
-	public synchronized MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public synchronized void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public synchronized File getProfileDir() {

@@ -24,13 +24,15 @@ import eega.util.tag.PageTag;
 import eega.util.tag.TTagHDRRec;
 import eega.util.tag.TagDataSet;
 import eega.util.tag.TagException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class allows to create a {@link StyledTagSet StyledTagSet} from file
  * and to convert a {@link TagDataSet TagDataSet} to a StyledTagSet.
  * Reading from file is done by reading TagDataSet (using method
  * {@link TagDataSet#loadTagDataSet(String)}) from file and converting it
- * to StyledTagSet. 
+ * to StyledTagSet.
  *
  * @see LegacyTagConstants
  * @see LegacyTagExporter
@@ -40,16 +42,16 @@ public class LegacyTagImporter {
 
 	protected static final Logger logger = Logger.getLogger(LegacyTagImporter.class);
 
-        /**
-         * Reads a {@link StyledTagSet StyledTagSet} from file.
-         * It is done by reading a {@link TagDataSet TagDataSet} form the file
-         * and converting it to StyledTagSet.
-         * @param f the file from which set will be read
-         * @param samplingFrequency the sampling frequency of a signal
-         * @return the created StyledTagSet
-         * @throws SignalMLException if file contains no legacy tag or
-         * some other error while reading legacy tags
-         */
+	/**
+	 * Reads a {@link StyledTagSet StyledTagSet} from file.
+	 * It is done by reading a {@link TagDataSet TagDataSet} form the file
+	 * and converting it to StyledTagSet.
+	 * @param f the file from which set will be read
+	 * @param samplingFrequency the sampling frequency of a signal
+	 * @return the created StyledTagSet
+	 * @throws SignalMLException if file contains no legacy tag or
+	 * some other error while reading legacy tags
+	 */
 	public StyledTagSet importLegacyTags(File f, float samplingFrequency) throws SignalMLException {
 
 		TagDataSet tds = null;
@@ -64,14 +66,14 @@ public class LegacyTagImporter {
 
 	}
 
-        /**
-         * Converts a {@link TagDataSet TagDataSet} to the given
-         * {@link StyledTagSet StyledTagSet} assuming given sampling frequency
-         * of a signal.
-         * @param tds the TagDataSet to be converted
-         * @param samplingFrequency the sampling frequency of a signal
-         * @return the created StyledTagSet object
-         */
+	/**
+	 * Converts a {@link TagDataSet TagDataSet} to the given
+	 * {@link StyledTagSet StyledTagSet} assuming given sampling frequency
+	 * of a signal.
+	 * @param tds the TagDataSet to be converted
+	 * @param samplingFrequency the sampling frequency of a signal
+	 * @return the created StyledTagSet object
+	 */
 	public StyledTagSet importLegacyTags(TagDataSet tds, float samplingFrequency) {
 
 		TagStyle style;
@@ -114,11 +116,11 @@ public class LegacyTagImporter {
 				style = TagStyle.getDefaultPage();
 			}
 			tag = new Tag(
-			        style,
-			        (pTag.getPage()-1)*tds.getSecPP(),
-			        tds.getSecPP(),
-			        Tag.CHANNEL_NULL,
-			        null
+				style,
+				(pTag.getPage()-1)*tds.getSecPP(),
+				tds.getSecPP(),
+				Tag.CHANNEL_NULL,
+				null
 			);
 			tags.add(tag);
 		}
@@ -132,11 +134,11 @@ public class LegacyTagImporter {
 				style = TagStyle.getDefaultBlock();
 			}
 			tag = new Tag(
-			        style,
-			        (bTag.getPage()-1)*tds.getSecPP() + (bTag.getBlock()-1)*blockSize,
-			        blockSize,
-			        Tag.CHANNEL_NULL,
-			        null
+				style,
+				(bTag.getPage()-1)*tds.getSecPP() + (bTag.getBlock()-1)*blockSize,
+				blockSize,
+				Tag.CHANNEL_NULL,
+				null
 			);
 			tags.add(tag);
 		}
@@ -153,63 +155,64 @@ public class LegacyTagImporter {
 					style = TagStyle.getDefaultChannel();
 				}
 				tag = new Tag(
-				        style,
-				        ((float) cTag.getOffset())/samplingFrequency,
-				        ((float) cTag.getLength())/samplingFrequency,
-				        channel,
-				        null
+					style,
+					((float) cTag.getOffset())/samplingFrequency,
+					((float) cTag.getLength())/samplingFrequency,
+					channel,
+					null
 				);
 				tags.add(tag);
 			}
 		}
 
-		return new StyledTagSet(styles,tags,pageSize,blocksPerPage);
+		TagStyles tagStyles = new TagStyles(styles.values());
+		return new StyledTagSet(tagStyles,tags,pageSize,blocksPerPage);
 
 	}
 
-        /**
-         * Converts the {@link TTagHDRRec TTagHDRRec object} to a
-         * {@link TagStyle TagStyle}.
-         * @param rec the object to be converted
-         * @param type the type of signal selection associated with the style
-         * @return the created object
-         */
+	/**
+	 * Converts the {@link TTagHDRRec TTagHDRRec object} to a
+	 * {@link TagStyle TagStyle}.
+	 * @param rec the object to be converted
+	 * @param type the type of signal selection associated with the style
+	 * @return the created object
+	 */
 	private TagStyle importStyle(TTagHDRRec rec, SignalSelectionType type) {
 
 		// note - fill style is not supported in new tags and ignored
 
 		String name = new String(new byte[] {rec.getTag()});
 		return new TagStyle(
-		               type,
-		               name,
-		               new String(rec.getHint()),
-		               importColor(rec.getBackColor()),
-		               rec.getPenStyle() == LegacyTagConstants.OUTLINE_MODE_CLEAR ? importColor(rec.getBackColor()) : importColor(rec.getPenColor()),
-		               rec.getPenWidth(),
-		               importDash(rec.getPenStyle()),
-		               KeyStroke.getKeyStroke("typed " + name),
-		               false // always false
-		       );
+				   type,
+				   name,
+				   new String(rec.getHint()),
+				   importColor(rec.getBackColor()),
+				   rec.getPenStyle() == LegacyTagConstants.OUTLINE_MODE_CLEAR ? importColor(rec.getBackColor()) : importColor(rec.getPenColor()),
+				   rec.getPenWidth(),
+				   importDash(rec.getPenStyle()),
+				   KeyStroke.getKeyStroke("typed " + name),
+				   false // always false
+			   );
 
 	}
 
-        /**
-         * Converts an integer representation of a RGB colour to
-         * {@link Color Color} object.
-         * @param rgb an integer with colour in the form of
-         * Blue|Green|Red (8 bits every base colour)
-         * @return the created Colour object
-         */
+	/**
+	 * Converts an integer representation of a RGB colour to
+	 * {@link Color Color} object.
+	 * @param rgb an integer with colour in the form of
+	 * Blue|Green|Red (8 bits every base colour)
+	 * @return the created Colour object
+	 */
 	private Color importColor(int rgb) {
 		return new Color((rgb & 0x0000FF), (rgb & 0x00FF00) >> 8, (rgb & 0xFF0000) >> 16);
 	}
 
-        /**
-         * Converts the constant byte representation of the outline to the array
-         * representing the dashing pattern for the outline.
-         * @param id the constant byte representation of the outline
-         * @return the array representing the dashing pattern for the outline
-         */
+	/**
+	 * Converts the constant byte representation of the outline to the array
+	 * representing the dashing pattern for the outline.
+	 * @param id the constant byte representation of the outline
+	 * @return the array representing the dashing pattern for the outline
+	 */
 	private float[] importDash(byte id) {
 		switch (id) {
 

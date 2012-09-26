@@ -4,12 +4,13 @@
 
 package org.signalml.app.action.util;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JList;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ListSelectInvertAction
  *
@@ -22,8 +23,8 @@ public class ListSelectInvertAction extends AbstractAction {
 
 	private JList list;
 
-	public ListSelectInvertAction(MessageSourceAccessor messageSource, JList list) {
-		super(messageSource.getMessage("action.util.selectInvert"));
+	public ListSelectInvertAction(JList list) {
+		super(_("Invert"));
 		this.list = list;
 	}
 

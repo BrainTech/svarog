@@ -4,6 +4,8 @@
 
 package org.signalml.app.task;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,14 +13,13 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.method.ApplicationMethodManager;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
-import org.signalml.app.view.dialog.TaskStatusDialog;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.TaskStatusDialog;
+import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.method.CleanupMethod;
 import org.signalml.method.Method;
 import org.signalml.task.DefaultTaskManager;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ApplicationTaskManager
  *
@@ -32,10 +33,7 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 	private Map<Task,ApplicationTaskWorker> workerMap = new HashMap<Task,ApplicationTaskWorker>();
 	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<Task,TaskStatusDialog>();
 	private Map<Task,TaskEventProxy> proxyMap = new HashMap<Task, TaskEventProxy>();
-
-	private MessageSourceAccessor messageSource;
 	private ApplicationMethodManager methodManager;
-	private ErrorsDialog errorsDialog;
 
 	private PleaseWaitDialog pleaseWaitDialog;
 
@@ -67,10 +65,8 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 	protected TaskStatusDialog createStatusDialog(Task task) {
 
 		TaskStatusDialog dialog = new TaskStatusDialog(task, mode);
-		dialog.setMessageSource(messageSource);
 		dialog.setTaskManager(this);
 		dialog.setMethodManager(methodManager);
-		dialog.setErrorsDialog(errorsDialog);
 
 		return dialog;
 
@@ -156,7 +152,7 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 			return;
 		}
 
-		pleaseWaitDialog.setActivity(messageSource.getMessage("activity.waitingForTaskToStop"));
+		pleaseWaitDialog.setActivity(_("waiting for task"));
 
 		pleaseWaitDialog.configureForIndeterminateSimulated();
 		worker.setPleaseWaitDialog(pleaseWaitDialog);
@@ -170,14 +166,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 
 	public void setMode(SignalMLOperationMode mode) {
 		this.mode = mode;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public ApplicationMethodManager getMethodManager() {
@@ -194,14 +182,6 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 
 	public void setStatusDialogParent(Window statusDialogParent) {
 		this.statusDialogParent = statusDialogParent;
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 	public PleaseWaitDialog getPleaseWaitDialog() {

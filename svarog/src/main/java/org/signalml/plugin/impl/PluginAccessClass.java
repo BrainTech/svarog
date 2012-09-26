@@ -1,15 +1,21 @@
 package org.signalml.plugin.impl;
 
+import java.util.HashMap;
+import java.util.MissingResourceException;
+
 import org.apache.log4j.Logger;
-import org.signalml.app.view.ViewerElementManager;
+import org.signalml.app.util.i18n.SvarogI18n;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
+import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import org.signalml.plugin.impl.change.ChangeSupportImpl;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.plugin.export.resources.SvarogAccessResources;
+import org.signalml.plugin.impl.change.SvarogAccessChangeSupportImpl;
+import org.signalml.plugin.loader.PluginHead;
 
 /**
  * Implementation of {@link SvarogAccess} interface.
@@ -18,71 +24,70 @@ import org.springframework.context.support.MessageSourceAccessor;
  * Passes the information that the {@link #setInitializationPhaseEnd
  * initialization phase} has finished to the {@link GUIAccessImpl GUI access}
  * and the information that the application is {@link #onClose() closing}
- * to {@link ChangeSupportImpl change support}. 
- * 
+ * to {@link SvarogAccessChangeSupportImpl change support}.
+ *
  * @author Marcin Szumski
- * @author Stanislaw Findeisen
+ * @author Stanislaw Findeisen (Eisenbits)
  */
 public class PluginAccessClass implements SvarogAccess {
-	
+
 	private static final Logger logger = Logger.getLogger(PluginAccessClass.class);
-	
-	/**
-	 * the unique shared instance of this class
-	 */
-	private static PluginAccessClass sharedInstance = null;
 
 	/**
 	 * the manager of Svarog elements
 	 */
-	private ViewerElementManager manager;
-	
+	private static ViewerElementManager manager = null;
+
+	private final Class _klass;
+
+	private SvarogI18n i18nAccessImpl;
+
+	private final SvarogAccessResourcesImpl resourcesAccessImpl;
+
 	/**
 	 * access to GUI features of Svarog
 	 */
-	protected GUIAccessImpl guiAccess;
-	
+	protected static final GUIAccessImpl guiAccess = GUIAccessImpl.getInstance();
+
+
 	/** Svarog methods and tasks facade. */
-	private MethodAccessImpl methodAccessImpl;
-	
+	private static final MethodAccessImpl methodAccessImpl = MethodAccessImpl.getInstance();
+
 	/** Svarog configuration facade. */
-	private ConfigAccessImpl configAccessImpl;
-	
+	private static final ConfigAccessImpl configAccessImpl = ConfigAccessImpl.getInstance();
+
 	/**
 	 * access to ordinary features of Svarog
 	 */
-	private SignalsAccessImpl signalsAccess;
+	private static final SignalsAccessImpl signalsAccess = SignalsAccessImpl.getInstance();
 	/**
 	 * access to listen on changes in Svarog
 	 */
-	private ChangeSupportImpl changeSupport;
+	private static final SvarogAccessChangeSupportImpl changeSupport = SvarogAccessChangeSupportImpl.getInstance();
 
-	
+	/**
+	 * The plugin map.
+	 */
+	private static HashMap<Object, PluginHead> pluginMap = new HashMap<Object, PluginHead>();
+
 	/**
 	 * Constructor. Creates child accesses.
 	 */
-	private PluginAccessClass(){
-		guiAccess = new GUIAccessImpl(this);
-		methodAccessImpl = new MethodAccessImpl(this);
-		configAccessImpl = new ConfigAccessImpl(this);
-		signalsAccess = new SignalsAccessImpl(this);
-		changeSupport = new ChangeSupportImpl(this);
+	public PluginAccessClass(PluginHead head) {
+		this._klass = head.getPluginObj().getClass();
+		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(this._klass);
 	}
-	
-	/**
-	 * Returns the shared instance of this class.
-	 * @return the shared instance of this class
-	 */
-	public static PluginAccessClass getSharedInstance()
-	{
-		if (null == sharedInstance) {
-		    synchronized (PluginAccessClass.class) {
-		        if (null == sharedInstance)
-		            sharedInstance = new PluginAccessClass();
-		    }
-		}
 
-		return sharedInstance;
+	/**
+	 * Adds given plugin to {@link #pluginMap}.
+	 * @param head plugin to add
+	 */
+	public synchronized static void addPlugin(PluginHead head) {
+		if (pluginMap.containsKey(head)) {
+			throw new IllegalArgumentException("Duplicate plugin auth! (" + head + ")");
+		}
+		pluginMap.put(head, head);
+		logger.debug("addPlugin: " + head + " --> " + head);
 	}
 
 	/**
@@ -90,15 +95,16 @@ public class PluginAccessClass implements SvarogAccess {
 	 * @return the implementation of GUI access
 	 */
 	public static GUIAccessImpl getGUIImpl() {
-		return getSharedInstance().guiAccess;
+		return guiAccess;
 	}
 
 	/**
 	 * @param manager the element manager to set
 	 */
-	public void setManager(ViewerElementManager manager) {
+	public static void setManager(ViewerElementManager manager) {
 		try {
-			this.manager = manager;
+			assert(PluginAccessClass.manager == null);
+			PluginAccessClass.manager = manager;
 			signalsAccess.setViewerElementManager(manager);
 			guiAccess.setViewerElementManager(manager);
 			changeSupport.setViewerElementManager(manager);
@@ -114,8 +120,8 @@ public class PluginAccessClass implements SvarogAccess {
 	/**
 	 * @return the element manager
 	 */
-	public ViewerElementManager getManager() {
-		return manager;
+	public static ViewerElementManager getManager() {
+		return PluginAccessClass.manager;
 	}
 
 	/* (non-Javadoc)
@@ -139,8 +145,6 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	@Override
 	public SvarogAccessChangeSupport getChangeSupport() {
-		if (changeSupport == null)
-			changeSupport = new ChangeSupportImpl(this);
 		return changeSupport;
 	}
 
@@ -148,32 +152,36 @@ public class PluginAccessClass implements SvarogAccess {
 	 * @param initializationPhase true if it is an initialization phase,
 	 * false otherwise
 	 */
-	public void setInitializationPhaseEnd() {
+	public static void setInitializationPhaseEnd() {
 		guiAccess.setInitializationPhaseEnd();
 	}
-	
+
 	/**
-	 * Calls {@link ChangeSupportImpl#onClose()}.
+	 * Calls {@link SvarogAccessChangeSupportImpl#onClose()}.
 	 */
-	public void onClose(){
+	public static void onClose() {
 		changeSupport.onClose();
 	}
-	
-	/**
-	 * Returns the source of messages.
-	 * @return the source of messages
-	 */
-	public MessageSourceAccessor getMessageSource(){
-		return manager.getMessageSource();
+
+	@Override
+	public SvarogAccessMethod getMethodAccess() {
+		return methodAccessImpl;
 	}
 
-    @Override
-    public SvarogAccessMethod getMethodAccess() {
-        return methodAccessImpl;
-    }
+	@Override
+	public SvarogAccessConfig getConfigAccess() {
+		return configAccessImpl;
+	}
 
-    @Override
-    public SvarogAccessConfig getConfigAccess() {
-        return configAccessImpl;
-    }
+	@Override
+	public synchronized SvarogAccessI18n getI18nAccess() {
+		if (this.i18nAccessImpl == null)
+			this.i18nAccessImpl = new SvarogI18n(this._klass);
+		return this.i18nAccessImpl;
+	}
+
+	@Override
+	public SvarogAccessResources getResourcesAccess() {
+		return this.resourcesAccessImpl;
+	}
 }

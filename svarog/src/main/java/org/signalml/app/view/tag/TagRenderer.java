@@ -33,8 +33,8 @@ public class TagRenderer extends JComponent {
 	private boolean selected;
 	private boolean selectionOnly;
 	private boolean active;
-	private static final BasicStroke WHITE_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 0F);
-	private static final BasicStroke BLACK_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 3F);
+	private static final BasicStroke WHITE_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3, 3}, 0F);
+	private static final BasicStroke BLACK_SELECTION_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3, 3}, 3F);
 
 	public Component getTagRendererComponent(TagStyle tagStyle, boolean isActive, boolean isSelected) {
 

@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -14,11 +16,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** AbstractFilterDialog
@@ -34,12 +37,12 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 
 	private JPanel namePanel;
 
-	public AbstractFilterDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public AbstractFilterDialog() {
+		super();
 	}
 
-	public AbstractFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public AbstractFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public JTextField getNameTextField() {
@@ -54,9 +57,9 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 		if (namePanel == null) {
 			namePanel = new JPanel(new BorderLayout());
 			namePanel.setBorder(new CompoundBorder(
-			                            new TitledBorder(messageSource.getMessage("atomFilter.nameTitle")),
-			                            new EmptyBorder(3,3,3,3)
-			                    ));
+									new TitledBorder(_("Filter name")),
+									new EmptyBorder(3,3,3,3)
+								));
 
 			namePanel.add(getNameTextField());
 
@@ -77,17 +80,16 @@ public abstract class AbstractFilterDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		String name = getNameTextField().getText();
 		if (name == null || name.isEmpty()) {
-			errors.rejectValue("name", "error.atomFilter.nameEmpty");
+			errors.addError(_("Empty filter name"));
 		} else if (Util.hasSpecialChars(name)) {
-			errors.rejectValue("name", "error.atomFilter.nameBadChars");
+			errors.addError(_("Filter name must not contain control characters"));
 		}
 
 	}
-
 
 }

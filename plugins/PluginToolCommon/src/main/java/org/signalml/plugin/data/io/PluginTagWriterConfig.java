@@ -1,6 +1,6 @@
 package org.signalml.plugin.data.io;
 
-import org.signalml.app.model.PagingParameterDescriptor;
+import org.signalml.app.model.signal.PagingParameterDescriptor;
 
 public class PluginTagWriterConfig {
 

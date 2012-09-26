@@ -17,6 +17,4 @@ public interface DynamicCompiler {
 
 	Class<?> compile(File[] path, String fqClassName) throws CompilationException;
 
-	void setWarning(DynamicCompilationWarning warning);
-
 }

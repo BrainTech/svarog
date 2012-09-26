@@ -1,21 +1,29 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.signalml.plugin</groupId>
-	<version>0.1</version>
 	<artifactId>Stager</artifactId>
+	<version>0.9</version>
 	<packaging>jar</packaging>
 
 	<name>Stager</name>
+	<parent>
+		<groupId>org.signalml</groupId>
+		<artifactId>svarog-top</artifactId>
+		<version>0.5.0-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
+	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.i18n.resources>src/main/resources/org/signalml/plugin/newstager/resource/i18n/</project.build.i18n.resources>
 		<maven.final.name>Stager</maven.final.name>
 	</properties>
 
 	<build>
-		<finalName>${artifactId}</finalName>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -23,7 +31,7 @@
 				<version>1.6</version>
 				<executions>
 					<execution>
-						<id>compile</id>
+						<id>copy-xml</id>
 						<phase>package</phase>
 						<configuration>
 							<target>
@@ -34,23 +42,7 @@
 							<goal>run</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<executions>
 					<execution>
 						<id>compile</id>
 						<phase>compile</phase>
@@ -66,10 +58,33 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<plugin>
+				<groupId>org.xnap.commons</groupId>
+				<artifactId>maven-gettext-plugin</artifactId>
+				<version>1.2.3</version>
+
+				<configuration>
+					<poDirectory>${project.build.i18n.resources}</poDirectory>
+					<targetBundle>org.signalml.plugin.newstager</targetBundle>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>gettext-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>dist</goal>
+						</goals>
+						<inherited>false</inherited>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--TODO TEXT. This plugin's configuration is used in m2e only.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -80,20 +95,43 @@
 								<pluginExecution>
 									<pluginExecutionFilter>
 										<groupId>
+											org.xnap.commons
+										</groupId>
+										<artifactId>
+											maven-gettext-plugin
+										</artifactId>
+										<versionRange>
+											[1.2.3,)
+										</versionRange>
+										<goals>
+											<goal>dist</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
 											org.apache.maven.plugins
 										</groupId>
 										<artifactId>
 											maven-antrun-plugin
 										</artifactId>
 										<versionRange>
-											[1.3,)
+											[1.6,)
 										</versionRange>
 										<goals>
 											<goal>run</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>
-										<ignore></ignore>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
 									</action>
 								</pluginExecution>
 							</pluginExecutions>
@@ -103,66 +141,20 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<repositories>
-		<repository>
-			<id>signalml.org</id>
-			<name>SignalML Maven Repository</name>
-			<url>http://signalml.org/maven/repository</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog</artifactId>
 			<version>0.5.0-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>2.0.7</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>2.0.7</version>
-			<exclusions>
-				<exclusion>
-					<groupId>aopalliance</groupId>
-					<artifactId>aopalliance</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.14</version>
-		</dependency>
-		<dependency>
-			<groupId>com.thoughtworks.xstream</groupId>
-			<artifactId>xstream</artifactId>
-			<version>1.2.2</version>
-			<exclusions>
-				<exclusion>
-					<groupId>xpp3</groupId>
-					<artifactId>xpp3_min</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-				<groupId>com.google.collections</groupId>
-				<artifactId>google-collections</artifactId>
-				<version>1.0-rc2</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.signalml.plugin</groupId>
 			<artifactId>PluginToolCommon</artifactId>
 			<version>1.0</version>
 			<type>jar</type>
-			<scope>compile</scope>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

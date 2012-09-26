@@ -139,7 +139,7 @@ public class SegmentReconstructionProvider {
 							ptr[itmp] = atom.getModulus();
 						}
 					} else if (atom.getType() == StandardBookAtom.SINCOSWAVE_IDENTITY) {
-						double freq = Math.PI * 2 * atom.getFrequency() / atom.getBaseLength(), phase = atom.getPhase() - freq * atom.getPosition();
+						double freq = Math.PI * 2 * atom.getNaturalFrequency() / atom.getBaseLength(), phase = atom.getPhase() - freq * atom.getPosition();
 
 						for (i = 0, sum = 0.0; i < DimBase; i++) {
 							sum += Util.sqr(tmpsig[i] = Math.cos(freq * i + phase));
@@ -150,7 +150,7 @@ public class SegmentReconstructionProvider {
 							ptr[i] = (tmpsig[i] * sum);
 						}
 					} else {
-						double freq = Math.PI * 2 * atom.getFrequency() / atom.getBaseLength(), phase = atom.getPhase() - freq * atom.getPosition();
+						double freq = Math.PI * 2 * atom.getNaturalFrequency() / atom.getBaseLength(), phase = atom.getPhase() - freq * atom.getPosition();
 						int start = 0, stop = DimBase - 1;
 
 						WignerMap.MakeExpTable(Exp, Math.PI / Util.sqr(atom.getScale()), atom.getPosition(), start, stop);
@@ -213,7 +213,10 @@ public class SegmentReconstructionProvider {
 	}
 
 	public boolean isAtomInSelectiveReconstruction(int index) {
-		return reconstruction.contains(segment.getAtomAt(index));
+		if (this.getAtomCount() > index)
+			return reconstruction.contains(segment.getAtomAt(index));
+		else
+			return false;
 	}
 
 	public boolean isAtomInSelectiveReconstruction(StandardBookAtom atom) {

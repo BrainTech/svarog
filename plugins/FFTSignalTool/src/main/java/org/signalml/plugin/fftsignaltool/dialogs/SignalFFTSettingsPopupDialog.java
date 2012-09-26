@@ -8,11 +8,12 @@ import java.awt.Window;
 
 import javax.swing.JComponent;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /**
@@ -23,7 +24,7 @@ import org.springframework.validation.Errors;
  * The model for this dialog is of type {@link SignalFFTTool} and the
  * parameters are stored in the {@link SignalFFTSettings settings}
  * {@link SignalFFTTool#getSettings() obtained} from it.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -43,13 +44,12 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
 	 * blocks top-level windows.
-	 * @param messageSource message source to set
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalFFTSettingsPopupDialog(MessageSourceAccessor messageSource,
-			Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public SignalFFTSettingsPopupDialog(
+		Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	@Override
 	public JComponent createInterface() {
 
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel(messageSource, true);
+		signalFFTSettingsPanel = new SignalFFTSettingsPanel(true);
 
 		return signalFFTSettingsPanel;
 
@@ -96,13 +96,11 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 * SignalFFTSettingsPanel#validatePanel(Errors) valid}.
 	 */
 	@Override
-	public void validateDialog(Object model, Errors errors)
-			throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors)
+	throws SignalMLException {
 		super.validateDialog(model, errors);
 
-		errors.pushNestedPath("settings");
 		signalFFTSettingsPanel.validatePanel(errors);
-		errors.popNestedPath();
 
 	}
 

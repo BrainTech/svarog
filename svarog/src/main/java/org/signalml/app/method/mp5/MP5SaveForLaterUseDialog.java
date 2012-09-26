@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
@@ -16,33 +18,32 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SaveForLaterUseDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5SaveForLaterUseDialog extends AbstractDialog {
+public class MP5SaveForLaterUseDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 
 	private JCheckBox saveConfigCheckBox;
 	private JCheckBox saveSignalCheckBox;
 
-	public MP5SaveForLaterUseDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public MP5SaveForLaterUseDialog() {
+		super();
 	}
 
-	public MP5SaveForLaterUseDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public MP5SaveForLaterUseDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("mp5Method.saveForLaterUseDialog.title"));
+		setTitle(_("Save for later use"));
 		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
@@ -54,8 +55,8 @@ public class MP5SaveForLaterUseDialog extends AbstractDialog {
 		JPanel interfacePanel = new JPanel(new GridLayout(2,1,3,3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.saveForLaterUseDialog.frameTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose what to save")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		interfacePanel.setBorder(border);
@@ -69,14 +70,14 @@ public class MP5SaveForLaterUseDialog extends AbstractDialog {
 
 	public JCheckBox getSaveConfigCheckBox() {
 		if (saveConfigCheckBox == null) {
-			saveConfigCheckBox = new JCheckBox(messageSource.getMessage("mp5Method.saveForLaterUseDialog.saveConfig"));
+			saveConfigCheckBox = new JCheckBox(_("Save MP configuration"));
 		}
 		return saveConfigCheckBox;
 	}
 
 	public JCheckBox getSaveSignalCheckBox() {
 		if (saveSignalCheckBox == null) {
-			saveSignalCheckBox = new JCheckBox(messageSource.getMessage("mp5Method.saveForLaterUseDialog.saveSignal"));
+			saveSignalCheckBox = new JCheckBox(_("Save signal for MP computation"));
 		}
 		return saveSignalCheckBox;
 	}

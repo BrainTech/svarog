@@ -60,8 +60,8 @@ public class SignalToolForwardingMouseAdapter extends MouseAdapter {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if ((! (signalTool instanceof SelectionSignalTool)) && (SwingUtilities.isMiddleMouseButton(e) || (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()))) {
-		    // TODO signalTool.mousePressed(e) ??
+		if ((!(signalTool instanceof SelectionSignalTool)) && (SwingUtilities.isMiddleMouseButton(e) || (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()))) {
+			// TODO signalTool.mousePressed(e) ??
 			selectTagSignalTool.mousePressed(e);
 		} else {
 			if (signalTool != null) {

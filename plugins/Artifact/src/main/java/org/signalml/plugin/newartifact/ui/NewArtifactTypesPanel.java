@@ -3,6 +3,8 @@
  */
 package org.signalml.plugin.newartifact.ui;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,20 +16,19 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.NewArtifactType;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ArtifactTypesPanel
  *
@@ -41,17 +42,14 @@ public class NewArtifactTypesPanel extends JPanel {
 
 	private static final int SCROLLBAR_SCALE = 10;
 
-	private MessageSourceAccessor messageSource;
-
 	private NewArtifactType[] artifactTypes = NewArtifactType.values();
 
 	private JTextField[] sensitivityTextFields;
 	private JScrollBar[] sensitivityScrollBars;
 	private JCheckBox[] artifactTypeCheckBoxes;
 
-	public NewArtifactTypesPanel(MessageSourceAccessor messageSource) {
+	public NewArtifactTypesPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -60,7 +58,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(messageSource.getMessage("newArtifactMethod.dialog.chooseArtifactTypes")),
+			new TitledBorder(_("Artifact types & sensitivity")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -126,7 +124,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		for (int i=0; i<artifactTypes.length; i++) {
 
 			textFields[i].setText(Float.toString(sensitivities[i]));
-			scrollBars[i].setValue((int) Math.round(sensitivities[i]*SCROLLBAR_SCALE));
+			scrollBars[i].setValue(Math.round(sensitivities[i]*SCROLLBAR_SCALE));
 			checkBoxes[i].setSelected(chosenArtifactTypes[i] != 0);
 
 		}
@@ -203,7 +201,7 @@ public class NewArtifactTypesPanel extends JPanel {
 		if (artifactTypeCheckBoxes == null) {
 			artifactTypeCheckBoxes = new JCheckBox[artifactTypes.length];
 			for (int i=0; i<artifactTypeCheckBoxes.length; i++) {
-				artifactTypeCheckBoxes[i] = new JCheckBox(messageSource.getMessage(artifactTypes[i]));
+				artifactTypeCheckBoxes[i] = new JCheckBox(NewArtifactTypeCaptionHelper.GetCaption(artifactTypes[i]));
 			}
 		}
 		return artifactTypeCheckBoxes;
@@ -255,7 +253,7 @@ public class NewArtifactTypesPanel extends JPanel {
 				return;
 			}
 			textField.setBackground(Color.WHITE);
-			getSensitivityScrollBars()[index].setValue((int) Math.round(value*SCROLLBAR_SCALE));
+			getSensitivityScrollBars()[index].setValue(Math.round(value*SCROLLBAR_SCALE));
 
 		}
 

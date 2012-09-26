@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -23,18 +25,17 @@ import javax.swing.border.CompoundBorder;
 
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.book.BookFilterProcessor;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomTableDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class AtomTableDialog extends AbstractDialog implements PropertyChangeListener {
+public class AtomTableDialog extends AbstractDialog  implements PropertyChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -56,17 +57,17 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 
 	private BookView currentView;
 
-	public AtomTableDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public AtomTableDialog() {
+		super();
 	}
 
-	public AtomTableDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public AtomTableDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("atomTable.title"));
+		setTitle(_("Atom table"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/atomtable.png"));
 		super.initialize();
 		setResizable(true);
@@ -85,8 +86,8 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 		JPanel tablePanel = new JPanel(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("atomTable.tableTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Atoms in the current segment (may exclude filtered atoms)")),
+			new EmptyBorder(3,3,3,3)
 		);
 		tablePanel.setBorder(border);
 
@@ -101,14 +102,14 @@ public class AtomTableDialog extends AbstractDialog implements PropertyChangeLis
 
 	public AtomTableModel getAtomTableModel() {
 		if (atomTableModel == null) {
-			atomTableModel = new AtomTableModel(messageSource);
+			atomTableModel = new AtomTableModel();
 		}
 		return atomTableModel;
 	}
 
 	public AtomTable getAtomTable() {
 		if (atomTable == null) {
-			atomTable = new AtomTable(getAtomTableModel(), messageSource);
+			atomTable = new AtomTable(getAtomTableModel());
 		}
 		return atomTable;
 	}

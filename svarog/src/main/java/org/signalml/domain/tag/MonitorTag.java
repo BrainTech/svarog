@@ -11,7 +11,7 @@ public class MonitorTag extends Tag {
 	private double timestamp;
 
 	public MonitorTag(TagStyle style, double timestamp, double length,
-		int channel) {
+					  int channel) {
 		super(style, 0, length, channel); //the position argument doesn't realy matter
 		this.timestamp = timestamp;
 	}
@@ -32,7 +32,7 @@ public class MonitorTag extends Tag {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null || !(obj instanceof MonitorTag) ) {
+		if (obj == null || !(obj instanceof MonitorTag)) {
 			return false;
 		}
 		return (this.compareTo((Tag) obj) == 0);

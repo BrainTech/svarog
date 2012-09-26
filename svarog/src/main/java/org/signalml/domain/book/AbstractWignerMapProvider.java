@@ -134,10 +134,10 @@ public abstract class AbstractWignerMapProvider {
 	public void setRange(double minFrequency, double maxFrequency, double minPosition, double maxPosition) {
 
 		if (
-		        this.minFrequency != minFrequency
-		        || this.maxFrequency != maxFrequency
-		        || this.minPosition != minPosition
-		        || this.maxPosition != maxPosition
+			this.minFrequency != minFrequency
+			|| this.maxFrequency != maxFrequency
+			|| this.minPosition != minPosition
+			|| this.maxPosition != maxPosition
 		) {
 
 			this.minFrequency = minFrequency;
@@ -159,10 +159,10 @@ public abstract class AbstractWignerMapProvider {
 			normalMap = null;
 
 		} else if (
-		        this.minFrequency != minFrequency
-		        || this.maxFrequency != maxFrequency
-		        || this.minPosition != minPosition
-		        || this.maxPosition != maxPosition
+			this.minFrequency != minFrequency
+			|| this.maxFrequency != maxFrequency
+			|| this.minPosition != minPosition
+			|| this.maxPosition != maxPosition
 		) {
 
 			mapDirty = true;
@@ -229,7 +229,7 @@ public abstract class AbstractWignerMapProvider {
 
 		for( int x=0; x<width; x++ ) {
 			for( int y=0; y<height; y++ ) {
-				map[x][y] = (1.0 + Math.sin( (2*Math.PI/300) * Math.sqrt( Util.sqr(stretchX*((double)(x-cenX))) + Util.sqr(stretchY*((double)(y-cenY))) ) ) ) / 2;
+				map[x][y] = (1.0 + Math.sin( (2*Math.PI/300) * Math.sqrt(Util.sqr(stretchX*((double)(x-cenX))) + Util.sqr(stretchY*((double)(y-cenY))) ) ) ) / 2;
 			}
 		}
 
@@ -241,7 +241,6 @@ public abstract class AbstractWignerMapProvider {
 		int pointMaxPosition = (int) Math.round(maxPosition * samplingFrequency);
 
 		WignerMap wignerMap = new WignerMap(width, height, pointMinPosition, pointMaxPosition, naturalMinFrequency, naturalMaxFrequency);
-		wignerMap.SetTrueSize(minFrequency, maxFrequency);
 		wignerMap.setBook(segment);
 
 		double[][] normMap = wignerMap.getWignerMap();

@@ -3,6 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -19,12 +21,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.SvarogApplication;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /** MP5ExecutablePanel
  *
@@ -35,18 +36,15 @@ public class MP5ExecutablePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private JTextField executableTextField;
 	private JButton chooseExecutableButton;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private File mp5Executable;
 
-	public MP5ExecutablePanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public MP5ExecutablePanel(FileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		initialize();
 	}
@@ -54,8 +52,8 @@ public class MP5ExecutablePanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.chooseExecutableTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("MP5 executable")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -64,23 +62,23 @@ public class MP5ExecutablePanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel executableLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.executable"));
+		JLabel executableLabel = new JLabel(_("Path to binary"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(executableLabel)
+			layout.createParallelGroup()
+			.addComponent(executableLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getExecutableTextField())
+			layout.createParallelGroup()
+			.addComponent(getExecutableTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getChooseExecutableButton())
+			layout.createParallelGroup()
+			.addComponent(getChooseExecutableButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -88,14 +86,14 @@ public class MP5ExecutablePanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(executableLabel)
-				.addComponent(getExecutableTextField())
-				.addComponent(getChooseExecutableButton())
-			);
-				
-		layout.setVerticalGroup(vGroup);		
-						
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(executableLabel)
+			.addComponent(getExecutableTextField())
+			.addComponent(getChooseExecutableButton())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
 	}
 
 	public JTextField getExecutableTextField() {
@@ -182,10 +180,10 @@ public class MP5ExecutablePanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (mp5Executable == null || !mp5Executable.exists() || !mp5Executable.canExecute()) {
-			errors.rejectValue("mp5Executable", "error.mp5.badMp5Executable");
+			errors.addError(_("MP5 executable not found or not accessible"));
 		}
 
 	}
@@ -195,9 +193,9 @@ public class MP5ExecutablePanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public ChooseExecutableAction() {
-			super(messageSource.getMessage("mp5Method.dialog.chooseExecutable"));
+			super(_("Choose..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.chooseExecutableToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose MP5 executable file"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

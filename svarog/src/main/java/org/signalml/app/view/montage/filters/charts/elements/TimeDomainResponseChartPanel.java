@@ -3,9 +3,10 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.jfree.chart.axis.NumberAxis;
-import org.signalml.domain.montage.filter.iirdesigner.FilterTimeDomainResponse;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
 
 /**
  * A chart panel used for displaying time domain responses (impulse response
@@ -16,16 +17,14 @@ public class TimeDomainResponseChartPanel extends ResponseChartPanel {
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public TimeDomainResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public TimeDomainResponseChartPanel() {
+		super();
 	}
 
 	@Override
 	public String getDomainAxisName() {
-		return messageSource.getMessage("editTimeDomainSampleFilter.graphTimeLabel");
+		return _("Time [s]");
 	}
 
 	@Override

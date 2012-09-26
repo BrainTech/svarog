@@ -9,20 +9,20 @@ package org.signalml.plugin.export.signal;
 public enum ExportedRawSignalSampleType {
 
 	/**
-     * Samples of the length of 64 bits in the form of double
-     */
+	 * Samples of the length of 64 bits in the form of double
+	 */
 	DOUBLE,
 	/**
-     * Samples of the length of 32 bits in the form of floats
-     */
+	 * Samples of the length of 32 bits in the form of floats
+	 */
 	FLOAT,
 	/**
-     * Samples of the length of 32 bits in the form of integers
-     */
+	 * Samples of the length of 32 bits in the form of integers
+	 */
 	INT,
 	/**
-     * Samples of the length of 16 bits in the form of integers
-     */
+	 * Samples of the length of 16 bits in the form of integers
+	 */
 	SHORT;
-	
+
 }

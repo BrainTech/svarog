@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.tag.comparison;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -13,7 +15,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleTableCellRenderer
  *
@@ -23,30 +24,25 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class TagStyleTableCellRenderer extends DefaultTableCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private String noneString;
 
 	public static final Color DISABLED_COLOR = new Color(220,220,220);
 
 	private TagIconProducer tagIconProducer;
 
-	public TagStyleTableCellRenderer(MessageSourceAccessor messageSource) {
+	public TagStyleTableCellRenderer() {
 		super();
-		this.messageSource = messageSource;
 
 		setHorizontalAlignment(CENTER);
 		setVerticalAlignment(CENTER);
 		setHorizontalTextPosition(CENTER);
 		setVerticalTextPosition(BOTTOM);
 
-		noneString = messageSource.getMessage("tagComparison.none");
+		noneString = _("(none)");
 
 	}
 
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
+
 
 	public TagIconProducer getTagIconProducer() {
 		return tagIconProducer;

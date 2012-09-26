@@ -5,6 +5,6 @@
 
 /**
  * This package contains definitions of filters of montage samples.
- * There are two types of filters: FFTSampleFilter and TimeDomainSampleFilter. 
+ * There are two types of filters: FFTSampleFilter and TimeDomainSampleFilter.
  */
 package org.signalml.domain.montage.filter;

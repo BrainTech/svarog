@@ -1,11 +1,10 @@
 package org.signalml.plugin.newartifact;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.awt.event.ActionEvent;
 
-import org.signalml.plugin.data.PluginConfigMethodData;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.PluginMethodManager;
 
 public class NewArtifactPluginAction extends AbstractSignalMLAction {
@@ -17,12 +16,11 @@ public class NewArtifactPluginAction extends AbstractSignalMLAction {
 
 	private PluginMethodManager mgr;
 
-	public NewArtifactPluginAction(PluginMethodManager mgr) throws PluginException {
-		super(PluginMessageSourceManager.GetMessageSource());
+	public NewArtifactPluginAction(PluginMethodManager mgr) {
+		super();
 		this.mgr = mgr;
-		PluginConfigMethodData config = mgr.getMethodConfig();
-		this.setText(config.getRunMethodString());
-		this.setIconPath(config.getIconPath());
+		this.setText(_("Artifact detection (new!)"));
+		this.setIconPath(NewArtifactPlugin.iconPath);
 	}
 
 	@Override

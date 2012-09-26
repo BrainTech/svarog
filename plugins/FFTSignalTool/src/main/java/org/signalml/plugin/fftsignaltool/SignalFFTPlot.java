@@ -3,6 +3,9 @@
  */
 package org.signalml.plugin.fftsignaltool;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,6 +16,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.util.Calendar;
 
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
@@ -28,15 +32,15 @@ import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.signalml.exception.SanityCheckException;
+import org.signalml.math.fft.FourierTransform;
+import org.signalml.math.fft.WindowType;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
-import org.signalml.plugin.fft.export.FourierTransform;
-import org.signalml.plugin.fft.export.WindowType;
+import org.signalml.util.FormatUtils;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Plot on which the power spectrum of the signal (fragment near cursor) is
@@ -44,8 +48,8 @@ import org.springframework.context.support.MessageSourceAccessor;
  * <ul><li>
  * The parameters of the display are stored in {@link SignalFFTSettings}.</li>
  * <li>The power spectrum is calculated using the {@link FourierTransform FFT}.
- * </li></ul> 
- * 
+ * </li></ul>
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o., Marcin Szumski
  */
@@ -60,7 +64,7 @@ public class SignalFFTPlot extends JComponent {
 	 * the logger
 	 */
 	protected static final Logger logger = Logger
-			.getLogger(SignalFFTPlot.class);
+										   .getLogger(SignalFFTPlot.class);
 
 	/**
 	 * how many FFT result points to cutoff at the left - discards the mean to
@@ -146,18 +150,20 @@ public class SignalFFTPlot extends JComponent {
 
 	/**
 	 * the stored samples of the signal that are used to calculate power
-	 * spectrum 
+	 * spectrum
 	 */
 	private double[] samples = null;
 
 	/**
-	 * the calculated power spectrum - the array with two rows:
-	 * <ul>
-	 * <li>first row ({@code powerSpectrum[0][i]} - frequencies,</li>
-	 * <li>second row ({@code powerSpectrum[1][i]}) - estimates of the
-	 * power spectrum for these frequencies</li>
+	 * the calculated power spectrum - estimates of the
+	 * power spectrum for these frequencies.
 	 */
-	private double[][] powerSpectrum;
+	private double[] powerSpectrum;
+
+	/**
+	 * the frequencies for the powerSpectrum values
+	 */
+	private double[] frequencies;
 
 	/**
 	 * the axis with frequencies
@@ -201,17 +207,15 @@ public class SignalFFTPlot extends JComponent {
 	private String error;
 
 	/**
-	 * the source of messages (labels)
+	 * The last time FFT was recalculated. (Useful for online signals).
 	 */
-	private MessageSourceAccessor messageSource;
+	private Calendar lastFFTRecalculationTime;
 
 	/**
 	 * Constructor. Sets the source of messages, title font and border.
-	 * @param messageSource the source of messages (labels)
 	 */
-	public SignalFFTPlot(MessageSourceAccessor messageSource) {
+	public SignalFFTPlot() {
 		super();
-		this.messageSource = messageSource;
 		setBorder(new LineBorder(Color.LIGHT_GRAY, 3, false));
 		titleFont = new Font(Font.DIALOG, Font.PLAIN, 12);
 	}
@@ -231,18 +235,19 @@ public class SignalFFTPlot extends JComponent {
 			return;
 		}
 		calculated = true;
+		lastFFTRecalculationTime = Calendar.getInstance();
 
 		error = null;
 
 		double timeZoomFactor = plot.getTimeZoomFactor();
 		int firstSample = (int) Math.floor((focusPoint.x / timeZoomFactor)
-				- windowWidth / 2);
+										   - windowWidth / 2);
 		if (firstSample < 0) {
-			error = messageSource.getMessage("fft.notEnoughSignalPoints");
+			error = _("Not enough signal points");
 		}
 		int lastSample = firstSample + windowWidth;
 		if (lastSample >= plot.getMaxSampleCount()) {
-			error = messageSource.getMessage("fft.notEnoughSignalPoints");
+			error = _("Not enough signal points");
 		}
 		if (error != null) {
 			return;
@@ -250,7 +255,7 @@ public class SignalFFTPlot extends JComponent {
 		int sampleCnt = lastSample - firstSample;
 		if (sampleCnt != windowWidth) {
 			throw new SanityCheckException(
-					"Sanity failed - sample count different than window size");
+				"Sanity failed - sample count different than window size");
 		}
 
 		if (samples == null || samples.length != sampleCnt) {
@@ -261,7 +266,7 @@ public class SignalFFTPlot extends JComponent {
 
 		try {
 			channelSamples = signalAccess.getActiveProcessedSignalSamples(
-					channel, firstSample, sampleCnt);
+								 channel, firstSample, sampleCnt);
 			samples = channelSamples.getSamples();
 		} catch (RuntimeException ex) {
 			setVisible(false);
@@ -274,19 +279,17 @@ public class SignalFFTPlot extends JComponent {
 		try {
 
 			logger.debug("Samples requested [" + sampleCnt + "] array size ["
-					+ samples.length + "]");
+						 + samples.length + "]");
 
-			FourierTransform fourierTransform = new FourierTransform();
-			fourierTransform.setWindowType(windowType, windowParameter);
+			FourierTransform fourierTransform = new FourierTransform(windowType, windowParameter);
 
-			powerSpectrum = fourierTransform.powerSpectrumReal(samples,
-					((float) 1) / channelSamples.getSamplingFrequency());
+			powerSpectrum = fourierTransform.calculatePowerSpectrum(samples);
+			frequencies = fourierTransform.getFrequencies(samples, channelSamples.getSamplingFrequency());
+
 			if (powerSpectrum == null) {
 				throw new NullPointerException("Null spectrum returned");
 			}
-
-			logger.debug("PS[0] size [" + powerSpectrum[0].length
-					+ "] PS[1] size [" + powerSpectrum[1].length + "]");
+			logger.debug("powerSpectrum length = " + powerSpectrum.length);
 
 		} catch (RuntimeException ex) {
 			setVisible(false);
@@ -318,39 +321,35 @@ public class SignalFFTPlot extends JComponent {
 		if (powerSpectrumChart == null) {
 
 			powerSpectrumChart = new JFreeChart(null, titleFont,
-					powerSpectrumPlot, false);
+												powerSpectrumPlot, false);
 			powerSpectrumChart.setBorderVisible(false);
 			powerSpectrumChart.setBackgroundPaint(Color.WHITE);
 
 		}
 
 		double pixelPerSecond = plot.getPixelPerSecond();
-		float minTime = (float) ((firstSample * timeZoomFactor) / pixelPerSecond);
-		float maxTime = (float) ((lastSample * timeZoomFactor) / pixelPerSecond);
+		float minTime = (float)((firstSample * timeZoomFactor) / pixelPerSecond);
+		float maxTime = (float)((lastSample * timeZoomFactor) / pixelPerSecond);
 
 		StringBuilder minTimeSb = new StringBuilder(20);
-		Util.addTime(minTime, minTimeSb);
+		FormatUtils.addTime(minTime, minTimeSb);
 
 		StringBuilder maxTimeSb = new StringBuilder(20);
-		Util.addTime(maxTime, maxTimeSb);
+		FormatUtils.addTime(maxTime, maxTimeSb);
 
-		String title = messageSource.getMessage("fft.chartTitle",
-				new Object[] { new Integer(windowWidth), minTimeSb.toString(),
-						maxTimeSb.toString(), channelSamples.getName() });
+		String title = _R("FFT over {0} points {1} - {2} ({3})",
+						  windowWidth, minTimeSb.toString(),
+						  maxTimeSb.toString(), channelSamples.getName());
 
-		if (titleVisible) {
-			powerSpectrumChart.setTitle(new TextTitle(title, titleFont));
-		} else {
-			powerSpectrumChart.setTitle((String) null);
-		}
+		powerSpectrumChart.setTitle(titleVisible ? new TextTitle(title, titleFont) : null);
 		powerSpectrumChart.setAntiAlias(antialias);
 
 		int startIndex = LEFT_CUTOFF;
-		int endIndex = powerSpectrum[1].length;
+		int endIndex = powerSpectrum.length;
 
 		{
 			// FIXME: check
-			double rangeStart = powerSpectrum[0][LEFT_CUTOFF];
+			double rangeStart = frequencies[LEFT_CUTOFF];
 			double rangeEnd = channelSamples.getSamplingFrequency() / 2.0D;
 			double rangeSize = rangeEnd - rangeStart;
 
@@ -363,9 +362,9 @@ public class SignalFFTPlot extends JComponent {
 				rangeEnd = fftSettings.getVisibleRangeEnd();
 			}
 
-			if (fftSettings.getMaxLabelCount() > 0) {
+			if (fftSettings.getXAxisLabelCount() > 0) {
 				double dist = rangeEnd - rangeStart;
-				double step = dist / fftSettings.getMaxLabelCount();
+				double step = dist / fftSettings.getXAxisLabelCount();
 				if (step < 1)
 					step = 1;
 				xAxis.setTickUnit(new NumberTickUnit(Math.round(step)));
@@ -375,35 +374,22 @@ public class SignalFFTPlot extends JComponent {
 				rangeEnd = rangeStart + 1;
 			}
 
-			if (fftSettings.isScaleToView()) {
-
-				double sampleDist = endIndex - startIndex;
-
-				int shift = (int) (((rangeEnd - oldRangeStart) / rangeSize) * sampleDist);
-				endIndex = startIndex + shift;
-
-				shift = (int) (((rangeStart - oldRangeStart) / rangeSize) * sampleDist);
-				startIndex += shift;
-
-			}
-
 			xAxis.setRange(rangeStart, rangeEnd);
 		}
 
 		double max = 0;
 		double min = Double.MAX_VALUE;
-
-		for (int i = startIndex; i < endIndex; i++) {
-			if (max < powerSpectrum[1][i]) {
-				max = powerSpectrum[1][i];
+		if (fftSettings.isAutoScaleYAxis()){
+			for (int i = startIndex; i < endIndex; i++) {
+				max = Math.max(max, powerSpectrum[i]);
+				min = Math.min(min, powerSpectrum[i]);
 			}
-			if (min > powerSpectrum[1][i]) {
-				min = powerSpectrum[1][i];
-			}
+			max *= 1.15; // scale up by 15% as per ZFB request (related to spline
+							// overshooting points).
+		} else {
+			max = fftSettings.getMaxPowerAxis();
+			min = fftSettings.getMinPowerAxis();
 		}
-
-		max *= 1.15; // scale up by 15% as per ZFB request (related to spline
-						// overshooting points).
 
 		if (logarithmic) {
 			logYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
@@ -411,7 +397,9 @@ public class SignalFFTPlot extends JComponent {
 			powerSpectrumPlot.setRangeAxis(logYAxis);
 		} else {
 			normalYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
-			normalYAxis.setRange(0, max);
+			if (fftSettings.isAutoScaleYAxis())
+				min = 0;
+			normalYAxis.setRange(min, max);
 			powerSpectrumPlot.setRangeAxis(normalYAxis);
 		}
 
@@ -426,7 +414,7 @@ public class SignalFFTPlot extends JComponent {
 		}
 
 		DefaultXYDataset dataset = new DefaultXYDataset();
-		dataset.addSeries("data", powerSpectrum);
+		dataset.addSeries("data", new double[][] {frequencies, powerSpectrum});
 		powerSpectrumPlot.setDataset(dataset);
 
 	}
@@ -475,13 +463,13 @@ public class SignalFFTPlot extends JComponent {
 			}
 
 			g.drawString(error, insets.left + x, insets.top
-					+ (size.height - height) / 2 + fontMetrics.getAscent());
+						 + (size.height - height) / 2 + fontMetrics.getAscent());
 			return;
 
 		}
 
 		powerSpectrumChart.draw(g, new Rectangle(insets.left, insets.top,
-				size.width, size.height));
+								size.width, size.height));
 
 	}
 
@@ -596,12 +584,11 @@ public class SignalFFTPlot extends JComponent {
 	 * @param channel the number of the channel for which the FFT is calculated
 	 */
 	public void setParameters(ExportedSignalPlot plot, Point focusPoint,
-			int channel) {
+							  int channel) {
 		this.plot = plot;
 		this.focusPoint = focusPoint;
 		this.channel = channel;
-		calculated = false;
-		repaint();
+		recalculateAndRepaint();
 	}
 
 	/**
@@ -613,6 +600,10 @@ public class SignalFFTPlot extends JComponent {
 	public void setParameters(Point focusPoint, int channel) {
 		this.focusPoint = focusPoint;
 		this.channel = channel;
+		recalculateAndRepaint();
+	}
+
+	public void recalculateAndRepaint() {
 		calculated = false;
 		repaint();
 	}
@@ -869,6 +860,14 @@ public class SignalFFTPlot extends JComponent {
 	 */
 	public void setSvarogAccess(SvarogAccess access) {
 		signalAccess = access.getSignalAccess();
+	}
+
+	/**
+	 * Returns the last time FFT was recalculated.
+	 * @return the last time FFT was recalculated
+	 */
+	public Calendar getLastFFTRecalculationTime() {
+		return lastFFTRecalculationTime;
 	}
 
 }

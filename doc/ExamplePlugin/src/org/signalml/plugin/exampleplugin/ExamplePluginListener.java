@@ -16,11 +16,11 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
  * {@link ExportedTagStyle tag styles} in Svarog.
  * When the change occurs, this class creates a pop-up with the description
  * of the change and of the changed elements.
- * 
+ *
  * @author Marcin Szumski
  */
 public class ExamplePluginListener implements SvarogTagListenerWithAcitve,
-		SvarogTagStyleListener {
+	SvarogTagStyleListener {
 
 	/**
 	 * Creates a string that describes the given {@link ExportedTagStyle
@@ -32,7 +32,7 @@ public class ExamplePluginListener implements SvarogTagListenerWithAcitve,
 	 * created description
 	 * @return the created description
 	 */
-	private String createTagStyleString(SvarogTagStyleEvent event, String text){
+	private String createTagStyleString(SvarogTagStyleEvent event, String text) {
 		ExportedTagStyle style = event.getTagStyle();
 		text += "\nname: " + style.getName();
 		text += "\ntype: " + style.getType().getName();
@@ -40,7 +40,7 @@ public class ExamplePluginListener implements SvarogTagListenerWithAcitve,
 		text += "\ndescription: " + style.getDescription();
 		return text;
 	}
-	
+
 	/**
 	 * Shows the pop-up with the added tag style.
 	 */
@@ -76,18 +76,18 @@ public class ExamplePluginListener implements SvarogTagListenerWithAcitve,
 	 * @param tag the tag to be described
 	 * @return the created description
 	 */
-	private String tagToStirng(ExportedTag tag){
+	private String tagToStirng(ExportedTag tag) {
 		String text = new String();
 		text += "\ntype: " + tag.getType().getName();
 		text += "\nstyle: " + tag.getStyle().getName();
-		if (tag.getType().isChannel()){
+		if (tag.getType().isChannel()) {
 			text+= "\nchannel: " + tag.getChannel();
 		}
 		text += "\nstart: " + tag.getPosition();
 		text += "\nlength: " + tag.getLength();
 		return text;
 	}
-	
+
 	/**
 	 * Creates a string that describes the given {@link ExportedTag tag}.
 	 * Description consists of the {@link #tagToStirng(ExportedTag) description
@@ -100,7 +100,7 @@ public class ExamplePluginListener implements SvarogTagListenerWithAcitve,
 	 * created description
 	 * @return the created description
 	 */
-	private String createTagString(SvarogTagEvent event, String text){
+	private String createTagString(SvarogTagEvent event, String text) {
 		ExportedTag tag = event.getTag();
 		ExportedTagDocument document = event.getDocument();
 		text += tagToStirng(tag);
@@ -110,9 +110,9 @@ public class ExamplePluginListener implements SvarogTagListenerWithAcitve,
 		text += "\nblock size: " + document.getBlockSize();
 		text += "\npage size: " + document.getPageSize();
 		return text;
-		
+
 	}
-	
+
 	/**
 	 * Shows the pop-up with the description of the added {@link ExportedTag
 	 * tag} and the document to which this tag was added.

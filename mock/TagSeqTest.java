@@ -13,44 +13,44 @@ public class TagSeqTest extends TestCase {
 
 	public void testCreateChannelList() {
 		String ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 		ch = TagSeqMock.createChannelList();
-		System.out.println( ch);
+		System.out.println(ch);
 	}
 
 	public void testRandomString() {
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
-		System.out.println( TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
+		System.out.println(TagSeqMock.randomString());
 	}
-	
+
 }

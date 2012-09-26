@@ -18,7 +18,6 @@ import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.method.SvarogTask;
 import org.signalml.task.TaskEvent.TaskEventType;
-import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.task.TaskExecutor;
 
 /**
@@ -45,7 +44,7 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 	private final Object data;
 	private volatile Object result;
 	private volatile Exception exception;
-	private volatile MessageSourceResolvable message;
+	private volatile String message;
 
 	private EventListenerList listenerList = new EventListenerList();
 
@@ -65,32 +64,32 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		logger.debug("TASK [" + hashCode() + "]: " + message);
 	}
 
-        /**
-         * Creates new instance of Task with specified Method and Data.
-         * Sets Task's UID, creation time, status and prepares tickers.
-         *
-	 * Note that this Task will not collect tick statistics.
-         *
-         * @param method method to be computed by this Task
-         * @param data arguments of the method
-         * @throws NullPointerException when specified Method is null
-         */
+	/**
+	 * Creates new instance of Task with specified Method and Data.
+	 * Sets Task's UID, creation time, status and prepares tickers.
+	 *
+	* Note that this Task will not collect tick statistics.
+	       *
+	       * @param method method to be computed by this Task
+	       * @param data arguments of the method
+	       * @throws NullPointerException when specified Method is null
+	       */
 	public LocalTask(Method method, Object data) {
 		this(method,data,false);
 	}
 
-        /**
-         * Creates a new instance of Task with specified Method and Data.
-         * Sets Task's UID, creation time, status and prepares tickers.
-	 *
+	/**
+	 * Creates a new instance of Task with specified Method and Data.
+	 * Sets Task's UID, creation time, status and prepares tickers.
+	*
 	 * When boolean collectTickStatistics is true and method is a {@link TrackableMethod}, this
 	 * Task will collect tick statistics which enables reading progress status.
-         *
-         * @param method method to be computed by this Task
-         * @param data arguments of the method
-         * @param collectTickStatistics is true if Task should collect tick statistics
+	       *
+	       * @param method method to be computed by this Task
+	       * @param data arguments of the method
+	       * @param collectTickStatistics is true if Task should collect tick statistics
 	 * @throws NullPointerException when specified Method is null
-         */
+	       */
 	public LocalTask(Method method, Object data, boolean collectTickStatistics) {
 		debug("Creating new task");
 		if (method == null) {
@@ -251,11 +250,11 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 * Prepares starting the execution of the task (the computation) on the new thread if specified TaskExecutor is null, otherwise by this TaskExecutor.
+	/**
+	* Prepares starting the execution of the task (the computation) on the new thread if specified TaskExecutor is null, otherwise by this TaskExecutor.
 	 * Note that "starting" in this case menas only to post a request for starting by setting the status to ACTIVE_WAITING.
-         * Note that when second thread calls start() on the same object, it will have to wait for the first thread to complete the call to this method.
-         * @param t executor of Task
+	       * Note that when second thread calls start() on the same object, it will have to wait for the first thread to complete the call to this method.
+	       * @param t executor of Task
 	 * @throws InvalidTaskStateException thrown when the task status doesn't allow starting
 	 */
 	public void start(TaskExecutor t) throws InvalidTaskStateException {
@@ -273,12 +272,12 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 * Starts the execution of the task (the computation) on the <b> current thread</b> if the task is currently startable.
+	/**
+	* Starts the execution of the task (the computation) on the <b> current thread</b> if the task is currently startable.
 	 * The method returns only when the computation has finished (due to being completed, aborted, suspeneded or due to an exception).
-         * Note that when second thread calls startAndDo() on the same object, it will have to wait for the first thread to complete the call to this method.
-         * @throws InvalidTaskStateException thrown when the task status doesn't allow starting
-         */
+	       * Note that when second thread calls startAndDo() on the same object, it will have to wait for the first thread to complete the call to this method.
+	       * @throws InvalidTaskStateException thrown when the task status doesn't allow starting
+	       */
 	public void startAndDo() throws InvalidTaskStateException {
 		synchronized (this) {
 			if (!status.isStartable()) {
@@ -404,22 +403,22 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Resumes the execution of this task. The task must be suspended and the method it runs
-         *  must be suspendable or exceptions will be thrown.
+	/**
+	*  Resumes the execution of this task. The task must be suspended and the method it runs
+	       *  must be suspendable or exceptions will be thrown.
 	 *
 	 *  Note that "resuming" in this case menas only to post a request for resumption by setting the status to ACTIVE.
-         *  It is up to the method's compute implementation to check for this status and resume when it is detected.
-         *
-         *  <p>This method may also wait for the task to resume, but this may lead to the calling thread being
-         *  permanently locked if the compute method never finishes.
-         *
-         *  Note that when second thread calls resume() on the same object, it will have to wait for the first thread to complete the call to this method.
-         *
-         * @param t executor of this task
-         * @throws InvalidTaskStateException thrown when the task status doesn't allow resuming or the method
-         *              isn't suspendable
-         */
+	       *  It is up to the method's compute implementation to check for this status and resume when it is detected.
+	       *
+	       *  <p>This method may also wait for the task to resume, but this may lead to the calling thread being
+	       *  permanently locked if the compute method never finishes.
+	       *
+	       *  Note that when second thread calls resume() on the same object, it will have to wait for the first thread to complete the call to this method.
+	       *
+	       * @param t executor of this task
+	       * @throws InvalidTaskStateException thrown when the task status doesn't allow resuming or the method
+	       *              isn't suspendable
+	       */
 	public void resume(TaskExecutor t) throws InvalidTaskStateException {
 		synchronized (this) {
 
@@ -439,15 +438,15 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Resumes the execution of this task. The task must be suspended and the method it runs
-         *  must be suspendable or exceptions will be thrown.
-         *
-         *  <p>Note that when second thread calls resumeAndDo() on the same object, it will have to wait for the first thread to complete the call to this method.
-         *
-         * @throws InvalidTaskStateException thrown when the task status doesn't allow resuming or the method
-         *              isn't suspendable
-         */
+	/**
+	*  Resumes the execution of this task. The task must be suspended and the method it runs
+	       *  must be suspendable or exceptions will be thrown.
+	       *
+	       *  <p>Note that when second thread calls resumeAndDo() on the same object, it will have to wait for the first thread to complete the call to this method.
+	       *
+	       * @throws InvalidTaskStateException thrown when the task status doesn't allow resuming or the method
+	       *              isn't suspendable
+	       */
 	public void resumeAndDo() throws InvalidTaskStateException {
 		synchronized (this) {
 			if (!(method instanceof SuspendableMethod) || !status.isResumable()) {
@@ -478,9 +477,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Method called on suspension this Task. It sets status to SUSPENDED and time of suspension of execution.
-         */
+	/**
+	 * Method called on suspension this Task. It sets status to SUSPENDED and time of suspension of execution.
+	 */
 	private void onSuspend() {
 		synchronized (this) {
 
@@ -493,10 +492,10 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Method called on finish of this Task. It sets status to FINISHED if no error occured, otherwise ERROR.
-	 * It also set a time of end of execution.
-         */
+	/**
+	 * Method called on finish of this Task. It sets status to FINISHED if no error occured, otherwise ERROR.
+	* It also set a time of end of execution.
+	       */
 	private void onFinish() {
 		synchronized (this) {
 
@@ -515,15 +514,15 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Computes this Task result.
-	 * If any exception occurs during computation process it sets this error as result.
+	/**
+	 * Computes this Task result.
+	* If any exception occurs during computation process it sets this error as result.
 	 * Possible errors:
 	 * - InputDataException when the input Data is invalid
 	 * - ComputationException when computation fails for reasons other than bad input data
 	 *   or when no result is returned
-         *
-         */
+	       *
+	       */
 	@Override
 	public void run() {
 
@@ -619,53 +618,51 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 * Checks if the controlling code requests the method to abort computations.
-         *
-         * @return true if an abortion request is posted
-         */
+	/**
+	* Checks if the controlling code requests the method to abort computations.
+	       *
+	       * @return true if an abortion request is posted
+	       */
 	@Override
 	public boolean isRequestingAbort() {
 		return status.isRequestingAbort();
 	}
 
-        /**
-	 * Checks if the controlling code requests the method to suspend computations.
-         *
-         * @return true if an suspention request is posted
-         */
+	/**
+	* Checks if the controlling code requests the method to suspend computations.
+	       *
+	       * @return true if an suspention request is posted
+	       */
 	@Override
 	public boolean isRequestingSuspend() {
 		return status.isRequestingSuspend();
 	}
 
-        /**
-	 * Retrieves the last message set by the computation code with the
-	 * {@link #setMessage(MessageSourceResolvable)} method. Initially the Task has no
+	/**
+	* Retrieves the last message set by the computation code with the
+	 * {@link #setMessage(String)} method. Initially the Task has no
 	 * message and null is returned.
-         *
-         * @return the message or null if no message has been posted
-         */
+	       *
+	       * @return the message or null if no message has been posted
+	       */
 	@Override
-	public MessageSourceResolvable getMessage() {
+	public String getMessage() {
 		return message;
 	}
 
-        /**
-	 *  Posts a task message, which may be displayed by any controling application. A message
-         *  is actually a MessageSourceResolvable in order to help enforce localization of
-         *  messages. Use {@link org.signalml.util.ResolvableString} to set a text message.
-         *
-         *  <p>Typically this method will be called from within the {@link Method#compute} method to
-         *  indicate the current stage or status of the ongoing computation.
-         *
+	/**
+	*  Posts a task message, which may be displayed by any controling application.
+	       *
+	       *  <p>Typically this method will be called from within the {@link Method#compute} method to
+	       *  indicate the current stage or status of the ongoing computation.
+	       *
 	 *  <p>Note that when second thread calls setMessage() on the same object, it will have to
 	 *  wait for the first thread to complete the call to this method.
-         *
+	       *
 	 * @param message the new message
-         */
+	       */
 	@Override
-	public void setMessage(MessageSourceResolvable message) {
+	public void setMessage(String message) {
 		synchronized (this) {
 			this.message = message;
 			debug("Task message set to [" + message + "]");
@@ -673,17 +670,17 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Returns the limits (maximum values) for the tickers associated with this task. For
-         *  methods which aren't trackable an empty array should be returned. For trackable methods
-         *  the length of the array should correspond to what is returned by
+	/**
+	*  Returns the limits (maximum values) for the tickers associated with this task. For
+	       *  methods which aren't trackable an empty array should be returned. For trackable methods
+	       *  the length of the array should correspond to what is returned by
 	 *  {@link TrackableMethod#getTickerCount()} for the executed method.
-         *
+	       *
 	 *  <p>Note that when second thread calls getTickerLimits() on the same object, it will
 	 *  have to wait for the first thread to complete the call to this method.
-         *
+	       *
 	 * @return the ticker limits
-         */
+	       */
 	@Override
 	public int[] getTickerLimits() {
 		synchronized (this) {
@@ -691,15 +688,15 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Sets the limits (maximum values) for the tickers associated with this task. The method
-         *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
-         *  the given array is longer than the ticker count for the method.
-         *
+	/**
+	*  Sets the limits (maximum values) for the tickers associated with this task. The method
+	       *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
+	       *  the given array is longer than the ticker count for the method.
+	       *
 	 *  <p>Note that when second thread calls setTickerLimits on the same object, it will
 	 *  have to wait for the first thread to complete the call to this method.
-         * @param initial the array of ticker limits
-         */
+	       * @param initial the array of ticker limits
+	       */
 	@Override
 	public void setTickerLimits(int[] initial) {
 		synchronized (this) {
@@ -716,14 +713,14 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Sets a single ticker limit. See {@link #setTickerLimits(int[])}.
-         *
+	/**
+	*  Sets a single ticker limit. See {@link #setTickerLimits(int[])}.
+	       *
 	 *  <p>Note that when second thread calls setTickerLimit() on the same object, it will have to wait for the first thread to complete the call to this method.
-         *
+	       *
 	 * @param index the index of the ticker
-         * @param limit the new limit
-         */
+	       * @param limit the new limit
+	       */
 	@Override
 	public void setTickerLimit(int index, int limit) {
 		synchronized (this) {
@@ -738,16 +735,16 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Returns the current values for the tickers associated with this task. For methods which
-         *  aren't trackable an empty array should be returned. For trackable methods the length of the array
-         *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
-         *  method.
-         *
+	/**
+	*  Returns the current values for the tickers associated with this task. For methods which
+	       *  aren't trackable an empty array should be returned. For trackable methods the length of the array
+	       *  should correspond to what is returned by {@link TrackableMethod#getTickerCount()} for the executed
+	       *  method.
+	       *
 	 *  <p>Note that when second thread calls getTickers() on the same object, it will have to wait for the first thread to complete the call to this method.
 	 *
-         * @return the ticker values
-         */
+	       * @return the ticker values
+	       */
 	@Override
 	public int[] getTickers() {
 		synchronized (this) {
@@ -755,11 +752,11 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Resets all ticker values to 0.
+	/**
+	*  Resets all ticker values to 0.
 	 *
 	 *  <p>Note that when second thread calls resetTickers() on the same object, it will have to wait for the first thread to complete the call to this method.
-         */
+	       */
 	@Override
 	public void resetTickers() {
 		synchronized (this) {
@@ -773,16 +770,16 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Sets the current values for the tickers associated with this task. The method
-         *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
-         *  the given array is longer than the ticker count for the method.
-         *
+	/**
+	*  Sets the current values for the tickers associated with this task. The method
+	       *  should generally throw IndexOutOfBoundsException if the method is not trackable or if
+	       *  the given array is longer than the ticker count for the method.
+	       *
 	 *  <p>Note that when second thread calls setTickers() on the same object, it will have to
 	 *  wait for the first thread to complete the call to this method.
 	 *
-         * @param tickers an array of ticker values
-         */
+	       * @param tickers an array of ticker values
+	       */
 	@Override
 	public void setTickers(int[] tickers) {
 		synchronized (this) {
@@ -800,14 +797,14 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Sets a single ticker value. See {@link #setTickers(int[])}.
-         *
+	/**
+	*  Sets a single ticker value. See {@link #setTickers(int[])}.
+	       *
 	 * <p>Note that when second thread calls setTicker() on the same object, it will have to wait for the first thread to complete the call to this method.
-         *
+	       *
 	 * @param index the index of the ticker
-         * @param value the new value
-         */
+	       * @param value the new value
+	       */
 	@Override
 	public void setTicker(int index, int value) {
 		synchronized (this) {
@@ -822,13 +819,13 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Advances the given ticker by one.
-         *
+	/**
+	*  Advances the given ticker by one.
+	       *
 	 *  <p>Note that when second thread calls tick() on the same object, it will have to wait for the first thread to complete the call to this method.
 	 *
-         * @param index the index of the ticker
-         */
+	       * @param index the index of the ticker
+	       */
 	@Override
 	public void tick(int index) {
 		synchronized (this) {
@@ -845,14 +842,14 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Advances the given ticker by the given value
-         *
+	/**
+	*  Advances the given ticker by the given value
+	       *
 	 *  <p>Note that when second thread calls tick() on the same object, it will have to wait for the first thread to complete the call to this method.
 	 *
-         * @param index the index of the ticker
-         * @param step the increase
-         */
+	       * @param index the index of the ticker
+	       * @param step the increase
+	       */
 	@Override
 	public void tick(int index, int step) {
 		synchronized (this) {
@@ -867,15 +864,15 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-	 *  Should return the expected number of seconds until given ticker is complete. This
-         *  should return <code>null</code> if the expected time is unknown or uncertain.
-         *
+	/**
+	*  Should return the expected number of seconds until given ticker is complete. This
+	       *  should return <code>null</code> if the expected time is unknown or uncertain.
+	       *
 	 *  <p>Note that when second thread calls getExpectedSecondsUntilComplete() on the same object, it will have to wait for the first thread to complete the call to this method.
 	 *
-         * @param index the index of the ticker
-         * @return expected time in seconds or <code>null</code> when unknown.
-         */
+	       * @param index the index of the ticker
+	       * @return expected time in seconds or <code>null</code> when unknown.
+	       */
 	@Override
 	public Integer getExpectedSecondsUntilComplete(int index) {
 		if (!collectTickStatistics) {
@@ -967,9 +964,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after suspending it.
-         */
+	/**
+	 * Starts executing this Task after suspending it.
+	 */
 	protected void fireTaskSuspended() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
@@ -983,9 +980,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after requesting aborting or suspense of it.
-         */
+	/**
+	 * Starts executing this Task after requesting aborting or suspense of it.
+	 */
 	protected void fireTaskRequestChanged() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
@@ -999,9 +996,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after resuming it.
-         */
+	/**
+	 * Starts executing this Task after resuming it.
+	 */
 	protected void fireTaskResumed() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
@@ -1015,9 +1012,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after aborting of it
-         */
+	/**
+	 * Starts executing this Task after aborting of it
+	 */
 	protected void fireTaskAborted() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
@@ -1031,9 +1028,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after finishing it
-         */
+	/**
+	 * Starts executing this Task after finishing it
+	 */
 	protected void fireTaskFinished() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
@@ -1047,9 +1044,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after setting message
-         */
+	/**
+	 * Starts executing this Task after setting message
+	 */
 	protected void fireTaskMessageSet() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;
@@ -1063,9 +1060,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 		}
 	}
 
-        /**
-         * Starts executing this Task after updating of ticker
-         */
+	/**
+	 * Starts executing this Task after updating of ticker
+	 */
 	protected void fireTaskTickerUpdated() {
 		Object[] listeners = listenerList.getListenerList();
 		TaskEvent taskEvent = null;

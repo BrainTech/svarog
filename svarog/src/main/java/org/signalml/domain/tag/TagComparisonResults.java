@@ -4,11 +4,11 @@
 
 package org.signalml.domain.tag;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.signal.MultichannelSampleSource;
-import org.signalml.exception.SanityCheckException;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.Tag;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This class contains {@link TagComparisonResult results} of comparison
@@ -20,50 +20,45 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class TagComparisonResults {
 
 	/**
-	 * A message source accessor capable of resolving localized message codes.
+	 * the {@link TagComparisonResult result} of comparison between page tags
 	 */
-	private MessageSourceAccessor messageSource;
-
-        /**
-         * the {@link TagComparisonResult result} of comparison between page tags
-         */
 	private TagComparisonResult pageTagResult;
 
-        /**
-         * the {@link TagComparisonResult result} of comparison between block tags
-         */
+	/**
+	 * the {@link TagComparisonResult result} of comparison between block tags
+	 */
 	private TagComparisonResult blockTagResult;
 
-        /**
-         * an array of {@link TagComparisonResult results} of comparison
-         * between channel tags (one entry for each channel)
-         */
+	/**
+	 * an array of {@link TagComparisonResult results} of comparison
+	 * between channel tags (one entry for each channel)
+	 */
 	private TagComparisonResult[] channelTagResults;
 
-        /**
-         * the length of the signal
-         */
+	/**
+	 * the length of the signal
+	 */
 	private float totalSignalTime;
 
-        /**
-         * the lengths of channels
-         */
+	/**
+	 * the lengths of channels
+	 */
 	private float[] totalChannelTimes;
 
-        /**
-         * the names of channels
-         */
+	/**
+	 * the names of channels
+	 */
 	private String[] channelNames;
 
-        /**
-         * Constructor. Creates a new object with given
-         * {@link TagComparisonResult results} of comparison of {@link Tag tags}
-         * of different types.
-         * @param pageTagResult the result of comparison between page tags
-         * @param blockTagResult the result of comparison between block tags
-         * @param channelTagResults an array with results of comparison
-         * between channel tags (one channel - one result)
-         */
+	/**
+	 * Constructor. Creates a new object with given
+	 * {@link TagComparisonResult results} of comparison of {@link Tag tags}
+	 * of different types.
+	 * @param pageTagResult the result of comparison between page tags
+	 * @param blockTagResult the result of comparison between block tags
+	 * @param channelTagResults an array with results of comparison
+	 * between channel tags (one channel - one result)
+	 */
 	public TagComparisonResults(TagComparisonResult pageTagResult, TagComparisonResult blockTagResult, TagComparisonResult[] channelTagResults) {
 
 		this.pageTagResult = pageTagResult;
@@ -75,96 +70,88 @@ public class TagComparisonResults {
 	}
 
 	/**
-	 * Sets a {@link MessageSourceAccessor} used to create these results.
-	 * @param messageSource {@link MessageSourceAccessor} to be set
+	 * Returns the number of channels.
+	 * @return the number of channels
 	 */
-	public void setMessageSourceAccessor(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
-	}
-
-        /**
-         * Returns the number of channels.
-         * @return the number of channels
-         */
 	public int getChannelCount() {
 		return channelTagResults.length;
 	}
 
-        /**
-         * Returns the {@link TagComparisonResult result} of comparison between
-         * tags for channel of a given index.
-         * @param index the index of the channel
-         * @return the result of comparison between tags for channel of a given
-         * index
-         */
+	/**
+	 * Returns the {@link TagComparisonResult result} of comparison between
+	 * tags for channel of a given index.
+	 * @param index the index of the channel
+	 * @return the result of comparison between tags for channel of a given
+	 * index
+	 */
 	public TagComparisonResult getChannelResult(int index) {
 		return channelTagResults[index];
 	}
 
-        /**
-         * Returns the {@link TagComparisonResult result} of comparison between
-         * page tags.
-         * @return the result of comparison between page tags
-         */
+	/**
+	 * Returns the {@link TagComparisonResult result} of comparison between
+	 * page tags.
+	 * @return the result of comparison between page tags
+	 */
 	public TagComparisonResult getPageTagResult() {
 		return pageTagResult;
 	}
 
-        /**
-         * Returns the {@link TagComparisonResult result} of comparison between
-         * block tags.
-         * @return the result of comparison between block tags
-         */
+	/**
+	 * Returns the {@link TagComparisonResult result} of comparison between
+	 * block tags.
+	 * @return the result of comparison between block tags
+	 */
 	public TagComparisonResult getBlockTagResult() {
 		return blockTagResult;
 	}
 
-        /**
-         * Returns an array of {@link TagComparisonResult results} of comparison
-         * between channel tags.
-         * @return an array of result of comparison between channel tags
-         */
+	/**
+	 * Returns an array of {@link TagComparisonResult results} of comparison
+	 * between channel tags.
+	 * @return an array of result of comparison between channel tags
+	 */
 	public TagComparisonResult[] getChannelTagResults() {
 		return channelTagResults;
 	}
 
-        /**
-         * Returns the length of the signal (in seconds).
-         * @return the length of the signal (in seconds)
-         */
+	/**
+	 * Returns the length of the signal (in seconds).
+	 * @return the length of the signal (in seconds)
+	 */
 	public float getTotalSignalTime() {
 		return totalSignalTime;
 	}
 
-        /**
-         * Sets the length of the signal to a given value.
-         * @param totalSignalTime the length of the signal (in seconds)
-         */
+	/**
+	 * Sets the length of the signal to a given value.
+	 * @param totalSignalTime the length of the signal (in seconds)
+	 */
 	public void setTotalSignalTime(float totalSignalTime) {
 		this.totalSignalTime = totalSignalTime;
 	}
 
-        /**
-         * Returns an array of lengths of channels.
-         * @return an array of lengths of channels
-         */
+	/**
+	 * Returns an array of lengths of channels.
+	 * @return an array of lengths of channels
+	 */
 	public float[] getTotalChannelTimes() {
 		return totalChannelTimes;
 	}
 
-        /**
-         * Returns the length of a given channel.
-         * @param index the index of a channel
-         * @return the length of a given channel
-         */
+	/**
+	 * Returns the length of a given channel.
+	 * @param index the index of a channel
+	 * @return the length of a given channel
+	 */
 	public float getTotalChannelTime(int index) {
 		return totalChannelTimes[index];
 	}
 
-        /**
-         * Sets lengths of channels to given values.
-         * @param totalChannelTimes an array of lengths of channels to be set
-         */
+	/**
+	 * Sets lengths of channels to given values.
+	 * @param totalChannelTimes an array of lengths of channels to be set
+	 */
 	public void setTotalChannelTimes(float[] totalChannelTimes) {
 		if (totalChannelTimes.length < channelTagResults.length) {
 			throw new IndexOutOfBoundsException("Array too short");
@@ -174,10 +161,10 @@ public class TagComparisonResults {
 		}
 	}
 
-        /**
-         * Sets channels names to given values.
-         * @param channelNames an array of channels names to be set
-         */
+	/**
+	 * Sets channels names to given values.
+	 * @param channelNames an array of channels names to be set
+	 */
 	public void setChannelNames(String[] channelNames) {
 		if (channelNames.length < channelTagResults.length) {
 			throw new IndexOutOfBoundsException("Array too short");
@@ -195,13 +182,13 @@ public class TagComparisonResults {
 		return channelNames;
 	}
 
-        /**
-         * Sets the attributes of this TagComparisonResults using given
-         * parameters. (A {@link MessageSourceAccessor} must be set before using
-	 * this method).
-         * @param source the {@link MultichannelSampleSource source} of samples
-         * @param montage the {@link SourceMontage montage} of source channels
-         */
+	/**
+	 * Sets the attributes of this TagComparisonResults using given
+	 * parameters. (A {@link SvarogI18n} must be set before using
+	* this method).
+	       * @param source the {@link MultichannelSampleSource source} of samples
+	       * @param montage the {@link SourceMontage montage} of source channels
+	       */
 	public void getParametersFromSampleSource(MultichannelSampleSource source, SourceMontage montage) {
 
 		int channelCount = source.getChannelCount();
@@ -223,11 +210,7 @@ public class TagComparisonResults {
 			channelNames[i] = montage.getSourceChannelLabelAt(i);
 		}
 
-		if (messageSource != null) {
-			channelNames[channelCount] = messageSource.getMessage("tagComparison.multichannelTags");
-		}
-		else
-			throw new SanityCheckException("No messageSource was set for TagComparisonResults!");
+		channelNames[channelCount] = _("MULTICHANNEL TAGS");
 	}
 
 }

@@ -3,17 +3,20 @@
  */
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
-import org.signalml.domain.book.DefaultBookBuilder;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.view.book.BookView;
+import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.domain.book.BookFormatException;
+import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
@@ -22,8 +25,6 @@ import org.signalml.domain.book.filter.AtomFilter;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
-
 
 /**
  * The document with a {@link StandardBook book}.
@@ -54,7 +55,7 @@ public class BookDocument extends AbstractFileDocument {
 	 * a {@link StandardBook book} that is stored in this document
 	 */
 	private StandardBook book;
-	
+
 	/**
 	 * the {@link AtomFilterChain chain} of {@link AtomFilter atom filters}
 	 * for this document (to filter atoms in the {@link #book})
@@ -139,8 +140,8 @@ public class BookDocument extends AbstractFileDocument {
 	@Override
 	public Object[] getArguments() {
 		return new Object[] {
-		               getName()
-		       };
+				   getName()
+			   };
 	}
 
 	@Override
@@ -186,17 +187,17 @@ public class BookDocument extends AbstractFileDocument {
 						String filterName = filter.getName();
 						logger.warn("Filter [" + filterName + "] failed to initialize", ex);
 
-						MessageSourceAccessor messageSource = ErrorsDialog.getStaticMessageSource();
 						String message = "Filter initialization failed";
-						if (messageSource != null) {
-							String exMessage = messageSource.getMessage(new ResolvableException(ex));
+						{
+							String exMessage =
+								new ResolvableException(ex).getDefaultMessage();
 							if (exMessage.length() > 50) {
 								exMessage = exMessage.substring(0, 50) + "...";
 							}
 							if (filterName.length() > 30) {
 								filterName = filterName.substring(0, 30) + "...";
 							}
-							message = messageSource.getMessage("error.filterFailedToInitialize", new Object[] { filterName, exMessage });
+							message = _R("Filter [{0}] failed to initialize with message [{1}] and has been disabled.", filterName, exMessage);
 						}
 
 						OptionPane.showRawError(null, message);
@@ -315,7 +316,7 @@ public class BookDocument extends AbstractFileDocument {
 	 */
 	public String getTextInfo() {
 		String textInfo = book.getTextInfo();
-		if (textInfo.length() > 100) {
+		if (textInfo != null && textInfo.length() > 100) {
 			return textInfo.substring(0, 100) + "...";
 		}
 		return textInfo;
@@ -337,7 +338,7 @@ public class BookDocument extends AbstractFileDocument {
 	 */
 	public String getWebSiteInfo() {
 		String webSiteInfo = book.getWebSiteInfo();
-		if (webSiteInfo.length() > 100) {
+		if (webSiteInfo != null && webSiteInfo.length() > 100) {
 			return webSiteInfo.substring(0, 100) + "...";
 		}
 		return webSiteInfo;
@@ -348,23 +349,33 @@ public class BookDocument extends AbstractFileDocument {
 
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
 
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.version", "version", BookDocument.class, "getVersion", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.channelCount", "channelCount", BookDocument.class, "getChannelCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.segmentCount", "segmentCount", BookDocument.class, "getSegmentCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.samplingFrequency", "samplingFrequency", BookDocument.class, "getSamplingFrequency", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.calibration", "calibration", BookDocument.class, "getCalibration", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.bookComment", "bookComment", BookDocument.class, "getBookComment", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.date", "date", BookDocument.class, "getDate", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.energyPercent", "energyPercent", BookDocument.class, "getEnergyPercent", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.maxIterationCount", "maxIterationCount", BookDocument.class, "getMaxIterationCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.dictionarySize", "dictionarySize", BookDocument.class, "getDictionarySize", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.dictionaryType", "dictionaryType", BookDocument.class, "getDictionaryType", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.signalChannelCount", "signalChannelCount", BookDocument.class, "getSignalChannelCount", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.textInfo", "textInfo", BookDocument.class, "getTextInfo", null));
-		list.add(new LabelledPropertyDescriptor("property.bookDocument.webSiteInfo", "webSiteInfo", BookDocument.class, "getWebSiteInfo", null));
+		list.add(new LabelledPropertyDescriptor(_("version"), "version", BookDocument.class, "getVersion", null));
+		list.add(new LabelledPropertyDescriptor(_("channel count"), "channelCount", BookDocument.class, "getChannelCount", null));
+		list.add(new LabelledPropertyDescriptor(_("segment count"), "segmentCount", BookDocument.class, "getSegmentCount", null));
+		list.add(new LabelledPropertyDescriptor(_("sampling frequency"), "samplingFrequency", BookDocument.class, "getSamplingFrequency", null));
+		list.add(new LabelledPropertyDescriptor(_("calibration"), "calibration", BookDocument.class, "getCalibration", null));
+		list.add(new LabelledPropertyDescriptor(_("book comment"), "bookComment", BookDocument.class, "getBookComment", null));
+		list.add(new LabelledPropertyDescriptor(_("date"), "date", BookDocument.class, "getDate", null));
+		list.add(new LabelledPropertyDescriptor(_("energy percent"), "energyPercent", BookDocument.class, "getEnergyPercent", null));
+		list.add(new LabelledPropertyDescriptor(_("maximum iteration count"), "maxIterationCount", BookDocument.class, "getMaxIterationCount", null));
+		list.add(new LabelledPropertyDescriptor(_("dictionary size"), "dictionarySize", BookDocument.class, "getDictionarySize", null));
+		list.add(new LabelledPropertyDescriptor(_("dictionary type"), "dictionaryType", BookDocument.class, "getDictionaryType", null));
+		list.add(new LabelledPropertyDescriptor(_("signal channel count"), "signalChannelCount", BookDocument.class, "getSignalChannelCount", null));
+		list.add(new LabelledPropertyDescriptor(_("text info"), "textInfo", BookDocument.class, "getTextInfo", null));
+		list.add(new LabelledPropertyDescriptor(_("web site info"), "webSiteInfo", BookDocument.class, "getWebSiteInfo", null));
 
 		return list;
 
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		super.setActive(active);
+
+		BookView view = (BookView) getDocumentView();
+		if (active == false) {
+			view.saveSettingsToApplicationConfiguration();
+		}
 	}
 
 }

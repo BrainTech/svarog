@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.iterate;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -36,9 +38,12 @@ import javax.swing.event.ChangeListener;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.view.common.components.ResolvableComboBox;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableNumericParameter;
@@ -46,8 +51,7 @@ import org.signalml.method.iterator.IterableParameter;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.ParameterIterationSettings;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** IterationSetupDialog
@@ -55,7 +59,7 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class IterationSetupDialog extends AbstractDialog {
+public class IterationSetupDialog extends AbstractDialog  {
 
 	private static final Dimension SPINNER_DIMENSION = new Dimension(250,25);
 
@@ -82,17 +86,17 @@ public class IterationSetupDialog extends AbstractDialog {
 	private IterableMethod currentMethod;
 	private ParameterIterationSettings[] currentParameters;
 
-	public IterationSetupDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public IterationSetupDialog() {
+		super();
 	}
 
-	public IterationSetupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public IterationSetupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("iterationSetup.title"));
+		setTitle(_("Method iteration"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/iteratemethod.png"));
 		setResizable(false);
 
@@ -107,50 +111,50 @@ public class IterationSetupDialog extends AbstractDialog {
 		JPanel baseConfigurationPanel = new JPanel();
 		baseConfigurationPanel.setLayout(new BoxLayout(baseConfigurationPanel, BoxLayout.X_AXIS));
 		baseConfigurationPanel.setBorder(new CompoundBorder(
-		                new TitledBorder(messageSource.getMessage("iterationSetup.baseConfigurationTitle")),
-		                new EmptyBorder(3,3,3,3)
-		                                 ));
+											 new TitledBorder(_("Base method configuration")),
+											 new EmptyBorder(3,3,3,3)
+										 ));
 
-		baseConfigurationPanel.add(new JLabel(messageSource.getMessage("iterationSetup.baseConfiguration")));
+		baseConfigurationPanel.add(new JLabel(_("Edit base configuration")));
 		baseConfigurationPanel.add(Box.createHorizontalStrut(5));
 		baseConfigurationPanel.add(Box.createHorizontalGlue());
 		baseConfigurationPanel.add(getEditBaseConfigurationButton());
 
 		JPanel iterationPanel = new JPanel();
 		iterationPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(messageSource.getMessage("iterationSetup.iterationConfigurationTitle")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Iteration configuration")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		GroupLayout layout = new GroupLayout(iterationPanel);
 		iterationPanel.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel iterationCountLabel = new JLabel(messageSource.getMessage("iterationSetup.iterationCount"));
-		JLabel parameterLabel = new JLabel(messageSource.getMessage("iterationSetup.parameter"));
-		JLabel iterateLabel = new JLabel(messageSource.getMessage("iterationSetup.iterate"));
-		JLabel iterationStartLabel = new JLabel(messageSource.getMessage("iterationSetup.iterationStart"));
-		JLabel iterationEndLabel = new JLabel(messageSource.getMessage("iterationSetup.iterationEnd"));
+		JLabel iterationCountLabel = new JLabel(_("Iteration count"));
+		JLabel parameterLabel = new JLabel(_("Parameter"));
+		JLabel iterateLabel = new JLabel(_("Iterate this parameter"));
+		JLabel iterationStartLabel = new JLabel(_("Iteration start value"));
+		JLabel iterationEndLabel = new JLabel(_("Iteration end value"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(iterationCountLabel)
-		        .addComponent(parameterLabel)
-		        .addComponent(iterateLabel)
-		        .addComponent(iterationStartLabel)
-		        .addComponent(iterationEndLabel)
+			layout.createParallelGroup()
+			.addComponent(iterationCountLabel)
+			.addComponent(parameterLabel)
+			.addComponent(iterateLabel)
+			.addComponent(iterationStartLabel)
+			.addComponent(iterationEndLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup(Alignment.TRAILING)
-		        .addComponent(getIterationCountSpinner())
-		        .addComponent(getParameterComboBox())
-		        .addComponent(getIterateCheckBox())
-		        .addComponent(getStartSpinner())
-		        .addComponent(getEndSpinner())
+			layout.createParallelGroup(Alignment.TRAILING)
+			.addComponent(getIterationCountSpinner())
+			.addComponent(getParameterComboBox())
+			.addComponent(getIterateCheckBox())
+			.addComponent(getStartSpinner())
+			.addComponent(getEndSpinner())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -158,40 +162,40 @@ public class IterationSetupDialog extends AbstractDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationCountLabel)
-				.addComponent(getIterationCountSpinner())
-			);
-		
-		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(parameterLabel)
-				.addComponent(getParameterComboBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationCountLabel)
+			.addComponent(getIterationCountSpinner())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterateLabel)
-				.addComponent(getIterateCheckBox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(parameterLabel)
+			.addComponent(getParameterComboBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationStartLabel)
-				.addComponent(getStartSpinner())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterateLabel)
+			.addComponent(getIterateCheckBox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationEndLabel)
-				.addComponent(getEndSpinner())
-			);
-		
-		layout.setVerticalGroup(vGroup);		
-		
-		interfacePanel.add( baseConfigurationPanel, BorderLayout.NORTH );
-		interfacePanel.add( iterationPanel, BorderLayout.CENTER );
-		
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationStartLabel)
+			.addComponent(getStartSpinner())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationEndLabel)
+			.addComponent(getEndSpinner())
+		);
+
+		layout.setVerticalGroup(vGroup);
+
+		interfacePanel.add(baseConfigurationPanel, BorderLayout.NORTH);
+		interfacePanel.add(iterationPanel, BorderLayout.CENTER);
+
 		return interfacePanel;
 
 	}
@@ -281,7 +285,7 @@ public class IterationSetupDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
@@ -294,7 +298,7 @@ public class IterationSetupDialog extends AbstractDialog {
 		}
 
 		if (!anyIterated) {
-			errors.reject("error.nothingIterated");
+			errors.addError(_("You must choose at least one parameter to iterate over"));
 		}
 
 	}
@@ -326,7 +330,7 @@ public class IterationSetupDialog extends AbstractDialog {
 
 	public ResolvableComboBox getParameterComboBox() {
 		if (parameterComboBox == null) {
-			parameterComboBox = new ResolvableComboBox(messageSource);
+			parameterComboBox = new ResolvableComboBox();
 			parameterComboBox.setModel(new DefaultComboBoxModel());
 			parameterComboBox.setPreferredSize(SPINNER_DIMENSION);
 			parameterComboBox.setMinimumSize(SPINNER_DIMENSION);
@@ -490,9 +494,9 @@ public class IterationSetupDialog extends AbstractDialog {
 		private static final long serialVersionUID = 1L;
 
 		public EditBaseConfiguration() {
-			super(messageSource.getMessage("iterationSetup.configure"));
+			super(_("Edit..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/baseconfiguration.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("iterationSetup.configureToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Reconfigure basic method parameters"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -509,7 +513,7 @@ public class IterationSetupDialog extends AbstractDialog {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Failed to configure base data", ex);
-				getErrorsDialog().showException(ex);
+				Dialogs.showExceptionDialog(IterationSetupDialog.this, ex);
 				return;
 			}
 

@@ -50,11 +50,11 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
 	private XStream createExecutorStreamer() {
 		XStream streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(
-		        streamer,
-		        MP5ExecutorManager.class,
-		        MP5LocalProcessExecutor.class
-		        //MP5RemoteExecutor.class,
-		        //MP5RemotePasswordExecutor.class
+			streamer,
+			MP5ExecutorManager.class,
+			MP5LocalProcessExecutor.class
+			//MP5RemoteExecutor.class,
+			//MP5RemotePasswordExecutor.class
 		);
 		streamer.setMode(XStream.ID_REFERENCES);
 
@@ -175,54 +175,54 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
 		Object[] listeners = listenerList.getListenerList();
 		MP5ExecutorManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==MP5ExecutorManagerListener.class) {
-				 if( e == null ) { 
-					 e = new MP5ExecutorManagerEvent(this,index);
-				 }
-				 ((MP5ExecutorManagerListener)listeners[i+1]).executorAdded(e);
-			 }
-		 }
+			if (listeners[i]==MP5ExecutorManagerListener.class) {
+				if (e == null) {
+					e = new MP5ExecutorManagerEvent(this,index);
+				}
+				((MP5ExecutorManagerListener)listeners[i+1]).executorAdded(e);
+			}
+		}
 	}
-	
+
 	protected void fireExecutorChanged(int index) {
 		Object[] listeners = listenerList.getListenerList();
 		MP5ExecutorManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==MP5ExecutorManagerListener.class) {
-				 if( e == null ) { 
-					 e = new MP5ExecutorManagerEvent(this, index);
-				 }
-				 ((MP5ExecutorManagerListener)listeners[i+1]).executorChanged(e);
-			 }
-		 }
+			if (listeners[i]==MP5ExecutorManagerListener.class) {
+				if (e == null) {
+					e = new MP5ExecutorManagerEvent(this, index);
+				}
+				((MP5ExecutorManagerListener)listeners[i+1]).executorChanged(e);
+			}
+		}
 	}
-	
+
 	protected void fireExecutorRemoved(int index) {
 		Object[] listeners = listenerList.getListenerList();
 		MP5ExecutorManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==MP5ExecutorManagerListener.class) {
-				 if( e == null ) { 
-					 e = new MP5ExecutorManagerEvent(this,index);
-				 }
-				 ((MP5ExecutorManagerListener)listeners[i+1]).executorRemoved(e);
-			 }
-		 }
+			if (listeners[i]==MP5ExecutorManagerListener.class) {
+				if (e == null) {
+					e = new MP5ExecutorManagerEvent(this,index);
+				}
+				((MP5ExecutorManagerListener)listeners[i+1]).executorRemoved(e);
+			}
+		}
 	}
 
 	protected void fireDefaultExecutorChanged() {
 		Object[] listeners = listenerList.getListenerList();
 		MP5ExecutorManagerEvent e = null;
 		for (int i = listeners.length-2; i>=0; i-=2) {
-			 if (listeners[i]==MP5ExecutorManagerListener.class) {
-				 if( e == null ) { 
-					 e = new MP5ExecutorManagerEvent(this);
-				 }
-				 ((MP5ExecutorManagerListener)listeners[i+1]).defaultExecutorChanged(e);
-			 }
-		 }
+			if (listeners[i]==MP5ExecutorManagerListener.class) {
+				if (e == null) {
+					e = new MP5ExecutorManagerEvent(this);
+				}
+				((MP5ExecutorManagerListener)listeners[i+1]).defaultExecutorChanged(e);
+			}
+		}
 	}
-	
+
 	public void addMP5ExecutorManagerListener(MP5ExecutorManagerListener listener) {
 		listenerList.add(MP5ExecutorManagerListener.class, listener);
 	}

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.impl;
 
@@ -14,22 +14,22 @@ import org.signalml.plugin.export.signal.ChannelSamples;
  *
  */
 public class ChannelSamplesImpl implements ChannelSamples {
-	
+
 	/**
 	 * An array with samples of the signal in the channel.
 	 */
 	private double[] samples;
-	
+
 	/**
 	 * the index of the channel
 	 */
 	private int channelNumber;
-	
+
 	/**
 	 * the number of samples per second
 	 */
 	private float samplingFrequency;
-	
+
 	/**
 	 * the name (label) of the channel
 	 */
@@ -42,13 +42,13 @@ public class ChannelSamplesImpl implements ChannelSamples {
 	 * @param frequency the number of samples per second
 	 * @param name the name (label) of the channel
 	 */
-	public ChannelSamplesImpl(double[] samples, int number, float frequency, String name){
+	public ChannelSamplesImpl(double[] samples, int number, float frequency, String name) {
 		this.samples = samples;
 		channelNumber = number;
 		samplingFrequency = frequency;
 		this.name = name;
 	}
-	
+
 	/**
 	 * Sets the number of the channel.
 	 * @param channelNumber the number of the channel
@@ -113,5 +113,5 @@ public class ChannelSamplesImpl implements ChannelSamples {
 		return name;
 	}
 
-	
+
 }

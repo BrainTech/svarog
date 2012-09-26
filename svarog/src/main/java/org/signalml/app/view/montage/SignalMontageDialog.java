@@ -3,8 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
-import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
-import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -13,92 +13,40 @@ import java.net.URL;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import org.signalml.app.config.preset.PredefinedTimeDomainFiltersPresetManager;
 
-import org.signalml.app.config.preset.FFTSampleFilterPresetManager;
-import org.signalml.app.config.preset.TimeDomainSampleFilterPresetManager;
-import org.signalml.app.config.preset.Preset;
-import org.signalml.app.config.preset.PresetManager;
-import org.signalml.app.document.SignalDocument;
-import org.signalml.app.model.MontageDescriptor;
-import org.signalml.app.model.SeriousWarningDescriptor;
-import org.signalml.app.montage.MontagePresetManager;
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.filter.FFTSampleFilter;
-import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.signal.SignalType;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
-import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 
 /** SignalMontageDialog
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class SignalMontageDialog extends AbstractPresetDialog {
+public class SignalMontageDialog extends AbstractDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * This dialog is used when edititing
-	 * {@link FFTSampleFilter FFTSampleFilter's} parameters.
-	 */
-	private EditFFTSampleFilterDialog editFFTSampleFilterDialog;
-
-	/**
-	 * This dialog is used when editing {@link TimeDomainSampleFilter}
-	 * parameters.
-	 */
-	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
-
-	protected MontageChannelsPanel channelsPanel;
-	protected MontageGeneratorPanel generatorPanel;
-	protected MatrixReferenceEditorPanel matrixReferenceEditorPanel;
-	protected VisualReferenceEditorPanel visualReferenceEditorPanel;
-	protected MontageFiltersPanel filtersPanel;
-	protected MontageMiscellaneousPanel miscellaneousPanel;
-
-	protected JTabbedPane tabbedPane;
-
-	private SignalDocument signalDocument;
-	private Montage currentMontage;
+	private ViewerElementManager viewerElementManager;
+	private SignalMontagePanel signalMontagePanel;
 
 	private URL contextHelpURL = null;
 
-	private FFTSampleFilterPresetManager fftFilterPresetManager;
+	public SignalMontageDialog(ViewerElementManager viewerElementManager,
+							   Window f, boolean isModal) {
 
-	/**
-	 * A {@link PresetManager} managing the user-defined
-	 * {@link TimeDomainSampleFilter} presets.
-	 */
-	private TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager;
-
-	/**
-	 * A {@link PresetManager} managing the predefined
-	 * {@link TimeDomainSampleFilter TimeDomainSampleFilters}.
-	 */
-	private PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager;
-
-	public SignalMontageDialog(MessageSourceAccessor messageSource, MontagePresetManager montagePresetManager,
-		PredefinedTimeDomainFiltersPresetManager predefinedTimeDomainSampleFilterPresetManager, Window f, boolean isModal) {
-		super(messageSource, montagePresetManager, f, isModal);
-		this.predefinedTimeDomainSampleFilterPresetManager = predefinedTimeDomainSampleFilterPresetManager;
+		super(f, isModal);
+		this.viewerElementManager = viewerElementManager;
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("signalMontage.title"));
+		setTitle(_("Signal montage"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
@@ -107,233 +55,38 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 
 	@Override
 	public JComponent createInterface() {
-
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		generatorPanel = new MontageGeneratorPanel(messageSource);
-		generatorPanel.setErrorsDialog(getErrorsDialog());
-		generatorPanel.setSeriousWarningDialog(getSeriousWarningDialog());
-
-		channelsPanel = new MontageChannelsPanel(messageSource);
-		channelsPanel.setSeriousWarningDialog(getSeriousWarningDialog());
-
-		matrixReferenceEditorPanel = new MatrixReferenceEditorPanel(messageSource);
-
-		visualReferenceEditorPanel = new VisualReferenceEditorPanel(messageSource);
-
-		filtersPanel = new MontageFiltersPanel(messageSource, predefinedTimeDomainSampleFilterPresetManager);
-		filtersPanel.setSeriousWarningDialog(getSeriousWarningDialog());
-		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());
-		filtersPanel.setTimeDomainSampleFilterDialog(getEditTimeDomainSampleFilterDialog());
-
-		miscellaneousPanel = new MontageMiscellaneousPanel(messageSource);
-
-		tabbedPane = new JTabbedPane();
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.channelsTabTitle"), channelsPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.visualTabTitle"), visualReferenceEditorPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.matrixTabTitle"), matrixReferenceEditorPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.filtersTabTitle"), filtersPanel);
-		tabbedPane.addTab(messageSource.getMessage("signalMontage.miscellaneousTabTitle"), miscellaneousPanel);
-		tabbedPane.addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				int index = tabbedPane.getSelectedIndex();
-				if (index < 0) {
-					return;
-				}
-				switch (index) {
-
-				case 1 :
-					visualReferenceEditorPanel.getEditor().requestFocusInWindow();
-					break;
-				case 2 :
-					matrixReferenceEditorPanel.getReferenceTable().requestFocusInWindow();
-					break;
-				case 3 :
-					miscellaneousPanel.getEditDescriptionPanel().getTextPane().requestFocusInWindow();
-					break;
-				case 0 :
-				default :
-					// no special focus
-
-				}
-			}
-
-		});
-
-
-		interfacePanel.add(generatorPanel, BorderLayout.NORTH);
-		interfacePanel.add(tabbedPane, BorderLayout.CENTER);
+		interfacePanel.add(getSignalMontagePanel(), BorderLayout.CENTER);
 
 		return interfacePanel;
+	}
 
+	public SignalMontagePanel getSignalMontagePanel() {
+		if (signalMontagePanel == null)
+			signalMontagePanel = new SignalMontagePanel(viewerElementManager.getFileChooser());
+		return signalMontagePanel;
 	}
 
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-
-		if (model instanceof Montage) {
-
-			// for presets
-			currentMontage = new Montage((Montage) model);
-
-		} else {
-
-			MontageDescriptor descriptor = (MontageDescriptor) model;
-			Montage montage = descriptor.getMontage();
-			SignalDocument signalDocument = descriptor.getSignalDocument();
-			boolean signalBound = (signalDocument != null);
-			if (montage == null) {
-				if (signalBound) {
-					currentMontage = new Montage(new SourceMontage(signalDocument));
-				} else {
-					currentMontage = new Montage(new SourceMontage(SignalType.EEG_10_20));
-				}
-			} else {
-				currentMontage = new Montage(montage);
-			}
-			this.signalDocument = signalDocument;
-
-			if (signalBound) {
-				getOkButton().setVisible(true);
-				getRootPane().setDefaultButton(getOkButton());
-			} else {
-				getOkButton().setVisible(false);
-				getRootPane().setDefaultButton(getCancelButton());
-			}
-
-			channelsPanel.setSignalBound(signalBound);
-			filtersPanel.setSignalBound(signalBound);
-			if (signalBound) {
-				filtersPanel.setCurrentSamplingFrequency(signalDocument.getSamplingFrequency());
-			} else {
-				filtersPanel.setCurrentSamplingFrequency(128.0F);
-			}
-
-		}
-
-		if (signalDocument != null) {
-			if (!currentMontage.isCompatible(signalDocument)) {
-
-				String warning =  messageSource.getMessage("montageDialog.onIncompatible");
-				SeriousWarningDescriptor descriptor = new SeriousWarningDescriptor(warning, 3);
-
-				boolean ok = getSeriousWarningDialog().showDialog(descriptor, true);
-				if (!ok) {
-					return;
-				}
-				currentMontage.adapt(signalDocument);
-
-			}
-		}
-		setMontageToPanels(currentMontage);
-		setChanged(false);
-
-	}
-
-	private void setMontageToPanels(Montage montage) {
-
-		generatorPanel.setMontage(montage);
-		channelsPanel.setMontage(montage);
-		visualReferenceEditorPanel.setMontage(montage);
-		matrixReferenceEditorPanel.setMontage(montage);
-		filtersPanel.setMontage(montage);
-		miscellaneousPanel.setMontage(montage);
-
+		getSignalMontagePanel().fillPanelFromModel(model);
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-
-		MontageDescriptor descriptor = (MontageDescriptor) model;
-
-		// montage was edited immediately for the most part
-		descriptor.setMontage(currentMontage);
-
+		getSignalMontagePanel().fillModelFromPanel(model);
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
-
-		// validate montage table
-		if (currentMontage.getMontageChannelCount() == 0) {
-			errors.reject("error.noChannelInMontage");
-		}
-		String description = miscellaneousPanel.getEditDescriptionPanel().getTextPane().getText();
-		if (description != null && !description.isEmpty()) {
-			if (Util.hasSpecialChars(description)) {
-				errors.rejectValue("montage.description", "error.descriptionBadChars");
-			}
-		}
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
+		getSignalMontagePanel().validate(model, errors);
 	}
 
 	@Override
 	protected void onDialogClose() {
 		super.onDialogClose();
-		setMontageToPanels(null);
-	}
-
-	@Override
-	public Preset getPreset() throws SignalMLException {
-
-		Montage preset = new Montage(currentMontage);
-
-		Errors errors = new BindException(preset, "data");
-		validateDialog(preset, errors);
-
-		if (errors.hasErrors()) {
-			showValidationErrors(errors);
-			return null;
-		}
-
-		return preset;
-
-	}
-
-	@Override
-	public void setPreset(Preset preset) throws SignalMLException {
-
-		fillDialogFromModel(preset);
-
-	}
-
-	@Override
-	protected boolean isTrackingChanges() {
-		return true;
-	}
-
-	@Override
-	protected boolean showLoadDefaultButton() {
-		return true;
-	}
-
-	@Override
-	protected boolean showSaveDefaultButton() {
-		return true;
-	}
-
-	@Override
-	protected boolean showRemoveDefaultButton() {
-		return true;
-	}
-
-	@Override
-	public boolean isChanged() {
-		if (currentMontage != null) {
-			return currentMontage.isChanged();
-		} else {
-			return super.isChanged();
-		}
-	}
-
-	@Override
-	protected void setChanged(boolean changed) {
-		if (currentMontage != null) {
-			currentMontage.setChanged(changed);
-		} else {
-			super.setChanged(changed);
-		}
+		getSignalMontagePanel().setMontageToPanels(null);
 	}
 
 	@Override
@@ -345,7 +98,7 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
 			try {
-				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
+				contextHelpURL = new ClassPathResource("org/signalml/help/contents.html").getURL();
 				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#montage");
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
@@ -354,77 +107,4 @@ public class SignalMontageDialog extends AbstractPresetDialog {
 		return contextHelpURL;
 	}
 
-	public FFTSampleFilterPresetManager getFftFilterPresetManager() {
-		return fftFilterPresetManager;
-	}
-
-	public void setFftFilterPresetManager(FFTSampleFilterPresetManager fftFilterPresetManager) {
-		this.fftFilterPresetManager = fftFilterPresetManager;
-	}
-
-	/**
-	 * Returns the {@link TimeDomainSampleFilterPresetManager} used by this
-	 * SignalMontageDialog.
-	 * @return the {@link TimeDomainSampleFilterPresetManager} used
-	 */
-	public TimeDomainSampleFilterPresetManager getTimeDomainSampleFilterPresetManager() {
-		return timeDomainSampleFilterPresetManager;
-	}
-
-	/**
-	 * Sets a {@link TimeDomainSampleFilterPresetManager} to be used by this
-	 * SignalMontageDialog.
-	 * @param timeDomainSampleFilterPresetManager
-	 * the {@link TimeDomainSampleFilterPresetManager} to be used
-	 */
-	public void setTimeDomainSampleFilterPresetManager(TimeDomainSampleFilterPresetManager timeDomainSampleFilterPresetManager) {
-		this.timeDomainSampleFilterPresetManager = timeDomainSampleFilterPresetManager;
-	}
-
-	protected EditFFTSampleFilterDialog getEditFFTSampleFilterDialog() {
-		if (editFFTSampleFilterDialog == null) {
-			editFFTSampleFilterDialog = new EditFFTSampleFilterDialog(messageSource, fftFilterPresetManager, this, true);
-			editFFTSampleFilterDialog.setApplicationConfig(getApplicationConfig());
-			editFFTSampleFilterDialog.setFileChooser(getFileChooser());
-		}
-		return editFFTSampleFilterDialog;
-	}
-
-	/**
-	 * Returns the {@link EditTimeDomainSampleFilterDialog} used by
-	 * this SignalMontageDialog.
-	 * @return the {@link EditTimeDomainSampleFilterDialog} used
-	 */
-	protected EditTimeDomainSampleFilterDialog getEditTimeDomainSampleFilterDialog() {
-		if (editTimeDomainSampleFilterDialog == null) {
-			editTimeDomainSampleFilterDialog = new EditTimeDomainSampleFilterDialog(messageSource, timeDomainSampleFilterPresetManager, this, true);
-			editTimeDomainSampleFilterDialog.setApplicationConfig(getApplicationConfig());
-			editTimeDomainSampleFilterDialog.setFileChooser(getFileChooser());
-		}
-		return editTimeDomainSampleFilterDialog;
-	}
-
-	/**
-	 * Sets the sampling frequency used by the filters in this montage.
-	 * @param samplingFrequency sampling frequency to be used
-	 */
-	public void setSamplingFrequency(float samplingFrequency) {
-		filtersPanel.setCurrentSamplingFrequency(samplingFrequency);
-	}
-
-	/**
-	 * Returns the current sampling frequency used by the filters in this montage.
-	 * @return the sampling frequency
-	 */
-	public float getSamplingFrequency() {
-		return filtersPanel.getCurrentSamplingFrequency();
-	}
-
-	/**
-	 * Returns the current montage.
-	 * @return the current montage
-	 */
-	public Montage getCurrentMontage() {
-		return currentMontage;
-	}
 }

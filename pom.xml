@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml</groupId>
@@ -14,20 +16,35 @@
 		<name>Department of Biomedical Physics, Warsaw University and The Svarog Team</name>
 		<url>http://brain.fuw.edu.pl/</url>
 	</organization>
-	<url>http://signalml.org/svarog/</url>
+	<url>https://bci.fuw.edu.pl/wiki/Svarog</url>
 	<inceptionYear>2007</inceptionYear>
 
 	<modules>
 		<module>svarog</module>
-		<module>plugins/FFT</module>
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
+		<module>plugins/Stager</module>
 	</modules>
+
+	<profiles>
+		<profile>
+			<id>installer</id>
+			<modules>
+				<module>svarog</module>
+				<module>plugins/FFTSignalTool</module>
+				<module>plugins/PluginToolCommon</module>
+				<module>plugins/Artifact</module>
+				<module>izpack</module>
+			</modules>
+		</profile>
+	</profiles>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>		
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.jdk_version>1.6</project.jdk_version>
+
 
 		<springframework.version>2.0.7</springframework.version>
 	</properties>
@@ -36,13 +53,7 @@
 		<repository>
 			<id>signalml.org</id>
 			<name>SignalML Maven Repository</name>
-			<url>http://signalml.org/maven/repository</url>
-		</repository>
-
-		<repository>
-			<id>JBOSS</id>
-			<name>JBoss Repository</name>
-			<url>http://repository.jboss.org/maven2</url>
+			<url>https://escher.fuw.edu.pl/maven/repository</url>
 		</repository>
 
 		<repository>
@@ -50,12 +61,27 @@
 			<name>Apache Commons</name>
 			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
 		</repository>
+
+		<repository>
+			<id>gettext-commons</id>
+			<name>gettext-commons</name>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
+		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
 			<id>onejar-maven-plugin.googlecode.com</id>
 			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>signalml.org</id>
+			<name>SignalML Maven Repository</name>
+			<url>http://escher.fuw.edu.pl/maven/repository</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>gettext-commons</id>
+			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -82,7 +108,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
-				<!-- <version>2.1</version> -->
+				<version>2.4</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -102,11 +128,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.12</version>
 			</plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
+				<version>2.3</version>
 				<configuration>
 					<aggregate>true</aggregate>
 					<linkJavadoc>true</linkJavadoc>
@@ -116,6 +144,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
 				<reportSets>
 					<reportSet>
 						<reports>
@@ -124,7 +153,6 @@
 					</reportSet>
 				</reportSets>
 				<configuration>
-					<version>2.7</version>
 					<show>private</show>
 					<nohelp>false</nohelp>
 					<stylesheetfile>javadoc.css</stylesheetfile>
@@ -146,6 +174,25 @@
 				<version>2.4</version>
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<targetJdk>${project.jdk_version}</targetJdk>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.2</version>
+				<configuration>
+					<findbugsXmlOutput>true</findbugsXmlOutput>
+					<findbugsXmlWithMessages>true</findbugsXmlWithMessages>
+					<xmlOutput>true</xmlOutput>
+				</configuration>
+			</plugin>
 		</plugins>
 	</reporting>
 
@@ -161,7 +208,7 @@
 
 	<issueManagement>
 		<system>Trac</system>
-		<url>http://bci.fuw.edu.pl/trac/</url>
+		<url>http://bci.fuw.edu.pl/trac/report/22</url>
 	</issueManagement>
 
 	<licenses>
@@ -175,7 +222,7 @@
 	<developers>
 		<developer>
 			<name>Michał Dobaczewski</name>
-			<email>michal (dot) d08 (at) "Google mail"</email>
+			<email>michal(dot) d08(at) "Google mail"</email>
 			<roles>
 				<role>Developer</role>
 			</roles>
@@ -217,7 +264,14 @@
 		<developer>
 			<name>Piotr Szachewicz</name>
 			<roles>
-				<role>Developer (tags and filters?)</role>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Tomasz Sawicki</name>
+			<roles>
+				<role>Developer</role>
 			</roles>
 			<timezone>+1</timezone>
 		</developer>
@@ -272,6 +326,28 @@
 				<role>Documentation</role>
 			</roles>
 		</developer>
+		<developer>
+			<name>Konrad Durnoga</name>
+			<organization>MIMUW</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Artifact &amp;
+				Stager plugins</role>
+			</roles>
+		</developer>
+		<developer>
+			<name>Paweł Kordowski</name>
+			<organization>ZFB</organization>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<name>Joanna Jędrzejewska-Szmek</name>
+			<organization>ZFB</organization>
+			<timezone>+1</timezone>
+			<roles>
+				<role>Documentation</role>
+			</roles>
+		</developer>
 	</developers>
 
 	<distributionManagement>
@@ -286,6 +362,34 @@
 	</distributionManagement>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>${project.jdk_version}</source>
+						<target>${project.jdk_version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.xnap.commons</groupId>
+					<artifactId>maven-gettext-plugin</artifactId>
+					<version>1.2.3</version>
+					<configuration>
+						<keywords>
+							--keyword=_:1 --keyword=_R:1 --keyword=N_:1,2 --keyword=N_R:1,2 --keyword=translate:3 --keyword=translateR:3 --keyword=translateN:3,4 --keyword=translateNR:3,4 --package-name=${project.artifactId} --foreign-user --sort-output
+						</keywords>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<extensions>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>

@@ -1,5 +1,8 @@
 package org.signalml.app.view.book;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -27,8 +30,12 @@ import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
-import org.signalml.app.view.dialog.PleaseWaitDialog;
+import org.signalml.app.view.book.wignermap.WignerMapImageProvider;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
+import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.domain.book.SegmentReconstructionProvider;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;
@@ -36,7 +43,6 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.WignerMapProvider;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookPlot
  *
@@ -75,8 +81,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	private BookPlotPopupProvider popupMenuProvider;
 	private BookView view;
-
-	private MessageSourceAccessor messageSource;
 	private PleaseWaitDialog pleaseWaitDialog;
 
 	private StandardBookSegment segment;
@@ -157,6 +161,13 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	private int pointMaxPosition;
 
+	/**
+	 * True, if this book plot already shown a message explaining
+	 * that an out of memory error had happened. In that case
+	 * this book shouldn't be redrawn.
+	 */
+	private boolean outOfMemoryErrorShown;
+
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
@@ -171,8 +182,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		setBorder(new EmptyBorder(5,5,5,5));
 		setFont(new Font(Font.DIALOG, Font.PLAIN, 10));
-
-		messageSource = view.getMessageSource();
 
 		view.addPropertyChangeListener(this);
 
@@ -191,25 +200,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		setFocusable(true);
 
-		ApplicationConfiguration config = view.getApplicationConfig();
-
-		signalAntialiased = config.isSignalAntialiased();
-		reconstructionVisible = config.isReconstructionVisible();
-		fullReconstructionVisible = config.isFullReconstructionVisible();
-		originalSignalVisible = config.isSignalAntialiased();
-		legendVisible = config.isLegendVisible();
-		scaleVisible = config.isScaleVisible();
-		axesVisible = config.isAxesVisible();
-
-		mapAspectRatioUp = config.getMapAspectRatioUp();
-		mapAspectRatioDown = config.getMapAspectRatioDown();
-
-		mapAspectRatio = ((double) mapAspectRatioUp) / ((double) mapAspectRatioDown);
-
-		reconstructionHeight = config.getReconstructionHeight();
-
-		palette = config.getPalette();
-		setScaleType(config.getScaleType());
 		imageProvider = new WignerMapImageProvider();
 
 		addMouseListener(new MouseAdapter() {
@@ -268,6 +258,31 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		});
 
+	}
+
+	/**
+	 * Loads all plot settings from the {@link ApplicationConfiguration}.
+	 */
+	public void loadSettingsFromApplicationConfiguration() {
+		ApplicationConfiguration config = SvarogApplication.getApplicationConfiguration();
+
+		signalAntialiased = config.isSignalInBookAntialiased();
+		reconstructionVisible = config.isReconstructionVisible();
+		fullReconstructionVisible = config.isFullReconstructionVisible();
+		originalSignalVisible = config.isOriginalSignalVisible();
+		legendVisible = config.isLegendVisible();
+		scaleVisible = config.isScaleVisible();
+		axesVisible = config.isAxesVisible();
+		atomToolTipsVisible = config.isAtomToolTipsVisible();
+
+		mapAspectRatioUp = config.getMapAspectRatioUp();
+		mapAspectRatioDown = config.getMapAspectRatioDown();
+
+		mapAspectRatio = ((double) mapAspectRatioUp) / ((double) mapAspectRatioDown);
+
+		setReconstructionHeight(config.getReconstructionHeight());
+		setPalette(config.getPalette());
+		setScaleType(config.getScaleType());
 	}
 
 	@Override
@@ -446,7 +461,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		if (fullReconstructionVisible) {
 
 			fullReconstructionRectangle = new Rectangle();
-			
+
 			fullReconstructionRectangle.x = insets.left + reservedLeftWidth;
 			fullReconstructionRectangle.width = availableWidth;
 
@@ -790,6 +805,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			if (scaleRectangle != null) {
 				repaint(scaleRectangle);
 			}
+			view.getPaletteComboBox().setSelectedItem(palette);
 		}
 	}
 
@@ -804,6 +820,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			if (mapRectangle != null) {
 				repaint(mapRectangle);
 			}
+			view.getScaleComboBox().setSelectedItem(type);
 		}
 	}
 
@@ -871,7 +888,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		if (mapRectangle != null) {
 			Rectangle mapToRepaint = clip.intersection(mapRectangle);
 			if (!mapToRepaint.isEmpty()) {
-				paintWignerMap(g, mapToRepaint);
+				paintWignerMapAndCatchOutOfMemory(g, mapToRepaint);
 			}
 		}
 
@@ -900,35 +917,26 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		}
 
 		if (reconstructionRectangle != null) {
-			Rectangle reconstructionToRepaint = clip.intersection(reconstructionRectangle);
-			if (!reconstructionToRepaint.isEmpty()) {
-				double[] selectiveReconstruction = reconstructionProvider.getSelectiveReconstruction();
-				paintReconstruction(g, selectiveReconstruction, reconstructionRectangle, reconstructionToRepaint);
-			}
+			double[] selectiveReconstruction = reconstructionProvider.getSelectiveReconstruction();
+			paintReconstruction(g, selectiveReconstruction, reconstructionRectangle);
 		}
 
 		if (fullReconstructionRectangle != null) {
-			Rectangle fullReconstructionToRepaint = clip.intersection(fullReconstructionRectangle);
-			if (!fullReconstructionToRepaint.isEmpty()) {
-				double[] reconstruction = reconstructionProvider.getFullReconstruction();
-				paintReconstruction(g, reconstruction, fullReconstructionRectangle, fullReconstructionToRepaint);
-			}
+			double[] reconstruction = reconstructionProvider.getFullReconstruction();
+			paintReconstruction(g, reconstruction, fullReconstructionRectangle);
 		}
 
 		if (originalSignalRectangle != null) {
-			Rectangle originalSignalToRepaint = clip.intersection(originalSignalRectangle);
-			if (!originalSignalToRepaint.isEmpty()) {
-				float[] signal = segment.getSignalSamples();
-				// XXX not optimal
-				double[] signalD = null;
-				if (signal != null) {
-					signalD = new double[signal.length];
-					for (int i=0; i<signal.length; i++) {
-						signalD[i] = signal[i];
-					}
+			float[] signal = segment.getSignalSamples();
+			// XXX not optimal
+			double[] signalD = null;
+			if (signal != null) {
+				signalD = new double[signal.length];
+				for (int i=0; i<signal.length; i++) {
+					signalD[i] = signal[i];
 				}
-				paintReconstruction(g, signalD, originalSignalRectangle, originalSignalToRepaint);
 			}
+			paintReconstruction(g, signalD, originalSignalRectangle);
 		}
 
 	}
@@ -994,14 +1002,14 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 	}
 
-	private void paintReconstruction(Graphics2D gOrig, double[] samples, Rectangle area, Rectangle areaToRepaint) {
+	private void paintReconstruction(Graphics2D gOrig, double[] samples, Rectangle area) {
 
 		Graphics2D g = (Graphics2D) gOrig.create();
 		g.clip(area);
 
 		if (samples == null) {
 
-			String label = messageSource.getMessage("bookView.noSignalToPaint");
+			String label = _("(no signal to paint)");
 			Rectangle2D stringBounds;
 			int width;
 			int height;
@@ -1030,27 +1038,26 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		}
 
-	
-		if ( signalAntialiased ) {	   
-			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-		}				
 
-		int relX = areaToRepaint.x - area.x;
+		if (signalAntialiased) {
+			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+		}
+
 		int level = area.y + area.height / 2;
 
 		g.setColor(Color.BLUE);
-		g.drawLine(areaToRepaint.x, level, areaToRepaint.x+areaToRepaint.width-1, level);
+		g.drawLine(area.x, level, area.x+area.width-1, level);
 
 		g.setColor(Color.BLACK);
 
-		int firstSample = (int)((minPosition / segment.getSegmentLength()) * samples.length);
-		int lastSample = (int) Math.min(samples.length - 1, (maxPosition / segment.getSegmentLength()) * samples.length);
+		int firstSample = (int)((minPosition * samplingFrequency / segment.getSegmentLength()) * samples.length);
+		int lastSample = (int) Math.min(samples.length - 1, (maxPosition * samplingFrequency / segment.getSegmentLength()) * samples.length);
 		if (lastSample < firstSample) {
 			return;
 		}
 		int length = 1 + lastSample - firstSample;
 
-		double realX = area.x + relX * reconstructionPixelPerSample;
+		double realX = area.x;
 		double y = level - (samples[firstSample] * reconstructionPixelPerValue);
 
 		generalPath.reset();
@@ -1128,7 +1135,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 			level = originalSignalRectangle.y + (originalSignalRectangle.height) / 2;
 
-			label = messageSource.getMessage("bookView.originalSignal");
+			label = _("Original");
 			stringBounds = font.getStringBounds(label, fontRenderContext);
 
 			width = (int) stringBounds.getWidth();
@@ -1142,7 +1149,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 			level = fullReconstructionRectangle.y + (fullReconstructionRectangle.height) / 2;
 
-			label = messageSource.getMessage("bookView.reconstructionSignal");
+			label = _("Reconstruction");
 			stringBounds = font.getStringBounds(label, fontRenderContext);
 
 			width = (int) stringBounds.getWidth();
@@ -1156,7 +1163,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 			level = reconstructionRectangle.y + (reconstructionRectangle.height) / 2;
 
-			label = messageSource.getMessage("bookView.chosenSignal");
+			label = _("Chosen");
 			stringBounds = font.getStringBounds(label, fontRenderContext);
 
 			width = (int) stringBounds.getWidth();
@@ -1166,6 +1173,20 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		}
 
+	}
+
+	private void paintWignerMapAndCatchOutOfMemory(Graphics2D gOrig, Rectangle mapToRepaint) {
+		try {
+			paintWignerMap(gOrig, mapToRepaint);
+			outOfMemoryErrorShown = false;
+		} catch (OutOfMemoryError error) {
+			if (!outOfMemoryErrorShown) {
+				error.printStackTrace();
+				Dialogs.showError(_("This book cannot be rendered because of lack of memory. Please close other books to free some memory."));
+				outOfMemoryErrorShown = true;
+				// this error should be shown only once
+			}
+		}
 	}
 
 	private void paintWignerMap(Graphics2D gOrig, Rectangle mapToRepaint) {
@@ -1187,16 +1208,16 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		int imgY = mapToRepaint.y - mapRectangle.y;
 
 		g.drawImage(
-		        cachedImage,
-		        mapToRepaint.x,
-		        mapToRepaint.y,
-		        mapToRepaint.x+mapToRepaint.width,
-		        mapToRepaint.y+mapToRepaint.height,
-		        imgX,
-		        imgY,
-		        imgX+mapToRepaint.width,
-		        imgY+mapToRepaint.height,
-		        null
+			cachedImage,
+			mapToRepaint.x,
+			mapToRepaint.y,
+			mapToRepaint.x+mapToRepaint.width,
+			mapToRepaint.y+mapToRepaint.height,
+			imgX,
+			imgY,
+			imgX+mapToRepaint.width,
+			imgY+mapToRepaint.height,
+			null
 		);
 
 		Rectangle markCaptureRectangle = new Rectangle(mapToRepaint);
@@ -1281,42 +1302,42 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 				StringBuilder sb = new StringBuilder("<html><body>");
 				sb.append("<b>")
-				.append(messageSource.getMessage("bookView.toolTip.atom", new Object[] { segment.indexOfAtom(nearestAtom)+1 }))
+				.append(_R("Atom {0}", segment.indexOfAtom(nearestAtom)+1))
 				.append("</b>");
 
 				sb.append("<p><table cellpadding=\"0\">");
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.position"))
+				.append(_("Position"))
 				.append("</td><td>&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getTimePosition()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.frequency"))
+				.append(_("Frequency"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
-				.append(toolTipFormat.format(nearestAtom.getFrequency()))
+				.append(toolTipFormat.format(nearestAtom.getHzFrequency()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.modulus"))
+				.append(_("Modulus"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getModulus()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.amplitude"))
+				.append(_("Amplitude"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getAmplitude()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.scale"))
+				.append(_("Scale"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getScale()))
 				.append("</td></tr>");
 
 				sb.append("<tr><td>")
-				.append(messageSource.getMessage("bookView.toolTip.phase"))
+				.append(_("Phase"))
 				.append("</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>")
 				.append(toolTipFormat.format(nearestAtom.getPhase()))
 				.append("</td></tr>");
@@ -1332,7 +1353,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			return cachedToolTipText;
 
 		} else {
-			return messageSource.getMessage("bookView.toolTip.noNearbyAtom");
+			return _("No nearby atom");
 		}
 
 	}
@@ -1402,7 +1423,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			return null;
 		}
 
-		int frequency = atom.getFrequency();
+		int frequency = atom.getNaturalFrequency();
 		if (frequency < naturalMinFrequency || frequency > naturalMaxFrequency) {
 			return null;
 		}
@@ -1458,20 +1479,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	/* ***************** ***************** ***************** */
 	/* ***************** ***************** ***************** */
 
-	/* Selection support */
-
-
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-	/* ***************** ***************** ***************** */
-
 	/* Other getters and setters */
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
 
 	public BookView getView() {
 		return view;
@@ -1526,4 +1534,3 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	}
 
 }
-

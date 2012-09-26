@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.exampleplugin;
 
@@ -17,14 +17,14 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
  */
 public abstract class ShowTagAction extends AbstractAction {
 
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * the {@link SvarogAccessSignal access} to signal options 
+	 * the {@link SvarogAccessSignal access} to signal options
 	 */
 	protected SvarogAccessSignal signalAccess;
-	
+
 	/**
 	 * Constructor. Sets {@link SvarogAccessSignal signal access}.
 	 * @param signalAccess access to set
@@ -33,7 +33,7 @@ public abstract class ShowTagAction extends AbstractAction {
 		super(name);
 		this.signalAccess = signalAccess;
 	}
-	
+
 	/**
 	 * Creates a string that describes the given {@link ExportedTag tag}.
 	 * Description contains {@link ExportedSignalSelectionType type}
@@ -43,13 +43,13 @@ public abstract class ShowTagAction extends AbstractAction {
 	 * @param tag the tag to be described
 	 * @return the created description
 	 */
-	protected String tagToString(ExportedTag tag){
+	protected String tagToString(ExportedTag tag) {
 		String text = new String();
 		text += "type: ";
 		text += tag.getType().getName();
 		text += ", style: ";
 		text += tag.getStyle().getName();
-		if (tag.getType().isChannel()){
+		if (tag.getType().isChannel()) {
 			text+= ", channel: ";
 			text+= tag.getChannel();
 		}
@@ -60,7 +60,7 @@ public abstract class ShowTagAction extends AbstractAction {
 		text += "\n";
 		return text;
 	}
-	
-	
+
+
 
 }

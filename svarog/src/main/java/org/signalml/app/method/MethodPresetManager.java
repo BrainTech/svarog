@@ -4,8 +4,8 @@
 
 package org.signalml.app.method;
 
-import org.signalml.app.config.preset.AbstractPresetManager;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.app.config.preset.managers.AbstractPresetManager;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -39,10 +39,12 @@ public class MethodPresetManager extends AbstractPresetManager {
 		return parameterClass;
 	}
 
+	@Override
 	public Preset getDefaultPreset() {
 		return defaultPreset;
 	}
 
+	@Override
 	public void setDefaultPreset(Preset defaultPreset) {
 		this.defaultPreset = defaultPreset;
 	}

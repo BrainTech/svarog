@@ -6,7 +6,7 @@ package org.signalml.plugin.newartifact.data;
 
 import java.io.File;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.method.AbstractData;
 import org.springframework.validation.Errors;
 
@@ -29,15 +29,12 @@ public class NewArtifactData extends AbstractData {
 	private boolean processedProject;
 
 	private String signalPath;
-	private NewArtifactSignalFormat signalFormat;
-
-	private NewArtifactOutputFormat outputFormat;
 
 	private int pageSize;
 	private int blocksPerPage;
 
 	@XStreamOmitField
-	private MultichannelSampleSource sampleSource;
+	private transient MultichannelSampleSource sampleSource;
 
 	@XStreamOmitField
 	private File projectFile;
@@ -69,22 +66,6 @@ public class NewArtifactData extends AbstractData {
 
 	public void setSignalPath(String signalPath) {
 		this.signalPath = signalPath;
-	}
-
-	public NewArtifactSignalFormat getSignalFormat() {
-		return signalFormat;
-	}
-
-	public void setSignalFormat(NewArtifactSignalFormat signalFormat) {
-		this.signalFormat = signalFormat;
-	}
-
-	public NewArtifactOutputFormat getOutputFormat() {
-		return outputFormat;
-	}
-
-	public void setOutputFormat(NewArtifactOutputFormat outputFormat) {
-		this.outputFormat = outputFormat;
 	}
 
 	public int getPageSize() {

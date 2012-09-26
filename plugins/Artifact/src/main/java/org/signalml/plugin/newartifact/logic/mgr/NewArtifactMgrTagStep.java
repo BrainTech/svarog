@@ -24,7 +24,6 @@ import org.signalml.plugin.io.PluginTagWriter;
 import org.signalml.plugin.method.logic.AbstractPluginComputationMgrStep;
 import org.signalml.plugin.method.logic.IPluginComputationMgrStepTrackerProxy;
 import org.signalml.plugin.newartifact.data.NewArtifactComputationType;
-import org.signalml.plugin.newartifact.data.NewArtifactParameters;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepData;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrStepResult;
 import org.signalml.plugin.newartifact.data.tag.NewArtifactTagResult;
@@ -75,9 +74,9 @@ public class NewArtifactMgrTagStep extends
 	throws PluginToolAbortException, ComputationException,
 		PluginToolInterruptedException {
 
-		final IPluginComputationMgrStepTrackerProxy<NewArtifactProgressPhase> tracker = this.data.tracker;
+		final IPluginComputationMgrStepTrackerProxy<NewArtifactComputationProgressPhase> tracker = this.data.tracker;
 
-		tracker.setProgressPhase(NewArtifactProgressPhase.TAGGER_PREPARE_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.TAGGER_PREPARE_PHASE);
 
 		this.checkAbortState();
 		this.prepareWorkers();
@@ -95,7 +94,7 @@ public class NewArtifactMgrTagStep extends
 
 		NewArtifactTagMerger merger = new NewArtifactTagMerger();
 
-		tracker.setProgressPhase(NewArtifactProgressPhase.TAGGING_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.TAGGING_PHASE);
 		for (int j = 0; j < this.taggerRoutines.size(); ++j) {
 			this.checkAbortState();
 			try {
@@ -105,11 +104,11 @@ public class NewArtifactMgrTagStep extends
 					merger.addTag(result);
 
 					NewArtifactComputationType taggerType = futureMap
-										.get(future);
+															.get(future);
 					if (taggerType != null) {
-						tracker.advance((int) this.readers.get(taggerType)
-								.getDataSize()
-								/ this.data.constants.getBlockLength());
+						tracker.advance(this, (int) this.readers
+										.get(taggerType).getDataSize()
+										/ this.data.constants.getBlockLength());
 					}
 				}
 			} catch (InterruptedException e) {
@@ -122,7 +121,7 @@ public class NewArtifactMgrTagStep extends
 		}
 
 		this.checkAbortState();
-		tracker.setProgressPhase(NewArtifactProgressPhase.TAG_MERGING_PHASE);
+		tracker.setProgressPhase(NewArtifactComputationProgressPhase.TAG_MERGING_PHASE);
 		return this.mergeTags(merger);
 	}
 
@@ -150,7 +149,7 @@ public class NewArtifactMgrTagStep extends
 		NewArtifactTagCreatorFactory factory = new NewArtifactTagCreatorFactory();
 
 		Collection<Integer> channelsList = this.data.artifactData
-						   .getEegChannels();
+										   .getEegChannels();
 		int eegChannels[] = new int[channelsList.size()];
 		int i = 0;
 		for (int channel : channelsList) {
@@ -161,28 +160,28 @@ public class NewArtifactMgrTagStep extends
 		for (NewArtifactComputationType taggerType : NewArtifactComputationType
 				.values()) {
 			if (!NewArtifactParameterHelper.IsParameterEnabled(taggerType,
-					this.data.artifactData.getParameters())) {
+					this.data.artifactData)) {
 				continue;
 			}
 
 			INewArtifactDataReader reader = this.readers.get(taggerType);
 			IPluginTagWriter writer = this.createTagWriterForTagger(taggerType,
-						  this.data);
+									  this.data);
 
 			if (reader != null && writer != null) {
 				this.taggerRoutines
 				.put(taggerType,
-				     new NewArtifactTagCreatorRoutine(
-					     new NewArtifactTagRoutineData(
-						     this.data.constants,
-						     this.data.artifactData
-						     .getParameters(),
-						     eegChannels,
-						     this.getExcludedChannelsForTagger(
-							     taggerType, this.data)),
-					     reader, factory
-					     .createTagger(taggerType),
-					     writer));
+					 new NewArtifactTagCreatorRoutine(
+						 new NewArtifactTagRoutineData(
+							 this.data.constants,
+							 this.data.artifactData
+							 .getParameters(),
+							 eegChannels,
+							 this.getExcludedChannelsForTagger(
+								 taggerType, this.data)),
+						 reader, factory
+						 .createTagger(taggerType),
+						 writer));
 			}
 		}
 
@@ -213,14 +212,12 @@ public class NewArtifactMgrTagStep extends
 		if (this.readers == null) {
 			this.readers = new HashMap<NewArtifactComputationType, INewArtifactDataReader>();
 
-			NewArtifactParameters parameters = this.data.artifactData
-							   .getParameters();
 			for (NewArtifactComputationType taggerType : NewArtifactComputationType
 					.values()) {
 				if (NewArtifactParameterHelper.IsParameterEnabled(taggerType,
-						parameters)) {
+						this.data.artifactData)) {
 					INewArtifactDataReader reader = this
-									.createDataReaderForTagger(taggerType, this.data);
+													.createDataReaderForTagger(taggerType, this.data);
 					if (reader != null) {
 						this.readers.put(taggerType, reader);
 					}
@@ -236,9 +233,9 @@ public class NewArtifactMgrTagStep extends
 			return null;
 		default:
 			return new PluginTagWriter(new File(
-							   data.pathConstructor.getPathToWorkDir(),
-							   this.getResultFileNameForAlgorithm(taggerType)[0]),
-						   new PluginTagWriterConfig());
+										   data.pathConstructor.getPathToWorkDir(),
+										   this.getResultFileNameForAlgorithm(taggerType)[0]),
+									   new PluginTagWriterConfig());
 		}
 	}
 
@@ -252,11 +249,11 @@ public class NewArtifactMgrTagStep extends
 			channelCount = 2;
 		default:
 			return new NewArtifactDataReader(
-				       new File(
-					       data.pathConstructor.getPathToWorkDir(),
-					       data.pathConstructor
-					       .getIntermediateFileNamesForAlgorithm(taggerType)[0]),
-				       channelCount);
+					   new File(
+						   data.pathConstructor.getPathToWorkDir(),
+						   data.pathConstructor
+						   .getIntermediateFileNamesForAlgorithm(taggerType)[0]),
+					   channelCount);
 		}
 	}
 
@@ -301,7 +298,7 @@ public class NewArtifactMgrTagStep extends
 
 		for (int i = 0; i < result.length; ++i) {
 			result[i] = result[i]
-				    + this.data.pathConstructor.getTagFileExtension();
+						+ this.data.pathConstructor.getTagFileExtension();
 		}
 		return result;
 	}

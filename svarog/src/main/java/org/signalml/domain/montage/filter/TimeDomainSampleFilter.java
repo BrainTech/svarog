@@ -5,14 +5,15 @@
 package org.signalml.domain.montage.filter;
 
 import java.util.Arrays;
+
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.util.ResolvableString;
 import org.springframework.context.MessageSourceResolvable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.text.DecimalFormat;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.domain.montage.filter.iirdesigner.ApproximationFunctionType;
-import org.signalml.domain.montage.filter.iirdesigner.FilterType;
 
 /**
  * This class holds a time domain representation of a
@@ -278,7 +279,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	 * Returns a string specifying the filter's passband frequencies.
 	 * @return a string describing the filter's passband frequencies
 	 */
-	public String getEffectString() {
+	public String getEffect() {
 
 		String passbandEdgeFrequency0 = convertDoubleToString(passbandEdgeFrequencies[0]);
 		String passbandEdgeFrequency1 = convertDoubleToString(passbandEdgeFrequencies[1]);
@@ -286,15 +287,20 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 		String stopbandEdgeFrequency1 = convertDoubleToString(stopbandEdgeFrequencies[1]);
 
 		String effectString = "";
+
+		effectString += filterType + " (";
+
 		if (filterType.isLowpass())
 			effectString += "0 - " + passbandEdgeFrequency0;
 		else if (filterType.isHighpass())
-			effectString += passbandEdgeFrequency0 + " - Fn";
+			effectString += passbandEdgeFrequency0 + " - inf";
 		else if (filterType.isBandpass())
 			effectString += passbandEdgeFrequency0 + " - " + passbandEdgeFrequency1;
 		else if (filterType.isBandstop())
 			effectString += stopbandEdgeFrequency0 + " - " + stopbandEdgeFrequency1;
 		effectString += " Hz";
+
+		effectString += ")";
 
 		return effectString;
 
@@ -311,33 +317,8 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	}
 
 	@Override
-	public MessageSourceResolvable getEffectDescription() {
-		return new ResolvableString(EFFECT_CODES, getArguments(), getDefaultEffectDescription());
-	}
-
-	@Override
-	public String getDefaultEffectDescription() {
-		return new String("Time Domain Filter");
-	}
-
-	@Override
 	public SampleFilterType getType() {
 		return SampleFilterType.TIME_DOMAIN;
-	}
-
-	@Override
-	public Object[] getArguments() {
-		return new Object[] {filterType, getEffectString(), approximationFunctionType};
-	}
-
-	@Override
-	public String[] getCodes() {
-		return EFFECT_CODES;
-	}
-
-	@Override
-	public String getDefaultMessage() {
-		return "Time domain filter " + getClass().getSimpleName();
 	}
 
 	/**
@@ -355,11 +336,11 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	}
 
 	/**
-         * Sets all parameters of this filter to mathch the values of the
-         * parameters of the given filter.
-         * @param filter a filter which parameters are to be copied
-         * to this filter
-         */
+	     * Sets all parameters of this filter to mathch the values of the
+	     * parameters of the given filter.
+	     * @param filter a filter which parameters are to be copied
+	     * to this filter
+	     */
 	public void copyFrom(TimeDomainSampleFilter filter) {
 
 		filterType = filter.filterType;
@@ -390,9 +371,9 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 		TimeDomainSampleFilter tdf = (TimeDomainSampleFilter)o;
 		if (tdf.filterType.equals(filterType) && tdf.approximationFunctionType.equals(approximationFunctionType) &&
-		                Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
-		                Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
-		                passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
+				Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
+				Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
+				passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
 			return true;
 		return false;
 
@@ -400,7 +381,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public String toString() {
-		return name;
+		return getEffect();
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package org.signalml.plugin.newartifact.method;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -9,7 +11,7 @@ import java.nio.channels.FileLock;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
@@ -17,7 +19,9 @@ import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.method.PluginAbstractMethod;
+import org.signalml.plugin.newartifact.NewArtifactPlugin;
 import org.signalml.plugin.newartifact.data.NewArtifactConstants;
 import org.signalml.plugin.newartifact.data.NewArtifactData;
 import org.signalml.plugin.newartifact.data.NewArtifactParameters;
@@ -27,7 +31,6 @@ import org.signalml.plugin.newartifact.data.NewIterableSensitivity;
 import org.signalml.plugin.newartifact.data.mgr.NewArtifactMgrData;
 import org.signalml.plugin.newartifact.logic.mgr.NewArtifactComputationMgr;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
 
 public class NewArtifactMethod extends PluginAbstractMethod implements
@@ -35,7 +38,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 
 	private static final String UID = "a3530db2-cfa5-4eed-be1f-dafc81ee4225";
 
-	private static final int[] VERSION = new int[] { 0, 9 };
+	private static final int[] VERSION = new int[] { 1, 0 };
 
 	private final int BLOCK_LENGTH_IN_SECONDS = 4;
 	private final int SMALL_BLOCK_LENGTH_IN_SECONDS = 1;
@@ -49,8 +52,8 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		NewArtifactData artifactData = (NewArtifactData) data;
 
 		File patientTagFile = new File(new File(artifactData.getProjectPath(),
-							artifactData.getPatientName()).getAbsolutePath(),
-					       artifactData.getPatientName() + ".lock");
+												artifactData.getPatientName()).getAbsolutePath(),
+									   artifactData.getPatientName() + ".lock");
 
 		FileChannel channel;
 		try {
@@ -70,8 +73,8 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 			NewArtifactComputationMgr mgr = new NewArtifactComputationMgr();
 
 			return mgr.compute(
-				       new NewArtifactMgrData(artifactData, this
-							      .getArtifactConstants(artifactData)), tracker);
+					   new NewArtifactMgrData(artifactData, this
+											  .getArtifactConstants(artifactData)), tracker);
 
 		} catch (IOException e) {
 			throw new ComputationException(e);
@@ -92,12 +95,12 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		NewArtifactData artifactData) {
 		MultichannelSampleSource sampleSource = artifactData.getSampleSource();
 		return new NewArtifactConstants(sampleSource.getChannelCount(),
-						sampleSource.getSamplingFrequency(), artifactData
-						.getParameters().getPowerGridFrequency(),
-						this.BLOCK_LENGTH_IN_SECONDS,
-						this.SMALL_BLOCK_LENGTH_IN_SECONDS,
-						this.TAIL_LENGTH_IN_SECONDS, this.SMALL_TAIL_LENGTH_IN_SECONDS,
-						this.SLOPE_LENGTH_IN_SECONDS);
+										sampleSource.getSamplingFrequency(), artifactData
+										.getParameters().getPowerGridFrequency(),
+										this.BLOCK_LENGTH_IN_SECONDS,
+										this.SMALL_BLOCK_LENGTH_IN_SECONDS,
+										this.TAIL_LENGTH_IN_SECONDS, this.SMALL_TAIL_LENGTH_IN_SECONDS,
+										this.SLOPE_LENGTH_IN_SECONDS);
 	}
 
 	@Override
@@ -115,9 +118,9 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
+	public String getTickerLabel(int ticker) {
 		if (ticker == 0) {
-			return messageSource.getMessage("newArtifactMethod.stepTicker");
+			return _("Artifact detection");
 		} else {
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}
@@ -136,7 +139,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		for (int i = 0; i < chosenArtifactTypes.length; i++) {
 			if (chosenArtifactTypes[i] != 0) {
 				list.add(new NewIterableSensitivity(parameters, NewArtifactType
-								    .values()[i]));
+													.values()[i]));
 			}
 		}
 
@@ -154,7 +157,7 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 		File tagFile = result.getTagFile();
 
 		File iterationTagFile = new File(tagFile.getParentFile(), "iteration_"
-						 + iteration + "_" + tagFile.getName());
+										 + iteration + "_" + tagFile.getName());
 
 		tagFile.renameTo(iterationTagFile);
 		result.setTagFile(iterationTagFile);
@@ -164,32 +167,15 @@ public class NewArtifactMethod extends PluginAbstractMethod implements
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return null;
 	}
-
-	/*
-	 * @Override public Object createData(PluginMethodManager manager) {
-	 * ExportedSignalDocument signalDocument; try { signalDocument =
-	 * manager.getSvarogAccess() .getSignalAccess().getActiveSignalDocument(); }
-	 * catch (NoActiveObjectException e) { signalDocument = null; }
-	 *
-	 * if (signalDocument == null) {
-	 * OptionPane.showNoActiveSignal(manager.getSvarogAccess()
-	 * .getGUIAccess().getManager().getOptionPaneParent()); return null; }
-	 *
-	 * NewArtifactApplicationData data = new NewArtifactApplicationData();
-	 * data.setSignalDocument(signalDocument);
-	 * data.setSignalAccess(manager.getSvarogAccess().getSignalAccess());
-	 *
-	 * return data; }
-	 */
 
 	@Override
 	public String getName() {
 		try {
 			return ((PluginConfigForMethod) PluginResourceRepository
-				.GetResource("config")).getMethodConfig().getMethodName();
+					.GetResource("config", NewArtifactPlugin.class)).getMethodConfig().getMethodName();
 		} catch (PluginException e) {
 			return "";
 		}

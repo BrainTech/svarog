@@ -3,6 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -11,10 +13,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.view.element.ResolvableComboBox;
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Executor;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5ExecutorPanel
@@ -26,15 +29,12 @@ public class MP5ExecutorPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private MP5ExecutorManager executorManager;
 
 	private ResolvableComboBox executorComboBox;
 
-	public MP5ExecutorPanel(MessageSourceAccessor messageSource, MP5ExecutorManager executorManager) {
+	public MP5ExecutorPanel(MP5ExecutorManager executorManager) {
 		super();
-		this.messageSource = messageSource;
 		this.executorManager = executorManager;
 		initialize();
 	}
@@ -44,8 +44,8 @@ public class MP5ExecutorPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.chooseExecutorTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("MP5 executor")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -55,7 +55,7 @@ public class MP5ExecutorPanel extends JPanel {
 
 	public ResolvableComboBox getExecutorComboBox() {
 		if (executorComboBox == null) {
-			executorComboBox = new ResolvableComboBox(messageSource);
+			executorComboBox = new ResolvableComboBox();
 			executorComboBox.setModel(new MP5ExecutorComboBoxModel(executorManager));
 			executorComboBox.setPreferredSize(new Dimension(300,25));
 		}
@@ -88,10 +88,10 @@ public class MP5ExecutorPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (getExecutorComboBox().getSelectedItem() == null) {
-			errors.rejectValue("executorUID", "error.mp5.noExecutor");
+			errors.addError(_("No executor"));
 		}
 
 	}

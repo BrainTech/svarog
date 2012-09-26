@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
+import org.apache.log4j.Logger;
 
 public class CodecCore {
 	protected static final String  NAMESPACES_FEATURE_ID = "http://xml.org/sax/features/namespaces";
@@ -18,51 +19,52 @@ public class CodecCore {
 	protected static final boolean DEFAULT_SCHEMA_VALIDATION = false;
 	protected static final boolean DEFAULT_SCHEMA_FULL_CHECKING = false;
 
+	protected static final Logger log = Logger.getLogger(Document.class);
+
 	public static Document parse(String arg) {
+
 		ParserWrapper parser = null;
 
 		try {
 			parser=(ParserWrapper)Class.forName(DEFAULT_PARSER_NAME).newInstance();
 		} catch (Exception e) {
-			System.err.println("error: Unable to instantiate parser ("+DEFAULT_PARSER_NAME+")");
+			log.error("error: Unable to instantiate parser ("+DEFAULT_PARSER_NAME+")",
+					  e);
 			return null;
 		}
 
 		try {
 			parser.setFeature(NAMESPACES_FEATURE_ID, DEFAULT_NAMESPACES);
 		} catch (SAXException e) {
-			System.err.println("warning: Parser does not support feature ("+NAMESPACES_FEATURE_ID+")");
+			log.warn("Parser does not support feature ("+NAMESPACES_FEATURE_ID+")");
 		}
 
 		try {
 			parser.setFeature(VALIDATION_FEATURE_ID, DEFAULT_VALIDATION);
 		} catch (SAXException e) {
-			System.err.println("warning: Parser does not support feature ("+VALIDATION_FEATURE_ID+")");
+			log.warn("Parser does not support feature ("+VALIDATION_FEATURE_ID+")");
 		}
 
 		try {
 			parser.setFeature(SCHEMA_VALIDATION_FEATURE_ID, DEFAULT_SCHEMA_VALIDATION);
 		} catch (SAXException e) {
-			System.err.println("warning: Parser does not support feature ("+SCHEMA_VALIDATION_FEATURE_ID+")");
+			log.warn("Parser does not support feature ("+SCHEMA_VALIDATION_FEATURE_ID+")");
 		}
 
 		try {
 			parser.setFeature(SCHEMA_FULL_CHECKING_FEATURE_ID, DEFAULT_SCHEMA_FULL_CHECKING);
 		} catch (SAXException e) {
-			System.err.println("warning: Parser does not support feature ("+SCHEMA_FULL_CHECKING_FEATURE_ID+")");
+			log.warn("Parser does not support feature ("+SCHEMA_FULL_CHECKING_FEATURE_ID+")");
 		}
 
 		try {
 			return parser.parse(arg);
 		} catch (SAXParseException e) {
-			System.err.println("error: Parse error occurred - "+e.getMessage());
-			e.printStackTrace(System.err);    ;
+			log.error("Parse error occurred", e);
 		} catch (Exception e) {
-			System.err.println("error: Parse error occurred - "+e.getMessage());
-			if (e instanceof SAXException) {
-				e=((SAXException)e).getException();
-			}
-			e.printStackTrace(System.err);
+			if (e instanceof SAXException)
+				log.warn("SAX error", ((SAXException)e).getException());
+			log.error("Parse error occurred", e);
 		}
 
 		return null;

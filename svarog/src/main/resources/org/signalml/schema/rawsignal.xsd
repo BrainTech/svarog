@@ -161,6 +161,40 @@
     	</restriction>
     </simpleType>
 
+    <complexType name="eegSystemName">
+    	<annotation>
+    		<documentation>SignalML source signal info.</documentation>
+    	</annotation>
+    	<sequence>
+    		<element name="eegSystemSymbol" type="rs:eegSystemSymbol"></element>
+    		<element name="eegSystemType" type="rs:eegSystemType"></element>
+    	</sequence>
+    </complexType>
+
+    <simpleType name="eegSystemSymbol">
+	<annotation>
+		<documentation>
+			The symbol of the EEG System
+		</documentation>
+	</annotation>
+	<restriction base="string">
+		<minLength value="0"></minLength>
+		<maxLength value="256"></maxLength>
+	</restriction>
+    </simpleType>
+
+    <simpleType name="eegSystemType">
+	<annotation>
+		<documentation>
+			The type of the EEG System (children/adults).
+		</documentation>
+	</annotation>
+	<restriction base="string">
+		<minLength value="0"></minLength>
+		<maxLength value="256"></maxLength>
+	</restriction>
+    </simpleType>
+
     <simpleType name="markerOffset">
     	<annotation>
     		<documentation>Time offset into the signal.</documentation>
@@ -288,6 +322,14 @@
                 	<documentation>
                 		Blocks per page used by this document -
                 		optional.
+                	</documentation>
+                </annotation>
+    		</element>
+		<element name="eegSystemName" type="rs:eegSystemName"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		The name of the EEG system used.
                 	</documentation>
                 </annotation>
     		</element>

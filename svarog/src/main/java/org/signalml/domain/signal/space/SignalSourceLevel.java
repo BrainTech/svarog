@@ -4,9 +4,9 @@
 
 package org.signalml.domain.signal.space;
 
-import org.signalml.domain.signal.MultichannelSampleFilter;
 import org.signalml.domain.signal.MultichannelSampleMontage;
-import org.signalml.domain.signal.MultichannelSampleSource;
+import org.signalml.domain.signal.filter.MultichannelSampleFilter;
+import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**
  * This class tells if the {@link MultichannelSampleSource source} had been
@@ -17,19 +17,20 @@ import org.signalml.domain.signal.MultichannelSampleSource;
  */
 public enum SignalSourceLevel {
 
-        /**
-         * the signal is neither assembled nor filtered
-         */
+	/**
+	 * the signal is neither assembled nor filtered
+	 */
 	RAW,
-        /**
-         * the signal is assembled but not filtered
-         */
+	/**
+	 * the signal is assembled but not filtered
+	 */
 	ASSEMBLED,
-        /**
-         * the signal is assembled and filtered
-         */
-	FILTERED
+	/**
+	 * the signal is assembled and filtered
+	 */
+	FILTERED,
 
+	FILTERED_FOR_EXPORT
 	;
 
 }

@@ -7,16 +7,15 @@ package org.signalml.app.view.signal;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
 
-import org.signalml.app.action.EditTagAnnotationAction;
-import org.signalml.app.action.PreciseSelectionAction;
-import org.signalml.app.action.RemoveTagAction;
-import org.signalml.app.action.TagSelectionAction;
+import org.signalml.app.action.signal.PreciseSelectionAction;
+import org.signalml.app.action.tag.EditTagAnnotationAction;
+import org.signalml.app.action.tag.RemoveTagAction;
+import org.signalml.app.action.tag.TagSelectionAction;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleMenu;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** SignalPlotPopupProvider
  *
@@ -38,8 +37,6 @@ public class SignalPlotPopupProvider {
 
 	private TagStyleMenu tagStyleMenu;
 
-	private MessageSourceAccessor messageSource;
-
 	public SignalPlotPopupProvider(SignalPlot plot) {
 		this.plot = plot;
 	}
@@ -49,14 +46,13 @@ public class SignalPlotPopupProvider {
 		if (plotPopupMenu == null) {
 			plotPopupMenu = new JPopupMenu();
 			tagStyleMenu = new TagStyleMenu(tagSelectionAction, tagIconProducer);
-			tagStyleMenu.setMessageSource(messageSource);
 			plotPopupMenu.add(tagStyleMenu);
 			plotPopupMenu.addSeparator();
 			plotPopupMenu.add(editTagAnnotationAction);
 			plotPopupMenu.add(removeTagAction);
 			plotPopupMenu.addSeparator();
 			plotPopupMenu.add(preciseSelectionAction);
-			
+
 			PluginAccessClass.getGUIImpl().addToSignalPlotPopupMenu(plotPopupMenu);
 		}
 
@@ -65,22 +61,13 @@ public class SignalPlotPopupProvider {
 		if (tagDocument != null) {
 			SignalSelection selection = plot.getView().getSignalSelection(plot);
 			if (selection != null) {
-				tagStyleMenu.setTagSet(tagDocument.getTagSet());
-				tagStyleMenu.setType(selection.getType());
+				tagStyleMenu.setParameters(tagDocument.getTagSet(), selection.getType());
 				tagStyleMenuEnabled = true;
 			}
 		}
 		tagStyleMenu.setEnabled(tagStyleMenuEnabled);
 
 		return plotPopupMenu;
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public JPopupMenu getColumnHeaderPopupMenu() {
@@ -92,7 +79,7 @@ public class SignalPlotPopupProvider {
 			columnHeaderPopupMenu.addSeparator();
 			JCheckBoxMenuItem compactMenuItem = new JCheckBoxMenuItem(plot.getSignalPlotColumnHeader().getSetCompactAction());
 			columnHeaderPopupMenu.add(compactMenuItem);
-			
+
 			PluginAccessClass.getGUIImpl().addToColumnHeaderPopupMenu(columnHeaderPopupMenu);
 		}
 

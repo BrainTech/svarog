@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
 import org.apache.log4j.Logger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import org.signalml.util.ResolvableString;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** MP5LocalProcessController
  *
@@ -39,9 +40,9 @@ public class MP5LocalProcessController {
 
 		ProcessBuilder pb = new ProcessBuilder();
 		pb.command(
-		        mp5ExecutablePath,
-		        "-x",
-		        configFile.getAbsolutePath()
+			mp5ExecutablePath,
+			"-x",
+			configFile.getAbsolutePath()
 		);
 		pb.directory(workingDirectory);
 		pb.redirectErrorStream(true);
@@ -60,7 +61,7 @@ public class MP5LocalProcessController {
 			throw new ComputationException(ex);
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.calculating"));
+		tracker.setMessage(_("Calculating"));
 
 		BufferedReader feedbackReader = null;
 		try {

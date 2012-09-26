@@ -4,6 +4,9 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
@@ -39,7 +42,6 @@ import org.signalml.domain.tag.TagEvent;
 import org.signalml.domain.tag.TagListener;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** HypnogramPlot
  *
@@ -59,7 +61,6 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private static final Dimension minimumSize = new Dimension(300,SINGLE_HYPNO_SIZE+7);
 
 	private SignalView view;
-	private MessageSourceAccessor messageSource;
 	private HashMap<StyledTagSet, HypnogramLine[]> hypnogramMap = new HashMap<StyledTagSet, HypnogramLine[]>();
 
 	private float pixelFactor;
@@ -71,9 +72,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private int focusEnd;
 	private int focusWidth;
 	private int focusCenter;
-		
+
 	private int factorStep;
-	
+
 	private String noTagsMessage = null;
 
 	private HypnogramMode mode = HypnogramMode.SHOW_ACTIVE;
@@ -85,11 +86,8 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private boolean focusCalculated = false;
 
 	public HypnogramPlot(SignalView view) {
-
 		this.view = view;
-
-		messageSource = view.getMessageSource();
-		noTagsMessage = messageSource.getMessage("hypnogram.noTags");
+		noTagsMessage = _("(no tags to display in the hypnogram)");
 		setBackground(view.getBackground());
 		setAutoscrolls(false);
 
@@ -210,10 +208,10 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 						if ((hypnogramLines[i].start - hypnogramLines[i-1].end) <= 1) {
 							g.setColor(Color.BLACK);
 							g.drawLine(
-							        hypnogramLines[i].start,
-							        offset+hypnogramLines[i-1].level,
-							        hypnogramLines[i].start,
-							        offset+hypnogramLines[i].level
+								hypnogramLines[i].start,
+								offset+hypnogramLines[i-1].level,
+								hypnogramLines[i].start,
+								offset+hypnogramLines[i].level
 							);
 						}
 					}
@@ -221,10 +219,10 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 				g.setColor(hypnogramLines[i].color);
 				g.drawLine(
-				        hypnogramLines[i].start,
-				        offset+hypnogramLines[i].level,
-				        hypnogramLines[i].end,
-				        offset+hypnogramLines[i].level
+					hypnogramLines[i].start,
+					offset+hypnogramLines[i].level,
+					hypnogramLines[i].end,
+					offset+hypnogramLines[i].level
 				);
 
 			}
@@ -323,13 +321,13 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 			popupMenu = new JPopupMenu();
 			ButtonGroup group = new ButtonGroup();
-			activeRadio = new JRadioButtonMenuItem(messageSource.getMessage("hypnogram.paintForActiveTag"));
+			activeRadio = new JRadioButtonMenuItem(_("For active tag only"));
 			group.add(activeRadio);
 			popupMenu.add(activeRadio);
-			allRadio = new JRadioButtonMenuItem(messageSource.getMessage("hypnogram.paintForAllTags"));
+			allRadio = new JRadioButtonMenuItem(_("For all tags"));
 			group.add(allRadio);
 			popupMenu.add(allRadio);
-			
+
 			PluginAccessClass.getGUIImpl().addToHypnogramPlotPopupMenu(popupMenu);
 
 			ActionListener actionListener = new ActionListener() {
@@ -365,9 +363,9 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 			String message;
 			if (tagDocument.getBackingFile() == null) {
-				message = messageSource.getMessage("hypnogram.hypnogramForNewTag", new Object[] { tagDocument.getName() });
+				message = _R("Hypnogram for new tag {0}", tagDocument.getName());
 			} else {
-				message = messageSource.getMessage("hypnogram.hypnogramForTag", new Object[] { tagDocument.getName() });
+				message = _R("Hypnogram for {0}", tagDocument.getName());
 			}
 
 			float time = ((float) point.x) / pixelPerSecond ;
@@ -389,7 +387,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 			return message;
 
 		} else {
-			return messageSource.getMessage("hypnogram.hypnogram");
+			return _("Hypnogram");
 		}
 	}
 

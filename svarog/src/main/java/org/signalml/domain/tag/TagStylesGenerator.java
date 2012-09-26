@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Stack;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
@@ -41,16 +42,18 @@ public class TagStylesGenerator {
 		}
 
 		this.colors = new Stack<Color>();
-		colors.push(Color.WHITE);
-		colors.push(Color.CYAN);
+
 		colors.push(Color.GRAY);
-		colors.push(Color.MAGENTA);
-		colors.push(Color.ORANGE);
 		colors.push(Color.PINK);
 		colors.push(Color.YELLOW);
+		colors.push(Color.DARK_GRAY);
+		colors.push(Color.ORANGE);
+		colors.push(Color.MAGENTA);
+		colors.push(Color.LIGHT_GRAY);
+		colors.push(Color.RED);
+		colors.push(Color.CYAN);
 		colors.push(Color.GREEN);
 		colors.push(Color.BLUE);
-
 	}
 
 	/**
@@ -66,7 +69,7 @@ public class TagStylesGenerator {
 		this.blockSize = pageSize / blocksPerPage;
 	}
 
-	protected Collection<TagStyle> getStylesFromDataBase(){
+	protected Collection<TagStyle> getStylesFromDataBase() {
 
 		//Create for a moment TagDocument so that it'll read-in database styles
 		Resource r = new ClassPathResource(STYLES_PATH);
@@ -84,7 +87,7 @@ public class TagStylesGenerator {
 			return new HashSet<TagStyle>();
 		}
 
-		return templateDocument.getTagSet().getStyles();
+		return templateDocument.getTagSet().getListOfStyles();
 
 	}
 
@@ -102,10 +105,10 @@ public class TagStylesGenerator {
 			signalSelectionType = SignalSelectionType.CHANNEL;
 
 		//generating new style for the tag
-		Color c = this.colors.pop();
+		Color c = this.getNextColor();
 		TagStyle style = new TagStyle(signalSelectionType, name, "",
-				c, Color.RED, 1);
-		logger.info("Generated color for:"+name+" = "+c);
+									  c, Color.RED, 1);
+		logger.info("Generated color for:"+name+" = "+c+" with type: "+signalSelectionType);
 		if (tagLength < 0.001)
 			style.setMarker(true);
 		else
@@ -123,6 +126,14 @@ public class TagStylesGenerator {
 		else
 			return this.tempStyles.get(name);
 
+	}
+	public Color getNextColor() {
+		if (this.colors.empty()) {
+			Random r = new Random();
+			Color c = new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255));
+			return c;
+		} else
+			return this.colors.pop();
 	}
 
 	public TagStyle getStyleFor(String name) {

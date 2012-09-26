@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.GridLayout;
@@ -23,14 +25,15 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.config.preset.BookFilterPresetManager;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.app.model.BookFilterDescriptor;
+import org.signalml.app.config.preset.managers.BookFilterPresetManager;
+import org.signalml.app.model.book.BookFilterDescriptor;
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.dialog.AbstractPresetDialog;
+import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
@@ -60,20 +63,15 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	private URL contextHelpURL = null;
 
-	public BookFilterDialog(MessageSourceAccessor messageSource, BookFilterPresetManager presetManager, Window w, boolean isModal) {
-		super(messageSource, presetManager, w, isModal);
+	public BookFilterDialog(BookFilterPresetManager presetManager, Window w, boolean isModal) {
+		super(presetManager, w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("bookFilter.title"));
+		setTitle(_("Edit book filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/editbookfilter.png"));
 		super.initialize();
-	}
-
-	@Override
-	protected boolean isTrackingChanges() {
-		return true;
 	}
 
 	@Override
@@ -97,11 +95,11 @@ public class BookFilterDialog extends AbstractPresetDialog {
 		JPanel masterSwitchPanel = new JPanel(new BorderLayout(3,3));
 
 		masterSwitchPanel.setBorder(new CompoundBorder(
-		                                    new TitledBorder(messageSource.getMessage("bookFilter.masterSwitchTitle")),
-		                                    new EmptyBorder(3,3,3,3)
-		                            ));
+										new TitledBorder(_("Filtering master switch")),
+										new EmptyBorder(3,3,3,3)
+									));
 
-		JLabel filteringEnabledLabel = new JLabel(messageSource.getMessage("bookFilter.filteringEnabled"));
+		JLabel filteringEnabledLabel = new JLabel(_("Enable book filtering"));
 
 		masterSwitchPanel.add(filteringEnabledLabel, BorderLayout.CENTER);
 		masterSwitchPanel.add(getFilteringEnabledCheckBox(), BorderLayout.EAST);
@@ -109,9 +107,9 @@ public class BookFilterDialog extends AbstractPresetDialog {
 		JPanel conditionPanel = new JPanel(new GridLayout(1,2,3,3));
 
 		conditionPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(messageSource.getMessage("bookFilter.conditionTypeTitle")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Condition type")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		conditionPanel.add(getConjunctionRadioButton());
 		conditionPanel.add(getAlternativeRadioButton());
@@ -130,7 +128,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	public BookFilterTablePanel getTablePanel() {
 		if (tablePanel == null) {
-			tablePanel = new BookFilterTablePanel(messageSource, this);
+			tablePanel = new BookFilterTablePanel(this);
 			tablePanel.setParameterFilterDialog(getParameterFilterDialog());
 			tablePanel.setTagBasedFilterDialog(getTagBasedFilterDialog());
 			tablePanel.setDelegatingFilterDialog(getDelegatingFilterDialog());
@@ -150,7 +148,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 						boolean selected = getFilteringEnabledCheckBox().isSelected();
 						if (selected != currentChain.isFilteringEnabled()) {
 							currentChain.setFilteringEnabled(selected);
-							setChanged(true);
 						}
 					}
 				}
@@ -170,7 +167,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	public JRadioButton getConjunctionRadioButton() {
 		if (conjunctionRadioButton == null) {
 
-			conjunctionRadioButton = new JRadioButton(messageSource.getMessage("bookFilter.conjunction"));
+			conjunctionRadioButton = new JRadioButton(_("Satisfy all (AND)"));
 			conjunctionRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 			getConditionButtonGroup().add(conjunctionRadioButton);
 
@@ -183,7 +180,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 						if (currentChain.isAlternative()) {
 							currentChain.setAlternative(false);
-							setChanged(true);
 						}
 
 					}
@@ -199,7 +195,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	public JRadioButton getAlternativeRadioButton() {
 		if (alternativeRadioButton == null) {
 
-			alternativeRadioButton = new JRadioButton(messageSource.getMessage("bookFilter.alternative"));
+			alternativeRadioButton = new JRadioButton(_("Satisfy any (OR)"));
 			alternativeRadioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 			getConditionButtonGroup().add(alternativeRadioButton);
 
@@ -212,7 +208,6 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 						if (!currentChain.isAlternative()) {
 							currentChain.setAlternative(true);
-							setChanged(true);
 						}
 
 					}
@@ -271,7 +266,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 		AtomFilterChain preset = currentChain.duplicate();
 
-		Errors errors = new BindException(preset, "data");
+		ValidationErrors errors = new ValidationErrors();
 		validateDialog(preset, errors);
 
 		if (errors.hasErrors()) {
@@ -291,7 +286,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
@@ -306,14 +301,14 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	public ParameterRangeFilterDialog getParameterFilterDialog() {
 		if (parameterFilterDialog == null) {
-			parameterFilterDialog = new ParameterRangeFilterDialog(messageSource, this,true);
+			parameterFilterDialog = new ParameterRangeFilterDialog(this,true);
 		}
 		return parameterFilterDialog;
 	}
 
 	public TagBasedFilterDialog getTagBasedFilterDialog() {
 		if (tagBasedFilterDialog == null) {
-			tagBasedFilterDialog = new TagBasedFilterDialog(messageSource, this,true);
+			tagBasedFilterDialog = new TagBasedFilterDialog(this,true);
 			tagBasedFilterDialog.setFileChooser(getFileChooser());
 		}
 		return tagBasedFilterDialog;
@@ -321,7 +316,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 
 	public DelegatingFilterDialog getDelegatingFilterDialog() {
 		if (delegatingFilterDialog == null) {
-			delegatingFilterDialog = new DelegatingFilterDialog(messageSource,this,true);
+			delegatingFilterDialog = new DelegatingFilterDialog(this,true);
 			delegatingFilterDialog.setFileChooser(getFileChooser());
 		}
 		return delegatingFilterDialog;

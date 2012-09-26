@@ -24,10 +24,10 @@ public class ColorConverter implements SingleValueConverter {
 	@Override
 	public Object fromString(String s) {
 		return new Color(
-		               Integer.parseInt(s.substring(0, 2), 16),
-		               Integer.parseInt(s.substring(2, 4), 16),
-		               Integer.parseInt(s.substring(4, 6), 16)
-		       );
+				   Integer.parseInt(s.substring(0, 2), 16),
+				   Integer.parseInt(s.substring(2, 4), 16),
+				   Integer.parseInt(s.substring(4, 6), 16)
+			   );
 		//TODO maybe throw an error when s has more than 6 elements
 		// and/or when one of numbers is negative
 	}

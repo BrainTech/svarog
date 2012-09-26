@@ -28,18 +28,35 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 		this.presetManager.addPresetManagerListener(this);
 	}
 
+	/**
+	 * Returns if the first element (e.g. 'choose an item') is showed
+	 * in the combo box.
+	 * @return true if it should be shown, false otherwise
+	 */
+	protected boolean isChooseTitleShowed() {
+		if (chooseTitle == null)
+			return false;
+		return true;
+	}
+
 	@Override
 	public int getSize() {
-		return presetManager.getPresetCount() + 1;
+		int size = presetManager.getPresetCount();
+		if (isChooseTitleShowed())
+			size += 1;
+		return size;
 	}
 
 	@Override
 	public Object getElementAt(int index) {
-		if (index == 0) {
-			return chooseTitle;
-		} else {
-			return presetManager.getPresetAt(index-1);
+		if (isChooseTitleShowed()) {
+			if (index == 0)
+				return chooseTitle;
+			else
+				return presetManager.getPresetAt(index-1);
 		}
+		else
+			return presetManager.getPresetAt(index);
 	}
 
 	@Override
@@ -50,6 +67,7 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 	@Override
 	public void setSelectedItem(Object anItem) {
 		selectedItem = anItem;
+		fireContentsChanged(this, 0, getSize());
 	}
 
 	@Override
@@ -59,17 +77,17 @@ public class PresetComboBoxModel extends AbstractListModel implements ComboBoxMo
 
 	@Override
 	public void presetAdded(PresetManagerEvent ev) {
-		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);
+		fireContentsChanged(this, 1, getSize());
 	}
 
 	@Override
 	public void presetRemoved(PresetManagerEvent ev) {
-		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);
+		fireContentsChanged(this, 1, getSize());
 	}
 
 	@Override
 	public void presetReplaced(PresetManagerEvent ev) {
-		fireContentsChanged(this, 1, presetManager.getPresetCount()+1);
+		fireContentsChanged(this, 1, getSize());
 	}
 
 }

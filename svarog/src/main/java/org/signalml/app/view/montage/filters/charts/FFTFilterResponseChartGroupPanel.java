@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.montage.filters.charts;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.app.view.montage.filters.charts.elements.FFTFrequencyResponseChartPanel;
 import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
 import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
@@ -14,7 +16,6 @@ import java.util.List;
 import javax.swing.JPanel;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * This panel represents a panel containing all chart-connected components
@@ -40,22 +41,20 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 * @param currentFilter the filter to be visualized
 	 */
-	public FFTFilterResponseChartGroupPanel(MessageSourceAccessor messageSource, FFTSampleFilter currentFilter) {
-		super(messageSource, currentFilter);
+	public FFTFilterResponseChartGroupPanel(FFTSampleFilter currentFilter) {
+		super(currentFilter);
 	}
 
 	@Override
 	protected JPanel createChartGroupPanel() {
-		frequencyResponseChartPanel = new FFTFrequencyResponseChartPanel(messageSource);
+		frequencyResponseChartPanel = new FFTFrequencyResponseChartPanel();
 
 		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
 		chartsList.add(frequencyResponseChartPanel);
 
-		chartPanelWithSpinner = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, messageSource.getMessage("editSampleFilter.graphFrequencySpinnerLabel"));
+		chartPanelWithSpinner = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, _("Maximum graph frequency [Hz]"));
 
 		return chartPanelWithSpinner;
 	}
@@ -147,7 +146,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 			int index;
 			for (frequency=lowFrequency; frequency<=limit; frequency += frequencyStepSize) {
 
-				index = (int) (frequency / frequencyStepSize);
+				index = (int)(frequency / frequencyStepSize);
 				coefficients[index] = coefficient;
 
 			}
@@ -168,7 +167,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 
 	@Override
 	protected String getChartGroupPanelTitle() {
-		return messageSource.getMessage("editFFTSampleFilter.graphPanelTitle");
+		return _("Filter design graph");
 	}
 
 }

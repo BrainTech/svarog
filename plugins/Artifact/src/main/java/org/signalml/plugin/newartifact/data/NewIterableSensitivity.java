@@ -116,7 +116,8 @@ public class NewIterableSensitivity implements IterableNumericParameter {
 
 	@Override
 	public Object[] getArguments() {
-		return artifactType.getArguments();
+		return new Object[0];
+		//return artifactType.getArguments();
 	}
 
 	@Override
@@ -126,7 +127,8 @@ public class NewIterableSensitivity implements IterableNumericParameter {
 
 	@Override
 	public String getDefaultMessage() {
-		return artifactType.getDefaultMessage();
+		return ""; //TODO
+		//return artifactType.getDefaultMessage();
 	}
 
 	@Override

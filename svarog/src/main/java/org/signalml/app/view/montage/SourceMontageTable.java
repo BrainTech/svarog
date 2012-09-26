@@ -15,13 +15,13 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.signalml.app.montage.SourceMontageTableModel;
+import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.element.ChannelComboBox;
-import org.signalml.app.view.element.GrayTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.SourceMontageTableTransferHandler;
 import org.signalml.domain.montage.SourceChannel;
-import org.springframework.context.support.MessageSourceAccessor;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The table which allows to edit the labels and functions of
@@ -44,7 +44,6 @@ public class SourceMontageTable extends JTable {
 	 * the default serialization constant
 	 */
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * the {@link TablePopupMenuProvider popup menu provider} for this table
 	 */
@@ -62,9 +61,8 @@ public class SourceMontageTable extends JTable {
 	 * Multiple rows of this table can be selected but the columns
 	 * can not be selected at all.
 	 * @param model the {@link SourceMontageTableModel model} for this table
-	 * @param messageSource the source of messages (labels)
 	 */
-	public SourceMontageTable(SourceMontageTableModel model, MessageSourceAccessor messageSource) {
+	public SourceMontageTable(SourceMontageTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
@@ -72,31 +70,16 @@ public class SourceMontageTable extends JTable {
 
 		TableColumn tc;
 
-		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
-		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
-		channelTableCellRenderer.setMessageSource(messageSource);
-
-		tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
-		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-		tc.setCellRenderer(grayIneditableTableCellRenderer);
+		tc = createIndexTableColumn(model);
 		columnModel.addColumn(tc);
 
-		tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
-		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+		tc = createLabelTableColumn(model);
 		columnModel.addColumn(tc);
 
-		tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
-		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
-		tc.setCellRenderer(channelTableCellRenderer);
-		ChannelComboBox channelComboBox = new ChannelComboBox(messageSource);
-		channelComboBox.setModel(model.getChannelListModel());
-		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
-		channelCellEditor.setClickCountToStart(2);
-		tc.setCellEditor(channelCellEditor);
+		tc = getFunctionTableColumn(model);
 		columnModel.addColumn(tc);
 
 		setColumnModel(columnModel);
-
 		setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
 		addMouseListener(new MouseAdapter() {
@@ -111,7 +94,6 @@ public class SourceMontageTable extends JTable {
 					}
 				}
 			}
-
 		});
 
 		getTableHeader().setReorderingAllowed(false);
@@ -120,6 +102,64 @@ public class SourceMontageTable extends JTable {
 		setDragEnabled(true);
 		setFillsViewportHeight(true);
 
+	}
+
+	/**
+	 * Creates and returns a {@link TableColumn} in which channels indices
+	 * are shown.
+	 * @param model the model of this {@link JTable}
+	 * @return the {@link TableColumn} showing the channel indices
+	 */
+	protected TableColumn createIndexTableColumn(SourceMontageTableModel model) {
+		TableColumn tc = new TableColumn(SourceMontageTableModel.INDEX_COLUMN, 100);
+		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+
+		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
+		tc.setCellRenderer(grayIneditableTableCellRenderer);
+		return tc;
+	}
+
+	/**
+	 * Creates and returns a {@link TableColumn} in which channels labels
+	 * are shown.
+	 * @param model the model of this {@link JTable}
+	 * @return the {@link TableColumn} showing the channel labels
+	 */
+	protected TableColumn createLabelTableColumn(SourceMontageTableModel model) {
+		TableColumn tc = new TableColumn(SourceMontageTableModel.LABEL_COLUMN, 200);
+		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+
+		ChannelComboBox channelLabelComboBox = new ChannelComboBox();
+		channelLabelComboBox.setModel(model.getChannelsListModel());
+		channelLabelComboBox.setEditable(true);
+
+		DefaultCellEditor channelLabelCellEditor = new DefaultCellEditor(channelLabelComboBox);
+		channelLabelCellEditor.setClickCountToStart(2);
+		tc.setCellEditor(channelLabelCellEditor);
+
+		return tc;
+	}
+
+	/**
+	 * Creates and returns a {@link TableColumn} in which channels functions
+	 * are shown.
+	 * @param model the model of this {@link JTable}
+	 * @return the {@link TableColumn} showing the channel functions
+	 */
+	protected TableColumn getFunctionTableColumn(SourceMontageTableModel model) {
+		TableColumn tc = new TableColumn(SourceMontageTableModel.FUNCTION_COLUMN, 200);
+		tc.setHeaderValue(model.getColumnName(tc.getModelIndex()));
+
+		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
+		tc.setCellRenderer(channelTableCellRenderer);
+
+		ChannelComboBox channelComboBox = new ChannelComboBox();
+		channelComboBox.setModel(model.getChannelFunctionsListModel());
+		DefaultCellEditor channelCellEditor = new DefaultCellEditor(channelComboBox);
+		channelCellEditor.setClickCountToStart(2);
+		tc.setCellEditor(channelCellEditor);
+
+		return tc;
 	}
 
 	/* (non-Javadoc)
@@ -145,7 +185,7 @@ public class SourceMontageTable extends JTable {
 	/**
 	 * Gets the {@link TablePopupMenuProvider popup menu provider} for this
 	 * table.
-	 * 
+	 *
 	 * @return the {@link TablePopupMenuProvider popup menu provider} for this
 	 *         table
 	 */
@@ -156,7 +196,7 @@ public class SourceMontageTable extends JTable {
 	/**
 	 * Sets the {@link TablePopupMenuProvider popup menu provider} for this
 	 * table.
-	 * 
+	 *
 	 * @param popupMenuProvider
 	 *            the new {@link TablePopupMenuProvider popup menu provider} for
 	 *            this table
@@ -164,5 +204,4 @@ public class SourceMontageTable extends JTable {
 	public void setPopupMenuProvider(TablePopupMenuProvider popupMenuProvider) {
 		this.popupMenuProvider = popupMenuProvider;
 	}
-
 }

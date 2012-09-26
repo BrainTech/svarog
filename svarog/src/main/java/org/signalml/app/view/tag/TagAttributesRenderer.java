@@ -60,7 +60,7 @@ public class TagAttributesRenderer extends JComponent {
 	/**
 	 * Stroke used to border the filled rectangle.
 	 */
-	private static final BasicStroke ATTRIBUTES_BORDER_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[]{3, 3}, 3F);
+	private static final BasicStroke ATTRIBUTES_BORDER_STROKE = new BasicStroke(1F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, new float[] {3, 3}, 3F);
 
 	/**
 	 * Returns the attributes renderer for the given tag.

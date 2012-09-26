@@ -34,11 +34,11 @@ public class RandomBookBuilder implements BookBuilder {
 	}
 
 	public static RandomBookBuilder getInstance() {
-		if (null == sharedInstance) {
-		    synchronized (RandomBookBuilder.class) {
-		        if (null == sharedInstance)
-		            sharedInstance = new RandomBookBuilder();
-		    }
+		if (sharedInstance == null) {
+			synchronized (RandomBookBuilder.class) {
+				if (sharedInstance == null)
+					sharedInstance = new RandomBookBuilder();
+			}
 		}
 
 		return sharedInstance;
@@ -78,11 +78,11 @@ public class RandomBookBuilder implements BookBuilder {
 			}
 
 			/*
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 0, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 0, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 2560/2-1, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 2560/2-1, 0) );
-			segment1[i].addAtom( segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560/2, 100, 2560/4, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 0, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 0, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560-1, 100, 2560/2-1, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 0, 100, 2560/2-1, 0) );
+			segment1[i].addAtom(segment1[i].createAtom(StandardBookAtom.GABORWAVE_IDENTITY, 0, 100, 100, 2560/2, 100, 2560/4, 0) );
 			 */
 		}
 
@@ -155,18 +155,18 @@ public class RandomBookBuilder implements BookBuilder {
 	private StandardBookAtom createRandomAtom(Random random, int iteration, float samplingFrequency, int segmentLength) {
 
 		DefaultBookAtom atom = new DefaultBookAtom(
-		        samplingFrequency,
-		        segmentLength,
-		        StandardBookAtom.GABORWAVE_IDENTITY,
-		        iteration,
-		        (float)(100 * Math.abs(random.nextDouble())),
-		        //(int) ( (segmentLength/2) * Math.abs( random.nextDouble() ) ),
-		        2560/2-1,
-		        //(int) (segmentLength * Math.abs( random.nextDouble() ) ),
-		        2560-1,
-		        (int)(segmentLength * Math.abs(random.nextDouble())),
-		        (float)(100 * Math.abs(random.nextDouble())),
-		        (float)(3.14 * random.nextDouble())
+			samplingFrequency,
+			segmentLength,
+			StandardBookAtom.GABORWAVE_IDENTITY,
+			iteration,
+			(float)(100 * Math.abs(random.nextDouble())),
+			//(int) ( (segmentLength/2) * Math.abs( random.nextDouble() ) ),
+			2560/2-1,
+			//(int) (segmentLength * Math.abs( random.nextDouble() ) ),
+			2560-1,
+			(int)(segmentLength * Math.abs(random.nextDouble())),
+			(float)(100 * Math.abs(random.nextDouble())),
+			(float)(3.14 * random.nextDouble())
 		);
 
 		return atom;

@@ -18,7 +18,7 @@ import javax.swing.border.TitledBorder;
 /**
  * Titled border which can contain the closing cross at the top right corner
  * (if {@code hasCloseCross==true}).
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
@@ -65,30 +65,30 @@ public class TitledCrossBorder extends TitledBorder {
 	 */
 	@Override
 	public void paintBorder(Component c, Graphics gOrig, int x, int y,
-			int width, int height) {
+							int width, int height) {
 		super.paintBorder(c, gOrig, x, y, width, height);
 
 		if (hasCloseCross) {
 			Graphics2D g = (Graphics2D) gOrig;
 
 			Object oldHint = g
-					.getRenderingHint(RenderingHints.KEY_ANTIALIASING);
+							 .getRenderingHint(RenderingHints.KEY_ANTIALIASING);
 			Color oldColor = g.getColor();
 			Stroke oldStroke = g.getStroke();
 			try {
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-						RenderingHints.VALUE_ANTIALIAS_ON);
+								   RenderingHints.VALUE_ANTIALIAS_ON);
 				g.setColor(Color.RED);
 				g.setStroke(new BasicStroke(3F, BasicStroke.CAP_ROUND,
-						BasicStroke.JOIN_BEVEL));
+											BasicStroke.JOIN_BEVEL));
 				g.drawLine(width
-						- (CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.width + 1),
-						CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.height - 1, width
-								- (1 + CLOSE_CROSS_OFFSET), CLOSE_CROSS_OFFSET);
+						   - (CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.width + 1),
+						   CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.height - 1, width
+						   - (1 + CLOSE_CROSS_OFFSET), CLOSE_CROSS_OFFSET);
 				g.drawLine(width
-						- (CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.width + 1),
-						CLOSE_CROSS_OFFSET, width - (1 + CLOSE_CROSS_OFFSET),
-						CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.height - 1);
+						   - (CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.width + 1),
+						   CLOSE_CROSS_OFFSET, width - (1 + CLOSE_CROSS_OFFSET),
+						   CLOSE_CROSS_OFFSET + CLOSE_CROSS_SIZE.height - 1);
 			} finally {
 				g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, oldHint);
 				g.setColor(oldColor);

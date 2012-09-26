@@ -716,13 +716,13 @@ public class Base64 {
 			read = reverseBase64Chars[(byte)read];
 			if (throwExceptions && (read == NON_BASE_64 || (numPadding > 0 && read > NON_BASE_64))) {
 				throw new Base64DecodingException(
-				        MessageFormat.format(
-				                "unexpectedchar",
-				                (Object[])new String[] {
-				                        "'" + (char)read + "' (0x" + Integer.toHexString(read) + ")"
-				                }
-				        ),
-				        (char)read
+					MessageFormat.format(
+						"unexpectedchar",
+						(Object[])new String[] {
+							"'" + (char)read + "' (0x" + Integer.toHexString(read) + ")"
+						}
+					),
+					(char)read
 				);
 			}
 			if (read == NON_BASE_64_PADDING) {
@@ -822,7 +822,7 @@ public class Base64 {
 		// we must read at least two bytes to be able to output anything
 		boolean done = false;
 		while (!done && (inBuffer[0] = readBase64(in, throwExceptions)) != END_OF_INPUT
-		                && (inBuffer[1] = readBase64(in, throwExceptions)) != END_OF_INPUT) {
+				&& (inBuffer[1] = readBase64(in, throwExceptions)) != END_OF_INPUT) {
 			// Fill the buffer
 			inBuffer[2] = readBase64(in, throwExceptions);
 			inBuffer[3] = readBase64(in, throwExceptions);

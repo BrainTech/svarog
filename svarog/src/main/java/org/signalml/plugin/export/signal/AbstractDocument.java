@@ -20,7 +20,7 @@ import org.signalml.plugin.export.view.DocumentView;
  * <li>a {@link DocumentView view} for this document - can be get and set</li>
  * <li>a support for property changes - allows to add and remove listeners</li>
  * </ul>
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractDocument implements Document {
@@ -70,10 +70,10 @@ public abstract class AbstractDocument implements Document {
 		if (!dependants.contains(document)) {
 			dependants.add(document);
 			pcSupport.fireIndexedPropertyChange(
-			        DEPENDENT_DOCUMENTS_PROPERTY,
-			        dependants.indexOf(document),
-			        null,
-			        document
+				DEPENDENT_DOCUMENTS_PROPERTY,
+				dependants.indexOf(document),
+				null,
+				document
 			);
 		}
 	}
@@ -84,10 +84,10 @@ public abstract class AbstractDocument implements Document {
 		if (index >= 0) {
 			dependants.remove(document);
 			pcSupport.fireIndexedPropertyChange(
-			        DEPENDENT_DOCUMENTS_PROPERTY,
-			        index,
-			        document,
-			        null
+				DEPENDENT_DOCUMENTS_PROPERTY,
+				index,
+				document,
+				null
 			);
 		}
 	}
@@ -127,4 +127,9 @@ public abstract class AbstractDocument implements Document {
 		return pcSupport.getPropertyChangeListeners();
 	}
 
+	@Override
+	public void setActive(boolean active) {
+		//if anything should be done after this state change
+		//this method should be overriden.
+	}
 }

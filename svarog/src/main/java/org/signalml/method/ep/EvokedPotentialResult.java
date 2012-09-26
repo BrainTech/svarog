@@ -5,6 +5,8 @@
 package org.signalml.method.ep;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /** EvokedPotentialResult
  *
@@ -22,14 +24,18 @@ public class EvokedPotentialResult implements Serializable {
 
 	private float samplingFrequency;
 
+	/**
+	 * Channel labels.
+	 */
 	private String[] labels;
-	private double[][] averageSamples;
+	private List<double[][]> averageSamples = new ArrayList<double[][]>();;
 
-	private int skippedCount;
-	private int averagedCount;
+	private List<Integer> unusableSegmentsCount = new ArrayList<Integer>();
+	private List<Integer> averagedSegmentsCount = new ArrayList<Integer>();
+	private List<Integer> artifactRejectedSegmentsCount = new ArrayList<Integer>();
 
-	private double secondsBefore;
-	private double secondsAfter;
+	private double startTime;
+	private double segmentLength;
 
 	public EvokedPotentialResult(EvokedPotentialData data) {
 		this.data = data;
@@ -71,44 +77,57 @@ public class EvokedPotentialResult implements Serializable {
 		this.labels = labels;
 	}
 
-	public double[][] getAverageSamples() {
+	public List<double[][]> getAverageSamples() {
 		return averageSamples;
 	}
 
 	public void setAverageSamples(double[][] averageSamples) {
-		this.averageSamples = averageSamples;
+		this.averageSamples = new ArrayList<double[][]>();
+		this.averageSamples.add(averageSamples);
 	}
 
-	public int getSkippedCount() {
-		return skippedCount;
+	public void addAverageSamples(double[][] averageSamples) {
+		this.averageSamples.add(averageSamples);
 	}
 
-	public void setSkippedCount(int skippedCount) {
-		this.skippedCount = skippedCount;
+	public List<Integer> getUnusableSegmentsCount() {
+		return unusableSegmentsCount;
 	}
 
-	public int getAveragedCount() {
-		return averagedCount;
+	public void setUnusableSegmentsCount(List<Integer> unusableSegmentsCount) {
+		this.unusableSegmentsCount = unusableSegmentsCount;
 	}
 
-	public void setAveragedCount(int averagedCount) {
-		this.averagedCount = averagedCount;
+	public List<Integer> getAveragedSegmentsCount() {
+		return averagedSegmentsCount;
 	}
 
-	public double getSecondsBefore() {
-		return secondsBefore;
+	public void setAveragedSegmentsCount(List<Integer> averagedSegmentsCount) {
+		this.averagedSegmentsCount = averagedSegmentsCount;
 	}
 
-	public void setSecondsBefore(double secondsBefore) {
-		this.secondsBefore = secondsBefore;
+	public List<Integer> getArtifactRejectedSegmentsCount() {
+		return artifactRejectedSegmentsCount;
 	}
 
-	public double getSecondsAfter() {
-		return secondsAfter;
+	public void setArtifactRejectedSegmentsCount(List<Integer> artifactRejectedSegmentsCount) {
+		this.artifactRejectedSegmentsCount = artifactRejectedSegmentsCount;
 	}
 
-	public void setSecondsAfter(double secondsAfter) {
-		this.secondsAfter = secondsAfter;
+	public double getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(double startTime) {
+		this.startTime = startTime;
+	}
+
+	public double getSegmentLength() {
+		return segmentLength;
+	}
+
+	public void setSegmentLength(double segmentLength) {
+		this.segmentLength = segmentLength;
 	}
 
 }

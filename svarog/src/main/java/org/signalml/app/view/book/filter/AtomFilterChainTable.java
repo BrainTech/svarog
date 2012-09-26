@@ -14,9 +14,8 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableColumnModel;
 
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.element.ResolvableTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.ResolvableTableCellRenderer;
 import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** AtomFilterChainTable
  *
@@ -29,7 +28,7 @@ public class AtomFilterChainTable extends JTable {
 
 	private TablePopupMenuProvider popupMenuProvider;
 
-	public AtomFilterChainTable(AtomFilterChainTableModel model, MessageSourceAccessor messageSource) {
+	public AtomFilterChainTable(AtomFilterChainTableModel model) {
 
 		super(model, (TableColumnModel) null);
 
@@ -50,7 +49,7 @@ public class AtomFilterChainTable extends JTable {
 
 		});
 
-		setDefaultRenderer(MessageSourceResolvable.class, new ResolvableTableCellRenderer(messageSource));
+		setDefaultRenderer(MessageSourceResolvable.class, new ResolvableTableCellRenderer());
 
 		getTableHeader().setReorderingAllowed(false);
 

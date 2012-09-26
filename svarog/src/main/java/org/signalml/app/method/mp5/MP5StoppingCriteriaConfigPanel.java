@@ -3,6 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -16,11 +18,12 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.common.components.CompactButton;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
-import org.signalml.plugin.export.view.AbstractDialog;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5StoppingCriteriaConfigPanel
@@ -31,16 +34,13 @@ import org.springframework.validation.Errors;
 public class MP5StoppingCriteriaConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private AbstractDialog owner;
 
 	private JSpinner maxIterationCountSpinner;
 	private JSpinner energyPercentSpinner;
 
-	public MP5StoppingCriteriaConfigPanel(MessageSourceAccessor messageSource, AbstractDialog owner) {
+	public MP5StoppingCriteriaConfigPanel(AbstractDialog owner) {
 		super();
-		this.messageSource = messageSource;
 		this.owner = owner;
 		initialize();
 	}
@@ -48,8 +48,8 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.stoppingCriteriaTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Stopping criteria")),
+			new EmptyBorder(3,3,3,3)
 		);
 
 		setBorder(border);
@@ -59,39 +59,39 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel maxIterationCountLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.maxIterationCount"));
-		JLabel energyPercentLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.energyPercent"));
+		JLabel maxIterationCountLabel = new JLabel(_("Max iterations"));
+		JLabel energyPercentLabel = new JLabel(_("Energy percent"));
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 
-		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
-		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton(messageSource, owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
+		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
+		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxIterationCountLabel)
-		        .addComponent(energyPercentLabel)
+			layout.createParallelGroup()
+			.addComponent(maxIterationCountLabel)
+			.addComponent(energyPercentLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(glue1)
-		        .addComponent(glue2)
+			layout.createParallelGroup()
+			.addComponent(glue1)
+			.addComponent(glue2)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMaxIterationCountSpinner())
-		        .addComponent(getEnergyPercentSpinner())
+			layout.createParallelGroup()
+			.addComponent(getMaxIterationCountSpinner())
+			.addComponent(getEnergyPercentSpinner())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxIterationCountHelpButton)
-		        .addComponent(energyPercentHelpButton)
+			layout.createParallelGroup()
+			.addComponent(maxIterationCountHelpButton)
+			.addComponent(energyPercentHelpButton)
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -99,20 +99,20 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(maxIterationCountLabel)
-				.addComponent(glue1)
-				.addComponent(getMaxIterationCountSpinner())
-				.addComponent(maxIterationCountHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(maxIterationCountLabel)
+			.addComponent(glue1)
+			.addComponent(getMaxIterationCountSpinner())
+			.addComponent(maxIterationCountHelpButton)
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.CENTER)
-				.addComponent(energyPercentLabel)
-				.addComponent(glue2)
-				.addComponent(getEnergyPercentSpinner())
-				.addComponent(energyPercentHelpButton)
-			);
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(energyPercentLabel)
+			.addComponent(glue2)
+			.addComponent(getEnergyPercentSpinner())
+			.addComponent(energyPercentHelpButton)
+		);
 
 		layout.setVerticalGroup(vGroup);
 
@@ -121,12 +121,12 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	public JSpinner getMaxIterationCountSpinner() {
 		if (maxIterationCountSpinner == null) {
 			maxIterationCountSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                MP5Parameters.MIN_ITERATION_COUNT,
-			                MP5Parameters.MIN_ITERATION_COUNT,
-			                MP5Parameters.MAX_ITERATION_COUNT,
-			                1
-			        )
+				new SpinnerNumberModel(
+					MP5Parameters.MIN_ITERATION_COUNT,
+					MP5Parameters.MIN_ITERATION_COUNT,
+					MP5Parameters.MAX_ITERATION_COUNT,
+					1
+				)
 			);
 			maxIterationCountSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			maxIterationCountSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
@@ -139,12 +139,12 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 	public JSpinner getEnergyPercentSpinner() {
 		if (energyPercentSpinner == null) {
 			energyPercentSpinner = new JSpinner(
-			        new SpinnerNumberModel(
-			                ((double) MP5Parameters.MIN_ENERGY_PERCENT),
-			                ((double) MP5Parameters.MIN_ENERGY_PERCENT),
-			                ((double) MP5Parameters.MAX_ENERGY_PERCENT),
-			                0.1d
-			        )
+				new SpinnerNumberModel(
+					((double) MP5Parameters.MIN_ENERGY_PERCENT),
+					((double) MP5Parameters.MIN_ENERGY_PERCENT),
+					((double) MP5Parameters.MAX_ENERGY_PERCENT),
+					0.1d
+				)
 			);
 			energyPercentSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
 			energyPercentSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
@@ -167,7 +167,7 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		// nothing to do
 

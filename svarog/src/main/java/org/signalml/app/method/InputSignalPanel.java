@@ -3,6 +3,8 @@
  */
 package org.signalml.app.method;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -13,7 +15,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** InputSignalPanel
  *
@@ -24,14 +25,11 @@ public class InputSignalPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private JTextField signalTextField;
 	private JButton montageButton;
 
-	public InputSignalPanel(MessageSourceAccessor messageSource) {
+	public InputSignalPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -40,8 +38,8 @@ public class InputSignalPanel extends JPanel {
 		setLayout(new BorderLayout(3,3));
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("method.dialog.inputData")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Input data")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

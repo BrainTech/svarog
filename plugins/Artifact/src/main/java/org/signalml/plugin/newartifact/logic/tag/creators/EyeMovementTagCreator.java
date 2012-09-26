@@ -41,13 +41,13 @@ public class EyeMovementTagCreator extends AbstractNewArtifactTagCreator
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(EyeMovementTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(EyeMovementTagCreator.CREATOR_TYPE) / 100.0;
 		final double factor = EyeMovementTagCreator.FACTOR_A + sensitivity
-				      * (EyeMovementTagCreator.FACTOR_B - EyeMovementTagCreator.FACTOR_A);
+							  * (EyeMovementTagCreator.FACTOR_B - EyeMovementTagCreator.FACTOR_A);
 		final double treshold = EyeMovementTagCreator.TRESHOLD_A + sensitivity
-					* (EyeMovementTagCreator.TRESHOLD_B - EyeMovementTagCreator.TRESHOLD_A);
+								* (EyeMovementTagCreator.TRESHOLD_B - EyeMovementTagCreator.TRESHOLD_A);
 		final double absTreshold = EyeMovementTagCreator.TRESHOLD_ABS_A + sensitivity
-					   * (EyeMovementTagCreator.TRESHOLD_ABS_B - EyeMovementTagCreator.TRESHOLD_ABS_A);
+								   * (EyeMovementTagCreator.TRESHOLD_ABS_B - EyeMovementTagCreator.TRESHOLD_ABS_A);
 
 		List<Integer> tags = new LinkedList<Integer>();
 		double source[][] = data.source;
@@ -67,8 +67,8 @@ public class EyeMovementTagCreator extends AbstractNewArtifactTagCreator
 
 				if (i < blockCount - 1) {
 					if (this.checkTagCondition(source,
-								   this.findLocalMin(source, ((i + 1) << 2) + 3, 0, 3),
-								   i + 1, treshold + factor, absTreshold)) {
+											   this.findLocalMin(source, ((i + 1) << 2) + 3, 0, 3),
+											   i + 1, treshold + factor, absTreshold)) {
 						tags.add(i + 1);
 					}
 				}
@@ -94,10 +94,10 @@ public class EyeMovementTagCreator extends AbstractNewArtifactTagCreator
 	}
 
 	private boolean checkTagCondition(double source[][], int channel, int block,
-					  double treshold, double absTreshold) {
+									  double treshold, double absTreshold) {
 		double parameterMin = source[channel][(block << 2) + 3];
 		return (parameterMin < treshold &&
-			NewArtifactVerticalMaxHelper.GetVMax(source, channel + (block << 2)) > absTreshold);
+				NewArtifactVerticalMaxHelper.GetVMax(source, channel + (block << 2)) > absTreshold);
 	}
 
 }

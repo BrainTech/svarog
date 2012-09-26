@@ -31,7 +31,7 @@ public class ExamplePlugin implements Plugin {
 	 * the access to {@link SvarogAccessChangeSupport listening} on changes
 	 */
 	SvarogAccessChangeSupport changeSupport;
-	
+
 	/**
 	 * This function is called just after this plug-in is loaded.
 	 * Here should:
@@ -49,7 +49,7 @@ public class ExamplePlugin implements Plugin {
 		changeSupport = access.getChangeSupport();
 		initialize();
 	}
-	
+
 	/**
 	 * Creates and adds the tag sub-menu.
 	 * This menu contains 3 buttons:
@@ -60,16 +60,16 @@ public class ExamplePlugin implements Plugin {
 	 * <li>{@link PreciseTagAction showing} the {@link PreciseTagDialog dialog}
 	 * that allows to create a custom (precise) tag.</li>
 	 * </ul>
-	 * Created sub-menu is added to column header pop-up menu. 
+	 * Created sub-menu is added to column header pop-up menu.
 	 */
-	private void createTagSubmenu(){
+	private void createTagSubmenu() {
 		JMenu menu = new JMenu("Tag actions");
 		menu.add(new ShowActiveTagAction(signalAccess));
 		menu.add(new ShowTagsFromActiveSignalAction(signalAccess));
 		menu.add(new PreciseTagAction(signalAccess));
 		guiAccess.addSubMenuToColumnHeaderPopupMenu(menu);
 	}
-	
+
 	/**
 	 * Adds elements to the GUI:
 	 * <ul>
@@ -80,19 +80,19 @@ public class ExamplePlugin implements Plugin {
 	 * property tab} in which first 100 samples of all channels are displayed</li>
 	 * and registers listeners.
 	 */
-	private void initialize(){
+	private void initialize() {
 		createTagSubmenu();
 		guiAccess.addButtonToSignalPlotPopupMenu(new SamplesPanelAction(signalAccess, guiAccess));
 		guiAccess.addButtonToEditMenu(new OpenBookAction(signalAccess));
 		registerListening();
 	}
-	
+
 	/**
 	 * Creates a {@link ExamplePluginListener listener} that listens on changes
 	 * associated with {@link ExportedTag tags} and {@link ExportedTagStyle
 	 * tag styles} (addition, removal, change) and registers this listener.
 	 */
-	private void registerListening(){
+	private void registerListening() {
 		ExamplePluginListener listener = new ExamplePluginListener();
 		changeSupport.addTagListener(listener);
 		changeSupport.addTagStyleListener(listener);

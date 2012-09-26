@@ -12,11 +12,10 @@ public class WignerMap {
 	private static final double EPS=1.0e-13;
 	private static final double PI2M=2.0*Math.PI;
 	private double minT,maxT,minF,maxF,ATime,BTime,AFreq,BFreq;
-	private double minVal=0.0,maxVal=0.0,SamplingFreq=1.0;
+	private double minVal=0.0,maxVal=0.0;
 	private double  reconst[][]=null;
 	private double ReconstSignal[]=null;
 	private double signal[]=null;
-	private double FreqMin=0.0,FreqMax=1.0;
 	private boolean mask[]=null;
 	private int Count=0;
 
@@ -52,7 +51,7 @@ public class WignerMap {
 	}
 
 	public static void makeCosTable(double Cos[],int start,int stop,
-	                                double freq,double phase) {
+									double freq,double phase) {
 		double sinFreq,cosFreq,sinPhase,cosPhase,newCos,oldSin,oldCos;
 
 		sinFreq=Math.sin(freq);
@@ -108,8 +107,8 @@ public class WignerMap {
 						  -1.0 : 1.0)*/ (dtmp=atom.getModulus());
 				ptr[itmp]=(double)dtmp;
 			} else if (atom.getType()==StandardBookAtom.SINCOSWAVE_IDENTITY) {
-				double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
-				       phase=atom.getPhase()-freq*atom.getPosition();
+				double freq=Math.PI*2*atom.getNaturalFrequency()/atom.getBaseLength(),
+					   phase=atom.getPhase()-freq*atom.getPosition();
 
 				for (i=0,sum=0.0 ; i<DimBase ; i++) {
 					sum+=SQR(tmpsig[i]=Math.cos(freq*i+phase));
@@ -121,13 +120,13 @@ public class WignerMap {
 					ptr[i]=(double)dtmp;
 				}
 			} else {
-				double freq=Math.PI*2*atom.getFrequency()/atom.getBaseLength(),
-				       phase=atom.getPhase()-freq*atom.getPosition();
+				double freq=Math.PI*2*atom.getNaturalFrequency()/atom.getBaseLength(),
+					   phase=atom.getPhase()-freq*atom.getPosition();
 				int start=0,stop=DimBase-1;
 
 				MakeExpTable(Exp,Math.PI/SQR(atom.getScale()),
-				             (int)atom.getPosition(),
-				             start,stop);
+							 (int)atom.getPosition(),
+							 start,stop);
 
 				makeCosTable(Cos,start,stop,freq,phase);
 
@@ -214,13 +213,11 @@ public class WignerMap {
 		}
 
 		minVal=maxVal=0.0;
-		SamplingFreq=book.getSamplingFrequency();
 		int BookSize=book.getAtomCount();
 
-		SetWignerParameters();
 		for (k=0 ; k<BookSize ; k++) {
 			StandardBookAtom atom=book.getAtomAt(k);
-			AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getFrequency());
+			AddAtom(atom.getModulus(), (int)atom.getScale(), (int)atom.getPosition(), atom.getNaturalFrequency());
 		}
 
 		signal=new double[DimBase];
@@ -240,24 +237,6 @@ public class WignerMap {
 
 	public double []getReconstruction() {
 		return ReconstSignal;
-	}
-
-	private void SetWignerParameters() {
-		//minT=0; maxT=DimBase-1;
-		minF=(int)(0.5+FreqMin*(DimBase-1)/SamplingFreq);
-		maxF=(int)(0.5+FreqMax*(DimBase-1)/SamplingFreq);
-		ATime=(maxT-minT)/(SizeX-1);
-		BTime=minT;
-		AFreq=(maxF-minF)/(SizeY-1);
-		BFreq=minF;
-	}
-
-	public void SetTrueSize(double StartFreq,double StopFreq) {
-		if (StartFreq>=StopFreq) {
-			return;
-		}
-		FreqMin=StartFreq;
-		FreqMax=StopFreq;
 	}
 
 	public WignerMap(int Sx,int Sy,int minTT,int maxTT,int minFF,int maxFF) {
@@ -379,7 +358,7 @@ public class WignerMap {
 	}
 
 	private void SetExp(double sig[],double alpha,int trans,
-	                    double modulus,int Max)
+						double modulus,int Max)
 	{
 		double Const=1.65*Math.sqrt(Math.log(modulus/(2.0*EPS))/(PI2M*alpha));
 
@@ -401,7 +380,7 @@ public class WignerMap {
 		if (scale!=0) {
 			double dy=Math.PI/DimBase;
 			double alphaTime=4.0*Math.PI/SQR(scale),
-			       alphaFreq=4.0*Math.PI*SQR(dy*scale/PI2M);
+				   alphaFreq=4.0*Math.PI*SQR(dy*scale/PI2M);
 
 			alphaTime*=(ATime*ATime);
 			trans=(int) Math.round(((((double)trans)-BTime)/ATime));
@@ -449,7 +428,7 @@ public class WignerMap {
 	}
 
 	public static void MakeExpTable(double ExpTab[],double alpha,int trans,
-	                                int start,int stop)
+									int start,int stop)
 	{
 		int left,right,itmp;
 		double Factor,OldExp,ConstStep;
@@ -460,8 +439,8 @@ public class WignerMap {
 			ConstStep=SQR(Factor);
 
 			for (left=trans-1,right=trans+1 ;
-			                start<=left && right<=stop ;
-			                left--,right++)
+					start<=left && right<=stop ;
+					left--,right++)
 			{
 				OldExp*=Factor;
 				ExpTab[left]=ExpTab[right]=OldExp;

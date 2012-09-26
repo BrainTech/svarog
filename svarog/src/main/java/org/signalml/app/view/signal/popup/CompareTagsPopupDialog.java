@@ -4,6 +4,9 @@
 
 package org.signalml.app.view.signal.popup;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -26,15 +29,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.model.TagComparisonDescriptor;
+import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.TitledCrossBorder;
+import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** CompareTagsPopupDialog
  *
@@ -58,8 +60,8 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 
 	private TagComparisonDialog tagComparisonDialog;
 
-	public CompareTagsPopupDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public CompareTagsPopupDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	public SignalView getSignalView() {
@@ -94,12 +96,12 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		JPanel graphicalComparePanel = new JPanel();
 		graphicalComparePanel.setLayout(new BoxLayout(graphicalComparePanel, BoxLayout.Y_AXIS));
 		graphicalComparePanel.setBorder(new CompoundBorder(
-		                                        new TitledCrossBorder(messageSource.getMessage("compareTags.graphicalCompareTitle"), true),
-		                                        new EmptyBorder(3,3,3,3)
-		                                ));
+											new TitledCrossBorder(_("Graphical comparison"), true),
+											new EmptyBorder(3,3,3,3)
+										));
 
-		compareOnRadio = new JRadioButton(messageSource.getMessage("compareTags.graphicalCompareOn"));
-		compareOffRadio = new JRadioButton(messageSource.getMessage("compareTags.graphicalCompareOff"));
+		compareOnRadio = new JRadioButton(_("Comparison mode enabled"));
+		compareOffRadio = new JRadioButton(_("Comparison mode disabled"));
 
 		ButtonGroup compareGroup = new ButtonGroup();
 		compareGroup.add(compareOffRadio);
@@ -122,19 +124,19 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		chooseTagsPanel.setLayout(new GridLayout(cnt, 1, 3, 3));
 
 		chooseTagsPanel.setBorder(new CompoundBorder(
-		                                  new TitledBorder(messageSource.getMessage("compareTags.chooseTagsTitle")),
-		                                  new EmptyBorder(3,3,3,3)
-		                          ));
+									  new TitledBorder(_("Choose tag documents (2 required)")),
+									  new EmptyBorder(3,3,3,3)
+								  ));
 
 		checkBoxes = new JCheckBox[cnt];
 		CheckBoxCoordinator checkBoxCoordinator = new CheckBoxCoordinator();
 
 		for (int i=0; i<cnt; i++) {
-			String message;
+			final String message;
 			if (tagDocuments[i].getBackingFile() == null) {
-				message = messageSource.getMessage("activeTag.newTag", new Object[] { tagDocuments[i].getName() });
+				message = _R("New tag {0}", tagDocuments[i].getName());
 			} else {
-				message = messageSource.getMessage("activeTag.tag", new Object[] { tagDocuments[i].getName() });
+				message = tagDocuments[i].getName();
 			}
 			checkBoxes[i] = new JCheckBox(message);
 			chooseTagsPanel.add(checkBoxes[i]);
@@ -305,9 +307,9 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		private static final long serialVersionUID = 1L;
 
 		public AnalyzeAction() {
-			super(messageSource.getMessage("compareTags.analyze"));
+			super(_("Analyze tag differences"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/analyze.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("compareTags.analyzeToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Show analytical comparison summary"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

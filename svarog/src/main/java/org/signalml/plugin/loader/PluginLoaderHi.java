@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URLConnection;
 import java.net.JarURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,8 +25,8 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.log4j.Logger;
 import org.jfree.ui.FilesystemFilter;
-import org.signalml.app.logging.SvarogLogger;
-import org.signalml.app.view.ViewerElementManager;
+import org.apache.log4j.Logger;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.w3c.dom.Document;
@@ -48,7 +48,7 @@ import org.xml.sax.SAXException;
  * <li>to create the {@link PluginDialog dialog} to manage plug-in options.
  * </li>
  * </ul>
- * 
+ *
  * @author Marcin Szumski
  * @author Stanislaw Findeisen (Eisenbits)
  */
@@ -120,7 +120,7 @@ public class PluginLoaderHi {
 	 * Access to this field should be synchronized!
 	 */
 	private ArrayList<PluginHead> pluginHeads = new ArrayList<PluginHead>();
-	
+
 	/**
 	 * Tells if the plugin loading process has already started.
 	 */
@@ -131,11 +131,11 @@ public class PluginLoaderHi {
 	 * @param profileDir the profile directory
 	 */
 	public static void createInstance(File profileDir) {
-		if (null == sharedInstance) {
-		    synchronized (PluginLoaderHi.class) {
-		        if (null == sharedInstance)
-		            sharedInstance = new PluginLoaderHi(profileDir);
-		    }
+		if (sharedInstance == null) {
+			synchronized (PluginLoaderHi.class) {
+				if (sharedInstance == null)
+					sharedInstance = new PluginLoaderHi(profileDir);
+			}
 		}
 	}
 
@@ -144,8 +144,8 @@ public class PluginLoaderHi {
 	 * @return the shared instance of this loader or null (if it is not initialized yet).
 	 */
 	public static PluginLoaderHi getInstance() {
-        // This method is called from SvarogSecurityManager in privileged mode!
-        // NEVER give control to any plugin or untrusted code from here!
+		// This method is called from SvarogSecurityManager in privileged mode!
+		// NEVER give control to any plugin or untrusted code from here!
 		return sharedInstance;
 	}
 
@@ -173,7 +173,7 @@ public class PluginLoaderHi {
 	 */
 	private PluginLoaderHi(File profileDir)
 	{
-	    super();
+		super();
 
 		this.pluginsStateFile = new File(profileDir + File.separator + "pluginsState.xml");
 		this.pluginsDirectoriesFile = new File(profileDir + File.separator + "plugin-locations.xml");
@@ -184,10 +184,12 @@ public class PluginLoaderHi {
 			readPluginsState(this.pluginsStateFile);
 		} catch (Exception e) {
 			final String errorMsg = "Failed to create loader of plug-ins";
-			SvarogLogger.getSharedInstance().error(errorMsg, e);
-			logger.error(errorMsg);
+			logger.error(errorMsg, e);
 		}
 	}
+
+	final static FilenameFilter xml_file_filter =
+		new FilesystemFilter("xml", "Xml File", false);
 
 	/**
 	 * Scans the given directory to find plug-ins.
@@ -195,45 +197,30 @@ public class PluginLoaderHi {
 	 */
 	private void scanPluginDirectory(File directory) {
 		logger.debug("scanning over dir '" + directory + "'");
-		ArrayList<PluginDescription> tmpDescriptions = new ArrayList<PluginDescription>();
-		FilenameFilter filter = new FilesystemFilter("xml", "Xml File", false);
-		String[] filenames = directory.list(filter);
+		String[] filenames = directory.list(xml_file_filter);
 		for (String filename: filenames) {
-			logger.debug("scanning over '" + filename + "'");
-			PluginDescription descr = readXml(directory
-			                                  + File.separator + filename);
-			if (descr != null) {
-			    String pluginName = descr.getName();
-			    if (descriptionsByName.containsKey(pluginName)) {
-			        PluginDescription pd = descriptionsByName.get(pluginName);
-			        logger.warn("Duplicate plugin: (" + pd + ") and (" + descr + "). Skipping the latter.");
-			    } else {
-    				descriptions.add(descr);
-    				tmpDescriptions.add(descr);
-    				descriptionsByName.put(pluginName, descr);
-			    }
+			logger.debug("looking at '" + filename + "'");
+			final PluginDescription descr = readXml(directory
+													+ File.separator + filename);
+			if (descr == null || !descr.fillURL(directory)) {
+				logger.warn("Skipping faulty plugin description: '" + descr + "'");
+				continue;
 			}
-		}
 
-		for (PluginDescription descr : tmpDescriptions) {
-			PluginState state = statesByName.get(descr.getName());
-			if (state!= null && descr.isActive()) {
-				descr.setActive(state.isActive());
+			final String pluginName = descr.getName();
+			if (descriptionsByName.containsKey(pluginName)) {
+				PluginDescription first = descriptionsByName.get(pluginName);
+				logger.warn("Duplicate plugin: '" + first + "' and '" + descr + "'."
+							+ "Skipping the latter.");
+				continue;
 			}
-			String name = null;
-			if (descr.isActive()) {
-				try {
-					name = directory.toURI().toString();
-					File jarFileTmp = new File(directory, descr.getJarFile());
-					name = name.concat(descr.getJarFile());
-					if (jarFileTmp.exists() && jarFileTmp.canRead())
-					    descr.setJarFileURL(new URL(name));
-					else
-						logger.error("File (" + jarFileTmp.getAbsolutePath() + ") does not exist or can not be read.");
-				} catch (MalformedURLException e) {
-					logger.error("failed to create URL for file "+name);
-					e.printStackTrace();
-				}
+
+			descriptions.add(descr);
+			descriptionsByName.put(pluginName, descr);
+
+			final PluginState state = statesByName.get(descr.getName());
+			if (state != null && descr.isActive()) {
+				descr.setActive(state.isActive());
 			}
 		}
 	}
@@ -243,14 +230,14 @@ public class PluginLoaderHi {
 	 * the directories {@code ../plugins/}*{@code /target}
 	 * @param svarogDir the svarog base directory
 	 */
-	private void startFromSourcesAddPluginDirs(File svarogDir){
+	private void startFromSourcesAddPluginDirs(File svarogDir) {
 		File pluginsDir = new File(svarogDir + File.separator + ".." + File.separator + "plugins");
 		logger.info("trying to load plugins from '" + pluginsDir + "'");
-		if (pluginsDir.exists() && pluginsDir.canRead() && pluginsDir.isDirectory()){
+		if (pluginsDir.exists() && pluginsDir.canRead() && pluginsDir.isDirectory()) {
 			String[] pluginSrcDirsNames = pluginsDir.list();
-			for (String dirName : pluginSrcDirsNames){
+			for (String dirName : pluginSrcDirsNames) {
 				File dir = new File(pluginsDir, dirName);
-				if (dir.isDirectory()){
+				if (dir.isDirectory()) {
 					File pluginDir = new File(dir + File.separator + "target");
 					if (pluginDir.exists() && pluginDir.isDirectory() && pluginDir.canRead()) {
 						globalPluginDirectories.add(pluginDir);
@@ -269,11 +256,11 @@ public class PluginLoaderHi {
 	 * <li>from jar file.</li>
 	 * </ul>
 	 */
-	private void setGlobalPluginDir(){
+	private void setGlobalPluginDir() {
 		//hack to get the location of the jar file and add the global plugin directory
 		URL srcURL = getClass().getProtectionDomain().getCodeSource().getLocation();
 		logger.debug("svarog is loaded from '" + srcURL + "'");
-		if (srcURL.toString().endsWith("/target/classes/")){
+		if (srcURL.toString().endsWith("/target/classes/")) {
 			File svarogDirFile = _urlToFile(srcURL);
 			svarogDirFile = svarogDirFile.getParentFile().getParentFile();
 			startFromSourcesAddPluginDirs(svarogDirFile);
@@ -281,7 +268,7 @@ public class PluginLoaderHi {
 			final URLConnection connection;
 			try {
 				connection = srcURL.openConnection();
-			} catch(IOException ex) {
+			} catch (IOException ex) {
 				logger.error("failed to open connection to jar", ex);
 				return;
 			}
@@ -306,7 +293,7 @@ public class PluginLoaderHi {
 	private File _urlToFile(URL url) {
 		try {
 			return new File(url.toURI());
-		} catch(java.net.URISyntaxException ex) {
+		} catch (java.net.URISyntaxException ex) {
 			throw new RuntimeException(ex);
 		}
 	}
@@ -338,7 +325,7 @@ public class PluginLoaderHi {
 	 * create a dialog window which will be activated after clicking this button.
 	 */
 	private void addPluginOptions() {
-		ViewerElementManager manager = PluginAccessClass.getSharedInstance().getManager();
+		ViewerElementManager manager = PluginAccessClass.getManager();
 		ArrayList<PluginState> existingPluginStates = new ArrayList<PluginState>();
 		for (PluginDescription descr : descriptions) {
 			PluginState pluginState = statesByName.get(descr.getName());
@@ -352,8 +339,8 @@ public class PluginLoaderHi {
 			pluginState.setVersion(descr.getVersion());
 			pluginState.setFailedToLoad(descr.isFailedToLoad());
 		}
-		PluginDialog pluginDialog = new PluginDialog(manager.getMessageSource(), manager.getDialogParent(), true, existingPluginStates,
-		                pluginDirs);
+		PluginDialog pluginDialog = new PluginDialog(manager.getDialogParent(), true, existingPluginStates,
+				pluginDirs);
 		PluginAction action = new PluginAction(existingPluginStates);
 		action.setPluginDialog(pluginDialog);
 		manager.getToolsMenu().add(action);
@@ -390,9 +377,9 @@ public class PluginLoaderHi {
 	 */
 	public void loadPlugins()
 	{
-        synchronized (this) {
-            this.startedLoading = true;
-        }
+		synchronized (this) {
+			this.startedLoading = true;
+		}
 
 		scanPluginDirectories();
 		ClassLoader prevCL = Thread.currentThread().getContextClassLoader();
@@ -400,16 +387,16 @@ public class PluginLoaderHi {
 		createPluginHeads();
 
 		for (PluginHead head : pluginHeads) {
-		    PluginDescription descr = head.getDescription();
-		    if (! head.hasLoader()) {
-    		    head.setLoader(new PluginLoaderLo(head, prevCL));
-		    }
-		    if (! loadPlugin(head))
-		        setDependentInactive(descr);
+			PluginDescription descr = head.getDescription();
+			if (! head.hasLoader()) {
+				head.setLoader(new PluginLoaderLo(head, prevCL));
+			}
+			if (! loadPlugin(head))
+				setDependentInactive(descr);
 		}
 
 		addPluginOptions();
-		PluginAccessClass.getSharedInstance().setInitializationPhaseEnd();
+		PluginAccessClass.setInitializationPhaseEnd();
 	}
 
 	/**
@@ -417,37 +404,35 @@ public class PluginLoaderHi {
 	 * @returns true iff success
 	 */
 	protected boolean loadPlugin(PluginHead head) {
-	    PluginDescription descr = head.getDescription();
-	    PluginLoaderLo loader = head.getLoader();
-		Plugin plugin = null;
+		final PluginDescription descr = head.getDescription();
+		final PluginLoaderLo loader = head.getLoader();
+		final Plugin plugin;
 		try {
-		    logger.debug("Loading plugin: " + descr.getStartingClass());
+			logger.debug("Loading plugin " + descr.getName() +
+						 " (class " + descr.getStartingClass() + ")");
 			plugin = (Plugin)(loader.loadClass(descr.getStartingClass())).newInstance();
-		} catch(Exception exc) {
+		} catch (Exception exc) {
 			String errorMsg = "Failed to load plugin " + descr.getName() +
-					  " from file " + descr.getJarFile();
-			SvarogLogger.getSharedInstance().warning(errorMsg, exc);
+							  " from " + descr.getJarFileURL();
+			logger.error(errorMsg, exc);
+
+			descr.setActive(false);
+			descr.setFailedToLoad(true);
+
+			return false;
+		}
+
+		head.setPluginObj(plugin);
+
+		try {
+			plugin.register(new PluginAccessClass(head));
+		} catch (Throwable exc) {
+			String errorMsg = "Failed to initialize plugin " + descr.getName() +
+							  " from " + descr.getJarFileURL();
 			logger.error(errorMsg, exc);
 		}
 
-		if (plugin != null) {
-		    head.setPluginObj(plugin);
-
-			try {
-				plugin.register(PluginAccessClass.getSharedInstance());
-			} catch(Throwable exc) {
-				String errorMsg = "Failed to initialize plugin " + descr.getName() +
-					" from file " + descr.getJarFile();
-				SvarogLogger.getSharedInstance().warning(errorMsg, exc);
-				logger.error(errorMsg, exc);
-			}
-			
-			return true;
-		} else {
-			descr.setActive(false);
-			descr.setFailedToLoad(true);
-		}
-        return false;
+		return true;
 	}
 
 	/**
@@ -508,7 +493,7 @@ public class PluginLoaderHi {
 	 */
 	private void readPluginsState(File fileName) {
 		try {
-			if (fileName.exists() && fileName.canRead()){
+			if (fileName.exists() && fileName.canRead()) {
 				Element element = openXMLDocument(fileName);
 				NodeList nodeList = element.getChildNodes();
 				for (int i = 0; i < nodeList.getLength(); ++i) {
@@ -533,7 +518,7 @@ public class PluginLoaderHi {
 	public void onClose() {
 		rememberPluginsState();
 		savePluginDirectories();
-		PluginAccessClass.getSharedInstance().onClose();
+		PluginAccessClass.onClose();
 	}
 
 	/**
@@ -618,33 +603,33 @@ public class PluginLoaderHi {
 		}
 		descriptions = sorted;
 	}
-	
+
 	/**
 	 * Populates {@link #pluginHeads} from {@link #descriptions}.
 	 * Here we assume {@link #descriptions} are sorted!
 	 */
 	private void createPluginHeads() {
-	    ArrayList<PluginHead> hl = new ArrayList<PluginHead>();
+		ArrayList<PluginHead> hl = new ArrayList<PluginHead>();
 
-	    for (PluginDescription desc : this.descriptions) {
-	        if (desc.dependenciesSatisfied(descriptions) && desc.isActive()) {
-                PluginHead head = new PluginHead(desc);
-    	        List<PluginDependency> depList = desc.getDependencies();
+		for (PluginDescription desc : this.descriptions) {
+			if (desc.dependenciesSatisfied(descriptions) && desc.isActive()) {
+				PluginHead head = new PluginHead(desc);
+				List<PluginDependency> depList = desc.getDependencies();
 
-    	        for (PluginDependency dep : depList) {
-    	            String depName = dep.getName();
-    	            PluginDescription depDesc = descriptionsByName.get(depName);
-    	            if (null != depDesc)
-    	                head.addDependency(depDesc.getHead());
-    	        }
-    	        desc.setHead(head);
-    	        hl.add(head);
-	        }
-	    }
+				for (PluginDependency dep : depList) {
+					String depName = dep.getName();
+					PluginDescription depDesc = descriptionsByName.get(depName);
+					if (null != depDesc)
+						head.addDependency(depDesc.getHead());
+				}
+				desc.setHead(head);
+				hl.add(head);
+			}
+		}
 
-	    synchronized (this) {
-	        this.pluginHeads = hl;
-	    }
+		synchronized (this) {
+			this.pluginHeads = hl;
+		}
 	}
 
 	/**
@@ -702,27 +687,27 @@ public class PluginLoaderHi {
 		tmpPluginDirs.addAll(globalPluginDirectories);
 		return tmpPluginDirs;
 	}
-	
+
 	/**
 	 * Returns true iff the plugin loading process has already started.
 	 * @return {@link #startedLoading}
 	 */
 	public synchronized boolean hasStartedLoading() {
-	    return startedLoading;
+		return startedLoading;
 	}
-	
-	public boolean hasLoaded(String className) {
-	    if (! hasStartedLoading())
-	        return false;
 
-	    ArrayList<PluginHead> heads = new ArrayList<PluginHead>();
-	    synchronized (this) {
-	        heads.addAll(this.pluginHeads);
-	    }
-        for (PluginHead h : heads) {
-            if (h.containsClass(className))
-                return true;
-        }
-	    return false;
+	public boolean hasLoaded(String className) {
+		if (! hasStartedLoading())
+			return false;
+
+		ArrayList<PluginHead> heads = new ArrayList<PluginHead>();
+		synchronized (this) {
+			heads.addAll(this.pluginHeads);
+		}
+		for (PluginHead h : heads) {
+			if (h.containsClass(className))
+				return true;
+		}
+		return false;
 	}
 }

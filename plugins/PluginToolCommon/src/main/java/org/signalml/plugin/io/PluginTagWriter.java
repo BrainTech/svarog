@@ -4,16 +4,15 @@ import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeSet;
 
 import javax.swing.KeyStroke;
 
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.data.io.PluginTagWriterConfig;
 import org.signalml.plugin.data.tag.IPluginTagDef;
@@ -39,10 +38,11 @@ public class PluginTagWriter implements IPluginTagWriter {
 
 	@Override
 	public void writeTags(Collection<PluginTagGroup> tags) throws IOException,
-		SignalMLException {
+			SignalMLException {
 
-		LinkedHashMap<String, TagStyle> styles = this.createStyles(tags);
-		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags, styles));
+		TagStyles styles = this.createStyles(tags);
+		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags,
+				styles));
 
 		float pageSize = this.config.pageSize;
 		float stretchFactor = -1;
@@ -52,29 +52,34 @@ public class PluginTagWriter implements IPluginTagWriter {
 				stretchFactor = tagGroup.stretchFactor;
 			} else {
 				if (stretchFactor != tagGroup.stretchFactor) {
-					throw new SanityCheckException("Inconsistent stretchFactor " + tagGroup + " (should be: " + stretchFactor + " )");
+					throw new SanityCheckException(
+							"Inconsistent stretchFactor " + tagGroup
+									+ " (should be: " + stretchFactor + " )");
 				}
 			}
+		}
 
+		if (stretchFactor == -1) {
+			stretchFactor = 1;
 		}
 
 		StyledTagSet tagSet = new StyledTagSet(styles, documentTags, pageSize,
-						       (int)(pageSize / stretchFactor));
+				(int) (pageSize / stretchFactor));
 		TagDocument document = new TagDocument(tagSet);
 		document.setBackingFile(this.outputFile);
 		document.saveDocument();
 	}
 
-	private LinkedHashMap<String, TagStyle> createStyles(
-		Collection<PluginTagGroup> tags) {
-		LinkedHashMap<String, TagStyle> styles = new LinkedHashMap<String, TagStyle>();
+	private TagStyles createStyles(Collection<PluginTagGroup> tags) {
+		TagStyles styles = new TagStyles();
 
 		for (PluginTagGroup tagGroup : tags) {
-			TagStyle style = new TagStyle(SignalSelectionType.typeByName(tagGroup.type.getName()),
-						      tagGroup.name, tagGroup.description, FILL_COLOR,
-						      OUTLINE_COLOR, 1, null, // solid
-						      this.createKeyStroke(tagGroup), false);
-			styles.put(tagGroup.name, style);
+			TagStyle style = new TagStyle(
+					SignalSelectionType.typeByName(tagGroup.type.getName()),
+					tagGroup.name, tagGroup.description, FILL_COLOR,
+					OUTLINE_COLOR, 1, null, // solid
+					this.createKeyStroke(tagGroup), false);
+			styles.addStyle(style);
 		}
 
 		return styles;
@@ -86,26 +91,26 @@ public class PluginTagWriter implements IPluginTagWriter {
 			return null;
 		} else {
 			return name.length() == 1 ? KeyStroke.getKeyStroke(name.charAt(0))
-			       : KeyStroke.getKeyStroke("typed " + name);
+					: KeyStroke.getKeyStroke("typed " + name);
 		}
 	}
 
 	private Collection<Tag> createTags(Collection<PluginTagGroup> tags,
-					   Map<String, TagStyle> tagStyles) {
+			TagStyles tagStyles) {
 		List<Tag> l = new LinkedList<Tag>();
 		for (PluginTagGroup tagGroup : tags) {
-			TagStyle style = tagStyles.get(tagGroup.name);
+			TagStyle style = tagStyles.getStyle(tagGroup.name);
 			if (style == null) {
 				style = TagStyle.getDefault();
 			}
 
 			TreeSet<IPluginTagDef> sortedTags = new TreeSet<IPluginTagDef>(
-				new PluginTagDefRangeComparator());
+					new PluginTagDefRangeComparator());
 			sortedTags.addAll(tagGroup.tags);
 
 			for (IPluginTagDef tag : sortedTags) {
-				l.add(new Tag(style, (float) tag.getOffset(), (float) tag
-					      .getLength(), tag.getChannel()));
+				l.add(new Tag(style, tag.getOffset(), tag.getLength(), tag
+						.getChannel()));
 			}
 		}
 		return l;

@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.tag;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Color;
 import java.awt.Component;
 
@@ -12,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagStyleListCellRenderer
  *
@@ -22,23 +23,15 @@ import org.springframework.context.support.MessageSourceAccessor;
 public class TagStyleListCellRenderer extends DefaultListCellRenderer {
 
 	private static final long serialVersionUID = 1L;
-
-	private MessageSourceAccessor messageSource;
 	private String noneString;
 
 	public static final Color DISABLED_COLOR = new Color(220,220,220);
 
 	private TagIconProducer tagIconProducer;
 
-	public TagStyleListCellRenderer(MessageSourceAccessor messageSource) {
+	public TagStyleListCellRenderer() {
 		super();
-		this.messageSource = messageSource;
-
-		noneString = messageSource.getMessage("tagStyle.none");
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+		noneString = _("(none)");
 	}
 
 	public TagIconProducer getTagIconProducer() {

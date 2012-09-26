@@ -6,6 +6,7 @@ package org.signalml.plugin.loader;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,14 +42,14 @@ import org.xml.sax.SAXException;
  * </ul>
  * @author Marcin Szumski
  */
-public class PluginDescription extends PluginState{
+public class PluginDescription extends PluginState {
 	private static final Logger logger = Logger.getLogger(PluginDescription.class);
 
 	/**
 	 * File this description has been loaded from.
 	 */
 	private File descriptionFile;
-	
+
 	/**
 	 * the string with the full name of the class,
 	 * that will be loaded to register the plug-in
@@ -58,7 +59,7 @@ public class PluginDescription extends PluginState{
 	 * the name of the jar file with the plug-in
 	 */
 	private String jarFile =  null;
-	
+
 	/**
 	 * {@link #jarFile} URL.
 	 */
@@ -73,7 +74,7 @@ public class PluginDescription extends PluginState{
 	 * of the plug-in
 	 */
 	private ArrayList<PluginDependency> dependencies = new ArrayList<PluginDependency>();
-	
+
 	/**
 	 * Plugin descriptor. This helps with dependency management during loading.
 	 */
@@ -86,8 +87,8 @@ public class PluginDescription extends PluginState{
 	 * @param variable the variable to be checked
 	 * @param variableName the name of the variable
 	 */
-	private String addMissing(String missingValues, Object variable, String variableName){
-		if (variable == null){
+	private String addMissing(String missingValues, Object variable, String variableName) {
+		if (variable == null) {
 			if (missingValues.length() != 0)
 				missingValues += ", ";
 			missingValues += variableName;
@@ -101,17 +102,17 @@ public class PluginDescription extends PluginState{
 	 * @param fileName the path to an XML file with the
 	 * description of the plug-in
 	 * @throws ParserConfigurationException if a DocumentBuilder
-     * cannot be created
+	 * cannot be created
 	 * @throws SAXException if the creation of document builder fails
 	 * @throws IOException if an error while parsing the file occurs
 	 * @throws ParseException if the xml file doesn't contain all necessary
 	 * values
 	 */
 	public PluginDescription(String fileName) throws ParserConfigurationException,
-							 SAXException, IOException, ParseException {
+		SAXException, IOException, ParseException {
 		logger.info("loading description from " + fileName);
-        File descFile = new File(fileName);
-        setDescriptionFile(descFile);
+		File descFile = new File(fileName);
+		setDescriptionFile(descFile);
 
 		DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
@@ -119,7 +120,7 @@ public class PluginDescription extends PluginState{
 		Element element = document.getDocumentElement();
 		element.normalize();
 		NodeList nodeList = element.getChildNodes();
-		for (int i = 0; i < nodeList.getLength(); ++i){
+		for (int i = 0; i < nodeList.getLength(); ++i) {
 			Node node = nodeList.item(i);
 			if (node.getNodeName().equals("name"))
 				if (name == null)
@@ -160,22 +161,22 @@ public class PluginDescription extends PluginState{
 	 * Parses the subtree with dependencies starting from the given node.
 	 * @param node XML node containing the dependencies of the plug-in
 	 */
-	private void parseDependencies(Node node){
+	private void parseDependencies(Node node) {
 		NodeList nodeList = node.getChildNodes();
-		for (int i = 0; i < nodeList.getLength(); ++i){
+		for (int i = 0; i < nodeList.getLength(); ++i) {
 			Node dependencyNode = nodeList.item(i);
-			if (dependencyNode.getNodeName().equals("dependency")){
+			if (dependencyNode.getNodeName().equals("dependency")) {
 				NodeList dependencyNodeList = dependencyNode.getChildNodes();
 				String name = null;
 				String minimumVersion = null;
-				for (int j = 0; j < dependencyNodeList.getLength(); ++j){
+				for (int j = 0; j < dependencyNodeList.getLength(); ++j) {
 					Node nodeTmp = dependencyNodeList.item(j);
 					if (nodeTmp.getNodeName().equals("name"))
 						name = nodeTmp.getFirstChild().getNodeValue().trim();
 					else if (nodeTmp.getNodeName().equals("version"))
 						minimumVersion = nodeTmp.getFirstChild().getNodeValue().trim();
 				}
-				if (name != null && minimumVersion != null){
+				if (name != null && minimumVersion != null) {
 					PluginDependency dependency = new PluginDependency(name, minimumVersion);
 					dependencies.add(dependency);
 				}
@@ -212,8 +213,8 @@ public class PluginDescription extends PluginState{
 	 * @param descriptions the list of all descriptions of plug-ins
 	 * @return true if all dependencies satisfied, false otherwise
 	 */
-	public boolean dependenciesSatisfied(ArrayList<PluginDescription> descriptions){
-		for (PluginDependency dep : dependencies){
+	public boolean dependenciesSatisfied(ArrayList<PluginDescription> descriptions) {
+		for (PluginDependency dep : dependencies) {
 			if (!dep.satisfied(descriptions))
 			{
 				setActive(false);
@@ -229,10 +230,10 @@ public class PluginDescription extends PluginState{
 	 * @param descriptions the list of all descriptions of plug-ins
 	 * @return the created array
 	 */
-	public ArrayList<PluginDependency> findMissingDependencies(ArrayList<PluginDescription> descriptions){
+	public ArrayList<PluginDependency> findMissingDependencies(ArrayList<PluginDescription> descriptions) {
 		ArrayList<PluginDependency> missingDependencies = new ArrayList<PluginDependency>();
-		for (PluginDependency dep: dependencies){
-			if (!dep.satisfied(descriptions)){
+		for (PluginDependency dep: dependencies) {
+			if (!dep.satisfied(descriptions)) {
 				missingDependencies.add(dep);
 			}
 		}
@@ -240,9 +241,9 @@ public class PluginDescription extends PluginState{
 	}
 
 	@Override
-	public String toString(){
-	    // TODO where is this used? can you modify this string
-	    // to include description file name?
+	public String toString() {
+		// TODO where is this used? can you modify this string
+		// to include description file name?
 		return name.concat(" v").concat(versionToString());
 	}
 
@@ -253,8 +254,8 @@ public class PluginDescription extends PluginState{
 	 * @return true if this plug-in is not dependent from any plug-in from the
 	 * list, false otherwise
 	 */
-	public boolean notDependentFrom(ArrayList<PluginDescription> descriptions){
-		for (PluginDescription descr : descriptions){
+	public boolean notDependentFrom(ArrayList<PluginDescription> descriptions) {
+		for (PluginDescription descr : descriptions) {
 			if (dependentFrom(descr)) return false;
 		}
 		return true;
@@ -266,45 +267,76 @@ public class PluginDescription extends PluginState{
 	 * @return true if this plug-in depends on the given plug-in,
 	 * false otherwise
 	 */
-	public boolean dependentFrom(PluginDescription description){
-		for (PluginDependency dependency : dependencies){
+	public boolean dependentFrom(PluginDescription description) {
+		for (PluginDependency dependency : dependencies) {
 			if (dependency.getName().equals(description.getName())) return true;
 		}
 		return false;
 	}
 
 	private void setDescriptionFile(File f) {
-	    this.descriptionFile = f;
+		this.descriptionFile = f;
 	}
-	
+
 	protected void setJarFileURL(URL u) {
-	    this.jarFileURL = u;
+		this.jarFileURL = u;
 	}
-	
+
 	/**
 	 * Returns the file this description has been loaded from. May be null.
 	 * @return file this description has been loaded from (null if none)
 	 */
 	public File getDescriptionFile() {
-	    return descriptionFile;
+		return descriptionFile;
 	}
-	
+
 	/**
 	 * Returns the URL of this plugin JAR file.
 	 * @return URL of this plugin JAR file (or null)
 	 */
 	public URL getJarFileURL() {
-	    return jarFileURL;
+		return jarFileURL;
 	}
-	
+
+	/**
+	 * Set URL based on plugin description and given directory.
+	 * @return true if JAR file is found and can be read
+	 */
+	public boolean fillURL(File directory) {
+		final String name = directory.toURI().toString().concat(this.getJarFile());
+		final URL url;
+		try {
+			url = new URL(name);
+		} catch (MalformedURLException e) {
+			logger.error("failed to create URL for file "+name);
+			e.printStackTrace();
+			return false;
+		}
+
+		File file = new File(directory, this.getJarFile());
+		if (!file.exists()) {
+			logger.error("File '" + file.getAbsolutePath() +
+						 "' does not exist");
+			return false;
+		} else if (!file.canRead()) {
+			logger.error("File '" + file.getAbsolutePath() +
+						 "' cannot be read.");
+			return false;
+		} else {
+			this.setJarFileURL(url);
+			logger.info(this.toString() + " will use " + url);
+			return true;
+		}
+	}
+
 	protected List<PluginDependency> getDependencies() {
-	    return Collections.unmodifiableList(dependencies);
+		return Collections.unmodifiableList(dependencies);
 	}
-	
+
 	protected PluginHead getHead() {
-	    return pluginHead;
+		return pluginHead;
 	}
 	protected void setHead(PluginHead h) {
-	    this.pluginHead = h;
+		this.pluginHead = h;
 	}
 }

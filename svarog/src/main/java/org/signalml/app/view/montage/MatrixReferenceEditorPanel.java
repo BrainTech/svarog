@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -11,10 +13,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.montage.ReferenceTableModel;
+import org.signalml.app.model.montage.ReferenceTableModel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The panel which displays the reference between {@link MontageChannel montage
@@ -31,11 +32,6 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * the {@link Montage montage} which is the model for this panel
 	 */
 	private Montage montage;
@@ -44,13 +40,13 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	 * the {@link ReferenceTableModel model} for the {@link #referenceTable}
 	 */
 	private ReferenceTableModel referenceTableModel;
-	
+
 	/**
 	 * the {@link ReferenceTable table} which displays the reference between
 	 * {@link MontageChannel montage channels} and original channels
 	 */
 	private ReferenceTable referenceTable;
-	
+
 	/**
 	 * the scroll pane with the {@link #referenceTable}
 	 */
@@ -59,11 +55,9 @@ public class MatrixReferenceEditorPanel extends JPanel {
 	/**
 	 * Constructor. Sets the source of messages (labels) and
 	 * {@link #initialize() initializes} this panel.
-	 * @param messageSource the source of messages (labels)
 	 */
-	public MatrixReferenceEditorPanel(MessageSourceAccessor messageSource) {
+	public MatrixReferenceEditorPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -76,8 +70,8 @@ public class MatrixReferenceEditorPanel extends JPanel {
 		setLayout(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("matrixReferenceEditor.editReference")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Edit reference")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 

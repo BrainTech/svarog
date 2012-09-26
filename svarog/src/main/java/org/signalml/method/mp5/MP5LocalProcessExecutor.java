@@ -4,20 +4,21 @@
 
 package org.signalml.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.model.SignalExportDescriptor;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-import org.signalml.util.ResolvableString;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -83,15 +84,11 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 		runtimeParameters.setChannelCount(sampleSource.getChannelCount());
 		runtimeParameters.setSegementSize(sampleSource.getSegmentLength());
 		runtimeParameters.setChosenChannels(null);
-		runtimeParameters.setDataFormat(MP5SignalFormatType.FLOAT);
-		runtimeParameters.setFooterSize(0);
-		runtimeParameters.setHeaderSize(0);
 		runtimeParameters.setOutputDirectory(null);
 		runtimeParameters.setPointsPerMicrovolt(1F);
 		runtimeParameters.setSamplingFrequency(sampleSource.getSamplingFrequency());
 		runtimeParameters.setSignalFile(signalFile);
 		runtimeParameters.setWritingMode(MP5WritingModeType.CREATE);
-		runtimeParameters.setResultFileExtension(null);
 
 		SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
 		signalExportDescriptor.setSampleType(RawSignalSampleType.FLOAT);
@@ -117,7 +114,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 			throw new ComputationException(ex);
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.writingSignalFile"));
+		tracker.setMessage(_("Writing signal file"));
 
 		// write data file
 		try {
@@ -139,7 +136,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 			generatedBookFile.delete();
 		}
 
-		tracker.setMessage(new ResolvableString("mp5Method.message.startingExecutable"));
+		tracker.setMessage(_("Starting executable"));
 
 		boolean executionOk = processController.executeProcess(workingDirectory, mp5ExecutablePath, configFile, tracker);
 		if (!executionOk) {

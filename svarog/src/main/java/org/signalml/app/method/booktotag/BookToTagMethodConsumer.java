@@ -12,13 +12,12 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
-import org.signalml.app.view.ViewerFileChooser;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.Method;
 import org.signalml.method.booktotag.BookToTagResult;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** BookToTagMethodConsumer
  *
@@ -29,15 +28,11 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 
 	protected static final Logger logger = Logger.getLogger(BookToTagMethodConsumer.class);
 
-	private MessageSourceAccessor messageSource;
-
 	private Window dialogParent;
 	private ViewerFileChooser fileChooser;
 
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
-
-		messageSource = manager.getMessageSource();
 		dialogParent = manager.getDialogParent();
 		fileChooser = manager.getFileChooser();
 
@@ -80,11 +75,11 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 				tagDocument.saveDocument();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to save document", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			} catch (IOException ex) {
 				logger.error("Failed to save document - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			}
 
@@ -93,9 +88,4 @@ public class BookToTagMethodConsumer implements InitializingMethodResultConsumer
 		return true;
 
 	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
 }

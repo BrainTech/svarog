@@ -4,6 +4,8 @@
 
 package org.signalml.method.iterator;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.AbstractMethod;
@@ -14,7 +16,7 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** IteratorMethod
  *
@@ -99,7 +101,7 @@ public class MethodIteratorMethod extends AbstractMethod implements Initializing
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new MethodIteratorData();
 	}
 
@@ -137,11 +139,11 @@ public class MethodIteratorMethod extends AbstractMethod implements Initializing
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
+	public String getTickerLabel(int ticker) {
 		if (ticker > 0 && subjectMethod instanceof TrackableMethod) {
-			return ((TrackableMethod) subjectMethod).getTickerLabel(messageSource, ticker-1);
+			return ((TrackableMethod) subjectMethod).getTickerLabel(ticker-1);
 		}
-		return messageSource.getMessage("methodIteratorMethod.iterationTicker");
+		return _("Iteration progress");
 	}
 
 	@Override

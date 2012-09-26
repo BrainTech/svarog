@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -21,13 +23,14 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.UnlimitedSpinnerPanel;
+import org.signalml.app.view.common.components.panels.UnlimitedSpinnerPanel;
 import org.signalml.domain.book.filter.ParameterRangeAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** ParameterRangeFilterDialog
@@ -54,13 +57,13 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 	private UnlimitedSpinnerPanel minPhasePanel;
 	private UnlimitedSpinnerPanel maxPhasePanel;
 
-	public ParameterRangeFilterDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public ParameterRangeFilterDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("paramerterRangeFilter.title"));
+		setTitle(_("Parameter range atom filter"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/filter.png"));
 		super.initialize();
 		setResizable(false);
@@ -80,38 +83,38 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		JPanel parameterPanel = new JPanel();
 
 		parameterPanel.setBorder(new CompoundBorder(
-		                                 new TitledBorder(messageSource.getMessage("paramerterRangeFilter.frameTitle")),
-		                                 new EmptyBorder(3,3,3,3)
-		                         ));
+									 new TitledBorder(_("Choose limits")),
+									 new EmptyBorder(3,3,3,3)
+								 ));
 
 		GroupLayout layout = new GroupLayout(parameterPanel);
 		parameterPanel.setLayout(layout);
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel iterationLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.iteration"));
-		JLabel modulusLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.modulus"));
-		JLabel amplitudeLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.amplitude"));
-		JLabel positionLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.position"));
-		JLabel scaleLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.scale"));
-		JLabel frequencyLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.frequency"));
-		JLabel phaseLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.phase"));
+		JLabel iterationLabel = new JLabel(_("Iteration"));
+		JLabel modulusLabel = new JLabel(_("Modulus"));
+		JLabel amplitudeLabel = new JLabel(_("Amplitude"));
+		JLabel positionLabel = new JLabel(_("Position"));
+		JLabel scaleLabel = new JLabel(_("Scale"));
+		JLabel frequencyLabel = new JLabel(_("Frequency"));
+		JLabel phaseLabel = new JLabel(_("Phase"));
 
-		JLabel minIterationLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
-		JLabel minModulusLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
-		JLabel minAmplitudeLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
-		JLabel minPositionLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
-		JLabel minScaleLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
-		JLabel minFrequencyLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
-		JLabel minPhaseLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.min"));
+		JLabel minIterationLabel = new JLabel(_("from"));
+		JLabel minModulusLabel = new JLabel(_("from"));
+		JLabel minAmplitudeLabel = new JLabel(_("from"));
+		JLabel minPositionLabel = new JLabel(_("from"));
+		JLabel minScaleLabel = new JLabel(_("from"));
+		JLabel minFrequencyLabel = new JLabel(_("from"));
+		JLabel minPhaseLabel = new JLabel(_("from"));
 
-		JLabel maxIterationLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
-		JLabel maxModulusLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
-		JLabel maxAmplitudeLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
-		JLabel maxPositionLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
-		JLabel maxScaleLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
-		JLabel maxFrequencyLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
-		JLabel maxPhaseLabel = new JLabel(messageSource.getMessage("paramerterRangeFilter.max"));
+		JLabel maxIterationLabel = new JLabel(_("to"));
+		JLabel maxModulusLabel = new JLabel(_("to"));
+		JLabel maxAmplitudeLabel = new JLabel(_("to"));
+		JLabel maxPositionLabel = new JLabel(_("to"));
+		JLabel maxScaleLabel = new JLabel(_("to"));
+		JLabel maxFrequencyLabel = new JLabel(_("to"));
+		JLabel maxPhaseLabel = new JLabel(_("to"));
 
 		Component iterationGlue = Box.createHorizontalGlue();
 		Component modulusGlue = Box.createHorizontalGlue();
@@ -124,69 +127,69 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(iterationLabel)
-		        .addComponent(modulusLabel)
-		        .addComponent(amplitudeLabel)
-		        .addComponent(positionLabel)
-		        .addComponent(scaleLabel)
-		        .addComponent(frequencyLabel)
-		        .addComponent(phaseLabel)
+			layout.createParallelGroup()
+			.addComponent(iterationLabel)
+			.addComponent(modulusLabel)
+			.addComponent(amplitudeLabel)
+			.addComponent(positionLabel)
+			.addComponent(scaleLabel)
+			.addComponent(frequencyLabel)
+			.addComponent(phaseLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(minIterationLabel)
-		        .addComponent(minModulusLabel)
-		        .addComponent(minAmplitudeLabel)
-		        .addComponent(minPositionLabel)
-		        .addComponent(minScaleLabel)
-		        .addComponent(minFrequencyLabel)
-		        .addComponent(minPhaseLabel)
+			layout.createParallelGroup()
+			.addComponent(minIterationLabel)
+			.addComponent(minModulusLabel)
+			.addComponent(minAmplitudeLabel)
+			.addComponent(minPositionLabel)
+			.addComponent(minScaleLabel)
+			.addComponent(minFrequencyLabel)
+			.addComponent(minPhaseLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMinIterationPanel())
-		        .addComponent(getMinModulusPanel())
-		        .addComponent(getMinAmplitudePanel())
-		        .addComponent(getMinPositionPanel())
-		        .addComponent(getMinScalePanel())
-		        .addComponent(getMinFrequencyPanel())
-		        .addComponent(getMinPhasePanel())
+			layout.createParallelGroup()
+			.addComponent(getMinIterationPanel())
+			.addComponent(getMinModulusPanel())
+			.addComponent(getMinAmplitudePanel())
+			.addComponent(getMinPositionPanel())
+			.addComponent(getMinScalePanel())
+			.addComponent(getMinFrequencyPanel())
+			.addComponent(getMinPhasePanel())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(iterationGlue)
-		        .addComponent(modulusGlue)
-		        .addComponent(amplitudeGlue)
-		        .addComponent(positionGlue)
-		        .addComponent(scaleGlue)
-		        .addComponent(frequencyGlue)
-		        .addComponent(phaseGlue)
+			layout.createParallelGroup()
+			.addComponent(iterationGlue)
+			.addComponent(modulusGlue)
+			.addComponent(amplitudeGlue)
+			.addComponent(positionGlue)
+			.addComponent(scaleGlue)
+			.addComponent(frequencyGlue)
+			.addComponent(phaseGlue)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(maxIterationLabel)
-		        .addComponent(maxModulusLabel)
-		        .addComponent(maxAmplitudeLabel)
-		        .addComponent(maxPositionLabel)
-		        .addComponent(maxScaleLabel)
-		        .addComponent(maxFrequencyLabel)
-		        .addComponent(maxPhaseLabel)
+			layout.createParallelGroup()
+			.addComponent(maxIterationLabel)
+			.addComponent(maxModulusLabel)
+			.addComponent(maxAmplitudeLabel)
+			.addComponent(maxPositionLabel)
+			.addComponent(maxScaleLabel)
+			.addComponent(maxFrequencyLabel)
+			.addComponent(maxPhaseLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getMaxIterationPanel())
-		        .addComponent(getMaxModulusPanel())
-		        .addComponent(getMaxAmplitudePanel())
-		        .addComponent(getMaxPositionPanel())
-		        .addComponent(getMaxScalePanel())
-		        .addComponent(getMaxFrequencyPanel())
-		        .addComponent(getMaxPhasePanel())
+			layout.createParallelGroup()
+			.addComponent(getMaxIterationPanel())
+			.addComponent(getMaxModulusPanel())
+			.addComponent(getMaxAmplitudePanel())
+			.addComponent(getMaxPositionPanel())
+			.addComponent(getMaxScalePanel())
+			.addComponent(getMaxFrequencyPanel())
+			.addComponent(getMaxPhasePanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -194,74 +197,74 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(iterationLabel)
-				.addComponent(minIterationLabel)
-				.addComponent(getMinIterationPanel())
-				.addComponent(iterationGlue)
-				.addComponent(maxIterationLabel)
-				.addComponent(getMaxIterationPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(iterationLabel)
+			.addComponent(minIterationLabel)
+			.addComponent(getMinIterationPanel())
+			.addComponent(iterationGlue)
+			.addComponent(maxIterationLabel)
+			.addComponent(getMaxIterationPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(modulusLabel)
-				.addComponent(minModulusLabel)
-				.addComponent(getMinModulusPanel())
-				.addComponent(modulusGlue)
-				.addComponent(maxModulusLabel)
-				.addComponent(getMaxModulusPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(modulusLabel)
+			.addComponent(minModulusLabel)
+			.addComponent(getMinModulusPanel())
+			.addComponent(modulusGlue)
+			.addComponent(maxModulusLabel)
+			.addComponent(getMaxModulusPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(amplitudeLabel)
-				.addComponent(minAmplitudeLabel)
-				.addComponent(getMinAmplitudePanel())
-				.addComponent(amplitudeGlue)
-				.addComponent(maxAmplitudeLabel)
-				.addComponent(getMaxAmplitudePanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(amplitudeLabel)
+			.addComponent(minAmplitudeLabel)
+			.addComponent(getMinAmplitudePanel())
+			.addComponent(amplitudeGlue)
+			.addComponent(maxAmplitudeLabel)
+			.addComponent(getMaxAmplitudePanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(positionLabel)
-				.addComponent(minPositionLabel)
-				.addComponent(getMinPositionPanel())
-				.addComponent(positionGlue)
-				.addComponent(maxPositionLabel)
-				.addComponent(getMaxPositionPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(positionLabel)
+			.addComponent(minPositionLabel)
+			.addComponent(getMinPositionPanel())
+			.addComponent(positionGlue)
+			.addComponent(maxPositionLabel)
+			.addComponent(getMaxPositionPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(scaleLabel)
-				.addComponent(minScaleLabel)
-				.addComponent(getMinScalePanel())
-				.addComponent(scaleGlue)
-				.addComponent(maxScaleLabel)
-				.addComponent(getMaxScalePanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(scaleLabel)
+			.addComponent(minScaleLabel)
+			.addComponent(getMinScalePanel())
+			.addComponent(scaleGlue)
+			.addComponent(maxScaleLabel)
+			.addComponent(getMaxScalePanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(frequencyLabel)
-				.addComponent(minFrequencyLabel)
-				.addComponent(getMinFrequencyPanel())
-				.addComponent(frequencyGlue)
-				.addComponent(maxFrequencyLabel)
-				.addComponent(getMaxFrequencyPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(frequencyLabel)
+			.addComponent(minFrequencyLabel)
+			.addComponent(getMinFrequencyPanel())
+			.addComponent(frequencyGlue)
+			.addComponent(maxFrequencyLabel)
+			.addComponent(getMaxFrequencyPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(phaseLabel)
-				.addComponent(minPhaseLabel)
-				.addComponent(getMinPhasePanel())
-				.addComponent(phaseGlue)
-				.addComponent(maxPhaseLabel)
-				.addComponent(getMaxPhasePanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(phaseLabel)
+			.addComponent(minPhaseLabel)
+			.addComponent(getMinPhasePanel())
+			.addComponent(phaseGlue)
+			.addComponent(maxPhaseLabel)
+			.addComponent(getMaxPhasePanel())
+		);
 
 		layout.setVerticalGroup(vGroup);
 
@@ -276,98 +279,98 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 
 	public UnlimitedSpinnerPanel getMinIterationPanel() {
 		if (minIterationPanel == null) {
-			minIterationPanel = new UnlimitedSpinnerPanel(messageSource,1,1,Integer.MAX_VALUE,1,false);
+			minIterationPanel = new UnlimitedSpinnerPanel(1,1,Integer.MAX_VALUE,1,false);
 		}
 		return minIterationPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxIterationPanel() {
 		if (maxIterationPanel == null) {
-			maxIterationPanel = new UnlimitedSpinnerPanel(messageSource,1,1,Integer.MAX_VALUE,1,false);
+			maxIterationPanel = new UnlimitedSpinnerPanel(1,1,Integer.MAX_VALUE,1,false);
 		}
 		return maxIterationPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMinModulusPanel() {
 		if (minModulusPanel == null) {
-			minModulusPanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			minModulusPanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return minModulusPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxModulusPanel() {
 		if (maxModulusPanel == null) {
-			maxModulusPanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			maxModulusPanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return maxModulusPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMinAmplitudePanel() {
 		if (minAmplitudePanel == null) {
-			minAmplitudePanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			minAmplitudePanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return minAmplitudePanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxAmplitudePanel() {
 		if (maxAmplitudePanel == null) {
-			maxAmplitudePanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			maxAmplitudePanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return maxAmplitudePanel;
 	}
 
 	public UnlimitedSpinnerPanel getMinPositionPanel() {
 		if (minPositionPanel == null) {
-			minPositionPanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			minPositionPanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return minPositionPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxPositionPanel() {
 		if (maxPositionPanel == null) {
-			maxPositionPanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			maxPositionPanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return maxPositionPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMinScalePanel() {
 		if (minScalePanel == null) {
-			minScalePanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			minScalePanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return minScalePanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxScalePanel() {
 		if (maxScalePanel == null) {
-			maxScalePanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			maxScalePanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return maxScalePanel;
 	}
 
 	public UnlimitedSpinnerPanel getMinFrequencyPanel() {
 		if (minFrequencyPanel == null) {
-			minFrequencyPanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			minFrequencyPanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return minFrequencyPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxFrequencyPanel() {
 		if (maxFrequencyPanel == null) {
-			maxFrequencyPanel = new UnlimitedSpinnerPanel(messageSource,0,0,Double.MAX_VALUE,0.1,false);
+			maxFrequencyPanel = new UnlimitedSpinnerPanel(0,0,Double.MAX_VALUE,0.1,false);
 		}
 		return maxFrequencyPanel;
 	}
 
 	public UnlimitedSpinnerPanel getMinPhasePanel() {
 		if (minPhasePanel == null) {
-			minPhasePanel = new UnlimitedSpinnerPanel(messageSource,0,-Math.PI,Math.PI,0.1,false);
+			minPhasePanel = new UnlimitedSpinnerPanel(0,-Math.PI,Math.PI,0.1,false);
 		}
 		return minPhasePanel;
 	}
 
 	public UnlimitedSpinnerPanel getMaxPhasePanel() {
 		if (maxPhasePanel == null) {
-			maxPhasePanel = new UnlimitedSpinnerPanel(messageSource,0,-Math.PI,Math.PI,0.1,false);
+			maxPhasePanel = new UnlimitedSpinnerPanel(0,-Math.PI,Math.PI,0.1,false);
 		}
 		return maxPhasePanel;
 	}
@@ -454,7 +457,7 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 
 		super.validateDialog(model, errors);
 
@@ -473,9 +476,9 @@ public class ParameterRangeFilterDialog extends AbstractFilterDialog {
 		private static final long serialVersionUID = 1L;
 
 		public ClearFilterAction() {
-			super(messageSource.getMessage("paramerterRangeFilter.clearFilter"));
+			super(_("Clear filter"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/clearfilter.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("paramerterRangeFilter.clearFilterToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Clear filter"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

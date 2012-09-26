@@ -92,10 +92,10 @@ public class RulerMeasurmentPlot extends JComponent {
 			width = MIN_LABEL_WIDTH;
 		}
 		Rectangle labelRect = new Rectangle(
-		        x,
-		        y,
-		        (int) Math.ceil(width),
-		        (int) Math.ceil(labelRect2D.getHeight())
+			x,
+			y,
+			(int) Math.ceil(width),
+			(int) Math.ceil(labelRect2D.getHeight())
 		);
 		labelRect.grow(3, 3);
 

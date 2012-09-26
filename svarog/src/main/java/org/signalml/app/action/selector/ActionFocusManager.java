@@ -15,13 +15,13 @@ import org.signalml.app.config.preset.PresetManagerAdapter;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.document.BookDocument;
-import org.signalml.app.document.SignalDocument;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.montage.MontagePresetManager;
-import org.signalml.app.view.ViewerDocumentTabbedPane;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.view.signal.PositionedTag;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.workspace.ViewerDocumentTabbedPane;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -74,10 +74,12 @@ public class ActionFocusManager implements ChangeListener, DocumentFocusSelector
 	public void setActiveDocument(Document document) {
 		if (document != activeDocument) {
 			if (activeDocument != null) {
+				activeDocument.setActive(false);
 				activeDocument.removePropertyChangeListener(this);
 			}
 			activeDocument = document;
 			if (document != null) {
+				document.setActive(true);
 				document.addPropertyChangeListener(this);
 			}
 			afSupport.fireActionFocusChanged();

@@ -5,6 +5,7 @@
 package org.signalml.domain.montage;
 
 import java.util.EventListener;
+import org.signalml.domain.montage.system.EegSystem;
 
 /**
  * This class represents an event listener associated with a change
@@ -16,24 +17,30 @@ import java.util.EventListener;
  */
 public interface SourceMontageListener extends EventListener {
 
-        /**
-         * Invoked when a {@link SourceChannel source channel} is added
-         * to a montage.
-         * @param ev an event object describing a change
-         */
+	/**
+	 * Invoked when a {@link SourceChannel source channel} is added
+	 * to a montage.
+	 * @param ev an event object describing a change
+	 */
 	void sourceMontageChannelAdded(SourceMontageEvent ev);
 
-        /**
-         * Invoked when a {@link SourceChannel source channel} is removed
-         * from a montage.
-         * @param ev an event object describing a change
-         */
+	/**
+	 * Invoked when a {@link SourceChannel source channel} is removed
+	 * from a montage.
+	 * @param ev an event object describing a change
+	 */
 	void sourceMontageChannelRemoved(SourceMontageEvent ev);
 
-        /**
-         * Invoked when a {@link SourceChannel source channel} is changed.
-         * @param ev an event object describing a change
-         */
+	/**
+	 * Invoked when a {@link SourceChannel source channel} is changed.
+	 * @param ev an event object describing a change
+	 */
 	void sourceMontageChannelChanged(SourceMontageEvent ev);
+
+	/**
+	     * Invoked when a {@link EegSystem} for the {@link SourceMontage} changes.
+	     * @param ev an event object describing a change
+	     */
+	void sourceMontageEegSystemChanged(SourceMontageEvent ev);
 
 }

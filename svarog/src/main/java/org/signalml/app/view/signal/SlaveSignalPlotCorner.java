@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.signal;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
@@ -17,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.element.CompactButton;
+import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
 
 /** SlaveSignalPlotCorner
@@ -73,7 +75,7 @@ public class SlaveSignalPlotCorner extends SignalPlotCorner {
 		public RemoveSlavePlotAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/removeslaveplot.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("signalView.removeSlavePlotToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove signal plot"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -91,7 +93,7 @@ public class SlaveSignalPlotCorner extends SignalPlotCorner {
 		public ConfigureSlavePlotAction() {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/configureslaveplot.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("signalView.configureSlavePlotToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Configure signal plot"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

@@ -15,14 +15,14 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
  * <p>
  * Usually such listers are used to open the dialog with the parameters of the
  * tool.
- * 
+ *
  * @author Marcin Szumski
  */
 public interface SignalToolButtonListener extends MouseListener {
-	
+
 	/**
 	 * Creates the copy of this listener with the {@link SignalTool tool} for
-	 * which it should be created and the button on which it will listen. 
+	 * which it should be created and the button on which it will listen.
 	 * @param tool the tool with which this listener should be associated
 	 * @param button the button on which this listener will listen
 	 * @return the created copy

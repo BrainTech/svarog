@@ -20,7 +20,7 @@ public class EvokedPotentialMethodConsumer implements InitializingMethodResultCo
 
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
-		dialog = new EvokedPotentialResultDialog(manager.getMessageSource(), manager.getDialogParent(), true);
+		dialog = new EvokedPotentialResultDialog(manager.getDialogParent(), true);
 		dialog.setFileChooser(manager.getFileChooser());
 	}
 

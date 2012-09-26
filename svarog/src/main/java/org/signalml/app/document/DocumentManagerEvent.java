@@ -31,20 +31,20 @@ public class DocumentManagerEvent extends EventObject {
 	 * the {@link Document document} connected with the change
 	 */
 	private Document document;
-	
+
 	/**
 	 * the index of the {@link Document document} in the collection of all
 	 * documents in the manager
 	 */
 	private int index;
-	
+
 	/**
 	 * the index of the {@link Document document} in the collection of
 	 * documents of a specified {@link ManagedDocumentType type}
 	 */
 	private int inTypeIndex;
 
-	
+
 	/**
 	 * Constructor. Sets all parameters of this event.
 	 * @param source the manager in which this event occurred

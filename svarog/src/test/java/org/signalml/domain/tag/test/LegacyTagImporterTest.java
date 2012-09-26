@@ -53,7 +53,7 @@ public class LegacyTagImporterTest {
 		assertEquals(1, sts.getBlockStyleCount());
 		assertEquals(0, sts.getChannelStyleCount());
 
-		TagStyle style = sts.getPageStyleAt(0);
+		TagStyle style = sts.getPageStyleAt(3);
 		assertEquals(SignalSelectionType.PAGE, style.getType());
 		assertEquals("1", style.getName());
 		assertEquals(Color.WHITE, style.getFillColor());
@@ -75,14 +75,14 @@ public class LegacyTagImporterTest {
 		assertEquals(20F, tag.getLength(), 0);
 		assertEquals(Tag.CHANNEL_NULL, tag.getChannel());
 
-		style = sts.getStyle("r");
+		style = sts.getStyle(SignalSelectionType.PAGE, "r");
 		assertNotNull(style);
 		assertEquals(SignalSelectionType.PAGE, style.getType());
 		assertEquals("r", style.getName());
 		assertEquals(Color.WHITE, style.getFillColor());
 		assertEquals(Color.WHITE, style.getOutlineColor());
 
-		style = sts.getStyle("a");
+		style = sts.getStyle(SignalSelectionType.BLOCK, "a");
 		assertNotNull(style);
 		assertEquals(SignalSelectionType.BLOCK, style.getType());
 		assertEquals("a", style.getName());

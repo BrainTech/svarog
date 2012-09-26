@@ -15,11 +15,7 @@ public class MP5RuntimeParameters {
 
 	private File signalFile;
 	private File outputDirectory;
-	private String resultFileExtension;
-	private MP5SignalFormatType dataFormat;
 	private MP5WritingModeType writingMode = MP5WritingModeType.CREATE;
-	private int headerSize = 0;
-	private int footerSize = 0;
 	private int channelCount = 1;
 	private int[] chosenChannels = new int[] {1};
 	private int minOffset = -1;
@@ -44,44 +40,12 @@ public class MP5RuntimeParameters {
 		this.outputDirectory = outputDirectory;
 	}
 
-	public String getResultFileExtension() {
-		return resultFileExtension;
-	}
-
-	public void setResultFileExtension(String resultFileExtension) {
-		this.resultFileExtension = resultFileExtension;
-	}
-
-	public MP5SignalFormatType getDataFormat() {
-		return dataFormat;
-	}
-
-	public void setDataFormat(MP5SignalFormatType dataFormat) {
-		this.dataFormat = dataFormat;
-	}
-
 	public MP5WritingModeType getWritingMode() {
 		return writingMode;
 	}
 
 	public void setWritingMode(MP5WritingModeType writingMode) {
 		this.writingMode = writingMode;
-	}
-
-	public int getHeaderSize() {
-		return headerSize;
-	}
-
-	public void setHeaderSize(int headerSize) {
-		this.headerSize = headerSize;
-	}
-
-	public int getFooterSize() {
-		return footerSize;
-	}
-
-	public void setFooterSize(int footerSize) {
-		this.footerSize = footerSize;
 	}
 
 	public int getChannelCount() {

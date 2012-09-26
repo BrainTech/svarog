@@ -4,12 +4,13 @@
 
 package org.signalml.app.view.tag;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import javax.swing.Action;
 import javax.swing.JMenuItem;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** TagEraserMenuItem
  *
@@ -20,9 +21,9 @@ public class TagEraserMenuItem extends JMenuItem implements TagStyleSelector {
 
 	private static final long serialVersionUID = 1L;
 
-	public TagEraserMenuItem(Action action, MessageSourceAccessor messageSource) {
+	public TagEraserMenuItem(Action action) {
 		super(action);
-		setText(messageSource.getMessage("signalView.eraser"));
+		setText(_("Erase tags"));
 		setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/eraser.png"));
 	}
 

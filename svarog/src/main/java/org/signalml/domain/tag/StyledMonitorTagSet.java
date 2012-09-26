@@ -9,7 +9,7 @@ import org.signalml.plugin.export.signal.Tag;
 
 /** StyledTagSet
  *
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class StyledMonitorTagSet extends StyledTagSet implements ActionListener {

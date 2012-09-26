@@ -19,7 +19,7 @@ import org.springframework.validation.Errors;
 public abstract class AbstractMethod implements SvarogMethod {
 
 	/**
-         * {@inheritDoc}
+	     * {@inheritDoc}
 	 */
 	@Override
 	public final Object compute(Object data, MethodExecutionTracker tracker) throws InputDataException, ComputationException {
@@ -35,7 +35,7 @@ public abstract class AbstractMethod implements SvarogMethod {
 	}
 
 	/**
-         * Returns the version as String.
+	     * Returns the version as String.
 	 *
 	 * @return the version
 	 */
@@ -52,7 +52,7 @@ public abstract class AbstractMethod implements SvarogMethod {
 	}
 
 	/**
-         *  Validates the data object received by the compute method. All problems should
+	     *  Validates the data object received by the compute method. All problems should
 	 *  be added to suppled Errors instance. The default implementation checks if the data
 	 *  object has approprtiate class (using {@link Method#supportsDataClass(Class)}).
 	 *
@@ -66,7 +66,7 @@ public abstract class AbstractMethod implements SvarogMethod {
 	}
 
 	/**
-         *  Subclasses must implement this to perform the actual computations all caveats for
+	     *  Subclasses must implement this to perform the actual computations all caveats for
 	 *  {@link #compute(Object, MethodExecutionTracker)} apply, except the data successfully passed through
 	 *  {@link #validate(Object, Errors)} before, and may be assumed to be ok.
 	 *
@@ -76,5 +76,4 @@ public abstract class AbstractMethod implements SvarogMethod {
 	 * @throws ComputationException when computation fails for reasons other than bad input data
 	 */
 	public abstract Object doComputation(Object data, MethodExecutionTracker tracker) throws ComputationException;
-
 }

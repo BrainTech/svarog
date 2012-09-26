@@ -3,13 +3,15 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.method.UnavailableMethodDescriptor;
-import org.signalml.app.view.dialog.ErrorsDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** UnavailableMethodAction
  *
@@ -23,21 +25,19 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 	protected static final Logger logger = Logger.getLogger(UnavailableMethodAction.class);
 
 	private UnavailableMethodDescriptor descriptor;
-	private ErrorsDialog errorsDialog;
 
-	public UnavailableMethodAction(MessageSourceAccessor messageSource, UnavailableMethodDescriptor descriptor) {
-		this.messageSource = messageSource;
+	public UnavailableMethodAction(UnavailableMethodDescriptor descriptor) {
 		this.descriptor = descriptor;
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		if (descriptor != null) {
-			nameCode = descriptor.getNameCode();
+			name = descriptor.getName();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
-			setText("action.unavailableMethod");
+			setText(_("Unavailable method"));
 		}
 		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);
@@ -50,17 +50,8 @@ public class UnavailableMethodAction extends AbstractSignalMLAction {
 	public void actionPerformed(ActionEvent ev) {
 
 		logger.debug("Unavailable method");
+		Dialogs.showExceptionDialog(descriptor.getException());
 
-		errorsDialog.showException(descriptor.getException());
-
-	}
-
-	public ErrorsDialog getErrorsDialog() {
-		return errorsDialog;
-	}
-
-	public void setErrorsDialog(ErrorsDialog errorsDialog) {
-		this.errorsDialog = errorsDialog;
 	}
 
 }

@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
@@ -11,9 +13,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import org.signalml.app.montage.SourceMontageTableModel;
+import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.domain.montage.SourceMontage;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditFixedMontagePanel
  *
@@ -24,8 +25,6 @@ public class SourceMontageChannelsPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private SourceMontage montage;
 
 	private SourceMontageTableModel sourceMontageTableModel;
@@ -33,9 +32,8 @@ public class SourceMontageChannelsPanel extends JPanel {
 	private SourceMontageTable sourceMontageTable;
 	private JScrollPane sourceScrollPane;
 
-	public SourceMontageChannelsPanel(MessageSourceAccessor messageSource) {
+	public SourceMontageChannelsPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -43,8 +41,8 @@ public class SourceMontageChannelsPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("sourceMontageTable.title")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Source montage")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -66,14 +64,13 @@ public class SourceMontageChannelsPanel extends JPanel {
 	public SourceMontageTableModel getSourceMontageTableModel() {
 		if (sourceMontageTableModel == null) {
 			sourceMontageTableModel = new SourceMontageTableModel();
-			sourceMontageTableModel.setMessageSource(messageSource);
 		}
 		return sourceMontageTableModel;
 	}
 
 	public SourceMontageTable getSourceMontageTable() {
 		if (sourceMontageTable == null) {
-			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel(), messageSource);
+			sourceMontageTable = new SourceMontageTable(getSourceMontageTableModel());
 		}
 		return sourceMontageTable;
 	}

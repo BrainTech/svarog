@@ -3,6 +3,8 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 
@@ -11,15 +13,14 @@ import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.TaskStatusDialog;
+import org.signalml.app.view.common.dialogs.TaskStatusDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.method.Method;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** RunMethodAction
  *
@@ -36,21 +37,20 @@ public class RunMethodAction extends AbstractSignalMLAction {
 	private ApplicationMethodManager methodManager;
 	private Method method;
 
-	public RunMethodAction(MessageSourceAccessor messageSource, Method method, ApplicationMethodManager methodManager) {
-		this.messageSource = messageSource;
+	public RunMethodAction(Method method, ApplicationMethodManager methodManager) {
 		this.method = method;
 		this.methodManager = methodManager;
-		String nameCode = null;
+		String name = null;
 		String iconPath = null;
 		ApplicationMethodDescriptor descriptor = methodManager.getMethodData(method);
 		if (descriptor != null) {
-			nameCode = descriptor.getNameCode();
+			name = descriptor.getName();
 			iconPath = descriptor.getIconPath();
 		}
-		if (nameCode != null && !nameCode.isEmpty()) {
-			setText(nameCode);
+		if (name != null && !name.isEmpty()) {
+			setText(name);
 		} else {
-			setText("action.runMethod");
+			setText(_("Run method {0}"));
 		}
 		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);
@@ -89,7 +89,7 @@ public class RunMethodAction extends AbstractSignalMLAction {
 				}
 			} catch (SignalMLException ex) {
 				logger.error("Failed to configure method", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 		}

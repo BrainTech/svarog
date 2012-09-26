@@ -4,14 +4,16 @@
 
 package org.signalml.app.document;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.signalml.app.model.LabelledPropertyDescriptor;
-import org.signalml.app.model.PropertyProvider;
+import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.AbstractDocument;
 import org.signalml.plugin.export.signal.Document;
@@ -23,7 +25,7 @@ import org.springframework.context.MessageSourceResolvable;
  * {@link FileBackedDocument backing file}.
  * Contains this file and as a {@link #getDefaultMessage() default message}
  * uses the path to it.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public abstract class AbstractFileDocument extends AbstractDocument implements FileBackedDocument, MessageSourceResolvable, PropertyProvider {
@@ -78,8 +80,8 @@ public abstract class AbstractFileDocument extends AbstractDocument implements F
 	@Override
 	public Object[] getArguments() {
 		return new Object[] {
-		               backingFile != null ? backingFile.getAbsolutePath() : "?"
-		       };
+				   backingFile != null ? backingFile.getAbsolutePath() : "?"
+			   };
 	}
 
 	@Override
@@ -101,7 +103,7 @@ public abstract class AbstractFileDocument extends AbstractDocument implements F
 
 		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
 
-		list.add(new LabelledPropertyDescriptor("property.document.backingFile", "backingFile", AbstractFileDocument.class));
+		list.add(new LabelledPropertyDescriptor(_("backing file"), "backingFile", AbstractFileDocument.class));
 
 		return list;
 

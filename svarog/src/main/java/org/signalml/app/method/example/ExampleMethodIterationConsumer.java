@@ -6,13 +6,12 @@ package org.signalml.app.method.example;
 import java.util.Random;
 
 import org.signalml.app.method.MethodIterationResultConsumer;
-import org.signalml.app.view.roc.RocDialog;
+import org.signalml.app.view.signal.roc.RocDialog;
 import org.signalml.domain.roc.RocData;
 import org.signalml.domain.roc.RocDataPoint;
 import org.signalml.method.iterator.IterableMethod;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.MethodIteratorResult;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** ExampleMethodIterationConsumer
  *
@@ -20,9 +19,6 @@ import org.springframework.context.support.MessageSourceAccessor;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ExampleMethodIterationConsumer implements MethodIterationResultConsumer {
-
-	private MessageSourceAccessor messageSource;
-
 	private RocDialog rocDialog;
 
 	private int[][] getSyntheticRocData() {
@@ -103,14 +99,6 @@ public class ExampleMethodIterationConsumer implements MethodIterationResultCons
 
 		rocDialog.showDialog(rocData, true);
 
-	}
-
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
-	}
-
-	public void setMessageSource(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
 	}
 
 	public RocDialog getRocDialog() {

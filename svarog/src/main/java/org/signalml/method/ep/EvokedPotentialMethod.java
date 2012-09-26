@@ -4,19 +4,25 @@
 
 package org.signalml.method.ep;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.apache.log4j.Logger;
-import org.signalml.domain.signal.MultichannelSegmentedSampleSource;
-import org.signalml.domain.signal.space.MarkerTimeSpace;
-import org.signalml.domain.signal.space.SignalSpace;
-import org.signalml.domain.signal.space.TimeSpaceType;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
+import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
+import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
+import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
+import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
+import org.signalml.math.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.FilterCoefficients;
+import org.signalml.math.iirdesigner.IIRDesigner;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.ResolvableString;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.validation.Errors;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** EvokedPotentialMethod
  *
@@ -42,98 +48,149 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		EvokedPotentialData data = (EvokedPotentialData) dataObj;
 
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.preparing"));
+		tracker.setMessage(_("Preparing"));
 
-		MultichannelSegmentedSampleSource sampleSource = data.getSampleSource();
+		MarkerSegmentedSampleSource sampleSource = data.getSampleSources().get(0);
 
 		int sampleCount = sampleSource.getSegmentLength();
 		int segmentCount = sampleSource.getSegmentCount();
 		int channelCount = sampleSource.getChannelCount();
 		float samplingFrequency = sampleSource.getSamplingFrequency();
 
-		int i;
-		int e;
-		int j;
-
-		double[] samples = new double[sampleCount];
-		double[][] averageSamples = new double[channelCount][sampleCount];
-
 		String[] labels = new String[channelCount];
-		for (i=0; i<channelCount; i++) {
-			labels[i] = sampleSource.getLabel(i);
+		for (int segment=0; segment<channelCount; segment++) {
+			labels[segment] = sampleSource.getLabel(segment);
 		}
 
 		EvokedPotentialResult result = new EvokedPotentialResult(data);
 
-		SignalSpace signalSpace = data.getParameters().getSignalSpace();
+		EvokedPotentialParameters parameters = data.getParameters();
+		result.setStartTime(parameters.getAveragingStartTime());
+		result.setSegmentLength(parameters.getAveragingTimeLength());
 
-		TimeSpaceType timeSpaceType = signalSpace.getTimeSpaceType();
-		if (timeSpaceType == TimeSpaceType.MARKER_BASED) {
-
-			MarkerTimeSpace markerTimeSpace = signalSpace.getMarkerTimeSpace();
-
-			result.setSecondsBefore(markerTimeSpace.getSecondsBefore());
-			result.setSecondsAfter(markerTimeSpace.getSecondsAfter());
-
-		} else {
-
-			// marker placed at the beginning of the segment
-			result.setSecondsAfter(((double) sampleCount) / samplingFrequency);
-			result.setSecondsBefore(0);
-
-		}
-
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.summing"));
+		tracker.setMessage(_("Summing"));
 		tracker.setTickerLimit(0, segmentCount);
 
-		for (i=0; i<segmentCount; i++) {
+		for (MultichannelSegmentedSampleSource segmentedSampleSource: data.getSampleSources()) {
+			double[][] averageSamples = average(segmentedSampleSource, tracker);
+			if (averageSamples == null)
+				return null;
+			result.addAverageSamples(averageSamples);
+		}
 
-			for (e=0; e<channelCount; e++) {
+		if (data.getParameters().isBaselineCorrectionEnabled())
+			performBaselineCorrection(result, data);
+
+		if (data.getParameters().isFilteringEnabled())
+			try {
+				performLowPassFiltering(result, data);
+			} catch (BadFilterParametersException exception) {
+				exception.printStackTrace();
+				throw new ComputationException(_("An error occured while designing the signal filter."));
+			}
+
+		result.setLabels(labels);
+		result.setSampleCount(sampleCount);
+		result.setChannelCount(channelCount);
+		result.setSamplingFrequency(samplingFrequency);
+
+		for (MarkerSegmentedSampleSource segmentedSampleSource: data.getSampleSources()) {
+			result.getAveragedSegmentsCount().add(segmentedSampleSource.getSegmentCount());
+			result.getUnusableSegmentsCount().add(segmentedSampleSource.getUnusableSegmentCount());
+			result.getArtifactRejectedSegmentsCount().add(segmentedSampleSource.getArtifactRejectedSegmentsCount());
+		}
+
+		tracker.setMessage(_("Finished"));
+
+		return result;
+
+	}
+
+	protected void performBaselineCorrection(EvokedPotentialResult result, EvokedPotentialData data) {
+		int sampleSourceNumber = 0;
+		for (MultichannelSegmentedSampleSource segmentedSampleSource: data.getBaselineSampleSources()) {
+			double[] baselineSamples = new double[segmentedSampleSource.getSegmentLength()];
+			for (int channel = 0; channel < segmentedSampleSource.getChannelCount(); channel++) {
+				double sum = 0.0;
+				for (int segment = 0; segment < segmentedSampleSource.getSegmentCount(); segment++) {
+					segmentedSampleSource.getSegmentSamples(channel, baselineSamples, segment);
+
+					for (double sample: baselineSamples) {
+						sum += sample;
+					}
+				}
+				double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLength());
+
+				double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
+				for (int i = 0; i < samples.length; i++)
+					samples[i] = samples[i] - baseline;
+			}
+			sampleSourceNumber++;
+		}
+	}
+
+	protected void performLowPassFiltering(EvokedPotentialResult result, EvokedPotentialData data) throws BadFilterParametersException {
+
+		TimeDomainSampleFilter filter = data.getParameters().getTimeDomainSampleFilter();
+		FilterCoefficients filterCoefficients = IIRDesigner.designDigitalFilter(filter);
+
+		for (double[][] samples: result.getAverageSamples()) {
+			DoubleArraySampleSource multichannelSampleSource = new DoubleArraySampleSource(samples);
+			for (int channel = 0; channel < samples.length; channel++) {
+				ChannelSelectorSampleSource channelSampleSource = new ChannelSelectorSampleSource(multichannelSampleSource, channel);
+				OfflineIIRSinglechannelSampleFilter filterEngine = new OfflineIIRSinglechannelSampleFilter(channelSampleSource, filterCoefficients);
+				filterEngine.setFiltfiltEnabled(true);
+				filterEngine.getSamples(samples[channel], 0, samples[channel].length, 0);
+			}
+		}
+
+	}
+
+	protected double[][] average(MultichannelSegmentedSampleSource sampleSource, MethodExecutionTracker tracker) {
+		int sampleCount = sampleSource.getSegmentLength();
+		int segmentCount = sampleSource.getSegmentCount();
+		int channelCount = sampleSource.getChannelCount();
+
+		double[] samples = new double[sampleCount];
+		double[][] averageSamples = new double[channelCount][sampleCount];
+
+		for (int segment=0; segment<segmentCount; segment++) {
+
+			for (int channel=0; channel<channelCount; channel++) {
 
 				if (tracker.isRequestingAbort()) {
 					return null;
 				}
 
-				sampleSource.getSegmentSamples(e, samples, i);
+				sampleSource.getSegmentSamples(channel, samples, segment);
 
-				for (j=0; j<sampleCount; j++) {
-					averageSamples[e][j] += samples[j];
+				for (int j=0; j<sampleCount; j++) {
+					averageSamples[channel][j] += samples[j];
 				}
 
 			}
 
-			if (i % 10 == 0) {
+			if (segment % 10 == 0) {
 				tracker.tick(0, 10);
 			}
 
 		}
 
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.averaging"));
+		tracker.setMessage(_("Averaging"));
 		tracker.setTicker(0, 0);
 		tracker.setTickerLimit(0, channelCount);
 
 		// markers have been summed, now divide to get the average
-
-		for (e=0; e<channelCount; e++) {
-			for (j=0; j<sampleCount; j++) {
-				averageSamples[e][j] /= segmentCount;
+		if (segmentCount >0 ) {
+			for (int channel=0; channel<channelCount; channel++) {
+				for (int j=0; j<sampleCount; j++) {
+					averageSamples[channel][j] /= segmentCount;
+				}
+				tracker.tick(0);
 			}
-			tracker.tick(0);
 		}
 
-
-		result.setAverageSamples(averageSamples);
-		result.setLabels(labels);
-		result.setSampleCount(sampleCount);
-		result.setChannelCount(channelCount);
-		result.setSamplingFrequency(samplingFrequency);
-		result.setAveragedCount(segmentCount);
-		result.setSkippedCount(sampleSource.getUnusableSegmentCount());
-
-		tracker.setMessage(new ResolvableString("evokedPotentialMethod.message.finished"));
-
-		return result;
-
+		return averageSamples;
 	}
 
 	@Override
@@ -151,18 +208,11 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	}
 
 	@Override
-	public String getTickerLabel(MessageSourceAccessor messageSource, int ticker) {
-		String code;
-		switch (ticker) {
-
-		case 0 :
-			code = "evokedPotentialMethod.markerTicker";
-			break;
-		default :
+	public String getTickerLabel(int ticker) {
+		if (0 == ticker)
+			return _("Processing markers");
+		else
 			throw new IndexOutOfBoundsException();
-
-		}
-		return messageSource.getMessage(code);
 	}
 
 	@Override
@@ -181,7 +231,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	}
 
 	@Override
-	public Object createData() {
+	public BaseMethodData createData() {
 		return new EvokedPotentialData();
 	}
 

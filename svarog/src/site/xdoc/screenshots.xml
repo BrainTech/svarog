@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://maven.apache.org/XDOC/2.0"
-	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Screenshots</title>
@@ -13,95 +13,95 @@
     <section name="Screenshots">
 
       <p>
-	Below you will find a few screenshots from the current version of Svarog.
+    Below you will find a few screenshots from the current version of Svarog.
       </p>
 
       <subsection name="The main window">
 
-	<p>
-	  <span style="float: left; margin-right: 10px;">
-	    <img alt="The main window" src="images/app_screen_full.png" />
-	  </span>
-	  <small>
-	    This is the main window of Svarog. The central portion of the window is
-	    taken up by the display of a signal (in this case EEG). The left portion
-	    displays several tree views (in tabs) which aid in navigation over the
-	    signal, files, etc. The bottom pane contains property sheets, the console
-	    and a task list. Above the signal you can see a tag based hypnogram.
-	    The gray block in the signal is an annotation.
-	  </small>
-	</p>
+    <p>
+      <span style="float: left; margin-right: 10px;">
+        <img alt="The main window" src="images/app_screen_full.png" />
+      </span>
+      <small>
+        This is the main window of Svarog. The central portion of the window is
+        taken up by the display of a signal (in this case EEG). The left portion
+        displays several tree views (in tabs) which aid in navigation over the
+        signal, files, etc. The bottom pane contains property sheets, the console
+        and a task list. Above the signal you can see a tag based hypnogram.
+        The gray block in the signal is an annotation.
+      </small>
+    </p>
 
-	<span style="display: block; clear: both" />
+    <span style="display: block; clear: both" />
 
       </subsection>
 
       <subsection name="The montage editor">
 
-	<p>
-	  <span style="float: left; margin-right: 10px;">
-	    <img alt="The montage editor" src="images/app_screen_montage.png" />
-	  </span>
-	  <span style="text-align: justify;"><small>
-	    This is the montage editor of Svarog. Montages can be edited by dragging
-	    channel symbols with the mouse.
-	  </small></span>
+    <p>
+      <span style="float: left; margin-right: 10px;">
+        <img alt="The montage editor" src="images/app_screen_montage.png" />
+      </span>
+      <span style="text-align: justify;"><small>
+        This is the montage editor of Svarog. Montages can be edited by dragging
+        channel symbols with the mouse.
+      </small></span>
 
-	</p>
+    </p>
 
-	<span style="display: block; clear: both" />
+    <span style="display: block; clear: both" />
 
       </subsection>
 
       <subsection name="Overlaid FFT">
 
-	<p>
-	  <span style="float: left; margin-right: 10px;">
-	    <img alt="Overlaid FFT" src="images/app_screen_fft.png" />
-	  </span>
-	  <span style="text-align: justify;"><small>
-	    The overlaid FFT view of Svarog. When holding the mouse button down,
-	    the FFT of the selected signal fragment is shown.
-	  </small></span>
+    <p>
+      <span style="float: left; margin-right: 10px;">
+        <img alt="Overlaid FFT" src="images/app_screen_fft.png" />
+      </span>
+      <span style="text-align: justify;"><small>
+        The overlaid FFT view of Svarog. When holding the mouse button down,
+        the FFT of the selected signal fragment is shown.
+      </small></span>
 
-	</p>
+    </p>
 
-	<span style="display: block; clear: both" />
+    <span style="display: block; clear: both" />
 
       </subsection>
 
       <subsection name="Filter configuration">
 
-	<p>
-	  <span style="float: left; margin-right: 10px;">
-	    <img alt="Filter configuration" src="images/app_screen_filter.png" />
-	  </span>
-	  <small>
-	    The configuration of an FFT filter. Svarog supports fast online signal
-	    filtering which can be fine-tuned to achieve many different goals.
-	  </small>
-	</p>
+    <p>
+      <span style="float: left; margin-right: 10px;">
+        <img alt="Filter configuration" src="images/app_screen_filter.png" />
+      </span>
+      <small>
+        The configuration of an FFT filter. Svarog supports fast online signal
+        filtering which can be fine-tuned to achieve many different goals.
+      </small>
+    </p>
 
-	<span style="display: block; clear: both" />
+    <span style="display: block; clear: both" />
 
       </subsection>
 
       <subsection name="Annotating the signal">
 
-	<p>
-	  <span style="float: left; margin-right: 10px;">
-	    <img alt="Annotating the signal" src="images/app_screen_tags.png" />
-	  </span>
-	  <small>
-	    Svarog allows the user to easily annotate signals (in several modes)
-	    using color tags. Colors are configurable. Annotation files can
-	    be saved in an XML format. There's also a support for markers
-	    (tags that have no width) and for averaging marked signal
-	    fragments.
-	  </small>
-	</p>
+    <p>
+      <span style="float: left; margin-right: 10px;">
+        <img alt="Annotating the signal" src="images/app_screen_tags.png" />
+      </span>
+      <small>
+        Svarog allows the user to easily annotate signals (in several modes)
+        using color tags. Colors are configurable. Annotation files can
+        be saved in an XML format. There's also a support for markers
+        (tags that have no width) and for averaging marked signal
+        fragments.
+      </small>
+    </p>
 
-	<span style="display: block; clear: both" />
+    <span style="display: block; clear: both" />
 
       </subsection>
 

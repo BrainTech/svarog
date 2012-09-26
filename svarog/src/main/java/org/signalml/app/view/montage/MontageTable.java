@@ -16,13 +16,12 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.montage.MontageTableModel;
+import org.signalml.app.model.montage.MontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
-import org.signalml.app.view.element.GrayTableCellRenderer;
+import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.MontageTableTransferHandler;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.SourceChannel;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * The table which allows to edit the labels and the order (the indexes) of
@@ -77,11 +76,10 @@ public class MontageTable extends JTable {
 	 * The order (and the indexes) of the channels can be changed with
 	 * drag and drop.
 	 * @param model the {@link MontageTableModel model} for this table
-	 * @param messageSource the source of messages (labels)
 	 * @param simplified <code>true</code> if the index column should be
 	 * omitted, <code>false</code> otherwise
 	 */
-	public MontageTable(MontageTableModel model, MessageSourceAccessor messageSource, boolean simplified) {
+	public MontageTable(MontageTableModel model, boolean simplified) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();
@@ -90,8 +88,6 @@ public class MontageTable extends JTable {
 		TableColumn tc;
 
 		GrayTableCellRenderer grayIneditableTableCellRenderer = new GrayTableCellRenderer();
-		ChannelTableCellRenderer channelTableCellRenderer = new ChannelTableCellRenderer();
-		channelTableCellRenderer.setMessageSource(messageSource);
 
 		if (simplified) {
 			tc = new TableColumn(MontageTableModel.PRIMARY_LABEL_COLUMN, 80);
@@ -166,7 +162,7 @@ public class MontageTable extends JTable {
 	/**
 	 * Gets the {@link TablePopupMenuProvider popup menu provider} for this
 	 * table.
-	 * 
+	 *
 	 * @return the {@link TablePopupMenuProvider popup menu provider} for this
 	 *         table
 	 */
@@ -177,7 +173,7 @@ public class MontageTable extends JTable {
 	/**
 	 * Sets the {@link TablePopupMenuProvider popup menu provider} for this
 	 * table.
-	 * 
+	 *
 	 * @param popupMenuProvider
 	 *            the new {@link TablePopupMenuProvider popup menu provider} for
 	 *            this table

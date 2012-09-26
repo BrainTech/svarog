@@ -6,16 +6,17 @@ package org.signalml.method.bookaverage;
 
 import java.util.LinkedHashSet;
 
-import org.signalml.app.view.book.WignerMapPalette;
+import org.signalml.app.view.book.palette.IWignerMapPalette;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.WignerMapScaleType;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** BookAverageData
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class BookAverageData {
+public class BookAverageData extends BaseMethodData {
 
 	private StandardBook book;
 
@@ -33,7 +34,7 @@ public class BookAverageData {
 
 	private LinkedHashSet<Integer> channels;
 
-	private WignerMapPalette palette;
+	private IWignerMapPalette palette;
 	private WignerMapScaleType scaleType;
 
 	public BookAverageData() {
@@ -135,11 +136,11 @@ public class BookAverageData {
 		channels.remove(new Integer(channel));
 	}
 
-	public WignerMapPalette getPalette() {
+	public IWignerMapPalette getPalette() {
 		return palette;
 	}
 
-	public void setPalette(WignerMapPalette palette) {
+	public void setPalette(IWignerMapPalette palette) {
 		this.palette = palette;
 	}
 

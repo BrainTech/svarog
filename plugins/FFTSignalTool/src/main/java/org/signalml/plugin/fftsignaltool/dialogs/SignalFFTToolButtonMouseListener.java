@@ -12,7 +12,6 @@ import javax.swing.Timer;
 import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.signal.SignalToolButtonListener;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Listener which listens for actions that occur on the JToggleButton associated
@@ -21,16 +20,16 @@ import org.springframework.context.support.MessageSourceAccessor;
  * This listener, when the mouse is pressed shows the {@link
  * SignalFFTSettingsPopupDialog} after the specified time (400 ms).
  * If the user releases the mouse before that time, no action is taken.
- * 
+ *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.,
  * Marcin Szumski
  */
-public class SignalFFTToolButtonMouseListener extends MouseAdapter implements SignalToolButtonListener{
+public class SignalFFTToolButtonMouseListener extends MouseAdapter implements SignalToolButtonListener {
 
 	/**
 	 * the timer used to wait a specified time (400 s) before the
 	 * {@link SignalFFTSettingsPopupDialog dialog} with settings is shown;
-	 * the timer is stopped if the user releases the mouse button 
+	 * the timer is stopped if the user releases the mouse button
 	 */
 	private Timer timer;
 
@@ -44,16 +43,9 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 	private JToggleButton button;
 
 	/**
-	 * the source of messages (labels)
-	 */
-	private MessageSourceAccessor messageSource;
-
-	/**
 	 * Constructor. Sets the source of messages.
-	 * @param messageSource the source of messages (labels)
 	 */
-	public SignalFFTToolButtonMouseListener(MessageSourceAccessor messageSource) {
-		this.messageSource = messageSource;
+	public SignalFFTToolButtonMouseListener() {
 	}
 
 	/**
@@ -63,8 +55,7 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 	ActionListener timerListener = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SignalFFTSettingsPopupDialog dialog = new SignalFFTSettingsPopupDialog(
-					messageSource, null, true);
+			SignalFFTSettingsPopupDialog dialog = new SignalFFTSettingsPopupDialog(null, true);
 			Point location = button.getLocationOnScreen();
 			dialog.setLocation(location);
 			button.doClick();
@@ -115,11 +106,11 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 	 * <p>This listener must be associated with {@link SignalFFTTool}, so that
 	 * the {@code tool} must be of that type.
 	 * @throws RuntimeException if the {@code tool} is not of type {@link
-	 * SignalFFTTool} 
+	 * SignalFFTTool}
 	 */
 	@Override
 	public SignalToolButtonListener createCopy(SignalTool tool, JToggleButton button) {
-		SignalFFTToolButtonMouseListener copy = new SignalFFTToolButtonMouseListener(messageSource);
+		SignalFFTToolButtonMouseListener copy = new SignalFFTToolButtonMouseListener();
 		copy.setButton(button);
 		if (tool instanceof SignalFFTTool) copy.setSignalFFTTool((SignalFFTTool) tool);
 		else throw new RuntimeException("tool should have type SignalFFTTool");

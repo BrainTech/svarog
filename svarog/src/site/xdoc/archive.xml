@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://maven.apache.org/XDOC/2.0"
-	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
 
   <properties>
     <title>Archive</title>
@@ -13,48 +13,48 @@
     <section name="Archives of old downloads">
 
       <p>
-	Prefious stable versions of Svarog are available as packages below.
+    Prefious stable versions of Svarog are available as packages below.
       </p>
 
       <subsection name="Previous stable versions">
 
-	<p>
-	  There is only one stable version at this time.
-	</p>
+    <p>
+      There is only one stable version at this time.
+    </p>
 
       </subsection>
 
       <subsection name="Old signalml versions">
 
-	<p>
-	  See the <a href="history.html">history page</a> for details.
-	</p>
+    <p>
+      See the <a href="history.html">history page</a> for details.
+    </p>
 
-	<p>
-	  The final packaged version of <i>signalml</i> is available below, but
-	  using it is not encouraged.
-	</p>
+    <p>
+      The final packaged version of <i>signalml</i> is available below, but
+      using it is not encouraged.
+    </p>
 
-	<h4>signalml 0.4.6</h4>
+    <h4>signalml 0.4.6</h4>
 
-	<table><tbody>
-	  <tr>
-	    <th>
-	      Platform
-	    </th>
-	    <th>
-	      URL
-	    </th>
-	  </tr>
-	  <tr>
-	    <td>Microsoft Windows</td>
-	    <td><a href="http://signalml.eeg.pl:8080/installer/0.4.6/signalml_installer.exe">signalml_installer.exe</a></td>
-	  </tr>
-	  <tr>
-	    <td>Other (multiplatform, run with Java)</td>
-	    <td><a href="http://signalml.eeg.pl:8080/installer/0.4.6/signalml_installer.jar">signalml_installer.jar</a></td>
-	  </tr>
-	</tbody></table>
+    <table><tbody>
+      <tr>
+        <th>
+          Platform
+        </th>
+        <th>
+          URL
+        </th>
+      </tr>
+      <tr>
+        <td>Microsoft Windows</td>
+        <td><a href="http://signalml.eeg.pl:8080/installer/0.4.6/signalml_installer.exe">signalml_installer.exe</a></td>
+      </tr>
+      <tr>
+        <td>Other (multiplatform, run with Java)</td>
+        <td><a href="http://signalml.eeg.pl:8080/installer/0.4.6/signalml_installer.jar">signalml_installer.jar</a></td>
+      </tr>
+    </tbody></table>
 
       </subsection>
 

@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.montage;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
@@ -12,10 +14,9 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JPanel;
 
-import org.signalml.app.view.element.TextPanePanel;
+import org.signalml.app.view.common.components.panels.TextPanePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** EditMontageReferencePanel
  *
@@ -26,15 +27,12 @@ public class MontageMiscellaneousPanel extends JPanel implements PropertyChangeL
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private Montage montage;
 
 	private TextPanePanel editDescriptionPanel;
 
-	public MontageMiscellaneousPanel(MessageSourceAccessor messageSource) {
+	public MontageMiscellaneousPanel() {
 		super();
-		this.messageSource = messageSource;
 		initialize();
 	}
 
@@ -66,7 +64,7 @@ public class MontageMiscellaneousPanel extends JPanel implements PropertyChangeL
 
 	public TextPanePanel getEditDescriptionPanel() {
 		if (editDescriptionPanel == null) {
-			editDescriptionPanel = new TextPanePanel(messageSource.getMessage("signalMontage.editDescription"));
+			editDescriptionPanel = new TextPanePanel(_("Edit description"));
 			editDescriptionPanel.setPreferredSize(new Dimension(300,200));
 			editDescriptionPanel.setMinimumSize(new Dimension(300,200));
 

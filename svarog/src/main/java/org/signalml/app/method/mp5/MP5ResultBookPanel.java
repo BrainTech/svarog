@@ -3,6 +3,8 @@
  */
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -18,9 +20,10 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
-import org.springframework.context.support.MessageSourceAccessor;
+import org.signalml.app.view.workspace.ViewerFileChooser;
+
 import org.springframework.validation.Errors;
 
 /** MP5ResultBookPanel
@@ -32,8 +35,6 @@ public class MP5ResultBookPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	private MessageSourceAccessor messageSource;
-
 	private JTextField bookTextField;
 	private JButton chooseBookButton;
 
@@ -41,9 +42,8 @@ public class MP5ResultBookPanel extends JPanel {
 
 	private File bookFile;
 
-	public MP5ResultBookPanel(MessageSourceAccessor messageSource, ViewerFileChooser fileChooser) {
+	public MP5ResultBookPanel(ViewerFileChooser fileChooser) {
 		super();
-		this.messageSource = messageSource;
 		this.fileChooser = fileChooser;
 		initialize();
 	}
@@ -51,8 +51,8 @@ public class MP5ResultBookPanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.dialog.result.chooseBookTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Choose book file")),
+			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
 
@@ -61,23 +61,23 @@ public class MP5ResultBookPanel extends JPanel {
 		layout.setAutoCreateContainerGaps(false);
 		layout.setAutoCreateGaps(true);
 
-		JLabel bookFileLabel = new JLabel(messageSource.getMessage("mp5Method.dialog.result.bookFile"));
+		JLabel bookFileLabel = new JLabel(_("Book file"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(bookFileLabel)
+			layout.createParallelGroup()
+			.addComponent(bookFileLabel)
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getBookTextField())
+			layout.createParallelGroup()
+			.addComponent(getBookTextField())
 		);
 
 		hGroup.addGroup(
-		        layout.createParallelGroup()
-		        .addComponent(getChooseBookButton())
+			layout.createParallelGroup()
+			.addComponent(getChooseBookButton())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -85,11 +85,11 @@ public class MP5ResultBookPanel extends JPanel {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(bookFileLabel)
-				.addComponent(getBookTextField())
-				.addComponent(getChooseBookButton())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(bookFileLabel)
+			.addComponent(getBookTextField())
+			.addComponent(getChooseBookButton())
+		);
 
 		layout.setVerticalGroup(vGroup);
 
@@ -133,14 +133,14 @@ public class MP5ResultBookPanel extends JPanel {
 
 	}
 
-	public void validatePanel(Errors errors) {
+	public void validatePanel(ValidationErrors errors) {
 
 		if (bookFile == null) {
-			errors.rejectValue("bookFile", "error.mp5.result.badBookFile");
+			errors.addError(_("Book file not chosen"));
 		} else {
 			File parent = bookFile.getParentFile();
 			if (parent == null || !parent.exists() || !parent.canWrite()) {
-				errors.rejectValue("bookFile", "error.mp5.result.bookFileNotWritable");
+				errors.addError(_("Book file parent directory doesn't exist or not writable"));
 			}
 		}
 
@@ -158,9 +158,9 @@ public class MP5ResultBookPanel extends JPanel {
 		private static final long serialVersionUID = 1L;
 
 		public ChooseBookFileAction() {
-			super(messageSource.getMessage("mp5Method.dialog.result.chooseBookFile"));
+			super(_("Choose..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,messageSource.getMessage("mp5Method.dialog.result.chooseBookFileToolTip"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose a book file to save"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

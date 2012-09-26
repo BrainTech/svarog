@@ -15,18 +15,17 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.montage.MontageFiltersTableModel;
+import org.signalml.app.model.montage.MontageFiltersTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * Table with the list of {@link SampleFilterDefinition sample filters}
  * associated with a {@link Montage}.
  * Contains three columns:
  * <ul>
- * <li>the index of the filter in the montage,</li> 
+ * <li>the index of the filter in the montage,</li>
  * <li>the custom name of the filter (description),</li>
  * <li>the description of the effect of the filter.</li></ul>
  *
@@ -52,9 +51,8 @@ public class MontageFiltersTable extends JTable {
 	 * Adds the mouse listener which changes the selected row, when it is
 	 * clicked with a right mouse button.
 	 * @param model the model for this table
-	 * @param messageSource the source of messages (labels)
 	 */
-	public MontageFiltersTable(MontageFiltersTableModel model, MessageSourceAccessor messageSource) {
+	public MontageFiltersTable(MontageFiltersTableModel model) {
 		super(model, (TableColumnModel) null);
 
 		DefaultTableColumnModel columnModel = new DefaultTableColumnModel();

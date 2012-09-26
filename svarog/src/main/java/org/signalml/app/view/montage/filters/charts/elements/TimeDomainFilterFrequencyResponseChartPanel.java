@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import org.jfree.chart.JFreeChart;
@@ -12,7 +14,6 @@ import org.jfree.ui.HorizontalAlignment;
 import org.jfree.ui.RectangleEdge;
 import org.jfree.ui.RectangleInsets;
 import org.jfree.ui.VerticalAlignment;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /**
  * A {@link FrequencyResponseChartPanel} used to draw filter's frequency
@@ -23,12 +24,10 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 
 	/**
 	 * Constructor.
-	 * @param messageSource message source capable of resolving localized
-	 * messages
 	 */
-	public TimeDomainFilterFrequencyResponseChartPanel(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setTitle(messageSource.getMessage("editTimeDomainSampleFilter.frequencyResponseGraphTitle"));
+	public TimeDomainFilterFrequencyResponseChartPanel() {
+		super();
+		setTitle(_("Filter frequency response [decibels]"));
 	}
 
 	@Override
@@ -47,11 +46,11 @@ public class TimeDomainFilterFrequencyResponseChartPanel extends FrequencyRespon
 
 		chart.addSubtitle(
 			new TextTitle(subtitleText,
-			createDefaultFont(),
-			Color.BLACK,
-			RectangleEdge.TOP,
-			HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
-			new RectangleInsets(0, 0, 0, 9)));
+						  createDefaultFont(),
+						  Color.BLACK,
+						  RectangleEdge.TOP,
+						  HorizontalAlignment.RIGHT, VerticalAlignment.TOP,
+						  new RectangleInsets(0, 0, 0, 9)));
 	}
 
 	@Override

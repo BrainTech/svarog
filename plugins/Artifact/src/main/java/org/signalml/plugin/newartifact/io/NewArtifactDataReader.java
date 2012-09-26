@@ -19,7 +19,7 @@ public class NewArtifactDataReader implements INewArtifactDataReader {
 	private static final int BUFFER_SIZE = 8192;
 
 	public NewArtifactDataReader(File sourceFile,
-				     int channelCount) {
+								 int channelCount) {
 		this.sourceFile = sourceFile;
 		this.channelCount = channelCount;
 	}

@@ -14,3 +14,7 @@ log
 .classpath
 .project
 .settings
+
+# i18n fully auto-generated files
+keys.pot
+en.po

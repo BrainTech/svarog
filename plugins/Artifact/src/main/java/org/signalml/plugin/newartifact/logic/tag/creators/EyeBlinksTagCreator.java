@@ -37,13 +37,13 @@ public class EyeBlinksTagCreator extends AbstractNewArtifactTagCreator
 	@Override
 	public NewArtifactTagResult tag(NewArtifactTagData data) {
 		final double sensitivity = data.parameters
-					   .getSensitivity(EyeBlinksTagCreator.CREATOR_TYPE) / 100.0;
+								   .getSensitivity(EyeBlinksTagCreator.CREATOR_TYPE) / 100.0;
 		final double factor = EyeBlinksTagCreator.FACTOR_A
-				      + sensitivity
-				      * (EyeBlinksTagCreator.FACTOR_B - EyeBlinksTagCreator.FACTOR_A);
+							  + sensitivity
+							  * (EyeBlinksTagCreator.FACTOR_B - EyeBlinksTagCreator.FACTOR_A);
 		final double treshold = EyeBlinksTagCreator.TRESHOLD_A
-					+ sensitivity
-					* (EyeBlinksTagCreator.TRESHOLD_B - EyeBlinksTagCreator.TRESHOLD_A);
+								+ sensitivity
+								* (EyeBlinksTagCreator.TRESHOLD_B - EyeBlinksTagCreator.TRESHOLD_A);
 		final double absTreshold = treshold + factor;
 
 		int blockCount = data.source[0].length;

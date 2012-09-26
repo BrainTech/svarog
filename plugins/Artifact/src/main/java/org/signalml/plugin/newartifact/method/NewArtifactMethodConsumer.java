@@ -9,17 +9,15 @@ import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.OptionPane;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.Method;
-import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.FileChooser;
-import org.signalml.plugin.i18n.PluginMessageSourceManager;
 import org.signalml.plugin.method.IPluginMethodResultConsumer;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.newartifact.data.NewArtifactApplicationData;
@@ -38,7 +36,7 @@ import org.signalml.util.Util;
 public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 
 	protected static final Logger logger = Logger
-					       .getLogger(NewArtifactMethodConsumer.class);
+										   .getLogger(NewArtifactMethodConsumer.class);
 
 	private Window dialogParent;
 	private FileChooser fileChooser;
@@ -53,21 +51,15 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
 		this.fileChooser = manager.getSvarogAccess().getGUIAccess().getFileChooser();
 
-		try {
-			this.resultDialog = new NewArtifactResultDialog(
-				PluginMessageSourceManager.GetMessageSource(),
-				this.dialogParent, true);
-		} catch (PluginException e) {
-			manager.handleException(e);
-			return;
-		}
+		this.resultDialog = new NewArtifactResultDialog(
+			this.dialogParent, true);
 		this.resultDialog.setFileChooser(fileChooser);
 
 	}
 
 	@Override
 	public boolean consumeResult(Method method, Object methodData,
-				     Object methodResult) throws SignalMLException {
+								 Object methodResult) throws SignalMLException {
 
 		if (!(methodData instanceof NewArtifactApplicationData)) {
 			logger.error("Invalid artifact data");
@@ -80,7 +72,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		NewArtifactResultTargetDescriptor descriptor = new NewArtifactResultTargetDescriptor();
 
 		SvarogAccessSignal signalAccess = this.manager.getSvarogAccess()
-						  .getSignalAccess();
+										  .getSignalAccess();
 
 		ExportedSignalDocument signalDocument = data.getSignalDocument();
 		boolean signalAvailable;
@@ -108,7 +100,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		descriptor.setPrimaryTag(primaryTag);
 
 		File workingDirectory = new File(data.getProjectPath(),
-						 data.getPatientName());
+										 data.getPatientName());
 		File[] additionalTagFiles = workingDirectory
 		.listFiles(new FileFilter() {
 
@@ -118,9 +110,9 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 					return false;
 				}
 				String fileExtension = Util.getFileExtension(pathname,
-						       false);
+									   false);
 				return (fileExtension != null && "tag"
-					.equalsIgnoreCase(fileExtension));
+						.equalsIgnoreCase(fileExtension));
 			}
 
 		});
@@ -149,11 +141,11 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 				primaryTag.saveDocument();
 			} catch (SignalMLException ex) {
 				logger.error("Failed to save document", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			} catch (IOException ex) {
 				logger.error("Failed to save document - i/o exception", ex);
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			}
 		}
@@ -161,22 +153,22 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 		if (signalAvailable && descriptor.isPrimaryOpenInWindow()) {
 			try {
 				signalAccess.openTagDocument(primaryTag.getBackingFile(),
-							     signalDocument, true);
+											 signalDocument, true);
 			} catch (InvalidClassException ex) {
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			} catch (IOException ex) {
-				ErrorsDialog.showImmediateExceptionDialog(dialogParent, ex);
+				Dialogs.showExceptionDialog(dialogParent, ex);
 				return false;
 			}
 		}
 
 		ArrayList<File> chosenAdditionalTags = descriptor
-						       .getChosenAdditionalTags();
+											   .getChosenAdditionalTags();
 		if (!chosenAdditionalTags.isEmpty()) {
 
 			boolean additionalOpenInWindow = descriptor
-							 .isAdditionalOpenInWindow();
+											 .isAdditionalOpenInWindow();
 			boolean additionalSaveToFile = descriptor.isAdditionalSaveToFile();
 
 			if (additionalOpenInWindow || additionalSaveToFile) {
@@ -193,7 +185,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 							d = new TagDocument(file);
 							d.openDocument();
 						} catch (IOException ex) {
-							ErrorsDialog.showImmediateExceptionDialog(
+							Dialogs.showExceptionDialog(
 								dialogParent, ex);
 							return false;
 						}
@@ -216,7 +208,7 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 							// file exists warning
 							if (saveFile.exists()) {
 								int res = OptionPane
-									  .showFileAlreadyExists(dialogParent);
+										  .showFileAlreadyExists(dialogParent);
 								if (res != OptionPane.OK_OPTION) {
 									hasFile = false;
 								}
@@ -230,14 +222,14 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 								additionalTag.saveDocument();
 							} catch (SignalMLException ex) {
 								logger.error("Failed to save document", ex);
-								ErrorsDialog.showImmediateExceptionDialog(
+								Dialogs.showExceptionDialog(
 									dialogParent, ex);
 								return false;
 							} catch (IOException ex) {
 								logger.error(
 									"Failed to save document - i/o exception",
 									ex);
-								ErrorsDialog.showImmediateExceptionDialog(
+								Dialogs.showExceptionDialog(
 									dialogParent, ex);
 								return false;
 							}
@@ -257,13 +249,13 @@ public class NewArtifactMethodConsumer implements IPluginMethodResultConsumer {
 
 						try {
 							signalAccess.openTagDocument(file, signalDocument,
-										     false);
+														 false);
 						} catch (InvalidClassException ex) {
-							ErrorsDialog.showImmediateExceptionDialog(
+							Dialogs.showExceptionDialog(
 								dialogParent, ex);
 							return false;
 						} catch (IOException ex) {
-							ErrorsDialog.showImmediateExceptionDialog(
+							Dialogs.showExceptionDialog(
 								dialogParent, ex);
 							return false;
 						}

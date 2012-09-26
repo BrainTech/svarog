@@ -4,6 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -15,13 +17,15 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.ViewerFileChooser;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.view.AbstractDialog;
+import org.signalml.plugin.export.view.FileChooser;
 import org.signalml.util.Util;
-import org.springframework.context.support.MessageSourceAccessor;
+
 import org.springframework.validation.Errors;
 
 /** MP5LocalExecutorDialog
@@ -29,27 +33,27 @@ import org.springframework.validation.Errors;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5LocalExecutorDialog extends AbstractDialog {
+public class MP5LocalExecutorDialog extends AbstractDialog  {
 
 	private static final long serialVersionUID = 1L;
 
-	private ViewerFileChooser fileChooser;
+	private FileChooser fileChooser;
 
 	private JTextField nameTextField;
 
 	private MP5ExecutablePanel executablePanel;
 
-	public MP5LocalExecutorDialog(MessageSourceAccessor messageSource) {
-		super(messageSource);
+	public MP5LocalExecutorDialog() {
+		super();
 	}
 
-	public MP5LocalExecutorDialog(MessageSourceAccessor messageSource, Window w, boolean isModal) {
-		super(messageSource, w, isModal);
+	public MP5LocalExecutorDialog(Window w, boolean isModal) {
+		super(w, isModal);
 	}
 
 	@Override
 	protected void initialize() {
-		setTitle(messageSource.getMessage("mp5Method.config.local.title"));
+		setTitle(_("Configure local executor"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/configure.png"));
 		setResizable(false);
 		super.initialize();
@@ -63,8 +67,8 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 		JPanel namePanel = new JPanel(new BorderLayout());
 
 		CompoundBorder border = new CompoundBorder(
-		        new TitledBorder(messageSource.getMessage("mp5Method.config.local.nameTitle")),
-		        new EmptyBorder(3,3,3,3)
+			new TitledBorder(_("Executor name")),
+			new EmptyBorder(3,3,3,3)
 		);
 		namePanel.setBorder(border);
 
@@ -87,7 +91,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 
 	public MP5ExecutablePanel getExecutablePanel() {
 		if (executablePanel == null) {
-			executablePanel = new MP5ExecutablePanel(messageSource,fileChooser);
+			executablePanel = new MP5ExecutablePanel(fileChooser);
 		}
 		return executablePanel;
 	}
@@ -99,7 +103,7 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 
 		String name = executor.getName();
 		if (name == null) {
-			name = messageSource.getMessage("mp5Method.config.local.newNameSuggestion");
+			name = _("New local executor");
 		}
 
 		JTextField nameField = getNameTextField();
@@ -122,11 +126,11 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 	}
 
 	@Override
-	public void validateDialog(Object model, Errors errors) throws SignalMLException {
+	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		super.validateDialog(model, errors);
 
 		if (Util.hasSpecialChars(getNameTextField().getText())) {
-			errors.rejectValue("name", "error.nameBadCharacters");
+			errors.addError(_("Name must not contain control characters"));
 		}
 
 		getExecutablePanel().validatePanel(errors);
@@ -138,11 +142,11 @@ public class MP5LocalExecutorDialog extends AbstractDialog {
 		return MP5LocalProcessExecutor.class.isAssignableFrom(clazz);
 	}
 
-	public ViewerFileChooser getFileChooser() {
+	public FileChooser getFileChooser() {
 		return fileChooser;
 	}
 
-	public void setFileChooser(ViewerFileChooser fileChooser) {
+	public void setFileChooser(FileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.signalml.plugin.exampleplugin;
 
@@ -20,12 +20,12 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 public class PreciseTagAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
-	 * the {@link SvarogAccessSignal access} to signal options 
+	 * the {@link SvarogAccessSignal access} to signal options
 	 */
 	private SvarogAccessSignal signalAccess;
-	
+
 	/**
 	 * Constructor. Sets {@link SvarogAccessSignal signal access}.
 	 * @param signalAccess access to set
@@ -34,7 +34,7 @@ public class PreciseTagAction extends AbstractAction {
 		super("Add precise tag");
 		this.signalAccess = signalAccess;
 	}
-	
+
 	/**
 	 * If there is an active {@link ExportedTagDocument tag document} creates
 	 * and show a {@link PreciseTagDialog dialog} that allows to create a
@@ -43,7 +43,7 @@ public class PreciseTagAction extends AbstractAction {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		try {
 			signalAccess.getActiveTagDocument();
 			PreciseTagDialog dialog = new PreciseTagDialog(signalAccess);

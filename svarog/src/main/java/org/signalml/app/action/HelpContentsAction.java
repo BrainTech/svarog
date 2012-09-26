@@ -3,15 +3,17 @@
  */
 package org.signalml.app.action;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.view.dialog.ErrorsDialog;
-import org.signalml.app.view.dialog.HelpDialog;
+import org.signalml.app.view.common.dialogs.HelpDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.springframework.context.support.MessageSourceAccessor;
 
 /** HelpContentsAction
  *
@@ -26,11 +28,12 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 	private HelpDialog helpDialog;
 
-	public HelpContentsAction(MessageSourceAccessor messageSource) {
-		super(messageSource);
-		setText("action.helpContents");
+	public HelpContentsAction() {
+		super();
+		setText(_("Contents..."));
 		setIconPath("org/signalml/app/icon/help.png");
-		setToolTip("action.helpContentsToolTip");
+		setToolTip(_("Display help contents"));
+		setMnemonic(KeyEvent.VK_C);
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 				helpDialog.setPage(null);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set help page", ex);
-				ErrorsDialog.showImmediateExceptionDialog((Window) null, ex);
+				Dialogs.showExceptionDialog((Window) null, ex);
 				return;
 			}
 			helpDialog.toFront();

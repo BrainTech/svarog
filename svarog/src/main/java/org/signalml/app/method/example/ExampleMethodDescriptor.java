@@ -4,12 +4,15 @@
 
 package org.signalml.app.method.example;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodPresetManager;
-import org.signalml.app.view.roc.RocDialog;
+import org.signalml.app.view.signal.roc.RocDialog;
 import org.signalml.method.example.ExampleMethod;
+import org.signalml.plugin.export.method.BaseMethodData;
 
 /** ExampleMethodDescriptor
  *
@@ -18,7 +21,7 @@ import org.signalml.method.example.ExampleMethod;
  */
 public class ExampleMethodDescriptor implements ApplicationIterableMethodDescriptor {
 
-	public static final String RUN_METHOD_STRING = "exampleMethod.runMethodString";
+	public static final String RUN_METHOD_STRING = _("Find the meaning of life");
 	private ExampleMethod method;
 	private ExampleMethodDialog configurer;
 	private ExampleMethodConsumer consumer;
@@ -36,13 +39,13 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	}
 
 	@Override
-	public String getNameCode() {
+	public String getName() {
 		return RUN_METHOD_STRING;
 	}
 
 	@Override
-	public String getIterationNameCode() {
-		return "exampleMethod.iterateMethodString";
+	public String getIterationName() {
+		return _("Iterate finding the meaning of life");
 	}
 
 	@Override
@@ -63,7 +66,7 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	@Override
 	public ExampleMethodDialog getConfigurer(ApplicationMethodManager methodManager) {
 		if (configurer == null) {
-			configurer = new ExampleMethodDialog(methodManager.getMessageSource(), methodManager.getDialogParent());
+			configurer = new ExampleMethodDialog(methodManager.getDialogParent());
 			configurer.initialize(methodManager);
 		}
 		return configurer;
@@ -73,7 +76,6 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	public ExampleMethodConsumer getConsumer(ApplicationMethodManager methodManager) {
 		if (consumer == null) {
 			consumer = new ExampleMethodConsumer();
-			consumer.setMessageSource(methodManager.getMessageSource());
 		}
 		return consumer;
 	}
@@ -82,7 +84,6 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	public MethodIterationResultConsumer getIterationConsumer(ApplicationMethodManager methodManager) {
 		if (iterationConsumer == null) {
 			iterationConsumer = new ExampleMethodIterationConsumer();
-			iterationConsumer.setMessageSource(methodManager.getMessageSource());
 			iterationConsumer.setRocDialog(getRocDialog(methodManager));
 		}
 		return iterationConsumer;
@@ -90,7 +91,7 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 
 	public RocDialog getRocDialog(ApplicationMethodManager methodManager) {
 		if (rocDialog == null) {
-			rocDialog = new RocDialog(methodManager.getMessageSource(), methodManager.getDialogParent(),true);
+			rocDialog = new RocDialog(methodManager.getDialogParent(),true);
 			rocDialog.setFileChooser(methodManager.getFileChooser());
 			rocDialog.setTableToTextExporter(methodManager.getTableToTextExporter());
 		}
@@ -98,7 +99,7 @@ public class ExampleMethodDescriptor implements ApplicationIterableMethodDescrip
 	}
 
 	@Override
-	public Object createData(ApplicationMethodManager methodManager) {
+	public BaseMethodData createData(ApplicationMethodManager methodManager) {
 		return method.createData();
 	}
 

@@ -3,7 +3,7 @@ package org.signalml.plugin.export.signal;
 
 /**
  * This interface allows to return {@link ChannelSamples samples} for a selected channel
- * and for all channels. 
+ * and for all channels.
  * @author Marcin Szumski
  */
 public interface SignalSamples {
