@@ -1,6 +1,5 @@
 /usr/share/java/svarog.jar /usr/bin/svarog
 
 /usr/share/maven-repo/org/signalml/plugin/FFTSignalTool/0.1/FFTSignalTool-0.1.jar /usr/share/java/svarog/plugins/FFTSignalTool.jar
-/usr/share/maven-repo/org/signalml/plugin/FFT/0.1/FFT-0.1.jar /usr/share/java/svarog/plugins/FFT.jar
 /usr/share/maven-repo/org/signalml/plugin/PluginToolCommon/1.0/PluginToolCommon-1.0.jar /usr/share/java/svarog/plugins/PluginToolCommon.jar
 /usr/share/maven-repo/org/signalml/plugin/Artifact/1.0/Artifact-1.0.jar /usr/share/java/svarog/plugins/Artifact.jar

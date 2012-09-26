@@ -24,3 +24,4 @@ org.apache.maven.plugins maven-source-plugin * * * *
 org.codehaus.mojo cobertura-maven-plugin * * * *
 org.codehaus.mojo exec-maven-plugin * * * *
 org.dstovall onejar-maven-plugin * * * *
+org.xnap.commons maven-gettext-plugin * * * *

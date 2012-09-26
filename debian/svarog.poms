@@ -25,7 +25,6 @@
 #
 pom.xml --has-package-version
 svarog/pom.xml --has-package-version --java-lib --artifact=svarog/target/svarog-0.5.0-SNAPSHOT.jar
-plugins/FFT/pom.xml --has-package-version --artifact=plugins/FFT/target/FFT.jar
 plugins/FFTSignalTool/pom.xml --has-package-version --artifact=plugins/FFTSignalTool/target/FFTSignalTool.jar
 plugins/PluginToolCommon/pom.xml --has-package-version --artifact=plugins/PluginToolCommon/target/PluginToolCommon.jar
 plugins/Artifact/pom.xml --has-package-version --artifact=plugins/Artifact/target/Artifact.jar
