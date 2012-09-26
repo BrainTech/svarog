@@ -178,4 +178,10 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 		return getDefaultMessage();
 	}
 
+	public static MP5LocalProcessExecutor pathExecutor() {
+		MP5LocalProcessExecutor ex = new MP5LocalProcessExecutor();
+		ex.setName("execute from $PATH");
+		ex.setMp5ExecutablePath("mp5");
+		return ex;
+	}
 }
