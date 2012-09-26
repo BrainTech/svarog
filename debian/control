@@ -51,7 +51,6 @@ Depends: ${misc:Depends},
 	libspring-context-java,
 	libspring-core-java,
 	libeega-tag-library-java,
-	libjmx-java,
 	libxstream-java,
 	jarwrapper,
 Description: Svarog
