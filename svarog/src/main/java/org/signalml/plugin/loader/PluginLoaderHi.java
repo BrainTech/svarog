@@ -278,7 +278,7 @@ public class PluginLoaderHi {
 				URL jarURL = ((JarURLConnection) connection).getJarFileURL();
 				jarFile = _urlToFile(jarURL);
 			} else {
-				// e.g. file:/usr/share/java/svarog-0.5.0-SNAPSHOT.jar
+				// e.g. file:/usr/share/java/svarog-0.6.0-SNAPSHOT.jar
 				jarFile = new File(srcURL.getPath());
 			}
 
