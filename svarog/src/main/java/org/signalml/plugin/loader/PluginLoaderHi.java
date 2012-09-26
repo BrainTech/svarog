@@ -295,22 +295,11 @@ public class PluginLoaderHi {
 				jarFile = new File(srcURL.getPath());
 			}
 
-			File pluginsDir = new File(jarFile.getParentFile() + File.separator +
-						   "svarog" + File.separator + "plugins");
-			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead()) {
-				logger.info("trying to load plugins from '" + pluginsDir + "'");
-				globalPluginDirectories.add(pluginsDir);
-				return;
-			}
+			File pluginsDir = new File(jarFile.getParentFile() + File.separator + "plugins");
+			logger.info("trying to load plugins from '" + pluginsDir + "'");
 
-			pluginsDir = new File(jarFile.getParentFile() + File.separator + "plugins");
-			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead()) {
-				logger.info("trying to load plugins from '" + pluginsDir + "'");
+			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead())
 				globalPluginDirectories.add(pluginsDir);
-				return;
-			}
-
-			logger.warn("plugin dir not found");
 		}
 	}
 
@@ -449,6 +438,7 @@ public class PluginLoaderHi {
 			} catch(Throwable exc) {
 				String errorMsg = "Failed to initialize plugin " + descr.getName() +
 					" from file " + descr.getJarFile();
+				SvarogLogger.getSharedInstance().warning(errorMsg, exc);
 				logger.error(errorMsg, exc);
 			}
 			

@@ -45,13 +45,11 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	protected static void install() {
 		final String mode = System.getProperties().getProperty("svarog.security_manager",
 								       "enforcing");
+		final boolean enforcing;
 		if (mode.equals("off")) {
 			SvarogSecurityLogger.getInstance().debug("SvarogSecurityManager is off");
 			return;
-		}
-
-		final boolean enforcing;
-		if (mode.equals("permissive")) {
+		} else if (mode.equals("permissive")) {
 			enforcing = false;
 		} else {
 			if (!mode.equals("enforcing"))

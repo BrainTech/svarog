@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 import java.util.prefs.Preferences;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 import javax.swing.SwingUtilities;
 
@@ -192,8 +190,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		SvarogLogger.getSharedInstance().debugThreads();
 		SvarogLogger.getSharedInstance().debugCL();
 
-		_install_properties(args);
-
 		// install security manager
 		SvarogSecurityManager.install();
 
@@ -207,28 +203,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		launchSvarog(args);
 
 		SvarogLogger.getSharedInstance().debug("SvarogApplication.main complete!");
-	}
-
-	/**
-	 * Put all -Dproperty=value into System properties.
-	 *
-	 */
-	private static void _install_properties(String...args) {
-		Pattern p = Pattern.compile("-D([a-zA-Z0-9_.]+?)=(.+)");
-
-		for(String arg: args)
-			if (arg.startsWith("-D")) {
-				Matcher m = p.matcher(arg);
-				if (!m.matches()) {
-					System.err.println("invalid property: " + arg);
-					System.exit(1);
-				}
-
-				String name = m.group(1), value = m.group(2);
-				SvarogLogger.getSharedInstance().debug(
-					   String.format("installing property %s=%s", name, value));
-				System.getProperties().setProperty(name, value);
-			}
 	}
 
 	/**
@@ -313,7 +287,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		options.addOption("R", "reset", false, "reset workspace settings");
 		options.addOption("s", "nosplash", false, "don't display splash screen");
 		options.addOption("m", "moltest", false, "include test method");
-		options.addOption("D", true, "define java property (allowed multiple times)");
 
 		for (String arg: args)
 			if (arg.equals("-h") || arg.equals("--help"))
