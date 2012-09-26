@@ -4,7 +4,8 @@
 
 package org.signalml.app.method.mp5;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.swing.event.EventListenerList;
@@ -28,15 +29,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("mp5executors")
 public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5ExecutorLocator {
 
-	private ArrayList<MP5Executor> executors;
+	private List<MP5Executor> executors;
 	private MP5Executor defaultExecutor;
 
 	private transient HashMap<String, MP5Executor> executorMap = null;
 	private transient EventListenerList listenerList = new EventListenerList();
 
 	public MP5ExecutorManager() {
-		executors = new ArrayList<MP5Executor>();
-		defaultExecutor = null;
+		defaultExecutor = MP5LocalProcessExecutor.pathExecutor();
+		executors = Arrays.asList(defaultExecutor);
 	}
 
 	@Override

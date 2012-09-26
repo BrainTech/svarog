@@ -25,8 +25,9 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 * called catalogId.
 	 */
 	public SvarogI18n(Class klass, String catalogId) {
-		log.info("loading i18n bundle " + catalogId);
-		this.i18n = I18nFactory.getI18n(klass, catalogId);
+		log.info("loading i18n bundle " + catalogId + "for klass " + klass.getName());
+		this.i18n = I18nFactory.getI18n(klass, catalogId, Locale.getDefault(),
+										I18nFactory.READ_PROPERTIES|I18nFactory.FALLBACK);
 	}
 
 	/**

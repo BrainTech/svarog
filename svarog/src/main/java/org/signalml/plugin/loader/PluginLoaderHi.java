@@ -278,15 +278,26 @@ public class PluginLoaderHi {
 				URL jarURL = ((JarURLConnection) connection).getJarFileURL();
 				jarFile = _urlToFile(jarURL);
 			} else {
-				// e.g. file:/usr/share/java/svarog-0.5.0-SNAPSHOT.jar
+				// e.g. file:/usr/share/java/svarog-0.6.0-SNAPSHOT.jar
 				jarFile = new File(srcURL.getPath());
 			}
 
-			File pluginsDir = new File(jarFile.getParentFile() + File.separator + "plugins");
-			logger.info("trying to load plugins from '" + pluginsDir + "'");
-
-			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead())
+			File pluginsDir = new File(jarFile.getParentFile() + File.separator +
+						   "svarog" + File.separator + "plugins");
+			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead()) {
+				logger.info("trying to load plugins from '" + pluginsDir + "'");
 				globalPluginDirectories.add(pluginsDir);
+				return;
+			}
+
+			pluginsDir = new File(jarFile.getParentFile() + File.separator + "plugins");
+			if (pluginsDir.exists() && pluginsDir.isDirectory() && pluginsDir.canRead()) {
+				logger.info("trying to load plugins from '" + pluginsDir + "'");
+				globalPluginDirectories.add(pluginsDir);
+				return;
+			}
+
+			logger.warn("plugin dir not found");
 		}
 	}
 
