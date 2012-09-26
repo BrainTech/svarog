@@ -1,3 +1,9 @@
+svarog (0.5.0.3) unstable; urgency=low
+
+  * Upstream changes.
+
+ -- Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>  Wed, 26 Sep 2012 14:57:30 +0200
+
 svarog (0.5.0.2) unstable; urgency=low
 
   * Upstream changes.
