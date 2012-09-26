@@ -11,7 +11,7 @@ mvn = mvn $(mvnflags)
 mvnflags = -Dmaven.repo.local=$(DEB_MAVEN_REPO) -o
 copy_repo = /usr/share/maven-debian-helper/copy-repo.sh
 
-mvnflags += --projects svarog,plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact
+mvnflags += --projects svarog,plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact,plugins/Stager
 mvnflags += -Dmaven.test.skip=true
 
 %:

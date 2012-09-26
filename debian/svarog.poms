@@ -28,3 +28,4 @@ svarog/pom.xml --has-package-version --java-lib --artifact=svarog/target/svarog-
 plugins/FFTSignalTool/pom.xml --has-package-version --artifact=plugins/FFTSignalTool/target/FFTSignalTool.jar
 plugins/PluginToolCommon/pom.xml --has-package-version --artifact=plugins/PluginToolCommon/target/PluginToolCommon.jar
 plugins/Artifact/pom.xml --has-package-version --artifact=plugins/Artifact/target/Artifact.jar
+plugins/Stager/pom.xml --has-package-version --artifact=plugins/Stager/target/Stager.jar
