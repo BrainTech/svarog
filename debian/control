@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 8.0.0),
 	       javahelper,
 Build-Depends-Indep:
 	janino,
-	libasm-java,
+	libasm3-java,
 	libbluecove-java,
 	libcommons-math-java,
 	libcommons-parent-java,
@@ -39,7 +39,7 @@ Package: svarog
 Architecture: all
 Depends: ${misc:Depends},
 	janino,
-	libasm-java,
+	libasm3-java,
 	libbluecove-java,
 	libcommons-math-java,
 	libcommons-parent-java,
