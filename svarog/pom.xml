@@ -30,7 +30,6 @@
 		<git.git>git</git.git>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
-		<springframework.version>2.0.7</springframework.version>
 	</properties>
 
 	<build>

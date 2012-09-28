@@ -45,8 +45,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.jdk_version>1.6</project.jdk_version>
 
-
-		<springframework.version>2.0.7</springframework.version>
+		<springframework.version>3.1.2.RELEASE</springframework.version>
 	</properties>
 
 	<repositories>
