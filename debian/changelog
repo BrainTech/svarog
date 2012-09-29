@@ -1,3 +1,16 @@
+svarog (0.6.0-1-ubuntu1) precise; urgency=low
+
+  * Initial ubuntu packaging.
+  * Add openbci-core depency.
+
+ -- Karol Auguštin <karol@augustin.pl>  Sat, 29 Sep 2012 12:40:47 +0200
+
+svarog (0.6.0-1-ubuntu1) precise; urgency=low
+
+  * Initial ubuntu packaging.
+
+ -- Karol Auguštin <karol@augustin.pl>  Sat, 29 Sep 2012 12:33:05 +0200
+
 svarog (0.6.0-1) unstable; urgency=low
 
   * Update build dependencies.
