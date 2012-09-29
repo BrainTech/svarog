@@ -64,4 +64,6 @@ Depends: ${misc:Depends},
 	jarwrapper,
 	java6-runtime-headless,
 	matching-pursuit,
-Description: Svarog
+Description: EEG signal viewer, annotator, analyzer and recorder. 
+ It combines rich signal analysis capabilities with easy to use GUI.
+ It is written in Java SE 6.
