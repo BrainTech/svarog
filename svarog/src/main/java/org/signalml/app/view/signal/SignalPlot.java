@@ -952,7 +952,13 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				sampleSkip = (int) Math.ceil(samplingFrequencyRatio  / timeZoomFactor);
 			}
 
-			for (i=1; i<length; i += sampleSkip) {
+			//if the user selects a piece of the signal, we shouldn't break the rule
+			//that we always take the sampleSkip's sample!
+			int startingFrom = sampleSkip - firstSample % sampleSkip;
+			if (firstSample == 0)
+				startingFrom = 0;
+
+			for (i=startingFrom; i<length; i += sampleSkip) {
 
 				y = samples[i] * pixelPerValueForChannel;
 
