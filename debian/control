@@ -41,7 +41,6 @@ Package: svarog
 Architecture: all
 Depends: ${misc:Depends},
 	janino,
-	openjdk-6-jdk,
 	libasm3-java,
 	libbluecove-java,
 	libcommons-math-java,
@@ -65,7 +64,7 @@ Depends: ${misc:Depends},
 	libeega-tag-library-java,
 	libxstream-java,
 	jarwrapper,
-	java6-runtime-headless,
+	java6-runtime,
 	matching-pursuit,
 	openbci-core,
 Description: EEG signal viewer, annotator, analyzer and recorder. 
