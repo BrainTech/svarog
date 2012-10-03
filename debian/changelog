@@ -1,3 +1,9 @@
+svarog (0.6.0-2) unstable; urgency=low
+
+  * Add openjdk-6-jdk depency.
+
+ -- Karol Auguštin <karolaug@dell>  Wed, 03 Oct 2012 09:32:41 +0200
+
 svarog (0.6.0-1) unstable; urgency=low
 
   * Update build dependencies.

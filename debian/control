@@ -39,6 +39,7 @@ Package: svarog
 Architecture: all
 Depends: ${misc:Depends},
 	janino,
+	openjdk-6-jdk,
 	libasm3-java,
 	libbluecove-java,
 	libcommons-math-java,
