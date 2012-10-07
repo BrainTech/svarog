@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+GenericName=Svarog
+Name=Svarog
+Exec=svarog %F
+TryExec=svarog
+Type=Application
+Terminal=false
+Categories=Graphics;Science;MedicalSoftware;Development;IDE;
+Icon=svarog.png
