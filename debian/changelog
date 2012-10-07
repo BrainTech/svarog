@@ -1,3 +1,9 @@
+svarog (0.6.0-3) precise; urgency=low
+
+  * Add menu entry.
+
+ -- Karol Auguštin <karol@augustin.pl>  Mon, 08 Oct 2012 00:23:16 +0200
+
 svarog (0.6.0-2) unstable; urgency=low
 
   * Add openjdk-6-jdk depency.
