@@ -894,9 +894,9 @@ public class ComplexPresetControlsPanel extends AbstractPanel {
 			Preset preset;
 			try {
 				preset = presetManager.readFromFile(file);
-			} catch (IOException ex) {
-				logger.error("Exception when reading file", ex);
-				Dialogs.showExceptionDialog(ComplexPresetControlsPanel.this.getParentWindow(), ex);
+			} catch (Exception ex) {
+				logger.error("Exception when reading preset from file", ex);
+				Dialogs.showError("There was a problem while loading the preset file - is it a correct file?");
 				return;
 			}
 
