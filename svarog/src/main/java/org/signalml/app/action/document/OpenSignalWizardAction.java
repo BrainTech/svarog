@@ -79,7 +79,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 
 		boolean tagFileExists = false;
 		for (String ext: ManagedDocumentType.TAG.getAllFileExtensions()) {
-			tagFile = Util.changeOrAddFileExtension(signalFile, "tag");
+			tagFile = Util.changeOrAddFileExtension(signalFile, ext);
 			if (tagFile.exists()) {
 				tagFileExists = true;
 				break;
