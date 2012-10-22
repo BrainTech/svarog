@@ -1,6 +1,2 @@
-plugins/FFTSignalTool/FFTSignalTool.xml /usr/share/java/svarog/plugins/
-plugins/PluginToolCommon/PluginToolCommon.xml /usr/share/java/svarog/plugins/
-plugins/Artifact/Artifact.xml /usr/share/java/svarog/plugins/
-plugins/Stager/Stager.xml /usr/share/java/svarog/plugins/
 debian/svarog.desktop usr/share/applications
 debian/svarog.png usr/share/pixmaps
