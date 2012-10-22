@@ -24,4 +24,3 @@
 #     temporarily for certain artifacts such as Javadoc jars.
 #
 plugins/PluginToolCommon/pom.xml --has-package-version --artifact=plugins/PluginToolCommon/target/PluginToolCommon.jar
-
