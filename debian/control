@@ -97,4 +97,3 @@ Depends: ${misc:Depends},
 	svarog,
 	svarog-plugin-tool,
 Description: Artifact Svarog plugin.
-
