@@ -1,3 +1,10 @@
+svarog (0.6.1-1) precise; urgency=low
+
+  * Upstream changes.
+  * Divide package to main program and plugins.
+
+ -- Karol Auguštin <karol@augustin.pl>  Mon, 22 Oct 2012 11:14:38 +0200
+
 svarog (0.6.0-3-ubuntu2) precise; urgency=low
 
   * Change launching icon.

@@ -141,9 +141,9 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 		channelSwitching = false;
 		plotSize = new Dimension(600, 200);
 		windowWidth = 256;
-		windowType = WindowType.RECTANGULAR;
+		windowType = WindowType.HAMMING;
 		windowParameter = 0;
-		logarithmic = true;
+		logarithmic = false;
 		spline = false;
 		antialias = true;
 

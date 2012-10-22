@@ -67,6 +67,34 @@ Depends: ${misc:Depends},
 	java6-runtime,
 	matching-pursuit,
 	openbci-core,
+	svarog-plugin-fft,
 Description: EEG signal viewer, annotator, analyzer and recorder. 
  It combines rich signal analysis capabilities with easy to use GUI.
  It is written in Java SE 6.
+
+Package: svarog-plugin-tool
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+Description: Svarog plugin to satisfy Artifact and Stager depencies.
+
+Package: svarog-plugin-fft
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+Description: Fast Fourier Transform Svarog plugin.
+
+Package: svarog-plugin-stager
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+	svarog-plugin-tool,
+Description: Stager Svarog plugin.
+
+Package: svarog-plugin-artifact
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+	svarog-plugin-tool,
+Description: Artifact Svarog plugin.
+
