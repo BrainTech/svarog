@@ -4,23 +4,24 @@
 export DH_VERBOSE=1
 
 DEB_MAVEN_REPO = $(CURDIR)/debian/maven-repo
-PACKAGE        = svarog
+PACKAGE        = svarog svarog-plugin-tool svarog-plugin-fft svarog-plugin-stager svarog-plugin-artifact
 DEB_JAR_PACKAGE = $(PACKAGE)
 
 mvn = mvn $(mvnflags)
 mvnflags = -Dmaven.repo.local=$(DEB_MAVEN_REPO) -o
 copy_repo = /usr/share/maven-debian-helper/copy-repo.sh
-
-mvnflags += --projects svarog,plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact,plugins/Stager
+mvnflags += --projects plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact,plugins/Stager
 mvnflags += -Dmaven.test.skip=true
+
 
 %:
 	dh $@
 
 override_dh_auto_configure:
 	$(copy_repo) debian/
-	mh_patchpoms -p$(DEB_JAR_PACKAGE) -v --debian-build \
-	    --keep-pom-version --maven-repo=$(DEB_MAVEN_REPO)
+	for x in $(DEB_JAR_PACKAGE); do \
+	mh_patchpoms -p$$x -v --debian-build --keep-pom-version --maven-repo=$(DEB_MAVEN_REPO) ; \
+	done
 
 override_dh_auto_build:
 	$(mvn) package
@@ -34,4 +35,6 @@ override_dh_install:
 override_dh_auto_clean:
 	rm -rf target
 	rm -rf $(DEB_MAVEN_REPO)
-	mh_unpatchpoms -p$(DEB_JAR_PACKAGE) -v
+	for x in $(DEB_JAR_PACKAGE); do \
+	mh_unpatchpoms -p$$x -v; \
+	done
