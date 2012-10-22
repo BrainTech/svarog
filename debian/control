@@ -67,3 +67,36 @@ Depends: ${misc:Depends},
 Description: EEG signal viewer, annotator, analyzer and recorder. 
  It combines rich signal analysis capabilities with easy to use GUI.
  It is written in Java SE 6.
+
+Package: svarog-plugin-tool
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+Description: EEG signal viewer, annotator, analyzer and recorder. 
+ It combines rich signal analysis capabilities with easy to use GUI.
+ It is written in Java SE 6.
+
+Package: svarog-plugin-fft
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+Description: EEG signal viewer, annotator, analyzer and recorder. 
+ It combines rich signal analysis capabilities with easy to use GUI.
+ It is written in Java SE 6.
+
+Package: svarog-plugin-stager
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+Description: EEG signal viewer, annotator, analyzer and recorder. 
+ It combines rich signal analysis capabilities with easy to use GUI.
+ It is written in Java SE 6.
+
+Package: svarog-plugin-artifact
+Architecture: all
+Depends: ${misc:Depends},
+	svarog,
+Description: EEG signal viewer, annotator, analyzer and recorder. 
+ It combines rich signal analysis capabilities with easy to use GUI.
+ It is written in Java SE 6.
+
