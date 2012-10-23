@@ -73,12 +73,14 @@ Package: svarog-plugin-tool
 Architecture: all
 Depends: ${misc:Depends},
 	svarog,
+Conflicts: svarog (<<0.6.1),
 Description: Svarog plugin to satisfy Artifact and Stager depencies.
 
 Package: svarog-plugin-fft
 Architecture: all
 Depends: ${misc:Depends},
 	svarog,
+Conflicts: svarog (<<0.6.1),
 Description: Fast Fourier Transform Svarog plugin.
 
 Package: svarog-plugin-stager
@@ -86,6 +88,7 @@ Architecture: all
 Depends: ${misc:Depends},
 	svarog,
 	svarog-plugin-tool,
+Conflicts: svarog (<<0.6.1),
 Description: Stager Svarog plugin.
 
 Package: svarog-plugin-artifact
@@ -93,4 +96,5 @@ Architecture: all
 Depends: ${misc:Depends},
 	svarog,
 	svarog-plugin-tool,
+Conflicts: svarog (<<0.6.1),
 Description: Artifact Svarog plugin.
