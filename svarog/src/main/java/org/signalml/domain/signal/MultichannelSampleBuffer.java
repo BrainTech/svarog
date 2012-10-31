@@ -7,6 +7,8 @@ package org.signalml.domain.signal;
 import java.beans.PropertyChangeEvent;
 import java.util.Arrays;
 
+import static java.lang.String.format;
+
 import org.apache.log4j.Logger;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
@@ -87,7 +89,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 	 * @param channel the number of channel
 	 * @param target the array to which results will be written starting
 	 * from position <code>arrayOffset</code>
-	 * @param signalOffset the position (in time) in the signal starting
+	 * @param signalOffset the position (in samples) in the signal starting
 	 * from which samples will be returned
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
@@ -192,7 +194,12 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 			boundary[channel] = 0;
 			minSample[channel] = signalOffset;
 			maxSample[channel] = maxSignalOffset+1;
-			source.getSamples(channel, buffer[channel], signalOffset, count, 0);
+			try {
+				source.getSamples(channel, buffer[channel], signalOffset, count, 0);
+			} catch(RuntimeException e) {
+				logger.error(format("failed to read %d samples at %d", count, signalOffset));
+				throw e;
+			}
 			bufferOffset = 0;
 		}
 

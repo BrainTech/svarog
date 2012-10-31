@@ -30,6 +30,7 @@
 		<git.git>git</git.git>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
+		<org.signalml.jsignalml.version>1.0-SNAPSHOT</org.signalml.jsignalml.version>
 	</properties>
 
 	<build>
@@ -201,6 +202,29 @@
 					</execution>
 
 					<execution>
+						<id>generate-sources-jsignalml</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<target>
+								<mkdir dir="${generated_sources_dir}" />
+								<java classname="jsignalml.CodecParser" failonerror="true">
+									<arg value="--resource"/>
+									<arg value="--output"/>
+									<arg value="${generated_sources_dir}"/>
+									<arg value="--package"/>
+									<arg value="org.signalml.codec.precompiled"/>
+									<arg value="M4D"/>
+									<arg value="EASYS"/>
+									<arg value="EDF"/>
+								</java>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+
+					<execution>
 						<id>git-describe</id>
 						<phase>generate-resources</phase>
 						<configuration>
@@ -249,8 +273,13 @@
 						<artifactId>jmx</artifactId>
 						<version>${multiplexer.jmx.version}</version>
 					</dependency>
-				</dependencies>
 				
+					<dependency>
+						<groupId>org.signalml.jsignalml</groupId>
+						<artifactId>jsignalml</artifactId>
+						<version>${org.signalml.jsignalml.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 
 			<plugin>
@@ -495,6 +524,11 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.signalml.jsignalml</groupId>
+			<artifactId>jsignalml</artifactId>
+			<version>${org.signalml.jsignalml.version}</version>
 		</dependency>
 
 		<!-- dependencies below are specified in util/maven/pom.xml -->
