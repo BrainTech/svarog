@@ -84,6 +84,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 
 		logger.debug("Registering static codecs");
 		register(org.signalml.codec.precompiled.EASYS.class);
+		register(org.signalml.codec.precompiled.EDF.class);
 		register(org.signalml.codec.precompiled.M4D.class);
 
 		logger.debug("Registering all available codecs in spec directory");

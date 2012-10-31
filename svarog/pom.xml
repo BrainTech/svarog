@@ -216,6 +216,7 @@
 									<arg value="org.signalml.codec.precompiled"/>
 									<arg value="M4D"/>
 									<arg value="EASYS"/>
+									<arg value="EDF"/>
 								</java>
 							</target>
 						</configuration>
