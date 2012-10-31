@@ -98,13 +98,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		logger.info("Registering codec: " + file);
 
 		try {
-			jsignalml.JavaClassGen gen =
-				jsignalml.CodecParser.generateFromFile(file, "org.signalml.codec.compiled", false);
-			String name = gen.getFullClassName();
-			CharSequence code = gen.getSourceCode();
-			jsignalml.compiler.CompiledClass<jsignalml.Source> klass =
-				jsignalml.compiler.CompiledClass.newCompiledClass(name, code);
-			logger.info("class " + name + " has been sourced");
+			jsignalml.compiler.CompiledClass<? extends jsignalml.Source> klass
+				= loadFromFile("compiled", file);
 			this.register(klass.theClass(), "compiled");
 		} catch(Exception e) {
 			logger.error("Failed to compile file " + file + ": " + e);
@@ -207,4 +202,20 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		return SvarogApplication.getApplicationConfiguration();
 	}
 
+	// XXX: find a home for this function. Should it go to jsignalml?
+	public static
+		jsignalml.compiler.CompiledClass<? extends jsignalml.Source> loadFromFile(String pkg, File file)
+		throws java.io.IOException,
+			   java.lang.ClassNotFoundException,
+			   org.xml.sax.SAXException
+	{
+			jsignalml.JavaClassGen gen =
+				jsignalml.CodecParser.generateFromFile(file, "org.signalml.codec." + pkg, false);
+			String name = gen.getFullClassName();
+			CharSequence code = gen.getSourceCode();
+			jsignalml.compiler.CompiledClass<jsignalml.Source> klass =
+				jsignalml.compiler.CompiledClass.newCompiledClass(name, code);
+			logger.info("class " + name + " has been sourced");
+			return klass;
+	}
 }
