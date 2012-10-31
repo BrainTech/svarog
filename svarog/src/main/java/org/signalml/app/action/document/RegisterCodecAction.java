@@ -4,6 +4,7 @@
 package org.signalml.app.action.document;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -83,9 +84,9 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		}
 
 		logger.debug("Registering static codecs");
-		register(org.signalml.codec.precompiled.EASYS.class);
-		register(org.signalml.codec.precompiled.EDF.class);
-		register(org.signalml.codec.precompiled.M4D.class);
+		register(org.signalml.codec.precompiled.EASYS.class, "precompiled");
+		register(org.signalml.codec.precompiled.EDF.class, "precompiled");
+		register(org.signalml.codec.precompiled.M4D.class, "precompiled");
 
 		logger.debug("Registering all available codecs in spec directory");
 		File[] files = specsDir.listFiles(new XmlFileFilter());
@@ -96,22 +97,22 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	private void register(File file) {
 		logger.info("Registering codec: " + file);
 
-		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
-
-		model.setSourceFile(file);
-		model.setFormatName(file.getName().toString().replaceAll(".xml", ""));
-
 		try {
-			model.setCodec(new XMLSignalMLCodec(file, null));
-		} catch (Exception e) {
-			logger.warn("Not a proper codec descriptor");
-			return;
+			jsignalml.JavaClassGen gen =
+				jsignalml.CodecParser.generateFromFile(file, "org.signalml.codec.compiled", false);
+			String name = gen.getFullClassName();
+			CharSequence code = gen.getSourceCode();
+			jsignalml.compiler.CompiledClass<jsignalml.Source> klass =
+				jsignalml.compiler.CompiledClass.newCompiledClass(name, code);
+			logger.info("class " + name + " has been sourced");
+			this.register(klass.theClass(), "compiled");
+		} catch(Exception e) {
+			logger.error("Failed to compile file " + file + ": " + e);
+			OptionPane.showError(null, _R("Failed to compile file {0}: {1}", file, e));
 		}
-
-		createCodec(model);
 	}
 
-	private void register(Class<? extends jsignalml.Source> source) {
+	private void register(Class<? extends jsignalml.Source> source, String message) {
 		logger.info("Registering codec: " + source.getCanonicalName());
 
 		SignalMLCodec codec = new StaticCodec(source);
@@ -119,7 +120,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
 		model.setCodec(codec);
 		model.setSourceFile(new File(""));
-		model.setFormatName(codec.getFormatName()); //  + "  [precompiled]");
+		model.setFormatName(codec.getFormatName() + " [" + message + "]");
 		createCodec(model);
 	}
 
