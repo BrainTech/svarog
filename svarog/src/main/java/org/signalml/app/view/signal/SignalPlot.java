@@ -6,6 +6,7 @@ package org.signalml.app.view.signal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+import static java.lang.String.format;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -900,6 +901,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			try {
 				signalChain.getSamples(channel, samples, firstSample, length, 0);
 			} catch (RuntimeException ex) {
+				logger.error(format("failed to read %d samples starting at %d, till %d, channel %d",
+									length, firstSample, lastSample, sampleCount[channel]));
 				setVisible(false);
 				throw ex;
 			}

@@ -6,8 +6,13 @@ import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.DoubleBuffer;
 import java.nio.BufferUnderflowException;
+import static java.lang.String.format;
+
+import org.apache.log4j.Logger;
 
 public class JsignalmlReader implements SignalMLCodecReader {
+	protected static final Logger log = Logger.getLogger(SignalMLCodecReader.class);
+
 	final jsignalml.Source source;
 	final SignalMLCodec codec;
 
@@ -82,7 +87,9 @@ public class JsignalmlReader implements SignalMLCodecReader {
 		long value = this.source.get_set().getMaxNumberOfSamples();
 		if (value > Integer.MAX_VALUE)
 			throw new SignalMLCodecException("32-bits suck");
-		return (int) value;
+		if (value <= 0)
+			throw new SignalMLCodecException("empty channel");
+		return (int)value - 1;
 	}
 
 	@Override
@@ -137,7 +144,12 @@ public class JsignalmlReader implements SignalMLCodecReader {
 
 	@Override
 	public float getChannelSample(long offset, int chn) throws SignalMLCodecException {
-		return this.source.get_set().getChannel(chn).getSample(offset);
+		try {
+			return this.source.get_set().getChannel(chn).getSample(offset);
+		} catch(RuntimeException e) {
+			log.info(format("%d / %d: %s", offset, chn, e));
+			throw e;
+		}
 	}
 
 	@Override
