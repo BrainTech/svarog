@@ -69,7 +69,12 @@ public class JsignalmlReader implements SignalMLCodecReader {
 
 	@Override
 	public float get_sampling_frequency() throws SignalMLCodecException {
-		return (float) this.source.get_set().getSamplingFrequency();
+		try {
+			return (float) this.source.get_set().getSamplingFrequency();
+			// will fail if not uniform
+		} catch(RuntimeException e) {
+			throw new SignalMLCodecException(e);
+		}
 	}
 
 	@Override
