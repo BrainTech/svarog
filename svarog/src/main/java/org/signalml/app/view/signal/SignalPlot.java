@@ -473,7 +473,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			signalPlotColumnHeader.reset();
 		}
 
-		if (signalPlotColumnHeader != null) {
+		if (signalPlotRowHeader != null) {
 			signalPlotRowHeader.reset();
 		}
 	}
