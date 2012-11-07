@@ -1196,7 +1196,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int currentPage = (int) Math.floor(position.x / pixelPerPage);
 
-		if (masterPlot != null) {
+		if (masterPlot == null) {
 			double timeZoomFactor = ((double) extent.width) / (samplingFrequency*pageSize);
 			setTimeZoomFactor(timeZoomFactor);
 		}
@@ -2392,6 +2392,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			double oldValue = this.timeZoomFactor;
 			this.timeZoomFactor = timeZoomFactor;
 			calculateParameters();
+
 			if (horizontalLock) {
 				horizontalPixelLead = (int) Math.round(horizontalTimeLead * pixelPerSecond);
 			}
