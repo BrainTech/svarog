@@ -108,6 +108,7 @@ public class SignalPlotRowHeader extends JComponent {
 	 * Sets calculated to false and creates ChannelOptions Buttons.
 	 */
 	public void reset() {
+
 		calculated = false;
 
 		if (channelOptionsButtons != null) {
@@ -126,6 +127,9 @@ public class SignalPlotRowHeader extends JComponent {
 			channelOptionsButtons[i] = b;
 			this.add(b);
 		}
+
+		revalidate();
+		repaint();
 	}
 	/*
 	 * Determine if there is some channel with its own value scale
