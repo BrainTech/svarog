@@ -1,5 +1,7 @@
 package org.signalml.plugin.io;
 
+import java.nio.DoubleBuffer;
+
 import java.beans.PropertyChangeListener;
 
 import org.signalml.codec.SignalMLCodecException;
@@ -13,14 +15,12 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 											 Integer.MAX_VALUE) / 20));
 
 	private SignalMLCodecReader delegate;
-	private short buffer[];
 	private int offset;
 
 	private String names[];
 
 	public FastMultichannelSampleSource(SignalMLCodecReader codec) {
 		this.delegate = codec;
-		this.buffer = null;
 		this.offset = -BUFFER_SIZE - 1;
 		this.names = null;
 	}
@@ -69,36 +69,16 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	@Override
 	public void getSamples(int channel, double[] target, int signalOffset,
 						   int count, int arrayOffset) {
-		if (count <= 0) {
+		if (count <= 0)
 			return;
-		}
 
-		int channelCount = this.getChannelCount();
-		int chunkOffset;
-		signalOffset = channelCount * signalOffset + channel;
-
-		while (count > 0) {
-			int end = this.offset + BUFFER_SIZE;
-			chunkOffset = signalOffset - this.offset;
-			while (signalOffset >= this.offset && end > signalOffset) {
-				target[arrayOffset] = (float) this.buffer[chunkOffset];
-				arrayOffset++;
-				count--;
-				signalOffset += channelCount;
-				chunkOffset += channelCount;
-				if (count <= 0) {
-					return;
-				}
-			}
-
-			this.offset = signalOffset;
-			try {
-				this.buffer = this.delegate.getSamples(signalOffset,
-													   BUFFER_SIZE);
-			} catch (SignalMLCodecException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		// XXX: check units, etc
+		DoubleBuffer buf = DoubleBuffer.wrap(target, arrayOffset, count);
+		try {
+			this.delegate.getSamples(buf, channel, signalOffset);
+		} catch(SignalMLCodecException e) {
+			/* nothing */
+			e.printStackTrace();
 		}
 	}
 
@@ -135,7 +115,6 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	
 	@Override
 	public void destroy() {
-		this.buffer = null;
 		this.delegate.close();
 	}
 

@@ -60,7 +60,7 @@ public abstract class AbstractSignalMLCodec implements SignalMLCodec {
 				readerDelegateClass = getReaderDelegateClass();
 			}
 		}
-		return new SignalMLCodecReader(readerDelegateClass, this);
+		return new SignalMLCodecReaderImpl(readerDelegateClass, this);
 	}
 
 	public abstract Class<?> getReaderDelegateClass() throws SignalMLCodecException;

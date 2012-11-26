@@ -1,9 +1,6 @@
 package org.signalml.app.config.preset.managers;
 
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -13,6 +10,10 @@ import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.math.geometry.Polar3dPoint;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamer;
+import com.thoughtworks.xstream.annotations.Annotations;
+
 /**
  * This {@link PresetManager} manages the electrodes definitions of a {@link EegSystem}
  * which are handled like presets. It is capable of reading the electrodes definitions
@@ -20,7 +21,7 @@ import org.signalml.math.geometry.Polar3dPoint;
  *
  * @author Piotr Szachewicz
  */
-public class EegElectrodesPresetManager extends AbstractMultifileRestoreablePresetManager {
+public class EegElectrodesPresetManager extends AbstractMultifileResourcesPresetManager {
 
 	@Override
 	public String getDirectoryName() {

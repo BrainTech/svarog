@@ -9,6 +9,7 @@ import java.io.File;
 import org.signalml.codec.CodecException;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.XMLSignalMLCodec;
+import org.signalml.codec.StaticCodec;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
@@ -57,6 +58,8 @@ public class SignalMLCodecDescriptor {
 			XMLSignalMLCodec codec = new XMLSignalMLCodec(formatName, cacheDirName, new File(repositoryDirPath), sourceSignature, new File(sourceFilePath));
 			codec.setDescription(description);
 			return codec;
+		} else if (clazz.equals(StaticCodec.class)) {
+			return StaticCodec.forSourceName(sourceUID);
 		} else {
 			throw new ClassCastException();
 		}
