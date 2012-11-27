@@ -6,7 +6,7 @@ package org.signalml.app.model.document;
 
 import java.io.File;
 
-import org.signalml.codec.XMLSignalMLCodec;
+import org.signalml.codec.SignalMLCodec;
 
 /** RegisterCodecDescriptor
  *
@@ -15,15 +15,15 @@ import org.signalml.codec.XMLSignalMLCodec;
  */
 public class RegisterCodecDescriptor {
 
-	private XMLSignalMLCodec codec;
+	private SignalMLCodec codec;
 	private File sourceFile;
 	private String formatName;
 
-	public XMLSignalMLCodec getCodec() {
+	public SignalMLCodec getCodec() {
 		return codec;
 	}
 
-	public void setCodec(XMLSignalMLCodec codec) {
+	public void setCodec(SignalMLCodec codec) {
 		this.codec = codec;
 	}
 

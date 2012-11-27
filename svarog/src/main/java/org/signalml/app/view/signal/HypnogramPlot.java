@@ -9,7 +9,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -18,7 +17,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
@@ -75,8 +73,6 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 	private int factorStep;
 
-	private String noTagsMessage = null;
-
 	private HypnogramMode mode = HypnogramMode.SHOW_ACTIVE;
 
 	private JRadioButtonMenuItem activeRadio;
@@ -87,7 +83,6 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 	public HypnogramPlot(SignalView view) {
 		this.view = view;
-		noTagsMessage = _("(no tags to display in the hypnogram)");
 		setBackground(view.getBackground());
 		setAutoscrolls(false);
 
@@ -187,18 +182,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 			}
 		}
 
-		if (tagDocument == null || hypnogramLines.length == 0) {
-
-			FontMetrics fm   = g.getFontMetrics(g.getFont());
-			Rectangle2D rect = fm.getStringBounds(noTagsMessage, g);
-
-			int textHeight = (int)(rect.getHeight());
-			int textWidth  = (int)(rect.getWidth());
-
-			g.setColor(Color.BLACK);
-			g.drawString(noTagsMessage, (size.width  - textWidth)  / 2, offset+(SINGLE_HYPNO_SIZE - textHeight) / 2  + fm.getAscent());
-
-		} else {
+		if (tagDocument != null && hypnogramLines.length > 0) {
 
 			int i;
 			for (i=0; i<hypnogramLines.length; i++) {

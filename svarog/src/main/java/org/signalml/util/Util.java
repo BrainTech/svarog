@@ -222,15 +222,14 @@ public abstract class Util {
 	 * @return String with MD5 checksum
 	 * @throws NullPointerException if given String is null
 	 */
-	public static String toMD5String(String s) {
-		if (s == null) {
+	public static String toMD5String(CharSequence s) {
+		if (s == null)
 			throw new NullPointerException();
-		}
 
 		byte[] bytes;
 		try {
 			MessageDigest md5 = MessageDigest.getInstance("MD5");
-			md5.update(s.getBytes());
+			md5.update(s.toString().getBytes());
 			bytes = md5.digest();
 		} catch (NoSuchAlgorithmException ex) {
 			logger.error("Failed to create a digest", ex);

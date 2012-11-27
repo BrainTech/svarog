@@ -21,7 +21,7 @@ import org.signalml.domain.montage.system.MontageGenerators;
  * @author Piotr Szachewicz
  */
 @XStreamAlias("monageGeneratorPresets")
-public class MontageGeneratorsPresetManager extends AbstractMultifileRestoreablePresetManager {
+public class MontageGeneratorsPresetManager extends AbstractMultifileResourcesPresetManager {
 
 	@Override
 	public String getDirectoryName() {
