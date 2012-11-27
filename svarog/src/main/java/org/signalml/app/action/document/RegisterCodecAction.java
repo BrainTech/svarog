@@ -78,17 +78,17 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 			return;
 		initialized = true;
 
-		File specsDir = new File(System.getProperty("user.dir"), "specs");
-
-		if (!specsDir.isDirectory()) {
-			logger.warn("Spec directory is not a directory: " + specsDir);
-			return;
-		}
-
 		logger.debug("Registering static codecs");
 		register(org.signalml.codec.precompiled.EASYS.class, "precompiled");
 		register(org.signalml.codec.precompiled.EDF.class, "precompiled");
 		register(org.signalml.codec.precompiled.M4D.class, "precompiled");
+
+		File specsDir = new File(System.getProperty("user.dir"), "specs");
+
+		if (!specsDir.isDirectory()) {
+			logger.info("Spec directory is not a directory, ignoring: " + specsDir);
+			return;
+		}
 
 		logger.debug("Registering all available codecs in spec directory");
 		File[] files = specsDir.listFiles(new XmlFileFilter());
