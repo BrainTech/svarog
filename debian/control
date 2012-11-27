@@ -33,7 +33,7 @@ Build-Depends-Indep:
 	libjmx-java,
 	libxstream-java,
 	libbuild-helper-maven-plugin-java,
-	libjsignalml-java,
+	libjsignalml-java (>= 1.0-2),
 Standards-Version: 3.9.1
 
 Package: svarog
@@ -64,7 +64,7 @@ Depends: ${misc:Depends},
 	libxstream-java,
 	jarwrapper,
 	java6-runtime,
-	libjsignalml-java,
+	libjsignalml-java (>= 1.0-2),
 	matching-pursuit,
 	svarog-plugin-fft,
 Description: EEG signal viewer, annotator, analyzer and recorder. 
