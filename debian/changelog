@@ -1,3 +1,9 @@
+svarog (1.0.0-1) UNRELEASED; urgency=low
+
+  * Upstream changes (jsignalml, bugfixes).
+
+ -- Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>  Tue, 27 Nov 2012 01:33:41 +0100
+
 svarog (0.6.1-1) precise; urgency=low
 
   * Upstream changes.
