@@ -234,9 +234,8 @@
 									  outputproperty="git-describe.output"
 									  resultproperty="git-describe.result">
 									<arg value="describe" />
-									<arg value="--always" />
+									<arg value="--abbrev=0" />
 									<arg value="--tags" />
-									<arg value="--dirty=+" />
 								</exec>
 								<condition property="svarog.git-version"
 										   value="${git-describe.output}"
