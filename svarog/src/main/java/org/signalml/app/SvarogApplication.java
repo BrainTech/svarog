@@ -5,6 +5,7 @@ package org.signalml.app;
 
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.util.Util.WINDOWS_OS_PATTERN;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -518,7 +519,12 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		String profilePath = null;
 		if (config.isProfileDefault()) {
-			profilePath = System.getProperty("user.home") + File.separator + "signalml";
+			String osName = System.getProperty("os.name");
+			if (WINDOWS_OS_PATTERN.matcher(osName).matches()) {
+				profilePath = System.getProperty("user.home") + File.separator + "_svarog";
+			} else {
+				profilePath = System.getProperty("user.home") + File.separator + ".svarog";
+			}
 			logger.debug("Setting profile path to default [" + profilePath + "]");
 		} else {
 			profilePath = config.getProfilePath();
