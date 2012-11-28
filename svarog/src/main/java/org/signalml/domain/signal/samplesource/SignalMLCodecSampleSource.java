@@ -185,6 +185,8 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 		readLabels();
 
+		logger.info("sampleCount = " + sampleCount);
+		logger.info("samplingFrequency = " + samplingFrequency);
 	}
 
 	/**

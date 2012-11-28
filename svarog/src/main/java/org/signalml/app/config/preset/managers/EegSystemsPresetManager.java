@@ -1,7 +1,6 @@
 package org.signalml.app.config.preset.managers;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.signalml.app.config.preset.Preset;
@@ -89,18 +88,12 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 
 	/**
 	 * Creates the 'eegSystems/electrodes' and 'eegSystems/generators'
-	 * directories in the user directory and copies the default EEG systems
-	 * definitions and montage generator's definition there. This action is performed
-	 * only when the directory doesn't exist or if it is empty, otherwise
-	 * this action has no effect. (The idea is to always have at least one
-	 * EEG system definition inside of that directory).
-	 * @throws FileNotFoundException thrown when the file to be copied is not found
-	 * @throws IOException thrown when an error occurs while copying (reading from
-	 * buffer/writing to buffer) the files with EEG systems
+	 * directories in the user directory, so that the user knows
+	 * where is the place to put his electrode and generators definitions.
 	 */
-	public void restoreDefaultFilesIfNecessary() throws FileNotFoundException, IOException {
-		eegElectrodesPresetManager.restoreDefaultPresetFilesIfNecessary();
-		montageGeneratorsPresetManager.restoreDefaultPresetFilesIfNecessary();
+	public void createProfileDirectoriesIfNecessary() {
+		eegElectrodesPresetManager.createProfileDirectoryIfNecessary();
+		montageGeneratorsPresetManager.createProfileDirectoryIfNecessary();
 	}
 
 	@Override

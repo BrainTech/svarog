@@ -4,21 +4,17 @@
 package org.signalml.app.action.document;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.log4j.Logger;
-import org.jfree.util.Log;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
@@ -33,6 +29,7 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.codec.SignalMLCodecSelector;
 import org.signalml.codec.XMLSignalMLCodec;
+import org.signalml.codec.StaticCodec;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** RegisterCodecAction
@@ -47,6 +44,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(RegisterCodecAction.class);
+
+	private static boolean initialized = false;
 
 	private SignalMLCodecManager codecManager;
 	private RegisterCodecDialog registerCodecDialog;
@@ -67,94 +66,58 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
 
 		boolean ok = registerCodecDialog.showDialog(model, true);
-		if (!ok) {
+		if (!ok)
 			return;
-		}
 
 		createCodec(model);
-
 	}
 
 	public void initializeAll() {
 
-		if (codecManager.getCodecCount() == 0) {
+		if (initialized)
+			return;
+		initialized = true;
 
-			File specsDir = new File(System.getProperty("user.dir"),"specs");
+		logger.debug("Registering static codecs");
+		register(org.signalml.codec.precompiled.EASYS.class, "precompiled");
+		register(org.signalml.codec.precompiled.EDF.class, "precompiled");
+		register(org.signalml.codec.precompiled.M4D.class, "precompiled");
 
-			if (specsDir.isDirectory()) {
+		File specsDir = new File(System.getProperty("user.dir"), "specs");
 
-				Log.debug("Registering all available codecs in scpec directory");
-
-				File[] files = specsDir.listFiles(new XmlFileFilter());
-
-				for (File file : files) {
-
-					Log.debug("Registering codec: " + file);
-
-					register(file);
-				}
-			} else {
-
-				Log.debug("No such direcoty: " + specsDir);
-
-				specsDir.mkdir();
-
-				String urlBaseName = "http://eeg.pl:8080/applet/specs";
-
-				List<String> codecsNameList = new LinkedList<String>();
-
-				codecsNameList.add("EASYS.xml");
-				codecsNameList.add("EDF.xml");
-
-				URL url = null;
-
-				for (String codecName : codecsNameList) {
-
-					try {
-						url = new URL(urlBaseName+"/"+codecName);
-
-						InputStream inStream = url.openStream();
-
-						File file = new File(specsDir, codecName);
-
-						FileOutputStream fos = new FileOutputStream(file);
-
-						byte[] buffer = new byte[1024];
-						int bytesRead;
-
-						while ((bytesRead = inStream.read(buffer)) != -1) {
-							fos.write(buffer,0,bytesRead);
-						}
-
-						fos.close();
-						inStream.close();
-
-						register(file);
-
-					} catch (MalformedURLException e) {
-						Log.error("Cannot download codec from server: " + urlBaseName, e);
-					} catch (IOException e) {
-						Log.error("Cannot download codec from server: " + urlBaseName, e);
-					}
-
-				}
-			}
+		if (!specsDir.isDirectory()) {
+			logger.info("Spec directory is not a directory, ignoring: " + specsDir);
+			return;
 		}
+
+		logger.debug("Registering all available codecs in spec directory");
+		File[] files = specsDir.listFiles(new XmlFileFilter());
+		for (File file : files)
+			register(file);
 	}
 
 	private void register(File file) {
-
-		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
-
-		model.setSourceFile(file);
-		model.setFormatName(file.getName().toString().replaceAll(".xml", ""));
+		logger.info("Registering codec: " + file);
 
 		try {
-			model.setCodec(new XMLSignalMLCodec(file, null));
-		} catch (Exception e) {
-			Log.debug("Not a proper codec descriptor");
+			jsignalml.compiler.CompiledClass<? extends jsignalml.Source> klass
+				= loadFromFile("compiled", file);
+			this.register(klass.theClass(), "compiled");
+		} catch(Exception e) {
+			logger.error("Failed to compile file " + file + ": " + e);
+			OptionPane.showError(null, _R("Failed to compile file {0}: {1}", file, e));
 		}
+	}
 
+	private void register(Class<? extends jsignalml.Source> source, String message) {
+		logger.info("Registering codec: " + source.getCanonicalName());
+
+		SignalMLCodec codec = new StaticCodec(source);
+
+		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
+		model.setCodec(codec);
+		model.setSourceFile(new File(""));
+		model.setFormatName(codec.getFormatName() + " [" + message + "]");
 		createCodec(model);
 	}
 
@@ -184,8 +147,8 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		}
 
 		if (reader == null) {
-			logger.error("Failed to create codec");
-			OptionPane.showError(null, "error.codecCompilationFailed");
+			logger.error("Failed to compile the codec");
+			OptionPane.showError(null, _("Failed to compile the codec"));
 			return;
 		}
 
@@ -243,4 +206,20 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		return SvarogApplication.getApplicationConfiguration();
 	}
 
+	// XXX: find a home for this function. Should it go to jsignalml?
+	public static
+		jsignalml.compiler.CompiledClass<? extends jsignalml.Source> loadFromFile(String pkg, File file)
+		throws java.io.IOException,
+			   java.lang.ClassNotFoundException,
+			   org.xml.sax.SAXException
+	{
+			jsignalml.JavaClassGen gen =
+				jsignalml.CodecParser.generateFromFile(file, "org.signalml.codec." + pkg, false);
+			String name = gen.getFullClassName();
+			CharSequence code = gen.getSourceCode();
+			jsignalml.compiler.CompiledClass<jsignalml.Source> klass =
+				jsignalml.compiler.CompiledClass.newCompiledClass(name, code);
+			logger.info("class " + name + " has been sourced");
+			return klass;
+	}
 }

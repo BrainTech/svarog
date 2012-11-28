@@ -15,12 +15,14 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
+import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.app.view.common.dialogs.AbstractWizardDialog;
 import org.signalml.codec.SignalMLCodec;
+import org.signalml.codec.JsignalmlCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.generator.xml.XMLCodecException;
@@ -54,7 +56,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	/**
 	 * the {@link SignalMLCodec codec} read in this dialog
 	 */
-	private XMLSignalMLCodec currentCodec;
+	private jsignalml.compiler.CompiledClass<? extends jsignalml.Source> currentCodec;
 
 	/**
 	 * the profile directory
@@ -134,7 +136,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model) {
 		if (fromStep == 0) {
-			String defaultFormatName = currentCodec.getFormatName();
+			String defaultFormatName = currentCodec.fullName; // XXX
 			getStepTwoPanel().getNameField().setText(defaultFormatName);
 			checkNameExists(defaultFormatName);
 		}
@@ -160,11 +162,11 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 			if (!errors.hasErrors()) {
 				File file = fileChooser.getSelectedFile();
 				try {
-					currentCodec = new XMLSignalMLCodec(file, profileDir);
+					currentCodec = RegisterCodecAction.loadFromFile("compiled2", file);
 				} catch (IOException ex) {
 					logger.debug("Failed to read codec file", ex);
 					errors.addError(_("Failed to read file"));
-				} catch (XMLCodecException ex) {
+				} catch (Exception ex) {
 					logger.debug("Failed to compile codec file", ex);
 					errors.addError(_("Failed to compile the codec"));
 				}
@@ -268,7 +270,7 @@ public class RegisterCodecDialog extends AbstractWizardDialog {
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		RegisterCodecDescriptor rcd = (RegisterCodecDescriptor) model;
 		rcd.setSourceFile(getStepOnePanel().getFileChooser().getSelectedFile());
-		rcd.setCodec(currentCodec);
+		rcd.setCodec(new JsignalmlCodec(currentCodec));
 		rcd.setFormatName(getStepTwoPanel().getNameField().getText());
 	}
 

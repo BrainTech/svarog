@@ -38,12 +38,7 @@ public class ManagerOfPresetManagers {
 
 		eegSystemsPresetManager = new EegSystemsPresetManager();
 		eegSystemsPresetManager.setProfileDir(profileDir);
-
-		try {
-			eegSystemsPresetManager.restoreDefaultFilesIfNecessary();
-		} catch (Exception ex) {
-			logger.debug("Error while creating the eegSystems directory with default EEG systems definition.");
-		}
+		eegSystemsPresetManager.createProfileDirectoriesIfNecessary();
 
 		try {
 			eegSystemsPresetManager.readFromPersistence(null);
