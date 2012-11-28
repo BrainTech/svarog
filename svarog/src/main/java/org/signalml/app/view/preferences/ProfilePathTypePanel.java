@@ -4,6 +4,7 @@
 package org.signalml.app.view.preferences;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.util.Util.WINDOWS_OS_PATTERN;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -130,7 +131,12 @@ public class ProfilePathTypePanel extends JPanel {
 	public JRadioButton getDefaultRadio() {
 		if (defaultRadio == null) {
 			defaultRadio = new JRadioButton();
-			defaultRadio.setText(_("signalml directory inside the user home directory (preferred)"));
+			String osName = System.getProperty("os.name");
+			if (WINDOWS_OS_PATTERN.matcher(osName).matches()) {
+				defaultRadio.setText(_("_svarog directory inside the user home directory (preferred)"));
+			} else {
+				defaultRadio.setText(_(".svarog directory inside the user home directory (preferred)"));
+			}
 			defaultRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(defaultRadio);
 		}
