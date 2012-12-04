@@ -7,23 +7,25 @@ package org.signalml.app.view.montage.filters.charts;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
-import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
-import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
-import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
-import org.signalml.app.view.montage.filters.charts.elements.TimeDomainFilterFrequencyResponseChartPanel;
-import org.signalml.app.view.montage.filters.charts.elements.GroupDelayResponseChartPanel;
-import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.JPanel;
 
+import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
+import org.signalml.app.view.montage.filters.charts.elements.GroupDelayResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.ImpulseResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.StepResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.TimeDomainFilterFrequencyResponseChartPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.math.ArrayOperations;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.FilterFrequencyResponse;
 import org.signalml.math.iirdesigner.FilterFrequencyResponseCalculator;
+import org.signalml.math.iirdesigner.FilterNotStableException;
 import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
 import org.signalml.math.iirdesigner.FilterTimeDomainResponseCalculator;
 import org.signalml.math.iirdesigner.IIRDesigner;
@@ -167,19 +169,45 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 	 * @param currentFilter the filter to be visualized
 	 * @throws BadFilterParametersException thrown when the filter cannot
 	 * be designed
+	 * @throws FilterNotStableException when the filter designed is not stable.
 	 */
-	public void updateGraphs(TimeDomainSampleFilter currentFilter) throws BadFilterParametersException {
+	public void updateGraphs(TimeDomainSampleFilter currentFilter) throws BadFilterParametersException, FilterNotStableException {
 
-		FilterCoefficients coeffs = coeffs = IIRDesigner.designDigitalFilter(currentFilter);
+		FilterCoefficients coeffs = IIRDesigner.designDigitalFilter(currentFilter);
 
 		frequencyResponseCalculator = new FilterFrequencyResponseCalculator(512, getSamplingFrequency(), coeffs);
 		calculateAndDrawFilterFrequencyResponse();
 		calculateAndDrawGroupDelayResponse();
 
 		timeDomainResponseCalculator = new FilterTimeDomainResponseCalculator(samplingFrequency, coeffs);
-		calculateAndDrawImpulseResponse();
-		calculateAndDrawStepResponse();
 
+		FilterTimeDomainResponse impulseResponse = timeDomainResponseCalculator.getImpulseResponse(getNumberOfPointsForTimeDomainResponse());
+		impulseResponseChartPanel.setData(impulseResponse);
+
+		FilterTimeDomainResponse stepResponse = timeDomainResponseCalculator.getStepResponse(getNumberOfPointsForTimeDomainResponse());
+		stepResponseChartPanel.setData(stepResponse);
+
+		if (!impulseResponse.isStable() || !stepResponse.isStable()) {
+			adaptTheTimeSpinnerToInstabilityTime(impulseResponse, stepResponse);
+			throw new FilterNotStableException();
+		}
+	}
+
+	/**
+	 * Changes the current time spinner value for the time response charts so that the
+	 * first sample above instability threshold is on the right of the chart.
+	 * @param impulseResponse
+	 * @param stepResponse
+	 */
+	protected void adaptTheTimeSpinnerToInstabilityTime(FilterTimeDomainResponse impulseResponse, FilterTimeDomainResponse stepResponse) {
+		int index1 = impulseResponse.getIndexOfFirstSampleAboveInstabilityThreshold();
+		int index2 = stepResponse.getIndexOfFirstSampleAboveInstabilityThreshold();
+		int index = Math.max(index1, index2);
+
+		double instabilityTime = (index) / getSamplingFrequency();
+		instabilityTime = Math.ceil(instabilityTime);
+
+		timeDomainResponseChartPanelWithSpinner.setCurrentSpinnerValue(instabilityTime);
 	}
 
 	/**
@@ -216,22 +244,6 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 
 		groupDelayResponseChartPanel.setData(frequencies, values);
 
-	}
-
-	/**
-	 * Calculates and plots current filter impulse response.
-	 */
-	protected void calculateAndDrawImpulseResponse() {
-		FilterTimeDomainResponse impulseResponse = timeDomainResponseCalculator.getImpulseResponse(getNumberOfPointsForTimeDomainResponse());
-		impulseResponseChartPanel.setData(impulseResponse);
-	}
-
-	/**
-	 * Calculates and plots current filter step response.
-	 */
-	protected void calculateAndDrawStepResponse() {
-		FilterTimeDomainResponse stepResponse = timeDomainResponseCalculator.getStepResponse(getNumberOfPointsForTimeDomainResponse());
-		stepResponseChartPanel.setData(stepResponse);
 	}
 
 	/**

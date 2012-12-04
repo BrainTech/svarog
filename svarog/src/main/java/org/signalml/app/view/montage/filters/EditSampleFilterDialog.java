@@ -11,12 +11,9 @@ import javax.swing.JPanel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.Util;
-
-import org.springframework.validation.Errors;
 
 /**
  * A class representing an abstract dialog for {@link TimeDomainSampleFilter}
@@ -105,8 +102,10 @@ abstract class EditSampleFilterDialog extends AbstractPresetDialog {
 	/**
 	 * Redraws the frequency response plot for the current filter and
 	 * sets appropriate values on the frequency axis.
+	 *
+	 * @return whether the graph was updated successfully.
 	 */
-	protected abstract void updateGraph();
+	protected abstract boolean updateGraph();
 
 	/**
 	 * Updates the rectangle which highlights the selected frequency range.
