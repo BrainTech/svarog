@@ -9,9 +9,12 @@ import org.signalml.app.model.tag.SlopeType;
 
 public class FindSignalSlopesWorkerTest extends AbstractSynchronizationTest {
 
-	public void testFindSlopes(SlopeType slopeType, Integer[] expectedPositions) throws InterruptedException, ExecutionException {
+	public void testFindSlopes(SlopeType slopeType, Integer[] expectedPositions, int lengthThreshold) throws InterruptedException, ExecutionException {
 
 		parameters.setSlopeType(slopeType);
+
+		parameters.setLengthThresholdValue(convertSamplesToTime(lengthThreshold));
+		parameters.setLengthThresholdEnabled(lengthThreshold != 0);
 
 		FindSignalSlopesWorker worker = new FindSignalSlopesWorker(parameters);
 		worker.setBusyDialogShouldBeShown(false);
@@ -23,17 +26,39 @@ public class FindSignalSlopesWorkerTest extends AbstractSynchronizationTest {
 
 	@Test
 	public void testFindAscendingSlopes() throws InterruptedException, ExecutionException {
-		testFindSlopes(SlopeType.ASCENDING, ascendingSlopes);
+		testFindSlopes(SlopeType.ASCENDING, getSlopePositions(SlopeType.ASCENDING, 0), 0);
 	}
 
 	@Test
 	public void testFindDescendingSlopes() throws InterruptedException, ExecutionException {
-		testFindSlopes(SlopeType.DESCENDING, descendingSlopes);
+		testFindSlopes(SlopeType.DESCENDING, getSlopePositions(SlopeType.DESCENDING, 0), 0);
 	}
 
 	@Test
 	public void testFindBothSlopes() throws InterruptedException, ExecutionException {
-		testFindSlopes(SlopeType.BOTH, getBothSlopePositions());
+		testFindSlopes(SlopeType.BOTH, getSlopePositions(SlopeType.BOTH, 0), 0);
+	}
+
+	@Test
+	public void testFindAscendingSlopesWithLengthThreshold() throws InterruptedException, ExecutionException {
+		int threshold = 50;
+		testFindSlopes(SlopeType.ASCENDING, getSlopePositions(SlopeType.ASCENDING, threshold), threshold);
+	}
+
+	@Test
+	public void testDescendingSlopesWithLengthThreshold() throws InterruptedException, ExecutionException {
+		int threshold = 51;
+		testFindSlopes(SlopeType.DESCENDING, getSlopePositions(SlopeType.DESCENDING, threshold), threshold);
+	}
+
+	@Test
+	public void testBothSlopesWithLengthThreshold() throws InterruptedException, ExecutionException {
+		int threshold = 51;
+		testFindSlopes(SlopeType.BOTH, getSlopePositions(SlopeType.BOTH, threshold), threshold);
+	}
+
+	protected float  convertSamplesToTime(int numberOfSamples) {
+		return (numberOfSamples)/parameters.getSampleSource().getSamplingFrequency();
 	}
 
 }

@@ -29,6 +29,7 @@ import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChar
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
+import org.signalml.math.iirdesigner.FilterNotStableException;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.core.io.ClassPathResource;
 
@@ -173,17 +174,23 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 	}
 
 	@Override
-	protected void updateGraph() {
+	protected boolean updateGraph() {
 
 		if (!validateCurrentFilterAndShowErrorMessage())
-			return;
+			return false;
 
+		getFilterNotValidPanel().clearMessages();
 		try {
 			getChartGroupPanelWithABorder().updateGraphs(currentFilter);
-			getFilterNotValidPanel().clearMessages();
 		} catch (BadFilterParametersException ex) {
 			getFilterNotValidPanel().addMessage(ex.getMessage());
+			return false;
+		} catch (FilterNotStableException ex) {
+			getFilterNotValidPanel().addMessage(ex.getMessage());
+			return false;
 		}
+
+		return true;
 	}
 
 	@Override
@@ -305,7 +312,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		getFilterParametersPanel().validatePanel(model, errors);
 
 		fillModelFromDialog(currentFilter);
-		if (!validateCurrentFilterAndShowErrorMessage())
+		if (!updateGraph())
 			errors.addError(_("Bad filter parameters, please correct them."));
 	}
 

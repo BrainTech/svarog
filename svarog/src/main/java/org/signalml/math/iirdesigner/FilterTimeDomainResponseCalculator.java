@@ -52,7 +52,6 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 		double[] stepResponseAmplitudes = AbstractIIRSinglechannelSampleFilter.filter(filterCoefficients.getBCoefficients(), filterCoefficients.getACoefficients(), excitation);
 
 		return new FilterTimeDomainResponse(stepResponseAmplitudes, samplingFrequency);
-
 	}
 
 	/**
@@ -85,7 +84,6 @@ public class FilterTimeDomainResponseCalculator extends FilterResponseCalculator
 
 		FilterTimeDomainResponse stepResponse = new FilterTimeDomainResponse(impulseResponseAmplitudes, samplingFrequency);
 		return stepResponse;
-
 	}
 
 }

@@ -1,3 +1,10 @@
+svarog (1.0.1-1) precise; urgency=low
+
+  * New upstream release.
+  * Fix ERP filter settings panel.
+
+ -- Karol Auguštin <karol@augustin.pl>  Wed, 05 Dec 2012 23:28:37 +0100
+
 svarog (1.0.0-1) precise; urgency=low
 
   * Upstream changes (jsignalml, bugfixes).

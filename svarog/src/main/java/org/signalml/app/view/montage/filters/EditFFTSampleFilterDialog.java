@@ -256,7 +256,7 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 							getFromFrequencySpinner().setValue((double) lowFrequency);
 							if (highFrequency <= lowFrequency) {
 								double maximumFrequency = getCurrentSamplingFrequency() / 2;
-								getToFrequencySpinner().setValue(Math.max((double) lowFrequency + FREQUENCY_SPINNER_STEP_SIZE, maximumFrequency));
+								getToFrequencySpinner().setValue(Math.max(lowFrequency + FREQUENCY_SPINNER_STEP_SIZE, maximumFrequency));
 								getUnlimitedCheckBox().setSelected(true);
 							} else {
 								getToFrequencySpinner().setValue((double) highFrequency);
@@ -535,8 +535,9 @@ public class EditFFTSampleFilterDialog extends EditSampleFilterDialog implements
 	}
 
 	@Override
-	protected void updateGraph() {
+	protected boolean updateGraph() {
 		getChartGroupPanelWithABorder().updateGraphs(currentFilter);
+		return true;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package org.signalml.app.action.tag;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -90,9 +91,9 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 				synchronizeTagsWorker.get();
 
 				if (slopes.length < tagCount) {
-					Dialogs.showWarningMessage(_("There were more tags than activating trigger slopes. Excessive tags have been removed!"));
+					Dialogs.showWarningMessage(_R("There were more tags ({0}) than activating trigger slopes ({1}). Excessive tags have been removed!", tagCount, slopes.length));
 				} else if (slopes.length > tagCount) {
-					Dialogs.showWarningMessage(_("There were less tags then activating trigger slopes."));
+					Dialogs.showWarningMessage(_R("There were less tags ({0}) then activating trigger slopes ({1}).", tagCount, slopes.length));
 				} else {
 					Dialogs.showMessage(_("Tags Synchronized"), _("Tags were successfully synchronized with the trigger channel."));
 				}

@@ -35,17 +35,17 @@ public class SynchronizeTagsWithTriggerWorkerTest extends AbstractSynchronizatio
 
 	@Test
 	public void testSynchronizeAscendingSlope() throws InterruptedException, ExecutionException {
-		testSlope(SlopeType.ASCENDING, ascendingSlopes);
+		testSlope(SlopeType.ASCENDING, getSlopePositions(SlopeType.ASCENDING, 0));
 	}
 
 	@Test
 	public void testSynchronizeDescendingSlope() throws InterruptedException, ExecutionException {
-		testSlope(SlopeType.DESCENDING, descendingSlopes);
+		testSlope(SlopeType.DESCENDING, getSlopePositions(SlopeType.DESCENDING, 0));
 	}
 
 	@Test
 	public void testSynchronizeToBothSlopes() throws InterruptedException, ExecutionException {
-		testSlope(SlopeType.BOTH, getBothSlopePositions());
+		testSlope(SlopeType.BOTH, getSlopePositions(SlopeType.BOTH, 0));
 	}
 
 	@Test

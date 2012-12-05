@@ -22,13 +22,13 @@ import org.signalml.app.view.common.components.spinners.DoubleSpinner;
  * A panel for selecting parameters for synchronizing tags with trigger.
  * @author Piotr Szachewicz
  */
-public class SynchronizeTagsWithTriggerPanel extends LabeledComponentsPanel {
+public class SynchronizeTagsWithTriggerParametersPanel extends LabeledComponentsPanel {
 
 	private DoubleSpinner thresholdSpinner;
 	private JComboBox channelComboBox;
 	private JComboBox slopeSelectionComboBox;
 
-	public SynchronizeTagsWithTriggerPanel() {
+	public SynchronizeTagsWithTriggerParametersPanel() {
 		super(_("Parameters"));
 	}
 
