@@ -23,12 +23,14 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 	private SynchronizeTagsWithTriggerParameters parameters;
 	private double threshold;
 	private MultichannelSampleSource sampleSource;
+	private int lengthThreshold;
 
 	public FindSignalSlopesWorker(SynchronizeTagsWithTriggerParameters parameters) {
 		super(null);
 		this.parameters = parameters;
 		this.threshold = parameters.getThresholdValue();
 		this.sampleSource = parameters.getSampleSource();
+		this.lengthThreshold = (int) (parameters.getLengthThresholdValue() * sampleSource.getSamplingFrequency());
 
 		getBusyDialog().setText(_("Finding trigger activating slopes."));
 		getBusyDialog().setCancellable(false);
@@ -38,9 +40,12 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 	protected Integer[] doInBackground() throws Exception {
 		showBusyDialog();
 
-		List<Integer> slopePositions = new ArrayList<Integer>();
+		List<TriggerPush> triggerPushes = new ArrayList<TriggerPush>();
 		int sampleCount = sampleSource.getSampleCount(0);
 		int currentSample = 0;
+
+		int triggerAsc = -1;
+		int triggerDesc = -1;
 		while(currentSample < sampleCount) {
 
 			int bufferSize = BUFFER_SIZE;
@@ -53,8 +58,21 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 
 			int i = 0;
 			for (; i < samples.length-1; i++) {
-				if (isSlopeActivating(samples[i], samples[i+1])) {
-					slopePositions.add(currentSample + i + 1);
+				double currentSampleValue = samples[i];
+				double nextSampleValue = samples[i+1];
+				if (isSlopeAscending(currentSampleValue, nextSampleValue))
+					triggerAsc = currentSample + i + 1;
+				else if (isSlopeDescending(currentSampleValue, nextSampleValue)) {
+					triggerDesc = currentSample + i + 1;
+
+					if (triggerAsc == -1)
+						// if the first slope is descending
+						triggerAsc = 0;
+
+					TriggerPush triggerPush = new TriggerPush(triggerAsc, triggerDesc);
+					triggerPushes.add(triggerPush);
+					triggerAsc = -1;
+					triggerDesc = -1;
 				}
 			}
 
@@ -62,21 +80,17 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 
 		}
 
-		return slopePositions.toArray(new Integer[0]);
-	}
-
-	protected boolean isSlopeActivating(double currentSample, double nextSample) {
-		SlopeType slopeType = parameters.getSlopeType();
-
-		switch(slopeType) {
-		case ASCENDING: return isSlopeAscending(currentSample, nextSample);
-		case DESCENDING: return isSlopeDescending(currentSample, nextSample);
-		case BOTH:
-			return isSlopeAscending(currentSample, nextSample)
-				|| isSlopeDescending(currentSample, nextSample);
+		if (triggerAsc != -1 && triggerDesc == -1) {
+			// if the last push does not end
+			triggerDesc = sampleCount-1;
+			TriggerPush triggerPush = new TriggerPush(triggerAsc, triggerDesc);
+			triggerPushes.add(triggerPush);
 		}
-		return false;
 
+
+
+		List<Integer> slopePositions = convertTriggerPushesToSlopePositions(triggerPushes);
+		return slopePositions.toArray(new Integer[0]);
 	}
 
 	protected boolean isSlopeAscending(double currentSample, double nextSample) {
@@ -87,4 +101,29 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 		return (nextSample < threshold && currentSample >= threshold);
 	}
 
+	protected List<Integer> convertTriggerPushesToSlopePositions(List<TriggerPush> triggerPushes) {
+		List<Integer> slopePositions = new ArrayList<Integer>();
+
+		for (TriggerPush triggerPush: triggerPushes) {
+			if (parameters.isLengthThresholdEnabled() && triggerPush.getLength() < lengthThreshold)
+				continue;
+
+			switch(parameters.getSlopeType()) {
+			case ASCENDING:
+				slopePositions.add(triggerPush.getStartSample());
+				break;
+			case BOTH:
+				slopePositions.add(triggerPush.getStartSample());
+				slopePositions.add(triggerPush.getEndSample());
+				break;
+			case DESCENDING:
+				slopePositions.add(triggerPush.getEndSample());
+				break;
+			}
+		}
+		return slopePositions;
+	}
+
 }
+
+

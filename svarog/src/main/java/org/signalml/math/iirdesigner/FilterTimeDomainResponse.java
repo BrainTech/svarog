@@ -15,6 +15,12 @@ package org.signalml.math.iirdesigner;
 public class FilterTimeDomainResponse {
 
 	/**
+	 * If a filter time response has values above this threshold, the filter
+	 * is considered to be instable.
+	 */
+	public static double INSTABILITY_THRESHOLD = 10e10;
+
+	/**
 	 * An array containing the time values for which the time domain response
 	 * was calculated.
 	 */
@@ -55,7 +61,7 @@ public class FilterTimeDomainResponse {
 	 */
 	protected void calculateTime(double samplingFrequency) {
 		for (int i = 0; i < time.length; i++) {
-			time[i] = ((double) i) / samplingFrequency;
+			time[i] = (i) / samplingFrequency;
 		}
 	}
 
@@ -73,6 +79,24 @@ public class FilterTimeDomainResponse {
 	 */
 	public double[] getValues() {
 		return values;
+	}
+
+	/**
+	 * Returns whether this filter is stable or instable.
+	 * @return true if the filter is stable.
+	 */
+	public boolean isStable() {
+		for (int i = 0; i < values.length; i++)
+			if (Math.abs(values[i]) > INSTABILITY_THRESHOLD)
+				return false;
+		return true;
+	}
+
+	public int getIndexOfFirstSampleAboveInstabilityThreshold() {
+		for (int i = 0; i < values.length; i++)
+			if (Math.abs(values[i]) > INSTABILITY_THRESHOLD)
+				return i;
+		return values.length;
 	}
 
 }

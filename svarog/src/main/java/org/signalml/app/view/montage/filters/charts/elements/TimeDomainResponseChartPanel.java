@@ -37,7 +37,30 @@ public class TimeDomainResponseChartPanel extends ResponseChartPanel {
 	 * @param timeDomainResponse response to be shown
 	 */
 	public void setData(FilterTimeDomainResponse timeDomainResponse) {
-		this.setData(timeDomainResponse.getTime(), timeDomainResponse.getValues());
+
+		double[] values = timeDomainResponse.getValues();
+		double[] fixedValues = limitTheValuesIfInstableFilter(values);
+
+		this.setData(timeDomainResponse.getTime(), fixedValues);
+	}
+
+	/**
+	 * Limits the largest value in the time response to {@link FilterTimeDomainResponse#INSTABILITY_THRESHOLD}.
+	 * The values larger than that are set to be equal to {@link Double#NaN}.
+	 *
+	 * @param values the time response values
+	 * @return the array containing the limited values
+	 */
+	protected double[] limitTheValuesIfInstableFilter(double[] values) {
+		double[] limitedValues = new double[values.length];
+
+		for (int i = 0; i < values.length; i++)
+			if (Math.abs(values[i]) > FilterTimeDomainResponse.INSTABILITY_THRESHOLD)
+				limitedValues[i] = Double.NaN;
+			else
+				limitedValues[i] = values[i];
+
+		return limitedValues;
 	}
 
 }
