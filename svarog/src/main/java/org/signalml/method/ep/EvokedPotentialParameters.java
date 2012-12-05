@@ -49,7 +49,7 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	public EvokedPotentialParameters() {
 		wholeSignalSpace = new SignalSpace();
 
-		timeDomainSampleFilter = new TimeDomainSampleFilter(FilterType.BANDPASS, ApproximationFunctionType.CHEBYSHEV2, new double[] { 1.0, 20.0 }, new double[] { 0.5, 30 }, 3.0, 40.0);
+		timeDomainSampleFilter = new TimeDomainSampleFilter(FilterType.BANDPASS, ApproximationFunctionType.BUTTERWORTH, new double[] { 1.0, 20.0 }, new double[] { 0.1, 50 }, 3.0, 20.0);
 		timeDomainSampleFilter.setDescription(_("After ERP averaging filter"));
 	}
 
