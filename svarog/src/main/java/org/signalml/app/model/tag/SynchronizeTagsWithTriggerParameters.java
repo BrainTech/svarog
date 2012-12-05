@@ -19,6 +19,9 @@ public class SynchronizeTagsWithTriggerParameters {
 	private int triggerChannel;
 	private SlopeType slopeType;
 
+	private boolean lengthThresholdEnabled;
+	private float lengthThresholdValue;
+
 	public MultichannelSampleSource getSampleSource() {
 		return sampleSource;
 	}
@@ -54,6 +57,18 @@ public class SynchronizeTagsWithTriggerParameters {
 	}
 	public void setChannelLabels(List<String> channelLabels) {
 		this.channelLabels = channelLabels;
+	}
+	public boolean isLengthThresholdEnabled() {
+		return lengthThresholdEnabled;
+	}
+	public void setLengthThresholdEnabled(boolean lengthThresholdEnabled) {
+		this.lengthThresholdEnabled = lengthThresholdEnabled;
+	}
+	public float getLengthThresholdValue() {
+		return lengthThresholdValue;
+	}
+	public void setLengthThresholdValue(float lengthThresholdValue) {
+		this.lengthThresholdValue = lengthThresholdValue;
 	}
 
 }

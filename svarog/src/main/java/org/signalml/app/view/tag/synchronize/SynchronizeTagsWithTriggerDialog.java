@@ -4,7 +4,9 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
@@ -18,7 +20,8 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public class SynchronizeTagsWithTriggerDialog extends AbstractDialog {
 
-	private SynchronizeTagsWithTriggerPanel synchronizePanel;
+	private SynchronizeTagsWithTriggerParametersPanel synchronizePanel;
+	private LengthThresholdPanel lengthThresholdPanel;
 
 	public SynchronizeTagsWithTriggerDialog() {
 		super();
@@ -29,14 +32,26 @@ public class SynchronizeTagsWithTriggerDialog extends AbstractDialog {
 
 	@Override
 	protected JComponent createInterface() {
-		return getSynchronizePanel();
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		panel.add(getSynchronizePanel());
+		panel.add(getLengthThresholdPanel());
+
+		return panel;
 	}
 
-	public SynchronizeTagsWithTriggerPanel getSynchronizePanel() {
+	public SynchronizeTagsWithTriggerParametersPanel getSynchronizePanel() {
 		if (synchronizePanel == null) {
-			synchronizePanel = new SynchronizeTagsWithTriggerPanel();
+			synchronizePanel = new SynchronizeTagsWithTriggerParametersPanel();
 		}
 		return synchronizePanel;
+	}
+
+	public LengthThresholdPanel getLengthThresholdPanel() {
+		if (lengthThresholdPanel == null)
+			lengthThresholdPanel = new LengthThresholdPanel();
+		return lengthThresholdPanel;
 	}
 
 	@Override
@@ -47,11 +62,13 @@ public class SynchronizeTagsWithTriggerDialog extends AbstractDialog {
 	@Override
 	protected void fillDialogFromModel(Object model) throws SignalMLException {
 		getSynchronizePanel().fillPanelFromModel((SynchronizeTagsWithTriggerParameters) model);
+		getLengthThresholdPanel().fillPanelFromModel((SynchronizeTagsWithTriggerParameters) model);
 	}
 
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		getSynchronizePanel().fillModelFromDialog((SynchronizeTagsWithTriggerParameters) model);
+		getLengthThresholdPanel().fillModelFromPanel((SynchronizeTagsWithTriggerParameters) model);
 	}
 
 }

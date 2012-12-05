@@ -1,7 +1,10 @@
 package org.signalml.app.worker.signal;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
@@ -16,10 +19,19 @@ public abstract class AbstractSynchronizationTest {
 	protected SynchronizeTagsWithTriggerParameters parameters;
 
 	private final int sampleCount = 3000;
-	protected final Integer[] ascendingSlopes = new Integer[] { 10, 1034, 1500, 2523, 2550, 2600, 2800, 2901 };
-	protected final Integer[] descendingSlopes = new Integer[] { 15, 1400, 1600, 2524, 2551, 2700, 2900, 2950 };
+
+	protected List<TriggerPush> triggerPushes = new ArrayList<TriggerPush>();
 
 	public AbstractSynchronizationTest() {
+		triggerPushes.add(new TriggerPush(10, 15));
+		triggerPushes.add(new TriggerPush(1034, 1400));
+		triggerPushes.add(new TriggerPush(1500, 1600));
+		triggerPushes.add(new TriggerPush(2523, 2524));
+		triggerPushes.add(new TriggerPush(2550, 2551));
+		triggerPushes.add(new TriggerPush(2600, 2700));
+		triggerPushes.add(new TriggerPush(2800, 2900));
+		triggerPushes.add(new TriggerPush(2901, 2950));
+
 		parameters = new SynchronizeTagsWithTriggerParameters();
 
 		parameters.setSampleSource(createSampleSource());
@@ -33,10 +45,11 @@ public abstract class AbstractSynchronizationTest {
 
 		double[][] samples = new double[2][sampleCount];
 
-		for (int i = 0; i < ascendingSlopes.length; i++) {
-			ArrayOperations.fillArrayWithValue(samples[0], 1.0, ascendingSlopes[i], descendingSlopes[i]);
+		for (int i = 0; i < triggerPushes.size(); i++) {
+			TriggerPush triggerPush = triggerPushes.get(i);
+			ArrayOperations.fillArrayWithValue(samples[0], 1.0, triggerPush.getStartSample(), triggerPush.getEndSample());
 		}
-		for (int i = 0; i < ascendingSlopes.length; i++) {
+		for (int i = 0; i < samples[1].length; i++) {
 			samples[1][i] = Math.random();
 		}
 
@@ -62,15 +75,28 @@ public abstract class AbstractSynchronizationTest {
 
 	}
 
-	protected Integer[] getBothSlopePositions() {
-		Integer[] slopePositions = new Integer[ascendingSlopes.length*2];
+	public Integer[] getSlopePositions(SlopeType slopeType, int threshold) {
+		List<Integer> slopes = new ArrayList<Integer>();
+		for (TriggerPush triggerPush: triggerPushes) {
+			if (triggerPush.getLength() < threshold)
+				continue;
 
-		for (int i = 0; i < ascendingSlopes.length; i++) {
-			slopePositions[2*i] = ascendingSlopes[i];
-			slopePositions[2*i + 1] = descendingSlopes[i];
+			switch (slopeType) {
+			case ASCENDING:
+				slopes.add(triggerPush.getStartSample());
+				break;
+			case BOTH:
+				slopes.add(triggerPush.getStartSample());
+				slopes.add(triggerPush.getEndSample());
+				break;
+			case DESCENDING:
+				slopes.add(triggerPush.getEndSample());
+				break;
+			}
 		}
-
-		return slopePositions;
+		return slopes.toArray(new Integer[0]);
 	}
+
+
 
 }
