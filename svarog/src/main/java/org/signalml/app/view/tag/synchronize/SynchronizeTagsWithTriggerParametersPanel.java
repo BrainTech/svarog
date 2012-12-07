@@ -50,7 +50,7 @@ public class SynchronizeTagsWithTriggerParametersPanel extends LabeledComponents
 
 	public DoubleSpinner getThresholdSpinner() {
 		if (thresholdSpinner == null) {
-			thresholdSpinner = new DoubleSpinner(new SpinnerNumberModel(1.0, -100.0, 10000.0, 0.01));
+			thresholdSpinner = new DoubleSpinner(new SpinnerNumberModel(1.0, -100000.0, 100000.0, 0.01));
 		}
 		return thresholdSpinner;
 	}
