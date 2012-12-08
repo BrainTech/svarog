@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import org.signalml.app.view.common.components.panels.PanelWithEnablingCheckbox;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * This is a panel for enabling/disabling the low-pass filter
@@ -44,6 +45,10 @@ public class FilterPanel extends PanelWithEnablingCheckbox<FilterParametersPanel
 
 	public void setSamplingFrequency(float samplingFrequency) {
 		getPanel().setSamplingFrequency(samplingFrequency);
+	}
+
+	public void setFileChooser(FileChooser fileChooser) {
+		getPanel().setFileChooser(fileChooser);
 	}
 
 }
