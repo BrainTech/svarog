@@ -65,11 +65,14 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 				else if (isSlopeDescending(currentSampleValue, nextSampleValue)) {
 					triggerDesc = currentSample + i + 1;
 
-					if (triggerAsc == -1)
+					TriggerPush triggerPush = null;
+					if (triggerAsc == -1) {
 						// if the first slope is descending
-						triggerAsc = 0;
+						triggerPush = new TriggerPush(0, triggerDesc);
+						triggerPush.setStartedProperly(false);
+					} else
+						triggerPush = new TriggerPush(triggerAsc, triggerDesc);
 
-					TriggerPush triggerPush = new TriggerPush(triggerAsc, triggerDesc);
 					triggerPushes.add(triggerPush);
 					triggerAsc = -1;
 					triggerDesc = -1;
@@ -84,6 +87,7 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 			// if the last push does not end
 			triggerDesc = sampleCount-1;
 			TriggerPush triggerPush = new TriggerPush(triggerAsc, triggerDesc);
+			triggerPush.setEndedProperly(false);
 			triggerPushes.add(triggerPush);
 		}
 
@@ -110,14 +114,18 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 
 			switch(parameters.getSlopeType()) {
 			case ASCENDING:
-				slopePositions.add(triggerPush.getStartSample());
+				if (triggerPush.isStartedProperly())
+					slopePositions.add(triggerPush.getStartSample());
 				break;
 			case BOTH:
-				slopePositions.add(triggerPush.getStartSample());
-				slopePositions.add(triggerPush.getEndSample());
+				if (triggerPush.isStartedProperly())
+					slopePositions.add(triggerPush.getStartSample());
+				if (triggerPush.isEndedProperly())
+					slopePositions.add(triggerPush.getEndSample());
 				break;
 			case DESCENDING:
-				slopePositions.add(triggerPush.getEndSample());
+				if (triggerPush.isEndedProperly())
+					slopePositions.add(triggerPush.getEndSample());
 				break;
 			}
 		}

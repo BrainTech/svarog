@@ -7,7 +7,7 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog-top</artifactId>
 	<packaging>pom</packaging>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.0.2-SNAPSHOT</version>
 
 	<name>Svarog-top</name>
 

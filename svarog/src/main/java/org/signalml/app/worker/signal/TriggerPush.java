@@ -4,6 +4,9 @@ public class TriggerPush {
 	private int startSample;
 	private int endSample;
 
+	private boolean startedProperly = true;
+	private boolean endedProperly = true;
+
 	public TriggerPush(int startSample, int endSample) {
 		super();
 		this.startSample = startSample;
@@ -25,6 +28,22 @@ public class TriggerPush {
 
 	public int getLength() {
 		return endSample - startSample;
+	}
+
+	public boolean isStartedProperly() {
+		return startedProperly;
+	}
+
+	public void setStartedProperly(boolean startedProperly) {
+		this.startedProperly = startedProperly;
+	}
+
+	public boolean isEndedProperly() {
+		return endedProperly;
+	}
+
+	public void setEndedProperly(boolean endedProperly) {
+		this.endedProperly = endedProperly;
 	}
 
 }
