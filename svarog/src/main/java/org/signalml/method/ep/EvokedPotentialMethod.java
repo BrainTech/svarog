@@ -21,8 +21,8 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.validation.Errors;
 import org.signalml.plugin.export.method.BaseMethodData;
+import org.springframework.validation.Errors;
 
 /** EvokedPotentialMethod
  *
