@@ -133,7 +133,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 
 		pleaseWaitDialog.setActivity(_("creating codec reader"));
 		pleaseWaitDialog.configureForIndeterminateSimulated();
-		pleaseWaitDialog.waitAndShowDialogIn(null, 0, worker);
+		pleaseWaitDialog.waitAndShowDialogIn(null, 3000, worker);
 
 		SignalMLCodecReader reader = null;
 		try {
