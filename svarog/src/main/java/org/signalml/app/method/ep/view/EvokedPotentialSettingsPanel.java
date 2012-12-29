@@ -14,6 +14,7 @@ import org.signalml.app.method.ep.view.time.EvokedPotentialsTimeSelectionPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * This panel consists of various panel which can be used to
@@ -114,6 +115,10 @@ public class EvokedPotentialSettingsPanel extends AbstractPanel {
 
 	public void setSignalDocument(SignalDocument signalDocument) {
 		getFilterPanel().setSamplingFrequency(signalDocument.getSamplingFrequency());
+	}
+
+	public void setFileChooser(FileChooser fileChooser) {
+		getFilterPanel().setFileChooser(fileChooser);
 	}
 
 }

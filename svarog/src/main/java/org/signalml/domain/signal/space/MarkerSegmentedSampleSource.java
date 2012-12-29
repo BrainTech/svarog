@@ -139,7 +139,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 					unusableSegmentCount++;
 					continue;
 				}
-				if (minSampleCount < markerSample - startTime + length) {
+				if (minSampleCount < markerSample + startSample + segmentLength) {
 					// not enough samples after
 					unusableSegmentCount++;
 					continue;

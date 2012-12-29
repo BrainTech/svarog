@@ -15,6 +15,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.IIRDesigner;
 import org.signalml.method.ep.EvokedPotentialParameters;
+import org.signalml.plugin.export.view.FileChooser;
 
 /**
  * This is a panel for selecting the cut-off frequency of a low pass filter
@@ -83,6 +84,10 @@ public class FilterParametersPanel extends AbstractPanel {
 			e.printStackTrace();
 			errors.addError(_("Cannot design the EP filter - please correct its parameters."));
 		}
+	}
+
+	public void setFileChooser(FileChooser fileChooser) {
+		getEditTimeDomainSampleFilterDialog().setFileChooser(fileChooser);
 	}
 
 }

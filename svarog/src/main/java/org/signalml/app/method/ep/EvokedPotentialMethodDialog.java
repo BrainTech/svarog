@@ -28,6 +28,7 @@ import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.view.FileChooser;
 
 /** EvokedPotentialMethodDialog
  *
@@ -205,6 +206,12 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return EvokedPotentialApplicationData.class.isAssignableFrom(clazz);
+	}
+
+	@Override
+	public void setFileChooser(FileChooser fileChooser) {
+		super.setFileChooser(fileChooser);
+		getEvokedPotentialSettingsPanel().setFileChooser(fileChooser);
 	}
 
 }
