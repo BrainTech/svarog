@@ -35,4 +35,4 @@ override_dh_auto_clean:
 	rm -rf target
 	rm -rf $(DEB_MAVEN_REPO)
 	mh_unpatchpoms -pall -v
-	rm debian/all.poms
+	rm -f debian/all.poms
