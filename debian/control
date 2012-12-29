@@ -40,7 +40,6 @@ Vcs-Browser: http://git.braintech.pl/svarog.git
 
 Package: svarog
 Architecture: all
-Recommends: openbci-core
 Depends: ${misc:Depends},
 	janino,
 	libasm3-java,
