@@ -1,7 +1,7 @@
 Source: svarog
 Section: java
 Priority: optional
-Maintainer: Zbigniew Jędrzejewski-Szmek <zbyszek@in.waw.pl>
+Maintainer:  Karol Auguštin <karol@augustin.pl>
 Build-Depends: debhelper (>= 8.0.0),
 	       maven-debian-helper,
 	       libmaven-antrun-plugin-java,
@@ -35,9 +35,12 @@ Build-Depends-Indep:
 	libbuild-helper-maven-plugin-java,
 	libjsignalml-java (>= 1.0-2),
 Standards-Version: 3.9.1
+Vcs-Git: git://git.braintech.pl/svarog.git
+Vcs-Browser: http://git.braintech.pl/svarog.git
 
 Package: svarog
 Architecture: all
+Recommends: openbci-core
 Depends: ${misc:Depends},
 	janino,
 	libasm3-java,
