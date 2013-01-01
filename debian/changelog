@@ -1,3 +1,9 @@
+svarog (1.0.3-2) unstable; urgency=low
+
+  * Drop SNAPSHOT in svarog version name.
+
+ -- Karol Auguštin <karol@augustin.pl>  Tue, 01 Jan 2013 16:03:07 +0100
+
 svarog (1.0.3-1) unstable; urgency=low
 
   * New upstream release.
