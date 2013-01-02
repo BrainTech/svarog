@@ -324,4 +324,9 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		return artifactRejectedSegmentsCount;
 	}
 
+	@Override
+	public String getLabel(int channel) {
+		return super.getLabel(channelIndices[channel]);
+	}
+
 }
