@@ -9,7 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.signalml.app.view.signal.SampleSourceUtils;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
+import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
@@ -327,6 +329,16 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	@Override
 	public String getLabel(int channel) {
 		return super.getLabel(channelIndices[channel]);
+	}
+
+	public IChannelFunction getChannelFunction(int channel) {
+		if (getSource() instanceof SignalProcessingChain) {
+			SignalProcessingChain chain = (SignalProcessingChain) getSource();
+			return chain.getMontage().getCurrentMontage().getSourceChannelFunctionAt(channelIndices[channel]);
+		} else {
+			return null;
+		}
+
 	}
 
 }

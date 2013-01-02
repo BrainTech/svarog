@@ -60,6 +60,8 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		String[] labels = new String[channelCount];
 		for (int segment=0; segment<channelCount; segment++) {
 			labels[segment] = sampleSource.getLabel(segment);
+			String unit = sampleSource.getChannelFunction(segment).getUnitOfMeasurementSymbol();
+			labels[segment] += " [" + unit + "]";
 		}
 
 		EvokedPotentialResult result = new EvokedPotentialResult(data);
