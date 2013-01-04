@@ -71,7 +71,7 @@ public class EvokedPotentialGraphPanel extends AbstractPanel {
 		chartPanels = new EvokedPotentialChart[channelCount];
 
 		globalMin = Double.MAX_VALUE;
-		globalMax = Double.MIN_VALUE;
+		globalMax = -Double.MAX_VALUE;
 
 		for (double[][] samples: result.getAverageSamples()) {
 
@@ -88,6 +88,13 @@ public class EvokedPotentialGraphPanel extends AbstractPanel {
 				}
 
 			}
+		}
+
+		if (globalMin == globalMax) {
+			//if all the samples are equal to 0, we want the graphs to show it with some
+			//margins
+			globalMin -= 100.0;
+			globalMax += 100.0;
 		}
 
 		timeValues = new double[sampleCount];

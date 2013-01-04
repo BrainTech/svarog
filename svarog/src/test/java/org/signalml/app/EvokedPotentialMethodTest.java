@@ -65,6 +65,16 @@ public class EvokedPotentialMethodTest {
 	}
 
 	@Test
+	public void testZeroTags() throws Exception {
+
+		List<Double> tagPositions = new ArrayList<Double>();
+		data.getParameters().setBaselineCorrectionEnabled(false);
+
+		performTest(tagPositions);
+
+	}
+
+	@Test
 	public void testOneTag() throws Exception {
 
 		List<Double> tagPositions = new ArrayList<Double>();
@@ -110,19 +120,21 @@ public class EvokedPotentialMethodTest {
 
 		double[][] averagedSamples = result.getAverageSamples().get(0);
 
+		int avgLength = getAveragedSamples(0, 1.0).length;
 		for (int channel = 0; channel < CHANNEL_COUNT; channel++) {
-			double[][] samplesTag = new double[tagPositions.size()][getAveragedSamples(0, 1.0).length];
+			double[][] samplesTag = new double[tagPositions.size()][avgLength];
 			for (int i = 0; i < tagPositions.size(); i++) {
 				samplesTag[i] = getAveragedSamples(channel, tagPositions.get(i));
 			}
 
-			double[] expectedAveragedSamples = new double[samplesTag[0].length];
+			double[] expectedAveragedSamples = new double[avgLength];
 			for (int i = 0; i < expectedAveragedSamples.length; i++) {
 
 				double sum = 0.0;
 				for (int j = 0; j < samplesTag.length; j++)
 					sum += samplesTag[j][i];
-				expectedAveragedSamples[i] = sum / samplesTag.length;
+				if (samplesTag.length > 0)
+					expectedAveragedSamples[i] = sum / samplesTag.length;
 			}
 
 			if (data.getParameters().isBaselineCorrectionEnabled()) {
@@ -158,9 +170,9 @@ public class EvokedPotentialMethodTest {
 			for (int channel = 0; channel < 2; channel++) {
 				for (int i = 0; i < SAMPLE_COUNT; i++)
 					if (channel == 0)
-						samples[channel][i] = ((float) i) / samplingFrequency;
+						samples[channel][i] = (i) / samplingFrequency;
 					else
-						samples[channel][i] = SAMPLE_COUNT - ((float) i) / samplingFrequency;
+						samples[channel][i] = SAMPLE_COUNT - (i) / samplingFrequency;
 			}
 		}
 		return samples;

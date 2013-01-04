@@ -8,6 +8,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
@@ -60,8 +61,12 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		String[] labels = new String[channelCount];
 		for (int segment=0; segment<channelCount; segment++) {
 			labels[segment] = sampleSource.getLabel(segment);
-			String unit = sampleSource.getChannelFunction(segment).getUnitOfMeasurementSymbol();
-			labels[segment] += " [" + unit + "]";
+
+			IChannelFunction channelFunction = sampleSource.getChannelFunction(segment);
+			if (channelFunction != null) {
+				String unit = channelFunction.getUnitOfMeasurementSymbol();
+				labels[segment] += " [" + unit + "]";
+			}
 		}
 
 		EvokedPotentialResult result = new EvokedPotentialResult(data);
@@ -113,6 +118,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 		for (MultichannelSegmentedSampleSource segmentedSampleSource: data.getBaselineSampleSources()) {
 			double[] baselineSamples = new double[segmentedSampleSource.getSegmentLength()];
 			for (int channel = 0; channel < segmentedSampleSource.getChannelCount(); channel++) {
+
 				double sum = 0.0;
 				for (int segment = 0; segment < segmentedSampleSource.getSegmentCount(); segment++) {
 					segmentedSampleSource.getSegmentSamples(channel, baselineSamples, segment);
@@ -121,11 +127,14 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 						sum += sample;
 					}
 				}
-				double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLength());
 
-				double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
-				for (int i = 0; i < samples.length; i++)
-					samples[i] = samples[i] - baseline;
+				if (segmentedSampleSource.getSegmentCount() > 0) {
+					double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLength());
+
+					double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
+					for (int i = 0; i < samples.length; i++)
+						samples[i] = samples[i] - baseline;
+				}
 			}
 			sampleSourceNumber++;
 		}
