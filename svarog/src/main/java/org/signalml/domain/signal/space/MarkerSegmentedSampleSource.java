@@ -118,13 +118,15 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		}
 
 		samplingFrequency = source.getSamplingFrequency();
-		startSample = (int) Math.ceil(samplingFrequency * startTime);
-		this.segmentLength = (int) Math.ceil(samplingFrequency * length);
+		startSample = convertTimeToSamples(startTime);
+		this.segmentLength = convertTimeToSamples(length);
 
 		List<TagStyle> tagStyles = getTagStyles(markerStyleNames, tagSet);
 		List<TagStyle> artifactStyles = getTagStyles(artifactStyleNames, tagSet);
 
 		int minSampleCount = SampleSourceUtils.getMinSampleCount(source);
+		int startMarkerSelectionInSamples = startMarkerSelection == null ? 0 : convertTimeToSamples(startMarkerSelection);
+		int endMarkerSelectionInSamples = endMarkerSelection == null ? minSampleCount : convertTimeToSamples(endMarkerSelection);
 
 		int markerSample;
 		int averagedCount = 0;
@@ -136,21 +138,16 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 				markerSample = (int) Math.floor(samplingFrequency * tag.getPosition());
 
-				if (markerSample + startSample < 0) {
+				if (markerSample + startSample < startMarkerSelectionInSamples) {
 					// not enough samples before
 					unusableSegmentCount++;
 					continue;
 				}
-				if (minSampleCount < markerSample + startSample + segmentLength) {
+				if (endMarkerSelectionInSamples < markerSample + startSample + segmentLength) {
 					// not enough samples after
 					unusableSegmentCount++;
 					continue;
 				}
-
-				if (startMarkerSelection != null && endMarkerSelection != null &&
-						(tag.getPosition() < startMarkerSelection || tag.getPosition() > endMarkerSelection))
-					//we don't use samples from outside the <firstSample, lastSample> range
-					continue;
 
 				if (overlapsWithArtifactTag(tagSet, tag, artifactStyles, startTime, length)) {
 					artifactRejectedSegmentsCount++;
@@ -292,8 +289,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 		return offsets.length;
 	}
 
-	@Override
-	public int getSegmentLength() {
+	/**
+	 * Returns the segment length in samples
+	 */
+	public int getSegmentLengthInSamples() {
 		return segmentLength;
 	}
 
@@ -339,6 +338,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 			return null;
 		}
 
+	}
+
+	protected int convertTimeToSamples(double time) {
+		return (int) Math.ceil(samplingFrequency * time);
 	}
 
 }

@@ -335,9 +335,9 @@ public class RawSignalWriter implements ISignalWriter {
 	 */
 	public void writeSignal(File signalFile, MultichannelSegmentedSampleSource sampleSource, SignalExportDescriptor descriptor, int segment, SignalWriterMonitor monitor) throws IOException {
 
-		int sampleCount = sampleSource.getSegmentLength();
+		int sampleCount = sampleSource.getSegmentLengthInSamples();
 
-		writeSignal(signalFile, sampleSource, descriptor, segment * sampleSource.getSegmentLength(), sampleCount, monitor);
+		writeSignal(signalFile, sampleSource, descriptor, segment * sampleSource.getSegmentLengthInSamples(), sampleCount, monitor);
 
 	}
 
@@ -359,9 +359,9 @@ public class RawSignalWriter implements ISignalWriter {
 	 */
 	public void writeSignal(OutputStream os, MultichannelSegmentedSampleSource sampleSource, SignalExportDescriptor descriptor, int segment, SignalWriterMonitor monitor) throws IOException {
 
-		int sampleCount = sampleSource.getSegmentLength();
+		int sampleCount = sampleSource.getSegmentLengthInSamples();
 
-		writeSignal(os, sampleSource, descriptor, segment * sampleSource.getSegmentLength(), sampleCount, monitor);
+		writeSignal(os, sampleSource, descriptor, segment * sampleSource.getSegmentLengthInSamples(), sampleCount, monitor);
 
 	}
 

@@ -892,7 +892,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				MP5RuntimeParameters runtimeParameters = new MP5RuntimeParameters();
 
 				runtimeParameters.setChannelCount(sampleSource.getChannelCount());
-				runtimeParameters.setSegementSize(sampleSource.getSegmentLength());
+				runtimeParameters.setSegementSize(sampleSource.getSegmentLengthInSamples());
 				runtimeParameters.setChosenChannels(null);
 				runtimeParameters.setOutputDirectory(null);
 				runtimeParameters.setPointsPerMicrovolt(1F);
@@ -900,7 +900,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				runtimeParameters.setSignalFile(signalFile);
 				runtimeParameters.setWritingMode(MP5WritingModeType.CREATE);
 				runtimeParameters.setMinOffset(1);
-				runtimeParameters.setMaxOffset(((int) Math.floor(minSampleCount / sampleSource.getSegmentLength())));
+				runtimeParameters.setMaxOffset(((int) Math.floor(minSampleCount / sampleSource.getSegmentLengthInSamples())));
 
 				Formatter configFormatter = mp5ConfigCreator.createConfigFormatter();
 

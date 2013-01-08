@@ -2,49 +2,24 @@ package org.signalml.app;
 
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Test;
-import org.signalml.app.document.TagDocument;
-import org.signalml.app.document.signal.RawSignalDocument;
-import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
-import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
-import org.signalml.domain.signal.raw.RawSignalWriter;
-import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
+import org.signalml.domain.signal.space.AbstractTagSegmentedTest;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.method.ep.EvokedPotentialResult;
-import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
-import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * Checks if the {@link EvokedPotentialMethod} works as expected.
  *
  * @author Piotr Szachewicz
  */
-public class EvokedPotentialMethodTest {
-
-	private static final int CHANNEL_COUNT = 2;
-	private static final int SAMPLE_COUNT = 128 * 15;
-	private double samplingFrequency = 128.0;
-
-	private double[][] samples;
-
-	protected File signalFile = new File("epTestSignalFile.bin");
-	protected TagStyle[] tagStyles = new TagStyle[] {
-			new TagStyle(SignalSelectionType.CHANNEL, "averaged", "", Color.black, Color.BLACK, 1),
-			new TagStyle(SignalSelectionType.CHANNEL, "not_averaged", "", Color.black, Color.BLACK, 1)
-	};
+public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 
 	EvokedPotentialApplicationData data = new EvokedPotentialApplicationData();
 
@@ -162,49 +137,6 @@ public class EvokedPotentialMethodTest {
 		}
 	}
 
-	protected double[][] getSamples() {
-
-		if (samples == null) {
-			samples = new double[CHANNEL_COUNT][SAMPLE_COUNT];
-
-			for (int channel = 0; channel < 2; channel++) {
-				for (int i = 0; i < SAMPLE_COUNT; i++)
-					if (channel == 0)
-						samples[channel][i] = (i) / samplingFrequency;
-					else
-						samples[channel][i] = SAMPLE_COUNT - (i) / samplingFrequency;
-			}
-		}
-		return samples;
-	}
-
-	protected SignalDocument getSignalDocument() throws SignalMLException, IOException {
-		//write data to file
-		DoubleArraySampleSource sampleSource = new DoubleArraySampleSource(getSamples());
-
-		RawSignalWriter writer = new RawSignalWriter();
-		writer.writeSignal(signalFile, sampleSource, new SignalExportDescriptor(), null);
-
-		//get signal document
-		RawSignalDescriptor descriptor = new RawSignalDescriptor();
-		descriptor.setSampleCount(getSamples()[0].length);
-		descriptor.setChannelCount(getSamples().length);
-		RawSignalDocument signalDocument = new RawSignalDocument(descriptor);
-		signalDocument.setBackingFile(signalFile);
-		signalDocument.openDocument();
-
-		return signalDocument;
-	}
-
-	protected TagDocument getTagDocument() throws SignalMLException, IOException {
-
-		TagDocument tagDocument = new TagDocument();
-		for (TagStyle style: tagStyles)
-			tagDocument.getTagSet().addStyle(style);
-
-		return tagDocument;
-	}
-
 	public double[] getSamples(int channel, double markerPosition, double startTime, double lengthInSeconds) {
 		int startSample = (int) ((markerPosition + startTime) * samplingFrequency);
 		int numberOfSamples = (int) (lengthInSeconds * samplingFrequency);
@@ -226,8 +158,4 @@ public class EvokedPotentialMethodTest {
 		return getSamples(channel, startPosition, parameters.getBaselineTimeStart(), parameters.getBaselineTimeLength());
 	}
 
-	@After
-	public void cleanUp() {
-		signalFile.delete();
-	}
 }

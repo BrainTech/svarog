@@ -53,7 +53,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 
 		MarkerSegmentedSampleSource sampleSource = data.getSampleSources().get(0);
 
-		int sampleCount = sampleSource.getSegmentLength();
+		int sampleCount = sampleSource.getSegmentLengthInSamples();
 		int segmentCount = sampleSource.getSegmentCount();
 		int channelCount = sampleSource.getChannelCount();
 		float samplingFrequency = sampleSource.getSamplingFrequency();
@@ -116,7 +116,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	protected void performBaselineCorrection(EvokedPotentialResult result, EvokedPotentialData data) {
 		int sampleSourceNumber = 0;
 		for (MultichannelSegmentedSampleSource segmentedSampleSource: data.getBaselineSampleSources()) {
-			double[] baselineSamples = new double[segmentedSampleSource.getSegmentLength()];
+			double[] baselineSamples = new double[segmentedSampleSource.getSegmentLengthInSamples()];
 			for (int channel = 0; channel < segmentedSampleSource.getChannelCount(); channel++) {
 
 				double sum = 0.0;
@@ -129,7 +129,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 				}
 
 				if (segmentedSampleSource.getSegmentCount() > 0) {
-					double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLength());
+					double baseline = sum / (segmentedSampleSource.getSegmentCount() * segmentedSampleSource.getSegmentLengthInSamples());
 
 					double[] samples = result.getAverageSamples().get(sampleSourceNumber)[channel];
 					for (int i = 0; i < samples.length; i++)
@@ -158,7 +158,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 	}
 
 	protected double[][] average(MultichannelSegmentedSampleSource sampleSource, MethodExecutionTracker tracker) {
-		int sampleCount = sampleSource.getSegmentLength();
+		int sampleCount = sampleSource.getSegmentLengthInSamples();
 		int segmentCount = sampleSource.getSegmentCount();
 		int channelCount = sampleSource.getChannelCount();
 
