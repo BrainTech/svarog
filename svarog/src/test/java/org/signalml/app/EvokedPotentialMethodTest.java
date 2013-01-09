@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.domain.signal.space.AbstractTagSegmentedTest;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.method.ep.EvokedPotentialResult;
@@ -42,52 +43,115 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 	@Test
 	public void testZeroTags() throws Exception {
 
-		List<Double> tagPositions = new ArrayList<Double>();
 		data.getParameters().setBaselineCorrectionEnabled(false);
 
-		performTest(tagPositions);
-
+		performTest();
 	}
 
 	@Test
 	public void testOneTag() throws Exception {
 
-		List<Double> tagPositions = new ArrayList<Double>();
-		tagPositions.add(1.0);
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 1.0, 0.0));
 		data.getParameters().setBaselineCorrectionEnabled(false);
 
-		performTest(tagPositions);
+		performTest();
 
 	}
 
 	@Test
 	public void testThreeTags() throws Exception {
 
-		List<Double> tagPositions = new ArrayList<Double>();
-		tagPositions.add(2.0);
-		tagPositions.add(4.0);
-		tagPositions.add(5.0);
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 2.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle, 4.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle, 5.0, 0.0));
 
 		data.getParameters().setBaselineCorrectionEnabled(false);
-		performTest(tagPositions);
+		performTest();
 	}
 
 	@Test
 	public void testThreeTagsWithBaseline() throws Exception {
 
-		List<Double> tagPositions = new ArrayList<Double>();
-		tagPositions.add(3.0);
-		tagPositions.add(5.0);
-		tagPositions.add(8.0);
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 3.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle, 5.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle, 8.0, 0.0));
 
 		data.getParameters().setBaselineCorrectionEnabled(true);
-		performTest(tagPositions);
+		performTest();
 	}
 
-	public void performTest(List<Double> tagPositions) throws Exception {
+	@Test
+	public void testTagOutsideTheSignal() throws Exception {
 
-		for (Double tagPosition: tagPositions)
-			data.getTagDocument().getTagSet().addTag(new Tag(tagStyles[0], tagPosition, 0.0));
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, -1.0, 0.0));
+
+		data.getParameters().setBaselineCorrectionEnabled(true);
+		performTest();
+	}
+
+	@Test
+	public void testTagOutsideTheSignalAndTheOtherInside() throws Exception {
+
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 10000.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle, 2.0, 0.0));
+
+		data.getParameters().setBaselineCorrectionEnabled(true);
+		performTest();
+	}
+
+	@Test
+	public void testOneTagBaselineOutside() throws Exception {
+
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 1.0, 0.0));
+
+		data.getParameters().setBaselineCorrectionEnabled(true);
+		performTest();
+	}
+
+	@Test
+	public void testOneTagBaselineOutside2() throws Exception {
+
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 1000.0, 0.0));
+
+		data.getParameters().setBaselineCorrectionEnabled(true);
+		performTest();
+	}
+
+	@Test
+	public void testALotOfTags() throws Exception {
+
+		data.getParameters().getAveragedTagStyles().add(new TagStyleGroup(AVERAGED_TAG_NAME_2));
+
+		StyledTagSet tagSet = data.getTagDocument().getTagSet();
+		tagSet.addTag(new Tag(averagedTagStyle, 10000.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle, 2.0, 0.0));
+		tagSet.addTag(new Tag(averagedTagStyle2, 30.0, 0.0));
+		tagSet.addTag(new Tag(otherTagStyle, 4.0, 0.0));
+		tagSet.addTag(new Tag(otherTagStyle, 7.0, 0.0));
+		tagSet.addTag(new Tag(otherTagStyle, -1.0, 0.0));
+		tagSet.addTag(new Tag(artifactTagStyle, 11.0, 0.0));
+
+		data.getParameters().setBaselineCorrectionEnabled(true);
+		performTest();
+	}
+
+	public void performTest() throws Exception {
+
+		List<Double> tagPositions = new ArrayList<Double>();
+		for (Tag tag: data.getTagDocument().getTagSet().getTags()) {
+			if ((tag.getStyle() == averagedTagStyle || tag.getStyle() == averagedTagStyle2)
+					&& tag.getPosition() >= 0.0 &&
+					tag.getPosition() * samplingFrequency <= data.getSignalDocument().getSampleSource().getSampleCount(0))
+				tagPositions.add(tag.getPosition());
+		}
+
 		data.calculate();
 
 		EvokedPotentialMethod method = new EvokedPotentialMethod();
@@ -130,7 +194,8 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 				number++;
 			}
 		}
-		baseline /= number;
+		if (number > 0)
+			baseline /= number;
 
 		for (int i = 0; i < samples.length; i++) {
 			samples[i] -= baseline;
@@ -139,7 +204,10 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 
 	public double[] getSamples(int channel, double markerPosition, double startTime, double lengthInSeconds) {
 		int startSample = (int) ((markerPosition + startTime) * samplingFrequency);
+
 		int numberOfSamples = (int) (lengthInSeconds * samplingFrequency);
+		if (startSample < 0 || startSample + numberOfSamples > samples[0].length)
+			numberOfSamples = 0;
 
 		double[] sampleChunk = new double[numberOfSamples];
 		for (int i = 0; i < sampleChunk.length; i++) {
