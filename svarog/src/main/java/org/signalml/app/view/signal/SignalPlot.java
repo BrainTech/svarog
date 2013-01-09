@@ -569,6 +569,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		SignalSelectionType type = tag.getType();
 		if (type == SignalSelectionType.PAGE) {
 			return;
+		} else if (tag.getChannel() != -1 && !isChannelVisible(tag.getChannel())) {
+			return;
 		}
 
 		Component rendererComponent;
@@ -705,10 +707,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				}
 				if (tag.getType() == SignalSelectionType.CHANNEL) {
 					paintTagOrTagSelection(g, tag, cnt, active, false, false);
-				} else {
-					continue;
 				}
-
 			}
 
 			cnt++;
@@ -835,7 +834,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			visibleCount = 0;
 			channel=startChannel;
 			while (visibleCount < maxNumberOfChannels && channel<channelCount) {
-				if (this.channelsPlotOptionsModel.getModelAt(channel).getVisible()) {
+				if (isChannelVisible(channel)) {
 					visibleCount ++;
 					g.drawLine(clip.x, channelLevel[channel], clipEndX, channelLevel[channel]);
 				}
@@ -883,7 +882,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		visibleCount = 0;
 		channel=startChannel;
 		while (visibleCount < maxNumberOfChannels && channel<channelCount) {
-			if (!this.channelsPlotOptionsModel.getModelAt(channel).getVisible()) {
+			if (!isChannelVisible(channel)) {
 				channel++;
 				continue;
 			}
@@ -1496,12 +1495,34 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public int channelToPixel(int channel) {
-		return (channel * pixelPerChannel);
+
+		int invisibleChannels = 0;
+		for (int i = 0; i < channel; i++)
+			if (!isChannelVisible(i))
+				invisibleChannels++;
+
+		return ((channel-invisibleChannels) * pixelPerChannel);
+	}
+
+	public int getInvisibleChannelsBeforeChannel(int channel) {
+		int numberOfInvisibleChannels = 0;
+		for (int i = 0; i <= channel + numberOfInvisibleChannels; i++) {
+			if (!isChannelVisible(i))
+				numberOfInvisibleChannels++;
+		}
+		return numberOfInvisibleChannels;
+	}
+
+	protected boolean isChannelVisible(int channel) {
+		return this.channelsPlotOptionsModel.getModelAt(channel).getVisible();
 	}
 
 	@Override
 	public int toChannelSpace(Point p) {
-		return (int) Math.max(0, Math.min(channelCount-1, Math.floor(p.y / pixelPerChannel)));
+		int channel = (int) Math.max(0, Math.min(channelCount-1, Math.floor(p.y / pixelPerChannel)));
+		int numberOfInvisibleChannels = getInvisibleChannelsBeforeChannel(channel);
+
+		return channel + numberOfInvisibleChannels;
 	}
 
 	public Rectangle getPixelSelectionBounds(SignalSelection selection, Rectangle useRect) {
@@ -1531,6 +1552,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			selTop = 0;
 			selBottom = getSize().height - 1;
 		} else {
+			selChannel -= getInvisibleChannelsBeforeChannel(selChannel);
 			selTop = selChannel*pixelPerChannel;
 			selBottom = selTop + pixelPerChannel - 1;
 		}
@@ -1632,7 +1654,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		Rectangle rect = getTagSelectionRectangle(tag, marker, tagCnt, useRect);
 
-		int channelOffset = channel * pixelPerChannel;
+		int invisibleChannels = getInvisibleChannelsBeforeChannel(channel);
+		int channelOffset = (channel-invisibleChannels) * pixelPerChannel;
 
 		if (comparing) {
 
