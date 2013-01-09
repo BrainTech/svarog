@@ -4,9 +4,9 @@
 
 package org.signalml.app.view.signal;
 
+import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
-import static java.lang.String.format;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -351,7 +351,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			// update models
 			timeScaleRangeModel.setRangeProperties((int)(timeZoomFactor*1000), 0, (int)(config.getMinTimeScale()*1000), (int)(config.getMaxTimeScale()*1000), false);
-			valueScaleRangeModel.setRangeProperties((int) 100, 0, config.getMinValueScale(), config.getMaxValueScale(), false);
+			valueScaleRangeModel.setRangeProperties(100, 0, config.getMinValueScale(), config.getMaxValueScale(), false);
 			channelHeightRangeModel.setRangeProperties(pixelPerChannel, 0, config.getMinChannelHeight(), config.getMaxChannelHeight(), false);
 
 			timeScaleRangeModel.addChangeListener(this);
@@ -380,7 +380,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (index == -1)
 			v = ChannelFunction.EEG.getMaxValue(); //global voltage scale is for EEG by default
 		else
-			v = (double) this.getSourceChannelFor(index).getFunction().getMaxValue();
+			v = this.getSourceChannelFor(index).getFunction().getMaxValue();
 		return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
 	}
 
@@ -890,8 +890,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			visibleCount ++;
 			// those must be offset by one to get correct partial redraw
 			// offset again by one, this time in terms of samples
-			firstSample = (int) Math.max(0, Math.floor(((double)(clip.x-1)) / timeZoomFactor) - 1);
-			lastSample = (int) Math.min(sampleCount[channel] - 1, Math.ceil(((double)(clipEndX+1)) / timeZoomFactor) + 1);
+			firstSample = (int) Math.max(0, Math.floor((clip.x-1) / timeZoomFactor) - 1);
+			lastSample = (int) Math.min(sampleCount[channel] - 1, Math.ceil((clipEndX+1) / timeZoomFactor) + 1);
 			if (lastSample < firstSample) {
 				continue;
 			}
@@ -1384,7 +1384,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				updateScales(timeZoomFactor, -1, -1, compensationEnabled);
 			}
 			else if (source == valueScaleRangeModel) {
-				double voltageZoomFactor = ((double) valueScaleRangeModel.getValue()) * voltageZoomFactorRatio;
+				double voltageZoomFactor = (valueScaleRangeModel.getValue()) * voltageZoomFactorRatio;
 				//this.channelsPlotOptionsModel.globalScaleChanged(valueScaleRangeModel.getValue());
 				updateScales(-1, voltageZoomFactor, -1, false);
 			}
@@ -1405,10 +1405,53 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public Point2D.Float toSignalSpace(Point p) {
-		float time = (float)(((double) p.x) / pixelPerSecond);
-		float value = (float)(((double) p.y) / pixelPerValue);
+		float time = (float)((p.x) / pixelPerSecond);
+		float value = (float)((p.y) / pixelPerValue);
 
 		return new Point2D.Float(time,value);
+	}
+
+	/**
+	 * Returns the distance (in the signal space) between two points (in pixels).
+	 * @param p1 point 1 (pixels)
+	 * @param p2 point 2 (pixels)
+	 * @return the distance between two points (signal space)
+	 */
+	public Point2D.Float getDistanceInSignalSpace(Point p1, Point p2) {
+		Point pixelSize = new Point(
+				Math.abs(p1.x - p2.x),
+				Math.abs(p1.y - p2.y)
+			);
+
+		int channel = toChannelSpace(p1);
+		double pixelPerValueForChannel= channelsPlotOptionsModel.getPixelsPerValue(channel);
+		float value = (float)((pixelSize.y) / pixelPerValueForChannel);
+		float time = (float)((pixelSize.x) / pixelPerSecond);
+
+		return new Point2D.Float(time,value);
+	}
+
+	/**
+	 * Distance is controversial when it has different scaling for each point.
+	 * @param p1 point 1
+	 * @param p2 point 2
+	 * @return true if for each point we have a different scaling.
+	 */
+	public boolean isDistanceControversial(Point p1, Point p2) {
+
+		int channel1 = Math.min(toChannelSpace(p1), toChannelSpace(p2));
+		int channel2 = Math.max(toChannelSpace(p1), toChannelSpace(p2));
+
+		double p1PixelPerValueForChannel= channelsPlotOptionsModel.getPixelsPerValue(channel1);
+
+		for (int channel = channel1; channel <= channel2; channel++) {
+			double p2PixelPerValueForChannel= channelsPlotOptionsModel.getPixelsPerValue(channel);
+
+			if (p1PixelPerValueForChannel != p2PixelPerValueForChannel)
+				return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -1431,24 +1474,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public float toTimeSpace(Point p) {
-		return Math.max(0, Math.min(maxTime, (float)(((double) p.x) / pixelPerSecond)));
+		return Math.max(0, Math.min(maxTime, (float)((p.x) / pixelPerSecond)));
 	}
 
 	@Override
 	public int toSampleSpace(Point p) {
-		return Math.max(0, Math.min(maxSampleCount-1, (int)(((double) p.x) / timeZoomFactor)));
+		return Math.max(0, Math.min(maxSampleCount-1, (int)((p.x) / timeZoomFactor)));
 	}
 
 	@Override
 	public float toValueSpace(Point p) {
 		int channel = toChannelSpace(p);
 		int y = channelLevel[channel] - p.y;
-		return (float) Math.round(((double) y) / pixelPerValue);
+		return Math.round((y) / pixelPerValue);
 	}
 
 	@Override
 	public int timeToPixel(double time) {
-		return (int) Math.round(((double) time) * pixelPerSecond);
+		return (int) Math.round((time) * pixelPerSecond);
 	}
 
 	@Override
@@ -1544,8 +1587,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			} else {
 				float pixerPerTag = ((float) height) / tagCnt;
-				rect.y = viewportPoint.y + (int)(((float) tagNumber) * pixerPerTag);
-				int endY = viewportPoint.y + (int)(((float)(tagNumber+1)) * pixerPerTag);
+				rect.y = viewportPoint.y + (int)((tagNumber) * pixerPerTag);
+				int endY = viewportPoint.y + (int)((tagNumber+1) * pixerPerTag);
 				rect.height = endY - rect.y;
 			}
 
@@ -1610,11 +1653,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			float pixelPerTag = ((float) pixelPerChannel) / tagCnt;
 
-			rect.y = channelOffset + (int)(((float) tagNumber) * pixelPerTag);
+			rect.y = channelOffset + (int)((tagNumber) * pixelPerTag);
 			if (channelLinesVisible && (tagCnt % 2 == 0) && (tagNumber == (tagCnt/2))) {  // avoid obscuring channel line
 				rect.y++;
 			}
-			int endY = channelOffset + (int)(((float)(tagNumber+1)) * pixelPerTag);
+			int endY = channelOffset + (int)((tagNumber+1) * pixelPerTag);
 			rect.height = endY - rect.y;
 
 		}
