@@ -333,7 +333,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	public IChannelFunction getChannelFunction(int channel) {
 		if (getSource() instanceof SignalProcessingChain) {
 			SignalProcessingChain chain = (SignalProcessingChain) getSource();
-			return chain.getMontage().getCurrentMontage().getSourceChannelFunctionAt(channelIndices[channel]);
+			if (chain.getMontage() == null)
+				return null;
+			else
+				return chain.getMontage().getCurrentMontage().getSourceChannelFunctionAt(channelIndices[channel]);
 		} else {
 			return null;
 		}
