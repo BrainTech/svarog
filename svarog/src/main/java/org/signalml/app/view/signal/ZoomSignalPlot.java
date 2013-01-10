@@ -71,8 +71,11 @@ public class ZoomSignalPlot extends JComponent {
 		MultichannelSampleSource sampleSource = plot.getSignalOutput();
 		Point2D.Float signalFocus = plot.toSignalSpace(focusPoint);
 		int pixelPerChannel = plot.getPixelPerChannel();
-		int channelCenter = channel*pixelPerChannel + pixelPerChannel/2;
-		double length = ((((double) size.width) / plot.getPixelPerSecond()) / factor);
+
+		int invisibleChannels = plot.getInvisibleChannelsBeforeChannel(channel);
+		int channelCenter = (channel - invisibleChannels)*pixelPerChannel + pixelPerChannel/2; //
+
+		double length = (((size.width) / plot.getPixelPerSecond()) / factor);
 		double minTime = signalFocus.x - length/2;
 		double maxTime = minTime + length;
 		float samplingFrequency = plot.getSamplingFrequency();
@@ -83,6 +86,9 @@ public class ZoomSignalPlot extends JComponent {
 		if (samples == null || samples.length < sampleCnt) {
 			samples = new double[sampleCnt];
 		}
+
+		if (channel >= sampleSource.getChannelCount())
+			return;
 
 		try {
 			sampleSource.getSamples(channel, samples, firstSample, sampleCnt, 0);
@@ -96,7 +102,7 @@ public class ZoomSignalPlot extends JComponent {
 		double pixelPerValue = plot.getPixelPerValue() * factor;
 		double timeZoomFactor = plot.getTimeZoomFactor() * factor;
 
-		int centerOffset = (int) Math.round((focusPoint.y - channelCenter) * factor);
+		int centerOffset = Math.round((focusPoint.y - channelCenter) * factor);
 
 		int leftOffset;
 		if (minTime < 0) {

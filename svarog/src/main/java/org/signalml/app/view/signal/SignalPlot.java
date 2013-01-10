@@ -1506,7 +1506,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public int getInvisibleChannelsBeforeChannel(int channel) {
 		int numberOfInvisibleChannels = 0;
-		for (int i = 0; i <= channel + numberOfInvisibleChannels; i++) {
+		for (int i = 0; i < channel + numberOfInvisibleChannels && i < getChannelCount(); i++) {
 			if (!isChannelVisible(i))
 				numberOfInvisibleChannels++;
 		}
@@ -1520,7 +1520,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	@Override
 	public int toChannelSpace(Point p) {
 		int channel = (int) Math.max(0, Math.min(channelCount-1, Math.floor(p.y / pixelPerChannel)));
-		int numberOfInvisibleChannels = getInvisibleChannelsBeforeChannel(channel);
+
+		int numberOfInvisibleChannels = 0;
+		for (int i = 0; i <= channel + numberOfInvisibleChannels && i < getChannelCount(); i++) {
+			if (!isChannelVisible(i))
+				numberOfInvisibleChannels++;
+		}
 
 		return channel + numberOfInvisibleChannels;
 	}
