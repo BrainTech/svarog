@@ -99,7 +99,7 @@ public class ZoomSignalPlot extends JComponent {
 
 		int i;
 		double x, y;
-		double pixelPerValue = plot.getPixelPerValue() * factor;
+		double pixelPerValue = plot.getPixelPerValue(channel) * factor;
 		double timeZoomFactor = plot.getTimeZoomFactor() * factor;
 
 		int centerOffset = Math.round((focusPoint.y - channelCenter) * factor);

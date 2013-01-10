@@ -2614,6 +2614,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return pixelPerValue;
 	}
 
+	public double getPixelPerValue(int channel) {
+		return channelsPlotOptionsModel.getPixelsPerValue(channel);
+	}
+
 	@Override
 	public int getChannelCount() {
 		return channelCount;
