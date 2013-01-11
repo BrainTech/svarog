@@ -949,11 +949,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			int sampleSkip = 1;
 
 			if (optimizeSignalDisplaying) {
-				double samplingFrequencyRatio = samplingFrequency / 256.0;
-				if (samplingFrequencyRatio < 1)
-					samplingFrequencyRatio = 1;
-
-				sampleSkip = (int) Math.ceil(samplingFrequencyRatio  / timeZoomFactor);
+				//optimize signal display displays at most two sample for each pixel.
+				sampleSkip = (int) (1/timeZoomFactor);
+				sampleSkip /= 2;
+				if (sampleSkip < 1)
+					sampleSkip = 1;
 			}
 
 			//if the user selects a piece of the signal, we shouldn't break the rule
