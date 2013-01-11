@@ -900,6 +900,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 
 			try {
+
 				signalChain.getSamples(channel, samples, firstSample, length, 0);
 			} catch (RuntimeException ex) {
 				logger.error(format("failed to read %d samples starting at %d, till %d, channel %d",
