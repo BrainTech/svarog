@@ -58,6 +58,7 @@ import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.samplesource.ChangeableMultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
@@ -958,8 +959,24 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			//if the user selects a piece of the signal, we shouldn't break the rule
 			//that we always take the sampleSkip's sample!
 			int startingFrom = sampleSkip - firstSample % sampleSkip;
-			if (firstSample == 0)
+			if (firstSample % sampleSkip == 0)
 				startingFrom = 0;
+
+			if (optimizeSignalDisplaying) {
+				//in each step we want to display the same samples even though few new were added
+				OriginalMultichannelSampleSource source = signalChain.getSource();
+				if (source instanceof ChangeableMultichannelSampleSource) {
+					ChangeableMultichannelSampleSource changeableSource = (ChangeableMultichannelSampleSource) source;
+					long addedSamples = changeableSource.getAddedSamplesCount();
+
+					int changeableCorrection = 0;
+					if (addedSamples % sampleSkip != 0)
+						changeableCorrection = (int) (sampleSkip - addedSamples % sampleSkip);
+					startingFrom += changeableCorrection;
+					if (startingFrom >= sampleSkip)
+						startingFrom -= sampleSkip;
+				}
+			}
 
 			for (i=startingFrom; i<length; i += sampleSkip) {
 
