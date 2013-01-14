@@ -49,7 +49,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.util.SvarogConstants;
 
 /**
  * Dialog which allows to add, remove and edit {@link TagStyle tag styles}.
@@ -226,7 +225,7 @@ public class TagStylePaletteDialog extends AbstractPresetDialog {
 	protected void initialize() {
 		setTitle(_("Tag style palette"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/palette.png"));
-		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
+		setPreferredSize(new Dimension(1000, 668));
 		super.initialize();
 
 		tagStyleTree.addTreeSelectionListener(new TreeSelectionListener() {
