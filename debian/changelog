@@ -1,3 +1,16 @@
+svarog (1.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * The signal ruler values are affected by local scales.
+  * Fixed tags editing after channels are hidden.
+  * Repaired ZoomSignalTool for hidden channels.
+  * Fixed ZoomSignalTool to take into account local scales.
+  * Removed the clearNewSamples method from Changeable SampleSource.
+  * Optimize signal display - fixed signal 'jumping'.
+  * Made the default size of dialogs smaller.
+
+ -- Karol Auguštin <karol@augustin.pl>  Fri, 01 Feb 2013 15:56:28 +0100
+
 svarog (1.0.3-2) unstable; urgency=low
 
   * Drop SNAPSHOT in svarog version name.
