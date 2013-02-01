@@ -16,7 +16,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
 
-	UNKNOWN("Unknown", false, true, "", 800),
+	UNKNOWN("Unknown", false, true, "uV", 800),
 	EOG_LEFT("EOG (left)", false ,true, "uV", 1000), //1-few mV
 	EOG_RIGHT("EOG (right)", false ,true, "uV", 1000),
 	TRIGGER("Trigger", false, true, "", 1),

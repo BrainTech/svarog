@@ -2,6 +2,7 @@ package org.signalml.app.view.document.opensignal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import java.awt.Dimension;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -32,6 +33,7 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.util.SvarogConstants;
 
 public class OpenSignalWizardDialog extends AbstractWizardDialog implements PropertyChangeListener {
 	protected static final Logger log = Logger.getLogger(OpenSignalWizardDialog.class);
@@ -50,6 +52,13 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		super(f, isModal);
 		this.viewerElementManager = viewerElementManager;
 		this.setTitle(_("Open signal"));
+	}
+
+	@Override
+	protected void initialize() {
+		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
+		super.initialize();
+		setMinimumSize(new Dimension(800, 600));
 	}
 
 	@Override

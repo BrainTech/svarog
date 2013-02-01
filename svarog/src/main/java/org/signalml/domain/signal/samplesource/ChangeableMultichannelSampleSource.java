@@ -16,17 +16,10 @@ import java.util.List;
 public interface ChangeableMultichannelSampleSource {
 
 	/**
-	 * Returns the number of new samples added counting from last call of
-	 * this function.
-	 *
-	 * @return number of new samples added
+	 * Returns how many samples have been added to this sample source.
+	 * @return number of samples added.
 	 */
-	int getNewSamplesCount();
-
-	/**
-	 * Clears the counter of new samples used by {@link #getNewSamplesCount()}.
-	 */
-	void clearNewSamplesCount();
+	long getAddedSamplesCount();
 
 	void addSampleChunk(float[] newSamples);
 

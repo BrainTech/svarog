@@ -30,10 +30,13 @@ public class RulerMeasurmentPlot extends JComponent {
 	private static final int OVAL_RADIUS = 6;
 	private static final int OVAL_DIAMETER = 2*OVAL_RADIUS;
 
+	private static final Color NORMAL_BOX_COLOR = new Color(255,255,187);
+	private static final Color WARNING_BOX_COLOR = new Color(255,0,0);
+
 	private static final long serialVersionUID = 1L;
 
 	private static final Stroke lineStroke = new BasicStroke(3F);
-	private static final Color boxColor = new Color(255,255,187);
+	private Color boxColor = new Color(255,255,187);
 
 	private Point start;
 	private Point end;
@@ -42,6 +45,13 @@ public class RulerMeasurmentPlot extends JComponent {
 
 	private float xValue;
 	private float yValue;
+
+	/**
+	 * True if each point defining a distance is under different scaling - in that case
+	 * we want to show the user that he has to double-check if what he is measuring
+	 * is allright.
+	 */
+	private boolean valueMeasurementControversial;
 
 	public RulerMeasurmentPlot() {
 		super();
@@ -76,7 +86,10 @@ public class RulerMeasurmentPlot extends JComponent {
 			g.drawLine(relEnd.x, relEnd.y, relEnd.x, relEnd.y);
 		}
 
+		boxColor = NORMAL_BOX_COLOR;
 		drawValueBox(g, xValue, relEnd.x, relEnd.y, true);
+
+		boxColor = valueMeasurementControversial ? WARNING_BOX_COLOR : NORMAL_BOX_COLOR;
 		drawValueBox(g, yValue, relEnd.x, relEnd.y, false);
 
 	}
@@ -194,6 +207,15 @@ public class RulerMeasurmentPlot extends JComponent {
 		this.yValue = yValue;
 		this.origin = origin;
 		repaint();
+	}
+
+	public void setValueMeasurementControversial(
+			boolean valueMeasurementControversial) {
+		this.valueMeasurementControversial = valueMeasurementControversial;
+	}
+
+	public boolean isValueMeasurementControversial() {
+		return valueMeasurementControversial;
 	}
 
 }

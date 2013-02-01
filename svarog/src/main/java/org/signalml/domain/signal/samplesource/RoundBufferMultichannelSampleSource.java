@@ -49,9 +49,9 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	private Semaphore semaphore;
 
 	/**
-	 * Stores the number of new samples - used by getNewSamplesCount().
+	 * Stores the number of samples added to this sample source.
 	 */
-	private int newSamplesCount = 0;
+	private long addedSamplesCount = 0;
 
 	public RoundBufferMultichannelSampleSource(int channelCount, int sampleCount) {
 
@@ -111,7 +111,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 			samples[i][nextInsertPos] = newSamples[i];
 		}
 		incrNextInsertPos();
-		newSamplesCount++;
+		addedSamplesCount++;
 
 		fireNewSamplesAddedEvent();
 	}
@@ -214,20 +214,6 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 	public void setLabels(Object[] labels) {
 		this.labels = labels;
-	}
-
-	@Override
-	public synchronized int getNewSamplesCount() {
-
-		int x = newSamplesCount;
-		clearNewSamplesCount();
-		return x;
-
-	}
-
-	@Override
-	public synchronized void clearNewSamplesCount() {
-		newSamplesCount = 0;
 	}
 
 	@Override
@@ -347,6 +333,11 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 				((PluginSignalChangeListener)listeners[i+1]).newSamplesAdded(e);
 			}
 		}
+	}
+
+	@Override
+	public long getAddedSamplesCount() {
+		return addedSamplesCount;
 	}
 
 }

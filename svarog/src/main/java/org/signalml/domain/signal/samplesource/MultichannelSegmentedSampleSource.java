@@ -24,7 +24,7 @@ public interface MultichannelSegmentedSampleSource extends MultichannelSampleSou
 	 * Returns the length of the segment (number of samples)
 	 * @return the length of the segment (number of samples)
 	 */
-	int getSegmentLength();
+	int getSegmentLengthInSamples();
 
 	/**
 	 * Returns the point in time (in seconds) where the segment begins.

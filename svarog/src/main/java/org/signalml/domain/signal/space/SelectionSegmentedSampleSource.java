@@ -211,7 +211,7 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 	}
 
 	@Override
-	public int getSegmentLength() {
+	public int getSegmentLengthInSamples() {
 		return segmentLength;
 	}
 

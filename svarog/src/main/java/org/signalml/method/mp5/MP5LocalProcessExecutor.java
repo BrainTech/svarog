@@ -82,7 +82,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 		MP5RuntimeParameters runtimeParameters = new MP5RuntimeParameters();
 
 		runtimeParameters.setChannelCount(sampleSource.getChannelCount());
-		runtimeParameters.setSegementSize(sampleSource.getSegmentLength());
+		runtimeParameters.setSegementSize(sampleSource.getSegmentLengthInSamples());
 		runtimeParameters.setChosenChannels(null);
 		runtimeParameters.setOutputDirectory(null);
 		runtimeParameters.setPointsPerMicrovolt(1F);

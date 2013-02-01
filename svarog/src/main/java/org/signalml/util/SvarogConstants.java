@@ -27,9 +27,9 @@ public abstract class SvarogConstants {
 		new Scanner(SvarogConstants.class.getResourceAsStream("/svarog/git-version")).next();
 
 	/**
-	 * Recommended minimal dimension of the screen
+	 * Recommended minimal dimension of the screen (including menu bars etc.)
 	 */
-	public static final Dimension MIN_ASSUMED_DESKTOP_SIZE = new Dimension(1024,768);
+	public static final Dimension MIN_ASSUMED_DESKTOP_SIZE = new Dimension(950, 668);
 
 	/**
 	 * Available languages

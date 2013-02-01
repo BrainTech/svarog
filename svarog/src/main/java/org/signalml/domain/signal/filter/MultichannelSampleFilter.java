@@ -69,6 +69,8 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	 */
 	private Semaphore semaphore = new Semaphore(1);
 
+	private long processedSampleCount = 0;
+
 	/**
 	 * Constructor. Creates an empty sample filter using a given source.
 	 * @param source the source of samples
@@ -140,10 +142,12 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				if (newMontage) {
 					newMontage = false;
 					samplesAdded = source.getSampleCount(0);
-					os.clearNewSamplesCount();
+					this.processedSampleCount = os.getAddedSamplesCount();
 				}
-				else
-					samplesAdded = os.getNewSamplesCount();
+				else {
+					samplesAdded = (int) (os.getAddedSamplesCount() - processedSampleCount);
+					processedSampleCount = os.getAddedSamplesCount();
+				}
 
 				if (samplesAdded > 0)
 					updateTimeDomainSampleFilterEnginesCache(samplesAdded);

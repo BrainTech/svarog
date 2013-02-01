@@ -43,7 +43,7 @@ public class ChannelStatisticsCalculator {
 
 	protected ChannelStatistics calculateChannelStatistics(int channelNumber, double[] channelSamples) {
 
-		double maxValue = Double.MIN_VALUE;
+		double maxValue = -Double.MAX_VALUE;
 		double maxTime = 0.0;
 		for (int i = 0; i < channelSamples.length; i++) {
 			if (channelSamples[i] > maxValue) {

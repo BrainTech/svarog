@@ -185,6 +185,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			FileTypeComboBoxModel model = new FileTypeComboBoxModel();
 			fileTypeComboBox = new JComboBox(model);
 			fileTypeComboBox.setSelectedItem(FileOpenSignalMethod.AUTODETECT);
+			fileTypeComboBox.setMinimumSize(new Dimension(200, 20));
 		}
 		return fileTypeComboBox;
 	}
@@ -228,7 +229,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	protected JComboBox getEegSystemComboBox() {
 		if (eegSystemComboBox == null) {
 			eegSystemComboBox = new JComboBox(getEegSystemComboBoxModel());
-			eegSystemComboBox.setPreferredSize(new Dimension(300, 20));
+			eegSystemComboBox.setMinimumSize(new Dimension(200, 20));
 		}
 		return eegSystemComboBox;
 	}
