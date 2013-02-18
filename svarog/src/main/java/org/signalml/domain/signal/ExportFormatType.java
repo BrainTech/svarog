@@ -2,6 +2,7 @@ package org.signalml.domain.signal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
+import org.apache.log4j.Logger;
 import org.signalml.domain.signal.export.ISignalWriter;
 import org.signalml.domain.signal.export.ascii.ASCIISignalWriter;
 import org.signalml.domain.signal.export.eeglab.EEGLabSignalWriter;
@@ -14,6 +15,8 @@ public enum ExportFormatType {
 	ASCII(_("ASCII"), "ascii", ASCIISignalWriter.class),
 	MATLAB(_("MATLAB"), "mat", MatlabSignalWriter.class),
 	EEGLab(_("EEGLab"), "set", EEGLabSignalWriter.class);
+
+	protected static final Logger logger = Logger.getLogger(ExportFormatType.class);
 
 	/**
 	 * Value which is displayed in GUI when
@@ -47,7 +50,7 @@ public enum ExportFormatType {
 		try {
 			return signalWriterClass.getConstructor(null).newInstance();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		return null;
 

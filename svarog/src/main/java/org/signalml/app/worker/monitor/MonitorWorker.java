@@ -164,7 +164,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		try {
 			sampleVector = SampleVector.parseFrom(sampleMsgString);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			return;
 		}
 		List<Sample> samples = sampleVector.getSamplesList();
@@ -197,7 +197,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		try {
 			tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 			return;
 		}
 

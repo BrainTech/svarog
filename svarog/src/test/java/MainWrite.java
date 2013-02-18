@@ -1,5 +1,6 @@
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.signalml.domain.book.BookBuilder;
 import org.signalml.domain.book.BookBuilderImpl;
 import org.signalml.domain.book.IncrementalBookWriter;
@@ -10,6 +11,9 @@ import org.signalml.domain.book.StandardBookWriter;
 import org.signalml.domain.book.impl.StandardBookSegmentWriterImpl;
 
 public class MainWrite {
+
+	protected static final Logger logger = Logger.getLogger(MainWrite.class);
+
 	public static void main(String args[]) {
 		BookBuilder builder = new BookBuilderImpl();
 		StandardBookWriter book = builder.createBook();
@@ -50,13 +54,13 @@ public class MainWrite {
 
 			System.out.println("Done.");
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} finally {
 			if (incBook != null) {
 				try {
 					incBook.close();
 				} catch (IOException e) {
-					e.printStackTrace();
+					logger.error("", e);
 				}
 			}
 		}

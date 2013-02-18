@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker.StateValue;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
@@ -29,6 +30,8 @@ import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
  * @author Piotr Szachewicz
  */
 public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAction implements PropertyChangeListener {
+
+	protected static final Logger logger = Logger.getLogger(SynchronizeTagsWithTriggerAction.class);
 
 	private SynchronizeTagsWithTriggerParameters parameters;
 	private SynchronizeTagsWithTriggerDialog synchronizeDialog;
@@ -59,7 +62,7 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 			parameters.setTagSet(signalDocument.getActiveTag().getTagSet());
 			parameters.setChannelLabels(getChannelLabels(masterPlot.getSignalOutput()));
 		} catch (InvalidClassException e1) {
-			e1.printStackTrace();
+			logger.error("", e1);
 			Dialogs.showExceptionDialog(e1);
 			return;
 		}
@@ -99,9 +102,9 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 				}
 
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			} catch (ExecutionException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}
