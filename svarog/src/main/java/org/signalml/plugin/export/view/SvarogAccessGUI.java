@@ -14,7 +14,7 @@ import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.signal.SignalTool;
-import org.signalml.plugin.export.signal.SignalToolButtonListener;
+import org.signalml.plugin.impl.ToolButtonParameters;
 
 /**
  * This is an interface that allows to:
@@ -349,18 +349,13 @@ public interface SvarogAccessGUI {
 	 * (for example FFT window) with it.
 	 * For every view there is created a copy of both signal tool and button.
 	 * Can be accessed only during initialization phase.
-	 * @param tool the tool to be associated with this button
-	 * @param icon the icon that is used to create a button
-	 * @param toolTipText the tool tip text for a button or null if no
-	 * tool tip text should be used
-	 * @param buttonListener the action listener for a button
-	 * or null if no mouse listener for this button should be used
+	 * @param toolButtonParameters the parameters of the tool button (e.g. the button icon etc.)
 	 * @throws UnsupportedOperationException if the function called
 	 * not during the initialization phase.
 	 * @see SignalTool
 	 * @see SelectTagSignalTool
 	 */
-	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, SignalToolButtonListener buttonListener) throws UnsupportedOperationException;
+	public void addSignalTool(SignalTool tool, ToolButtonParameters toolButtonParameters) throws UnsupportedOperationException;
 
 	/**
 	 * Adds the button to the main toolbar (the top one).

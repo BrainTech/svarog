@@ -6,6 +6,7 @@ package org.signalml.plugin.impl;
 import javax.swing.Icon;
 
 import org.signalml.plugin.export.signal.SignalToolButtonListener;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /**
  * Contains the parameters of a button:
@@ -31,15 +32,31 @@ public class ToolButtonParameters {
 	private SignalToolButtonListener listener;
 
 	/**
+	 * What happens if the user clicks with the right button on the tool.
+	 */
+	private AbstractSignalMLAction rightButtonClickAction;
+
+	/**
+	 * Constructor. Sets parameters.
+	 * @param toolTipText the text used in tooltip
+	 * @param icon the icon of the button
+	 * @param listener the listener for mouse events
+	 */
+	public ToolButtonParameters(String toolTipText, Icon icon, SignalToolButtonListener listener, AbstractSignalMLAction rightButtonClickAction) {
+		this.toolTipText = toolTipText;
+		this.icon = icon;
+		this.listener = listener;
+		this.rightButtonClickAction = rightButtonClickAction;
+	}
+
+	/**
 	 * Constructor. Sets parameters.
 	 * @param toolTipText the text used in tooltip
 	 * @param icon the icon of the button
 	 * @param listener the listener for mouse events
 	 */
 	public ToolButtonParameters(String toolTipText, Icon icon, SignalToolButtonListener listener) {
-		this.toolTipText = toolTipText;
-		this.icon = icon;
-		this.listener = listener;
+		this(toolTipText, icon, listener, null);
 	}
 
 	/**
@@ -61,5 +78,9 @@ public class ToolButtonParameters {
 	 */
 	public SignalToolButtonListener getListener() {
 		return listener;
+	}
+
+	public AbstractSignalMLAction getRightButtonClickAction() {
+		return rightButtonClickAction;
 	}
 }

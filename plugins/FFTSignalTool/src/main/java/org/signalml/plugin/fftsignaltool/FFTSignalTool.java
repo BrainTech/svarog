@@ -15,6 +15,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialogAction;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListener;
+import org.signalml.plugin.impl.ToolButtonParameters;
 
 /**
  * Plug-in with the {@link SignalFFTTool FFT signal tool}.
@@ -100,10 +101,13 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 		tool.setSvarogAccess(access);
 		listener = new SignalFFTToolButtonMouseListener();
 		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
-		guiAccess.addSignalTool(tool, icon, _("Signal FFT (for settings press and hold the mouse button here)"), listener);
+		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
+
+		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press and hold the mouse button here)"), icon, listener, action);
+		guiAccess.addSignalTool(tool, parameters);
 
 		//creates and adds the action which shows the
-		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
+
 		guiAccess.addButtonToToolsMenu(action);
 	}
 
