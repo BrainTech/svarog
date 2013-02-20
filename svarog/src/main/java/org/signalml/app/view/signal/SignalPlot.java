@@ -410,9 +410,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		pixelPerPage = pixelPerSecond * pageSize;
 		pixelPerBlock = pixelPerPage / blocksPerPage;
 
-		int oldChannelCount = channelCount;
 		channelCount = signalChain.getChannelCount();
-		if (oldChannelCount != channelCount)
+		if (this.channelsPlotOptionsModel.getChannelCount() != channelCount)
 			this.channelsPlotOptionsModel.reset(channelCount);
 		sampleCount = new int[channelCount];
 		int i, j, k;
@@ -1351,8 +1350,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		if (source == document) {
 			if (name.equals(SignalDocument.MONTAGE_PROPERTY)) {
-				this.setLocalMontage((Montage) evt.getNewValue());
-				this.channelsPlotOptionsModel.reset(this.getChannelCount());
+				Montage oldMontage = (Montage) evt.getOldValue();
+				Montage newMontage = (Montage) evt.getNewValue();
+
+				this.channelsPlotOptionsModel.resetOnlyWhatsNecessary(oldMontage, newMontage);
+				this.setLocalMontage(newMontage);
+				reset();
 			}
 		}
 		else if (masterPlot != null && source == masterPlot) {

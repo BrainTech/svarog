@@ -538,6 +538,20 @@ public class Montage extends SourceMontage implements Preset {
 	}
 
 	/**
+	 * Returns the index of the montage channel that has
+	 * the specified label.
+	 * @param label the label of the montage channel that is search for
+	 * @return the index of the montage channel
+	 */
+	public int getMontageChannelIndex(String label) {
+		for (int i = 0; i < montageChannels.size(); i++) {
+			if (montageChannels.get(i).getLabel().equals(label))
+				return i;
+		}
+		return -1;
+	}
+
+	/**
 	 * Sets a new label for a {@link MontageChannel montage channel}
 	 * at a given index.
 	 * @param index the index of a montage channel
