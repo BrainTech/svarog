@@ -279,14 +279,15 @@ public class SplashScreen extends JDialog {
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 
-			final String title = _("Loading Svarog");
+			final String title = _("Svarog");
 
 			Rectangle2D stringBounds = fontMetrics.getStringBounds(title, g);
 			int width = (int) stringBounds.getWidth();
 			int height = (int) stringBounds.getHeight();
 
 			g.drawString(title, (size.width-width)/2, offset + fontMetrics.getAscent());
-			final int version_height = offset + fontMetrics.getAscent() * 2;
+
+			// final int version_height = offset + fontMetrics.getAscent() * 2;
 
 			font = new Font(Font.DIALOG, Font.PLAIN, 10);
 			fontMetrics = g.getFontMetrics(font);
@@ -294,32 +295,34 @@ public class SplashScreen extends JDialog {
 
 			stringBounds = fontMetrics.getStringBounds(SvarogConstants.VERSION, g);
 			width = (int) stringBounds.getWidth();
-			g.drawString(SvarogConstants.VERSION,
-						 (size.width-width)/2, version_height);
+			// g.drawString(SvarogConstants.VERSION,
+			//			 (size.width-width)/2, version_height);
 
-			offset += (height + 95);
+			offset += (height + 200);
 
-			final String url = "http://signalml.org/";
+			final String url = "http://braintech.pl/svarog";
 
 			stringBounds = fontMetrics.getStringBounds(url, g);
 			width = (int) stringBounds.getWidth();
 			height = (int) stringBounds.getHeight();
-
+			/*
 			g.setColor(Color.WHITE);
 			g.fillRect((size.width-width)/2 - 5, offset, width + 20, height);
+			*/
 			g.setColor(Color.BLUE.darker());
 			g.drawString(url, (size.width-width)/2, offset + fontMetrics.getAscent());
 
 			offset += (height + 5);
 
-			String comment = _("Financed from Polish funds for science");
+			String comment = _("Build "+SvarogConstants.VERSION+" by BrainTech.pl");
 
 			stringBounds = fontMetrics.getStringBounds(comment, g);
 			width = (int) stringBounds.getWidth();
 			height = (int) stringBounds.getHeight();
-
+			/*
 			g.setColor(Color.WHITE);
 			g.fillRect((size.width-width)/2 - 5, offset, width + 20, height);
+			*/
 			g.setColor(Color.BLUE.darker());
 			g.drawString(comment, (size.width-width)/2, offset + fontMetrics.getAscent());
 
