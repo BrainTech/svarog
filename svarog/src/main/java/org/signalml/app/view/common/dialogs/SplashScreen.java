@@ -287,18 +287,20 @@ public class SplashScreen extends JDialog {
 
 			g.drawString(title, (size.width-width)/2, offset + fontMetrics.getAscent());
 
-			// final int version_height = offset + fontMetrics.getAscent() * 2;
+			final int name_height = offset+ 9 + fontMetrics.getAscent() * 2;
 
-			font = new Font(Font.DIALOG, Font.PLAIN, 10);
+			font = new Font(Font.DIALOG, Font.BOLD, 15);
 			fontMetrics = g.getFontMetrics(font);
 			g.setFont(font);
 
-			stringBounds = fontMetrics.getStringBounds(SvarogConstants.VERSION, g);
-			width = (int) stringBounds.getWidth();
-			// g.drawString(SvarogConstants.VERSION,
-			//			 (size.width-width)/2, version_height);
+			final String name = _("Signal Viewer, Analyzer and Recorder On GPL");
 
-			offset += (height + 200);
+			stringBounds = fontMetrics.getStringBounds(name, g);
+			width = (int) stringBounds.getWidth();
+			g.drawString(name,
+						 (size.width-width)/2, name_height);
+
+			offset += (height + 100);
 
 			final String url = "http://braintech.pl/svarog";
 
