@@ -84,7 +84,7 @@ class AmplifierParameters {
 			if (AmplifierChannel.SPECIAL_CHANNEL_NAMES.contains(channel.getOriginalName()))
 				activeChannels += channel.getOriginalName();
 			else
-				activeChannels += i;
+				activeChannels += (channel.getNumber()-1);
 
 			channelNames += channel.getLabel();
 
