@@ -98,7 +98,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	public static final String HELP_BOOK_COMMENT 				= "org/signalml/help/mp5.html#bookComment";
 	public static final String HELP_MAX_ITERATION_COUNT			= "org/signalml/help/mp5.html#maxIterationCount";
 	public static final String HELP_ENERGY_PERCENT 				= "org/signalml/help/mp5.html#energyPercent";
-	public static final String HELP_DILATION_FACTOR				= "org/signalml/help/mp5.html#dilationFactor";
+	public static final String HELP_ENERGY_ERROR				= "org/signalml/help/mp5.html#energyError";
 	public static final String HELP_ATOM_COUNT	 				= "org/signalml/help/mp5.html#atomCount";
 	public static final String HELP_RAM_USAGE	 				= "org/signalml/help/mp5.html#ramUsage";
 	public static final String HELP_DICTIONARY_TYPE				= "org/signalml/help/mp5.html#dictionaryType";
@@ -230,7 +230,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		getBasicConfigPanel().getDictionaryDensityConfigPanel().getDilationFactorSpinner().addChangeListener(new ChangeListener() {
+		getBasicConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorSpinner().addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -239,7 +239,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		getBasicConfigPanel().getDictionaryDensityConfigPanel().getDilationFactorPercentageSpinner().addChangeListener(new ChangeListener() {
+		getBasicConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorPercentageSpinner().addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -531,11 +531,14 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		MP5BasicConfigPanel panel = getBasicConfigPanel();
 		MP5DictionaryDensityConfigPanel densityConfigPanel = panel.getDictionaryDensityConfigPanel();
-		double a = ((Number) densityConfigPanel.getDilationFactorSpinner().getValue()).doubleValue();
-		double percentageChosen = ((Number) densityConfigPanel.getDilationFactorPercentageSpinner().getValue()).doubleValue();
+		double eps2 = ((Number) densityConfigPanel.getEnergyErrorSpinner().getValue()).doubleValue();
+		double eps = Math.sqrt(eps2);
+		double a = (1 + eps*Math.sqrt((2.0-eps2)*(eps2*eps2-2.0*eps2+2.0))) / ((1.0-eps2)*(1.0-eps2));
+		double percentageChosen = ((Number) densityConfigPanel.getEnergyErrorPercentageSpinner().getValue()).doubleValue();
 
-		// R = 2pi * N * ln(N)/[(ln(a) *ln(0.5(a+ 1/a))]
-		double approxAtomCount = Math.ceil(2 * Math.PI * currentPageLength * Math.log(currentPageLength) / (Math.log(a) * Math.log(0.5 * (a + 1/a))));
+		// R = 0.5pi * N * ln(N)/ln(a) / ln(1-eps2)
+		double approxAtomCount = Math.ceil(0.5 * Math.PI * currentPageLength
+			* Math.log(currentPageLength)/Math.log(a) / Math.abs(Math.log(1.0-eps2)) );
 		approxAtomCount *= (percentageChosen / 100.0F);
 
 		MP5Algorithm algorithm = (MP5Algorithm) panel.getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();

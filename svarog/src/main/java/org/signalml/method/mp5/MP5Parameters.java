@@ -27,11 +27,11 @@ public class MP5Parameters implements Serializable, Preset {
 	public static final float MIN_SCALE_TO_PERIOD_FACTOR = 0F;
 	public static final float MAX_SCALE_TO_PERIOD_FACTOR = 20000F;
 
-	public static final float MIN_DILATION_FACTOR = 1F + Float.MIN_NORMAL;
-	public static final float MAX_DILATION_FACTOR = 20000F;
+	public static final float MIN_ENERGY_ERROR = 0F;
+	public static final float MAX_ENERGY_ERROR = 1F;
 
-	public static final float MIN_DILATION_FACTOR_PERCENTAGE = 0.0F;
-	public static final float MAX_DILATION_FACTOR_PERCENTAGE = 100F;
+	public static final float MIN_ENERGY_ERROR_PERCENTAGE = 0.0F;
+	public static final float MAX_ENERGY_ERROR_PERCENTAGE = 100F;
 
 	public static final int MIN_ITERATION_COUNT = 1;
 	public static final int MAX_ITERATION_COUNT = 20000;
@@ -52,9 +52,9 @@ public class MP5Parameters implements Serializable, Preset {
 	// dictionary parameters
 	private MP5DictionaryType dictionaryType = MP5DictionaryType.OCTAVE_FIXED;
 	private MP5DictionaryReinitType dictionaryReinitType = MP5DictionaryReinitType.NO_REINIT_AT_ALL;
-	private float scaleToPeriodFactor = 0.1F;
-	private float dilationFactor = 2F;
-	private float dilationFactorPercentage = 90.0F;
+	private float scaleToPeriodFactor = 1F;
+	private float energyError = 0.3F;
+	private float energyErrorPercentage = 90.0F;
 
 	// decomposition parameters
 	private MP5Algorithm algorithm = MP5Algorithm.SMP;
@@ -92,11 +92,11 @@ public class MP5Parameters implements Serializable, Preset {
 		if (scaleToPeriodFactor < MIN_SCALE_TO_PERIOD_FACTOR || scaleToPeriodFactor > MAX_SCALE_TO_PERIOD_FACTOR) {
 			errors.rejectValue("scaleToPeriodFactor", "error.mp5.badScaleToPeriodFactor", _("Bad scale to period factor"));
 		}
-		if (dilationFactor < MIN_DILATION_FACTOR || dilationFactor > MAX_DILATION_FACTOR) {
-			errors.rejectValue("dilationFactor", "error.mp5.badDilationFactor", _("Bad dilation factor"));
+		if (!(energyError > MIN_ENERGY_ERROR && energyError < MAX_ENERGY_ERROR)) {
+			errors.rejectValue("energyError", "error.mp5.badEnergyError", _("Bad energy error"));
 		}
-		if (dilationFactorPercentage < MIN_DILATION_FACTOR_PERCENTAGE || dilationFactorPercentage > MAX_DILATION_FACTOR_PERCENTAGE) {
-			errors.rejectValue("dilationFactorPercentage", "error.mp5.badDilationFactor", _("Bad dilation factor"));
+		if (!(energyErrorPercentage > MIN_ENERGY_ERROR_PERCENTAGE && energyErrorPercentage < MAX_ENERGY_ERROR_PERCENTAGE)) {
+			errors.rejectValue("energyErrorPercentage", "error.mp5.badEnergyError", _("Bad energy error percentage"));
 		}
 		if (maxIterationCount < MIN_ITERATION_COUNT || maxIterationCount > MAX_ITERATION_COUNT) {
 			errors.rejectValue("maxIterationCount", "error.mp5.badMaxIterationCount", _("Bad max iteration count"));
@@ -114,20 +114,20 @@ public class MP5Parameters implements Serializable, Preset {
 		this.dictionaryType = dictionaryType;
 	}
 
-	public float getDilationFactor() {
-		return dilationFactor;
+	public float getEnergyError() {
+		return energyError;
 	}
 
-	public void setDilationFactor(float dilationFactor) {
-		this.dilationFactor = dilationFactor;
+	public void setEnergyError(float energyError) {
+		this.energyError = energyError;
 	}
 
-	public float getDilationFactorPercentage() {
-		return dilationFactorPercentage;
+	public float getEnergyErrorPercentage() {
+		return energyErrorPercentage;
 	}
 
-	public void setDilationFactorPercentage(float dilationFactorPercentage) {
-		this.dilationFactorPercentage = dilationFactorPercentage;
+	public void setEnergyErrorPercentage(float energyErrorPercentage) {
+		this.energyErrorPercentage = energyErrorPercentage;
 	}
 
 	public MP5DictionaryReinitType getDictionaryReinitType() {

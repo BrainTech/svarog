@@ -45,7 +45,7 @@ public class MP5ConfigCreator {
 
 	public static final String TYPE_OF_DICTIONARY = "typeOfDictionary";
 
-	public static final String DILATION_FACTOR = "dilationFactor";
+	public static final String ENERGY_ERROR = "energyError";
 
 	public static final String RANDOM_SEED = "randomSeed";
 
@@ -110,7 +110,7 @@ public class MP5ConfigCreator {
 		}
 
 		formatter.format("%s %s%n", TYPE_OF_DICTIONARY, parameters.getDictionaryType().toString());
-		formatter.format("%s %f %f%n", DILATION_FACTOR, parameters.getDilationFactor(), parameters.getDilationFactorPercentage());
+		formatter.format("%s %f %f%n", ENERGY_ERROR, parameters.getEnergyError(), parameters.getEnergyErrorPercentage());
 		formatter.format("%s %s%n", REINIT_DICTIONARY, parameters.getDictionaryReinitType().toString());
 		formatter.format("%s %f%n", SCALE_TO_PERIOD_FACTOR, parameters.getScaleToPeriodFactor());
 
