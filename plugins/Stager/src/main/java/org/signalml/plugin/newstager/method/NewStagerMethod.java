@@ -157,7 +157,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		StandardBook book = doc.getBook();
 
 		return new NewStagerConstants(book.getSamplingFrequency(),
-									  (int) access.getSignalAccess().getActiveSignalDocument().getPageSize(),
+				stagerData.getParameters().rules.getBlockLengthInSecINT(),
 									  book.getSegmentCount(),
 									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
 									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,

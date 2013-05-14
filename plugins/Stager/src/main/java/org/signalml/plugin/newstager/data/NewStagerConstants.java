@@ -48,7 +48,7 @@ public class NewStagerConstants {
 
 
 	public final float frequency;
-	public final int blockLengthInSeconds; //offsetDimension
+	public final int blockLengthInSecondsINT; //offsetDimension
 	public final int segmentCount;
 	public final float muscleThreshold;
 	public final float muscleThresholdRate;
@@ -58,7 +58,7 @@ public class NewStagerConstants {
 	public final float deltaOffset;
 	public final float spindleOffset;
 
-	public NewStagerConstants(float frequency, int blockLengthInSeconds,
+	public NewStagerConstants(float frequency, int blockLengthInSecondsINT,
 							  int segmentCount,
 							  float muscleThreshold,
 							  float muscleThresholdRate,
@@ -68,7 +68,7 @@ public class NewStagerConstants {
 							  float deltaOffset,
 							  float spindleOffset) {
 		this.frequency = frequency;
-		this.blockLengthInSeconds = blockLengthInSeconds;
+		this.blockLengthInSecondsINT = blockLengthInSecondsINT;
 		this.segmentCount = segmentCount;
 		this.muscleThreshold = muscleThreshold;
 		this.muscleThresholdRate = muscleThresholdRate;
@@ -79,12 +79,8 @@ public class NewStagerConstants {
 		this.spindleOffset = spindleOffset;
 	}
 
-	public int getBlockLength() {
-		return (int) this.getBlockLengthAsFloat();
-	}
-
-	public float getBlockLengthAsFloat() {
-		return this.blockLengthInSeconds * frequency;
+	public int getBlockLengthInSamples() {
+		return (int) (this.blockLengthInSecondsINT * this.frequency);
 	}
 
 }

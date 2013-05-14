@@ -261,14 +261,14 @@ public class NewStagerBookProcessStep extends
 			//very rough estimate of number of atom segments
 			segmentCount = PluginSignalHelper.GetBlockCount(
 							   this.data.stagerData.getSampleSource(),
-							   this.data.constants.getBlockLength());
+							   this.data.constants.getBlockLengthInSamples());
 		}
 
 		return segmentCount;
 	}
 
 	private int getAtomTickerEstimate(int segmentCount) {
-		int ratio = this.data.constants.getBlockLength() / 20;
+		int ratio = this.data.constants.getBlockLengthInSamples() / 20;
 		return (int) Math.ceil(((double) segmentCount) / ratio);
 	}
 

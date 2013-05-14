@@ -114,7 +114,7 @@ public class NewStagerTagWriteStep extends
 		if (this.signalBlockCount == null) {
 			this.signalBlockCount = PluginSignalHelper.GetBlockCount(
 					this.data.stagerData.getSampleSource(),
-					this.data.constants.getBlockLength());
+					this.data.constants.getBlockLengthInSamples());
 		}
 
 		return this.signalBlockCount;

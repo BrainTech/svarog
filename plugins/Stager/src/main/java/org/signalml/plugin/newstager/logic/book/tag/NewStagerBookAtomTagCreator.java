@@ -10,7 +10,7 @@ public class NewStagerBookAtomTagCreator {
 	private final double frequency;
 
 	public NewStagerBookAtomTagCreator(NewStagerBookAtomTagCreatorData data) {
-		this.epochSize = data.constants.blockLengthInSeconds;
+		this.epochSize = data.constants.blockLengthInSecondsINT;
 		this.frequency = data.bookInfo.samplingFrequency;
 	}
 
