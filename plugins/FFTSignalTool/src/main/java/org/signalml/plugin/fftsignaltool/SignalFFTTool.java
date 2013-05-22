@@ -64,6 +64,11 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	 * displayed
 	 */
 	private SignalFFTSettings settings;
+	
+	private double[] powerSpectrum;
+	private double[] frequencies;
+
+	private SignalFFTPopupAction popupAction;
 
 	/**
 	 * Constructor. Sets the source of messages and the {@link
@@ -71,10 +76,11 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	 * created.
 	 * @param signalView the signal view
 	 */
-	public SignalFFTTool(ExportedSignalView signalView) {
+	public SignalFFTTool(SignalFFTPopupAction popupAction, ExportedSignalView signalView) {
 		super(signalView);
 		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
+		this.popupAction = popupAction;
 	}
 
 	/**
@@ -82,15 +88,16 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created must be set separately.
 	 */
-	public SignalFFTTool() {
+	public SignalFFTTool(SignalFFTPopupAction popupAction) {
 		super();
 		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
+		this.popupAction = popupAction;
 	}
 
 	@Override
 	public SignalFFTTool createCopy() {
-		SignalFFTTool copy = new SignalFFTTool();
+		SignalFFTTool copy = new SignalFFTTool(popupAction);
 		copy.setSvarogAccess(svarogAccess);
 		copy.setSettings(getSettings());
 		return copy;
@@ -109,7 +116,6 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	public void mousePressed(MouseEvent e) {
 
 		if (SwingUtilities.isLeftMouseButton(e)) {
-
 			Object source = e.getSource();
 			if (!(source instanceof ExportedSignalPlot)) {
 				plot = null;
@@ -133,7 +139,6 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 			selectAround(point);
 			setEngaged(true);
 			e.consume();
-
 		}
 
 	}
@@ -141,6 +146,7 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		if (SwingUtilities.isLeftMouseButton(e)) {
+			popupAction.setPowerAndFrequencies(fftPlot.getPowerSpectrum(), fftPlot.getFrequencies());
 			hideFFT();
 			setEngaged(false);
 			plot = null;
@@ -305,5 +311,4 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 			}
 		}
 	}
-
 }

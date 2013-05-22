@@ -467,7 +467,7 @@ public class SignalFFTPlot extends JComponent {
 			return;
 
 		}
-
+		
 		powerSpectrumChart.draw(g, new Rectangle(insets.left, insets.top,
 								size.width, size.height));
 
@@ -870,4 +870,11 @@ public class SignalFFTPlot extends JComponent {
 		return lastFFTRecalculationTime;
 	}
 
+	public double[] getPowerSpectrum() {
+		return powerSpectrum;
+	}
+
+	public double[] getFrequencies() {
+		return frequencies;
+	}
 }

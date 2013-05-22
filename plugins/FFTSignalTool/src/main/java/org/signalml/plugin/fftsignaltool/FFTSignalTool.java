@@ -96,9 +96,10 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
 
 		//creates and adds the signal tool
-		tool = new SignalFFTTool();
+		SignalFFTPopupAction popupAction = new SignalFFTPopupAction(i18nDelegate);
+		tool = new SignalFFTTool(popupAction);
 		tool.setSettings(signalFFTSettings);
-		tool.setSvarogAccess(access);
+		tool.setSvarogAccess(access); 
 		listener = new SignalFFTToolButtonMouseListener();
 		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
 		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
@@ -109,6 +110,8 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 		//creates and adds the action which shows the
 
 		guiAccess.addButtonToToolsMenu(action);
+		
+		guiAccess.addButtonToSignalPlotPopupMenu(popupAction);
 	}
 
 	/**
