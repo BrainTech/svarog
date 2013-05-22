@@ -47,11 +47,11 @@
     <ul>
       <li>Latest compiled version (latest checkin on any branch):
       <a href="https://escher.fuw.edu.pl/jenkins/job/svarog/lastBuild/">compilation results</a>
-      <a href="https://escher.fuw.edu.pl/jenkins/job/svarog/lastBuild/org.signalml$svarog/artifact/org.signalml/svarog/1.0.4/svarog-1.0.4-onejar.jar">runnable</a> one-jar version.
+      <a href="https://escher.fuw.edu.pl/jenkins/job/svarog/lastBuild/org.signalml$svarog/artifact/org.signalml/svarog/1.0.5/svarog-1.0.5-onejar.jar">runnable</a> one-jar version.
       </li>
       <li>Laster compiled version on the master branch (more stable):
       <a href="https://escher.fuw.edu.pl/jenkins/job/svarog-master/lastBuild/">compilation results</a>
-      <a href="https://escher.fuw.edu.pl/jenkins/job/svarog-master/lastBuild/org.signalml$svarog/artifact/org.signalml/svarog/1.0.4/svarog-1.0.4-onejar.jar">runnable</a> one-jar version.
+      <a href="https://escher.fuw.edu.pl/jenkins/job/svarog-master/lastBuild/org.signalml$svarog/artifact/org.signalml/svarog/1.0.5/svarog-1.0.5-onejar.jar">runnable</a> one-jar version.
       </li>
     </ul>
       </subsection>
