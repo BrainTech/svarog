@@ -1,37 +1,31 @@
-/* MP5AdvancedConfigPanel.java created 2008-01-30
+/* MP5DictionaryConfigPanel.java created 2008-01-30
  *
  */
 package org.signalml.app.method.mp5;
 
 import java.awt.BorderLayout;
-
-import javax.swing.Box;
 import javax.swing.JPanel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
 
-import org.springframework.validation.Errors;
-
-/** MP5AdvancedConfigPanel
+/** MP5DictionaryConfigPanel
  *
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MP5AdvancedConfigPanel extends JPanel {
+public class MP5DictionaryConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private MP5ExecutorManager executorManager;
 	private AbstractDialog owner;
 
+	private MP5DictionaryDensityConfigPanel dictionaryDensityConfigPanel;
 	private MP5AdvancedDecompositionConfigPanel advancedDecompositionConfigPanel;
-	private MP5ExecutorPanel executorPanel;
 	private MP5AtomsInDictionaryPanel outputConfigPanel;
 
-	public MP5AdvancedConfigPanel(MP5ExecutorManager executorManager, AbstractDialog owner) {
+	public MP5DictionaryConfigPanel(AbstractDialog owner) {
 		super();
-		this.executorManager = executorManager;
 		this.owner = owner;
 		initialize();
 	}
@@ -40,15 +34,17 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		JPanel topPanel = new JPanel(new BorderLayout());
+		add(getDictionaryDensityConfigPanel(), BorderLayout.NORTH);
+		add(getAdvancedDecompositionConfigPanel(), BorderLayout.CENTER);
+		add(getOutputConfigPanel(), BorderLayout.SOUTH);
 
-		topPanel.add(getAdvancedDecompositionConfigPanel(), BorderLayout.NORTH);
-		topPanel.add(getExecutorPanel(), BorderLayout.CENTER);
-		topPanel.add(getOutputConfigPanel(), BorderLayout.SOUTH);
+	}
 
-		add(topPanel, BorderLayout.NORTH);
-		add(Box.createVerticalGlue(), BorderLayout.CENTER);
-
+	public MP5DictionaryDensityConfigPanel getDictionaryDensityConfigPanel() {
+		if (dictionaryDensityConfigPanel == null) {
+			dictionaryDensityConfigPanel = new MP5DictionaryDensityConfigPanel(owner);
+		}
+		return dictionaryDensityConfigPanel;
 	}
 
 	public MP5AdvancedDecompositionConfigPanel getAdvancedDecompositionConfigPanel() {
@@ -56,13 +52,6 @@ public class MP5AdvancedConfigPanel extends JPanel {
 			advancedDecompositionConfigPanel = new MP5AdvancedDecompositionConfigPanel(owner);
 		}
 		return advancedDecompositionConfigPanel;
-	}
-
-	public MP5ExecutorPanel getExecutorPanel() {
-		if (executorPanel == null) {
-			executorPanel = new MP5ExecutorPanel(executorManager);
-		}
-		return executorPanel;
 	}
 
 	public MP5AtomsInDictionaryPanel getOutputConfigPanel() {
@@ -74,6 +63,7 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	public void fillPanelFromParameters(MP5Parameters parameters) {
 
+		getDictionaryDensityConfigPanel().fillPanelFromParameters(parameters);
 		getAdvancedDecompositionConfigPanel().fillPanelFromParameters(parameters);
 		getOutputConfigPanel().fillPanelFromParameters(parameters);
 
@@ -81,6 +71,7 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	public void fillParametersFromPanel(MP5Parameters parameters) {
 
+		getDictionaryDensityConfigPanel().fillParametersFromPanel(parameters);
 		getAdvancedDecompositionConfigPanel().fillParametersFromPanel(parameters);
 		getOutputConfigPanel().fillParametersFromPanel(parameters);
 
@@ -88,8 +79,11 @@ public class MP5AdvancedConfigPanel extends JPanel {
 
 	public void validatePanel(ValidationErrors errors) {
 
+		getDictionaryDensityConfigPanel().validatePanel(errors);
 		getAdvancedDecompositionConfigPanel().validatePanel(errors);
 		getOutputConfigPanel().validatePanel(errors);
+
+		// comment panel is ok
 
 	}
 

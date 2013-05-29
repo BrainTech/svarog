@@ -115,8 +115,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	private MP5ToolConfigDialog configDialog;
 
 	private SignalSpacePanel signalSpacePanel;
-	private MP5BasicConfigPanel basicConfigPanel;
-	private MP5AdvancedConfigPanel advancedConfigPanel;
+	private MP5DictionaryConfigPanel dictionaryConfigPanel;
+	private MP5DecompositionConfigPanel decompositionConfigPanel;
 	private MP5ExpertConfigPanel expertConfigPanel;
 
 	private MP5RawConfigPanel rawConfigPanel;
@@ -221,7 +221,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 				boolean mmpEnabled = (selCount > 1);
 
-				getBasicConfigPanel().getAlgorithmConfigPanel().setMMPEnabled(mmpEnabled);
+				getDecompositionConfigPanel().getAlgorithmConfigPanel().setMMPEnabled(mmpEnabled);
 
 				currentSelectedChannelCount = selCount;
 				updateInfoFields();
@@ -230,7 +230,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		getBasicConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorSpinner().addChangeListener(new ChangeListener() {
+		getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorSpinner().addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -239,7 +239,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		getBasicConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorPercentageSpinner().addChangeListener(new ChangeListener() {
+		getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorPercentageSpinner().addChangeListener(new ChangeListener() {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -248,7 +248,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		getBasicConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(new ItemListener() {
+		getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(new ItemListener() {
 
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -270,23 +270,23 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		return signalSpacePanel;
 	}
 
-	public MP5BasicConfigPanel getBasicConfigPanel() {
-		if (basicConfigPanel == null) {
-			basicConfigPanel = new MP5BasicConfigPanel(this);
+	public MP5DictionaryConfigPanel getDictionaryConfigPanel() {
+		if (dictionaryConfigPanel == null) {
+			dictionaryConfigPanel = new MP5DictionaryConfigPanel(this);
 		}
-		return basicConfigPanel;
+		return dictionaryConfigPanel;
 	}
 
-	public MP5AdvancedConfigPanel getAdvancedConfigPanel() {
-		if (advancedConfigPanel == null) {
-			advancedConfigPanel = new MP5AdvancedConfigPanel(executorManager,this);
+	public MP5DecompositionConfigPanel getDecompositionConfigPanel() {
+		if (decompositionConfigPanel == null) {
+			decompositionConfigPanel = new MP5DecompositionConfigPanel(this);
 		}
-		return advancedConfigPanel;
+		return decompositionConfigPanel;
 	}
 
 	public MP5ExpertConfigPanel getExpertConfigPanel() {
 		if (expertConfigPanel == null) {
-			expertConfigPanel = new MP5ExpertConfigPanel(this);
+			expertConfigPanel = new MP5ExpertConfigPanel(executorManager,this);
 		}
 		return expertConfigPanel;
 	}
@@ -317,9 +317,9 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		if (rawMode) {
 			pane.addTab(_("Edit raw config"), getRawConfigPanel());
 		} else {
-			pane.addTab(_("Basic settings"), getBasicConfigPanel());
-			pane.addTab(_("Advanced settings"), getAdvancedConfigPanel());
-			pane.addTab(_("Expert settings"), getExpertConfigPanel());
+			pane.addTab(_("Dictionary"), getDictionaryConfigPanel());
+			pane.addTab(_("Decomposition"), getDecompositionConfigPanel());
+			pane.addTab(_("Advanced/setup"), getExpertConfigPanel());
 		}
 
 	}
@@ -410,7 +410,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		fillDialogFromParameters(parameters, true);
 
 		if (parameters.getRawConfigText() == null) {
-			getAdvancedConfigPanel().getExecutorPanel().fillPanelFromModel(data);
+			getExpertConfigPanel().getExecutorPanel().fillPanelFromModel(data);
 		} else {
 			getRawConfigPanel().getExecutorPanel().fillPanelFromModel(data);
 		}
@@ -434,8 +434,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 			setRawMode(false);
 
-			getBasicConfigPanel().fillPanelFromParameters(parameters);
-			getAdvancedConfigPanel().fillPanelFromParameters(parameters);
+			getDictionaryConfigPanel().fillPanelFromParameters(parameters);
+			getDecompositionConfigPanel().fillPanelFromParameters(parameters);
 			getExpertConfigPanel().fillPanelFromParameters(parameters);
 
 		} else {
@@ -458,7 +458,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		fillParametersFromDialog(data.getParameters());
 
 		if (data.getParameters().getRawConfigText() == null) {
-			getAdvancedConfigPanel().getExecutorPanel().fillModelFromPanel(data);
+			getExpertConfigPanel().getExecutorPanel().fillModelFromPanel(data);
 		} else {
 			getRawConfigPanel().getExecutorPanel().fillModelFromPanel(data);
 		}
@@ -474,8 +474,8 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		if (rawMode) {
 			getRawConfigPanel().fillParametersFromPanel(parameters);
 		} else {
-			getBasicConfigPanel().fillParametersFromPanel(parameters);
-			getAdvancedConfigPanel().fillParametersFromPanel(parameters);
+			getDictionaryConfigPanel().fillParametersFromPanel(parameters);
+			getDecompositionConfigPanel().fillParametersFromPanel(parameters);
 			getExpertConfigPanel().fillParametersFromPanel(parameters);
 
 			parameters.setRawConfigText(null);
@@ -514,22 +514,22 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		if (rawMode) {
 			getRawConfigPanel().validatePanel(errors);
 		} else {
-			getBasicConfigPanel().validatePanel(errors);
-			getAdvancedConfigPanel().validatePanel(errors);
+			getDictionaryConfigPanel().validatePanel(errors);
+			getDecompositionConfigPanel().validatePanel(errors);
 			getExpertConfigPanel().validatePanel(errors);
 		}
 
 		if (rawMode) {
 			getRawConfigPanel().getExecutorPanel().validatePanel(errors);
 		} else {
-			getAdvancedConfigPanel().getExecutorPanel().validatePanel(errors);
+			getExpertConfigPanel().getExecutorPanel().validatePanel(errors);
 		}
 
 	}
 
 	public void updateInfoFields() {
 
-		MP5BasicConfigPanel panel = getBasicConfigPanel();
+		MP5DictionaryConfigPanel panel = getDictionaryConfigPanel();
 		MP5DictionaryDensityConfigPanel densityConfigPanel = panel.getDictionaryDensityConfigPanel();
 		double eps2 = ((Number) densityConfigPanel.getEnergyErrorSpinner().getValue()).doubleValue();
 		double eps = Math.sqrt(eps2);
@@ -541,7 +541,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 			* Math.log(currentPageLength)/Math.log(a) / Math.abs(Math.log(1.0-eps2)) );
 		approxAtomCount *= (percentageChosen / 100.0F);
 
-		MP5Algorithm algorithm = (MP5Algorithm) panel.getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();
+		MP5Algorithm algorithm = (MP5Algorithm) getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();
 		int k;
 
 		switch (algorithm) {
@@ -678,14 +678,14 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				currentParameters.setRawConfigText(null);
 
 				fillDialogFromParameters(currentParameters, false);
-				getAdvancedConfigPanel().getExecutorPanel().fillPanelFromModel(currentData);
+				getExpertConfigPanel().getExecutorPanel().fillPanelFromModel(currentData);
 
 			} else {
 
 				// switch to raw mode
 
 				fillParametersFromDialog(currentParameters);
-				getAdvancedConfigPanel().getExecutorPanel().fillModelFromPanel(currentData);
+				getExpertConfigPanel().getExecutorPanel().fillModelFromPanel(currentData);
 
 				boolean ok = setRawMode(true);
 				if (!ok) {
