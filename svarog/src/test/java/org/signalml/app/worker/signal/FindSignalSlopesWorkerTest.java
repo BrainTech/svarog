@@ -17,6 +17,7 @@ public class FindSignalSlopesWorkerTest extends AbstractSynchronizationTest {
 		parameters.setLengthThresholdEnabled(lengthThreshold != 0);
 
 		FindSignalSlopesWorker worker = new FindSignalSlopesWorker(parameters);
+		worker.setBufferSize(20);
 		worker.setBusyDialogShouldBeShown(false);
 		worker.execute();
 		Integer[] slopePositions = worker.get();
