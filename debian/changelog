@@ -1,3 +1,9 @@
+svarog (1.0.5-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Karol Auguštin <karol@augustin.pl>  Fri, 21 Jun 2013 11:26:30 +0200
+
 svarog (1.0.4.3-1) unstable; urgency=low
 
   * Change splash screen
