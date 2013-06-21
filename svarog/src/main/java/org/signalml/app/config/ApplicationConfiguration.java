@@ -4,15 +4,8 @@
 
 package org.signalml.app.config;
 
-import java.util.Enumeration;
-
 import javax.swing.ToolTipManager;
 
-import org.apache.log4j.Appender;
-import org.apache.log4j.Logger;
-import org.apache.log4j.rolling.RollingFileAppender;
-import org.apache.log4j.rolling.RollingPolicy;
-import org.signalml.app.util.logging.DeletingFilesTimeBasedRollingPolicy;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.tag.TagPaintMode;
@@ -23,16 +16,11 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 /**
  * ApplicationConfiguration
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
- *         Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * @author Stanislaw Findeisen
  */
 @XStreamAlias("application")
-public class ApplicationConfiguration extends AbstractXMLConfiguration
-		implements org.signalml.plugin.export.config.SvarogConfiguration {
-
-	protected static final Logger logger = Logger
-			.getLogger(ApplicationConfiguration.class);
+public class ApplicationConfiguration extends AbstractXMLConfiguration implements org.signalml.plugin.export.config.SvarogConfiguration {
 
 	private String[] favouriteDirs = new String[0];
 	private String[] lastDirs = new String[0];
@@ -110,17 +98,15 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 
 	private float monitorPageSize;
 	/**
-	 * Determines if a highpass filter should be added to each signal
-	 * automatically.
+	 * Determines if a highpass filter should be added to each
+	 * signal automatically.
 	 */
 	private boolean autoAddHighpassFilter;
 	/**
-	 * When opening a signal automatically tries to load it with tags that have
-	 * the same file name.
+	 * When opening a signal automatically tries to load it with tags
+	 * that have the same file name.
 	 */
 	private boolean autoTryToLoadSignalWithTags;
-
-	private int maxDaysToKeepLogs;
 
 	public void applySystemSettings() {
 
@@ -129,25 +115,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 		toolTipManager.setInitialDelay(toolTipInitialDelay);
 		toolTipManager.setDismissDelay(toolTipDismissDelay);
 
-		setupLoggers();
-	}
-
-	private void setupLoggers() {
-
-		Enumeration e = Logger.getRootLogger().getAllAppenders();
-		while (e.hasMoreElements()) {
-			Appender appender = (Appender) e.nextElement();
-			if (appender instanceof RollingFileAppender) {
-				RollingFileAppender rollingFileAppender = (RollingFileAppender) appender;
-				RollingPolicy rollingPolicy = rollingFileAppender
-						.getRollingPolicy();
-				if (rollingPolicy instanceof DeletingFilesTimeBasedRollingPolicy) {
-					((DeletingFilesTimeBasedRollingPolicy) rollingPolicy)
-							.setMaxDaysToKeep(maxDaysToKeepLogs);
-				}
-
-			}
-		}
 	}
 
 	@Override
@@ -207,8 +174,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 		return precalculateSignalChecksums;
 	}
 
-	public void setPrecalculateSignalChecksums(
-			boolean precalculateSignalChecksums) {
+	public void setPrecalculateSignalChecksums(boolean precalculateSignalChecksums) {
 		this.precalculateSignalChecksums = precalculateSignalChecksums;
 	}
 
@@ -369,8 +335,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 		return viewModeCompactsPageTagBars;
 	}
 
-	public void setViewModeCompactsPageTagBars(
-			boolean viewModeCompactsPageTagBars) {
+	public void setViewModeCompactsPageTagBars(boolean viewModeCompactsPageTagBars) {
 		this.viewModeCompactsPageTagBars = viewModeCompactsPageTagBars;
 	}
 
@@ -576,10 +541,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 
 	/**
 	 * Query configuration of various paths by name.
-	 *
 	 * @return configuration value or null
-	 * @param name
-	 *            name is the same as function name without get
+	 * @param name name is the same as function name without get
 	 *
 	 */
 	public String getPath(String name) {
@@ -592,10 +555,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 
 	/**
 	 * Set configuration value of paths by name.
-	 *
 	 * @return configuration value or null
-	 * @param name
-	 *            name is the same as function name without set
+	 * @param name name is the same as function name without set
 	 *
 	 */
 	public void setPath(String name, String path) {
@@ -655,14 +616,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration
 
 	public void setAutoTryToLoadSignalWithTags(boolean autoTryToLoadTags) {
 		this.autoTryToLoadSignalWithTags = autoTryToLoadTags;
-	}
-
-	public void setMaxDaysToKeepLogs(int maxDaysToKeepLogs) {
-		this.maxDaysToKeepLogs = maxDaysToKeepLogs;
-	}
-
-	public int getMaxDaysToKeepLogs() {
-		return maxDaysToKeepLogs;
 	}
 
 }
