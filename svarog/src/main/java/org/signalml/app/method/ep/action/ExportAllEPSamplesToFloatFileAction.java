@@ -68,7 +68,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 			writeData(file, i);
 		} catch (Exception e) {
 			Dialogs.showExceptionDialog(e);
-			logger.error("", e);
+			e.printStackTrace();
 			return;
 		}
 

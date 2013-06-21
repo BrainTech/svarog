@@ -89,9 +89,9 @@ public abstract class AbstractMultifileResourcesPresetManager extends AbstractPr
 		try {
 			config = this.getClass().newInstance();
 		} catch (InstantiationException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		}
 
 		return config;

@@ -2,7 +2,6 @@ package org.signalml.app.worker.monitor.messages.parsing;
 
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.Message;
@@ -11,15 +10,13 @@ import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 
 public class MessageParser {
 
-	protected static final Logger logger = Logger.getLogger(MessageParser.class);
-
 	public static Message parseMessageFromJSON(String json, MessageType messageType) throws OpenbciCommunicationException {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			Message readMessage = (Message) mapper.readValue(json.getBytes(), messageType.getMessageClass());
 			return readMessage;
 		} catch (Exception e) {
-			logger.error("", e);
+			e.printStackTrace();
 			throw new OpenbciCommunicationException(_R("An error occurred while parsing the JSON message ({0})", e.getStackTrace()[0]));
 		}
 	}

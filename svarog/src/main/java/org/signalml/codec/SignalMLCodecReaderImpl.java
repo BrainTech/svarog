@@ -55,7 +55,7 @@ public class SignalMLCodecReaderImpl implements SignalMLCodecReader {
 //				delegate = new EASYS();
 //			} catch (XMLCodecException e) {
 //				// TODO Auto-generated catch block
-//				logger.error("", e);
+//				e.printStackTrace();
 //			}
 		} catch (InstantiationException ex) {
 			logger.error("Failed to instantiate codec delegate", ex);

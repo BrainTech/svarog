@@ -32,7 +32,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.util.Util;
 
 public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
-	protected static final Logger logger = Logger.getLogger(SignalSourceTabbedPane.class);
+	protected static final Logger log = Logger.getLogger(SignalSourceTabbedPane.class);
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
 
@@ -172,7 +172,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			signalMLDocument.closeDocument();
 		} catch (Exception e) {
 			Dialogs.showError(_R("There was an error while loading the file - did you select a correct SignalML file?"));
-			logger.error("", e);
+			e.printStackTrace();
 			openSignalDescriptor = null;
 		}
 	}
@@ -205,7 +205,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor = reader.readDocument(xmlManifestFile);
 			openSignalDescriptor.setCorrectlyRead(true);
 		} catch (Exception e) {
-			logger.error("", e);
+			e.printStackTrace();
 			Dialogs.showError(_("There was an error while reading the XML manifest. Please input the signal parameters manually."));
 			openSignalDescriptor = new RawSignalDescriptor();
 			openSignalDescriptor.setCorrectlyRead(false);

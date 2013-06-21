@@ -25,6 +25,7 @@ import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.impl.AbstractAccess;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.impl.change.events.PluginTagEventImpl;
 import org.signalml.plugin.impl.change.events.PluginTagStyleEventImpl;
 
@@ -103,7 +104,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 		try {
 			listener.tagAdded(event);
 		} catch (Exception ex) {
-			logger.error("unhandled exception in plugin on tag added", ex);
+			logger.error("unhandled exception in plugin on tag added");
+			ex.printStackTrace();
 		}
 	}
 
@@ -119,7 +121,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 				singleTagAdded(event, listener);
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag was added", ex);
+			logger.error("Unknown error in plug-in interface when tag was added");
+			ex.printStackTrace();
 		}
 	}
 
@@ -132,7 +135,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 		try {
 			listener.tagRemoved(event);
 		} catch (Exception ex) {
-			logger.error("unhandled exception in plugin on tag removed", ex);
+			logger.error("unhandled exception in plugin on tag removed");
+			ex.printStackTrace();
 		}
 	}
 
@@ -148,7 +152,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 				singleTagRemoved(event, listener);
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag was removed", ex);
+			logger.error("Unknown error in plug-in interface when tag was removed");
+			ex.printStackTrace();
 		}
 	}
 
@@ -161,7 +166,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 		try {
 			listener.tagChanged(event);
 		} catch (Exception ex) {
-			logger.error("unhandled exception in plugin on tag changed", ex);
+			logger.error("unhandled exception in plugin on tag changed");
+			ex.printStackTrace();
 		}
 	}
 
@@ -177,7 +183,8 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 				singleTagChanged(event, listener);
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag has changed", ex);
+			logger.error("Unknown error in plug-in interface when tag has changed");
+			ex.printStackTrace();
 		}
 	}
 
@@ -205,11 +212,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 				try {
 					listener.tagStyleAdded(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on tag style addded", ex);
+					logger.error("unhandled exception in plugin on tag style addded");
+					ex.printStackTrace();
 				}
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag style was added", ex);
+			logger.error("Unknown error in plug-in interface when tag style was added");
+			ex.printStackTrace();
 		}
 	}
 
@@ -225,11 +234,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 				try {
 					listener.tagStyleRemoved(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on tag style removed", ex);
+					logger.error("unhandled exception in plugin on tag style removed");
+					ex.printStackTrace();
 				}
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag style was removed", ex);
+			logger.error("Unknown error in plug-in interface when tag style was removed");
+			ex.printStackTrace();
 		}
 	}
 
@@ -245,11 +256,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 				try {
 					listener.tagStyleChanged(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on tag style changed", ex);
+					logger.error("unhandled exception in plugin on tag style changed");
+					ex.printStackTrace();
 				}
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag style was added", ex);
+			logger.error("Unknown error in plug-in interface when tag style was added");
+			ex.printStackTrace();
 		}
 	}
 

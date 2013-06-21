@@ -669,7 +669,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			try {
 				settings.setVisibleRangeStart(Integer.parseInt(val));
 			} catch (NumberFormatException e) {
-				logger.error("", e);
+				e.printStackTrace();
 				settings.setVisibleRangeStart(Integer.MIN_VALUE);
 
 			}
@@ -681,7 +681,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			try {
 				settings.setVisibleRangeEnd(Integer.parseInt(val));
 			} catch (NumberFormatException e) {
-				logger.error("", e);
+				e.printStackTrace();
 				settings.setVisibleRangeEnd(Integer.MAX_VALUE);
 
 			}
@@ -693,7 +693,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 			try {
 				settings.setXAxisLabelCount(Integer.parseInt(val));
 			} catch (NumberFormatException e) {
-				logger.error("", e);
+				e.printStackTrace();
 				settings.setXAxisLabelCount(Integer.MAX_VALUE);
 			}
 		} else {

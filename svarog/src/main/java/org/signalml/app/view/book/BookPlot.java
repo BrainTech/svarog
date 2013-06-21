@@ -497,14 +497,14 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		}
 
 		// the map must vertically fit into availableHeight
-		int width = (int) Math.round((availableHeight) * mapAspectRatio);
+		int width = (int) Math.round(((double) availableHeight) * mapAspectRatio);
 		int height = availableHeight;
 		int paddingY = 0;
 		int paddingX = 0;
 
 		if (width > availableWidth) {
 			width = availableWidth;
-			height = (int) Math.round((width) / mapAspectRatio);
+			height = (int) Math.round(((double) width) / mapAspectRatio);
 			paddingY = (availableHeight-height) / 2;
 		} else if (width < size.width) {
 			paddingX = (availableWidth-width) / 2;
@@ -614,15 +614,15 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			}
 		}
 
-		reconstructionPixelPerValue = (reconstructionHeight/2-1) / maxDeflection;
+		reconstructionPixelPerValue = ((double)(reconstructionHeight/2-1)) / maxDeflection;
 
 		wignerMapProvider.setSize(width, height);
 		if (wignerMapProvider.isDirty()) {
 			cachedImage = null;
 		}
 
-		mapPixelPerSecond = (width-1) / (maxPosition-minPosition);
-		mapPixelPerHz = (height-1) / (maxFrequency-minFrequency);
+		mapPixelPerSecond = ((double)(width-1)) / (maxPosition-minPosition);
+		mapPixelPerHz = ((double)(height-1)) / (maxFrequency-minFrequency);
 
 		segmentLength = segment.getSegmentLength();
 		naturalMinFrequency = (int) Math.round((minFrequency / samplingFrequency) * segmentLength);
@@ -1181,7 +1181,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			outOfMemoryErrorShown = false;
 		} catch (OutOfMemoryError error) {
 			if (!outOfMemoryErrorShown) {
-				logger.error("", error);
+				error.printStackTrace();
 				Dialogs.showError(_("This book cannot be rendered because of lack of memory. Please close other books to free some memory."));
 				outOfMemoryErrorShown = true;
 				// this error should be shown only once

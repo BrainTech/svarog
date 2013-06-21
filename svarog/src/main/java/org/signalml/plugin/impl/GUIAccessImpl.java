@@ -468,7 +468,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Error in plug-in interface while adding elements to pop-up menu");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 
@@ -633,12 +633,12 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 					button.addActionListener(toolSelectionListener);
 				} catch (Exception e) {
 					logger.error("Failed to register signal tool " + (tool != null ? tool.toString() : ""));
-					logger.error("", e);
+					e.printStackTrace();
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the registration of signal tools");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 
@@ -655,7 +655,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the addition of buttons for signal tools");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 
@@ -679,7 +679,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the addition of buttons to main toolbar");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 

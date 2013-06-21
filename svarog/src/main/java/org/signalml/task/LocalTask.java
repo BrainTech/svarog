@@ -502,7 +502,7 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 			if (exception != null) {
 				status = TaskStatus.ERROR;
 				debug("Task finished with error");
-				logger.error("Task finished with error", exception);
+				logger.debug("Task finished with error", exception);
 			} else {
 				status = TaskStatus.FINISHED;
 				debug("Task finished ok");
@@ -891,9 +891,9 @@ public class LocalTask implements SvarogTask, MethodExecutionTracker, Runnable {
 				totalTime += tickStatisticTimes[index][pos];
 				totalTicks += tickStatisticTicks[index][pos];
 			}
-			float tps = (totalTicks) / (((float) totalTime)/1000);
+			float tps = ((float) totalTicks) / (((float) totalTime)/1000);
 
-			int seconds = Math.round((tickerLimits[index]-tickers[index]) / tps);
+			int seconds = (int) Math.round(((float)(tickerLimits[index]-tickers[index])) / tps);
 
 			// subtract elapsed
 			seconds -= ((System.currentTimeMillis()-lastTickMillis[index])/1000);

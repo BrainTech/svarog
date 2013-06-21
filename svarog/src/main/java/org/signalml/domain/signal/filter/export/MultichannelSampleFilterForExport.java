@@ -130,10 +130,10 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 					prepareFilteredData();
 				} catch (BadFilterParametersException e) {
 					// TODO Auto-generated catch block
-					logger.error("", e);
+					e.printStackTrace();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
-					logger.error("", e);
+					e.printStackTrace();
 				}
 			}
 			resultSampleSource.getSamples(channel, target, signalOffset, count, arrayOffset);

@@ -30,13 +30,13 @@ public abstract class AbstractResponseJSonReader {
 			map = mapper.readValue(s.getBytes(), new TypeReference<LinkedHashMap<String, Object>>() {});
 		} catch (JsonParseException e1) {
 			log.append(_("ERROR - JsonParseException while parsing the received message!\n"));
-			logger.error("", e1);
+			e1.printStackTrace();
 		} catch (JsonMappingException e1) {
 			log.append(_("ERROR - JsonMappingException while parsing the received message!\n"));
-			logger.error("", e1);
+			e1.printStackTrace();
 		} catch (IOException e1) {
 			log.append(_("ERROR - IOException while parsing the received message!\n"));
-			logger.error("", e1);
+			e1.printStackTrace();
 		}
 
 		if (map == null)
@@ -58,7 +58,7 @@ public abstract class AbstractResponseJSonReader {
 					errorAlreadyOcurred = true;
 				}
 				logger.error("There was an error parsing an experiment: " + e.getMessage());
-				logger.error("", e);
+				e.printStackTrace();
 			}
 		}
 
@@ -90,7 +90,7 @@ public abstract class AbstractResponseJSonReader {
 			 * We actually need it to be double, so it's safer to trasform it to String
 			 * and then parse.
 			 */
-			String idleString = channelInfo.get("idle").toString();
+			String idleString = ((Object) channelInfo.get("idle")).toString();
 			channel.setIdle(Double.parseDouble(idleString));
 
 			channel.setSelected(false);

@@ -3,7 +3,6 @@ package org.signalml.app.worker.monitor.messages;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -39,8 +38,6 @@ public enum MessageType {
 
 	REQUEST_OK_RESPONSE("rq_ok", RequestOKResponse.class),
 	REQUEST_ERROR_RESPONSE("rq_error", RequestErrorResponse.class);
-
-	protected static final Logger logger = Logger.getLogger(MessageType.class);
 
 	private Class messageClass;
 	private String messageCode;
@@ -78,11 +75,11 @@ public enum MessageType {
 			return MessageType.parseMessageTypeFromMessageCode(msgTypeCode);
 
 		} catch (JsonParseException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (JsonMappingException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (IOException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		}
 		return null;
 	}

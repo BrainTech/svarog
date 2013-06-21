@@ -39,7 +39,7 @@ public class ExportAllEPChartsToFileAction extends AbstractSaveAction {
 			evokedPotentialGraphPanel.savePanelToFile(file);
 		} catch (IOException e1) {
 			Dialogs.showExceptionDialog(e1);
-			logger.error("", e1);
+			e1.printStackTrace();
 		}
 	}
 

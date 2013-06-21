@@ -92,7 +92,7 @@ public class EvokedPotentialMethod extends AbstractMethod implements TrackableMe
 			try {
 				performLowPassFiltering(result, data);
 			} catch (BadFilterParametersException exception) {
-				logger.error("", exception);
+				exception.printStackTrace();
 				throw new ComputationException(_("An error occured while designing the signal filter."));
 			}
 

@@ -205,9 +205,9 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 			} catch (CancellationException ex) {
 				logger.debug(_("Connecting to experiment cancelled."));
 			} catch (InterruptedException e) {
-				logger.error("", e);
+				e.printStackTrace();
 			} catch (ExecutionException e) {
-				logger.error("", e);
+				e.printStackTrace();
 			}
 		}
 	}

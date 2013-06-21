@@ -11,16 +11,12 @@ import java.util.regex.Pattern;
 
 import javax.swing.text.NumberFormatter;
 
-import org.apache.log4j.Logger;
-
 /**
  * Class which should be used format numbers to strings.
  *
  * @author Piotr Szachewicz
  */
 public class FormatUtils {
-
-	protected static final Logger logger = Logger.getLogger(FormatUtils.class);
 
 	/**
 	 * Number format with two digits
@@ -45,7 +41,7 @@ public class FormatUtils {
 		try {
 			return formatter.valueToString(number);
 		} catch (ParseException e) {
-			logger.error("", e);
+			e.printStackTrace();
 			return Integer.toString(number);
 		}
 	}

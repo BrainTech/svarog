@@ -3,7 +3,6 @@ package org.signalml.plugin.newstager.mock;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
@@ -11,8 +10,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
 public class NewStagerTagImporter {
-
-	protected static final Logger logger = Logger.getLogger(NewStagerTagImporter.class);
 
 	//private static String path = "../../../../book_20sec_a1.3_smp_delta.tag";
 	private static String path = "E:/book_20sec_a1.3_smp_spindles.tag";
@@ -30,7 +27,7 @@ public class NewStagerTagImporter {
 		try {
 			tags = importer.importLegacyTags(sourceFile, samplingFrequency);
 		} catch (SignalMLException e) {
-			logger.error("", e);
+			e.printStackTrace();
 			return;
 		}
 
@@ -40,7 +37,7 @@ public class NewStagerTagImporter {
 		try {
 			d = new TagDocument(tags);
 		} catch (SignalMLException e) {
-			logger.error("", e);
+			e.printStackTrace();
 			return;
 		}
 
@@ -49,10 +46,10 @@ public class NewStagerTagImporter {
 			d.saveDocument();
 			d.closeDocument();
 		} catch (SignalMLException e) {
-			logger.error("", e);
+			e.printStackTrace();
 			return;
 		} catch (IOException e) {
-			logger.error("", e);
+			e.printStackTrace();
 			return;
 		}
 	}

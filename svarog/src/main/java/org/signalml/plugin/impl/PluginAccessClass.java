@@ -112,7 +112,7 @@ public class PluginAccessClass implements SvarogAccess {
 			methodAccessImpl.setViewerElementManager(manager);
 		} catch (Exception e) {
 			logger.error("error in plug-in interface while setting element manager");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 

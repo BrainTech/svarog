@@ -2,8 +2,6 @@ package org.signalml.plugin.export.signal;
 
 import java.io.File;
 
-import org.apache.log4j.Logger;
-
 /**
  * The file that is removed from the disk when this instance is destroyed
  * by Garbage Collector.
@@ -11,8 +9,6 @@ import org.apache.log4j.Logger;
  * @author Marcin Szumski
  */
 public class TemporaryFile extends File {
-
-	protected static final Logger logger = Logger.getLogger(TemporaryFile.class);
 
 	/**
 	 * See {@link File#File(File, String)}
@@ -44,7 +40,7 @@ public class TemporaryFile extends File {
 			delete();
 			super.finalize();
 		} catch (Throwable e) {
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 }

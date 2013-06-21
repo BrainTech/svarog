@@ -21,7 +21,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.log4j.Logger;
 import org.signalml.math.fft.WindowType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -38,8 +37,6 @@ import org.xml.sax.SAXException;
  */
 
 public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
-
-	protected static final Logger logger = Logger.getLogger(SignalFFTSettings.class);
 
 	/**
 	 * the serialization constant
@@ -625,11 +622,11 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 
 			}
 		} catch (ParserConfigurationException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (SAXException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (IOException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		}
 
 
@@ -663,11 +660,11 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 			addWindowTypeNode(doc, root, "windowType", getWindowType());
 			saveToXMLFile(xmlFile, doc);
 		} catch (FileNotFoundException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (TransformerException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 

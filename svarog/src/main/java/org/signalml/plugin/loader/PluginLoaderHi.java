@@ -161,7 +161,7 @@ public class PluginLoaderHi {
 			return new PluginDescription(fileName);
 		} catch (Exception e) {
 			logger.warn("failed do read description of a plug-in from file "+fileName);
-			logger.error("", e);
+			e.printStackTrace();
 			return null;
 		}
 
@@ -517,7 +517,7 @@ public class PluginLoaderHi {
 			}
 		} catch (Exception e) {
 			logger.error("Failed to load states of plug-ins from file. All plug-ins with unloaded states will be set inacitve.");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 
 	}
@@ -589,7 +589,7 @@ public class PluginLoaderHi {
 			return true;
 		} catch (Exception e) {
 			logger.error("failed to save states of plug-ins");
-			logger.error("", e);
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -664,7 +664,7 @@ public class PluginLoaderHi {
 			}
 		} catch (Exception e) {
 			logger.error("failed to read plug-in directories from file");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 		return false;
 	}
@@ -686,7 +686,7 @@ public class PluginLoaderHi {
 			saveToXMLFile(this.pluginsDirectoriesFile, doc);
 		} catch (Exception e) {
 			logger.error("failed to save current plug-in directories");
-			logger.error("", e);
+			e.printStackTrace();
 		}
 	}
 

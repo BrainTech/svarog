@@ -13,7 +13,7 @@ import org.signalml.app.view.common.dialogs.errors.Dialogs;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler {
-	protected static final Logger logger = Logger.getLogger(SvarogExceptionHandler.class);
+	protected static final Logger log = Logger.getLogger(SvarogExceptionHandler.class);
 
 	private static SvarogExceptionHandler instance = null;
 	private static boolean installed = false;
@@ -30,7 +30,7 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 				if (!installed) {
 					Thread.setDefaultUncaughtExceptionHandler(getSharedInstance());
 					installed = true;
-					logger.debug("SvarogExceptionHandler successfully installed!");
+					log.debug("SvarogExceptionHandler successfully installed!");
 				}
 			}
 		}
@@ -55,13 +55,14 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 	}
 
 	protected void handleAWT(Throwable t) {
-		logger.error("AWT exception handler", t);
+		log.error("AWT exception handler: " + t);
+		t.printStackTrace();
 		displayUserMessage(t);
 	}
 
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
-		logger.error("uncaught exception in thread [" + (t.getId()) + "/" + (t.getName()) + "]", e);
+		log.error("uncaught exception in thread [" + (t.getId()) + "/" + (t.getName()) + "]", e);
 		displayUserMessage(e);
 	}
 }

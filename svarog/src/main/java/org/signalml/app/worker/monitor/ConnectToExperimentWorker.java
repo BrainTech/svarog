@@ -116,7 +116,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 				try {
 					Thread.sleep(TIMEOUT_MILIS);
 				} catch (InterruptedException e) {
-					logger.error("", e);
+					e.printStackTrace();
 				}
 			}
 		}
@@ -172,7 +172,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 			logger.debug("Connecting to experiment cancelled");
 		} catch (InterruptedException e) {
 			shouldDisconnect = true;
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (ExecutionException e) {
 			shouldDisconnect = true;
 			if (e.getCause() instanceof OpenbciCommunicationException) {
@@ -180,7 +180,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 				exception.showErrorDialog(_("An error occurred while connecting to experiment"));
 			}
 			else {
-				logger.error("", e);
+				e.printStackTrace();
 			}
 		}
 

@@ -523,10 +523,10 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 				chain.filter = new MultichannelSampleFilterForExport(chain.montage, currentBaseMontage);
 			} catch (BadFilterParametersException e) {
 				// TODO Auto-generated catch block
-				logger.error("", e);
+				e.printStackTrace();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				logger.error("", e);
+				e.printStackTrace();
 			}
 			//chain.filter.setCurrentMontage(currentBaseMontage);
 		}

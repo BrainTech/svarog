@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.AmplifierType;
@@ -23,8 +22,6 @@ import org.signalml.app.worker.monitor.messages.parsing.FindEEGExperimentsRespon
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 
 public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentDescriptor>> {
-
-	protected static final Logger logger = Logger.getLogger(FindEEGExperimentsWorker.class);
 
 	public static String WORKER_LOG_APPENDED_PROPERTY = "workerLoggerProperty";
 	public static String NEW_EXPERIMENTS_RECEIVED = "newExperimentsReceived";
@@ -117,14 +114,14 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		try {
 			get();
 		} catch (InterruptedException e) {
-			logger.error("", e);
+			e.printStackTrace();
 		} catch (ExecutionException e) {
 			if (e.getCause() instanceof OpenbciCommunicationException) {
 				OpenbciCommunicationException exception = (OpenbciCommunicationException) e.getCause();
 				exception.showErrorDialog(_("An error occurred while refreshing experiments"));
 			}
 			else {
-				logger.error("", e);
+				e.printStackTrace();
 			}
 			log(_("ERROR"));
 		} catch (CancellationException e) {
