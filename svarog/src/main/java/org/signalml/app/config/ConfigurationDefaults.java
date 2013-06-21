@@ -80,6 +80,7 @@ public class ConfigurationDefaults {
 		config.setAutoLoadDefaultMontage(getBoolean("application.autoLoadDefaultMontage"));
 		config.setAutoAddHighpassFilter(getBoolean("application.autoAddHighpassFilter"));
 		config.setAutoTryToLoadSignalWithTags(getBoolean("application.autoTryToLoadSignalWithTags"));
+		config.setMaxDaysToKeepLogs(getInt("application.maxDaysToKeepLogs"));
 		config.setPrecalculateSignalChecksums(getBoolean("application.precalculateSignalChecksums"));
 
 		config.setSaveConfigOnEveryChange(getBoolean("application.saveConfigOnEveryChange"));

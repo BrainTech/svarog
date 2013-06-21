@@ -161,7 +161,7 @@ public class PluginLoaderHi {
 			return new PluginDescription(fileName);
 		} catch (Exception e) {
 			logger.warn("failed do read description of a plug-in from file "+fileName);
-			e.printStackTrace();
+			logger.error("", e);
 			return null;
 		}
 
@@ -278,7 +278,7 @@ public class PluginLoaderHi {
 				URL jarURL = ((JarURLConnection) connection).getJarFileURL();
 				jarFile = _urlToFile(jarURL);
 			} else {
-				// e.g. file:/usr/share/java/svarog-1.0.4.jar
+				// e.g. file:/usr/share/java/svarog-1.0.5.jar
 				jarFile = new File(srcURL.getPath());
 			}
 
@@ -517,7 +517,7 @@ public class PluginLoaderHi {
 			}
 		} catch (Exception e) {
 			logger.error("Failed to load states of plug-ins from file. All plug-ins with unloaded states will be set inacitve.");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 
 	}
@@ -589,7 +589,7 @@ public class PluginLoaderHi {
 			return true;
 		} catch (Exception e) {
 			logger.error("failed to save states of plug-ins");
-			e.printStackTrace();
+			logger.error("", e);
 			return false;
 		}
 	}
@@ -664,7 +664,7 @@ public class PluginLoaderHi {
 			}
 		} catch (Exception e) {
 			logger.error("failed to read plug-in directories from file");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 		return false;
 	}
@@ -686,7 +686,7 @@ public class PluginLoaderHi {
 			saveToXMLFile(this.pluginsDirectoriesFile, doc);
 		} catch (Exception e) {
 			logger.error("failed to save current plug-in directories");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 

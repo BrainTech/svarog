@@ -73,6 +73,8 @@ public class NewStagerSignalStatsStep extends
 
 	private final AtomicInteger progressBlockCount;
 	private final AtomicBoolean statResultReadyFlag;
+	
+	private final int blockLengthInSapmles;
 
 	private Integer blockCount;
 
@@ -89,6 +91,8 @@ public class NewStagerSignalStatsStep extends
 				this.getBlockCount());
 
 		this.statResult = null;
+		
+		this.blockLengthInSapmles = this.data.constants.getBlockLengthInSamples();
 	}
 
 	@Override
@@ -159,7 +163,7 @@ public class NewStagerSignalStatsStep extends
 		for (int i = 0; i < BUFFER_QUEUE_SIZE; ++i) {
 			freeBufferQueue
 			.add(new double[source.getChannelCount()][this.data.constants
-					.getBlockLength()]);
+					.getBlockLengthInSamples()]);
 		}
 
 		INewStagerStatsSynchronizer synchronizer = new INewStagerStatsSynchronizer() {
@@ -198,6 +202,11 @@ public class NewStagerSignalStatsStep extends
 			@Override
 			public void finalizeBuffers() throws InterruptedException {
 				this.shutdownFlag.set(true);
+			}
+
+			@Override
+			public int getBufferLength() {
+				return blockLengthInSapmles;
 			}
 		};
 
@@ -312,7 +321,7 @@ public class NewStagerSignalStatsStep extends
 		if (this.blockCount == null) {
 			this.blockCount = new Integer(PluginSignalHelper.GetBlockCount(
 											  this.data.stagerData.getSampleSource(),
-											  this.data.constants.getBlockLength()));
+											  this.data.constants.getBlockLengthInSamples()));
 		}
 		return this.blockCount;
 	}

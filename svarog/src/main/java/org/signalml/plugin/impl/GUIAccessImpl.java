@@ -5,6 +5,8 @@ package org.signalml.plugin.impl;
 
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +30,7 @@ import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerTabbedPane;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.SignalTool;
-import org.signalml.plugin.export.signal.SignalToolButtonListener;
+import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.FileChooser;
@@ -466,7 +468,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Error in plug-in interface while adding elements to pop-up menu");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 
@@ -546,11 +548,10 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 * @see org.signalml.plugin.export.PluginAccessGUI#addSignalTool(javax.swing.JToggleButton, org.signalml.plugin.export.SignalTool)
 	 */
 	@Override
-	public void addSignalTool(SignalTool tool, Icon icon, String toolTipText, SignalToolButtonListener buttonListener) throws UnsupportedOperationException {
+	public void addSignalTool(SignalTool tool, ToolButtonParameters toolButtonParameters) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
 		signalTools.add(tool);
-		ToolButtonParameters parameters = new ToolButtonParameters(toolTipText, icon, buttonListener);
-		parametersForToolButtons.put(tool, parameters);
+		parametersForToolButtons.put(tool, toolButtonParameters);
 		buttonsForTools.put(tool, new HashMap<SignalView, JToggleButton>());
 	}
 
@@ -574,11 +575,33 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 		if (button == null) {
 			ToolButtonParameters parameters = parametersForToolButtons.get(tool);
 			button = new JToggleButton(parameters.getIcon());
+			addRightButtonAction(button, parameters.getRightButtonClickAction());
+
 			if (parameters.getToolTipText() != null)
 				button.setToolTipText(parameters.getToolTipText());
 			buttonsForViews.put(view, button);
 		}
 		return button;
+	}
+
+	/**
+	 * Adds an action to a button which is executed when the button is pressed
+	 * with the right click of the mouse.
+	 * @param button the button for which the action will be added
+	 * @param action the action to be executed
+	 */
+	private void addRightButtonAction(JToggleButton button, final AbstractSignalMLAction action) {
+		if (action == null)
+			return;
+
+		button.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getButton() == MouseEvent.BUTTON3) {
+					action.actionPerformed(null);
+				}
+			}
+		});
 	}
 
 	/**
@@ -610,12 +633,12 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 					button.addActionListener(toolSelectionListener);
 				} catch (Exception e) {
 					logger.error("Failed to register signal tool " + (tool != null ? tool.toString() : ""));
-					e.printStackTrace();
+					logger.error("", e);
 				}
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the registration of signal tools");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 
@@ -632,7 +655,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the addition of buttons for signal tools");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 
@@ -656,7 +679,7 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the addition of buttons to main toolbar");
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 

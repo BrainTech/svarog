@@ -41,7 +41,7 @@ public class NewStagerTagWriter {
 			Map<NewStagerTagCollectionType, Collection<IPluginTagDef>> tagMap)
 			throws IOException, SignalMLException {
 
-		final float stretch = this.constants.blockLengthInSeconds
+		final float stretch = this.constants.blockLengthInSecondsINT
 				/ PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;
 
 		List<PluginTagGroup> sleepTags = new LinkedList<PluginTagGroup>();
@@ -63,7 +63,7 @@ public class NewStagerTagWriter {
 
 		File resultFile = this.getTagFileName(tagType);
 		PluginTagWriter pluginTagWriter = new PluginTagWriter(resultFile,
-				new PluginTagWriterConfig(this.constants.blockLengthInSeconds,
+				new PluginTagWriterConfig(this.constants.blockLengthInSecondsINT,
 						PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE));
 		pluginTagWriter.writeTags(sleepTags);
 

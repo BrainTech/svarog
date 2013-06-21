@@ -81,7 +81,7 @@ public class NewStagerStatAlgorithm {
 			++i;
 		}
 
-		int count = length * this.data.constants.getBlockLength();
+		int count = length * this.data.constants.getBlockLengthInSamples();
 		double mean = this.c3a2diff / count;
 		double dev = this.c3a2diffSquare - 2 * mean * this.c3a2diff + mean
 					 * mean * count;

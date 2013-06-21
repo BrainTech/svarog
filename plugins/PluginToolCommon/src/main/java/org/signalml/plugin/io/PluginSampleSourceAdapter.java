@@ -3,15 +3,18 @@ package org.signalml.plugin.io;
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.SignalMLCodecSampleSource;
+import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
-import org.signalml.plugin.export.signal.ChannelSamples;
 
 public class PluginSampleSourceAdapter implements MultichannelSampleSource {
+
+	protected static final Logger logger = Logger.getLogger(PluginSampleSourceAdapter.class);
 
 	private SvarogAccessSignal signalAccess;
 	private ExportedSignalDocument signalDocument;
@@ -79,10 +82,10 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 				samples = this.signalAccess.getRawSignalSamplesFromDocument(
 							  this.signalDocument, channel, signalOffset, count);
 			} catch (InvalidClassException e) {
-				e.printStackTrace();
+				logger.error("", e);
 				return;
 			} catch (IndexOutOfBoundsException e) {
-				e.printStackTrace();
+				logger.error("", e);
 				return;
 			}
 			System.arraycopy(samples.getSamples(), 0, target, arrayOffset,
@@ -120,6 +123,6 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 			this.delegate.destroy();
 		}
 	}
-	
+
 
 }

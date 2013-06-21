@@ -24,11 +24,11 @@ public abstract class AbstractSynchronizationTest {
 
 	public AbstractSynchronizationTest() {
 		triggerPushes.add(new TriggerPush(10, 15));
-		triggerPushes.add(new TriggerPush(1034, 1400));
+		triggerPushes.add(new TriggerPush(1024, 1400));
 		triggerPushes.add(new TriggerPush(1500, 1600));
 		triggerPushes.add(new TriggerPush(2523, 2524));
 		triggerPushes.add(new TriggerPush(2550, 2551));
-		triggerPushes.add(new TriggerPush(2600, 2700));
+		triggerPushes.add(new TriggerPush(2599, 2700));
 		triggerPushes.add(new TriggerPush(2800, 2900));
 		triggerPushes.add(new TriggerPush(2901, 2950));
 

@@ -42,7 +42,7 @@ public abstract class NewStagerArtifactAnalysisAlgorithmBase {
 	protected double[] computeItermediateMean(double channelSignal[],
 			NewStagerConstants constants)
 	{
-		int length = constants.blockLengthInSeconds;
+		int length = constants.blockLengthInSecondsINT;
 		int frequency = (int) constants.frequency;
 		int lengthNN = (int) Math.round(0.8d * frequency);
 

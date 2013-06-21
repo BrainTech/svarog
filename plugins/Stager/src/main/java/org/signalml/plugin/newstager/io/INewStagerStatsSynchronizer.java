@@ -7,5 +7,6 @@ public interface INewStagerStatsSynchronizer {
 	double[][] getReadyBuffer() throws InterruptedException;
 	void markBufferAsProcessed(double[][] buffer) throws InterruptedException;
 	void finalizeBuffers() throws InterruptedException;
+	int getBufferLength();
 
 }

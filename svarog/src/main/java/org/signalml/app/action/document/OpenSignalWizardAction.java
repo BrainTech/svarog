@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
@@ -22,6 +23,8 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
 
 public class OpenSignalWizardAction extends AbstractSignalMLAction implements PropertyChangeListener {
+
+	protected static final Logger logger = Logger.getLogger(OpenSignalWizardAction.class);
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private OpenSignalWizardDialog openSignalWizardDialog;
@@ -106,9 +109,9 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 			try {
 				documentFlowIntegrator.closeDocument(signalDocument, true, true);
 			} catch (IOException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			} catch (SignalMLException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}

@@ -9,19 +9,21 @@ public class NewStagerSignalReader implements IPluginDataSourceReader {
 	private final int channelCount;
 	private final int samplesCount;
 	private int signalOffset;
+	private final int blockLengthInSapmles;
 
 
-	public NewStagerSignalReader(MultichannelSampleSource sampleSource) {
+	public NewStagerSignalReader(MultichannelSampleSource sampleSource, int blockLengthInSamples) {
 		this.source = sampleSource;
 		this.channelCount = this.source.getChannelCount();
 		this.samplesCount = this.computeSamplesCount();
 		this.signalOffset = 0;
+		this.blockLengthInSapmles = blockLengthInSamples;
 	}
 
 	@Override
 	public boolean hasMoreSamples() throws InterruptedException {
 		synchronized (this) {
-			return this.signalOffset < this.samplesCount;
+			return this.signalOffset + this.blockLengthInSapmles <= this.samplesCount;
 		}
 	}
 

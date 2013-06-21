@@ -75,7 +75,7 @@ public class Helper {
 				return null;
 			}
 			else {
-				ex.printStackTrace();
+				logger.error("", ex);
 				throw ex;
 			}
 		}
@@ -89,7 +89,7 @@ public class Helper {
 		try {
 			sendMessage(request);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new OpenbciCommunicationException(_("I/O error occurred while writing to socket."));
 		}
 
@@ -97,17 +97,17 @@ public class Helper {
 		try {
 			response = receiveResponse();
 		} catch (SocketTimeoutException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new OpenbciCommunicationException(_("Socket timeout exceeded while waiting for response"));
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new OpenbciCommunicationException(_("I/O error occurred while reading from socket."));
 		}
 
 		try {
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new OpenbciCommunicationException(_("I/O error occurred while closing the socket."));
 		}
 
@@ -120,15 +120,15 @@ public class Helper {
 			socket = new Socket(destinationIP, destinationPort);
 			socket.setSoTimeout(timeout);
 		} catch (UnknownHostException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			String message = _R("Could not connect to {0}:{1}", destinationIP, FormatUtils.formatNoGrouping(destinationPort));
 			throw new OpenbciConnectionException(message, destinationIP, destinationPort);
 		} catch (ConnectException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			String message = _R("Could not connect to {0}:{1} ({2})", destinationIP, FormatUtils.formatNoGrouping(destinationPort), e.getMessage());
 			throw new OpenbciConnectionException(message, destinationIP, destinationPort);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 			throw new OpenbciCommunicationException(_("I/O exception while creating a socket."));
 		}
 	}
@@ -174,7 +174,7 @@ public class Helper {
 		try {
 			socket.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 	}
 

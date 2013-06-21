@@ -1100,7 +1100,7 @@ msgid "Dictionary type"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:62
-msgid "Dilation factor \"a\""
+msgid "Energy error"
 msgstr ""
 
 #: org/signalml/app/view/element/ProfilePathTypePanel.java:203

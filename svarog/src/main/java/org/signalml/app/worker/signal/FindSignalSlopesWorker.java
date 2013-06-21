@@ -18,7 +18,8 @@ import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
  */
 public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[], Void> {
 
-	private static final int BUFFER_SIZE = 1024;
+	private static final int DEFAULT_BUFFER_SIZE = 1024;
+	private int bufferSize = DEFAULT_BUFFER_SIZE;
 
 	private SynchronizeTagsWithTriggerParameters parameters;
 	private double threshold;
@@ -36,6 +37,14 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 		getBusyDialog().setCancellable(false);
 	}
 
+	public void setBufferSize(int bufferSize) {
+		this.bufferSize = bufferSize;
+	}
+
+	public int getBufferSize() {
+		return bufferSize;
+	}
+
 	@Override
 	protected Integer[] doInBackground() throws Exception {
 		showBusyDialog();
@@ -48,13 +57,13 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 		int triggerDesc = -1;
 		while(currentSample < sampleCount) {
 
-			int bufferSize = BUFFER_SIZE;
-			if (currentSample + bufferSize > sampleCount)
-				bufferSize = sampleCount - currentSample;
+			int currentBufferSize = bufferSize;
+			if (currentSample + currentBufferSize > sampleCount)
+				currentBufferSize = sampleCount - currentSample;
 
-			double[] samples = new double[bufferSize];
+			double[] samples = new double[currentBufferSize];
 
-			sampleSource.getSamples(parameters.getTriggerChannel(), samples, currentSample, bufferSize, 0);
+			sampleSource.getSamples(parameters.getTriggerChannel(), samples, currentSample, currentBufferSize, 0);
 
 			int i = 0;
 			for (; i < samples.length-1; i++) {
@@ -79,8 +88,7 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 				}
 			}
 
-			currentSample += i + 1;
-
+			currentSample += (bufferSize-1);
 		}
 
 		if (triggerAsc != -1 && triggerDesc == -1) {

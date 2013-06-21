@@ -9,6 +9,7 @@ import static org.signalml.plugin.i18n.PluginI18n._;
 import java.io.File;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.document.BookDocument;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.method.ComputationException;
@@ -42,6 +43,8 @@ import org.springframework.validation.Errors;
 public class NewStagerMethod extends PluginAbstractMethod implements
 	TrackableMethod, IterableMethod {
 
+	protected static final Logger logger = Logger.getLogger(NewStagerMethod.class);
+
 	private static final String UID = "3c5b3e3d-c6b5-467b-8c20-fee30874889c";
 	private static final int[] VERSION = new int[] { 1, 0 };
 
@@ -62,7 +65,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 			return mgr.compute(new NewStagerMgrData(stagerData, this.getStagerConstants(stagerData)), tracker);
 		} catch (SignalMLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("", e);
 			return null;
 		}
 	}
@@ -144,7 +147,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		if (access == null) {
 			throw new SignalMLException();
 		}
-		
+
 		BookDocument doc;
 		try {
 			doc = new BookDocument(new File(stagerData.getParameters().bookFilePath));
@@ -154,7 +157,7 @@ public class NewStagerMethod extends PluginAbstractMethod implements
 		StandardBook book = doc.getBook();
 
 		return new NewStagerConstants(book.getSamplingFrequency(),
-									  (int) access.getSignalAccess().getActiveSignalDocument().getPageSize(),
+				stagerData.getParameters().rules.getBlockLengthInSecINT(),
 									  book.getSegmentCount(),
 									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD,
 									  NewStagerConstants.DEFAULT_MUSCLE_THRESHOLD_RATE,

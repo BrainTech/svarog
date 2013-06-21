@@ -38,7 +38,7 @@ public class NewStagerArtifactMontageAlgorithm extends
 		this.c3a2Count = 0;
 		this.c4a1Count = 0;
 
-		int halfEpochSize = this.data.constants.blockLengthInSeconds >> 1;
+		int halfEpochSize = this.data.constants.blockLengthInSecondsINT >> 1;
 		boolean eegFlag = this.data.parameters.analyseEEGChannelsFlag;
 		boolean emgFlag = this.data.parameters.analyseEMGChannelFlag;
 
