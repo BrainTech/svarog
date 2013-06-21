@@ -67,7 +67,7 @@ Depends: ${misc:Depends},
 	jarwrapper,
 	java6-runtime,
 	libjsignalml-java (>= 1.0-2),
-	matching-pursuit,
+	matching-pursuit (>= 5.1-1),
 	svarog-plugin-fft,
 Description: EEG signal viewer, annotator, analyzer and recorder. 
  It combines rich signal analysis capabilities with easy to use GUI.
