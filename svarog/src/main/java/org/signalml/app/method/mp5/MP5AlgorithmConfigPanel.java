@@ -63,7 +63,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 
 		JLabel algorithmLabel = new JLabel(_("MP version"));
 
-		CompactButton algorithmHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ALGORITHM);
+//		CompactButton algorithmHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ALGORITHM);
 
 		Component glue1 = Box.createHorizontalGlue();
 
@@ -84,10 +84,10 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 			.addComponent(getAlgorithmComboBox())
 		);
 
-		hGroup.addGroup(
-			layout.createParallelGroup()
-			.addComponent(algorithmHelpButton)
-		);
+//		hGroup.addGroup(
+//			layout.createParallelGroup()
+//			.addComponent(algorithmHelpButton)
+//		);
 
 		layout.setHorizontalGroup(hGroup);
 
@@ -98,7 +98,7 @@ public class MP5AlgorithmConfigPanel extends JPanel {
 			.addComponent(algorithmLabel)
 			.addComponent(glue1)
 			.addComponent(getAlgorithmComboBox())
-			.addComponent(algorithmHelpButton)
+//			.addComponent(algorithmHelpButton)
 		);
 
 		layout.setVerticalGroup(vGroup);

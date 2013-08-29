@@ -66,9 +66,9 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 		JLabel dictionaryReinitTypeLabel = new JLabel(_("Reinit dictionary"));
 		JLabel scaleToPeriodFactorLabel = new JLabel(_("Max scale / period"));
 
-		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
-		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
-		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
+//		CompactButton dictionaryTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_TYPE);
+//		CompactButton dictionaryReinitTypeHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_DICTIONARY_REINIT_TYPE);
+//		CompactButton scaleToPeriodFactorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_SCALE_TO_PERIOD_FACTOR);
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
@@ -97,12 +97,12 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 			.addComponent(getScaleToPeriodFactorSpinner())
 		);
 
-		hGroup.addGroup(
-			layout.createParallelGroup()
-			.addComponent(dictionaryTypeHelpButton)
-			.addComponent(dictionaryReinitTypeHelpButton)
-			.addComponent(scaleToPeriodFactorHelpButton)
-		);
+//		hGroup.addGroup(
+//			layout.createParallelGroup()
+//			.addComponent(dictionaryTypeHelpButton)
+//			.addComponent(dictionaryReinitTypeHelpButton)
+//			.addComponent(scaleToPeriodFactorHelpButton)
+//		);
 
 		layout.setHorizontalGroup(hGroup);
 
@@ -113,7 +113,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 			.addComponent(dictionaryTypeLabel)
 			.addComponent(glue1)
 			.addComponent(getDictionaryTypeComboBox())
-			.addComponent(dictionaryTypeHelpButton)
+//			.addComponent(dictionaryTypeHelpButton)
 		);
 
 		vGroup.addGroup(
@@ -121,7 +121,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 			.addComponent(dictionaryReinitTypeLabel)
 			.addComponent(glue2)
 			.addComponent(getDictionaryReinitTypeComboBox())
-			.addComponent(dictionaryReinitTypeHelpButton)
+//			.addComponent(dictionaryReinitTypeHelpButton)
 		);
 
 		vGroup.addGroup(
@@ -129,7 +129,7 @@ public class MP5AdvancedDecompositionConfigPanel extends JPanel {
 			.addComponent(scaleToPeriodFactorLabel)
 			.addComponent(glue3)
 			.addComponent(getScaleToPeriodFactorSpinner())
-			.addComponent(scaleToPeriodFactorHelpButton)
+//			.addComponent(scaleToPeriodFactorHelpButton)
 		);
 
 		layout.setVerticalGroup(vGroup);
