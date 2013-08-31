@@ -9,6 +9,8 @@ public interface StandardBookSegmentWriter {
 
 	void addAtom(StandardBookAtomWriter atom);
 
+	void clearAtoms();
+
 	public int getSegmentLength();
 
 	public void setSegmentLength(int segmentLength);
