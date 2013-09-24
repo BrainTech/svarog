@@ -21,8 +21,6 @@
   described partly by Durka et al. <a href="#ref:stochmp">(Durka2001)</a> and Kuś et al. <a href="#ref:OGD">(Kuś2013)</a>. Mp5 is designed
   for batch processing input signals and writing results to disk
   files called—after&nbsp;<a href="#ref:Mallat1993">(Mallat1993)</a>—<em>decomposition
-  
-  
   books</em>. These books (<strong>*</strong>.b) contain
   parameters of the functions selected for representation of the
   analyzed signal.&nbsp; </p>
@@ -39,7 +37,8 @@
   avaialble at <a href="http://braintech.pl/svarog/screencast.html">http://braintech.pl/svarog/screencast.html</a>. <em>Caveat</em>: default settings are optimized for speed rather
   than quality of the decomposition. This may be sufficient for the
   first try, but serious use requires some understanding of the
-  procedure.</p>
+  procedure. Detailed description of the algorithm is given in <a
+  href="#ref:OGD">(Kuś2013)</a>, <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a>.</p>
 <p>Contents:</p>
 <ol id="mozToc">
   <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
@@ -242,7 +241,7 @@ range: 1 - 65535
     optimally cover the ranges of parameters reasonable for a given
     signal in a way that the distance between any two neighboring
     functions does not exceed the threshold given by a user <a
-          href="#ref:OGD">(Kuś et al. 2013)</a> </li>
+          href="#ref:OGD">(Kuś2013)</a> </li>
   <li><code>OCTAVE_STOCH</code> — distribution as in <code>OCTAVE_FIXED</code>,
     plus a stochastic element to remove the possible bias <a
           href="#ref:stochmp">(Durka et al. 2001)</a>. The dictionary
@@ -357,7 +356,7 @@ energyError 0.3 40.0</code></pre>
   possible versions of the multichannel MP. Choice of the
   appropriate flavor of multivariate algorithm is controlled by the
   MP variable, which can be assigned one of the following values.
-  For equations and formulae see <a href="#ref:Uni">(Durka&nbsp;2007a)</a> and <a href="#ref:OGD">(Kuś et al. 2013)</a></p>
+  For equations and formulae see <a href="#ref:Uni">(Durka&nbsp;2007a)</a> and <a href="#ref:OGD">(Kuś2013)</a></p>
 <ul>
   <li><code>SMP</code> — monochannel MP (separate decomposition of
     single channels) </li>
@@ -467,11 +466,13 @@ progressBar            	   	ON
   
   
   Pursuit</a>, Scholarpedia, p. 20910, 2007.</p>
-<p><a name="ref:OGD"></a>(Kuś et al.2013) Rafał Kuś, Piotr T.
+<p><a name="ref:OGD"></a>(Kuś2013) Rafał Kuś, Piotr T.
   Różański and Piotr J. Durka<br>
   Multivariate matching pursuit in optimal Gabor dictionaries:
-  mathematical foundations and software for EEG/MEG (submitted to <span
-        style="font-style: italic;">Biomedical Engineering Online</span>)</p>
+  theory and software for EEG/MEG via Svarog, <span
+        style="font-style: italic;">Biomedical Engineering Online</span>
+  2013, 12:94 doi:10.1186/1475-925X-14-94,
+  <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a></p>
 <p><a name="ref:stochmp"></a>(Durka et al. 2001) Piotr J. Durka, D.
   Ircha and K. J. Blinowska<br>
   Stochastic time-frequency dictionaries for Matching Pursuit, <span
