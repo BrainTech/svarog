@@ -357,6 +357,14 @@
 				<role>Documentation</role>
 			</roles>
 		</developer>
+		<developer>
+			<name>Piotr Różański</name>
+			<organization>MISDoMP</organization>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
 	</developers>
 
 	<distributionManagement>

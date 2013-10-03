@@ -53,13 +53,13 @@ public class MP5RawConfigPanel extends JPanel {
 		JPanel rawConfigPanel = new JPanel(new BorderLayout(3,3));
 		rawConfigPanel.setBorder(new TitledBorder(_("Raw config (signal input/output/range directives will be added/replaced)")));
 
-		CompactButton rawConfigHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAW_CONFIG);
+//		CompactButton rawConfigHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAW_CONFIG);
 
-		JPanel rawConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-		rawConfigHelpPanel.add(rawConfigHelpButton);
+//		JPanel rawConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
+//		rawConfigHelpPanel.add(rawConfigHelpButton);
 
 		rawConfigPanel.add(getRawConfigTextPane(), BorderLayout.CENTER);
-		rawConfigPanel.add(rawConfigHelpPanel, BorderLayout.SOUTH);
+//		rawConfigPanel.add(rawConfigHelpPanel, BorderLayout.SOUTH);
 
 		add(rawConfigPanel, BorderLayout.CENTER);
 		add(getExecutorPanel(), BorderLayout.SOUTH);

@@ -235,12 +235,12 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 
 	@Override
 	public float getTimePosition() {
-		return position*getSamplingFrequency();
+		return position/getSamplingFrequency();
 	}
 
 	@Override
 	public float getTimeScale() {
-		return scale*getSamplingFrequency();
+		return scale/getSamplingFrequency();
 	}
 
 }

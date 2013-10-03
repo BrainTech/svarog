@@ -222,6 +222,10 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 		atoms.addElement((AtomV5) atom);
 	}
 
+	public void clearAtoms() {
+		atoms.clear();
+	}
+
 	public void setChannelNumber(int channel) {
 		this.channelNumber = channel;
 	}

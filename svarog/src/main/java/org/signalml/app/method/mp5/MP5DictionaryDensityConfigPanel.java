@@ -72,9 +72,9 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		Component glue3 = Box.createHorizontalGlue();
 		Component glue4 = Box.createHorizontalGlue();
 
-		CompactButton energyErrorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_ERROR);
-		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ATOM_COUNT);
-		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAM_USAGE);
+//		CompactButton energyErrorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_ERROR);
+//		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ATOM_COUNT);
+//		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAM_USAGE);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -102,13 +102,13 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(getRamUsageTextField())
 		);
 
-		hGroup.addGroup(
-			layout.createParallelGroup()
-			.addComponent(energyErrorHelpButton)
-			.addComponent(energyErrorHelpButton)
-			.addComponent(atomCountHelpButton)
-			.addComponent(ramUsageHelpButton)
-		);
+//		hGroup.addGroup(
+//			layout.createParallelGroup()
+//			.addComponent(energyErrorHelpButton)
+//			.addComponent(energyErrorHelpButton)
+//			.addComponent(atomCountHelpButton)
+//			.addComponent(ramUsageHelpButton)
+//		);
 
 		layout.setHorizontalGroup(hGroup);
 
@@ -119,7 +119,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(energyErrorLabel)
 			.addComponent(glue1)
 			.addComponent(getEnergyErrorSpinner())
-			.addComponent(energyErrorHelpButton)
+//			.addComponent(energyErrorHelpButton)
 		);
 
 		vGroup.addGroup(
@@ -127,7 +127,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(energyErrorPercentageLabel)
 			.addComponent(glue2)
 			.addComponent(getEnergyErrorPercentageSpinner())
-			.addComponent(energyErrorHelpButton)
+//			.addComponent(energyErrorHelpButton)
 		);
 
 		vGroup.addGroup(
@@ -135,7 +135,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(atomCountLabel)
 			.addComponent(glue3)
 			.addComponent(getAtomCountTextField())
-			.addComponent(atomCountHelpButton)
+//			.addComponent(atomCountHelpButton)
 		);
 
 		vGroup.addGroup(
@@ -143,7 +143,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(ramUsageLabel)
 			.addComponent(glue4)
 			.addComponent(getRamUsageTextField())
-			.addComponent(ramUsageHelpButton)
+//			.addComponent(ramUsageHelpButton)
 		);
 
 		layout.setVerticalGroup(vGroup);

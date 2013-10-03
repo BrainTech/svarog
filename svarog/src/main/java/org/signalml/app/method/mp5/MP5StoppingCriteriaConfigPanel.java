@@ -65,8 +65,8 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 
-		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
-		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
+//		CompactButton maxIterationCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_MAX_ITERATION_COUNT);
+//		CompactButton energyPercentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_PERCENT);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -88,11 +88,11 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 			.addComponent(getEnergyPercentSpinner())
 		);
 
-		hGroup.addGroup(
-			layout.createParallelGroup()
-			.addComponent(maxIterationCountHelpButton)
-			.addComponent(energyPercentHelpButton)
-		);
+//		hGroup.addGroup(
+//			layout.createParallelGroup()
+//			.addComponent(maxIterationCountHelpButton)
+//			.addComponent(energyPercentHelpButton)
+//		);
 
 		layout.setHorizontalGroup(hGroup);
 
@@ -103,7 +103,7 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 			.addComponent(maxIterationCountLabel)
 			.addComponent(glue1)
 			.addComponent(getMaxIterationCountSpinner())
-			.addComponent(maxIterationCountHelpButton)
+//			.addComponent(maxIterationCountHelpButton)
 		);
 
 		vGroup.addGroup(
@@ -111,7 +111,7 @@ public class MP5StoppingCriteriaConfigPanel extends JPanel {
 			.addComponent(energyPercentLabel)
 			.addComponent(glue2)
 			.addComponent(getEnergyPercentSpinner())
-			.addComponent(energyPercentHelpButton)
+//			.addComponent(energyPercentHelpButton)
 		);
 
 		layout.setVerticalGroup(vGroup);
