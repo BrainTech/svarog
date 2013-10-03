@@ -1,3 +1,9 @@
+svarog (1.0.5-4) unstable; urgency=low
+
+  * Improve help for MP5 decomposition functionality.
+
+ -- Karol Auguštin <karol@augustin.pl>  Thu, 03 Oct 2013 16:43:01 +0200
+
 svarog (1.0.5-3) unstable; urgency=low
 
   * Fix matching-pursuit dependency.
