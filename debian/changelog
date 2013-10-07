@@ -1,3 +1,9 @@
+svarog (1.0.5-5) unstable; urgency=low
+
+  * Change source format to 3.0 (quilt).
+
+ -- Karol Auguštin <karol@augustin.pl>  Mon, 07 Oct 2013 18:59:59 +0200
+
 svarog (1.0.5-4) unstable; urgency=low
 
   * Improve help for MP5 decomposition functionality.
