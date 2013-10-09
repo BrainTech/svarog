@@ -5,13 +5,13 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 
 	<name>Svarog</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>1.0.5</version>
+		<version>1.0.6</version>
 	</parent>
 
 	<properties>
@@ -30,7 +30,7 @@
 		<git.git>git</git.git>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
-		<org.signalml.jsignalml.version>1.0-SNAPSHOT</org.signalml.jsignalml.version>
+		<org.signalml.jsignalml.version>1.1</org.signalml.jsignalml.version>
 	</properties>
 
 	<build>
