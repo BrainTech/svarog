@@ -27,7 +27,7 @@
 		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
 		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
 
-		<git.git>git</git.git>
+		<git.git>dpkg-parsechangelog</git.git>
 
 		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
 		<org.signalml.jsignalml.version>1.1</org.signalml.jsignalml.version>
@@ -230,12 +230,12 @@
 						<configuration>
 							<target>
 								<exec executable="${git.git}"
-									  failifexecutionfails="false"
+									  failifexecutionfails="true"
 									  outputproperty="git-describe.output"
 									  resultproperty="git-describe.result">
-									<arg value="describe" />
-									<arg value="--abbrev=0" />
-									<arg value="--tags" />
+									<arg value="--show-field=version" />
+									<arg value="--file" />
+									<arg value="../debian/changelog" />
 								</exec>
 								<condition property="svarog.git-version"
 										   value="${git-describe.output}"
