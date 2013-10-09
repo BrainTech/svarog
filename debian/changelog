@@ -1,24 +1,30 @@
+svarog (1.0.6-2) unstable; urgency=low
+
+  * Fixed broken dependencies.
+
+ -- Karol Auguštin <karol@augustin.pl>  Wed, 09 Oct 2013 23:16:03 +0200
+
 svarog (1.0.6-1) unstable; urgency=low
 
-  * Change jsignalml dependency version to 1.1-2.
+  * Changed jsignalml dependency version to 1.1-2.
 
  -- Karol Auguštin <karol@augustin.pl>  Wed, 09 Oct 2013 12:46:16 +0200
 
 svarog (1.0.5-5) unstable; urgency=low
 
-  * Change source format to 3.0 (quilt).
+  * Changed source format to 3.0 (quilt).
 
  -- Karol Auguštin <karol@augustin.pl>  Mon, 07 Oct 2013 18:59:59 +0200
 
 svarog (1.0.5-4) unstable; urgency=low
 
-  * Improve help for MP5 decomposition functionality.
+  * Improved help for MP5 decomposition functionality.
 
  -- Karol Auguštin <karol@augustin.pl>  Thu, 03 Oct 2013 16:43:01 +0200
 
 svarog (1.0.5-3) unstable; urgency=low
 
-  * Fix matching-pursuit dependency.
+  * Fixed matching-pursuit dependency.
 
  -- Karol Auguštin <karol@augustin.pl>  Tue, 25 Jun 2013 11:52:14 +0200
 
@@ -36,7 +42,7 @@ svarog (1.0.5-1) unstable; urgency=low
 
 svarog (1.0.4.3-1) unstable; urgency=low
 
-  * Change splash screen
+  * Changed splash screen.
 
  -- Karol Auguštin <karol@augustin.pl>  Sun, 14 Apr 2013 19:42:59 +0200
 

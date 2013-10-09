@@ -33,7 +33,7 @@ Build-Depends-Indep:
 	libjmx-java,
 	libxstream-java,
 	libbuild-helper-maven-plugin-java,
-	libjsignalml-java (>= 1.1-2),
+	libjsignalml-java (>= 1.1-2~),
 Standards-Version: 3.9.1
 Vcs-Git: git://git.braintech.pl/svarog.git
 Vcs-Browser: http://git.braintech.pl/svarog.git
