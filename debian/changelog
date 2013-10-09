@@ -1,3 +1,9 @@
+svarog (1.0.6-1) UNRELEASED; urgency=low
+
+  * Change jsignalml dependency version to 1.1-2.
+
+ -- Karol Auguštin <karol@augustin.pl>  Wed, 09 Oct 2013 12:46:16 +0200
+
 svarog (1.0.5-5) unstable; urgency=low
 
   * Change source format to 3.0 (quilt).
