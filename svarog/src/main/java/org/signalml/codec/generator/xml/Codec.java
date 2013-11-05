@@ -785,7 +785,7 @@ public class Codec extends CodecCore {
 	      	// "C:\\XMLGen\\XML-Prop\\meta_EDF.xml"
 	      //"C:\\XMLGen\\XML-Prop\\meta_FORMAT_example.xml"));
 	    } catch(Exception e) {
-	      e.printStackTrace();
+	      logger.error("", e);
 	    }
 	}
 	*/

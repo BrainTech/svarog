@@ -55,7 +55,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 				jmxClient.shutdown();
 				logger.debug("Multiplexer has been successfully shutdown");
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		experimentDescriptor.setJmxClient(null);
 	}
@@ -85,7 +85,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		try {
 			get();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.error("", e);
 		} catch (ExecutionException e) {
 			if (e.getCause() instanceof OpenbciCommunicationException) {
 				OpenbciCommunicationException openbciException = (OpenbciCommunicationException) e.getCause();
@@ -93,7 +93,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 				//no dialog is shown.
 			}
 			else {
-				e.printStackTrace();
+				logger.error("", e);
 			}
 		}
 	}

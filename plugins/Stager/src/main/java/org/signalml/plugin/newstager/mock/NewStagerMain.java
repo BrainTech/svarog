@@ -1,9 +1,9 @@
 package org.signalml.plugin.newstager.mock;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.signalml.app.document.BookDocument;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.codec.XMLSignalMLCodec;
@@ -19,7 +19,6 @@ import org.signalml.plugin.newstager.data.NewStagerParameters;
 import org.signalml.plugin.newstager.data.NewStagerRules;
 import org.signalml.plugin.newstager.data.logic.NewStagerMgrData;
 import org.signalml.plugin.newstager.logic.mgr.NewStagerComputationMgr;
-import org.springframework.context.MessageSourceResolvable;
 
 import pl.edu.fuw.MP.Core.Utils;
 
@@ -111,6 +110,8 @@ class Tracker implements MethodExecutionTracker {
 }
 
 public class NewStagerMain {
+
+	protected static final Logger logger = Logger.getLogger(NewStagerMain.class);
 
 	private static String codecSourceFile = "../../specs/EASYS.xml";
 	// private static String bookFilePath = "../../../../book_20sec_a1.3_smp.b";
@@ -205,7 +206,7 @@ public class NewStagerMain {
 				new Tracker());
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("", e);
 		}
 
 		System.exit(0);

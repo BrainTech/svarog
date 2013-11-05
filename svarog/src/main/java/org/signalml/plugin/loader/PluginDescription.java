@@ -309,7 +309,7 @@ public class PluginDescription extends PluginState {
 			url = new URL(name);
 		} catch (MalformedURLException e) {
 			logger.error("failed to create URL for file "+name);
-			e.printStackTrace();
+			logger.error("", e);
 			return false;
 		}
 

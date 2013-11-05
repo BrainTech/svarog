@@ -45,7 +45,6 @@ import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.view.DocumentView;
-import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.impl.change.events.PluginActiveDocumentEventImpl;
 import org.signalml.plugin.impl.change.events.PluginActiveTagEventImpl;
 import org.signalml.plugin.impl.change.events.PluginCodecEventImpl;
@@ -199,8 +198,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 						try {
 							listener.activeDocumentChanged(event);
 						} catch (Exception ex) {
-							logger.error("unhandled exception in plugin on active document change");
-							ex.printStackTrace();
+							logger.error("unhandled exception in plugin on active document change", ex);
 						}
 					}
 				} else {
@@ -212,8 +210,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 							try {
 								listener.activeTagDocumentChanged(event);
 							} catch (Exception ex) {
-								logger.error("unhandled exception in plugin on active tag document change");
-								ex.printStackTrace();
+								logger.error("unhandled exception in plugin on active tag document change", ex);
 							}
 						}
 					}
@@ -234,8 +231,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 							try {
 								listener.activeTagChanged(event);
 							} catch (Exception ex) {
-								logger.error("unhandled exception in plugin on active tag change");
-								ex.printStackTrace();
+								logger.error("unhandled exception in plugin on active tag change", ex);
 							}
 						}
 						activeTags.put(signalView, newActiveTag);
@@ -243,8 +239,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				}
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when action focus changed");
-			ex.printStackTrace();
+			logger.error("Unknown error in plug-in interface when action focus changed", ex);
 		}
 	}
 
@@ -357,14 +352,12 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				try {
 					listener.documentAdded(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on document added");
-					ex.printStackTrace();
+					logger.error("unhandled exception in plugin on document added", ex);
 				}
 
 			}
 		} catch (Exception e2) {
-			logger.error("Unknown error in plug-in interface when document was added");
-			e2.printStackTrace();
+			logger.error("Unknown error in plug-in interface when document was added", e2);
 		}
 	}
 
@@ -380,13 +373,11 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				try {
 					listener.documentRemoved(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on document removed");
-					ex.printStackTrace();
+					logger.error("unhandled exception in plugin on document removed", ex);
 				}
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when document was removed");
-			ex.printStackTrace();
+			logger.error("Unknown error in plug-in interface when document was removed", ex);
 		}
 	}
 
@@ -427,13 +418,11 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				try {
 					listener.codecAdded(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on codec added");
-					ex.printStackTrace();
+					logger.error("unhandled exception in plugin on codec added", ex);
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Unknown error in plug-in interface when codec was added");
-			e.printStackTrace();
+			logger.error("Unknown error in plug-in interface when codec was added", e);
 		}
 	}
 
@@ -449,13 +438,11 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				try {
 					listener.codecRemoved(event);
 				} catch (Exception ex) {
-					logger.error("unhandled exception in plugin on codec removed");
-					ex.printStackTrace();
+					logger.error("unhandled exception in plugin on codec removed", ex);
 				}
 			}
 		} catch (Exception e) {
-			logger.error("Unknown error in plug-in interface when codec was removed");
-			e.printStackTrace();
+			logger.error("Unknown error in plug-in interface when codec was removed", e);
 		}
 	}
 
@@ -510,16 +497,14 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 						try {
 							listener.documentViewChanged(event);
 						} catch (Exception ex) {
-							logger.error("unhandled exception in plugin on document view changed");
-							ex.printStackTrace();
+							logger.error("unhandled exception in plugin on document view changed", ex);
 						}
 					}
 				}
 
 			}
 		} catch (Exception e) {
-			logger.error("Unknown error in plug-in interface when property has changed");
-			e.printStackTrace();
+			logger.error("Unknown error in plug-in interface when property has changed", e);
 		}
 	}
 
@@ -531,8 +516,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				singleTagAdded(event, listener);
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag was added");
-			ex.printStackTrace();
+			logger.error("Unknown error in plug-in interface when tag was added", ex);
 		}
 	}
 
@@ -544,8 +528,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				singleTagRemoved(event, listener);
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag was removed");
-			ex.printStackTrace();
+			logger.error("Unknown error in plug-in interface when tag was removed", ex);
 		}
 	}
 
@@ -557,8 +540,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				singleTagChanged(event, listener);
 			}
 		} catch (Exception ex) {
-			logger.error("Unknown error in plug-in interface when tag has changed");
-			ex.printStackTrace();
+			logger.error("Unknown error in plug-in interface when tag has changed", ex);
 		}
 	}
 
@@ -680,7 +662,7 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 				listener.applicationClosing();
 			} catch (Exception e) {
 				logger.error("Unhandled exception in plugin on application closing");
-				e.printStackTrace();
+				logger.error("", e);
 			}
 	}
 
