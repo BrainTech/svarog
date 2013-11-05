@@ -34,6 +34,7 @@ Build-Depends-Indep:
 	libxstream-java,
 	libbuild-helper-maven-plugin-java,
 	libjsignalml-java (>= 1.1-2~),
+	liblog4j1.2-java
 Standards-Version: 3.9.1
 Vcs-Git: git://git.braintech.pl/svarog.git
 Vcs-Browser: http://git.braintech.pl/svarog.git
@@ -69,6 +70,7 @@ Depends: ${misc:Depends},
 	libjsignalml-java (>= 1.1-2~),
 	matching-pursuit (>= 5.1),
 	svarog-plugin-fft,
+	liblog4j1.2-java
 Description: EEG signal viewer, annotator, analyzer and recorder. 
  It combines rich signal analysis capabilities with easy to use GUI.
  It is written in Java SE 6.
