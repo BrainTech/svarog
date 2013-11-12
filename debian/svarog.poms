@@ -24,4 +24,4 @@
 #     temporarily for certain artifacts such as Javadoc jars.
 #
 pom.xml --has-package-version
-svarog/pom.xml --has-package-version --java-lib --artifact=svarog/target/svarog-1.0.6.jar
+svarog/pom.xml --has-package-version --java-lib --artifact=svarog/target/svarog-1.0.6.one-jar.jar
