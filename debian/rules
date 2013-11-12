@@ -8,8 +8,7 @@ PACKAGE        = svarog svarog-plugin-tool svarog-plugin-fft svarog-plugin-stage
 DEB_JAR_PACKAGE = $(PACKAGE)
 
 mvn = mvn $(mvnflags)
-mvnflags = -Dmaven.repo.local=$(DEB_MAVEN_REPO) -o
-copy_repo = /usr/share/maven-debian-helper/copy-repo.sh
+mvnflags = -Dmaven.repo.local=$(DEB_MAVEN_REPO)
 mvnflags += --projects svarog,plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact,plugins/Stager
 mvnflags += -Dmaven.test.skip=true
 
@@ -18,9 +17,8 @@ mvnflags += -Dmaven.test.skip=true
 	dh $@
 
 override_dh_auto_configure:
-	$(copy_repo) debian/
+	mkdir -p $(DEB_MAVEN_REPO)
 	cat debian/svarog.poms debian/svarog-plugin-fft.poms debian/svarog-plugin-tool.poms debian/svarog-plugin-artifact.poms debian/svarog-plugin-stager.poms > debian/all.poms
-	mh_patchpoms -pall -v --debian-build --keep-pom-version --maven-repo=$(DEB_MAVEN_REPO)
 
 override_dh_auto_build:
 	$(mvn) package
@@ -34,5 +32,4 @@ override_dh_install:
 override_dh_auto_clean:
 	rm -rf target
 	rm -rf $(DEB_MAVEN_REPO)
-	mh_unpatchpoms -pall -v
 	rm -f debian/all.poms
