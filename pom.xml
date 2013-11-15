@@ -25,6 +25,7 @@
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
 		<module>plugins/Stager</module>
+		<module>svarog-standalone</module>
 	</modules>
 
 	<profiles>
@@ -36,6 +37,7 @@
 				<module>plugins/PluginToolCommon</module>
 				<module>plugins/Artifact</module>
 				<module>izpack</module>
+				<module>svarog-standalone</module>
 			</modules>
 		</profile>
 	</profiles>
