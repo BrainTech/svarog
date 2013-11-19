@@ -111,7 +111,8 @@
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
 			</plugin>
-
+			
+			<!--
 			<plugin>
 				<groupId>org.dstovall</groupId>
 				<artifactId>onejar-maven-plugin</artifactId>
@@ -119,7 +120,7 @@
 				<executions>
 					<execution>
 						<configuration>
-							<!-- Optional, default is false -->
+							< ! - - Optional, default is false - - >
 							<attachToBuild>true</attachToBuild>
 						</configuration>
 						<goals>
@@ -128,6 +129,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			-->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -361,6 +363,33 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+                    <execution>
+                        <id>package-jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
+                            <archive>
+                                <manifest>
+                                    <mainClass>org.signalml.app.SvarogApplication</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+			</plugin>
+			-->
 		</plugins>
 	</build>
 
