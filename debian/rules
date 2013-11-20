@@ -30,7 +30,7 @@ override_dh_install:
 	jh_exec -v
 
 override_dh_auto_clean:
-	$(mvn) clean
+#	$(mvn) clean
 	rm -rf target
 	rm -rf $(DEB_MAVEN_REPO)
 	rm -f debian/all.poms
