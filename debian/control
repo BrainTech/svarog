@@ -4,7 +4,7 @@ Priority: optional
 Maintainer:  Karol Auguštin <karol@augustin.pl>
 Build-Depends: debhelper (>= 8.0.0),
 	       maven-debian-helper,
-	       maven,
+	       maven2,
 	       protobuf-compiler (>= 2.4),
 	       javahelper,
 Standards-Version: 3.9.1
