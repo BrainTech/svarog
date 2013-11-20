@@ -9,7 +9,7 @@ DEB_JAR_PACKAGE = $(PACKAGE)
 
 mvn = mvn $(mvnflags)
 mvnflags = -Dmaven.repo.local=$(DEB_MAVEN_REPO)
-mvnflags += --projects svarog,plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact,plugins/Stager
+mvnflags += --projects svarog,plugins/FFTSignalTool,plugins/PluginToolCommon,plugins/Artifact,plugins/Stager,svarog-standalone
 mvnflags += -Dmaven.test.skip=true
 
 
