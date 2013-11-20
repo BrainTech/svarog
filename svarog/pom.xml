@@ -564,9 +564,9 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
-		<developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
-		<url>http://escher.fuw.edu.pl/git/svarog</url>
+		<connection>scm:git://git.braintech.pl/svarog.git</connection>
+		<developerConnection>scm:ssh://git.braintech.pl/svarog.git</developerConnection>
+		<url>http://git.braintech.pl/svarog.git</url>
 	</scm>
 
 	<reporting>
@@ -610,10 +610,4 @@
 		</mailingList>
 	</mailingLists>
 
-	<distributionManagement>
-		<site>
-			<id>signalml.org</id>
-			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/svarog</url>
-		</site>
-	</distributionManagement>
 </project>

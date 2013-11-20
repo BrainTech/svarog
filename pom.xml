@@ -57,12 +57,6 @@
 			<url>http://maven.braintech.pl</url>
 		</repository>
 		<repository>
-			<id>signalml.org</id>
-			<name>SignalML Maven Repository</name>
-			<url>https://escher.fuw.edu.pl/maven/repository</url>
-		</repository>
-
-		<repository>
 			<id>apache</id>
 			<name>Apache Commons</name>
 			<url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
@@ -86,11 +80,6 @@
 			<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>
 		</pluginRepository>
 		<pluginRepository>
-			<id>signalml.org</id>
-			<name>SignalML Maven Repository</name>
-			<url>http://escher.fuw.edu.pl/maven/repository</url>
-		</pluginRepository>
-		<pluginRepository>
 			<id>gettext-commons</id>
 			<url>http://gettext-commons.googlecode.com/svn/maven-repository/</url>
 		</pluginRepository>
@@ -108,9 +97,9 @@
 	</dependencyManagement>
 
 	<scm>
-		<connection>scm:git://escher.fuw.edu.pl/git/svarog</connection>
-		<developerConnection>scm:ssh://escher.fuw.edu.pl/git/svarog</developerConnection>
-		<url>http://escher.fuw.edu.pl/git/svarog</url>
+		<connection>scm:git://git.braintech.pl/svarog.git</connection>
+		<developerConnection>scm:ssh://git.braintech.pl/svarog.git</developerConnection>
+		<url>http://git.braintech.pl/svarog.git</url>
 	</scm>
 
 	<reporting>
@@ -372,11 +361,11 @@
 	<distributionManagement>
 		<repository>
 			<id>signalml.org</id>
-			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
+			<url>scpexe://maven.braintech.pl/var/www/maven.braintech.pl</url>
 		</repository>
 		<snapshotRepository>
 			<id>signalml.org</id>
-			<url>scpexe://escher.fuw.edu.pl/home/srv/www/signalml-site/maven/repository</url>
+			<url>scpexe://maven.braintech.pl/var/www/maven.braintech.pl</url>
 		</snapshotRepository>
 	</distributionManagement>
 
