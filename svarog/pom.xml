@@ -5,13 +5,13 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.6</version>
+	<version>1.0.7</version>
 
 	<name>Svarog</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>1.0.6</version>
+		<version>1.0.7</version>
 	</parent>
 
 	<properties>
@@ -410,6 +410,12 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.14</version>
 		</dependency>
+		<dependency>
+			<groupId>net.kencochrane.raven</groupId>
+			<artifactId>raven-log4j</artifactId>
+			<version>4.1.1</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>commons-cli</groupId>
