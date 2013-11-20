@@ -1,6 +1,7 @@
 svarog (1.0.7-1) unstable; urgency=low
 
   * Add file logging.
+  * This is not real debian package anymore.
 
  -- Karol Auguštin <karol@augustin.pl>  Tue, 12 Nov 2013 16:19:35 +0100
 
