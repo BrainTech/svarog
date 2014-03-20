@@ -159,7 +159,7 @@
 									-->
 
 									<!-- protoc returns 1 on success, how lame -->
-									<equals arg1="${protobuf.protoc.version.result}" arg2="1" />
+									<equals arg1="${protobuf.protoc.version.result}" arg2="0" />
 								</condition>
 
 								<echo message="protobuf.protoc.version.result=${protobuf.protoc.version.result}" />
@@ -512,7 +512,7 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>2.4.1</version>
+			<version>2.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
