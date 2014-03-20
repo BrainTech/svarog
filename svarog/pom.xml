@@ -158,7 +158,7 @@
 										 so in effect, missing protoc means skipping compilation.
 									-->
 
-									<!-- protoc returns 1 on success, how lame -->
+									<!-- protoc pririor to 2.5.0 returns 1 on success, how lame -->
 									<equals arg1="${protobuf.protoc.version.result}" arg2="0" />
 								</condition>
 
