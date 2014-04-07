@@ -32,6 +32,7 @@ public class ComputationException extends ResolvableException {
 	       */
 	public ComputationException(String message, Throwable cause) {
 		super(message, cause);
+		this.setStackTrace(cause.getStackTrace());
 	}
 
 	/**
@@ -64,6 +65,7 @@ public class ComputationException extends ResolvableException {
 	 */
 	public ComputationException(Throwable cause) {
 		super(cause);
+		this.setStackTrace(cause.getStackTrace());
 	}
 
 }
