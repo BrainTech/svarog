@@ -57,30 +57,23 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 			chartData[i] = chartPresets[i].createEmptyData(signalLength);
 		}
 
+		tracker.setTickerLimit(0, reader.getAllSegmentsCount());
 		Collection<BookReporterAtom> atomSample = null;
 		while ((atomSample = reader.getAtomsFromNextSegment()) != null) {
+			if (tracker.isRequestingAbort()) {
+				return null;
+			}
 			for (BookReporterChartData chart : chartData) {
 				chart.process(atomSample);
 			}
+			tracker.setTicker(0, reader.getProcessedSegmentsCount());
 		}
-		
-		int exportedCharts = 0;
+
+		BookReporterResult result = new BookReporterResult();
 		for (BookReporterChartData chart : chartData) {
-			try {
-				String rootFilePath = bookReporterData.getParameters().outputDirPath + "/chart";
-				int pos = 1;
-				File file = new File(rootFilePath + pos + ".png");
-				while (!file.createNewFile()) {
-					pos++;
-					file = new File(rootFilePath + pos + ".png");
-				}
-				ChartUtilities.saveChartAsPNG(file, chart.getChart(), 800, 200);
-				exportedCharts++;
-			} catch (IOException ex) {
-				java.util.logging.Logger.getLogger(BookReporterMethod.class.getName()).log(Level.SEVERE, null, ex);
-			}
+			result.addChart(chart.getChart());
 		}
-		return new BookReporterResult(exportedCharts);
+		return result;
 	}
 
 	@Override

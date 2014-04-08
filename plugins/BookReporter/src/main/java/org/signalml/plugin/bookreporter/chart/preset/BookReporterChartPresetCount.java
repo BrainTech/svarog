@@ -47,7 +47,7 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 				return new XYPlot(
 					new XYSeriesCollection(data),
 					new NumberAxis("time [hours]"),
-					new NumberAxis("count of " + getWavesName() + " per " + getTimeInterval() + " s"),
+					new NumberAxis(getWavesName() + " per " + getTimeInterval() + " s"),
 					new XYAreaRenderer()
 				);
 			}

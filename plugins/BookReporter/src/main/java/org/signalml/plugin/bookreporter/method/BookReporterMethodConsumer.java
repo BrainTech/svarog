@@ -3,9 +3,11 @@ package org.signalml.plugin.bookreporter.method;
 import java.awt.Window;
 import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
+import org.jfree.chart.JFreeChart;
 import org.signalml.method.Method;
 import org.signalml.plugin.bookreporter.data.BookReporterData;
 import org.signalml.plugin.bookreporter.data.BookReporterResult;
+import org.signalml.plugin.bookreporter.ui.BookReporterResultFrame;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.method.IPluginMethodResultConsumer;
 import org.signalml.plugin.method.PluginMethodManager;
@@ -32,12 +34,19 @@ public class BookReporterMethodConsumer implements IPluginMethodResultConsumer {
 			return false;
 		}
 		BookReporterResult result = (BookReporterResult) methodResult;
-		JOptionPane.showMessageDialog(
-			dialogParent,
-			"Number of exported charts: " + result.getChartCount(),
-			"Book reporting finished",
-			JOptionPane.INFORMATION_MESSAGE
-		);
+		
+		BookReporterResultFrame resultFrame = new BookReporterResultFrame();
+		for (JFreeChart chart : result.getCharts()) {
+			resultFrame.addChartToPanel(chart);
+		}
+		resultFrame.setVisible(true);
+//		
+//		JOptionPane.showMessageDialog(
+//			dialogParent,
+//			"Number of exported charts: " + result.getChartCount(),
+//			"Book reporting finished",
+//			JOptionPane.INFORMATION_MESSAGE
+//		);
 		return true;
 	}
 }

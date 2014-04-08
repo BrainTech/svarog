@@ -52,7 +52,6 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 
 	private URL contextHelpURL = null;
 
-	private BookReporterDirPanel dirPanel;
 	private BookReporterBookPanel bookPanel;
 	private BookReporterConfigPanel advancedConfigPanel;
 
@@ -102,8 +101,7 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		interfacePanel.add(getBookPanel(), BorderLayout.NORTH);
-		interfacePanel.add(getDirPanel(), BorderLayout.CENTER);
-		interfacePanel.add(getAdvancedConfigPanel(), BorderLayout.SOUTH);
+		interfacePanel.add(getAdvancedConfigPanel(), BorderLayout.CENTER);
 
 		return interfacePanel;
 
@@ -114,13 +112,6 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 			advancedConfigPanel = new BookReporterConfigPanel(this);
 		}
 		return advancedConfigPanel;
-	}
-
-	public BookReporterDirPanel getDirPanel() {
-		if (dirPanel == null) {
-			dirPanel = new BookReporterDirPanel(getFileChooser());
-		}
-		return dirPanel;
 	}
 
 	public BookReporterBookPanel getBookPanel() {
@@ -145,7 +136,6 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 	}
 
 	private void fillDialogFromParameters(BookReporterParameters parameters) {
-		getDirPanel().fillPanelFromModel(parameters);
 		getBookPanel().fillPanelFromModel(parameters);
 		getAdvancedConfigPanel().fillPanelFromParameters(parameters);
 	}
@@ -157,7 +147,6 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 	}
 
 	private void fillParametersFromDialog(BookReporterParameters parameters) {
-		getDirPanel().fillModelFromPanel(parameters);
 		getBookPanel().fillModelFromPanel(parameters);
 		getAdvancedConfigPanel().fillParametersFromPanel(parameters);
 	}
@@ -191,7 +180,6 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors) {
-		getDirPanel().validatePanel(errors);
 		getBookPanel().validatePanel(errors);
 		getAdvancedConfigPanel().validatePanel(errors);
 	}
@@ -237,11 +225,9 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 		try {
 			BookReporterParameters parameters = this.getParametersPreset();
 
-			getDirPanel().fillModelFromPanel(parameters);
 			getBookPanel().fillModelFromPanel(parameters);
 			getAdvancedConfigPanel().fillParametersFromPanel(parameters);
 
-			getDirPanel().fillPanelFromModel(parameters);
 			getBookPanel().fillPanelFromModel(parameters);
 			getAdvancedConfigPanel().fillPanelFromParameters(parameters);
 		} finally {

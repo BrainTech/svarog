@@ -14,13 +14,11 @@ public class BookReporterParameters implements Serializable, Preset {
 
 	private String name;
 	public String bookFilePath;
-	public String outputDirPath;
 	public BookReporterChartPreset[] chartPresets;
 
 	public BookReporterParameters() {
 		name = "";
 		bookFilePath = "";
-		outputDirPath = "";
 		chartPresets = new BookReporterChartPreset[0];
 	}
 

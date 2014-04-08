@@ -83,4 +83,11 @@ public class BookReporterBookReader {
 		return this.segmentCount * this.segmentTimeLength;
 	}
 	
+	public int getAllSegmentsCount() {
+		return this.segmentCount;
+	}
+	
+	public int getProcessedSegmentsCount() {
+		return this.nextSegment;
+	}
 }
