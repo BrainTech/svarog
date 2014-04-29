@@ -132,7 +132,7 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 	@Override
 	public String getTickerLabel(int ticker) {
 		if (ticker == 0) {
-			return _("Book reporting");
+			return _("EEG profiles");
 		} else {
 			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
 		}

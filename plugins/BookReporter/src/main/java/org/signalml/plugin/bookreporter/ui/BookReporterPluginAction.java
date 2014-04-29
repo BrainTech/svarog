@@ -22,7 +22,7 @@ public class BookReporterPluginAction extends AbstractSignalMLAction {
 	public BookReporterPluginAction(PluginMethodManager mgr) {
 		super();
 		this.mgr = mgr;
-		this.setText(_("Book reporting"));
+		this.setText(_("EEG profiles (MP)"));
 		this.setIconPath(BookReporterPlugin.iconPath);
 	}
 

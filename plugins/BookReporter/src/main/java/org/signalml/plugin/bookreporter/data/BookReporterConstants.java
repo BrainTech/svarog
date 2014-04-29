@@ -21,5 +21,8 @@ public class BookReporterConstants {
 	public static final float MIN_PHASE = -3.14f;
 	public static final float MAX_PHASE = 3.14f;
 	public static final float INCR_PHASE = 0.01f;
+	
+	// all structures will occupy time interval x₀ ± z s where
+	public static final float TIME_OCCUPATION_SCALE = 1.5f; // = z
 
 }

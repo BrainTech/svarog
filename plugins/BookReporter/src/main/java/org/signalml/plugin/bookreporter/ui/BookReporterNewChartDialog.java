@@ -65,7 +65,6 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
 
                 diagramTypeButtonGroup.add(timePercentageDiagramButton);
                 timePercentageDiagramButton.setText("time percentage occupied by...");
-                timePercentageDiagramButton.setEnabled(false);
                 timePercentageDiagramButton.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 timePercentageDiagramButtonActionPerformed(evt);
