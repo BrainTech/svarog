@@ -73,7 +73,6 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
 
                 diagramTypeButtonGroup.add(singleOccurenceDiagramButton);
                 singleOccurenceDiagramButton.setText("single occurences of...");
-                singleOccurenceDiagramButton.setEnabled(false);
                 singleOccurenceDiagramButton.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 singleOccurenceDiagramButtonActionPerformed(evt);
