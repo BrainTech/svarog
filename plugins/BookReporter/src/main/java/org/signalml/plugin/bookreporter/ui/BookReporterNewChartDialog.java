@@ -52,7 +52,6 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
                 setModal(true);
                 setName("newChartDialog"); // NOI18N
                 setResizable(false);
-                setType(java.awt.Window.Type.UTILITY);
 
                 diagramTypeButtonGroup.add(waveCountDiagramButton);
                 waveCountDiagramButton.setSelected(true);

@@ -10,9 +10,6 @@
     <Property name="modal" type="boolean" value="true"/>
     <Property name="name" type="java.lang.String" value="newChartDialog" noResource="true"/>
     <Property name="resizable" type="boolean" value="false"/>
-    <Property name="type" type="java.awt.Window$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
-      <Value id="UTILITY"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
