@@ -1,4 +1,4 @@
-package org.signalml.plugin.bookreporter.logic.book.tag.helper;
+package org.signalml.plugin.bookreporter.logic.filter;
 
 import java.util.Collection;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;

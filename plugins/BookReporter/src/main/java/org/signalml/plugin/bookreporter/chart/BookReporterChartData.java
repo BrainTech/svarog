@@ -5,8 +5,8 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.Plot;
 import org.signalml.plugin.bookreporter.data.BookReporterFASPThreshold;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
-import org.signalml.plugin.bookreporter.logic.book.tag.helper.BookReporterBookAtomFilterBase;
-import org.signalml.plugin.bookreporter.logic.book.tag.helper.IBookReporterBookAtomFilter;
+import org.signalml.plugin.bookreporter.logic.filter.BookReporterBookAtomFilterBase;
+import org.signalml.plugin.bookreporter.logic.filter.IBookReporterBookAtomFilter;
 
 /**
  * @author piotr@develancer.pl
