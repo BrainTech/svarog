@@ -47,15 +47,23 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 				XYSeries data = new XYSeries("count");
 				int dataPointCount = (int) Math.ceil(signalLength/timeInterval);
 				
+				data.add(0.0, 0.0);
 				for (int i=0; i<dataPointCount; i++) {
 					double seconds = i * timeInterval;
 					BookReporterTimeInterval interval = BookReporterTimeInterval.create(seconds, seconds+timeInterval);
 					double percentage = 100.0 * intervals.cover(interval) / timeInterval;
-					data.add(seconds/3600.0, percentage);
+					double secondsLeft = (i+0.1) * timeInterval;
+					double secondsRight = (i+0.9) * timeInterval;
+					data.add(secondsLeft/3600.0, percentage);
+					data.add(secondsRight/3600.0, percentage);
 				}
+				data.add(signalLength/3600.0, 0.0);
+
+				NumberAxis xAxis = new NumberAxis("time [hours]");
+				xAxis.setRange(0.0, signalLength/3600.0);
 				return new XYPlot(
 					new XYSeriesCollection(data),
-					new NumberAxis("time [hours]"),
+					xAxis,
 					new NumberAxis("% of each " + getTimeInterval() + " s occupied by " + getWavesName()),
 					new XYAreaRenderer()
 				);

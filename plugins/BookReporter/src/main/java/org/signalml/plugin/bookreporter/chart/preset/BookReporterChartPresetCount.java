@@ -41,13 +41,21 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 			@Override
 			protected Plot getPlot() {
 				XYSeries data = new XYSeries("count");
+
+				data.add(0.0, 0.0);
 				for (int i=0; i<this.counts.length; i++) {
-					double seconds = i * timeInterval;
-					data.add(seconds/3600.0, this.counts[i]);
+					double secondsLeft = (i+0.1) * timeInterval;
+					double secondsRight = (i+0.9) * timeInterval;
+					data.add(secondsLeft/3600.0, this.counts[i]);
+					data.add(secondsRight/3600.0, this.counts[i]);
 				}
+				data.add(signalLength/3600.0, 0.0);
+
+				NumberAxis xAxis = new NumberAxis("time [hours]");
+				xAxis.setRange(0.0, signalLength/3600.0);
 				return new XYPlot(
 					new XYSeriesCollection(data),
-					new NumberAxis("time [hours]"),
+					xAxis,
 					new NumberAxis(getWavesName() + " per " + getTimeInterval() + " s"),
 					new XYAreaRenderer()
 				);

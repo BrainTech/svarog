@@ -13,27 +13,33 @@ public class BookReporterFASPThreshold implements Serializable {
 		public Predefined() {
 			super();
 			put("alpha waves", new BookReporterFASPThreshold(
-				8.0, 12.0,   // f
-				5.0, null,   // a
-				1.5, null,   // s
+				8.0,  12.0,  // f
+				5.0,  null,  // a
+				1.5,  null,  // s
+				null, null   // p
+			));
+			put("beta waves", new BookReporterFASPThreshold(
+				15.0, 25.0,  // f
+				5.0,  null,  // a
+				0.5,  null,  // s
 				null, null   // p
 			));
 			put("delta waves", new BookReporterFASPThreshold(
-				0.2, 4.0,    // f
+				0.2,  4.0,   // f
 				65.0, null,  // a
-				0.5, 6.0,    // s
+				0.5,  6.0,   // s
 				null, null   // p
 			));
 			put("theta waves", new BookReporterFASPThreshold(
-				4.0, 8.0,    // f
-				30.0, null,  // a
-				0.1, null,   // s
+				4.0,  8.0,   // f
+				15.0, null,  // a
+				1.0,  null,  // s
 				null, null   // p
 			));
 			put("sleep spindles", new BookReporterFASPThreshold(
 				11.0, 15.0,  // f
 				12.0, null,  // a
-				0.4, 25.0,   // s
+				0.4,  2.5,   // s
 				null, null   // p
 			));
 			put("K-complexes", new BookReporterFASPThreshold(
@@ -41,6 +47,12 @@ public class BookReporterFASPThreshold implements Serializable {
 				100.0, null, // a
 				0.3, 1.5,    // s
 				-0.5, +0.5   // p
+			));
+			put("SWA", new BookReporterFASPThreshold(
+				0.2,  4.0,   // f
+				70.0, null,  // a
+				0.5,  null,  // s
+				null, null   // p
 			));
 		}
 	}
