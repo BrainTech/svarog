@@ -1,7 +1,6 @@
 package org.signalml.plugin.bookreporter.method;
 
 import java.awt.Window;
-import javax.swing.JOptionPane;
 import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.signalml.method.Method;
@@ -39,6 +38,7 @@ public class BookReporterMethodConsumer implements IPluginMethodResultConsumer {
 		for (JFreeChart chart : result.getCharts()) {
 			resultFrame.addChartToPanel(chart);
 		}
+		resultFrame.setTags(result.getTags());
 		resultFrame.setVisible(true);
 //		
 //		JOptionPane.showMessageDialog(

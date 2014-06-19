@@ -9,6 +9,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * @author piotr@develancer.pl
@@ -21,8 +22,8 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 	}
 
 	@Override
-	public BookReporterChartData createEmptyData(final double signalLength) {
-		return new BookReporterChartData(getThreshold()) {
+	public BookReporterChartData createEmptyData(final double signalLength, TagStyle tagStyle) {
+		return new BookReporterChartData(getThreshold(), tagStyle) {
 
 			private final int timeInterval = getTimeInterval();
 			private final int[] counts = new int[ (int) Math.ceil(signalLength/timeInterval) ];

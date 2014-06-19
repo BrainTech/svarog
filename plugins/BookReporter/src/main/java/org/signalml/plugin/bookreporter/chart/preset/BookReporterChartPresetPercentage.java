@@ -12,6 +12,7 @@ import org.signalml.plugin.bookreporter.data.BookReporterConstants;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.bookreporter.logic.intervals.BookReporterTimeInterval;
 import org.signalml.plugin.bookreporter.logic.intervals.BookReporterTimeIntervalSet;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * @author piotr@develancer.pl
@@ -24,8 +25,8 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 	}
 
 	@Override
-	public BookReporterChartData createEmptyData(final double signalLength) {
-		return new BookReporterChartData(getThreshold()) {
+	public BookReporterChartData createEmptyData(final double signalLength, TagStyle tagStyle) {
+		return new BookReporterChartData(getThreshold(), tagStyle) {
 
 			private final int timeInterval = getTimeInterval();
 			private final BookReporterTimeIntervalSet intervals = new BookReporterTimeIntervalSet();

@@ -1,11 +1,9 @@
 package org.signalml.plugin.bookreporter.method;
 
-import java.io.File;
-import java.io.IOException;
+import java.awt.Color;
 import java.util.Collection;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
-import org.jfree.chart.ChartUtilities;
+import org.signalml.domain.tag.TagStyles;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
@@ -22,6 +20,8 @@ import org.signalml.plugin.bookreporter.io.BookReporterBookReader;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.method.BaseMethodData;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.TagStyle;
 import static org.signalml.plugin.i18n.PluginI18n._;
 import org.signalml.plugin.method.PluginAbstractMethod;
 import org.signalml.plugin.tool.PluginResourceRepository;
@@ -50,15 +50,19 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 			throw new RuntimeException(ex.getMessage());
 		}
 
+		TagStyles tagStyles = new TagStyles();
+
 		double signalLength = reader.getTimeLength();
 		BookReporterChartPreset[] chartPresets = bookReporterData.getParameters().chartPresets;
 		BookReporterChartData[] chartData = new BookReporterChartData[chartPresets.length];
 		for (int i=0; i<chartPresets.length; i++) {
-			chartData[i] = chartPresets[i].createEmptyData(signalLength);
+			TagStyle tagStyle = new TagStyle(SignalSelectionType.CHANNEL, chartPresets[i].getWavesName(), "EEG profiling tag", Color.RED, Color.BLACK, 1.0f);
+			chartData[i] = chartPresets[i].createEmptyData(signalLength, tagStyle);
+			tagStyles.addStyle(tagStyle);
 		}
 
 		tracker.setTickerLimit(0, reader.getAllSegmentsCount());
-		Collection<BookReporterAtom> atomSample = null;
+		Collection<BookReporterAtom> atomSample;
 		while ((atomSample = reader.getAtomsFromNextSegment()) != null) {
 			if (tracker.isRequestingAbort()) {
 				return null;
@@ -69,9 +73,10 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 			tracker.setTicker(0, reader.getProcessedSegmentsCount());
 		}
 
-		BookReporterResult result = new BookReporterResult();
+		BookReporterResult result = new BookReporterResult(tagStyles);
 		for (BookReporterChartData chart : chartData) {
 			result.addChart(chart.getChart());
+			result.addTags(chart.getTagList());
 		}
 		return result;
 	}

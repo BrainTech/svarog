@@ -1,6 +1,5 @@
 package org.signalml.plugin.bookreporter.chart.preset;
 
-import java.awt.Color;
 import java.util.Collection;
 import java.util.LinkedList;
 import org.jfree.chart.axis.NumberAxis;
@@ -12,6 +11,7 @@ import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * @author piotr@develancer.pl
@@ -24,9 +24,9 @@ public class BookReporterChartPresetOccurences extends BookReporterChartPreset {
 	}
 
 	@Override
-	public BookReporterChartData createEmptyData(double signalLength) {
+	public BookReporterChartData createEmptyData(double signalLength, TagStyle tagStyle) {
 		final double signalHours = signalLength / 3600.0;
-		return new BookReporterChartData(getThreshold()) {
+		return new BookReporterChartData(getThreshold(), tagStyle) {
 
 			private final LinkedList<Double> positions = new LinkedList<Double>();
 

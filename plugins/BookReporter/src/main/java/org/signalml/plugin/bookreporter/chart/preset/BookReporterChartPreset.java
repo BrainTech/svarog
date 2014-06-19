@@ -2,6 +2,7 @@ package org.signalml.plugin.bookreporter.chart.preset;
 
 import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.BookReporterFASPThreshold;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * @author piotr@develancer.pl
@@ -34,6 +35,6 @@ public abstract class BookReporterChartPreset {
 		this.wavesName = wavesName;
 	}
 	
-	public abstract BookReporterChartData createEmptyData(double signalLength);
+	public abstract BookReporterChartData createEmptyData(double signalLength, TagStyle tagStyle);
 	
 }

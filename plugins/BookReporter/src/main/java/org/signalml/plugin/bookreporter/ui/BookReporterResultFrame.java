@@ -13,6 +13,9 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.signalml.app.document.TagDocument;
+import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.SignalMLException;
 
 /**
  * @author piotr@develancer.pl
@@ -23,12 +26,15 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 	
 	private final ArrayList<JFreeChart> charts;
 	
+	private StyledTagSet tags;
+	
 	/**
 	 * Creates new form BookReporterResultFrame
 	 */
 	public BookReporterResultFrame() {
 		initComponents();
 		charts = new ArrayList<JFreeChart>();
+		tags = null;
 	}
 
 	/**
@@ -47,6 +53,7 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
                 ySizeSpinner = new javax.swing.JSpinner();
                 jLabel3 = new javax.swing.JLabel();
                 pngSaveButton = new javax.swing.JButton();
+                tagsSaveButton = new javax.swing.JButton();
                 chartPanelContainer = new javax.swing.JPanel();
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -88,6 +95,18 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
                 });
                 menuToolBar.add(pngSaveButton);
 
+                tagsSaveButton.setText("tags");
+                tagsSaveButton.setEnabled(false);
+                tagsSaveButton.setFocusable(false);
+                tagsSaveButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+                tagsSaveButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                tagsSaveButton.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                tagsSaveButtonActionPerformed(evt);
+                        }
+                });
+                menuToolBar.add(tagsSaveButton);
+
                 chartPanelContainer.setBackground(java.awt.Color.white);
                 chartPanelContainer.setLayout(new java.awt.GridLayout(0, 1));
 
@@ -126,12 +145,39 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 		}
         }//GEN-LAST:event_pngSaveButtonActionPerformed
 
+        private void tagsSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tagsSaveButtonActionPerformed
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setFileFilter(new FileNameExtensionFilter("tag files", "tag"));
+		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+			File outputFile = fileChooser.getSelectedFile();
+			if (outputFile != null) {
+				try {
+					TagDocument document = new TagDocument(tags);
+					try {
+						document.setBackingFile(outputFile);
+						document.saveDocument();
+						JOptionPane.showMessageDialog(this, "Tags were saved successfully!", "Tags saved to file", JOptionPane.INFORMATION_MESSAGE);
+					} catch (IOException ex) {
+						JOptionPane.showMessageDialog(this, ex.getMessage(), "Error saving tags", JOptionPane.ERROR_MESSAGE);
+					}
+				} catch (SignalMLException ex) {
+					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error processing tags", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}
+        }//GEN-LAST:event_tagsSaveButtonActionPerformed
+
 	public void addChartToPanel(JFreeChart chart) {
 		chart.setBackgroundPaint(Color.WHITE);
 		ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanelContainer.add(chartPanel);
 		charts.add(chart);
 		ySizeSpinner.setValue(new Integer(charts.size() * ONE_HEIGHT));
+	}
+	
+	public void setTags(StyledTagSet tags) {
+		this.tags = tags;
+		tagsSaveButton.setEnabled(this.tags != null);
 	}
 	
 	private BufferedImage generateBufferedImage() {
@@ -158,6 +204,7 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
         private javax.swing.JLabel jLabel3;
         private javax.swing.JToolBar menuToolBar;
         private javax.swing.JButton pngSaveButton;
+        private javax.swing.JButton tagsSaveButton;
         private javax.swing.JSpinner xSizeSpinner;
         private javax.swing.JSpinner ySizeSpinner;
         // End of variables declaration//GEN-END:variables
