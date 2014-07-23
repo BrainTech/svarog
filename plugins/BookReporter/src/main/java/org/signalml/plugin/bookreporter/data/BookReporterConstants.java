@@ -23,6 +23,6 @@ public class BookReporterConstants {
 	public static final float INCR_PHASE = 0.01f;
 	
 	// all structures will occupy time interval x₀ ± z s where
-	public static final float TIME_OCCUPATION_SCALE = 1.5f; // = z
+	public static final float TIME_OCCUPATION_SCALE = 0.5f; // = z
 
 }
