@@ -97,7 +97,7 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
                 waveTypeCombo.setEditable(true);
                 waveTypeCombo.setModel(new DefaultComboBoxModel(BookReporterFASPThreshold.getPredefinedThresholdNames()));
 
-                timeIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(180), Integer.valueOf(1), null, Integer.valueOf(1)));
+                timeIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(20), Integer.valueOf(1), null, Integer.valueOf(1)));
                 timeIntervalSpinner.setMinimumSize(new java.awt.Dimension(80, 28));
                 timeIntervalSpinner.setPreferredSize(new java.awt.Dimension(80, 28));
 

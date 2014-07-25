@@ -123,7 +123,7 @@ public class BookReporterConfigPanel extends JPanel {
 					"<html><body><div align=\"center\">" + _("Frequency [Hz]")
 							+ "<br />" + _("min/max") + "</div></body></html>");
 			BookReporterTitleLabel scaleLabel = new BookReporterTitleLabel(
-					"<html><body><div align=\"center\">" + _("Scale [s]")
+					"<html><body><div align=\"center\">" + _("Time width [s]")
 							+ "<br />" + _("min/max") + "</div></body></html>");
 			BookReporterTitleLabel phaseLabel = new BookReporterTitleLabel(
 					"<html><body><div align=\"center\">" + _("Phase [rad]")
