@@ -23,9 +23,11 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
@@ -70,6 +72,7 @@ import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Algorithm;
 import org.signalml.method.mp5.MP5ConfigCreator;
 import org.signalml.method.mp5.MP5Data;
+import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.method.mp5.MP5RuntimeParameters;
 import org.signalml.method.mp5.MP5WritingModeType;
@@ -94,19 +97,19 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	private static final long MEMORY_GB = 1024L*1024L*1024L;
 	private static final long MEMORY_TB = 1024L*1024L*1024L*1024L;
 
-//	public static final String HELP_ALGORITHM 					= "org/signalml/help/mp5.html#algorithm";
-//	public static final String HELP_BOOK_COMMENT 				= "org/signalml/help/mp5.html#bookComment";
-//	public static final String HELP_MAX_ITERATION_COUNT			= "org/signalml/help/mp5.html#maxIterationCount";
-//	public static final String HELP_ENERGY_PERCENT 				= "org/signalml/help/mp5.html#energyPercent";
-//	public static final String HELP_ENERGY_ERROR				= "org/signalml/help/mp5.html#energyError";
-//	public static final String HELP_ATOM_COUNT	 				= "org/signalml/help/mp5.html#atomCount";
-//	public static final String HELP_RAM_USAGE	 				= "org/signalml/help/mp5.html#ramUsage";
-//	public static final String HELP_DICTIONARY_TYPE				= "org/signalml/help/mp5.html#dictionaryType";
-//	public static final String HELP_DICTIONARY_REINIT_TYPE		= "org/signalml/help/mp5.html#dictionaryReinitType";
-//	public static final String HELP_SCALE_TO_PERIOD_FACTOR  	= "org/signalml/help/mp5.html#scaleToPeriodFactor";
-//	public static final String HELP_BOOK_WITH_SIGNAL			= "org/signalml/help/mp5.html#bookWithSignal";
-//	public static final String HELP_ADDITIONAL_CONFIG			= "org/signalml/help/mp5.html#additionalConfig";
-//	public static final String HELP_RAW_CONFIG					= "org/signalml/help/mp5.html#rawConfig";
+//	public static final String HELP_ALGORITHM 					= "org/signalml/help/decompMP5.html#algorithm";
+//	public static final String HELP_BOOK_COMMENT 				= "org/signalml/help/decompMP5.html#bookComment";
+//	public static final String HELP_MAX_ITERATION_COUNT			= "org/signalml/help/decompMP5.html#maxIterationCount";
+//	public static final String HELP_ENERGY_PERCENT 				= "org/signalml/help/decompMP5.html#energyPercent";
+//	public static final String HELP_ENERGY_ERROR				= "org/signalml/help/decompMP5.html#energyError";
+//	public static final String HELP_ATOM_COUNT	 				= "org/signalml/help/decompMP5.html#atomCount";
+//	public static final String HELP_RAM_USAGE	 				= "org/signalml/help/decompMP5.html#ramUsage";
+//	public static final String HELP_DICTIONARY_TYPE				= "org/signalml/help/decompMP5.html#dictionaryType";
+//	public static final String HELP_DICTIONARY_REINIT_TYPE		= "org/signalml/help/decompMP5.html#dictionaryReinitType";
+//	public static final String HELP_SCALE_TO_PERIOD_FACTOR  	= "org/signalml/help/decompMP5.html#scaleToPeriodFactor";
+//	public static final String HELP_BOOK_WITH_SIGNAL			= "org/signalml/help/decompMP5.html#bookWithSignal";
+//	public static final String HELP_ADDITIONAL_CONFIG			= "org/signalml/help/decompMP5.html#additionalConfig";
+//	public static final String HELP_RAW_CONFIG					= "org/signalml/help/decompMP5.html#rawConfig";
 
 	private PleaseWaitDialog pleaseWaitDialog;
 	private MP5ExecutorManager executorManager;
@@ -186,7 +189,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
 			try {
-				contextHelpURL = (new ClassPathResource("org/signalml/help/mp5.html")).getURL();
+				contextHelpURL = (new ClassPathResource("org/signalml/help/decompMP5.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
@@ -230,34 +233,38 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorSpinner().addChangeListener(new ChangeListener() {
+		final JSpinner energyErrorPercentageSpinner = getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorPercentageSpinner();
+		final JComboBox dictionaryTypeComboBox = getDictionaryConfigPanel().getAdvancedDecompositionConfigPanel().getDictionaryTypeComboBox();
+		dictionaryTypeComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					energyErrorPercentageSpinner.setEnabled(e.getItem() == MP5DictionaryType.OCTAVE_STOCH);
+				}
+			}
+		});
 
+		ChangeListener changeListener = new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				updateInfoFields();
 			}
-
-		});
-
-		getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorPercentageSpinner().addChangeListener(new ChangeListener() {
-
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				updateInfoFields();
-			}
-
-		});
-
-		getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(new ItemListener() {
-
+		};
+		ItemListener itemListener = new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
 					updateInfoFields();
 				}
 			}
+		};
 
-		});
+		getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorSpinner().addChangeListener(changeListener);
+		energyErrorPercentageSpinner.addChangeListener(changeListener);
+		getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(itemListener);
+		getDictionaryConfigPanel().getAdvancedDecompositionConfigPanel().getDictionaryTypeComboBox().addItemListener(itemListener);
+		dictionaryTypeComboBox.addItemListener(itemListener);
+
 		return interfacePanel;
 
 	}
@@ -531,6 +538,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		MP5DictionaryConfigPanel panel = getDictionaryConfigPanel();
 		MP5DictionaryDensityConfigPanel densityConfigPanel = panel.getDictionaryDensityConfigPanel();
+		MP5AdvancedDecompositionConfigPanel advancedPanel = panel.getAdvancedDecompositionConfigPanel();
 		double eps2 = ((Number) densityConfigPanel.getEnergyErrorSpinner().getValue()).doubleValue();
 		double eps = Math.sqrt(eps2);
 		double a = (1 + eps*Math.sqrt((2.0-eps2)*(eps2*eps2-2.0*eps2+2.0))) / ((1.0-eps2)*(1.0-eps2));
@@ -539,7 +547,9 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		// R = 0.5pi * N * ln(N)/ln(a) / ln(1-eps2)
 		double approxAtomCount = Math.ceil(0.5 * Math.PI * currentPageLength
 			* Math.log(currentPageLength)/Math.log(a) / Math.abs(Math.log(1.0-eps2)) );
-		approxAtomCount *= (percentageChosen / 100.0F);
+		if (advancedPanel.getDictionaryTypeComboBox().getSelectedItem() == MP5DictionaryType.OCTAVE_STOCH) {
+			approxAtomCount *= (percentageChosen / 100.0F);
+		}
 
 		MP5Algorithm algorithm = (MP5Algorithm) getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();
 		int k;

@@ -27,8 +27,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -67,6 +70,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
 import org.signalml.app.view.book.popup.BookZoomPopupDialog;
@@ -77,6 +81,8 @@ import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.book.wignermap.WignerMapPaletteComboBoxCellRenderer;
 import org.signalml.app.view.book.wignermap.WignerMapScaleComboBoxCellRenderer;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
+import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.HelpDialog;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.BookFilterProcessor;
@@ -85,6 +91,7 @@ import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
+import org.springframework.core.io.ClassPathResource;
 
 /** BookView
  *
@@ -161,6 +168,8 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 	private MouseListener plotActivationMouseListener;
 
 	private BookToolForwardingMouseAdapter toolMouseAdapter;
+
+	private final HelpDialog helpDialog = new HelpDialog(null, false);
 
 	private int currentSegment;
 	private int currentChannel;
@@ -467,6 +476,12 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
 		mainToolBar.add(filterSwitchButton);
 
+		try {
+			AbstractAction helpAction = getContextHelpAction();
+			mainToolBar.add(new JButton(helpAction));
+		} catch (IOException ex) {
+			java.util.logging.Logger.getLogger(BookView.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	}
 
 	public BookFilterProcessor getFilter() {
@@ -574,6 +589,20 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			filterSwitchAction = new BookFilterSwitchAction(this);
 		}
 		return filterSwitchAction;
+	}
+
+	public AbstractAction getContextHelpAction() throws IOException {
+		final URL contextHelpURL = (new ClassPathResource("org/signalml/help/viewerBookMP5.html")).getURL();
+		AbstractAction action = new AbstractAction() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				helpDialog.reset();
+				helpDialog.showDialog(contextHelpURL, true);
+			}
+		};
+		action.putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
+		action.putValue(AbstractAction.SHORT_DESCRIPTION,_("Display context help for this dialog"));
+		return action;
 	}
 
 	public ShowPreviousBookSegmentAction getPreviousSegmentAction() {

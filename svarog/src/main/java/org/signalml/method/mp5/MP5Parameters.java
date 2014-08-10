@@ -53,7 +53,7 @@ public class MP5Parameters implements Serializable, Preset {
 	private MP5DictionaryType dictionaryType = MP5DictionaryType.OCTAVE_FIXED;
 	private MP5DictionaryReinitType dictionaryReinitType = MP5DictionaryReinitType.NO_REINIT_AT_ALL;
 	private float scaleToPeriodFactor = 1F;
-	private float energyError = 0.3F;
+	private float energyError = 0.1F;
 	private float energyErrorPercentage = 90.0F;
 
 	// decomposition parameters

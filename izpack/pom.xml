@@ -4,13 +4,13 @@
 
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog-installer</artifactId>
-	<version>1.0.7</version>
+	<version>1.0.8</version>
 
 	<name>svarog-installer</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>1.0.7</version>
+		<version>1.0.8</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 

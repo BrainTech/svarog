@@ -146,35 +146,32 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 		}
 
 		if (samplingFrequencyCapable) {
+
 			try {
-				samplingFrequency = reader.get_sampling_frequency();
+				uniformSampling = reader.is_uniform_sampling_frequency();
 			} catch (SignalMLCodecException e) {
-				logger.warn("WARNING: codec doesn't support sampling frequency, left null");
+				logger.warn("WARNING: codec doesn't support uniform sampling frequency info, left true");
 				logger.debug("Caught exception was", e);
-				samplingFrequencyCapable = false;
 			}
 
-			if (samplingFrequencyCapable) {
+			if (!uniformSampling) {
+
+				logger.warn("WARNING: signal sampling is not uniform. Naive upsampling will be used for select channels");
+
+				resampler = new NaiveMultichannelSignalResampler();
+				collectChannelSampling();
+
+			} else {
 
 				try {
-					uniformSampling = reader.is_uniform_sampling_frequency();
+					samplingFrequency = reader.get_sampling_frequency();
 				} catch (SignalMLCodecException e) {
-					logger.warn("WARNING: codec doesn't support uniform sampling frequency info, left true");
+					logger.warn("WARNING: codec doesn't support sampling frequency, left null");
 					logger.debug("Caught exception was", e);
 				}
-
-				if (!uniformSampling) {
-
-					logger.warn("WARNING: signal sampling is not uniform. Naive upsampling will be used for select channels");
-
-					resampler = new NaiveMultichannelSignalResampler();
-					collectChannelSampling();
-
-				}
-
 			}
-
 		}
+
 
 		try {
 			this.calibrationCapable = reader.is_calibration();
@@ -201,14 +198,22 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 
 			try {
 				channelSampling[i] = reader.get_sampling_frequency(i);
+				if (channelSampling[i] > samplingFrequency) {
+					samplingFrequency = channelSampling[i];
+				}
 			} catch (SignalMLCodecException e) {
 				logger.warn("WARNING: codec didn't return channel sampling for channel [" + i + "] - assumed default");
 				logger.debug("Caught exception was", e);
-				channelSampling[i] = samplingFrequency;
+				channelSampling[i] = 0;
 			}
 
 		}
 
+		for (int i=0; i<channelCount; i++) {
+			if (channelSampling[i] == 0) {
+				channelSampling[i] = samplingFrequency;
+			}
+		}
 	}
 
 	/**
