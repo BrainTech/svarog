@@ -19,3 +19,7 @@ log
 keys.pot
 en.po
 svarog/output.bin
+
+# NetBeans configuration
+nb-configuration.xml
+nbactions.xml

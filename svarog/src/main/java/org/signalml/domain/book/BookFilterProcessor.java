@@ -58,13 +58,14 @@ public class BookFilterProcessor extends BookProcessor {
 		StandardBookSegment[] segments = segmentCache.get(new Integer(segmentIndex));
 		if (segments == null) {
 
+			StandardBookSegment[] sourceSegments = source.getSegmentAt(segmentIndex);
 			if (filterChain == null || !filterChain.isFiltered()) {
-				segments = source.getSegmentAt(segmentIndex);
+				segments = sourceSegments;
 			} else {
 				int channelCount = source.getChannelCount();
 				segments = new FilteredBookSegment[ channelCount ];
 				for (int i=0; i<channelCount; i++) {
-					segments[i] = new FilteredBookSegment(source.getSegmentAt(segmentIndex, i), filterChain);
+					segments[i] = new FilteredBookSegment(sourceSegments[i], filterChain);
 				}
 			}
 

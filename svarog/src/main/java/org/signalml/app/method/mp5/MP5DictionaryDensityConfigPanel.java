@@ -23,6 +23,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;
 
 import org.springframework.validation.Errors;
@@ -158,7 +159,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 					((double) MP5Parameters.MIN_ENERGY_ERROR),
 					((double) MP5Parameters.MIN_ENERGY_ERROR),
 					((double) MP5Parameters.MAX_ENERGY_ERROR),
-					0.1d
+					0.01d
 				)
 			);
 			energyErrorSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
@@ -214,6 +215,7 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 
 		getEnergyErrorSpinner().setValue(new Double(parameters.getEnergyError()));
 		getEnergyErrorPercentageSpinner().setValue(new Double(parameters.getEnergyErrorPercentage()));
+		getEnergyErrorPercentageSpinner().setEnabled(parameters.getDictionaryType() == MP5DictionaryType.OCTAVE_STOCH);
 
 	}
 
