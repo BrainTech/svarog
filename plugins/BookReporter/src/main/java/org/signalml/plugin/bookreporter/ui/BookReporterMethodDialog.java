@@ -35,20 +35,7 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String HELP_RULES = "org/signalml/help/bookReporter.html#rules";
-	public static final String HELP_DELTA_MIN_AMPLITUDE = "org/signalml/help/bookReporter.html#deltaMinAmplitude";
-	public static final String HELP_ALPHA_MIN_AMPLITUDE = "org/signalml/help/bookReporter.html#alphaMinAmplitude";
-	public static final String HELP_SPINDLE_MIN_AMPLITUDE = "org/signalml/help/bookReporter.html#spindleMinAmplitude";
-	public static final String HELP_PRIMARY_HYPNOGRAM = "org/signalml/help/bookReporter.html#primaryHypnogram";
-
-	public static final String HELP_PARAMETERS = "org/signalml/help/bookReporter.html#parameters";
-
-	public static final String HELP_EMG_TONE_THRESHOLD = "org/signalml/help/bookReporter.html#emgToneThreshold";
-	public static final String HELP_MT_EEG_THRESHOLD = "org/signalml/help/bookReporter.html#mtEegThreshold";
-	public static final String HELP_MT_EMG_THRESHOLD = "org/signalml/help/bookReporter.html#mtEmgThreshold";
-	public static final String HELP_MT_TONE_EMG_THRESHOLD = "org/signalml/help/bookReporter.html#mtToneEmgThreshold";
-	public static final String HELP_REM_EOG_DEFLECTION_THRESHOLD = "org/signalml/help/bookReporter.html#remEogDeflectionThreshold";
-	public static final String HELP_SEM_EOG_DEFLECTION_THRESHOLD = "org/signalml/help/bookReporter.html#semEogDeflectionThreshold";
+	public static final String HELP_PARAMETERS = "org/signalml/help/profilesEEG.html#";
 
 	private URL contextHelpURL = null;
 
@@ -87,7 +74,7 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 		if (contextHelpURL == null) {
 			try {
 				contextHelpURL = (new ClassPathResource(
-						"org/signalml/help/bookReporter.html")).getURL();
+						"org/signalml/help/profilesEEG.html")).getURL();
 			} catch (IOException ex) {
 				logger.error("Failed to get help URL", ex);
 			}
