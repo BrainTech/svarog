@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>Results of MP decompositions stored offline (&quot;books&quot;) can be visualized as interactive  time-frequency maps of signals energy density. This can be achieved either by clicking &quot;open in the viewer&quot; in the &quot;get result&quot; window, which appears after a successfull MP decomposition, or expliciltly opening a previously computed book via  File -&gt; Open book or Alt+B. Both these actions open  a new tab.</p>
+<p>The center of the tab is occupied by the time-frequency map of signals energy density, calculated as a sum of Wigner distributions of all the functions chosen by MP for the representation of given signal.  The map itself is interactive -- centers of the atoms are clickable.</p>
+<p>Below the interactive map three signals are displayed with time scale aligned with the map. These signals are, from the top: the original signal, its reconstruction from all the atoms in the book (the difference between these two stems from the fact that MP is an approximation), and in the bottom the signal reconstructed from all the selected atoms -- initially flat. To add an atom to (or remove from) the reconstruction simply click it's center on the time-frequency map.</p>
+<p>Functionalities related to the interactive display are accesible from the toolbar at the top. The group located on the left  contains, from the left:</p>
+<ul>
+  <li>
+Group of three icons for zooming the time-frequency map: magnifying glass in the center activates zooming (drag the mouse over the area of the map you want to zoom), rightmost icon with green recycling symbol returns default zoom of the complete map (full time range and frequency from 0 to Nyquist), and the leftmost arrow returns the normal function of the mouse, which is marking atoms to be added to the reconstruction</li>
+  <li>Next panel navigates through subsequent decompositions potentially stored in one file. If the   book contains decomposition of more than one epoch, symbols of next/previous page will be active next to the field indicating the current epoch; if the book contains only one epoch, these symbols will be inactive and the field will display 1/1, meaning 1st epoch out of 1.</li>
+  <li>Next panel navigates through subsequent channels, if the book contains a multichannel (multivariate) decomposition. The field next to the right indicates the channel displayed and the total number of channels; in case of monovariate decomposition of one signal, it will indicate 1/1.</li>
+  <li>The last icon in the right group with a symbol of a table indeed displays a table, containing parameters -- time and frequency centers, amplitude, energy (modulus) and phase -- of Gabor functions from the current decomposition. Functions chosen for the reconstruction (bottom signal) are marked in the rightmost column, which is clickable and can be also used to choose atoms for the reconstruction.</li>
+</ul>
+<p>Group of icons located on the right side of the bar contains, from the left:</p>
+<ul>
+  <li>A symbol of filter which opens a window for filtering the results of the decomposition, that is choosing which of the functions chosen by MP for the representation of the signal should be displayed. This can be used for example to display only the functions conforming to the definition of a sleep spindle, which would impose conditions on their time-frequency parameters like frequency from 11 to 15 Hz, time width above 1 second, amplitude... etc.</li>
+  <li>Two following pulldowns choose the gamma correction (linear, sqrt or log) and colormap (rainbow or grayscale)</li>
+  <li>The next icon with a symbol of a switch opens a window regulating what and how is displayed; here you may turn on antialiasing for display of the signals (recommended), choose which signals are displayed etc.</li>
+  <li>After a slider regulating the height of the reconstruction, last symbol of a filter toggles whether the previously described filter is active or not.</li>
+  </ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

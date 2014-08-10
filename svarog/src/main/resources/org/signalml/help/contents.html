@@ -3,69 +3,29 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Signalml viewer 1.0.8</title>
+<style type="text/css">
+.red {
+	color: #008;
+}
+</style>
 </head>
-<body><div><h1>Welcome to signalml viewer 1.0.8</h1>
-
-<h2>Overview</h2>
-
-<p>The description of the software, credits and support information can be found at:</p>
-
-<p><a href="http://signalml.org/">signalml.org website</a></p>
-
-<p>Please visit for all further details.</p>
-
-<h2>Technical information</h2>
-
-<p>signalml viewer requires Java 1.6.0+ compatible Java virtual machine. Although
-virtual machines by other publishers may work, only the Sun VM is officially supported
-and recommended. The JRE should be enough to run the application, the JDK distribution
-works just as well.</p>
-
-<p>If you intend to run artifact detection or automatic sleep staging (analysis methods bundled
-with the application), you will also need Matlab Component Runtime v. 7.6. Appropriate binary
-install package is redistributed with this application.</p>
-
-<p>Some parts of the application, notably the MP5 decomposition rely on a native application (mp5). 
-Binary versions for Windows and generic Linux are included with the application. If you run this application
-on another operating system you need to (either) compile MP5 from sources yourself or use a server.</p>
-
-<h2>Acknowledgments</h2>
-
-<p>This software utilises the following Open Source components:</p>
-
-<ul>
-<li>Spring Framework (<a href="http://www.springframework.org/" />website</a>)</li>
-<li>Spring Web Services (<a href="http://static.springframework.org/spring-ws/site/" />website</a>)</li>
-<li>Log4J (<a href="http://logging.apache.org/log4j/1.2/index.html" />website</a>)</li>
-<li>Some Apache Commons libs (logging &amp; cli) (<a href="http://commons.apache.org/" />website</a>)</li>
-<li>Xerces (<a href="http://xerces.apache.org/xerces-j/" />website</a>)</li>
-<li>XStream (<a href="http://xstream.codehaus.org/" />website</a>)</li>
-<li>Janino compiler (<a href="http://www.janino.net/" />website</a>)</li>
-<li>JFreeChart (<a href="http://www.jfree.org/jfreechart/" />website</a>)</li>
-<li>FamFamFam icons (<a href="http://www.famfamfam.com/" />website</a>)</li>
-<li>Crystal icons (<a href="http://www.everaldo.com/crystal/" />website</a>)</li>
-</ul>
-
-<p>Developped with the Eclipse IDE (<a href="http://www.eclipse.org/" />website</a>)</p>
-
-<h2>Known issues</h2>
-
-<ul>
-<li>Installation of MCR may fail on Windows if Visual C++ Redistributable is not installed. The
-problem manifests itself with a misleading error message that the instalation has been "interrupted".
-The Visual C++ Redistributable can be obtained freely from Microsoft
-<a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=200b2fd9-ae1a-4a14-984d-389c36f85647&DisplayLang=en">here</a>. 
-Note that the same effect can also be caused by lack of administrative priviledges when MCR
-is installed. 
-<li>MCR on x86_64 architecture causes error associated with the incorrect loading file.</li>
-</ul>
-
-<p>This readme will be installed in you install directory for future reference.</p>
-
-
-<p><b><i>to edit this file search for signalml/src/org/signalml/help/contents.html</i></b></p>
-
+<body><div>
+<h1><span class="red">SVAROG</span> 1.0.8</h1>
+<h2><span class="red">S</span>ignal <span class="red">V</span>iewer, <span class="red">A</span>nalyzer and <span class="red">R</span>ecorder <span class="red">O</span>n <span class="red">G</span>PL </h2>
+<h3>Project started at the <A HREF="http://www.uw.edu.pl">University of Warsaw</A>, 
+<a href="http://www.fuw.edu.pl">Faculty of Physics</a>. <br>
+Since 2012 developed by <a href="http://braintech.pl">BrainTech</a> Ltd.</h3>
 
 </div>
+<p>Major features include:</p>
+<ul>
+  <li>multichannel viewer for EEG/MEG/EMG etc. with top quality interface,</li>
+  <li>reading new formats based on SignalML description,</li>
+  <li>API for plugins implementing advanced signal processing methods in user-friendly environment,</li>
+  <li>interface for recording bioelectric signals via OpenBCI.</li>
+</ul>
+<p>Svarog is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License v3 as published by the Free Software Foundation.  This program is distributed in the hope that it will be useful,  but WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License <a href="http://www.gnu.org/copyleft/gpl.html">http://www.gnu.org/copyleft/gpl.html</a> for more details.</p>
+<p>Source code: <a href="http://braintech.pl/git.html">http://braintech.pl/git.html</a></p>
+<p>Compiled jar, executables and tutorials: <a href="http://braintech.pl/svarog/">http://braintech.pl/svarog/</a></p>
 </body>
 </html>
