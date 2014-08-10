@@ -237,7 +237,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 	private int getSizeOfAtoms() {
 		int sum = 0, len = atoms.size();
 		for (int i = 0; i < len; i++) {
-			sum += atoms.elementAt(i).SizeOfAtom();
+			sum += 2 + atoms.elementAt(i).SizeOfAtom();
 		}
 		return sum;
 	}

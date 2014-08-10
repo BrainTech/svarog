@@ -60,7 +60,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 			size=6;
 			break;
 		}
-		return 4*size + 2;
+		return 4*size; // 2 is added only in SegmentHeaderV5.java:240
 	}
 
 	public void Read(RandomAccessFile stream) throws IOException {
