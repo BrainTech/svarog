@@ -23,15 +23,15 @@
  * <p>
  * To create such plug-in it is necessary to include some libraries:
  * <ul>
- * <li>{@code svarog-1.0.8.jar} - to use Svarog classes, for example
+ * <li>{@code svarog-1.0.9.jar} - to use Svarog classes, for example
  * the plug-in interface ;) (can be found in {@code svarog\target}),</li>
  * <li>{@code log4j.jar} - to use logging interface consistent with that used
  * in Svarog
- * ({@code svarog\target\svarog-1.0.8-full\svarog-1.0.8\lib}),
+ * ({@code svarog\target\svarog-1.0.9-full\svarog-1.0.9\lib}),
  * </li>
  * <li>{@code spring-context.jar} - to use classes such as {@code Tag}
  * and {@code TagStyle}
- * ({@code svarog\target\svarog-1.0.8-full\svarog-1.0.8\lib}),
+ * ({@code svarog\target\svarog-1.0.9-full\svarog-1.0.9\lib}),
  * </li>
  * </ul>
  * <p>
