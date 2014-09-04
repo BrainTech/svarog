@@ -4,9 +4,9 @@ import java.util.Collection;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYAreaRenderer;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.data.xy.XYIntervalSeries;
+import org.jfree.data.xy.XYIntervalSeriesCollection;
 import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.BookReporterConstants;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
@@ -44,28 +44,26 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 
 			@Override
 			protected Plot getPlot() {
-				XYSeries data = new XYSeries("count");
+				XYIntervalSeries data = new XYIntervalSeries("count");
 				int dataPointCount = (int) Math.ceil(signalLength/timeInterval);
-				
-				data.add(0.0, 0.0);
 				for (int i=0; i<dataPointCount; i++) {
-					double seconds = i * timeInterval;
-					BookReporterTimeInterval interval = BookReporterTimeInterval.create(seconds, seconds+timeInterval);
+					double secondsLeft = i * timeInterval;
+					double secondsCenter = (i+0.5) * timeInterval;
+					double secondsRight = (i+1) * timeInterval;
+					BookReporterTimeInterval interval = BookReporterTimeInterval.create(secondsLeft, secondsRight);
 					double percentage = 100.0 * intervals.cover(interval) / timeInterval;
-					double secondsLeft = (i+0.1) * timeInterval;
-					double secondsRight = (i+0.9) * timeInterval;
-					data.add(secondsLeft/3600.0, percentage);
-					data.add(secondsRight/3600.0, percentage);
+					data.add(secondsCenter/3600.0, secondsLeft/3600.0, secondsRight/3600.0, percentage, percentage, percentage);
 				}
-				data.add(signalLength/3600.0, 0.0);
 
 				NumberAxis xAxis = new NumberAxis("time [hours]");
+				NumberAxis yAxis = new NumberAxis("% of each " + getTimeInterval() + " s occupied by " + getWavesName());
 				xAxis.setRange(0.0, signalLength/3600.0);
+				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
+				collection.addSeries(data);
 				return new XYPlot(
-					new XYSeriesCollection(data),
-					xAxis,
-					new NumberAxis("% of each " + getTimeInterval() + " s occupied by " + getWavesName()),
-					new XYAreaRenderer()
+					collection,
+					xAxis, yAxis,
+					new XYBarRenderer()
 				);
 			}
 		};
