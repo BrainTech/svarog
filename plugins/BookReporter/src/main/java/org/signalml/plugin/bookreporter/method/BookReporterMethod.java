@@ -3,6 +3,7 @@ package org.signalml.plugin.bookreporter.method;
 import java.awt.Color;
 import java.util.Collection;
 import org.apache.log4j.Logger;
+import org.jfree.chart.axis.NumberAxis;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
@@ -60,7 +61,7 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 			chartData[i] = chartPresets[i].createEmptyData(signalLength, tagStyle);
 			tagStyles.addStyle(tagStyle);
 		}
-
+		
 		tracker.setTickerLimit(0, reader.getAllSegmentsCount());
 		Collection<BookReporterAtom> atomSample;
 		while ((atomSample = reader.getAtomsFromNextSegment()) != null) {
@@ -73,9 +74,13 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 			tracker.setTicker(0, reader.getProcessedSegmentsCount());
 		}
 
+		NumberAxis timeAxis = new NumberAxis("time [hours]");
+		timeAxis.setRange(0.0, signalLength/3600.0);
+		
 		BookReporterResult result = new BookReporterResult(tagStyles);
+		result.setTimeAxis(timeAxis);
 		for (BookReporterChartData chart : chartData) {
-			result.addChart(chart.getChart());
+			result.addPlot(chart.getPlot());
 			result.addTags(chart.getTagList());
 		}
 		return result;

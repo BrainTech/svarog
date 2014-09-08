@@ -2,7 +2,6 @@ package org.signalml.plugin.bookreporter.chart.preset;
 
 import java.util.Collection;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.xy.XYIntervalSeries;
@@ -39,7 +38,7 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 			}
 
 			@Override
-			protected Plot getPlot() {
+			public XYPlot getPlot() {
 				XYIntervalSeries data = new XYIntervalSeries("count");
 				for (int i=0; i<this.counts.length; i++) {
 					double secondsLeft = i * timeInterval;
@@ -48,14 +47,12 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 					data.add(secondsCenter/3600.0, secondsLeft/3600.0, secondsRight/3600.0, counts[i], counts[i], counts[i]);
 				}
 
-				NumberAxis xAxis = new NumberAxis("time [hours]");
 				NumberAxis yAxis = new NumberAxis(getWavesName() + " per " + getTimeInterval() + " s");
-				xAxis.setRange(0.0, signalLength/3600.0);
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
 				return new XYPlot(
 					collection,
-					xAxis, yAxis,
+					new NumberAxis(), yAxis,
 					new XYBarRenderer()
 				);
 			}

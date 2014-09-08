@@ -6,7 +6,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.plot.XYPlot;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.plugin.export.signal.Tag;
@@ -16,35 +17,46 @@ import org.signalml.plugin.export.signal.Tag;
  */
 public class BookReporterResult implements Serializable {
 
-	private final List<JFreeChart> charts;
+	private final List<XYPlot> plots;
 	
 	private final TagStyles tagStyles;
 	
 	private final TreeSet<Tag> tags;
 	
+	private ValueAxis timeAxis;
+	
 	public BookReporterResult(TagStyles tagStyles) {
-		this.charts = new LinkedList<JFreeChart>();
+		this.plots = new LinkedList<XYPlot>();
 		this.tagStyles = tagStyles;
 		this.tags = new TreeSet<Tag>();
+		this.timeAxis = null;
 	}
 	
-	public void addChart(JFreeChart chart) {
-		this.charts.add(chart);
+	public void addPlot(XYPlot plot) {
+		this.plots.add(plot);
 	}
 	
 	public void addTags(Collection<? extends Tag> tags) {
 		this.tags.addAll(tags);
 	}
 	
-	public List<JFreeChart> getCharts() {
-		return Collections.unmodifiableList(charts);
+	public int getPlotCount() {
+		return this.plots.size();
+	}
+	
+	public List<XYPlot> getPlots() {
+		return Collections.unmodifiableList(plots);
 	}
 
 	public StyledTagSet getTags() {
 		return new StyledTagSet(tagStyles, tags);
 	}
+	
+	public ValueAxis getTimeAxis() {
+		return this.timeAxis;
+	}
 
-	public int getChartCount() {
-		return this.charts.size();
+	public void setTimeAxis(ValueAxis timeAxis) {
+		this.timeAxis = timeAxis;
 	}
 }

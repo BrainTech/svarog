@@ -13,7 +13,7 @@ public class BookReporterChartExportDialog extends javax.swing.JDialog {
 	private static final float STANDARD_DPI = 100.0f;
 
 	private int dpi;
-	
+
 	private File selectedFile = null;
 
 	/**
@@ -50,25 +50,20 @@ public class BookReporterChartExportDialog extends javax.swing.JDialog {
 	public File getSelectedFile() {
 		return selectedFile;
 	}
-	
+
 	/**
 	 * @return scale of exported chart (1 = screen resolution)
 	 */
 	public float getScale() {
-		switch (unitCombo.getSelectedIndex()) {
-			case 1: // mm
-				return dpi / STANDARD_DPI;
-			default: // px
-				return 1.0f;
-		}
+		return dpi / STANDARD_DPI;
 	}
 
-	/**
-	 * @param k integer to multiple current height by
-	 */
-	public void multiplyHeight(int k) {
-		int height = (Integer) ySize.getValue();
-		ySize.setValue(k * height);
+	@Override
+	public void setVisible(boolean visible) {
+		if (visible) {
+			selectedFile = null;
+		}
+		super.setVisible(visible);
 	}
 
 	/**
@@ -92,10 +87,11 @@ public class BookReporterChartExportDialog extends javax.swing.JDialog {
         fileChooser = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Export chart as PNG");
 
         xSize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(1), null, Integer.valueOf(1)));
 
-        ySize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(50), Integer.valueOf(1), null, Integer.valueOf(1)));
+        ySize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(1), null, Integer.valueOf(1)));
 
         dpiCombo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "72", "100", "150", "200", "300", "600" }));
         dpiCombo.setSelectedIndex(2);

@@ -4,8 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.XYPlot;
 import org.signalml.plugin.bookreporter.data.BookReporterConstants;
 import org.signalml.plugin.bookreporter.data.BookReporterFASPThreshold;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
@@ -45,14 +44,8 @@ public abstract class BookReporterChartData {
 		}
 	}
 
-	protected abstract Plot getPlot();
+	public abstract XYPlot getPlot();
 
-	public JFreeChart getChart() {
-		JFreeChart chart = new JFreeChart(this.getPlot());
-		chart.removeLegend();
-		return chart;
-	}
-	
 	public List<Tag> getTagList() {
 		return Collections.unmodifiableList(this.tags);
 	}

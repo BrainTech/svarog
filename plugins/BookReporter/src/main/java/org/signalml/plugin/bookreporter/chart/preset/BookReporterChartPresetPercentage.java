@@ -43,7 +43,7 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 			}
 
 			@Override
-			protected Plot getPlot() {
+			public XYPlot getPlot() {
 				XYIntervalSeries data = new XYIntervalSeries("count");
 				int dataPointCount = (int) Math.ceil(signalLength/timeInterval);
 				for (int i=0; i<dataPointCount; i++) {
@@ -55,14 +55,12 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 					data.add(secondsCenter/3600.0, secondsLeft/3600.0, secondsRight/3600.0, percentage, percentage, percentage);
 				}
 
-				NumberAxis xAxis = new NumberAxis("time [hours]");
 				NumberAxis yAxis = new NumberAxis("% of each " + getTimeInterval() + " s occupied by " + getWavesName());
-				xAxis.setRange(0.0, signalLength/3600.0);
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
 				return new XYPlot(
 					collection,
-					xAxis, yAxis,
+					new NumberAxis(), yAxis,
 					new XYBarRenderer()
 				);
 			}

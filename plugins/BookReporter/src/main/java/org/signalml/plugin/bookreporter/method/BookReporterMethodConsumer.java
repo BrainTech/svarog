@@ -1,8 +1,7 @@
 package org.signalml.plugin.bookreporter.method;
 
-import java.awt.Window;
 import org.apache.log4j.Logger;
-import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
 import org.signalml.method.Method;
 import org.signalml.plugin.bookreporter.data.BookReporterData;
 import org.signalml.plugin.bookreporter.data.BookReporterResult;
@@ -19,11 +18,9 @@ public class BookReporterMethodConsumer implements IPluginMethodResultConsumer {
 
 	protected static final Logger logger = Logger.getLogger(BookReporterMethodConsumer.class);
 
-	private Window dialogParent;
-
 	@Override
 	public void initialize(PluginMethodManager manager) {
-		this.dialogParent = manager.getSvarogAccess().getGUIAccess().getDialogParent();
+		// nothing here
 	}
 
 	@Override
@@ -35,18 +32,12 @@ public class BookReporterMethodConsumer implements IPluginMethodResultConsumer {
 		BookReporterResult result = (BookReporterResult) methodResult;
 		
 		BookReporterResultFrame resultFrame = new BookReporterResultFrame();
-		for (JFreeChart chart : result.getCharts()) {
-			resultFrame.addChartToPanel(chart);
+		for (XYPlot plot : result.getPlots()) {
+			resultFrame.addPlotToPanel(plot);
 		}
+		resultFrame.setTimeAxis(result.getTimeAxis());
 		resultFrame.setTags(result.getTags());
 		resultFrame.setVisible(true);
-//		
-//		JOptionPane.showMessageDialog(
-//			dialogParent,
-//			"Number of exported charts: " + result.getChartCount(),
-//			"Book reporting finished",
-//			JOptionPane.INFORMATION_MESSAGE
-//		);
 		return true;
 	}
 }

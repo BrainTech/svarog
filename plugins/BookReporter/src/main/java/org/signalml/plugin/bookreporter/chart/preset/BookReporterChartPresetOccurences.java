@@ -3,7 +3,6 @@ package org.signalml.plugin.bookreporter.chart.preset;
 import java.util.Collection;
 import java.util.LinkedList;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.xy.XYIntervalSeries;
@@ -51,20 +50,18 @@ public class BookReporterChartPresetOccurences extends BookReporterChartPreset {
 			}
 
 			@Override
-			protected Plot getPlot() {
+			public XYPlot getPlot() {
 				XYIntervalSeries data = new XYIntervalSeries("occurences");
 				for (Occurrence o : occurrences) {
 					data.add(o.time, o.time-0.5*o.length, o.time+0.5*o.length, o.value, o.value, o.value);
 				}
 
-				NumberAxis xAxis = new NumberAxis("time [hours]");
 				NumberAxis yAxis = new NumberAxis("amplitude of "+getWavesName()+" [µV]");
-				xAxis.setRange(0.0, signalLength/3600.0);
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
 				return new XYPlot(
 					collection,
-					xAxis, yAxis,
+					new NumberAxis(), yAxis,
 					new XYBarRenderer()
 				);
 			}
