@@ -2,11 +2,13 @@ package org.signalml.plugin.bookreporter.ui;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Paint;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -16,6 +18,7 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.CombinedDomainXYPlot;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
@@ -25,16 +28,26 @@ import org.signalml.plugin.export.SignalMLException;
  */
 public class BookReporterResultFrame extends javax.swing.JFrame {
 
+	private static final Color[] COLORS = {
+		Color.getHSBColor(0.00f, 0.8f, 0.8f),
+		Color.getHSBColor(0.25f, 0.8f, 0.8f),
+		Color.getHSBColor(0.50f, 0.8f, 0.8f),
+		Color.getHSBColor(0.70f, 0.8f, 0.8f),
+		Color.getHSBColor(0.90f, 0.8f, 0.8f)
+	};
+
 	private final BookReporterChartExportDialog exportDialog;
 
 	private final CombinedDomainXYPlot plot;
 
 	private final JFreeChart chart;
 
-	private int plotCount = 0;
+	private final HashMap<String, Paint> colors;
 
 	private StyledTagSet tags;
-
+	
+	private int nextColor = 0;
+	
 	/**
 	 * Creates new form BookReporterResultFrame
 	 */
@@ -43,6 +56,7 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 		exportDialog = new BookReporterChartExportDialog(this, true);
 		plot = new CombinedDomainXYPlot();
 		chart = new JFreeChart(plot);
+		colors = new HashMap<String, Paint>();
 		tags = null;
 
 		chart.setBackgroundPaint(Color.WHITE);
@@ -160,7 +174,17 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 
 	public void addPlotToPanel(XYPlot plot) {
 		this.plot.add(plot);
-		++plotCount;
+		String key = (String) plot.getDataset().getSeriesKey(0);
+		Paint existingColor = colors.get(key);
+		XYItemRenderer renderer = plot.getRenderer();
+		if (existingColor == null) {
+			existingColor = COLORS[nextColor];
+			nextColor = (nextColor + 1) % COLORS.length;
+			colors.put(key, existingColor);
+		} else {
+			renderer.setSeriesVisibleInLegend(0, false);
+		}
+		renderer.setSeriesPaint(0, existingColor);
 	}
 
 	public void setTags(StyledTagSet tags) {

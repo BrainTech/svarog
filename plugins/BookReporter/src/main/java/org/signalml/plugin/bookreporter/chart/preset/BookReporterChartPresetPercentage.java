@@ -44,7 +44,7 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 
 			@Override
 			public XYPlot getPlot() {
-				XYIntervalSeries data = new XYIntervalSeries("count");
+				XYIntervalSeries data = new XYIntervalSeries("% occupied in "+getTimeInterval()+" s");
 				int dataPointCount = (int) Math.ceil(signalLength/timeInterval);
 				for (int i=0; i<dataPointCount; i++) {
 					double secondsLeft = i * timeInterval;
@@ -55,7 +55,7 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 					data.add(secondsCenter/3600.0, secondsLeft/3600.0, secondsRight/3600.0, percentage, percentage, percentage);
 				}
 
-				NumberAxis yAxis = new NumberAxis("% of each " + getTimeInterval() + " s occupied by " + getWavesName());
+				NumberAxis yAxis = new NumberAxis(getWavesName());
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
 				return new XYPlot(

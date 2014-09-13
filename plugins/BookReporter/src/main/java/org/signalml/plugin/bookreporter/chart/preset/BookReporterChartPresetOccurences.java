@@ -51,12 +51,12 @@ public class BookReporterChartPresetOccurences extends BookReporterChartPreset {
 
 			@Override
 			public XYPlot getPlot() {
-				XYIntervalSeries data = new XYIntervalSeries("occurences");
+				XYIntervalSeries data = new XYIntervalSeries("amplitudes [µV]");
 				for (Occurrence o : occurrences) {
 					data.add(o.time, o.time-0.5*o.length, o.time+0.5*o.length, o.value, o.value, o.value);
 				}
 
-				NumberAxis yAxis = new NumberAxis("amplitude of "+getWavesName()+" [µV]");
+				NumberAxis yAxis = new NumberAxis(getWavesName());
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
 				return new XYPlot(

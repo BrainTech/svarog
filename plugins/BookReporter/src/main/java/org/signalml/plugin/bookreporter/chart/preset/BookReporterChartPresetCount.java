@@ -39,7 +39,7 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 
 			@Override
 			public XYPlot getPlot() {
-				XYIntervalSeries data = new XYIntervalSeries("count");
+				XYIntervalSeries data = new XYIntervalSeries("count per "+getTimeInterval()+" s");
 				for (int i=0; i<this.counts.length; i++) {
 					double secondsLeft = i * timeInterval;
 					double secondsCenter = (i+0.5) * timeInterval;
@@ -47,7 +47,7 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 					data.add(secondsCenter/3600.0, secondsLeft/3600.0, secondsRight/3600.0, counts[i], counts[i], counts[i]);
 				}
 
-				NumberAxis yAxis = new NumberAxis(getWavesName() + " per " + getTimeInterval() + " s");
+				NumberAxis yAxis = new NumberAxis(getWavesName());
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
 				return new XYPlot(
