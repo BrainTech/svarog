@@ -39,7 +39,7 @@ public class BookReporterFASPThreshold implements Serializable {
 			put("sleep spindles", new BookReporterFASPThreshold(
 				11.0, 15.0,  // f
 				12.0, null,  // a
-				0.4,  2.5,   // s
+				0.5,  2.5,   // s
 				null, null   // p
 			));
 			put("K-complexes", new BookReporterFASPThreshold(
