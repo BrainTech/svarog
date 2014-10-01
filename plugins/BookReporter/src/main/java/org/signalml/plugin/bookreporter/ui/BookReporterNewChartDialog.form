@@ -30,7 +30,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="timeIntervalPanel" max="32767" attributes="0"/>
@@ -39,17 +39,18 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="cancelButton" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="waveTypeCombo" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="waveCountDiagramButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="timePercentageDiagramButton" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="singleOccurenceDiagramButton" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="showHorizontalLinesCheckBox" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="waveTypeCombo" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -69,6 +70,8 @@
               <Component id="waveTypeCombo" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="timeIntervalPanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="showHorizontalLinesCheckBox" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="addChartButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -85,7 +88,6 @@
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="diagramTypeButtonGroup"/>
         </Property>
-        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="count (per time interval) of..."/>
       </Properties>
       <Events>
@@ -97,6 +99,7 @@
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="diagramTypeButtonGroup"/>
         </Property>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="time percentage occupied by..."/>
       </Properties>
       <Events>
@@ -143,6 +146,9 @@
           <Connection code="new DefaultComboBoxModel(BookReporterFASPThreshold.getPredefinedThresholdNames())" type="code"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="waveTypeComboActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="timeIntervalPanel">
 
@@ -194,5 +200,10 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JCheckBox" name="showHorizontalLinesCheckBox">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="show horizontal lines for 20% and 50%"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

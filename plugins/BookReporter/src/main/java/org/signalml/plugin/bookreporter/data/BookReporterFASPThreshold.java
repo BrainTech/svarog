@@ -12,37 +12,37 @@ public class BookReporterFASPThreshold implements Serializable {
 	private static class Predefined extends HashMap<String, BookReporterFASPThreshold> {
 		public Predefined() {
 			super();
-			put("alpha waves", new BookReporterFASPThreshold(
+			put("alpha", new BookReporterFASPThreshold(
 				8.0,  12.0,  // f
 				5.0,  null,  // a
 				1.5,  null,  // s
 				null, null   // p
 			));
-			put("beta waves", new BookReporterFASPThreshold(
+			put("beta", new BookReporterFASPThreshold(
 				15.0, 25.0,  // f
 				5.0,  null,  // a
 				0.5,  null,  // s
 				null, null   // p
 			));
-			put("delta waves", new BookReporterFASPThreshold(
+			put("delta", new BookReporterFASPThreshold(
 				0.2,  4.0,   // f
 				65.0, null,  // a
 				0.5,  6.0,   // s
 				null, null   // p
 			));
-			put("theta waves", new BookReporterFASPThreshold(
+			put("theta", new BookReporterFASPThreshold(
 				4.0,  8.0,   // f
 				15.0, null,  // a
 				1.0,  null,  // s
 				null, null   // p
 			));
-			put("sleep spindles", new BookReporterFASPThreshold(
+			put("spindles", new BookReporterFASPThreshold(
 				11.0, 15.0,  // f
 				12.0, null,  // a
 				0.5,  2.5,   // s
 				null, null   // p
 			));
-			put("K-complexes", new BookReporterFASPThreshold(
+			put("K-comp.", new BookReporterFASPThreshold(
 				0.03, 25.0,  // f
 				100.0, null, // a
 				0.3, 1.5,    // s

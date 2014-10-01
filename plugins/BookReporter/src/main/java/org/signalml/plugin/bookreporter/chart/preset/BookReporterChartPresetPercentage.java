@@ -2,7 +2,7 @@ package org.signalml.plugin.bookreporter.chart.preset;
 
 import java.util.Collection;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.Plot;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.xy.XYIntervalSeries;
@@ -19,13 +19,20 @@ import org.signalml.plugin.export.signal.TagStyle;
  */
 public class BookReporterChartPresetPercentage extends BookReporterChartPresetPerInterval {
 
+	private boolean showHorizontalLines = true;
+
 	@Override
 	public String getCaption() {
 		return "<html>time % of<br>" + getWavesName() + "<br>per " + getTimeInterval() + " s</html>";
 	}
 
+	public void setShowHorizontalLines(boolean showHorizontalLines) {
+		this.showHorizontalLines = showHorizontalLines;
+	}
+
 	@Override
 	public BookReporterChartData createEmptyData(final double signalLength, TagStyle tagStyle) {
+		final boolean showHorizLines = showHorizontalLines;
 		return new BookReporterChartData(getThreshold(), tagStyle) {
 
 			private final int timeInterval = getTimeInterval();
@@ -58,11 +65,16 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 				NumberAxis yAxis = new NumberAxis(getWavesName());
 				XYIntervalSeriesCollection collection = new XYIntervalSeriesCollection();
 				collection.addSeries(data);
-				return new XYPlot(
+				XYPlot plot = new XYPlot(
 					collection,
 					new NumberAxis(), yAxis,
 					new XYBarRenderer()
 				);
+				if (showHorizLines) {
+					plot.addRangeMarker(new ValueMarker(20.0));
+					plot.addRangeMarker(new ValueMarker(50.0));
+				}
+				return plot;
 			}
 		};
 	}
