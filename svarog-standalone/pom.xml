@@ -5,13 +5,13 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog-standalone</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.9</version>
+	<version>1.0.10</version>
 
 	<name>Svarog</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>1.0.9</version>
+		<version>1.0.10</version>
 	</parent>
 
 	<build>
@@ -84,7 +84,7 @@
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog</artifactId>
-			<version>1.0.9</version>
+			<version>1.0.10</version>
 		</dependency>
 	</dependencies>
 
