@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+    <bean id="config" class="org.signalml.plugin.bookreporter.data.BookReporterPluginConfig">
+        <constructor-arg type="java.lang.Class">
+            <value>org.signalml.plugin.bookreporter.BookReporterPlugin</value>
+        </constructor-arg>
+        <property name="methodConfig" ref="bookReporterMethodConfig">
+        </property>
+    </bean>
+
+    <bean id="streamCreator" class="org.signalml.plugin.tool.PluginStreamCreator"></bean>
+
+    <bean id="bookReporterMethodConfig" class="org.signalml.plugin.data.PluginConfigMethodData">
+        <property name="methodName">
+            <value>bookReporter</value>
+        </property>
+        <property name="methodDescriptor" ref="bookReporterMethodDescriptor" />
+        <property name="method" ref="bookReporterMethod" />
+    </bean>
+
+    <bean id="bookReporterMethodDescriptor" class="org.signalml.plugin.bookreporter.method.BookReporterMethodDescriptor" />
+    <bean id="bookReporterMethod" class="org.signalml.plugin.bookreporter.method.BookReporterMethod" />
+
+    <bean id="streamer" class="com.thoughtworks.xstream.XStream" factory-bean="streamCreator" factory-method="createInstance">
+        <constructor-arg ref="config"></constructor-arg>
+        <constructor-arg>
+            <list>
+                <value>org.signalml.app.method.MethodPresetManager</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

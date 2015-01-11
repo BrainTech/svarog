@@ -1,0 +1,16 @@
+<plugin>
+    <name>Book Reporting</name>
+    <version>0.6.1</version>
+    <jar-file>BookReporter.jar</jar-file>
+    <starting-class>org.signalml.plugin.bookreporter.BookReporterPlugin</starting-class>
+    <dependencies>
+		<dependency>
+			<name>Svarog API</name>
+			<version>0.5</version>
+		</dependency>
+		<dependency>
+			<name>Plugin Common Tools</name>
+			<version>1.0</version>
+		</dependency>
+	</dependencies>
+</plugin>
