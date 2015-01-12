@@ -11,10 +11,11 @@ import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.plugin.export.method.BaseMethodData;
 
-/** BookAverageData
- *
+/**
+ * BookAverageData
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * (+ fixed by) piotr@develancer.pl
  */
 public class BookAverageData extends BaseMethodData {
 
@@ -36,6 +37,7 @@ public class BookAverageData extends BaseMethodData {
 
 	private IWignerMapPalette palette;
 	private WignerMapScaleType scaleType;
+	private String outputFilePath = "";
 
 	public BookAverageData() {
 		channels = new LinkedHashSet<Integer>();
@@ -111,6 +113,14 @@ public class BookAverageData extends BaseMethodData {
 
 	public void setMaxSegment(int maxSegment) {
 		this.maxSegment = maxSegment;
+	}
+
+	public String getOutputFilePath() {
+		return outputFilePath;
+	}
+
+	public void setOutputFilePath(String outputFilePath) {
+		this.outputFilePath = outputFilePath;
 	}
 
 	public LinkedHashSet<Integer> getChannels() {

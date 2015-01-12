@@ -12,10 +12,11 @@ import org.signalml.method.Method;
 import org.signalml.method.bookaverage.BookAverageData;
 import org.signalml.plugin.export.SignalMLException;
 
-/** BookAverageMethodConfigurer
- *
+/**
+ * BookAverageMethodConfigurer
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * (+ fixed by) piotr@develancer.pl
  */
 public class BookAverageMethodConfigurer implements InitializingMethodConfigurer {
 

@@ -4,18 +4,25 @@
 
 package org.signalml.app.method.bookaverage;
 
+import org.signalml.app.document.BookDocument;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
+import org.signalml.app.view.book.BookView;
+import org.signalml.app.view.common.dialogs.OptionPane;
+import org.signalml.domain.book.StandardBook;
+import org.signalml.method.bookaverage.BookAverageData;
 import org.signalml.method.bookaverage.BookAverageMethod;
 import org.signalml.plugin.export.method.BaseMethodData;
+import org.signalml.plugin.export.signal.Document;
 
-/** BookAverageMethodDescriptor
- *
+/**
+ * BookAverageMethodDescriptor
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * (+ fixed by) piotr@develancer.pl
  */
 public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor {
 
@@ -70,8 +77,34 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 
 	@Override
 	public BaseMethodData createData(ApplicationMethodManager methodManager) {
-		// TODO may not be enough
-		return method.createData();
+		Document document = methodManager.getActionFocusManager().getActiveDocument();
+		if (!(document instanceof BookDocument)) {
+			OptionPane.showNoActiveBook(methodManager.getDialogParent());
+			return null;
+		}
+		BookDocument bookDocument = (BookDocument) document;
+		BookView bookView = (BookView) bookDocument.getDocumentView();
+		StandardBook book = bookDocument.getBook();
+
+		int segmentCount = book.getSegmentCount();
+		int currentChannel = bookView.getCurrentChannel();
+
+		BookAverageData data = new BookAverageData();
+		data.setBook(book);
+		data.setPalette(bookView.getPlot().getPalette());
+		data.setScaleType(bookView.getPlot().getScaleType());
+		data.setMinSegment(0);
+		data.setMaxSegment(segmentCount - 1);
+		data.setMinFrequency(0.0);
+		data.setMaxFrequency(data.getBook().getSamplingFrequency()/2);
+		data.setMinPosition(0.0);
+		data.setMaxPosition(5.0);
+		data.setWidth(400);
+		data.setHeight(400);
+		data.setOutputFilePath("output.png");
+		data.addChannel(currentChannel);
+
+		return data;
 	}
 
 }
