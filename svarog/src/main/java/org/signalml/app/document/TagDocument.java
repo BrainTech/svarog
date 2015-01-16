@@ -366,9 +366,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		List<TagStyle> markerStyles = new ArrayList<TagStyle>();
 
 		for (TagStyle style: getTagSet().getChannelStyles()) {
-			if (style.isMarker()) {
-				markerStyles.add(style);
-			}
+			markerStyles.add(style);
 		}
 
 		constraints.setMarkerStyles(markerStyles.toArray(new TagStyle[0]));
