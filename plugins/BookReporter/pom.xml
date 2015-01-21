@@ -12,7 +12,7 @@
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>1.0.9</version>
+		<version>1.0.10</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -55,28 +55,6 @@
 						<goals>
 							<goal>run</goal>
 						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<groupId>org.xnap.commons</groupId>
-				<artifactId>maven-gettext-plugin</artifactId>
-				<version>1.2.3</version>
-
-				<configuration>
-					<poDirectory>${project.build.i18n.resources}</poDirectory>
-					<targetBundle>org.signalml.plugin.bookreporter</targetBundle>
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>gettext-dist</id>
-						<phase>generate-resources</phase>
-						<goals>
-							<goal>dist</goal>
-						</goals>
-						<inherited>false</inherited>
 					</execution>
 				</executions>
 			</plugin>
@@ -145,7 +123,7 @@
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog</artifactId>
-			<version>1.0.9</version>
+			<version>1.0.10</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
