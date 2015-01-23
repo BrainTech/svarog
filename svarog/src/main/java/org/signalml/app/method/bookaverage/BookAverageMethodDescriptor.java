@@ -85,6 +85,10 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 		BookDocument bookDocument = (BookDocument) document;
 		BookView bookView = (BookView) bookDocument.getDocumentView();
 		StandardBook book = bookDocument.getBook();
+		if (book.getSegmentCount() == 0 || book.getSegmentAt(0).length == 0) {
+			OptionPane.showError(methodManager.getDialogParent(), "Book contains no valid segments!");
+			return null;
+		}
 
 		int segmentCount = book.getSegmentCount();
 		int currentChannel = bookView.getCurrentChannel();
@@ -96,9 +100,9 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 		data.setMinSegment(0);
 		data.setMaxSegment(segmentCount - 1);
 		data.setMinFrequency(0.0);
-		data.setMaxFrequency(data.getBook().getSamplingFrequency()/2);
+		data.setMaxFrequency(book.getSamplingFrequency() / 2);
 		data.setMinPosition(0.0);
-		data.setMaxPosition(5.0);
+		data.setMaxPosition(book.getSegmentAt(0)[0].getSegmentTimeLength());
 		data.setWidth(400);
 		data.setHeight(400);
 		data.setOutputFilePath("output.png");

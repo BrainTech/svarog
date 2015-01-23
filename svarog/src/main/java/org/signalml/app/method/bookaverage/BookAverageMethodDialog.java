@@ -51,6 +51,8 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		panel.setSelectedHeight(data.getHeight());
 		panel.setTimeStart(data.getMinPosition());
 		panel.setTimeEnd(data.getMaxPosition());
+		panel.setFrequencyStart(data.getMinFrequency());
+		panel.setFrequencyEnd(data.getMaxFrequency());
 		panel.setOutputFilePath(data.getOutputFilePath());
 	}
 
@@ -61,6 +63,8 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		data.setHeight(panel.getSelectedHeight());
 		data.setMinPosition(panel.getTimeStart());
 		data.setMaxPosition(panel.getTimeEnd());
+		data.setMinFrequency(panel.getFrequencyStart());
+		data.setMaxFrequency(panel.getFrequencyEnd());
 		data.setOutputFilePath(panel.getOutputFilePath());
 	}
 
@@ -74,6 +78,8 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		super.validateDialog(model, errors);
 		double timeEnd = panel.getTimeEnd();
 		double timeStart = panel.getTimeStart();
+		double freqEnd = panel.getFrequencyEnd();
+		double freqStart = panel.getFrequencyStart();
 		String filePath = panel.getOutputFilePath();
 		if (Double.isNaN(timeEnd) || Double.isInfinite(timeEnd) || timeEnd < 0) {
 			errors.addError(_("Invalid end time."));
@@ -83,6 +89,15 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		}
 		if (timeStart >= timeEnd) {
 			errors.addError(_("Invalid time interval."));
+		}
+		if (Double.isNaN(freqEnd) || Double.isInfinite(freqEnd) || freqEnd < 0) {
+			errors.addError(_("Invalid highest frequency."));
+		}
+		if (Double.isNaN(freqStart) || Double.isInfinite(freqStart) || freqStart < 0) {
+			errors.addError(_("Invalid lowest frequency."));
+		}
+		if (freqStart >= freqEnd) {
+			errors.addError(_("Invalid frequency interval."));
 		}
 		if (panel.getSelectedWidth() <= 0 || panel.getSelectedHeight() <= 0) {
 			errors.addError(_("Invalid image dimensions."));

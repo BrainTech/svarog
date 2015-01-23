@@ -35,6 +35,11 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
         jLabel8 = new javax.swing.JLabel();
         outputFilePath = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        freqEnd = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        freqStart = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
 
         jLabel4.setText("px");
 
@@ -64,6 +69,14 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
 
         jLabel9.setText("output file path:");
 
+        jLabel10.setText("Hz");
+
+        jLabel11.setText("to");
+
+        freqStart.setText("0");
+
+        jLabel12.setText("frequency:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,21 +98,33 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
                                 .addComponent(pxHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(timeStart, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(timeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(outputFilePath))
+                    .addComponent(outputFilePath)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(freqStart, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(freqEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(timeStart, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(timeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel7))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -122,13 +147,30 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
                     .addComponent(timeEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(freqEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(freqStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(outputFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+	private double getDoubleFromTextField(javax.swing.JTextField field) {
+		double value = Double.NaN;
+		try {
+			value = Double.valueOf(field.getText());
+		} catch (NumberFormatException ex) {
+			// pass
+		}
+		return value;
+	}
 
 	public String getOutputFilePath() {
 		return outputFilePath.getText();
@@ -142,28 +184,32 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
 		return (Integer) pxHeight.getValue();
 	}
 
+	public double getFrequencyEnd() {
+		return getDoubleFromTextField(freqEnd);
+	}
+
+	public double getFrequencyStart() {
+		return getDoubleFromTextField(freqStart);
+	}
+
 	public double getTimeEnd() {
-		double value = Double.NaN;
-		try {
-			value = Double.valueOf(timeEnd.getText());
-		} catch (NumberFormatException ex) {
-			// pass
-		}
-		return value;
+		return getDoubleFromTextField(timeEnd);
 	}
 
 	public double getTimeStart() {
-		double value = Double.NaN;
-		try {
-			value = Double.valueOf(timeStart.getText());
-		} catch (NumberFormatException ex) {
-			// pass
-		}
-		return value;
+		return getDoubleFromTextField(timeStart);
 	}
 
 	public void setOutputFilePath(String path) {
 		outputFilePath.setText(path);
+	}
+
+	public void setFrequencyEnd(double freq) {
+		freqEnd.setText(Double.toString(freq));
+	}
+
+	public void setFrequencyStart(double freq) {
+		freqStart.setText(Double.toString(freq));
 	}
 
 	public void setSelectedWidth(int width) {
@@ -183,7 +229,12 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField freqEnd;
+    private javax.swing.JTextField freqStart;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
