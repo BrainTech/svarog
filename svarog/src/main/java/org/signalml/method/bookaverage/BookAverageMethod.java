@@ -20,16 +20,17 @@ import org.signalml.plugin.export.method.BaseMethodData;
 
 import org.springframework.validation.Errors;
 
-/** BookAverageMethod
- *
+/**
+ * BookAverageMethod
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * (+ fixed by) piotr@develancer.pl
  */
 public class BookAverageMethod extends AbstractMethod implements TrackableMethod {
 
 	protected static final Logger logger = Logger.getLogger(BookAverageMethod.class);
 
-	private static final String UID = "705783f7-1cf8-43e5-83d8-c02fed683e7e";
+	private static final String UID = "60f2b583-b5d8-491b-9de2-6531b985fec0";
 	private static final String NAME = "bookAverage";
 	private static final int[] VERSION = new int[] {1,0};
 
@@ -119,7 +120,11 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 
 		for (int e=0; e<channelArr.length; e++) {
 			for (int i=minSegment; i<=maxSegment; i++) {
-				segment = book.getSegmentAt(i,channelArr[e]);
+				if (tracker.isRequestingAbort()) {
+					return null;
+				}
+
+				segment = book.getSegmentAt(i)[channelArr[e]];
 				provider.setSegment(segment);
 				normalMap = provider.getMap();
 				for (x=0; x<width; x++) {
@@ -178,15 +183,9 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 
 
 		BookAverageResult result = new BookAverageResult();
-
-		// getMap is where real processing happens
 		result.setMap(averageMap);
 		result.setSignal(averageSignal);
-		// FIXME do
-		result.setReconstruction(null);
-
 		return result;
-
 	}
 
 	@Override

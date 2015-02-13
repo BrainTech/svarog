@@ -4,17 +4,16 @@
 
 package org.signalml.method.bookaverage;
 
-/** BookAverageResult
- *
+/**
+ * BookAverageResult
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * (+ fixed by) piotr@develancer.pl
  */
 public class BookAverageResult {
 
 	private double[][] map;
-
 	private float[] signal;
-	private float[] reconstruction;
 
 	public double[][] getMap() {
 		return map;
@@ -30,14 +29,6 @@ public class BookAverageResult {
 
 	public void setSignal(float[] signal) {
 		this.signal = signal;
-	}
-
-	public float[] getReconstruction() {
-		return reconstruction;
-	}
-
-	public void setReconstruction(float[] reconstruction) {
-		this.reconstruction = reconstruction;
 	}
 
 }
