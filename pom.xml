@@ -22,6 +22,7 @@
 	<modules>
 		<module>svarog</module>
 		<module>plugins/FFTSignalTool</module>
+		<module>plugins/SignalAnalysisPlugin</module>
 		<module>plugins/PluginToolCommon</module>
 		<module>plugins/Artifact</module>
 		<module>plugins/Stager</module>
@@ -35,6 +36,7 @@
 			<modules>
 				<module>svarog</module>
 				<module>plugins/FFTSignalTool</module>
+				<module>plugins/SignalAnalysisPlugin</module>
 				<module>plugins/PluginToolCommon</module>
 				<module>plugins/Artifact</module>
 				<module>izpack</module>
