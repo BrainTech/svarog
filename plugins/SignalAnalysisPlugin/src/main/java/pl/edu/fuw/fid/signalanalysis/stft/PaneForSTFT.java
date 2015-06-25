@@ -2,14 +2,16 @@ package pl.edu.fuw.fid.signalanalysis.stft;
 
 import java.io.IOException;
 import java.net.URL;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -61,11 +63,23 @@ public class PaneForSTFT {
 		final double selectionLength = selection.getLength();
 		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
 		final double samplingFrequency = samples.getSamplingFrequency();
+		final double nyquistFrequency = 0.5 * samplingFrequency;
 
-		Axis<Number> xAxis = new NumberAxis(0.0, selectionLength, 1);
-		Axis<Number> yAxis = new NumberAxis(0.0, 0.5 * samplingFrequency, 1);
+		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1);
+		final NumberAxis yAxis = new NumberAxis(0.0, nyquistFrequency, 1);
 		xAxis.setLabel("czas [s]");
 		yAxis.setLabel("częstotliwość [Hz]");
+
+		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencySlider");
+		maxFrequency.setMax(nyquistFrequency);
+		maxFrequency.setValue(nyquistFrequency);
+		maxFrequency.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				double maxFreq = Math.round(newValue.doubleValue());
+				yAxis.setUpperBound(maxFreq);
+			}
+		});
 
 		SimpleSignal signal = new SimpleSignal() {
 			@Override
