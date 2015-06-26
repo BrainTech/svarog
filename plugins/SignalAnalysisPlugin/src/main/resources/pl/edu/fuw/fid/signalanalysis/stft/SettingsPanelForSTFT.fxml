@@ -27,6 +27,7 @@
                         <ComboBox fx:id="windowSizeComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
+                  <CheckBox fx:id="padToHeightCheckBox" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" text="pad to chart height" />
                </children>
             </AnchorPane>
       </content>

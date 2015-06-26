@@ -52,6 +52,7 @@ public class ImageChart extends XYChart<Number, Number> {
 				}
 			};
 			task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+				@Override
 				public void handle(WorkerStateEvent event) {
 					if (lastTaskId == id) {
 						Image image = task.getValue();

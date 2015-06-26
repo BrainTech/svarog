@@ -10,6 +10,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
@@ -34,7 +35,7 @@ public class PaneForSTFT {
 	final ImageChart chart;
 	final ImageRendererForSTFT renderer;
 
-	public PaneForSTFT(SvarogAccessSignal signalAccess) throws IOException, NoActiveObjectException {
+	public PaneForSTFT(SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
 		root = new BorderPane();
 		windowTypeItems = FXCollections.observableArrayList(
 			WindowType.RECTANGULAR,
@@ -59,7 +60,6 @@ public class PaneForSTFT {
 		windowSize.setItems(windowSizeItems);
 		windowSize.getSelectionModel().selectFirst();
 
-		ExportedSignalSelection selection = signalAccess.getActiveSelection();
 		final double selectionLength = selection.getLength();
 		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
 		final double samplingFrequency = samples.getSamplingFrequency();
@@ -117,6 +117,16 @@ public class PaneForSTFT {
 					renderer.setWindowLength(ws);
 					chart.refreshChartImage();
 				}
+			}
+		});
+
+		final CheckBox padToHeight = (CheckBox) fxmlLoader.getNamespace().get("padToHeightCheckBox");
+		padToHeight.setSelected(renderer.getPadToHeight());
+		padToHeight.selectedProperty().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				renderer.setPadToHeight(newValue);
+				chart.refreshChartImage();
 			}
 		});
 

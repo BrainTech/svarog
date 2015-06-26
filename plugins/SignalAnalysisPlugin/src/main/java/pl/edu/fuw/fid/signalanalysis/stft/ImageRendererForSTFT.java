@@ -18,9 +18,25 @@ public class ImageRendererForSTFT implements ImageRenderer {
 
 	private volatile WindowType windowType_ = WindowType.RECTANGULAR;
 	private volatile Integer windowLength_ = 128;
+	private volatile boolean padToHeight_ = false;
 
 	public ImageRendererForSTFT(SimpleSignal signal) {
 		this.signal = signal;
+	}
+
+	private static int calculatePaddedWindowLength(int windowLength, int chartHeight) {
+		while (windowLength < chartHeight) {
+			windowLength *= 2;
+		}
+		return windowLength;
+	}
+
+	public boolean getPadToHeight() {
+		return padToHeight_;
+	}
+
+	public void setPadToHeight(boolean padToHeight) {
+		padToHeight_ = padToHeight;
 	}
 
 	public void setWindowType(WindowType windowType) {
@@ -46,7 +62,8 @@ public class ImageRendererForSTFT implements ImageRenderer {
 	@Override
 	public BufferedImage renderImage(int width, int height, double tMin, double tMax, double fMin, double fMax, ImageRendererStatus status) throws Exception {
 		final WindowType windowType = windowType_;
-		final Integer windowLength = windowLength_;
+		final int windowLength = windowLength_;
+		final int spectrumLength = padToHeight_ ? calculatePaddedWindowLength(windowLength, height) : windowLength;
 
 		final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		final double sampling = signal.getSamplingFrequency();
@@ -68,11 +85,16 @@ public class ImageRendererForSTFT implements ImageRenderer {
 				window[wi] = (i >=0 && i < all.length) ? all[i] : 0.0;
 			}
 			double[] windowed = wf.applyWindow(window);
+			if (spectrumLength > windowLength) {
+				double[] temp = new double[spectrumLength];
+				System.arraycopy(windowed, 0, temp, 0, windowLength);
+				windowed = temp;
+			}
 			Complex[] spectrum = fft.transform(windowed);
 			for (int iy=0; iy<height; ++iy) {
-				double f = fMin + (fMax - fMin) * iy / height;
-				int i = (int) Math.round(windowLength * f / sampling);
-				double value = (i >= 0 && i < windowLength) ? spectrum[i].abs() : 0.0;
+				double f = fMax + (fMin - fMax) * (height - 1 - iy) / height;
+				int i = (int) Math.floor(spectrumLength * f / sampling);
+				double value = (i >= 0 && i < spectrumLength) ? spectrum[i].abs() : 0.0;
 				result[ix][iy] = value;
 				max = Math.max(max, value);
 			}

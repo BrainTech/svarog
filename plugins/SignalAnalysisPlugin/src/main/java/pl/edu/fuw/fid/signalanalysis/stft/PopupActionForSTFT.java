@@ -8,7 +8,9 @@ import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
@@ -17,10 +19,12 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  */
 public class PopupActionForSTFT extends AbstractSignalMLAction {
 
+	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PopupActionForSTFT.class);
+
 	private final SvarogAccessSignal signalAccess;
 
-	private void initFX(JFXPanel fxPanel) throws NoActiveObjectException, IOException {
-		PaneForSTFT pane = new PaneForSTFT(signalAccess);
+	private void initFX(JFXPanel fxPanel, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
+		PaneForSTFT pane = new PaneForSTFT(signalAccess, selection);
         Scene scene = new Scene(pane.getPane(), 500, 300);
 		fxPanel.setScene(scene);
 	}
@@ -31,9 +35,23 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 		setText("Short-Time Fourier Transform");
 	}
 
+	private ExportedSignalSelection getActiveSelection() {
+		try {
+			return signalAccess.getActiveSelection();
+		} catch (NoActiveObjectException ex) {
+			return null;
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// This method is invoked on Swing thread
+		final ExportedSignalSelection selection = getActiveSelection();
+		if (selection == null || selection.getChannel() < 0) {
+			JOptionPane.showMessageDialog(null, "Select valid single-channel signal fragment.", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
 		JFrame frame = new JFrame("FX");
 		frame.setSize(500, 500);
 		final JFXPanel fxPanel = new JFXPanel();
@@ -44,11 +62,11 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 			@Override
 			public void run() {
 				try {
-					initFX(fxPanel);
+					initFX(fxPanel, selection);
 				} catch (NoActiveObjectException ex) {
-					Logger.getLogger(PopupActionForSTFT.class.getName()).log(Level.SEVERE, null, ex);
+					logger.error("could not access signal selection", ex);
 				} catch (IOException ex) {
-					Logger.getLogger(PopupActionForSTFT.class.getName()).log(Level.SEVERE, null, ex);
+					logger.error("could not initialize plugin", ex);
 				}
 			}
 		});
