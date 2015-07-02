@@ -41,5 +41,14 @@
             </AnchorPane>
       </content>
     </TitledPane>
+      <TitledPane animated="false" collapsible="false" text="Palette">
+        <content>
+          <AnchorPane>
+               <children>
+                  <ComboBox fx:id="paletteTypeComboBox" layoutX="24.0" layoutY="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
    </children>
 </VBox>

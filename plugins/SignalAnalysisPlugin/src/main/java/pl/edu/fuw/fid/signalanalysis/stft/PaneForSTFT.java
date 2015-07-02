@@ -16,6 +16,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.math.fft.WindowType;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ChannelSamples;
@@ -32,6 +33,7 @@ public class PaneForSTFT {
 	final BorderPane root;
 	final ObservableList<WindowType> windowTypeItems;
 	final ObservableList<Integer> windowSizeItems;
+	final ObservableList<WignerMapPalette> paletteTypeItems;
 	final ImageChart chart;
 	final ImageRendererForSTFT renderer;
 
@@ -48,6 +50,10 @@ public class PaneForSTFT {
 		windowSizeItems = FXCollections.observableArrayList(
 			32, 64, 128, 256, 512, 1024
 		);
+		paletteTypeItems = FXCollections.observableArrayList(
+			WignerMapPalette.RAINBOW,
+			WignerMapPalette.GRAYSCALE
+		);
 
 		URL url = getClass().getResource("SettingsPanelForSTFT.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
@@ -58,7 +64,9 @@ public class PaneForSTFT {
 
 		final ComboBox windowSize = (ComboBox) fxmlLoader.getNamespace().get("windowSizeComboBox");
 		windowSize.setItems(windowSizeItems);
-		windowSize.getSelectionModel().selectFirst();
+
+		final ComboBox paletteType = (ComboBox) fxmlLoader.getNamespace().get("paletteTypeComboBox");
+		paletteType.setItems(paletteTypeItems);
 
 		final double selectionLength = selection.getLength();
 		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
@@ -97,6 +105,7 @@ public class PaneForSTFT {
 
 		windowType.getSelectionModel().select(renderer.getWindowType());
 		windowSize.getSelectionModel().select(renderer.getWindowLength());
+		paletteType.getSelectionModel().select(renderer.getPaletteType());
 
 		windowType.setOnAction(new EventHandler() {
 			@Override
@@ -115,6 +124,17 @@ public class PaneForSTFT {
 				Integer ws = (Integer) windowSize.getSelectionModel().getSelectedItem();
 				if (ws != null) {
 					renderer.setWindowLength(ws);
+					chart.refreshChartImage();
+				}
+			}
+		});
+
+		paletteType.setOnAction(new EventHandler() {
+			@Override
+			public void handle(Event event) {
+				WignerMapPalette pt = (WignerMapPalette) paletteType.getSelectionModel().getSelectedItem();
+				if (pt != null) {
+					renderer.setPaletteType(pt);
 					chart.refreshChartImage();
 				}
 			}

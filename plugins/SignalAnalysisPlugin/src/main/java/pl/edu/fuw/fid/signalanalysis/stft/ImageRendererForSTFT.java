@@ -3,6 +3,7 @@ package pl.edu.fuw.fid.signalanalysis.stft;
 import java.awt.image.BufferedImage;
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
 import pl.edu.fuw.fid.signalanalysis.ImageRenderer;
@@ -14,11 +15,14 @@ import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
  */
 public class ImageRendererForSTFT implements ImageRenderer {
 
+	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ImageRendererForSTFT.class);
+
 	private final SimpleSignal signal;
 
 	private volatile WindowType windowType_ = WindowType.RECTANGULAR;
 	private volatile Integer windowLength_ = 128;
 	private volatile boolean padToHeight_ = false;
+	private volatile WignerMapPalette palette_ = WignerMapPalette.RAINBOW;
 
 	public ImageRendererForSTFT(SimpleSignal signal) {
 		this.signal = signal;
@@ -29,6 +33,14 @@ public class ImageRendererForSTFT implements ImageRenderer {
 			windowLength *= 2;
 		}
 		return windowLength;
+	}
+
+	public WignerMapPalette getPaletteType() {
+		return palette_;
+	}
+
+	public void setPaletteType(WignerMapPalette palette) {
+		palette_ = palette;
 	}
 
 	public boolean getPadToHeight() {
@@ -99,12 +111,14 @@ public class ImageRendererForSTFT implements ImageRenderer {
 				max = Math.max(max, value);
 			}
 		}
+		int[] palette = palette_.getPalette();
 		for (int ix=0; ix<width; ++ix) {
 			if (status.isCancelled()) {
 				return null;
 			}
 			for (int iy=0; iy<height; ++iy) {
-				int value = (int) Math.floor(255 * result[ix][iy] / max);
+				double t = result[ix][iy] / max;
+				int value = palette[Math.min( (int) Math.floor(t * palette.length), palette.length-1 )];
 				image.setRGB(ix, iy, 0x010101 * value);
 			}
 		}
