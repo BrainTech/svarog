@@ -1,4 +1,4 @@
-package pl.edu.fuw.fid.signalanalysis.stft;
+package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -15,22 +15,22 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 /**
  * @author ptr@mimuw.edu.pl
  */
-public class PopupActionForSTFT extends AbstractSignalMLAction {
+public class PopupActionForWavelet extends AbstractSignalMLAction {
 
-	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PopupActionForSTFT.class);
+	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PopupActionForWavelet.class);
 
 	private final SvarogAccessSignal signalAccess;
 
 	private void initFX(JFXPanel fxPanel, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
-		PaneForSTFT pane = new PaneForSTFT(signalAccess, selection);
+		PaneForWavelet pane = new PaneForWavelet(signalAccess, selection);
         Scene scene = new Scene(pane.getPane(), 500, 300);
 		fxPanel.setScene(scene);
 	}
 
-	public PopupActionForSTFT(SvarogAccessSignal signalAccess) {
+	public PopupActionForWavelet(SvarogAccessSignal signalAccess) {
 		super();
 		this.signalAccess = signalAccess;
-		setText("Short-Time Fourier Transform");
+		setText("Wavelet Transform");
 	}
 
 	private ExportedSignalSelection getActiveSelection() {

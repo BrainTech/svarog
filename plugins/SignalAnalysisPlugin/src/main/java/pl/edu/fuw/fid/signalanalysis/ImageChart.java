@@ -18,9 +18,12 @@ import javafx.util.Duration;
  */
 public class ImageChart extends XYChart<Number, Number> {
 
+	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ImageChart.class);
+
 	private final ImageView imageView = new ImageView();
 	private Task<Image> lastTask;
 	private volatile long lastTaskId = 0;
+	private volatile double[] lastResult;
 	private final ImageRenderer renderer;
 
 	public ImageChart(Axis<Number> xAxis, Axis<Number> yAxis, ImageRenderer renderer) {
@@ -31,13 +34,10 @@ public class ImageChart extends XYChart<Number, Number> {
 		this.imageView.relocate(0, 0);
 	}
 
+	// must be called from JavaFX thread
 	public void refreshChartImage() {
 		final int width = (int) getXAxis().getWidth();
 		final int height = (int) getYAxis().getHeight();
-		final double xMin = this.getXAxis().getValueForDisplay(0).doubleValue();
-		final double xMax = this.getXAxis().getValueForDisplay(width).doubleValue();
-		final double yMin = this.getYAxis().getValueForDisplay(0).doubleValue();
-		final double yMax = this.getYAxis().getValueForDisplay(height).doubleValue();
 
 		if (width > 0 && height > 0) {
 			final long id = ++lastTaskId;
@@ -47,8 +47,13 @@ public class ImageChart extends XYChart<Number, Number> {
 			final Task<Image> task = new Task<Image>() {
 				@Override
 				protected Image call() throws Exception {
-					BufferedImage image = renderer.renderImage(width, height, xMin, xMax, yMin, yMax, new ImageRendererStatus(this));
-					return (image == null) ? null : SwingFXUtils.toFXImage(image, null);
+					try {
+						BufferedImage image = renderer.renderImage(getXAxis(), getYAxis(), new ImageRendererStatus(this));
+						return (image == null) ? null : SwingFXUtils.toFXImage(image, null);
+					} catch (Exception ex) {
+						logger.warn(ex);
+						throw ex;
+					}
 				}
 			};
 			task.setOnSucceeded(new EventHandler<WorkerStateEvent>() {

@@ -1,31 +1,36 @@
 package pl.edu.fuw.fid.signalanalysis.stft;
 
-import java.awt.image.BufferedImage;
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
-import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
 import pl.edu.fuw.fid.signalanalysis.ImageRenderer;
 import pl.edu.fuw.fid.signalanalysis.ImageRendererStatus;
+import pl.edu.fuw.fid.signalanalysis.PreferencesWithAxes;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
  */
-public class ImageRendererForSTFT implements ImageRenderer {
+public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ImageRendererForSTFT.class);
 
-	private final SimpleSignal signal;
-
-	private volatile WindowType windowType_ = WindowType.RECTANGULAR;
-	private volatile Integer windowLength_ = 128;
 	private volatile boolean padToHeight_ = false;
-	private volatile WignerMapPalette palette_ = WignerMapPalette.RAINBOW;
+	private volatile Integer windowLength_ = 128;
+	private volatile WindowType windowType_ = WindowType.RECTANGULAR;
 
 	public ImageRendererForSTFT(SimpleSignal signal) {
-		this.signal = signal;
+		super(signal);
+	}
+
+	@Override
+	protected PreferencesForSTFT getPreferences() {
+		PreferencesForSTFT prefs = new PreferencesForSTFT();
+		prefs.padToHeight = padToHeight_;
+		prefs.windowLength = windowLength_;
+		prefs.windowType = windowType_;
+		return prefs;
 	}
 
 	private static int calculatePaddedWindowLength(int windowLength, int chartHeight) {
@@ -33,14 +38,6 @@ public class ImageRendererForSTFT implements ImageRenderer {
 			windowLength *= 2;
 		}
 		return windowLength;
-	}
-
-	public WignerMapPalette getPaletteType() {
-		return palette_;
-	}
-
-	public void setPaletteType(WignerMapPalette palette) {
-		palette_ = palette;
 	}
 
 	public boolean getPadToHeight() {
@@ -72,57 +69,42 @@ public class ImageRendererForSTFT implements ImageRenderer {
 	}
 
 	@Override
-	public BufferedImage renderImage(int width, int height, double tMin, double tMax, double fMin, double fMax, ImageRendererStatus status) throws Exception {
-		final WindowType windowType = windowType_;
-		final int windowLength = windowLength_;
-		final int spectrumLength = padToHeight_ ? calculatePaddedWindowLength(windowLength, height) : windowLength;
-
-		final BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		final double sampling = signal.getSamplingFrequency();
+	protected double[][] computeValues(PreferencesWithAxes<PreferencesForSTFT> preferences, ImageRendererStatus status) throws Exception {
+		final PreferencesForSTFT prefs = preferences.prefs;
+		final int spectrumLength = prefs.padToHeight ? calculatePaddedWindowLength(prefs.windowLength, preferences.height) : prefs.windowLength;
 		final double[] all = signal.getData();
-		final double[] window = new double[windowLength];
-		final double[][] result = new double[width][height];
+		final double[] window = new double[prefs.windowLength];
+		final double[][] result = new double[preferences.width][preferences.height];
 		final FastFourierTransformer fft = new FastFourierTransformer();
 
 		double max = 0;
-		WindowFunction wf = new WindowFunction(windowType, windowType.getParameterDefault());
-		for (int ix=0; ix<width; ++ix) {
+		WindowFunction wf = new WindowFunction(prefs.windowType, prefs.windowType.getParameterDefault());
+		for (int ix=0; ix<preferences.width; ++ix) {
 			if (status.isCancelled()) {
 				return null;
 			}
-			double t = tMin + (tMax - tMin) * ix / width;
-			int i0 = (int) Math.floor(sampling * t) - windowLength / 2;
-			for (int wi=0; wi<windowLength; ++wi) {
+			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
+			int i0 = (int) Math.floor(sampling * t) - prefs.windowLength / 2;
+			for (int wi=0; wi<prefs.windowLength; ++wi) {
 				int i = i0 + wi;
 				window[wi] = (i >=0 && i < all.length) ? all[i] : 0.0;
 			}
 			double[] windowed = wf.applyWindow(window);
-			if (spectrumLength > windowLength) {
+			if (spectrumLength > prefs.windowLength) {
 				double[] temp = new double[spectrumLength];
-				System.arraycopy(windowed, 0, temp, 0, windowLength);
+				System.arraycopy(windowed, 0, temp, 0, prefs.windowLength);
 				windowed = temp;
 			}
 			Complex[] spectrum = fft.transform(windowed);
-			for (int iy=0; iy<height; ++iy) {
-				double f = fMax + (fMin - fMax) * (height - 1 - iy) / height;
+			for (int iy=0; iy<preferences.height; ++iy) {
+				double f = preferences.yAxis.getValueForDisplay(iy).doubleValue();
 				int i = (int) Math.floor(spectrumLength * f / sampling);
 				double value = (i >= 0 && i < spectrumLength) ? spectrum[i].abs() : 0.0;
 				result[ix][iy] = value;
 				max = Math.max(max, value);
 			}
 		}
-		int[] palette = palette_.getPalette();
-		for (int ix=0; ix<width; ++ix) {
-			if (status.isCancelled()) {
-				return null;
-			}
-			for (int iy=0; iy<height; ++iy) {
-				double t = result[ix][iy] / max;
-				int value = palette[Math.min( (int) Math.floor(t * palette.length), palette.length-1 )];
-				image.setRGB(ix, iy, 0x010101 * value);
-			}
-		}
-		return image;
+		return result;
 	}
 
 }
