@@ -20,6 +20,31 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 		super(signal);
 	}
 
+	public WaveletPreview computeWaveletPreview(double t0, double scale) {
+		MotherWavelet wavelet = wavelet_;
+		double t_start = t0 - scale * wavelet.getHalfWidth();
+		double t_end = t0 + scale * wavelet.getHalfWidth();
+		int i_start = (int) Math.round(t_start * sampling);
+		int i_end = (int) Math.round(t_end * sampling);
+
+		WaveletPreview preview = new WaveletPreview(t_start, t_end);
+		double scaleSqrt = Math.sqrt(scale);
+		final double[] all = signal.getData();
+		double sumProduct = 0.0;
+		double sumSquare = 0.0;
+		final double norm = 1.0 / sampling; // integration step
+		for (int i=i_start; i<=i_end; ++i) {
+			double t = i / sampling;
+			double waveletValue = wavelet.value((t-t0) / scale) / scaleSqrt;
+			double signalValue = (i>=0 && i<all.length) ? all[i] : 0.0;
+			preview.addDataPoint(t, waveletValue, signalValue);
+			sumProduct += waveletValue * signalValue;
+			sumSquare += waveletValue * waveletValue;
+		}
+		preview.scaleWavelet(sumProduct * Math.sqrt(norm / sumSquare));
+		return preview;
+	}
+
 	@Override
 	public double[][] computeValues(PreferencesWithAxes<PreferencesForWavelet> preferences, ImageRendererStatus status) throws Exception {
 		final PreferencesForWavelet prefs = preferences.prefs;
@@ -43,6 +68,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 			if (status.isCancelled()) {
 				return null;
 			}
+			status.setProgress(0.25 * iy / preferences.height);
 			double scale = 1.0 / preferences.yAxis.getValueForDisplay(iy).doubleValue();
 			double scaleSqrt = Math.sqrt(scale);
 			for (int ix=0; ix<windowLength; ++ix) {
@@ -60,6 +86,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 			if (status.isCancelled()) {
 				return null;
 			}
+			status.setProgress(0.25 + 0.75 * ix / preferences.width);
 			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
 			int i0 = (int) Math.floor(sampling * t) - windowLength / 2;
 			for (int wi=0; wi<windowLength; ++wi) {

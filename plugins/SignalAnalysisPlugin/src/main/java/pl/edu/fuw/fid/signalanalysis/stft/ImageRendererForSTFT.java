@@ -83,6 +83,7 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 			if (status.isCancelled()) {
 				return null;
 			}
+			status.setProgress(ix / (double) preferences.width);
 			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
 			int i0 = (int) Math.floor(sampling * t) - prefs.windowLength / 2;
 			for (int wi=0; wi<prefs.windowLength; ++wi) {

@@ -9,8 +9,10 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.chart.Axis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 
 /**
@@ -21,9 +23,9 @@ public class ImageChart extends XYChart<Number, Number> {
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ImageChart.class);
 
 	private final ImageView imageView = new ImageView();
+	private final ProgressIndicator waiting = new ProgressIndicator();
 	private Task<Image> lastTask;
 	private volatile long lastTaskId = 0;
-	private volatile double[] lastResult;
 	private final ImageRenderer renderer;
 
 	public ImageChart(Axis<Number> xAxis, Axis<Number> yAxis, ImageRenderer renderer) {
@@ -32,6 +34,9 @@ public class ImageChart extends XYChart<Number, Number> {
 		setData(FXCollections.<Series<Number,Number>>emptyObservableList());
 		getPlotChildren().add(this.imageView);
 		this.imageView.relocate(0, 0);
+		waiting.setMaxWidth(100);
+		waiting.setMaxHeight(100);
+		getPlotChildren().add(this.waiting);
 	}
 
 	// must be called from JavaFX thread
@@ -48,7 +53,7 @@ public class ImageChart extends XYChart<Number, Number> {
 				@Override
 				protected Image call() throws Exception {
 					try {
-						BufferedImage image = renderer.renderImage(getXAxis(), getYAxis(), new ImageRendererStatus(this));
+						BufferedImage image = renderer.renderImage(getXAxis(), getYAxis(), new ImageRendererStatus(this, waiting.progressProperty()));
 						return (image == null) ? null : SwingFXUtils.toFXImage(image, null);
 					} catch (Exception ex) {
 						logger.warn(ex);
@@ -64,14 +69,21 @@ public class ImageChart extends XYChart<Number, Number> {
 						if (image != null) {
 							imageView.setImage(image);
 							startFadeTransition(1.0);
+							waiting.setVisible(false);
 						}
 					}
 				}
 			});
 			lastTask = task;
 			startFadeTransition(0.0);
+			waiting.relocate(0.5*width, 0.5*height);
+			waiting.setVisible(true);
 			new Thread(task).start();
 		}
+	}
+
+	public ProgressIndicator getProgressIndicator() {
+		return waiting;
 	}
 
 	private void startFadeTransition(double finalOpacity) {
@@ -108,6 +120,14 @@ public class ImageChart extends XYChart<Number, Number> {
 	@Override
 	protected void seriesRemoved(Series series) {
 		throw new UnsupportedOperationException("this operation is not supported");
+	}
+
+	public void setOnCursorOnChart(EventHandler<? super MouseEvent> value) {
+		imageView.setOnMouseMoved(value);
+	}
+
+	public void setOnCursorOffChart(EventHandler<? super MouseEvent> value) {
+		imageView.setOnMouseExited(value);
 	}
 
 }

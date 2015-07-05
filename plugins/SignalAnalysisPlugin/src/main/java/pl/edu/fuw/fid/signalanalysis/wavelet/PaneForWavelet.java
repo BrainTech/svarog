@@ -10,11 +10,15 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
@@ -45,7 +49,8 @@ public class PaneForWavelet {
 			WignerMapPalette.GRAYSCALE
 		);
 		waveletTypeItems = FXCollections.observableArrayList(
-			(MotherWavelet) new MexicanHatWavelet()
+			new MexicanHatWavelet(),
+			new ShannonWavelet()
 		);
 
 		URL url = getClass().getResource("SettingsPanelForWavelet.fxml");
@@ -134,7 +139,41 @@ public class PaneForWavelet {
 			}
 		});
 
-		root.setCenter(chart);
+		final NumberAxis waveletX = new NumberAxis();
+		final NumberAxis waveletY = new NumberAxis();
+		final LineChart<Number, Number> waveletChart = new LineChart<Number, Number>(waveletX, waveletY);
+		waveletChart.setCreateSymbols(false);
+		waveletChart.setLegendVisible(false);
+		waveletX.setAutoRanging(false);
+		settingsPanel.getChildren().add(waveletChart);
+		waveletChart.setVisible(false);
+
+		chart.setOnCursorOffChart(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				waveletChart.setVisible(false);
+			}
+		});
+
+		chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				double t = chart.getXAxis().getValueForDisplay(event.getX()).doubleValue();
+				double f = chart.getYAxis().getValueForDisplay(event.getY()).doubleValue();
+				WaveletPreview preview = renderer.computeWaveletPreview(t, 1.0/f);
+				waveletX.setLowerBound(preview.t_start);
+				waveletX.setUpperBound(preview.t_end);
+				waveletChart.setData(preview.getDataSeries());
+				waveletChart.setVisible(true);
+			}
+		});
+
+		StackPane stack = new StackPane(
+			chart,
+			chart.getProgressIndicator()
+		);
+		stack.setAlignment(Pos.CENTER);
+		root.setCenter(stack);
 		root.setLeft(settingsPanel);
 	}
 
