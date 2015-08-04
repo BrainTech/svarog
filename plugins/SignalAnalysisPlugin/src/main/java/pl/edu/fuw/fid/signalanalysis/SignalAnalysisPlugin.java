@@ -1,5 +1,7 @@
 package pl.edu.fuw.fid.signalanalysis;
 
+import java.io.File;
+import org.fuin.utils4j.Utils4J;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
@@ -18,6 +20,7 @@ public class SignalAnalysisPlugin implements Plugin {
 
 	@Override
 	public void register(SvarogAccess access) {
+		Utils4J.addToClasspath("file:///"+System.getProperty("java.home")+ File.separator+"lib"+File.separator+"jfxrt.jar");
 		guiAccess = access.getGUIAccess();
 		signalAccess = access.getSignalAccess();
 

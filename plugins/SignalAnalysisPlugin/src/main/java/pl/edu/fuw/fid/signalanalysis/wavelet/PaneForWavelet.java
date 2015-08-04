@@ -55,7 +55,7 @@ public class PaneForWavelet {
 
 		URL url = getClass().getResource("SettingsPanelForWavelet.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
-		VBox settingsPanel = fxmlLoader.load();
+		VBox settingsPanel = (VBox) fxmlLoader.load();
 
 		final ComboBox paletteType = (ComboBox) fxmlLoader.getNamespace().get("paletteTypeComboBox");
 		paletteType.setItems(paletteTypeItems);
@@ -168,7 +168,8 @@ public class PaneForWavelet {
 			}
 		});
 
-		StackPane stack = new StackPane(
+		StackPane stack = new StackPane();
+		stack.getChildren().addAll(
 			chart,
 			chart.getProgressIndicator()
 		);

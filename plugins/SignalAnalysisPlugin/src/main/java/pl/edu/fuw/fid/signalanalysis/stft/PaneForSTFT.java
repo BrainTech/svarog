@@ -57,7 +57,7 @@ public class PaneForSTFT {
 
 		URL url = getClass().getResource("SettingsPanelForSTFT.fxml");
 		FXMLLoader fxmlLoader = new FXMLLoader(url);
-		VBox settingsPanel = fxmlLoader.load();
+		VBox settingsPanel = (VBox) fxmlLoader.load();
 
 		final ComboBox windowType = (ComboBox) fxmlLoader.getNamespace().get("windowTypeComboBox");
 		windowType.setItems(windowTypeItems);

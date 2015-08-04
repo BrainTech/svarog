@@ -578,6 +578,18 @@
 			<artifactId>jsignalml</artifactId>
 			<version>${org.signalml.jsignalml.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.fuin</groupId>
+			<artifactId>utils4j</artifactId>
+			<version>0.7.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javafx</groupId>
+			<artifactId>jfxrt</artifactId>
+			<version>${java.version}</version>
+			<scope>system</scope>
+			<systemPath>${java.home}/lib/jfxrt.jar</systemPath>
+		</dependency>
 
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>
