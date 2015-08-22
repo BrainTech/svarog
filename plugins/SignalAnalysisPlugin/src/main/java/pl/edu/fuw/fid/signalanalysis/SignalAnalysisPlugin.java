@@ -6,6 +6,7 @@ import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
+import pl.edu.fuw.fid.signalanalysis.ica.IcaMethodAction;
 import pl.edu.fuw.fid.signalanalysis.stft.PopupActionForSTFT;
 import pl.edu.fuw.fid.signalanalysis.wavelet.PopupActionForWavelet;
 
@@ -26,6 +27,7 @@ public class SignalAnalysisPlugin implements Plugin {
 
 		guiAccess.addButtonToSignalPlotPopupMenu(new PopupActionForSTFT(signalAccess));
 		guiAccess.addButtonToSignalPlotPopupMenu(new PopupActionForWavelet(signalAccess));
+		guiAccess.addButtonToToolsMenu(new IcaMethodAction(guiAccess, signalAccess));
 	}
 
 }
