@@ -1,4 +1,4 @@
-package pl.edu.fuw.fid.signalanalysis;
+package pl.edu.fuw.fid.signalanalysis.waveform;
 
 import javafx.application.Platform;
 import javafx.beans.property.DoubleProperty;

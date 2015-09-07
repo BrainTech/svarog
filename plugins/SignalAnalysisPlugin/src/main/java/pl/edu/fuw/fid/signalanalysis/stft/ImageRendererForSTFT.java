@@ -4,10 +4,11 @@ import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
 import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
-import pl.edu.fuw.fid.signalanalysis.ImageRenderer;
-import pl.edu.fuw.fid.signalanalysis.ImageRendererStatus;
-import pl.edu.fuw.fid.signalanalysis.PreferencesWithAxes;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRendererStatus;
+import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -69,15 +70,14 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 	}
 
 	@Override
-	protected double[][] computeValues(PreferencesWithAxes<PreferencesForSTFT> preferences, ImageRendererStatus status) throws Exception {
+	protected ImageResult compute(PreferencesWithAxes<PreferencesForSTFT> preferences, ImageRendererStatus status) throws Exception {
 		final PreferencesForSTFT prefs = preferences.prefs;
 		final int spectrumLength = prefs.padToHeight ? calculatePaddedWindowLength(prefs.windowLength, preferences.height) : prefs.windowLength;
 		final double[] all = signal.getData();
 		final double[] window = new double[prefs.windowLength];
-		final double[][] result = new double[preferences.width][preferences.height];
+		final ImageResult result = new ImageResult(preferences.width, preferences.height);
 		final FastFourierTransformer fft = new FastFourierTransformer();
 
-		double max = 0;
 		WindowFunction wf = new WindowFunction(prefs.windowType, prefs.windowType.getParameterDefault());
 		for (int ix=0; ix<preferences.width; ++ix) {
 			if (status.isCancelled()) {
@@ -85,6 +85,7 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 			}
 			status.setProgress(ix / (double) preferences.width);
 			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
+			result.t[ix] = t;
 			int i0 = (int) Math.floor(sampling * t) - prefs.windowLength / 2;
 			for (int wi=0; wi<prefs.windowLength; ++wi) {
 				int i = i0 + wi;
@@ -100,9 +101,9 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 			for (int iy=0; iy<preferences.height; ++iy) {
 				double f = preferences.yAxis.getValueForDisplay(iy).doubleValue();
 				int i = (int) Math.floor(spectrumLength * f / sampling);
-				double value = (i >= 0 && i < spectrumLength) ? spectrum[i].abs() : 0.0;
-				result[ix][iy] = value;
-				max = Math.max(max, value);
+				result.f[iy] = i * sampling / spectrumLength;
+				Complex value = (i >= 0 && i < spectrumLength) ? spectrum[i] : Complex.ZERO;
+				result.values[ix][iy] = value;
 			}
 		}
 		return result;

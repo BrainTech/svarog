@@ -2,10 +2,12 @@ package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
-import pl.edu.fuw.fid.signalanalysis.ImageRenderer;
-import pl.edu.fuw.fid.signalanalysis.ImageRendererStatus;
-import pl.edu.fuw.fid.signalanalysis.PreferencesWithAxes;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRendererStatus;
+import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
+import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -20,33 +22,8 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 		super(signal);
 	}
 
-	public WaveletPreview computeWaveletPreview(double t0, double scale) {
-		MotherWavelet wavelet = wavelet_;
-		double t_start = t0 - scale * wavelet.getHalfWidth();
-		double t_end = t0 + scale * wavelet.getHalfWidth();
-		int i_start = (int) Math.round(t_start * sampling);
-		int i_end = (int) Math.round(t_end * sampling);
-
-		WaveletPreview preview = new WaveletPreview(t_start, t_end);
-		double scaleSqrt = Math.sqrt(scale);
-		final double[] all = signal.getData();
-		double sumProduct = 0.0;
-		double sumSquare = 0.0;
-		final double norm = 1.0 / sampling; // integration step
-		for (int i=i_start; i<=i_end; ++i) {
-			double t = i / sampling;
-			double waveletValue = wavelet.value((t-t0) / scale) / scaleSqrt;
-			double signalValue = (i>=0 && i<all.length) ? all[i] : 0.0;
-			preview.addDataPoint(t, waveletValue, signalValue);
-			sumProduct += waveletValue * signalValue;
-			sumSquare += waveletValue * waveletValue;
-		}
-		preview.scaleWavelet(sumProduct * Math.sqrt(norm / sumSquare));
-		return preview;
-	}
-
 	@Override
-	public double[][] computeValues(PreferencesWithAxes<PreferencesForWavelet> preferences, ImageRendererStatus status) throws Exception {
+	public ImageResult compute(PreferencesWithAxes<PreferencesForWavelet> preferences, ImageRendererStatus status) throws Exception {
 		final PreferencesForWavelet prefs = preferences.prefs;
 
 		// długość okna zależy od maksymalnej długości falki
@@ -59,21 +36,29 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 
 		final double[] all = signal.getData();
 		final Complex[][] windows = new Complex[preferences.height][];
-		final double[][] result = new double[preferences.width][preferences.height];
+		ImageResult result = new ImageResult(preferences.width, preferences.height);
 		final FastFourierTransformer fft = new FastFourierTransformer();
 
 		// prepare windows
-		double[] window = new double[windowLength];
+		Complex[] window = new Complex[windowLength];
 		for (int iy=0; iy<preferences.height; ++iy) {
 			if (status.isCancelled()) {
 				return null;
 			}
 			status.setProgress(0.25 * iy / preferences.height);
-			double scale = 1.0 / preferences.yAxis.getValueForDisplay(iy).doubleValue();
-			double scaleSqrt = Math.sqrt(scale);
+			double f = preferences.yAxis.getValueForDisplay(iy).doubleValue();
+			result.f[iy] = f;
+			Waveform scaled = prefs.wavelet.scale(f);
+			double norm = 0.0;
 			for (int ix=0; ix<windowLength; ++ix) {
 				double t = (ix - 0.5*(windowLength-1)) / sampling;
-				window[ix] = prefs.wavelet.value(t / scale) / scaleSqrt;
+				window[ix] = scaled.value(t);
+				double re = window[ix].getReal(), im = window[ix].getImaginary();
+				norm += re*re + im*im;
+			}
+			norm = 1.0 / Math.sqrt(norm * windowLength);
+			for (int ix=0; ix<windowLength; ++ix) {
+				window[ix] = window[ix].multiply(norm);
 			}
 			windows[iy] = fft.transform(window);
 			for (int ix=0; ix<windowLength; ++ix) {
@@ -81,17 +66,17 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 			}
 		}
 
-		double max = 0;
 		for (int ix=0; ix<preferences.width; ++ix) {
 			if (status.isCancelled()) {
 				return null;
 			}
 			status.setProgress(0.25 + 0.75 * ix / preferences.width);
 			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
+			result.t[ix] = t;
 			int i0 = (int) Math.floor(sampling * t) - windowLength / 2;
 			for (int wi=0; wi<windowLength; ++wi) {
 				int i = i0 + wi;
-				window[wi] = (i >=0 && i < all.length) ? all[i] : 0.0;
+				window[wi] = new Complex((i >=0 && i < all.length) ? all[i] : 0.0, 0.0);
 			}
 			Complex[] spectrum = fft.transform(window);
 			for (int iy=0; iy<preferences.height; ++iy) {
@@ -99,9 +84,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 				for (int iw=0; iw<windowLength; ++iw) {
 					sum = sum.add(spectrum[iw].multiply(windows[iy][iw]));
 				}
-				double value = sum.abs();
-				result[ix][iy] = value;
-				max = Math.max(max, value);
+				result.values[ix][iy] = sum;
 			}
 		}
 		return result;

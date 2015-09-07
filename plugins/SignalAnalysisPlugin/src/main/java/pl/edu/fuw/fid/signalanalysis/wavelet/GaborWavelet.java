@@ -5,28 +5,27 @@ import org.apache.commons.math.complex.Complex;
 /**
  * @author ptr@mimuw.edu.pl
  */
-public class MexicanHatWavelet extends MotherWavelet {
-
-	private final static double NORM = 1.0 / Math.sqrt(2*Math.PI);
+public class GaborWavelet extends MotherWavelet {
 
 	@Override
 	public double getBasicFrequency() {
-		return 1.0; // TODO
+		return 1.0;
 	}
 
 	@Override
 	public double getHalfWidth() {
-		return 4.0;
+		return 3.0;
 	}
 
 	@Override
 	public String getLabel() {
-		return "mexican hat";
+		return "Gabor";
 	}
 
 	@Override
 	public Complex value(double t) {
-		return new Complex(NORM * (1.0-t*t) * Math.exp(-0.5*t*t), 0.0);
+		double exp = Math.exp(-t*t);
+		return new Complex(0.0, 2*Math.PI*t).exp().multiply(exp);
 	}
 
 }

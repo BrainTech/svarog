@@ -1,14 +1,40 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
+import org.apache.commons.math.complex.Complex;
+import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
+
 /**
+ * Base class for wavelet waveforms.
+ *
  * @author ptr@mimuw.edu.pl
  */
-public interface MotherWavelet {
+public abstract class MotherWavelet implements Waveform {
 
-	public double getHalfWidth();
+	@Override
+	abstract public double getHalfWidth();
 
-	public String getLabel();
+	abstract public String getLabel();
 
-	public double value(double t);
+	abstract public double getBasicFrequency();
+
+	@Override
+	abstract public Complex value(double t);
+
+	public Waveform scale(final double f) {
+		return new Waveform() {
+
+			@Override
+			public double getHalfWidth() {
+				return MotherWavelet.this.getHalfWidth() / f;
+			}
+
+			@Override
+			public Complex value(double t) {
+				double relative = f / getBasicFrequency();
+				return MotherWavelet.this.value(t * relative).multiply(Math.sqrt(relative));
+			}
+
+		};
+	}
 
 }

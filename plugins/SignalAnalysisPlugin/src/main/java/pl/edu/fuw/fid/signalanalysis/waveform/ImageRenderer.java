@@ -1,8 +1,10 @@
-package pl.edu.fuw.fid.signalanalysis;
+package pl.edu.fuw.fid.signalanalysis.waveform;
 
 import java.awt.image.BufferedImage;
 import javafx.scene.chart.Axis;
+import org.apache.commons.math.complex.Complex;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
+import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -20,10 +22,22 @@ public abstract class ImageRenderer<P> {
 		this.sampling = signal.getSamplingFrequency();
 	}
 
-	protected abstract double[][] computeValues(PreferencesWithAxes<P> preferences, ImageRendererStatus status) throws Exception;
+	protected abstract ImageResult compute(PreferencesWithAxes<P> preferences, ImageRendererStatus status) throws Exception;
 
 	public WignerMapPalette getPaletteType() {
 		return palette_;
+	}
+
+	public TimeFrequency getTimeFrequency(int x, int y) {
+		TimeFrequency result = null;
+		CachedImageResult<PreferencesWithAxes<P>> cache = cache_;
+		if (cache != null && x >= 0 && x < cache.result.t.length && y >= 0 && y < cache.result.f.length) {
+			double t = cache.result.t[x];
+			double f = cache.result.f[y];
+			Complex v = cache.result.values[x][y];
+			result = new TimeFrequency(t, f, v);
+		}
+		return result;
 	}
 
 	public void setPaletteType(WignerMapPalette palette) {
@@ -45,13 +59,13 @@ public abstract class ImageRenderer<P> {
 	 * @throws Exception if computational error occurs
 	 */
 	public BufferedImage renderImage(Axis<Number> xAxis, Axis<Number> yAxis, ImageRendererStatus status) throws Exception {
-		double[][] result;
+		ImageResult result;
 		PreferencesWithAxes<P> pax = new PreferencesWithAxes<P>(getPreferences(), xAxis, yAxis);
 		CachedImageResult<PreferencesWithAxes<P>> cache = cache_;
 		if (cache != null && cache.preferences.equals(pax)) {
 			result = cache.result;
 		} else {
-			result = computeValues(pax, status);
+			result = compute(pax, status);
 			if (result == null) {
 				return null;
 			}
@@ -65,7 +79,7 @@ public abstract class ImageRenderer<P> {
 		double max = 0;
 		for (int ix=0; ix<pax.width; ++ix) {
 			for (int iy=0; iy<pax.height; ++iy) {
-				max = Math.max(max, result[ix][iy]);
+				max = Math.max(max, result.values[ix][iy].abs());
 			}
 		}
 		int[] palette = palette_.getPalette();
@@ -74,7 +88,7 @@ public abstract class ImageRenderer<P> {
 				return null;
 			}
 			for (int iy=0; iy<pax.height; ++iy) {
-				double t = result[ix][iy] / max;
+				double t = result.values[ix][iy].abs() / max;
 				int value = palette[Math.min( (int) Math.floor(t * palette.length), palette.length-1 )];
 				image.setRGB(ix, iy, value);
 			}

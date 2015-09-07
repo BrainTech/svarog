@@ -13,6 +13,7 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -22,8 +23,10 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
-import pl.edu.fuw.fid.signalanalysis.ImageChart;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageChart;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
+import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -75,8 +78,8 @@ public class PaneForSTFT {
 
 		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1.0);
 		final NumberAxis yAxis = new NumberAxis(0.0, nyquistFrequency, 10.0);
-		xAxis.setLabel("time [s]");
 		yAxis.setLabel("frequency [Hz]");
+		yAxis.setPrefWidth(50);
 
 		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencySlider");
 		maxFrequency.setMax(nyquistFrequency);
@@ -106,6 +109,13 @@ public class PaneForSTFT {
 		windowType.getSelectionModel().select(renderer.getWindowType());
 		windowSize.getSelectionModel().select(renderer.getWindowLength());
 		paletteType.getSelectionModel().select(renderer.getPaletteType());
+
+		final NumberAxis xAxisSignal = new NumberAxis(0.0, selectionLength, 1.0);
+		final NumberAxis yAxisSignal = new NumberAxis();
+		xAxisSignal.setLabel("time [s]");
+		yAxisSignal.setLabel("value [µV]");
+		yAxisSignal.setPrefWidth(50);
+		final SignalChart signalChart = new SignalChart(signal, xAxisSignal, yAxisSignal);
 
 		windowType.setOnAction(new EventHandler() {
 			@Override
@@ -150,7 +160,30 @@ public class PaneForSTFT {
 			}
 		});
 
-		root.setCenter(chart);
+		chart.setOnCursorOffChart(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				signalChart.clearWaveform();
+			}
+		});
+
+		chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				Integer ws = (Integer) windowSize.getSelectionModel().getSelectedItem();
+				TimeFrequency tf = chart.getTimeFrequency((int)event.getX(), (int)event.getY());
+				if (ws != null && tf != null) {
+					WindowType wt = (WindowType) windowType.getSelectionModel().getSelectedItem();
+					signalChart.setWaveform(new SineWaveform(tf.f, 0.5*ws/samplingFrequency), wt, tf.t, tf.v);
+				}
+			}
+		});
+
+		BorderPane main = new BorderPane();
+		main.setCenter(chart);
+		main.setBottom(signalChart);
+
+		root.setCenter(main);
 		root.setLeft(settingsPanel);
 	}
 

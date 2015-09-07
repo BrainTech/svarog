@@ -1,4 +1,4 @@
-package pl.edu.fuw.fid.signalanalysis;
+package pl.edu.fuw.fid.signalanalysis.waveform;
 
 import java.awt.image.BufferedImage;
 import javafx.animation.FadeTransition;
@@ -80,6 +80,10 @@ public class ImageChart extends XYChart<Number, Number> {
 			waiting.setVisible(true);
 			new Thread(task).start();
 		}
+	}
+
+	public TimeFrequency getTimeFrequency(int x, int y) {
+		return renderer.getTimeFrequency(x, y);
 	}
 
 	public ProgressIndicator getProgressIndicator() {

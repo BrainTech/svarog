@@ -11,7 +11,6 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -26,8 +25,10 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
-import pl.edu.fuw.fid.signalanalysis.ImageChart;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageChart;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
+import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -50,6 +51,7 @@ public class PaneForWavelet {
 		);
 		waveletTypeItems = FXCollections.observableArrayList(
 			new MexicanHatWavelet(),
+			new GaborWavelet(),
 			new ShannonWavelet()
 		);
 
@@ -83,8 +85,7 @@ public class PaneForWavelet {
 
 		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1.0);
 		final LogarithmicAxis yAxis = new LogarithmicAxis();
-		xAxis.setLabel("time [s]");
-		yAxis.setLabel("scale inverse [Hz]");
+		yAxis.setPrefWidth(50);
 		yAxis.setLowerBound(5.0); // Hz
 		yAxis.setUpperBound(nyquistFrequency);
 
@@ -117,6 +118,13 @@ public class PaneForWavelet {
 		waveletType.getSelectionModel().select(renderer.getWavelet());
 		paletteType.getSelectionModel().select(renderer.getPaletteType());
 
+		final NumberAxis xAxisSignal = new NumberAxis(0.0, selectionLength, 1.0);
+		final NumberAxis yAxisSignal = new NumberAxis();
+		xAxisSignal.setLabel("time [s]");
+		yAxisSignal.setLabel("value [µV]");
+		yAxisSignal.setPrefWidth(50);
+		final SignalChart signalChart = new SignalChart(signal, xAxisSignal, yAxisSignal);
+
 		waveletType.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
@@ -139,32 +147,21 @@ public class PaneForWavelet {
 			}
 		});
 
-		final NumberAxis waveletX = new NumberAxis();
-		final NumberAxis waveletY = new NumberAxis();
-		final LineChart<Number, Number> waveletChart = new LineChart<Number, Number>(waveletX, waveletY);
-		waveletChart.setCreateSymbols(false);
-		waveletChart.setLegendVisible(false);
-		waveletX.setAutoRanging(false);
-		settingsPanel.getChildren().add(waveletChart);
-		waveletChart.setVisible(false);
-
 		chart.setOnCursorOffChart(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				waveletChart.setVisible(false);
+				signalChart.clearWaveform();
 			}
 		});
 
 		chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				double t = chart.getXAxis().getValueForDisplay(event.getX()).doubleValue();
-				double f = chart.getYAxis().getValueForDisplay(event.getY()).doubleValue();
-				WaveletPreview preview = renderer.computeWaveletPreview(t, 1.0/f);
-				waveletX.setLowerBound(preview.t_start);
-				waveletX.setUpperBound(preview.t_end);
-				waveletChart.setData(preview.getDataSeries());
-				waveletChart.setVisible(true);
+				MotherWavelet mv = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
+				TimeFrequency tf = chart.getTimeFrequency((int)event.getX(), (int)event.getY());
+				if (mv != null && tf != null) {
+					signalChart.setWaveform(mv.scale(tf.f), null, tf.t, tf.v);
+				}
 			}
 		});
 
@@ -174,7 +171,12 @@ public class PaneForWavelet {
 			chart.getProgressIndicator()
 		);
 		stack.setAlignment(Pos.CENTER);
-		root.setCenter(stack);
+
+		BorderPane main = new BorderPane();
+		main.setCenter(stack);
+		main.setBottom(signalChart);
+		
+		root.setCenter(main);
 		root.setLeft(settingsPanel);
 	}
 
