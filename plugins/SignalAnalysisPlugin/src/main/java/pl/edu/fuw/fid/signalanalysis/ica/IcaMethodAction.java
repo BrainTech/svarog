@@ -2,6 +2,8 @@ package pl.edu.fuw.fid.signalanalysis.ica;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import org.apache.commons.math.linear.Array2DRowRealMatrix;
+import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
@@ -15,15 +17,16 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
+import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.zero.ZeroMethodAction;
 
 /**
- *
- * @author piotr
+ * @author ptr@mimuw.edu.pl
  */
 public class IcaMethodAction extends AbstractSignalMLAction {
 
-	private static final String TITLE = "Independent Component Analysis";
+	private static final String TITLE = "Compute ICA";
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;
@@ -70,22 +73,18 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				}
 
 				IcaMethodComputer computer = new IcaMethodComputer();
-				double[][] raw = computer.compute(data);
+				RealMatrix ica = new Array2DRowRealMatrix(computer.compute(data));
 
-				double[][] components;
+				RealMatrix M;
 				if (oldMontage == null) {
-					components = raw;
-				} else {
-					components = new double[raw.length][inputChannelCount];
-					for (int i=0; i<raw.length; ++i) {
-						for (int k=0; k<outputChannelCount; ++k) {
-							float[] kMontage = oldMontage.getReferenceAsFloat(outputChannels[k]);
-							for (int j=0; j<inputChannelCount; ++j) {
-								components[i][j] += raw[i][k] * kMontage[j];
-							}
-						}
+					M = new Array2DRowRealMatrix(outputChannelCount, inputChannelCount);
+					for (int i=0; i<outputChannelCount; ++i) {
+						M.setEntry(i, outputChannels[i], 1.0);
 					}
+				} else {
+					M = SignalAnalysisTools.extractMatrixFromMontage(oldMontage, outputChannels);
 				}
+				double[][] components = ica.multiply(M).getData();
 
 				for (double[] weights : components) {
 					int mainChannel = 0;
@@ -102,12 +101,15 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 						for (int c=0; c<weights.length; ++c) {
 							if (c != mainChannel) {
 								double weight = weights[c] / mainWeight;
-								newMontage.setReference(index, c, Double.toString(weight));
+								if (Math.abs(weight) > SignalAnalysisTools.THRESHOLD) {
+									newMontage.setReference(index, c, Double.toString(weight));
+								}
 							}
 						}
 					}
 				}
 				if (newMontage.getMontageChannelCount() > 0) {
+					ZeroMethodAction.trace = new IcaComputationTrace(signalDocument, ica, oldMontage, outputChannels);
 					signalDocument.setMontage(newMontage);
 				} else {
 					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "No valid components found.", "Error", JOptionPane.ERROR_MESSAGE);
