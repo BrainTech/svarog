@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.fuw.fid.signalanalysis.zero;
+package pl.edu.fuw.fid.signalanalysis.ica;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
@@ -12,7 +12,6 @@ import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.MontageMismatchException;
@@ -23,7 +22,6 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
-import pl.edu.fuw.fid.signalanalysis.ica.IcaComputationTrace;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -58,17 +56,17 @@ public class ZeroMethodAction extends AbstractSignalMLAction {
 			RealMatrix M = SignalAnalysisTools.extractMatrixFromMontage(trace.montage, trace.selectedChannels);
 			int inputChannelCount = M.getColumnDimension();
 			int outputChannelCount = M.getRowDimension();
-			if (A.getRowDimension() != outputChannelCount || A.getColumnDimension() != outputChannelCount || signalDocument.getChannelCount() != inputChannelCount) {
+			Montage icaMontage = signalDocument.getMontage();
+			if (icaMontage == null || A.getRowDimension() != outputChannelCount || A.getColumnDimension() != outputChannelCount || signalDocument.getChannelCount() != inputChannelCount) {
 				throw new MontageMismatchException();
 			}
 
-			ChannelSpacePanel panel = new ChannelSpacePanel();
-			panel.setConstraints(signalSpaceConstraints);
+			ZeroMethodPanel panel = new ZeroMethodPanel(icaMontage, signalSpaceConstraints);
 
 			int result = JOptionPane.showConfirmDialog(guiAccess.getDialogParent(), panel, TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 
-				int[] channelsToZero = panel.getChannelList().getSelectedIndices();
+				int[] channelsToZero = panel.getSelectedChannels();
 
 				Montage newMontage;
 				if (trace.montage == null) {

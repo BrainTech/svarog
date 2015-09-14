@@ -19,7 +19,6 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
-import pl.edu.fuw.fid.signalanalysis.zero.ZeroMethodAction;
 
 /**
  * @author ptr@mimuw.edu.pl

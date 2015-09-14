@@ -10,7 +10,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.ica.IcaMethodAction;
 import pl.edu.fuw.fid.signalanalysis.stft.PopupActionForSTFT;
 import pl.edu.fuw.fid.signalanalysis.wavelet.PopupActionForWavelet;
-import pl.edu.fuw.fid.signalanalysis.zero.ZeroMethodAction;
+import pl.edu.fuw.fid.signalanalysis.ica.ZeroMethodAction;
 
 /**
  * @author ptr@mimuw.edu.pl
