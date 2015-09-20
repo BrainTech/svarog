@@ -19,6 +19,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.StoredSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -50,6 +51,10 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 			if (result == JOptionPane.OK_OPTION) {
 
 				int[] outputChannels = panel.getChannelList().getSelectedIndices();
+				if (outputChannels.length == 0) {
+					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Select at least one channel.", "Try again", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 
 				SignalProcessingChain signalChain = SignalProcessingChain.createFilteredChain(signalDocument.getSampleSource());
 				Montage oldMontage = signalDocument.getMontage();
