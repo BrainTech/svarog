@@ -16,7 +16,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ImageRendererForWavelet.class);
 
-	private volatile MotherWavelet wavelet_ = new MexicanHatWavelet();
+	private volatile MotherWavelet wavelet_ = new GaborWavelet();
 
 	public ImageRendererForWavelet(SimpleSignal signal) {
 		super(signal);

@@ -5,34 +5,52 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox prefHeight="400.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="327.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
    <children>
     <TitledPane animated="false" collapsible="false" text="Wavelet">
       <content>
         <AnchorPane>
                <children>
-                  <GridPane layoutX="7.0" layoutY="29.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane hgap="5.0" layoutX="7.0" layoutY="29.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="25.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
                         <Label text="Type:" />
                         <ComboBox fx:id="waveletTypeComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <Slider fx:id="waveletParamSlider" majorTickUnit="3.0" max="10.0" min="1.0" minorTickCount="1" showTickLabels="true" value="1.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Width:" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
             </AnchorPane>
       </content>
     </TitledPane>
-    <TitledPane animated="false" collapsible="false" text="Max frequency">
+    <TitledPane animated="false" collapsible="false" text="Frequency">
       <content>
         <AnchorPane>
                <children>
-                  <Slider fx:id="frequencySlider" layoutX="14.0" layoutY="14.0" majorTickUnit="20.0" minorTickCount="1" showTickLabels="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <GridPane hgap="5.0" layoutX="-16.0" layoutY="-31.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="25.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Slider fx:id="frequencyMaxSlider" majorTickUnit="20.0" minorTickCount="1" showTickLabels="true" GridPane.columnIndex="1" />
+                        <Label text="Max:" />
+                        <Label text="Scale:" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="frequencyScaleComboBox" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
       </content>
@@ -41,7 +59,21 @@
         <content>
           <AnchorPane>
                <children>
-                  <ComboBox fx:id="paletteTypeComboBox" layoutX="24.0" layoutY="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+                  <GridPane hgap="5.0" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" percentWidth="25.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <ComboBox fx:id="paletteTypeComboBox" prefWidth="150.0" GridPane.columnIndex="1" />
+                        <CheckBox fx:id="paletteInvertCheckBox" mnemonicParsing="false" text="invert colours" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Type:" />
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
         </content>

@@ -5,27 +5,32 @@ import org.apache.commons.math.complex.Complex;
 /**
  * @author ptr@mimuw.edu.pl
  */
-public class ShannonWavelet extends MotherWavelet {
+public class HaarWavelet extends MotherWavelet {
 
 	@Override
 	public double getBasicFrequency() {
-		return 0.75;
+		return 1.0;
 	}
 
 	@Override
 	public double getHalfWidth() {
-		return 5.0;
+		return 0.5;
 	}
 
 	@Override
 	public String getLabel() {
-		return "Shannon";
+		return "Haar";
 	}
 
 	@Override
 	public Complex value(double t) {
-		double sinc = (Math.abs(t) > 1.0e-6) ? Math.sin(t) / t : 1;
-		return new Complex(0.0, 2*Math.PI*t).exp().multiply(sinc);
+		if (t >= -0.5 && t < 0) {
+			return Complex.ONE;
+		}
+		if (t >= 0 && t < 0.5) {
+			return Complex.ONE.multiply(-1);
+		}
+		return Complex.ZERO;
 	}
 
 }

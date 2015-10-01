@@ -11,7 +11,7 @@ public class PreferencesForWavelet {
 	public boolean equals(Object other) {
 		if (other != null && other instanceof PreferencesForWavelet) {
 			PreferencesForWavelet prefs = (PreferencesForWavelet) other;
-			return wavelet.getClass().equals(prefs.wavelet.getClass());
+			return wavelet.equals(prefs.wavelet);
 		} else {
 			return false;
 		}

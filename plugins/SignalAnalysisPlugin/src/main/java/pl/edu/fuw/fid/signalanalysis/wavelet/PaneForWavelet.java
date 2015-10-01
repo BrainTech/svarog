@@ -40,8 +40,25 @@ public class PaneForWavelet {
 	final BorderPane root;
 	final ObservableList<MotherWavelet> waveletTypeItems;
 	final ObservableList<WignerMapPalette> paletteTypeItems;
+	final ObservableList<String> frequencyScaleItems;
 	final ImageChart chart;
 	final ImageRendererForWavelet renderer;
+
+	private MotherWavelet createWavelet(MotherWavelet wavelet, double param) {
+		if (wavelet instanceof ParamWavelet) try {
+			Class<? extends MotherWavelet> cl = wavelet.getClass();
+			wavelet = cl.getConstructor(Double.class).newInstance(param);
+		} catch (Exception ex) {
+			logger.error("wavelet class does not have a proper constructor", ex);
+		}
+		return wavelet;
+	}
+
+	private void setWavelet(MotherWavelet wavelet, double param) {
+		wavelet = createWavelet(wavelet, param);
+		renderer.setWavelet(wavelet);
+		chart.refreshChartImage();
+	}
 
 	public PaneForWavelet(SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
 		root = new BorderPane();
@@ -50,9 +67,13 @@ public class PaneForWavelet {
 			WignerMapPalette.GRAYSCALE
 		);
 		waveletTypeItems = FXCollections.observableArrayList(
-			new MexicanHatWavelet(),
-			new GaborWavelet(),
-			new ShannonWavelet()
+			new GaborWavelet(1.0),
+			new ShannonWavelet(),
+			new HaarWavelet()
+		);
+		frequencyScaleItems = FXCollections.observableArrayList(
+			"linear",
+			"logarithmic"
 		);
 
 		URL url = getClass().getResource("SettingsPanelForWavelet.fxml");
@@ -89,7 +110,7 @@ public class PaneForWavelet {
 		yAxis.setLowerBound(5.0); // Hz
 		yAxis.setUpperBound(nyquistFrequency);
 
-		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencySlider");
+		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencyMaxSlider");
 		maxFrequency.setMin(5.0); // Hz
 		maxFrequency.setMax(nyquistFrequency);
 		maxFrequency.setValue(nyquistFrequency);
@@ -98,6 +119,17 @@ public class PaneForWavelet {
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				double maxFreq = Math.round(newValue.doubleValue());
 				yAxis.setUpperBound(maxFreq);
+			}
+		});
+
+		final ComboBox freqScale = (ComboBox) fxmlLoader.getNamespace().get("frequencyScaleComboBox");
+		freqScale.setItems(frequencyScaleItems);
+		freqScale.getSelectionModel().select(1);
+		freqScale.valueProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				boolean logScale = newValue.equals("logarithmic");
+				// TODO
 			}
 		});
 
@@ -125,13 +157,26 @@ public class PaneForWavelet {
 		yAxisSignal.setPrefWidth(50);
 		final SignalChart signalChart = new SignalChart(signal, xAxisSignal, yAxisSignal);
 
+		final Slider waveletParam = (Slider) fxmlLoader.getNamespace().get("waveletParamSlider");
+		waveletParam.setValue(GaborWavelet.DEFAULT_WIDTH);
+		waveletParam.valueProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				MotherWavelet wavelet = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
+				if (wavelet != null) {
+					setWavelet(wavelet, newValue.doubleValue());
+				}
+			}
+		});
+
 		waveletType.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
-				MotherWavelet mv = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
-				if (mv != null) {
-					renderer.setWavelet(mv);
-					chart.refreshChartImage();
+				double newValue = waveletParam.getValue();
+				MotherWavelet wavelet = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
+				if (wavelet != null) {
+					waveletParam.setDisable(!(wavelet instanceof ParamWavelet));
+					setWavelet(wavelet, newValue);
 				}
 			}
 		});
@@ -157,7 +202,9 @@ public class PaneForWavelet {
 		chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
+				double newValue = waveletParam.getValue();
 				MotherWavelet mv = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
+				mv = createWavelet(mv, newValue);
 				TimeFrequency tf = chart.getTimeFrequency((int)event.getX(), (int)event.getY());
 				if (mv != null && tf != null) {
 					signalChart.setWaveform(mv.scale(tf.f), null, tf.t, tf.v);
