@@ -28,6 +28,7 @@ public class PreferencesWithAxes<P> {
 
 	public boolean equals(PreferencesWithAxes<P> other) {
 		return prefs.equals(other.prefs)
+			&& yAxis == other.yAxis
 			&& width == other.width
 			&& height == other.height
 			&& xMin == other.xMin

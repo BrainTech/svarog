@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
@@ -41,8 +42,10 @@ public class PaneForWavelet {
 	final ObservableList<MotherWavelet> waveletTypeItems;
 	final ObservableList<WignerMapPalette> paletteTypeItems;
 	final ObservableList<String> frequencyScaleItems;
-	final ImageChart chart;
+	final ImageChart linChart, logChart;
 	final ImageRendererForWavelet renderer;
+
+	private ImageChart theChart;
 
 	private MotherWavelet createWavelet(MotherWavelet wavelet, double param) {
 		if (wavelet instanceof ParamWavelet) try {
@@ -57,7 +60,7 @@ public class PaneForWavelet {
 	private void setWavelet(MotherWavelet wavelet, double param) {
 		wavelet = createWavelet(wavelet, param);
 		renderer.setWavelet(wavelet);
-		chart.refreshChartImage();
+		theChart.refreshChartImage();
 	}
 
 	public PaneForWavelet(SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
@@ -83,6 +86,8 @@ public class PaneForWavelet {
 		final ComboBox paletteType = (ComboBox) fxmlLoader.getNamespace().get("paletteTypeComboBox");
 		paletteType.setItems(paletteTypeItems);
 
+		final CheckBox paletteInvert = (CheckBox) fxmlLoader.getNamespace().get("paletteInvertCheckBox");
+
 		final ComboBox waveletType = (ComboBox) fxmlLoader.getNamespace().get("waveletTypeComboBox");
 		waveletType.setItems(waveletTypeItems);
 		waveletType.setConverter(new StringConverter() {
@@ -103,12 +108,15 @@ public class PaneForWavelet {
 		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
 		final double samplingFrequency = samples.getSamplingFrequency();
 		final double nyquistFrequency = 0.5 * samplingFrequency;
+		final double minFrequency = 5.0; // Hz
 
 		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1.0);
-		final LogarithmicAxis yAxis = new LogarithmicAxis();
-		yAxis.setPrefWidth(50);
-		yAxis.setLowerBound(5.0); // Hz
-		yAxis.setUpperBound(nyquistFrequency);
+		final NumberAxis linAxis = new NumberAxis(minFrequency, nyquistFrequency, 10.0);
+		linAxis.setPrefWidth(50);
+		final LogarithmicAxis logAxis = new LogarithmicAxis();
+		logAxis.setPrefWidth(50);
+		logAxis.setLowerBound(minFrequency); // Hz
+		logAxis.setUpperBound(nyquistFrequency);
 
 		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencyMaxSlider");
 		maxFrequency.setMin(5.0); // Hz
@@ -118,7 +126,8 @@ public class PaneForWavelet {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				double maxFreq = Math.round(newValue.doubleValue());
-				yAxis.setUpperBound(maxFreq);
+				linAxis.setUpperBound(maxFreq);
+				logAxis.setUpperBound(maxFreq);
 			}
 		});
 
@@ -129,7 +138,16 @@ public class PaneForWavelet {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				boolean logScale = newValue.equals("logarithmic");
-				// TODO
+				if (logScale) {
+					linChart.setVisible(false);
+					theChart = logChart;
+				} else {
+					logChart.setVisible(false);
+					theChart = linChart;
+				}
+				theChart.hideImage();
+				theChart.setVisible(true);
+				theChart.refreshChartImage();
 			}
 		});
 
@@ -145,7 +163,11 @@ public class PaneForWavelet {
 			}
 		};
 		renderer = new ImageRendererForWavelet(signal);
-		chart = new ImageChart(xAxis, yAxis, renderer);
+		linChart = new ImageChart(xAxis, linAxis, renderer);
+		logChart = new ImageChart(xAxis, logAxis, renderer);
+		linChart.setVisible(false);
+		logChart.setVisible(true);
+		theChart = logChart;
 
 		waveletType.getSelectionModel().select(renderer.getWavelet());
 		paletteType.getSelectionModel().select(renderer.getPaletteType());
@@ -187,35 +209,48 @@ public class PaneForWavelet {
 				WignerMapPalette pt = (WignerMapPalette) paletteType.getSelectionModel().getSelectedItem();
 				if (pt != null) {
 					renderer.setPaletteType(pt);
-					chart.refreshChartImage();
+					theChart.refreshChartImage();
 				}
 			}
 		});
 
-		chart.setOnCursorOffChart(new EventHandler<MouseEvent>() {
+		paletteInvert.setOnAction(new EventHandler() {
 			@Override
-			public void handle(MouseEvent event) {
-				signalChart.clearWaveform();
+			public void handle(Event event) {
+				boolean inverted = paletteInvert.isSelected();
+				renderer.setInverted(inverted);
+				theChart.refreshChartImage();
 			}
 		});
 
-		chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				double newValue = waveletParam.getValue();
-				MotherWavelet mv = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
-				mv = createWavelet(mv, newValue);
-				TimeFrequency tf = chart.getTimeFrequency((int)event.getX(), (int)event.getY());
-				if (mv != null && tf != null) {
-					signalChart.setWaveform(mv.scale(tf.f), null, tf.t, tf.v);
+		for (final ImageChart chart : new ImageChart[] { linChart, logChart }) {
+			chart.setOnCursorOffChart(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					signalChart.clearWaveform();
 				}
-			}
-		});
+			});
+
+			chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent event) {
+					double newValue = waveletParam.getValue();
+					MotherWavelet mv = (MotherWavelet) waveletType.getSelectionModel().getSelectedItem();
+					mv = createWavelet(mv, newValue);
+					TimeFrequency tf = chart.getTimeFrequency((int)event.getX(), (int)event.getY());
+					if (mv != null && tf != null) {
+						signalChart.setWaveform(mv.scale(tf.f), null, tf.t, tf.v);
+					}
+				}
+			});
+		}
 
 		StackPane stack = new StackPane();
 		stack.getChildren().addAll(
-			chart,
-			chart.getProgressIndicator()
+			linChart,
+			logChart,
+			linChart.getProgressIndicator(),
+			logChart.getProgressIndicator()
 		);
 		stack.setAlignment(Pos.CENTER);
 

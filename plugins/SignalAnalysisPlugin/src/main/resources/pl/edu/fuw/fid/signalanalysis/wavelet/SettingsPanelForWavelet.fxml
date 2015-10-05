@@ -48,7 +48,7 @@
                         <Slider fx:id="frequencyMaxSlider" majorTickUnit="20.0" minorTickCount="1" showTickLabels="true" GridPane.columnIndex="1" />
                         <Label text="Max:" />
                         <Label text="Scale:" GridPane.rowIndex="1" />
-                        <ComboBox fx:id="frequencyScaleComboBox" disable="true" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="frequencyScaleComboBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

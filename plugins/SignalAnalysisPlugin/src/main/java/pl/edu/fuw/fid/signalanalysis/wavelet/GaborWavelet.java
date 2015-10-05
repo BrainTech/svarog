@@ -30,7 +30,7 @@ public class GaborWavelet extends ParamWavelet {
 
 	@Override
 	public String getLabel() {
-		return "Gabor";
+		return "Morlet";
 	}
 
 	@Override

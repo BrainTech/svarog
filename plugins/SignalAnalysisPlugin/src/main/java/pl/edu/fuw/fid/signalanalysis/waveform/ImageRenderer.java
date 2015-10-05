@@ -14,6 +14,7 @@ public abstract class ImageRenderer<P> {
 	protected final SimpleSignal signal;
 	protected final double sampling;
 
+	private volatile boolean inverted_ = false;
 	private volatile WignerMapPalette palette_ = WignerMapPalette.RAINBOW;
 	private volatile CachedImageResult<PreferencesWithAxes<P>> cache_;
 
@@ -23,6 +24,10 @@ public abstract class ImageRenderer<P> {
 	}
 
 	protected abstract ImageResult compute(PreferencesWithAxes<P> preferences, ImageRendererStatus status) throws Exception;
+
+	public boolean isInverted() {
+		return inverted_;
+	}
 
 	public WignerMapPalette getPaletteType() {
 		return palette_;
@@ -38,6 +43,10 @@ public abstract class ImageRenderer<P> {
 			result = new TimeFrequency(t, f, v);
 		}
 		return result;
+	}
+
+	public void setInverted(boolean inverted) {
+		inverted_ = inverted;
 	}
 
 	public void setPaletteType(WignerMapPalette palette) {
@@ -83,12 +92,16 @@ public abstract class ImageRenderer<P> {
 			}
 		}
 		int[] palette = palette_.getPalette();
+		boolean inverted = inverted_;
 		for (int ix=0; ix<pax.width; ++ix) {
 			if (status.isCancelled()) {
 				return null;
 			}
 			for (int iy=0; iy<pax.height; ++iy) {
 				double t = result.values[ix][iy].abs() / max;
+				if (inverted) {
+					t = 1.0 - t;
+				}
 				int value = palette[Math.min( (int) Math.floor(t * palette.length), palette.length-1 )];
 				image.setRGB(ix, iy, value);
 			}

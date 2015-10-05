@@ -40,6 +40,11 @@ public class ImageChart extends XYChart<Number, Number> {
 	}
 
 	// must be called from JavaFX thread
+	public void hideImage() {
+		imageView.setOpacity(0.0);
+	}
+
+	// must be called from JavaFX thread
 	public void refreshChartImage() {
 		final int width = (int) getXAxis().getWidth();
 		final int height = (int) getYAxis().getHeight();
