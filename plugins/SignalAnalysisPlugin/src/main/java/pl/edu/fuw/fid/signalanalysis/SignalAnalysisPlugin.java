@@ -8,6 +8,7 @@ import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.dtf.DtfMethodAction;
+import pl.edu.fuw.fid.signalanalysis.ica.DescribeComponentsAction;
 import pl.edu.fuw.fid.signalanalysis.ica.IcaMethodAction;
 import pl.edu.fuw.fid.signalanalysis.stft.PopupActionForSTFT;
 import pl.edu.fuw.fid.signalanalysis.wavelet.PopupActionForWavelet;
@@ -41,6 +42,7 @@ public class SignalAnalysisPlugin implements Plugin {
 
 		JMenu icaMenu = new JMenu("Independent Component Analysis");
 		icaMenu.add(new IcaMethodAction(guiAccess, signalAccess));
+		icaMenu.add(new DescribeComponentsAction(guiAccess, signalAccess));
 		icaMenu.add(new ZeroMethodAction(guiAccess, signalAccess));
 
 		guiAccess.addSubmenuToToolsMenu(icaMenu);

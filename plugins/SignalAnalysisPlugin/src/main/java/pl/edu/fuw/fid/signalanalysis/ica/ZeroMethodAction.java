@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package pl.edu.fuw.fid.signalanalysis.ica;
 
 import java.awt.event.ActionEvent;
@@ -12,6 +7,7 @@ import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.MontageMismatchException;
@@ -61,12 +57,13 @@ public class ZeroMethodAction extends AbstractSignalMLAction {
 				throw new MontageMismatchException();
 			}
 
-			ZeroMethodPanel panel = new ZeroMethodPanel(icaMontage, signalSpaceConstraints);
+			ChannelSpacePanel panel = new ChannelSpacePanel();
+			panel.setConstraints(signalSpaceConstraints);
 
 			int result = JOptionPane.showConfirmDialog(guiAccess.getDialogParent(), panel, TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 
-				int[] channelsToZero = panel.getSelectedChannels();
+				int[] channelsToZero = panel.getChannelList().getSelectedIndices();
 
 				Montage newMontage;
 				if (trace.montage == null) {

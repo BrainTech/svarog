@@ -2,32 +2,27 @@ package pl.edu.fuw.fid.signalanalysis.ica;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.Arrays;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.signal.space.SignalSpaceConstraints;
 
 /**
  * @author ptr@mimuw.edu.pl
  */
-public class ZeroMethodPanel extends JPanel {
+public class DescribeComponentsPanel extends JPanel {
 
 	private final int componentCount;
 
 	private final VisualReferenceModel intensityModel;
 	private final VisualIntensityDisplay intensityDisplay;
 	private final JScrollPane intensityPane;
-
-	private final DefaultTableModel channelModel;
-	private final JTable channelDisplay;
+	private final JList<String> channelDisplay;
 	
-	public ZeroMethodPanel(final Montage montage, SignalSpaceConstraints signalSpaceConstraints) {
+	public DescribeComponentsPanel(final Montage montage) {
 		super(new BorderLayout());
 
 		intensityModel = new VisualReferenceModel();
@@ -39,55 +34,31 @@ public class ZeroMethodPanel extends JPanel {
 		intensityDisplay.setViewport(intensityPane.getViewport());
 
 		componentCount = montage.getMontageChannelCount();
-		Object[][] componentData = new Object[componentCount][2];
+		final String[] componentNames = new String[componentCount];
+		final float[][] components = new float[componentCount][];
 		for (int i=0; i<componentCount; ++i) {
-			componentData[i][0] = Boolean.FALSE;
-			componentData[i][1] = montage.getMontageChannelLabelAt(i);
+			componentNames[i] = montage.getMontageChannelLabelAt(i);
+			components[i] = montage.getReferenceAsFloat(i);
 		}
 
-        channelModel = new DefaultTableModel(
-            componentData, new String[] {"Remove?", "Component"}
-        ) {
-			@Override
-            public Class getColumnClass(int columnIndex) {
-				return columnIndex == 0 ? Boolean.class : String.class;
-            }
-
-			@Override
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return columnIndex == 0;
-            }
-        };
-
-		channelDisplay = new JTable(channelModel);
-		channelDisplay.getTableHeader().setReorderingAllowed(false);
+		channelDisplay = new JList<String>(componentNames);
 		channelDisplay.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		channelDisplay.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				int component = channelDisplay.getSelectedRow();
+				int component = channelDisplay.getSelectedIndex();
 				if (component >= 0) {
-					float[] intensities = montage.getReferenceAsFloat(component);
+					float[] intensities = components[component];
 					if (intensities != null) {
 						intensityDisplay.setIntensities(intensities);
 					}
 				}
 			}
 		});
+		channelDisplay.setPreferredSize(new Dimension(50, 400));
 
 		add(intensityPane, BorderLayout.CENTER);
 		add(channelDisplay, BorderLayout.EAST);
-	}
-
-	public int[] getSelectedChannels() {
-		int[] selected = new int[componentCount];
-		int count = 0;
-		for (int i=0; i<componentCount; ++i) {
-			if (channelModel.getValueAt(i, 0).equals(Boolean.TRUE)) {
-				selected[count++] = i;
-			}
-		}
-		return Arrays.copyOf(selected, count);
 	}
 
 }

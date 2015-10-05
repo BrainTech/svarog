@@ -1,20 +1,31 @@
 package pl.edu.fuw.fid.signalanalysis.ica;
 
 import java.awt.event.ActionEvent;
+import java.io.InvalidClassException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
+import org.signalml.app.view.signal.signalselection.TimeSpacePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.signal.ExportedSignalSelection;
+import org.signalml.plugin.export.signal.ExportedTag;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
@@ -45,12 +56,34 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 			SignalView signalView = (SignalView) signalDocument.getDocumentView();
 			SignalSpaceConstraints signalSpaceConstraints = signalView.createSignalSpaceConstraints();
 
-			ChannelSpacePanel panel = new ChannelSpacePanel();
-			panel.setConstraints(signalSpaceConstraints);
+			ExportedSignalSelection selection = null;
+			try {
+				selection = signalAccess.getActiveSelection();
+			} catch (NoActiveObjectException ex) {
+				// all right, no problem
+			}
+
+			ChannelSpacePanel channelPanel = new ChannelSpacePanel();
+			channelPanel.setConstraints(signalSpaceConstraints);
+
+			TimeSpacePanel timePanel = new TimeSpacePanel();
+			timePanel.setConstraints(signalSpaceConstraints);
+
+			if (selection != null) {
+				SignalSpace signalSpace = new SignalSpace();
+				signalSpace.configureFromSelections(new SignalSelection(selection), null);
+				timePanel.fillPanelFromModel(signalSpace);
+			}
+
+			JPanel panel = new JPanel();
+			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+			panel.add(channelPanel);
+			panel.add(timePanel);
+
 			int result = JOptionPane.showConfirmDialog(guiAccess.getDialogParent(), panel, TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 			if (result == JOptionPane.OK_OPTION) {
 
-				int[] outputChannels = panel.getChannelList().getSelectedIndices();
+				int[] outputChannels = channelPanel.getChannelList().getSelectedIndices();
 				if (outputChannels.length == 0) {
 					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Select at least one channel.", "Try again", JOptionPane.WARNING_MESSAGE);
 					return;
