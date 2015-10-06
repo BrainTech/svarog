@@ -292,6 +292,7 @@ public class SignalSelectionPanel extends JPanel {
 		startPageSpinner.setEditor(new SpinnerNumberEditor(startPageSpinner));
 
 		SwingUtils.replaceSpinnerModel(lengthSpinner, pageSelectionModelProvider.getLengthSpinnerModel());
+
 		lengthSpinner.setEditor(new SpinnerNumberEditor(lengthSpinner));
 
 		BlockSelectionModelProvider blockSelectionModelProvider;
@@ -346,8 +347,8 @@ public class SignalSelectionPanel extends JPanel {
 				bss.getMaxTime(),
 				bss.getSamplingFrequency(),
 				bss.getChannels(),
-				0,
-				1,
+				0.0,
+				1.0,
 				0 //select first channel
 			);
 		}

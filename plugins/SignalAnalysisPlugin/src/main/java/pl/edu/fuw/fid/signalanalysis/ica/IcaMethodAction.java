@@ -69,11 +69,11 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 			TimeSpacePanel timePanel = new TimeSpacePanel();
 			timePanel.setConstraints(signalSpaceConstraints);
 
+			SignalSpace signalSpace = new SignalSpace();
 			if (selection != null) {
-				SignalSpace signalSpace = new SignalSpace();
 				signalSpace.configureFromSelections(new SignalSelection(selection), null);
-				timePanel.fillPanelFromModel(signalSpace);
 			}
+			timePanel.fillPanelFromModel(signalSpace);
 
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -102,11 +102,22 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 					}
 				}
 
+				timePanel.fillModelFromPanel(signalSpace);
+				SignalSelection selected = signalSpace.getSelectionTimeSpace();
+
 				int inputChannelCount = signalDocument.getChannelCount();
 				int outputChannelCount = outputChannels.length;
 				SimpleSignal[] data = new SimpleSignal[outputChannelCount];
-				for (int i=0; i<outputChannelCount; ++i) {
-					data[i] = new StoredSignal(signalChain.getOutput(), outputChannels[i]);
+				if (selected != null) {
+					int start = (int) Math.round(selected.getPosition() * signalDocument.getSamplingFrequency());
+					int length = (int) Math.round(selected.getLength() * signalDocument.getSamplingFrequency());
+					for (int i=0; i<outputChannelCount; ++i) {
+						data[i] = new StoredSignal(signalChain.getOutput(), outputChannels[i], start, length);
+					}
+				} else {
+					for (int i=0; i<outputChannelCount; ++i) {
+						data[i] = new StoredSignal(signalChain.getOutput(), outputChannels[i]);
+					}
 				}
 
 				IcaMethodComputer computer = new IcaMethodComputer();

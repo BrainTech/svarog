@@ -11,10 +11,16 @@ public class StoredSignal implements SimpleSignal {
 	private final double[] samples;
 
 	public StoredSignal(MultichannelSampleSource source, int channel) {
-		int length = source.getSampleCount(channel);
+		this(source, channel, 0, source.getSampleCount(channel));
+	}
+
+	public StoredSignal(MultichannelSampleSource source, int channel, int start, int length) {
+		if (start < 0 || length < 0 || start + length > source.getSampleCount(channel)) {
+			throw new IllegalArgumentException("invalid time selection");
+		}
 		frequency = source.getSamplingFrequency();
 		samples = new double[length];
-		source.getSamples(channel, samples, 0, length, 0);
+		source.getSamples(channel, samples, start, length, 0);
 	}
 
 	@Override
