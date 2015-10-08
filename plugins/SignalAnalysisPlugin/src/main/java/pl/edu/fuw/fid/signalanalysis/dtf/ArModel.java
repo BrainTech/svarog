@@ -46,7 +46,6 @@ public class ArModel {
 		// calculating variances
 		double[] std = new double[C];
 		for (int c=0; c<C; ++c) {
-			std[c] = 1.0;
 			for (double x : signal.getData(c)) {
 				double diff = x - avg[c];
 				std[c] += diff * diff;
@@ -64,6 +63,7 @@ public class ArModel {
 					final double[] jData = signal.getData(j);
 					double sum = 0;
 					for (int t=0; t<N-s; ++t) {
+						// causality i -> j, so t < t+s
 						double iValue = (iData[t] - avg[i]) / std[i];
 						double jValue = (jData[t+s] - avg[j]) / std[j];
 						sum += iValue * jValue;
@@ -82,7 +82,7 @@ public class ArModel {
 			bigMatrix.setSubMatrix(block.getData(), i*C, j*C);
 		}
 		for (int i=0; i<order; ++i) {
-			RealMatrix block = R[i+1].transpose();
+			RealMatrix block = R[i+1];
 			bigColumn.setSubMatrix(block.getData(), i*C, 0);
 		}
 
@@ -100,36 +100,38 @@ public class ArModel {
 
 	public RealMatrix computeTransferMatrix(double freq, boolean normalize) {
 		FieldMatrix<Complex> S = new Array2DRowFieldMatrix<Complex>(ComplexField.getInstance(), C, C);
-		for (int s=0; s<A.length; ++s) {
-			Complex exp = new Complex(0, -2*Math.PI*(s+1)*freq/freqSampling).exp();
+		for (int s=0; s<=A.length; ++s) {
+			Complex exp = new Complex(0, -2*Math.PI*s*freq/freqSampling).exp();
 			for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
-				S.addToEntry(i, j, exp.multiply(A[s].getEntry(i, j)));
+				double val = (s > 0) ? A[s-1].getEntry(i, j) : (i==j ? -1.0 : 0.0);
+				S.addToEntry(i, j, exp.multiply(val));
 			}
 		}
-		S = new FieldLUDecompositionImpl(S).getSolver().getInverse();
+		FieldMatrix<Complex> H = new FieldLUDecompositionImpl(S).getSolver().getInverse();
 
-		RealMatrix H = new Array2DRowRealMatrix(C, C);
+		RealMatrix DTF = new Array2DRowRealMatrix(C, C);
 		for (int i=0; i<C; ++i) {
 			for (int j=0; j<C; ++j) {
-				Complex h = S.getEntry(i, j);
+				Complex h = H.getEntry(i, j);
 				double re = h.getReal();
 				double im = h.getImaginary();
-				H.setEntry(i, j, re*re + im*im);
+				DTF.setEntry(i, j, re*re + im*im);
 			}
 		}
 		if (normalize) {
-			for (int i=0; i<C; ++i) {
+			// entry (i, j) represents causality i ->
+			for (int j=0; j<C; ++j) {
 				double norm = 0;
-				for (int j=0; j<C; ++j) {
-					norm += H.getEntry(i, j);
+				for (int i=0; i<C; ++i) {
+					norm += DTF.getEntry(i, j);
 				}
 				norm = 1.0 / norm;
-				for (int j=0; j<C; ++j) {
-					H.multiplyEntry(i, j, norm);
+				for (int i=0; i<C; ++i) {
+					DTF.multiplyEntry(i, j, norm);
 				}
 			}
 		}
-		return H;
+		return DTF;
 	}
 
 	public int getChannelCount() {

@@ -71,7 +71,7 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 				values[i][j].add(new XYChart.Data<Number, Number>(freq, value));
 			}
 		}
-		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
+		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) if (i != j) {
 			XYChart.Series<Number,Number> serie = new XYChart.Series<Number,Number>(FXCollections.observableArrayList(values[i][j]));
 			ObservableList<XYChart.Series<Number,Number>> data = FXCollections.observableArrayList(serie);
 			NumberAxis ax = new NumberAxis(0, nyquist, 10.0);
@@ -79,9 +79,9 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 			LineChart chart = new LineChart(ax, ay, data);
 			chart.setCreateSymbols(false);
 			chart.setLegendVisible(false);
-			chart.setPrefSize(100, 100);
+			chart.setPrefSize(200, 200);
 			chart.setTitle(channelNames[i]+"→"+channelNames[j]);
-			pane.add(chart, j, i);
+			pane.add(chart, i, j);
 		}
 
 		Scene scene = new Scene(new ScrollPane(pane));
