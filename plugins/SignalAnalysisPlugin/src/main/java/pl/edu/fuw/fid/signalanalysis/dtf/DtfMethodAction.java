@@ -8,12 +8,14 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -55,10 +57,21 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 	}
 
 	private void initFX(JFXPanel fxPanel, ArModel model, String[] channelNames) {
-		GridPane pane = new GridPane();
+		final GridPane pane = new GridPane();
+		final StackPane stack = new StackPane(pane);
 
 		final int C = model.getChannelCount();
 		final double nyquist = 0.5 * model.getSamplingFrequency();
+		final NumberAxis axMaster = new NumberAxis(0, nyquist, 10.0);
+		final NumberAxis ayMaster = new NumberAxis(0, 1.0, 0.1);
+		final LineChart master = new LineChart(axMaster, ayMaster);
+		master.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				stack.getChildren().setAll(pane);
+			}
+		});
+
 		List<XYChart.Data<Number,Number>>[][] values = new LinkedList[C][C];
 		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
 			values[i][j] = new LinkedList<XYChart.Data<Number,Number>>();
@@ -71,20 +84,37 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 				values[i][j].add(new XYChart.Data<Number, Number>(freq, value));
 			}
 		}
-		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) if (i != j) {
+		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
+			final int fi=i, fj=j;
 			XYChart.Series<Number,Number> serie = new XYChart.Series<Number,Number>(FXCollections.observableArrayList(values[i][j]));
-			ObservableList<XYChart.Series<Number,Number>> data = FXCollections.observableArrayList(serie);
-			NumberAxis ax = new NumberAxis(0, nyquist, 10.0);
-			NumberAxis ay = new NumberAxis(0, 1.0, 0.1);
-			LineChart chart = new LineChart(ax, ay, data);
+			final ObservableList<XYChart.Series<Number,Number>> data = FXCollections.observableArrayList(serie);
+			final NumberAxis ax = new NumberAxis(0, nyquist, 10.0);
+			final NumberAxis ay = new NumberAxis(0, 1.0, 0.1);
+			final LineChart chart = new LineChart(ax, ay, data);
+			final String title = channelNames[i]+"→"+channelNames[j];
 			chart.setCreateSymbols(false);
 			chart.setLegendVisible(false);
-			chart.setPrefSize(200, 200);
-			chart.setTitle(channelNames[i]+"→"+channelNames[j]);
+			chart.setMinSize(50, 50);
+			chart.setTitle(title);
 			pane.add(chart, i, j);
+			chart.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				private boolean zoom = false;
+				@Override
+				public void handle(MouseEvent event) {
+					zoom = ! zoom;
+					if (zoom) {
+						stack.getChildren().setAll(chart);
+						chart.setTitle(title+" (click again to view all)");
+					} else {
+						stack.getChildren().setAll(pane);
+						chart.setTitle(title);
+						pane.add(chart, fi, fj);
+					}
+				}
+			});
 		}
 
-		Scene scene = new Scene(new ScrollPane(pane));
+		Scene scene = new Scene(stack);
 		fxPanel.setScene(scene);
 	}
 
