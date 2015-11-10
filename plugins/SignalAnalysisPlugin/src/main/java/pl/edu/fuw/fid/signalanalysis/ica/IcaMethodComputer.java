@@ -4,7 +4,7 @@ import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.EigenDecomposition;
 import org.apache.commons.math.linear.EigenDecompositionImpl;
 import org.apache.commons.math.linear.RealMatrix;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import org.apache.commons.math.linear.RealVector;
 
 /**
  * The core calculations of ICA (Independent Component Analysis) method.
@@ -20,50 +20,38 @@ public class IcaMethodComputer {
 	/**
 	 * Performs the calculations.
 	 *
-	 * @param channels  objects providing multichannel data
+	 * @param data  matrix of multichannel data (channels × samples)
 	 * @return  matrix of coefficients corresponding to independent components,
-	 * row result[0][0..N] corresponds to first component, and so on,
-	 * with N being number of given channels
+	 * row 0 corresponds to first component, and so on,
+	 * with row count (# components) = column count (# given channels)
 	 *
-	 * @throws pl.edu.fuw.fid.signalanalysis.ica.IcaMethodException
+	 * @throws IcaMethodException
 	 */
-	public double[][] compute(SimpleSignal[] channels) throws IcaMethodException {
-		final int C = channels.length;
+	public RealMatrix compute(RealMatrix data) throws IcaMethodException {
+		final int C = data.getRowDimension();
 		if (C == 0) {
 			throw new IcaMethodException("no channels selected");
 		}
-		final int N = channels[0].getData().length;
+		final int N = data.getColumnDimension();
 		if (N == 0) {
 			throw new IcaMethodException("signal is empty");
-		}
-		for (int i=1; i<C; ++i) {
-			if (channels[i].getData().length != N) {
-				throw new IcaMethodException("signal's channels have different lengths");
-			}
 		}
 
 		// mean elimination
 		for (int i=0; i<C; ++i) {
 			double mean = 0.0;
-			double[] channel = channels[i].getData();
+			double[] channel = data.getRow(i);
 			for (int n=0; n<N; ++n) {
 				mean += channel[n];
 			}
 			mean /= N;
 			for (int n=0; n<N; ++n) {
-				channel[n] -= mean;
+				data.addToEntry(i, n, -mean);
 			}
 		}
 
 		// computation of covariance matrix
-		RealMatrix V = new Array2DRowRealMatrix(C, C);
-		for (int i=0; i<C; ++i) for (int j=i; j<C; ++j) {
-			double[] ichannel = channels[i].getData();
-			double[] jchannel = channels[j].getData();
-			double cov = product(N, ichannel, jchannel) / N;
-			V.setEntry(i, j, cov);
-			V.setEntry(j, i, cov);
-		}
+		RealMatrix V = data.multiply(data.transpose()).scalarMultiply(1.0/N);
 
 		// computation of whitening matrix
 		V = power(V, -0.5);
@@ -75,11 +63,7 @@ public class IcaMethodComputer {
 		}
 
 		// whitening the signal
-		RealMatrix x = new Array2DRowRealMatrix(C, N);
-		for (int i=0; i<C; ++i) {
-			x.setRow(i, channels[i].getData());
-		}
-		RealMatrix v = V.multiply(x);
+		RealMatrix v = V.multiply(data);
 
 		// rows of matrix BT will be IC coefficients
 		RealMatrix BT = new Array2DRowRealMatrix(C, C);
@@ -128,7 +112,16 @@ public class IcaMethodComputer {
 			// another solution
 			BT.setRow(iteration, w0);
 		}
-		return BT.multiply(V).getData();
+
+		// final solution
+		RealMatrix ICA = BT.multiply(V);
+
+		// normalizing each component
+		for (int i=0; i<C; ++i) {
+			RealVector u = ICA.getRowVector(i).unitVector();
+			ICA.setRowVector(i, u);
+		}
+		return ICA;
 	}
 
 	/**

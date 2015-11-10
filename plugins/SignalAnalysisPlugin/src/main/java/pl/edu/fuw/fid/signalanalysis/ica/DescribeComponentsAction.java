@@ -4,7 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import org.signalml.app.document.signal.SignalDocument;
+import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.Document;
@@ -33,16 +33,16 @@ public class DescribeComponentsAction extends AbstractSignalMLAction {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			Document document = signalAccess.getActiveDocument();
-			if (!(document instanceof SignalDocument)) {
+			if (!(document instanceof IcaSignalDocument)) {
 				throw new NoActiveObjectException();
 			}
-			Montage icaMontage = ((SignalDocument) document).getMontage();
-			if (icaMontage == null) {
-				throw new NoActiveObjectException();
-			}
+			IcaSignalDocument icaDocument = (IcaSignalDocument) document;
+			Montage montage = icaDocument.getSourceMontage();
+			// montage object is used only for visual channel placement
+			RealMatrix icaFromRaw = icaDocument.getIcaMatrix(true);
 
-			DescribeComponentsPanel panel = new DescribeComponentsPanel(icaMontage);
-			JDialog dialog = new JDialog(guiAccess.getDialogParent(), "Components' topography");
+			DescribeComponentsPanel panel = new DescribeComponentsPanel(montage, icaFromRaw);
+			JDialog dialog = new JDialog(guiAccess.getDialogParent(), "Topography of ICA components");
 			dialog.setContentPane(panel);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setMinimumSize(new Dimension(400, 300));
@@ -50,7 +50,7 @@ public class DescribeComponentsAction extends AbstractSignalMLAction {
 			dialog.setVisible(true);
 
 		} catch (NoActiveObjectException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose a signal with an existing ICA analysis.", "Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose a tab with an existing ICA analysis.", "Error", JOptionPane.WARNING_MESSAGE);
 		}
 	}
 }

@@ -7,22 +7,22 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
 import org.signalml.domain.montage.Montage;
+import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 
 /**
  * @author ptr@mimuw.edu.pl
  */
 public class DescribeComponentsPanel extends JPanel {
 
-	private final int componentCount;
-
 	private final VisualReferenceModel intensityModel;
 	private final VisualIntensityDisplay intensityDisplay;
 	private final JScrollPane intensityPane;
 	private final JList<String> channelDisplay;
 	
-	public DescribeComponentsPanel(final Montage montage) {
+	public DescribeComponentsPanel(final Montage montage, final RealMatrix data) {
 		super(new BorderLayout());
 
 		intensityModel = new VisualReferenceModel();
@@ -33,12 +33,14 @@ public class DescribeComponentsPanel extends JPanel {
 		intensityPane.setPreferredSize(new Dimension(500, 400));
 		intensityDisplay.setViewport(intensityPane.getViewport());
 
-		componentCount = montage.getMontageChannelCount();
-		final String[] componentNames = new String[componentCount];
-		final float[][] components = new float[componentCount][];
+		final int componentCount = data.getRowDimension();
+		final int sourceChannelCount = data.getColumnDimension();
+		final String[] componentNames = SignalAnalysisTools.generateIcaComponentNames(componentCount);
+		final float[][] components = new float[componentCount][sourceChannelCount];
 		for (int i=0; i<componentCount; ++i) {
-			componentNames[i] = montage.getMontageChannelLabelAt(i);
-			components[i] = montage.getReferenceAsFloat(i);
+			for (int j=0; j<sourceChannelCount; ++j) {
+				components[i][j] = (float) data.getEntry(i, j);
+			}
 		}
 
 		channelDisplay = new JList<String>(componentNames);

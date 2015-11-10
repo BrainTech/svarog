@@ -1,36 +1,35 @@
 package pl.edu.fuw.fid.signalanalysis.ica;
 
 import java.awt.event.ActionEvent;
-import java.io.InvalidClassException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.RealMatrix;
+import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.app.view.signal.signalselection.TimeSpacePanel;
 import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.raw.RawSignalByteOrder;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
-import org.signalml.plugin.export.signal.ExportedTag;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
-import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
+import org.signalml.plugin.impl.PluginAccessClass;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
-import pl.edu.fuw.fid.signalanalysis.StoredSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -90,87 +89,59 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				}
 
 				SignalProcessingChain signalChain = SignalProcessingChain.createFilteredChain(signalDocument.getSampleSource());
-				Montage oldMontage = signalDocument.getMontage();
-				Montage newMontage;
-				if (oldMontage == null) {
-					newMontage = new Montage(new SourceMontage(signalDocument));
-				} else {
-					signalChain.applyMontageDefinition(oldMontage);
-					newMontage = oldMontage.clone();
-					while (newMontage.getMontageChannelCount() > 0) {
-						newMontage.removeMontageChannel(0);
-					}
+				Montage montage = signalDocument.getMontage();
+				if (montage != null) {
+					signalChain.applyMontageDefinition(montage);
 				}
 
 				timePanel.fillModelFromPanel(signalSpace);
-				SignalSelection selected = signalSpace.getSelectionTimeSpace();
-
-				int inputChannelCount = signalDocument.getChannelCount();
-				int outputChannelCount = outputChannels.length;
-				SimpleSignal[] data = new SimpleSignal[outputChannelCount];
-				if (selected != null) {
-					int start = (int) Math.round(selected.getPosition() * signalDocument.getSamplingFrequency());
-					int length = (int) Math.round(selected.getLength() * signalDocument.getSamplingFrequency());
-					for (int i=0; i<outputChannelCount; ++i) {
-						data[i] = new StoredSignal(signalChain.getOutput(), outputChannels[i], start, length);
-					}
-				} else {
-					for (int i=0; i<outputChannelCount; ++i) {
-						data[i] = new StoredSignal(signalChain.getOutput(), outputChannels[i]);
-					}
-				}
+				RealMatrix output = SignalAnalysisTools.extractDataFromSignal(signalChain.getOutput(), signalSpace.getSelectionTimeSpace(), outputChannels);
 
 				IcaMethodComputer computer = new IcaMethodComputer();
-				RealMatrix ica = new Array2DRowRealMatrix(computer.compute(data));
 
-				RealMatrix M;
-				if (oldMontage == null) {
-					M = new Array2DRowRealMatrix(outputChannelCount, inputChannelCount);
-					for (int i=0; i<outputChannelCount; ++i) {
-						M.setEntry(i, outputChannels[i], 1.0);
-					}
-				} else {
-					M = SignalAnalysisTools.extractMatrixFromMontage(oldMontage, outputChannels);
-				}
-				double[][] components = ica.multiply(M).getData();
+				// transfer matrix from transformed signal to ICA components
+				RealMatrix icaFromOutput = computer.compute(output);
 
-				for (double[] weights : components) {
-					int mainChannel = 0;
-					double mainWeight = weights[0];
-					for (int c=1; c<weights.length; ++c) {
-						if (Math.abs(weights[c]) > Math.abs(mainWeight)) {
-							mainChannel = c;
-							mainWeight = weights[c];
-						}
-					}
-					if (mainWeight != 0) {
-						int index = newMontage.addMontageChannel(mainChannel);
-						newMontage.setMontageChannelLabelAt(index, "ICA-"+(index+1));
-						for (int c=0; c<weights.length; ++c) {
-							if (c != mainChannel) {
-								double weight = weights[c] / mainWeight;
-								if (Math.abs(weight) > SignalAnalysisTools.THRESHOLD) {
-									newMontage.setReference(index, c, Double.toString(weight));
-								}
-							}
-						}
-					}
+				// ICA component data
+				RealMatrix ica = icaFromOutput.multiply(output);
+
+				// transfer matrix from raw signal to ICA components
+				if (montage == null) {
+					montage = new Montage(new SourceMontage(signalDocument));
 				}
-				if (newMontage.getMontageChannelCount() > 0) {
-					ZeroMethodAction.trace = new IcaComputationTrace(signalDocument, ica, oldMontage, outputChannels);
-					signalDocument.setMontage(newMontage);
-				} else {
-					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "No valid components found.", "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				RealMatrix outputFromRaw = SignalAnalysisTools.extractMatrixFromMontage(montage, outputChannels);
+
+				File newFile = SignalAnalysisTools.createRawTemporaryFileFromData(signalAccess, ica);
+
+				// open generated data in a new tab
+				RawSignalDescriptor newDescriptor = new RawSignalDescriptor();
+				newDescriptor.setBlocksPerPage(signalDocument.getBlocksPerPage());
+				newDescriptor.setByteOrder(RawSignalByteOrder.BIG_ENDIAN);
+				newDescriptor.setChannelLabels(SignalAnalysisTools.generateIcaComponentNames(ica.getRowDimension()));
+				newDescriptor.setChannelCount(ica.getRowDimension());
+				newDescriptor.setSampleCount(ica.getColumnDimension());
+				newDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
+				newDescriptor.setSamplingFrequency(signalDocument.getSamplingFrequency());
+				newDescriptor.setSourceFileName(newFile.getName());
+
+				IcaSignalDocument newDocument = new IcaSignalDocument(newDescriptor, icaFromOutput, outputFromRaw, montage);
+				newDocument.setBackingFile(newFile);
+				newDocument.openDocument();
+
+				DocumentFlowIntegrator dfi = PluginAccessClass.getManager().getDocumentFlowIntegrator();
+				dfi.getDocumentManager().addDocument(newDocument);
+				dfi.getActionFocusManager().setActiveDocument(newDocument);
 			}
 		} catch (IcaMethodException ex) {
 			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "ICA method failed: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-		} catch (MontageException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Montage error.", "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (MontageMismatchException ex) {
 			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Montage mismatch.", "Error", JOptionPane.ERROR_MESSAGE);
 		} catch (NoActiveObjectException ex) {
 			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose an active signal first.", "Error", JOptionPane.WARNING_MESSAGE);
+		} catch (SignalMLException ex) {
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+		} catch (IOException ex) {
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
