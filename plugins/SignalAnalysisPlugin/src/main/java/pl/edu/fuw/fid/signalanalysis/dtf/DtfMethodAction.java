@@ -133,7 +133,11 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 		final String[] channels = getChannelNames(sampleSource, selectedChannels);
 
 		// create tabbed pane
-		DtfTabbedPane tabbedPane = new DtfTabbedPane(criteria, channels, models, SPECTRUM_SIZE);
+		Montage montage = new Montage(signalDocument);
+		for (int i=0; i<selectedChannels.length; ++i) {
+			montage.addMontageChannel(selectedChannels[i]);
+		}
+		DtfTabbedPane tabbedPane = new DtfTabbedPane(criteria, channels, models, SPECTRUM_SIZE, montage);
 
 		// display dialog with DTF results
 		JDialog dialog = new JDialog(guiAccess.getDialogParent(), "DTF results");

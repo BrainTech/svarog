@@ -1,9 +1,20 @@
 package pl.edu.fuw.fid.signalanalysis.dtf;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import org.apache.commons.math.linear.Array2DRowRealMatrix;
+import org.apache.commons.math.linear.RealMatrix;
 import org.jfree.data.xy.XYSeries;
+import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
+import org.signalml.domain.montage.Montage;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -13,9 +24,11 @@ public class DtfTabbedPane extends JTabbedPane {
 	private final ArModel[] models;
 	private final int spectrumSize;
 	private final XYSeries[][] series;
+	private final DtfArrowsDisplay arrowsDisplay;
 
 	private int order = 0;
 	private boolean normalized = true;
+	private Double freqMin, freqMax;
 
 	private void refreshData() {
 		if (order > 0) {
@@ -29,10 +42,31 @@ public class DtfTabbedPane extends JTabbedPane {
 					series[i][j].add(single.freqcs[f], single.values[f], f==single.length-1);
 				}
 			}
+			RealMatrix transfer = null;
+			if (freqMin != null && freqMax != null && freqMin <= freqMax) {
+				transfer = new Array2DRowRealMatrix(C, C);
+				RealMatrix counts = new Array2DRowRealMatrix(C, C);
+				for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
+					ArModelData single = data[j][i]; // display is transposed
+					for (int f=0; f<single.length; ++f) {
+						if (freqMin <= single.freqcs[f] && single.freqcs[f] <= freqMax) {
+							transfer.addToEntry(i, j, single.values[f]);
+							counts.addToEntry(i, j, 1.0);
+						}
+					}
+				}
+				for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
+					double count = counts.getEntry(i, j);
+					if (count > 0) {
+						transfer.setEntry(i, j, transfer.getEntry(i, j) / count);
+					}
+				}
+			}
+			arrowsDisplay.setTransferData(transfer);
 		}
 	}
 
-	public DtfTabbedPane(XYSeriesWithLegend[] criteria, String[] channels, ArModel[] models, int spectrumSize) {
+	public DtfTabbedPane(XYSeriesWithLegend[] criteria, String[] channels, ArModel[] models, int spectrumSize, Montage sources) {
 		final int C = channels.length;
 
 		this.models = models;
@@ -47,15 +81,47 @@ public class DtfTabbedPane extends JTabbedPane {
 				series[i][j].setDescription(label);
 			}
 		}
+		this.freqMin = 0.0;
+		this.freqMax = 0.5 * models[0].getSamplingFrequency();
 
 		int maxOrder = models.length + 1;
 		final DtfOrderCriteriaPanel criteriaPanel = DtfOrderCriteriaPanel.create(maxOrder, criteria);
 		final DtfNormRadioPanel normPanel = new DtfNormRadioPanel();
 		final DtfPlotsPanel plotsPanel = new DtfPlotsPanel(series);
 
+		final JButton copyModelDataButton = new JButton("copy model coefficients to clipboard");
+		final JPanel copyModelDataPanel = new JPanel(new BorderLayout());
+		copyModelDataButton.setEnabled(false);
+		copyModelDataButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int order = DtfTabbedPane.this.order;
+				String output = DtfTabbedPane.this.models[order-1].exportCoefficients();
+				Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(output), null);
+			}
+		});
+		copyModelDataPanel.add(copyModelDataButton, BorderLayout.EAST);
+
+		VisualReferenceModel visualModel = new VisualReferenceModel();
+		visualModel.setMontage(sources);
+		arrowsDisplay = new DtfArrowsDisplay(visualModel);
+		final JScrollPane arrowsPane = new JScrollPane(arrowsDisplay, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		arrowsPane.setPreferredSize(new Dimension(740, 440));
+		arrowsDisplay.setViewport(arrowsPane.getViewport());
+
+		DtfFrequencyRangePanel frequencyPanel = new DtfFrequencyRangePanel(freqMin, freqMax);
+
+		final JPanel orderPanel = new JPanel(new BorderLayout());
+		orderPanel.add(copyModelDataPanel, BorderLayout.NORTH);
+		orderPanel.add(criteriaPanel, BorderLayout.CENTER);
+
 		final JPanel mainPanel = new JPanel(new BorderLayout());
 		mainPanel.add(normPanel, BorderLayout.NORTH);
 		mainPanel.add(plotsPanel, BorderLayout.CENTER);
+
+		final JPanel visualPanel = new JPanel(new BorderLayout());
+		visualPanel.add(frequencyPanel, BorderLayout.NORTH);
+		visualPanel.add(arrowsPane, BorderLayout.CENTER);
 
 		criteriaPanel.setListener(new DtfOrderSelectionListener() {
 			@Override
@@ -66,6 +132,7 @@ public class DtfTabbedPane extends JTabbedPane {
 				plotsPanel.rescaleCharts();
 				if (first) {
 					plotsPanel.showAllCharts();
+					copyModelDataButton.setEnabled(true);
 				}
 			}
 		});
@@ -79,8 +146,18 @@ public class DtfTabbedPane extends JTabbedPane {
 			}
 		});
 
-		add("Model order", criteriaPanel);
+		frequencyPanel.setListener(new DtfFrequencyRangeListener() {
+			@Override
+			public void frequencyRangeChanged(Double freqMin, Double freqMax) {
+				DtfTabbedPane.this.freqMin = freqMin;
+				DtfTabbedPane.this.freqMax = freqMax;
+				refreshData();
+			}
+		});
+
+		add("Model order", orderPanel);
 		add("Transfer functions", mainPanel);
+		add("Transfer graph", visualPanel);
 	}
 
 }

@@ -6,6 +6,8 @@ import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.labels.XYSeriesLabelGenerator;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.ValueMarker;
@@ -29,6 +31,7 @@ public class DtfOrderCriteriaPanel extends ChartPanel {
 		}
 		final JFreeChart chart = ChartFactory.createXYLineChart("Model order selection", "model order", "criterion value", dataset, PlotOrientation.VERTICAL, true, false, false);
 		final XYPlot plot = chart.getXYPlot();
+		((NumberAxis) plot.getDomainAxis()).setTickUnit(new NumberTickUnit(1.0));
 		final XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
 		renderer.setLegendItemToolTipGenerator(new XYSeriesLabelGenerator() {
 			@Override

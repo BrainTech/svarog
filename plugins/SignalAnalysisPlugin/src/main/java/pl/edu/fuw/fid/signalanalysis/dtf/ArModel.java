@@ -189,6 +189,42 @@ public class ArModel {
 		return DTF;
 	}
 
+	private static String exportMatrix(RealMatrix M) {
+		boolean comma = false;
+		String result = "[";
+		for (int r=0; r<M.getRowDimension(); ++r) {
+			if (comma) result += ",";
+			result += exportRow(M.getRow(r));
+			comma = true;
+		}
+		result += "]";
+		return result;
+	}
+
+	private static String exportRow(double[] row) {
+		boolean comma = false;
+		String result = "[";
+		for (double v : row) {
+			if (comma) result += ",";
+			result += v;
+			comma = true;
+		}
+		result += "]";
+		return result;
+	}
+
+	public String exportCoefficients() {
+		boolean comma = false;
+		String result = "[";
+		for (int i=1; i<A.length; ++i) {
+			if (comma) result += ",";
+			result += exportMatrix(A[i]);
+			comma = true;
+		}
+		result += "]";
+		return result;
+	}
+
 	public int getChannelCount() {
 		return C;
 	}
