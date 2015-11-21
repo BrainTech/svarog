@@ -277,7 +277,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private HypnogramPlot hypnogramPlot = null;
 
-	private ZoomMouseWheelListener zoomMouseWheelListener;
+//	private ZoomMouseWheelListener zoomMouseWheelListener;
 	private SignalToolForwardingMouseAdapter toolMouseAdapter;
 	private SignalToolForwardingMouseAdapter columnToolMouseAdapter;
 	private SignalToolForwardingMouseAdapter rowToolMouseAdapter;
@@ -341,7 +341,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			}
 		});
 
-		zoomMouseWheelListener = new ZoomMouseWheelListener(this);
+//		zoomMouseWheelListener = new ZoomMouseWheelListener(this);
 		toolMouseAdapter = new SignalToolForwardingMouseAdapter();
 		columnToolMouseAdapter = new SignalToolForwardingMouseAdapter(true,false);
 		rowToolMouseAdapter = new SignalToolForwardingMouseAdapter(false,true);
@@ -476,7 +476,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		rowHeaders.add(rowHeader);
 		corners.add(corner);
 
-		plot.addMouseWheelListener(zoomMouseWheelListener);
+//		plot.addMouseWheelListener(zoomMouseWheelListener);
 
 		plot.addMouseMotionListener(toolMouseAdapter);
 		plot.addMouseListener(toolMouseAdapter);
@@ -1291,7 +1291,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			getSnapToPageAction().putValue(AbstractAction.SELECTED_KEY, new Boolean(snapToPageMode));
 
 			timeScaleSlider.setEnabled(!snapToPageMode);
-			zoomMouseWheelListener.setTimeEnabled(!snapToPageMode);
+//			zoomMouseWheelListener.setTimeEnabled(!snapToPageMode);
 
 			if (snapToPageMode) {
 				if (isVisible()) {
