@@ -84,7 +84,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 				for (int iw=0; iw<windowLength; ++iw) {
 					sum = sum.add(spectrum[iw].multiply(windows[iy][iw]));
 				}
-				result.values[ix][iy] = sum;
+				result.values[ix][iy] = sum.multiply(2.0);
 			}
 		}
 		return result;

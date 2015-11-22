@@ -102,7 +102,9 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 				double f = preferences.yAxis.getValueForDisplay(iy).doubleValue();
 				int i = (int) Math.floor(spectrumLength * f / sampling);
 				result.f[iy] = i * sampling / spectrumLength;
-				Complex value = (i >= 0 && i < spectrumLength) ? spectrum[i] : Complex.ZERO;
+				// phase difference between start and center of time window
+				Complex phaser = new Complex(0, Math.PI*result.f[iy]*prefs.windowLength/sampling).exp().multiply(2.0);
+				Complex value = (i >= 0 && i < spectrumLength) ? spectrum[i].multiply(phaser) : Complex.ZERO;
 				result.values[ix][iy] = value;
 			}
 		}
