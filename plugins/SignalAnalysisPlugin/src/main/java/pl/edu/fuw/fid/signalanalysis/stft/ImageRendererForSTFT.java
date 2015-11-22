@@ -34,8 +34,9 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 		return prefs;
 	}
 
-	private static int calculatePaddedWindowLength(int windowLength, int chartHeight) {
-		while (windowLength < chartHeight) {
+	private static int calculatePaddedWindowLength(int windowLength, int chartHeight, double maxFrequency, double samplingFrequency) {
+		double fullChartHeight = chartHeight * samplingFrequency / maxFrequency;
+		while (windowLength < fullChartHeight) {
 			windowLength *= 2;
 		}
 		return windowLength;
@@ -72,7 +73,9 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 	@Override
 	protected ImageResult compute(PreferencesWithAxes<PreferencesForSTFT> preferences, ImageRendererStatus status) throws Exception {
 		final PreferencesForSTFT prefs = preferences.prefs;
-		final int spectrumLength = prefs.padToHeight ? calculatePaddedWindowLength(prefs.windowLength, preferences.height) : prefs.windowLength;
+		final int spectrumLength = prefs.padToHeight
+			? calculatePaddedWindowLength(prefs.windowLength, preferences.height, preferences.yAxis.getValueForDisplay(0.0).doubleValue(), sampling)
+			: prefs.windowLength;
 		final double[] all = signal.getData();
 		final double[] window = new double[prefs.windowLength];
 		final ImageResult result = new ImageResult(preferences.width, preferences.height);

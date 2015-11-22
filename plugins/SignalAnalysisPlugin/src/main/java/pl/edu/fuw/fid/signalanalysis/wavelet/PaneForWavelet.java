@@ -108,7 +108,7 @@ public class PaneForWavelet {
 		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
 		final double samplingFrequency = samples.getSamplingFrequency();
 		final double nyquistFrequency = 0.5 * samplingFrequency;
-		final double minFrequency = 5.0; // Hz
+		final double minFrequency = 2.0; // Hz
 
 		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1.0);
 		final NumberAxis linAxis = new NumberAxis(minFrequency, nyquistFrequency, 10.0);
@@ -119,7 +119,7 @@ public class PaneForWavelet {
 		logAxis.setUpperBound(nyquistFrequency);
 
 		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencyMaxSlider");
-		maxFrequency.setMin(5.0); // Hz
+		maxFrequency.setMin(minFrequency); // Hz
 		maxFrequency.setMax(nyquistFrequency);
 		maxFrequency.setValue(nyquistFrequency);
 		maxFrequency.valueProperty().addListener(new ChangeListener<Number>() {
@@ -133,7 +133,7 @@ public class PaneForWavelet {
 
 		final ComboBox freqScale = (ComboBox) fxmlLoader.getNamespace().get("frequencyScaleComboBox");
 		freqScale.setItems(frequencyScaleItems);
-		freqScale.getSelectionModel().select(1);
+		freqScale.getSelectionModel().select(0);
 		freqScale.valueProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -165,9 +165,9 @@ public class PaneForWavelet {
 		renderer = new ImageRendererForWavelet(signal);
 		linChart = new ImageChart(xAxis, linAxis, renderer);
 		logChart = new ImageChart(xAxis, logAxis, renderer);
-		linChart.setVisible(false);
-		logChart.setVisible(true);
-		theChart = logChart;
+		linChart.setVisible(true);
+		logChart.setVisible(false);
+		theChart = linChart;
 
 		waveletType.getSelectionModel().select(renderer.getWavelet());
 		paletteType.getSelectionModel().select(renderer.getPaletteType());

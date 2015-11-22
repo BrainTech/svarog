@@ -19,6 +19,8 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PopupActionForSTFT.class);
 
+	private static final String TITLE = "Short-Time Fourier Transform";
+
 	private final SvarogAccessSignal signalAccess;
 
 	private void initFX(JFXPanel fxPanel, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
@@ -30,7 +32,7 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 	public PopupActionForSTFT(SvarogAccessSignal signalAccess) {
 		super();
 		this.signalAccess = signalAccess;
-		setText("Short-Time Fourier Transform");
+		setText(TITLE);
 	}
 
 	private ExportedSignalSelection getActiveSelection() {
@@ -50,8 +52,8 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 			return;
 		}
 
-		JFrame frame = new JFrame("FX");
-		frame.setSize(500, 500);
+		JFrame frame = new JFrame(TITLE);
+		frame.setSize(800, 600);
 		final JFXPanel fxPanel = new JFXPanel();
 		frame.add(fxPanel);
 		frame.setVisible(true);

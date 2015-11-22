@@ -1,7 +1,6 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
-import org.apache.commons.math.transform.FastFourierTransformer;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageRendererStatus;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
@@ -37,7 +36,6 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 		final double[] all = signal.getData();
 		final Complex[][] windows = new Complex[preferences.height][];
 		ImageResult result = new ImageResult(preferences.width, preferences.height);
-		final FastFourierTransformer fft = new FastFourierTransformer();
 
 		// prepare windows
 		Complex[] window = new Complex[windowLength];
@@ -60,10 +58,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 			for (int ix=0; ix<windowLength; ++ix) {
 				window[ix] = window[ix].multiply(norm);
 			}
-			windows[iy] = fft.transform(window);
-			for (int ix=0; ix<windowLength; ++ix) {
-				windows[iy][ix] = windows[iy][ix].conjugate();
-			}
+			windows[iy] = window.clone();
 		}
 
 		for (int ix=0; ix<preferences.width; ++ix) {
@@ -78,13 +73,12 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 				int i = i0 + wi;
 				window[wi] = new Complex((i >=0 && i < all.length) ? all[i] : 0.0, 0.0);
 			}
-			Complex[] spectrum = fft.transform(window);
 			for (int iy=0; iy<preferences.height; ++iy) {
 				Complex sum = Complex.ZERO;
 				for (int iw=0; iw<windowLength; ++iw) {
-					sum = sum.add(spectrum[iw].multiply(windows[iy][iw]));
+					sum = sum.add(window[iw].multiply(windows[iy][iw]));
 				}
-				result.values[ix][iy] = sum.multiply(2.0);
+				result.values[ix][iy] = sum.conjugate().multiply(windowLength);
 			}
 		}
 		return result;
