@@ -99,7 +99,7 @@ public class BookAverageMethod extends AbstractMethod implements TrackableMethod
 		}
 
 		int minSegment = data.getMinSegment();
-		int maxSegment = data.getMaxSegment();
+		int maxSegment = Math.min(data.getMaxSegment(), book.getSegmentCount()-1);
 
 		int stepCount = (maxSegment+1-minSegment) * channelArr.length;
 		tracker.setTickerLimits(new int[] {stepCount});

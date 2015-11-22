@@ -105,7 +105,6 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 		data.setMaxPosition(book.getSegmentAt(0)[0].getSegmentTimeLength());
 		data.setWidth(400);
 		data.setHeight(400);
-		data.setOutputFilePath("output.png");
 		data.addChannel(currentChannel);
 
 		return data;

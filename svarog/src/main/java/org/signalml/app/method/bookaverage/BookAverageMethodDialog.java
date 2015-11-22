@@ -53,7 +53,8 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		panel.setTimeEnd(data.getMaxPosition());
 		panel.setFrequencyStart(data.getMinFrequency());
 		panel.setFrequencyEnd(data.getMaxFrequency());
-		panel.setOutputFilePath(data.getOutputFilePath());
+		panel.setPageStart(data.getMinSegment() + 1);
+		panel.setPageEnd(data.getMaxSegment() + 1);
 	}
 
 	@Override
@@ -65,7 +66,8 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		data.setMaxPosition(panel.getTimeEnd());
 		data.setMinFrequency(panel.getFrequencyStart());
 		data.setMaxFrequency(panel.getFrequencyEnd());
-		data.setOutputFilePath(panel.getOutputFilePath());
+		data.setMinSegment(panel.getPageStart() - 1);
+		data.setMaxSegment(panel.getPageEnd() - 1);
 	}
 
 	@Override
@@ -80,7 +82,11 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		double timeStart = panel.getTimeStart();
 		double freqEnd = panel.getFrequencyEnd();
 		double freqStart = panel.getFrequencyStart();
-		String filePath = panel.getOutputFilePath();
+		int pageEnd = panel.getPageEnd();
+		int pageStart = panel.getPageStart();
+		if (pageEnd <= 0 || pageStart <= 0 || pageStart > pageEnd) {
+			errors.addError(_("Invalid page selection."));
+		}
 		if (Double.isNaN(timeEnd) || Double.isInfinite(timeEnd) || timeEnd < 0) {
 			errors.addError(_("Invalid end time."));
 		}
@@ -101,9 +107,6 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 		}
 		if (panel.getSelectedWidth() <= 0 || panel.getSelectedHeight() <= 0) {
 			errors.addError(_("Invalid image dimensions."));
-		}
-		if (filePath.isEmpty()) {
-			errors.addError(_("Output file path (name) is not given."));
 		}
 	}
 

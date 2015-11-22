@@ -37,7 +37,6 @@ public class BookAverageData extends BaseMethodData {
 
 	private IWignerMapPalette palette;
 	private WignerMapScaleType scaleType;
-	private String outputFilePath = "";
 
 	public BookAverageData() {
 		channels = new LinkedHashSet<Integer>();
@@ -113,14 +112,6 @@ public class BookAverageData extends BaseMethodData {
 
 	public void setMaxSegment(int maxSegment) {
 		this.maxSegment = maxSegment;
-	}
-
-	public String getOutputFilePath() {
-		return outputFilePath;
-	}
-
-	public void setOutputFilePath(String outputFilePath) {
-		this.outputFilePath = outputFilePath;
 	}
 
 	public LinkedHashSet<Integer> getChannels() {
