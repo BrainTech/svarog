@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ChannelSamples;
@@ -105,7 +106,8 @@ public class PaneForWavelet {
 		});
 
 		final double selectionLength = selection.getLength();
-		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
+		final int selectedChannel = Math.max(selection.getChannel(), 0);
+		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel, (float) selection.getPosition(), (float) selectionLength);
 		final double samplingFrequency = samples.getSamplingFrequency();
 		final double nyquistFrequency = 0.5 * samplingFrequency;
 		final double minFrequency = 2.0; // Hz

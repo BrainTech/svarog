@@ -47,7 +47,7 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 	public void actionPerformed(ActionEvent arg0) {
 		// This method is invoked on Swing thread
 		final ExportedSignalSelection selection = getActiveSelection();
-		if (selection == null || selection.getChannel() < 0) {
+		if (selection == null) {
 			JOptionPane.showMessageDialog(null, "Select valid single-channel signal fragment.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

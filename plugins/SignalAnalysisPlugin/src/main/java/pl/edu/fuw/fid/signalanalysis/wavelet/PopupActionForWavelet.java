@@ -7,6 +7,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
@@ -47,7 +48,7 @@ public class PopupActionForWavelet extends AbstractSignalMLAction {
 	public void actionPerformed(ActionEvent arg0) {
 		// This method is invoked on Swing thread
 		final ExportedSignalSelection selection = getActiveSelection();
-		if (selection == null || selection.getChannel() < 0) {
+		if (selection == null) {
 			JOptionPane.showMessageDialog(null, "Select valid single-channel signal fragment.", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

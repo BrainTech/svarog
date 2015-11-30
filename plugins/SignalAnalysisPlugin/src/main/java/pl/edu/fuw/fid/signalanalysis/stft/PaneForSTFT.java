@@ -72,7 +72,8 @@ public class PaneForSTFT {
 		paletteType.setItems(paletteTypeItems);
 
 		final double selectionLength = selection.getLength();
-		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selection.getChannel(), (float) selection.getPosition(), (float) selectionLength);
+		final int selectedChannel = Math.max(selection.getChannel(), 0);
+		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel, (float) selection.getPosition(), (float) selectionLength);
 		final double samplingFrequency = samples.getSamplingFrequency();
 		final double nyquistFrequency = 0.5 * samplingFrequency;
 
