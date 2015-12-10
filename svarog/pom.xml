@@ -29,7 +29,7 @@
 
 		<git.git>git</git.git>
 
-		<multiplexer.jmx.version>0.9.1</multiplexer.jmx.version>
+		<multiplexer.jmx.version>0.9.2</multiplexer.jmx.version>
 		<org.signalml.jsignalml.version>1.1</org.signalml.jsignalml.version>
 	</properties>
 
@@ -271,6 +271,24 @@
 
 				<dependencies>
 					<dependency>
+						<groupId>args4j</groupId>
+						<artifactId>args4j</artifactId>
+						<version>2.0.16</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.freemarker</groupId>
+						<artifactId>freemarker</artifactId>
+						<version>2.3.15</version>
+					</dependency>
+
+					<dependency>
+						<groupId>com.google.protobuf</groupId>
+						<artifactId>protobuf-java</artifactId>
+						<version>2.6.1</version>
+					</dependency>
+
+					<dependency>
 						<groupId>multiplexer</groupId>
 						<artifactId>jmx</artifactId>
 						<version>${multiplexer.jmx.version}</version>
@@ -490,6 +508,11 @@
 			<version>2.9.1</version>
 		</dependency>
 		<dependency>
+			<groupId>trove</groupId>
+			<artifactId>trove</artifactId>
+			<version>2.1.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>eega-tag-library</artifactId>
 			<version>1.0.0</version>
@@ -497,7 +520,7 @@
 		<dependency>
 			<groupId>org.jboss.netty</groupId>
 			<artifactId>netty</artifactId>
-			<version>3.1.0.GA</version>
+			<version>3.2.3.Final</version>
 		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
@@ -512,7 +535,7 @@
 		<dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
-			<version>2.5.0</version>
+			<version>2.6.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
