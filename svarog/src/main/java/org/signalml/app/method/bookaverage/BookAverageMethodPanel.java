@@ -250,6 +250,11 @@ public class BookAverageMethodPanel extends javax.swing.JPanel {
 		pageEnd.setText(Integer.toString(page));
 	}
 
+	public void setPageSelectionEnabled(boolean enabled) {
+		pageStart.setEnabled(enabled);
+		pageEnd.setEnabled(enabled);
+	}
+
 	public void setTimeEnd(double time) {
 		timeEnd.setText(Double.toString(time));
 	}

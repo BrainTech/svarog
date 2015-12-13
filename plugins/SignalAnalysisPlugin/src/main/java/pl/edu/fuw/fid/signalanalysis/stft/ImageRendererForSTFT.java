@@ -1,13 +1,14 @@
 package pl.edu.fuw.fid.signalanalysis.stft;
 
+import java.util.Arrays;
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
 import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
+import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
-import pl.edu.fuw.fid.signalanalysis.waveform.ImageRendererStatus;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
 
 /**
@@ -21,7 +22,7 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 	private volatile Integer windowLength_ = 128;
 	private volatile WindowType windowType_ = WindowType.RECTANGULAR;
 
-	public ImageRendererForSTFT(SimpleSignal signal) {
+	public ImageRendererForSTFT(SingleSignal signal) {
 		super(signal);
 	}
 
@@ -32,14 +33,6 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 		prefs.windowLength = windowLength_;
 		prefs.windowType = windowType_;
 		return prefs;
-	}
-
-	private static int calculatePaddedWindowLength(int windowLength, int chartHeight, double maxFrequency, double samplingFrequency) {
-		double fullChartHeight = chartHeight * samplingFrequency / maxFrequency;
-		while (windowLength < fullChartHeight) {
-			windowLength *= 2;
-		}
-		return windowLength;
 	}
 
 	public boolean getPadToHeight() {
@@ -70,44 +63,53 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 		return windowLength_;
 	}
 
+	private static double calculatePaddedHeight(int chartHeight, double minFrequency, double maxFrequency, double samplingFrequency) {
+		return chartHeight * samplingFrequency / Math.abs(maxFrequency - minFrequency);
+	}
+
 	@Override
-	protected ImageResult compute(PreferencesWithAxes<PreferencesForSTFT> preferences, ImageRendererStatus status) throws Exception {
+	protected ImageResult compute(PreferencesWithAxes<PreferencesForSTFT> preferences, AsyncStatus status) throws Exception {
 		final PreferencesForSTFT prefs = preferences.prefs;
-		final int spectrumLength = prefs.padToHeight
-			? calculatePaddedWindowLength(prefs.windowLength, preferences.height, preferences.yAxis.getValueForDisplay(0.0).doubleValue(), sampling)
-			: prefs.windowLength;
-		final double[] all = signal.getData();
-		final double[] window = new double[prefs.windowLength];
 		final ImageResult result = new ImageResult(preferences.width, preferences.height);
 		final FastFourierTransformer fft = new FastFourierTransformer();
 
+		double paddedLengthMin = prefs.windowLength;
+		if (prefs.padToHeight) {
+			paddedLengthMin = Math.max(
+				paddedLengthMin,
+				calculatePaddedHeight(preferences.height, preferences.yMin, preferences.yMax, signal.getSamplingFrequency())
+			);
+		}
+		int paddedLength = 2;
+		while (paddedLength < paddedLengthMin) {
+			paddedLength *= 2;
+		}
 		WindowFunction wf = new WindowFunction(prefs.windowType, prefs.windowType.getParameterDefault());
+
+		double[] chunk = new double[prefs.windowLength];
+		double[] padded = new double[paddedLength];
 		for (int ix=0; ix<preferences.width; ++ix) {
 			if (status.isCancelled()) {
 				return null;
 			}
 			status.setProgress(ix / (double) preferences.width);
-			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
-			result.t[ix] = t;
-			int i0 = (int) Math.floor(sampling * t) - prefs.windowLength / 2;
-			for (int wi=0; wi<prefs.windowLength; ++wi) {
-				int i = i0 + wi;
-				window[wi] = (i >=0 && i < all.length) ? all[i] : 0.0;
-			}
-			double[] windowed = wf.applyWindow(window);
-			if (spectrumLength > prefs.windowLength) {
-				double[] temp = new double[spectrumLength];
-				System.arraycopy(windowed, 0, temp, 0, prefs.windowLength);
-				windowed = temp;
-			}
-			Complex[] spectrum = fft.transform(windowed);
+
+			double t0 = preferences.xMin + (preferences.xMax - preferences.xMin) * ix / (preferences.width - 1);
+			result.t[ix] = t0;
+			int n0 = (int) Math.round(t0 * sampling);
+			Arrays.fill(chunk, 0.0);
+			signal.getSamples(n0 - prefs.windowLength / 2, prefs.windowLength, chunk);
+			double[] windowed = wf.applyWindow(chunk);
+			System.arraycopy(windowed, 0, padded, 0, prefs.windowLength);
+			Complex[] spectrum = fft.transform(padded);
 			for (int iy=0; iy<preferences.height; ++iy) {
-				double f = preferences.yAxis.getValueForDisplay(iy).doubleValue();
-				int i = (int) Math.floor(spectrumLength * f / sampling);
-				result.f[iy] = i * sampling / spectrumLength;
+				double fIdeal = preferences.yMin + (preferences.yMax - preferences.yMin) * iy / (preferences.height - 1);
+				int i = (int) Math.round(spectrum.length * fIdeal / sampling);
+				double fExact = i * sampling / spectrum.length;
+				result.f[iy] = fExact;
 				// phase difference between start and center of time window
 				Complex phaser = new Complex(0, Math.PI*result.f[iy]*prefs.windowLength/sampling).exp().multiply(2.0);
-				Complex value = (i >= 0 && i < spectrumLength) ? spectrum[i].multiply(phaser) : Complex.ZERO;
+				Complex value = (i >= 0 && i < paddedLength) ? spectrum[i].multiply(phaser) : Complex.ZERO;
 				result.values[ix][iy] = value;
 			}
 		}

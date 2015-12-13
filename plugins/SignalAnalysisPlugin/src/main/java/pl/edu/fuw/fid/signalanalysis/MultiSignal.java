@@ -7,9 +7,9 @@ public interface MultiSignal {
 
 	public int getChannelCount();
 
-	public double[] getData(int channel);
-
 	public int getSampleCount();
+
+	public void getSamples(int channel, int start, int length, double[] buffer);
 
 	public double getSamplingFrequency();
 

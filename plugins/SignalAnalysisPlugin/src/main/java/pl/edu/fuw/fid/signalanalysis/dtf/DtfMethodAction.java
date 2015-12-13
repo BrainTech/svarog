@@ -17,7 +17,6 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.MultiSignal;
-import pl.edu.fuw.fid.signalanalysis.MultiStoredSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -115,10 +114,31 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 		return signalChain.getOutput();
 	}
 
-	private void proceedToComputation(SignalDocument signalDocument, int[] selectedChannels, int maxOrder) throws MontageMismatchException {
+	private void proceedToComputation(SignalDocument signalDocument, final int[] selectedChannels, int maxOrder) throws MontageMismatchException {
 		// extract data samples of selected channels
-		MultichannelSampleSource sampleSource = getSampleSource(signalDocument);
-		MultiSignal data = new MultiStoredSignal(sampleSource, selectedChannels);
+		final MultichannelSampleSource sampleSource = getSampleSource(signalDocument);
+		MultiSignal data = new MultiSignal() {
+
+			@Override
+			public int getChannelCount() {
+				return selectedChannels.length;
+			}
+
+			@Override
+			public void getSamples(int channel, int start, int length, double[] buffer) {
+				sampleSource.getSamples(channel, buffer, start, length, 0);
+			}
+
+			@Override
+			public int getSampleCount() {
+				return sampleSource.getSampleCount(0);
+			}
+
+			@Override
+			public double getSamplingFrequency() {
+				return sampleSource.getSamplingFrequency();
+			}
+		};
 
 		// compute AR models for all orders from 1 up to maxOrder
 		final ArModel[] models = new ArModel[maxOrder];

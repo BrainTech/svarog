@@ -13,14 +13,20 @@ import pl.edu.fuw.fid.signalanalysis.ica.IcaMethodAction;
 import pl.edu.fuw.fid.signalanalysis.stft.PopupActionForSTFT;
 import pl.edu.fuw.fid.signalanalysis.wavelet.PopupActionForWavelet;
 import pl.edu.fuw.fid.signalanalysis.ica.ZeroMethodAction;
+import pl.edu.fuw.fid.signalanalysis.stft.AveragedStftDialog;
+import pl.edu.fuw.fid.signalanalysis.stft.ImageRendererForSTFT;
+import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseAction;
+import pl.edu.fuw.fid.signalanalysis.wavelet.AveragedWaveletDialog;
+import pl.edu.fuw.fid.signalanalysis.wavelet.ImageRendererForWavelet;
 
 /**
  * @author ptr@mimuw.edu.pl
  */
 public class SignalAnalysisPlugin implements Plugin {
 
-	private SvarogAccessGUI guiAccess;
+	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SignalAnalysisPlugin.class);
 
+	private SvarogAccessGUI guiAccess;
 	private SvarogAccessSignal signalAccess;
 
 	private void addToClasspathIfExists(String relativePath) {
@@ -47,8 +53,24 @@ public class SignalAnalysisPlugin implements Plugin {
 
 		guiAccess.addSubmenuToToolsMenu(icaMenu);
 		guiAccess.addButtonToToolsMenu(new DtfMethodAction(guiAccess, signalAccess));
-		guiAccess.addButtonToToolsMenu(new PopupActionForSTFT(signalAccess));
-		guiAccess.addButtonToToolsMenu(new PopupActionForWavelet(signalAccess));
+
+		JMenu stftMenu = new JMenu("Short-Time Fourier Transform");
+		stftMenu.add(new PopupActionForSTFT(signalAccess));
+		try {
+			stftMenu.add(new AveragedBaseAction(guiAccess, signalAccess, AveragedStftDialog.class, ImageRendererForSTFT.class));
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		guiAccess.addSubmenuToToolsMenu(stftMenu);
+
+		JMenu wtMenu = new JMenu("Wavelet Transform");
+		wtMenu.add(new PopupActionForWavelet(signalAccess));
+		try {
+			wtMenu.add(new AveragedBaseAction(guiAccess, signalAccess, AveragedWaveletDialog.class, ImageRendererForWavelet.class));
+		} catch (Exception ex) {
+			logger.error(ex);
+		}
+		guiAccess.addSubmenuToToolsMenu(wtMenu);
 	}
 
 }

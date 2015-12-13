@@ -1,10 +1,10 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
+import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
-import pl.edu.fuw.fid.signalanalysis.waveform.ImageRendererStatus;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
 import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
 
@@ -16,13 +16,14 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ImageRendererForWavelet.class);
 
 	private volatile MotherWavelet wavelet_ = new GaborWavelet();
+	private volatile boolean logScale_ = false;
 
-	public ImageRendererForWavelet(SimpleSignal signal) {
+	public ImageRendererForWavelet(SingleSignal signal) {
 		super(signal);
 	}
 
 	@Override
-	public ImageResult compute(PreferencesWithAxes<PreferencesForWavelet> preferences, ImageRendererStatus status) throws Exception {
+	public ImageResult compute(PreferencesWithAxes<PreferencesForWavelet> preferences, AsyncStatus status) throws Exception {
 		final PreferencesForWavelet prefs = preferences.prefs;
 
 		// długość okna zależy od maksymalnej długości falki
@@ -33,7 +34,6 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 			windowLength *= 2;
 		}
 
-		final double[] all = signal.getData();
 		final Complex[][] windows = new Complex[preferences.height][];
 		ImageResult result = new ImageResult(preferences.width, preferences.height);
 
@@ -44,7 +44,9 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 				return null;
 			}
 			status.setProgress(0.25 * iy / preferences.height);
-			double f = preferences.yAxis.getValueForDisplay(iy).doubleValue();
+			double f = prefs.logScale
+				? Math.exp( Math.log(preferences.yMin) + Math.log(preferences.yMax / preferences.yMin) * iy / (preferences.height - 1) )
+				: preferences.yMin + (preferences.yMax - preferences.yMin) * iy / (preferences.height - 1);
 			result.f[iy] = f;
 			Waveform scaled = prefs.wavelet.scale(f);
 			double norm = 0.0;
@@ -61,22 +63,20 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 			windows[iy] = window.clone();
 		}
 
+		double[] chunk = new double[windowLength];
 		for (int ix=0; ix<preferences.width; ++ix) {
 			if (status.isCancelled()) {
 				return null;
 			}
 			status.setProgress(0.25 + 0.75 * ix / preferences.width);
-			double t = preferences.xAxis.getValueForDisplay(ix).doubleValue();
+			double t = preferences.xMin + (preferences.xMax - preferences.xMin) * ix / (preferences.width - 1);
 			result.t[ix] = t;
 			int i0 = (int) Math.floor(sampling * t) - windowLength / 2;
-			for (int wi=0; wi<windowLength; ++wi) {
-				int i = i0 + wi;
-				window[wi] = new Complex((i >=0 && i < all.length) ? all[i] : 0.0, 0.0);
-			}
+			signal.getSamples(i0, windowLength, chunk);
 			for (int iy=0; iy<preferences.height; ++iy) {
 				Complex sum = Complex.ZERO;
 				for (int iw=0; iw<windowLength; ++iw) {
-					sum = sum.add(window[iw].multiply(windows[iy][iw]));
+					sum = sum.add(windows[iy][iw].multiply(chunk[iw]));
 				}
 				result.values[ix][iy] = sum.conjugate().multiply(windowLength);
 			}
@@ -88,6 +88,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 	protected PreferencesForWavelet getPreferences() {
 		PreferencesForWavelet prefs = new PreferencesForWavelet();
 		prefs.wavelet = wavelet_;
+		prefs.logScale = logScale_;
 		return prefs;
 	}
 
@@ -97,6 +98,14 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 
 	public void setWavelet(MotherWavelet wavelet) {
 		wavelet_ = wavelet;
+	}
+	
+	public boolean isLogScale() {
+		return logScale_;
+	}
+	
+	public void setLogScale(boolean logScale) {
+		logScale_ = logScale;
 	}
 
 }

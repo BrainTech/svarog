@@ -21,14 +21,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
-import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
+import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageChart;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRefresher;
 import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
 import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
 
@@ -45,6 +47,7 @@ public class PaneForWavelet {
 	final ObservableList<String> frequencyScaleItems;
 	final ImageChart linChart, logChart;
 	final ImageRendererForWavelet renderer;
+	final ImageRefresher refresher;
 
 	private ImageChart theChart;
 
@@ -61,7 +64,7 @@ public class PaneForWavelet {
 	private void setWavelet(MotherWavelet wavelet, double param) {
 		wavelet = createWavelet(wavelet, param);
 		renderer.setWavelet(wavelet);
-		theChart.refreshChartImage();
+		refresher.refreshChartImage(theChart);
 	}
 
 	public PaneForWavelet(SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
@@ -105,14 +108,15 @@ public class PaneForWavelet {
 			}
 		});
 
-		final double selectionLength = selection.getLength();
 		final int selectedChannel = Math.max(selection.getChannel(), 0);
-		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel, (float) selection.getPosition(), (float) selectionLength);
+		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel);
 		final double samplingFrequency = samples.getSamplingFrequency();
 		final double nyquistFrequency = 0.5 * samplingFrequency;
-		final double minFrequency = 2.0; // Hz
+		final double minFrequency = SignalAnalysisTools.MIN_WAVELET_FREQ;
 
-		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1.0);
+		double tMin = selection.getPosition();
+		double tMax = selection.getEndPosition();
+		final NumberAxis xAxis = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis linAxis = new NumberAxis(minFrequency, nyquistFrequency, 10.0);
 		linAxis.setPrefWidth(50);
 		final LogarithmicAxis logAxis = new LogarithmicAxis();
@@ -133,6 +137,10 @@ public class PaneForWavelet {
 			}
 		});
 
+		SingleSignal signal = new SimpleSingleSignal(samples);
+		renderer = new ImageRendererForWavelet(signal);
+		refresher = new ImageRefresher(renderer);
+
 		final ComboBox freqScale = (ComboBox) fxmlLoader.getNamespace().get("frequencyScaleComboBox");
 		freqScale.setItems(frequencyScaleItems);
 		freqScale.getSelectionModel().select(0);
@@ -142,31 +150,27 @@ public class PaneForWavelet {
 				boolean logScale = newValue.equals("logarithmic");
 				if (logScale) {
 					linChart.setVisible(false);
+					linChart.hideImage();
 					theChart = logChart;
 				} else {
 					logChart.setVisible(false);
+					logChart.hideImage();
 					theChart = linChart;
 				}
-				theChart.hideImage();
 				theChart.setVisible(true);
-				theChart.refreshChartImage();
+				renderer.setLogScale(logScale);
+				refresher.refreshChartImage(theChart);
 			}
 		});
 
-		SimpleSignal signal = new SimpleSignal() {
+		Runnable onResize = new Runnable() {
 			@Override
-			public double[] getData() {
-				return samples.getSamples();
-			}
-
-			@Override
-			public double getSamplingFrequency() {
-				return samplingFrequency;
+			public void run() {
+				refresher.refreshChartImage(theChart);
 			}
 		};
-		renderer = new ImageRendererForWavelet(signal);
-		linChart = new ImageChart(xAxis, linAxis, renderer);
-		logChart = new ImageChart(xAxis, logAxis, renderer);
+		linChart = new ImageChart(xAxis, linAxis, renderer, onResize);
+		logChart = new ImageChart(xAxis, logAxis, renderer, onResize);
 		linChart.setVisible(true);
 		logChart.setVisible(false);
 		theChart = linChart;
@@ -174,12 +178,12 @@ public class PaneForWavelet {
 		waveletType.getSelectionModel().select(renderer.getWavelet());
 		paletteType.getSelectionModel().select(renderer.getPaletteType());
 
-		final NumberAxis xAxisSignal = new NumberAxis(0.0, selectionLength, 1.0);
+		final NumberAxis xAxisSignal = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis yAxisSignal = new NumberAxis();
 		xAxisSignal.setLabel("time [s]");
 		yAxisSignal.setLabel("value [µV]");
 		yAxisSignal.setPrefWidth(50);
-		final SignalChart signalChart = new SignalChart(signal, xAxisSignal, yAxisSignal);
+		final SignalChart signalChart = new SignalChart(signal, tMin, tMax, xAxisSignal, yAxisSignal);
 
 		final Slider waveletParam = (Slider) fxmlLoader.getNamespace().get("waveletParamSlider");
 		waveletParam.setValue(GaborWavelet.DEFAULT_WIDTH);
@@ -211,7 +215,7 @@ public class PaneForWavelet {
 				WignerMapPalette pt = (WignerMapPalette) paletteType.getSelectionModel().getSelectedItem();
 				if (pt != null) {
 					renderer.setPaletteType(pt);
-					theChart.refreshChartImage();
+					refresher.refreshChartImage(theChart);
 				}
 			}
 		});
@@ -221,7 +225,7 @@ public class PaneForWavelet {
 			public void handle(Event event) {
 				boolean inverted = paletteInvert.isSelected();
 				renderer.setInverted(inverted);
-				theChart.refreshChartImage();
+				refresher.refreshChartImage(theChart);
 			}
 		});
 
@@ -251,8 +255,7 @@ public class PaneForWavelet {
 		stack.getChildren().addAll(
 			linChart,
 			logChart,
-			linChart.getProgressIndicator(),
-			logChart.getProgressIndicator()
+			refresher.getProgressIndicator()
 		);
 		stack.setAlignment(Pos.CENTER);
 

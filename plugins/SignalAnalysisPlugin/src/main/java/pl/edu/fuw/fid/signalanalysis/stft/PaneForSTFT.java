@@ -23,8 +23,11 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
+import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageChart;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRefresher;
 import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
 import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
 
@@ -40,7 +43,7 @@ public class PaneForSTFT {
 	final ImageChart chart;
 	final ImageRendererForSTFT renderer;
 
-	public PaneForSTFT(SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
+	public PaneForSTFT(final SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
 		root = new BorderPane();
 		windowTypeItems = FXCollections.observableArrayList(
 			WindowType.RECTANGULAR,
@@ -67,17 +70,19 @@ public class PaneForSTFT {
 
 		final ComboBox windowSize = (ComboBox) fxmlLoader.getNamespace().get("windowSizeComboBox");
 		windowSize.setItems(windowSizeItems);
+		windowSize.setEditable(true);
 
 		final ComboBox paletteType = (ComboBox) fxmlLoader.getNamespace().get("paletteTypeComboBox");
 		paletteType.setItems(paletteTypeItems);
 
-		final double selectionLength = selection.getLength();
 		final int selectedChannel = Math.max(selection.getChannel(), 0);
-		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel, (float) selection.getPosition(), (float) selectionLength);
+		final ChannelSamples samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel);
 		final double samplingFrequency = samples.getSamplingFrequency();
 		final double nyquistFrequency = 0.5 * samplingFrequency;
 
-		final NumberAxis xAxis = new NumberAxis(0.0, selectionLength, 1.0);
+		double tMin = selection.getPosition();
+		double tMax = selection.getEndPosition();
+		final NumberAxis xAxis = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis yAxis = new NumberAxis(0.0, nyquistFrequency, 10.0);
 		yAxis.setLabel("frequency [Hz]");
 		yAxis.setPrefWidth(50);
@@ -93,30 +98,27 @@ public class PaneForSTFT {
 			}
 		});
 
-		SimpleSignal signal = new SimpleSignal() {
+		SingleSignal signal = new SimpleSingleSignal(samples);
+		renderer = new ImageRendererForSTFT(signal);
+		final ImageRefresher refresher = new ImageRefresher(renderer);
+		Runnable onResize = new Runnable() {
 			@Override
-			public double[] getData() {
-				return samples.getSamples();
-			}
-
-			@Override
-			public double getSamplingFrequency() {
-				return samplingFrequency;
+			public void run() {
+				refresher.refreshChartImage(chart);
 			}
 		};
-		renderer = new ImageRendererForSTFT(signal);
-		chart = new ImageChart(xAxis, yAxis, renderer);
+		chart = new ImageChart(xAxis, yAxis, renderer, onResize);
 
 		windowType.getSelectionModel().select(renderer.getWindowType());
 		windowSize.getSelectionModel().select(renderer.getWindowLength());
 		paletteType.getSelectionModel().select(renderer.getPaletteType());
 
-		final NumberAxis xAxisSignal = new NumberAxis(0.0, selectionLength, 1.0);
+		final NumberAxis xAxisSignal = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis yAxisSignal = new NumberAxis();
 		xAxisSignal.setLabel("time [s]");
 		yAxisSignal.setLabel("value [µV]");
 		yAxisSignal.setPrefWidth(50);
-		final SignalChart signalChart = new SignalChart(signal, xAxisSignal, yAxisSignal);
+		final SignalChart signalChart = new SignalChart(signal, tMin, tMax, xAxisSignal, yAxisSignal);
 
 		windowType.setOnAction(new EventHandler() {
 			@Override
@@ -124,7 +126,7 @@ public class PaneForSTFT {
 				WindowType wt = (WindowType) windowType.getSelectionModel().getSelectedItem();
 				if (wt != null) {
 					renderer.setWindowType(wt);
-					chart.refreshChartImage();
+					refresher.refreshChartImage(chart);
 				}
 			}
 		});
@@ -132,10 +134,11 @@ public class PaneForSTFT {
 		windowSize.setOnAction(new EventHandler() {
 			@Override
 			public void handle(Event event) {
-				Integer ws = (Integer) windowSize.getSelectionModel().getSelectedItem();
+				Object item = windowSize.getSelectionModel().getSelectedItem();
+				Integer ws = SignalAnalysisTools.parsePositiveInteger(item);
 				if (ws != null) {
 					renderer.setWindowLength(ws);
-					chart.refreshChartImage();
+					refresher.refreshChartImage(chart);
 				}
 			}
 		});
@@ -146,7 +149,7 @@ public class PaneForSTFT {
 				WignerMapPalette pt = (WignerMapPalette) paletteType.getSelectionModel().getSelectedItem();
 				if (pt != null) {
 					renderer.setPaletteType(pt);
-					chart.refreshChartImage();
+					refresher.refreshChartImage(chart);
 				}
 			}
 		});
@@ -157,7 +160,7 @@ public class PaneForSTFT {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				renderer.setPadToHeight(newValue);
-				chart.refreshChartImage();
+				refresher.refreshChartImage(chart);
 			}
 		});
 
@@ -171,7 +174,8 @@ public class PaneForSTFT {
 		chart.setOnCursorOnChart(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				Integer ws = (Integer) windowSize.getSelectionModel().getSelectedItem();
+				Object item = windowSize.getSelectionModel().getSelectedItem();
+				Integer ws = SignalAnalysisTools.parsePositiveInteger(item);
 				TimeFrequency tf = chart.getTimeFrequency((int)event.getX(), (int)event.getY());
 				if (ws != null && tf != null) {
 					WindowType wt = (WindowType) windowType.getSelectionModel().getSelectedItem();

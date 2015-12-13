@@ -9,7 +9,7 @@ public class ShannonWavelet extends MotherWavelet {
 
 	@Override
 	public double getBasicFrequency() {
-		return 0.75;
+		return 1.0;
 	}
 
 	@Override

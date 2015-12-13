@@ -7,7 +7,6 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
@@ -33,7 +32,7 @@ public class PopupActionForWavelet extends AbstractSignalMLAction {
 	public PopupActionForWavelet(SvarogAccessSignal signalAccess) {
 		super();
 		this.signalAccess = signalAccess;
-		setText(TITLE);
+		setText("from selection");
 	}
 
 	private ExportedSignalSelection getActiveSelection() {

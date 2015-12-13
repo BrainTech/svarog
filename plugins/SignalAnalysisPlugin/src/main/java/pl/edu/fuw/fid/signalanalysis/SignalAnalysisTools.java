@@ -17,6 +17,7 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 public class SignalAnalysisTools {
 
 	public static final double THRESHOLD = 1.0e-9;
+	public static final double MIN_WAVELET_FREQ = 2.0;
 
 	public static File createRawTemporaryFileFromData(SvarogAccessSignal signalAccess, RealMatrix data) throws IOException {
 		File newFile = signalAccess.getTemporaryFile(".raw");
@@ -31,6 +32,22 @@ public class SignalAnalysisTools {
 		}
 		dos.close();
 		return newFile;
+	}
+
+	public static Integer parsePositiveInteger(Object object) {
+		Integer result = null;
+		if (object instanceof Integer) {
+			Integer number = (Integer) object;
+			if (number > 0) {
+				result = number;
+			}
+		} else if (object instanceof String) try {
+			String string = (String) object;
+			result = Integer.parseInt(string);
+		} catch (NumberFormatException ex) {
+			// nothing here, returning null
+		}
+		return result;
 	}
 
 	public static RealMatrix extractMatrixFromMontage(Montage montage) {

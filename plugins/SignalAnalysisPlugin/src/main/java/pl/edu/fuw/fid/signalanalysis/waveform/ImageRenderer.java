@@ -4,26 +4,27 @@ import java.awt.image.BufferedImage;
 import javafx.scene.chart.Axis;
 import org.apache.commons.math.complex.Complex;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
  */
 public abstract class ImageRenderer<P> {
 
-	protected final SimpleSignal signal;
+	protected final SingleSignal signal;
 	protected final double sampling;
 
 	private volatile boolean inverted_ = false;
 	private volatile WignerMapPalette palette_ = WignerMapPalette.RAINBOW;
 	private volatile CachedImageResult<PreferencesWithAxes<P>> cache_;
 
-	public ImageRenderer(SimpleSignal signal) {
+	public ImageRenderer(SingleSignal signal) {
 		this.signal = signal;
 		this.sampling = signal.getSamplingFrequency();
 	}
 
-	protected abstract ImageResult compute(PreferencesWithAxes<P> preferences, ImageRendererStatus status) throws Exception;
+	protected abstract ImageResult compute(PreferencesWithAxes<P> preferences, AsyncStatus status) throws Exception;
 
 	public boolean isInverted() {
 		return inverted_;
@@ -69,7 +70,13 @@ public abstract class ImageRenderer<P> {
 	 */
 	public BufferedImage renderImage(Axis<Number> xAxis, Axis<Number> yAxis, ImageRendererStatus status) throws Exception {
 		ImageResult result;
-		PreferencesWithAxes<P> pax = new PreferencesWithAxes<P>(getPreferences(), xAxis, yAxis);
+		int width = (int) xAxis.getWidth();
+		int height = (int) yAxis.getHeight();
+		double xMin = xAxis.getValueForDisplay(0.0).doubleValue();
+		double xMax = xAxis.getValueForDisplay(width-1).doubleValue();
+		double yMin = yAxis.getValueForDisplay(0.0).doubleValue();
+		double yMax = yAxis.getValueForDisplay(height-1).doubleValue();
+		PreferencesWithAxes<P> pax = new PreferencesWithAxes<P>(getPreferences(), width, height, xMin, xMax, yMin, yMax);
 		CachedImageResult<PreferencesWithAxes<P>> cache = cache_;
 		if (cache != null && cache.preferences.equals(pax)) {
 			result = cache.result;

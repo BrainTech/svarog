@@ -41,31 +41,22 @@ public class ArModel {
 		final int N = signal.getSampleCount();
 		final int C = signal.getChannelCount();
 
-		// calculating mean values
-		double[] avg = new double[C];
-		for (int c=0; c<C; ++c) {
-			for (double x : signal.getData(c)) {
-				avg[c] += x;
-			}
-			avg[c] /= N;
-		}
-
-		// calculating variances
-		double[] std = new double[C];
-		for (int c=0; c<C; ++c) {
-			for (double x : signal.getData(c)) {
-				double diff = x - avg[c];
-				std[c] += diff * diff;
-			}
-			std[c] = Math.sqrt(std[c] / N);
-		}
-
 		// creating matrix with whitened data
 		RealMatrix X = new Array2DRowRealMatrix(C, N);
-		for (int i=0; i<C; ++i) {
-			RealMatrix row = new Array2DRowRealMatrix(signal.getData(i));
-			row = row.scalarAdd(-avg[i]).scalarMultiply(1.0/std[i]);
-			X.setRowMatrix(i, row.transpose());
+		double[] row = new double[N];
+		for (int c=0; c<C; ++c) {
+			signal.getSamples(c, 0, N, row);
+			double sum = 0.0, sum2 = 0.0;
+			for (double x : row) {
+				sum += x;
+				sum2 += x * x;
+			}
+			double EX = sum / N;
+			double EX2 = sum2 / N;
+			double D = Math.sqrt(EX2 - EX*EX);
+			for (int i=0; i<N; ++i) {
+				X.setEntry(c, i, (row[i] - EX) / D);
+			}
 		}
 
 		// calculating lag correlations

@@ -5,12 +5,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.chart.Axis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import org.apache.commons.math.complex.Complex;
 import org.signalml.math.fft.WindowType;
-import pl.edu.fuw.fid.signalanalysis.SimpleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -24,14 +24,17 @@ public class SignalChart extends LineChart<Number, Number> {
 	private final double samplingFrequency;
 	private final ObservableList<XYChart.Series<Number,Number>> series;
 
-	public SignalChart(SimpleSignal signal, Axis<Number> xAxis, Axis<Number> yAxis) {
+	public SignalChart(SingleSignal signal, double tMin, double tMax, NumberAxis xAxis, NumberAxis yAxis) {
 		super(xAxis, yAxis);
-		this.data = signal.getData();
+		int nMin = (int) Math.round(tMin * signal.getSamplingFrequency());
+		int nMax = (int) Math.round(tMax * signal.getSamplingFrequency());
+		this.data = new double[nMax - nMin];
 		this.samplingFrequency = signal.getSamplingFrequency();
+		signal.getSamples(nMin, nMax-nMin, data);
 
 		ObservableList<XYChart.Data<Number,Number>> signalData = FXCollections.observableArrayList();
 		for (int i=0; i<data.length; ++i) {
-			double t = i / samplingFrequency;
+			double t = tMin + (tMax - tMin) * i / data.length;
 			signalData.add(new XYChart.Data<Number,Number>(t, data[i]));
 		}
 
