@@ -20,7 +20,7 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 
 	private volatile boolean padToHeight_ = false;
 	private volatile Integer windowLength_ = 128;
-	private volatile WindowType windowType_ = WindowType.RECTANGULAR;
+	private volatile WindowType windowType_ = WindowType.BARTLETT;
 
 	public ImageRendererForSTFT(SingleSignal signal) {
 		super(signal);

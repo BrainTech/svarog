@@ -46,11 +46,11 @@ public class PaneForSTFT {
 	public PaneForSTFT(final SvarogAccessSignal signalAccess, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
 		root = new BorderPane();
 		windowTypeItems = FXCollections.observableArrayList(
-			WindowType.RECTANGULAR,
 			WindowType.BARTLETT,
 			WindowType.GAUSSIAN,
 			WindowType.HAMMING,
 			WindowType.HANN,
+			WindowType.RECTANGULAR,
 			WindowType.WELCH
 		);
 		windowSizeItems = FXCollections.observableArrayList(

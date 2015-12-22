@@ -2,6 +2,8 @@ package pl.edu.fuw.fid.signalanalysis.stft;
 
 import java.awt.GridLayout;
 import java.awt.Window;
+import java.util.Arrays;
+import java.util.Comparator;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,7 +28,15 @@ public class AveragedStftDialog extends AveragedBaseDialog<PreferencesForSTFT> {
 
 	@Override
 	protected JPanel createCustomPanel() {
-		windowTypeComboBox = new JComboBox(WindowType.values());
+		WindowType[] windowTypes = WindowType.values();
+		Arrays.sort(windowTypes, new Comparator<WindowType>() {
+			@Override
+			public int compare(WindowType o1, WindowType o2) {
+				return o1.toString().compareTo(o2.toString());
+			}
+		});
+
+		windowTypeComboBox = new JComboBox(windowTypes);
 		windowLengthComboBox = new JComboBox(new Integer[] { 32, 64, 128, 256, 512, 1024 });
 		windowLengthComboBox.setEditable(true);
 
