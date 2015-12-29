@@ -1,0 +1,66 @@
+<html><body>
+<h1>DTF result window</h1>
+
+<p>This window presents results from DTF (Directed Transfer Function)
+method. The method is formulated in the framework of AR model.
+Elements of the transfer function matrix for multichannel EEG process,
+properly normalized, appear to be good estimators of the propagation
+direction and spectral properties of the investigated signals.</p>
+
+<p>Model coefficients are estimated from the input signal
+using the Yule-Walker method. Prior to coefficient estimation,
+all input channels are independently normalized to mean=0 and variance=1.</p>
+
+<h2>Model order</h2>
+<p>The main graph presents values of several criteria facilitating
+selection of most suitable model order. The analytical formulae of the
+criteria can be displayed by hovering mouse on the label in the legend area.
+Variables in formulae describe as follows:</p>
+<ul>
+	<li>channels: number of selected channels from the input signal</li>
+	<li>order: AR model order > 0</li>
+	<li>samples: number of samples in the selected signal</li>
+	<li>V: covariance matrix of the residual noise, its dimensions are: channels × channels</li>
+</ul>
+<p>The best model order correspond to the lowest value of the criterion.
+After selecting preferred model order by clicking on the graph,
+data of the chosen AR model will be displayed in the other sections
+of the window: <em>Transfer functions</em> and <em>Transfer graph</em>.</p>
+
+<p>Also, it is possible to copy coefficients of the selected model to
+the clipboard. The data will be aligned as 3-dimensional array
+(list of coefficient matrices), ordered by the ascending time lag:
+1, 2, 3, (…) up to model order. For example, for a order-2 single-channel model described as
+x(t) = 0.8061560601208944 x(t−1) − 0.2625742978704753 x(t−2) + ε(t)
+the output is
+<pre>[[[0.8061560601208944]],[[-0.2625742978704753]]]</pre>
+while for an order-2 multi-channel model (three channels) the output would be presented as
+<pre>[[[0.8061065403359177,0.016318446822562428,-0.061749715159001295],[0.236878938920024,0.39264247253218987,0.005563227997886028],[0.07746866368897523,0.052281999563032054,0.20082386391939483]],[[-0.20869955649173783,-0.0023608446650237773,0.050938878243404005],[-0.05294976129376853,-0.4927536408857016,0.021964746581938435],[-0.22203468218993755,0.01008725282993888,-0.6093122774503732]]]</pre>
+</p>
+
+<h2>Transfer functions</h2>
+<p>The top switch allows to select whether normalized or unnormalized DTF
+should be calculated. Normalization is applied in such a way, that for every
+frequency and every source channel, sum of the transfer values to all channels
+(including the self-transfer) is equal to 1.</p>
+
+<p>The diagonal plots represent spectra of channels, regardless of
+the normalization selection described above. Non-diagonal entries
+represent values of the transfer functions (normalized or not)
+between different channels.</p>
+
+<h2>Transfer graph</h2>
+<p>Transfer graph represent values of the transfer function
+averaged over specified frequency interval. The relative intensity of
+the transfer is represented by colour (from blue to red) and opacity
+(from transparent to opaque) of arrows between the labeled circles
+representing selected channels of the input signal.</p>
+
+<h2>Literature</h2>
+<ol>
+<li>Kamiński M. J., Blinowska K. J.:
+A new method of the description of the information flow in the brain structures,
+<em>Biological Cybernetics</em> July 1991, Volume 65, Issue 3, pp 203-210</li>
+</ol>
+
+</body></html>

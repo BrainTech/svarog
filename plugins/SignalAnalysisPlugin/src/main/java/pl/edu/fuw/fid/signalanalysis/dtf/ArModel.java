@@ -4,13 +4,11 @@ import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.complex.ComplexField;
 import org.apache.commons.math.linear.Array2DRowFieldMatrix;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
-import org.apache.commons.math.linear.ArrayRealVector;
 import org.apache.commons.math.linear.FieldLUDecompositionImpl;
 import org.apache.commons.math.linear.FieldMatrix;
 import org.apache.commons.math.linear.LUDecompositionImpl;
 import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
-import org.apache.commons.math.linear.RealVector;
 import pl.edu.fuw.fid.signalanalysis.MultiSignal;
 
 /**
@@ -101,15 +99,9 @@ public class ArModel {
 
 		// computing residual error
 		RealMatrix V = new Array2DRowRealMatrix(C, C);
-		for (int t=order; t<N; ++t) {
-			RealVector noise = new ArrayRealVector(C);
-			for (int s=0; s<=order; ++s) {
-				noise = noise.add(A[s].operate(X.getColumnVector(t-s)));
-			}
-			V = V.add(noise.outerProduct(noise));
+		for (int s=0; s<=order; ++s) {
+			V = V.subtract(A[s].multiply(R[s]));
 		}
-		V = V.scalarMultiply(1.0 / N);
-
 		return new ArModel(C, A, V, signal.getSamplingFrequency());
 	}
 

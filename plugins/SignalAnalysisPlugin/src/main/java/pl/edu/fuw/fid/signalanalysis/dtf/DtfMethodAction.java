@@ -1,7 +1,6 @@
 package pl.edu.fuw.fid.signalanalysis.dtf;
 
 import java.awt.event.ActionEvent;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 import org.apache.commons.math.linear.SingularMatrixException;
@@ -157,14 +156,12 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 		for (int i=0; i<selectedChannels.length; ++i) {
 			montage.addMontageChannel(selectedChannels[i]);
 		}
-		DtfTabbedPane tabbedPane = new DtfTabbedPane(criteria, channels, models, SPECTRUM_SIZE, montage);
 
 		// display dialog with DTF results
-		JDialog dialog = new JDialog(guiAccess.getDialogParent(), "DTF results");
+		DtfDialog dialog = new DtfDialog(guiAccess.getDialogParent(), criteria, channels, models, SPECTRUM_SIZE, montage);
 		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		dialog.add(tabbedPane);
-		dialog.pack();
-		dialog.setVisible(true);
+		dialog.setModal(false);
+		dialog.showDialog(null);
 	}
 
 }
