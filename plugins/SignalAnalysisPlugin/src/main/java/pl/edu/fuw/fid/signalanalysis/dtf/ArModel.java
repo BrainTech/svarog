@@ -100,7 +100,7 @@ public class ArModel {
 		// computing residual error
 		RealMatrix V = new Array2DRowRealMatrix(C, C);
 		for (int s=0; s<=order; ++s) {
-			V = V.subtract(A[s].multiply(R[s]));
+			V = V.subtract(A[s].transpose().multiply(R[s]));
 		}
 		return new ArModel(C, A, V, signal.getSamplingFrequency());
 	}
