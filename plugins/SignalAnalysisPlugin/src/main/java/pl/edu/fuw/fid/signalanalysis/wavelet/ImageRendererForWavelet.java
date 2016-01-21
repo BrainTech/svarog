@@ -35,7 +35,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 		}
 
 		final Complex[][] windows = new Complex[preferences.height][];
-		ImageResult result = new ImageResult(preferences.width, preferences.height);
+		ImageResult result = new ImageResult(preferences.width, preferences.height, "Averaged wavelet transform ("+prefs.wavelet.getLabel()+")");
 
 		// prepare windows
 		Complex[] window = new Complex[windowLength];

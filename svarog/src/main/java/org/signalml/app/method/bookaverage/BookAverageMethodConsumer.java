@@ -34,7 +34,7 @@ public class BookAverageMethodConsumer implements InitializingMethodResultConsum
 		BookAverageResult result = (BookAverageResult) methodResult;
 
 		TimeFrequencyMapPresenter presenter = new TimeFrequencyMapPresenter(dialogParent);
-		presenter.showResults(result.getMap(), data.getMinFrequency(), data.getMaxFrequency(), data.getMaxPosition() - data.getMinPosition());
+		presenter.showResults("Average map of MP decomposition", result.getMap(), data.getMinFrequency(), data.getMaxFrequency(), data.getMaxPosition() - data.getMinPosition());
 		return true;
 	}
 }

@@ -1,7 +1,6 @@
 package pl.edu.fuw.fid.signalanalysis.waveform;
 
 import java.awt.Window;
-import pl.edu.fuw.fid.signalanalysis.stft.*;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
@@ -111,6 +110,7 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 						try {
 							final double[][] values = new double[preferences.width][preferences.height];
 							int progress = 0;
+							String title = "";
 							for (SingleSignal signal : signals) {
 								final ImageRenderer<P> renderer = clazz.getConstructor(SingleSignal.class).newInstance(signal);
 								final ImageResult result = renderer.compute(preferences, status);
@@ -122,6 +122,7 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 										values[ix][iy] += result.values[ix][iy].abs();
 									}
 								}
+								title = result.title;
 								progressMonitor.setProgress(progress++);
 							}
 							double max = 0.0;
@@ -137,12 +138,13 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 									}
 								}
 							}
+							final String titleFinal = title;
 							SwingUtilities.invokeLater(new Runnable() {
 								@Override
 								public void run() {
 									progressMonitor.close();
 									TimeFrequencyMapPresenter presenter = new TimeFrequencyMapPresenter(guiAccess.getDialogParent());
-									presenter.showResults(values, preferences.yMin, preferences.yMax, preferences.xMax - preferences.xMin);
+									presenter.showResults(titleFinal, values, preferences.yMin, preferences.yMax, preferences.xMax - preferences.xMin);
 								}
 							});
 						} catch (final Exception ex) {

@@ -14,9 +14,9 @@ public class TimeFrequencyMapPresenter {
 		this.dialogParent = dialogParent;
 	}
 
-	public void showResults(double[][] data, double freqMin, double freqMax, double timeRange) {
+	public void showResults(String title, double[][] data, double freqMin, double freqMax, double timeRange) {
 		TimeFrequencyMapPanel panel = new TimeFrequencyMapPanel(data, freqMin, freqMax, timeRange);
-		JDialog dialog = new JDialog(dialogParent, "Average time-frequency map");
+		JDialog dialog = new JDialog(dialogParent, title);
 		dialog.add(panel);
 		dialog.pack();
 		dialog.setVisible(true);

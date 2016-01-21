@@ -70,7 +70,7 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 	@Override
 	protected ImageResult compute(PreferencesWithAxes<PreferencesForSTFT> preferences, AsyncStatus status) throws Exception {
 		final PreferencesForSTFT prefs = preferences.prefs;
-		final ImageResult result = new ImageResult(preferences.width, preferences.height);
+		final ImageResult result = new ImageResult(preferences.width, preferences.height, "Averaged Short-Time Fourier Transform");
 		final FastFourierTransformer fft = new FastFourierTransformer();
 
 		double paddedLengthMin = prefs.windowLength;
