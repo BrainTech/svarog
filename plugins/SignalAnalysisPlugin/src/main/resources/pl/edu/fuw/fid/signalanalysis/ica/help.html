@@ -1,0 +1,51 @@
+<html><body>
+<h1>Independent Component Analysis</h1>
+
+<div>
+ICA is a computational method for separating a multivariate (multi-channel)
+signal into independent additive subcomponents. ICA separation of mixed signals
+give very good results, providing two assumptions are met:<ul>
+<li>the (unknown) source signals are independent of each other</li>
+<li>the values in each source signal have non-gaussian distributions</li>
+</ul>
+Version implemented in this GUI is based on FastICA by Aapo Hyvärinen.
+</div>
+
+<h2>Computing ICA</h2>
+In the configuration dialog, you can choose<ul>
+	<li>which channels are to be used for calculations, and</li>
+	<li>should ICA be computed on a whole signal, or on a part of it.</li>
+</ul>
+After selecting “OK” computation starts and, in a while, a new (temporary) signal
+will appear, consisting of ICA components calculated from the input signal.
+The number of components will be the same as the number of selected channels.
+Due to the randomization in FastICA implementation, the components will be
+presented in random order.
+
+<h2>Analysing components</h2>
+After the computation is finished, you can use “Describe components” to preview
+the spatial structure of the ICA components. After selecting the component from
+the displayed list, its topography will be displayed: electrodes' color will
+correspond to the associations between signal channels and ICA components.
+Blue colour means the channel adds to the coefficient with the positive sign,
+red colour denote the negative sign. Absolute value of the coefficient is represented
+by intensity of the colour.
+
+<h2>Zeroing components</h2>
+By using “Zero selected components” method, it is possible to perform an inverse
+transform, representing signal channels as a superposition of ICA components.
+In addition, selected components may be suppressed in this process. In this way,
+one can remove artifacts and/or noise, if they're represented as separate ICA
+components.
+
+<h2>Literature</h2>
+<ol>
+<li>Comon P.:
+Independent component analysis, A new concept?,
+<em>Signal Processing</em> 36 (1994), pp 287-314</li>
+<li>Hyvärinen A.:
+Fast and Robust Fixed-Point Algorithms for Independent Components Analysis,
+<em>IEEE Transactions on Neural Networks</em> 10(3) 1999, pp 626-634</li>
+</ol>
+
+</body></html>

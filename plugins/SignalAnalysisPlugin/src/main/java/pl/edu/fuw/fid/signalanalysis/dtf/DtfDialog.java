@@ -17,6 +17,7 @@ public class DtfDialog extends AbstractDialog {
 
 	public DtfDialog(Window parent, XYSeriesWithLegend[] criteria, String[] channels, ArModel[] models, int spectrumSize, Montage sources) {
 		super(parent, false);
+		setTitle("DTF results");
 		pane = new DtfTabbedPane(criteria, channels, models, spectrumSize, sources);
 	}
 

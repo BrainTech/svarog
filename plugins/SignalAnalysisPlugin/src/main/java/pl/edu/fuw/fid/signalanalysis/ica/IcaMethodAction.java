@@ -3,15 +3,12 @@ package pl.edu.fuw.fid.signalanalysis.ica;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
-import org.signalml.app.view.signal.signalselection.TimeSpacePanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceMontage;
@@ -19,12 +16,12 @@ import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
+import org.signalml.domain.signal.space.ChannelSpaceType;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
-import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
@@ -62,30 +59,20 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				// all right, no problem
 			}
 
-			ChannelSpacePanel channelPanel = new ChannelSpacePanel();
-			channelPanel.setConstraints(signalSpaceConstraints);
-
-			TimeSpacePanel timePanel = new TimeSpacePanel();
-			timePanel.setConstraints(signalSpaceConstraints);
-
 			SignalSpace signalSpace = new SignalSpace();
-			if (selection != null) {
-				signalSpace.configureFromSelections(new SignalSelection(selection), null);
-			}
-			timePanel.fillPanelFromModel(signalSpace);
+			IcaDialog dialog = new IcaDialog(guiAccess.getDialogParent(), signalSpaceConstraints, selection);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			if (dialog.showDialog(signalSpace)) {
 
-			JPanel panel = new JPanel();
-			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-			panel.add(channelPanel);
-			panel.add(timePanel);
-
-			int result = JOptionPane.showConfirmDialog(guiAccess.getDialogParent(), panel, TITLE, JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-			if (result == JOptionPane.OK_OPTION) {
-
-				int[] outputChannels = channelPanel.getChannelList().getSelectedIndices();
-				if (outputChannels.length == 0) {
-					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Select at least one channel.", "Try again", JOptionPane.WARNING_MESSAGE);
-					return;
+				int[] outputChannels;
+				if (signalSpace.getChannelSpaceType() == ChannelSpaceType.WHOLE_SIGNAL) {
+					int channelCount = signalSpaceConstraints.getChannels().length;
+					outputChannels = new int[channelCount];
+					for (int i=0; i<channelCount; ++i) {
+						outputChannels[i] = i;
+					}
+				} else {
+					outputChannels = signalSpace.getChannelSpace().getSelectedChannels();
 				}
 
 				SignalProcessingChain signalChain = SignalProcessingChain.createFilteredChain(signalDocument.getSampleSource());
@@ -94,7 +81,6 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 					signalChain.applyMontageDefinition(montage);
 				}
 
-				timePanel.fillModelFromPanel(signalSpace);
 				RealMatrix output = SignalAnalysisTools.extractDataFromSignal(signalChain.getOutput(), signalSpace.getSelectionTimeSpace(), outputChannels);
 
 				IcaMethodComputer computer = new IcaMethodComputer();
