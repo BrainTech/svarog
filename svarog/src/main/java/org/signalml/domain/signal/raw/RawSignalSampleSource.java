@@ -377,7 +377,8 @@ public class RawSignalSampleSource extends AbstractMultichannelSampleSource impl
 				maxBufferedSample = signalOffset + count - 1;
 
 				try {
-					randomAccessFile.seek(signalOffset * sampleSize);
+					long seekOffset = (long) signalOffset * (long) sampleSize;
+					randomAccessFile.seek(seekOffset);
 					randomAccessFile.readFully(byteBuffer);
 				} catch (IOException ex) {
 					byteBuffer = null;
