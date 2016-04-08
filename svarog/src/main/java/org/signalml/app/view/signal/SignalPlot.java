@@ -48,6 +48,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.model.components.ChannelsPlotOptionsModel;
+import org.signalml.app.model.components.ExpBoundedRangeModel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagAttributesRenderer;
 import org.signalml.app.view.tag.TagPaintMode;
@@ -154,7 +155,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private JLabel signalPlotSynchronizationLabel = null;
 
 	private DefaultBoundedRangeModel timeScaleRangeModel;
-	private DefaultBoundedRangeModel valueScaleRangeModel;
+	private ExpBoundedRangeModel valueScaleRangeModel;
 	private DefaultBoundedRangeModel channelHeightRangeModel;
 
 	private ChannelsPlotOptionsModel channelsPlotOptionsModel;
@@ -224,7 +225,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (masterPlot == null) {
 
 			timeScaleRangeModel = new DefaultBoundedRangeModel();
-			valueScaleRangeModel = new DefaultBoundedRangeModel();
+			valueScaleRangeModel = new ExpBoundedRangeModel();
 			channelHeightRangeModel = new DefaultBoundedRangeModel();
 
 			pixelPerChannel = 80;
@@ -1404,7 +1405,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				updateScales(timeZoomFactor, -1, -1, compensationEnabled);
 			}
 			else if (source == valueScaleRangeModel) {
-				double voltageZoomFactor = (valueScaleRangeModel.getValue()) * voltageZoomFactorRatio;
+				double voltageZoomFactor = (valueScaleRangeModel.getExpValue()) * voltageZoomFactorRatio;
 				//this.channelsPlotOptionsModel.globalScaleChanged(valueScaleRangeModel.getValue());
 				updateScales(-1, voltageZoomFactor, -1, false);
 			}
@@ -2255,7 +2256,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return timeScaleRangeModel;
 	}
 
-	public DefaultBoundedRangeModel getValueScaleRangeModel() {
+	public ExpBoundedRangeModel getValueScaleRangeModel() {
 		return valueScaleRangeModel;
 	}
 
@@ -2459,7 +2460,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					if (rangeModelValue < valueScaleRangeModel.getMinimum()) {
 						valueScaleRangeModel.setMinimum(rangeModelValue);
 					}
-					valueScaleRangeModel.setValue(rangeModelValue);
+					valueScaleRangeModel.setExpValue(rangeModelValue);
 					//todo mati - rebuild gui in side panel
 
 				} finally {
