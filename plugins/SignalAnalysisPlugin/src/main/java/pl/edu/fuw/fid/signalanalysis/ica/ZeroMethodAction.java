@@ -27,13 +27,15 @@ import org.signalml.plugin.impl.PluginAccessClass;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 
 /**
+ * Action triggered whenever user chooses to zero some ICA components
+ * and revert to the original channel space. It can be only performed
+ * on a IcaSignalDocument.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ZeroMethodAction extends AbstractSignalMLAction {
 
 	private static final String TITLE = "Zero selected components";
-
-	public static IcaComputationTrace trace;
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;

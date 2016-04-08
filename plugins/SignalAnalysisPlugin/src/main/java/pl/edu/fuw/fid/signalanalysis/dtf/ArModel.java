@@ -9,9 +9,11 @@ import org.apache.commons.math.linear.FieldMatrix;
 import org.apache.commons.math.linear.LUDecompositionImpl;
 import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
-import pl.edu.fuw.fid.signalanalysis.MultiSignal;
 
 /**
+ * AR model class. Contains a factory method compute, calculating
+ * AR model coefficients from Yule-Walker method (with whitening).
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ArModel {
@@ -22,6 +24,15 @@ public class ArModel {
 	private final RealMatrix[] A;
 	private final double freqSampling;
 
+	/**
+	 * Create a new AR model instance from precomputed matrix of coefficients
+	 * and error covariance matrix.
+	 *
+	 * @param C  number of channels
+	 * @param A  coefficient matrix
+	 * @param V  error covariance matrix
+	 * @param freqSampling  sampling frequency (Hz)
+	 */
 	public ArModel(int C, RealMatrix[] A, RealMatrix V, double freqSampling) {
 		for (RealMatrix M : A) {
 			if (M.getRowDimension() != C || M.getColumnDimension() != C) {
@@ -35,15 +46,23 @@ public class ArModel {
 		this.freqSampling = freqSampling;
 	}
 
-	public static ArModel compute(MultiSignal signal, int order) {
-		final int N = signal.getSampleCount();
-		final int C = signal.getChannelCount();
+	/**
+	 * Fit AR model to given multi-channel signal, using the Yule-Walker method.
+	 * Signal will be whitened (mean subtracted and divided by standard variation)
+	 * prior to calculations.
+	 *
+	 * @param X  multichannel signal data, rows=channels, columns=samples
+	 * @param freqSampling  sampling frequency (Hz)
+	 * @param order  order > 0 of the AR model to be fit
+	 * @return  AR model instance with computed coefficients
+	 */
+	public static ArModel compute(RealMatrix X, double freqSampling, int order) {
+		final int N = X.getColumnDimension();
+		final int C = X.getRowDimension();
 
-		// creating matrix with whitened data
-		RealMatrix X = new Array2DRowRealMatrix(C, N);
-		double[] row = new double[N];
+		// whitening matrix data
 		for (int c=0; c<C; ++c) {
-			signal.getSamples(c, 0, N, row);
+			double[] row = X.getRow(c);
 			double sum = 0.0, sum2 = 0.0;
 			for (double x : row) {
 				sum += x;
@@ -102,7 +121,7 @@ public class ArModel {
 		for (int s=0; s<=order; ++s) {
 			V = V.subtract(A[s].transpose().multiply(R[s]));
 		}
-		return new ArModel(C, A, V, signal.getSamplingFrequency());
+		return new ArModel(C, A, V, freqSampling);
 	}
 
 	public ArModelData[][] computeSpectralData(int spectrumSize, boolean normalized) {

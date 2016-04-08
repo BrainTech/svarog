@@ -3,6 +3,8 @@ package pl.edu.fuw.fid.signalanalysis.dtf;
 import org.jfree.data.xy.XYSeries;
 
 /**
+ * Subclass of XYSeries (from JFreeChart), including a legend (as text).
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class XYSeriesWithLegend extends XYSeries {

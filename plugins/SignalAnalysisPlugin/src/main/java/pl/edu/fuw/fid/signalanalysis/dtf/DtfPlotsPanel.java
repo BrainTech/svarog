@@ -16,6 +16,9 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
+ * Panel displaying precomputed spectral features of the AR model,
+ * all at once (in rectangular grid), or one at a time.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfPlotsPanel extends JPanel {

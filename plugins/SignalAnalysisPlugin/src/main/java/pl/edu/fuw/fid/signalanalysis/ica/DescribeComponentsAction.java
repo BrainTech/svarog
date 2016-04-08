@@ -13,6 +13,9 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 
 /**
+ * Action triggered when user selects "Describe components" from ICA menu.
+ * DescribeComponentsPanel is then shown, filled with precomputed data.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DescribeComponentsAction extends AbstractSignalMLAction {

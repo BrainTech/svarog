@@ -9,6 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 /**
+ * Panel with a single switch, allowing to select "normalized"
+ * or "not normalized" version of DTF method.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfNormRadioPanel extends JPanel {

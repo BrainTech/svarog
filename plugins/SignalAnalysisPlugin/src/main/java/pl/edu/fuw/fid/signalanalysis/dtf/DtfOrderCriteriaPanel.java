@@ -18,6 +18,10 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 /**
+ * Panel displaying plot of AR criteria value vs selected model order.
+ * Allows user to select feasible model order and notifies given listener object
+ * about the selection.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfOrderCriteriaPanel extends ChartPanel {

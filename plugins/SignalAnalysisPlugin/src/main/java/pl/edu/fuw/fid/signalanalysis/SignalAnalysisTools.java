@@ -12,6 +12,9 @@ import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 
 /**
+ * Several, mostly self-explanatory functions used in multiple places
+ * by Signal Analysis plugin.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class SignalAnalysisTools {
@@ -46,19 +49,6 @@ public class SignalAnalysisTools {
 			result = Integer.parseInt(string);
 		} catch (NumberFormatException ex) {
 			// nothing here, returning null
-		}
-		return result;
-	}
-
-	public static RealMatrix extractMatrixFromMontage(Montage montage) {
-		int outputs = montage.getMontageChannelCount();
-		int inputs = montage.getSourceChannelCount();
-		RealMatrix result = new Array2DRowRealMatrix(outputs, inputs);
-		for (int i=0; i<outputs; ++i) {
-			float[] coeffs = montage.getReferenceAsFloat(i);
-			for (int k=0; k<inputs; ++k) {
-				result.setEntry(i, k, coeffs[k]);
-			}
 		}
 		return result;
 	}

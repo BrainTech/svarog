@@ -20,6 +20,10 @@ import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
 import org.signalml.app.view.montage.visualreference.VisualReferenceSourceChannel;
 
 /**
+ * Component displaying EEG channels positioned on the scalp, with arrows
+ * between them. Intensity and colour of arrows correspond to connection
+ * strength (DTF) between EEG channels.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfArrowsDisplay extends VisualReferenceDisplay {

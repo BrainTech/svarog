@@ -6,6 +6,8 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**
+ * Subclass for Svarog's signal documents consisting of ICA components.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class IcaSignalDocument extends RawSignalDocument {

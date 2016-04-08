@@ -8,6 +8,9 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
+ * Dialog for displaying results of DTF method, consisting of a single
+ * DTFTabbedPane panel and help button.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfDialog extends AbstractDialog {

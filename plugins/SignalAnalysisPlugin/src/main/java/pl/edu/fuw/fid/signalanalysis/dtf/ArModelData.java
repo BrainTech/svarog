@@ -1,6 +1,9 @@
 package pl.edu.fuw.fid.signalanalysis.dtf;
 
 /**
+ * Spectral function x(f), consisting of array of values,
+ * one for every given frequency.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ArModelData {

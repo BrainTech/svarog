@@ -20,6 +20,12 @@ import pl.edu.fuw.fid.signalanalysis.wavelet.AveragedWaveletDialog;
 import pl.edu.fuw.fid.signalanalysis.wavelet.ImageRendererForWavelet;
 
 /**
+ * Main class for the Signal Analysis plugin.
+ * Since parts of the plugin (time-frequency transforms) require JavaFX,
+ * this plugin adds JavaFX runtime (jfxrt.jar) to the classpath,
+ * with a little help from Utils4J.
+ * Should JavaFX cease to be required, Utils4J dependency may be removed.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class SignalAnalysisPlugin implements Plugin {

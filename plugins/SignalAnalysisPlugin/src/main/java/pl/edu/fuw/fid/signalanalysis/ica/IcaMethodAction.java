@@ -29,6 +29,9 @@ import org.signalml.plugin.impl.PluginAccessClass;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 
 /**
+ * Action triggered when user decides to compute ICA
+ * (Independent Component Analysis).
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class IcaMethodAction extends AbstractSignalMLAction {

@@ -6,6 +6,9 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
+ * Swing panel (JPanel descendant) with Box layout,
+ * in which all components are left-aligned.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class LeftAlignedBoxPanel extends JPanel {

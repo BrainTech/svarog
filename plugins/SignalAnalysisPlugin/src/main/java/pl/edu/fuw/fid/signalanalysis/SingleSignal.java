@@ -1,6 +1,8 @@
 package pl.edu.fuw.fid.signalanalysis;
 
 /**
+ * Single-channel signal interface.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public interface SingleSignal {

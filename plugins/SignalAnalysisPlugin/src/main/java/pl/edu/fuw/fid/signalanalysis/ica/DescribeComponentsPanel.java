@@ -13,6 +13,9 @@ import org.signalml.domain.montage.Montage;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 
 /**
+ * Panel showing list of components with preview of their distribution
+ * across EEG channels.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DescribeComponentsPanel extends JPanel {

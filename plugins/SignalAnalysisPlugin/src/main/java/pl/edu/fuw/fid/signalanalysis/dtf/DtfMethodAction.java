@@ -3,6 +3,7 @@ package pl.edu.fuw.fid.signalanalysis.dtf;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
+import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.SingularMatrixException;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalView;
@@ -15,9 +16,11 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import pl.edu.fuw.fid.signalanalysis.MultiSignal;
+import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 
 /**
+ * Manages DTF method computation. Gathers data and presents results.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfMethodAction extends AbstractSignalMLAction {
@@ -116,37 +119,17 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 	private void proceedToComputation(SignalDocument signalDocument, final int[] selectedChannels, int maxOrder) throws MontageMismatchException {
 		// extract data samples of selected channels
 		final MultichannelSampleSource sampleSource = getSampleSource(signalDocument);
-		MultiSignal data = new MultiSignal() {
-
-			@Override
-			public int getChannelCount() {
-				return selectedChannels.length;
-			}
-
-			@Override
-			public void getSamples(int channel, int start, int length, double[] buffer) {
-				sampleSource.getSamples(channel, buffer, start, length, 0);
-			}
-
-			@Override
-			public int getSampleCount() {
-				return sampleSource.getSampleCount(0);
-			}
-
-			@Override
-			public double getSamplingFrequency() {
-				return sampleSource.getSamplingFrequency();
-			}
-		};
+		final int N = sampleSource.getSampleCount(0);
+		RealMatrix data = SignalAnalysisTools.extractDataFromSignal(sampleSource, null, selectedChannels);
 
 		// compute AR models for all orders from 1 up to maxOrder
 		final ArModel[] models = new ArModel[maxOrder];
 		for (int order=1; order<=maxOrder; ++order) {
-			models[order-1] = ArModel.compute(data, order);
+			models[order-1] = ArModel.compute(data, sampleSource.getSamplingFrequency(), order);
 		}
 
 		// compute criteria facilitating order selection
-		XYSeriesWithLegend[] criteria = computeCriteria(models, data.getSampleCount());
+		XYSeriesWithLegend[] criteria = computeCriteria(models, N);
 
 		// make list of channel labels
 		final String[] channels = getChannelNames(sampleSource, selectedChannels);

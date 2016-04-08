@@ -17,6 +17,13 @@ import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
 import org.signalml.domain.montage.Montage;
 
 /**
+ * Tabbed display of the results from the DTF method.
+ * Consists of three tabs:<ul>
+ * <li>model order selection,</li>
+ * <li>charts of the transfer functions,</li>
+ * <li>visualization of the spatial connectivity.</li>
+ * </ul>
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfTabbedPane extends JTabbedPane {

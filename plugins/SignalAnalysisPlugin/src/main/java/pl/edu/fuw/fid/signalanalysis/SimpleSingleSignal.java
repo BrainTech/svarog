@@ -4,6 +4,10 @@ import java.util.Arrays;
 import org.signalml.plugin.export.signal.ChannelSamples;
 
 /**
+ * Implementation of single-channel signal, based on given ChannelSamples
+ * instance. Its getSamples method allows to reach
+ * outside of signal's valid time range, returning 0 in that case.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class SimpleSingleSignal implements SingleSignal {

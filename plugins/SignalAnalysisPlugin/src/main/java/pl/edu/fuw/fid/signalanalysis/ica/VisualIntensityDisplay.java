@@ -9,6 +9,9 @@ import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
 import org.signalml.app.view.montage.visualreference.VisualReferenceSourceChannel;
 
 /**
+ * Component displaying EEG channels positioned on the scalp.
+ * Displayed intensity of the channel symbols may be changed freely.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class VisualIntensityDisplay extends VisualReferenceDisplay {

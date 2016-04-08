@@ -16,6 +16,9 @@ import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SignalSelection;
 
 /**
+ * Setup dialog for ICA method. Allows to select time interval of the signal
+ * (selecting the whole signal is possible as well) and a subset of channels.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class IcaDialog extends AbstractDialog {

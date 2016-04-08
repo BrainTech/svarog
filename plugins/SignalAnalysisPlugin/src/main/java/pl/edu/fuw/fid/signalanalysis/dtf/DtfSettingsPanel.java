@@ -11,6 +11,9 @@ import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 
 /**
+ * Panel for DTF method settings: selected channels
+ * and maximum order for the AR model.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public final class DtfSettingsPanel extends JPanel {
@@ -30,7 +33,6 @@ public final class DtfSettingsPanel extends JPanel {
 
 		add(channelPanel, BorderLayout.CENTER);
 		add(bottomPanel, BorderLayout.SOUTH);
-		// TODO przyciski Compute i Cancel
 	}
 
 	public int[] getSelectedChannels() {

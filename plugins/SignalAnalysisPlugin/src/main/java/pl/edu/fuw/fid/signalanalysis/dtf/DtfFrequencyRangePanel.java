@@ -8,6 +8,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
+ * Panel consisting of two labeled text fields for entering frequency range.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class DtfFrequencyRangePanel extends JPanel {
