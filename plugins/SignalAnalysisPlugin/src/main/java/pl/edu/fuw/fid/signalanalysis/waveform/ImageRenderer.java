@@ -8,6 +8,9 @@ import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 
 /**
+ * Base class for object computing time-frequency maps
+ * for parameters selected by the user.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public abstract class ImageRenderer<P> {

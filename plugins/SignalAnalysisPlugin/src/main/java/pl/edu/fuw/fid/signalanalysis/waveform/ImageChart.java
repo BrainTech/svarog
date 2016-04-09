@@ -9,6 +9,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 /**
+ * Subclass of XYChart (from JFreeChart) adapted to display time-frequency data
+ * as an image laid over an empty chart.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ImageChart extends XYChart<Number, Number> {

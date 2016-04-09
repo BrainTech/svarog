@@ -3,6 +3,8 @@ package pl.edu.fuw.fid.signalanalysis.wavelet;
 import org.apache.commons.math.complex.Complex;
 
 /**
+ * Implementation of the complex Shannon wavelet.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ShannonWavelet extends MotherWavelet {

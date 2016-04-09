@@ -13,6 +13,9 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /**
+ * Action performed when user requests interactive Short-Time Fourier Transform
+ * computation on selected signal fragment.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class PopupActionForSTFT extends AbstractSignalMLAction {

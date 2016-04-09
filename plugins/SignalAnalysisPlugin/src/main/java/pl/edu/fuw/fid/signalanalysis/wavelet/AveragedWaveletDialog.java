@@ -22,6 +22,9 @@ import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseDialog;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 
 /**
+ * Dialog for selecting settings for averaged Wavelet Transform.
+ * Inherits some options from AveragedBaseDialog, and adds some new as well.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class AveragedWaveletDialog extends AveragedBaseDialog<PreferencesForWavelet> {

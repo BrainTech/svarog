@@ -3,6 +3,9 @@ package pl.edu.fuw.fid.signalanalysis.waveform;
 import org.apache.commons.math.complex.Complex;
 
 /**
+ * Time-frequency map (power estimation). Stores also time and frequency values
+ * as well as text summary of the used method.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ImageResult {

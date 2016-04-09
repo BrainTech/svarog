@@ -14,6 +14,9 @@ import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseDialog;
 
 /**
+ * Dialog for selecting settings for averaged Short-Time Fourier Transform.
+ * Inherits some options from AveragedBaseDialog, and adds some new as well.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class AveragedStftDialog extends AveragedBaseDialog<PreferencesForSTFT> {

@@ -24,6 +24,8 @@ import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 
 /**
+ * Base class for action requesting computation of averaged time-frequency maps.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class AveragedBaseAction<P> extends AbstractSignalMLAction {

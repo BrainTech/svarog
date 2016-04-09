@@ -1,6 +1,8 @@
 package pl.edu.fuw.fid.signalanalysis.waveform;
 
 /**
+ * Time-frequency map with a set of preferences used to compute it.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class CachedImageResult<P> {

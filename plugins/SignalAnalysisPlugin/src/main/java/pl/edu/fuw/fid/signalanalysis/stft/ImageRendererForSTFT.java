@@ -12,6 +12,9 @@ import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
 
 /**
+ * Computes Short-Time Fourier Transform coefficients
+ * for parameters selected by the user.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {

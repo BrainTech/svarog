@@ -1,6 +1,8 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 /**
+ * Set of preferences for Wavelet Transform.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class PreferencesForWavelet {

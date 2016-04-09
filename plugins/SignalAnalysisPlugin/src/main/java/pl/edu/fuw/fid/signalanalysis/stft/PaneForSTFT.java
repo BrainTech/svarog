@@ -32,6 +32,8 @@ import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
 import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
 
 /**
+ * User interface for interactive Short-Time Fourier Transform.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class PaneForSTFT {

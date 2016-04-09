@@ -9,6 +9,8 @@ import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
 
 /**
+ * Computes values of waveforms around some given time location.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class WaveformRenderer {

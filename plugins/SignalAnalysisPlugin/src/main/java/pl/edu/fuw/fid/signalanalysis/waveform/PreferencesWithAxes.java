@@ -1,8 +1,11 @@
 package pl.edu.fuw.fid.signalanalysis.waveform;
 
 /**
+ * Time-frequency method preferences
+ * with ranges of both (time and frequency) axes.
+ *
  * @author ptr@mimuw.edu.pl
- * @param <P>
+ * @param <P> set of preferences for given method
  */
 public class PreferencesWithAxes<P> {
 

@@ -3,6 +3,8 @@ package pl.edu.fuw.fid.signalanalysis.stft;
 import org.signalml.math.fft.WindowType;
 
 /**
+ * Set of preferences for Short-Time Fourier Transform.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class PreferencesForSTFT {

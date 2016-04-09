@@ -3,7 +3,9 @@ package pl.edu.fuw.fid.signalanalysis.wavelet;
 import org.apache.commons.math.complex.Complex;
 
 /**
- * f(t) = exp(iwt) exp(-t²/2)
+ * Implementation of a Morlet (aka Gabor) wavelet.
+ * This wavelet is implemented as <code>f(t) = exp(iwt) exp(-t²/2)</code>.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class GaborWavelet extends ParamWavelet {

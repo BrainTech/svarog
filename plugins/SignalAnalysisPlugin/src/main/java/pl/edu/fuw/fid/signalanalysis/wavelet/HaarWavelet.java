@@ -3,6 +3,10 @@ package pl.edu.fuw.fid.signalanalysis.wavelet;
 import org.apache.commons.math.complex.Complex;
 
 /**
+ * Implementation of the Haar wavelet.
+ * This wavelet is implemented primarily for educational purposed,
+ * as it is not suited for continuous wavelet transform.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class HaarWavelet extends MotherWavelet {

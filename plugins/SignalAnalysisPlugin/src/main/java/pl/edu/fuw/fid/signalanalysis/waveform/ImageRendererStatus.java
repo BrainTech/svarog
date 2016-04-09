@@ -6,6 +6,8 @@ import javafx.concurrent.Task;
 import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
 
 /**
+ * Asynchronous result (promise) of ImageRenderer's computation.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ImageRendererStatus implements AsyncStatus {

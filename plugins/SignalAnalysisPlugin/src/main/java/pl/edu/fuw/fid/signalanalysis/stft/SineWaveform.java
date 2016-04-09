@@ -4,6 +4,9 @@ import org.apache.commons.math.complex.Complex;
 import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
 
 /**
+ * Waveform implementation for oscillating (sine) function
+ * on a bounded support.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class SineWaveform implements Waveform {

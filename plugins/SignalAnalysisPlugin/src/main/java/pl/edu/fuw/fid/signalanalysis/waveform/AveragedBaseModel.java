@@ -5,6 +5,8 @@ import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 
 /**
+ * Data model for AveragedBaseDialog.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public final class AveragedBaseModel<P> {

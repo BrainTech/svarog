@@ -9,6 +9,8 @@ import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
 import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
 
 /**
+ * Computes Wavelet Transform coefficients for parameters selected by the user.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet> {

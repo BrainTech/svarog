@@ -13,6 +13,9 @@ import org.signalml.math.fft.WindowType;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 
 /**
+ * Chart for the signal displayed in interactive time-frequency map window.
+ * Allows to overlay waveform over the signal, in distinctive colour.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public class SignalChart extends LineChart<Number, Number> {

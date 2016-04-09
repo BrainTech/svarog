@@ -15,6 +15,9 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
+ * Base class for dialogs allowing to select options
+ * for averaged time-frequency map.
+ *
  * @author ptr@mimuw.edu.pl
  */
 public abstract class AveragedBaseDialog<P> extends AbstractDialog {
