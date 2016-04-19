@@ -59,6 +59,7 @@ import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.SignalProcessingChain;
+import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.samplesource.ChangeableMultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
@@ -144,6 +145,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private float blockSize;
 	private float maxTime;
 	private int blocksPerPage;
+	private final long firstSampleTimestamp;
 
 	private GeneralPath generalPath = new GeneralPath(GeneralPath.WIND_EVEN_ODD,50000);
 
@@ -211,6 +213,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		setBackground(Color.WHITE);
 		setFocusable(true);
 
+		if (document.getSampleSource() instanceof RawSignalSampleSource) {
+			double timestamp = ((RawSignalSampleSource) document.getSampleSource()).getFirstSampleTimestamp();
+			firstSampleTimestamp = Math.round(timestamp);
+		} else {
+			firstSampleTimestamp = 0;
+		}
 		signalChain = SignalProcessingChain.createFilteredChain(document.getSampleSource());
 
 		Montage montage = document.getMontage();
@@ -1048,6 +1056,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		}
 
+	}
+
+	public long getFirstSampleTimestamp() {
+		return this.view.isDisplayClockTime() ? firstSampleTimestamp : 0;
 	}
 
 	@Override

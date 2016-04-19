@@ -63,6 +63,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.action.DisplayClockTimeAction;
 import org.signalml.app.action.SnapToPageAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
@@ -252,10 +253,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private PreciseSelectionAction preciseSelectionAction;
 	private TagSelectionAction tagSelectionAction;
 	private RemoveTagAction removeTagAction;
+	private DisplayClockTimeAction displayClockTimeAction;
 	private EditTagAnnotationAction editTagAnnotationAction;
 	private SnapToPageAction snapToPageAction;
 	private SignalFilterSwitchAction signalFilterSwitchAction;
 
+	private boolean displayClockTime = false;
 	private boolean snapToPageMode = false;
 	private boolean deferredSnapToPage = false;
 
@@ -953,6 +956,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
 		snapToPageButton.setHideActionText(true);
 		mainToolBar.add(snapToPageButton);
+		JToggleButton displayClockTimeButton = new JToggleButton(getDisplayClockTimeAction());
+		displayClockTimeButton.setHideActionText(true);
+		mainToolBar.add(displayClockTimeButton);
 		mainToolBar.addSeparator();
 
 		mainToolBar.add(new TitledSliderPanel(_("Value scale"), valueScaleSlider));
@@ -1256,6 +1262,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return applyDefaultMontageAction;
 	}
 
+	public DisplayClockTimeAction getDisplayClockTimeAction() {
+		if (displayClockTimeAction == null) {
+			displayClockTimeAction = new DisplayClockTimeAction(this);
+		}
+		return displayClockTimeAction;
+	}
+
 	public EditTagAnnotationAction getEditTagAnnotationAction() {
 		if (editTagAnnotationAction == null) {
 			editTagAnnotationAction = new EditTagAnnotationAction(this);
@@ -1279,6 +1292,19 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			signalFilterSwitchAction = new SignalFilterSwitchAction(this);
 		}
 		return signalFilterSwitchAction;
+	}
+
+	public boolean isDisplayClockTime() {
+		return displayClockTime;
+	}
+
+	public void setDisplayClockTime(boolean displayClockTime) {
+		if (this.displayClockTime != displayClockTime) {
+			this.displayClockTime = displayClockTime;
+			for (SignalPlot plot : plots) {
+				plot.revalidateAndRepaintAll();
+			}
+		}
 	}
 
 	public boolean isSnapToPageMode() {

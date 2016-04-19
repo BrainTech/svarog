@@ -432,13 +432,17 @@ public class SignalPlotColumnHeader extends JComponent {
 			if ((i % 10) != 0) {
 				g.drawLine(x, (compact ? timeScaleY : timeScaleY-1), x, timeScaleY+1);
 			} else {
+				long firstSampleTimestamp = plot.getFirstSampleTimestamp();
 				g.drawLine(x, (compact ? timeScaleY : timeScaleY-2), x, timeScaleY+2);
 				second = (int) Math.round((i * pixelPerColumnUnit) / pixelPerSecond);
+				if (firstSampleTimestamp > 0) {
+					second = (int) ((firstSampleTimestamp + second) % 86400);
+				}
 				hour = second / 3600;
 				minute = (second % 3600) / 60;
 				second = second % 60;
 				formatter = new Formatter();
-				if (maxSampleCount / samplingFrequency > 3600) {
+				if (firstSampleTimestamp > 0 || maxSampleCount / samplingFrequency > 3600) {
 					formatter.format("%02d:", hour);
 				}
 				formatter.format("%02d:%02d", minute, second);
