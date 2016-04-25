@@ -21,9 +21,9 @@ public class DisplayClockTimeAction extends AbstractFocusableSignalMLAction<Sign
 
 	public DisplayClockTimeAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
-		setText(_("Display clock time in signal"));
+		setText(_("Display this computer's local time"));
 		setIconPath("org/signalml/app/icon/waiting.png");
-		setToolTip(_("Display clock (absolute) time on time scale"));
+		setToolTip(_("Display this computer's local time on time scale"));
 	}
 
 	@Override

@@ -20,9 +20,11 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.Calendar;
 import java.util.Formatter;
 import java.util.List;
 import java.util.SortedSet;
+import java.util.TimeZone;
 
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
@@ -436,7 +438,9 @@ public class SignalPlotColumnHeader extends JComponent {
 				g.drawLine(x, (compact ? timeScaleY : timeScaleY-2), x, timeScaleY+2);
 				second = (int) Math.round((i * pixelPerColumnUnit) / pixelPerSecond);
 				if (firstSampleTimestamp > 0) {
-					second = (int) ((firstSampleTimestamp + second) % 86400);
+					TimeZone timeZone = Calendar.getInstance().getTimeZone();
+					int offset = timeZone.getOffset(1000 * firstSampleTimestamp);
+					second = (int) ((firstSampleTimestamp + second + offset) % 86400);
 				}
 				hour = second / 3600;
 				minute = (second % 3600) / 60;

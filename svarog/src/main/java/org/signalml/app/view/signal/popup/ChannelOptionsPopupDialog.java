@@ -147,7 +147,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 
 		ExpBoundedRangeModel m = currentPlot.getValueScaleRangeModel();
 		this.valueScaleModel = (ExpBoundedRangeModel) valueScaleSlider.getModel();
-		this.valueScaleModel.setRangeProperties(m.getValue(), m.getExtent(), m.getMinimum(), m.getMaximum(), m.getValueIsAdjusting());
+		this.valueScaleModel.setRangeProperties(m.getExpValue(), m.getExtent(), m.getMinimum(), m.getMaximum(), m.getValueIsAdjusting());
 
 		Dimension d = valueScaleSlider.getPreferredSize();
 		d.width = 100;
