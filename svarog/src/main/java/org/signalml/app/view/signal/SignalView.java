@@ -94,6 +94,7 @@ import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.components.LogarithmicJSlider;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
@@ -860,7 +861,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		timeScaleSlider.setMinimumSize(d);
 		timeScaleSlider.setMaximumSize(d);
 
-		valueScaleSlider = new JSlider(plot.getValueScaleRangeModel()) {
+		valueScaleSlider = new LogarithmicJSlider(plot.getValueScaleRangeModel()) {
 
 			private static final long serialVersionUID = 1L;
 

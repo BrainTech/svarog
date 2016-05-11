@@ -25,7 +25,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
-import org.signalml.app.model.components.ExpBoundedRangeModel;
+import org.signalml.app.model.components.LogarithmicJSlider;
 import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.signal.SignalPlot;
@@ -49,7 +49,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	/*
 	 * value scale model for current channel
 	 */
-	private ExpBoundedRangeModel valueScaleModel;
+	private DefaultBoundedRangeModel valueScaleModel;
 	/*
 	 * ignore-global-scale value for current channel
 	 */
@@ -136,7 +136,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 */
 	private JPanel getValueScalePanel() {
 
-		valueScaleSlider = new JSlider(new ExpBoundedRangeModel()) {
+		valueScaleSlider = new LogarithmicJSlider(new DefaultBoundedRangeModel()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -145,9 +145,9 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 			}
 		};
 
-		ExpBoundedRangeModel m = currentPlot.getValueScaleRangeModel();
-		this.valueScaleModel = (ExpBoundedRangeModel) valueScaleSlider.getModel();
-		this.valueScaleModel.setRangeProperties(m.getExpValue(), m.getExtent(), m.getMinimum(), m.getMaximum(), m.getValueIsAdjusting());
+		DefaultBoundedRangeModel m = currentPlot.getValueScaleRangeModel();
+		this.valueScaleModel = (DefaultBoundedRangeModel) valueScaleSlider.getModel();
+		this.valueScaleModel.setRangeProperties(m.getValue(), m.getExtent(), m.getMinimum(), m.getMaximum(), m.getValueIsAdjusting());
 
 		Dimension d = valueScaleSlider.getPreferredSize();
 		d.width = 100;
@@ -169,7 +169,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 * @param scale initial value to be set
 	 */
 	private void setInitialVoltageScale(int scale) {
-		this.valueScaleModel.setExpValue(scale);
+		this.valueScaleModel.setValue(scale);
 	}
 
 	/*
@@ -242,7 +242,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
 		if (source == this.valueScaleModel) {
-			this.model.setVoltageScale(this.valueScaleModel.getExpValue());
+			this.model.setVoltageScale(this.valueScaleModel.getValue());
 		}
 
 	}

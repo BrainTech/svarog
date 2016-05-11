@@ -43,7 +43,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		channelsOptions = new ChannelPlotOptionsModel[numOfChannels];
 		for (int i = 0; i < channelsOptions.length; i++) {
 			channelsOptions[i] = new ChannelPlotOptionsModel(this, this.plot
-					.getValueScaleRangeModel().getExpValue());
+					.getValueScaleRangeModel().getValue());
 		}
 	}
 
@@ -64,7 +64,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 					.getMontageChannelLabelAt(i));
 			if (previousIndex == -1 || channelsOptions.length <= previousIndex)
 				newChannelsOptions[i] = new ChannelPlotOptionsModel(this,
-						this.plot.getValueScaleRangeModel().getExpValue());
+						this.plot.getValueScaleRangeModel().getValue());
 			else
 				newChannelsOptions[i] = channelsOptions[previousIndex];
 		}
@@ -133,7 +133,8 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
 		if (source == plot.getValueScaleRangeModel())
-			this.globalScaleChanged(plot.getValueScaleRangeModel().getExpValue());
+			this.globalScaleChanged(plot.getValueScaleRangeModel().getValue());
+
 	}
 
 	/**
