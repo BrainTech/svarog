@@ -15,7 +15,6 @@
  */
 package org.signalml.app.model.components;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
@@ -27,6 +26,7 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.plaf.UIResource;
+import javax.swing.plaf.basic.BasicSliderUI;
 import javax.swing.plaf.metal.MetalSliderUI;
 
 /**
@@ -41,42 +41,36 @@ public class LogarithmicJSlider extends JSlider {
 
 	public LogarithmicJSlider(int orientation) {
 		super(orientation);
-		this.setUI(new LogSliderUI(this));
+		this.setLogSliderUI();
 	}
 
 	public LogarithmicJSlider(int min, int max) {
 		super(min, max);
-		this.setUI(new LogSliderUI(this));
+		this.setLogSliderUI();
 	}
 
 	public LogarithmicJSlider(int min, int max, int value) {
 		super(min, max, value);
-		this.setUI(new LogSliderUI(this));
+		this.setLogSliderUI();
 	}
 
 	public LogarithmicJSlider(int orientation, int min, int max, int value) {
 		super(orientation, min, max, value);
-		this.setUI(new LogSliderUI(this));
+		this.setLogSliderUI();
 	}
 
 	public LogarithmicJSlider(BoundedRangeModel brm) {
 		super(brm);
-		this.setUI(new LogSliderUI(this));
+		this.setLogSliderUI();
 	}
 
 	public LogarithmicJSlider() {
-		this.setUI(new LogSliderUI(this));
+		this.setLogSliderUI();
 	}
 
-	public static class LogSliderUI extends MetalSliderUI {
+	public static class LogSliderCore {
 
-		public LogSliderUI(JSlider b) {
-			super();
-			this.slider = b;
-		}
-
-		@Override
-		public int xPositionForValue(int value) {
+		public static int xPositionForValue(int value, JSlider slider, boolean drawInverted, Rectangle trackRect) {
 			int min = slider.getMinimum();
 			int max = slider.getMaximum();
 			int trackLength = trackRect.width;
@@ -86,7 +80,7 @@ public class LogarithmicJSlider extends JSlider {
 			int trackRight = trackRect.x + (trackRect.width - 1);
 			int xPosition;
 
-			if (!drawInverted()) {
+			if (!drawInverted) {
 				xPosition = trackLeft;
 				xPosition += Math.round(pixelsPerValue * ((double) Math.log(value) - Math.log(min)));
 			} else {
@@ -98,23 +92,9 @@ public class LogarithmicJSlider extends JSlider {
 			xPosition = Math.min(trackRight, xPosition);
 
 			return xPosition;
-
 		}
 
-		@Override
-		public int yPositionForValue(int value) {
-			// TODO GH: Implement to support vertical log sliders
-			return super.yPositionForValue(value);
-		}
-
-		@Override
-		public int valueForYPosition(int yPos) {
-			// TODO GH: Implement to support vertical log sliders
-			return super.valueForYPosition(yPos);
-		}
-
-		@Override
-		public int valueForXPosition(int xPos) {
+		public static int valueForXPosition(int xPos, JSlider slider, boolean drawInverted, Rectangle trackRect) {
 			int value;
 			final int minValue = slider.getMinimum();
 			final int maxValue = slider.getMaximum();
@@ -123,11 +103,11 @@ public class LogarithmicJSlider extends JSlider {
 			final int trackRight = trackRect.x + (trackRect.width - 1);
 
 			if (xPos <= trackLeft) {
-				value = drawInverted() ? maxValue : minValue;
+				value = drawInverted ? maxValue : minValue;
 			} else if (xPos >= trackRight) {
-				value = drawInverted() ? minValue : maxValue;
+				value = drawInverted ? minValue : maxValue;
 			} else {
-				int distanceFromTrackLeft = drawInverted() ? trackRight - xPos : xPos - trackLeft;
+				int distanceFromTrackLeft = drawInverted ? trackRight - xPos : xPos - trackLeft;
 				double valueRange = Math.log((double) maxValue) - Math.log((double) minValue);
                 //double valuePerPixel = (double)valueRange / (double)trackLength;
 				//int valueFromTrackLeft =
@@ -140,107 +120,53 @@ public class LogarithmicJSlider extends JSlider {
 			}
 
 			return value;
-
 		}
 
+	}
+
+	public static class LogMetalSliderUI extends MetalSliderUI {
+		public LogMetalSliderUI(JSlider slider) {
+			super();
+			this.slider = slider;
+		}
+		@Override
+		protected int xPositionForValue(int value) {
+			return LogSliderCore.xPositionForValue(value, slider, drawInverted(), trackRect);
+		}
+		@Override
+		public int valueForXPosition(int xPos) {
+			return LogSliderCore.valueForXPosition(xPos, slider, drawInverted(), trackRect);
+		}
 		@Override
 		public void paintTicks(Graphics g) {
-			Rectangle tickBounds = tickRect;
-			int i;
-			int maj, min, max;
-			int w = tickBounds.width;
-			int h = tickBounds.height;
-			int centerEffect, tickHeight;
-
-			g.setColor(Color.black);
-
-			maj = slider.getMajorTickSpacing();
-			min = slider.getMinorTickSpacing();
-
-			if (slider.getOrientation() == JSlider.HORIZONTAL) {
-				g.translate(0, tickBounds.y);
-
-				int value = slider.getMinimum();
-				int xPos = 0;
-
-				if (slider.getMinorTickSpacing() > 0) {
-					int majorValue = slider.getMinimum();
-
-					while (value <= slider.getMaximum()) {
-						if (value >= majorValue) {
-							value = majorValue;
-							majorValue *= maj;
-						}
-						value += (majorValue / 10.0);
-
-						xPos = xPositionForValue(value);
-						paintMinorTickForHorizSlider(g, tickBounds, xPos);
-
-					}
-				}
-
-				if (slider.getMajorTickSpacing() > 0) {
-					value = slider.getMinimum();
-
-					while (value <= slider.getMaximum()) {
-						xPos = xPositionForValue(value);
-						paintMajorTickForHorizSlider(g, tickBounds, xPos);
-						value *= slider.getMajorTickSpacing();
-					}
-				}
-
-				g.translate(0, -tickBounds.y);
-			} else {
-
-				g.translate(tickBounds.x, 0);
-
-				int value = slider.getMinimum();
-				int yPos = 0;
-
-				if (slider.getMinorTickSpacing() > 0) {
-					int majorValue = slider.getMinimum();
-					int offset = 0;
-					if (!slider.getComponentOrientation().isLeftToRight()) {
-						offset = tickBounds.width - tickBounds.width / 2;
-						g.translate(offset, 0);
-					}
-
-					while (value <= slider.getMaximum()) {
-						if (value >= majorValue) {
-							value = majorValue;
-							majorValue *= maj;
-						}
-
-						yPos = yPositionForValue(value);
-						paintMinorTickForVertSlider(g, tickBounds, yPos);
-						value += (majorValue / 10.0);
-					}
-
-					if (!slider.getComponentOrientation().isLeftToRight()) {
-						g.translate(-offset, 0);
-					}
-				}
-
-				if (slider.getMajorTickSpacing() > 0) {
-					value = slider.getMinimum();
-					if (!slider.getComponentOrientation().isLeftToRight()) {
-						g.translate(2, 0);
-					}
-
-					while (value <= slider.getMaximum()) {
-						yPos = yPositionForValue(value);
-						paintMajorTickForVertSlider(g, tickBounds, yPos);
-						value *= slider.getMajorTickSpacing();
-					}
-
-					if (!slider.getComponentOrientation().isLeftToRight()) {
-						g.translate(-2, 0);
-					}
-				}
-				g.translate(-tickBounds.x, 0);
-			}
+			// nothing here
 		}
+	}
 
+	public static class LogBasicSliderUI extends BasicSliderUI {
+		public LogBasicSliderUI(JSlider slider) {
+			super(slider);
+		}
+		@Override
+		protected int xPositionForValue(int value) {
+			return LogSliderCore.xPositionForValue(value, slider, drawInverted(), trackRect);
+		}
+		@Override
+		public int valueForXPosition(int xPos) {
+			return LogSliderCore.valueForXPosition(xPos, slider, drawInverted(), trackRect);
+		}
+		@Override
+		public void paintTicks(Graphics g) {
+			// nothing here
+		}
+	}
+
+	private void setLogSliderUI() {
+		if (this.getUI() instanceof MetalSliderUI) {
+			this.setUI(new LogMetalSliderUI(this));
+		} else {
+			this.setUI(new LogBasicSliderUI(this));
+		}
 	}
 
 	/**
