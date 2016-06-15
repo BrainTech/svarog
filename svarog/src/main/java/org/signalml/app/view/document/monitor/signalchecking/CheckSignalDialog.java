@@ -116,7 +116,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		checkSignalDisplay = new CheckSignalDisplay(visualReferenceModel);
 		checkSignalDisplay.setBackground(Color.WHITE);
 
-		JScrollPane editorScrollPane = new JScrollPane(checkSignalDisplay, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane editorScrollPane = new JScrollPane(checkSignalDisplay, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		checkSignalDisplay.setViewport(editorScrollPane.getViewport());
 
 		editorPanel.setBorder(new CompoundBorder(new TitledBorder(_("Channels")), new EmptyBorder(3, 3, 3, 3)));

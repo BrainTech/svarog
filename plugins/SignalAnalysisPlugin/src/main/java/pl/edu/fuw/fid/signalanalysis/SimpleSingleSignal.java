@@ -30,7 +30,7 @@ public class SimpleSingleSignal implements SingleSignal {
 		}
 		int bufferOffset = 0;
 		if (start < 0) {
-			bufferOffset = -start;
+			bufferOffset = Math.min(length, -start);
 			length -= bufferOffset;
 			start = 0;
 			Arrays.fill(buffer, 0, bufferOffset, 0.0);
