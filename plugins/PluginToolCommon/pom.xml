@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>1.1.3</version>
+		<version>1.1.4</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 
@@ -63,7 +63,7 @@
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog</artifactId>
-			<version>1.1.3</version>
+			<version>1.1.4</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
