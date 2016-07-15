@@ -1,0 +1,134 @@
+INSTRUKCJA UŻYTKOWANIA ŚRODOWISKA PROGRAMISTYCZNEGO DLA SVAROGA
+===============================================================
+
+Instrukcja dotyczy systemu Ubuntu Linux 16.04 i ma za zadanie
+zainstalować środowisko developerskie dla projektu Svarog,
+umożliwiające przygotowywanie plików JAR projektu i uruchamianie ich.
+
+
+I. Przygotowanie
+----------------
+
+1. Ściągamy repozytorium Svaroga, dostępne pod adresem:
+  git@gitlab.com:braintech/svarog2.git
+
+2. Uruchamiamy (jako administrator) skrypt „install-dev-env.sh” (warto
+go obejrzeć przed uruchomieniem). Zainstaluje on przede wszystkim
+środowisko NetBeans, jak również wszystkie wymagane zależności, włącznie
+z Oracle'ową wersją Java 8.
+
+
+II. Wytwarzanie plików JAR
+--------------------------
+
+UWAGA: przy pierwszej kompilacji skrypt maven pobierze bardzo dużą
+liczbę zależności (bibliotek), z których Svarog korzysta. Może to potrwać
+nawet kilkanaście minut, w zależności od szybkości łącza internetowego.
+
+W katalogu głównym projektu należy wykonać
+
+  mvn clean package
+
+przy czym w wypadku niewielkich zmian można owo "clean" pominąć.
+
+Spowoduje to wyprodukowanie uruchamialnego pliku JAR Svaroga
+w katalogu svarog-standalone/target oraz plików JAR wtyczek
+w poszczególnych katalogach NAZWA-WTYCZKI/target. Aby uruchomić
+wygenerowany JAR, wystarczy polecenie
+
+  java -jar svarog-standalone/target/svarog-standalone-*.jar
+
+UWAGA: W ten sposób uruchomi się sam Svarog, bez pluginów.
+Aby uruchomić go razem z pluginami, należy
+
+a) w katalogu $HOME/.svarog/plugins utworzyć dowiązania do plików JAR
+oraz plików XML wszystkich pluginów, które chcemy uruchomić, a które
+znajdują się pod NAZWA-WTYCZKI/target/NAZWA-WTYCZKI.(xml|jar)
+
+  LUB
+
+b) stworzyć katalog według instrukcji tworzenia paczki ZIP (poniżej)
+i uruchamiać Svaroga z tamtego katalogu.
+
+
+III. Konfiguracja IDE
+---------------------
+
+1. Budujemy Svaroga z linii poleceń wg instrukcji zawartej w sekcji II.
+Jeśli pominiemy ten punkt, środowisko NetBeans nie będzie mogło znaleźć
+niektórych plików (generowanych kompilatorem protoc) i wyświetli błąd.
+
+2. Uruchamiamy zainstalowaną aplikację NetBeans, wchodzimy w menu
+Tools → Plugins, następnie w zakładkę Settings, gdzie zaznaczamy
+wszystkie trzy dostępne źródła wtyczek. Przechodzimy następnie do
+zakładki Available Plugins, gdzie po odświeżeniu listy
+(Check for Newest) wybieramy wtyczkę Maven i ją instalujemy.
+Aplikacja upomni się o ponowne uruchomienie.
+
+3. Możemy teraz wybrać File → Open Projects…  i wskazać ścieżkę
+pobranego repozytorium Svaroga i/lub podkatalog "svarog" w repozytorium.
+Z punktu widzenia Mavena (systemu do zarządzania zależnościami)
+Svarog składa się z kilku projektów:
+
+* Svarog-top, czyli projekt „nadrzędny”, którego zbudowanie powoduje
+  zbudowanie Svaroga razem ze wszystkimi zależnościami (pluginami),
+* Svarog, czyli główna część Svaroga,
+* wtyczki, z których każda stanowi oddzielny projekt.
+
+Większość plików źródłowych głównej części Svaroga znajduje się w katalogu
+
+  svarog/src/main/java
+
+i ten katalog stanowi CLASSPATH dla projektu, co oznacza, że struktura
+katalogów wewnątrz tego miejsca odpowiada strukturze pakietów Javy.
+Każdy plik źródłowy zawiera dokładnie jedną klasę, o takiej samej nazwie, jak plik.
+
+Przykładowo, plik svarog/src/main/java/org/signalml/app/SvarogApplication.java
+zawiera klasę SvarogApplication, a pierwsza linia tego pliku definiuje
+paczkę, w której ta klasa jest zawarta:
+
+  package org.signalml.app;
+
+Analogicznie, każda z wtyczek Svaroga ma własną hierarchię paczek,
+zaczynającą się od:
+
+  plugins/NAZWA-WTYCZKI/src/main/java
+
+
+IV. Zmiana wersji Svaroga
+--------------------------
+
+Numer wersji Svaroga tworzony jest automatycznie przez Mavena
+na podstawie tagów w repozytorium git, poleceniem
+
+  git describe --tags
+
+zatem, aby utworzyć JARa z nowym numerem wersji, należy:
+
+1. Podmienić wszystkie wystąpienia starej wersji na nową w kodzie
+źródłowym, w szczególności w plikach "pom.xml".
+
+2. Wgrać zmiany (commit) i na tym stworzyć tag z numerem wersji:
+
+  git tag WERSJA
+
+3. Można teraz zbudować JAR; będzie już miał nowy numer wersji.
+
+
+V. Tworzenie paczki ZIP do umieszczenia w Releases
+----------------------------------------------------
+
+Zawartość paczki ZIP składa się z:
+a) pliku JAR Svaroga
+b) plików JAR i XML wtyczek
+c) skryptu uruchamiającego run_svarog.sh
+d) przykładowego sygnału wakeEEG.bin wraz z plikiem XML
+e) binarnych plików wykonywalnych MP5 i empi
+
+Wszystkie pliki poza a) i b) można pobrać z poprzedniej paczki Svaroga.
+Następnie wystarczy tylko:
+
+* podmienić plik JAR Svaroga i pliki wtyczek, jeśli się zmieniły
+* zmienić nazwę wersji w pliku run_svarog.sh
+* spakować ZIP z nową nazwą (warto jednocześnie uaktualnić nazwę głównego
+  katalogu w paczce)
