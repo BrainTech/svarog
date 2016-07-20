@@ -1,14 +1,18 @@
 image: ubuntu:16.04
 
 before_script:
+  - apt-get update -qq
+  - apt-get install -y -qq software-properties-common python-software-properties
   - add-apt-repository -y "deb http://us.archive.ubuntu.com/ubuntu/ xenial universe multiverse" 
   - add-apt-repository -y "deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates universe multiverse"
+  - add-apt-repository -y ppa:webupd8team/java
   - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
   - apt-get update -qq
-  - apt-get install -y -qq libwagon-java libcommons-math-java libcommons-math3-java maven protobuf-compiler oracle-java8-installer
+  - apt-get install -y -qq gettext libwagon-java libcommons-math-java libcommons-math3-java maven protobuf-compiler oracle-java8-installer git
  
 stages:
   - builddeb
+  - test
   
 
 
@@ -20,3 +24,8 @@ build:
     name: "{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths: 
     - ./dist/*
+
+mvntest:
+  stage: test
+  script:
+    - mvn test
