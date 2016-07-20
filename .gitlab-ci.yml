@@ -1,0 +1,22 @@
+image: ubuntu:16.04
+
+before_script:
+  - add-apt-repository -y "deb http://us.archive.ubuntu.com/ubuntu/ xenial universe multiverse" 
+  - add-apt-repository -y "deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates universe multiverse"
+  - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+  - apt-get update -qq
+  - apt-get install -y -qq libwagon-java libcommons-math-java libcommons-math3-java maven protobuf-compiler oracle-java8-installer
+ 
+stages:
+  - builddeb
+  
+
+
+build:
+  stage: builddeb
+  script:
+    - ./builddeb.sh
+  artifacts:
+    name: "{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    paths: 
+    - ./dist/*

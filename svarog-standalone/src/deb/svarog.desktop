@@ -1,0 +1,9 @@
+[Desktop Entry]
+GenericName=Svarog
+Name=Svarog
+Exec=svarog
+TryExec=svarog
+Type=Application
+Terminal=false
+Categories=MedicalSoftware;
+Icon=/usr/share/pixmaps/svarog.png

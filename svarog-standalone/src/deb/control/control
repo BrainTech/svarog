@@ -1,0 +1,8 @@
+Package: [[name]]
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: 
+Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
+Description: Svarog EEG signal viewer

@@ -1,0 +1,8 @@
+Package: svarog-[[name]]
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: 
+Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
+Description: Common plugin tool for svarog

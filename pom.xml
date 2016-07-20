@@ -62,7 +62,7 @@
 		<repository>
 			<id>apache</id>
 			<name>Apache Commons</name>
-			<url>http://maven.ibiblio.org/maven2</url>
+			<url>http://repo.maven.apache.org/maven2</url>
 		</repository>
 
 		<repository>

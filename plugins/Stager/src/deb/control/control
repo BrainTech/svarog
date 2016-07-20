@@ -1,0 +1,8 @@
+Package: svarog-[[name]]
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: svarog
+Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
+Description: Automatic sleep staging plugin for svarog
