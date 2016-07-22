@@ -12,6 +12,7 @@ before_script:
  
 stages:
   - builddeb
+  - sign
   - test
   
 
@@ -29,3 +30,16 @@ mvntest:
   stage: test
   script:
     - mvn test
+    
+signdebs:
+  stage: sign
+  before_script:
+  - apt-get update -qq
+  - apt-get install -y gnupg debsigs
+  script: ./signdebs.sh
+  dependencies:
+  - build
+  artifacts:
+    name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    paths:
+    - ./dist/*.deb
