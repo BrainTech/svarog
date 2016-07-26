@@ -9,3 +9,4 @@ debsigs --sign=origin PluginToolCommon_*.deb
 debsigs --sign=origin SignalAnalysisPlugin_*.deb
 debsigs --sign=origin Stager_*.deb
 debsigs --sign=origin svarog-standalone_*.deb
+debsigs --sign=origin svarog-all_*.deb
