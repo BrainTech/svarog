@@ -1,4 +1,5 @@
 #!/bin/bash
+mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(git describe --tags)
 mvn clean package
 mkdir dist
 mv svarog-standalone/target/*.deb ./dist
