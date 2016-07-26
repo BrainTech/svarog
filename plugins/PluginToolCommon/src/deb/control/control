@@ -3,6 +3,6 @@ Version: [[version]]
 Section: misc
 Priority: optional
 Architecture: all
-Depends: 
+Depends: svarog
 Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
 Description: Common plugin tool for svarog

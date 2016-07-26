@@ -102,17 +102,21 @@ Numer wersji Svaroga tworzony jest automatycznie przez Mavena
 na podstawie tagów w repozytorium git, poleceniem
 
   git describe --tags
+  
+Ustawianie wersji pom.xml robi się poleceniem 
+
+mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(git describe --tags)
+
+(CI odpala je same)
 
 zatem, aby utworzyć JARa z nowym numerem wersji, należy:
 
-1. Podmienić wszystkie wystąpienia starej wersji na nową w kodzie
-źródłowym, w szczególności w plikach "pom.xml".
 
-2. Wgrać zmiany (commit) i na tym stworzyć tag z numerem wersji:
+1. Wgrać zmiany (commit) i na tym stworzyć tag z numerem wersji:
 
   git tag WERSJA
 
-3. Można teraz zbudować JAR; będzie już miał nowy numer wersji.
+2. Można teraz zbudować JAR; będzie już miał nowy numer wersji.
 
 
 V. Tworzenie paczki ZIP do umieszczenia w Releases

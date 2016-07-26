@@ -100,16 +100,20 @@ the most recent tags in git repository, as returned by
 
   git describe --tags
 
+with
+
+  mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(git describe --tags)
+
+command (Which CI runs by itself).
+
 therefore, to create JAR with a new version number, it is necessary to:
 
-1. Replace all the source occurences of old version number with the new
-version number, especially in "pom.xml" files.
 
-2. Commit the changes and create a git tag with the new version number:
+1. Commit the changes and create a git tag with the new version number:
 
   git tag VERSION
 
-3. You can now build the JAR file; it will have the new version number.
+2. You can now build the JAR file; it will have the new version number.
 
 
 V. Creating ZIP file for github Releases
