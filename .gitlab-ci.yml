@@ -14,6 +14,7 @@ stages:
   - builddeb
   - sign
   - test
+  - deploy
   
 
 
@@ -43,3 +44,54 @@ signdebs:
     name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths:
     - ./dist/*.deb
+    
+deploy_xenial_development:
+  stage: deploy
+  only:
+    - development
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - signdebs
+  script:
+    - export DEB_SRV=$DEB_NIGHTLY_SRV
+    - export MASTER=0
+    - export DEB_USER=$DEB_NIGHTLY_USER
+    - export SSHPASS=$DEB_NIGHTLY_PASSWD
+    - export RELEASE=xenial
+    - ./deploydebs.sh
+
+deploy_xenial_testing:
+  stage: deploy
+  only:
+    - release/
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - signdebs
+  script:
+    - export DEB_SRV=$DEB_TESTING_SRV
+    - export MASTER=0
+    - export DEB_USER=$DEB_TESTING_USER
+    - export SSHPASS=$DEB_TESTING_PASSWD
+    - export RELEASE=xenial
+    - ./deploydebs.sh
+
+deploy_xenial_master:
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - signdebs
+  script:
+    - export DEB_SRV=$DEB_STABLE_SRV
+    - export MASTER=1
+    - export DEB_USER=$DEB_STABLE_USER
+    - export SSHPASS=$DEB_STABLE_PASSWD
+    - export RELEASE=xenial
+    - ./deploydebs.sh
