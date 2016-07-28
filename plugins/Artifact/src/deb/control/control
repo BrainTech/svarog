@@ -1,4 +1,4 @@
-Package: svarog-[[name]]
+Package: svarog-artifact
 Version: [[version]]
 Section: misc
 Priority: optional

@@ -1,4 +1,4 @@
-Package: svarog-[[name]]
+Package: svarog-stager
 Version: [[version]]
 Section: misc
 Priority: optional

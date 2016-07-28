@@ -1,4 +1,4 @@
-Package: svarog-[[name]]
+Package: svarog-plugintoolcommon
 Version: [[version]]
 Section: misc
 Priority: optional
