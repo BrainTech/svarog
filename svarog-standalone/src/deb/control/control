@@ -4,5 +4,6 @@ Section: misc
 Priority: optional
 Architecture: all
 Depends: oracle-java8-installer | default-jre | openjdk-8-jre
+Suggests: svarog-artifact, svarog-bookreporter, svarog-fftsignaltool, svarog-plugintoolcommon, svarog-signalanalysisplugin, svarog-stager, empi
 Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
 Description: Svarog EEG signal viewer
