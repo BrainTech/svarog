@@ -1,12 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>org.signalml.plugin</groupId>
 	<artifactId>PluginToolCommon</artifactId>
 	<version>1.0</version>
 	<packaging>jar</packaging>
-
 	<name>PluginToolCommon</name>
 	<parent>
 		<groupId>org.signalml</groupId>
@@ -14,12 +12,10 @@
 		<version>2.0.0dev-5-g9b81411</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.final.name>PluginToolCommon</maven.final.name>
 	</properties>
-
 	<build>
 		<finalName>${project.artifactId}</finalName>
 		<plugins>
@@ -33,21 +29,20 @@
 						<phase>package</phase>
 						<configuration>
 							<target>
-								<copy file="PluginToolCommon.xml" tofile="target/PluginToolCommon.xml"/>
+								<copy file="PluginToolCommon.xml" tofile="target/PluginToolCommon.xml" />
 							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
 						</goals>
 					</execution>
-
 					<execution>
 						<id>compile</id>
 						<phase>compile</phase>
 						<configuration>
 							<target>
-								<property name="runtime_classpath" refid="maven.runtime.classpath"/>
-								<echo message="runtime classpath: ${runtime_classpath}"/>
+								<property name="runtime_classpath" refid="maven.runtime.classpath" />
+								<echo message="runtime classpath: ${runtime_classpath}" />
 							</target>
 						</configuration>
 						<goals>
@@ -57,41 +52,40 @@
 				</executions>
 			</plugin>
 			<plugin>
-	        <artifactId>jdeb</artifactId>
-	        <groupId>org.vafer</groupId>
-	        <version>1.5</version>
-	        <executions>
-	          <execution>
-	            <phase>package</phase>
-	            <goals>
-	              <goal>jdeb</goal>
-	            </goals>
-	            <configuration>
-	              <dataSet>
-					<data>
-	                  <src>${project.build.directory}/${project.build.finalName}.jar</src>
-	                  <type>file</type>
-	                  <mapper>
-	                    <type>perm</type>
-	                    <prefix>/usr/share/java/svarog/plugins</prefix>
-	                  </mapper>
-	                </data>
-					<data>
-	                  <src>${project.build.directory}/${project.build.finalName}.xml</src>
-	                  <type>file</type>
-	                  <mapper>
-	                    <type>perm</type>
-	                    <prefix>/usr/share/java/svarog/plugins</prefix>
-	                  </mapper>
-	                </data>
-	              </dataSet>
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>
+				<artifactId>jdeb</artifactId>
+				<groupId>org.vafer</groupId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jdeb</goal>
+						</goals>
+						<configuration>
+							<dataSet>
+								<data>
+									<src>${project.build.directory}/${project.build.finalName}.jar</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/share/java/svarog/plugins</prefix>
+									</mapper>
+								</data>
+								<data>
+									<src>${project.build.directory}/${project.build.finalName}.xml</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/share/java/svarog/plugins</prefix>
+									</mapper>
+								</data>
+							</dataSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.signalml</groupId>
@@ -102,3 +96,4 @@
 		</dependency>
 	</dependencies>
 </project>
+

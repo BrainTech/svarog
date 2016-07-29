@@ -1,26 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog-standalone</artifactId>
 	<packaging>jar</packaging>
 	<version>2.0.0dev-5-g9b81411</version>
-
 	<name>Svarog</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
 		<version>2.0.0dev-5-g9b81411</version>
 	</parent>
-
 	<build>
 		<plugins>
-
-
-
-
-      
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
@@ -51,100 +43,94 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<version>1.1</version>
-
 				<configuration>
 					<mainClass>org.signalml.app.SvarogApplication</mainClass>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.4</version>
 				<executions>
-                    <execution>
-                        <id>package-jar-with-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <appendAssemblyId>false</appendAssemblyId>
-                            <descriptorRefs>
-                                <descriptorRef>jar-with-dependencies</descriptorRef>
-                            </descriptorRefs>
-                            <archive>
-                                <manifest>
-                                    <mainClass>org.signalml.app.SvarogApplication</mainClass>
-                                </manifest>
-                            </archive>
-                        </configuration>
-                    </execution>
-                </executions>
+					<execution>
+						<id>package-jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>org.signalml.app.SvarogApplication</mainClass>
+								</manifest>
+							</archive>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-
-<plugin>
-        <artifactId>jdeb</artifactId>
-        <groupId>org.vafer</groupId>
-        <version>1.5</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>jdeb</goal>
-            </goals>
-            <configuration>
-              <dataSet>
-		<data>
-                  <src>${project.build.directory}/${project.build.finalName}.jar</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/usr/share/java/svarog</prefix>
-                  </mapper>
-                </data>
-		<data>
-                  <type>link</type>
-                  <linkName>/usr/share/java/svarog/svarog.jar</linkName>
-                  <linkTarget>/usr/share/java/svarog/${project.build.finalName}.jar</linkTarget>
-                  <symlink>true</symlink>
-                </data>
-		<data>
-                  <src>${project.basedir}/src/deb/svarog.desktop</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/usr/share/applications</prefix>
-		    <filemode>755</filemode>
-                  </mapper>
-                </data>
-		<data>
-                  <src>${project.basedir}/src/deb/svarog.png</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/usr/share/pixmaps</prefix>
-			
-                  </mapper>
-                </data>
-		<data>
-                  <src>${project.basedir}/src/deb/svarog</src>
-                  <type>file</type>
-                  <mapper>
-                    <type>perm</type>
-                    <prefix>/usr/bin</prefix>
-		    <filemode>755</filemode>
-                  </mapper>
-                </data>
-              </dataSet>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
+			<plugin>
+				<artifactId>jdeb</artifactId>
+				<groupId>org.vafer</groupId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>jdeb</goal>
+						</goals>
+						<configuration>
+							<dataSet>
+								<data>
+									<src>${project.build.directory}/${project.build.finalName}.jar</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/share/java/svarog</prefix>
+									</mapper>
+								</data>
+								<data>
+									<type>link</type>
+									<linkName>/usr/share/java/svarog/svarog.jar</linkName>
+									<linkTarget>/usr/share/java/svarog/${project.build.finalName}.jar</linkTarget>
+									<symlink>true</symlink>
+								</data>
+								<data>
+									<src>${project.basedir}/src/deb/svarog.desktop</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/share/applications</prefix>
+										<filemode>755</filemode>
+									</mapper>
+								</data>
+								<data>
+									<src>${project.basedir}/src/deb/svarog.png</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/share/pixmaps</prefix>
+									</mapper>
+								</data>
+								<data>
+									<src>${project.basedir}/src/deb/svarog</src>
+									<type>file</type>
+									<mapper>
+										<type>perm</type>
+										<prefix>/usr/bin</prefix>
+										<filemode>755</filemode>
+									</mapper>
+								</data>
+							</dataSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.signalml</groupId>
@@ -152,5 +138,5 @@
 			<version>2.0.0dev-5-g9b81411</version>
 		</dependency>
 	</dependencies>
-
 </project>
+
