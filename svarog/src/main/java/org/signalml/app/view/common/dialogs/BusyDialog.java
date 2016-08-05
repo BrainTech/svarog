@@ -20,7 +20,7 @@ import javax.swing.JProgressBar;
 import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
-public class BusyDialog extends JDialog {
+public class BusyDialog extends JDialog implements IBusyDialog {
 
 	public static String CANCEL_BUTTON_PRESSED = "cancelButtonPressed";
 

@@ -1,6 +1,7 @@
 package org.signalml.app.worker;
 
 import java.awt.Container;
+import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -8,10 +9,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import org.signalml.app.view.common.dialogs.BusyDialog;
+import org.signalml.app.view.common.dialogs.DummyBusyDialog;
+import org.signalml.app.view.common.dialogs.IBusyDialog;
 
 public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> implements PropertyChangeListener {
 
-	private BusyDialog busyDialog;
+	private final IBusyDialog busyDialog;
 	/**
 	 * This variable is for synchronity reasons. Without it, there could be a
 	 * situation when busyDialog.setVisible(false) could be invoked before
@@ -26,11 +29,16 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 
 	public SwingWorkerWithBusyDialog(Container parentContainer) {
 		super();
-		this.busyDialog = new BusyDialog(parentContainer);
-		busyDialog.addPropertyChangeListener(this);
+		if (GraphicsEnvironment.isHeadless()) {
+			this.busyDialog = new DummyBusyDialog();
+		} else {
+			BusyDialog busy = new BusyDialog(parentContainer);
+			this.busyDialog = busy;
+			busy.addPropertyChangeListener(this);
+		}
 	}
 
-	public BusyDialog getBusyDialog() {
+	public IBusyDialog getBusyDialog() {
 		return busyDialog;
 	}
 
