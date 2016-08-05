@@ -144,7 +144,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 		}
 
 		if (!generatedBookFile.exists()) {
-			logger.error("MP5 process didn't produce expected result file [" + generatedBookFile.getAbsolutePath() + "]");
+			logger.error("MP process didn't produce expected result file [" + generatedBookFile.getAbsolutePath() + "]");
 			throw new ComputationException("error.mp5.exitedWithNoResult");
 		}
 
@@ -181,7 +181,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 	public static MP5LocalProcessExecutor pathExecutor() {
 		MP5LocalProcessExecutor ex = new MP5LocalProcessExecutor();
 		ex.setName("execute from $PATH");
-		ex.setMp5ExecutablePath("mp5");
+		ex.setMp5ExecutablePath("empi");
 		return ex;
 	}
 }

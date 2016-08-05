@@ -102,7 +102,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	public Object doComputation(Object dataObj, final MethodExecutionTracker tracker) throws ComputationException {
 
 		this.tracker = tracker;
-		logger.debug("Beginning computation of MP5");
+		logger.debug("Beginning computation of MP");
 
 		MP5Data data = (MP5Data) dataObj;
 
@@ -133,7 +133,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 			executorConfigurer.configure(executor);
 		}
 
-		logger.debug("Using mp5 executor [" + executor + "]");
+		logger.debug("Using MP executor [" + executor + "]");
 
 		File segmentBookFile;
 		boolean segmentOk;

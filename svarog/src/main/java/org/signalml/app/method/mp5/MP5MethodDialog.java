@@ -346,7 +346,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				// enter raw mode
 
 				modeAction.putValue(AbstractAction.NAME, _("To friendly mode"));
-				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP5 configuration with a user friendly editor"));
+				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP configuration with a user friendly editor"));
 
 			} else {
 				// exit raw mode
@@ -359,7 +359,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 				}
 
 				modeAction.putValue(AbstractAction.NAME, _("To raw mode"));
-				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP5 configuration as text"));
+				modeAction.putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP configuration as text"));
 
 			}
 
@@ -664,7 +664,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		public SwitchEditModeAction() {
 			super(_("To raw mode"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/switcheditmode.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP5 configuration as text"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Edit MP configuration as text"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

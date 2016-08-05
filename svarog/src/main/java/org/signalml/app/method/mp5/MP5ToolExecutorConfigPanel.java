@@ -89,7 +89,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		setLayout(new BorderLayout(3,3));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("MP5 executors")),
+			new TitledBorder(_("MP executors")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -216,7 +216,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		public AddLocalExecutorAction() {
 			super(_("Add local"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/addlocal.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Add local process MP5 executor"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Add local process MP executor"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {
@@ -241,7 +241,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		public RemoveExecutorAction() {
 			super(_("Remove"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/remove.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove selected MP5 executor"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Remove selected MP executor"));
 			setEnabled(false);
 		}
 
@@ -265,7 +265,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		public ConfigureExecutorAction() {
 			super(_("Configure"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/configure.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Configure selected MP5 executor"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Configure selected MP executor"));
 			setEnabled(false);
 		}
 

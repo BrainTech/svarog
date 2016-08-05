@@ -678,9 +678,9 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			mp5ExecutorManager.readFromPersistence(null);
 		} catch (FileNotFoundException ex) {
-			logger.debug("MP5 executor manager config not found - will use defaults");
+			logger.debug("MP executor manager config not found - will use defaults");
 		} catch (Exception ex) {
-			logger.error("Failed to read MP5 executor manager configuration - will use defaults", ex);
+			logger.error("Failed to read MP executor manager configuration - will use defaults", ex);
 		}
 
 		methodManager = new ApplicationMethodManager();
@@ -746,10 +746,10 @@ public class SvarogApplication implements java.lang.Runnable {
 				MP5MethodDescriptor mp5Descriptor = new MP5MethodDescriptor(mp5Method);
 				methodManager.setMethodData(mp5Method, mp5Descriptor);
 			} catch (SignalMLException ex) {
-				logger.error("Failed to create mp5 method", ex);
+				logger.error("Failed to create MP method", ex);
 				throw ex;
 			} catch (Throwable t) {
-				logger.error("Serious error - failed to create mp5 method", t);
+				logger.error("Serious error - failed to create MP method", t);
 				throw t;
 			}
 
@@ -930,7 +930,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			mp5ExecutorManager.writeToPersistence(null);
 		} catch (Exception ex) {
-			logger.error("Failed to write MP5 executor manager configuration", ex);
+			logger.error("Failed to write MP executor manager configuration", ex);
 		}
 
 		managerOfPresetManagers.writePresetsToPersistence();

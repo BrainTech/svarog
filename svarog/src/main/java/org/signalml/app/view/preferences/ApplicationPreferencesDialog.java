@@ -376,7 +376,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 				try {
 					mp5ExecutorManager.writeToPersistence(null);
 				} catch (Exception ex) {
-					logger.error("Failed to save mp5 executor configuration", ex);
+					logger.error("Failed to save MP executor configuration", ex);
 				}
 				try {
 					config.writeToPersistence(null);

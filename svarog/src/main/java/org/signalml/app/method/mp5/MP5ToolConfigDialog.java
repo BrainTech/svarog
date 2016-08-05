@@ -42,7 +42,7 @@ public class MP5ToolConfigDialog extends AbstractDialog  {
 
 	@Override
 	protected void initialize() {
-		setTitle(_("MP5 configuration"));
+		setTitle(_("MP configuration"));
 		setIconImage(IconUtils.loadClassPathImage(MP5MethodDescriptor.ICON_PATH));
 		setResizable(false);
 		super.initialize();
