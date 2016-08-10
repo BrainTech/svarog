@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
@@ -34,6 +35,7 @@ import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 
 public class OtherSettingsPanel extends AbstractPanel {
@@ -50,6 +52,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
 	private JLabel registerCodecsLabel = new JLabel(_("Manage SignalML codecs"));
 	private JLabel tryToOpenTagsLabel = new JLabel(_("Automatically try to open tags"));
+	private JLabel videoFileNameLabel = new JLabel(_("Name of synchronous video file"));
 	private JPanel registerSignalMLCodecPanel;
 	/**
 	 * {@link JComboBox} that displays the list of available presets.
@@ -71,6 +74,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	private JComboBox fileTypeComboBox;
 	private JCheckBox tryToOpenTagsCheckbox;
+	private JTextField videoFileNameField;
 
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
@@ -104,6 +108,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(eegSystemsLabel)
 			.addComponent(registerCodecsLabel)
 			.addComponent(tryToOpenTagsLabel)
+			.addComponent(videoFileNameLabel)
 		);
 
 		hGroup.addGroup(
@@ -113,6 +118,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(getEegSystemComboBox())
 			.addComponent(getRegisterSignalMLCodecPanel())
 			.addComponent(getTryToOpenTagsCheckbox())
+			.addComponent(getVideoFilePathField())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -147,6 +153,12 @@ public class OtherSettingsPanel extends AbstractPanel {
 				layout.createParallelGroup(Alignment.BASELINE)
 				.addComponent(tryToOpenTagsLabel)
 				.addComponent(getTryToOpenTagsCheckbox())
+			);
+
+		vGroup.addGroup(
+				layout.createParallelGroup(Alignment.BASELINE)
+				.addComponent(videoFileNameLabel)
+				.addComponent(getVideoFilePathField())
 			);
 
 		layout.setVerticalGroup(vGroup);
@@ -203,6 +215,13 @@ public class OtherSettingsPanel extends AbstractPanel {
 			});
 		}
 		return tryToOpenTagsCheckbox;
+	}
+
+	public JTextField getVideoFilePathField() {
+		if (videoFileNameField == null) {
+			videoFileNameField = new JTextField();
+		}
+		return videoFileNameField;
 	}
 
 	/**
@@ -298,6 +317,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 		if (eegSystemName != null)
 			setEegSystemByName(eegSystemName);
 
+		String videoFileName = "";
 		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
 			String tagStylesName = experimentDescriptor.getTagStylesName();
@@ -311,7 +331,13 @@ public class OtherSettingsPanel extends AbstractPanel {
 				if (preset != null)
 					getTagPresetComboBox().setSelectedItem(preset);
 			}
+		} else if (openSignalDescriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) openSignalDescriptor;
+
+			if (rawSignalDescriptor.getVideoFileName() != null)
+				videoFileName = rawSignalDescriptor.getVideoFileName();
 		}
+		getVideoFilePathField().setText(videoFileName);
 	}
 
 	public void fillModelFromPanel(AbstractOpenSignalDescriptor descriptor) {
@@ -322,6 +348,11 @@ public class OtherSettingsPanel extends AbstractPanel {
 		}
 		descriptor.setEegSystem(getSelectedEegSystem());
 		descriptor.setTryToOpenTagDocument(getTryToOpenTagsCheckbox().isSelected());
+		if (descriptor instanceof RawSignalDescriptor) {
+			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) descriptor;
+			String videoFileName = getVideoFilePathField().getText();
+			rawSignalDescriptor.setVideoFileName(videoFileName.isEmpty() ? null : videoFileName);
+		}
 	}
 
 	public void preparePanelForSignalSource(SignalSource selectedSignalSource) {

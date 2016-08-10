@@ -109,6 +109,11 @@ public class RawSignalDescriptorReader {
 				descriptor.setBlocksPerPage(Integer.parseInt(blocksPerPage));
 			}
 
+			String videoFileName = path.evaluate(RawSignalDocumentBuilder.VIDEO_FILE_NAME, rawSignalEl);
+			if (videoFileName != null && !videoFileName.isEmpty()) {
+				descriptor.setVideoFileName(videoFileName);
+			}
+
 			Element eegSystemNameNode = (Element) path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_NAME, rawSignalEl, XPathConstants.NODE);
 			if (eegSystemNameNode != null) {
 				String symbol = path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_SYMBOL, eegSystemNameNode);

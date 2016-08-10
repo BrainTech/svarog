@@ -43,10 +43,9 @@ public final class VideoFrame extends JFrame {
 		}
 		component = new EmbeddedMediaPlayerComponent();
 		setContentPane(component);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		player = component.getMediaPlayer();
-		player.setRepeat(true);
 	}
 
 	/**

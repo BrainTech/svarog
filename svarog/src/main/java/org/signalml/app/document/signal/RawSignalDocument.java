@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.video.VideoFrame;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
@@ -39,6 +40,11 @@ public class RawSignalDocument extends AbstractFileSignal {
 	private RawSignalDescriptor descriptor;
 
 	/**
+	 * optional video preview for this signal
+	 */
+	private VideoFrame videoFrame;
+
+	/**
 	 * Constructor. Sets the {@link SignalType type} and
 	 * {@link RawSignalDescriptor descriptor}.
 	 * @param type the type of the signal
@@ -54,6 +60,9 @@ public class RawSignalDocument extends AbstractFileSignal {
 		if (sampleSource != null) {
 			((RawSignalSampleSource) sampleSource).close();
 			sampleSource = null;
+		}
+		if (videoFrame != null) {
+			videoFrame.dispose();
 		}
 		super.closeDocument();
 	}
@@ -115,6 +124,25 @@ public class RawSignalDocument extends AbstractFileSignal {
 
 		return list;
 
+	}
+
+	/**
+	 * Get video preview window assigned to this signal.
+	 * If no such window exists, return null.
+	 *
+	 * @return  currently assigned video window
+	 */
+	public VideoFrame getVideoFrame() {
+		return videoFrame;
+	}
+
+	/**
+	 * Assign given video frame to be managed by this signal document.
+	 *
+	 * @param frame  created video frame
+	 */
+	public void setVideoFrame(VideoFrame frame) {
+		this.videoFrame = frame;
 	}
 
 }

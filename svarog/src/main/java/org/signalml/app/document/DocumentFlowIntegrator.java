@@ -16,12 +16,14 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JOptionPane;
 
 import javax.swing.filechooser.FileFilter;
 
 import multiplexer.jmx.client.ConnectException;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.mrud.MRUDEntry;
@@ -39,6 +41,8 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
@@ -772,6 +776,23 @@ public class DocumentFlowIntegrator {
 			rawSignalDocument.setPageSize(rawDescriptor.getPageSize());
 			rawSignalDocument.setBlocksPerPage(rawDescriptor.getBlocksPerPage());
 
+			String videoFilePath = null;
+			if (rawDescriptor.getVideoFileName() != null) {
+				// name is relative to signal file path
+				File videoFile = new File(file.getParentFile(), rawDescriptor.getVideoFileName());
+				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+				if (!videoFile.isFile()) {
+					JOptionPane.showMessageDialog(dialogParent, "Video file could not be found. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
+					// we don't want to display the warning again
+					// when this file is re-opened on next Svarog startup
+					rawDescriptor.setVideoFileName(null);
+				} else if (!VideoFrame.isVideoAvailable()) {
+					JOptionPane.showMessageDialog(dialogParent, "VLC libraries are missing. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
+				} else {
+					videoFilePath = videoFile.getPath();
+				}
+			}
+
 			// start background checksum calculation
 			if (applicationConfig.isPrecalculateSignalChecksums()) {
 				SignalChecksumWorker checksummer = new SignalChecksumWorker(rawSignalDocument, null, new String[] { "crc32" });
@@ -786,6 +807,14 @@ public class DocumentFlowIntegrator {
 
 			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(rawSignalDocument);
+
+			if (videoFilePath != null) {
+				VideoFrame frame = new VideoFrame("VIDEO");
+				frame.open(videoFilePath);
+				rawSignalDocument.setVideoFrame(frame);
+				frame.setVisible(true);
+				frame.play(); // temporary, for demonstration
+			}
 
 			if (descriptor.isMakeActive()) {
 				actionFocusManager.setActiveDocument(rawSignalDocument);
