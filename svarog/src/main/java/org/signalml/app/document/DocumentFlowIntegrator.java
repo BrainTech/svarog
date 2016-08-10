@@ -777,6 +777,7 @@ public class DocumentFlowIntegrator {
 			rawSignalDocument.setBlocksPerPage(rawDescriptor.getBlocksPerPage());
 
 			String videoFilePath = null;
+			String videoFileName = null;
 			if (rawDescriptor.getVideoFileName() != null) {
 				// name is relative to signal file path
 				File videoFile = new File(file.getParentFile(), rawDescriptor.getVideoFileName());
@@ -789,6 +790,7 @@ public class DocumentFlowIntegrator {
 				} else if (!VideoFrame.isVideoAvailable()) {
 					JOptionPane.showMessageDialog(dialogParent, "VLC libraries are missing. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
 				} else {
+					videoFileName = videoFile.getName();
 					videoFilePath = videoFile.getPath();
 				}
 			}
@@ -809,7 +811,7 @@ public class DocumentFlowIntegrator {
 			onCommonDocumentAdded(rawSignalDocument);
 
 			if (videoFilePath != null) {
-				VideoFrame frame = new VideoFrame("VIDEO");
+				VideoFrame frame = new VideoFrame(videoFileName);
 				frame.open(videoFilePath);
 				rawSignalDocument.setVideoFrame(frame);
 				frame.setVisible(true);
