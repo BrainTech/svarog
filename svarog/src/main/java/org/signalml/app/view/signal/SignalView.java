@@ -87,17 +87,20 @@ import org.signalml.app.action.tag.RemoveTagAction;
 import org.signalml.app.action.tag.SaveTagAction;
 import org.signalml.app.action.tag.SaveTagAsAction;
 import org.signalml.app.action.tag.TagSelectionAction;
+import org.signalml.app.action.video.PlayPauseVideoAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManagerAdapter;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.TagDocument;
+import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.LogarithmicJSlider;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
+import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -258,6 +261,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private EditTagAnnotationAction editTagAnnotationAction;
 	private SnapToPageAction snapToPageAction;
 	private SignalFilterSwitchAction signalFilterSwitchAction;
+
+	private PlayPauseVideoAction playPauseVideoAction;
 
 	private boolean displayClockTime = false;
 	private boolean snapToPageMode = false;
@@ -941,6 +946,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(getSaveTagAsAction());
 		mainToolBar.add(getCloseTagAction());
 
+		AbstractAction playPauseAction = getPlayPauseVideoAction();
+		if (playPauseAction != null) {
+			mainToolBar.addSeparator();
+			mainToolBar.add(playPauseAction);
+		}
+
 		mainToolBar.add(Box.createHorizontalGlue());
 		mainToolBar.add(getMonitorRecordingDurationPanel());
 		mainToolBar.add(getStartMonitorRecordingAction());
@@ -1204,6 +1215,23 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			removeTagAction = new RemoveTagAction(this);
 		}
 		return removeTagAction;
+	}
+
+	/**
+	 * @return play/pause action or NULL if not available for this signal
+	 */
+	public PlayPauseVideoAction getPlayPauseVideoAction() {
+		if (playPauseVideoAction == null) {
+			if (document instanceof RawSignalDocument) {
+				RawSignalDocument rawDocument = (RawSignalDocument) document;
+				VideoFrame videoFrame = rawDocument.getVideoFrame();
+				if (videoFrame != null) {
+					playPauseVideoAction = new PlayPauseVideoAction(videoFrame);
+					return playPauseVideoAction;
+				}
+			}
+		}
+		return playPauseVideoAction;
 	}
 
 	/**

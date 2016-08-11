@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
  * Video display window in Svarog.
@@ -24,6 +25,7 @@ public final class VideoFrame extends JFrame {
 	/**
 	 * Check if video playback is available (VLC libraries are installed).
 	 * VideoFrame instances can be created only if this method returns true.
+	 * Internal VLC instance will NOT automatically read settings in ~/.config/vlc.
 	 *
 	 * @return true if video playback is available, false otherwise
 	 */
@@ -41,11 +43,25 @@ public final class VideoFrame extends JFrame {
 		if (!AVAILABLE) {
 			throw new RuntimeException("video playback is unavailable on this machine");
 		}
-		component = new EmbeddedMediaPlayerComponent();
+		component = new EmbeddedMediaPlayerComponent() {
+			@Override
+			protected String[] onGetMediaPlayerFactoryArgs() {
+				return new String[] { "--no-overlay" };
+			}
+		};
 		setContentPane(component);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		player = component.getMediaPlayer();
+	}
+
+	/**
+	 * Add listener object to respond to media player events.
+	 *
+	 * @param listener  listener object, cannot be null
+	 */
+	public void addListener(MediaPlayerEventListener listener) {
+		player.addMediaPlayerEventListener(listener);
 	}
 
 	/**

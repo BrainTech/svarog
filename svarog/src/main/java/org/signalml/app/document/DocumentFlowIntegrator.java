@@ -783,12 +783,12 @@ public class DocumentFlowIntegrator {
 				File videoFile = new File(file.getParentFile(), rawDescriptor.getVideoFileName());
 				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
 				if (!videoFile.isFile()) {
-					JOptionPane.showMessageDialog(dialogParent, "Video file could not be found. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(dialogParent, "Specified video file could not be found. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
 					// we don't want to display the warning again
 					// when this file is re-opened on next Svarog startup
 					rawDescriptor.setVideoFileName(null);
 				} else if (!VideoFrame.isVideoAvailable()) {
-					JOptionPane.showMessageDialog(dialogParent, "VLC libraries are missing. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(dialogParent, "<html><body>VLC libraries are missing. Video preview will not be available.<br>The VLC player can be downloaded from http://www.videolan.org/vlc/ or your system's repositiories.</body></html>", _("Warning"), JOptionPane.WARNING_MESSAGE);
 				} else {
 					videoFileName = videoFile.getName();
 					videoFilePath = videoFile.getPath();
@@ -807,16 +807,17 @@ public class DocumentFlowIntegrator {
 			mrud.setLastTimeOpened(new Date());
 			mrudRegistry.registerMRUDEntry(mrud);
 
-			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());
-			onCommonDocumentAdded(rawSignalDocument);
-
 			if (videoFilePath != null) {
+				// VideoFrame needs to be created before onCommonDocumentAdded
+				// for SignalView to respond properly
 				VideoFrame frame = new VideoFrame(videoFileName);
 				frame.open(videoFilePath);
 				rawSignalDocument.setVideoFrame(frame);
 				frame.setVisible(true);
-				frame.play(); // temporary, for demonstration
 			}
+
+			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());
+			onCommonDocumentAdded(rawSignalDocument);
 
 			if (descriptor.isMakeActive()) {
 				actionFocusManager.setActiveDocument(rawSignalDocument);
