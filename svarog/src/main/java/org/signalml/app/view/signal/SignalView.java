@@ -14,6 +14,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Window;
@@ -31,6 +32,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,12 +42,14 @@ import java.util.TreeSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
+import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -946,10 +950,15 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		mainToolBar.add(getSaveTagAsAction());
 		mainToolBar.add(getCloseTagAction());
 
-		AbstractAction playPauseAction = getPlayPauseVideoAction();
+		PlayPauseVideoAction playPauseAction = getPlayPauseVideoAction();
 		if (playPauseAction != null) {
 			mainToolBar.addSeparator();
 			mainToolBar.add(playPauseAction);
+			// slider must be put into JPanel for its preferred size to be respected
+			JPanel sliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+			sliderPanel.setOpaque(false);
+			sliderPanel.add(playPauseAction.getVideoRateSlider());
+			mainToolBar.add(sliderPanel);
 		}
 
 		mainToolBar.add(Box.createHorizontalGlue());
