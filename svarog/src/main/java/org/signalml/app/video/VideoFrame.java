@@ -1,5 +1,8 @@
 package org.signalml.app.video;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JFrame;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
@@ -33,6 +36,17 @@ public final class VideoFrame extends JFrame {
 		return AVAILABLE;
 	}
 
+	private static String[] getVideoFlags() {
+		List<String> videoFlagsList = new LinkedList<String>();
+		String videoFlagsStr = System.getenv("SVAROG_VIDEO_FLAGS");
+		if (videoFlagsStr == null) {
+			videoFlagsList.add("--no-overlay");
+		} else {
+			videoFlagsList.addAll(Arrays.asList(videoFlagsStr.split(" ")));
+		}
+		return videoFlagsList.toArray(new String[videoFlagsList.size()]);
+	}
+
 	/**
 	 * Create new Swing frame for displaying video.
 	 *
@@ -46,7 +60,7 @@ public final class VideoFrame extends JFrame {
 		component = new EmbeddedMediaPlayerComponent() {
 			@Override
 			protected String[] onGetMediaPlayerFactoryArgs() {
-				return new String[] { "--no-overlay" };
+				return getVideoFlags();
 			}
 		};
 		setContentPane(component);
