@@ -52,6 +52,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	private JLabel fileTypeLabel = new JLabel(_("File type"));
 	private JLabel registerCodecsLabel = new JLabel(_("Manage SignalML codecs"));
 	private JLabel tryToOpenTagsLabel = new JLabel(_("Automatically try to open tags"));
+	private JLabel tryToOpenVideoLabel = new JLabel(_("Automatically try to open video"));
 	private JLabel videoFileNameLabel = new JLabel(_("Name of synchronous video file"));
 	private JPanel registerSignalMLCodecPanel;
 	/**
@@ -74,6 +75,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 
 	private JComboBox fileTypeComboBox;
 	private JCheckBox tryToOpenTagsCheckbox;
+	private JCheckBox tryToOpenVideoCheckbox;
 	private JTextField videoFileNameField;
 
 	public OtherSettingsPanel(ViewerElementManager viewerElementManager) {
@@ -108,6 +110,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(eegSystemsLabel)
 			.addComponent(registerCodecsLabel)
 			.addComponent(tryToOpenTagsLabel)
+			.addComponent(tryToOpenVideoLabel)
 			.addComponent(videoFileNameLabel)
 		);
 
@@ -118,6 +121,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			.addComponent(getEegSystemComboBox())
 			.addComponent(getRegisterSignalMLCodecPanel())
 			.addComponent(getTryToOpenTagsCheckbox())
+			.addComponent(getTryToOpenVideoCheckbox())
 			.addComponent(getVideoFilePathField())
 		);
 
@@ -144,22 +148,28 @@ public class OtherSettingsPanel extends AbstractPanel {
 		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(registerCodecsLabel)
-				.addComponent(getRegisterSignalMLCodecPanel())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(registerCodecsLabel)
+			.addComponent(getRegisterSignalMLCodecPanel())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(tryToOpenTagsLabel)
-				.addComponent(getTryToOpenTagsCheckbox())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(tryToOpenTagsLabel)
+			.addComponent(getTryToOpenTagsCheckbox())
+		);
 
 		vGroup.addGroup(
-				layout.createParallelGroup(Alignment.BASELINE)
-				.addComponent(videoFileNameLabel)
-				.addComponent(getVideoFilePathField())
-			);
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(tryToOpenVideoLabel)
+			.addComponent(getTryToOpenVideoCheckbox())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE)
+			.addComponent(videoFileNameLabel)
+			.addComponent(getVideoFilePathField())
+		);
 
 		layout.setVerticalGroup(vGroup);
 
@@ -215,6 +225,14 @@ public class OtherSettingsPanel extends AbstractPanel {
 			});
 		}
 		return tryToOpenTagsCheckbox;
+	}
+
+	public JCheckBox getTryToOpenVideoCheckbox() {
+		if (tryToOpenVideoCheckbox == null) {
+			tryToOpenVideoCheckbox = new JCheckBox();
+			tryToOpenVideoCheckbox.setSelected(false);
+		}
+		return tryToOpenVideoCheckbox;
 	}
 
 	public JTextField getVideoFilePathField() {
@@ -351,7 +369,10 @@ public class OtherSettingsPanel extends AbstractPanel {
 		if (descriptor instanceof RawSignalDescriptor) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) descriptor;
 			String videoFileName = getVideoFilePathField().getText();
-			rawSignalDescriptor.setVideoFileName(videoFileName.isEmpty() ? null : videoFileName);
+			if (videoFileName.isEmpty() || !getTryToOpenVideoCheckbox().isSelected()) {
+				videoFileName = null;
+			}
+			rawSignalDescriptor.setVideoFileName(videoFileName);
 		}
 	}
 
