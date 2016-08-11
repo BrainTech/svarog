@@ -16,20 +16,25 @@ public final class VideoRateSlider extends JSlider {
 	private static final int MAX_PERCENTAGE = 200;
 	private static final int INITAL_PERCENTAGE = 100;
 
-	private static final int PREFERRED_WIDTH = 200;
+	private static final int PREFERRED_WIDTH = 180;
 	private static final int PREFERRED_HEIGHT = 30;
 	private static final int MINOR_TICK_SPACING = 10;
 	private static final int MAJOR_TICK_SPACING = 50;
 
 	public VideoRateSlider() {
 		super(JSlider.HORIZONTAL, MIN_PERCENTAGE, MAX_PERCENTAGE, INITAL_PERCENTAGE);
-		setPreferredSize(new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT));
+		Dimension size = new Dimension(PREFERRED_WIDTH, PREFERRED_HEIGHT);
+		setPreferredSize(size);
+		setMinimumSize(size);
+		setMaximumSize(size);
+
 		setFocusable(false);
 		setMinorTickSpacing(MINOR_TICK_SPACING);
 		setMajorTickSpacing(MAJOR_TICK_SPACING);
 		setOpaque(false);
 		setPaintLabels(true);
 		setSnapToTicks(true);
+
 		// unfortunately, Swing uses obsolete Dictionary interface
 		Hashtable labels = new Hashtable();
 		for (int i=MIN_PERCENTAGE; i<=MAX_PERCENTAGE; i+=MAJOR_TICK_SPACING) {

@@ -954,11 +954,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		if (playPauseAction != null) {
 			mainToolBar.addSeparator();
 			mainToolBar.add(playPauseAction);
-			// slider must be put into JPanel for its preferred size to be respected
-			JPanel sliderPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
-			sliderPanel.setOpaque(false);
-			sliderPanel.add(playPauseAction.getVideoRateSlider());
-			mainToolBar.add(sliderPanel);
+			mainToolBar.add(playPauseAction.getVideoRateSlider());
 		}
 
 		mainToolBar.add(Box.createHorizontalGlue());
