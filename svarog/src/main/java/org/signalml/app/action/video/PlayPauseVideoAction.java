@@ -67,16 +67,13 @@ public final class PlayPauseVideoAction extends AbstractSignalMLAction {
 
 		@Override
 		public void playing(MediaPlayer mp) {
+			setEnabled(true);
 			updateActionState(mp);
 		}
 
 		@Override
 		public void finished(MediaPlayer mp) {
-			updateActionState(mp);
-		}
-
-		@Override
-		public void stopped(MediaPlayer mp) {
+			setEnabled(false);
 			updateActionState(mp);
 		}
 	}

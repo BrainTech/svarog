@@ -67,6 +67,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
+import org.jfree.data.time.Millisecond;
 import org.signalml.app.action.DisplayClockTimeAction;
 import org.signalml.app.action.SnapToPageAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
@@ -104,6 +105,7 @@ import org.signalml.app.model.components.LogarithmicJSlider;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
+import org.signalml.app.util.SwingUtils;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
@@ -149,6 +151,8 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.util.Util;
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 
 /** SignalView
  *
@@ -304,6 +308,35 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private HashMap<KeyStroke,TagStyle> lastStylesByKeyStrokes;
 
+	/**
+	 * Internal listener, connected to the VideoFrame.
+	 */
+	private class VideoFrameListener extends MediaPlayerEventAdapter {
+
+		private void scheduleColumnHeadersUpdate(long milliseconds) {
+			final double time = 0.001 * milliseconds;
+			SwingUtilities.invokeLater(new Runnable() {
+				@Override
+				public void run() {
+					// here TODO #25625
+					for (SignalPlotColumnHeader columnHeader : columnHeaders) {
+						columnHeader.setVideoMarkerTime(time);
+					}
+				}
+			});
+		}
+
+		@Override
+		public void timeChanged(MediaPlayer mp, long milliseconds) {
+			scheduleColumnHeadersUpdate(milliseconds);
+		}
+
+		@Override
+		public void finished(MediaPlayer mp) {
+			scheduleColumnHeadersUpdate(mp.getLength());
+		}
+	}
+
 	public SignalView(SignalDocument document) {
 		super(new BorderLayout());
 		this.document = document;
@@ -444,6 +477,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		topMap.setParent(map);
 		setInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, topMap);
 
+		// listen to video frame events to update video markers
+		VideoFrame videoFrame = getDocumentVideoFrame();
+		if (videoFrame != null) {
+			videoFrame.addListener(new VideoFrameListener());
+		}
 	}
 
 	private SignalPlot createSignalPlot(SignalPlot masterPlot) throws SignalMLException {
@@ -483,6 +521,17 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		scrollPane.setCorner(JScrollPane.UPPER_LEFT_CORNER, corner);
 		scrollPane.setWheelScrollingEnabled(false);
 		scrollPane.setMinimumSize(new Dimension(200,200));
+
+		columnHeader.setListener(new SignalPlotColumnHeaderListener() {
+			@Override
+			public void timeSelected(double time) {
+				VideoFrame videoFrame = getDocumentVideoFrame();
+				if (videoFrame != null) {
+					// converting to milliseconds
+					videoFrame.setTime( (int) Math.round(1000*time) );
+				}
+			}
+		});
 
 		scrollPanes.add(scrollPane);
 		columnHeaders.add(columnHeader);
@@ -776,6 +825,21 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	@Override
 	public void clearTagSelection() {
 		setTagSelection(null, null);
+	}
+
+	/**
+	 * Return video frame connected with the signal document,
+	 * or NULL if no video frame exists.
+	 *
+	 * @return video frame instance or NULL
+	 */
+	public VideoFrame getDocumentVideoFrame() {
+		VideoFrame videoFrame = null;
+		if (document instanceof RawSignalDocument) {
+			RawSignalDocument rawDocument = (RawSignalDocument) document;
+			videoFrame = rawDocument.getVideoFrame();
+		}
+		return videoFrame;
 	}
 
 	public LockableJSplitPane getPlotSplitPane() {
@@ -1227,13 +1291,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 */
 	public PlayPauseVideoAction getPlayPauseVideoAction() {
 		if (playPauseVideoAction == null) {
-			if (document instanceof RawSignalDocument) {
-				RawSignalDocument rawDocument = (RawSignalDocument) document;
-				VideoFrame videoFrame = rawDocument.getVideoFrame();
-				if (videoFrame != null) {
-					playPauseVideoAction = new PlayPauseVideoAction(videoFrame);
-					return playPauseVideoAction;
-				}
+			VideoFrame videoFrame = getDocumentVideoFrame();
+			if (videoFrame != null) {
+				playPauseVideoAction = new PlayPauseVideoAction(videoFrame);
 			}
 		}
 		return playPauseVideoAction;

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 /**
@@ -24,6 +25,9 @@ public final class VideoFrame extends JFrame {
 
 	private final MediaPlayer player;
 	private final EmbeddedMediaPlayerComponent component;
+	private final List<MediaPlayerEventListener> listeners = new LinkedList<MediaPlayerEventListener>();
+
+	private volatile Long duration;
 
 	/**
 	 * Check if video playback is available (VLC libraries are installed).
@@ -67,6 +71,13 @@ public final class VideoFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		player = component.getMediaPlayer();
+		player.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+			@Override
+			public void mediaDurationChanged(MediaPlayer mediaPlayer, long newDuration) {
+				// once the duration is known, we store it inside this class
+				duration = newDuration;
+			}
+		});
 	}
 
 	/**
@@ -76,6 +87,7 @@ public final class VideoFrame extends JFrame {
 	 */
 	public void addListener(MediaPlayerEventListener listener) {
 		player.addMediaPlayerEventListener(listener);
+		listeners.add(listener);
 	}
 
 	/**
@@ -123,7 +135,27 @@ public final class VideoFrame extends JFrame {
 	 * @param time  time since the beginning, in milliseconds
 	 */
 	public void setTime(long time) {
-		player.setTime(time);
+		if (duration != null && time >= duration) {
+			// if duration is already known
+			return;
+		}
+		boolean needsFix = !player.isPlaying();
+		if (needsFix) {
+			// fix to make sure player is not in "stopped" state
+			player.start();
+			player.setPause(true);
+		}
+		if (duration != null && time < duration) {
+			// duration should be known after returning from start()
+			player.setTime(time);
+			if (needsFix) {
+				for (MediaPlayerEventListener listener : listeners) {
+					// this is needed, because MediaPlayer does not send
+					// timeChanged events when paused
+					listener.timeChanged(player, time);
+				}
+			}
+		}
 	}
 
 	/**

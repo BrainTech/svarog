@@ -79,12 +79,30 @@ public class SignalPlotColumnHeader extends JComponent {
 
 	private Rectangle tempBounds = new Rectangle();
 
+	private double videoMarkerTime;
+
 	private boolean compact;
 	private SetCompactAction setCompactAction;
+	private SignalPlotColumnHeaderListener listener;
 
 	public SignalPlotColumnHeader(SignalPlot plot) {
 		super();
 		this.plot = plot;
+	}
+
+	@Override
+	protected void processMouseEvent(MouseEvent e) {
+		if (e.getID() == MouseEvent.MOUSE_PRESSED && e.getButton() == MouseEvent.BUTTON1) {
+			// dispatching mouse clicks to SignalPlotColumnHeaderListener
+			SignalPlotColumnHeaderListener list = listener;
+			if (list != null) {
+				double time = e.getX() / pixelPerSecond;
+				list.timeSelected(time);
+				e.consume();
+			}
+		} else {
+			super.processMouseEvent(e);
+		}
 	}
 
 	public void reset() {
@@ -364,6 +382,15 @@ public class SignalPlotColumnHeader extends JComponent {
 
 	}
 
+	private void paintVideoMarker(Graphics2D g) {
+		int videoMarkerX = (int) Math.round(videoMarkerTime * pixelPerSecond);
+		Rectangle clip = g.getClipBounds();
+		if (clip.x <= videoMarkerX && videoMarkerX <= clip.x + clip.width) {
+			g.setColor(Color.BLUE);
+			g.fillRect(videoMarkerX-1, TOP_OFFSET, 2, pageTagAreaHeight);
+		}
+	}
+
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
@@ -471,6 +498,7 @@ public class SignalPlotColumnHeader extends JComponent {
 			paintSelectedTagSelectionBox(g, tagSelection);
 		}
 
+		paintVideoMarker(g);
 	}
 
 	@Override
@@ -591,6 +619,10 @@ public class SignalPlotColumnHeader extends JComponent {
 
 	}
 
+	public void setListener(SignalPlotColumnHeaderListener listener) {
+		this.listener = listener;
+	}
+
 	public SignalPlotPopupProvider getSignalViewPopupProvider() {
 		return signalPlotPopupProvider;
 	}
@@ -601,6 +633,11 @@ public class SignalPlotColumnHeader extends JComponent {
 
 	public SignalPlot getPlot() {
 		return plot;
+	}
+
+	public void setVideoMarkerTime(double time) {
+		this.videoMarkerTime = time;
+		repaint();
 	}
 
 	public boolean isCompact() {
