@@ -318,9 +318,15 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
-					// here TODO #25625
 					for (SignalPlotColumnHeader columnHeader : columnHeaders) {
 						columnHeader.setVideoMarkerTime(time);
+					}
+					SignalPlot plot = activePlot;
+					if (plot != null) {
+						int videoMarkerX = (int) Math.round(time * plot.getPixelPerSecond());
+						if (plot.getViewport().getViewRect().getMaxX() <= videoMarkerX) {
+							plot.pageForward();
+						}
 					}
 				}
 			});
