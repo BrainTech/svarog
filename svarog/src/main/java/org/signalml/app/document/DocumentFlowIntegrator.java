@@ -778,6 +778,7 @@ public class DocumentFlowIntegrator {
 
 			String videoFilePath = null;
 			String videoFileName = null;
+			float videoFileOffset = 0;
 			if (rawDescriptor.getVideoFileName() != null) {
 				// name is relative to signal file path
 				File videoFile = new File(file.getParentFile(), rawDescriptor.getVideoFileName());
@@ -792,6 +793,7 @@ public class DocumentFlowIntegrator {
 				} else {
 					videoFileName = videoFile.getName();
 					videoFilePath = videoFile.getPath();
+					videoFileOffset = rawDescriptor.getVideoFileOffset();
 				}
 			}
 
@@ -812,8 +814,14 @@ public class DocumentFlowIntegrator {
 				// for SignalView to respond properly
 				VideoFrame frame = new VideoFrame(videoFileName);
 				frame.open(videoFilePath);
-				rawSignalDocument.setVideoFrame(frame);
+				rawSignalDocument.setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);
+				frame.init();
+
+				if (!frame.isSeekable()) {
+					Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+					JOptionPane.showMessageDialog(dialogParent, "<html><body>Opened video file has no time index.<br>It may not be possible to change time position.</body></html>", _("Warning"), JOptionPane.WARNING_MESSAGE);
+				}
 			}
 
 			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());

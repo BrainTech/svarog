@@ -100,6 +100,25 @@ public final class VideoFrame extends JFrame {
 	}
 
 	/**
+	 * Start the video and pause it immediately.
+	 *
+	 * It will ensure that playback is not in the "stopped" state.
+	 */
+	public void init() {
+		player.start();
+		player.setPause(true);
+	}
+
+	/**
+	 * Check whether the video position (time) can be changed while playing.
+	 *
+	 * @return TRUE if video position can be changed, FALSE otherwise
+	 */
+	public boolean isSeekable() {
+		return player.isSeekable() && duration != null;
+	}
+
+	/**
 	 * Prepare a new media item for playback, but do not begin playing.
 	 *
 	 * When playing files, depending on the run-time Operating System it may be necessary to pass a URL here
@@ -135,20 +154,21 @@ public final class VideoFrame extends JFrame {
 	 * @param time  time since the beginning, in milliseconds
 	 */
 	public void setTime(long time) {
-		if (duration != null && time >= duration) {
-			// if duration is already known
+		if (time < 0 || (duration != null && time >= duration)) {
+			// if given time is outside signal extent
 			return;
 		}
-		boolean needsFix = !player.isPlaying();
-		if (needsFix) {
+		boolean isNotPlaying = !player.isPlaying();
+		if (isNotPlaying) {
 			// fix to make sure player is not in "stopped" state
-			player.start();
-			player.setPause(true);
+			// because it is not possible to change position in this state
+			init();
 		}
 		if (duration != null && time < duration) {
-			// duration should be known after returning from start()
+			// duration should be known after returning from start(),
+			// otherwise the video position cannot be changed
 			player.setTime(time);
-			if (needsFix) {
+			if (isNotPlaying) {
 				for (MediaPlayerEventListener listener : listeners) {
 					// this is needed, because MediaPlayer does not send
 					// timeChanged events when paused

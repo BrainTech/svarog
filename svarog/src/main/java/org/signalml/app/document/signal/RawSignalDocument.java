@@ -45,6 +45,11 @@ public class RawSignalDocument extends AbstractFileSignal {
 	private VideoFrame videoFrame;
 
 	/**
+	 * time offset (in seconds) of video relative to the signal's start
+	 */
+	private float videoOffset;
+
+	/**
 	 * Constructor. Sets the {@link SignalType type} and
 	 * {@link RawSignalDescriptor descriptor}.
 	 * @param type the type of the signal
@@ -137,12 +142,23 @@ public class RawSignalDocument extends AbstractFileSignal {
 	}
 
 	/**
+	 * Get time offset of video file, relative to the signal's start.
+	 *
+	 * @return  time offset (in seconds) of video file
+	 */
+	public float getVideoOffset() {
+		return videoOffset;
+	}
+
+	/**
 	 * Assign given video frame to be managed by this signal document.
 	 *
 	 * @param frame  created video frame
+	 * @param offset  time offset (in seconds) of video relative to the signal's start
 	 */
-	public void setVideoFrame(VideoFrame frame) {
+	public void setVideoFrame(VideoFrame frame, float offset) {
 		this.videoFrame = frame;
+		this.videoOffset = offset;
 	}
 
 }

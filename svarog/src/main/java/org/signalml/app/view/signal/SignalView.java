@@ -314,7 +314,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private class VideoFrameListener extends MediaPlayerEventAdapter {
 
 		private void scheduleColumnHeadersUpdate(long milliseconds) {
-			final double time = 0.001 * milliseconds;
+			final double time = 0.001 * milliseconds + getDocumentVideoOffset();
 			SwingUtilities.invokeLater(new Runnable() {
 				@Override
 				public void run() {
@@ -528,11 +528,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		scrollPane.setWheelScrollingEnabled(false);
 		scrollPane.setMinimumSize(new Dimension(200,200));
 
+		columnHeader.setVideoMarkerTime(getDocumentVideoOffset());
 		columnHeader.setListener(new SignalPlotColumnHeaderListener() {
 			@Override
 			public void timeSelected(double time) {
 				VideoFrame videoFrame = getDocumentVideoFrame();
 				if (videoFrame != null) {
+					// accounting for video offset
+					time -= getDocumentVideoOffset();
 					// converting to milliseconds
 					videoFrame.setTime( (int) Math.round(1000*time) );
 				}
@@ -846,6 +849,20 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			videoFrame = rawDocument.getVideoFrame();
 		}
 		return videoFrame;
+	}
+
+	/**
+	 * Return time offset of video file, relative to the signal's start.
+	 *
+	 * @return video offset in seconds (0 if unknown)
+	 */
+	public float getDocumentVideoOffset() {
+		float videoOffset = 0;
+		if (document instanceof RawSignalDocument) {
+			RawSignalDocument rawDocument = (RawSignalDocument) document;
+			videoOffset = rawDocument.getVideoOffset();
+		}
+		return videoOffset;
 	}
 
 	public LockableJSplitPane getPlotSplitPane() {
