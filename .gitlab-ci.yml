@@ -1,15 +1,3 @@
-image: ubuntu:16.04
-
-before_script:
-  - apt-get update -qq
-  - apt-get install -y -qq software-properties-common python-software-properties
-  - add-apt-repository -y "deb http://us.archive.ubuntu.com/ubuntu/ xenial universe multiverse" 
-  - add-apt-repository -y "deb http://us.archive.ubuntu.com/ubuntu/ xenial-updates universe multiverse"
-  - add-apt-repository -y ppa:webupd8team/java
-  - echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-  - apt-get update -qq
-  - apt-get install -y -qq gettext libwagon-java libcommons-math-java libcommons-math3-java maven protobuf-compiler oracle-java8-installer git sed equivs
- 
 stages:
   - builddeb
   - sign
@@ -19,6 +7,7 @@ stages:
 
 
 build:
+  image: svarog-build-test-image:u1604
   stage: builddeb
   script:
     - ./builddeb.sh
@@ -28,11 +17,13 @@ build:
     - ./dist/*
 
 mvntest:
+  image: svarog-build-test-image:u1604
   stage: test
   script:
     - mvn test
     
 signdebs:
+  image: signdebs-image
   stage: sign
   before_script:
   - apt-get update -qq
@@ -46,6 +37,7 @@ signdebs:
     - ./dist/*.deb
     
 deploy_xenial_development:
+  image: deployment-image
   stage: deploy
   only:
     - development
@@ -63,6 +55,7 @@ deploy_xenial_development:
     - ./deploydebs.sh
 
 deploy_xenial_testing:
+  image: deployment-image
   stage: deploy
   only:
     - release/
@@ -80,6 +73,7 @@ deploy_xenial_testing:
     - ./deploydebs.sh
 
 deploy_xenial_master:
+  image: deployment-image
   stage: deploy
   only:
     - master
