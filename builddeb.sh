@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(git describe --tags)
 mvn clean package
 mkdir dist
