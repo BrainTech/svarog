@@ -588,6 +588,11 @@
 			<artifactId>vlcj</artifactId>
 			<version>3.10.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.zeromq</groupId>
+			<artifactId>jeromq</artifactId>
+			<version>0.3.5</version>
+		</dependency>
 
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>
