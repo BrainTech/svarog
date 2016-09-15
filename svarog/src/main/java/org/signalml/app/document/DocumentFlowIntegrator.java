@@ -20,8 +20,6 @@ import javax.swing.JOptionPane;
 
 import javax.swing.filechooser.FileFilter;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.selector.ActionFocusManager;
@@ -158,10 +156,8 @@ public class DocumentFlowIntegrator {
 	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
 	 * failed to save the document or if {@link SignalChecksumWorker checksum
 	 * worker} was interrupted or failed to calculate the checksum
-	 * @throws ConnectException TODO when {@link MonitorSignalDocument}
-	 * throws it and above exceptions
 	 */
-	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
+	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 		ManagedDocumentType type = descriptor.getType();
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 			return openSignalDocument(descriptor);
@@ -194,9 +190,6 @@ public class DocumentFlowIntegrator {
 			Dialogs.showExceptionDialog(window, ex);
 		} catch (IOException ex) {
 			logger.error("Failed to open document - I/O exception", ex);
-			Dialogs.showExceptionDialog(window, ex);
-		} catch (ConnectException ex) {
-			logger.error("Failed to open document - connection exception", ex);
 			Dialogs.showExceptionDialog(window, ex);
 		}
 		return null;
@@ -567,10 +560,8 @@ public class DocumentFlowIntegrator {
 	 * of a given UID or if {@link SaveDocumentWorker save worker}
 	 * failed to save the document or if {@link SignalChecksumWorker checksum
 	 * worker} was interrupted or failed to calculate the checksum
-	 * @throws ConnectException TODO when {@link MonitorSignalDocument}
-	 * throws it and above exceptions
 	 */
-	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException, ConnectException {
+	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException {
 
 		ManagedDocumentType type = mrud.getDocumentType();
 
@@ -843,7 +834,7 @@ public class DocumentFlowIntegrator {
 
 	}
 
-	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
+	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
 

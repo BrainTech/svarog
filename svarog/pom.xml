@@ -23,13 +23,11 @@
 		<protobuf.protoc>protoc</protobuf.protoc>
 		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
 		<protobuf.proto_file>variables.proto</protobuf.proto_file>
-		<protobuf.rules_file>multiplexer.rules</protobuf.rules_file>
 		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
 		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
 
 		<git.git>git</git.git>
 
-		<multiplexer.jmx.version>0.9.2</multiplexer.jmx.version>
 		<org.signalml.jsignalml.version>1.1</org.signalml.jsignalml.version>
 	</properties>
 
@@ -181,29 +179,6 @@
 					</execution>
 
 					<execution>
-						<id>generate-sources-compile</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<target>
-								<java classname="multiplexer.jmx.tools.CompileConstants"
-									  failonerror="true">
-									<arg value="-input"/>
-									<arg value="${protobuf.source_dir}/${protobuf.rules_file}"/>
-									<arg value="-outdir"/>
-									<arg value="${generated_sources_dir}/org/signalml/multiplexer/protocol"/>
-									<arg value="-class"/>
-									<arg value="SvarogConstants"/>
-									<arg value="-package"/>
-									<arg value="org.signalml.multiplexer.protocol"/>
-								</java>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-
-					<execution>
 						<id>generate-sources-jsignalml</id>
 						<phase>generate-sources</phase>
 						<configuration>
@@ -288,12 +263,6 @@
 						<version>2.6.1</version>
 					</dependency>
 
-					<dependency>
-						<groupId>multiplexer</groupId>
-						<artifactId>jmx</artifactId>
-						<version>${multiplexer.jmx.version}</version>
-					</dependency>
-				
 					<dependency>
 						<groupId>org.signalml.jsignalml</groupId>
 						<artifactId>jsignalml</artifactId>
@@ -555,11 +524,6 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-jdk14</artifactId>
 			<version>1.5.8</version>
-		</dependency>
-		<dependency>
-			<groupId>multiplexer</groupId>
-			<artifactId>jmx</artifactId>
-			<version>${multiplexer.jmx.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>edu.emory.mathcs</groupId>

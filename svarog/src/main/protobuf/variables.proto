@@ -1,8 +1,6 @@
-import "Multiplexer.proto";
-
 package variables;
 
-option java_package = "org.signalml.multiplexer.protocol";
+option java_package = "org.signalml.peer.protocol";
 option java_outer_classname = "SvarogProtocol";
 
 message Variable {

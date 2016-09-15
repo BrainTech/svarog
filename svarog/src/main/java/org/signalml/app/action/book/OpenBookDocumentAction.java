@@ -12,8 +12,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
@@ -73,11 +71,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 
 		try {
 			documentFlowIntegrator.openDocument(openDocumentDescriptor);
-		} catch (IOException ex) {
-			Logger.getLogger(OpenBookDocumentAction.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (SignalMLException ex) {
-			Logger.getLogger(OpenBookDocumentAction.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (ConnectException ex) {
+		} catch (IOException | SignalMLException ex) {
 			Logger.getLogger(OpenBookDocumentAction.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}

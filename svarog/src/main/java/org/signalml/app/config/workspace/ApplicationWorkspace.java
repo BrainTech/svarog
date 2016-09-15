@@ -7,8 +7,6 @@ package org.signalml.app.config.workspace;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.BookDocument;
@@ -97,8 +95,6 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 				logger.error("Exception while restoring workspace", ex);
 			} catch (SignalMLException ex) {
 				logger.error("Exception while restoring workspace", ex);
-			} catch (ConnectException ex) {
-				logger.error("Exception while restoring workspace", ex);
 			}
 
 			if (this.activeDocument == workspaceDocument) {
@@ -158,7 +154,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 		return documents.size();
 	}
 
-	public Document restoreDocument(WorkspaceDocument workspaceDocument, DocumentFlowIntegrator integrator) throws IOException, SignalMLException, ConnectException {
+	public Document restoreDocument(WorkspaceDocument workspaceDocument, DocumentFlowIntegrator integrator) throws IOException, SignalMLException {
 		if (workspaceDocument instanceof WorkspaceSignal) {
 			Document document = integrator.openMRUDEntry(workspaceDocument.getMrudEntry());
 			if (document == null || !(document instanceof SignalDocument)) {

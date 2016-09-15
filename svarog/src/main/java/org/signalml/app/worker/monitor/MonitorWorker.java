@@ -18,9 +18,9 @@ import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSour
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.multiplexer.protocol.SvarogProtocol;
-import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
-import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
+import org.signalml.peer.protocol.SvarogProtocol;
+import org.signalml.peer.protocol.SvarogProtocol.Sample;
+import org.signalml.peer.protocol.SvarogProtocol.SampleVector;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
