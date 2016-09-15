@@ -199,7 +199,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 			try {
 				worker.get();
 
-				if (experimentDescriptor.getJmxClient() != null) {
+				if (experimentDescriptor.getPeer() != null) {
 					super.onOkPressed();
 				}
 			} catch (CancellationException ex) {

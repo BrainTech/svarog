@@ -104,12 +104,8 @@ public abstract class AbstractResponseJSonReader {
 	protected void readSamplingFrequencies(LinkedHashMap<String, Object> parameters, ExperimentDescriptor experiment) {
 		Amplifier amplifier = experiment.getAmplifier();
 
-		List<Integer> samplingFrequencies = (List<Integer>) parameters.get("sampling_rates");
-		amplifier.setSamplingFrequencies(new ArrayList<Float>());
-
-		for (Integer sf: samplingFrequencies) {
-			amplifier.getSamplingFrequencies().add(new Float(sf));
-		}
+		List<Float> samplingFrequencies = (List<Float>) parameters.get("sampling_rates");
+		amplifier.setSamplingFrequencies(new ArrayList<Float>(samplingFrequencies));
 	}
 
 	public String getLog() {

@@ -9,10 +9,7 @@ import java.util.StringTokenizer;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
-import multiplexer.jmx.client.JmxClient;
-
 import org.apache.log4j.Logger;
-import org.jboss.netty.channel.ChannelFuture;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
@@ -26,7 +23,9 @@ import org.signalml.app.worker.monitor.messages.RequestOKResponse;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalRequest;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
-import org.signalml.multiplexer.protocol.SvarogConstants;
+import org.signalml.peer.BrokerInfo;
+import org.signalml.peer.BrokerTcpConnector;
+import org.signalml.peer.Peer;
 
 public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, Void> {
 
@@ -135,27 +134,15 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 	}
 
 	protected void connectToMultiplexer() {
-
-		JmxClient jmxClient = new JmxClient(SvarogConstants.PeerTypes.STREAM_RECEIVER);
-		experimentDescriptor.setJmxClient(jmxClient);
-		multiplexerSocket = new InetSocketAddress(multiplexerAddress, multiplexerPort);
-
-		ChannelFuture connectFuture = null;
-		connectFuture = jmxClient.asyncConnect(multiplexerSocket);
-		logger.debug("Connecting to JMX");
-
-		int i = 0;
-		while (!isCancelled() && i < TRYOUT_COUNT) {
-			i++;
-			try {
-				Thread.sleep(TIMEOUT_MILIS);
-			} catch (InterruptedException e1) {
-			}
-
-			if ((connectFuture.isDone())) {
-				break;
-			} else
-				logger.debug("Connection to JMX failed, retrying");
+		logger.debug("Connecting to OBCI");
+		BrokerTcpConnector connector = new BrokerTcpConnector(multiplexerAddress, multiplexerPort);
+		try {
+			BrokerInfo brokerInfo = connector.fetchBrokerInfo();
+			Peer peer = new Peer(experimentDescriptor.getPeerId(), brokerInfo);
+			peer.connect();
+			experimentDescriptor.setPeer(peer);
+		} catch (Exception ex) {
+			logger.error("Connection to JMX failed", ex);
 		}
 	}
 
