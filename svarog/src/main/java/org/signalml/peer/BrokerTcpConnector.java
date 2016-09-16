@@ -24,7 +24,7 @@ public class BrokerTcpConnector {
 	/**
 	 * The same magic sequence of four bytes as defined in OBCI.
 	 */
-	public static final byte[] TCP_MAGIC_BYTES = "OBCI".getBytes();
+	public static final byte[] TCP_MAGIC_BYTES = Converter.bytesFromString("OBCI");
 
 	/**
 	 * Socket connection timeout (in milliseconds).
@@ -94,7 +94,7 @@ public class BrokerTcpConnector {
 			socket.connect(brokerTcpAddr, TIMEOUT_MILIS);
 
 			socket.getOutputStream().write(TCP_MAGIC_BYTES);
-			String response = new String(drainSocket(socket));
+			String response = Converter.stringFromBytes(drainSocket(socket));
 
 			JSONObject json = new JSONObject(response);
 			String brokerURL = json.getString("broker_url");

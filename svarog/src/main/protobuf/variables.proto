@@ -29,7 +29,3 @@ message Tag {
 	required string channels = 4;
 	optional VariableVector desc = 5;
 }
-
-message TagVector {
-    repeated Tag tags = 1;
-}

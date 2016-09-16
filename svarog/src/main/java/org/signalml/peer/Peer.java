@@ -16,6 +16,11 @@ public class Peer {
 
 	private static final Logger logger = Logger.getLogger(Peer.class);
 
+	/**
+	 * Default High Water-Mark for sockets.
+	 */
+	private static final int HWM = 500;
+
 	private final String peerId;
 	private final BrokerInfo brokerInfo;
 	private final ZMQ.Context context;
@@ -34,9 +39,9 @@ public class Peer {
 		this.brokerInfo = brokerInfo;
 
 		context = ZMQ.context(1);
-		sub = context.socket(ZMQ.SUB);
-		rep = context.socket(ZMQ.REP);
-		//pub = context.socket(ZMQ.PUB);
+		sub = createSocket(ZMQ.SUB);
+		rep = createSocket(ZMQ.REP);
+		//pub = createSocket(ZMQ.PUB);
 	}
 
 	/**
@@ -65,9 +70,7 @@ public class Peer {
 			req.send(message.getHeader(), ZMQ.SNDMORE);
 			req.send(message.getData());
 
-			String header = req.recvStr(); // no way to check for SNDMORE flag
-			byte[] data = req.recv();
-			Message response = Message.parse(header, data);
+			Message response = receiveFromSocket(req, -1);
 			if (!response.type.equals(message.type+"_RESPONSE")) {
 				throw new CommunicationException("unexpected response "+response.type);
 			}
@@ -84,14 +87,21 @@ public class Peer {
 	 * @return actual address on which socket is bound
 	 */
 	private static String bindSocket(ZMQ.Socket socket, String address) {
-		if (address.endsWith(":*")) {
-			address = address.substring(0, address.length() - 2);
-			int port = socket.bindToRandomPort(address);
-			address += ":" + port;
-		} else {
-			socket.bind(address);
-		}
-		return address;
+		socket.bind(address);
+		return (String) socket.base().getsockoptx(zmq.ZMQ.ZMQ_LAST_ENDPOINT);
+	}
+
+	/**
+	 * Create ZMQ socket of specified type. Set linger=0 and default HWM.
+	 *
+	 * @param type  socket type, e.g. ZMQ.REP
+	 * @return newly created socket
+	 */
+	private ZMQ.Socket createSocket(int type) {
+		ZMQ.Socket socket = context.socket(type);
+		socket.setLinger(0);
+		socket.setHWM(HWM);
+		return socket;
 	}
 
 	/**
@@ -109,11 +119,11 @@ public class Peer {
 			JSONObject helloJSON = new JSONObject();
 			helloJSON.put("broker_url", brokerInfo.brokerURL);
 			helloJSON.put("peer_url", repURL);
-			Message hello = new Message(Message.BROKER_HELLO, peerId, helloJSON.toString().getBytes());
+			Message hello = new Message(Message.BROKER_HELLO, peerId, Converter.bytesFromString(helloJSON.toString()));
 
 			Message response = askBroker(hello);
 
-			JSONObject responseJSON = new JSONObject(new String(response.data));
+			JSONObject responseJSON = new JSONObject(Converter.stringFromBytes(response.data));
 			String xpubURL = responseJSON.getString("xpub_url");
 			//String xsubURL = responseJSON.getString("xsub_url");
 			//pub.connect(xsubURL);
@@ -122,6 +132,45 @@ public class Peer {
 		} catch (JSONException ex) {
 			throw new CommunicationException("JSON error in peer", ex);
 		}
+	}
+
+	/**
+	 * Check whether the socket has more message parts to receive.
+	 *
+	 * @param socket  socket to check
+	 * @return true if more parts are coming, false otherwise
+	 */
+	private static boolean isRcvMore(ZMQ.Socket socket) {
+		int rcvMore = (Integer) socket.base().getsockoptx(zmq.ZMQ.ZMQ_RCVMORE);
+		return rcvMore == 1;
+	}
+
+	/**
+	 * Receive multi-part message from given socket.
+	 * Message has two consist from exactly two parts.
+	 *
+	 * @param socket socket to receive message from
+	 * @param timeoutMillis timeout in milliseconds, or -1 to wait forever
+	 * @return new Message instance
+	 * @throws CommunicationException if received message is invalid
+	 */
+	private static Message receiveFromSocket(ZMQ.Socket socket, int timeoutMillis) throws CommunicationException {
+		int previousTimeout = socket.getReceiveTimeOut();
+		socket.setReceiveTimeOut(timeoutMillis);
+		String header = socket.recvStr();
+		socket.setReceiveTimeOut(previousTimeout);
+		if (!isRcvMore(socket)) {
+			throw new CommunicationException("received invalid one-part message");
+		}
+		if (header == null) {
+			// timeout
+			return null;
+		}
+		byte[] data = socket.recv();
+		if (isRcvMore(socket)) {
+			throw new CommunicationException("received message with more than two parts");
+		}
+		return Message.parse(header, data);
 	}
 
 	/**
@@ -143,14 +192,7 @@ public class Peer {
 	 * @throws CommunicationException  if received message is invalid
 	 */
 	public Message receive(int timoutMillis) throws CommunicationException {
-		sub.setReceiveTimeOut(timoutMillis);
-		String header = sub.recvStr(); // no way to check for SNDMORE flag
-		if (header == null) {
-			return null;
-		}
-		sub.setReceiveTimeOut(-1);
-		byte[] data = sub.recv();
-		return Message.parse(header, data);
+		return receiveFromSocket(sub, timoutMillis);
 	}
 
 	/**
@@ -171,7 +213,7 @@ public class Peer {
 	 * @param type  message type
 	 */
 	public void subscribe(String type) {
-		sub.subscribe(type.getBytes());
+		sub.subscribe(Converter.bytesFromString(type));
 	}
 
 }
