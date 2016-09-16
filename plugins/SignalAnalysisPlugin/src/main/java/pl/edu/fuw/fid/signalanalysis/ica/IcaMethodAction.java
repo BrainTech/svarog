@@ -103,15 +103,20 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				File newFile = SignalAnalysisTools.createRawTemporaryFileFromData(signalAccess, ica);
 
 				// open generated data in a new tab
+				int channelCount = ica.getRowDimension();
 				RawSignalDescriptor newDescriptor = new RawSignalDescriptor();
 				newDescriptor.setBlocksPerPage(signalDocument.getBlocksPerPage());
 				newDescriptor.setByteOrder(RawSignalByteOrder.BIG_ENDIAN);
-				newDescriptor.setChannelLabels(SignalAnalysisTools.generateIcaComponentNames(ica.getRowDimension()));
-				newDescriptor.setChannelCount(ica.getRowDimension());
+				newDescriptor.setChannelLabels(SignalAnalysisTools.generateIcaComponentNames(channelCount));
+				newDescriptor.setChannelCount(channelCount);
 				newDescriptor.setSampleCount(ica.getColumnDimension());
 				newDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 				newDescriptor.setSamplingFrequency(signalDocument.getSamplingFrequency());
 				newDescriptor.setSourceFileName(newFile.getName());
+
+				newDescriptor.getSignalParameters().setCalibrationGain(new float[channelCount]);
+				newDescriptor.getSignalParameters().setCalibrationOffset(new float[channelCount]);
+				newDescriptor.setCalibrationGain(1.0f);
 
 				IcaSignalDocument newDocument = new IcaSignalDocument(newDescriptor, icaFromOutput, outputFromRaw, montage);
 				newDocument.setBackingFile(newFile);

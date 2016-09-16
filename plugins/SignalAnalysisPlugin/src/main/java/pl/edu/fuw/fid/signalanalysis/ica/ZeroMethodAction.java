@@ -79,14 +79,19 @@ public class ZeroMethodAction extends AbstractSignalMLAction {
 				File newFile = SignalAnalysisTools.createRawTemporaryFileFromData(signalAccess, output);
 
 				// open generated data in a new tab
+				int channelCount = ica.getRowDimension();
 				RawSignalDescriptor newDescriptor = new RawSignalDescriptor();
 				newDescriptor.setBlocksPerPage(icaDocument.getBlocksPerPage());
 				newDescriptor.setByteOrder(RawSignalByteOrder.BIG_ENDIAN);
-				newDescriptor.setChannelCount(ica.getRowDimension());
+				newDescriptor.setChannelCount(channelCount);
 				newDescriptor.setSampleCount(ica.getColumnDimension());
 				newDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 				newDescriptor.setSamplingFrequency(icaDocument.getSamplingFrequency());
 				newDescriptor.setSourceFileName(newFile.getName());
+
+				newDescriptor.getSignalParameters().setCalibrationGain(new float[channelCount]);
+				newDescriptor.getSignalParameters().setCalibrationOffset(new float[channelCount]);
+				newDescriptor.setCalibrationGain(1.0f);
 
 				RawSignalDocument newDocument = new RawSignalDocument(newDescriptor);
 				newDocument.setBackingFile(newFile);
