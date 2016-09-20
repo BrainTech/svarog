@@ -13,19 +13,6 @@ import static junit.framework.Assert.assertEquals;
  */
 public class Util {
 
-	public static void printFloatArray(float[] arr) {
-		StringBuilder sb = new StringBuilder("Length: ");
-		sb.append(arr.length);
-		sb.append("\n");
-		for (int i=0; i<arr.length; i++) {
-			if (i > 0) {
-				sb.append(", ");
-			}
-			sb.append(arr[i]);
-		}
-		System.out.println(sb.toString());
-	}
-
 	public static void assertFloatArrayEquals(float[] arr1, float[] arr2) {
 		assertEquals(arr1.length, arr2.length);
 		for (int i=0; i<arr1.length; i++) {

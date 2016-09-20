@@ -2,7 +2,10 @@
 
 package pl.edu.fuw.MP.Core;
 
+import org.apache.log4j.Logger;
+
 public class Utils {
+	private static final Logger logger = Logger.getLogger(Utils.class);
 	public static boolean loggingFlag = true;
 
 	public static float HmppPhase(float freq,float position,float phase) {
@@ -30,9 +33,11 @@ public class Utils {
 
 	public static void log(String text) {
 		if (Utils.loggingFlag) {
-			System.err.println(text);
-			if (text.indexOf("Exception")!=-1) {
+			if (text.contains("Exception")) {
+				logger.error(text);
 				throw new RuntimeException();
+			} else {
+				logger.debug(text);
 			}
 		}
 	}

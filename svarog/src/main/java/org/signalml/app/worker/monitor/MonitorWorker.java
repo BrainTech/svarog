@@ -173,7 +173,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			}
 
 			double samplesTimestamp = samples.get(0).getTimestamp();
-			//System.out.println("  -- " + samplesTimestamp);
+			//logger.debug("  -- " + samplesTimestamp);
 			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
 
 			publish(newSamplesPackage);

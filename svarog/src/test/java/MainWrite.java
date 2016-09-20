@@ -52,7 +52,7 @@ public class MainWrite {
 
 			incBook.writeSegment(seg);
 
-			System.out.println("Done.");
+			logger.info("Done.");
 		} catch (IOException e) {
 			logger.error("", e);
 		} finally {

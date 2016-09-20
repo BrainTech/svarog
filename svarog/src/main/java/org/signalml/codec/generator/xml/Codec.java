@@ -776,18 +776,4 @@ public class Codec extends CodecCore {
 		}
 	}
 
-	/*
-	public static void main(String args[]) {
-	    try {
-	      System.out.println(compile(
-	      	  //"C:\\XMLGen\\XML-Prop\\meta_EDF.xml"
-	      	 "C:\\Documents and Settings\\Dobi\\Projekty\\XMLGen\\Integracja\\SignalML\\data\\sample\\meta_EASYS.xml"
-	      	// "C:\\XMLGen\\XML-Prop\\meta_EDF.xml"
-	      //"C:\\XMLGen\\XML-Prop\\meta_FORMAT_example.xml"));
-	    } catch(Exception e) {
-	      logger.error("", e);
-	    }
-	}
-	*/
-
 }
