@@ -136,3 +136,19 @@ Następnie wystarczy tylko:
 * zmienić nazwę wersji w pliku run_svarog.sh
 * spakować ZIP z nową nazwą (warto jednocześnie uaktualnić nazwę głównego
   katalogu w paczce)
+
+
+VI. Znane problemy
+------------------
+
+Zdarza się, szczególnie przy pracy w środowisku maszyny wirtualnej,
+że zmiana rozdzielczości wyświetlania lub uśpienie/wstrzymanie komputera
+powodują wystąpienie następującego błędu:
+
+  message: sun.awt.image.BufImgSurfaceData cannot be cast to sun.java2d.xr.XRSurfaceData
+  class java.lang.ClassCastException
+
+Jest to znany błąd w aktualnej wersji wirtualnej maszyny Java i można
+go uniknąć, uruchamiając Svaroga z pliku JAR z dodatkową opcją
+
+  -Dsun.java2d.xrender=false

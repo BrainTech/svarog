@@ -133,3 +133,19 @@ a) and b). Afterwards, it is necessary to:
 * replace version number in run_svarog.sh
 * make a ZIP file with the new name (check if the name of the package
   corresponds to the package's main directory)
+
+
+VI. Known problems
+------------------
+
+It is known that sometimes, especially when working in virtual machine
+environment, any change of the display resolution or energy-saving
+transition (e.g. computer sleep/wakeup) triggers the following error:
+
+  message: sun.awt.image.BufImgSurfaceData cannot be cast to sun.java2d.xr.XRSurfaceData
+  class java.lang.ClassCastException
+
+This is a known bug in the current version of Java, and can be avoided
+by starting Svarog from JAR file with the command-line option
+
+  -Dsun.java2d.xrender=false
