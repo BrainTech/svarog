@@ -7,7 +7,6 @@ package org.signalml.app.action.document.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.io.IOException;
-import java.util.logging.Level;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -58,7 +57,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 			try {
 				monitorSignalDocument.stopMonitorRecording();
 			} catch (IOException ex) {
-				java.util.logging.Logger.getLogger(StopMonitorRecordingAction.class.getName()).log(Level.SEVERE, null, ex);
+				logger.error(ex, ex);
 			}
 		}
 

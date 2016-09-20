@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.util.XMLUtils;
@@ -104,14 +103,8 @@ public abstract class AbstractXMLConfiguration {
 				AbstractXMLConfiguration config = this.getClass().newInstance();
 				XMLUtils.objectFromFile(config, f, getStreamer());
 				this.copyFrom(config);
-			} catch (InstantiationException ex) {
-				java.util.logging.Logger.getLogger(
-						AbstractXMLConfiguration.class.getName()).log(
-						Level.SEVERE, null, ex);
-			} catch (IllegalAccessException ex) {
-				java.util.logging.Logger.getLogger(
-						AbstractXMLConfiguration.class.getName()).log(
-						Level.SEVERE, null, ex);
+			} catch (InstantiationException|IllegalAccessException ex) {
+				logger.error(ex, ex);
 			}
 		}
 	}

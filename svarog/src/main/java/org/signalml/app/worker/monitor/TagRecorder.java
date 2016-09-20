@@ -14,8 +14,7 @@ import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.SortedSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.MonitorTag;
@@ -32,6 +31,8 @@ import org.signalml.plugin.export.signal.Tag;
  * @author Piotr Szachewicz
  */
 public class TagRecorder {
+
+	private static final Logger logger = Logger.getLogger(TagRecorder.class);
 
 	/**
 	 * The timestamp of the first sample in the samples recording (recorded by the {@link SignalRecorderWorker}).
@@ -141,7 +142,7 @@ public class TagRecorder {
 			removeAllTags();
 
 		} catch (Exception ex) {
-			Logger.getLogger(TagRecorder.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 	}
 

@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.Montage;
@@ -153,7 +152,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 					updateTimeDomainSampleFilterEnginesCache(samplesAdded);
 			}
 			catch (InterruptedException ex) {
-				java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+				logger.error(ex, ex);
 			}
 			finally {
 				os.unlock();
@@ -181,7 +180,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			}
 		}
 		catch (InterruptedException ex) {
-			java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 		finally {
 			semaphore.release();
@@ -311,7 +310,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 				try {
 					filterCoefficients = IIRDesigner.designDigitalFilter(tdsFilter);
 				} catch (BadFilterParametersException ex) {
-					java.util.logging.Logger.getLogger(AbstractIIRSinglechannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+					logger.error(ex, ex);
 					continue;
 				}
 
@@ -430,7 +429,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 			newMontage = true;
 
 		} catch (InterruptedException ex) {
-			java.util.logging.Logger.getLogger(MultichannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 		finally {
 			semaphore.release();

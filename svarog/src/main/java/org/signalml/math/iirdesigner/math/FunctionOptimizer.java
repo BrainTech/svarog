@@ -3,7 +3,6 @@
  */
 
 package org.signalml.math.iirdesigner.math;
-import java.util.logging.Level;
 import org.apache.commons.math.FunctionEvaluationException;
 import org.apache.commons.math.MaxIterationsExceededException;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
@@ -12,6 +11,7 @@ import org.apache.commons.math.optimization.OptimizationException;
 import org.apache.commons.math.optimization.RealPointValuePair;
 import org.apache.commons.math.optimization.direct.NelderMead;
 import org.apache.commons.math.optimization.univariate.BrentOptimizer;
+import org.apache.log4j.Logger;
 
 /**
  * This class represents an optimizer capable of finding minimum values in
@@ -20,6 +20,8 @@ import org.apache.commons.math.optimization.univariate.BrentOptimizer;
  * @author Piotr Szachewicz
  */
 public class FunctionOptimizer {
+
+	private static final Logger logger = Logger.getLogger(FunctionOptimizer.class);
 
 	/**
 	 * Returns the value of the parameter found by the Nelder and Mead simplex
@@ -38,12 +40,8 @@ public class FunctionOptimizer {
 		RealPointValuePair result = null;
 		try {
 			result = optimizer.optimize(wrappedFunction, GoalType.MINIMIZE, new double[] {start});
-		} catch (FunctionEvaluationException ex) {
-			java.util.logging.Logger.getLogger(FunctionOptimizer.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (OptimizationException ex) {
-			java.util.logging.Logger.getLogger(FunctionOptimizer.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (IllegalArgumentException ex) {
-			java.util.logging.Logger.getLogger(FunctionOptimizer.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (FunctionEvaluationException|OptimizationException|IllegalArgumentException ex) {
+			logger.error(ex, ex);
 		}
 
 		return result.getPoint()[0];
@@ -68,10 +66,8 @@ public class FunctionOptimizer {
 		double result = 0;
 		try {
 			result = optimizer.optimize(function, GoalType.MINIMIZE, lowerBounds, higherBounds);
-		} catch (MaxIterationsExceededException ex) {
-			java.util.logging.Logger.getLogger(FunctionOptimizer.class.getName()).log(Level.SEVERE, null, ex);
-		} catch (FunctionEvaluationException ex) {
-			java.util.logging.Logger.getLogger(FunctionOptimizer.class.getName()).log(Level.SEVERE, null, ex);
+		} catch (MaxIterationsExceededException|FunctionEvaluationException ex) {
+			logger.error(ex, ex);
 		}
 
 		return result;

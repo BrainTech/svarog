@@ -9,8 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
@@ -27,6 +26,8 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  * @author Piotr Szachewicz
  */
 public class OpenBookDocumentAction extends AbstractSignalMLAction {
+
+	private static final Logger logger = Logger.getLogger(OpenBookDocumentAction.class);
 
 	/**
 	 * Used for opening documents.
@@ -72,7 +73,7 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 		try {
 			documentFlowIntegrator.openDocument(openDocumentDescriptor);
 		} catch (IOException | SignalMLException ex) {
-			Logger.getLogger(OpenBookDocumentAction.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 	}
 

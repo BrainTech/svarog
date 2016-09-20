@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.io.InvalidClassException;
-import java.util.logging.Level;
 
 import javax.swing.SwingUtilities;
 
@@ -87,7 +86,7 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 				try {
 					tagTo(e.getPoint());
 				} catch (InvalidClassException ex) {
-					java.util.logging.Logger.getLogger(TagChannelSignalTool.class.getName()).log(Level.SEVERE, null, ex);
+					logger.error(ex, ex);
 				}
 			}
 			startPosition = null;
@@ -105,7 +104,7 @@ public class TagChannelSignalTool extends AbstractSignalTool implements TaggingS
 			try {
 				selectTo(point);
 			} catch (InvalidClassException ex) {
-				java.util.logging.Logger.getLogger(TagChannelSignalTool.class.getName()).log(Level.SEVERE, null, ex);
+				logger.error(ex, ex);
 			}
 			Rectangle r = new Rectangle(point.x, point.y, 1, 1);
 			((SignalPlot)e.getSource()).scrollRectToVisible(r);
