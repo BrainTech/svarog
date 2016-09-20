@@ -14,7 +14,20 @@ build:
   artifacts:
     name: "{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths: 
-    - ./dist/*
+    - ./dist/*.deb
+    
+buildstandalone:
+  image: svarog-build-test-image:u1604
+  stage: builddeb
+  before_script:
+    - apt-get update 
+    - apt-get install tar
+  script:
+    - ./buildtar.sh
+  artifacts:
+    name: Svarog_standalone_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
+    paths: 
+    - ./dist/*.tar.gz
 
 mvntest:
   image: svarog-build-test-image:u1604

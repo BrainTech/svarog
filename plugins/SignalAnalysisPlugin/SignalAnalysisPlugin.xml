@@ -1,6 +1,6 @@
 <plugin>
 	<name>Signal Analysis Plugin</name>
-	<version> 0.1 </version>
+	<version> 0.2 </version>
 	<jar-file>SignalAnalysisPlugin.jar</jar-file>
 	<starting-class>
 		pl.edu.fuw.fid.signalanalysis.SignalAnalysisPlugin
