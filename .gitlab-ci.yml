@@ -20,14 +20,14 @@ buildstandalone:
   image: svarog-build-test-image:u1604
   stage: builddeb
   before_script:
-    - apt-get update 
-    - apt-get install tar
+    - apt-get update -y
+    - apt-get install -y zip
   script:
-    - ./buildtar.sh
+    - ./buildzip.sh
   artifacts:
     name: Svarog_standalone_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
     paths: 
-    - ./dist/*.tar.gz
+    - ./dist/svarog-*.zip
 
 mvntest:
   image: svarog-build-test-image:u1604

@@ -28,4 +28,4 @@ mv plugins/Stager/target/*.jar dist/svarog-$VERSION-standalone/plugins/
 mv plugins/Stager/target/*.xml dist/svarog-$VERSION-standalone/plugins/
 
 cd dist
-tar -zcvf svarog-$VERSION-standalone.tar.gz svarog-$VERSION-standalone
+zip -r svarog-$VERSION-standalone.zip svarog-$VERSION-standalone
