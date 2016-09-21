@@ -126,7 +126,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private ViewerMainFrame viewerMainFrame = null;
 	private XStream streamer = null;
 	private SplashScreen splashScreen = null;
-	private String startupDir = null;
 	// this needs to be a field to allow for invokeAndWait
 	private GeneralConfiguration initialConfig = null;
 	private boolean molTest = false;
@@ -166,9 +165,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 		}
 
-		// do a temporary logging configuration, until it is done
-		// properly in _run().
-		BasicConfigurator.configure();
+		// configure logging properly
+		_init_logging();
 		logger.debug("Preparing Svarog " + SvarogConstants.VERSION);
 		DebugHelpers.debugThreads(logger);
 		DebugHelpers.debugCL(logger);
@@ -286,8 +284,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	}
 
 	private void _run(String[] args) {
-		startupDir = System.getProperty("user.dir");
-
 		final Options options = new Options();
 		options.addOption("h", "help", false, "display help");
 		options.addOption("R", "reset", false, "reset workspace settings");
@@ -334,8 +330,6 @@ public class SvarogApplication implements java.lang.Runnable {
 			initializeFirstTime(null);
 			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
 		}
-
-		_init_logging();
 
 		Util.dumpDebuggingInfo();
 
@@ -407,9 +401,9 @@ public class SvarogApplication implements java.lang.Runnable {
 		logger.debug("SvarogApplication._run complete!");
 	}
 
-	private void _init_logging() {
+	private static void _init_logging() {
 		// allow for local file config
-		final File loggingConfig = new File(startupDir, "logging.properties");
+		final File loggingConfig = new File(System.getProperty("user.dir"), "logging.properties");
 		final String loggingPath;
 		if (loggingConfig.exists()) {
 			loggingPath = "file:" + loggingConfig.getAbsolutePath();
@@ -974,11 +968,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	// this is guaranteed not to be used in applet context
 	public SignalMLCodecManager getSignalMLCodecManager() {
 		return signalMLCodecManager;
-	}
-
-	// this is guaranteed not to be used in applet context
-	public String getStartupDir() {
-		return startupDir;
 	}
 
 	/** {@link #elementManager} getter. */
