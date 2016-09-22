@@ -28,7 +28,7 @@
 
 		<git.git>git</git.git>
 
-		<org.signalml.jsignalml.version>1.1</org.signalml.jsignalml.version>
+		<org.signalml.jsignalml.version>1.2</org.signalml.jsignalml.version>
 	</properties>
 
 	<build>
