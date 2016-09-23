@@ -66,6 +66,7 @@ deploy_xenial_development:
     - export SSHPASS=$DEB_NIGHTLY_PASSWD
     - export RELEASE=xenial
     - ./deploydebs.sh
+  environment: nightly_ubuntu1604
 
 deploy_xenial_testing:
   image: deployment-image
@@ -84,6 +85,7 @@ deploy_xenial_testing:
     - export SSHPASS=$DEB_TESTING_PASSWD
     - export RELEASE=xenial
     - ./deploydebs.sh
+  environment: testing_ubuntu1604
 
 deploy_xenial_master:
   image: deployment-image
@@ -102,3 +104,4 @@ deploy_xenial_master:
     - export SSHPASS=$DEB_STABLE_PASSWD
     - export RELEASE=xenial
     - ./deploydebs.sh
+  environment: production_ubuntu1604
