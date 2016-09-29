@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
  */
 public class SvarogLoggingConfigurer {
 
-	private static final String OBCI_REP_HOST = "127.0.0.1";
+	private static final String OBCI_REP_IP = "127.0.0.1";
 	private static final int OBCI_REP_PORT = 54654;
 
 	private SvarogLoggingConfigurer() {
@@ -28,10 +28,10 @@ public class SvarogLoggingConfigurer {
 	public static void configure(Logger logger) {
 		try {
 			try (java.net.Socket socket = new java.net.Socket()) {
-				socket.connect(new InetSocketAddress(OBCI_REP_HOST, OBCI_REP_PORT));
+				socket.connect(new InetSocketAddress(OBCI_REP_IP, OBCI_REP_PORT));
 			}
 			// obci_server appears to be running
-			String url = "tcp://"+OBCI_REP_HOST+":"+OBCI_REP_PORT;
+			String url = "tcp://"+OBCI_REP_IP+":"+OBCI_REP_PORT;
 			ZmqRemoteAppender appender = new ZmqRemoteAppender(url);
 			logger.removeAllAppenders();
 			logger.addAppender(appender);

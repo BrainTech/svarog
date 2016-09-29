@@ -19,7 +19,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	private static final String MESSAGE_TYPE = "log_msg";
 
 	/** maximal queue capacity to avoid exhausting memory */
-	private static final int QUEUE_CAPACITY = 10000;
+	private static final int QUEUE_CAPACITY = 1000;
 
 	/** timeout for sending pending messages at shutdown (milliseconds) */
 	private static final int SHUTDOWN_TIMEOUT = 1000;
@@ -35,7 +35,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	 * @param url address (e.g. "tcp://host:123") of the remote REP socket
 	 */
 	public ZmqRemoteAppender(String url) {
-		source = "svarog_" + DateTimeFormatter.ISO_DATE_TIME.withZone(ZoneOffset.UTC).format(Instant.now());
+		source = "svarog_" + DateTimeFormatter.ISO_DATE_TIME.format(Instant.now());
 		queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
 		thread = new ZmqLoggingThread(queue, url);
 	}
