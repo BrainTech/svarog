@@ -50,7 +50,9 @@ public class MultichannelSampleFilterForExportTest {
 
 		RawSignalWriter rawSignalWriter = new RawSignalWriter();
 		SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
-		rawSignalWriter.writeSignal(new File("output.bin"), sampleSource, signalExportDescriptor, null);
+		File outputFile = new File("output.bin");
+		outputFile.deleteOnExit();
+		rawSignalWriter.writeSignal(outputFile, sampleSource, signalExportDescriptor, null);
 
 		createFilters();
 		createRawSignalDocument();
