@@ -1,7 +1,6 @@
 package org.signalml.app.logging;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.spi.LoggingEvent;
@@ -35,7 +34,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	 * @param url address (e.g. "tcp://host:123") of the remote REP socket
 	 */
 	public ZmqRemoteAppender(String url) {
-		source = "svarog_" + DateTimeFormatter.ISO_DATE_TIME.format(Instant.now());
+		source = "svarog_" + ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
 		queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
 		thread = new ZmqLoggingThread(queue, url);
 	}
