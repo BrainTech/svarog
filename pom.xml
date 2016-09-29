@@ -39,7 +39,6 @@
 				<module>plugins/SignalAnalysisPlugin</module>
 				<module>plugins/PluginToolCommon</module>
 				<module>plugins/Artifact</module>
-				<module>izpack</module>
 				<module>svarog-standalone</module>
 			</modules>
 		</profile>
