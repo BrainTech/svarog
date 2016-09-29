@@ -18,7 +18,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.i18n.resources>src/main/resources/org/signalml/app/resource/i18n/</project.build.i18n.resources>
-		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 
 		<protobuf.protoc>protoc</protobuf.protoc>
 		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
