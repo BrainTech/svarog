@@ -91,6 +91,8 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import org.apache.log4j.LogManager;
+import org.signalml.app.logging.SvarogLoggingConfigurer;
 
 /**
  * The Svarog application.
@@ -413,6 +415,10 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		try {
 			Log4jConfigurer.initLogging(loggingPath);
+			SvarogLoggingConfigurer.configure(Logger.getRootLogger());
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				LogManager.shutdown();
+			}));
 		} catch (FileNotFoundException ex) {
 			System.err.println("Critical error: no logging configuration");
 			System.exit(1);
