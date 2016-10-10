@@ -58,10 +58,6 @@ public class Helper {
 
 		return MessageParser.parseMessageFromJSON(responseString, awaitedMessageType);
 	}
-	public static synchronized String sendRequest(Message request, String destinationIP,
-			 int destinationPort) throws OpenbciCommunicationException {
-		return sendRequest(request, destinationIP, destinationPort);
-	}
 
 	public static synchronized String sendRequest(Message request, String destinationIP,
 			 int destinationPort, int timeout) throws OpenbciCommunicationException {
