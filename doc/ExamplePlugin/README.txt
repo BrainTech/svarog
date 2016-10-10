@@ -3,4 +3,4 @@ svarog\target\svarog-{version}.jar
 target\svarog-{version}-full.dir\svarog-{version}\lib\log4j.jar
 target\svarog-{version}-full.dir\svarog-{version}\lib\spring-context.jar
 
-If the version of Svarog changes from 1.1.4 to something else you will also have to modify the configuration of the project.
+If the version of Svarog changes from 1.1.5 to something else you will also have to modify the configuration of the project.
