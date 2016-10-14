@@ -220,7 +220,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 
 	@Override
 	public float getHzFrequency() {
-		return getNaturalFrequency()*getSamplingFrequency()/getBaseLength();
+		return 0.5f * frequency * getSamplingFrequency();
 	}
 
 	@Override
