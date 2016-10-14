@@ -210,9 +210,8 @@
 									  outputproperty="git-describe.output"
 									  resultproperty="git-describe.result">
 									<arg value="describe" />
-									<arg value="--always" />
 									<arg value="--tags" />
-									<arg value="--dirty=+" />
+									<arg value="--first-parent" />
 								</exec>
 								<condition property="svarog.git-version"
 										   value="${git-describe.output}"
