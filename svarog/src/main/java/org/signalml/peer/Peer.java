@@ -203,7 +203,19 @@ public class Peer {
 		sub.close();
 		rep.close();
 		//pub.close();
-		context.term();
+		Thread closing = new Thread(() -> {
+			context.term();
+		});
+		// if internal ZMQ thread raises an exception,
+		// context.term() sometimes hangs forever,
+		// therefore it must be closed asynchronously
+		closing.setDaemon(true);
+		closing.start();
+		try {
+			closing.join(1000);
+		} catch (InterruptedException ex) {
+			// interrupted
+		}
 	}
 
 	/**
