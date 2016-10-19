@@ -5,13 +5,13 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog</artifactId>
 	<packaging>jar</packaging>
-	<version>2.0.0dev-36-geb90e1e</version>
+	<version>2.1</version>
 
 	<name>Svarog</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>2.0.0dev-36-geb90e1e</version>
+		<version>2.1</version>
 	</parent>
 
 	<properties>
