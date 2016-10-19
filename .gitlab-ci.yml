@@ -72,7 +72,7 @@ deploy_xenial_testing:
   image: deployment-image
   stage: deploy
   only:
-    - ^release.*
+    - /^release.*/
   before_script:
     - apt-get update -qq -y
     - apt-get install -y -qq sshpass openssh-client uuid-runtime
