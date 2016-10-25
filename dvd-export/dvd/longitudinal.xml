@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<montage id="1">
+  <eegSystemName id="2">
+    <eegSystemSymbol>EEG 10_20 Cap19</eegSystemSymbol>
+    <eegSystemType>adults</eegSystemType>
+  </eegSystemName>
+  <sourceChannels id="3">
+    <sourcechannel id="4">
+      <channel>0</channel>
+      <label>Fp1</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="5">
+        <label>Fp1</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="6">
+          <radius>1.0</radius>
+          <theta>18.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="7">
+      <channel>1</channel>
+      <label>Fp2</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="8">
+        <label>Fp2</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="9">
+          <radius>1.0</radius>
+          <theta>-18.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="10">
+      <channel>2</channel>
+      <label>AFz</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="11">
+      <channel>3</channel>
+      <label>F7</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="12">
+        <label>F7</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="13">
+          <radius>1.0</radius>
+          <theta>54.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="14">
+      <channel>4</channel>
+      <label>F3</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="15">
+        <label>F3</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="16">
+          <radius>1.0</radius>
+          <theta>39.0</theta>
+          <phi>30.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="17">
+      <channel>5</channel>
+      <label>Fz</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="18">
+        <label>Fz</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="19">
+          <radius>1.0</radius>
+          <theta>-0.0</theta>
+          <phi>44.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="20">
+      <channel>6</channel>
+      <label>F4</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="21">
+        <label>F4</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="22">
+          <radius>1.0</radius>
+          <theta>-39.0</theta>
+          <phi>30.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="23">
+      <channel>7</channel>
+      <label>F8</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="24">
+        <label>F8</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="25">
+          <radius>1.0</radius>
+          <theta>-54.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="26">
+      <channel>8</channel>
+      <label>T3</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="27">
+        <label>T3</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="28">
+          <radius>1.0</radius>
+          <theta>90.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="29">
+      <channel>9</channel>
+      <label>C3</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="30">
+        <label>C3</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="31">
+          <radius>1.0</radius>
+          <theta>90.0</theta>
+          <phi>44.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="32">
+      <channel>10</channel>
+      <label>Cz</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="33">
+        <label>Cz</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="34">
+          <radius>1.0</radius>
+          <theta>-90.0</theta>
+          <phi>90.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="35">
+      <channel>11</channel>
+      <label>C4</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="36">
+        <label>C4</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="37">
+          <radius>1.0</radius>
+          <theta>-90.0</theta>
+          <phi>44.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="38">
+      <channel>12</channel>
+      <label>T4</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="39">
+        <label>T4</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="40">
+          <radius>1.0</radius>
+          <theta>-90.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="41">
+      <channel>13</channel>
+      <label>T5</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="42">
+        <label>T5</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="43">
+          <radius>1.0</radius>
+          <theta>126.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="44">
+      <channel>14</channel>
+      <label>P3</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="45">
+        <label>P3</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="46">
+          <radius>1.0</radius>
+          <theta>141.0</theta>
+          <phi>30.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="47">
+      <channel>15</channel>
+      <label>Pz</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="48">
+        <label>Pz</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="49">
+          <radius>1.0</radius>
+          <theta>-180.0</theta>
+          <phi>44.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="50">
+      <channel>16</channel>
+      <label>P4</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="51">
+        <label>P4</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="52">
+          <radius>1.0</radius>
+          <theta>-141.0</theta>
+          <phi>30.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="53">
+      <channel>17</channel>
+      <label>T6</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="54">
+        <label>T6</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="55">
+          <radius>1.0</radius>
+          <theta>-126.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="56">
+      <channel>18</channel>
+      <label>O1</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="57">
+        <label>O1</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="58">
+          <radius>1.0</radius>
+          <theta>162.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="59">
+      <channel>19</channel>
+      <label>O2</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="60">
+        <label>O2</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="61">
+          <radius>1.0</radius>
+          <theta>-162.0</theta>
+          <phi>-2.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="62">
+      <channel>20</channel>
+      <label>A1</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="63">
+        <label>A1</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="64">
+          <radius>1.2</radius>
+          <theta>100.0</theta>
+          <phi>0.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="65">
+      <channel>21</channel>
+      <label>A2</label>
+      <function class="eegchannel">EEG</function>
+      <eegElectrode id="66">
+        <label>A2</label>
+        <channelType>PRIMARY</channelType>
+        <polarPosition id="67">
+          <radius>1.2</radius>
+          <theta>-100.0</theta>
+          <phi>0.0</phi>
+        </polarPosition>
+      </eegElectrode>
+    </sourcechannel>
+    <sourcechannel id="68">
+      <channel>22</channel>
+      <label>EOGL</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="69">
+      <channel>23</channel>
+      <label>EOGR</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="70">
+      <channel>24</channel>
+      <label>EMG</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="71">
+      <channel>25</channel>
+      <label>EKG</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="72">
+      <channel>26</channel>
+      <label>RESP_U</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="73">
+      <channel>27</channel>
+      <label>RESP_D</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="74">
+      <channel>28</channel>
+      <label>TERM</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="75">
+      <channel>29</channel>
+      <label>SaO2</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="76">
+      <channel>30</channel>
+      <label>Pleth</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="77">
+      <channel>31</channel>
+      <label>HRate</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="78">
+      <channel>32</channel>
+      <label>Saw</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+    <sourcechannel id="79">
+      <channel>33</channel>
+      <label>Driver_Saw</label>
+      <function class="eegchannel">UNKNOWN</function>
+    </sourcechannel>
+  </sourceChannels>
+  <montageChannels id="80">
+    <montagechannel id="81">
+      <primaryChannel reference="4"/>
+      <label>Fp1-F3</label>
+      <referenceMap id="82">
+        <entry>
+          <sourcechannel reference="14"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="83">
+      <primaryChannel reference="14"/>
+      <label>F3-C3</label>
+      <referenceMap id="84">
+        <entry>
+          <sourcechannel reference="29"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="85">
+      <primaryChannel reference="29"/>
+      <label>C3-P3</label>
+      <referenceMap id="86">
+        <entry>
+          <sourcechannel reference="44"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="87">
+      <primaryChannel reference="44"/>
+      <label>P3-O1</label>
+      <referenceMap id="88">
+        <entry>
+          <sourcechannel reference="56"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="89">
+      <primaryChannel reference="7"/>
+      <label>Fp2-F4</label>
+      <referenceMap id="90">
+        <entry>
+          <sourcechannel reference="20"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="91">
+      <primaryChannel reference="20"/>
+      <label>F4-C4</label>
+      <referenceMap id="92">
+        <entry>
+          <sourcechannel reference="35"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="93">
+      <primaryChannel reference="35"/>
+      <label>C4-P4</label>
+      <referenceMap id="94">
+        <entry>
+          <sourcechannel reference="50"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="95">
+      <primaryChannel reference="50"/>
+      <label>P4-O2</label>
+      <referenceMap id="96">
+        <entry>
+          <sourcechannel reference="59"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="97">
+      <primaryChannel reference="4"/>
+      <label>Fp1-F7</label>
+      <referenceMap id="98">
+        <entry>
+          <sourcechannel reference="11"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="99">
+      <primaryChannel reference="11"/>
+      <label>F7-T3</label>
+      <referenceMap id="100">
+        <entry>
+          <sourcechannel reference="26"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="101">
+      <primaryChannel reference="26"/>
+      <label>T3-T5</label>
+      <referenceMap id="102">
+        <entry>
+          <sourcechannel reference="41"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="103">
+      <primaryChannel reference="41"/>
+      <label>T5-O1</label>
+      <referenceMap id="104">
+        <entry>
+          <sourcechannel reference="56"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="105">
+      <primaryChannel reference="7"/>
+      <label>Fp2-F8</label>
+      <referenceMap id="106">
+        <entry>
+          <sourcechannel reference="23"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="107">
+      <primaryChannel reference="23"/>
+      <label>F8-T4</label>
+      <referenceMap id="108">
+        <entry>
+          <sourcechannel reference="38"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="109">
+      <primaryChannel reference="38"/>
+      <label>T4-T6</label>
+      <referenceMap id="110">
+        <entry>
+          <sourcechannel reference="53"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="111">
+      <primaryChannel reference="53"/>
+      <label>T6-O2</label>
+      <referenceMap id="112">
+        <entry>
+          <sourcechannel reference="59"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="113">
+      <primaryChannel reference="17"/>
+      <label>Fz-Cz</label>
+      <referenceMap id="114">
+        <entry>
+          <sourcechannel reference="32"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="115">
+      <primaryChannel reference="32"/>
+      <label>Cz-Pz</label>
+      <referenceMap id="116">
+        <entry>
+          <sourcechannel reference="47"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="117">
+      <primaryChannel reference="68"/>
+      <label>EOGL</label>
+      <referenceMap id="118">
+        <entry>
+          <sourcechannel reference="62"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="119">
+      <primaryChannel reference="69"/>
+      <label>EOGR</label>
+      <referenceMap id="120">
+        <entry>
+          <sourcechannel reference="65"/>
+          <string>-1</string>
+        </entry>
+      </referenceMap>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="121">
+      <primaryChannel reference="70"/>
+      <label>EMG</label>
+      <referenceMap id="122"/>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="123">
+      <primaryChannel reference="71"/>
+      <label>EKG</label>
+      <referenceMap id="124"/>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+    <montagechannel id="125">
+      <primaryChannel reference="72"/>
+      <label>RESP_U</label>
+      <referenceMap id="126"/>
+      <excludeAllFilters>false</excludeAllFilters>
+    </montagechannel>
+  </montageChannels>
+  <filters id="127">
+    <filter id="128">
+      <definition class="timeDomainSampleFilter" id="129">
+        <description>New time domain filter</description>
+        <filterType>LOWPASS</filterType>
+        <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+        <passbandEdgeFrequencies id="130">
+          <double>40.0</double>
+          <double>0.0</double>
+        </passbandEdgeFrequencies>
+        <stopbandEdgeFrequencies id="131">
+          <double>80.0</double>
+          <double>0.0</double>
+        </stopbandEdgeFrequencies>
+        <passbandRipple>3.0</passbandRipple>
+        <stopbandAttenuation>13.35</stopbandAttenuation>
+      </definition>
+      <enabled>true</enabled>
+      <excludedChannels id="132">
+        <montagechannel reference="123"/>
+        <montagechannel reference="121"/>
+      </excludedChannels>
+    </filter>
+    <filter id="133">
+      <definition class="timeDomainSampleFilter" id="134">
+        <description>New time domain filter</description>
+        <filterType>BANDSTOP</filterType>
+        <approximationFunctionType>CHEBYSHEV2</approximationFunctionType>
+        <passbandEdgeFrequencies id="135">
+          <double>47.5</double>
+          <double>52.5</double>
+        </passbandEdgeFrequencies>
+        <stopbandEdgeFrequencies id="136">
+          <double>49.9</double>
+          <double>50.1</double>
+        </stopbandEdgeFrequencies>
+        <passbandRipple>3.0</passbandRipple>
+        <stopbandAttenuation>25.0</stopbandAttenuation>
+      </definition>
+      <enabled>true</enabled>
+      <excludedChannels id="137"/>
+    </filter>
+    <filter id="138">
+      <definition class="timeDomainSampleFilter" id="139">
+        <description>New time domain filter</description>
+        <filterType>HIGHPASS</filterType>
+        <approximationFunctionType>BUTTERWORTH</approximationFunctionType>
+        <passbandEdgeFrequencies id="140">
+          <double>0.5</double>
+          <double>0.0</double>
+        </passbandEdgeFrequencies>
+        <stopbandEdgeFrequencies id="141">
+          <double>0.25</double>
+          <double>0.0</double>
+        </stopbandEdgeFrequencies>
+        <passbandRipple>3.0</passbandRipple>
+        <stopbandAttenuation>6.97</stopbandAttenuation>
+      </definition>
+      <enabled>true</enabled>
+      <excludedChannels id="142"/>
+    </filter>
+  </filters>
+  <filteringEnabled>true</filteringEnabled>
+  <filtfiltEnabled>true</filtfiltEnabled>
+</montage>
