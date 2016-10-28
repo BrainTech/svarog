@@ -2268,8 +2268,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			if (document instanceof MonitorSignalDocument) {
 				// user tags in monitor mode
 				MonitorSignalDocument monitor = (MonitorSignalDocument) document;
-				final MonitorTag tag = new MonitorTag(tagStyle, 0.001*System.currentTimeMillis(), 1.0, -1);
-				monitor.getMonitorWorker().acceptUserTag(tag);
+				if (tagStyle.getType() == SignalSelectionType.CHANNEL) {
+					final MonitorTag tag = new MonitorTag(tagStyle, 0.001*System.currentTimeMillis(), 1.0, -1);
+					monitor.getMonitorWorker().acceptUserTag(tag);
+				}
 			}
 			else if (currentSignalTool instanceof SelectionSignalTool) {
 
