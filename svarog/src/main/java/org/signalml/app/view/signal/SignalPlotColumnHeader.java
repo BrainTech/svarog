@@ -439,7 +439,8 @@ public class SignalPlotColumnHeader extends JComponent {
 				second = (int) Math.round((i * pixelPerColumnUnit) / pixelPerSecond);
 				if (firstSampleTimestamp > 0) {
 					TimeZone timeZone = Calendar.getInstance().getTimeZone();
-					int offset = timeZone.getOffset(1000 * firstSampleTimestamp);
+					// TimeZone API uses timestamp in milliseconds
+					int offset = timeZone.getOffset(1000 * firstSampleTimestamp) / 1000;
 					second = (int) ((firstSampleTimestamp + second + offset) % 86400);
 				}
 				hour = second / 3600;
