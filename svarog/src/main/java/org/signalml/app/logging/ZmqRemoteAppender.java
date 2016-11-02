@@ -34,7 +34,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	 * @param url address (e.g. "tcp://host:123") of the remote REP socket
 	 */
 	public ZmqRemoteAppender(String url) {
-		source = "svarog_" + ZonedDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		source = "svarog_" + ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT).replaceAll("[:\\-]", "");
 		queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
 		thread = new ZmqLoggingThread(queue, url);
 	}
