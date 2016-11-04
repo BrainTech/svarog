@@ -159,12 +159,12 @@ public class Peer {
 		socket.setReceiveTimeOut(timeoutMillis);
 		String header = socket.recvStr();
 		socket.setReceiveTimeOut(previousTimeout);
-		if (!isRcvMore(socket)) {
-			throw new CommunicationException("received invalid one-part message");
-		}
 		if (header == null) {
 			// timeout
 			return null;
+		}
+		if (!isRcvMore(socket)) {
+			throw new CommunicationException("received invalid one-part message");
 		}
 		byte[] data = socket.recv();
 		if (isRcvMore(socket)) {
