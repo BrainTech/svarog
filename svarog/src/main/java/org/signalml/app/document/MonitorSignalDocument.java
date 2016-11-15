@@ -150,7 +150,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		setSaved(true);
 
-		if (descriptor.getJmxClient() == null) {
+		if (descriptor.getPeer() == null) {
 			throw new IOException();
 		}
 

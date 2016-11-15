@@ -1,8 +1,6 @@
-import "Multiplexer.proto";
-
 package variables;
 
-option java_package = "org.signalml.multiplexer.protocol";
+option java_package = "org.signalml.peer.protocol";
 option java_outer_classname = "SvarogProtocol";
 
 message Variable {
@@ -30,8 +28,4 @@ message Tag {
 	required string name = 3;
 	required string channels = 4;
 	optional VariableVector desc = 5;
-}
-
-message TagVector {
-    repeated Tag tags = 1;
 }

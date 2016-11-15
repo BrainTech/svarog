@@ -50,33 +50,15 @@ public class FindEEGExperimentsResponseJSonReader extends AbstractResponseJSonRe
 		List<Object> channelsInfo = (List<Object>) amplifierParams.get("channels_info");
 		readChannelsList(channelsInfo, experiment);
 
-		//active channels
-		String activeChannels = (String) amplifierParams.get("active_channels");
-
-		StringTokenizer tokenizer = new StringTokenizer(activeChannels, ";");
-		while (tokenizer.hasMoreTokens()) {
-			String channelName = tokenizer.nextToken();
-
-			try {
-				int channelNumber = Integer.parseInt(channelName);
-				amplifier.getChannels().get(channelNumber).setSelected(true);
-			}
-			catch (NumberFormatException ex) {
-				for (AmplifierChannel channel: amplifier.getChannels()) {
-					if (channel.getLabel().equalsIgnoreCase(channelName))
-						channel.setSelected(true);
-				}
-			}
-		}
-
 		//channel names
 		String channelNames = (String) amplifierParams.get("channel_names");
-		tokenizer = new StringTokenizer(channelNames, ";");
-		List<AmplifierChannel> selectedChannels = amplifier.getSelectedChannels();
+		StringTokenizer tokenizer = new StringTokenizer(channelNames, ";");
 		int i = 0;
 		while (tokenizer.hasMoreTokens()) {
 			String channelName = tokenizer.nextToken();
-			selectedChannels.get(i).setLabel(channelName);
+			AmplifierChannel channel = amplifier.getChannels().get(i);
+			channel.setSelected(true);
+			channel.setLabel(channelName);
 			i++;
 		}
 

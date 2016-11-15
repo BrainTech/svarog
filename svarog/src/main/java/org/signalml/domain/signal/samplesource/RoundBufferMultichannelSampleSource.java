@@ -7,9 +7,9 @@ package org.signalml.domain.signal.samplesource;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
-import java.util.logging.Level;
 
 import javax.swing.event.EventListenerList;
+import org.apache.log4j.Logger;
 
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
@@ -19,6 +19,8 @@ import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.impl.change.events.PluginSignalChangeEventImpl;
 
 public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource implements OriginalMultichannelSampleSource, ChangeableMultichannelSampleSource {
+
+	private static final Logger logger = Logger.getLogger(RoundBufferMultichannelSampleSource.class);
 
 	/**
 	 * The list containing objects listening for change in this sample source.
@@ -221,7 +223,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		try {
 			semaphore.acquire();
 		} catch (InterruptedException ex) {
-			java.util.logging.Logger.getLogger(RoundBufferMultichannelSampleSource.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 	}
 

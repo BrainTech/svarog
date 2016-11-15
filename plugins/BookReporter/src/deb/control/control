@@ -1,0 +1,8 @@
+Package: svarog-bookreporter
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: svarog, oracle-java8-installer | openjfx 
+Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
+Description: Bookreporter plugin for svarog

@@ -31,7 +31,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -81,7 +80,6 @@ import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.book.wignermap.WignerMapPaletteComboBoxCellRenderer;
 import org.signalml.app.view.book.wignermap.WignerMapScaleComboBoxCellRenderer;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
-import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.common.dialogs.HelpDialog;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
@@ -480,7 +478,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 			AbstractAction helpAction = getContextHelpAction();
 			mainToolBar.add(new JButton(helpAction));
 		} catch (IOException ex) {
-			java.util.logging.Logger.getLogger(BookView.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 	}
 

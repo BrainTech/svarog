@@ -93,6 +93,16 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	private double firstSampleTimestamp = Double.NaN;
 
 	/**
+	 * Name of video file, relative to raw signal path.
+	 */
+	private String videoFileName;
+
+	/**
+	 * Time offset of video file's start, relative to the signal' start.
+	 */
+	private float videoFileOffset;
+
+	/**
 	 * Whether the signal is a backup and was not saved as a result
 	 * of a proper recording stop.
 	 */
@@ -435,6 +445,22 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 	public void setFirstSampleTimestamp(double value) {
 		this.firstSampleTimestamp = value;
+	}
+
+	public String getVideoFileName() {
+		return videoFileName;
+	}
+
+	public void setVideoFileName(String value) {
+		this.videoFileName = value;
+	}
+
+	public float getVideoFileOffset() {
+		return videoFileOffset;
+	}
+
+	public void setVideoFileOffset(float value) {
+		this.videoFileOffset = value;
 	}
 
 	@Override

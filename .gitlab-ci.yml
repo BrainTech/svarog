@@ -1,0 +1,107 @@
+stages:
+  - builddeb
+  - sign
+  - test
+  - deploy
+  
+
+
+build:
+  image: svarog-build-test-image:u1604
+  stage: builddeb
+  script:
+    - ./builddeb.sh
+  artifacts:
+    name: "{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    paths: 
+    - ./dist/*.deb
+    
+buildstandalone:
+  image: svarog-build-test-image:u1604
+  stage: builddeb
+  before_script:
+    - apt-get update -y
+    - apt-get install -y zip
+  script:
+    - ./buildzip.sh
+  artifacts:
+    name: Svarog_standalone_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
+    paths: 
+    - ./dist/svarog-*.zip
+
+mvntest:
+  image: svarog-build-test-image:u1604
+  stage: test
+  script:
+    - mvn test
+    
+signdebs:
+  image: signdebs-image
+  stage: sign
+  before_script:
+  - apt-get update -qq
+  - apt-get install -y gnupg debsigs
+  script: ./signdebs.sh
+  dependencies:
+  - build
+  artifacts:
+    name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    paths:
+    - ./dist/*.deb
+    
+deploy_xenial_development:
+  image: deployment-image
+  stage: deploy
+  only:
+    - development
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - signdebs
+  script:
+    - export DEB_SRV=$DEB_NIGHTLY_SRV
+    - export MASTER=0
+    - export DEB_USER=$DEB_NIGHTLY_USER
+    - export SSHPASS=$DEB_NIGHTLY_PASSWD
+    - export RELEASE=xenial
+    - ./deploydebs.sh
+  environment: nightly_ubuntu1604
+
+deploy_xenial_testing:
+  image: deployment-image
+  stage: deploy
+  only:
+    - /^release.*/
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - signdebs
+  script:
+    - export DEB_SRV=$DEB_TESTING_SRV
+    - export MASTER=0
+    - export DEB_USER=$DEB_TESTING_USER
+    - export SSHPASS=$DEB_TESTING_PASSWD
+    - export RELEASE=xenial
+    - ./deploydebs.sh
+  environment: testing_ubuntu1604
+
+deploy_xenial_master:
+  image: deployment-image
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - signdebs
+  script:
+    - export DEB_SRV=$DEB_STABLE_SRV
+    - export MASTER=1
+    - export DEB_USER=$DEB_STABLE_USER
+    - export SSHPASS=$DEB_STABLE_PASSWD
+    - export RELEASE=xenial
+    - ./deploydebs.sh
+  environment: production_ubuntu1604

@@ -7,7 +7,7 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog-top</artifactId>
 	<packaging>pom</packaging>
-	<version>1.1.6</version>
+	<version>2.0+beta</version>
 
 	<name>Svarog-top</name>
 
@@ -39,7 +39,6 @@
 				<module>plugins/SignalAnalysisPlugin</module>
 				<module>plugins/PluginToolCommon</module>
 				<module>plugins/Artifact</module>
-				<module>izpack</module>
 				<module>svarog-standalone</module>
 			</modules>
 		</profile>
@@ -62,7 +61,7 @@
 		<repository>
 			<id>apache</id>
 			<name>Apache Commons</name>
-			<url>http://maven.ibiblio.org/maven2</url>
+			<url>http://repo.maven.apache.org/maven2</url>
 		</repository>
 
 		<repository>

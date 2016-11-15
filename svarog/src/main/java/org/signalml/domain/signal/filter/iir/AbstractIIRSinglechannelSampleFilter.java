@@ -1,7 +1,5 @@
 package org.signalml.domain.signal.filter.iir;
 
-import java.util.logging.Level;
-
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.SinglechannelSampleFilterEngine;
@@ -66,7 +64,7 @@ public abstract class AbstractIIRSinglechannelSampleFilter extends Singlechannel
 			filtered = null;
 
 		} catch (BadFilterParametersException ex) {
-			java.util.logging.Logger.getLogger(AbstractIIRSinglechannelSampleFilter.class.getName()).log(Level.SEVERE, null, ex);
+			logger.error(ex, ex);
 		}
 
 	}

@@ -6,6 +6,7 @@ package org.signalml.math.iirdesigner;
 
 import org.apache.commons.math.complex.Complex;
 import java.util.Arrays;
+import org.apache.log4j.Logger;
 
 import org.signalml.math.iirdesigner.math.ComplexPolynomial;
 
@@ -15,6 +16,8 @@ import org.signalml.math.iirdesigner.math.ComplexPolynomial;
  * @author Piotr Szachewicz
  */
 class FilterZerosPolesGain {
+
+	private static final Logger logger = Logger.getLogger(FilterZerosPolesGain.class);
 
 	/**
 	 * an array of zeros (the roots of the numerator of the transfer function representing the filter)
@@ -118,7 +121,9 @@ class FilterZerosPolesGain {
 	 * Prints the poles, zeros and gain on screen.
 	 */
 	protected void print() {
-		System.out.println(toString());
+		logger.debug("Zeros: " + Arrays.toString(zeros));
+		logger.debug("Poles: " + Arrays.toString(poles));
+		logger.debug("Gain: " + gain);
 	}
 
 	/**

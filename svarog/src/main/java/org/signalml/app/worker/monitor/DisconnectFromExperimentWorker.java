@@ -6,8 +6,6 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import multiplexer.jmx.client.JmxClient;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -17,6 +15,7 @@ import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
+import org.signalml.peer.Peer;
 
 public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 
@@ -47,17 +46,14 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 	}
 
 	private void disconnectFromMultiplexer() {
-		JmxClient jmxClient = experimentDescriptor.getJmxClient();
-		logger.debug("Shutting down multiplexer");
+		Peer peer = experimentDescriptor.getPeer();
+		logger.debug("Shutting down peer");
 
-		if (jmxClient != null)
-			try {
-				jmxClient.shutdown();
-				logger.debug("Multiplexer has been successfully shutdown");
-			} catch (InterruptedException e) {
-				logger.error("", e);
-			}
-		experimentDescriptor.setJmxClient(null);
+		if (peer != null) {
+			peer.shutdown();
+			logger.debug("Peer has been successfully shut down");
+		}
+		experimentDescriptor.setPeer(null);
 	}
 
 	private void sendLeaveExperimentRequest() throws OpenbciCommunicationException {

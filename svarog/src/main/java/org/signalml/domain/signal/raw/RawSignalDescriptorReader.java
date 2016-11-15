@@ -109,6 +109,15 @@ public class RawSignalDescriptorReader {
 				descriptor.setBlocksPerPage(Integer.parseInt(blocksPerPage));
 			}
 
+			String videoFileName = path.evaluate(RawSignalDocumentBuilder.VIDEO_FILE_NAME, rawSignalEl);
+			String videoFileOffset = path.evaluate(RawSignalDocumentBuilder.VIDEO_FILE_OFFSET, rawSignalEl);
+			if (videoFileName != null && !videoFileName.isEmpty()) {
+				descriptor.setVideoFileName(videoFileName);
+				if (!videoFileOffset.isEmpty()) {
+					descriptor.setVideoFileOffset(Float.parseFloat(videoFileOffset));
+				}
+			}
+
 			Element eegSystemNameNode = (Element) path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_NAME, rawSignalEl, XPathConstants.NODE);
 			if (eegSystemNameNode != null) {
 				String symbol = path.evaluate(RawSignalDocumentBuilder.EEG_SYSTEM_SYMBOL, eegSystemNameNode);

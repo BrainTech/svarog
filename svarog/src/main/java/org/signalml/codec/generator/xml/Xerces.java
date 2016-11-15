@@ -40,6 +40,7 @@
 */
 package org.signalml.codec.generator.xml;
 
+import org.apache.log4j.Logger;
 import org.apache.xerces.dom.TextImpl;
 import org.apache.xerces.parsers.DOMParser;
 import org.w3c.dom.Document;
@@ -51,6 +52,8 @@ import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.SAXParseException;
 
 public class Xerces implements ParserWrapper, ParserWrapper.DocumentInfo, ErrorHandler {
+
+	protected static final Logger logger = Logger.getLogger(Xerces.class);
 
 	protected DOMParser parser = new DOMParser();
 
@@ -77,36 +80,16 @@ public class Xerces implements ParserWrapper, ParserWrapper.DocumentInfo, ErrorH
 	}
 
 	public void warning(SAXParseException ex) throws SAXException {
-		printError("Warning", ex);
+		logger.warn(ex.getSystemId(), ex);
 	}
 
 	public void error(SAXParseException ex) throws SAXException {
-		printError("Error", ex);
+		logger.error(ex.getSystemId(), ex);
 	}
 
 	public void fatalError(SAXParseException ex) throws SAXException {
-		printError("Fatal Error", ex);
+		logger.fatal(ex.getSystemId(), ex);
 		throw ex;
 	}
 
-	protected void printError(String type, SAXParseException ex) {
-		System.err.print("[");
-		System.err.print(type);
-		System.err.print("] ");
-		String systemId = ex.getSystemId();
-		if (systemId != null) {
-			int index = systemId.lastIndexOf('/');
-			if (index != -1)
-				systemId = systemId.substring(index + 1);
-			System.err.print(systemId);
-		}
-		System.err.print(':');
-		System.err.print(ex.getLineNumber());
-		System.err.print(':');
-		System.err.print(ex.getColumnNumber());
-		System.err.print(": ");
-		System.err.print(ex.getMessage());
-		System.err.println();
-		System.err.flush();
-	}
 }

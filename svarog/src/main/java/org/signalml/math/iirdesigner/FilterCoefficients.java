@@ -6,6 +6,7 @@ package org.signalml.math.iirdesigner;
 import org.signalml.math.iirdesigner.math.SpecialMath;
 
 import java.util.Arrays;
+import org.apache.log4j.Logger;
 
 /**
  * This class contains the values of the feedback and feedforward coefficients (B & A coefficients)
@@ -14,6 +15,8 @@ import java.util.Arrays;
  * @author Piotr Szachewicz
  */
 public class FilterCoefficients {
+
+	private static final Logger logger = Logger.getLogger(FilterCoefficients.class);
 
 	/**
 	 * an array of feedforward coefficients
@@ -396,18 +399,9 @@ public class FilterCoefficients {
 	}
 
 	public void print() {
-
-		System.out.println("filter order: " + getFilterOrder());
-
-		System.out.print("b: ");
-		for (int i = 0; i < bCoefficients.length; i++)
-			System.out.print(bCoefficients[i] + ", ");
-		System.out.println();
-
-		System.out.print("a: ");
-		for (int i = 0; i < aCoefficients.length; i++)
-			System.out.print(aCoefficients[i] + ", ");
-		System.out.println();
+		logger.debug("filter order: " + getFilterOrder());
+		logger.debug("b: "+Arrays.toString(bCoefficients));
+		logger.debug("b: "+Arrays.toString(aCoefficients));
 	}
 
 	/**

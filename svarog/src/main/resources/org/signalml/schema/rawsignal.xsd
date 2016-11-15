@@ -161,6 +161,22 @@
     	</restriction>
     </simpleType>
 
+    <simpleType name="videoFileName">
+    	<annotation>
+    		<documentation>Name of video file.</documentation>
+    	</annotation>
+    	<restriction base="string">
+    		<minLength value="1"></minLength>
+    	</restriction>
+    </simpleType>
+
+    <simpleType name="videoFileOffset">
+    	<annotation>
+    		<documentation>Time offset of the video vs signal.</documentation>
+    	</annotation>
+    	<restriction base="float" />
+    </simpleType>
+
     <complexType name="eegSystemName">
     	<annotation>
     		<documentation>SignalML source signal info.</documentation>
@@ -325,7 +341,26 @@
                 	</documentation>
                 </annotation>
     		</element>
-		<element name="eegSystemName" type="rs:eegSystemName"
+    		<element name="videoFileName" type="rs:videoFileName"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+                		Name of video file for this signal - optional,
+						relative to the signal path.
+                	</documentation>
+                </annotation>
+    		</element>
+    		<element name="videoFileOffset" type="rs:videoFileOffset"
+    			maxOccurs="1" minOccurs="0">
+                <annotation>
+                	<documentation>
+						Time offset (in seconds) of the video file's start,
+						relative to the start of the signal. Positive numbers
+						represent video starting later than the signal.
+                	</documentation>
+                </annotation>
+    		</element>
+			<element name="eegSystemName" type="rs:eegSystemName"
     			maxOccurs="1" minOccurs="0">
                 <annotation>
                 	<documentation>

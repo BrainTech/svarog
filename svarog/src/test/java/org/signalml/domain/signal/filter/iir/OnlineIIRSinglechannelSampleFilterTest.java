@@ -5,8 +5,6 @@ import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
 import org.signalml.domain.signal.filter.TestingSignals;
-import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
-import org.signalml.domain.signal.filter.iir.OnlineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -44,7 +42,6 @@ public class OnlineIIRSinglechannelSampleFilterTest extends AbstractIIRSinglecha
 			source.addSamples(new float[] {samples[i]});
 
 		double[] uCache = engine.getUnfilteredSamplesCache(source.getSampleCount(0));
-		//System.out.println("uCache.length="+uCache.length);
 		for (int i = 0; i < TEST_SAMPLE_COUNT; i++) {
 			if (samples.length - i - 1 >= 0)
 				assertEquals(uCache[uCache.length - i - 1], samples[samples.length - i - 1], 0.000001);

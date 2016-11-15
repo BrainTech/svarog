@@ -1,13 +1,12 @@
 package org.signalml.app.model.document.opensignal;
 
-import multiplexer.jmx.client.JmxClient;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.peer.Peer;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -26,7 +25,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 
 	private String multiplexerAddress;
 	private int multiplexerPort;
-	private JmxClient jmxClient;
+	private Peer peer;
 
 	private Float backupFrequency;
 	private MonitorRecordingDescriptor monitorRecordingDescriptor = new MonitorRecordingDescriptor();
@@ -134,12 +133,12 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 		this.backupFrequency = backupFrequency;
 	}
 
-	public JmxClient getJmxClient() {
-		return jmxClient;
+	public Peer getPeer() {
+		return peer;
 	}
 
-	public void setJmxClient(JmxClient jmxClient) {
-		this.jmxClient = jmxClient;
+	public void setPeer(Peer peer) {
+		this.peer = peer;
 	}
 
 	public StyledTagSet getTagStyles() {

@@ -52,7 +52,7 @@ public class MP5ExecutablePanel extends JPanel {
 	private void initialize() {
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("MP5 executable")),
+			new TitledBorder(_("MP executable")),
 			new EmptyBorder(3,3,3,3)
 		);
 		setBorder(border);
@@ -116,53 +116,8 @@ public class MP5ExecutablePanel extends JPanel {
 
 		String path = executor.getMp5ExecutablePath();
 		if (path == null) {
-
 			mp5Executable = null;
-
-			String osName = System.getProperty("os.name");
-			if (Util.WINDOWS_OS_PATTERN.matcher(osName).matches()) {
-
-				File executable = new File(SvarogApplication.getSharedInstance().getStartupDir(), "native/windows/bin/mp5.exe");
-				if (executable.exists()) {
-					if (executable.canExecute()) {
-						mp5Executable = executable;
-					}
-				}
-
-			}
-			else if (Util.LINUX_OS_PATTERN.matcher(osName).matches()) {
-
-				File executable = new File(SvarogApplication.getSharedInstance().getStartupDir(), "native/linux/bin/mp5");
-				if (executable.exists()) {
-					if (!executable.canExecute()) {
-						executable.setExecutable(true, true);
-					}
-					if (executable.canExecute()) {
-						mp5Executable = executable;
-					}
-				}
-
-			}
-			else if (Util.MAC_OS_PATTERN.matcher(osName).matches()) {
-
-				File executable = new File(SvarogApplication.getSharedInstance().getStartupDir(), "native/mac/bin/mp5");
-				if (executable.exists()) {
-					if (!executable.canExecute()) {
-						executable.setExecutable(true, true);
-					}
-					if (executable.canExecute()) {
-						mp5Executable = executable;
-					}
-				}
-			} else {
-				// other os - do nothing
-			}
-
-			if (mp5Executable == null) {
-				getExecutableTextField().setText("");
-			} else {
-				getExecutableTextField().setText(mp5Executable.getAbsolutePath());
-			}
+			getExecutableTextField().setText("");
 		} else {
 			mp5Executable = new File(path);
 			getExecutableTextField().setText(path);
@@ -183,7 +138,7 @@ public class MP5ExecutablePanel extends JPanel {
 	public void validatePanel(ValidationErrors errors) {
 
 		if (mp5Executable == null || !mp5Executable.exists() || !mp5Executable.canExecute()) {
-			errors.addError(_("MP5 executable not found or not accessible"));
+			errors.addError(_("MP executable not found or not accessible"));
 		}
 
 	}
@@ -195,7 +150,7 @@ public class MP5ExecutablePanel extends JPanel {
 		public ChooseExecutableAction() {
 			super(_("Choose..."));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/find.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose MP5 executable file"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Choose MP executable file"));
 		}
 
 		public void actionPerformed(ActionEvent ev) {

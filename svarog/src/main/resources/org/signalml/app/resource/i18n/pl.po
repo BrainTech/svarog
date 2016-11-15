@@ -133,7 +133,7 @@ msgid "Add local"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:218
-msgid "Add local process MP5 executor"
+msgid "Add local process MP executor"
 msgstr ""
 
 #: org/signalml/app/view/dialog/TagStylePaletteDialog.java:847
@@ -574,15 +574,15 @@ msgid "Choose"
 msgstr ""
 
 #: org/signalml/app/view/ViewerFileChooser.java:131
-msgid "Choose MP5 config file to save"
+msgid "Choose MP config file to save"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ExecutablePanel.java:198
-msgid "Choose MP5 executable file"
+msgid "Choose MP executable file"
 msgstr ""
 
 #: org/signalml/app/view/ViewerFileChooser.java:144
-msgid "Choose MP5 signal file to save"
+msgid "Choose MP signal file to save"
 msgstr ""
 
 #: org/signalml/app/view/element/RegisterCodecStepOnePanel.java:73
@@ -892,7 +892,7 @@ msgid "Configure search"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:267
-msgid "Configure selected MP5 executor"
+msgid "Configure selected MP executor"
 msgstr ""
 
 #: org/signalml/app/view/signal/SlaveSignalPlotCorner.java:95
@@ -1214,11 +1214,11 @@ msgstr ""
 
 #: org/signalml/app/method/mp5/MP5MethodDialog.java:348
 #: org/signalml/app/method/mp5/MP5MethodDialog.java:655
-msgid "Edit MP5 configuration as text"
+msgid "Edit MP configuration as text"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5MethodDialog.java:335
-msgid "Edit MP5 configuration with a user friendly editor"
+msgid "Edit MP configuration with a user friendly editor"
 msgstr ""
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:114
@@ -2039,19 +2039,19 @@ msgid "MP version"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ToolConfigDialog.java:42
-msgid "MP5 configuration"
+msgid "MP configuration"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ExecutablePanel.java:55
-msgid "MP5 executable"
+msgid "MP executable"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ExecutorPanel.java:45
-msgid "MP5 executor"
+msgid "MP executor"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:91
-msgid "MP5 executors"
+msgid "MP executors"
 msgstr ""
 
 #: org/signalml/domain/tag/TagComparisonResults.java:212
@@ -2931,7 +2931,7 @@ msgid "Remove range"
 msgstr ""
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:243
-msgid "Remove selected MP5 executor"
+msgid "Remove selected MP executor"
 msgstr ""
 
 #: org/signalml/app/view/dialog/TagStylePaletteDialog.java:912

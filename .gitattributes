@@ -1,8 +1,4 @@
-*		tabwidth=4
+*	tabwidth=4
 *.xml	diff=html
 *.xsd	diff=html
-*.el	whitespace=tab-in-indent
-/.project diff=html
-/.classpath diff=html
-
 *.java  diff=java

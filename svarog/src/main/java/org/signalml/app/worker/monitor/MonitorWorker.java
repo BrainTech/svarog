@@ -6,10 +6,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 
-import multiplexer.jmx.client.IncomingMessageData;
-import multiplexer.jmx.client.JmxClient;
-import multiplexer.protocol.Protocol.MultiplexerMessage;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
@@ -22,15 +18,16 @@ import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSour
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.multiplexer.protocol.SvarogConstants.MessageTypes;
-import org.signalml.multiplexer.protocol.SvarogProtocol;
-import org.signalml.multiplexer.protocol.SvarogProtocol.Sample;
-import org.signalml.multiplexer.protocol.SvarogProtocol.SampleVector;
+import org.signalml.peer.protocol.SvarogProtocol;
+import org.signalml.peer.protocol.SvarogProtocol.Sample;
+import org.signalml.peer.protocol.SvarogProtocol.SampleVector;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
 
-import com.google.protobuf.ByteString;
+import org.signalml.peer.CommunicationException;
+import org.signalml.peer.Message;
+import org.signalml.peer.Peer;
 
 /** MonitorWorker
  *
@@ -41,7 +38,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	public static final int TIMEOUT_MILIS = 5000;
 	protected static final Logger logger = Logger.getLogger(MonitorWorker.class);
 
-	private final JmxClient client;
+	private final Peer peer;
 	private final RoundBufferMultichannelSampleSource sampleSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
@@ -70,7 +67,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	public MonitorWorker(ExperimentDescriptor experimentDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		super(null);
 		this.experimentDescriptor = experimentDescriptor;
-		this.client = experimentDescriptor.getJmxClient();
+		this.peer = experimentDescriptor.getPeer();
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
 
@@ -85,16 +82,18 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	@Override
 	protected Void doInBackground() {
 
-		MultiplexerMessage sampleMsg;
+		Message sampleMsg;
 		boolean firstSampleReceived = false;
 		showBusyDialog();
 
+		peer.subscribe(Message.AMPLIFIER_SIGNAL_MESSAGE);
+		peer.subscribe(Message.TAG);
+
 		while (!isCancelled()) {
 			try {
-				IncomingMessageData msgData;
 
 				if (firstSampleReceived)
-					msgData = client.receive(TIMEOUT_MILIS);
+					sampleMsg = peer.receive(TIMEOUT_MILIS);
 				else {
 					/**
 					 * The first sample to be received is the most problematic
@@ -103,7 +102,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					 * timeout should longer in order to wait for the multiplexer
 					 * to fully start to operate.
 					 */
-					msgData = client.receive();
+					sampleMsg = peer.receive();
 					firstSampleReceived = true;
 					hideBusyDialog();
 				}
@@ -112,8 +111,8 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					//it might have been cancelled while waiting on the client.receive()
 					return null;
 				}
-				else if (msgData == null) {
-					// timeout
+				else if (sampleMsg == null) {
+					// timeout or error
 
 					double timeoutInSeconds = ((double)TIMEOUT_MILIS) / 1000.0;
 					DIALOG_OPTIONS result = Dialogs.showWarningYesNoDialog(_R("Did not receive any samples in {0} seconds, maybe the experiment is down?\nDo you wish to wait some more? Press No to disconnect from the experiment.", FormatUtils.format(timeoutInSeconds)));
@@ -125,27 +124,23 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 						break;
 					}
 				}
-				else {
-					sampleMsg = msgData.getMessage();
-				}
-			} catch (InterruptedException e) {
+			} catch (CommunicationException e) {
 				logger.error("receive failed", e);
 				return null;
 			}
 
-			int sampleType = sampleMsg.getType();
+			String sampleType = sampleMsg.type;
 			logger.debug("Worker: received message type: " + sampleType);
 
 			switch (sampleType) {
-			case MessageTypes.AMPLIFIER_SIGNAL_MESSAGE:
-				parseMessageWithSamples(sampleMsg.getMessage());
+			case Message.AMPLIFIER_SIGNAL_MESSAGE:
+				parseMessageWithSamples(sampleMsg.getData());
 				break;
-			case MessageTypes.TAG:
-				parseMessageWithTags(sampleMsg.getMessage());
+			case Message.TAG:
+				parseMessageWithTags(sampleMsg.getData());
 				break;
 			default:
-				final String name = MessageTypes.instance.getConstantsNames().get(sampleType);
-				logger.error("received unknown reply: " +  sampleType + "/" + name);
+				logger.error("received unknown reply: " +  sampleType);
 			}
 		}
 
@@ -155,14 +150,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	/**
 	 * If the message contains samples, this function can be used
 	 * to parse its contents.
-	 * @param sampleMsgString the content of the message
+	 * @param sampleMsgData the content of the message
 	 */
-	protected void parseMessageWithSamples(ByteString sampleMsgString) {
+	protected void parseMessageWithSamples(byte[] sampleMsgData) {
 		logger.debug("Worker: reading chunk!");
 
 		SampleVector sampleVector;
 		try {
-			sampleVector = SampleVector.parseFrom(sampleMsgString);
+			sampleVector = SampleVector.parseFrom(sampleMsgData);
 		} catch (Exception e) {
 			logger.error("", e);
 			return;
@@ -178,7 +173,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			}
 
 			double samplesTimestamp = samples.get(0).getTimestamp();
-			//System.out.println("  -- " + samplesTimestamp);
+			//logger.debug("  -- " + samplesTimestamp);
 			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
 
 			publish(newSamplesPackage);
@@ -188,14 +183,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	/**
 	 * If the given message contains tags, this method can be used
 	 * to parse its contents.
-	 * @param sampleMsgString the contents of the message
+	 * @param sampleMsgData the contents of the message
 	 */
-	private void parseMessageWithTags(ByteString sampleMsgString) {
+	private void parseMessageWithTags(byte[] sampleMsgData) {
 		logger.info("Tag recorder: got a tag!");
 
 		final SvarogProtocol.Tag tagMsg;
 		try {
-			tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgString);
+			tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgData);
 		} catch (Exception e) {
 			logger.error("", e);
 			return;

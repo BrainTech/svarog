@@ -11,14 +11,13 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+import org.apache.log4j.Logger;
 
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
@@ -40,6 +39,8 @@ import org.springframework.core.io.ClassPathResource;
  * @author Piotr Szachewicz
  */
 public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
+
+	private static final Logger logger = Logger.getLogger(EditTimeDomainSampleFilterDialog.class);
 
 	/**
 	 * represents the currently edited filter
@@ -274,7 +275,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 			try {
 				fillModelFromDialog(currentFilter);
 			} catch (SignalMLException ex) {
-				Logger.getLogger(EditTimeDomainSampleFilterDialog.class.getName()).log(Level.SEVERE, null, ex);
+				logger.error(ex, ex);
 			}
 
 			updateGraph();

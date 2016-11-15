@@ -86,7 +86,7 @@ public class MP5ConfigCreator {
 		Formatter formatter = new Formatter(new Locale("en_EN"));
 
 		if (addHeader) {
-			formatter.format("# signalml mp5 configuration%n");
+			formatter.format("# signalml MP configuration%n");
 			formatter.format("# auto created by SignalML version [%s] on [%s]%n", SvarogConstants.VERSION, (new Date()).toString());
 			formatter.format("%n");
 		}

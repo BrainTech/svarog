@@ -73,9 +73,9 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 					presetManager.readFromPersistence(null);
 				} catch (IOException ex) {
 					if (ex instanceof FileNotFoundException) {
-						logger.debug("Seems like mp5 preset configuration doesn't exist");
+						logger.debug("Seems like MP preset configuration doesn't exist");
 					} else {
-						logger.error("Failed to read mp5 presets - presets lost", ex);
+						logger.error("Failed to read MP presets - presets lost", ex);
 					}
 				}
 			}

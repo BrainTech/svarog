@@ -47,10 +47,10 @@ public class MP5LocalProcessController {
 		pb.directory(workingDirectory);
 		pb.redirectErrorStream(true);
 
-		logger.debug("Using mp5 working directory [" + pb.directory().getAbsolutePath() + "]");
+		logger.debug("Using MP working directory [" + pb.directory().getAbsolutePath() + "]");
 		List<String> command = pb.command();
 		for (String s : command) {
-			logger.debug("Using mp5 command [" + s + "]");
+			logger.debug("Using MP command [" + s + "]");
 		}
 
 		Process process;
@@ -129,7 +129,7 @@ public class MP5LocalProcessController {
 		int exitValue = process.exitValue();
 		logger.debug("Process may have finished, exit code is [" + exitValue + "]");
 		if (exitValue != 0) {
-			logger.warn("MP5 process exited with an error [" + exitValue + "]");
+			logger.warn("MP process exited with an error [" + exitValue + "]");
 			throw new ComputationException("error.mp5.exitedWithErrorCode", new Object[] { exitValue });
 		}
 

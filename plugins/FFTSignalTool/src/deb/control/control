@@ -1,0 +1,8 @@
+Package: svarog-fftsignaltool
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: svarog
+Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
+Description: FFTSignalTool plugin for svarog

@@ -16,12 +16,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JOptionPane;
 
 import javax.swing.filechooser.FileFilter;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.apache.log4j.Logger;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.mrud.MRUDEntry;
@@ -39,6 +39,8 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
@@ -154,10 +156,8 @@ public class DocumentFlowIntegrator {
 	 * @throws SignalMLException if {@link SaveDocumentWorker save worker}
 	 * failed to save the document or if {@link SignalChecksumWorker checksum
 	 * worker} was interrupted or failed to calculate the checksum
-	 * @throws ConnectException TODO when {@link MonitorSignalDocument}
-	 * throws it and above exceptions
 	 */
-	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
+	public Document openDocument(OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 		ManagedDocumentType type = descriptor.getType();
 		if (type.equals(ManagedDocumentType.SIGNAL)) {
 			return openSignalDocument(descriptor);
@@ -190,9 +190,6 @@ public class DocumentFlowIntegrator {
 			Dialogs.showExceptionDialog(window, ex);
 		} catch (IOException ex) {
 			logger.error("Failed to open document - I/O exception", ex);
-			Dialogs.showExceptionDialog(window, ex);
-		} catch (ConnectException ex) {
-			logger.error("Failed to open document - connection exception", ex);
 			Dialogs.showExceptionDialog(window, ex);
 		}
 		return null;
@@ -563,10 +560,8 @@ public class DocumentFlowIntegrator {
 	 * of a given UID or if {@link SaveDocumentWorker save worker}
 	 * failed to save the document or if {@link SignalChecksumWorker checksum
 	 * worker} was interrupted or failed to calculate the checksum
-	 * @throws ConnectException TODO when {@link MonitorSignalDocument}
-	 * throws it and above exceptions
 	 */
-	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException, ConnectException {
+	public Document openMRUDEntry(MRUDEntry mrud) throws IOException, SignalMLException {
 
 		ManagedDocumentType type = mrud.getDocumentType();
 
@@ -772,6 +767,27 @@ public class DocumentFlowIntegrator {
 			rawSignalDocument.setPageSize(rawDescriptor.getPageSize());
 			rawSignalDocument.setBlocksPerPage(rawDescriptor.getBlocksPerPage());
 
+			String videoFilePath = null;
+			String videoFileName = null;
+			float videoFileOffset = 0;
+			if (rawDescriptor.getVideoFileName() != null) {
+				// name is relative to signal file path
+				File videoFile = new File(file.getParentFile(), rawDescriptor.getVideoFileName());
+				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+				if (!videoFile.isFile()) {
+					JOptionPane.showMessageDialog(dialogParent, "Specified video file could not be found. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
+					// we don't want to display the warning again
+					// when this file is re-opened on next Svarog startup
+					rawDescriptor.setVideoFileName(null);
+				} else if (!VideoFrame.isVideoAvailable()) {
+					JOptionPane.showMessageDialog(dialogParent, "<html><body>VLC libraries are missing. Video preview will not be available.<br>The VLC player can be downloaded from http://www.videolan.org/vlc/ or your system's repositiories.</body></html>", _("Warning"), JOptionPane.WARNING_MESSAGE);
+				} else {
+					videoFileName = videoFile.getName();
+					videoFilePath = videoFile.getPath();
+					videoFileOffset = rawDescriptor.getVideoFileOffset();
+				}
+			}
+
 			// start background checksum calculation
 			if (applicationConfig.isPrecalculateSignalChecksums()) {
 				SignalChecksumWorker checksummer = new SignalChecksumWorker(rawSignalDocument, null, new String[] { "crc32" });
@@ -783,6 +799,21 @@ public class DocumentFlowIntegrator {
 			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, rawSignalDocument.getClass(), file.getAbsolutePath(), rawDescriptor);
 			mrud.setLastTimeOpened(new Date());
 			mrudRegistry.registerMRUDEntry(mrud);
+
+			if (videoFilePath != null) {
+				// VideoFrame needs to be created before onCommonDocumentAdded
+				// for SignalView to respond properly
+				VideoFrame frame = new VideoFrame(videoFileName);
+				frame.open(videoFilePath);
+				rawSignalDocument.setVideoFrame(frame, videoFileOffset);
+				frame.setVisible(true);
+				frame.init();
+
+				if (!frame.isSeekable()) {
+					Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
+					JOptionPane.showMessageDialog(dialogParent, "<html><body>Opened video file has no time index.<br>It may not be possible to change time position.</body></html>", _("Warning"), JOptionPane.WARNING_MESSAGE);
+				}
+			}
 
 			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(rawSignalDocument);
@@ -803,7 +834,7 @@ public class DocumentFlowIntegrator {
 
 	}
 
-	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException, ConnectException {
+	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
 

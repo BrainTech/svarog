@@ -13,8 +13,6 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import multiplexer.jmx.client.ConnectException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.FileBackedDocument;
@@ -179,7 +177,7 @@ public class WorkspaceSignal extends WorkspaceDocument {
 
 	}
 
-	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator, EegSystemsPresetManager eegSystemsPresetManager) throws IOException, SignalMLException, ConnectException {
+	public void configureSignal(SignalDocument document, DocumentFlowIntegrator integrator, EegSystemsPresetManager eegSystemsPresetManager) throws IOException, SignalMLException {
 
 		SignalView view = (SignalView) document.getDocumentView();
 		SignalPlot masterSignalPlot = view.getMasterPlot();
