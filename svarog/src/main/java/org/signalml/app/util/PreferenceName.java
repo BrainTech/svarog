@@ -10,11 +10,7 @@ package org.signalml.app.util;
  */
 public enum PreferenceName {
 
-	INITIALIZED("initialized"),
-	PROFILE_DEFAULT("profileDefault"),
-	PROFILE_PATH("profilePath")
-	;
-
+	INITIALIZED("initialized");
 	String name;
 
 	private PreferenceName(String name) {

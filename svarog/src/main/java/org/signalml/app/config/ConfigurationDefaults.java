@@ -32,13 +32,6 @@ public class ConfigurationDefaults {
 		properties = ConfigurationDefaultsLoader.Load(ConfigurationDefaults.class, "signalml_defaults.properties");
 	}
 
-	public static void setGeneralConfigurationDefaults(GeneralConfiguration config) {
-
-		config.setProfileDefault(true);
-		config.setProfilePath(null);
-
-	}
-
 	// property accessor methods
 
 	static String getString(String name) {

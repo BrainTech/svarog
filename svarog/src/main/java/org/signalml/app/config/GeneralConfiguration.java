@@ -20,34 +20,12 @@ public class GeneralConfiguration extends AbstractXMLConfiguration {
 
 	private String locale;
 
-	@XStreamOmitField
-	private boolean profileDefault;
-
-	@XStreamOmitField
-	private String profilePath;
-
 	public String getLocale() {
 		return locale;
 	}
 
 	public void setLocale(String locale) {
 		this.locale = locale;
-	}
-
-	public boolean isProfileDefault() {
-		return profileDefault;
-	}
-
-	public void setProfileDefault(boolean profileDefault) {
-		this.profileDefault = profileDefault;
-	}
-
-	public String getProfilePath() {
-		return profilePath;
-	}
-
-	public void setProfilePath(String profilePath) {
-		this.profilePath = profilePath;
 	}
 
 	public String getStandardFilename() {

@@ -23,7 +23,6 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.signalml.SignalMLOperationMode;
@@ -64,7 +63,6 @@ import org.signalml.app.util.XMLUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.util.logging.DebugHelpers;
 import org.signalml.app.view.common.dialogs.SplashScreen;
-import org.signalml.app.view.preferences.ProfilePathDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
 import org.signalml.codec.DefaultSignalMLCodecManager;
@@ -320,8 +318,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		boolean initialized = false;
 		if (line.hasOption("reset")) {
 			preferences.remove(PreferenceName.INITIALIZED.toString());
-			preferences.remove(PreferenceName.PROFILE_DEFAULT.toString());
-			preferences.remove(PreferenceName.PROFILE_PATH.toString());
 		} else {
 			initialized = preferences.getBoolean(PreferenceName.INITIALIZED.toString(), false);
 		}
@@ -423,40 +419,16 @@ public class SvarogApplication implements java.lang.Runnable {
 	}
 
 	private void initializeFirstTime(final GeneralConfiguration suggested) {
-
+		setProfileDir(true);
 		if (locale == null) {
 			locale = Locale.ENGLISH;
 		}
-
-		boolean ok = false;
-		initialConfig = null;
-		do {
-			try {
-				SwingUtilities.invokeAndWait(new Runnable() {
-
-					@Override
-					public void run() {
-						initialConfig = askForProfilePath(suggested);
-					}
-				});
-			} catch (InterruptedException ex) {
-				logger.error("Profile choice error", ex);
-				System.exit(1);
-			} catch (InvocationTargetException ex) {
-				logger.error("Profile choice error", ex);
-				System.exit(1);
-			}
-			initialConfig.setLocale(locale.toString());
-			ok = setProfileDir(initialConfig, true);
-		} while (!ok);
-
-		preferences.putBoolean(PreferenceName.PROFILE_DEFAULT.toString(), initialConfig.isProfileDefault());
-		if (initialConfig.isProfileDefault()) {
-			preferences.remove(PreferenceName.PROFILE_PATH.toString());
+		if (suggested == null) {
+			initialConfig = new GeneralConfiguration();
 		} else {
-			preferences.put(PreferenceName.PROFILE_PATH.toString(), initialConfig.getProfilePath());
+			initialConfig = suggested;
 		}
-
+		initialConfig.setLocale(locale.toString());
 		try {
 			initialConfig.writeToXML(initialConfig.getStandardFile(profileDir), streamer);
 		} catch (IOException ex) {
@@ -468,35 +440,15 @@ public class SvarogApplication implements java.lang.Runnable {
 	private void initialize() {
 
 		GeneralConfiguration config = new GeneralConfiguration();
-		ConfigurationDefaults.setGeneralConfigurationDefaults(config);
 
-		String profileDefault = preferences.get(PreferenceName.PROFILE_DEFAULT.toString(), null);
-		String profilePath = preferences.get(PreferenceName.PROFILE_PATH.toString(), null);
-
-		if (profileDefault == null) {
-			logger.error("Profile settings seem to be lost");
-			initializeFirstTime(null);
-			return;
-		}
-
-		boolean profileDef = Boolean.parseBoolean(profileDefault);
-		config.setProfileDefault(profileDef);
-		if (profileDef) {
-			config.setProfilePath(null);
-		} else {
-			config.setProfilePath(profilePath);
-		}
-
-		boolean ok = setProfileDir(config, false);
+		boolean ok = setProfileDir(false);
 		if (!ok) {
 			logger.error("Profile settings seem to be invalid");
 			initializeFirstTime(config);
 			return;
 		}
-
-		GeneralConfiguration config2 = new GeneralConfiguration();
 		try {
-			config2.readFromXML(config2.getStandardFile(profileDir), streamer);
+			config.readFromXML(config.getStandardFile(profileDir), streamer);
 		} catch (FileNotFoundException ex) {
 			logger.debug("Failed to read configuration - file not found, will have to reinitialize");
 			initializeFirstTime(config);
@@ -506,30 +458,17 @@ public class SvarogApplication implements java.lang.Runnable {
 			initializeFirstTime(config);
 			return;
 		}
-
-		locale = new Locale(config2.getLocale());
+		locale = new Locale(config.getLocale());
 		config.setLocale(locale.toString());
 
 	}
 
-	private boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {
+	private boolean setProfileDir(boolean firstTime) {
 
 		String profilePath = null;
-		if (config.isProfileDefault()) {
-			String osName = System.getProperty("os.name");
-			if (WINDOWS_OS_PATTERN.matcher(osName).matches()) {
-				profilePath = System.getProperty("user.home") + File.separator + "_svarog";
-			} else {
-				profilePath = System.getProperty("user.home") + File.separator + ".svarog";
-			}
-			logger.debug("Setting profile path to default [" + profilePath + "]");
-		} else {
-			profilePath = config.getProfilePath();
-			logger.debug("Setting profile path to chosen [" + profilePath + "]");
-		}
-
+		profilePath = System.getProperty("user.home") + File.separator + ".obci" + File.separator + "svarog";
+		logger.debug("Setting profile path to [" + profilePath + "]");
 		System.getProperties().setProperty("signalml.root", profilePath);
-
 		File file = (new File(profilePath)).getAbsoluteFile();
 		if (!file.exists()) {
 			logger.debug("Profile dir not found...");
@@ -561,28 +500,6 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		PluginLoaderHi.createInstance(profileDir);
 		return true;
-	}
-
-	private GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
-
-		ProfilePathDialog dialog = new ProfilePathDialog(null, true);
-
-		GeneralConfiguration model;
-		if (suggested == null) {
-			model = new GeneralConfiguration();
-			ConfigurationDefaults.setGeneralConfigurationDefaults(model);
-		} else {
-			model = suggested;
-		}
-
-		boolean result = dialog.showDialog(model, 0.5, 0.2);
-		if (!result) {
-			// we do not allow continuation if profile selection was cancelled
-			System.exit(1);
-		}
-
-		return model;
-
 	}
 
 	public void splash(String newMessage, boolean doStep) {
