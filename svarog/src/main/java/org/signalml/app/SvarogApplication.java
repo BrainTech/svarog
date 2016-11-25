@@ -416,9 +416,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			Log4jConfigurer.initLogging(loggingPath);
 			SvarogLoggingConfigurer.configure(Logger.getRootLogger());
-			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-				LogManager.shutdown();
-			}));
 		} catch (FileNotFoundException ex) {
 			System.err.println("Critical error: no logging configuration");
 			System.exit(1);
@@ -633,6 +630,11 @@ public class SvarogApplication implements java.lang.Runnable {
 			"Application config not found - will use defaults",
 			"Failed to read application configuration - will use defaults");
 		applicationConfig.applySystemSettings();
+
+		String sentryDsn = applicationConfig.getSentryDsn();
+		if (sentryDsn != null && !sentryDsn.isEmpty()) {
+			SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn);
+		}
 
 		splash(_("Initializing codecs"), true);
 

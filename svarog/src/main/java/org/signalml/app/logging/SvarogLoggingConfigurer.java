@@ -1,8 +1,14 @@
 package org.signalml.app.logging;
 
+import com.getsentry.raven.DefaultRavenFactory;
+import com.getsentry.raven.Raven;
+import com.getsentry.raven.RavenFactory;
+import com.getsentry.raven.dsn.Dsn;
+import com.getsentry.raven.log4j.SentryAppender;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 
 /**
  * Configures Svarog logging system, depending on the environment.
@@ -13,6 +19,8 @@ public class SvarogLoggingConfigurer {
 
 	private static final String OBCI_REP_IP = "127.0.0.1";
 	private static final int OBCI_REP_PORT = 54654;
+
+	private static RavenFactory ravenFactory = new DefaultRavenFactory();
 
 	private SvarogLoggingConfigurer() {
 		// noninstantiable class
@@ -35,9 +43,33 @@ public class SvarogLoggingConfigurer {
 			ZmqRemoteAppender appender = new ZmqRemoteAppender(url);
 			logger.removeAllAppenders();
 			logger.addAppender(appender);
+			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+				appender.close();
+			}));
 			appender.startThread();
 		} catch (IOException ex) {
 			// socket connection failed, do nothing
+		}
+	}
+
+	/**
+	 * Configure additional Sentry handling.
+	 * If Sentry messages are to be sent to OBCI, configure() must be called
+	 * prior to configureSentry(). Otherwise, or if OBCI server is not running,
+	 * messages will be sent directly to Sentry server.
+	 *
+	 * @param logger  Logger instance to be configured, usually the root logger
+	 * @param dsn  DSN for Raven (e.g. https://sentry.io/...)
+	 */
+	public static void configureSentry(Logger logger, String dsn) {
+		try {
+			Raven raven = ravenFactory.createRavenInstance(new Dsn(dsn));
+			SentryAppender sentry = new SentryAppender(raven);
+			sentry.setThreshold(Priority.ERROR);
+			logger.addAppender(sentry);
+			logger.info("successfully initialized logging to Sentry");
+		} catch (Exception ex) {
+			logger.error("cannot initialize logging to Sentry", ex);
 		}
 	}
 

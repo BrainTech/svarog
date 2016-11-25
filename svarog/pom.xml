@@ -564,6 +564,11 @@
 			<artifactId>jeromq</artifactId>
 			<version>0.3.5</version>
 		</dependency>
+		<dependency>
+			<groupId>com.getsentry.raven</groupId>
+			<artifactId>raven-log4j</artifactId>
+			<version>7.8.0</version>
+		</dependency>
 
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>
