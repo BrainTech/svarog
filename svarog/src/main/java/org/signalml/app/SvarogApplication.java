@@ -5,7 +5,6 @@ package org.signalml.app;
 
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.util.Util.WINDOWS_OS_PATTERN;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -126,8 +125,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private ViewerMainFrame viewerMainFrame = null;
 	private XStream streamer = null;
 	private SplashScreen splashScreen = null;
-	// this needs to be a field to allow for invokeAndWait
-	private GeneralConfiguration initialConfig = null;
 	private boolean molTest = false;
 
 	/** {@link ViewerElementManager} shared instance. */
@@ -322,12 +319,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			initialized = preferences.getBoolean(PreferenceName.INITIALIZED.toString(), false);
 		}
 
-		if (initialized) {
-			initialize();
-		} else {
-			initializeFirstTime(null);
-			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
-		}
+		initialize(!initialized);
+		preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
 
 		Util.dumpDebuggingInfo();
 
@@ -418,76 +411,53 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 	}
 
-	private void initializeFirstTime(final GeneralConfiguration suggested) {
-		setProfileDir(true);
-		if (locale == null) {
-			locale = Locale.ENGLISH;
+	private void initialize(boolean firstTime) {
+		boolean ok = initializeProfileDir();
+		if (!ok) {
+			logger.fatal("Could not initialize profile directory");
+			System.exit(1);
 		}
-		if (suggested == null) {
-			initialConfig = new GeneralConfiguration();
-		} else {
-			initialConfig = suggested;
-		}
-		initialConfig.setLocale(locale.toString());
-		try {
-			initialConfig.writeToXML(initialConfig.getStandardFile(profileDir), streamer);
-		} catch (IOException ex) {
-			logger.error("Failed to write configuration", ex);
-		}
-
-	}
-
-	private void initialize() {
 
 		GeneralConfiguration config = new GeneralConfiguration();
-
-		boolean ok = setProfileDir(false);
-		if (!ok) {
-			logger.error("Profile settings seem to be invalid");
-			initializeFirstTime(config);
-			return;
+		if (!firstTime) {
+			try {
+				config.readFromXML(config.getStandardFile(profileDir), streamer);
+				locale = new Locale(config.getLocale());
+				return; // initialized!
+			} catch (FileNotFoundException ex) {
+				logger.debug("Failed to read configuration - file not found, will have to reinitialize");
+			} catch (Exception ex) {
+				logger.error("Failed to read configuration", ex);
+			}
 		}
-		try {
-			config.readFromXML(config.getStandardFile(profileDir), streamer);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Failed to read configuration - file not found, will have to reinitialize");
-			initializeFirstTime(config);
-			return;
-		} catch (Exception ex) {
-			logger.error("Failed to read configuration", ex);
-			initializeFirstTime(config);
-			return;
+		if (locale == null) {
+			locale = Locale.ENGLISH;
+			try {
+				config.setLocale(locale.toString());
+				config.writeToXML(config.getStandardFile(profileDir), streamer);
+			} catch (IOException ex) {
+				logger.error("Failed to write configuration", ex);
+			}
 		}
-		locale = new Locale(config.getLocale());
-		config.setLocale(locale.toString());
-
 	}
 
-	private boolean setProfileDir(boolean firstTime) {
-
-		String profilePath = null;
-		profilePath = System.getProperty("user.home") + File.separator + ".obci" + File.separator + "svarog";
+	private boolean initializeProfileDir() {
+		String profilePath = System.getProperty("user.home") + File.separator + ".obci" + File.separator + "svarog";
 		logger.debug("Setting profile path to [" + profilePath + "]");
 		System.getProperties().setProperty("signalml.root", profilePath);
 		File file = (new File(profilePath)).getAbsoluteFile();
 		if (!file.exists()) {
 			logger.debug("Profile dir not found...");
-			if (firstTime) {
-				// create
-				boolean ok = file.mkdirs();
-				if (!ok) {
-					logger.error("Failed to create profile dir");
-					// return false to indicate dir invalid
-					return false;
-				}
-			} else {
+			boolean ok = file.mkdirs();
+			if (!ok) {
+				logger.error("Failed to create profile dir");
 				// return false to indicate dir invalid
 				return false;
 			}
 		}
 
 		if (!file.isDirectory()) {
-			logger.error("This is not a directory");
+			logger.error("Profile path is not a directory");
 			return false;
 		}
 
@@ -779,48 +749,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		viewerMainFrame.initialize();
 
 	}
-
-//	private void setupGUIExceptionHandler() {
-//
-//		final UncaughtExceptionHandler prevHandler = Thread.getDefaultUncaughtExceptionHandler();
-//
-//		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-//
-//			@Override
-//			public void uncaughtException(final Thread t, final Throwable e) {
-//
-//				logger.error("Exception caught", e);
-//
-//				Runnable job = new Runnable() {
-//
-//					@Override
-//					public void run() {
-//						try {
-//						    SvarogLogger.getInstance().debug("Default Uncaught Exception Handler!");
-//
-//							// prevent the splash screen from staying on top
-//							if (splashScreen != null && splashScreen.isVisible()) {
-//								splashScreen.setVisible(false);
-//								splashScreen.dispose();
-//								splashScreen = null;
-//							}
-//
-//							ErrorsDialog errorsDialog = new ErrorsDialog( null, true, _("Exception occured"));
-//							ResolvableException ex = new ResolvableException(e);
-//							errorsDialog.showDialog(ex, true);
-//						} catch (Throwable ex1) {
-//							// fallback to previous handler to prevent exception loss
-//							logger.error("Failed to display error dialog", ex1);
-//							prevHandler.uncaughtException(t, e);
-//						}
-//					}
-//				};
-//
-//				SwingUtilities.invokeLater(job);
-//
-//			}
-//		});
-//	}
 
 	public void exit(int code) {
 
