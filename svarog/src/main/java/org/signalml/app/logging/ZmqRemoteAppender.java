@@ -2,7 +2,6 @@ package org.signalml.app.logging;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.concurrent.LinkedBlockingQueue;
 import org.apache.log4j.spi.LoggingEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,15 +16,8 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	/** message type for logging, as defined in OBCI source code */
 	private static final String MESSAGE_TYPE = "log_msg";
 
-	/** maximal queue capacity to avoid exhausting memory */
-	private static final int QUEUE_CAPACITY = 1000;
-
-	/** timeout for sending pending messages at shutdown (milliseconds) */
-	private static final int SHUTDOWN_TIMEOUT = 1000;
-
 	private final String source;
-	private final LinkedBlockingQueue<String> queue;
-	private final ZmqLoggingThread thread;
+	private final ZmqRemoteSender sender;
 
 	/**
 	 * Create a new appender instance, with its own ZMQ context.
@@ -35,8 +27,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	 */
 	public ZmqRemoteAppender(String url) {
 		source = "svarog_" + ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT).replaceAll("[:\\-]", "");
-		queue = new LinkedBlockingQueue<>(QUEUE_CAPACITY);
-		thread = new ZmqLoggingThread(queue, url);
+		sender = new ZmqRemoteSender(url);
 	}
 
 	/**
@@ -52,7 +43,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 				.put("timestamp", le.getTimeStamp() / 1000)
 				.put("msg", le.getMessage())
 				.toString();
-			queue.offer(message);
+			sender.offer(message);
 		} catch (JSONException ex) {
 			// not really a possibility
 		}
@@ -65,14 +56,8 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	public void close() {
 		try {
 			String message = createJsonMessage("end_logs").toString();
-			queue.offer(message);
-			queue.offer("");
-			try {
-				// let's give the thread a chance to send these messages
-				thread.join(SHUTDOWN_TIMEOUT);
-			} catch (InterruptedException ex) {
-				// does not matter
-			}
+			sender.offer(message);
+			sender.close();
 		} catch (JSONException ex) {
 			// not really a possibility
 		}
@@ -99,7 +84,7 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	 * Start the thread to send messages using ZMQ.
 	 */
 	public void startThread() {
-		thread.start();
+		sender.startThread();
 	}
 
 }

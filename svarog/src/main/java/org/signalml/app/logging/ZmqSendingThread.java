@@ -8,7 +8,7 @@ import org.zeromq.ZMQ;
  *
  * @author piotr.rozanski@braintech.pl
  */
-class ZmqLoggingThread extends Thread {
+class ZmqSendingThread extends Thread {
 
 	private static final int TIMEOUT = 2000; // milliseconds
 
@@ -22,7 +22,7 @@ class ZmqLoggingThread extends Thread {
 	 * @param queue  blocking queue instance to read messages from
 	 * @param url address (e.g. "tcp://host:123") of the remote REP socket
 	 */
-	public ZmqLoggingThread(BlockingQueue<String> queue, String url) {
+	public ZmqSendingThread(BlockingQueue<String> queue, String url) {
 		this.queue = queue;
 		this.url = url;
 		setDaemon(true);

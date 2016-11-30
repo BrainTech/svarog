@@ -40,6 +40,7 @@ public class SvarogLoggingConfigurer {
 			}
 			// obci_server appears to be running
 			String url = "tcp://"+OBCI_REP_IP+":"+OBCI_REP_PORT;
+			ravenFactory = new ObciRavenFactory(url);
 			ZmqRemoteAppender appender = new ZmqRemoteAppender(url);
 			logger.removeAllAppenders();
 			logger.addAppender(appender);
@@ -62,6 +63,12 @@ public class SvarogLoggingConfigurer {
 	 * @param dsn  DSN for Raven (e.g. https://sentry.io/...)
 	 */
 	public static void configureSentry(Logger logger, String dsn) {
+		if (ravenFactory instanceof ObciRavenFactory) {
+			// DSN does not matter if sending to OBCI
+			dsn = "https://dummy:password@sentry/url";
+		} else if (dsn == null || dsn.isEmpty()) {
+			return;
+		}
 		try {
 			Raven raven = ravenFactory.createRavenInstance(new Dsn(dsn));
 			SentryAppender sentry = new SentryAppender(raven);
