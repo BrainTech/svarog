@@ -7,6 +7,8 @@ import com.getsentry.raven.dsn.Dsn;
 import com.getsentry.raven.log4j.SentryAppender;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 
@@ -19,6 +21,11 @@ public class SvarogLoggingConfigurer {
 
 	private static final String OBCI_REP_IP = "127.0.0.1";
 	private static final int OBCI_REP_PORT = 54654;
+	private static final String SOURCE =
+		"svarog_" + ZonedDateTime.now()
+		.format(DateTimeFormatter.ISO_INSTANT)
+		.replaceAll("[:\\-]", "");
+
 
 	private static RavenFactory ravenFactory = new DefaultRavenFactory();
 
@@ -40,8 +47,8 @@ public class SvarogLoggingConfigurer {
 			}
 			// obci_server appears to be running
 			String url = "tcp://"+OBCI_REP_IP+":"+OBCI_REP_PORT;
-			ravenFactory = new ObciRavenFactory(url);
-			ZmqRemoteAppender appender = new ZmqRemoteAppender(url);
+			ravenFactory = new ObciRavenFactory(url, SOURCE);
+			ZmqRemoteAppender appender = new ZmqRemoteAppender(url, SOURCE);
 			logger.removeAllAppenders();
 			logger.addAppender(appender);
 			Runtime.getRuntime().addShutdownHook(new Thread(() -> {

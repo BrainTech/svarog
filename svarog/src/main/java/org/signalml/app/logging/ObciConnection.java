@@ -22,6 +22,7 @@ import org.json.JSONObject;
 public class ObciConnection extends ZmqRemoteSender implements Connection {
 
 	private Marshaller marshaller;
+	private final String source;
 
 	// dateformat definition compatible with Raven's JsonMarshaller
 	private static final DateFormat ISO_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -33,8 +34,9 @@ public class ObciConnection extends ZmqRemoteSender implements Connection {
 	 *
 	 * @param obciRepUrl  address (e.g. "tcp://host:123") of the remote REP socket
 	 */
-	public ObciConnection(String obciRepUrl) {
+	public ObciConnection(String obciRepUrl, String source) {
 		super(obciRepUrl);
+		this.source = source;
 		startThread();
 	}
 
@@ -67,6 +69,7 @@ public class ObciConnection extends ZmqRemoteSender implements Connection {
 				.put("type", "sentry")
 				.put("log_type", "sentry")
 				.put("data", data)
+				.put("source", source)
 				.toString();
 			offer(message);
 		} catch (JSONException json) {

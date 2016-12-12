@@ -24,9 +24,10 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	 * It will redirect all appended logs to the remote REP socket.
 	 *
 	 * @param url address (e.g. "tcp://host:123") of the remote REP socket
+	 * @param source  name of the current Svarog instance for logging and crash reporting
 	 */
-	public ZmqRemoteAppender(String url) {
-		source = "svarog_" + ZonedDateTime.now().format(DateTimeFormatter.ISO_INSTANT).replaceAll("[:\\-]", "");
+	public ZmqRemoteAppender(String url, String source) {
+		this.source = source;
 		sender = new ZmqRemoteSender(url);
 	}
 

@@ -16,14 +16,17 @@ import com.getsentry.raven.marshaller.Marshaller;
 public class ObciRavenFactory extends DefaultRavenFactory {
 
 	private final String obciRepUrl;
+	private final String source;
 
 	/**
 	 * Create a new factory.
 	 *
 	 * @param obciRepUrl  address (e.g. "tcp://host:123") of the remote REP socket
+	 * @param source  name of the current Svarog instance for logging and crash reporting
 	 */
-	public ObciRavenFactory(String obciRepUrl) {
+	public ObciRavenFactory(String obciRepUrl, String source) {
 		this.obciRepUrl = obciRepUrl;
+		this.source = source;
 	}
 
 	/**
@@ -34,7 +37,7 @@ public class ObciRavenFactory extends DefaultRavenFactory {
 	 */
 	@Override
 	protected Connection createHttpConnection(Dsn dsn) {
-		ObciConnection connection = new ObciConnection(obciRepUrl);
+		ObciConnection connection = new ObciConnection(obciRepUrl, source);
 		Marshaller marshaller = createMarshaller(dsn);
 		connection.setMarshaller(marshaller);
 		return connection;
