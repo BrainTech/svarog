@@ -1,7 +1,5 @@
 package org.signalml.app.logging;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import org.apache.log4j.spi.LoggingEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
