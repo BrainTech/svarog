@@ -223,7 +223,6 @@ public class ViewerElementManager {
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
-	private OpenSignalWizardDialog openSignalWizardDialog;
 	private SignalSelectionDialog signalSelectionDialog;
 	private NewTagDialog newTagDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
@@ -1036,13 +1035,6 @@ public class ViewerElementManager {
 		return signalMontageDialog;
 	}
 
-	public OpenSignalWizardDialog getOpenSignalWizardDialog() {
-		if (openSignalWizardDialog == null) {
-			openSignalWizardDialog = new OpenSignalWizardDialog(this, getDialogParent(), true);
-		}
-		return openSignalWizardDialog;
-	}
-
 	public SignalSelectionDialog getSignalSelectionDialog() {
 		if (signalSelectionDialog == null) {
 			signalSelectionDialog = new SignalSelectionDialog(getDialogParent(), true);
@@ -1448,8 +1440,7 @@ public class ViewerElementManager {
 
 	public OpenSignalWizardAction getOpenSignalWizardAction() {
 		if (openSignalWizardAction == null) {
-			openSignalWizardAction = new OpenSignalWizardAction(getDocumentFlowIntegrator());
-			openSignalWizardAction.setOpenSignalWizardDialog(getOpenSignalWizardDialog());
+			openSignalWizardAction = new OpenSignalWizardAction(this);
 		}
 		return openSignalWizardAction;
 	}
