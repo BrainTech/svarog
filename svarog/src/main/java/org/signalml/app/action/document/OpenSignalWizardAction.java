@@ -17,6 +17,7 @@ import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.OpenTagDescriptor;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
+import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.monitor.MonitorWorker;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
@@ -27,7 +28,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	protected static final Logger logger = Logger.getLogger(OpenSignalWizardAction.class);
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
-	private OpenSignalWizardDialog openSignalWizardDialog;
+	private ViewerElementManager viewerElementManager;
 	private OpenDocumentDescriptor openDocumentDescriptor;
 
 	private SignalDocument signalDocument;
@@ -37,23 +38,23 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	 * @param viewerElementManager ViewerElementManager to be used by
 	 * this action.
 	 */
-	public OpenSignalWizardAction(DocumentFlowIntegrator documentFlowIntegrator) {
+	public OpenSignalWizardAction(ViewerElementManager viewerElementManager) {
 		super();
-		this.documentFlowIntegrator = documentFlowIntegrator;
+		this.documentFlowIntegrator = viewerElementManager.getDocumentFlowIntegrator();
+		this.viewerElementManager = viewerElementManager;
 		setText(_("Open signal"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open signal and set montage for it"));
 		setMnemonic(KeyEvent.VK_O);
 	}
 
-	public void setOpenSignalWizardDialog(OpenSignalWizardDialog openSignalWizardDialog) {
-		this.openSignalWizardDialog = openSignalWizardDialog;
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		openDocumentDescriptor = new OpenDocumentDescriptor();
 
+		OpenSignalWizardDialog openSignalWizardDialog = new OpenSignalWizardDialog(
+			viewerElementManager, viewerElementManager.getDialogParent(), true
+		);
 		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor, true);
 		if (!ok) {
 			return;
