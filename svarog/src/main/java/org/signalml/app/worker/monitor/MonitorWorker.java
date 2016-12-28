@@ -4,6 +4,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.beans.PropertyChangeEvent;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.util.Collections;
 import java.util.List;
 
@@ -20,8 +22,6 @@ import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
 import org.signalml.peer.protocol.SvarogProtocol;
-import org.signalml.peer.protocol.SvarogProtocol.Sample;
-import org.signalml.peer.protocol.SvarogProtocol.SampleVector;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
@@ -160,28 +160,28 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	protected void parseMessageWithSamples(byte[] sampleMsgData) {
 		logger.debug("Worker: reading chunk!");
 
-		SampleVector sampleVector;
 		try {
-			sampleVector = SampleVector.parseFrom(sampleMsgData);
-		} catch (Exception e) {
-			logger.error("", e);
-			return;
-		}
-		List<Sample> samples = sampleVector.getSamplesList();
+			DataInputStream data = new DataInputStream(new ByteArrayInputStream(sampleMsgData));
+			final int sampleCount = data.readUnsignedShort();
+			final int channelCount = data.readUnsignedShort();
 
-		for (int k=0; k<sampleVector.getSamplesCount(); k++) {
-			Sample sample = sampleVector.getSamples(k);
-
-			float[] newSamplesArray = new float[sample.getChannelsCount()];
-			for (int i = 0; i < newSamplesArray.length; i++) {
-				newSamplesArray[i] = sample.getChannels(i);
+			double[] timestamps = new double[sampleCount];
+			for (int sample=0; sample<sampleCount; ++sample) {
+				timestamps[sample] = data.readDouble();
 			}
+			for (int sample=0; sample<sampleCount; ++sample) {
+				float[] newSamplesArray = new float[channelCount];
+				for (int i=0; i<channelCount; ++i) {
+					newSamplesArray[i] = data.readFloat();
+				}
 
-			double samplesTimestamp = samples.get(0).getTimestamp();
-			//logger.debug("  -- " + samplesTimestamp);
-			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
+				double samplesTimestamp = timestamps[sample];
+				NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
 
-			publish(newSamplesPackage);
+				publish(newSamplesPackage);
+			}
+		} catch (Exception ex) {
+			logger.error("cannot process signal message", ex);
 		}
 	}
 

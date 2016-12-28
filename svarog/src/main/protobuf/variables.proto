@@ -12,16 +12,6 @@ message VariableVector {
 	repeated Variable variables = 1;
 }
 
-
-message Sample {
-    required double timestamp = 1;
-    repeated float channels = 2;
-}
-
-message SampleVector {
-    repeated Sample samples = 1;
-}
-
 message Tag {
 	required double start_timestamp = 1;
 	required double end_timestamp = 2;
