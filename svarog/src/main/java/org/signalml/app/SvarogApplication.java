@@ -363,11 +363,8 @@ public class SvarogApplication implements java.lang.Runnable {
 					createMainFrame();
 				}
 			});
-		} catch (InterruptedException ex) {
-			logger.error("Failed to create GUI", ex);
-			System.exit(1);
-		} catch (InvocationTargetException ex) {
-			logger.error("Failed to create GUI", ex);
+		} catch (InterruptedException|InvocationTargetException ex) {
+			logger.fatal("Failed to create GUI", ex);
 			System.exit(1);
 		}
 

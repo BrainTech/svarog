@@ -1,5 +1,6 @@
 package org.signalml.app;
 
+import com.getsentry.raven.Raven;
 import java.awt.Window;
 
 import org.apache.log4j.Logger;
@@ -17,6 +18,7 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 
 	private static SvarogExceptionHandler instance = null;
 	private static boolean installed = false;
+	private volatile Raven raven = null;
 
 	/**
 	 * Installs SvarogExceptionHandler instance as default exception handler.
@@ -36,8 +38,19 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 		}
 	}
 
+	/**
+	 * Assign a Raven instance to this exception handler.
+	 * All exceptions processed by this handler will be sent to Raven.
+	 * If NULL is passed, no Raven instance will be assigned.
+	 *
+	 * @param raven  Raven client
+	 */
+	public void setRaven(Raven raven) {
+		this.raven = raven;
+	}
+
 	/** Returns the shared instance. */
-	protected static SvarogExceptionHandler getSharedInstance() {
+	public static SvarogExceptionHandler getSharedInstance() {
 		if (instance == null) {
 			synchronized (SvarogExceptionHandler.class) {
 				if (instance == null)
@@ -50,7 +63,23 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 	private SvarogExceptionHandler() {
 	}
 
-	private void displayUserMessage(Throwable t) {
+	/**
+	 * Report exception to Raven (if already configured)
+	 * and display user message.
+	 *
+	 * @param t  exception
+	 */
+	private static void processException(Throwable t, Raven raven) {
+		if (raven != null) {
+			synchronized (raven) {
+				// Raven is not guaranteed to be thread-safe
+				raven.sendException(t);
+			}
+		}
+		displayUserMessage(t);
+	}
+
+	private static void displayUserMessage(Throwable t) {
 		Dialogs.showExceptionDialog((Window) null, t);
 	}
 
@@ -62,6 +91,6 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
 		logger.error("uncaught exception in thread [" + (t.getId()) + "/" + (t.getName()) + "]", e);
-		displayUserMessage(e);
+		processException(e, raven);
 	}
 }

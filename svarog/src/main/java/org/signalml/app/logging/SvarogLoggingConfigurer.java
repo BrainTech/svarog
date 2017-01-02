@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
+import org.signalml.app.SvarogExceptionHandler;
 
 /**
  * Configures Svarog logging system, depending on the environment.
@@ -78,8 +79,9 @@ public class SvarogLoggingConfigurer {
 		}
 		try {
 			Raven raven = ravenFactory.createRavenInstance(new Dsn(dsn));
+			SvarogExceptionHandler.getSharedInstance().setRaven(raven);
 			SentryAppender sentry = new SentryAppender(raven);
-			sentry.setThreshold(Priority.ERROR);
+			sentry.setThreshold(Priority.FATAL);
 			logger.addAppender(sentry);
 			logger.info("successfully initialized logging to Sentry");
 		} catch (Exception ex) {
