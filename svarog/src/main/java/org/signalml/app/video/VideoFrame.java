@@ -55,8 +55,9 @@ public final class VideoFrame extends JFrame {
 	 * Create new Swing frame for displaying video.
 	 *
 	 * @param title  text to be displayed in frame's top bar
+	 * @param defaultCloseOperation  one of JFrame.*_ON_CLOSE constants
 	 */
-	public VideoFrame(String title) {
+	public VideoFrame(String title, int defaultCloseOperation) {
 		super(title);
 		if (!AVAILABLE) {
 			throw new RuntimeException("video playback is unavailable on this machine");
@@ -68,7 +69,7 @@ public final class VideoFrame extends JFrame {
 			}
 		};
 		setContentPane(component);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(defaultCloseOperation);
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		player = component.getMediaPlayer();
 		player.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {

@@ -70,6 +70,7 @@ import org.signalml.app.action.workspace.tasks.RemoveAllFinishedTasksAction;
 import org.signalml.app.action.workspace.tasks.RemoveAllTasksAction;
 import org.signalml.app.action.workspace.tasks.ResumeAllTasksAction;
 import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
+import org.signalml.app.action.video.AddCameraAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.document.BookDocument;
@@ -322,6 +323,8 @@ public class ViewerElementManager {
 	 * a monitor signal recording.
 	 */
 	private StopMonitorRecordingAction stopMonitorRecordingAction;
+
+	private AddCameraAction addCameraAction;
 
 	private ArrayList<AbstractSignalMLAction> runMethodActions;
 	private ArrayList<AbstractSignalMLAction> iterateMethodActions;
@@ -642,6 +645,8 @@ public class ViewerElementManager {
 			monitorMenu = new JMenu(_("Monitor"));
 			monitorMenu.setMnemonic(KeyEvent.VK_R);
 
+			monitorMenu.add(getAddCameraAction());
+			monitorMenu.addSeparator();
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
 			monitorMenu.addSeparator();
@@ -1307,6 +1312,18 @@ public class ViewerElementManager {
 		if (stopMonitorRecordingAction == null)
 			stopMonitorRecordingAction = new StopMonitorRecordingAction(getActionFocusManager());
 		return stopMonitorRecordingAction;
+	}
+
+	/**
+	 * Returns an {@link Action} responsible for opening a new window
+	 * with video preview.
+	 * @return an {@link Action} responsible for opening video preview
+	 */
+	public AddCameraAction getAddCameraAction() {
+		if (addCameraAction == null) {
+			addCameraAction = new AddCameraAction(this);
+		}
+		return addCameraAction;
 	}
 
 	public CloseDocumentAction getCloseActiveDocumentAction() {

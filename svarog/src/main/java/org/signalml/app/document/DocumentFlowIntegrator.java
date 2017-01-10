@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import javax.swing.filechooser.FileFilter;
@@ -803,7 +804,7 @@ public class DocumentFlowIntegrator {
 			if (videoFilePath != null) {
 				// VideoFrame needs to be created before onCommonDocumentAdded
 				// for SignalView to respond properly
-				VideoFrame frame = new VideoFrame(videoFileName);
+				VideoFrame frame = new VideoFrame(videoFileName, JFrame.DO_NOTHING_ON_CLOSE);
 				frame.open(videoFilePath);
 				rawSignalDocument.setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);
