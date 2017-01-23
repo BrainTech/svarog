@@ -5,7 +5,7 @@ import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import org.signalml.app.video.VideoFrame;
+import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -17,7 +17,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
  */
 public final class PlayPauseVideoAction extends AbstractSignalMLAction {
 
-	private final VideoFrame videoFrame;
+	private final OfflineVideoFrame videoFrame;
 	private final JSlider videoRateSlider;
 	private final Runnable onClickWhenPaused = new Runnable() {
 		@Override
@@ -83,7 +83,7 @@ public final class PlayPauseVideoAction extends AbstractSignalMLAction {
 	 *
 	 * @param videoFrame  created video frame, must not be null
 	 */
-	public PlayPauseVideoAction(VideoFrame videoFrame) {
+	public PlayPauseVideoAction(OfflineVideoFrame videoFrame) {
 		this.videoFrame = videoFrame;
 		this.videoRateSlider = new VideoRateSlider();
 		this.onClick = onClickWhenPaused;

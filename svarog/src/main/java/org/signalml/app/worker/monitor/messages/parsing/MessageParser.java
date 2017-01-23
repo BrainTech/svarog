@@ -24,6 +24,10 @@ public class MessageParser {
 		}
 	}
 
+	private static boolean isNullOrEmpty(String string) {
+		return string == null || string.isEmpty();
+	}
+
 	public static void checkIfResponseIsOK(String response, MessageType awaitedMessageType) throws OpenbciCommunicationException {
 
 		MessageType type = MessageType.parseMessageTypeFromResponse(response);
@@ -32,6 +36,9 @@ public class MessageParser {
 		}
 		else if (type == MessageType.REQUEST_ERROR_RESPONSE) {
 			RequestErrorResponse msg = (RequestErrorResponse) MessageParser.parseMessageFromJSON(response, type);
+			if (isNullOrEmpty(msg.getErrorCode()) && !isNullOrEmpty(msg.getDetails())) {
+				throw new OpenbciCommunicationException(msg.getDetails());
+			}
 			throw new OpenbciCommunicationException(_R("Got request error from server (code: {0})", msg.getErrorCode()));
 		}
 		else {

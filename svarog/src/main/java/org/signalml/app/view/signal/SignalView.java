@@ -107,6 +107,7 @@ import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
 import org.signalml.app.util.SwingUtils;
+import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
@@ -493,7 +494,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		setInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, topMap);
 
 		// listen to video frame events to update video markers
-		VideoFrame videoFrame = getDocumentVideoFrame();
+		OfflineVideoFrame videoFrame = getDocumentVideoFrame();
 		if (videoFrame != null) {
 			videoFrame.addListener(new VideoFrameListener());
 		}
@@ -541,7 +542,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		columnHeader.setListener(new SignalPlotColumnHeaderListener() {
 			@Override
 			public void timeSelected(double time) {
-				VideoFrame videoFrame = getDocumentVideoFrame();
+				OfflineVideoFrame videoFrame = getDocumentVideoFrame();
 				if (videoFrame != null) {
 					// accounting for video offset
 					time -= getDocumentVideoOffset();
@@ -851,8 +852,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 *
 	 * @return video frame instance or NULL
 	 */
-	public VideoFrame getDocumentVideoFrame() {
-		VideoFrame videoFrame = null;
+	public OfflineVideoFrame getDocumentVideoFrame() {
+		OfflineVideoFrame videoFrame = null;
 		if (document instanceof RawSignalDocument) {
 			RawSignalDocument rawDocument = (RawSignalDocument) document;
 			videoFrame = rawDocument.getVideoFrame();
@@ -1323,7 +1324,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 */
 	public PlayPauseVideoAction getPlayPauseVideoAction() {
 		if (playPauseVideoAction == null) {
-			VideoFrame videoFrame = getDocumentVideoFrame();
+			OfflineVideoFrame videoFrame = getDocumentVideoFrame();
 			if (videoFrame != null) {
 				playPauseVideoAction = new PlayPauseVideoAction(videoFrame);
 			}

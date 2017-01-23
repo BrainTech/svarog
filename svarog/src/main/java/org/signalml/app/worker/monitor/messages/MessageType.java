@@ -37,6 +37,8 @@ public enum MessageType {
 	JOIN_EXPERIMENT_REQUEST("join_experiment", JoinExperimentRequest.class),
 	LEAVE_EXPERIMENT_REQUEST("leave_experiment", LeaveExperimentRequest.class),
 
+	CAMERA_CONTROL_REQUEST("cam_control_msg", CameraControlRequest.class),
+
 	REQUEST_OK_RESPONSE("rq_ok", RequestOKResponse.class),
 	REQUEST_ERROR_RESPONSE("rq_error", RequestErrorResponse.class);
 

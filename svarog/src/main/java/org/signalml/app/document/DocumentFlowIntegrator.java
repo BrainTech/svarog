@@ -41,6 +41,7 @@ import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
@@ -804,7 +805,7 @@ public class DocumentFlowIntegrator {
 			if (videoFilePath != null) {
 				// VideoFrame needs to be created before onCommonDocumentAdded
 				// for SignalView to respond properly
-				VideoFrame frame = new VideoFrame(videoFileName, JFrame.DO_NOTHING_ON_CLOSE);
+				OfflineVideoFrame frame = new OfflineVideoFrame(videoFileName);
 				frame.open(videoFilePath);
 				rawSignalDocument.setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);

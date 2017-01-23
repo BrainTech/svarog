@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -42,7 +43,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	/**
 	 * optional video preview for this signal
 	 */
-	private VideoFrame videoFrame;
+	private OfflineVideoFrame videoFrame;
 
 	/**
 	 * time offset (in seconds) of video relative to the signal's start
@@ -137,7 +138,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 *
 	 * @return  currently assigned video window
 	 */
-	public VideoFrame getVideoFrame() {
+	public OfflineVideoFrame getVideoFrame() {
 		return videoFrame;
 	}
 
@@ -156,7 +157,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 * @param frame  created video frame
 	 * @param offset  time offset (in seconds) of video relative to the signal's start
 	 */
-	public void setVideoFrame(VideoFrame frame, float offset) {
+	public void setVideoFrame(OfflineVideoFrame frame, float offset) {
 		this.videoFrame = frame;
 		this.videoOffset = offset;
 	}
