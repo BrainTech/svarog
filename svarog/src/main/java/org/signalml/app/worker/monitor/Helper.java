@@ -3,14 +3,13 @@ package org.signalml.app.worker.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import org.apache.commons.io.IOUtils;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
@@ -140,18 +139,7 @@ public class Helper {
 	}
 
 	private static String receiveResponse() throws SocketTimeoutException, IOException, OpenbciCommunicationException {
-		BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-		StringBuilder stringBuilder = new StringBuilder();
-
-		String line;
-		do {
-			line = in.readLine();
-			if (line != null)
-				stringBuilder.append(line);
-		} while (line != null);
-
-		String response = stringBuilder.toString();
+		String response = IOUtils.toString(socket.getInputStream());
 		if (response == null || response.isEmpty())
 			throw new OpenbciCommunicationException(_("Received an empty response from openBCI!"));
 
