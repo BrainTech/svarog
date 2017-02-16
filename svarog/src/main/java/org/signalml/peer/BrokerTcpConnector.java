@@ -24,7 +24,7 @@ public class BrokerTcpConnector {
 	/**
 	 * The same magic sequence of four bytes as defined in OBCI.
 	 */
-	public static final byte[] TCP_MAGIC_BYTES = Converter.bytesFromString("OBCI");
+	public static final byte[] TCP_MAGIC_BYTES = Converter.bytesFromString("OBCI\n");
 
 	/**
 	 * Socket connection timeout (in milliseconds).
