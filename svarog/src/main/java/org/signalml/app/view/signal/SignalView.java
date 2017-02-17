@@ -98,6 +98,7 @@ import org.signalml.app.config.preset.PresetManagerAdapter;
 import org.signalml.app.config.preset.PresetManagerEvent;
 import org.signalml.app.config.preset.PresetManagerListener;
 import org.signalml.app.document.DocumentFlowIntegrator;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
@@ -128,6 +129,7 @@ import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
+import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagDifference;
 import org.signalml.domain.tag.TagDifferenceDetector;
@@ -347,6 +349,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		super(new BorderLayout());
 		this.document = document;
 		document.addPropertyChangeListener(this);
+
+		if (document instanceof MonitorSignalDocument) {
+			// for user tags in monitor mode
+			StyledTagSet tagSet = document.getActiveTag().getTagSet();
+			tagSet.addTagListener(this);
+			tagSet.addTagStyleListener(this);
+		}
 	}
 
 	public void initialize() throws SignalMLException {
@@ -2256,7 +2265,15 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			if (currentSignalTool instanceof SelectionSignalTool) {
+			if (document instanceof MonitorSignalDocument) {
+				// user tags in monitor mode
+				MonitorSignalDocument monitor = (MonitorSignalDocument) document;
+				if (tagStyle.getType() == SignalSelectionType.CHANNEL) {
+					final MonitorTag tag = new MonitorTag(tagStyle, 0.001*System.currentTimeMillis(), 1.0, -1);
+					monitor.getMonitorWorker().acceptUserTag(tag);
+				}
+			}
+			else if (currentSignalTool instanceof SelectionSignalTool) {
 
 				if (signalSelection == null) {
 					return;
@@ -2307,7 +2324,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		@Override
 		public boolean isEnabled() {
 
-			if (currentSignalTool instanceof SelectionSignalTool) {
+			if (document instanceof MonitorSignalDocument) {
+				return true;
+			} else if (currentSignalTool instanceof SelectionSignalTool) {
 				return getTagSelectionAction().isEnabled();
 			} else if (currentSignalTool instanceof TaggingSignalTool) {
 				return true;

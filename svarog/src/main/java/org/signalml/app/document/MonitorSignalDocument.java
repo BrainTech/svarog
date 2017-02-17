@@ -351,6 +351,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		// connecting recorders to the monitor worker
 		monitorWorker.connectSignalRecorderWorker(signalRecorderWorker);
 		monitorWorker.connectTagRecorderWorker(tagRecorderWorker);
+		documentView.requestFocusInWindow();  // for user tags in monitor mode
 
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
 
@@ -379,6 +380,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		tagRecorderWorker = null;
 		signalRecorderWorker = null;
+		if (documentView != null) {
+			// for user tags in monitor mode
+			documentView.requestFocusInWindow();
+		}
 
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, true, false);
 

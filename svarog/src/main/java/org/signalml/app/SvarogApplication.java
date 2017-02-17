@@ -5,7 +5,6 @@ package org.signalml.app;
 
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.util.Util.WINDOWS_OS_PATTERN;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +22,6 @@ import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.signalml.SignalMLOperationMode;
@@ -64,7 +62,6 @@ import org.signalml.app.util.XMLUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.util.logging.DebugHelpers;
 import org.signalml.app.view.common.dialogs.SplashScreen;
-import org.signalml.app.view.preferences.ProfilePathDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
 import org.signalml.codec.DefaultSignalMLCodecManager;
@@ -128,8 +125,6 @@ public class SvarogApplication implements java.lang.Runnable {
 	private ViewerMainFrame viewerMainFrame = null;
 	private XStream streamer = null;
 	private SplashScreen splashScreen = null;
-	// this needs to be a field to allow for invokeAndWait
-	private GeneralConfiguration initialConfig = null;
 	private boolean molTest = false;
 
 	/** {@link ViewerElementManager} shared instance. */
@@ -320,18 +315,12 @@ public class SvarogApplication implements java.lang.Runnable {
 		boolean initialized = false;
 		if (line.hasOption("reset")) {
 			preferences.remove(PreferenceName.INITIALIZED.toString());
-			preferences.remove(PreferenceName.PROFILE_DEFAULT.toString());
-			preferences.remove(PreferenceName.PROFILE_PATH.toString());
 		} else {
 			initialized = preferences.getBoolean(PreferenceName.INITIALIZED.toString(), false);
 		}
 
-		if (initialized) {
-			initialize();
-		} else {
-			initializeFirstTime(null);
-			preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
-		}
+		initialize(!initialized);
+		preferences.putBoolean(PreferenceName.INITIALIZED.toString(), true);
 
 		Util.dumpDebuggingInfo();
 
@@ -416,142 +405,59 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			Log4jConfigurer.initLogging(loggingPath);
 			SvarogLoggingConfigurer.configure(Logger.getRootLogger());
-			Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-				LogManager.shutdown();
-			}));
 		} catch (FileNotFoundException ex) {
 			System.err.println("Critical error: no logging configuration");
 			System.exit(1);
 		}
 	}
 
-	private void initializeFirstTime(final GeneralConfiguration suggested) {
-
-		if (locale == null) {
-			locale = Locale.ENGLISH;
+	private void initialize(boolean firstTime) {
+		boolean ok = initializeProfileDir();
+		if (!ok) {
+			logger.fatal("Could not initialize profile directory");
+			System.exit(1);
 		}
-
-		boolean ok = false;
-		initialConfig = null;
-		do {
-			try {
-				SwingUtilities.invokeAndWait(new Runnable() {
-
-					@Override
-					public void run() {
-						initialConfig = askForProfilePath(suggested);
-					}
-				});
-			} catch (InterruptedException ex) {
-				logger.error("Profile choice error", ex);
-				System.exit(1);
-			} catch (InvocationTargetException ex) {
-				logger.error("Profile choice error", ex);
-				System.exit(1);
-			}
-			initialConfig.setLocale(locale.toString());
-			ok = setProfileDir(initialConfig, true);
-		} while (!ok);
-
-		preferences.putBoolean(PreferenceName.PROFILE_DEFAULT.toString(), initialConfig.isProfileDefault());
-		if (initialConfig.isProfileDefault()) {
-			preferences.remove(PreferenceName.PROFILE_PATH.toString());
-		} else {
-			preferences.put(PreferenceName.PROFILE_PATH.toString(), initialConfig.getProfilePath());
-		}
-
-		try {
-			initialConfig.writeToXML(initialConfig.getStandardFile(profileDir), streamer);
-		} catch (IOException ex) {
-			logger.error("Failed to write configuration", ex);
-		}
-
-	}
-
-	private void initialize() {
 
 		GeneralConfiguration config = new GeneralConfiguration();
-		ConfigurationDefaults.setGeneralConfigurationDefaults(config);
-
-		String profileDefault = preferences.get(PreferenceName.PROFILE_DEFAULT.toString(), null);
-		String profilePath = preferences.get(PreferenceName.PROFILE_PATH.toString(), null);
-
-		if (profileDefault == null) {
-			logger.error("Profile settings seem to be lost");
-			initializeFirstTime(null);
-			return;
+		if (!firstTime) {
+			try {
+				config.readFromXML(config.getStandardFile(profileDir), streamer);
+				locale = new Locale(config.getLocale());
+				return; // initialized!
+			} catch (FileNotFoundException ex) {
+				logger.debug("Failed to read configuration - file not found, will have to reinitialize");
+			} catch (Exception ex) {
+				logger.error("Failed to read configuration", ex);
+			}
 		}
-
-		boolean profileDef = Boolean.parseBoolean(profileDefault);
-		config.setProfileDefault(profileDef);
-		if (profileDef) {
-			config.setProfilePath(null);
-		} else {
-			config.setProfilePath(profilePath);
+		if (locale == null) {
+			locale = Locale.ENGLISH;
+			try {
+				config.setLocale(locale.toString());
+				config.writeToXML(config.getStandardFile(profileDir), streamer);
+			} catch (IOException ex) {
+				logger.error("Failed to write configuration", ex);
+			}
 		}
-
-		boolean ok = setProfileDir(config, false);
-		if (!ok) {
-			logger.error("Profile settings seem to be invalid");
-			initializeFirstTime(config);
-			return;
-		}
-
-		GeneralConfiguration config2 = new GeneralConfiguration();
-		try {
-			config2.readFromXML(config2.getStandardFile(profileDir), streamer);
-		} catch (FileNotFoundException ex) {
-			logger.debug("Failed to read configuration - file not found, will have to reinitialize");
-			initializeFirstTime(config);
-			return;
-		} catch (Exception ex) {
-			logger.error("Failed to read configuration", ex);
-			initializeFirstTime(config);
-			return;
-		}
-
-		locale = new Locale(config2.getLocale());
-		config.setLocale(locale.toString());
-
 	}
 
-	private boolean setProfileDir(GeneralConfiguration config, boolean firstTime) {
-
-		String profilePath = null;
-		if (config.isProfileDefault()) {
-			String osName = System.getProperty("os.name");
-			if (WINDOWS_OS_PATTERN.matcher(osName).matches()) {
-				profilePath = System.getProperty("user.home") + File.separator + "_svarog";
-			} else {
-				profilePath = System.getProperty("user.home") + File.separator + ".svarog";
-			}
-			logger.debug("Setting profile path to default [" + profilePath + "]");
-		} else {
-			profilePath = config.getProfilePath();
-			logger.debug("Setting profile path to chosen [" + profilePath + "]");
-		}
-
+	private boolean initializeProfileDir() {
+		String profilePath = System.getProperty("user.home") + File.separator + ".obci" + File.separator + "svarog";
+		logger.debug("Setting profile path to [" + profilePath + "]");
 		System.getProperties().setProperty("signalml.root", profilePath);
-
 		File file = (new File(profilePath)).getAbsoluteFile();
 		if (!file.exists()) {
 			logger.debug("Profile dir not found...");
-			if (firstTime) {
-				// create
-				boolean ok = file.mkdirs();
-				if (!ok) {
-					logger.error("Failed to create profile dir");
-					// return false to indicate dir invalid
-					return false;
-				}
-			} else {
+			boolean ok = file.mkdirs();
+			if (!ok) {
+				logger.error("Failed to create profile dir");
 				// return false to indicate dir invalid
 				return false;
 			}
 		}
 
 		if (!file.isDirectory()) {
-			logger.error("This is not a directory");
+			logger.error("Profile path is not a directory");
 			return false;
 		}
 
@@ -564,28 +470,6 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		PluginLoaderHi.createInstance(profileDir);
 		return true;
-	}
-
-	private GeneralConfiguration askForProfilePath(GeneralConfiguration suggested) {
-
-		ProfilePathDialog dialog = new ProfilePathDialog(null, true);
-
-		GeneralConfiguration model;
-		if (suggested == null) {
-			model = new GeneralConfiguration();
-			ConfigurationDefaults.setGeneralConfigurationDefaults(model);
-		} else {
-			model = suggested;
-		}
-
-		boolean result = dialog.showDialog(model, 0.5, 0.2);
-		if (!result) {
-			// we do not allow continuation if profile selection was cancelled
-			System.exit(1);
-		}
-
-		return model;
-
 	}
 
 	public void splash(String newMessage, boolean doStep) {
@@ -633,6 +517,9 @@ public class SvarogApplication implements java.lang.Runnable {
 			"Application config not found - will use defaults",
 			"Failed to read application configuration - will use defaults");
 		applicationConfig.applySystemSettings();
+
+		String sentryDsn = applicationConfig.getSentryDsn();
+		SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn);
 
 		splash(_("Initializing codecs"), true);
 
@@ -860,48 +747,6 @@ public class SvarogApplication implements java.lang.Runnable {
 		viewerMainFrame.initialize();
 
 	}
-
-//	private void setupGUIExceptionHandler() {
-//
-//		final UncaughtExceptionHandler prevHandler = Thread.getDefaultUncaughtExceptionHandler();
-//
-//		Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
-//
-//			@Override
-//			public void uncaughtException(final Thread t, final Throwable e) {
-//
-//				logger.error("Exception caught", e);
-//
-//				Runnable job = new Runnable() {
-//
-//					@Override
-//					public void run() {
-//						try {
-//						    SvarogLogger.getInstance().debug("Default Uncaught Exception Handler!");
-//
-//							// prevent the splash screen from staying on top
-//							if (splashScreen != null && splashScreen.isVisible()) {
-//								splashScreen.setVisible(false);
-//								splashScreen.dispose();
-//								splashScreen = null;
-//							}
-//
-//							ErrorsDialog errorsDialog = new ErrorsDialog( null, true, _("Exception occured"));
-//							ResolvableException ex = new ResolvableException(e);
-//							errorsDialog.showDialog(ex, true);
-//						} catch (Throwable ex1) {
-//							// fallback to previous handler to prevent exception loss
-//							logger.error("Failed to display error dialog", ex1);
-//							prevHandler.uncaughtException(t, e);
-//						}
-//					}
-//				};
-//
-//				SwingUtilities.invokeLater(job);
-//
-//			}
-//		});
-//	}
 
 	public void exit(int code) {
 

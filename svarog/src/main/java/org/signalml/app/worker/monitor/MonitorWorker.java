@@ -4,6 +4,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.beans.PropertyChangeEvent;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Level;
@@ -77,6 +78,10 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		getBusyDialog().setText(_("Waiting for the first sample..."));
 
 		logger.setLevel((Level) Level.INFO);
+	}
+
+	public void acceptUserTag(MonitorTag tag) {
+		process(Collections.singletonList(tag));
 	}
 
 	@Override

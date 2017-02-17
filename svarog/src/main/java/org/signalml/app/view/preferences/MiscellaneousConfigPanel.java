@@ -15,6 +15,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -108,6 +109,11 @@ public class MiscellaneousConfigPanel extends JPanel {
 	private JSpinner toolTipDismissSpinner;
 
 	/**
+	 * text field for sentry DSN (e.g https://sentry.io/...)
+	 */
+	private JTextField sentryDsnTextField;
+
+	/**
 	 * the {@link SignalMLOperationMode mode} in which Svarog is running
 	 */
 	private SignalMLOperationMode mode;
@@ -167,6 +173,14 @@ public class MiscellaneousConfigPanel extends JPanel {
 			generalPanel.add(getSaveConfigOnEveryChangeCheckBox());
 			generalPanel.add(getRestoreWorkspaceCheckBox());
 		}
+
+		JPanel sentryPanel = new JPanel();
+		sentryPanel.setBorder(new EmptyBorder(3,3,3,3));
+		sentryPanel.setLayout(new BorderLayout(10, 0));
+		sentryPanel.add(new JLabel(_("Sentry DSN")), BorderLayout.WEST);
+		sentryPanel.add(getSentryDsnTextField(), BorderLayout.CENTER);
+		sentryPanel.add(new JLabel("("+_("Svarog needs to be restarted for changes to take effect")+")"), BorderLayout.SOUTH);
+		generalPanel.add(sentryPanel);
 
 		JPanel toolTipPanel = new JPanel();
 		toolTipPanel.setLayout(new BoxLayout(toolTipPanel, BoxLayout.X_AXIS));
@@ -347,6 +361,18 @@ public class MiscellaneousConfigPanel extends JPanel {
 	}
 
 	/**
+	 * Return the text field which allows to enter Sentry DNS for logging
+	 * crash reports in case OpenBCI server is not active.
+	 * If the spinner doesn't exist it is created.
+	 * @return created text field
+	 */
+	protected JTextField getSentryDsnTextField() {
+		if (sentryDsnTextField == null)
+			sentryDsnTextField = new JTextField();
+		return sentryDsnTextField;
+	}
+
+	/**
 	 * Fills all the fields of this panel (check-boxes and spinners) from the
 	 * given {@link ApplicationConfiguration configuration} of Svarog
 	 * @param applicationConfig the configuration of Svarog
@@ -368,6 +394,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 		getToolTipInitialSpinner().setValue(applicationConfig.getToolTipInitialDelay());
 		getToolTipDismissSpinner().setValue(applicationConfig.getToolTipDismissDelay());
+		getSentryDsnTextField().setText(applicationConfig.getSentryDsn());
 
 	}
 
@@ -393,6 +420,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 		applicationConfig.setToolTipInitialDelay((Integer) getToolTipInitialSpinner().getValue());
 		applicationConfig.setToolTipDismissDelay((Integer) getToolTipDismissSpinner().getValue());
+		applicationConfig.setSentryDsn(getSentryDsnTextField().getText());
 
 	}
 
