@@ -519,7 +519,9 @@ public class SvarogApplication implements java.lang.Runnable {
 		applicationConfig.applySystemSettings();
 
 		String sentryDsn = applicationConfig.getSentryDsn();
-		SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn);
+		String sentrySite = applicationConfig.getSentrySite();
+		
+		SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn, sentrySite);
 
 		splash(_("Initializing codecs"), true);
 
