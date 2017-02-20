@@ -7,7 +7,6 @@ package org.signalml.app.document.signal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.beans.IntrospectionException;
-import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -380,8 +379,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	}
 
 	@Override
-	public SignalView getSignalView() throws InvalidClassException {
-		if (!(getDocumentView() instanceof SignalView)) throw new InvalidClassException("document view for a signal document must be always of type SignalView");
+	public SignalView getSignalView() {
 		return (SignalView) getDocumentView();
 	}
 }

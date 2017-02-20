@@ -4,25 +4,34 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.action.document.monitor.StartVideoPreviewAction;
 import org.signalml.app.document.signal.AbstractSignal;
 import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
+import org.signalml.app.video.PreviewVideoFrame;
+import org.signalml.app.video.TimecodeData;
+import org.signalml.app.video.VideoStreamManager;
+import org.signalml.app.video.VideoStreamSpecification;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.monitor.DisconnectFromExperimentWorker;
 import org.signalml.app.worker.monitor.MonitorWorker;
 import org.signalml.app.worker.monitor.SignalRecorderWorker;
 import org.signalml.app.worker.monitor.TagRecorder;
+import org.signalml.app.worker.monitor.VideoRecordingStatusListener;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
@@ -77,6 +86,16 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private StyledMonitorTagSet tagSet;
 
 	/**
+	 * Video manager responsible for the RTSP stream being recorded.
+	 */
+	private final VideoStreamManager videoStreamRecordingManager;
+
+	/**
+	 * Currently active frame for video preview.
+	 */
+	private PreviewVideoFrame previewVideoFrame;
+
+	/**
 	 * Whether the signal was saved.
 	 */
 	private boolean saved = true;
@@ -97,6 +116,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		super();
 		this.descriptor = descriptor;
+		this.videoStreamRecordingManager = new VideoStreamManager();
 		float freq = descriptor.getSignalParameters().getSamplingFrequency();
 		double ps = descriptor.getSignalParameters().getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
@@ -333,7 +353,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	public void startMonitorRecording() throws FileNotFoundException {
 
 		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
-		boolean tagsRecordingEnabled = monitorRecordingDescriptor.isTagsRecordingEnabled();
 
 		// starting signal recorder
 		String dataPath = monitorRecordingDescriptor.getSignalRecordingFilePath();
@@ -341,8 +360,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		// if tags recording is enabled: starting tag recorder and connecting it
 		// to signal recorder
-		if (tagsRecordingEnabled) {
-
+		if (monitorRecordingDescriptor.isTagsRecordingEnabled()) {
 			String tagsPath = monitorRecordingDescriptor.getTagsRecordingFilePath();
 			tagRecorderWorker = new TagRecorder(tagsPath);
 			signalRecorderWorker.setTagRecorder(tagRecorderWorker);
@@ -355,6 +373,54 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
 
+		// requesting RTSP stream and starting video recording
+		if (monitorRecordingDescriptor.isVideoRecordingEnabled()) {
+
+			StartVideoPreviewAction startVideoPreviewAction = getSignalView().getStartVideoPreviewAction();
+			monitorWorker.connectVideoRecordingStatusListener(startVideoPreviewAction);
+
+			VideoStreamSpecification videoSpecs = monitorRecordingDescriptor.getVideoStreamSpecification();
+
+			try {
+				String rtcpURL = videoStreamRecordingManager.replace(videoSpecs);
+				String relativeFilePath = monitorRecordingDescriptor.getVideoRecordingFilePathWithExtension();
+				String targetFilePath = (new File(relativeFilePath)).getAbsolutePath();
+				monitorWorker.startVideoSaving(rtcpURL, targetFilePath);
+
+				// display camera name and status in button's tool tip
+				startVideoPreviewAction.setToolTipFromVideoSpecs(videoSpecs);
+
+				if (monitorRecordingDescriptor.getDisplayVideoPreviewWhileSaving()) {
+					showVideoFrameForPreview();
+				}
+			} catch (OpenbciCommunicationException ex) {
+				ex.showErrorDialog("Failed to start video recording");
+				logger.error("Failed to start video recording", ex);
+			}
+		}
+	}
+
+	/**
+	 * Requests that a window displaying a preview of the video being recorded
+	 * will be displayed for the user.
+	 *
+	 * If the window does not exists, it is created. If it already exists,
+	 * it is brought to front.
+	 */
+	public void showVideoFrameForPreview() {
+		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
+		if (previewVideoFrame != null && previewVideoFrame.isVisible()) {
+			previewVideoFrame.toFront();
+		} else if (monitorRecordingDescriptor.isVideoRecordingEnabled()) {
+			VideoStreamSpecification videoSpecs = monitorRecordingDescriptor.getVideoStreamSpecification();
+			try {
+				previewVideoFrame = new PreviewVideoFrame(videoSpecs);
+				previewVideoFrame.setVisible(true);
+			} catch (OpenbciCommunicationException ex) {
+				ex.showErrorDialog("Failed to start video preview");
+				logger.error("Failed to start video preview", ex);
+			}
+		}
 	}
 
 	/**
@@ -365,6 +431,32 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * data to the given files occurs
 	 */
 	public void stopMonitorRecording() throws IOException {
+		if (descriptor.getMonitorRecordingDescriptor().isVideoRecordingEnabled()
+				&& signalRecorderWorker != null) {
+			monitorWorker.connectVideoRecordingStatusListener(new VideoRecordingStatusListener() {
+				@Override
+				public void videoRecordingStatusChanged(boolean recording) {
+					if (!recording) {
+						monitorWorker.disconnectVideoRecordingStatusListener(this);
+						videoStreamRecordingManager.free();
+						if (!tryToFinalizeVideoRecordingMetadata()) {
+							JOptionPane.showMessageDialog(null,
+								"Video saving has not been finalized! Video data may be missing from XML file.",
+								"Video saving issue",
+								JOptionPane.WARNING_MESSAGE
+							);
+						}
+						stopMonitorRecordingInternally();
+					}
+				}
+			});
+			monitorWorker.stopVideoSaving();
+		} else {
+			stopMonitorRecordingInternally();
+		}
+	}
+
+	private void stopMonitorRecordingInternally() {
 
 		//stops the monitorWorker from sending more samples and tags to the recorders
 		monitorWorker.disconnectTagRecorderWorker();
@@ -387,6 +479,30 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, true, false);
 
+	}
+
+	/**
+	 * @return  true if success, false if failure
+	 */
+	private boolean tryToFinalizeVideoRecordingMetadata() {
+		String relativeFilePath = descriptor.getMonitorRecordingDescriptor().getVideoRecordingFilePath();
+		File timestampFile = new File(relativeFilePath + ".ts.txt");
+
+		try {
+			TimecodeData timestamps = TimecodeData.readFromFile(timestampFile);
+			if (timestamps.size() < 2) {
+				// we need at least two entries,
+				// since if there is only one, it may be partial
+				return false;
+			}
+			double firstFrameTimestamp = timestamps.get(0) / 1000;
+			signalRecorderWorker.setFirstVideoFrameTimestamp(firstFrameTimestamp);
+			return true;
+
+		} catch (IOException ex) {
+			// timestamp file is not ready yet
+			return false;
+		}
 	}
 
 	/**

@@ -88,9 +88,8 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import org.apache.log4j.LogManager;
 import org.signalml.app.logging.SvarogLoggingConfigurer;
-import org.signalml.app.video.OnlineVideoFrame;
+import org.signalml.app.video.VideoStreamManager;
 
 /**
  * The Svarog application.
@@ -806,7 +805,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 
 		logger.debug("Disposing of all video preview frames");
-		OnlineVideoFrame.disposeAll();
+		VideoStreamManager.freeAllStreams();
 
 		logger.debug("Application stopped");
 

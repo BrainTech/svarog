@@ -10,7 +10,6 @@ import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Panel;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.File;
 
 import javax.swing.JCheckBox;
@@ -47,10 +46,22 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	private FileSelectPanel selectTagsRecordingFilePanel;
 
 	/**
-	 * A panel containing a {@link JCheckBox} allowing to enable/disable
-	 * the recording of tags (only signal is recorded then).
+	 * A {@link FileSelectPanel} for selecting a video recording target file
+	 * for a monitor recording.
 	 */
-	private EnableTagRecordingPanel enableTagRecordingPanel;
+	private FileSelectPanel selectVideoRecordingFilePanel;
+
+	/**
+	 * A panel containing a {@link JCheckBox} allowing to enable/disable
+	 * the recording of tags (only signal (and, optionally, video) is recorded then).
+	 */
+	private EnableRecordingPanel enableTagRecordingPanel;
+
+	/**
+	 * A panel containing a {@link JCheckBox} allowing to enable/disable
+	 * the recording of video (only signal (and, optionally, tags) is recorded then).
+	 */
+	private EnableRecordingPanel enableVideoRecordingPanel;
 
 	/**
 	 * Constructor.
@@ -66,7 +77,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 * Initializes this panel.
 	 */
 	private void initialize() {
-		setLayout(new GridLayout(2, 1, 2, 2));
+		setLayout(new GridLayout(3, 1, 2, 2));
 		CompoundBorder border = new CompoundBorder(
 			new TitledBorder(_("Choose files to which signal and tags will be recorded")),
 			new EmptyBorder(3, 3, 3, 3));
@@ -78,6 +89,12 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		tagsRecordingPanel.add(getSelectTagsRecordingFilePanel(), BorderLayout.CENTER);
 
 		add(tagsRecordingPanel);
+
+		JPanel videoRecordingPanel = new JPanel(new BorderLayout());
+		videoRecordingPanel.add(getEnableVideoRecordingPanel(), BorderLayout.WEST);
+		videoRecordingPanel.add(getSelectVideoRecordingFilePanel(), BorderLayout.CENTER);
+
+		add(videoRecordingPanel);
 	}
 
 	/**
@@ -109,16 +126,42 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	}
 
 	/**
+	 * Returns a {@link FileSelectPanel} allowing to select a video recording
+	 * target file.
+	 * @return a {@link FileSelectPanel} for selecting video recording target
+	 * file using this panel
+	 */
+	protected FileSelectPanel getSelectVideoRecordingFilePanel() {
+		if (selectVideoRecordingFilePanel == null) {
+			selectVideoRecordingFilePanel = new FileSelectPanel(_("Record video to file"));
+			selectVideoRecordingFilePanel.setEnabled(false);
+		}
+		return selectVideoRecordingFilePanel;
+	}
+
+	/**
 	 * Returns a {@link Panel} containing a {@link JCheckBox} allowing to
 	 * enable/disable tag recording (if tag recording is disabled, then only
 	 * signal is recorded).
 	 * @return a {@link Panel} for enabling/disabling tag recording
 	 */
-	protected EnableTagRecordingPanel getEnableTagRecordingPanel() {
+	protected EnableRecordingPanel getEnableTagRecordingPanel() {
 		if (enableTagRecordingPanel == null) {
-			enableTagRecordingPanel = new EnableTagRecordingPanel();
+			enableTagRecordingPanel = new EnableRecordingPanel(getSelectTagsRecordingFilePanel());
 		}
 		return enableTagRecordingPanel;
+	}
+
+	/**
+	 * Returns a {@link Panel} containing a {@link JCheckBox} allowing to
+	 * enable/disable video recording.
+	 * @return a {@link Panel} for enabling/disabling video recording
+	 */
+	protected EnableRecordingPanel getEnableVideoRecordingPanel() {
+		if (enableVideoRecordingPanel == null) {
+			enableVideoRecordingPanel = new EnableRecordingPanel(getSelectVideoRecordingFilePanel());
+		}
+		return enableVideoRecordingPanel;
 	}
 
 	/**
@@ -129,15 +172,20 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		MonitorRecordingDescriptor monitorRecordingDescriptor = ((ExperimentDescriptor) model).getMonitorRecordingDescriptor();
 		monitorRecordingDescriptor.setSignalRecordingFilePath(getSelectSignalRecordingFilePanel().getFileName());
 		monitorRecordingDescriptor.setTagsRecordingFilePath(getSelectTagsRecordingFilePanel().getFileName());
-		monitorRecordingDescriptor.setTagsRecordingEnabled(getEnableTagRecordingPanel().isTagRecordingEnabled());
+		monitorRecordingDescriptor.setTagsRecordingEnabled(getEnableTagRecordingPanel().isRecordingEnabled());
+		monitorRecordingDescriptor.setVideoRecordingFilePath(getSelectVideoRecordingFilePanel().getFileName());
 	}
 
 
 	public void fillPanelFromModel(Object model) {
-		MonitorRecordingDescriptor monitorRecordingDescriptor = ((ExperimentDescriptor) model).getMonitorRecordingDescriptor();
-		getEnableTagRecordingPanel().setTagRecordingEnabled(monitorRecordingDescriptor.isTagsRecordingEnabled());
+		ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) model;
+		MonitorRecordingDescriptor monitorRecordingDescriptor = experimentDescriptor.getMonitorRecordingDescriptor();
+		getEnableTagRecordingPanel().setRecordingEnabled(monitorRecordingDescriptor.isTagsRecordingEnabled());
+		getEnableVideoRecordingPanel().setRecordingEnabled(monitorRecordingDescriptor.isVideoRecordingEnabled());
+		getEnableVideoRecordingPanel().setEnabled(experimentDescriptor.getHasVideoSaver());
 		getSelectSignalRecordingFilePanel().setFileName(monitorRecordingDescriptor.getSignalRecordingFilePath());
 		getSelectTagsRecordingFilePanel().setFileName(monitorRecordingDescriptor.getTagsRecordingFilePath());
+		getSelectVideoRecordingFilePanel().setFileName(monitorRecordingDescriptor.getVideoRecordingFilePath());
 	}
 
 	/**
@@ -150,15 +198,10 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		super.setEnabled(enabled);
 
 		getSelectSignalRecordingFilePanel().setEnabled(enabled);
-		if (!enabled) {
-			getSelectTagsRecordingFilePanel().setEnabled(false);
-			getEnableTagRecordingPanel().setEnabled(false);
-		}
-		else {
-			getEnableTagRecordingPanel().setEnabled(true);
-			getSelectTagsRecordingFilePanel().setEnabled(getEnableTagRecordingPanel().isTagRecordingEnabled());
-		}
-
+		getEnableTagRecordingPanel().setEnabled(enabled);
+		getSelectTagsRecordingFilePanel().setEnabled(enabled && getEnableTagRecordingPanel().isRecordingEnabled());
+		getEnableVideoRecordingPanel().setEnabled(enabled);
+		getSelectVideoRecordingFilePanel().setEnabled(enabled && getEnableVideoRecordingPanel().isRecordingEnabled());
 	}
 
 	/**
@@ -177,56 +220,66 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	public void validatePanel(Object model, ValidationErrors errors) {
 
 		String recordingFileName = getSelectSignalRecordingFilePanel().getFileName();
-		String tagRecordingFileName = getSelectTagsRecordingFilePanel().getFileName();
+		validateRecordingFileName("Signal", recordingFileName, errors);
 
+		if (getEnableTagRecordingPanel().isRecordingEnabled()) {
+			String tagRecordingFileName = getSelectTagsRecordingFilePanel().getFileName();
+			validateRecordingFileName("Tag", tagRecordingFileName, errors);
+		}
+		if (getEnableVideoRecordingPanel().isRecordingEnabled()) {
+			String videoRecordingFileName = getSelectVideoRecordingFilePanel().getFileName();
+			validateRecordingFileName("Video", videoRecordingFileName, errors);
+		}
+	}
+
+	private static void validateRecordingFileName(String type, String recordingFileName, ValidationErrors errors) {
 		if (recordingFileName.isEmpty()) {
-			errors.addError(_("Please input a correct signal filename"));
+			errors.addError(_("Please input a correct "+type.toLowerCase()+" filename"));
 		}
 		else if ((new File(recordingFileName)).exists()) {
-			int anwser = JOptionPane.showConfirmDialog(null, _("Signal recording target file already exists! Do you want to overwrite?"));
-			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
+			int answer = JOptionPane.showConfirmDialog(null,
+						 _(type + " recording target file already exists! Do you want to overwrite?"));
+			if (answer == JOptionPane.CANCEL_OPTION || answer == JOptionPane.NO_OPTION)
 				errors.addError("");
 		}
-
-		if (getEnableTagRecordingPanel().isTagRecordingEnabled() && tagRecordingFileName.isEmpty()) {
-			errors.addError(_("Please input a correct tag filename"));
-		}
-		else if (getEnableTagRecordingPanel().isTagRecordingEnabled() && (new File(tagRecordingFileName)).exists()) {
-			int anwser = JOptionPane.showConfirmDialog(null,
-						 _("Tag recording target file already exists! Do you want to overwrite?"));
-			if (anwser == JOptionPane.CANCEL_OPTION || anwser == JOptionPane.NO_OPTION)
-				errors.addError("");
-		}
-
 	}
 
 	/**
-	 * Represents a panel that contains a checkbox to enable/disable tag recording.
+	 * Represents a panel that contains a checkbox
+	 * to enable/disable recording of tags or video.
 	 */
-	protected class EnableTagRecordingPanel extends JPanel {
+	protected static class EnableRecordingPanel extends JPanel {
 
-		private JCheckBox enableTagRecordingCheckBox = null;
+		private JCheckBox enableRecordingCheckBox = null;
 
 		/**
-		 * Constructor. Creates a new {@link DisableTagRecordingPanel}.
+		 * Constructor. Creates a new {@link EnableRecordingPanel}.
+		 * @param fileSelectPanel  file name field associated with the checkbox
 		 */
-		public EnableTagRecordingPanel() {
+		public EnableRecordingPanel(FileSelectPanel fileSelectPanel) {
+			enableRecordingCheckBox = new JCheckBox();
+			attachComponentToToggle(fileSelectPanel);
+			add(enableRecordingCheckBox);
+		}
 
-			enableTagRecordingCheckBox = new JCheckBox();
-			enableTagRecordingCheckBox.addItemListener(new ItemListener() {
-
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-					if (e.getStateChange() == ItemEvent.SELECTED) {
-						getSelectTagsRecordingFilePanel().setEnabled(true);
-					} else if (e.getStateChange() == ItemEvent.DESELECTED) {
-						getSelectTagsRecordingFilePanel().setEnabled(false);
-					}
+		/**
+		 * Connect this EnableRecordingPanel to a component.
+		 *
+		 * Every time this panel will have its checkbox checked,
+		 * the connected component will be enabled.
+		 * Every time the checkbox is unchecked, the connected component
+		 * will be disabled.
+		 *
+		 * @param component  component to be attached
+		 */
+		public void attachComponentToToggle(Component component) {
+			enableRecordingCheckBox.addItemListener((ItemEvent e) -> {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					component.setEnabled(true);
+				} else if (e.getStateChange() == ItemEvent.DESELECTED) {
+					component.setEnabled(false);
 				}
 			});
-
-			add(enableTagRecordingCheckBox);
-			//add(new JLabel(_("Do not record tags")));
 		}
 
 		/**
@@ -243,48 +296,41 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		}
 
 		/**
-		 * Returns whether tag recording was disabled using this panel.
-		 * @return true if tag recording was disabled, false otherwise
+		 * Returns whether recording was enabled using this panel.
+		 * @return true if recording was enabled, false otherwise
 		 */
-		public boolean isTagRecordingDisabled() {
-			return !isTagRecordingEnabled();
+		public boolean isRecordingEnabled() {
+			return enableRecordingCheckBox.isSelected();
 		}
 
 		/**
-		 * Returns whether tag recording was enabled using this panel.
-		 * @return true if tag recording was enabled, false otherwise
-		 */
-		public boolean isTagRecordingEnabled() {
-			return enableTagRecordingCheckBox.isSelected();
-		}
-
-		/**
-		 * Sets the status of the tag recording checkbox.
+		 * Sets the status of the recording checkbox.
 		 * @param enable true to disable tag recording, false otherwise
 		 */
-		public void setTagRecordingEnabled(boolean enable) {
-			enableTagRecordingCheckBox.setSelected(enable);
+		public void setRecordingEnabled(boolean enable) {
+			enableRecordingCheckBox.setSelected(enable);
 		}
 	}
 
 	@Override
 	public void insertUpdate(DocumentEvent e) {
-		updateTagNameToFitSignalName();
+		updateNamesToFitSignalName();
 	}
 
 	@Override
 	public void removeUpdate(DocumentEvent e) {
-		updateTagNameToFitSignalName();
+		updateNamesToFitSignalName();
 	}
 
 	@Override
 	public void changedUpdate(DocumentEvent e) {
-		updateTagNameToFitSignalName();
+		updateNamesToFitSignalName();
 	}
 
-	public void updateTagNameToFitSignalName() {
+	public void updateNamesToFitSignalName() {
 		String fileName = getSelectSignalRecordingFilePanel().getFileName();
 		getSelectTagsRecordingFilePanel().setFileName(fileName);
+		getSelectVideoRecordingFilePanel().setFileName(fileName);
 	}
 
 }

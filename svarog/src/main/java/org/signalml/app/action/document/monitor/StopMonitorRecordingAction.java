@@ -55,6 +55,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 			try {
+				setEnabled(false);
 				monitorSignalDocument.stopMonitorRecording();
 			} catch (IOException ex) {
 				logger.error(ex, ex);

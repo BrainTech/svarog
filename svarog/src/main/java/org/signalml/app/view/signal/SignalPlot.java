@@ -78,6 +78,7 @@ import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
+import static java.lang.String.format;
 
 /** SignalPlot
  *

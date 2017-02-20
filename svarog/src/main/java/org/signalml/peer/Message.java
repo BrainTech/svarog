@@ -10,9 +10,17 @@ package org.signalml.peer;
 public class Message {
 
 	// definitions of message types, the same as in OBCI
+	// (we cannot use the enum, unless we declare all *_RESPONSE types as well)
+
 	public static final String AMPLIFIER_SIGNAL_MESSAGE = "AMPLIFIER_SIGNAL_MESSAGE";
 	public static final String BROKER_HELLO = "BROKER_HELLO";
 	public static final String TAG = "TAG";
+
+	public static final String SAVE_VIDEO = "SAVE_VIDEO";
+	public static final String SAVE_VIDEO_ERROR = "SAVE_VIDEO_ERROR";
+	public static final String SAVE_VIDEO_OK = "SAVE_VIDEO_OK";
+	public static final String FINISH_SAVING_VIDEO = "FINISH_SAVING_VIDEO";
+	public static final String SAVE_VIDEO_DONE = "SAVE_VIDEO_DONE";
 
 	/**
 	 * Message type.

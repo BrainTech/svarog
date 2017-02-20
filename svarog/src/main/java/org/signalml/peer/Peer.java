@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.zeromq.ZMQ;
+import org.zeromq.ZMQException;
 
 /**
  * Object communicating with OBCI using ZMQ.
@@ -25,7 +26,7 @@ public class Peer {
 	private final BrokerInfo brokerInfo;
 	private final ZMQ.Context context;
 
-	private final ZMQ.Socket sub, rep; //, pub;
+	private final ZMQ.Socket sub, rep, pub;
 
 	/**
 	 * Create a new Peer instance and its sockets.
@@ -41,7 +42,7 @@ public class Peer {
 		context = ZMQ.context(1);
 		sub = createSocket(ZMQ.SUB);
 		rep = createSocket(ZMQ.REP);
-		//pub = createSocket(ZMQ.PUB);
+		pub = createSocket(ZMQ.PUB);
 	}
 
 	/**
@@ -125,8 +126,8 @@ public class Peer {
 
 			JSONObject responseJSON = new JSONObject(Converter.stringFromBytes(response.data));
 			String xpubURL = responseJSON.getString("xpub_url");
-			//String xsubURL = responseJSON.getString("xsub_url");
-			//pub.connect(xsubURL);
+			String xsubURL = responseJSON.getString("xsub_url");
+			pub.connect(xsubURL);
 			sub.connect(xpubURL);
 
 		} catch (JSONException ex) {
@@ -195,6 +196,15 @@ public class Peer {
 		return receiveFromSocket(sub, timoutMillis);
 	}
 
+	public void publish(Message message) {
+		try {
+			pub.send(message.getHeader(), ZMQ.SNDMORE);
+			pub.send(message.getData());
+		} catch (ZMQException ex) {
+			logger.error("could not publish message (header="+message.getHeader()+")", ex);
+		}
+	}
+
 	/**
 	 * Close all this peers' sockets and free ZMQ resources.
 	 * Peer instance cannot be used after calling this method.
@@ -202,7 +212,7 @@ public class Peer {
 	public void shutdown() {
 		sub.close();
 		rep.close();
-		//pub.close();
+		pub.close();
 		Thread closing = new Thread(() -> {
 			context.term();
 		});

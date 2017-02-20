@@ -1,5 +1,6 @@
 package org.signalml.app.video;
 
+import org.signalml.app.video.components.SvarogMediaPlayerComponent;
 import javax.swing.JFrame;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -16,7 +17,7 @@ public final class OfflineVideoFrame extends VideoFrame {
 	private volatile Long duration;
 
 	public OfflineVideoFrame(String title) {
-		super(title, JFrame.DO_NOTHING_ON_CLOSE);
+		super(new SvarogMediaPlayerComponent(), title, JFrame.DO_NOTHING_ON_CLOSE);
 		setContentPane(component);
 		player.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 			@Override

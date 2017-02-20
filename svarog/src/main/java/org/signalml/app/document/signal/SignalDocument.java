@@ -173,6 +173,6 @@ public interface SignalDocument extends ExportedSignalDocument {
 	String getMontageInfo();
 
 	@Override
-	SignalView getSignalView() throws InvalidClassException;
+	SignalView getSignalView();
 
 }

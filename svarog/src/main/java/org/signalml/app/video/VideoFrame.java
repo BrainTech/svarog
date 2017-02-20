@@ -1,6 +1,5 @@
 package org.signalml.app.video;
 
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -37,34 +36,19 @@ public class VideoFrame extends JFrame {
 		return AVAILABLE;
 	}
 
-	private static String[] getVideoFlags() {
-		List<String> videoFlagsList = new LinkedList<String>();
-		String videoFlagsStr = System.getenv("SVAROG_VIDEO_FLAGS");
-		if (videoFlagsStr == null) {
-			videoFlagsList.add("--no-overlay");
-		} else {
-			videoFlagsList.addAll(Arrays.asList(videoFlagsStr.split(" ")));
-		}
-		return videoFlagsList.toArray(new String[videoFlagsList.size()]);
-	}
-
 	/**
 	 * Create new Swing frame for displaying video.
 	 *
+	 * @param mediaPlayerComponent  component for displaying video
 	 * @param title  text to be displayed in frame's top bar
 	 * @param defaultCloseOperation  one of JFrame.*_ON_CLOSE constants
 	 */
-	public VideoFrame(String title, int defaultCloseOperation) {
+	public VideoFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent, String title, int defaultCloseOperation) {
 		super(title);
 		if (!AVAILABLE) {
 			throw new RuntimeException("video playback is unavailable on this machine");
 		}
-		component = new EmbeddedMediaPlayerComponent() {
-			@Override
-			protected String[] onGetMediaPlayerFactoryArgs() {
-				return getVideoFlags();
-			}
-		};
+		component = mediaPlayerComponent;
 		setDefaultCloseOperation(defaultCloseOperation);
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 		player = component.getMediaPlayer();

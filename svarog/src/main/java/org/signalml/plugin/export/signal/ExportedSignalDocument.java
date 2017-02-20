@@ -147,7 +147,7 @@ public interface ExportedSignalDocument extends Document {
 	/**
 	 * Returns a {@link ExportedSignalView signal view} for this document.
 	 * @return a signal view for this document.
-	 * @throws InvalidClassException if the view for this document has an invalid type
+	 * @throws ClassCastException if the view for this document has an invalid type
 	 */
-	ExportedSignalView getSignalView() throws InvalidClassException;
+	ExportedSignalView getSignalView();
 }

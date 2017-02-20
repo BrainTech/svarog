@@ -15,6 +15,7 @@ import org.apache.log4j.Level;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -72,6 +73,11 @@ public class SignalRecorderWorker {
 	private double firstSampleTimestamp;
 
 	/**
+	 * The timestamp of the first recorded video frame.
+	 */
+	private double firstVideoFrameTimestamp;
+
+	/**
 	 * Whether the worker is finished.
 	 */
 	private volatile boolean finished;
@@ -126,6 +132,7 @@ public class SignalRecorderWorker {
 		this.finished = false;
 		this.savedSampleCount = 0;
 		this.firstSampleTimestamp = Double.NaN;
+		this.firstVideoFrameTimestamp = Double.NaN;
 
 		this.tagRecorder = null;
 
@@ -272,6 +279,15 @@ public class SignalRecorderWorker {
 		if (monitorDescriptor.getEegSystem() != null)
 			rsd.setEegSystemName(monitorDescriptor.getEegSystem().getEegSystemName());
 
+		MonitorRecordingDescriptor descriptor = monitorDescriptor.getMonitorRecordingDescriptor();
+		if (descriptor.isVideoRecordingEnabled()) {
+			rsd.setVideoFileName(descriptor.getVideoRecordingFilePathWithExtension());
+			if (isFirstSampleTimestampSet() && isFirstVideoFrameTimestampSet()) {
+				float videoFileOffset = (float) (firstVideoFrameTimestamp - firstSampleTimestamp);
+				rsd.setVideoFileOffset(videoFileOffset);
+			}
+		}
+
 		RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 		descrWriter.writeDocument(rsd, metadataFile);
 	}
@@ -289,10 +305,23 @@ public class SignalRecorderWorker {
 	 * @return true if the firstSampleTimestamp was set, false otherwise.
 	 */
 	public boolean isFirstSampleTimestampSet() {
-		if (Double.isNaN(firstSampleTimestamp)) {
-			return false;
-		}
-		return true;
+		return !Double.isNaN(firstSampleTimestamp);
+	}
+
+	/**
+	 * Sets the timestamp of the first video frame recorder with this signal.
+	 * @param value new value of the timestamp
+	 */
+	public void setFirstVideoFrameTimestamp(double value) {
+		this.firstVideoFrameTimestamp = value;
+	}
+
+	/**
+	 * Returns if the firstSampleTimestamp was set using {@link SignalRecorderWorker#setFirstSampleTimestamp(double)}.
+	 * @return true if the firstSampleTimestamp was set, false otherwise.
+	 */
+	public boolean isFirstVideoFrameTimestampSet() {
+		return !Double.isNaN(firstVideoFrameTimestamp);
 	}
 
 	/**

@@ -1,6 +1,11 @@
 package org.signalml.app.video;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.CameraControlRequest;
@@ -23,9 +28,15 @@ public class VideoStreamManager {
 	private VideoStreamSpecification currentStream;
 	private String currentStreamURL;
 
+	private static final Set<VideoStreamManager> INSTANCES = new HashSet<>();
+
 	public VideoStreamManager() {
 		openbciIpAddress = Helper.getOpenBCIIpAddress();
 		openbciPort = Helper.getOpenbciPort();
+		// store this instance so it will be disposed when Svarog exits
+		synchronized (INSTANCES) {
+			INSTANCES.add(this);
+		}
 	}
 
 	/**
@@ -87,8 +98,42 @@ public class VideoStreamManager {
 
 	@Override
 	protected void finalize() throws Throwable {
+		synchronized (INSTANCES) {
+			INSTANCES.remove(this);
+		}
 		free();
 		super.finalize();
+	}
+
+	/**
+	 * Release all RTSP streams.
+	 * This includes notifying OBCI that video streams are no longer needed.
+	 */
+	public static void freeAllStreams() {
+		List<VideoStreamManager> instancesToFree;
+		synchronized (INSTANCES) {
+			instancesToFree = new ArrayList<>(INSTANCES);
+			INSTANCES.clear();
+		}
+		for (VideoStreamManager manager : instancesToFree) {
+			manager.free();
+		}
+	}
+
+	/**
+	 * @return list of specifications of all currently active streams
+	 */
+	public static List<VideoStreamSpecification> getAllActiveStreams() {
+		List<VideoStreamSpecification> streams = new LinkedList<>();
+		synchronized (INSTANCES) {
+			for (VideoStreamManager instance: INSTANCES) {
+				VideoStreamSpecification stream = instance.getCurrentStream();
+				if (stream != null) {
+					streams.add(stream);
+				}
+			}
+		}
+		return streams;
 	}
 
 }

@@ -6,7 +6,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.InvalidClassException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -56,16 +55,10 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 		parameters = new SynchronizeTagsWithTriggerParameters();
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
-		try {
-			SignalPlot masterPlot = signalDocument.getSignalView().getMasterPlot();
-			parameters.setSampleSource(masterPlot.getSignalOutput());
-			parameters.setTagSet(signalDocument.getActiveTag().getTagSet());
-			parameters.setChannelLabels(getChannelLabels(masterPlot.getSignalOutput()));
-		} catch (InvalidClassException e1) {
-			logger.error("", e1);
-			Dialogs.showExceptionDialog(e1);
-			return;
-		}
+		SignalPlot masterPlot = signalDocument.getSignalView().getMasterPlot();
+		parameters.setSampleSource(masterPlot.getSignalOutput());
+		parameters.setTagSet(signalDocument.getActiveTag().getTagSet());
+		parameters.setChannelLabels(getChannelLabels(masterPlot.getSignalOutput()));
 
 		boolean showDialog = getSynchronizeDialog().showDialog(parameters, true);
 

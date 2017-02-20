@@ -7,12 +7,16 @@ import java.beans.PropertyChangeEvent;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import org.signalml.app.video.VideoRecordingInitializer;
 import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
@@ -27,6 +31,7 @@ import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
 
 import org.signalml.peer.CommunicationException;
+import org.signalml.peer.Converter;
 import org.signalml.peer.Message;
 import org.signalml.peer.Peer;
 
@@ -43,6 +48,19 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	private final RoundBufferMultichannelSampleSource sampleSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
+
+	/**
+	 * Object responsible for retrying "start video recording" request.
+	 * Immediately after OBCI server returns RTSP address as a response to
+	 * a "get_stream" request, the RTSP stream may not be ready yet. Therefore,
+	 * there may be a need to retry connecting after first connection fails.
+	 */
+	private volatile VideoRecordingInitializer videoRecordingInitializer;
+
+	/**
+	 * This object's method is called whenever video recording starts or stops.
+	 */
+	private final Set<VideoRecordingStatusListener> videoRecordingStatusListeners = new HashSet<>();
 
 	/**
 	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
@@ -93,6 +111,9 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 		peer.subscribe(Message.AMPLIFIER_SIGNAL_MESSAGE);
 		peer.subscribe(Message.TAG);
+		peer.subscribe(Message.SAVE_VIDEO_ERROR);
+		peer.subscribe(Message.SAVE_VIDEO_OK);
+		peer.subscribe(Message.SAVE_VIDEO_DONE);
 
 		while (!isCancelled()) {
 			try {
@@ -143,6 +164,15 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 				break;
 			case Message.TAG:
 				parseMessageWithTags(sampleMsg.getData());
+				break;
+			case Message.SAVE_VIDEO_ERROR:
+				parseVideoSavingError(sampleMsg.getData());
+				break;
+			case Message.SAVE_VIDEO_OK:
+				parseVideoSavingOK(sampleMsg.getData());
+				break;
+			case Message.SAVE_VIDEO_DONE:
+				parseVideoSavingDone(sampleMsg.getData());
 				break;
 			default:
 				logger.error("received unknown reply: " +  sampleType);
@@ -225,6 +255,56 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			}
 		}
 		publish(tag);
+	}
+
+	/**
+	 * Parse error message from video saver peer.
+	 *
+	 * @param sampleMsgData the contents of the message
+	 */
+	private void parseVideoSavingError(byte[] sampleMsgData) {
+		notifyVideoRecordingStatusChange(false);
+		VideoRecordingInitializer initializer = videoRecordingInitializer;
+		if (initializer != null) {
+			initializer.startRecording();
+		}
+	}
+
+	/**
+	 * Parse "done" message from video saver peer.
+	 *
+	 * @param sampleMsgData the contents of the message
+	 */
+	private void parseVideoSavingDone(byte[] sampleMsgData) {
+		videoRecordingInitializer = null;
+		notifyVideoRecordingStatusChange(false);
+	}
+
+	/**
+	 * Parse "OK" message from video saver peer.
+	 *
+	 * @param sampleMsgData the contents of the message
+	 */
+	private void parseVideoSavingOK(byte[] sampleMsgData) {
+		videoRecordingInitializer = null;
+		notifyVideoRecordingStatusChange(true);
+	}
+
+	/**
+	 * Notifies all listeners about the new recording status.
+	 *
+	 * @param newStatus  true if video is recording, false if not
+	 */
+	private void notifyVideoRecordingStatusChange(boolean newStatus) {
+		Set<VideoRecordingStatusListener> listeners;
+		synchronized (videoRecordingStatusListeners) {
+			listeners = new HashSet<>(videoRecordingStatusListeners);
+		}
+		for (VideoRecordingStatusListener listener : listeners) {
+			SwingUtilities.invokeLater(() -> {
+				listener.videoRecordingStatusChanged(newStatus);
+			});
+		}
 	}
 
 	@Override
@@ -330,6 +410,30 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		this.signalRecorderWorker = null;
 	}
 
+	/**
+	 * Connects a {@link VideoRecordingStatusListener} object to be notified
+	 * whenever video recording starts or stops.
+	 *
+	 * @param listener  object with videoRecordingStatusChanged method
+	 */
+	public void connectVideoRecordingStatusListener(VideoRecordingStatusListener listener) {
+		synchronized (videoRecordingStatusListeners) {
+			videoRecordingStatusListeners.add(listener);
+		}
+	}
+
+	/**
+	 * Disconnects a previously connected {@link VideoRecordingStatusListener}
+	 * object to be no longer notified whenever video recording starts or stops.
+	 *
+	 * @param listener  previously connected object
+	 */
+	public void disconnectVideoRecordingStatusListener(VideoRecordingStatusListener listener) {
+		synchronized (videoRecordingStatusListeners) {
+			videoRecordingStatusListeners.remove(listener);
+		}
+	}
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		super.propertyChange(evt);
@@ -338,6 +442,36 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			cancel(true);
 			firePropertyChange(MonitorWorker.OPENING_MONITOR_CANCELLED, false, true);
 		}
+	}
+
+	/**
+	 * Send a "start video saving" request. If it fails, it will be automatically
+	 * resent after predefined interval.
+	 *
+	 * @param rtspURL  URL of RTSP stream
+	 * @param targetFilePath  path for target video file
+	 */
+	public void startVideoSaving(String rtspURL, String targetFilePath) {
+		VideoRecordingInitializer initializer = new VideoRecordingInitializer(
+			peer,
+			experimentDescriptor.getPeerId(),
+			rtspURL,
+			targetFilePath
+		);
+		initializer.startRecording();
+		videoRecordingInitializer = initializer;
+	}
+
+	/**
+	 * Send a "stop video saving" request.
+	 */
+	public void stopVideoSaving() {
+		videoRecordingInitializer = null;
+		peer.publish(new Message(
+			Message.FINISH_SAVING_VIDEO,
+			experimentDescriptor.getPeerId(),
+			Converter.bytesFromString("{}")
+		));
 	}
 
 	/**

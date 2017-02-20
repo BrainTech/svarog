@@ -10,6 +10,7 @@ import java.util.Objects;
  */
 public class VideoStreamSpecification {
 
+	public final String cameraName;
 	public final String cameraID;
 	public final String streamID;
 	public final int width;
@@ -19,13 +20,15 @@ public class VideoStreamSpecification {
 	/**
 	 * Create a new video stream specification.
 	 *
+	 * @param cameraName  human-readable camera name
 	 * @param cameraID  camera ID
 	 * @param streamID  stream ID
 	 * @param width  video width in pixels
 	 * @param height  video height in pixels
 	 * @param fps  video frames per second
 	 */
-	public VideoStreamSpecification(String cameraID, String streamID, int width, int height, float fps) {
+	public VideoStreamSpecification(String cameraName, String cameraID, String streamID, int width, int height, float fps) {
+		this.cameraName = cameraName;
 		this.cameraID = cameraID;
 		this.streamID = streamID;
 		this.width = width;
