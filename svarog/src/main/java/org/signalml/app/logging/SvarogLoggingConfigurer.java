@@ -69,8 +69,9 @@ public class SvarogLoggingConfigurer {
 	 *
 	 * @param logger  Logger instance to be configured, usually the root logger
 	 * @param dsn  DSN for Raven (e.g. https://sentry.io/...)
+	 * @param site Site for raven - string installation name
 	 */
-	public static void configureSentry(Logger logger, String dsn) {
+	public static void configureSentry(Logger logger, String dsn, String site) {
 		if (ravenFactory instanceof ObciRavenFactory) {
 			// DSN does not matter if sending to OBCI
 			dsn = "https://dummy:password@sentry/url";
@@ -81,6 +82,7 @@ public class SvarogLoggingConfigurer {
 			Raven raven = ravenFactory.createRavenInstance(new Dsn(dsn));
 			SvarogExceptionHandler.getSharedInstance().setRaven(raven);
 			SentryAppender sentry = new SentryAppender(raven);
+			sentry.setTags("site:"+site);
 			sentry.setThreshold(Priority.FATAL);
 			logger.addAppender(sentry);
 			logger.info("successfully initialized logging to Sentry");

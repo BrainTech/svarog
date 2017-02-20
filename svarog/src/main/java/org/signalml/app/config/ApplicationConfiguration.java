@@ -96,6 +96,8 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private String openbciIPAddress;
 	private int openbciPort;
 	private String sentryDsn;
+	private String sentrySite;
+
 
 	private float monitorPageSize;
 	/**
@@ -609,6 +611,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setSentryDsn(String sentryDsn) {
 		this.sentryDsn = sentryDsn;
+	}
+	
+	public String getSentrySite() {
+		return sentrySite;
+	}
+	
+	public void setSentrySite(String sentrySite) {
+		this.sentrySite = sentrySite;
 	}
 
 	public boolean isAutoAddHighpassFilter() {

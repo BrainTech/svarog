@@ -114,6 +114,11 @@ public class MiscellaneousConfigPanel extends JPanel {
 	private JTextField sentryDsnTextField;
 
 	/**
+	 * text field for sentry installation Site
+	 */
+	private JTextField sentrySiteTextField;
+
+	/**
 	 * the {@link SignalMLOperationMode mode} in which Svarog is running
 	 */
 	private SignalMLOperationMode mode;
@@ -177,8 +182,19 @@ public class MiscellaneousConfigPanel extends JPanel {
 		JPanel sentryPanel = new JPanel();
 		sentryPanel.setBorder(new EmptyBorder(3,3,3,3));
 		sentryPanel.setLayout(new BorderLayout(10, 0));
-		sentryPanel.add(new JLabel(_("Sentry DSN")), BorderLayout.WEST);
-		sentryPanel.add(getSentryDsnTextField(), BorderLayout.CENTER);
+		JPanel sentryDsnPanel = new JPanel();
+		sentryDsnPanel.setBorder(new EmptyBorder(3,3,3,3));
+		sentryDsnPanel.setLayout(new BorderLayout(10, 0));
+		JPanel sentrySitePanel = new JPanel();
+		sentrySitePanel.setBorder(new EmptyBorder(3,3,3,3));
+		sentrySitePanel.setLayout(new BorderLayout(10, 0));
+		sentryDsnPanel.add(new JLabel(_("Sentry DSN")), BorderLayout.WEST);
+		sentryDsnPanel.add(getSentryDsnTextField(), BorderLayout.CENTER);
+		sentrySitePanel.add(new JLabel(_("Sentry Site")), BorderLayout.WEST);
+		sentrySitePanel.add(getSentrySiteTextField(), BorderLayout.CENTER);
+		sentryPanel.add(sentryDsnPanel, BorderLayout.NORTH);
+		sentryPanel.add(sentrySitePanel, BorderLayout.CENTER);
+
 		sentryPanel.add(new JLabel("("+_("Svarog needs to be restarted for changes to take effect")+")"), BorderLayout.SOUTH);
 		generalPanel.add(sentryPanel);
 
@@ -371,6 +387,19 @@ public class MiscellaneousConfigPanel extends JPanel {
 			sentryDsnTextField = new JTextField();
 		return sentryDsnTextField;
 	}
+	
+	/**
+	 * Return the text field which allows to enter Sentry instalation site
+	 * for logging crash reports
+	 * If the spinner doesn't exist it is created.
+	 * @return created text field
+	 */
+	
+	protected JTextField getSentrySiteTextField() {
+		if (sentrySiteTextField == null)
+			sentrySiteTextField = new JTextField();
+		return sentrySiteTextField;
+	}
 
 	/**
 	 * Fills all the fields of this panel (check-boxes and spinners) from the
@@ -395,6 +424,8 @@ public class MiscellaneousConfigPanel extends JPanel {
 		getToolTipInitialSpinner().setValue(applicationConfig.getToolTipInitialDelay());
 		getToolTipDismissSpinner().setValue(applicationConfig.getToolTipDismissDelay());
 		getSentryDsnTextField().setText(applicationConfig.getSentryDsn());
+		getSentrySiteTextField().setText(applicationConfig.getSentrySite());
+
 
 	}
 
@@ -421,6 +452,8 @@ public class MiscellaneousConfigPanel extends JPanel {
 		applicationConfig.setToolTipInitialDelay((Integer) getToolTipInitialSpinner().getValue());
 		applicationConfig.setToolTipDismissDelay((Integer) getToolTipDismissSpinner().getValue());
 		applicationConfig.setSentryDsn(getSentryDsnTextField().getText());
+		applicationConfig.setSentrySite(getSentrySiteTextField().getText());
+
 
 	}
 
