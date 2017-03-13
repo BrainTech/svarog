@@ -7,7 +7,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
 import java.awt.Panel;
 import java.awt.event.ItemEvent;
 import java.io.File;
@@ -15,6 +16,7 @@ import java.io.File;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JLabel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -77,24 +79,43 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 * Initializes this panel.
 	 */
 	private void initialize() {
-		setLayout(new GridLayout(3, 1, 2, 2));
+		setLayout(new BorderLayout());
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("Choose files to which signal and tags will be recorded")),
+			new TitledBorder(_("Choose files to which signal and tags will be recorded.")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
-		add(getSelectSignalRecordingFilePanel());
+		JLabel extInfo = new JLabel(_("File Extensions will be added automatically"));
+		
+		JPanel signalRecordPanel = new JPanel(new GridBagLayout());
+		
+		add(extInfo, BorderLayout.NORTH);
+		add(signalRecordPanel, BorderLayout.CENTER);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx=0;
+		c.gridy=0;
+		signalRecordPanel.add(new JLabel(""), c);
+		c.gridx=1;
+		c.gridy=0;
+		signalRecordPanel.add(getSelectSignalRecordingFilePanel(), c);
 
-		JPanel tagsRecordingPanel = new JPanel(new BorderLayout());
-		tagsRecordingPanel.add(getEnableTagRecordingPanel(), BorderLayout.WEST);
-		tagsRecordingPanel.add(getSelectTagsRecordingFilePanel(), BorderLayout.CENTER);
+		
+		c.gridx=0;
+		c.gridy=1;
+		signalRecordPanel.add(getEnableTagRecordingPanel(), c);
+		c.gridx=1;
+		c.gridy=1;
+		signalRecordPanel.add(getSelectTagsRecordingFilePanel(), c);
 
-		add(tagsRecordingPanel);
+		
+		c.gridx=0;
+		c.gridy=2;
+		signalRecordPanel.add(getEnableVideoRecordingPanel(), c);
+		c.gridx=1;
+		c.gridy=2;
+		signalRecordPanel.add(getSelectVideoRecordingFilePanel(), c);
 
-		JPanel videoRecordingPanel = new JPanel(new BorderLayout());
-		videoRecordingPanel.add(getEnableVideoRecordingPanel(), BorderLayout.WEST);
-		videoRecordingPanel.add(getSelectVideoRecordingFilePanel(), BorderLayout.CENTER);
-
-		add(videoRecordingPanel);
 	}
 
 	/**
@@ -105,7 +126,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 */
 	protected FileSelectPanel getSelectSignalRecordingFilePanel() {
 		if (selectSignalRecordingFilePanel == null) {
-			selectSignalRecordingFilePanel = new FileSelectPanel(_("Record signal to file"));
+			selectSignalRecordingFilePanel = new FileSelectPanel(_("Signal filename:"));
 			selectSignalRecordingFilePanel.getFileNameField().getDocument().addDocumentListener(this);
 		}
 		return selectSignalRecordingFilePanel;
@@ -119,7 +140,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 */
 	protected FileSelectPanel getSelectTagsRecordingFilePanel() {
 		if (selectTagsRecordingFilePanel == null) {
-			selectTagsRecordingFilePanel = new FileSelectPanel(_("Record tags to file"));
+			selectTagsRecordingFilePanel = new FileSelectPanel(_("Tags filename:"));
 			selectTagsRecordingFilePanel.setEnabled(false);
 		}
 		return selectTagsRecordingFilePanel;
@@ -133,7 +154,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 */
 	protected FileSelectPanel getSelectVideoRecordingFilePanel() {
 		if (selectVideoRecordingFilePanel == null) {
-			selectVideoRecordingFilePanel = new FileSelectPanel(_("Record video to file"));
+			selectVideoRecordingFilePanel = new FileSelectPanel(_("Video filename:"));
 			selectVideoRecordingFilePanel.setEnabled(false);
 		}
 		return selectVideoRecordingFilePanel;
@@ -148,6 +169,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	protected EnableRecordingPanel getEnableTagRecordingPanel() {
 		if (enableTagRecordingPanel == null) {
 			enableTagRecordingPanel = new EnableRecordingPanel(getSelectTagsRecordingFilePanel());
+			enableTagRecordingPanel.setText("Record Tags");
 		}
 		return enableTagRecordingPanel;
 	}
@@ -160,6 +182,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	protected EnableRecordingPanel getEnableVideoRecordingPanel() {
 		if (enableVideoRecordingPanel == null) {
 			enableVideoRecordingPanel = new EnableRecordingPanel(getSelectVideoRecordingFilePanel());
+			enableVideoRecordingPanel.setText("Record video");
 		}
 		return enableVideoRecordingPanel;
 	}
@@ -252,14 +275,23 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 
 		private JCheckBox enableRecordingCheckBox = null;
 
+		
 		/**
 		 * Constructor. Creates a new {@link EnableRecordingPanel}.
 		 * @param fileSelectPanel  file name field associated with the checkbox
 		 */
 		public EnableRecordingPanel(FileSelectPanel fileSelectPanel) {
 			enableRecordingCheckBox = new JCheckBox();
+			
 			attachComponentToToggle(fileSelectPanel);
 			add(enableRecordingCheckBox);
+		}
+		
+		/**
+		 * @param text sets the checkbox text
+		 */
+		public void setText(String text){
+			enableRecordingCheckBox.setText(text);
 		}
 
 		/**
