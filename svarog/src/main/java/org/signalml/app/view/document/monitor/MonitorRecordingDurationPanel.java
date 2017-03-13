@@ -1,6 +1,7 @@
 package org.signalml.app.view.document.monitor;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
@@ -74,10 +75,23 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 			else
 				stopCountingTime();
 		}
+		if (MonitorSignalDocument.IS_VIDEO_SAVING_PROPERTY.equals(evt.getPropertyName())) {
+			boolean videoIsSaving = (Boolean) evt.getNewValue();
+			if (videoIsSaving) {
+				stopCountingTime();
+				startVideoSavingIndication();
+			}
+			else
+				stopCountingTime();
+		}
 	}
 
 	protected void displayTime(int hours, int minutes, int seconds) {
 		durationLabel.setText(formatNumber(hours) + ":" + formatNumber(minutes) + ":" + formatNumber(seconds));
+	}
+	
+	protected void displayText(String text) {
+		durationLabel.setText(text);
 	}
 
 	protected String formatNumber(int number) {
@@ -93,6 +107,18 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 		TimerTask task = new RecordingDurationTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 1000);
 	}
+	
+	/**
+	 * Starts the timer which is responsible for displaying animated
+	 * word "Saving..."
+	 */
+	protected void startVideoSavingIndication() {
+		timer = new Timer();
+		TimerTask task = new VideoSavingTimerTask();
+		timer.scheduleAtFixedRate(task, 0, 1000);
+		durationLabel.setForeground(Color.red);
+
+	}
 
 	/**
 	 * Stops the timer and resets the value of the durationLabel.
@@ -101,6 +127,7 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 		if (timer != null)
 			timer.cancel();
 		durationLabel.setText("");
+		durationLabel.setForeground(Color.black);
 	}
 
 	/**
@@ -133,6 +160,26 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 			}
 		}
 
+	}
+	
+	class VideoSavingTimerTask extends TimerTask {
+		private String main = "Saving";
+		private String additional = ".";
+		private int number;
+		
+		@Override
+		public void run() {
+			String suffix = "";
+			for(int i = 0; i < number; i++)
+				suffix += additional;
+
+			number++;
+			if (number > 3)
+				number = 0;
+        
+			displayText(main + suffix);
+			
+		}
 	}
 
 }

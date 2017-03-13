@@ -50,6 +50,13 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * A property describing whether this document is recording its signal.
 	 */
 	public static String IS_RECORDING_PROPERTY = "isRecording";
+	
+	/**
+	 * A property describing whether this document is waiting
+	 * on video saving finalization.
+	 */
+	public static String IS_VIDEO_SAVING_PROPERTY = "isVideoSaving";
+	
 	/**
 	 * A logger to save history of execution at.
 	 */
@@ -306,7 +313,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			return true;
 		return false;
 	}
-
+	
 	@Override
 	public String getName() {
 		return name;
@@ -439,6 +446,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 					if (!recording) {
 						monitorWorker.disconnectVideoRecordingStatusListener(this);
 						videoStreamRecordingManager.free();
+						
 						if (!tryToFinalizeVideoRecordingMetadata()) {
 							JOptionPane.showMessageDialog(null,
 								"Video saving has not been finalized! Video data may be missing from XML file.",
@@ -446,39 +454,60 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 								JOptionPane.WARNING_MESSAGE
 							);
 						}
-						stopMonitorRecordingInternally();
+						pcSupport.firePropertyChange(IS_VIDEO_SAVING_PROPERTY, true, false);
+						stopMonitorRecordingFinalizeMetadata();
+						
+
 					}
 				}
 			});
+			stopMonitorRecordingSignal();
 			monitorWorker.stopVideoSaving();
+			pcSupport.firePropertyChange(IS_VIDEO_SAVING_PROPERTY, false, true);
+
 		} else {
 			stopMonitorRecordingInternally();
 		}
 	}
 
-	private void stopMonitorRecordingInternally() {
-
-		//stops the monitorWorker from sending more samples and tags to the recorders
+	private void stopMonitorRecordingSignal(){
 		monitorWorker.disconnectTagRecorderWorker();
 		monitorWorker.disconnectSignalRecorderWorker();
-
+		
 		if (signalRecorderWorker != null) {
-			signalRecorderWorker.save();
+			signalRecorderWorker.stopSaving();
 		}
 
 		if (tagRecorderWorker != null) {
 			tagRecorderWorker.save();
 		}
-
 		tagRecorderWorker = null;
+
+	}
+
+	private void stopMonitorRecordingFinalizeMetadata(){
+		if (signalRecorderWorker != null) {
+			try {
+				signalRecorderWorker.saveMetadata(false);
+			} catch (IOException ex) {
+				logger.error("Failed to write metadata XML", ex);
+			}
+		}
 		signalRecorderWorker = null;
 		if (documentView != null) {
 			// for user tags in monitor mode
 			documentView.requestFocusInWindow();
 		}
-
 		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, true, false);
 
+
+		
+	}
+
+	
+	private void stopMonitorRecordingInternally() {
+		stopMonitorRecordingSignal();
+		stopMonitorRecordingFinalizeMetadata();
 	}
 
 	/**
@@ -515,6 +544,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
+		list.add(new LabelledPropertyDescriptor(_("is video saving"), IS_VIDEO_SAVING_PROPERTY, MonitorSignalDocument.class, null, null));
 		list.add(new LabelledPropertyDescriptor(_("is recording"), IS_RECORDING_PROPERTY, MonitorSignalDocument.class, "isRecording", null));
 		return list;
 	}

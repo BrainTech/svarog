@@ -182,6 +182,22 @@ public class SignalRecorderWorker {
 			finished = true;
 		}
 	}
+	
+	/**
+	 * Stops receiving signal chunks and flushes signal
+	 * Does not save metadata.
+	 */
+	public void stopSaving() {
+		
+		synchronized (this) {
+			try {
+				flushSamples();
+				finished = true;
+			} catch (IOException ex) {
+				logger.error("Failed to write samples", ex);
+			}
+		}
+	}
 
 	/**
 	 * Saves all data to the disk.
@@ -253,7 +269,7 @@ public class SignalRecorderWorker {
 	 * @param isBackup whether this save is a backup or a normal save
 	 * @throws IOException when file cannot be used
 	 */
-	private void saveMetadata(boolean isBackup) throws IOException {
+	public void saveMetadata(boolean isBackup) throws IOException {
 
 		File metadataFile = new File(metadataFilePath);
 		if (metadataFile.exists())
