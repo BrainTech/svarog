@@ -19,6 +19,13 @@ public class SvarogMediaPlayerComponent extends EmbeddedMediaPlayerComponent {
 		String videoFlagsStr = System.getenv("SVAROG_VIDEO_FLAGS");
 		if (videoFlagsStr == null) {
 			videoFlagsList.add("--no-overlay");
+			videoFlagsList.add("--network-caching");
+			videoFlagsList.add("500");
+			videoFlagsList.add("--rtsp-frame-buffer-size");
+			videoFlagsList.add("40000");
+
+
+
 		} else {
 			videoFlagsList.addAll(Arrays.asList(videoFlagsStr.split(" ")));
 		}
