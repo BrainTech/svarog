@@ -2,6 +2,7 @@ package org.signalml.app.worker.monitor.messages;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
@@ -21,15 +22,17 @@ public enum MessageType {
 	PONG("pong", Message.class),
 
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
-	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", null),
+	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", EEGExperimentsMsg.class),
 
 	FIND_EEG_AMPLIFIERS_REQUEST("find_eeg_amplifiers", FindEEGAmplifiersRequest.class),
-	EEG_AMPLIFIERS_RESPONSE("eeg_amplifiers", null),
+	EEG_AMPLIFIERS_RESPONSE("eeg_amplifiers", EEGAmplifiersMsg.class),
 
 	START_EEG_SIGNAL_REQUEST("start_eeg_signal", StartEEGSignalRequest.class),
 	START_EEG_SIGNAL_RESPONSE("starting_experiment", StartEEGSignalResponse.class),
 
 	KILL_EXPERIMENT_REQUEST("kill_experiment", KillExperimentRequest.class),
+	KILL_EXPERIMENT_RESPONSE("kill_sent", KillExperimentResponse.class),
+
 
 	GET_EXPERIMENT_CONTACT_REQUEST("get_experiment_contact", GetExperimentContactRequest.class),
 	GET_EXPERIMENT_CONTACT_RESPONSE("experiment_contact", GetExperimentContactResponse.class),
@@ -66,25 +69,6 @@ public enum MessageType {
 			if (type.getMessageCode().equalsIgnoreCase(code)) {
 				return type;
 			}
-		}
-		return null;
-	}
-
-	public static MessageType parseMessageTypeFromResponse(String response) {
-
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			HashMap<String,Object> map = mapper.readValue(response.getBytes(), new TypeReference<HashMap<String, Object>>() {});
-
-			String msgTypeCode = (String) map.get("type");
-			return MessageType.parseMessageTypeFromMessageCode(msgTypeCode);
-
-		} catch (JsonParseException e) {
-			logger.error("", e);
-		} catch (JsonMappingException e) {
-			logger.error("", e);
-		} catch (IOException e) {
-			logger.error("", e);
 		}
 		return null;
 	}

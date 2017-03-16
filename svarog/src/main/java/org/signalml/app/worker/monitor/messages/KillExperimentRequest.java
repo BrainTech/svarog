@@ -8,11 +8,12 @@ public class KillExperimentRequest extends Message {
 	@JsonProperty("strname")
 	private String uuid;
 
-	private String force;
+	private boolean force;
 
 	public KillExperimentRequest(ExperimentDescriptor experimentDescriptor) {
 		super(MessageType.KILL_EXPERIMENT_REQUEST);
 		this.uuid = experimentDescriptor.getId();
+		this.force = false;
 	}
 
 	public String getUuid() {
@@ -23,11 +24,11 @@ public class KillExperimentRequest extends Message {
 		this.uuid = uuid;
 	}
 
-	public String getForce() {
+	public boolean getForce() {
 		return force;
 	}
 
-	public void setForce(String force) {
+	public void setForce(boolean force) {
 		this.force = force;
 	}
 

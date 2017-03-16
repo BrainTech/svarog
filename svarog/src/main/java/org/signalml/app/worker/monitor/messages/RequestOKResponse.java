@@ -12,7 +12,7 @@ public class RequestOKResponse extends Message {
 	public LinkedHashMap<String, Object> getParams() {
 		return params;
 	}
-
+	
 	public void setParams(LinkedHashMap<String, Object> params) {
 		this.params = params;
 	}

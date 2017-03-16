@@ -90,7 +90,7 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
-		logger.error("uncaught exception in thread [" + (t.getId()) + "/" + (t.getName()) + "]", e);
+		logger.fatal("uncaught exception in thread [" + (t.getId()) + "/" + (t.getName()) + "]", e);
 		processException(e, raven);
 	}
 }

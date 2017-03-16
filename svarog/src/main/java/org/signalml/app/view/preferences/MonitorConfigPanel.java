@@ -5,7 +5,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

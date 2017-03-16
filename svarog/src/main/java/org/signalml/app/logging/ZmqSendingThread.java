@@ -1,5 +1,6 @@
 package org.signalml.app.logging;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import org.zeromq.ZMQ;
 
@@ -12,7 +13,7 @@ class ZmqSendingThread extends Thread {
 
 	private static final int TIMEOUT = 2000; // milliseconds
 
-	private final BlockingQueue<String> queue;
+	private final BlockingQueue<List<String>> queue;
 	private final String url;
 
 	/**
@@ -22,13 +23,13 @@ class ZmqSendingThread extends Thread {
 	 * @param queue  blocking queue instance to read messages from
 	 * @param url address (e.g. "tcp://host:123") of the remote REP socket
 	 */
-	public ZmqSendingThread(BlockingQueue<String> queue, String url) {
+	public ZmqSendingThread(BlockingQueue<List<String>> queue, String url) {
 		this.queue = queue;
 		this.url = url;
 		setDaemon(true);
 	}
 
-	private String takeFromQueue() {
+	private List<String> takeFromQueue() {
 		while (true) try {
 			return queue.take();
 		} catch (InterruptedException ex) {
@@ -38,7 +39,7 @@ class ZmqSendingThread extends Thread {
 
 	@Override
 	public void run() {
-		String message = takeFromQueue();
+		List<String> message = takeFromQueue();
 		try (ZMQ.Context context = ZMQ.context(1)) {
 			while (true) {
 				try (ZMQ.Socket socket = context.socket(ZMQ.REQ)) {
@@ -53,9 +54,22 @@ class ZmqSendingThread extends Thread {
 							// the thread is to be terminated
 							return;
 						}
-						if (!socket.send(message) || socket.recv() == null) {
+						if (!socket.sendMore(message.get(0)) ||!socket.send(message.get(1))) {
 							break; // timeout, re-create socket
 						}
+						
+						Boolean is_ok = socket.recv() != null;
+						Boolean more = socket.hasReceiveMore();
+						if (is_ok && more)
+						{
+							if (socket.recv() == null || socket.hasReceiveMore())
+							{
+								break;
+							}
+						}
+						else
+							break;
+						
 						// message sent, take next one
 						message = takeFromQueue();
 					}

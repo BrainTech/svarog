@@ -1,48 +1,40 @@
-package org.signalml.app.worker.monitor.messages.parsing;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.signalml.app.worker.monitor.messages;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
-public abstract class AbstractResponseJSonReader {
-
-	private static final Logger logger = Logger.getLogger(AbstractResponseJSonReader.class);
+/**
+ *
+ * @author Marian Dovgialo ...
+ */
+public abstract class AbstractEEGExperimentsMsg extends Message{
+	@JsonIgnore
+	private static final Logger logger = Logger.getLogger(AbstractEEGExperimentsMsg.class);
+	@JsonIgnore
 	private StringBuilder log = new StringBuilder();
 
-	public List<ExperimentDescriptor> parseExperiments(String s) {
+	@JsonIgnore
+	public List<ExperimentDescriptor> getExperiments() {
 
-		ObjectMapper mapper = new ObjectMapper();
-
-		LinkedHashMap<String, Object> map = new LinkedHashMap<String, Object>();
-		try {
-			map = mapper.readValue(s.getBytes(), new TypeReference<LinkedHashMap<String, Object>>() {});
-		} catch (JsonParseException e1) {
-			log.append(_("ERROR - JsonParseException while parsing the received message!\n"));
-			logger.error("", e1);
-		} catch (JsonMappingException e1) {
-			log.append(_("ERROR - JsonMappingException while parsing the received message!\n"));
-			logger.error("", e1);
-		} catch (IOException e1) {
-			log.append(_("ERROR - IOException while parsing the received message!\n"));
-			logger.error("", e1);
-		}
-
-		if (map == null)
-			return null;
-
-		List<LinkedHashMap<String, Object>> list = (List<LinkedHashMap<String, Object>>) map.get(getExperimentsListFieldName());
+		List<LinkedHashMap<String, Object>> list = getExperimentsList();
 
 		boolean errorAlreadyOcurred = false;
 		List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
@@ -65,10 +57,13 @@ public abstract class AbstractResponseJSonReader {
 		return experiments;
 	}
 
-	protected abstract String getExperimentsListFieldName();
+	@JsonIgnore
+	protected abstract List<LinkedHashMap<String, Object>> getExperimentsList();
 
+	@JsonIgnore
 	public abstract ExperimentDescriptor parseSingleExperiment(LinkedHashMap<String, Object> map);
 
+	@JsonIgnore
 	protected void readChannelsList(List<Object> listOfChannels, ExperimentDescriptor experiment) {
 		Amplifier amplifier = experiment.getAmplifier();
 
@@ -100,15 +95,12 @@ public abstract class AbstractResponseJSonReader {
 
 		experiment.getSignalParameters().setChannelCount(i);
 	}
-
+	
+	@JsonIgnore
 	protected void readSamplingFrequencies(LinkedHashMap<String, Object> parameters, ExperimentDescriptor experiment) {
 		Amplifier amplifier = experiment.getAmplifier();
 
 		List<Float> samplingFrequencies = (List<Float>) parameters.get("sampling_rates");
 		amplifier.setSamplingFrequencies(new ArrayList<Float>(samplingFrequencies));
-	}
-
-	public String getLog() {
-		return log.toString();
 	}
 }

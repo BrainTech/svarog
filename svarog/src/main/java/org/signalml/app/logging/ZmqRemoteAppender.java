@@ -1,5 +1,7 @@
 package org.signalml.app.logging;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.log4j.spi.LoggingEvent;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,11 +39,11 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	@Override
 	protected void append(LoggingEvent le) {
 		try {
-			String message = createJsonMessage(le.getLevel().toString())
+			JSONObject messageData = createJsonMessage(le.getLevel().toString())
 				.put("subsource", le.getLoggerName())
-				.put("timestamp", le.getTimeStamp() / 1000)
-				.put("msg", le.getMessage())
-				.toString();
+				.put("timestamp", (float)(le.getTimeStamp()) / 1000.0)
+				.put("msg", le.getMessage());
+			List<String> message = packJsonMessage(messageData);
 			sender.offer(message);
 		} catch (JSONException ex) {
 			// not really a possibility
@@ -54,7 +56,12 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	@Override
 	public void close() {
 		try {
-			String message = createJsonMessage("end_logs").toString();
+			JSONObject messageData = createJsonMessage("end_logs");
+			messageData.put("msg", "");
+			messageData.put("subsource", "");
+			long unixTime = System.currentTimeMillis() / 1000L;
+			messageData.put("timestamp", (float)unixTime);
+			List<String> message = packJsonMessage(messageData);
 			sender.offer(message);
 			sender.close();
 		} catch (JSONException ex) {
@@ -64,11 +71,19 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 
 	private JSONObject createJsonMessage(String logType) throws JSONException {
 		return (new JSONObject())
-			.put("type", MESSAGE_TYPE)
 			.put("log_type", logType)
 			.put("source", source);
 	}
-
+	
+	private List<String> packJsonMessage(JSONObject messageData){
+		String messageHeader = MESSAGE_TYPE+"^^";
+		List<String> message = new ArrayList();
+		message.add(messageHeader);
+		message.add(messageData.toString());
+		return message;
+	}
+	
+	
 	/**
 	 * Always return false, since this appender does not require layout.
 	 *

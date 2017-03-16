@@ -1,5 +1,6 @@
 package org.signalml.app.video;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -113,7 +114,7 @@ public class VideoStreamManager {
 		if (currentStreamURL != null) {
 			try {
 				CameraControlRequest dropStreamRequest = new CameraControlRequest("drop_stream", currentStream);
-				Helper.sendRequest(dropStreamRequest, openbciIpAddress, openbciPort, Helper.DEFAULT_RECEIVE_TIMEOUT);
+				Helper.sendRequestAndParseResponse(dropStreamRequest, openbciIpAddress, openbciPort, MessageType.REQUEST_OK_RESPONSE);
 			} catch (OpenbciCommunicationException ex) {
 				// stream or OBCI is no longer active
 			}

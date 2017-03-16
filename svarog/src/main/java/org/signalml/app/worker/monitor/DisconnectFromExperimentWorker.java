@@ -1,5 +1,6 @@
 package org.signalml.app.worker.monitor;
 
+import java.util.List;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.util.concurrent.ExecutionException;
@@ -12,9 +13,9 @@ import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.KillExperimentRequest;
 import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;
+import org.signalml.app.worker.monitor.messages.Message;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
-import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.peer.Peer;
 
 public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
@@ -59,17 +60,22 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 	private void sendLeaveExperimentRequest() throws OpenbciCommunicationException {
 		LeaveExperimentRequest request = new LeaveExperimentRequest(experimentDescriptor);
 
-		String response = Helper.sendRequest(request, experimentDescriptor.getExperimentIPAddress(), experimentDescriptor.getExperimentPort(), Helper.DEFAULT_RECEIVE_TIMEOUT);
-		MessageParser.checkIfResponseIsOK(response, MessageType.REQUEST_OK_RESPONSE);
+		Helper.sendRequestAndParseResponse(request,
+						   experimentDescriptor.getFirstRepHost(),
+						   experimentDescriptor.getFirstRepPort(),
+						   MessageType.REQUEST_OK_RESPONSE);
 	}
 
 	private void sendKillExperimentRequest() throws OpenbciCommunicationException {
 		KillExperimentRequest request = new KillExperimentRequest(experimentDescriptor);
 
-		String response = Helper.sendRequest(request, Helper.getOpenBCIIpAddress(), Helper.getOpenbciPort(), Helper.DEFAULT_RECEIVE_TIMEOUT);
-		MessageType type = MessageType.parseMessageTypeFromResponse(response);
+		Message response = Helper.sendRequestAndParseResponse(request,
+									   Helper.getOpenBCIIpAddress(),
+									   Helper.getOpenbciPort(),
+									   MessageType.KILL_EXPERIMENT_RESPONSE);
+		MessageType type = response.getType();
 		if (type == MessageType.REQUEST_ERROR_RESPONSE) {
-			RequestErrorResponse msg = (RequestErrorResponse) MessageParser.parseMessageFromJSON(response, type);
+			RequestErrorResponse msg = (RequestErrorResponse) response;
 			Dialogs.showError("Could not kill this experiment in openBCI (error code: " + msg.getErrorCode() + ")");
 		}
 	}

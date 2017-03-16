@@ -8,7 +8,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class GetExperimentContactResponse extends Message {
 
 	@JsonProperty("rep_addrs")
-	private Object repAddress;
+	private List<String> repAddress;
 
 	@JsonProperty("status_name")
 	private String statusName;
@@ -18,8 +18,6 @@ public class GetExperimentContactResponse extends Message {
 	private String name;
 	private String machine;
 
-	@JsonProperty("tcp_addrs")
-	private List<List<Object>> tcpAddress;
 	private Object details;
 	private String uuid;
 
@@ -27,19 +25,11 @@ public class GetExperimentContactResponse extends Message {
 		super(MessageType.GET_EXPERIMENT_CONTACT_RESPONSE);
 	}
 
-	public String getExperimentIPAddress() {
-		return (String) tcpAddress.get(0).get(0);
-	}
-
-	public Integer getExperimentPort() {
-		return (Integer) tcpAddress.get(0).get(1);
-	}
-
-	public Object getRepAddress() {
+	public List<String> getRepAddress() {
 		return repAddress;
 	}
 
-	public void setRepAddress(Object repAddress) {
+	public void setRepAddress(List<String> repAddress) {
 		this.repAddress = repAddress;
 	}
 
@@ -73,13 +63,6 @@ public class GetExperimentContactResponse extends Message {
 
 	public void setMachine(String machine) {
 		this.machine = machine;
-	}
-
-	public List<List<Object>> getTcpAddress() {
-		return tcpAddress;
-	}
-	public void setTcpAddress(List<List<Object>> tcpAddress) {
-		this.tcpAddress = tcpAddress;
 	}
 
 	public Object getDetails() {

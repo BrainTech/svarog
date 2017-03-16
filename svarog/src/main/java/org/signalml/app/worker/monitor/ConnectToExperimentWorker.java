@@ -5,6 +5,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.Container;
 import java.net.InetSocketAddress;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
@@ -17,12 +18,12 @@ import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
+import org.signalml.app.worker.monitor.messages.Message;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalRequest;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;
-import org.signalml.app.worker.monitor.messages.parsing.MessageParser;
 import org.signalml.peer.BrokerInfo;
 import org.signalml.peer.BrokerTcpConnector;
 import org.signalml.peer.Peer;
@@ -31,6 +32,8 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 20;
+        public static final int EXPERIMENT_START_TIMEOUT_MILIS = 10000;
+
 	private static Logger logger = Logger.getLogger(ConnectToExperimentWorker.class);
 
 	private ExperimentDescriptor experimentDescriptor;
@@ -39,6 +42,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 	private int multiplexerPort;
 
 	private InetSocketAddress multiplexerSocket;
+	
 
 	public ConnectToExperimentWorker(Container parentContainer, ExperimentDescriptor experimentDescriptor) {
 		super(parentContainer);
@@ -69,13 +73,21 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 
 	protected void startNewExperiment() throws OpenbciCommunicationException {
 		StartEEGSignalRequest request = new StartEEGSignalRequest(experimentDescriptor);
+		
+                //After getting Start EEG obci server launches experiment and after it is
+                // launched (or launch failed) it sends needed data
+                // It can take few secodsn, this worker is not cancelable, so we can
+                // just extend the timout on Pull socket.
+		ObciPullSocket pullSocket = new ObciPullSocket(EXPERIMENT_START_TIMEOUT_MILIS);
+		request.setClientPushAddress(pullSocket.getAddressLocal());
 
-		StartEEGSignalResponse response = (StartEEGSignalResponse) Helper.sendRequestAndParseResponse(request,
-										  Helper.getOpenBCIIpAddress(),
-										  Helper.getOpenbciPort(),
-										  MessageType.START_EEG_SIGNAL_RESPONSE);
-
-		experimentDescriptor.setId(response.getSender());
+		Helper.sendRequestAndParseResponse(request, Helper.getOpenBCIIpAddress(), Helper.getOpenbciPort(), MessageType.REQUEST_OK_RESPONSE);
+		
+		StartEEGSignalResponse response = (StartEEGSignalResponse)pullSocket.getAndParsePushPullResponse(MessageType.START_EEG_SIGNAL_RESPONSE);
+		pullSocket.close();
+		String exp_id = response.getSender();
+		logger.debug("GOT expereiment ID "+exp_id);
+		experimentDescriptor.setId(exp_id);
 
 		getExperimentContact();
 	}
@@ -89,29 +101,26 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 				Helper.getOpenbciPort(),
 				MessageType.GET_EXPERIMENT_CONTACT_RESPONSE);
 
-		experimentDescriptor.setExperimentIPAddress(response.getExperimentIPAddress());
-		experimentDescriptor.setExperimentPort(response.getExperimentPort());
+		experimentDescriptor.setExperimentRepUrls(response.getRepAddress());
 	}
 
 	protected void sendJoinExperimentRequest() throws OpenbciCommunicationException {
 		JoinExperimentRequest request = new JoinExperimentRequest(experimentDescriptor);
 		RequestOKResponse response = null;
 		MessageType responseType = null;
-		String responseString = null;
 
 		for (int i = 0; i < TRYOUT_COUNT; i++) {
 
-			responseString = Helper.sendRequest(request,
-					experimentDescriptor.getExperimentIPAddress(),
-					experimentDescriptor.getExperimentPort(),
-					Helper.DEFAULT_RECEIVE_TIMEOUT);
-
-			responseType = MessageType.parseMessageTypeFromResponse(responseString);
-			if (responseType != MessageType.REQUEST_ERROR_RESPONSE) {
-				response = (RequestOKResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
+			try{
+				response = (RequestOKResponse)Helper.sendRequestAndParseResponse(request,
+						experimentDescriptor.getFirstRepHost(),
+						experimentDescriptor.getFirstRepPort(),
+						MessageType.REQUEST_OK_RESPONSE);
 				break;
-			} else {
+			}
+			catch (OpenbciCommunicationException ex){
 				logger.warn("Error while connecting to experiment, retrying");
+				
 				try {
 					Thread.sleep(TIMEOUT_MILIS);
 				} catch (InterruptedException e) {
@@ -120,13 +129,9 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 			}
 		}
 
-		if (response == null) {
-			throw new OpenbciCommunicationException(_R("There was an error while joinging to the experiment."));
-		} else if (responseType == MessageType.REQUEST_ERROR_RESPONSE) {
-			RequestErrorResponse errorResponse = (RequestErrorResponse) MessageParser.parseMessageFromJSON(responseString, MessageType.REQUEST_OK_RESPONSE);
-			throw new OpenbciCommunicationException(_R("There was an error while joinging to the experiment ({0}).", errorResponse.getErrorCode()));
+		if (response==null){
+			throw new OpenbciCommunicationException("Couldn't connect to experiment");
 		}
-
 		String mxAddr = (String) response.getParams().get("mx_addr");
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
 		multiplexerAddress = tokenizer.nextToken();

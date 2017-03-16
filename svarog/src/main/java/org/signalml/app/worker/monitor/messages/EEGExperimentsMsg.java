@@ -1,24 +1,38 @@
-package org.signalml.app.worker.monitor.messages.parsing;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.signalml.app.worker.monitor.messages;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 
-public class FindEEGExperimentsResponseJSonReader extends AbstractResponseJSonReader {
-
-	protected static final Logger logger = Logger.getLogger(FindEEGExperimentsResponseJSonReader.class);
-
+/**
+ *
+ * @author marian
+ */
+public class EEGExperimentsMsg extends AbstractEEGExperimentsMsg{
+	@JsonProperty("experiment_list")
+	private List<LinkedHashMap<String, Object>> experimentList;
+	
+	@JsonIgnore
 	@Override
-	protected String getExperimentsListFieldName() {
-		return "experiment_list";
+	protected List<LinkedHashMap<String, Object>> getExperimentsList()
+	{
+		return experimentList;
 	}
 
+	@JsonIgnore
+	@Override
 	public ExperimentDescriptor parseSingleExperiment(LinkedHashMap<String, Object> map) {
 		ExperimentDescriptor experiment = new ExperimentDescriptor();
 
@@ -62,11 +76,8 @@ public class FindEEGExperimentsResponseJSonReader extends AbstractResponseJSonRe
 			i++;
 		}
 
-		List<Object> tcpAddress = (List<Object>) ((List<Object>) map.get("tcp_addrs")).get(0);
-		experiment.setExperimentIPAddress((String) tcpAddress.get(0));
-		experiment.setExperimentPort((Integer) tcpAddress.get(1));
-
+		experiment.setExperimentRepUrls((List<String>) map.get("rep_addrs"));
 		return experiment;
 	}
-
+		
 }

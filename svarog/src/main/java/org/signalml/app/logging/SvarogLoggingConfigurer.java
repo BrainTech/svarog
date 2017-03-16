@@ -20,8 +20,9 @@ import org.signalml.app.SvarogExceptionHandler;
  */
 public class SvarogLoggingConfigurer {
 
+	//Svarog configuration doesn't exist yet.
 	private static final String OBCI_REP_IP = "127.0.0.1";
-	private static final int OBCI_REP_PORT = 54654;
+	private static final int OBCI_REP_PORT = 12012;
 	private static final String SOURCE =
 		"svarog_" + ZonedDateTime.now()
 		.format(DateTimeFormatter.ISO_INSTANT)
