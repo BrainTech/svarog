@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
 import org.signalml.app.document.MonitorSignalDocument;
@@ -46,8 +47,8 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 
 		this.setLayout(new BorderLayout());
 		this.setOpaque(false);
-		this.setMaximumSize(new Dimension(100, 20));
-		this.setPreferredSize(new Dimension(100, 20));
+		this.setMaximumSize(new Dimension(150, 25));
+		this.setPreferredSize(new Dimension(150, 25));
 
 		Border emptyBorder = BorderFactory.createEmptyBorder(5, 5, 5, 5);
 		this.setBorder(emptyBorder);
@@ -63,7 +64,8 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 
 	protected void createInterface() {
 		durationLabel = new JLabel();
-		this.add(durationLabel, BorderLayout.EAST);
+		this.add(durationLabel, BorderLayout.WEST);
+		durationLabel.setHorizontalAlignment(SwingConstants.LEFT);
 	}
 
 	@Override
@@ -176,7 +178,7 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 			number++;
 			if (number > 3)
 				number = 0;
-        
+
 			displayText(main + suffix);
 			
 		}

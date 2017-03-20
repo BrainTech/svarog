@@ -1051,10 +1051,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		mainToolBar.add(Box.createHorizontalGlue());
-		mainToolBar.add(getMonitorRecordingDurationPanel());
 		mainToolBar.add(getStartMonitorRecordingAction());
 		mainToolBar.add(getStopMonitorRecordingAction());
 		mainToolBar.add(getStartVideoPreviewAction());
+		mainToolBar.add(getMonitorRecordingDurationPanel());
+
 
 		PluginAccessClass.getGUIImpl().addToMainSignalToolBar(mainToolBar);
 
