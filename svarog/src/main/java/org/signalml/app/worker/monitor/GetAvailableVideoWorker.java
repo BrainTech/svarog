@@ -61,10 +61,11 @@ public class GetAvailableVideoWorker extends SwingWorkerWithBusyDialog<List<Vide
 			try {
 				Map params = (Map) dictionary;
 				String description = (String) params.get("model");
+				int cameraFeatures = parseCameraFeatures(params);
 				Map presets = (Map) params.get("available_presets");
 				VideoSourceSpecification camera = new VideoSourceSpecification(
 					description,
-					parseReturnedStreams(description, cameraID, presets)
+					parseReturnedStreams(description, cameraID, cameraFeatures, presets)
 				);
 				publish(camera);
 			} catch (Throwable t) {
@@ -73,12 +74,32 @@ public class GetAvailableVideoWorker extends SwingWorkerWithBusyDialog<List<Vide
 		});
 	}
 
-	private static List<VideoStreamSpecification> parseReturnedStreams(String cameraName, String cameraID, Map<String, Object> streamData) {
+	private static int parseCameraFeatures(Map params) {
+		int cameraFeatures = 0;
+		if (Boolean.TRUE.equals(params.get("has_relative_pan"))) {
+			cameraFeatures |= VideoStreamSpecification.FEATURE_PAN;
+		}
+		if (Boolean.TRUE.equals(params.get("has_relative_tilt"))) {
+			cameraFeatures |= VideoStreamSpecification.FEATURE_TILT;
+		}
+		if (Boolean.TRUE.equals(params.get("has_relative_zoom"))) {
+			cameraFeatures |= VideoStreamSpecification.FEATURE_ZOOM;
+		}
+		if (Boolean.TRUE.equals(params.get("has_home_position"))) {
+			cameraFeatures |= VideoStreamSpecification.FEATURE_HOME;
+		}
+		if (Boolean.TRUE.equals(params.get("has_night_mode"))) {
+			cameraFeatures |= VideoStreamSpecification.FEATURE_NIGHT_MODE;
+		}
+		return cameraFeatures;
+	}
+
+	private static List<VideoStreamSpecification> parseReturnedStreams(String cameraName, String cameraID, int cameraFeatures, Map<String, Object> streamData) {
 		List<VideoStreamSpecification> streams = new LinkedList<>();
 		streamData.forEach((String streamID, Object dictionary) -> {
 			try {
 				Map params = (Map) dictionary;
-				streams.add(parseReturnedStream(cameraName, cameraID, streamID, params));
+				streams.add(parseReturnedStream(cameraName, cameraID, cameraFeatures, streamID, params));
 			} catch (Throwable t) {
 				logger.error("received invalid description for stream "+streamID, t);
 			}
@@ -86,11 +107,11 @@ public class GetAvailableVideoWorker extends SwingWorkerWithBusyDialog<List<Vide
 		return streams;
 	}
 
-	protected static VideoStreamSpecification parseReturnedStream(String cameraName, String cameraID, String streamID, Map params) {
+	protected static VideoStreamSpecification parseReturnedStream(String cameraName, String cameraID, int cameraFeatures, String streamID, Map params) {
 		int width = (Integer) params.get("width");
 		int height = (Integer) params.get("height");
 		double fps = (Double) params.get("fps");
-		return new VideoStreamSpecification(cameraName, cameraID, streamID, width, height, (float) fps);
+		return new VideoStreamSpecification(cameraName, cameraID, streamID, width, height, (float) fps, cameraFeatures);
 	}
 
 	@Override

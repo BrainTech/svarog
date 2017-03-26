@@ -66,17 +66,43 @@ public class VideoStreamManager {
 	 */
 	public synchronized String replace(VideoStreamSpecification stream) throws OpenbciCommunicationException {
 		free();
-		CameraControlRequest getStreamRequest = new CameraControlRequest("get_stream", stream);
-		RequestOKResponse response = (RequestOKResponse) Helper.sendRequestAndParseResponse(
-			getStreamRequest,
-			openbciIpAddress,
-			openbciPort,
-			MessageType.REQUEST_OK_RESPONSE
-		);
+		RequestOKResponse response = sendRequest(new CameraControlRequest("get_stream", stream));
 		Map params = (Map) response.getParams();
 		currentStreamURL = (String) params.get("url");
 		currentStream = stream;
 		return currentStreamURL;
+	}
+
+	/**
+	 * Send a custom request to camera server.
+	 *
+	 * @param request  request object
+	 * @return  response object
+	 * @throws OpenbciCommunicationException  if action did not succeed
+	 */
+	public synchronized RequestOKResponse sendRequest(CameraControlRequest request) throws OpenbciCommunicationException {
+		return (RequestOKResponse) Helper.sendRequestAndParseResponse(
+			request,
+			openbciIpAddress,
+			openbciPort,
+			MessageType.REQUEST_OK_RESPONSE
+		);
+	}
+
+	/**
+	 * Send a custom request to camera server.
+	 * Required field "cam_id" will be added automatically.
+	 *
+	 * @param request  request object
+	 * @return  response object
+	 * @throws OpenbciCommunicationException  if action did not succeed
+	 */
+	public synchronized RequestOKResponse sendRequestWithCameraID(CameraControlRequest request) throws OpenbciCommunicationException {
+		if (currentStream == null) {
+			throw new OpenbciCommunicationException("no current stream");
+		}
+		request.putArg("cam_id", currentStream.cameraID);
+		return sendRequest(request);
 	}
 
 	/**

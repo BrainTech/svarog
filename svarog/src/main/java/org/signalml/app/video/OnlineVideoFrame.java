@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import org.signalml.app.video.components.OnlineMediaPlayerPanel;
 import org.signalml.app.video.components.VideoStreamSelectionListener;
 import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
@@ -19,11 +20,12 @@ import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public final class OnlineVideoFrame extends VideoFrame {
+public final class OnlineVideoFrame extends VideoFrame<OnlineMediaPlayerComponent> {
 
 	private final VideoStreamManager manager;
 	private final VideoStreamSelectionPanel streamSelectionPanel;
 	private final JPanel sidePanel;
+	private final OnlineMediaPlayerPanel previewPanel;
 
 	/**
 	 * Reacts on user selecting one of the available streams,
@@ -49,6 +51,7 @@ public final class OnlineVideoFrame extends VideoFrame {
 				player.stop();
 				try {
 					String rtspURL = manager.replace(stream);
+					previewPanel.setCameraFeatures(stream.features);
 					open(rtspURL);
 					play();
 				} catch (OpenbciCommunicationException ex) {
@@ -84,7 +87,7 @@ public final class OnlineVideoFrame extends VideoFrame {
 		super(new OnlineMediaPlayerComponent(), title, JFrame.DISPOSE_ON_CLOSE);
 
 		// communicates with OBCI when needed
-		manager = ((OnlineMediaPlayerComponent) component).getManager();
+		manager = component.getManager();
 
 		// panel allowing user to select video source (camera) and stream
 		streamSelectionPanel = new VideoStreamSelectionPanel(new UserSelectionListener());
@@ -97,9 +100,12 @@ public final class OnlineVideoFrame extends VideoFrame {
 		sidePanel.add(separator, BorderLayout.WEST);
 		sidePanel.add(streamSelectionPanel, BorderLayout.CENTER);
 
+		// create panel with video preview and PTZ buttons
+		previewPanel = new OnlineMediaPlayerPanel(component);
+
 		// place video playback component in the center of the frame
 		JPanel mainPanel = new JPanel(new BorderLayout());
-		mainPanel.add(component, BorderLayout.CENTER);
+		mainPanel.add(previewPanel, BorderLayout.CENTER);
 		mainPanel.add(sidePanel, BorderLayout.EAST);
 		setContentPane(mainPanel);
 	}

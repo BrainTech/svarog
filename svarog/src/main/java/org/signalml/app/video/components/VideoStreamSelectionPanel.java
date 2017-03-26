@@ -26,7 +26,7 @@ import org.signalml.app.video.VideoStreamSpecification;
  * the list of available cameras. The main part of the panel is a list of video
  * streams provided by a currently selected camera.
  *
- * @author piotr.rozanski@onet.pl
+ * @author piotr.rozanski@braintech.pl
  */
 public final class VideoStreamSelectionPanel extends JPanel {
 

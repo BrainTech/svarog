@@ -2,6 +2,7 @@ package org.signalml.app.video;
 
 import org.signalml.app.video.components.OnlineMediaPlayerComponent;
 import javax.swing.JFrame;
+import org.signalml.app.video.components.OnlineMediaPlayerPanel;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 
 /**
@@ -9,7 +10,7 @@ import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public final class PreviewVideoFrame extends VideoFrame {
+public final class PreviewVideoFrame extends VideoFrame<OnlineMediaPlayerComponent> {
 
 	private final VideoStreamManager manager;
 	private final String rtspURL;
@@ -22,9 +23,11 @@ public final class PreviewVideoFrame extends VideoFrame {
 	 */
 	public PreviewVideoFrame(VideoStreamSpecification stream) throws OpenbciCommunicationException {
 		super(new OnlineMediaPlayerComponent(), "video preview", JFrame.DISPOSE_ON_CLOSE);
-		manager = ((OnlineMediaPlayerComponent) component).getManager();
+		manager = component.getManager();
 		rtspURL = manager.replace(stream);
-		setContentPane(component);
+		OnlineMediaPlayerPanel previewPanel = new OnlineMediaPlayerPanel(component);
+		previewPanel.setCameraFeatures(stream.features);
+		setContentPane(previewPanel);
 	}
 
 	@Override

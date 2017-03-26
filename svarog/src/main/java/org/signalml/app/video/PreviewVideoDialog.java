@@ -14,7 +14,7 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 /**
  * Simple modal dialog for displaying a preview of a single RTSP stream.
  *
- * @author piotr.rozanski@onet.pl
+ * @author piotr.rozanski@braintech.pl
  */
 public final class PreviewVideoDialog extends JDialog {
 

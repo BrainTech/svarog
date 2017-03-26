@@ -11,7 +11,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public final class OfflineVideoFrame extends VideoFrame {
+public final class OfflineVideoFrame extends VideoFrame<SvarogMediaPlayerComponent> {
 
 	// media duration in milliseconds
 	private volatile Long duration;

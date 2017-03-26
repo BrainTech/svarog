@@ -10,12 +10,19 @@ import java.util.Objects;
  */
 public class VideoStreamSpecification {
 
+	public static final int FEATURE_PAN = 1;
+	public static final int FEATURE_TILT = 2;
+	public static final int FEATURE_ZOOM = 4;
+	public static final int FEATURE_HOME = 8;
+	public static final int FEATURE_NIGHT_MODE = 16;
+
 	public final String cameraName;
 	public final String cameraID;
 	public final String streamID;
 	public final int width;
 	public final int height;
 	public final float fps;
+	public final int features;  // bitmask of FEATURE_*
 
 	/**
 	 * Create a new video stream specification.
@@ -27,13 +34,14 @@ public class VideoStreamSpecification {
 	 * @param height  video height in pixels
 	 * @param fps  video frames per second
 	 */
-	public VideoStreamSpecification(String cameraName, String cameraID, String streamID, int width, int height, float fps) {
+	public VideoStreamSpecification(String cameraName, String cameraID, String streamID, int width, int height, float fps, int features) {
 		this.cameraName = cameraName;
 		this.cameraID = cameraID;
 		this.streamID = streamID;
 		this.width = width;
 		this.height = height;
 		this.fps = fps;
+		this.features = features;
 	}
 
 	@Override

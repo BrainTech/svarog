@@ -14,15 +14,16 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
  * are necessary for this method to work.
  *
  * @author piotr.rozanski@braintech.pl
+ * @param <T>  actual media player implementation
  */
-public class VideoFrame extends JFrame {
+public class VideoFrame<T extends EmbeddedMediaPlayerComponent> extends JFrame {
 
 	private static final boolean AVAILABLE = new NativeDiscovery().discover();
 	private static final int DEFAULT_WIDTH = 600;
 	private static final int DEFAULT_HEIGHT = 400;
 
 	protected final MediaPlayer player;
-	protected final EmbeddedMediaPlayerComponent component;
+	protected final T component;
 	protected final List<MediaPlayerEventListener> listeners = new LinkedList<>();
 
 	/**
@@ -43,7 +44,7 @@ public class VideoFrame extends JFrame {
 	 * @param title  text to be displayed in frame's top bar
 	 * @param defaultCloseOperation  one of JFrame.*_ON_CLOSE constants
 	 */
-	public VideoFrame(EmbeddedMediaPlayerComponent mediaPlayerComponent, String title, int defaultCloseOperation) {
+	public VideoFrame(T mediaPlayerComponent, String title, int defaultCloseOperation) {
 		super(title);
 		if (!AVAILABLE) {
 			throw new RuntimeException("video playback is unavailable on this machine");

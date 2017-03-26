@@ -11,7 +11,7 @@ public class CameraControlRequest extends Message {
 	private final String action_name;
 
 	@JsonProperty("args")
-	private final Map<String, String> args;
+	private final Map<String, Object> args;
 
 	public CameraControlRequest(String action_name) {
 		super(MessageType.CAMERA_CONTROL_REQUEST);
@@ -25,7 +25,7 @@ public class CameraControlRequest extends Message {
 		putArg("preset_id", stream.streamID);
 	}
 
-	public final void putArg(String key, String value) {
+	public final void putArg(String key, Object value) {
 		args.put(key, value);
 	}
 
