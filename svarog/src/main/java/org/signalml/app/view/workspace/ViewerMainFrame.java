@@ -122,7 +122,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		SvarogApplication.getSharedInstance().splash(_("Creating interface"), true);
 
-		Method method = elementManager.getMethodManager().getMethodByName("mp5");
+		Method method = elementManager.getMethodManager().getMethodByName("MP");
 		if (method == null || !(method instanceof MP5Method)) {
 			throw new SanityCheckException("No MP method");
 		}

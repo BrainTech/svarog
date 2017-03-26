@@ -46,7 +46,10 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 		BookReporterData bookReporterData = (BookReporterData) data;
 		BookReporterBookReader reader = null;
 		try {
-			reader = new BookReporterBookReader(bookReporterData.getParameters().bookFilePath);
+			reader = new BookReporterBookReader(
+				bookReporterData.getParameters().bookFilePath,
+				bookReporterData.getParameters().channel
+			);
 		} catch (BookReporterBookReaderException ex) {
 			throw new RuntimeException(ex.getMessage());
 		}

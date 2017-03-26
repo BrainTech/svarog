@@ -38,7 +38,7 @@ public abstract class BookReporterChartData {
 		if (this.tagStyle != null) {
 			for (BookReporterAtom atom : filteredAtoms) {
 				double halfWidth = atom.scale * BookReporterConstants.TIME_OCCUPATION_SCALE;
-				Tag tag = new Tag(tagStyle, atom.position - halfWidth, 2 * halfWidth);
+				Tag tag = new Tag(tagStyle, atom.position - halfWidth, 2 * halfWidth, atom.channel);
 				tags.add(tag);
 			}
 		}

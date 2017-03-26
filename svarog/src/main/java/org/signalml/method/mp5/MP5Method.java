@@ -59,7 +59,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 	protected static final Logger logger = Logger.getLogger(MP5Method.class);
 
 	private static final String UID = "93a02d05-92ce-4634-b51a-5b5c558be506";
-	private static final String NAME = "mp5";
+	private static final String NAME = "MP";
 	private static final int[] VERSION = new int[] {1,0};
 
 	private File tempDirectory = null;
