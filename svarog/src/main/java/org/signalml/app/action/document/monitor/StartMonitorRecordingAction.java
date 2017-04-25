@@ -16,6 +16,7 @@ import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 
 /**
  * This class is responsible for actions regarding the menu item which starts
@@ -67,11 +68,16 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 				return;
 			}
 
-			try {
-				monitorSignalDocument.startMonitorRecording();
-			} catch (FileNotFoundException ex) {
+			try {                          
+                                monitorSignalDocument.startMonitorRecording();
+			} 
+                        catch (FileNotFoundException ex) {
 				logger.error("The files to which you want to record signal/tags were not found", ex);
-			}
+                        }
+                        catch (OpenbciCommunicationException ex) {
+                                ex.showErrorDialog("Failed to start video recording");
+                                logger.error("Failed to start video recording", ex);
+                        }
 
 		}
 

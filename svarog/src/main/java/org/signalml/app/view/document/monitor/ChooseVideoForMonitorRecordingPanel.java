@@ -7,6 +7,7 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Level;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -158,8 +159,21 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
 	 * @param errors the object in which errors are stored
 	 */
 	public void validatePanel(Object model, ValidationErrors errors) {
-		if (getVideoStreamSelectionPanel().isEnabled() && getVideoStreamSelectionPanel().getSelectedVideoStream() == null) {
-			errors.addError(_("Please select a video stream to be recorded"));
+		if (getVideoStreamSelectionPanel().isEnabled()){
+                    if (getVideoStreamSelectionPanel().getSelectedVideoStream() == null) {
+                        errors.addError(_("Please select a video stream to be recorded"));
+                    }
+                    else{
+                        VideoStreamSpecification stream = getVideoStreamSelectionPanel().getSelectedVideoStream();
+                        VideoStreamManager vsm = new VideoStreamManager();
+                        try {
+                            vsm.replace(stream);
+                        } catch (OpenbciCommunicationException ex) {
+                            errors.addError(ex.getMessage()); 
+                        }
+                        vsm.free();
+                    }
+			
 		}
 	}
 

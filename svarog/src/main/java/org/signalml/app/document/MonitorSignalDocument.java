@@ -356,8 +356,9 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * will be written to the given files.
 	 *
 	 * @throws FileNotFoundException thrown when the files for buffering, signal and tag recording are not found
+         * @throws OpenbciCommunicationException thrown when video preview is not available
 	 */
-	public void startMonitorRecording() throws FileNotFoundException {
+	public void startMonitorRecording() throws FileNotFoundException, OpenbciCommunicationException{
 
 		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
 
@@ -378,33 +379,29 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		monitorWorker.connectTagRecorderWorker(tagRecorderWorker);
 		documentView.requestFocusInWindow();  // for user tags in monitor mode
 
-		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
 
 		// requesting RTSP stream and starting video recording
 		if (monitorRecordingDescriptor.isVideoRecordingEnabled()) {
 
-			StartVideoPreviewAction startVideoPreviewAction = getSignalView().getStartVideoPreviewAction();
-			monitorWorker.connectVideoRecordingStatusListener(startVideoPreviewAction);
+                    StartVideoPreviewAction startVideoPreviewAction = getSignalView().getStartVideoPreviewAction();
+                    monitorWorker.connectVideoRecordingStatusListener(startVideoPreviewAction);
 
-			VideoStreamSpecification videoSpecs = monitorRecordingDescriptor.getVideoStreamSpecification();
+                    VideoStreamSpecification videoSpecs = monitorRecordingDescriptor.getVideoStreamSpecification();
 
-			try {
-				String rtcpURL = videoStreamRecordingManager.replace(videoSpecs);
-				String relativeFilePath = monitorRecordingDescriptor.getVideoRecordingFilePathWithExtension();
-				String targetFilePath = (new File(relativeFilePath)).getAbsolutePath();
-				monitorWorker.startVideoSaving(rtcpURL, targetFilePath);
+                    String rtcpURL = videoStreamRecordingManager.replace(videoSpecs);
+                    String relativeFilePath = monitorRecordingDescriptor.getVideoRecordingFilePathWithExtension();
+                    String targetFilePath = (new File(relativeFilePath)).getAbsolutePath();
+                    monitorWorker.startVideoSaving(rtcpURL, targetFilePath);
 
-				// display camera name and status in button's tool tip
-				startVideoPreviewAction.setToolTipFromVideoSpecs(videoSpecs);
+                    // display camera name and status in button's tool tip
+                    startVideoPreviewAction.setToolTipFromVideoSpecs(videoSpecs);
 
-				if (monitorRecordingDescriptor.getDisplayVideoPreviewWhileSaving()) {
-					showVideoFrameForPreview();
-				}
-			} catch (OpenbciCommunicationException ex) {
-				ex.showErrorDialog("Failed to start video recording");
-				logger.error("Failed to start video recording", ex);
-			}
+                    if (monitorRecordingDescriptor.getDisplayVideoPreviewWhileSaving()) {
+                            showVideoFrameForPreview();
+                }
 		}
+                
+		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
 	}
 
 	/**
