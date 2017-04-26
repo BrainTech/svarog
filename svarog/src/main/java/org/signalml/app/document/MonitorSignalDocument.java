@@ -380,6 +380,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		documentView.requestFocusInWindow();  // for user tags in monitor mode
 
 
+		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
+		
 		// requesting RTSP stream and starting video recording
 		if (monitorRecordingDescriptor.isVideoRecordingEnabled()) {
 
@@ -401,7 +403,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
                 }
 		}
                 
-		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
 	}
 
 	/**
