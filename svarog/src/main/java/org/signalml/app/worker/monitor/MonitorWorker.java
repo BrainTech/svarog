@@ -6,6 +6,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.beans.PropertyChangeEvent;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -21,18 +23,20 @@ import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.peer.protocol.SvarogProtocol;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
 
 import org.signalml.peer.CommunicationException;
 import org.signalml.peer.Converter;
-import org.signalml.peer.Message;
+import org.signalml.peer.PeerMessage;
+import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
 
 /** MonitorWorker
@@ -105,15 +109,15 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	@Override
 	protected Void doInBackground() {
 
-		Message sampleMsg;
+		PeerMessage sampleMsg;
 		boolean firstSampleReceived = false;
 		showBusyDialog();
 
-		peer.subscribe(Message.AMPLIFIER_SIGNAL_MESSAGE);
-		peer.subscribe(Message.TAG);
-		peer.subscribe(Message.SAVE_VIDEO_ERROR);
-		peer.subscribe(Message.SAVE_VIDEO_OK);
-		peer.subscribe(Message.SAVE_VIDEO_DONE);
+		peer.subscribe(PeerMessage.AMPLIFIER_SIGNAL_MESSAGE);
+		peer.subscribe(PeerMessage.TAG);
+		peer.subscribe(PeerMessage.SAVE_VIDEO_ERROR);
+		peer.subscribe(PeerMessage.SAVE_VIDEO_OK);
+		peer.subscribe(PeerMessage.SAVE_VIDEO_DONE);
 
 		while (!isCancelled()) {
 			try {
@@ -159,19 +163,27 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			logger.debug("Worker: received message type: " + sampleType);
 
 			switch (sampleType) {
-			case Message.AMPLIFIER_SIGNAL_MESSAGE:
+			case PeerMessage.AMPLIFIER_SIGNAL_MESSAGE:
 				parseMessageWithSamples(sampleMsg.getData());
 				break;
-			case Message.TAG:
-				parseMessageWithTags(sampleMsg.getData());
+			case PeerMessage.TAG:
+				try{
+				TagMsg tagMsg = (TagMsg)Message.deserialize(sampleMsg);
+				publishTagFromMessage(tagMsg);
+				}
+				catch (OpenbciCommunicationException e)
+				{
+					logger.error("Tag parsing failed", e);
+						
+				}
 				break;
-			case Message.SAVE_VIDEO_ERROR:
+			case PeerMessage.SAVE_VIDEO_ERROR:
 				parseVideoSavingError(sampleMsg.getData());
 				break;
-			case Message.SAVE_VIDEO_OK:
+			case PeerMessage.SAVE_VIDEO_OK:
 				parseVideoSavingOK(sampleMsg.getData());
 				break;
-			case Message.SAVE_VIDEO_DONE:
+			case PeerMessage.SAVE_VIDEO_DONE:
 				parseVideoSavingDone(sampleMsg.getData());
 				break;
 			default:
@@ -217,19 +229,11 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 	/**
 	 * If the given message contains tags, this method can be used
-	 * to parse its contents.
-	 * @param sampleMsgData the contents of the message
+	 * to parse its contents and publish it to gui, recorder etc.
+	 * @param tagMsg tagMessage containing tag
 	 */
-	private void parseMessageWithTags(byte[] sampleMsgData) {
+	private void publishTagFromMessage(TagMsg tagMsg) {
 		logger.info("Tag recorder: got a tag!");
-
-		final SvarogProtocol.Tag tagMsg;
-		try {
-			tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgData);
-		} catch (Exception e) {
-			logger.error("", e);
-			return;
-		}
 
 		// TODO: By now we ignore field channels and assume that tag if for all channels
 		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
@@ -242,18 +246,21 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		}
 
 		final MonitorTag tag = new MonitorTag(style,
-											  tagMsg.getStartTimestamp(),
-											  tagLen,
-											  -1);
+						  tagMsg.getStartTimestamp(),
+						  tagLen,
+						  -1);
 
-		for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
-			if (v.getKey().equals("annotation")) {
-				tag.setAnnotation(v.getValue());
+		tagMsg.getDescription().forEach((key, value) -> {     
+			if (key.equals("annotation")) {
+				tag.setAnnotation(value.toString());
 			}
 			else {
-				tag.addAttributeToTag(v.getKey(), v.getValue());
+				tag.addAttributeToTag(key, value.toString());
 			}
-		}
+		
+		
+		});
+
 		publish(tag);
 	}
 
@@ -467,8 +474,8 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 */
 	public void stopVideoSaving() {
 		videoRecordingInitializer = null;
-		peer.publish(new Message(
-			Message.FINISH_SAVING_VIDEO,
+		peer.publish(new PeerMessage(
+			PeerMessage.FINISH_SAVING_VIDEO,
 			experimentDescriptor.getPeerId(),
 			Converter.bytesFromString("{}")
 		));

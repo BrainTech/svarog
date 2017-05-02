@@ -21,6 +21,8 @@ public enum MessageType {
 	PING("ping", Message.class),
 	PONG("pong", Message.class),
 
+	TAG_MSG("TAG", TagMsg.class),
+	
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
 	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", EEGExperimentsMsg.class),
 

@@ -52,7 +52,7 @@ public class Peer {
 	 * @return  response from the broker
 	 * @throws CommunicationException if communication fails
 	 */
-	public final Message askBroker(Message message) throws CommunicationException {
+	public final PeerMessage askBroker(PeerMessage message) throws CommunicationException {
 		return askPeer(message, brokerInfo.brokerURL);
 	}
 
@@ -64,14 +64,14 @@ public class Peer {
 	 * @return  response from the peer
 	 * @throws CommunicationException if communication fails
 	 */
-	public final Message askPeer(Message message, String repURL) throws CommunicationException {
+	public final PeerMessage askPeer(PeerMessage message, String repURL) throws CommunicationException {
 		try (ZMQ.Socket req = context.socket(ZMQ.REQ)) {
 			req.connect(repURL);
 
 			req.send(message.getHeader(), ZMQ.SNDMORE);
 			req.send(message.getData());
 
-			Message response = receiveFromSocket(req, -1);
+			PeerMessage response = receiveFromSocket(req, -1);
 			if (!response.type.equals(message.type+"_RESPONSE")) {
 				throw new CommunicationException("unexpected response "+response.type);
 			}
@@ -120,9 +120,9 @@ public class Peer {
 			JSONObject helloJSON = new JSONObject();
 			helloJSON.put("broker_url", brokerInfo.brokerURL);
 			helloJSON.put("peer_url", repURL);
-			Message hello = new Message(Message.BROKER_HELLO, peerId, Converter.bytesFromString(helloJSON.toString()));
+			PeerMessage hello = new PeerMessage(PeerMessage.BROKER_HELLO, peerId, Converter.bytesFromString(helloJSON.toString()));
 
-			Message response = askBroker(hello);
+			PeerMessage response = askBroker(hello);
 
 			JSONObject responseJSON = new JSONObject(Converter.stringFromBytes(response.data));
 			String xpubURL = responseJSON.getString("xpub_url");
@@ -155,7 +155,7 @@ public class Peer {
 	 * @return new Message instance
 	 * @throws CommunicationException if received message is invalid
 	 */
-	private static Message receiveFromSocket(ZMQ.Socket socket, int timeoutMillis) throws CommunicationException {
+	private static PeerMessage receiveFromSocket(ZMQ.Socket socket, int timeoutMillis) throws CommunicationException {
 		int previousTimeout = socket.getReceiveTimeOut();
 		socket.setReceiveTimeOut(timeoutMillis);
 		String header = socket.recvStr();
@@ -171,7 +171,7 @@ public class Peer {
 		if (isRcvMore(socket)) {
 			throw new CommunicationException("received message with more than two parts");
 		}
-		return Message.parse(header, data);
+		return PeerMessage.parse(header, data);
 	}
 
 	/**
@@ -180,7 +180,7 @@ public class Peer {
 	 * @return received message, or NULL on ZMQ error
 	 * @throws CommunicationException  if received message is invalid
 	 */
-	public Message receive() throws CommunicationException {
+	public PeerMessage receive() throws CommunicationException {
 		return receive(-1);
 	}
 
@@ -192,11 +192,11 @@ public class Peer {
 	 * @return received message, or NULL on ZMQ error or timeout
 	 * @throws CommunicationException  if received message is invalid
 	 */
-	public Message receive(int timoutMillis) throws CommunicationException {
+	public PeerMessage receive(int timoutMillis) throws CommunicationException {
 		return receiveFromSocket(sub, timoutMillis);
 	}
 
-	public void publish(Message message) {
+	public void publish(PeerMessage message) {
 		try {
 			pub.send(message.getHeader(), ZMQ.SNDMORE);
 			pub.send(message.getData());

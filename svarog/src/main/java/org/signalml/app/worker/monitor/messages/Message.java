@@ -13,6 +13,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.peer.PeerMessage;
 
 public class Message {
 
@@ -120,6 +121,18 @@ public class Message {
 		else
 			throw new OpenbciCommunicationException(_R("Unknown message type"));
 	}
+	
+	@JsonIgnore
+	public static Message deserialize(PeerMessage msg) throws OpenbciCommunicationException{
+		String header = msg.getHeader();
+		String data = new String(msg.getData());
+		List<String> tagMsgString = new ArrayList();
+		tagMsgString.add(header);
+		tagMsgString.add(data);
+		return deserialize(tagMsgString);
+	}
+	
+	
 	
 	@JsonIgnore
 	public static String[] parseHeader(String header)

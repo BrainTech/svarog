@@ -7,7 +7,7 @@ package org.signalml.peer;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public class Message {
+public class PeerMessage {
 
 	// definitions of message types, the same as in OBCI
 	// (we cannot use the enum, unless we declare all *_RESPONSE types as well)
@@ -44,7 +44,7 @@ public class Message {
 	 * @param subtype  message subtype (usually equal to peer ID)
 	 * @param data  binary data (reference to array will be stored in Message)
 	 */
-	public Message(String type, String subtype, byte[] data) {
+	public PeerMessage(String type, String subtype, byte[] data) {
 		this.type = type;
 		this.subtype = subtype;
 		this.data = data;
@@ -76,12 +76,12 @@ public class Message {
 	 * @return  created Message instance
 	 * @throws CommunicationException if message header is invalid
 	 */
-	public static Message parse(String header, byte[] data) throws CommunicationException {
+	public static PeerMessage parse(String header, byte[] data) throws CommunicationException {
 		String[] headerParts = header.split("\\^");
 		if (headerParts.length != 2) {
-			throw new CommunicationException("invalid message header");
+			throw new CommunicationException("invalid message header: " + header + String.format("%d", headerParts.length));
 		}
-		return new Message(headerParts[0], headerParts[1], data);
+		return new PeerMessage(headerParts[0], headerParts[1], data);
 	}
 
 }
