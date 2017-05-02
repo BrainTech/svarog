@@ -225,7 +225,7 @@ public class Peer {
 	 * @param type  message type
 	 */
 	public void subscribe(String type) {
-		sub.subscribe(Converter.bytesFromString(type));
+		sub.subscribe(Converter.bytesFromString(type+'^'));
 	}
 
 }
