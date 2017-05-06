@@ -40,7 +40,6 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
@@ -823,12 +822,11 @@ public class DocumentFlowIntegrator {
 				// VideoFrame needs to be created before onCommonDocumentAdded
 				// for SignalView to respond properly
 				OfflineVideoFrame frame = new OfflineVideoFrame(videoFileName);
-				frame.open(videoFilePath);
+				frame.component.open(videoFilePath);
 				((RawSignalDocument) signalDocument).setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);
-				frame.init();
 
-				if (!frame.isSeekable()) {
+				if (!frame.component.isSeekable()) {
 					Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
 					JOptionPane.showMessageDialog(dialogParent, _("<html><body>Opened video file has no time index.<br>It may not be possible to change time position.</body></html>"), _("Warning"), JOptionPane.WARNING_MESSAGE);
 				}

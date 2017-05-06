@@ -551,7 +551,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 					// accounting for video offset
 					time -= getDocumentVideoOffset();
 					// converting to milliseconds
-					videoFrame.setTime( (int) Math.round(1000*time) );
+					videoFrame.component.setTime( (int) Math.round(1000*time) );
 				}
 			}
 		});

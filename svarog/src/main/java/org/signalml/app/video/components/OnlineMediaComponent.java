@@ -15,15 +15,15 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 
 /**
- * Media player component with additional reconnecting support.
+ * Media component with additional reconnecting support.
  * Whenever RTSP communication fails, player tries to reconnect with the same URL.
  * Every component instance owns an internal instance of VideoStreamManager.
  *
  * @author piotr.rozanski@braintech.pl
  */
-public class OnlineMediaPlayerComponent extends SvarogMediaPlayerComponent {
+public class OnlineMediaComponent extends SvarogMediaComponent {
 
-	private static final Logger logger = Logger.getLogger(OnlineMediaPlayerComponent.class);
+	private static final Logger logger = Logger.getLogger(OnlineMediaComponent.class);
 
 	private static final int WAIT_BEFORE_RECONNECT_MILLIS = 100;
 
@@ -57,10 +57,10 @@ public class OnlineMediaPlayerComponent extends SvarogMediaPlayerComponent {
 		}
 	}
 
-	public OnlineMediaPlayerComponent() {
+	public OnlineMediaComponent() {
 		reconnectCount = 0;
 		this.manager = new VideoStreamManager();
-		getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerErrorListener());
+		addMediaPlayerEventListener(new MediaPlayerErrorListener());
 	}
 
 	public VideoStreamManager getManager() {
