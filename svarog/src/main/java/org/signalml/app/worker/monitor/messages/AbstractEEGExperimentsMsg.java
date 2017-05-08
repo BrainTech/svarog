@@ -25,7 +25,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  *
  * @author Marian Dovgialo ...
  */
-public abstract class AbstractEEGExperimentsMsg extends Message{
+public abstract class AbstractEEGExperimentsMsg extends LauncherMessage{
 	@JsonIgnore
 	private static final Logger logger = Logger.getLogger(AbstractEEGExperimentsMsg.class);
 	@JsonIgnore

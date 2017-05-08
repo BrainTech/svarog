@@ -72,7 +72,8 @@ public class ZmqRemoteAppender extends org.apache.log4j.AppenderSkeleton {
 	private JSONObject createJsonMessage(String logType) throws JSONException {
 		return (new JSONObject())
 			.put("log_type", logType)
-			.put("source", source);
+			.put("source", source)
+			.put("msg", "");
 	}
 	
 	private List<String> packJsonMessage(JSONObject messageData){

@@ -3,7 +3,7 @@ package org.signalml.app.worker.monitor.messages;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class RequestErrorResponse extends Message {
+public class RequestErrorResponse extends LauncherMessage {
 
 	private String details;
 

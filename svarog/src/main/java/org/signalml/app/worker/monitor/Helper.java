@@ -4,14 +4,18 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
-import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.BaseMessage;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.zeromq.ZMQ;
@@ -48,14 +52,32 @@ public class Helper {
 		return SvarogApplication.getApplicationConfiguration().getOpenbciPort();
 	}
 
-	public static Message sendRequestAndParseResponse(Message request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
-		List<String> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
+	
+	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
+		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
 		Helper.checkIfResponseIsOK(response, awaitedMessageType);
 
-		return Message.deserialize(response);
+		return BaseMessage.deserialize(response);
+	}
+	
+
+	public static BaseMessage sendRequestAndGetResponse(BaseMessage request, String url) throws OpenbciCommunicationException {
+		logger.debug("Sending request to: "+url);
+
+		String IP;
+		int port;
+		IP = hostFromUrl(url);
+		logger.debug("Got IP, " + IP);
+		port = portFromUrl(url);
+		logger.debug("Got port, " + port);
+
+		logger.debug("Sending request to: "+IP+":"+ Integer.toString(port));
+
+		List<byte[]> response = sendRequest(request, IP, port, DEFAULT_RECEIVE_TIMEOUT);
+		return BaseMessage.deserialize(response);
 	}
 
-	public static synchronized List<String> sendRequest(Message request, String destinationIP,
+	public static synchronized List<byte[]> sendRequest(BaseMessage request, String destinationIP,
 			 int destinationPort, int timeout) throws OpenbciCommunicationException {
 
 		try {
@@ -73,7 +95,7 @@ public class Helper {
 		}
 	}
 
-	private static synchronized List<String> sendRequestWithoutHandlingExceptions(Message request, String destinationIP,
+	private static synchronized List<byte[]> sendRequestWithoutHandlingExceptions(BaseMessage request, String destinationIP,
 			 int destinationPort, int timeout) throws OpenbciCommunicationException {
 
 		createSocket(destinationIP, destinationPort, timeout);
@@ -82,7 +104,7 @@ public class Helper {
 		sendMessage(request);
 	
 
-		List<String> response;
+		List<byte[]> response;
 		try {
 			response = receiveResponse();
 		} catch (SocketTimeoutException e) {
@@ -110,7 +132,7 @@ public class Helper {
 		
 	}
 
-	private static void sendMessage(Message request) throws OpenbciCommunicationException {
+	private static void sendMessage(BaseMessage request) throws OpenbciCommunicationException {
 		
 		String header = request.getHeader();
 		String data = request.getData();
@@ -132,14 +154,14 @@ public class Helper {
 	}
 		
 
-	private static List<String> receiveResponse() throws SocketTimeoutException, OpenbciCommunicationException {
-		List<String> list = new ArrayList<String>();
-		String response_header = socket.recvStr();
+	private static List<byte[]> receiveResponse() throws SocketTimeoutException, OpenbciCommunicationException {
+		List<byte[]> list = new ArrayList<byte[]>();
+		byte[] response_header = socket.recv();
 		logger.debug("Got header: " + response_header);
-		String response_data;
+		byte[] response_data;
 		if (socket.hasReceiveMore() && response_header != null ) {
 			list.add(response_header);
-			response_data = socket.recvStr();
+			response_data = socket.recv();
 			if (response_data == null)
 				throw new OpenbciCommunicationException(_("Received an empty response from openBCI!"));
 			else
@@ -155,14 +177,14 @@ public class Helper {
 		return list;
 	}
 	
-	public static void checkIfResponseIsOK(List<String> responseList, MessageType awaitedMessageType) throws OpenbciCommunicationException {
+	public static void checkIfResponseIsOK(List<byte[]> responseList, MessageType awaitedMessageType) throws OpenbciCommunicationException {
 
-		MessageType type = Message.parseMessageType(responseList.get(0));
+		MessageType type = LauncherMessage.parseMessageType(responseList.get(0));
 		if (type == awaitedMessageType) {
 			//it's ok - do nothing
 		}
 		else if (type == MessageType.REQUEST_ERROR_RESPONSE) {
-			RequestErrorResponse msg = (RequestErrorResponse) Message.deserialize(responseList);
+			RequestErrorResponse msg = (RequestErrorResponse) LauncherMessage.deserialize(responseList);
 			if (isNullOrEmpty(msg.getErrorCode()) && !isNullOrEmpty(msg.getDetails())) {
 				throw new OpenbciCommunicationException(msg.getDetails());
 			}
@@ -182,6 +204,19 @@ public class Helper {
 	 */
 	public static void cancelReceiving() {
 		cancelled = true;
+	}
+	
+	public static int portFromUrl(String url){
+		
+		String[] parts = url.split(":");
+		return Integer.parseInt(parts[2]);
+		
+	}
+	
+	public static String hostFromUrl(String url){
+		String[] parts = url.split(":");
+		String hostname = parts[1];
+		return hostname.substring(2);
 	}
 
 }

@@ -5,14 +5,22 @@
  */
 package org.signalml.app.worker.monitor.messages;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  *
- * @author marian
+ * @author Marian Dovgialo
  */
-public class KillExperimentResponse extends LauncherMessage {
-	@JsonProperty("experiment_id")
-	String experimentId;
+public class SaveVideoOkMsg extends BaseMessage{
+	
+	@JsonProperty("status")
+	private String status;
+	
+	@JsonProperty("status")
+	String getStatus(){
+		return status;
+	}
+	
 	
 }

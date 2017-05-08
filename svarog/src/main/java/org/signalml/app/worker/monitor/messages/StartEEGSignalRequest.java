@@ -6,7 +6,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 
-public class StartEEGSignalRequest extends Message {
+public class StartEEGSignalRequest extends LauncherMessage {
 
 	@JsonProperty("name")
 	private String name;

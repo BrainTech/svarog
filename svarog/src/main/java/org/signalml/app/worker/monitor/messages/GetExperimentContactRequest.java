@@ -2,7 +2,7 @@ package org.signalml.app.worker.monitor.messages;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class GetExperimentContactRequest extends Message {
+public class GetExperimentContactRequest extends LauncherMessage {
 
 	@JsonProperty("strname")
 	private String experimentUUID;

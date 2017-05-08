@@ -2,7 +2,7 @@ package org.signalml.app.worker.monitor.messages;
 
 import java.util.LinkedHashMap;
 
-public class RequestOKResponse extends Message {
+public class RequestOKResponse extends LauncherMessage {
 
 	private LinkedHashMap<String, Object> params;
 	private String status;

@@ -5,7 +5,7 @@ import java.util.List;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class GetExperimentContactResponse extends Message {
+public class GetExperimentContactResponse extends LauncherMessage {
 
 	@JsonProperty("rep_addrs")
 	private List<String> repAddress;

@@ -24,6 +24,8 @@ import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.messages.BaseMessage;
+import org.signalml.app.worker.monitor.messages.FinishSavingVideoMsg;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -34,8 +36,9 @@ import org.signalml.util.FormatUtils;
 
 import org.signalml.peer.CommunicationException;
 import org.signalml.peer.Converter;
-import org.signalml.peer.PeerMessage;
-import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
+import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.SignalMsg;
 import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
 
@@ -109,15 +112,15 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	@Override
 	protected Void doInBackground() {
 
-		PeerMessage sampleMsg;
+		BaseMessage sampleMsg;
 		boolean firstSampleReceived = false;
 		showBusyDialog();
 
-		peer.subscribe(PeerMessage.AMPLIFIER_SIGNAL_MESSAGE);
-		peer.subscribe(PeerMessage.TAG);
-		peer.subscribe(PeerMessage.SAVE_VIDEO_ERROR);
-		peer.subscribe(PeerMessage.SAVE_VIDEO_OK);
-		peer.subscribe(PeerMessage.SAVE_VIDEO_DONE);
+		peer.subscribe(MessageType.AMPLIFIER_SIGNAL_MESSAGE.getMessageCode());
+		peer.subscribe(MessageType.TAG_MSG.getMessageCode());
+		peer.subscribe(MessageType.SAVE_VIDEO_ERROR.getMessageCode());
+		peer.subscribe(MessageType.SAVE_VIDEO_OK.getMessageCode());
+		peer.subscribe(MessageType.SAVE_VIDEO_DONE.getMessageCode());
 
 		while (!isCancelled()) {
 			try {
@@ -136,7 +139,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					firstSampleReceived = true;
 					hideBusyDialog();
 				}
-
 				if (isCancelled()) {
 					//it might have been cancelled while waiting on the client.receive()
 					return null;
@@ -154,37 +156,28 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 						break;
 					}
 				}
-			} catch (CommunicationException e) {
+			} catch (OpenbciCommunicationException e) {
 				logger.error("receive failed", e);
 				return null;
 			}
-
-			String sampleType = sampleMsg.type;
-			logger.debug("Worker: received message type: " + sampleType);
+			
+			MessageType sampleType = sampleMsg.getType();
 
 			switch (sampleType) {
-			case PeerMessage.AMPLIFIER_SIGNAL_MESSAGE:
-				parseMessageWithSamples(sampleMsg.getData());
+			case AMPLIFIER_SIGNAL_MESSAGE:
+				publishSamples(sampleMsg);
 				break;
-			case PeerMessage.TAG:
-				try{
-				TagMsg tagMsg = (TagMsg)Message.deserialize(sampleMsg);
-				publishTagFromMessage(tagMsg);
-				}
-				catch (OpenbciCommunicationException e)
-				{
-					logger.error("Tag parsing failed", e);
-						
-				}
+			case TAG_MSG:
+				publishTagFromMessage(sampleMsg);
 				break;
-			case PeerMessage.SAVE_VIDEO_ERROR:
-				parseVideoSavingError(sampleMsg.getData());
+			case SAVE_VIDEO_ERROR:
+				parseVideoSavingError(sampleMsg);
 				break;
-			case PeerMessage.SAVE_VIDEO_OK:
-				parseVideoSavingOK(sampleMsg.getData());
+			case SAVE_VIDEO_OK:
+				parseVideoSavingOK(sampleMsg);
 				break;
-			case PeerMessage.SAVE_VIDEO_DONE:
-				parseVideoSavingDone(sampleMsg.getData());
+			case SAVE_VIDEO_DONE:
+				parseVideoSavingDone(sampleMsg);
 				break;
 			default:
 				logger.error("received unknown reply: " +  sampleType);
@@ -199,32 +192,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 * to parse its contents.
 	 * @param sampleMsgData the content of the message
 	 */
-	protected void parseMessageWithSamples(byte[] sampleMsgData) {
-		logger.debug("Worker: reading chunk!");
-
-		try {
-			DataInputStream data = new DataInputStream(new ByteArrayInputStream(sampleMsgData));
-			final int sampleCount = data.readUnsignedShort();
-			final int channelCount = data.readUnsignedShort();
-
-			double[] timestamps = new double[sampleCount];
-			for (int sample=0; sample<sampleCount; ++sample) {
-				timestamps[sample] = data.readDouble();
-			}
-			for (int sample=0; sample<sampleCount; ++sample) {
-				float[] newSamplesArray = new float[channelCount];
-				for (int i=0; i<channelCount; ++i) {
-					newSamplesArray[i] = data.readFloat();
-				}
-
-				double samplesTimestamp = timestamps[sample];
-				NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
-
-				publish(newSamplesPackage);
-			}
-		} catch (Exception ex) {
-			logger.error("cannot process signal message", ex);
+	protected void publishSamples(BaseMessage generic_message) {
+		SignalMsg sampleMsg  = (SignalMsg)generic_message;
+		List<NewSamplesData> samples = sampleMsg.getSamples();
+		
+		for(NewSamplesData sample: samples){
+			publish(sample);
 		}
+
 	}
 
 	/**
@@ -232,9 +207,11 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 * to parse its contents and publish it to gui, recorder etc.
 	 * @param tagMsg tagMessage containing tag
 	 */
-	private void publishTagFromMessage(TagMsg tagMsg) {
+	private void publishTagFromMessage(BaseMessage msg) {
+		
 		logger.info("Tag recorder: got a tag!");
 
+		TagMsg tagMsg = (TagMsg)msg;
 		// TODO: By now we ignore field channels and assume that tag if for all channels
 		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 
@@ -269,7 +246,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 *
 	 * @param sampleMsgData the contents of the message
 	 */
-	private void parseVideoSavingError(byte[] sampleMsgData) {
+	private void parseVideoSavingError(BaseMessage msg) {
 		notifyVideoRecordingStatusChange(false);
 		VideoRecordingInitializer initializer = videoRecordingInitializer;
 		if (initializer != null) {
@@ -282,7 +259,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 *
 	 * @param sampleMsgData the contents of the message
 	 */
-	private void parseVideoSavingDone(byte[] sampleMsgData) {
+	private void parseVideoSavingDone(BaseMessage sampleMsgData) {
 		videoRecordingInitializer = null;
 		notifyVideoRecordingStatusChange(false);
 	}
@@ -292,7 +269,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 *
 	 * @param sampleMsgData the contents of the message
 	 */
-	private void parseVideoSavingOK(byte[] sampleMsgData) {
+	private void parseVideoSavingOK(BaseMessage sampleMsgData) {
 		videoRecordingInitializer = null;
 		notifyVideoRecordingStatusChange(true);
 	}
@@ -474,11 +451,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 */
 	public void stopVideoSaving() {
 		videoRecordingInitializer = null;
-		peer.publish(new PeerMessage(
-			PeerMessage.FINISH_SAVING_VIDEO,
-			experimentDescriptor.getPeerId(),
-			Converter.bytesFromString("{}")
-		));
+		peer.publish(new FinishSavingVideoMsg(experimentDescriptor.getPeerId()));
 	}
 
 	/**
@@ -493,50 +466,3 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	}*/
 }
 
-/**
- * This class holds information about the newest samples package that was received
- * by Svarog and published by the doInTheBackground method.
- *
- * The data consists of the sample values (a sample value for each channel)
- * and a timestamp of these samples.
- * @author Piotr Szachewicz
- */
-class NewSamplesData {
-	/**
-	 * The values of the samples. The size of the array is equal to the number
-	 * of channels in the signal.
-	 */
-	private float[] sampleValues;
-
-	/**
-	 * The timestamp of the samples represented by the sampleValues array.
-	 */
-	private double samplesTimestamp;
-
-	/**
-	 * Constructor. Creates an object containing samples data.
-	 * @param sampleValues the values of the samples for each channel
-	 * @param samplesTimestamp the timestamp of the samples
-	 */
-	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
-		this.sampleValues = sampleValues;
-		this.samplesTimestamp = samplesTimestamp;
-	}
-
-	public float[] getSampleValues() {
-		return sampleValues;
-	}
-
-	public void setSampleValues(float[] sampleValues) {
-		this.sampleValues = sampleValues;
-	}
-
-	public double getSamplesTimestamp() {
-		return samplesTimestamp;
-	}
-
-	public void setSamplesTimestamp(double samplesTimestamp) {
-		this.samplesTimestamp = samplesTimestamp;
-	}
-
-}

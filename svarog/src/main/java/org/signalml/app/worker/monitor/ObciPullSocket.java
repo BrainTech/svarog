@@ -4,7 +4,7 @@ import java.util.List;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.AmplifierType;
-import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.zeromq.ZMQ; 
 
@@ -59,19 +59,19 @@ public class ObciPullSocket{
 	}
 	
 	
-	private List<String> getPushPullResponse() throws OpenbciCommunicationException{
-		String response_header = pullsocket.recvStr();
+	private List<byte[]> getPushPullResponse() throws OpenbciCommunicationException{
+		byte[] response_header = pullsocket.recv();
 		if (response_header == null)
 			return null;
-		String response_data;
+		byte[] response_data;
 		if (pullsocket.hasReceiveMore()){
-			response_data = pullsocket.recvStr();
+			response_data = pullsocket.recv();
 			if (response_data == null)
 				throw new OpenbciCommunicationException("Failed to get message data");
 		}
 		else
 			throw new OpenbciCommunicationException("No message data is being sent");
-		List<String> response = new ArrayList();
+		List<byte[]> response = new ArrayList();
 		response.add(response_header);
 		response.add(response_data);
 		return response;
@@ -87,12 +87,12 @@ public class ObciPullSocket{
 	 * @throws OpenbciCommunicationException
 	 */
 
-	public Message getAndParsePushPullResponse(MessageType msgType) throws OpenbciCommunicationException{
-		List<String> response = getPushPullResponse();
+	public LauncherMessage getAndParsePushPullResponse(MessageType msgType) throws OpenbciCommunicationException{
+		List<byte[]> response = getPushPullResponse();
 		if (response == null)
 			return null;
 		Helper.checkIfResponseIsOK(response, msgType);
-		return Message.deserialize(response);
+		return (LauncherMessage)LauncherMessage.deserialize(response);
 	}
 	
 	/*

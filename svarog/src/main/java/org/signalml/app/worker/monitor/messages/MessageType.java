@@ -18,11 +18,22 @@ import org.signalml.app.worker.monitor.messages.parsing.MessageTypeSerializer;
 @JsonDeserialize(using=MessageTypeDeserializer.class)
 public enum MessageType {
 
-	PING("ping", Message.class),
-	PONG("pong", Message.class),
+	PING("ping", LauncherMessage.class),
+	PONG("pong", LauncherMessage.class),
 
 	TAG_MSG("TAG", TagMsg.class),
 	
+	BROKER_HELLO("BROKER_HELLO", BrokerHelloMsg.class),
+	BROKER_HELLO_RESPONSE("BROKER_HELLO_RESPONSE", BrokerHelloResponseMsg.class),
+	
+	AMPLIFIER_SIGNAL_MESSAGE("AMPLIFIER_SIGNAL_MESSAGE", SignalMsg.class),
+	
+	SAVE_VIDEO("SAVE_VIDEO", SaveVideoMsg.class),
+	SAVE_VIDEO_ERROR("SAVE_VIDEO_ERROR", SaveVideoErrorMsg.class),
+	SAVE_VIDEO_OK("SAVE_VIDEO_OK", SaveVideoOkMsg.class),
+	SAVE_VIDEO_DONE("SAVE_VIDEO_DONE", SaveVideoDoneMsg.class),
+	FINISH_SAVING_VIDEO("FINISH_SAVING_VIDEO", FinishSavingVideoMsg.class),
+
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
 	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", EEGExperimentsMsg.class),
 

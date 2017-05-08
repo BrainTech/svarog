@@ -3,7 +3,7 @@ package org.signalml.app.worker.monitor.messages;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
-public class KillExperimentRequest extends Message {
+public class KillExperimentRequest extends LauncherMessage {
 
 	@JsonProperty("strname")
 	private String uuid;

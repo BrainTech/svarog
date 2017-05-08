@@ -5,7 +5,7 @@ import java.util.Date;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
-public abstract class AbstractJoinOrLeaveExperimentRequest extends Message {
+public abstract class AbstractJoinOrLeaveExperimentRequest extends LauncherMessage {
 
 	@JsonProperty("peer_id")
 	private String peerId;

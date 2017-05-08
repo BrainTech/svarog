@@ -18,7 +18,7 @@ import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
-import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;

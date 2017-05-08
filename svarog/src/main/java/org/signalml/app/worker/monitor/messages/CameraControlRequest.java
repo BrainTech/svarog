@@ -5,7 +5,7 @@ import java.util.Map;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.video.VideoStreamSpecification;
 
-public class CameraControlRequest extends Message {
+public class CameraControlRequest extends LauncherMessage {
 
 	@JsonProperty("action_name")
 	private final String action_name;

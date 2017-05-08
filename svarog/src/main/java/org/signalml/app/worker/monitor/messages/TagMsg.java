@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  *
  * @author Marian Dovgialo
  */
-public class TagMsg extends Message{
+public class TagMsg extends BaseMessage{
 	@JsonProperty("start_timestamp")
 	private double start_timestamp;
 	
