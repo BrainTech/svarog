@@ -90,28 +90,28 @@ public final class OnlineMediaPlayerPanel extends JPanel {
 			"moveleft",
 			"relative_pan",
 			(CameraControlRequest request) -> {
-				request.putArg("x", DEFAULT_PAN);
+				request.putArg("x", -DEFAULT_PAN);
 			}
 		));
 		tiltButtons[0] = toolbar.add(createAction(
 			"moveup",
 			"relative_tilt",
 			(CameraControlRequest request) -> {
-				request.putArg("rot", -DEFAULT_TILT);
+				request.putArg("rot", DEFAULT_TILT);
 			}
 		));
 		tiltButtons[1] = toolbar.add(createAction(
 			"movedown",
 			"relative_tilt",
 			(CameraControlRequest request) -> {
-				request.putArg("rot", DEFAULT_TILT);
+				request.putArg("rot", -DEFAULT_TILT);
 			}
 		));
 		panButtons[1] = toolbar.add(createAction(
 			"moveright",
 			"relative_pan",
 			(CameraControlRequest request) -> {
-				request.putArg("x", -DEFAULT_PAN);
+				request.putArg("x", DEFAULT_PAN);
 			}
 		));
 	}
