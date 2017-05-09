@@ -401,12 +401,24 @@ public class StyledTagSetConverter implements Converter {
 								length = (Float) floatConverter.fromString(reader.getAttribute("length"));
 
 								style = styles.getStyle(type, tagName);
-								if (style == null) {
+								if (style == null)
+								{
 									style = tagStylesGenerator.getSmartStyleFor(tagName, length, channel);
+									// if we are reading tagfile without styles and tag style type doesnt fit default style type
+									if (
+										(style.getType() == SignalSelectionType.PAGE && length != pageSize)
+										|| (style.getType() == SignalSelectionType.BLOCK && length != pageSize / blocksPerPage)
+										)
+										{
+											style = tagStylesGenerator.generateNewStyleFor(tagName, length, channel);
+										}
+										
+										
 									styles.addStyle(style);
 								}
 
 								annotation = null;
+
 								tag = new Tag(style,position,length,channel,annotation);
 
 								while (reader.hasMoreChildren()) {
