@@ -32,23 +32,19 @@ public class SignalMsg extends BaseMessage{
 	
 	@JsonIgnore
 	@Override
-	public BaseMessage deserializeImplementation(byte[] header, byte[] data) throws OpenbciCommunicationException{
-		MessageType type = parseMessageType(header);
+	public BaseMessage deseralizeData(byte[] data, MessageType type) throws OpenbciCommunicationException{
 		if (type != null){
-			SignalMsg message = new SignalMsg(parseSender(header), data);
-			message.setType(type);
+			SignalMsg message = new SignalMsg(data);
 			return (BaseMessage)message;
 		}
 		else
 			throw new OpenbciCommunicationException(_R("Unknown message type"));
 	}
 	
-	public SignalMsg(String sender, byte[] data)
+	public SignalMsg(byte[] data)
 	{
 		super(MessageType.AMPLIFIER_SIGNAL_MESSAGE);
-		setSender(sender);
 		parseSamples(data);
-
 	}
 	
 	public SignalMsg()

@@ -106,16 +106,10 @@ public class BaseMessage {
 	
 	
 	@JsonIgnore
-	public BaseMessage deserializeImplementation(byte[] header, byte[] data) throws OpenbciCommunicationException{
-		MessageType type = parseMessageType(header);
-		logger.debug("Parsed header: " + new String(header));
+	public BaseMessage deseralizeData(byte[] data, MessageType type) throws OpenbciCommunicationException{
 		logger.debug("Parsing data: " + new String(data));
 		BaseMessage message = parseDataFromJSON(data, type);
-		message.setType(type);
-		message.setSender(parseSender(header));
 		return message;
-
-		
 	}
 	
 	@JsonIgnore
@@ -123,11 +117,14 @@ public class BaseMessage {
 		MessageType type = parseMessageType(header);
 		if (type != null){
 			try {
-				BaseMessage msgtype;
+				BaseMessage message;
 				Constructor msgconst;
 				msgconst = type.getMessageClass().getConstructor();
-				msgtype = (BaseMessage) msgconst.newInstance();
-				return msgtype.deserializeImplementation(header, data);
+				message = (BaseMessage) msgconst.newInstance();
+				message = message.deseralizeData(data, type);
+				message.setType(type);
+				message.setSender(parseSender(header));
+				return message;
 			} catch (InstantiationException ex) {
 				logger.error(ex);
 			} catch (IllegalAccessException ex) {
