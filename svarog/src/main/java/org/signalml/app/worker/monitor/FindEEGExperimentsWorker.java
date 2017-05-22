@@ -19,7 +19,7 @@ import org.signalml.app.worker.monitor.messages.AmplifierType;
 import org.signalml.app.worker.monitor.messages.FindEEGAmplifiersRequest;
 import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.LongRequest;
-import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 
 public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentDescriptor>> {

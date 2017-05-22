@@ -11,9 +11,10 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.KillExperimentRequest;
 import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;
-import org.signalml.app.worker.monitor.messages.Message;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.peer.Peer;
@@ -69,7 +70,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 	private void sendKillExperimentRequest() throws OpenbciCommunicationException {
 		KillExperimentRequest request = new KillExperimentRequest(experimentDescriptor);
 
-		Message response = Helper.sendRequestAndParseResponse(request,
+		BaseMessage response = Helper.sendRequestAndParseResponse(request,
 									   Helper.getOpenBCIIpAddress(),
 									   Helper.getOpenbciPort(),
 									   MessageType.KILL_EXPERIMENT_RESPONSE);

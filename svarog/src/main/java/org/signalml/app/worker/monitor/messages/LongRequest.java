@@ -11,7 +11,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  *
  * @author marian
  */
-public class LongRequest extends Message{
+public class LongRequest extends LauncherMessage{
 	
 	@JsonProperty("client_push_address")
 	protected String clientPushAddress;

@@ -3,6 +3,13 @@ package org.signalml.peer;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.signalml.app.worker.monitor.Helper;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.messages.BaseMessage;
+import org.signalml.app.worker.monitor.messages.BrokerHelloMsg;
+import org.signalml.app.worker.monitor.messages.BrokerHelloResponseMsg;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
+import org.signalml.app.worker.monitor.messages.MessageType;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
 
@@ -52,7 +59,7 @@ public class Peer {
 	 * @return  response from the broker
 	 * @throws CommunicationException if communication fails
 	 */
-	public final Message askBroker(Message message) throws CommunicationException {
+	public final BaseMessage askBroker(BaseMessage message) throws OpenbciCommunicationException {
 		return askPeer(message, brokerInfo.brokerURL);
 	}
 
@@ -64,19 +71,10 @@ public class Peer {
 	 * @return  response from the peer
 	 * @throws CommunicationException if communication fails
 	 */
-	public final Message askPeer(Message message, String repURL) throws CommunicationException {
-		try (ZMQ.Socket req = context.socket(ZMQ.REQ)) {
-			req.connect(repURL);
-
-			req.send(message.getHeader(), ZMQ.SNDMORE);
-			req.send(message.getData());
-
-			Message response = receiveFromSocket(req, -1);
-			if (!response.type.equals(message.type+"_RESPONSE")) {
-				throw new CommunicationException("unexpected response "+response.type);
-			}
-			return response;
-		}
+	public final BaseMessage askPeer(BaseMessage message, String repURL) throws OpenbciCommunicationException {
+			
+		return Helper.sendRequestAndGetResponse(message, repURL);
+		
 	}
 
 	/**
@@ -112,27 +110,20 @@ public class Peer {
 	 * {@link #subscribe} must be call afterwards.
 	 *
 	 * @throws CommunicationException
+	 * @throws org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException
 	 */
-	public void connect() throws CommunicationException {
+	public void connect() throws CommunicationException, OpenbciCommunicationException {
 		String repURL = bindSocket(rep, brokerInfo.repURLs[0]);
 
-		try {
-			JSONObject helloJSON = new JSONObject();
-			helloJSON.put("broker_url", brokerInfo.brokerURL);
-			helloJSON.put("peer_url", repURL);
-			Message hello = new Message(Message.BROKER_HELLO, peerId, Converter.bytesFromString(helloJSON.toString()));
 
-			Message response = askBroker(hello);
+		BrokerHelloMsg hello = new BrokerHelloMsg(repURL, brokerInfo.brokerURL);
+		hello.setSender(peerId);
+		BrokerHelloResponseMsg response = (BrokerHelloResponseMsg)askBroker(hello);
 
-			JSONObject responseJSON = new JSONObject(Converter.stringFromBytes(response.data));
-			String xpubURL = responseJSON.getString("xpub_url");
-			String xsubURL = responseJSON.getString("xsub_url");
-			pub.connect(xsubURL);
-			sub.connect(xpubURL);
-
-		} catch (JSONException ex) {
-			throw new CommunicationException("JSON error in peer", ex);
-		}
+		pub.connect(response.getXsubUrl());
+		sub.connect(response.getXpubUrl());
+		
+		
 	}
 
 	/**
@@ -155,23 +146,23 @@ public class Peer {
 	 * @return new Message instance
 	 * @throws CommunicationException if received message is invalid
 	 */
-	private static Message receiveFromSocket(ZMQ.Socket socket, int timeoutMillis) throws CommunicationException {
+	private static BaseMessage receiveFromSocket(ZMQ.Socket socket, int timeoutMillis) throws OpenbciCommunicationException {
 		int previousTimeout = socket.getReceiveTimeOut();
 		socket.setReceiveTimeOut(timeoutMillis);
-		String header = socket.recvStr();
+		byte[] header = socket.recv();
 		socket.setReceiveTimeOut(previousTimeout);
 		if (header == null) {
 			// timeout
 			return null;
 		}
 		if (!isRcvMore(socket)) {
-			throw new CommunicationException("received invalid one-part message");
+			throw new OpenbciCommunicationException("received invalid one-part message");
 		}
 		byte[] data = socket.recv();
 		if (isRcvMore(socket)) {
-			throw new CommunicationException("received message with more than two parts");
+			throw new OpenbciCommunicationException("received message with more than two parts");
 		}
-		return Message.parse(header, data);
+		return BaseMessage.deserialize(header, data);
 	}
 
 	/**
@@ -180,7 +171,7 @@ public class Peer {
 	 * @return received message, or NULL on ZMQ error
 	 * @throws CommunicationException  if received message is invalid
 	 */
-	public Message receive() throws CommunicationException {
+	public BaseMessage receive() throws OpenbciCommunicationException {
 		return receive(-1);
 	}
 
@@ -192,11 +183,11 @@ public class Peer {
 	 * @return received message, or NULL on ZMQ error or timeout
 	 * @throws CommunicationException  if received message is invalid
 	 */
-	public Message receive(int timoutMillis) throws CommunicationException {
+	public BaseMessage receive(int timoutMillis) throws OpenbciCommunicationException {
 		return receiveFromSocket(sub, timoutMillis);
 	}
 
-	public void publish(Message message) {
+	public void publish(BaseMessage message) {
 		try {
 			pub.send(message.getHeader(), ZMQ.SNDMORE);
 			pub.send(message.getData());

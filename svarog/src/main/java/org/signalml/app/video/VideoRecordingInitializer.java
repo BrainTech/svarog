@@ -3,8 +3,8 @@ package org.signalml.app.video;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.signalml.app.worker.monitor.messages.SaveVideoMsg;
 import org.signalml.peer.Converter;
-import org.signalml.peer.Message;
 import org.signalml.peer.Peer;
 
 /**
@@ -33,16 +33,7 @@ public class VideoRecordingInitializer {
 	 * Send a single request to start recording video.
 	 */
 	public void startRecording() {
-		try {
-			JSONObject saveVideoJSON = new JSONObject();
-			saveVideoJSON.put("URL", rtspURL);
-			saveVideoJSON.put("PATH", targetFilePath);
-			byte[] content = Converter.bytesFromString(saveVideoJSON.toString());
-			peer.publish(new Message(Message.SAVE_VIDEO, peerId, content));
-		} catch (JSONException ex) {
-			// should not happen
-			logger.error("JSON error in startRecording", ex);
-		}
+		peer.publish(new SaveVideoMsg(peerId, targetFilePath, rtspURL));
 	}
-
+	
 }

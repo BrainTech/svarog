@@ -1,46 +1,44 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.signalml.app.worker.monitor.messages;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.logging.Level;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.SerializationConfig;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 
-public class Message {
 
+public class BaseMessage {
 	@JsonIgnore
-	protected static final Logger logger = Logger.getLogger(Message.class);
+	protected static final Logger logger = Logger.getLogger(LauncherMessage.class);
 
-	@JsonProperty("sender_ip")
-	private String senderIp = "";
+	
 	@JsonIgnore
 	private MessageType type;
 	@JsonIgnore
 	private String sender = "";
-	@JsonProperty("receiver")
-	private String receiver ="";
 
-	public Message() {
+	public BaseMessage() {
 	}
 
-	public Message(MessageType type) {
+	public BaseMessage(MessageType type) {
 		this.type = type;
-	}
-
-	public String getSenderIp() {
-		return senderIp;
-	}
-
-	public void setSenderIp(String senderIp) {
-		this.senderIp = senderIp;
 	}
 
 	public MessageType getType() {
@@ -59,17 +57,11 @@ public class Message {
 		this.sender = sender;
 	}
 
-	public String getReceiver() {
-		return receiver;
-	}
-
-	public void setReceiver(String receiver) {
-		this.receiver = receiver;
-	}
 
 	public String toString() {
 
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(SerializationConfig.Feature.FAIL_ON_EMPTY_BEANS, false);
 
 		ByteArrayOutputStream os = new ByteArrayOutputStream();
 		try {
@@ -106,36 +98,69 @@ public class Message {
 	}
 	
 	@JsonIgnore
-	public static Message deserialize(List<String> msg) throws OpenbciCommunicationException{
-		String header = msg.get(0);
-		String data = msg.get(1);
+	public static BaseMessage deserialize(List<byte[]> msg) throws OpenbciCommunicationException{
+		byte[] header = msg.get(0);
+		byte[] data = msg.get(1);
+		return deserialize(header, data);
+	}
+	
+	
+	@JsonIgnore
+	public BaseMessage deseralizeData(byte[] data, MessageType type) throws OpenbciCommunicationException{
+		logger.debug("Parsing data: " + new String(data));
+		BaseMessage message = parseDataFromJSON(data, type);
+		return message;
+	}
+	
+	@JsonIgnore
+	public static BaseMessage deserialize(byte[] header, byte[] data) throws OpenbciCommunicationException{
 		MessageType type = parseMessageType(header);
-		logger.debug("Parsed header: " + header);
-		logger.debug("Parsing data: " + data);
 		if (type != null){
-			Message message = parseDataFromJSON(data, type);
-			message.setSender(parseSender(header));
-			return message;
+			try {
+				BaseMessage message;
+				Constructor msgconst;
+				msgconst = type.getMessageClass().getConstructor();
+				message = (BaseMessage) msgconst.newInstance();
+				message = message.deseralizeData(data, type);
+				message.setType(type);
+				message.setSender(parseSender(header));
+				return message;
+			} catch (InstantiationException ex) {
+				logger.error(ex);
+			} catch (IllegalAccessException ex) {
+				logger.error(ex);
+			} catch (IllegalArgumentException ex) {
+				logger.error(ex);
+			} catch (InvocationTargetException ex) {
+				logger.error(ex);
+			} catch (NoSuchMethodException ex) {
+				logger.error(ex);
+			} catch (SecurityException ex) {
+				logger.error(ex);
+			}
+			return null;
 		}
 		else
 			throw new OpenbciCommunicationException(_R("Unknown message type"));
 	}
 	
+	
+	
 	@JsonIgnore
-	public static String[] parseHeader(String header)
+	public static String[] parseHeader(byte[] header)
 	{
-		return header.split("\\^");
+		return (new String(header)).split("\\^");
 	}
 	
 	@JsonIgnore
-	public static MessageType parseMessageType(String header) {
+	public static MessageType parseMessageType(byte[] header) {
 		
 		String msgTypeCode = parseHeader(header)[0];
 		return MessageType.parseMessageTypeFromMessageCode(msgTypeCode);
 	}
 	
 	@JsonIgnore
-	public static String parseSender(String header) {
+	public static String parseSender(byte[] header) {
 		try {
 			return parseHeader(header)[1];
 		}
@@ -144,17 +169,15 @@ public class Message {
 		}
 	}
 	
-	@JsonIgnore
-	public static MessageType parseMessageType(List<String> msg) {
-		return parseMessageType(msg.get(0));
-	}
-	
 	
 	@JsonIgnore
-	public static Message parseDataFromJSON(String json, MessageType messageType) throws OpenbciCommunicationException {
+	public static BaseMessage parseDataFromJSON(byte[] json, MessageType messageType) throws OpenbciCommunicationException {
+		
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			Message readMessage = (Message) mapper.readValue(json.getBytes(), messageType.getMessageClass());
+			//TODO WORKS EXACTLY UP TO HERE
+			BaseMessage readMessage = (BaseMessage) mapper.readValue(new String(json), messageType.getMessageClass());
+
 			return readMessage;
 			
 		} catch (Exception e) {
@@ -164,4 +187,3 @@ public class Message {
 		}
 	}
 }
-
