@@ -1,14 +1,19 @@
 #!/bin/bash
 set -e
 #needs variables:
-#MASTER
-#BRAINTECHPL_USR
-#BRAINTECHPL_PSW
+#ADDRESS
+#USR
+#PSW
+#SVAROG_LOCATION
+
+cd dist
+SVAROG_PKG=`ls svarog-*-standalone.zip`
 
 
-#for test
+echo "RewriteEngine On
+RewriteRule ^svarog-latest\.zip $SVAROG_LOCATION/$SVAROG_PKG [L,R=302]" > .htaccess
 
-
-
-FTP_FILES=`ls`
-
+sshpass -p $PSW sftp -o StrictHostKeyChecking=no $USR@$ADDRESS << EOT
+mput svarog-*-standalone.zip
+put .htaccess
+EOT
