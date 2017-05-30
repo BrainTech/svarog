@@ -7,7 +7,11 @@ VERSION=$(git describe --tags --first-parent)
 
 mkdir -p dist/svarog-$VERSION-standalone/plugins
 
-mv svarog-standalone/target/*.jar dist/svarog-$VERSION-standalone/
+
+mv standalone-package-files/* dist/svarog-$VERSION-standalone/
+
+
+mv svarog-standalone/target/*.jar dist/svarog-$VERSION-standalone/svarog-standalone.jar
 
 mv plugins/Artifact/target/*.jar dist/svarog-$VERSION-standalone/plugins/
 mv plugins/Artifact/target/*.xml dist/svarog-$VERSION-standalone/plugins/
