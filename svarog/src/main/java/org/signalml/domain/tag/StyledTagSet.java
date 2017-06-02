@@ -1409,9 +1409,14 @@ public class StyledTagSet implements Serializable, Preset {
 
 		List<String> stylesThatCouldNotBeDeleted = new ArrayList<String>();
 
-		Set<TagStyle> stylesFromBoth = new HashSet<TagStyle>();
-		stylesFromBoth.addAll(this.getListOfStyles());
-		stylesFromBoth.addAll(tagSet.getListOfStyles());
+		List<TagStyle> stylesFromBoth = this.getListOfStyles();
+		Set<TagStyle> styleSetFromBoth = new HashSet<>(stylesFromBoth);
+		for (TagStyle tag : tagSet.getListOfStyles()) {
+			if (!styleSetFromBoth.contains(tag)) {
+				stylesFromBoth.add(tag);
+				styleSetFromBoth.add(tag);
+			}
+		}
 
 		//for each tag check if it should be removed, updated or deleted
 		for (TagStyle style: stylesFromBoth) {
