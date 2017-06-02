@@ -12,7 +12,7 @@ build:
   script:
     - ./builddeb.sh
   artifacts:
-    name: "{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: svarog_deb_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
     paths: 
     - ./dist/*.deb
     
@@ -105,3 +105,22 @@ deploy_xenial_master:
     - export RELEASE=xenial
     - ./deploydebs.sh
   environment: production_ubuntu1604
+
+deploy_standalone_braintech:
+  image: deployment-image
+  stage: deploy
+  only:
+    - master
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - buildstandalone
+  script:
+    - export ADDRESS=$BRAINTECH_SRV
+    - export USR=$BRAINTECH_USR
+    - export PSW=$BRAINTECH_PWD
+    - ./deployjar.sh
+  when: manual
+  environment: braintech_pl_standalone_jar_production
+
