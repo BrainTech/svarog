@@ -9,7 +9,7 @@ public class Amplifier {
 
 	private String name;
 	private int samplesPerPacket;
-	private List<Float> samplingFrequencies;
+	private List<Double> samplingFrequencies;
 	private List<AmplifierChannel> channels;
 
 	private AmplifierType amplifierType;
@@ -23,8 +23,8 @@ public class Amplifier {
 		this.name = presetAmplifier.name;
 		this.samplesPerPacket = presetAmplifier.samplesPerPacket;
 
-		this.samplingFrequencies = new ArrayList<Float>();
-		for (Float samplingFrequency: presetAmplifier.getSamplingFrequencies())
+		this.samplingFrequencies = new ArrayList<Double>();
+		for (Double samplingFrequency: presetAmplifier.getSamplingFrequencies())
 			this.samplingFrequencies.add(samplingFrequency);
 
 		this.channels = new ArrayList<AmplifierChannel>();
@@ -46,12 +46,12 @@ public class Amplifier {
 		this.name = name;
 	}
 
-	public List<Float> getSamplingFrequencies() {
+	public List<Double> getSamplingFrequencies() {
 		return samplingFrequencies;
 	}
 
 	public void setSamplingFrequencies(
-		List<Float> availableSamplingFrequencies) {
+		List<Double> availableSamplingFrequencies) {
 		this.samplingFrequencies = availableSamplingFrequencies;
 	}
 
