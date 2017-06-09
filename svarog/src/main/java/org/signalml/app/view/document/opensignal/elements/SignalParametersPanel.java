@@ -338,7 +338,7 @@ public class SignalParametersPanel extends JPanel {
 				getSampleTypeComboBox().setSelectedItem(rawSignalDescriptor.getSampleType());
 		} else if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) openSignalDescriptor;
-			List<Float> samplingFrequencies = experimentDescriptor.getAmplifier().getSamplingFrequencies();
+			List<Double> samplingFrequencies = experimentDescriptor.getAmplifier().getSamplingFrequencies();
 			getSamplingFrequencyComboBox().setModel(new DefaultComboBoxModel(samplingFrequencies.toArray()));
 
 			float samplingFrequency = experimentDescriptor.getSignalParameters().getSamplingFrequency();

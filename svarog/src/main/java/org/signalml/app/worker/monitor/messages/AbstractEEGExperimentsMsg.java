@@ -100,7 +100,7 @@ public abstract class AbstractEEGExperimentsMsg extends LauncherMessage{
 	protected void readSamplingFrequencies(LinkedHashMap<String, Object> parameters, ExperimentDescriptor experiment) {
 		Amplifier amplifier = experiment.getAmplifier();
 
-		List<Float> samplingFrequencies = (List<Float>) parameters.get("sampling_rates");
-		amplifier.setSamplingFrequencies(new ArrayList<Float>(samplingFrequencies));
+		List<Double> samplingFrequencies = (List<Double>) parameters.get("sampling_rates");
+		amplifier.setSamplingFrequencies(new ArrayList<Double>(samplingFrequencies));
 	}
 }
