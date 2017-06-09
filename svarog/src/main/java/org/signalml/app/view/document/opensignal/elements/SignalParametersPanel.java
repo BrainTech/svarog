@@ -345,8 +345,8 @@ public class SignalParametersPanel extends JPanel {
 			getSampleTypeComboBox().setSelectedItem(samplingFrequency);
 		}
 		SignalParameters signalParameters = openSignalDescriptor.getSignalParameters();
-
-		getSamplingFrequencyComboBox().setSelectedItem(signalParameters.getSamplingFrequency());
+		double freq = (double)signalParameters.getSamplingFrequency();
+		getSamplingFrequencyComboBox().setSelectedItem(freq);
 		getChannelCountSpinner().setValue(signalParameters.getChannelCount());
 		getPageSizeSpinner().setValue(signalParameters.getPageSize());
 		getBlocksPerPageSpinner().setValue(signalParameters.getBlocksPerPage());
