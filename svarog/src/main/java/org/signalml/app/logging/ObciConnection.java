@@ -70,8 +70,7 @@ public class ObciConnection extends ZmqRemoteSender implements Connection {
 			JSONObject messageData = (new JSONObject())
 				.put("log_type", "sentry")
 				.put("data", data)
-				.put("source", source)
-				.put("msg", "");
+				.put("source", source);
 			String messageHeader = "sentry^^";
 			List<String> message = new ArrayList();
 			message.add(messageHeader);
