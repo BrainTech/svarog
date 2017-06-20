@@ -29,7 +29,6 @@ public class Helper {
 
 	protected static Logger logger = Logger.getLogger(Helper.class);
 	
-	private static final int TIMEOUT = 2000; // milliseconds
 	private static ZMQ.Socket socket;
 	private static ZMQ.Context context;
 	private static boolean cancelled;
@@ -37,12 +36,7 @@ public class Helper {
 	/**
 	 * The socket timeout used by this helper by default.
 	 */
-	public static final int DEFAULT_RECEIVE_TIMEOUT = 10000;
-
-	/**
-	 * The constant holding a value for an infinite timeout.
-	 */
-	public static final int INFINITE_TIMEOUT = 0;
+	public static final int DEFAULT_TIMEOUT = 10000;
 
 	public static String getOpenBCIIpAddress() {
 		return SvarogApplication.getApplicationConfiguration().getOpenbciIPAddress();
@@ -54,7 +48,7 @@ public class Helper {
 
 	
 	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
-		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
+		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
 		Helper.checkIfResponseIsOK(response, awaitedMessageType);
 
 		return BaseMessage.deserialize(response);
@@ -73,7 +67,7 @@ public class Helper {
 
 		logger.debug("Sending request to: "+IP+":"+ Integer.toString(port));
 
-		List<byte[]> response = sendRequest(request, IP, port, DEFAULT_RECEIVE_TIMEOUT);
+		List<byte[]> response = sendRequest(request, IP, port, DEFAULT_TIMEOUT);
 		return BaseMessage.deserialize(response);
 	}
 
@@ -125,8 +119,8 @@ public class Helper {
 		socket = context.socket(ZMQ.REQ);
 		socket.setLinger(0);
 		socket.setHWM(100);
-		socket.setSendTimeOut(TIMEOUT);
-		socket.setReceiveTimeOut(TIMEOUT);
+		socket.setSendTimeOut(timeout);
+		socket.setReceiveTimeOut(timeout);
 		socket.connect(url);
 		logger.debug("Socket: " + url+ " conected");
 		
