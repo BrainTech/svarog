@@ -193,6 +193,7 @@ public class Peer {
 			pub.send(message.getData());
 		} catch (ZMQException ex) {
 			logger.error("could not publish message (header="+message.getHeader()+")", ex);
+			throw ex;
 		}
 	}
 
