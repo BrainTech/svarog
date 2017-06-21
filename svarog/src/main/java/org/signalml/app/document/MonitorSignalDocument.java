@@ -39,6 +39,7 @@ import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSour
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.DocumentView;
+import org.zeromq.ZMQException;
 
 /**
  * @author Mariusz Podsiadło
@@ -454,15 +455,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 						}
 						pcSupport.firePropertyChange(IS_VIDEO_SAVING_PROPERTY, true, false);
 						stopMonitorRecordingFinalizeMetadata();
-						
+
 
 					}
 				}
 			});
 			stopMonitorRecordingSignal();
-			monitorWorker.stopVideoSaving();
 			pcSupport.firePropertyChange(IS_VIDEO_SAVING_PROPERTY, false, true);
-
+			monitorWorker.stopVideoSaving();
 		} else {
 			stopMonitorRecordingInternally();
 		}
@@ -471,7 +471,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private void stopMonitorRecordingSignal(){
 		monitorWorker.disconnectTagRecorderWorker();
 		monitorWorker.disconnectSignalRecorderWorker();
-		
+
 		if (signalRecorderWorker != null) {
 			signalRecorderWorker.stopSaving();
 		}
