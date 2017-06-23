@@ -41,7 +41,7 @@ import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.SignalMsg;
 import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
-
+import org.zeromq.ZMQException;
 /** MonitorWorker
  *
  */
@@ -162,7 +162,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			}
 			
 			MessageType sampleType = sampleMsg.getType();
-
 			switch (sampleType) {
 			case AMPLIFIER_SIGNAL_MESSAGE:
 				publishSamples(sampleMsg);
@@ -451,7 +450,13 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 */
 	public void stopVideoSaving() {
 		videoRecordingInitializer = null;
-		peer.publish(new FinishSavingVideoMsg(experimentDescriptor.getPeerId()));
+		try{
+			peer.publish(new FinishSavingVideoMsg(experimentDescriptor.getPeerId()));
+		}catch (ZMQException ex){
+		    // communication with VideoSaver failed, probaly because experiment has been shutdown.
+		    // We no longer have control over it, so assume that video saving is finished (with error)
+			notifyVideoRecordingStatusChange(false);
+		}
 	}
 
 	/**
