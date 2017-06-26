@@ -2,15 +2,8 @@ package org.signalml.app.worker.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
@@ -29,7 +22,6 @@ public class Helper {
 
 	protected static Logger logger = Logger.getLogger(Helper.class);
 	
-	private static final int TIMEOUT = 2000; // milliseconds
 	private static ZMQ.Socket socket;
 	private static ZMQ.Context context;
 	private static boolean cancelled;
@@ -37,12 +29,7 @@ public class Helper {
 	/**
 	 * The socket timeout used by this helper by default.
 	 */
-	public static final int DEFAULT_RECEIVE_TIMEOUT = 10000;
-
-	/**
-	 * The constant holding a value for an infinite timeout.
-	 */
-	public static final int INFINITE_TIMEOUT = 0;
+	public static final int DEFAULT_TIMEOUT = 10000;
 
 	public static String getOpenBCIIpAddress() {
 		return SvarogApplication.getApplicationConfiguration().getOpenbciIPAddress();
@@ -54,7 +41,7 @@ public class Helper {
 
 	
 	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
-		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_RECEIVE_TIMEOUT);
+		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
 		Helper.checkIfResponseIsOK(response, awaitedMessageType);
 
 		return BaseMessage.deserialize(response);
@@ -73,7 +60,7 @@ public class Helper {
 
 		logger.debug("Sending request to: "+IP+":"+ Integer.toString(port));
 
-		List<byte[]> response = sendRequest(request, IP, port, DEFAULT_RECEIVE_TIMEOUT);
+		List<byte[]> response = sendRequest(request, IP, port, DEFAULT_TIMEOUT);
 		return BaseMessage.deserialize(response);
 	}
 
@@ -97,22 +84,11 @@ public class Helper {
 
 	private static synchronized List<byte[]> sendRequestWithoutHandlingExceptions(BaseMessage request, String destinationIP,
 			 int destinationPort, int timeout) throws OpenbciCommunicationException {
-
 		createSocket(destinationIP, destinationPort, timeout);
-
-		
 		sendMessage(request);
-	
-
 		List<byte[]> response;
-		try {
-			response = receiveResponse();
-		} catch (SocketTimeoutException e) {
-			logger.error("", e);
-			throw new OpenbciCommunicationException(_("Socket timeout exceeded while waiting for response"));
-		}
+		response = receiveResponse();
 		socket.close();
-
 		return response;
 	}
 
@@ -125,15 +101,13 @@ public class Helper {
 		socket = context.socket(ZMQ.REQ);
 		socket.setLinger(0);
 		socket.setHWM(100);
-		socket.setSendTimeOut(TIMEOUT);
-		socket.setReceiveTimeOut(TIMEOUT);
+		socket.setSendTimeOut(timeout);
+		socket.setReceiveTimeOut(timeout);
 		socket.connect(url);
 		logger.debug("Socket: " + url+ " conected");
-		
 	}
 
 	private static void sendMessage(BaseMessage request) throws OpenbciCommunicationException {
-		
 		String header = request.getHeader();
 		String data = request.getData();
 		
@@ -147,14 +121,11 @@ public class Helper {
 			String msg = "Error while sending message data";
 			logger.error(msg);
 			throw new OpenbciCommunicationException(msg);
-
 		}
-		
-        
 	}
 		
 
-	private static List<byte[]> receiveResponse() throws SocketTimeoutException, OpenbciCommunicationException {
+	private static List<byte[]> receiveResponse() throws OpenbciCommunicationException {
 		List<byte[]> list = new ArrayList<byte[]>();
 		byte[] response_header = socket.recv();
 		logger.debug("Got header: " + response_header);
