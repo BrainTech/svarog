@@ -35,6 +35,8 @@ public class Peer {
 
 	private final ZMQ.Socket sub, rep, pub;
 
+	private boolean closed;
+
 	/**
 	 * Create a new Peer instance and its sockets.
 	 * To connect peer to broker, {@link #connect} must be called afterwards.
@@ -50,6 +52,7 @@ public class Peer {
 		sub = createSocket(ZMQ.SUB);
 		rep = createSocket(ZMQ.REP);
 		pub = createSocket(ZMQ.PUB);
+		closed = false;
 	}
 
 	/**
@@ -188,6 +191,9 @@ public class Peer {
 	}
 
 	public void publish(BaseMessage message) {
+		if (this.closed){
+			throw new ZMQException("sockets are closed", 5);
+		}
 		try {
 			pub.send(message.getHeader(), ZMQ.SNDMORE);
 			pub.send(message.getData());
@@ -205,6 +211,7 @@ public class Peer {
 		sub.close();
 		rep.close();
 		pub.close();
+		this.closed = true;
 		Thread closing = new Thread(() -> {
 			context.term();
 		});
