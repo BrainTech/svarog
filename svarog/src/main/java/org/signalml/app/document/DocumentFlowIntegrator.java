@@ -780,7 +780,7 @@ public class DocumentFlowIntegrator {
 					JOptionPane.showMessageDialog(dialogParent, "Specified video file could not be found. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
 					// we don't want to display the warning again
 					// when this file is re-opened on next Svarog startup
-					rawDescriptor.setVideoFileName(null);
+					rawDescriptor.setVideoFileName((String)null);
 				} else if (!VideoFrame.isVideoAvailable()) {
 					JOptionPane.showMessageDialog(dialogParent, "<html><body>VLC libraries are missing. Video preview will not be available.<br>The VLC player can be downloaded from http://www.videolan.org/vlc/ or your system's repositiories.</body></html>", _("Warning"), JOptionPane.WARNING_MESSAGE);
 				} else {
