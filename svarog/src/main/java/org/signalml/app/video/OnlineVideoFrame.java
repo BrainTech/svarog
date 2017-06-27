@@ -131,6 +131,7 @@ public final class OnlineVideoFrame extends VideoFrame<OnlineMediaPlayerComponen
 	@Override
 	public void dispose() {
 		super.dispose();
+		component.release();
 		manager.free();
 	}
 
