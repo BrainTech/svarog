@@ -15,4 +15,5 @@ movedeb plugins/SignalAnalysisPlugin/target/*.deb
 movedeb plugins/Stager/target/*.deb
 sed "s/GIT_VERSION/$(git describe --tags --first-parent)/g" svarog-all.template > dist/svarog-all
 cd dist
+mv svarog_*.deb svarog_`git describe --tags --first-parent`_all.deb
 equivs-build svarog-all
