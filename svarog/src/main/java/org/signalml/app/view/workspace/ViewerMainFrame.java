@@ -266,7 +266,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 	}
 
 	public void closeView() {
-
+		Dialogs.DIALOG_OPTIONS result = Dialogs.showWarningYesNoDialog(_("Are you sure you want to close Svarog?"));
+		if (result == Dialogs.DIALOG_OPTIONS.NO)
+		{
+			return;
+		}
 		logger.debug("Main window closing");
 
 		boolean hasSerializableTasks = false;
