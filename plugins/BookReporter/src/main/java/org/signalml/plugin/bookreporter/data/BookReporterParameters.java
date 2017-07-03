@@ -14,6 +14,7 @@ public class BookReporterParameters implements Serializable, Preset {
 
 	private String name;
 	public String bookFilePath;
+	public int channel;  // starting from 1
 	public BookReporterChartPreset[] chartPresets;
 
 	public BookReporterParameters() {

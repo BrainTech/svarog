@@ -1,23 +1,37 @@
-package org.signalml.app.worker.monitor.messages.parsing;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.signalml.app.worker.monitor.messages;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-
 import org.apache.log4j.Logger;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 
-public class FindEEGAmplifiersResponseJSonReader extends AbstractResponseJSonReader {
-
-	protected static final Logger logger = Logger.getLogger(FindEEGAmplifiersResponseJSonReader.class);
-
+/**
+ *
+ * @author Marian Dovgialo <marian.dowgialo@braintech.pl>
+ */
+public class EEGAmplifiersMsg extends AbstractEEGExperimentsMsg{
+	@JsonProperty("amplifier_list")
+	private List<LinkedHashMap<String, Object>> amplifierList;
+	
+	@JsonIgnore
 	@Override
-	protected String getExperimentsListFieldName() {
-		return "amplifier_list";
+	protected List<LinkedHashMap<String, Object>> getExperimentsList()
+	{
+		return amplifierList;
 	}
-
+		
+	@JsonIgnore
+	@Override
 	public ExperimentDescriptor parseSingleExperiment(LinkedHashMap<String, Object> map) {
 		ExperimentDescriptor experiment = new ExperimentDescriptor();
 
@@ -51,5 +65,5 @@ public class FindEEGAmplifiersResponseJSonReader extends AbstractResponseJSonRea
 
 		return experiment;
 	}
-
+		
 }

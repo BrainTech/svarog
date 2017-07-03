@@ -439,6 +439,10 @@ public class SignalPlotColumnHeader extends JComponent {
 			for (i=startPage; i <= endPage; i++) {
 				x = (int)(i * pixelPerPage);
 				g.drawLine(x, TOP_OFFSET, x, TOP_OFFSET + pageTagAreaHeight - 1);
+				if (!compact) {
+					int displayedPageNumber = i + 1;
+					g.drawString(Integer.toString(displayedPageNumber), x + 3, TOP_OFFSET + fontMetrics.getAscent());
+				}
 			}
 		}
 

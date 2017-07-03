@@ -1,5 +1,7 @@
 package org.signalml.app.logging;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -15,7 +17,7 @@ public class ZmqRemoteSender {
 	/** timeout for sending pending messages at shutdown (milliseconds) */
 	private static final int SHUTDOWN_TIMEOUT = 1000;
 
-	private final LinkedBlockingQueue<String> queue;
+	private final LinkedBlockingQueue<List<String>> queue;
 	private final ZmqSendingThread thread;
 
 	/**
@@ -34,7 +36,7 @@ public class ZmqRemoteSender {
 	 *
 	 * @param message message to be send
 	 */
-	protected void offer(String message) {
+	protected void offer(List<String> message) {
 		queue.offer(message);
 	}
 
@@ -42,7 +44,7 @@ public class ZmqRemoteSender {
 	 * Finalize sending messages.
 	 */
 	public void close() {
-		queue.offer("");
+		queue.offer(new ArrayList<String>());
 		try {
 			// let's give the thread a chance to send pending messages
 			thread.join(SHUTDOWN_TIMEOUT);

@@ -4,32 +4,44 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.beans.PropertyChangeEvent;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import org.signalml.app.video.VideoRecordingInitializer;
 import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.messages.BaseMessage;
+import org.signalml.app.worker.monitor.messages.FinishSavingVideoMsg;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
-import org.signalml.peer.protocol.SvarogProtocol;
-import org.signalml.peer.protocol.SvarogProtocol.Sample;
-import org.signalml.peer.protocol.SvarogProtocol.SampleVector;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
 
 import org.signalml.peer.CommunicationException;
-import org.signalml.peer.Message;
+import org.signalml.peer.Converter;
+import org.signalml.app.worker.monitor.messages.LauncherMessage;
+import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.SignalMsg;
+import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
-
+import org.zeromq.ZMQException;
 /** MonitorWorker
  *
  */
@@ -43,6 +55,19 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	private final RoundBufferMultichannelSampleSource sampleSource;
 	private final StyledMonitorTagSet tagSet;
 	private volatile boolean finished;
+
+	/**
+	 * Object responsible for retrying "start video recording" request.
+	 * Immediately after OBCI server returns RTSP address as a response to
+	 * a "get_stream" request, the RTSP stream may not be ready yet. Therefore,
+	 * there may be a need to retry connecting after first connection fails.
+	 */
+	private volatile VideoRecordingInitializer videoRecordingInitializer;
+
+	/**
+	 * This object's method is called whenever video recording starts or stops.
+	 */
+	private final Set<VideoRecordingStatusListener> videoRecordingStatusListeners = new HashSet<>();
 
 	/**
 	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
@@ -87,12 +112,15 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	@Override
 	protected Void doInBackground() {
 
-		Message sampleMsg;
+		BaseMessage sampleMsg;
 		boolean firstSampleReceived = false;
 		showBusyDialog();
 
-		peer.subscribe(Message.AMPLIFIER_SIGNAL_MESSAGE);
-		peer.subscribe(Message.TAG);
+		peer.subscribe(MessageType.AMPLIFIER_SIGNAL_MESSAGE.getMessageCode());
+		peer.subscribe(MessageType.TAG_MSG.getMessageCode());
+		peer.subscribe(MessageType.SAVE_VIDEO_ERROR.getMessageCode());
+		peer.subscribe(MessageType.SAVE_VIDEO_OK.getMessageCode());
+		peer.subscribe(MessageType.SAVE_VIDEO_DONE.getMessageCode());
 
 		while (!isCancelled()) {
 			try {
@@ -111,7 +139,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					firstSampleReceived = true;
 					hideBusyDialog();
 				}
-
 				if (isCancelled()) {
 					//it might have been cancelled while waiting on the client.receive()
 					return null;
@@ -129,20 +156,27 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 						break;
 					}
 				}
-			} catch (CommunicationException e) {
+			} catch (OpenbciCommunicationException e) {
 				logger.error("receive failed", e);
 				return null;
 			}
-
-			String sampleType = sampleMsg.type;
-			logger.debug("Worker: received message type: " + sampleType);
-
+			
+			MessageType sampleType = sampleMsg.getType();
 			switch (sampleType) {
-			case Message.AMPLIFIER_SIGNAL_MESSAGE:
-				parseMessageWithSamples(sampleMsg.getData());
+			case AMPLIFIER_SIGNAL_MESSAGE:
+				publishSamples(sampleMsg);
 				break;
-			case Message.TAG:
-				parseMessageWithTags(sampleMsg.getData());
+			case TAG_MSG:
+				publishTagFromMessage(sampleMsg);
+				break;
+			case SAVE_VIDEO_ERROR:
+				parseVideoSavingError(sampleMsg);
+				break;
+			case SAVE_VIDEO_OK:
+				parseVideoSavingOK(sampleMsg);
+				break;
+			case SAVE_VIDEO_DONE:
+				parseVideoSavingDone(sampleMsg);
 				break;
 			default:
 				logger.error("received unknown reply: " +  sampleType);
@@ -157,50 +191,26 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 * to parse its contents.
 	 * @param sampleMsgData the content of the message
 	 */
-	protected void parseMessageWithSamples(byte[] sampleMsgData) {
-		logger.debug("Worker: reading chunk!");
-
-		SampleVector sampleVector;
-		try {
-			sampleVector = SampleVector.parseFrom(sampleMsgData);
-		} catch (Exception e) {
-			logger.error("", e);
-			return;
+	protected void publishSamples(BaseMessage generic_message) {
+		SignalMsg sampleMsg  = (SignalMsg)generic_message;
+		List<NewSamplesData> samples = sampleMsg.getSamples();
+		
+		for(NewSamplesData sample: samples){
+			publish(sample);
 		}
-		List<Sample> samples = sampleVector.getSamplesList();
 
-		for (int k=0; k<sampleVector.getSamplesCount(); k++) {
-			Sample sample = sampleVector.getSamples(k);
-
-			float[] newSamplesArray = new float[sample.getChannelsCount()];
-			for (int i = 0; i < newSamplesArray.length; i++) {
-				newSamplesArray[i] = sample.getChannels(i);
-			}
-
-			double samplesTimestamp = samples.get(0).getTimestamp();
-			//logger.debug("  -- " + samplesTimestamp);
-			NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
-
-			publish(newSamplesPackage);
-		}
 	}
 
 	/**
 	 * If the given message contains tags, this method can be used
-	 * to parse its contents.
-	 * @param sampleMsgData the contents of the message
+	 * to parse its contents and publish it to gui, recorder etc.
+	 * @param tagMsg tagMessage containing tag
 	 */
-	private void parseMessageWithTags(byte[] sampleMsgData) {
+	private void publishTagFromMessage(BaseMessage msg) {
+		
 		logger.info("Tag recorder: got a tag!");
 
-		final SvarogProtocol.Tag tagMsg;
-		try {
-			tagMsg = SvarogProtocol.Tag.parseFrom(sampleMsgData);
-		} catch (Exception e) {
-			logger.error("", e);
-			return;
-		}
-
+		TagMsg tagMsg = (TagMsg)msg;
 		// TODO: By now we ignore field channels and assume that tag if for all channels
 		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
 
@@ -212,19 +222,72 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		}
 
 		final MonitorTag tag = new MonitorTag(style,
-											  tagMsg.getStartTimestamp(),
-											  tagLen,
-											  -1);
+						  tagMsg.getStartTimestamp(),
+						  tagLen,
+						  -1);
 
-		for (SvarogProtocol.Variable v : tagMsg.getDesc().getVariablesList()) {
-			if (v.getKey().equals("annotation")) {
-				tag.setAnnotation(v.getValue());
+		tagMsg.getDescription().forEach((key, value) -> {     
+			if (key.equals("annotation")) {
+				tag.setAnnotation(value.toString());
 			}
 			else {
-				tag.addAttributeToTag(v.getKey(), v.getValue());
+				tag.addAttributeToTag(key, value.toString());
 			}
-		}
+		
+		
+		});
+
 		publish(tag);
+	}
+
+	/**
+	 * Parse error message from video saver peer.
+	 *
+	 * @param sampleMsgData the contents of the message
+	 */
+	private void parseVideoSavingError(BaseMessage msg) {
+		notifyVideoRecordingStatusChange(false);
+		VideoRecordingInitializer initializer = videoRecordingInitializer;
+		if (initializer != null) {
+			initializer.startRecording();
+		}
+	}
+
+	/**
+	 * Parse "done" message from video saver peer.
+	 *
+	 * @param sampleMsgData the contents of the message
+	 */
+	private void parseVideoSavingDone(BaseMessage sampleMsgData) {
+		videoRecordingInitializer = null;
+		notifyVideoRecordingStatusChange(false);
+	}
+
+	/**
+	 * Parse "OK" message from video saver peer.
+	 *
+	 * @param sampleMsgData the contents of the message
+	 */
+	private void parseVideoSavingOK(BaseMessage sampleMsgData) {
+		videoRecordingInitializer = null;
+		notifyVideoRecordingStatusChange(true);
+	}
+
+	/**
+	 * Notifies all listeners about the new recording status.
+	 *
+	 * @param newStatus  true if video is recording, false if not
+	 */
+	private void notifyVideoRecordingStatusChange(boolean newStatus) {
+		Set<VideoRecordingStatusListener> listeners;
+		synchronized (videoRecordingStatusListeners) {
+			listeners = new HashSet<>(videoRecordingStatusListeners);
+		}
+		for (VideoRecordingStatusListener listener : listeners) {
+			SwingUtilities.invokeLater(() -> {
+				listener.videoRecordingStatusChanged(newStatus);
+			});
+		}
 	}
 
 	@Override
@@ -330,6 +393,30 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		this.signalRecorderWorker = null;
 	}
 
+	/**
+	 * Connects a {@link VideoRecordingStatusListener} object to be notified
+	 * whenever video recording starts or stops.
+	 *
+	 * @param listener  object with videoRecordingStatusChanged method
+	 */
+	public void connectVideoRecordingStatusListener(VideoRecordingStatusListener listener) {
+		synchronized (videoRecordingStatusListeners) {
+			videoRecordingStatusListeners.add(listener);
+		}
+	}
+
+	/**
+	 * Disconnects a previously connected {@link VideoRecordingStatusListener}
+	 * object to be no longer notified whenever video recording starts or stops.
+	 *
+	 * @param listener  previously connected object
+	 */
+	public void disconnectVideoRecordingStatusListener(VideoRecordingStatusListener listener) {
+		synchronized (videoRecordingStatusListeners) {
+			videoRecordingStatusListeners.remove(listener);
+		}
+	}
+
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		super.propertyChange(evt);
@@ -337,6 +424,38 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		if (BusyDialog.CANCEL_BUTTON_PRESSED.equals(evt.getPropertyName())) {
 			cancel(true);
 			firePropertyChange(MonitorWorker.OPENING_MONITOR_CANCELLED, false, true);
+		}
+	}
+
+	/**
+	 * Send a "start video saving" request. If it fails, it will be automatically
+	 * resent after predefined interval.
+	 *
+	 * @param rtspURL  URL of RTSP stream
+	 * @param targetFilePath  path for target video file
+	 */
+	public void startVideoSaving(String rtspURL, String targetFilePath) {
+		VideoRecordingInitializer initializer = new VideoRecordingInitializer(
+			peer,
+			experimentDescriptor.getPeerId(),
+			rtspURL,
+			targetFilePath
+		);
+		initializer.startRecording();
+		videoRecordingInitializer = initializer;
+	}
+
+	/**
+	 * Send a "stop video saving" request.
+	 */
+	public void stopVideoSaving() {
+		videoRecordingInitializer = null;
+		try{
+			peer.publish(new FinishSavingVideoMsg(experimentDescriptor.getPeerId()));
+		}catch (ZMQException ex){
+			// communication with VideoSaver failed, probaly because experiment has been shutdown.
+			// We no longer have control over it, so assume that video saving is finished (with error)
+			notifyVideoRecordingStatusChange(false);
 		}
 	}
 
@@ -352,50 +471,3 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	}*/
 }
 
-/**
- * This class holds information about the newest samples package that was received
- * by Svarog and published by the doInTheBackground method.
- *
- * The data consists of the sample values (a sample value for each channel)
- * and a timestamp of these samples.
- * @author Piotr Szachewicz
- */
-class NewSamplesData {
-	/**
-	 * The values of the samples. The size of the array is equal to the number
-	 * of channels in the signal.
-	 */
-	private float[] sampleValues;
-
-	/**
-	 * The timestamp of the samples represented by the sampleValues array.
-	 */
-	private double samplesTimestamp;
-
-	/**
-	 * Constructor. Creates an object containing samples data.
-	 * @param sampleValues the values of the samples for each channel
-	 * @param samplesTimestamp the timestamp of the samples
-	 */
-	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
-		this.sampleValues = sampleValues;
-		this.samplesTimestamp = samplesTimestamp;
-	}
-
-	public float[] getSampleValues() {
-		return sampleValues;
-	}
-
-	public void setSampleValues(float[] sampleValues) {
-		this.sampleValues = sampleValues;
-	}
-
-	public double getSamplesTimestamp() {
-		return samplesTimestamp;
-	}
-
-	public void setSamplesTimestamp(double samplesTimestamp) {
-		this.samplesTimestamp = samplesTimestamp;
-	}
-
-}

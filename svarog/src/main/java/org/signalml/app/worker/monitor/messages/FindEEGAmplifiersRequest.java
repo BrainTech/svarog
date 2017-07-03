@@ -5,21 +5,13 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class FindEEGAmplifiersRequest extends Message {
-
-	@JsonProperty("client_push_address")
-	private String clientPushAddress;
-
-	@JsonProperty("checked_srvs")
-	private String checkedSrvs;
+public class FindEEGAmplifiersRequest extends LongRequest {
 
 	@JsonProperty("amplifier_types")
 	private List<AmplifierType> amplifierTypes = new ArrayList<AmplifierType>();
 
 	public FindEEGAmplifiersRequest() {
 		super(MessageType.FIND_EEG_AMPLIFIERS_REQUEST);
-		this.clientPushAddress = "";
-		this.checkedSrvs = "";
 
 		amplifierTypes.add(AmplifierType.USB);
 		amplifierTypes.add(AmplifierType.BLUETOOTH);
@@ -28,18 +20,6 @@ public class FindEEGAmplifiersRequest extends Message {
 
 	public FindEEGAmplifiersRequest(AmplifierType amplifierType) {
 		super(MessageType.FIND_EEG_AMPLIFIERS_REQUEST);
-		this.clientPushAddress = "";
-		this.checkedSrvs = "";
-
 		amplifierTypes.add(amplifierType);
 	}
-
-	public String getClientPushAddress() {
-		return clientPushAddress;
-	}
-
-	public void setClientPushAddress(String clientPushAddress) {
-		this.clientPushAddress = clientPushAddress;
-	}
-
 }

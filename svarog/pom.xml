@@ -5,13 +5,13 @@
 	<groupId>org.signalml</groupId>
 	<artifactId>svarog</artifactId>
 	<packaging>jar</packaging>
-	<version>2.1</version>
+	<version>2.3</version>
 
 	<name>Svarog</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>2.1</version>
+		<version>2.3</version>
 	</parent>
 
 	<properties>
@@ -19,9 +19,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.i18n.resources>src/main/resources/org/signalml/app/resource/i18n/</project.build.i18n.resources>
 
-		<protobuf.protoc>protoc</protobuf.protoc>
-		<protobuf.source_dir>${project.basedir}/src/main/protobuf</protobuf.source_dir>
-		<protobuf.proto_file>variables.proto</protobuf.proto_file>
 		<generated_sources_dir>${project.build.directory}/generated-sources</generated_sources_dir>
 		<generated_resources_dir>${project.build.directory}/generated-resources</generated_resources_dir>
 

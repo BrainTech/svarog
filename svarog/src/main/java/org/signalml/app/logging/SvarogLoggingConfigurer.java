@@ -11,6 +11,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
+import org.signalml.app.SvarogExceptionHandler;
 import org.apache.log4j.MDC;
 import org.apache.log4j.NDC;
 
@@ -21,8 +22,9 @@ import org.apache.log4j.NDC;
  */
 public class SvarogLoggingConfigurer {
 
+	//Svarog configuration doesn't exist yet.
 	private static final String OBCI_REP_IP = "127.0.0.1";
-	private static final int OBCI_REP_PORT = 54654;
+	private static final int OBCI_REP_PORT = 12012;
 	private static final String SOURCE =
 		"svarog_" + ZonedDateTime.now()
 		.format(DateTimeFormatter.ISO_INSTANT)
@@ -81,9 +83,10 @@ public class SvarogLoggingConfigurer {
 		}
 		try {
 			Raven raven = ravenFactory.createRavenInstance(new Dsn(dsn));
+			SvarogExceptionHandler.getSharedInstance().setRaven(raven);
 			SentryAppender sentry = new SentryAppender(raven);
 			sentry.setTags("site:"+site);
-			sentry.setThreshold(Priority.ERROR);
+			sentry.setThreshold(Priority.FATAL);
 			logger.addAppender(sentry);
 			logger.info("successfully initialized logging to Sentry");
 		} catch (Exception ex) {

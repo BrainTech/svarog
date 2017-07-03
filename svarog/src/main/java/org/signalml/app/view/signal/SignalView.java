@@ -14,7 +14,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Window;
@@ -32,7 +31,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,14 +40,12 @@ import java.util.TreeSet;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.BoundedRangeModel;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -67,11 +63,11 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
-import org.jfree.data.time.Millisecond;
 import org.signalml.app.action.DisplayClockTimeAction;
 import org.signalml.app.action.SnapToPageAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
+import org.signalml.app.action.document.monitor.StartVideoPreviewAction;
 import org.signalml.app.action.montage.ApplyDefaultMontageAction;
 import org.signalml.app.action.montage.EditSignalMontageAction;
 import org.signalml.app.action.selector.ActionFocusListener;
@@ -106,8 +102,7 @@ import org.signalml.app.model.components.LogarithmicJSlider;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
-import org.signalml.app.util.SwingUtils;
-import org.signalml.app.video.VideoFrame;
+import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -259,6 +254,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 * recording.
 	 */
 	private StopMonitorRecordingAction stopMonitorRecordingAction;
+
+	private StartVideoPreviewAction startVideoPreviewAction;
 	private MonitorRecordingDurationPanel monitorRecordingDurationPanel;
 
 	private EditSignalParametersAction editSignalParametersAction;
@@ -493,7 +490,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		setInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, topMap);
 
 		// listen to video frame events to update video markers
-		VideoFrame videoFrame = getDocumentVideoFrame();
+		OfflineVideoFrame videoFrame = getDocumentVideoFrame();
 		if (videoFrame != null) {
 			videoFrame.addListener(new VideoFrameListener());
 		}
@@ -541,7 +538,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		columnHeader.setListener(new SignalPlotColumnHeaderListener() {
 			@Override
 			public void timeSelected(double time) {
-				VideoFrame videoFrame = getDocumentVideoFrame();
+				OfflineVideoFrame videoFrame = getDocumentVideoFrame();
 				if (videoFrame != null) {
 					// accounting for video offset
 					time -= getDocumentVideoOffset();
@@ -851,8 +848,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 *
 	 * @return video frame instance or NULL
 	 */
-	public VideoFrame getDocumentVideoFrame() {
-		VideoFrame videoFrame = null;
+	public OfflineVideoFrame getDocumentVideoFrame() {
+		OfflineVideoFrame videoFrame = null;
 		if (document instanceof RawSignalDocument) {
 			RawSignalDocument rawDocument = (RawSignalDocument) document;
 			videoFrame = rawDocument.getVideoFrame();
@@ -1054,9 +1051,11 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		mainToolBar.add(Box.createHorizontalGlue());
-		mainToolBar.add(getMonitorRecordingDurationPanel());
 		mainToolBar.add(getStartMonitorRecordingAction());
 		mainToolBar.add(getStopMonitorRecordingAction());
+		mainToolBar.add(getStartVideoPreviewAction());
+		mainToolBar.add(getMonitorRecordingDurationPanel());
+
 
 		PluginAccessClass.getGUIImpl().addToMainSignalToolBar(mainToolBar);
 
@@ -1323,7 +1322,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	 */
 	public PlayPauseVideoAction getPlayPauseVideoAction() {
 		if (playPauseVideoAction == null) {
-			VideoFrame videoFrame = getDocumentVideoFrame();
+			OfflineVideoFrame videoFrame = getDocumentVideoFrame();
 			if (videoFrame != null) {
 				playPauseVideoAction = new PlayPauseVideoAction(videoFrame);
 			}
@@ -1356,6 +1355,18 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			stopMonitorRecordingAction = new StopMonitorRecordingAction(getActionFocusManager());
 		}
 		return stopMonitorRecordingAction;
+	}
+
+	/**
+	 * Returns an {@link Action} responsible for stopping a monitor recording.
+	 * @return an {@link Action} responsible for stopping an  monitor
+	 * recording
+	 */
+	public StartVideoPreviewAction getStartVideoPreviewAction() {
+		if (startVideoPreviewAction == null) {
+			startVideoPreviewAction = new StartVideoPreviewAction(document);
+		}
+		return startVideoPreviewAction;
 	}
 
 	public MonitorRecordingDurationPanel getMonitorRecordingDurationPanel() {

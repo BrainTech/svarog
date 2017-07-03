@@ -88,8 +88,8 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
-import org.apache.log4j.LogManager;
 import org.signalml.app.logging.SvarogLoggingConfigurer;
+import org.signalml.app.video.VideoStreamManager;
 
 /**
  * The Svarog application.
@@ -266,8 +266,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		try {
 			_run(cmdLineArgs);
 		} catch (Throwable e) {
-			logger.error("uncaught exception", e);
-
+			logger.fatal("uncaught exception", e);
+			SvarogExceptionHandler.getSharedInstance().handleAWT(e);
 			// also log directly to stderr in case of problems with logging
 			System.err.println("unable to initialize svarog: " + e);
 			System.exit(11);
@@ -363,11 +363,8 @@ public class SvarogApplication implements java.lang.Runnable {
 					createMainFrame();
 				}
 			});
-		} catch (InterruptedException ex) {
-			logger.error("Failed to create GUI", ex);
-			System.exit(1);
-		} catch (InvocationTargetException ex) {
-			logger.error("Failed to create GUI", ex);
+		} catch (InterruptedException|InvocationTargetException ex) {
+			logger.fatal("Failed to create GUI", ex);
 			System.exit(1);
 		}
 
@@ -385,11 +382,13 @@ public class SvarogApplication implements java.lang.Runnable {
 					splashScreen.setVisible(false);
 					splashScreen.dispose();
 					splashScreen = null;
-				}
+				}				
+
 			}
 		});
 
 		logger.debug("SvarogApplication._run complete!");
+		
 	}
 
 	private static void _init_logging() {
@@ -806,6 +805,9 @@ public class SvarogApplication implements java.lang.Runnable {
 				}
 			}
 		}
+
+		logger.debug("Disposing of all video preview frames");
+		VideoStreamManager.freeAllStreams();
 
 		logger.debug("Application stopped");
 

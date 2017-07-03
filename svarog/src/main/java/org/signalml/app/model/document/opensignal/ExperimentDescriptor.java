@@ -10,6 +10,7 @@ import org.signalml.peer.Peer;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import java.util.List;
 
 @XStreamAlias(value="experiment")
 public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implements Preset {
@@ -20,9 +21,8 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	private Amplifier amplifier = new Amplifier();
 	private ExperimentStatus status;
 
-	private String experimentIPAddress;
-	private int experimentPort;
-
+	private List<String> experimentRepUrls;
+	
 	private String multiplexerAddress;
 	private int multiplexerPort;
 	private Peer peer;
@@ -37,6 +37,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	private String peerId;
 
 	private String recommendedScenario;
+	private boolean hasVideoSaver;
 
 	/**
 	 * This value holds information whether Svarog has connected to this experiment or not.
@@ -51,7 +52,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 		this.path = other.path;
 		this.amplifier = new Amplifier(other.getAmplifier());
 		this.status = other.status;
-		this.experimentIPAddress = other.experimentIPAddress;
+		this.experimentRepUrls = other.experimentRepUrls;
 		this.signalParameters = new SignalParameters(other.signalParameters);
 
 		this.backupFrequency = other.backupFrequency;
@@ -100,18 +101,25 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getExperimentIPAddress() {
-		return experimentIPAddress;
+	
+	public List<String> getExperimentRepUrls(){
+		return experimentRepUrls;
 	}
-	public void setExperimentIPAddress(String experimentAddress) {
-		this.experimentIPAddress = experimentAddress;
+
+	public List<String> setExperimentRepUrls(List<String> repUrls){
+		return this.experimentRepUrls = repUrls;
 	}
-	public int getExperimentPort() {
-		return experimentPort;
+	
+	public String getFirstRepHost(){
+		String first = experimentRepUrls.get(0);
+		return first.split(":")[1].substring(2);
 	}
-	public void setExperimentPort(int experimentPort) {
-		this.experimentPort = experimentPort;
+	
+	public int getFirstRepPort(){
+		String first = experimentRepUrls.get(0);
+		return Integer.parseInt(first.split(":")[2]);
 	}
+
 	public String getMultiplexerAddress() {
 		return multiplexerAddress;
 	}
@@ -188,6 +196,13 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	}
 	public void setRecommendedScenario(String recommendedScenario) {
 		this.recommendedScenario = recommendedScenario;
+	}
+
+	public boolean getHasVideoSaver() {
+		return hasVideoSaver;
+	}
+	public void setHasVideoSaver(boolean hasVideoSaver) {
+		this.hasVideoSaver = hasVideoSaver;
 	}
 
 	@Override

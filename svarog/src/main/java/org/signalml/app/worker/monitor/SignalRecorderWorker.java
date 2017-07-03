@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ import org.apache.log4j.Level;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
@@ -72,6 +75,11 @@ public class SignalRecorderWorker {
 	private double firstSampleTimestamp;
 
 	/**
+	 * The timestamp of the first recorded video frame.
+	 */
+	private double firstVideoFrameTimestamp;
+
+	/**
 	 * Whether the worker is finished.
 	 */
 	private volatile boolean finished;
@@ -126,6 +134,7 @@ public class SignalRecorderWorker {
 		this.finished = false;
 		this.savedSampleCount = 0;
 		this.firstSampleTimestamp = Double.NaN;
+		this.firstVideoFrameTimestamp = Double.NaN;
 
 		this.tagRecorder = null;
 
@@ -173,6 +182,22 @@ public class SignalRecorderWorker {
 
 			doSave(false);
 			finished = true;
+		}
+	}
+	
+	/**
+	 * Stops receiving signal chunks and flushes signal
+	 * Does not save metadata.
+	 */
+	public void stopSaving() {
+		
+		synchronized (this) {
+			try {
+				flushSamples();
+				finished = true;
+			} catch (IOException ex) {
+				logger.error("Failed to write samples", ex);
+			}
 		}
 	}
 
@@ -246,7 +271,7 @@ public class SignalRecorderWorker {
 	 * @param isBackup whether this save is a backup or a normal save
 	 * @throws IOException when file cannot be used
 	 */
-	private void saveMetadata(boolean isBackup) throws IOException {
+	public void saveMetadata(boolean isBackup) throws IOException {
 
 		File metadataFile = new File(metadataFilePath);
 		if (metadataFile.exists())
@@ -272,6 +297,27 @@ public class SignalRecorderWorker {
 		if (monitorDescriptor.getEegSystem() != null)
 			rsd.setEegSystemName(monitorDescriptor.getEegSystem().getEegSystemName());
 
+		MonitorRecordingDescriptor descriptor = monitorDescriptor.getMonitorRecordingDescriptor();
+		if (descriptor.isVideoRecordingEnabled()) {
+			
+			
+			Path videoFilePath = Paths.get(descriptor.getVideoRecordingFilePathWithExtension()).toAbsolutePath();
+			Path videoFileRoot = videoFilePath.getParent();
+			Path videoFileName = videoFilePath.getFileName();
+
+			Path savingRoot = Paths.get(metadataFilePath).toAbsolutePath().getParent();
+	
+			Path videoFilePathRelativeToXml = videoFileRoot.relativize(savingRoot);
+			Path target = videoFilePathRelativeToXml.resolve(videoFileName);
+			rsd.setVideoFileName(target);
+			
+
+			if (isFirstSampleTimestampSet() && isFirstVideoFrameTimestampSet()) {
+				float videoFileOffset = (float) (firstVideoFrameTimestamp - firstSampleTimestamp);
+				rsd.setVideoFileOffset(videoFileOffset);
+			}
+		}
+
 		RawSignalDescriptorWriter descrWriter = new RawSignalDescriptorWriter();
 		descrWriter.writeDocument(rsd, metadataFile);
 	}
@@ -289,10 +335,23 @@ public class SignalRecorderWorker {
 	 * @return true if the firstSampleTimestamp was set, false otherwise.
 	 */
 	public boolean isFirstSampleTimestampSet() {
-		if (Double.isNaN(firstSampleTimestamp)) {
-			return false;
-		}
-		return true;
+		return !Double.isNaN(firstSampleTimestamp);
+	}
+
+	/**
+	 * Sets the timestamp of the first video frame recorder with this signal.
+	 * @param value new value of the timestamp
+	 */
+	public void setFirstVideoFrameTimestamp(double value) {
+		this.firstVideoFrameTimestamp = value;
+	}
+
+	/**
+	 * Returns if the firstSampleTimestamp was set using {@link SignalRecorderWorker#setFirstSampleTimestamp(double)}.
+	 * @return true if the firstSampleTimestamp was set, false otherwise.
+	 */
+	public boolean isFirstVideoFrameTimestampSet() {
+		return !Double.isNaN(firstVideoFrameTimestamp);
 	}
 
 	/**

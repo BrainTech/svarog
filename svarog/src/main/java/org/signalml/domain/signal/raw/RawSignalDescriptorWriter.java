@@ -132,6 +132,18 @@ public class RawSignalDescriptorWriter {
 
 		}
 
+		if (descriptor.getVideoFileName() != null && !descriptor.getVideoFileName().isEmpty()) {
+			element = document.createElement(RawSignalDocumentBuilder.VIDEO_FILE_NAME);
+			element.setTextContent(descriptor.getVideoFileName());
+			root.appendChild(element);
+		}
+
+		if (descriptor.getVideoFileOffset() != 0) {
+			element = document.createElement(RawSignalDocumentBuilder.VIDEO_FILE_OFFSET);
+			element.setTextContent(Float.toString(descriptor.getVideoFileOffset()));
+			root.appendChild(element);
+		}
+
 		EegSystemName eegSystemName = descriptor.getEegSystemName();
 		if (eegSystemName != null) {
 			Element name = document.createElement(RawSignalDocumentBuilder.EEG_SYSTEM_NAME);

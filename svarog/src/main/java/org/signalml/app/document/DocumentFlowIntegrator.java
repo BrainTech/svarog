@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import javax.swing.filechooser.FileFilter;
@@ -40,6 +41,7 @@ import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
@@ -778,7 +780,7 @@ public class DocumentFlowIntegrator {
 					JOptionPane.showMessageDialog(dialogParent, "Specified video file could not be found. Video preview will not be available.", _("Warning"), JOptionPane.WARNING_MESSAGE);
 					// we don't want to display the warning again
 					// when this file is re-opened on next Svarog startup
-					rawDescriptor.setVideoFileName(null);
+					rawDescriptor.setVideoFileName((String)null);
 				} else if (!VideoFrame.isVideoAvailable()) {
 					JOptionPane.showMessageDialog(dialogParent, "<html><body>VLC libraries are missing. Video preview will not be available.<br>The VLC player can be downloaded from http://www.videolan.org/vlc/ or your system's repositiories.</body></html>", _("Warning"), JOptionPane.WARNING_MESSAGE);
 				} else {
@@ -803,7 +805,7 @@ public class DocumentFlowIntegrator {
 			if (videoFilePath != null) {
 				// VideoFrame needs to be created before onCommonDocumentAdded
 				// for SignalView to respond properly
-				VideoFrame frame = new VideoFrame(videoFileName);
+				OfflineVideoFrame frame = new OfflineVideoFrame(videoFileName);
 				frame.open(videoFilePath);
 				rawSignalDocument.setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);

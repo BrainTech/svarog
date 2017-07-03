@@ -74,9 +74,14 @@ public class TagRecorder {
 		if (!filePath.endsWith(".tag")) {
 			filePath += ".tag";
 		}
-
-		this.filePath = filePath;
-		this.finished = false;
+		
+                this.filePath = filePath;
+                this.finished = false;
+                
+                File backingFile = new File(filePath);
+                if (backingFile.exists()) {
+                    backingFile.delete();
+                }
 	}
 
 	/**

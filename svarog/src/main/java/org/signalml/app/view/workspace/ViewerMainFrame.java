@@ -122,7 +122,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 		SvarogApplication.getSharedInstance().splash(_("Creating interface"), true);
 
-		Method method = elementManager.getMethodManager().getMethodByName("mp5");
+		Method method = elementManager.getMethodManager().getMethodByName("MP");
 		if (method == null || !(method instanceof MP5Method)) {
 			throw new SanityCheckException("No MP method");
 		}
@@ -266,7 +266,11 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 	}
 
 	public void closeView() {
-
+		Dialogs.DIALOG_OPTIONS result = Dialogs.showWarningYesNoDialog(_("Are you sure you want to close Svarog?"));
+		if (result == Dialogs.DIALOG_OPTIONS.NO)
+		{
+			return;
+		}
 		logger.debug("Main window closing");
 
 		boolean hasSerializableTasks = false;

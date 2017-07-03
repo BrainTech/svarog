@@ -559,6 +559,21 @@ public abstract class Util {
 	}
 
 	/**
+	 * Calls Thread.sleep() and returns normally, even if the thread is interrupted.
+	 * The exact duration of sleep is subject to the precision and accuracy
+	 * of system timers and schedulers. The thread does not lose ownership of any monitors.
+	 *
+	 * @param millis  the length of time to sleep in milliseconds
+	 */
+	public static void sleep(long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException ex) {
+			logger.warn("Thread.sleep was interrupted");
+		}
+	}
+
+	/**
 	 * Compresses specified data and encodes it using Base64.
 	 * @param data Data to process
 	 * @return String representation of compressed and encoded data

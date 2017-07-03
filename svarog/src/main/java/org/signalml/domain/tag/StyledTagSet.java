@@ -53,6 +53,11 @@ public class StyledTagSet implements Serializable, Preset {
 	protected static final Logger logger = Logger.getLogger(StyledTagSet.class);
 
 	/**
+	 * For getting incompatable tags
+	 */
+	private TagStylesGenerator tagStyleGenerator = null;
+	
+	/**
 	 * page size in seconds
 	 */
 	private float pageSize;
@@ -789,7 +794,8 @@ public class StyledTagSet implements Serializable, Preset {
 	 */
 	public void addTag(Tag tag) {
 		if (!verifyTag(tag)) {
-			throw new SanityCheckException("Tag not compatible");
+			// Tag is incompatable with current style set
+			processIncompatableTag(tag);
 		}
 
 		TagStyle style = this.getStyle(tag.getStyle().getType(), tag.getStyle().getName());
@@ -802,6 +808,31 @@ public class StyledTagSet implements Serializable, Preset {
 			maxTagLength = tag.getLength();
 		}
 		fireTagAdded(tag);
+	}
+	
+
+	
+	public void processIncompatableTag(Tag tag)
+	{	
+		// all tags which are incompatable with default tag set
+		// but try to use it will fall into freeform style
+		String tagName = tag.getStyle().getName();
+		TagStyle freeform_style = styles.getStyle(SignalSelectionType.CHANNEL, tagName);
+		if (freeform_style == null)
+		{
+			if (tagStyleGenerator == null)
+			{
+				tagStyleGenerator = new TagStylesGenerator(pageSize, blocksPerPage);
+			}
+			double length = tag.getLength();
+			int channel = tag.getChannel();
+			freeform_style = tagStyleGenerator.generateNewStyleFor(tagName, length, channel);
+			styles.addStyle(freeform_style);
+		}
+		
+		tag.setStyle(freeform_style);
+		
+		
 	}
 
 	/**

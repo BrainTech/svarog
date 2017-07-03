@@ -9,6 +9,8 @@ import java.io.ByteArrayOutputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimeZone;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,18 +65,21 @@ public class ObciConnection extends ZmqRemoteSender implements Connection {
 					// falling back to current timestamp
 					timeMillis = System.currentTimeMillis();
 				}
-				data.put("timestamp", 0.001 * timeMillis);
+				data.put("timestamp", 0.001 * (float)timeMillis);
 			}
-			String message = (new JSONObject())
-				.put("type", "sentry")
+			JSONObject messageData = (new JSONObject())
 				.put("log_type", "sentry")
 				.put("data", data)
-				.put("source", source)
-				.toString();
+				.put("source", source);
+			String messageHeader = "sentry^^";
+			List<String> message = new ArrayList();
+			message.add(messageHeader);
+			message.add(messageData.toString());
 			offer(message);
 		} catch (JSONException json) {
 			// not really a possibility
 		}
+		
 	}
 
 	/**

@@ -19,14 +19,16 @@ public class BookReporterBookReader {
 
 	private BookDocument bookDocument = null;
 	private final int segmentCount;
+	private final int channel;  // starting from 1
 	private final double segmentTimeLength;
 	private int nextSegment = 0;
 
-	public BookReporterBookReader(String bookFilePath) throws BookReporterBookReaderException {
+	public BookReporterBookReader(String bookFilePath, int channel) throws BookReporterBookReaderException {
 		try {
 			this.bookDocument = new BookDocument(new File(bookFilePath));
 			this.bookDocument.openDocument();
 			this.segmentCount = this.bookDocument.getSegmentCount();
+			this.channel = channel;
 			this.segmentTimeLength = (this.segmentCount > 0)
 				? this.bookDocument.getBook().getSegmentAt(0,0).getSegmentTimeLength()
 				: 0.0;
@@ -56,14 +58,16 @@ public class BookReporterBookReader {
 			return null;
 		} else {
 			ArrayList<BookReporterAtom> atoms = new ArrayList<BookReporterAtom>();
-			for (StandardBookSegment segment : this.bookDocument.getBook().getSegmentAt(this.nextSegment)) {
+			for (StandardBookSegment segment : this.bookDocument.getBook().getSegmentAt(this.nextSegment))
+			if (segment.getChannelNumber() == channel) {
 				double timeOffset = this.nextSegment * this.segmentTimeLength;
 				int atomCount = segment.getAtomCount();
 				for (int atomIndex=0; atomIndex<atomCount; ++atomIndex) {
 					BookReporterAtom newAtom = BookReporterAtom.createFromStandardBookAtom(
 						segment.getAtomAt(atomIndex),
 						this.bookDocument.getCalibration(),
-						timeOffset
+						timeOffset,
+						channel
 					);
 					atoms.add(newAtom);
 				}

@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.signalml.plugin</groupId>
 	<artifactId>BookReporter</artifactId>
-	<version>0.6.1</version>
+	<version>0.6.2</version>
 	<packaging>jar</packaging>
 	<name>BookReporter</name>
 	<parent>
 		<groupId>org.signalml</groupId>
 		<artifactId>svarog-top</artifactId>
-		<version>2.1</version>
+		<version>2.3</version>
 		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<properties>
@@ -138,7 +138,7 @@
 		<dependency>
 			<groupId>org.signalml</groupId>
 			<artifactId>svarog</artifactId>
-			<version>2.1</version>
+			<version>2.3</version>
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>

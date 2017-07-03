@@ -7,8 +7,9 @@ package org.signalml.app.view.document.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
-
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
@@ -24,6 +25,7 @@ import org.signalml.plugin.export.SignalMLException;
 public class StartMonitorRecordingDialog extends AbstractDialog {
 
 	protected ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel;
+	protected ChooseVideoForMonitorRecordingPanel chooseVideoForMonitorRecordingPanel;
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
@@ -48,7 +50,11 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	 */
 	@Override
 	protected JComponent createInterface() {
-		return getChooseFilesForMonitorRecordingPanel();
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(getChooseFilesForMonitorRecordingPanel());
+		panel.add(getChooseVideoForMonitorRecordingPanel());
+		return panel;
 	}
 
 	/**
@@ -69,6 +75,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		getChooseFilesForMonitorRecordingPanel().fillPanelFromModel(model);
+		getChooseVideoForMonitorRecordingPanel().fillPanelFromModel(model);
 	}
 
 	/**
@@ -79,6 +86,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(model);
+		getChooseVideoForMonitorRecordingPanel().fillModelFromPanel(model);
 	}
 
 	/**
@@ -87,9 +95,22 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	 * @return the panel used for file selection
 	 */
 	public ChooseFilesForMonitorRecordingPanel getChooseFilesForMonitorRecordingPanel() {
-		if (chooseFilesForMonitorRecordingPanel == null)
+		if (chooseFilesForMonitorRecordingPanel == null) {
 			chooseFilesForMonitorRecordingPanel = new ChooseFilesForMonitorRecordingPanel();
+			chooseFilesForMonitorRecordingPanel.getEnableVideoRecordingPanel().attachComponentToToggle(getChooseVideoForMonitorRecordingPanel());
+		}
 		return chooseFilesForMonitorRecordingPanel;
+	}
+
+	/**
+	 * Returns the {@link ChooseFilesForMonitorRecordingPanel} used to select
+	 * video stream which will be recorded with the signal.
+	 * @return the panel used for video selection
+	 */
+	public ChooseVideoForMonitorRecordingPanel getChooseVideoForMonitorRecordingPanel() {
+		if (chooseVideoForMonitorRecordingPanel == null)
+			chooseVideoForMonitorRecordingPanel = new ChooseVideoForMonitorRecordingPanel(this);
+		return chooseVideoForMonitorRecordingPanel;
 	}
 
 	/**
@@ -104,6 +125,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 
 		fillModelFromDialog(model);
 		getChooseFilesForMonitorRecordingPanel().validatePanel(model, errors);
+		getChooseVideoForMonitorRecordingPanel().validatePanel(model, errors);
 	}
 
 	/**

@@ -2,6 +2,7 @@ package org.signalml.app.worker.monitor.messages;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.JsonParseException;
@@ -17,25 +18,42 @@ import org.signalml.app.worker.monitor.messages.parsing.MessageTypeSerializer;
 @JsonDeserialize(using=MessageTypeDeserializer.class)
 public enum MessageType {
 
-	PING("ping", Message.class),
-	PONG("pong", Message.class),
+	PING("ping", LauncherMessage.class),
+	PONG("pong", LauncherMessage.class),
+
+	TAG_MSG("TAG", TagMsg.class),
+	
+	BROKER_HELLO("BROKER_HELLO", BrokerHelloMsg.class),
+	BROKER_HELLO_RESPONSE("BROKER_HELLO_RESPONSE", BrokerHelloResponseMsg.class),
+	
+	AMPLIFIER_SIGNAL_MESSAGE("AMPLIFIER_SIGNAL_MESSAGE", SignalMsg.class),
+	
+	SAVE_VIDEO("SAVE_VIDEO", SaveVideoMsg.class),
+	SAVE_VIDEO_ERROR("SAVE_VIDEO_ERROR", SaveVideoErrorMsg.class),
+	SAVE_VIDEO_OK("SAVE_VIDEO_OK", SaveVideoOkMsg.class),
+	SAVE_VIDEO_DONE("SAVE_VIDEO_DONE", SaveVideoDoneMsg.class),
+	FINISH_SAVING_VIDEO("FINISH_SAVING_VIDEO", FinishSavingVideoMsg.class),
 
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
-	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", null),
+	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", EEGExperimentsMsg.class),
 
 	FIND_EEG_AMPLIFIERS_REQUEST("find_eeg_amplifiers", FindEEGAmplifiersRequest.class),
-	EEG_AMPLIFIERS_RESPONSE("eeg_amplifiers", null),
+	EEG_AMPLIFIERS_RESPONSE("eeg_amplifiers", EEGAmplifiersMsg.class),
 
 	START_EEG_SIGNAL_REQUEST("start_eeg_signal", StartEEGSignalRequest.class),
 	START_EEG_SIGNAL_RESPONSE("starting_experiment", StartEEGSignalResponse.class),
 
 	KILL_EXPERIMENT_REQUEST("kill_experiment", KillExperimentRequest.class),
+	KILL_EXPERIMENT_RESPONSE("kill_sent", KillExperimentResponse.class),
+
 
 	GET_EXPERIMENT_CONTACT_REQUEST("get_experiment_contact", GetExperimentContactRequest.class),
 	GET_EXPERIMENT_CONTACT_RESPONSE("experiment_contact", GetExperimentContactResponse.class),
 
 	JOIN_EXPERIMENT_REQUEST("join_experiment", JoinExperimentRequest.class),
 	LEAVE_EXPERIMENT_REQUEST("leave_experiment", LeaveExperimentRequest.class),
+
+	CAMERA_CONTROL_REQUEST("cam_control_msg", CameraControlRequest.class),
 
 	REQUEST_OK_RESPONSE("rq_ok", RequestOKResponse.class),
 	REQUEST_ERROR_RESPONSE("rq_error", RequestErrorResponse.class);
@@ -64,25 +82,6 @@ public enum MessageType {
 			if (type.getMessageCode().equalsIgnoreCase(code)) {
 				return type;
 			}
-		}
-		return null;
-	}
-
-	public static MessageType parseMessageTypeFromResponse(String response) {
-
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			HashMap<String,Object> map = mapper.readValue(response.getBytes(), new TypeReference<HashMap<String, Object>>() {});
-
-			String msgTypeCode = (String) map.get("type");
-			return MessageType.parseMessageTypeFromMessageCode(msgTypeCode);
-
-		} catch (JsonParseException e) {
-			logger.error("", e);
-		} catch (JsonMappingException e) {
-			logger.error("", e);
-		} catch (IOException e) {
-			logger.error("", e);
 		}
 		return null;
 	}
