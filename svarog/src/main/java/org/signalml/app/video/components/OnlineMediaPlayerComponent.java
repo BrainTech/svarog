@@ -1,5 +1,7 @@
 package org.signalml.app.video.components;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 import org.apache.log4j.Logger;
@@ -8,6 +10,8 @@ import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.CameraControlRequest;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+
 
 /**
  * Media player component with additional reconnecting support.
@@ -23,6 +27,10 @@ public class OnlineMediaPlayerComponent extends SvarogMediaPlayerComponent {
 	private static final int WAIT_BEFORE_RECONNECT_MILLIS = 100;
 
 	private final VideoStreamManager manager;
+	
+	private static int MAX_RECONNECTS = 5;
+	
+	private int reconnectCount;
 
 	/**
 	 * Forces reconnect on VLC player errors.
@@ -37,12 +45,19 @@ public class OnlineMediaPlayerComponent extends SvarogMediaPlayerComponent {
 					player.play();
 				}
 			});
+			reconnectCount += 1;
+			if (reconnectCount == MAX_RECONNECTS)
+			{
+				reportReconnects();
+			}
+			
 			tryAgain.setRepeats(false);
 			tryAgain.start();
 		}
 	}
 
 	public OnlineMediaPlayerComponent() {
+		reconnectCount = 0;
 		this.manager = new VideoStreamManager();
 		getMediaPlayer().addMediaPlayerEventListener(new MediaPlayerErrorListener());
 	}
@@ -50,6 +65,15 @@ public class OnlineMediaPlayerComponent extends SvarogMediaPlayerComponent {
 	public VideoStreamManager getManager() {
 		return manager;
 	}
+
+	public void reportReconnects() {
+		String rtspURL = manager.getCurrentStreamURL();
+		Dialogs.showWarningMessage(_("Failed due to error in VLC preview\n"
+			+ "Video preview will not work until you restart Svarog.\n"
+			+ "Video saving will continue to operate normally.\n"
+			+ "You can open preview in any "
+			+ "other video player, by opening this link: \n") + rtspURL);
+        }
 
 	/**
 	 * Send a custom request to camera server.
