@@ -12,6 +12,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.nio.file.Path;
 
 /**
  * This class represents the descriptor of a raw signal.
@@ -451,6 +452,10 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 		return videoFileName;
 	}
 
+	public void setVideoFileName(Path value) {
+		setVideoFileName(value.toString());
+	}
+	
 	public void setVideoFileName(String value) {
 		this.videoFileName = value;
 	}

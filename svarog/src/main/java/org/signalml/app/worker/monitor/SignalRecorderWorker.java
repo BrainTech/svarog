@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -297,7 +299,19 @@ public class SignalRecorderWorker {
 
 		MonitorRecordingDescriptor descriptor = monitorDescriptor.getMonitorRecordingDescriptor();
 		if (descriptor.isVideoRecordingEnabled()) {
-			rsd.setVideoFileName(descriptor.getVideoRecordingFilePathWithExtension());
+			
+			
+			Path videoFilePath = Paths.get(descriptor.getVideoRecordingFilePathWithExtension()).toAbsolutePath();
+			Path videoFileRoot = videoFilePath.getParent();
+			Path videoFileName = videoFilePath.getFileName();
+
+			Path savingRoot = Paths.get(metadataFilePath).toAbsolutePath().getParent();
+	
+			Path videoFilePathRelativeToXml = videoFileRoot.relativize(savingRoot);
+			Path target = videoFilePathRelativeToXml.resolve(videoFileName);
+			rsd.setVideoFileName(target);
+			
+
 			if (isFirstSampleTimestampSet() && isFirstVideoFrameTimestampSet()) {
 				float videoFileOffset = (float) (firstVideoFrameTimestamp - firstSampleTimestamp);
 				rsd.setVideoFileOffset(videoFileOffset);
