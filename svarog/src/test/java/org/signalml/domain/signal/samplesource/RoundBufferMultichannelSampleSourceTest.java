@@ -7,13 +7,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 
 /**
  * @author Mariusz Podsiadło
  *
  */
-public class RoundBufferMultichannelSampleSourceTest {
+public class RoundBufferMultichannelSampleSourceTest extends BaseTestCase {
 
 	public static final int TEST_CHANNEL_COUNT = 4;
 	public static final int TEST_SAMPLE_COUNT = 10;

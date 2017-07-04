@@ -1,5 +1,6 @@
 package org.signalml.math.fft;
 
+import org.signalml.BaseTestCase;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import java.util.Arrays;
@@ -11,7 +12,7 @@ import org.junit.Test;
  *
  * @author Piotr Szachewicz
  */
-public class WindowFunctionTest {
+public class WindowFunctionTest extends BaseTestCase {
 
 	@Test
 	public void testCalculateWeightsHanning() {

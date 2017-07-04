@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.filter.iir.OnlineIIRSinglechannelSampleFilter;
@@ -18,7 +19,7 @@ import org.signalml.math.iirdesigner.FilterCoefficients;
  *
  * @author Piotr Szachewicz
  */
-public abstract class AbstractIIRSinglechannelSampleFilterTest {
+public abstract class AbstractIIRSinglechannelSampleFilterTest extends BaseTestCase {
 
 	/**
 	 * the number of samples used for the tests

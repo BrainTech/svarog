@@ -11,6 +11,7 @@ import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 import org.junit.Test;
 import java.lang.Math.*;
 
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.EllipticIIRDesigner;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -24,7 +25,7 @@ import org.signalml.math.iirdesigner.EllipticIIRDesigner.VRatio;
  * This class performs unit tests on {@link EllipticIIRDesigner} class.
  * @author Piotr Szachewicz
  */
-public class EllipticIIRDesignerTest {
+public class EllipticIIRDesignerTest extends BaseTestCase {
 
 	/**
 	 * an instance of {@link EllipticIIRDesigner} needed to call all the tested methods.

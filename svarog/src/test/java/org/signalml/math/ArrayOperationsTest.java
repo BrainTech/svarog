@@ -5,6 +5,7 @@
 package org.signalml.math;
 
 import static org.junit.Assert.assertEquals;
+import org.signalml.BaseTestCase;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
@@ -14,7 +15,7 @@ import org.junit.Test;
  *
  * @author Piotr Szachewicz
  */
-public class ArrayOperationsTest {
+public class ArrayOperationsTest extends BaseTestCase {
 
 	/**
 	 * A test method for {@link ArrayOperations#padWithZeros(double[], int) }.

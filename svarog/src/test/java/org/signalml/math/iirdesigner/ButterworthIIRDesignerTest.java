@@ -9,6 +9,7 @@ import org.apache.commons.math.complex.Complex;
 import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import java.lang.Math.*;
 
 import org.signalml.math.iirdesigner.AbstractIIRDesigner;
@@ -24,7 +25,7 @@ import org.signalml.math.iirdesigner.AbstractIIRDesigner.BandstopObjectiveFuncti
  *
  * @author Piotr Szachewicz
  */
-public class ButterworthIIRDesignerTest {
+public class ButterworthIIRDesignerTest extends BaseTestCase {
 
 	/**
 	 * an instance of ButterworthIIRDesigner needed to call the tested methods

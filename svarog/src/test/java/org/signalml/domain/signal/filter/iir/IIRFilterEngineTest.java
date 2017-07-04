@@ -3,10 +3,11 @@ package org.signalml.domain.signal.filter.iir;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.signal.filter.TestingSignals;
 import org.signalml.domain.signal.filter.iir.IIRFilterEngine;
 
-public class IIRFilterEngineTest {
+public class IIRFilterEngineTest extends BaseTestCase {
 
 	@Test
 	public void testFilter() {
