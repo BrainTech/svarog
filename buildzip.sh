@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(git describe --tags --first-parent)
-mvn clean package
+# Skip tests without even compiling them. Whe are compiling them and running in previous job, so it isn't necessary.
+# To compile tests run `mvn test-compile compile`
+mvn clean package -DskipTests
 
 VERSION=$(git describe --tags --first-parent)
 
