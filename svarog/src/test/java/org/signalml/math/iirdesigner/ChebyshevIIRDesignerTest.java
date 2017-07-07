@@ -9,6 +9,7 @@ import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 import org.junit.Test;
 import java.lang.Math.*;
 
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.Chebyshev1IIRDesigner;
 import org.signalml.math.iirdesigner.ChebyshevIIRDesigner;
@@ -20,7 +21,7 @@ import org.signalml.math.iirdesigner.AbstractIIRDesigner.BandstopObjectiveFuncti
  *
  * @author Piotr Szachewicz
  */
-public class ChebyshevIIRDesignerTest {
+public class ChebyshevIIRDesignerTest extends BaseTestCase {
 
 	/**
 	 * an instance of {@link Chebyshev1IIRDesigner} needed to call all the test methods

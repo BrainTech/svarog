@@ -7,7 +7,9 @@ mvn versions:set -DgenerateBackupPoms=false -DnewVersion=$(git describe --tags -
 
 sed -i s/VRS/$(git describe --tags --first-parent)/g svarog-standalone/src/deb/control/control
 
-mvn clean package
+# Skip tests without even compiling them. Whe are compiling them and running in previous job, so it isn't necessary.
+# To compile tests run `mvn test-compile compile`
+mvn clean package -DskipTests
 mkdir -p dist
 movedeb svarog-standalone/target/*.deb
 movedeb plugins/Artifact/target/*.deb

@@ -9,13 +9,14 @@ import org.apache.commons.math.complex.Complex;
 import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 
 /**
  * This class performes unit tests on {@link org.apache.commons.math.complex.Complex}.
  *
  * @author Piotr Szachewicz
  */
-public class ComplexTest {
+public class ComplexTest extends BaseTestCase {
 
 	/**
 	 * Test method for {@link org.apache.commons.math.complex.Complex#exp() }.

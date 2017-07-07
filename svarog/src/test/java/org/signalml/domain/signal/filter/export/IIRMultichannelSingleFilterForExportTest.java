@@ -5,6 +5,7 @@ import static org.signalml.SignalMLAssert.assertArrayEquals;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.TestingSignals;
 import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;
@@ -15,7 +16,7 @@ import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.math.iirdesigner.IIRDesigner;
 
-public class IIRMultichannelSingleFilterForExportTest {
+public class IIRMultichannelSingleFilterForExportTest extends BaseTestCase {
 
 	@Test
 	public void testGetSamples() throws BadFilterParametersException, IOException {

@@ -5,6 +5,7 @@
 package org.signalml.math.iirdesigner.math;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.math.SpecialMath;
 
 import static org.junit.Assert.*;
@@ -15,7 +16,7 @@ import static org.signalml.math.iirdesigner.math.SpecialMath.*;
  *
  * @author Piotr Szachewicz
  */
-public class SpecialMathTest {
+public class SpecialMathTest extends BaseTestCase {
 
 	/**
 	 * Test method for {@link SpecialMath#getMachineEpsilon() }.

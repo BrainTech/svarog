@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.After;
+import org.signalml.BaseTestCase;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
@@ -16,7 +17,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 
-public class AbstractTagSegmentedTest {
+public class AbstractTagSegmentedTest extends BaseTestCase {
 
 	protected static final int CHANNEL_COUNT = 3;
 	protected static final int SAMPLE_COUNT = 128 * 15;

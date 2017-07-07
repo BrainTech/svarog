@@ -12,6 +12,7 @@ import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.SignalSelectionType;
@@ -25,7 +26,7 @@ import org.springframework.core.io.Resource;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class LegacyTagImporterTest {
+public class LegacyTagImporterTest extends BaseTestCase {
 
 	private File legacyTagFile;
 	private LegacyTagImporter lti;

@@ -5,6 +5,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
 import org.signalml.math.iirdesigner.FilterTimeDomainResponseCalculator;
@@ -18,7 +19,7 @@ import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
  *
  * @author Piotr Szachewicz
  */
-public class FilterTimeDomainResponseCalculatorTest {
+public class FilterTimeDomainResponseCalculatorTest extends BaseTestCase {
 
 	/**
 	 * Checks if the time vector of the time domain response is correctly

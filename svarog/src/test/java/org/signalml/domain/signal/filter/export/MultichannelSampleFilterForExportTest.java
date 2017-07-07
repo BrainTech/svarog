@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
@@ -25,7 +26,7 @@ import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.math.iirdesigner.IIRDesigner;
 import org.signalml.plugin.export.SignalMLException;
 
-public class MultichannelSampleFilterForExportTest {
+public class MultichannelSampleFilterForExportTest extends BaseTestCase {
 
 	private RawSignalDocument originalSamplesRawSignalDocument;
 	private double[][] originalSamples;

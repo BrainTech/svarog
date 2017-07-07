@@ -10,9 +10,10 @@ import java.util.Date;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.plugin.export.SignalMLException;
 
-public class RawSignalDescriptorTest {
+public class RawSignalDescriptorTest extends BaseTestCase {
 
 	float[] gain = new float[] { 1f, 1.5f, 2.0f, -1f, 0f};
 	float[] offset = new float[] { -2f, 0f, 2.0f, -3f, 4f};

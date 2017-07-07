@@ -5,6 +5,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.EllipticIIRDesigner;
 import org.signalml.math.iirdesigner.EllipticIIRDesigner.KRatio;
 import org.signalml.math.iirdesigner.EllipticIIRDesigner.VRatio;
@@ -17,7 +18,7 @@ import static org.junit.Assert.*;
  *
  * @author Piotr Szachewicz
  */
-public class FunctionOptimizerTest {
+public class FunctionOptimizerTest extends BaseTestCase {
 
 	/**
 	 * Test method for {@link FunctionOptimizer#minimizeFunction(org.apache.commons.math.analysis.UnivariateRealFunction, double, int) }.

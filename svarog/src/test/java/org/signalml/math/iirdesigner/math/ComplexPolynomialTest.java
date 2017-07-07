@@ -9,6 +9,7 @@ import org.apache.commons.math.complex.Complex;
 import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.math.ComplexPolynomial;
 
 /**
@@ -16,7 +17,7 @@ import org.signalml.math.iirdesigner.math.ComplexPolynomial;
  *
  * @author Piotr Szachewicz
  */
-public class ComplexPolynomialTest {
+public class ComplexPolynomialTest extends BaseTestCase {
 
 	/**
 	 * Test method for {@link ComplexPolynomial#getDegree() }.

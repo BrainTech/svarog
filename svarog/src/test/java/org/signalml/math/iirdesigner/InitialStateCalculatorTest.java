@@ -4,6 +4,7 @@
 
 package org.signalml.math.iirdesigner;
 
+import org.signalml.BaseTestCase;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 import static org.signalml.SignalMLAssert.assertMatrixEquals;
 import static org.signalml.SignalMLAssert.assertVectorEquals;
@@ -19,7 +20,7 @@ import org.junit.Test;
  *
  * @author Piotr Szachewicz
  */
-public class InitialStateCalculatorTest {
+public class InitialStateCalculatorTest extends BaseTestCase {
 
 	/**
 	 * Test method for {@link InitialStateCalculator#calculateZID() }.
