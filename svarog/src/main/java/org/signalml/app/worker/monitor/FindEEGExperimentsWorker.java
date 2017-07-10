@@ -34,6 +34,7 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 	
 	//OBCI assumes that long requests will be finished in 10 seconds
 	private int PULL_TIMEOUT = 10;
+	private int BLUETOOTH_PULL_TIMEOUT = 60 * 5;  //~30s required for one tmsi device.
 	
 	public FindEEGExperimentsWorker() {
 		
@@ -91,8 +92,9 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		
 			LocalDateTime started = LocalDateTime.now();
 			AbstractEEGExperimentsMsg result = null;
-			while (result == null & Duration.between(started, LocalDateTime.now()).getSeconds() < PULL_TIMEOUT & !isCancelled())
-				result = (AbstractEEGExperimentsMsg)pullsocket.getAndParsePushPullResponse(type);
+			while (result == null & Duration.between(started, LocalDateTime.now()).getSeconds() <
+					(amplifierType == amplifierType.BLUETOOTH ? BLUETOOTH_PULL_TIMEOUT : PULL_TIMEOUT) & !isCancelled())
+				result = (AbstractEEGExperimentsMsg) pullsocket.getAndParsePushPullResponse(type);
 			if (!isCancelled() & result != null){
 				publish(result.getExperiments());			
 				logln(_("OK"));
