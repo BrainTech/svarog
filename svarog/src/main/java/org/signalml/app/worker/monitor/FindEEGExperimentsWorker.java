@@ -96,7 +96,9 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 					(amplifierType == amplifierType.BLUETOOTH ? BLUETOOTH_PULL_TIMEOUT : PULL_TIMEOUT) & !isCancelled())
 				result = (AbstractEEGExperimentsMsg) pullsocket.getAndParsePushPullResponse(type);
 			if (!isCancelled() & result != null){
-				publish(result.getExperiments());			
+				List<ExperimentDescriptor> experiments = result.getExperiments();
+				for (ExperimentDescriptor e : experiments) e.getAmplifier().setAmplifierType(amplifierType);
+				publish(experiments);
 				logln(_("OK"));
 			}
 		}
