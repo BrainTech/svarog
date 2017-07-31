@@ -110,6 +110,14 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	private boolean isBackup;
 
 	/**
+	 * Path to the ASCII signal file.
+	 * This field is not null only for ASCII files, for which it represents
+	 * the path to the source ASCII signal file, while the backingFile attribute
+	 * in {@link RawSignalDocument} will represent the converted binary file.
+	 */
+	private String asciiFilePath;
+
+	/**
 	 * Constructor. Creates an empty descriptor of a raw signal.
 	 */
 	public RawSignalDescriptor() {
@@ -163,6 +171,23 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 	public void setIsBackup(boolean isBackup) {
 		this.isBackup = isBackup;
+	}
+
+	/**
+	 * Return the path to the ASCII signal file,
+	 * if the signal was converted from ASCII. Otherwise, return null.
+	 * @return path to ASCII signal file or null
+	 */
+	public String getAsciiFilePath() {
+		return asciiFilePath;
+	}
+
+	/**
+	 * Mark the signal as an ASCII file, setting its path.
+	 * @param asciiFilePath path to ASCII signal file
+	 */
+	public void setAsciiFilePath(String asciiFilePath) {
+		this.asciiFilePath = asciiFilePath;
 	}
 
 	/**

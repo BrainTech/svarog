@@ -13,6 +13,7 @@ import org.signalml.codec.SignalMLCodecManagerListener;
  * A {@link ComboBoxModel} for a combobox for selecting how a file should be opened:
  *<ul>
  * <li>AUTODETECT - autodetect the file type and open it automatically</li>
+ * <li>ASCII - will try to load a file as a text (ASCII) signal file</li>
  * <li>RAW - will try to load a file as a RAW signal file
  * <li>EDF/EASYS/etc. - will use a {@link SignalMLCodec} to open the file.
  *</ul>
@@ -36,14 +37,16 @@ public class FileTypeComboBoxModel extends AbstractListModel implements ComboBox
 			return FileOpenSignalMethod.AUTODETECT;
 		case 1:
 			return FileOpenSignalMethod.RAW;
+		case 2:
+			return FileOpenSignalMethod.ASCII;
 		default:
-			return codecManager.getCodecAt(index - 2);
+			return codecManager.getCodecAt(index - 3);
 		}
 	}
 
 	@Override
 	public int getSize() {
-		return codecManager.getCodecCount() + 2;
+		return codecManager.getCodecCount() + 3;
 	}
 
 	@Override
@@ -58,17 +61,17 @@ public class FileTypeComboBoxModel extends AbstractListModel implements ComboBox
 
 	@Override
 	public void codecAdded(SignalMLCodecManagerEvent ev) {
-		fireContentsChanged(this, 1, getSize());
+		fireContentsChanged(this, 2, getSize());
 	}
 
 	@Override
 	public void codecRemoved(SignalMLCodecManagerEvent ev) {
-		fireContentsChanged(this, 1, getSize());
+		fireContentsChanged(this, 2, getSize());
 	}
 
 	@Override
 	public void codecsChanged(SignalMLCodecManagerEvent ev) {
-		fireContentsChanged(this, 1, getSize());
+		fireContentsChanged(this, 2, getSize());
 	}
 
 }

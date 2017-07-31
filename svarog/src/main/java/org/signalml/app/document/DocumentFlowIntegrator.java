@@ -59,6 +59,7 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
+import org.signalml.domain.signal.ascii.AsciiBackingFilesRepository;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
@@ -592,6 +593,16 @@ public class DocumentFlowIntegrator {
 
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
 				odd.setOpenSignalDescriptor(rawEntry.getDescriptor());
+				if (rawEntry.getDescriptor().getAsciiFilePath() != null) {
+					// ASCII files need to be converted to RAW when restoring
+					try {
+						File asciiFile = new File(rawEntry.getDescriptor().getAsciiFilePath());
+						odd.setFile(AsciiBackingFilesRepository.prepare(asciiFile).raw);
+					} catch (Exception ex) {
+						logger.error("Cannot restore opened ASCII file", ex);
+						return null;
+					}
+				}
 
 			} else {
 				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
