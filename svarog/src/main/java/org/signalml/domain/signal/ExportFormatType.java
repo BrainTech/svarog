@@ -12,7 +12,7 @@ import org.signalml.domain.signal.raw.RawSignalWriter;
 public enum ExportFormatType {
 
 	RAW(_("RAW"), "bin", RawSignalWriter.class),
-	ASCII(_("ASCII"), "ascii", ASCIISignalWriter.class),
+	ASCII(_("CSV"), "csv", ASCIISignalWriter.class),
 	MATLAB(_("MATLAB"), "mat", MatlabSignalWriter.class),
 	EEGLab(_("EEGLab"), "set", EEGLabSignalWriter.class);
 
