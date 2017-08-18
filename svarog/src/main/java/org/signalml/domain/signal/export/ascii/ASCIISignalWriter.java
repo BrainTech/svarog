@@ -45,28 +45,32 @@ public class ASCIISignalWriter implements ISignalWriter {
 	@Override
 	public void writeSignal(File outputFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
 
-		FileWriter fileWriter = new FileWriter(outputFile);
-		this.channelCount = sampleSource.getChannelCount();
-
-		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
-		int numberOfSamplesToGet = 0;
+            try (FileWriter fileWriter = new FileWriter(outputFile)) {
+                this.channelCount = sampleSource.getChannelCount();
+                int bufferSizePerChannel = Math.floorDiv(BUFFER_SIZE, this.channelCount);
+                int sampleCount = SampleSourceUtils.getMaxSampleCount(sampleSource) * this.channelCount;
+                int numberOfSamplesToGet, numberOfSamplesToGetPerChannel;
 
                 this.writeMultiChannelSamplesHeader(fileWriter, descriptor, sampleSource);
-                for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {  
-			numberOfSamplesToGet = Math.min(sampleCount - sampleNumber, BUFFER_SIZE);
-
-                        double[][] dataChunk = this.getMultiChannelSamplesChunk(sampleSource, sampleNumber, numberOfSamplesToGet);
-                        this.writeMultiChannelSamplesChunk(fileWriter, descriptor, dataChunk, BUFFER_SIZE);
-
-                        if (monitor != null) {
-				if (monitor.isRequestingAbort())
-                                    return;
-                                double processedSampleCount = this.channelCount * numberOfSamplesToGet;
-                                processedSampleCount = Math.ceil(processedSampleCount / (this.channelCount * sampleCount));
-                                monitor.setProcessedSampleCount((int) processedSampleCount); 
-			}
+                for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {
+                    numberOfSamplesToGetPerChannel = Math.min(
+                            this.getRemainingSamplesPerChannel(sampleNumber, sampleCount),
+                            bufferSizePerChannel
+                    );
+                    numberOfSamplesToGet = numberOfSamplesToGetPerChannel * this.channelCount;
+                    
+                    double[][] dataChunk = this.getMultiChannelSamplesChunk(sampleSource, sampleNumber, numberOfSamplesToGetPerChannel);
+                    this.writeMultiChannelSamplesChunk(fileWriter, descriptor, dataChunk, numberOfSamplesToGetPerChannel);
+                    
+                    if (monitor != null) {
+                        if (monitor.isRequestingAbort())
+                            return;
+                        double processedSampleCount = this.channelCount * numberOfSamplesToGet;
+                        processedSampleCount = Math.ceil(processedSampleCount / (this.channelCount * sampleCount));
+                        monitor.setProcessedSampleCount((int) processedSampleCount);
+                    }
                 }
-		fileWriter.close();
+            }
 	}
 
 	/**
@@ -75,27 +79,36 @@ public class ASCIISignalWriter implements ISignalWriter {
          * @param numberOfSamplesToGet number of samples which will be fetched for each channel.
 	 * @throws IOException
 	 */
-        private double[][] getMultiChannelSamplesChunk(MultichannelSampleSource sampleSource, int sampleNumber, int numberOfSamplesToGet){
+        private double[][] getMultiChannelSamplesChunk(MultichannelSampleSource sampleSource, int sampleNumber, int numberOfSamplesToGetPerChannel){
                 double[][] samplesChunk = new double[this.channelCount][];
-
                 IntStream.range(0, this.channelCount).forEach(
                         channelNumber -> {
-                            samplesChunk[channelNumber] = new double[numberOfSamplesToGet];
-                            sampleSource.getSamples(channelNumber, samplesChunk[channelNumber], sampleNumber, numberOfSamplesToGet, 0);
+                            samplesChunk[channelNumber] = new double[numberOfSamplesToGetPerChannel];
+                            sampleSource.getSamples(channelNumber, samplesChunk[channelNumber], sampleNumber, numberOfSamplesToGetPerChannel, 0);
                         }
                 );
 
                 return samplesChunk;
         }
 
+        /**
+         * Returns minimum number of samples per channel to be return (or 1 in case of zero).
+         * @param sampleNumber number of current sample
+         * @param sampleCount total number of samples remaining for all channels
+         * @return 
+         */
+        private int getRemainingSamplesPerChannel(int sampleNumber, int sampleCount){
+            return Math.max(Math.floorDiv(sampleCount - sampleNumber, this.channelCount), 1);
+        }
+
 	/**
 	 * Exports signal from a multiple channels to file.
 	 * @param samplesChunk double[numberOfChannes][numberOfSamplesInChunk] matrix.
-         * @param chunkSize numberOfSamplesInChunk.
+         * @param singleChannelChunkSize numberOfSamplesInChunk for a single channel.
 	 * @throws IOException
 	 */
-        private void writeMultiChannelSamplesChunk(FileWriter output, SignalExportDescriptor descriptor, double[][] samplesChunk, int chunkSize) throws IOException {
-                for (int sampleNumber = 0; sampleNumber < chunkSize; sampleNumber++){
+        private void writeMultiChannelSamplesChunk(FileWriter output, SignalExportDescriptor descriptor, double[][] samplesChunk, int singleChannelChunkSize) throws IOException {
+                for (int sampleNumber = 0; sampleNumber < singleChannelChunkSize; sampleNumber++){
                         for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
                                 output.write(this.formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
                         }
