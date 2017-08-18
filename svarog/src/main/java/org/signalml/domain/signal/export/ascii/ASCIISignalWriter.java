@@ -53,8 +53,8 @@ public class ASCIISignalWriter implements ISignalWriter {
 
                 this.writeMultiChannelSamplesHeader(fileWriter, descriptor, sampleSource);
                 for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {
-                    numberOfSamplesToGetPerChannel = Math.min(
-                            this.getRemainingSamplesPerChannel(sampleNumber, sampleCount),
+                    numberOfSamplesToGetPerChannel = (int) Math.min(
+                            Math.ceil((double) sampleCount - (double) sampleNumber / (double) this.channelCount),
                             bufferSizePerChannel
                     );
                     numberOfSamplesToGet = numberOfSamplesToGetPerChannel * this.channelCount;
@@ -87,16 +87,6 @@ public class ASCIISignalWriter implements ISignalWriter {
                 );
 
                 return samplesChunk;
-        }
-
-        /**
-         * Returns minimum number of samples per channel to be return (or 1 in case of zero).
-         * @param sampleNumber number of current sample
-         * @param sampleCount total number of samples remaining for all channels
-         * @return 
-         */
-        private int getRemainingSamplesPerChannel(int sampleNumber, int sampleCount){
-            return Math.max(Math.floorDiv(sampleCount - sampleNumber, this.channelCount), 1);
         }
 
 	/**
