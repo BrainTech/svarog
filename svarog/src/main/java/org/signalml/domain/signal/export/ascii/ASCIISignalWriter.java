@@ -103,16 +103,12 @@ public class ASCIISignalWriter implements ISignalWriter {
 	 * @throws IOException
 	 */
         private void writeMultiChannelSamplesChunk(FileWriter output, SignalExportDescriptor descriptor, double[][] samplesChunk, int chunkSize) throws IOException {
-                IntStream.range(0, chunkSize).forEach(
-                        sampleNumber -> {
-                            IntStream.range(0, this.channelCount).forEach(
-                                channelNumber -> {
-                                    output.write(formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
-                                }
-                            );
-                            output.write("\n");
+                for (int sampleNumber = 0; sampleNumber < chunkSize; sampleNumber++){
+                        for (int channelNumber = 0; channelNumber < this.channelCount; channelNumber++){
+                                output.write(formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
                         }
-                );
+                        output.write("\n");
+                }
         }
         
 	/**
