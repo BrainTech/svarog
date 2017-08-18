@@ -65,9 +65,7 @@ public class ASCIISignalWriter implements ISignalWriter {
                     if (monitor != null) {
                         if (monitor.isRequestingAbort())
                             return;
-                        double processedSampleCount = this.channelCount * numberOfSamplesToGet;
-                        processedSampleCount = Math.ceil(processedSampleCount / (this.channelCount * sampleCount));
-                        monitor.setProcessedSampleCount((int) processedSampleCount);
+                        monitor.setProcessedSampleCount(sampleNumber + numberOfSamplesToGet);
                     }
                 }
             }
