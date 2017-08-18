@@ -59,7 +59,7 @@ public class ASCIISignalWriter implements ISignalWriter {
 		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
 		int numberOfSamplesToGet = 0;
                 
-                this.writeMultiChannelSamplesHeader(fileWriter, descriptor);
+                this.writeMultiChannelSamplesHeader(fileWriter, descriptor, sampleSource);
                 for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {  
 			numberOfSamplesToGet = Math.min(sampleCount - sampleNumber, BUFFER_SIZE);
                         
@@ -104,10 +104,10 @@ public class ASCIISignalWriter implements ISignalWriter {
 	 */
         private void writeMultiChannelSamplesChunk(FileWriter output, SignalExportDescriptor descriptor, double[][] samplesChunk, int chunkSize) throws IOException {
                 for (int sampleNumber = 0; sampleNumber < chunkSize; sampleNumber++){
-                        for (int channelNumber = 0; channelNumber < this.channelCount; channelNumber++){
-                                output.write(formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
+                        for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
+                                output.write(this.formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
                         }
-                        output.write("\n");
+                        output.write(this.formatter.format(samplesChunk[this.channelCount - 1][sampleNumber]) + "\n");
                 }
         }
         
@@ -115,8 +115,11 @@ public class ASCIISignalWriter implements ISignalWriter {
 	 * Exports channels names as a header to file.
 	 * @throws IOException
 	 */
-        private void writeMultiChannelSamplesHeader(FileWriter output, SignalExportDescriptor descriptor) throws IOException {
-            
+        private void writeMultiChannelSamplesHeader(FileWriter output, SignalExportDescriptor descriptor, MultichannelSampleSource sampleSource) throws IOException {
+            for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
+                output.write(sampleSource.getLabel(channelNumber) + descriptor.getSeparator());
+            }
+            output.write(sampleSource.getLabel(this.channelCount - 1) + "\n");
         }
 
 	/**
