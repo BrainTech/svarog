@@ -192,6 +192,9 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.ASCII
 						   && !"ascii".equals(extension)){
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "ascii");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.CSV
+						   && !"csv".equals(extension)){
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "csv");
 				}
 			}
 		}
@@ -203,6 +206,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			case RAW: file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion); break;
 			case EEGLab: file = fileChooser.chooseExportEEGLabSignalFile(optionPaneParent, fileSuggestion); break;
 			case ASCII: file = fileChooser.chooseExportASCIISignalFile(optionPaneParent, fileSuggestion); break;
+			case CSV: file = fileChooser.chooseExportCSVSignalFile(optionPaneParent, fileSuggestion); break;
 			case MATLAB: file = fileChooser.chooseExportMatlabSignalFile(optionPaneParent, fileSuggestion); break;
 			}
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.stream.IntStream;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
@@ -45,73 +44,55 @@ public class ASCIISignalWriter implements ISignalWriter {
 	@Override
 	public void writeSignal(File outputFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
 
-            try (FileWriter fileWriter = new FileWriter(outputFile)) {
-                this.channelCount = sampleSource.getChannelCount();
-                int bufferSizePerChannel = Math.floorDiv(BUFFER_SIZE, this.channelCount);
-                int sampleCount = SampleSourceUtils.getMaxSampleCount(sampleSource) * this.channelCount;
-                int numberOfSamplesToGet, numberOfSamplesToGetPerChannel;
+		FileWriter fileWriter = new FileWriter(outputFile);
+		this.channelCount = sampleSource.getChannelCount();
 
-                this.writeMultiChannelSamplesHeader(fileWriter, descriptor, sampleSource);
-                for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {
-                    numberOfSamplesToGetPerChannel = (int) Math.min(
-                            Math.ceil((double) sampleCount - (double) sampleNumber / (double) this.channelCount),
-                            bufferSizePerChannel
-                    );
-                    numberOfSamplesToGet = numberOfSamplesToGetPerChannel * this.channelCount;
-                    
-                    double[][] dataChunk = this.getMultiChannelSamplesChunk(sampleSource, sampleNumber, numberOfSamplesToGetPerChannel);
-                    this.writeMultiChannelSamplesChunk(fileWriter, descriptor, dataChunk, numberOfSamplesToGetPerChannel);
-                    
-                    if (monitor != null) {
-                        if (monitor.isRequestingAbort())
-                            return;
-                        monitor.setProcessedSampleCount(sampleNumber + numberOfSamplesToGet);
-                    }
-                }
-            }
+		for (int channelNumber = 0; channelNumber < channelCount; channelNumber++) {
+			if(!writeSingleChannel(fileWriter, sampleSource, descriptor, monitor, channelNumber))
+				return;
+
+			if (channelNumber < sampleSource.getChannelCount()-1)
+				fileWriter.write("\n");
+		}
+		fileWriter.close();
 	}
 
 	/**
-	 * Returns chunk of samples from all channels.
-	 * @param sampleNumber starting point (in time) from which on samples are fetched.
-         * @param numberOfSamplesToGet number of samples which will be fetched for each channel.
+	 * Exports signal from a single channel to file.
+	 * @param channelNumber number of channel to be exported.
+	 * @return false if writing data was cancelled, true if continuing is ok.
 	 * @throws IOException
 	 */
-        private double[][] getMultiChannelSamplesChunk(MultichannelSampleSource sampleSource, int sampleNumber, int numberOfSamplesToGetPerChannel){
-                double[][] samplesChunk = new double[this.channelCount][];
-                IntStream.range(0, this.channelCount).forEach(
-                        channelNumber -> {
-                            samplesChunk[channelNumber] = new double[numberOfSamplesToGetPerChannel];
-                            sampleSource.getSamples(channelNumber, samplesChunk[channelNumber], sampleNumber, numberOfSamplesToGetPerChannel, 0);
-                        }
-                );
+	protected boolean writeSingleChannel(
+			FileWriter output, MultichannelSampleSource sampleSource,
+			SignalExportDescriptor descriptor, SignalWriterMonitor monitor,
+			int channelNumber) throws IOException {
 
-                return samplesChunk;
-        }
+		int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
+		int numberOfSamplesToGet = 0;
 
-	/**
-	 * Exports signal from a multiple channels to file.
-	 * @param samplesChunk double[numberOfChannes][numberOfSamplesInChunk] matrix.
-         * @param singleChannelChunkSize numberOfSamplesInChunk for a single channel.
-	 * @throws IOException
-	 */
-        private void writeMultiChannelSamplesChunk(FileWriter output, SignalExportDescriptor descriptor, double[][] samplesChunk, int singleChannelChunkSize) throws IOException {
-                for (int sampleNumber = 0; sampleNumber < singleChannelChunkSize; sampleNumber++){
-                        for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
-                                output.write(this.formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
-                        }
-                        output.write(this.formatter.format(samplesChunk[this.channelCount - 1][sampleNumber]) + "\n");
-                }
-        }
+		for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {
+			numberOfSamplesToGet = Math.min(sampleCount - sampleNumber, BUFFER_SIZE);
 
-	/**
-	 * Exports channels names as a header to file.
-	 * @throws IOException
-	 */
-        private void writeMultiChannelSamplesHeader(FileWriter output, SignalExportDescriptor descriptor, MultichannelSampleSource sampleSource) throws IOException {
-            for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
-                output.write(sampleSource.getLabel(channelNumber) + descriptor.getSeparator());
-            }
-            output.write(sampleSource.getLabel(this.channelCount - 1) + "\n");
-        }
+			double[] data = new double[numberOfSamplesToGet];
+			sampleSource.getSamples(channelNumber, data, sampleNumber, numberOfSamplesToGet, 0);
+
+			for (double sample: data) {
+				output.write(formatter.format(sample) + descriptor.getSeparator());
+			}
+
+			if (monitor != null && monitor.isRequestingAbort()) {
+				return false;
+			}
+
+			if (monitor != null) {
+				double processedSampleCount = channelNumber * sampleCount + sampleNumber + numberOfSamplesToGet;
+				processedSampleCount = Math.ceil(processedSampleCount / channelCount);
+				monitor.setProcessedSampleCount((int) processedSampleCount);
+			}
+		}
+		return true;
+
+	}
+
 }

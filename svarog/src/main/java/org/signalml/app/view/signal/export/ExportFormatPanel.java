@@ -108,6 +108,7 @@ public class ExportFormatPanel extends JPanel {
 		if (optionsPanel == null) {
 			optionsPanel = new JPanel(new CardLayout());
 			optionsPanel.add(getRawOptionsPanel(), ExportFormatType.RAW.toString());
+			optionsPanel.add(new JPanel(), ExportFormatType.CSV.toString());
 			optionsPanel.add(getASCIIOptionsPanel(), ExportFormatType.ASCII.toString());
 			optionsPanel.add(getEEGLabOptionsPanel(), ExportFormatType.EEGLab.toString());
 			optionsPanel.add(new JPanel(), ExportFormatType.MATLAB.toString());
@@ -163,6 +164,7 @@ public class ExportFormatPanel extends JPanel {
 		descriptor.setFormatType(selectedFormatType);
 
 		switch(selectedFormatType) {
+                        case CSV: descriptor.setSeparator(","); break;
 			case ASCII: getASCIIOptionsPanel().fillModelFromPanel(descriptor); break;
 			case RAW: getRawOptionsPanel().fillModelFromPanel(descriptor); break;
 			case EEGLab: getEEGLabOptionsPanel().fillModelFromPanel(descriptor); break;
