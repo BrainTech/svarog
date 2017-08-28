@@ -39,22 +39,21 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 	public FindEEGExperimentsWorker() {
 		
 	}
+	
+	protected void mainWork() throws OpenbciCommunicationException {
 
+		getRunningExperiments(true);
+		getRunningExperiments(false);
+		
+	}
+	
 	@Override
 	protected Void doInBackground() throws OpenbciCommunicationException {
 
 		openbciIpAddress = Helper.getOpenBCIIpAddress();
 		openbciPort = Helper.getOpenbciPort();
 
-		getRunningExperiments(true);
-		getRunningExperiments(false);
-	
-		for (AmplifierType amplifierType: AmplifierType.values()) {
-			if (isCancelled())
-				break;
-
-			getNewExperiments(amplifierType);
-		}
+		mainWork();
 		
 		if (!isCancelled())
 			log(_("Refreshing successfully accomplished!"));
@@ -74,13 +73,6 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 
 		getExperiments(findEEGExperimentsRequest, null, MessageType.EEG_EXPERIMENTS_RESPONSE);
 
-	}
-
-	protected void getNewExperiments(AmplifierType amplifierType) {
-		FindEEGAmplifiersRequest findEEGAmplifiersRequest = new FindEEGAmplifiersRequest(amplifierType);
-		
-		log(_R("Requesting the list of available {0} amplifiers...", amplifierType));
-		getExperiments(findEEGAmplifiersRequest, amplifierType, MessageType.EEG_AMPLIFIERS_RESPONSE);
 	}
 	
 	protected void getExperiments(LongRequest request, AmplifierType amplifierType, MessageType type){

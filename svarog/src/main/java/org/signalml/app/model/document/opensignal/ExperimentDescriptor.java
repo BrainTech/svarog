@@ -18,6 +18,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	private String id;
 	private String name;
 	private String path;
+	private String origin_machine;
 	private Amplifier amplifier = new Amplifier();
 	private ExperimentStatus status;
 
@@ -100,6 +101,13 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getOriginMachine() {
+		return origin_machine;
+	}
+	public void setOriginMachine(String origin_machine) {
+		this.origin_machine = origin_machine;
 	}
 	
 	public List<String> getExperimentRepUrls(){

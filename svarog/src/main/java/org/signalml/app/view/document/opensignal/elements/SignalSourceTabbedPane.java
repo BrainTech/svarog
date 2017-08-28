@@ -45,14 +45,18 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	 */
 	private FileChooserPanel fileChooserPanel;
 	private ChooseExperimentPanel chooseExperimentPanel;
+	private ChooseAmplifierPanel chooseAmplifierPanel;
+
 
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 	private Object fileTypeMethod = FileOpenSignalMethod.AUTODETECT;
 
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
-		addTab(_("FILE"), getFileChooserPanel());
-		addTab(_("ONLINE"), getChooseExperimentPanel());
+		addTab(_("File"), getFileChooserPanel());
+		addTab(_("Online experiments"), getChooseExperimentPanel());
+		addTab(_("Online amplifiers"), getChooseAmplifierPanel());
+
 	}
 
 	/**
@@ -77,6 +81,14 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		}
 		return chooseExperimentPanel;
 	}
+	
+	public ChooseAmplifierPanel getChooseAmplifierPanel() {
+		if (chooseAmplifierPanel == null) {
+			chooseAmplifierPanel = new ChooseAmplifierPanel();
+			chooseAmplifierPanel.addPropertyChangeListener(this);
+		}
+		return chooseAmplifierPanel;
+	}
 
 	public SignalSource getSelectedSignalSource() {
 		if (getSelectedComponent() == getFileChooserPanel())
@@ -95,6 +107,11 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor = null;
 			fireOpenSignalDescriptorChanged();
 		}
+		
+		else if (ChooseAmplifierPanel.AMPLIFIER_SELECTED_PROPERTY.equals(propertyName)) {
+			updateSelectedAmplifier();
+		}
+		
 		else if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
 			updateSelectedExperiment();
 		}
@@ -102,6 +119,11 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	protected void updateSelectedExperiment() {
 		openSignalDescriptor = chooseExperimentPanel.getSelectedExperiment();
+		fireOpenSignalDescriptorChanged();
+	}
+	
+	protected void updateSelectedAmplifier() {
+		openSignalDescriptor = chooseAmplifierPanel.getSelectedAmplifier();
 		fireOpenSignalDescriptorChanged();
 	}
 
@@ -244,6 +266,12 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		if (this.getSelectedComponent() == fileChooserPanel) {
 			updatedSelectedFile();
 		}
+		
+		else if (this.getSelectedComponent() == chooseAmplifierPanel)
+		{
+			updateSelectedAmplifier();
+		}
+		
 		else {
 			updateSelectedExperiment();
 		}
