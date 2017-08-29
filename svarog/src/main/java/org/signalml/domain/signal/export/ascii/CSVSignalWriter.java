@@ -41,17 +41,14 @@ public class CSVSignalWriter implements ISignalWriter {
         public void writeSignal(File outputFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, SignalWriterMonitor monitor) throws IOException {
                 try (FileWriter fileWriter = new FileWriter(outputFile)) {
                         this.channelCount = sampleSource.getChannelCount();
-                        int bufferSizePerChannel = (int) Math.ceil((double) this.BUFFER_SIZE / (double) this.channelCount);
-                        int sampleCount = SampleSourceUtils.getMaxSampleCount(sampleSource) * this.channelCount;
+                        int bufferSizePerChannel = (int) Math.floor((double) this.BUFFER_SIZE / (double) this.channelCount);
+                        int sampleCount = SampleSourceUtils.getMinSampleCount(sampleSource);
                         int numberOfSamplesToGet, numberOfSamplesToGetPerChannel;
 
                         this.writeMultiChannelSamplesHeader(fileWriter, descriptor, sampleSource);
                         for (int sampleNumber = 0; sampleNumber < sampleCount; sampleNumber += numberOfSamplesToGet) {
-                                numberOfSamplesToGetPerChannel = (int) Math.min(
-                                        Math.ceil((double) (sampleCount - sampleNumber) / (double) this.channelCount),
-                                        bufferSizePerChannel
-                                );
-                                numberOfSamplesToGet = numberOfSamplesToGetPerChannel * this.channelCount;
+                                numberOfSamplesToGetPerChannel = Math.min((sampleCount - sampleNumber), bufferSizePerChannel);
+                                numberOfSamplesToGet = numberOfSamplesToGetPerChannel;
 
                                 double[][] dataChunk = this.getMultiChannelSamplesChunk(sampleSource, sampleNumber, numberOfSamplesToGetPerChannel);
                                 this.writeMultiChannelSamplesChunk(fileWriter, descriptor, dataChunk, numberOfSamplesToGetPerChannel);
