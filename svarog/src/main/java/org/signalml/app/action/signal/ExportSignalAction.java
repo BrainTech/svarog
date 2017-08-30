@@ -435,8 +435,11 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 	@Override
 	public void setEnabledAsNeeded() {
 		SignalDocumentFocusSelector x = getActionFocusSelector();
-		if (null != x)
-			setEnabled(x.getActiveSignalDocument() != null);
+		if (null != x) {
+			SignalDocument document = x.getActiveSignalDocument();
+			if (document != null)
+				setEnabled(document.getFormatName() != null);
+		}
 	}
 
 	public ExportSignalDialog getExportSignalDialog() {
