@@ -92,7 +92,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 		File file;
 		boolean hasFile = false;
 		do {
-			file = fileChooser.chooseSamplesSaveAsTextFile(null);
+			file = fileChooser.chooseSamplesSaveAsFloatFile(null);
 			if (file == null) {
 				return null;
 			}
