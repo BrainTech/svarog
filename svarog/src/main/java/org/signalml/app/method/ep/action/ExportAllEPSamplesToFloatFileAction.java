@@ -133,6 +133,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 		descriptor.setChannelCount(channelCount);
 		descriptor.setExportFileName(file.getName());
 		descriptor.setChannelLabels(result.getLabels());
+		descriptor.setSamplingFrequency(result.getSamplingFrequency());
 
 		File xmlFile = Util.changeOrAddFileExtension(file, "xml");
 		descriptorWriter.writeDocument(descriptor, xmlFile);
