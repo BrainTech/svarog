@@ -43,7 +43,7 @@ public class SignalFFTSettingsDialog extends org.signalml.plugin.export.view.Abs
 	 */
 	@Override
 	protected JComponent createInterface() {
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel(true);
+		signalFFTSettingsPanel = new SignalFFTSettingsPanel(false);
 
 		return signalFFTSettingsPanel;
 	}
