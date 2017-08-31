@@ -21,13 +21,16 @@ import org.signalml.app.method.ep.view.EvokedPotentialSettingsPanel;
 import org.signalml.app.method.ep.view.signalspace.ERPSignalSpacePanel;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
+import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.method.ep.EvokedPotentialParameters;
 import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.view.FileChooser;
 
 /** EvokedPotentialMethodDialog
@@ -92,7 +95,6 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 
 		EvokedPotentialApplicationData data = (EvokedPotentialApplicationData) model;
-
 		SignalDocument signalDocument = data.getSignalDocument();
 		SignalView signalView = (SignalView) signalDocument.getDocumentView();
 
@@ -104,8 +106,6 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 		}
 
 		getSignalSpacePanel().setConstraints(constraints);
-
-		// test for active selections and use them if possible
 
 		EvokedPotentialParameters parameters;
 
@@ -123,6 +123,17 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 
 		data.setParameters(parameters);
 		fillDialogFromParameters(parameters);
+		
+		// test for active selections and use them if possible
+		SignalPlot masterPlot = signalView.getMasterPlot();
+		SignalSelection signalSelection = signalView.getSignalSelection(masterPlot);
+		if (signalSelection != null)
+		{
+			SignalExportDescriptor signalExportDescriptor = new SignalExportDescriptor();
+			SignalSpace space = signalExportDescriptor.getSignalSpace();
+			space.configureFromSelections(signalSelection, null);
+			getSignalSpacePanel().fillPanelFromModel(space);
+		}
 	}
 
 	protected void fillDialogFromParameters(EvokedPotentialParameters parameters) {
