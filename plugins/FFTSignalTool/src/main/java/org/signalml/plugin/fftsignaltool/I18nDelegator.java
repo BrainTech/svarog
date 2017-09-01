@@ -8,10 +8,10 @@ import org.springframework.context.MessageSourceResolvable;
  *
  * @author Stanislaw Findeisen (Eisenbits)
  */
-public class FFTSignalToolI18nDelegate {
+public class I18nDelegator {
 	private SvarogAccess svarogAccess;
 
-	protected FFTSignalToolI18nDelegate(SvarogAccess sa) {
+	protected I18nDelegator(SvarogAccess sa) {
 		this.svarogAccess = sa;
 	}
 

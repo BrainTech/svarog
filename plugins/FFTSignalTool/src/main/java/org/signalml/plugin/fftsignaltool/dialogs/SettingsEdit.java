@@ -13,11 +13,12 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 
+import org.signalml.plugin.fftsignaltool.dialogs.components.SettingsPanel;
 import org.springframework.validation.Errors;
 
 /**
  * Dialog which allows to select the parameters of the FFT.
- * Contains only {@link SignalFFTSettingsPanel}, where these parameters are
+ * Contains only {@link SettingsPanel}, where these parameters are
  * described.
  * <p>
  * The model for this dialog is of type {@link SignalFFTSettings} and the
@@ -26,7 +27,7 @@ import org.springframework.validation.Errors;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
+public class SettingsEdit extends AbstractPopupDialog {
 
 	/**
 	 * the serialization constant
@@ -34,10 +35,10 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * the {@link SignalFFTSettingsPanel panel} with the actual contents of
+	 * the {@link SettingsPanel panel} with the actual contents of
 	 * this dialog
 	 */
-	private SignalFFTSettingsPanel signalFFTSettingsPanel;
+	private SettingsPanel settingsPanel;
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
@@ -45,59 +46,59 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
-	public SignalFFTSettingsPopupDialog(
+	public SettingsEdit(
 		Window w, boolean isModal) {
 		super(w, isModal);
 	}
 
 	/**
 	 * Creates the interface for this dialog.
-	 * This interface contains only {@link SignalFFTSettingsPanel}.
+	 * This interface contains only {@link SettingsPanel}.
 	 */
 	@Override
 	public JComponent createInterface() {
 
-		signalFFTSettingsPanel = new SignalFFTSettingsPanel(true);
+		settingsPanel = new SettingsPanel(true);
 
-		return signalFFTSettingsPanel;
+		return settingsPanel;
 
 	}
 
 	/**
-	 * {@link SignalFFTSettingsPanel#fillPanelFromModel(org.signalml.plugin.
+	 * {@link SettingsPanel#fillPanelFromModel(org.signalml.plugin.
 	 * fftsignaltool.SignalFFTSettings) Fills} the {@link
-	 * SignalFFTSettingsPanel} from the {@link SignalFFTSettings model}.
+	 * SettingsPanel} from the {@link SignalFFTSettings model}.
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		SignalFFTSettings settings = (SignalFFTSettings) model;
 
-		signalFFTSettingsPanel.fillPanelFromModel(settings);
+		settingsPanel.fillPanelFromModel(settings);
 
 	}
 
 	/**
-	 * {@link SignalFFTSettingsPanel#fillModelFromPanel(org.signalml.plugin.
+	 * {@link SettingsPanel#fillModelFromPanel(org.signalml.plugin.
 	 * fftsignaltool.SignalFFTSettings) Fills} the {@link SignalFFTSettings model}.
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		SignalFFTSettings settings = (SignalFFTSettings) model;
 
-		signalFFTSettingsPanel.fillModelFromPanel(settings);
+		settingsPanel.fillModelFromPanel(settings);
 	}
 
 	/**
 	 * Validates this dialog.
-	 * This dialog is valid if {@link SignalFFTSettingsPanel} is {@link
-	 * SignalFFTSettingsPanel#validatePanel(Errors) valid}.
+	 * This dialog is valid if {@link SettingsPanel} is {@link
+	 * SettingsPanel#validatePanel(Errors) valid}.
 	 */
 	@Override
 	public void validateDialog(Object model, ValidationErrors errors)
 	throws SignalMLException {
 		super.validateDialog(model, errors);
 
-		signalFFTSettingsPanel.validatePanel(errors);
+		settingsPanel.validatePanel(errors);
 
 	}
 

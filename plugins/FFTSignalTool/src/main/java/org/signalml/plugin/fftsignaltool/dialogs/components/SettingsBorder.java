@@ -2,7 +2,7 @@
  *
  */
 
-package org.signalml.plugin.fftsignaltool.dialogs;
+package org.signalml.plugin.fftsignaltool.dialogs.components;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -22,7 +22,7 @@ import javax.swing.border.TitledBorder;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class TitledCrossBorder extends TitledBorder {
+public class SettingsBorder extends TitledBorder {
 
 	/**
 	 * the serialization constant
@@ -52,7 +52,7 @@ public class TitledCrossBorder extends TitledBorder {
 	 * @param hasCloseCross {@code true} if this border should contain the
 	 * cross, {@code false} otherwise
 	 */
-	public TitledCrossBorder(String title, boolean hasCloseCross) {
+	public SettingsBorder(String title, boolean hasCloseCross) {
 		super(title);
 		this.hasCloseCross = hasCloseCross;
 	}

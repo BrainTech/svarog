@@ -1,9 +1,9 @@
 /* SignalFFTSettingsPanel.java created 2007-12-17
  *
  */
-package org.signalml.plugin.fftsignaltool.dialogs;
+package org.signalml.plugin.fftsignaltool.dialogs.components;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -64,7 +64,7 @@ import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
  */
-public class SignalFFTSettingsPanel extends JPanel {
+public class SettingsPanel extends JPanel {
 
 	/**
 	 * the serialization constant
@@ -75,7 +75,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 * the logger
 	 */
 	protected static final Logger logger = Logger
-										   .getLogger(SignalFFTSettingsPanel.class);
+										   .getLogger(SettingsPanel.class);
 
 	/**
 	 * the array with possible sizes of FFT window (number of samples)
@@ -226,7 +226,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 	 *            {@code true} if the panel should has a cross which closes it,
 	 *            {@code false} otherwise
 	 */
-	public SignalFFTSettingsPanel(
+	public SettingsPanel(
 		boolean hasCloseCross) {
 		super();
 		this.hasCloseCross = hasCloseCross;
@@ -273,7 +273,7 @@ public class SignalFFTSettingsPanel extends JPanel {
 
 		JPanel windowWidthPanel = new JPanel(new GridLayout(3, 3, 3, 3));
 
-		CompoundBorder border = new CompoundBorder(new TitledCrossBorder(
+		CompoundBorder border = new CompoundBorder(new SettingsBorder(
 					_("FFT window width"),
 					hasCloseCross), new EmptyBorder(3, 3, 3, 3));
 		windowWidthPanel.setBorder(border);
