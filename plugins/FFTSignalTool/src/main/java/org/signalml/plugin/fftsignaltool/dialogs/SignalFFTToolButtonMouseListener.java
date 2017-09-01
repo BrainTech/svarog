@@ -59,7 +59,7 @@ public class SignalFFTToolButtonMouseListener extends MouseAdapter implements Si
 			Point location = button.getLocationOnScreen();
 			dialog.setLocation(location);
 			button.doClick();
-			dialog.showDialog(signalFFTTool);
+			dialog.showDialog(signalFFTTool.getSettings());
 		}
 	};
 

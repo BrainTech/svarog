@@ -12,7 +12,6 @@ import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialogAction;
 import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListener;
 import org.signalml.plugin.impl.ToolButtonParameters;
@@ -22,7 +21,7 @@ import org.signalml.plugin.impl.ToolButtonParameters;
  * Contains:
  * <ul>
  * <li>the tool,</li>
- * <li>the {@link SignalFFTSettingsDialog dialogs} which allow to manage
+ * <li>the {@link SignalFFTSettingsPopupDialog dialogs} which allow to manage
  * the {@link SignalFFTSettings settings} of this tool,</li>
  * <li>the settings that are stored in the configuration file,</li>
  * </ul>
@@ -80,7 +79,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	 * <li>reads or creates the {@link SignalFFTSettings FFT settings},</li>
 	 * <li>creates and adds the {@link SignalFFTTool signal tool},</li>
 	 * <li>creates and adds the {@link SignalFFTSettingsDialogAction action}
-	 * which shows the {@link SignalFFTSettingsDialog}.</li></ul>
+	 * which shows the {@link SignalFFTSettingsPopupDialog}.</li></ul>
 	 */
 	@Override
 	public void register(SvarogAccess access)

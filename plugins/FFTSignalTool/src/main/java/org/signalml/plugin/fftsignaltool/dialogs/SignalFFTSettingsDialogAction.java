@@ -7,7 +7,7 @@ import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
 
 /**
- * Action which shows the {@link SignalFFTSettingsDialog dialog} in which the
+ * Action which shows the {@link SignalFFTSettingsPopupDialog dialog} in which the
  * {@link SignalFFTSettings FFT settings} are filled.
  *
  * @author Marcin Szumski
@@ -27,30 +27,29 @@ public class SignalFFTSettingsDialogAction extends AbstractSignalMLAction {
 	/**
 	 * the dialog that is shown by this action
 	 */
-	private SignalFFTSettingsDialog fftSettingsDialog;
+	private SignalFFTSettingsPopupDialog fftSettingsDialog;
 
 	/**
 	 * Constructor. Sets the source of messages, {@link SignalFFTSettings FFT
 	 * settings} and the text of the button.
 	 * @param settings the settings that are filled in the
-	 * {@link SignalFFTSettingsDialog dialog} shown by this action
+	 * {@link SignalFFTSettingsPopupDialog dialog} shown by this action
 	 */
 	public SignalFFTSettingsDialogAction(SignalFFTSettings settings) {
 		super();
 		fftSettings = settings;
-		fftSettingsDialog = new SignalFFTSettingsDialog();
+		fftSettingsDialog = new SignalFFTSettingsPopupDialog(null, true);
 		setText(_("Signal FFT Settings"));
 	}
 
 	/**
-	 * Shows the {@link SignalFFTSettingsDialog dialog} in which the
+	 * Shows the {@link SignalFFTSettingsPopupDialog dialog} in which the
 	 * {@link SignalFFTSettings FFT settings} are filled.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
-
+	public void actionPerformed(ActionEvent e)
+	{
 		fftSettingsDialog.showDialog(fftSettings);
-
 	}
 
 }

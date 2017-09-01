@@ -12,7 +12,6 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-import org.signalml.plugin.fftsignaltool.SignalFFTTool;
 
 import org.springframework.validation.Errors;
 
@@ -21,9 +20,8 @@ import org.springframework.validation.Errors;
  * Contains only {@link SignalFFTSettingsPanel}, where these parameters are
  * described.
  * <p>
- * The model for this dialog is of type {@link SignalFFTTool} and the
- * parameters are stored in the {@link SignalFFTSettings settings}
- * {@link SignalFFTTool#getSettings() obtained} from it.
+ * The model for this dialog is of type {@link SignalFFTSettings} and the
+ * parameters are stored in it.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
  *         Sp. z o.o.
@@ -68,26 +66,25 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	/**
 	 * {@link SignalFFTSettingsPanel#fillPanelFromModel(org.signalml.plugin.
 	 * fftsignaltool.SignalFFTSettings) Fills} the {@link
-	 * SignalFFTSettingsPanel} from the {@link SignalFFTTool model}.
+	 * SignalFFTSettingsPanel} from the {@link SignalFFTSettings model}.
 	 */
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
-		SignalFFTTool tool = (SignalFFTTool) model;
+		SignalFFTSettings settings = (SignalFFTSettings) model;
 
-		signalFFTSettingsPanel.fillPanelFromModel(tool.getSettings());
+		signalFFTSettingsPanel.fillPanelFromModel(settings);
 
 	}
 
 	/**
 	 * {@link SignalFFTSettingsPanel#fillModelFromPanel(org.signalml.plugin.
-	 * fftsignaltool.SignalFFTSettings) Fills} the {@link SignalFFTTool model}
-	 * from the {@link SignalFFTSettingsPanel}.
+	 * fftsignaltool.SignalFFTSettings) Fills} the {@link SignalFFTSettings model}.
 	 */
 	@Override
 	public void fillModelFromDialog(Object model) throws SignalMLException {
-		SignalFFTTool tool = (SignalFFTTool) model;
+		SignalFFTSettings settings = (SignalFFTSettings) model;
 
-		signalFFTSettingsPanel.fillModelFromPanel(tool.getSettings());
+		signalFFTSettingsPanel.fillModelFromPanel(settings);
 	}
 
 	/**
@@ -105,11 +102,11 @@ public class SignalFFTSettingsPopupDialog extends AbstractPopupDialog {
 	}
 
 	/**
-	 * The model for this dialog must be of type {@link SignalFFTTool}
+	 * The model for this dialog must be of type {@link SignalFFTSettings}
 	 */
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
-		return SignalFFTTool.class.isAssignableFrom(clazz);
+		return SignalFFTSettings.class.isAssignableFrom(clazz);
 	}
 
 	/**
