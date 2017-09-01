@@ -35,6 +35,11 @@ public class MontageGeneratorsPresetManager extends AbstractMultifileResourcesPr
 			"eeg10_10_cap33_gen.xml",
 			"eeg10_10_cap47_gen.xml",
 			"eeg10_20_capsleep_gen.xml",
+			"eeg_easy_cap_10_10_gen",
+			"eeg_easy_cap_10_20_gen",
+			"eeg_gel_cap_10_10_gen.xml",
+			"eeg_gel_cap_10_20_gen.xml",
+			"eeg_black_water_cap_gen.xml",
 		};
 	}
 

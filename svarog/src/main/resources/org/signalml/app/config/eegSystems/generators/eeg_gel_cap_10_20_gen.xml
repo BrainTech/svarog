@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<monageGeneratorPresets>
+	<presets>
+		<montageGenerators>
+			<eegSystemName>
+				<eegSystemSymbol>EEG GEL CAP 10_20</eegSystemSymbol>
+				<eegSystemType/>
+			</eegSystemName>
+			<generators>
+				<montageGenerator>
+					<name>Longitudinal I</name>
+					<type>BIPOLAR_REFERENCE</type>
+					<channels>
+						<pair><channel>M1</channel><channel>M2</channel></pair>
+						<pair><channel>M2</channel><channel>M1</channel></pair>
+					</channels>
+				</montageGenerator>
+			</generators>
+		</montageGenerators>
+	</presets>
+</monageGeneratorPresets>
