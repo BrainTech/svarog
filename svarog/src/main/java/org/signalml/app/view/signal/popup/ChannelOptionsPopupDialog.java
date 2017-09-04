@@ -229,11 +229,6 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		return false;
 	}
 
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
 	/*
 	 * Fired on valueScale changed. Changes model's value scale.
 	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)

@@ -126,12 +126,4 @@ public class SettingsEdit extends AbstractPopupDialog {
 		return false;
 	}
 
-	/**
-	 * @return true
-	 */
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
 }

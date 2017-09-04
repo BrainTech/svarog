@@ -412,11 +412,6 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	}
 
 	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
-	@Override
 	public boolean isControlPanelEquipped() {
 		return false;
 	}

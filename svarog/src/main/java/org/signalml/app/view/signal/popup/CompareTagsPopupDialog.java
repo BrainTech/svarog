@@ -236,11 +236,6 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		return true;
 	}
 
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
 	private class CheckBoxCoordinator implements ItemListener {
 
 		private JCheckBox penultimateSelection;

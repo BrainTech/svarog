@@ -265,11 +265,6 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		return false;
 	}
 
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
 	public SignalMontageDialog getSignalMontageDialog() {
 		return signalMontageDialog;
 	}

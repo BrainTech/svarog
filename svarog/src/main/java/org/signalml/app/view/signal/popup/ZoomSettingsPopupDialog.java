@@ -71,9 +71,4 @@ public class ZoomSettingsPopupDialog extends AbstractPopupDialog {
 		return false;
 	}
 
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
 }

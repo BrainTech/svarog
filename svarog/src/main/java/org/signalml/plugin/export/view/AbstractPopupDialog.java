@@ -5,6 +5,7 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -25,6 +26,7 @@ import org.signalml.app.view.common.dialogs.AbstractDialog;
  */
 public abstract class AbstractPopupDialog extends AbstractDialog {
 
+	static final int CROSS_SIZE = 20;
 	static final long serialVersionUID = 1L;
 
 	/**
@@ -53,40 +55,33 @@ public abstract class AbstractPopupDialog extends AbstractDialog {
 	public boolean isCancellable() {
 		return true;
 	}
-
-	/**
-	 * Returns true if clicking on the form should be approving action
-	 * ({@code OkAction}), false if it should be a canceling action
-	 * ({@code CancelAction}).
-	 * @return true if clicking on the form should be approving action,
-	 * false if it should be a canceling action
-	 */
-	public boolean isFormClickApproving() {
-		return false;
-	}
-
+	
 	@Override
 	protected void initialize() {
 
 		setUndecorated(true);
 		getRootPane().setBorder(new LineBorder(Color.LIGHT_GRAY));
 		super.initialize();
+			int winWidth = this.getWidth();
+		        MouseAdapter ma = new MouseAdapter() {
 
-		MouseAdapter ma = new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (isFormClickApproving()) {
+                       @Override
+                       public void mousePressed(MouseEvent e) {
+			       // cant find what produces cross
+			       // so doing thi crazy hack
+				Point point = e.getPoint();
+				if (winWidth - point.x < CROSS_SIZE & point.y < CROSS_SIZE)
+				{
 					getOkAction().actionPerformed(new ActionEvent(this, 0, "ok"));
-				} else {
-					getCancelAction().actionPerformed(new ActionEvent(this, 0, "cancel"));
 				}
-				e.consume();
-			}
+                              
+                               e.consume();
+                       }
 
-		};
+               };
 
-		addMouseListener(ma);
+               addMouseListener(ma);
+
 
 	}
 
