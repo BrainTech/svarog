@@ -310,6 +310,9 @@ public class SignalFFTSettingsPanel extends JPanel {
 		customWindowWidthTextField = new JTextField("");
 		customWindowWidthTextField.setPreferredSize(new Dimension(80, 25));
 		customWindowWidthTextField.setEnabled(false);
+                customWindowWidthTextField.setToolTipText(
+                        _("Be aware that if number which is a power of 2 will not be supplied, then the nearest greater power of 2 will be used.")
+                );
 
 		windowWidthPanel.add(customWindowWidthTextField);
 
