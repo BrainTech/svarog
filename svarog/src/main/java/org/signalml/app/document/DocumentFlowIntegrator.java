@@ -1603,61 +1603,46 @@ public class DocumentFlowIntegrator {
 
 		childDocuments = document.getDependentDocuments();
 		if (!childDocuments.isEmpty()) {
+			List<Document> toClose = new LinkedList<Document>();
+			Iterator<Document> it = childDocuments.iterator();
+			boolean savedOk;
+			boolean dependantsOk;
 
-			// inform the user that dependent documents must be closed
-			int res = 0;
-			if (!force) {
-				res = OptionPane.showOtherDocumentsDepend(optionPaneParent);
-			}
-			if (force || res == OptionPane.YES_OPTION) {
+			// check them
+			while (it.hasNext()) {
 
-				List<Document> toClose = new LinkedList<Document>();
-				Iterator<Document> it = childDocuments.iterator();
-				boolean savedOk;
-				boolean dependantsOk;
+				childDocument = it.next();
 
-				// check them
-				while (it.hasNext()) {
-
-					childDocument = it.next();
-
-					synchronized (childDocument) {
-						if (!force) {
-							savedOk = assertDocumentIsSaved(childDocument, false, false);
-							if (!savedOk) {
-								// cancel parent operation
-								return false;
-							}
-						}
-
-						dependantsOk = assertDocumentDependantsClosed(childDocument, force);
-						if (!dependantsOk) {
+				synchronized (childDocument) {
+					if (!force) {
+						savedOk = assertDocumentIsSaved(childDocument, false, false);
+						if (!savedOk) {
 							// cancel parent operation
 							return false;
 						}
 					}
 
-					toClose.add(childDocument);
-
-				}
-
-				// close them
-				it = toClose.iterator();
-				while (it.hasNext()) {
-					childDocument = it.next();
-					synchronized (childDocument) {
-						closeDocumentInternal(childDocument);
+					dependantsOk = assertDocumentDependantsClosed(childDocument, force);
+					if (!dependantsOk) {
+						// cancel parent operation
+						return false;
 					}
 				}
 
-			} else {
-				return false;
+				toClose.add(childDocument);
+
 			}
 
+			// close them
+			it = toClose.iterator();
+			while (it.hasNext()) {
+				childDocument = it.next();
+				synchronized (childDocument) {
+					closeDocumentInternal(childDocument);
+				}
+			}
 		}
-
 		return true;
-
 	}
 
 	/**
