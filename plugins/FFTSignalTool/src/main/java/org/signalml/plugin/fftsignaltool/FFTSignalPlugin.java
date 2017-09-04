@@ -67,12 +67,6 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 	private ArrayList<File> temporaryFiles = new ArrayList<File>();
 
 	/**
-	 * the {@link ButtonListener listener} that is set on
-	 * the button which activates {@link SignalFFTTool}
-	 */
-	private ButtonListener listener;
-
-	/**
 	 * Registers this plug-in:
 	 * <ul>
 	 * <li>extracts the resources and creates the source of messages,</li>
@@ -99,11 +93,10 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 		tool = new SignalFFTTool(popupAction);
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access); 
-		listener = new ButtonListener();
 		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
 		ShowSettings action = new ShowSettings(signalFFTSettings);
 
-		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press and hold the mouse button here)"), icon, listener, action);
+		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press right mouse button)"), icon, null, action);
 		guiAccess.addSignalTool(tool, parameters);
 
 		//creates and adds the action which shows the
