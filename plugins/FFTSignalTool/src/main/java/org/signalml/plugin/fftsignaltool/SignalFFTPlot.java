@@ -16,6 +16,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import javax.swing.JComponent;
@@ -315,6 +316,7 @@ public class SignalFFTPlot extends JComponent {
 
 			logYAxis = new LogAxis();
 			logYAxis.setAutoRange(false);
+			logYAxis.setNumberFormatOverride(new DecimalFormat("0.000E0"));
 
 		}
 
