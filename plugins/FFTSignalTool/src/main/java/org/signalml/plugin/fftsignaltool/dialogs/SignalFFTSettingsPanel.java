@@ -359,14 +359,18 @@ public class SignalFFTSettingsPanel extends JPanel {
 							JOptionPane
 							.showMessageDialog(
 								input.getParent(),
-								_("Positive integer required"));
+								_("Positive integer required"),
+								_("Validation error"),
+								JOptionPane.WARNING_MESSAGE);
 							return false;
 						}
 					} catch (NumberFormatException nfe) {
 						JOptionPane
 						.showMessageDialog(
 							input.getParent(),
-							_("Positive integer required"));
+							_("Positive integer required"),
+							_("Validation error"),
+							JOptionPane.WARNING_MESSAGE);
 						return false;
 					}
 				}
@@ -420,14 +424,18 @@ public class SignalFFTSettingsPanel extends JPanel {
 							JOptionPane
 									.showMessageDialog(
 											input.getParent(),
-											_("Positive double required"));
+											_("Positive double required"),
+											_("Validation error"),
+											JOptionPane.WARNING_MESSAGE);
 							return false;
 						}
 					} catch (NumberFormatException nfe) {
 						JOptionPane
 								.showMessageDialog(
 										input.getParent(),
-										_("Positive double required"));
+										_("Positive double required"),
+										_("Validation error"),
+										JOptionPane.WARNING_MESSAGE);
 						return false;
 					}
 				}
