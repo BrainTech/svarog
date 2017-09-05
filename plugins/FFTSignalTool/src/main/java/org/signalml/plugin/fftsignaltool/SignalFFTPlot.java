@@ -232,6 +232,7 @@ public class SignalFFTPlot extends JComponent {
 	 */
 	private void calculate() {
 
+		Boolean signal_online;
 		if (calculated) {
 			return;
 		}
@@ -269,6 +270,7 @@ public class SignalFFTPlot extends JComponent {
 			channelSamples = signalAccess.getActiveProcessedSignalSamples(
 								 channel, firstSample, sampleCnt);
 			samples = channelSamples.getSamples();
+			signal_online = (signalAccess.getActiveSignalDocument()).getFormatName() == null ? true : false;
 		} catch (RuntimeException ex) {
 			setVisible(false);
 			throw ex;
@@ -333,16 +335,20 @@ public class SignalFFTPlot extends JComponent {
 		float minTime = (float)((firstSample * timeZoomFactor) / pixelPerSecond);
 		float maxTime = (float)((lastSample * timeZoomFactor) / pixelPerSecond);
 
-		StringBuilder minTimeSb = new StringBuilder(20);
-		FormatUtils.addTime(minTime, minTimeSb);
+		String title;
+		if (signal_online) {
+			title = _R("FFT over {0} points ({1})",  windowWidth, channelSamples.getName());
+		} else {
+			StringBuilder minTimeSb = new StringBuilder(20);
+			FormatUtils.addTime(minTime, minTimeSb);
 
-		StringBuilder maxTimeSb = new StringBuilder(20);
-		FormatUtils.addTime(maxTime, maxTimeSb);
+			StringBuilder maxTimeSb = new StringBuilder(20);
+			FormatUtils.addTime(maxTime, maxTimeSb);
 
-		String title = _R("FFT over {0} points {1} - {2} ({3})",
-						  windowWidth, minTimeSb.toString(),
-						  maxTimeSb.toString(), channelSamples.getName());
-
+			title = _R("FFT over {0} points {1} - {2} ({3})",
+					windowWidth, minTimeSb.toString(),
+					maxTimeSb.toString(), channelSamples.getName());
+		}
 		powerSpectrumChart.setTitle(titleVisible ? new TextTitle(title, titleFont) : null);
 		powerSpectrumChart.setAntiAlias(antialias);
 
