@@ -3,8 +3,8 @@
  */
 package org.signalml.plugin.fftsignaltool;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._R;
 
 import java.awt.Color;
 import java.awt.Dimension;

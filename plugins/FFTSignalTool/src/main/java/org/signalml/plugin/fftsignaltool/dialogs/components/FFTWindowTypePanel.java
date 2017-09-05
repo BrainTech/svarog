@@ -1,9 +1,9 @@
 /* FFTWindowTypePanel.java created 2008-02-04
  *
  */
-package org.signalml.plugin.fftsignaltool.dialogs;
+package org.signalml.plugin.fftsignaltool.dialogs.components;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;

@@ -12,9 +12,8 @@ import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialog;
-import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTSettingsDialogAction;
-import org.signalml.plugin.fftsignaltool.dialogs.SignalFFTToolButtonMouseListener;
+import org.signalml.plugin.fftsignaltool.actions.SaveToCSV;
+import org.signalml.plugin.fftsignaltool.actions.ShowSettings;
 import org.signalml.plugin.impl.ToolButtonParameters;
 
 /**
@@ -22,7 +21,7 @@ import org.signalml.plugin.impl.ToolButtonParameters;
  * Contains:
  * <ul>
  * <li>the tool,</li>
- * <li>the {@link SignalFFTSettingsDialog dialogs} which allow to manage
+ * <li>the {@link SignalFFTSettingsPopupDialog dialogs} which allow to manage
  * the {@link SignalFFTSettings settings} of this tool,</li>
  * <li>the settings that are stored in the configuration file,</li>
  * </ul>
@@ -30,9 +29,9 @@ import org.signalml.plugin.impl.ToolButtonParameters;
  *
  * @author Marcin Szumski
  */
-public class FFTSignalTool implements Plugin, PluginCloseListener {
-	protected static final Logger log = Logger.getLogger(FFTSignalTool.class);
-	private static FFTSignalToolI18nDelegate i18nDelegate;
+public class FFTSignalPlugin implements Plugin, PluginCloseListener {
+	protected static final Logger log = Logger.getLogger(FFTSignalPlugin.class);
+	private static I18nDelegator i18nDelegate;
 
 	/**
 	 * the {@link SvarogAccessGUI} access to Svarog GUI
@@ -68,25 +67,19 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	private ArrayList<File> temporaryFiles = new ArrayList<File>();
 
 	/**
-	 * the {@link SignalFFTToolButtonMouseListener listener} that is set on
-	 * the button which activates {@link SignalFFTTool}
-	 */
-	private SignalFFTToolButtonMouseListener listener;
-
-	/**
 	 * Registers this plug-in:
 	 * <ul>
 	 * <li>extracts the resources and creates the source of messages,</li>
 	 * <li>reads or creates the {@link SignalFFTSettings FFT settings},</li>
 	 * <li>creates and adds the {@link SignalFFTTool signal tool},</li>
-	 * <li>creates and adds the {@link SignalFFTSettingsDialogAction action}
-	 * which shows the {@link SignalFFTSettingsDialog}.</li></ul>
+	 * <li>creates and adds the {@link ShowSettings action}
+	 * which shows the {@link SignalFFTSettingsPopupDialog}.</li></ul>
 	 */
 	@Override
 	public void register(SvarogAccess access)
 	throws IOException {
 
-		i18nDelegate = new FFTSignalToolI18nDelegate(access);
+		i18nDelegate = new I18nDelegator(access);
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
@@ -96,15 +89,14 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
 
 		//creates and adds the signal tool
-		SignalFFTPopupAction popupAction = new SignalFFTPopupAction(i18nDelegate);
+		SaveToCSV popupAction = new SaveToCSV(i18nDelegate);
 		tool = new SignalFFTTool(popupAction);
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access); 
-		listener = new SignalFFTToolButtonMouseListener();
 		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
-		SignalFFTSettingsDialogAction action = new SignalFFTSettingsDialogAction(signalFFTSettings);
+		ShowSettings action = new ShowSettings(signalFFTSettings);
 
-		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press and hold the mouse button here)"), icon, listener, action);
+		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press right mouse button)"), icon, null, action);
 		guiAccess.addSignalTool(tool, parameters);
 
 		//creates and adds the action which shows the
@@ -150,7 +142,7 @@ public class FFTSignalTool implements Plugin, PluginCloseListener {
 	 * Svarog i18n delegate getter.
 	 * @return the shared delegate instance
 	 */
-	public static FFTSignalToolI18nDelegate i18n() {
+	public static I18nDelegator i18n() {
 		return i18nDelegate;
 	}
 
