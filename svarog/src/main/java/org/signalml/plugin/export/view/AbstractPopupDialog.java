@@ -26,7 +26,6 @@ import org.signalml.app.view.common.dialogs.AbstractDialog;
  */
 public abstract class AbstractPopupDialog extends AbstractDialog {
 
-	static final int CROSS_SIZE = 20;
 	static final long serialVersionUID = 1L;
 
 	/**
@@ -58,31 +57,10 @@ public abstract class AbstractPopupDialog extends AbstractDialog {
 	
 	@Override
 	protected void initialize() {
-
-		setUndecorated(true);
+		setUndecorated(false);
+		setResizable(false);
 		getRootPane().setBorder(new LineBorder(Color.LIGHT_GRAY));
 		super.initialize();
-			int winWidth = this.getWidth();
-		        MouseAdapter ma = new MouseAdapter() {
-
-                       @Override
-                       public void mousePressed(MouseEvent e) {
-			       // cant find what produces cross
-			       // so doing thi crazy hack
-				Point point = e.getPoint();
-				if (winWidth - point.x < CROSS_SIZE & point.y < CROSS_SIZE)
-				{
-					getOkAction().actionPerformed(new ActionEvent(this, 0, "ok"));
-				}
-                              
-                               e.consume();
-                       }
-
-               };
-
-               addMouseListener(ma);
-
-
 	}
 
 }

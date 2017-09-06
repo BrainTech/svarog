@@ -122,11 +122,6 @@ public class TagStylesPopupDialog extends AbstractPopupDialog implements ActionL
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (tagStyleToolBar.isTagSelectionOnButtonClick()) {
 			tagStyleToolBar.getTagSelectionAction().actionPerformed(new ActionEvent(e.getSource(), 0, "tagSelection"));

@@ -57,8 +57,7 @@ public class SettingsEdit extends AbstractPopupDialog {
 	 */
 	@Override
 	public JComponent createInterface() {
-
-		settingsPanel = new SettingsPanel(true);
+		settingsPanel = new SettingsPanel();
 
 		return settingsPanel;
 
@@ -108,22 +107,6 @@ public class SettingsEdit extends AbstractPopupDialog {
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return SignalFFTSettings.class.isAssignableFrom(clazz);
-	}
-
-	/**
-	 * @return false
-	 */
-	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	/**
-	 * @return false
-	 */
-	@Override
-	public boolean isCancellable() {
-		return false;
 	}
 
 }

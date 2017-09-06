@@ -20,7 +20,6 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 
 import org.springframework.validation.Errors;
 
@@ -78,16 +77,8 @@ public class SignalZoomSettingsPanel extends JPanel {
 	 * {@code true} if the panel has a cross which closes it,
 	 * {@code false} otherwise
 	 */
-	private boolean hasCloseCross;
-
-	/**
-	 * Constructor. Initializes the panel.
-	 * @param hasCloseCross {@code true} if the panel should has a cross which
-	 * closes it, {@code false} otherwise
-	 */
 	public SignalZoomSettingsPanel(boolean hasCloseCross) {
 		super();
-		this.hasCloseCross = hasCloseCross;
 		initialize();
 	}
 
@@ -111,7 +102,7 @@ public class SignalZoomSettingsPanel extends JPanel {
 		JPanel factorPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 3, 3));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledCrossBorder(_("Zoom factor"), hasCloseCross),
+			new TitledBorder(_("Zoom factor")),
 			new EmptyBorder(3,3,3,3)
 		);
 		factorPanel.setBorder(border);
