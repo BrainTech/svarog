@@ -220,11 +220,6 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
 		return false;
 	}

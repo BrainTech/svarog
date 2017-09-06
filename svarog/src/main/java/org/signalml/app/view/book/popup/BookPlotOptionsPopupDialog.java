@@ -411,11 +411,6 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return false;
 	}
 
-	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
 	/**
 	 * Saves settings set in this dialog to {@ling ApplicationConfiguration}.
 	 */

@@ -227,11 +227,6 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
 		return true;
 	}

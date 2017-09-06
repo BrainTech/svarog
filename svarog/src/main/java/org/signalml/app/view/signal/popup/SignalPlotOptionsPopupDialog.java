@@ -384,9 +384,4 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return false;
 	}
 
-	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
 }

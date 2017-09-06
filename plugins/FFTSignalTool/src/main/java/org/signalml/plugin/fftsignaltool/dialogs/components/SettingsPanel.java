@@ -74,8 +74,7 @@ public class SettingsPanel extends JPanel {
 	/**
 	 * the logger
 	 */
-	protected static final Logger logger = Logger
-										   .getLogger(SettingsPanel.class);
+	protected static final Logger logger = Logger.getLogger(SettingsPanel.class);
 
 	/**
 	 * the array with possible sizes of FFT window (number of samples)
@@ -214,22 +213,10 @@ public class SettingsPanel extends JPanel {
 	 * {@code true} if the panel has a cross which closes it, {@code false}
 	 * otherwise
 	 */
-	private boolean hasCloseCross;
-
 	private JRadioButton fixedYAxisRadioButton;
 
-	/**
-	 * Constructor. Sets the {@link SvarogAccessI18n message source} and
-	 * initializes this panel.
-	 *
-	 * @param hasCloseCross
-	 *            {@code true} if the panel should has a cross which closes it,
-	 *            {@code false} otherwise
-	 */
-	public SettingsPanel(
-		boolean hasCloseCross) {
+	public SettingsPanel() {
 		super();
-		this.hasCloseCross = hasCloseCross;
 		initialize();
 	}
 
@@ -273,9 +260,8 @@ public class SettingsPanel extends JPanel {
 
 		JPanel windowWidthPanel = new JPanel(new GridLayout(3, 3, 3, 3));
 
-		CompoundBorder border = new CompoundBorder(new SettingsBorder(
-					_("FFT window width"),
-					hasCloseCross), new EmptyBorder(3, 3, 3, 3));
+		CompoundBorder border = new CompoundBorder(new TitledBorder(
+					_("FFT window width")), new EmptyBorder(3, 3, 3, 3));
 		windowWidthPanel.setBorder(border);
 
 		ItemListener cachingListener = new ItemListener() {

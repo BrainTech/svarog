@@ -62,11 +62,6 @@ public class ZoomSettingsPopupDialog extends AbstractPopupDialog {
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
 		return false;
 	}

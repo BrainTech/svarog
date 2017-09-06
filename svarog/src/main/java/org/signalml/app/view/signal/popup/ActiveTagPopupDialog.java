@@ -153,11 +153,6 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		getOkAction().actionPerformed(new ActionEvent(this, 0, "ok"));
 	}
