@@ -67,9 +67,4 @@ public class BookZoomPopupDialog extends AbstractPopupDialog {
 		return false;
 	}
 
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
 }
