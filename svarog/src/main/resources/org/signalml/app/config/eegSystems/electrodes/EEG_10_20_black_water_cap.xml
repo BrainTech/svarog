@@ -3,7 +3,7 @@
 	<presets>
 		<eegSystem>
 			<eegSystemName>
-				<eegSystemSymbol>EEG BLACK WATER CAP</eegSystemSymbol>
+				<eegSystemSymbol>EEG 10-20 black water cap</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<isDefault>false</isDefault>

@@ -31,17 +31,11 @@ public class EegElectrodesPresetManager extends AbstractMultifileResourcesPreset
 	@Override
 	public String[] getDefaultFileNames() {
 		return new String[] {
-			"eeg10_20_cap19.xml",
-			"eeg10_20_cap25.xml",
-			"eeg10_20_cap25_extended.xml",
-			"eeg10_10_cap33.xml",
-			"eeg10_10_cap47.xml",
-			"eeg10_20_capsleep.xml",
-			"eeg_easy_cap_10_10.xml",
-			"eeg_easy_cap_10_20.xml",
-			"eeg_gel_cap_10_10.xml",
-			"eeg_gel_cap_10_20.xml",
-			"eeg_black_water_cap.xml",
+			"EEG_10_10_easy_cap.xml",
+			"EEG_10_20_easy_cap.xml",
+			"EEG_10_10_gel_cap.xml",
+			"EEG_10_20_blue_water_cap.xml",
+			"EEG_10_20_black_water_cap.xml",
 		};
 	}
 

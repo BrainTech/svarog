@@ -3,7 +3,7 @@
 	<presets>
 		<eegSystem>
 			<eegSystemName>
-				<eegSystemSymbol>EEG EASY CAP 10_20</eegSystemSymbol>
+				<eegSystemSymbol>EEG 10-20 easy cap</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<isDefault>false</isDefault>

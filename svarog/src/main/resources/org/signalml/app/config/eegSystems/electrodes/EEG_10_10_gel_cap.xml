@@ -3,7 +3,7 @@
 	<presets>
 		<eegSystem>
 			<eegSystemName>
-				<eegSystemSymbol>EEG GEL CAP 10_10</eegSystemSymbol>
+				<eegSystemSymbol>EEG 10-10 gel cap</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<isDefault>false</isDefault>
