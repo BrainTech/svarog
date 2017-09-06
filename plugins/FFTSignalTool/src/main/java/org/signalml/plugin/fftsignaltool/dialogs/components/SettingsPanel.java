@@ -348,41 +348,11 @@ public class SettingsPanel extends JPanel {
 			JLabel label = new JLabel(
 				_("Show fq range [Hz]"));
 
-			InputVerifier intInputVerifier = new InputVerifier() {
-				@Override
-				public boolean verify(JComponent input) {
-					try {
-						String text = ((JTextField) input).getText().trim();
-						if (text.length() == 0 || Integer.parseInt(text) >= 0)
-							return true;
-						else {
-							JOptionPane
-							.showMessageDialog(
-								input.getParent(),
-								_("Positive integer required"),
-								_("Validation error"),
-								JOptionPane.WARNING_MESSAGE);
-							return false;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane
-						.showMessageDialog(
-							input.getParent(),
-							_("Positive integer required"),
-							_("Validation error"),
-							JOptionPane.WARNING_MESSAGE);
-						return false;
-					}
-				}
-			};
-
 			JPanel rangePanel = new JPanel();
 			visibleRangeStartTextField = new JTextField();
 			visibleRangeStartTextField.setColumns(5);
-			visibleRangeStartTextField.setInputVerifier(intInputVerifier);
 			visibleRangeEndTextField = new JTextField();
 			visibleRangeEndTextField.setColumns(5);
-			visibleRangeEndTextField.setInputVerifier(intInputVerifier);
 			rangePanel.add(label);
 			rangePanel.add(visibleRangeStartTextField);
 			rangePanel.add(new JLabel("-"));
@@ -397,7 +367,6 @@ public class SettingsPanel extends JPanel {
 
 			xAxisLabelCountTextField = new JTextField();
 			xAxisLabelCountTextField.setColumns(5);
-			xAxisLabelCountTextField.setInputVerifier(intInputVerifier);
 			countPanel.add(xAxisLabelCountTextField);
 			fftViewPanel.add(countPanel);
 			fftViewPanel.add(rangePanel);
@@ -413,41 +382,12 @@ public class SettingsPanel extends JPanel {
 			fixedYAxisRadioButton.setSelected(true);
 			fftViewPanel.add(autoScaleYAxisRadioButton);
 
-			InputVerifier doubleInputVerifier = new InputVerifier() {
-				@Override
-				public boolean verify(JComponent input) {
-					try {
-						String text = ((JTextField) input).getText().trim();
-						if (text.length() == 0 || Double.parseDouble(text) >= 0)
-							return true;
-						else {
-							JOptionPane
-									.showMessageDialog(
-											input.getParent(),
-											_("Positive double required"),
-											_("Validation error"),
-											JOptionPane.WARNING_MESSAGE);
-							return false;
-						}
-					} catch (NumberFormatException nfe) {
-						JOptionPane
-								.showMessageDialog(
-										input.getParent(),
-										_("Positive double required"),
-										_("Validation error"),
-										JOptionPane.WARNING_MESSAGE);
-						return false;
-					}
-				}
-			};
 			JPanel yAxisRangePanel = new JPanel();
 			yAxisRangePanel.add(fixedYAxisRadioButton);
 			customMinYAxis = new JTextField();
 			customMinYAxis.setColumns(5);
-			customMinYAxis.setInputVerifier(doubleInputVerifier);
 			customMaxYAxis = new JTextField();
 			customMaxYAxis.setColumns(5);
-			customMaxYAxis.setInputVerifier(doubleInputVerifier);
 			yAxisRangePanel.add(customMinYAxis);
 			yAxisRangePanel.add(new JLabel("-"));
 			yAxisRangePanel.add(customMaxYAxis);
@@ -711,8 +651,24 @@ public class SettingsPanel extends JPanel {
 			settings.setXAxisLabelCount(Integer.MAX_VALUE);
 		}
 		settings.setAutoScaleYAxis(autoScaleYAxisRadioButton.isSelected());
-		settings.setMaxPowerAxis(Double.parseDouble(customMaxYAxis.getText()));
-		settings.setMinPowerAxis(Double.parseDouble(customMinYAxis.getText()));
+		try
+		{
+			settings.setMaxPowerAxis(Double.parseDouble(customMaxYAxis.getText()));
+		}
+		catch (NumberFormatException ex)
+		{
+			settings.setMaxPowerAxis(0);
+		}
+		
+		try
+		{
+			settings.setMinPowerAxis(Double.parseDouble(customMinYAxis.getText()));
+		}
+		catch (NumberFormatException ex)
+		{
+			settings.setMinPowerAxis(0);
+		}
+		
 
 		Dimension plotSize = new Dimension(600, 200);
 		for (i = 0; i < possiblePlotWidths.length; i++) {
@@ -754,6 +710,24 @@ public class SettingsPanel extends JPanel {
 
 	}
 
+	private boolean validatePositiveInt(JTextField field){
+		try {	
+			 return Integer.parseInt(field.getText()) >= 0;
+		}
+		catch(NumberFormatException ex) {
+			return false;
+		}
+	}
+	
+	private boolean validatePositiveDouble(JTextField field){
+		try {	
+			return Double.parseDouble(field.getText()) >= 0;
+		}
+		catch(NumberFormatException ex) {
+			return false;
+		}
+	}
+	
 	/**
 	 * Validates this panel. This panel can be invalid only in the custom window
 	 * size is selected and the entered value is in bad format or to small (
@@ -766,8 +740,7 @@ public class SettingsPanel extends JPanel {
 
 		if (customWindowWidthRadioButton.isSelected()) {
 			try {
-				int windowWidth = Integer.parseInt(customWindowWidthTextField
-												   .getText());
+				int windowWidth = Integer.parseInt(customWindowWidthTextField.getText());
 				if (windowWidth < 8) {
 					errors.addError(_("Bad window width. Must be an integer greater than 7"));
 				}
@@ -775,26 +748,72 @@ public class SettingsPanel extends JPanel {
 				errors.addError(_("Bad window width. Must be an integer greater than 7"));
 			}
 		}
+		
 
-		try {
+		boolean minYV = validatePositiveDouble(customMinYAxis);
+		boolean maxYV = validatePositiveDouble(customMaxYAxis);
+		if (!maxYV && fixedYAxisRadioButton.isSelected())
+		{
+			errors.addError(_("Max Y axis: positive double required "));
+		}
+		if (!minYV && fixedYAxisRadioButton.isSelected())
+		{
+			errors.addError(_("Min Y axis: positive double required "));
+		}
+		
+		double minY = 0;
+		if (minYV && maxYV && fixedYAxisRadioButton.isSelected())
+		{
+			double maxY = Double.parseDouble(customMaxYAxis.getText());
+			minY = Double.parseDouble(customMinYAxis.getText());
+
+			if (maxY <= minY)
+			errors.addError(_("Bad power axis range - min must be lower than max"));
+		}
+		
+
+		if (fixedYAxisRadioButton.isSelected() &&
+				logarithmicCheckBox.isSelected() && minYV && minY == 0)
+			errors.addError(_("For logarithmic scale for Y axis min cannot be equal to 0."));
+		
+		
+		boolean minXV = validatePositiveInt(visibleRangeStartTextField);
+		if (!minXV && visibleRangeStartTextField.getText().length()>0)
+		{
+			errors.addError(_("Frequency range start: positive integer required"));
+		}
+		
+		boolean maxXV = validatePositiveInt(visibleRangeEndTextField);
+
+		
+		if (!maxXV && visibleRangeEndTextField.getText().length()>0)
+		{
+			errors.addError(_("Frequency range end: positive integer required"));
+		}
+		
+		if (minXV && maxXV)
+		{
+			int maxX = Integer.parseInt(visibleRangeEndTextField.getText());
+			int minX = Integer.parseInt(visibleRangeStartTextField.getText());
+
+			if (maxX <= minX)
+			errors.addError(_("Bad frequency axis range - min must be lower than max"));
+		}
+		fftWindowTypePanel.validatePanel(errors);
+
+		
+		
+		if (!validatePositiveInt(xAxisLabelCountTextField))
+		{
+			errors.addError(_("X-axis label count: positive integer required"));
+		}
+		else
+		{
 			int xAxisLabelCount = Integer.parseInt(xAxisLabelCountTextField.getText());
 			if (xAxisLabelCount <= 0) {
 				errors.addError(_("X-Axis label count should be greater than 0!"));
 			}
-		} catch(NumberFormatException ex) {
-			errors.addError(_("Bad X-Axis label count!"));
 		}
-
-		fftWindowTypePanel.validatePanel(errors);
-		double maxY = Double.parseDouble(customMaxYAxis.getText());
-		double minY = Double.parseDouble(customMinYAxis.getText());
-		if (maxY <= minY)
-			errors.addError(_("Bad power axis range - min must be lower than max"));
-
-		if (fixedYAxisRadioButton.isSelected() &&
-				logarithmicCheckBox.isSelected() && minY == 0)
-			errors.addError(_("For logarithmic scale for Y axis min cannot be equal to 0."));
-
 	}
 
 }

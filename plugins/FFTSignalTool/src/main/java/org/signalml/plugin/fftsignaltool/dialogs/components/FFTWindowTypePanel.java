@@ -265,19 +265,17 @@ public class FFTWindowTypePanel extends JPanel {
 							String parameterMinString;
 							String parameterMaxString;
 							if (parameterMin > Double.MIN_VALUE) {
-								parameterMinString = Double
-													 .toString(parameterMin);
+								parameterMinString = "[" + Double.toString(parameterMin);
 							} else {
-								parameterMinString = "";
+								parameterMinString = "(0";
 							}
 							if (parameterMax < Double.MAX_VALUE) {
-								parameterMaxString = Double
-													 .toString(parameterMax);
+								parameterMaxString = Double.toString(parameterMax) + "]";
 							} else {
-								parameterMaxString = "";
+								parameterMaxString = "+∞)";
 							}
 
-							errors.addError(_("Bad window parameter. Allowed range: ") + parameterMinString + " - " + parameterMaxString);
+							errors.addError(_("Bad window parameter. Allowed range: ") + parameterMinString + "; " + parameterMaxString);
 						}
 					} catch (NumberFormatException ex) {
 						errors.addError(_("Bad window parameter. Must be a double precision value"));
