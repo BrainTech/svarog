@@ -209,10 +209,6 @@ public class SettingsPanel extends JPanel {
 	 */
 	private String cachedWindowWidth = null;
 
-	/**
-	 * {@code true} if the panel has a cross which closes it, {@code false}
-	 * otherwise
-	 */
 	private JRadioButton fixedYAxisRadioButton;
 
 	public SettingsPanel() {

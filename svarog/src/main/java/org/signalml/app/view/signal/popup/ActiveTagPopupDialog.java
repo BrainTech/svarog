@@ -23,9 +23,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import org.signalml.app.document.TagDocument;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
@@ -76,7 +76,7 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 		interfacePanel.setLayout(new GridLayout(cnt, 1, 3, 3));
 
 		CompoundBorder cb = new CompoundBorder(
-			new TitledCrossBorder(_("Choose active tag"), true),
+			new TitledBorder(_("Choose active tag")),
 			new EmptyBorder(3,3,3,3)
 		);
 		interfacePanel.setBorder(cb);

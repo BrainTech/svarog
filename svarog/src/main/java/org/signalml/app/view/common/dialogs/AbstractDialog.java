@@ -215,7 +215,7 @@ public abstract class AbstractDialog extends JDialog {
 	protected final void initializeControlPane() {
 
 		JPanel controlPane = getControlPane();
-		contentPane.add(controlPane,BorderLayout.SOUTH);
+		contentPane.add(controlPane, BorderLayout.SOUTH);
 
 		addContextHelp();
 

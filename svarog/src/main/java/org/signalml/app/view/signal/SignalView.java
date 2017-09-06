@@ -2128,12 +2128,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		public void actionPerformed(ActionEvent e) {
 			SignalPlotOptionsPopupDialog dialog = getPlotOptionsDialog();
 			dialog.initializeNow();
-			Container ancestor = getTopLevelAncestor();
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(plotOptionsButton, new Point(0,0), ancestor);
-			location.translate(containerLocation.x-(dialog.getSize().width-plotOptionsButton.getSize().width)/2, containerLocation.y);
-			dialog.setLocation(location);
-			dialog.showDialog(null);
+			dialog.showDialog(null, true);
 		}
 
 	}
