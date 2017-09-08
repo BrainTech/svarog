@@ -83,7 +83,7 @@ public class ManagerOfPresetManagers {
 
 		fftFilterPresetManager = new FFTSampleFilterPresetManager();
 		fftFilterPresetManager.setProfileDir(profileDir);
-
+		
 		try {
 			fftFilterPresetManager.readFromPersistence(null);
 		} catch (FileNotFoundException ex) {
@@ -94,6 +94,7 @@ public class ManagerOfPresetManagers {
 
 		experimentsSettingsPresetManager = new ExperimentsSettingsPresetManager();
 		experimentsSettingsPresetManager.setProfileDir(profileDir);
+		experimentsSettingsPresetManager.createProfileDirectoryIfNecessary();
 		try {
 			experimentsSettingsPresetManager.readFromPersistence(null);
 		} catch (FileNotFoundException ex) {
@@ -161,6 +162,9 @@ public class ManagerOfPresetManagers {
 		}
 
 		try {
+			for (String resourceFileName: experimentsSettingsPresetManager.getDefaultFileNames()) {
+				experimentsSettingsPresetManager.removePresetByName(resourceFileName);
+			}
 			experimentsSettingsPresetManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write new experiments settings presets to file", ex);

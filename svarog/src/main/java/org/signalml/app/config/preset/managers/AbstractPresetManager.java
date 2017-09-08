@@ -35,6 +35,8 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 	protected Preset defaultPreset;
 
 	protected transient HashMap<String, Integer> presetsByName;
+	
+	protected transient HashMap<String, Integer> presetsToRemoveByName;
 
 	protected transient EventListenerList listenerList = new EventListenerList();
 
@@ -215,4 +217,4 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 			this.defaultPreset = otherPresetManager.defaultPreset;
 	}
 
-}
+}	

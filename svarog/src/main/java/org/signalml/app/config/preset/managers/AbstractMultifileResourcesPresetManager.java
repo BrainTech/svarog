@@ -75,10 +75,12 @@ public abstract class AbstractMultifileResourcesPresetManager extends AbstractPr
 
 			resourcesConfiguration.copyFrom(config);
 		}
-
 		// then - read from profileDir
-		super.readFromPersistence(file);
-
+		try {
+				super.readFromPersistence(file);
+			} catch (IOException e) {
+					//do nothing
+				}
 		// merge both results
 		this.copyFrom(resourcesConfiguration);
 	}
