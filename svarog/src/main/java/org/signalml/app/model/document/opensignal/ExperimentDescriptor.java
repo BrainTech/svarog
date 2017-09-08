@@ -17,6 +17,7 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 
 	private String id;
 	private String name;
+
 	private String path;
 	private String origin_machine;
 	private Amplifier amplifier = new Amplifier();

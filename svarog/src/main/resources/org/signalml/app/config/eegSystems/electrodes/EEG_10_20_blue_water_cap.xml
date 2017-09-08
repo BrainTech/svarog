@@ -67,8 +67,8 @@
 				<eegElectrode>
 					<label>POz</label>
 					<polarPosition>
-						<theta>67</theta>
-						<phi>-90</phi>
+						<theta>-180</theta>
+						<phi>21</phi>
 						<radius>1</radius>
 					</polarPosition>
 				</eegElectrode>
