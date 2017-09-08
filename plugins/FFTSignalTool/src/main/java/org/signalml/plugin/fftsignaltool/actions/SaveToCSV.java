@@ -41,7 +41,7 @@ public class SaveToCSV extends AbstractSignalMLAction {
 		logger.debug("Saving FFT in CSV file");
 		if (powerSpectrum == null || frequencies == null) {
 			JOptionPane.showMessageDialog(null,
-					_("First you have to comupte FFT."),
+					_("First you have to compute FFT."),
 					_("No FFT computed"),
 					JOptionPane.ERROR_MESSAGE);
 			logger.debug("No FFT computed");
