@@ -4,6 +4,7 @@
 
 package org.signalml.app.document;
 
+import static javax.swing.JOptionPane.showOptionDialog;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Component;
@@ -16,9 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
 import javax.swing.filechooser.FileFilter;
 
 import org.apache.log4j.Logger;
@@ -41,6 +40,7 @@ import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.util.IconUtils;
 import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.book.BookView;
@@ -251,6 +251,21 @@ public class DocumentFlowIntegrator {
 						return false;
 					}
 				}
+
+				String closeString = _("Close");
+				String cancelString = _("Cancel");
+
+				int res = showOptionDialog(optionPaneParent,
+						_("Are you sure you want to close the preview?"),
+						closeString + "?",
+						JOptionPane.OK_OPTION,
+						JOptionPane.QUESTION_MESSAGE,
+						IconUtils.getQuestionIcon(),
+						new Object[]{closeString, cancelString},
+						closeString
+				);
+				if (res != 0) return false;
+
 
 				boolean dependantsOk = assertDocumentDependantsClosed(document, force);
 				if (!dependantsOk) {
