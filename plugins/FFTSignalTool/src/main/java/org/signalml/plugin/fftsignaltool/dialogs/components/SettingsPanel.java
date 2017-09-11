@@ -449,7 +449,9 @@ public class SettingsPanel extends JPanel {
 		optionsPanel.add(channelSwitchingCheckBox);
 		optionsPanel.add(logarithmicCheckBox);
 		optionsPanel.add(antialiasCheckBox);
-		optionsPanel.add(splineCheckBox);
+		// TODO: repair scale: when spline is used fft window
+		// do not fit to the signal its y max and min value. issue: #36625
+		// optionsPanel.add(splineCheckBox);
 		optionsPanel.add(frequencyAxisLabelsVisibleCheckBox);
 		optionsPanel.add(powerAxisLabelsVisibleCheckBox);
 		optionsPanel.add(titleVisibleCheckBox);
