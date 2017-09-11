@@ -7,6 +7,7 @@ package org.signalml.app.worker.monitor.messages;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -147,20 +148,24 @@ public class BaseMessage {
 	
 	
 	@JsonIgnore
-	public static String[] parseHeader(byte[] header)
+	public static String[] parseHeader(byte[] header) throws OpenbciCommunicationException
 	{
-		return (new String(header)).split("\\^");
+		try {
+			return (new String(header,"UTF8")).split("\\^");
+		} catch (UnsupportedEncodingException ex) {
+			throw new OpenbciCommunicationException(_R("Unknown message chartype"));
+		}
 	}
 	
 	@JsonIgnore
-	public static MessageType parseMessageType(byte[] header) {
+	public static MessageType parseMessageType(byte[] header) throws OpenbciCommunicationException {
 		
 		String msgTypeCode = parseHeader(header)[0];
 		return MessageType.parseMessageTypeFromMessageCode(msgTypeCode);
 	}
 	
 	@JsonIgnore
-	public static String parseSender(byte[] header) {
+	public static String parseSender(byte[] header) throws OpenbciCommunicationException {
 		try {
 			return parseHeader(header)[1];
 		}
