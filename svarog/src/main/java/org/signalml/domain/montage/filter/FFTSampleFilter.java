@@ -566,6 +566,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 
 		if (!this.windowType.equals(windowType) || this.windowParameter!=fft.windowParameter)
 			return false;
+		if (name != fft.name) return false;
 
 		return true;
 
