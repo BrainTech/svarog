@@ -29,6 +29,7 @@ import org.signalml.app.view.montage.SignalMontagePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
@@ -101,7 +102,12 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 			String[] channelLabels = openSignalDescriptor.getChannelLabels();
 			for (int i = 0; i < channelLabels.length; i++) {
+				try{
 				createdMontage.setSourceChannelLabelAt(i, channelLabels[i]);
+				}catch(MontageException e){
+					Dialogs.showError(e.getMessage());
+					return false;
+				}
 			}
 			createdMontage.getMontageGenerator().createMontage(createdMontage);
 
