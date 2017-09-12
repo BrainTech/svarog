@@ -122,16 +122,13 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 
 		boolean ok = true;
 
-		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
 		for (int i = 0; i < referenceChannelsNames.length; i++) {
 			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
-			if (sourceChannel != null)
-				sourceChannels.add(sourceChannel);
-			else {
+			if (sourceChannel == null)
+			{
 				onNotFound(referenceChannelsNames[i], errors);
 				ok = false;
 			}
-
 		}
 
 		return ok;

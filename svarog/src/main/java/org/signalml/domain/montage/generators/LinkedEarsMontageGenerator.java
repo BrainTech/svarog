@@ -1,7 +1,9 @@
 package org.signalml.domain.montage.generators;
 
+import org.signalml.app.model.components.validation.ValidationErrors;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.SourceChannel;
+import org.signalml.domain.montage.SourceMontage;
 
 /**
  * This class represents a generator for a linked ears montage.
@@ -23,4 +25,33 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 		setName(_("Linked ears montage"));
 	}
 
+	@Override
+	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
+		boolean setAvailable = super.validateSourceMontage(sourceMontage, null);
+		if (!setAvailable)
+		{
+			this.referenceChannelsNames = new String[] {
+				  SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE,
+				  SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE
+					};
+			setAvailable = super.validateSourceMontage(sourceMontage, null);
+		}
+		if (!setAvailable)
+		{	
+			this.referenceChannelsNames = new String[] {
+			  SourceChannel.LEFT_EAR_CHANNEL_NAME,
+			  SourceChannel.RIGHT_EAR_CHANNEL_NAME
+				};
+			errors.addError(_("At least one set of ears should be available: "
+				+ SourceChannel.LEFT_EAR_CHANNEL_NAME + ", "
+				+ SourceChannel.RIGHT_EAR_CHANNEL_NAME + " or "
+				+ SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE
+				+ ", "
+				+ SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE
+				+ "."
+			));
+			return false;
+		}
+		return true;
+	}
 }

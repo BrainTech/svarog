@@ -29,7 +29,10 @@ public abstract class AbstractMontageGenerator implements IMontageGenerator {
 	* @param errors an Errors object used to report errors
 	*/
 	protected void onNotFound(String channelName, ValidationErrors errors) {
+		if (errors != null)
+		{
 		errors.addError(_("One of required channels not identified: ") + channelName);
+		}
 	}
 
 	@Override
