@@ -382,7 +382,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public String toString() {
-		return name;
+		return name != null ? name : getEffect();
 	}
 
 	@Override
