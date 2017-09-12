@@ -248,19 +248,19 @@ public class MontageChannel implements Serializable {
 		if (item.contains("/")) {
 			parts = item.split("\\s*/\\s*");
 			if (parts == null || parts.length != 2) {
-				throw new NumberFormatException("error.badReferenceValue");
+				throw new NumberFormatException("Bad reference value");
 			}
 			hi = Integer.parseInt(parts[0]);
 			lo = Integer.parseInt(parts[1]);
 			if (lo == 0) {
-				throw new NumberFormatException("error.badReferenceValue");
+				throw new NumberFormatException("Bad reference value");
 			}
 			return (((float) hi) / lo);
 		} else {
 			try {
 				return Float.parseFloat(item);
 			} catch (NumberFormatException ex) {
-				throw new NumberFormatException("error.badReferenceValue");
+				throw new NumberFormatException("Bad reference value");
 			}
 		}
 	}
