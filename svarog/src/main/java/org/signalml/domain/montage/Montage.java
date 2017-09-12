@@ -3,6 +3,7 @@
  */
 
 package org.signalml.domain.montage;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -563,10 +564,10 @@ public class Montage extends SourceMontage implements Preset {
 	public String setMontageChannelLabelAt(int index, String label) throws MontageException {
 
 		if (label == null || label.isEmpty()) {
-			throw new MontageException("error.montageChannelLabelEmpty");
+			throw new MontageException(_("Montage label cannot be empty."));
 		}
 		if (Util.hasSpecialChars(label)) {
-			throw new MontageException("error.montageChannelLabelBadChars");
+			throw new MontageException(_("Special character are not allowed in montage label."));
 		}
 
 		MontageChannel channel = montageChannels.get(index);
@@ -575,7 +576,7 @@ public class Montage extends SourceMontage implements Preset {
 		if (!oldLabel.equals(label)) {
 			MontageChannel namedChannel = map.get(label);
 			if (namedChannel != null && namedChannel != channel) {
-				throw new MontageException("error.montageChannelLabelDuplicate");
+				throw new MontageException(_("Montage labels cannot be duplicates."));
 			}
 			map.remove(oldLabel);
 			channel.setLabel(label);
