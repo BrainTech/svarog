@@ -2711,7 +2711,7 @@ msgid "Previous topic"
 msgstr ""
 
 #: org/signalml/app/montage/MontageTableModel.java:90
-msgid "Primary label"
+msgid "Reference"
 msgstr ""
 
 #: org/signalml/app/view/montage/VisualReferenceModel.java:166

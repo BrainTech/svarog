@@ -708,9 +708,7 @@ public class Montage extends SourceMontage implements Preset {
 		String result = ""; // start with the first element
 		String ONE = "1", MINUS = "-";
 		for (int i=0; i<references.length; i++) {
-			if ((references[i] == null) || (this.getSourceChannelAt(i).getFunction() == ChannelFunction.ZERO))
-				// null means that no reference for given sourceChannel is present
-				// empty is 0 - also ignore
+			if (references[i] == null)
 				continue;
 			else {
 				// combine current reference with other - insert '*' chars etc
@@ -722,10 +720,7 @@ public class Montage extends SourceMontage implements Preset {
 				if (!references[i].equals(ONE))
 					pre = pre + references[i] + "*";
 
-				if (this.getSourceChannelAt(i).getFunction() == ChannelFunction.ONE)
-					result = result + pre + "1";
-				else
-					result = result + pre + sourceChannels.get(i).getLabel();
+				result = result + pre + sourceChannels.get(i).getLabel();
 			}
 		}
 		return result;
