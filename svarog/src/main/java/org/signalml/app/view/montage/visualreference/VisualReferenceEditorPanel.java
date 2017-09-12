@@ -481,7 +481,7 @@ public class VisualReferenceEditorPanel extends JPanel implements PropertyChange
 			try {
 				montage.setReference(arrow.getTargetChannel(), arrow.getSourceChannel(), weightTextField.getText());
 			} catch (NumberFormatException ex) {
-				Dialogs.showExceptionDialog((Window) null, ex);
+				Dialogs.showError(ex.getMessage());
 				weightTextField.setText(montage.getReference(arrow.getTargetChannel(), arrow.getSourceChannel()));
 				weightTextField.selectAll();
 				weightTextField.requestFocusInWindow();

@@ -236,6 +236,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	protected void onDialogClose() {
 		super.onDialogClose();
 
+
 		getStepOnePanel().getSignalSourceTabbedPane().getChooseExperimentPanel().clearExperiments();
 	}
 
