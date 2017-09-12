@@ -153,7 +153,7 @@ public class MontageTableModel extends AbstractTableModel implements SourceMonta
 			try {
 				montage.setMontageChannelLabelAt(rowIndex, (String) value);
 			} catch (MontageException ex) {
-				Dialogs.showExceptionDialog((Window) null, ex);
+				Dialogs.showError(ex.getLocalizedMessage());
 				fireTableDataChanged();
 				return;
 			}
