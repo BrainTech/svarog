@@ -196,7 +196,7 @@ public class SourceMontageTableModel extends AbstractTableModel implements Sourc
 			try {
 				montage.setSourceChannelLabelAt(rowIndex, (String) value);
 			} catch (MontageException ex) {
-				Dialogs.showExceptionDialog((Window) null, ex);
+				Dialogs.showError(ex.getMessage());
 				fireTableCellUpdated(rowIndex, columnIndex);
 				return;
 			}
