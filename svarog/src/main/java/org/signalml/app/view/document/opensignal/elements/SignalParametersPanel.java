@@ -260,7 +260,7 @@ public class SignalParametersPanel extends JPanel {
 
 		if (pageSizeSpinner == null) {
 			pageSizeSpinner = new FloatSpinner(new SpinnerNumberModel(20.0F,
-											   20.0F, 100000.0F, 0.1F));
+											   20.0F, 8000.0F, 0.1F));
 		}
 		return pageSizeSpinner;
 	}
