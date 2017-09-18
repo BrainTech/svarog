@@ -33,5 +33,7 @@ mv plugins/SignalAnalysisPlugin/target/*.xml dist/svarog-$VERSION-standalone/plu
 mv plugins/Stager/target/*.jar dist/svarog-$VERSION-standalone/plugins/
 mv plugins/Stager/target/*.xml dist/svarog-$VERSION-standalone/plugins/
 
+cp LICENSE.txt dist/svarog-$VERSION-standalone/
+
 cd dist
 zip -r svarog-$VERSION-standalone.zip svarog-$VERSION-standalone

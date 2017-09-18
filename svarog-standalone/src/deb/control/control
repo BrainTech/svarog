@@ -8,3 +8,4 @@ Recommends: vlc
 Suggests: svarog-artifact, svarog-bookreporter, svarog-fftsignaltool, svarog-plugintoolcommon, svarog-signalanalysisplugin, svarog-stager, empi
 Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
 Description: Svarog EEG signal viewer
+ License: GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)

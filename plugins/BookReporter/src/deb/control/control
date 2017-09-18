@@ -6,3 +6,4 @@ Architecture: all
 Depends: svarog, oracle-java8-installer | openjfx 
 Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
 Description: Bookreporter plugin for svarog
+ License: GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)

@@ -23,3 +23,4 @@ Depends: svarog-artifact, svarog-bookreporter, svarog-fftsignaltool, svarog-plug
 # Files: <pair of space-separated paths; First is file to include, second is destination>
 #  <more pairs, if there's more than one file to include. Notice the starting space>
 Description: Svarog metapackage - install Svarog with all plugins
+ License: GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
