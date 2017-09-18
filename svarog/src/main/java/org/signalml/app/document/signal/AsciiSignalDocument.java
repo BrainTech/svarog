@@ -27,7 +27,7 @@ public class AsciiSignalDocument extends BaseSignalDocument {
 
 	@Override
 	public String getFormatName() {
-		return "ASCII";
+		return "CSV";
 	}
 
 }

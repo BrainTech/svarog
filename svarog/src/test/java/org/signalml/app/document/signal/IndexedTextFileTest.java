@@ -5,12 +5,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 
 /**
  * @author piotr.rozanski@braintech.pl
  */
-public class IndexedTextFileTest {
-	
+public class IndexedTextFileTest extends BaseTestCase {
+
 	private static IndexedTextFile prepareTemporaryTestFile(String contents) throws IOException {
 		File temp = File.createTempFile("ascii", ".txt");
 		temp.deleteOnExit();

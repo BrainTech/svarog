@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import org.apache.log4j.Logger;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.FIRST_LINE_START;
 import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.SEPARATOR;
 
@@ -22,7 +24,8 @@ public class AsciiSignalSampleSource extends BaseSignalSampleSource {
 
 	private final IndexedTextFile index;
 	private final boolean startsWithComment;
-	
+	private boolean parsingErrorDialogShown;
+
 	public AsciiSignalSampleSource(File file, int channelCount, float samplingFrequency) throws IOException {
 		super(file, channelCount, samplingFrequency);
 		index = new IndexedTextFile(file, INTERVAL_BETWEEN_STORED_OFFSETS);
@@ -58,6 +61,7 @@ public class AsciiSignalSampleSource extends BaseSignalSampleSource {
 		if (startsWithComment) {
 			++lineOffset;
 		}
+		boolean csvParsingErrors = false;
 		try {
 			for (int i=0; i<count; ++i) {
 				String line = index.getLine(lineOffset + i);
@@ -65,12 +69,22 @@ public class AsciiSignalSampleSource extends BaseSignalSampleSource {
 				if (values.length != channelCount) {
 					throw new IOException("invalid data format");
 				}
-				double sample = Double.parseDouble(values[channel]);
-				target[arrayOffset + i] = performCalibration(channel, sample);
+				try {
+					double sample = Double.parseDouble(values[channel]);
+					target[arrayOffset + i] = performCalibration(channel, sample);
+				} catch (NumberFormatException ex) {
+					csvParsingErrors = true;
+					target[arrayOffset + i] = 0.0;
+				}
 			}
-		} catch (IOException|NumberFormatException ex) {
-			logger.warn("cannot read from ASCII file", ex);
+		} catch (IOException ex) {
+			logger.warn("cannot read from CSV file", ex);
 			Arrays.fill(target, arrayOffset, arrayOffset+count, 0.0);
+		}
+		if (csvParsingErrors && !parsingErrorDialogShown) {
+			// display the error dialog only once per file
+			parsingErrorDialogShown = true;
+			Dialogs.showError(_("CSV file is badly formatted. Some data may not be displayed properly."));
 		}
 	}
 
