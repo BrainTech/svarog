@@ -284,7 +284,14 @@ public class DefaultDocumentManager implements DocumentManager {
 		return null;
 
 	}
-
+	@Override
+	public Iterator<Document> iterator(ManagedDocumentType type) {
+		synchronized (this) {
+			Vector<Document> vector = documentVectorsByType.getOrDefault(type,new Vector<Document>());
+			return vector.iterator();
+		}
+	}
+	
 	@Override
 	public int getIndexOfDocument(ManagedDocumentType type, Document document) {
 

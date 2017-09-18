@@ -662,7 +662,7 @@ public class SignalViewingConfigPanel extends JPanel {
 
 			scalesPanel = new JPanel();
 			scalesPanel.setBorder(new CompoundBorder(
-									  new TitledBorder(_("Scale limits (changes do not affect signals already open)")),
+									  new TitledBorder(_("Scale limits (changes do affect all signals already open)")),
 									  new EmptyBorder(3,6,3,6)
 								  ));
 
