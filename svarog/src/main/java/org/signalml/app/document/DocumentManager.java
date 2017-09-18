@@ -122,7 +122,13 @@ public interface DocumentManager {
 	 * @return the document of a specified index
 	 */
 	Document getDocumentAt(ManagedDocumentType type, int index);
-
+	/**
+	 * Returns the iterator over the collection of all {@link Document
+	 * documents} of a specified {@link ManagedDocumentType type}.in this manager.
+	 * @return the iterator over the collection of all documents of a specified type 
+	 * in this manager
+	 */
+	Iterator<Document> iterator(ManagedDocumentType type);
 	/**
 	 * Returns the index of a given {@link Document document} in the
 	 * collection of documents of a specified {@link ManagedDocumentType type}.
