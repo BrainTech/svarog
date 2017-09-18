@@ -1,6 +1,7 @@
 package org.signalml.math.fft;
 
 import static org.junit.Assert.assertEquals;
+import org.signalml.BaseTestCase;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.apache.commons.math.complex.Complex;
@@ -11,7 +12,7 @@ import org.junit.Test;
  *
  * @author Piotr Szachewicz
  */
-public class FourierTransformTest {
+public class FourierTransformTest extends BaseTestCase {
 
 	@Test
 	public void testForwardFFT() {

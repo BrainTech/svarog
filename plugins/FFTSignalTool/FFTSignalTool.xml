@@ -1,10 +1,10 @@
 <plugin>
 	<name>FFT Signal Tool</name>
-	<version> 0.1 </version>
+	<version> 0.2.1 </version>
 	<jar-file>FFTSignalTool.jar</jar-file>
 	<starting-class>
-		org.signalml.plugin.fftsignaltool.FFTSignalTool
-	</starting-class>
+        org.signalml.plugin.fftsignaltool.FFTSignalPlugin
+    </starting-class>
 	<dependencies>
 		<dependency>
 			<name>Svarog API</name>

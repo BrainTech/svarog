@@ -3,10 +3,11 @@ package org.signalml.domain.signal.filter.iir.helper;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 
-public class TrimSignalSampleSourceTest {
+public class TrimSignalSampleSourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetSamples() {

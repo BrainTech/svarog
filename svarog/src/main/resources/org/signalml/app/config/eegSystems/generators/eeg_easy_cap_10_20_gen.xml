@@ -3,7 +3,7 @@
 	<presets>
 		<montageGenerators>
 			<eegSystemName>
-				<eegSystemSymbol>EEG 10_10 Cap47</eegSystemSymbol>
+				<eegSystemSymbol>EEG EASY CAP 10_20</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<generators>
@@ -11,8 +11,8 @@
 					<name>Longitudinal I</name>
 					<type>BIPOLAR_REFERENCE</type>
 					<channels>
-						<pair><channel>Fp1</channel><channel>F9</channel></pair>
-						<pair><channel>Fp2</channel><channel>F9</channel></pair>
+						<pair><channel>TP9</channel><channel>Tp10</channel></pair>
+						<pair><channel>TP10</channel><channel>TP9</channel></pair>
 					</channels>
 				</montageGenerator>
 			</generators>

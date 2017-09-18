@@ -373,6 +373,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 		if (tdf.filterType.equals(filterType) && tdf.approximationFunctionType.equals(approximationFunctionType) &&
 				Arrays.equals(passbandEdgeFrequencies, tdf.passbandEdgeFrequencies) &&
 				Arrays.equals(stopbandEdgeFrequencies, tdf.stopbandEdgeFrequencies) &&
+				name == tdf.name &&
 				passbandRipple == tdf.passbandRipple && stopbandAttenuation == tdf.stopbandAttenuation)
 			return true;
 		return false;
@@ -381,7 +382,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 
 	@Override
 	public String toString() {
-		return getEffect();
+		return name != null ? name : getEffect();
 	}
 
 	@Override

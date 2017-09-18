@@ -41,6 +41,7 @@ public class EEGExperimentsMsg extends AbstractEEGExperimentsMsg{
 
 		experiment.setName((String) experimentInfo.get("name"));
 		experiment.setId((String) experimentInfo.get("uuid"));
+		experiment.setOriginMachine((String) experimentInfo.get("origin_machine"));
 
 		LinkedHashMap<String, Object> experimentStatus = (LinkedHashMap<String, Object>) experimentInfo.get("experiment_status");
 		String statusName = (String) experimentStatus.get("status_name");

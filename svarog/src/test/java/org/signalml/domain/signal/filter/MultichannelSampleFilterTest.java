@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.montage.SourceMontage;
@@ -29,7 +30,7 @@ import org.signalml.math.iirdesigner.FilterType;
  * @author Piotr Szachewicz
  *
  */
-public class MultichannelSampleFilterTest {
+public class MultichannelSampleFilterTest extends BaseTestCase {
 
 	/**
 	 * the number of channels used for the tests

@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 
 /**
@@ -16,7 +17,7 @@ import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
  *
  * @author Piotr Szachewicz
  */
-public class RoundBufferSampleSourceTest {
+public class RoundBufferSampleSourceTest extends BaseTestCase {
 
 	/**
 	 * number of samples used for the tests.

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.signalml.BaseTestCase;
 import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
@@ -14,7 +15,7 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
-public abstract class AbstractSynchronizationTest {
+public abstract class AbstractSynchronizationTest extends BaseTestCase {
 
 	protected SynchronizeTagsWithTriggerParameters parameters;
 

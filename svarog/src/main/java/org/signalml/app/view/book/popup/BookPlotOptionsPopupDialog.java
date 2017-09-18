@@ -26,6 +26,7 @@ import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -34,7 +35,6 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.common.components.spinners.IntegerSpinner;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
@@ -85,7 +85,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
-		interfacePanel.setBorder(new TitledCrossBorder(_("Plot options"), true));
+		interfacePanel.setBorder(new TitledBorder(_("Plot options")));
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
@@ -408,16 +408,6 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	@Override
 	public boolean isCancellable() {
-		return false;
-	}
-
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
-	@Override
-	public boolean isControlPanelEquipped() {
 		return false;
 	}
 

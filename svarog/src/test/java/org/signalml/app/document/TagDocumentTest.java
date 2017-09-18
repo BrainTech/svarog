@@ -17,6 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.signalml.domain.tag.StyledTagSet;
 import static org.junit.Assert.*;
+import org.signalml.BaseTestCase;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
@@ -30,7 +31,7 @@ import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagDocumentTest {
+public class TagDocumentTest extends BaseTestCase {
 
 	private File defaultFile = new File("src/main/resources/org/signalml/domain/tag/sample/default_sleep_styles.xml");
 	private TagDocument tagDocument;

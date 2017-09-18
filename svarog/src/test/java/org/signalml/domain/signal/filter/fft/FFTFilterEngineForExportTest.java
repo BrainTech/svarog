@@ -1,12 +1,13 @@
 package org.signalml.domain.signal.filter.fft;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.signal.filter.fft.FFTFilterEngineForExport;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 
-public class FFTFilterEngineForExportTest {
+public class FFTFilterEngineForExportTest extends BaseTestCase {
 
 	@Test
 	public void testFiltering() {

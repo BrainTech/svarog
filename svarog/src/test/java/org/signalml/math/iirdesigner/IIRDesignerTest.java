@@ -7,6 +7,7 @@ package org.signalml.math.iirdesigner;
 import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -20,7 +21,7 @@ import java.lang.Math.*;
  *
  * @author Piotr Szachewicz
  */
-public class IIRDesignerTest {
+public class IIRDesignerTest extends BaseTestCase {
 
 
 	/**

@@ -914,43 +914,6 @@ public class OptionPane extends JOptionPane {
 	}
 
 	/**
-	 * Shows the information that there are other document dependent on the
-	 * closed one and asks the user whether to close them.
-	 * @param parent the window parent to this one
-	 * @return
-	 * <ul>
-	 * <li>{@code YES_OPTION} if the user chose to close,</li>
-	 * <li>{@code CLOSED_OPTION} if the user chose to cancel,</li>
-	 * <li>{@code CANCEL_OPTION} if the user canceled the dialog.</li></ul>
-	 */
-	public static int showOtherDocumentsDepend(Component parent) {
-		if (!initialized) {
-			initialize();
-		}
-
-		int res = showOptionDialog(
-					  parent,
-					  _("Other documents depend on this one. Close all?"),
-					  closeString + "?",
-					  JOptionPane.OK_OPTION,
-					  JOptionPane.QUESTION_MESSAGE,
-					  IconUtils.getQuestionIcon(),
-					  new Object[] {closeString,cancelString},
-					  closeString
-				  );
-
-		switch (res) {
-		case 0 :
-			return YES_OPTION;
-		case 1 :
-		case CLOSED_OPTION :
-		default :
-			return NO_OPTION;
-		}
-
-	}
-
-	/**
 	 * Shows the information that the document of the specified path is already
 	 * open and the user should choose a different path.
 	 * The dialog has only OK option.

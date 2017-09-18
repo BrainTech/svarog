@@ -24,6 +24,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
@@ -214,7 +215,7 @@ public abstract class AbstractDialog extends JDialog {
 	protected final void initializeControlPane() {
 
 		JPanel controlPane = getControlPane();
-		contentPane.add(controlPane,BorderLayout.SOUTH);
+		contentPane.add(controlPane, BorderLayout.SOUTH);
 
 		addContextHelp();
 
@@ -295,7 +296,7 @@ public abstract class AbstractDialog extends JDialog {
 
 		contentPane.setBorder(new EmptyBorder(3,3,3,3));
 
-		contentPane.add(getInterface(),BorderLayout.CENTER);
+		contentPane.add(getInterface(), BorderLayout.CENTER);
 
 	}
 
@@ -539,7 +540,17 @@ public abstract class AbstractDialog extends JDialog {
 	 * @param errors the errors to be displayed
 	 */
 	protected void showValidationErrors(ValidationErrors errors) {
-		getErrorsDialog().showDialog(errors, true);
+		if (errors.getSize()>1){
+			getErrorsDialog().showDialog(errors, true);
+		}
+		else // show prettier error window when there is only 1 error
+		{
+			JOptionPane.showMessageDialog(getErrorsDialog().getParent(),
+						      errors.getElementAt(0),
+						      _("Validation error"),
+						      JOptionPane.WARNING_MESSAGE);
+		}
+		
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package org.signalml.plugin.fftsignaltool;
+package org.signalml.plugin.fftsignaltool.actions;
 
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
@@ -9,12 +9,13 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import org.signalml.plugin.fftsignaltool.I18nDelegator;
+import org.signalml.plugin.fftsignaltool.SignalFFTTool;
 
-public class SignalFFTPopupAction extends AbstractSignalMLAction {
+public class SaveToCSV extends AbstractSignalMLAction {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,12 +25,12 @@ public class SignalFFTPopupAction extends AbstractSignalMLAction {
 
 	private double[] frequencies;
 
-	private static FFTSignalToolI18nDelegate i18nDelegate;
+	private static I18nDelegator i18nDelegate;
 
 	protected static final Logger logger = Logger
-			   .getLogger(SignalFFTPopupAction.class);
+			   .getLogger(SaveToCSV.class);
 	
-	public SignalFFTPopupAction(FFTSignalToolI18nDelegate i18nDelegate) {
+	public SaveToCSV(I18nDelegator i18nDelegate) {
 		super();
 		this.i18nDelegate = i18nDelegate;
 		setText("Export FFT to CSV");
@@ -40,7 +41,7 @@ public class SignalFFTPopupAction extends AbstractSignalMLAction {
 		logger.debug("Saving FFT in CSV file");
 		if (powerSpectrum == null || frequencies == null) {
 			JOptionPane.showMessageDialog(null,
-					_("First you have to comupte FFT."),
+					_("First you have to compute FFT."),
 					_("No FFT computed"),
 					JOptionPane.ERROR_MESSAGE);
 			logger.debug("No FFT computed");

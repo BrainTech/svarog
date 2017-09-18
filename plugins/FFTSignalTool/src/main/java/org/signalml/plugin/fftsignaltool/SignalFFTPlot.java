@@ -3,8 +3,8 @@
  */
 package org.signalml.plugin.fftsignaltool;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._;
-import static org.signalml.plugin.fftsignaltool.FFTSignalTool._R;
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._R;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,6 +16,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 
 import javax.swing.JComponent;
@@ -231,6 +232,7 @@ public class SignalFFTPlot extends JComponent {
 	 */
 	private void calculate() {
 
+		Boolean signal_online;
 		if (calculated) {
 			return;
 		}
@@ -268,6 +270,7 @@ public class SignalFFTPlot extends JComponent {
 			channelSamples = signalAccess.getActiveProcessedSignalSamples(
 								 channel, firstSample, sampleCnt);
 			samples = channelSamples.getSamples();
+			signal_online = (signalAccess.getActiveSignalDocument()).getFormatName() == null ? true : false;
 		} catch (RuntimeException ex) {
 			setVisible(false);
 			throw ex;
@@ -315,6 +318,7 @@ public class SignalFFTPlot extends JComponent {
 
 			logYAxis = new LogAxis();
 			logYAxis.setAutoRange(false);
+			logYAxis.setNumberFormatOverride(new DecimalFormat("0.000E0"));
 
 		}
 
@@ -331,16 +335,20 @@ public class SignalFFTPlot extends JComponent {
 		float minTime = (float)((firstSample * timeZoomFactor) / pixelPerSecond);
 		float maxTime = (float)((lastSample * timeZoomFactor) / pixelPerSecond);
 
-		StringBuilder minTimeSb = new StringBuilder(20);
-		FormatUtils.addTime(minTime, minTimeSb);
+		String title;
+		if (signal_online) {
+			title = _R("FFT over {0} points ({1})",  windowWidth, channelSamples.getName());
+		} else {
+			StringBuilder minTimeSb = new StringBuilder(20);
+			FormatUtils.addTime(minTime, minTimeSb);
 
-		StringBuilder maxTimeSb = new StringBuilder(20);
-		FormatUtils.addTime(maxTime, maxTimeSb);
+			StringBuilder maxTimeSb = new StringBuilder(20);
+			FormatUtils.addTime(maxTime, maxTimeSb);
 
-		String title = _R("FFT over {0} points {1} - {2} ({3})",
-						  windowWidth, minTimeSb.toString(),
-						  maxTimeSb.toString(), channelSamples.getName());
-
+			title = _R("FFT over {0} points {1} - {2} ({3})",
+					windowWidth, minTimeSb.toString(),
+					maxTimeSb.toString(), channelSamples.getName());
+		}
 		powerSpectrumChart.setTitle(titleVisible ? new TextTitle(title, titleFont) : null);
 		powerSpectrumChart.setAntiAlias(antialias);
 

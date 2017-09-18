@@ -4,6 +4,7 @@
 
 package org.signalml.app.model.montage;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Window;
 
 import javax.swing.table.AbstractTableModel;
@@ -178,7 +179,7 @@ public class ReferenceTableModel extends AbstractTableModel implements MontageLi
 		try {
 			montage.setReference(rowIndex, columnIndex, (String) value);
 		} catch (NumberFormatException ex) {
-			Dialogs.showExceptionDialog((Window) null, ex);
+			Dialogs.showError(_("Enter valid floating point number."));
 			fireTableCellUpdated(rowIndex, columnIndex);
 			return;
 		}

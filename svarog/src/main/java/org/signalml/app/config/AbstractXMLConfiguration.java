@@ -68,7 +68,7 @@ public abstract class AbstractXMLConfiguration {
 			 * TODO: If this configuration was read from multiple files it
 			 * should be able to write the changes made to it to the same files
 			 * it read it from. For now, this functionality is not needed, so it
-			 * is not implemented.
+			 * is implemented.
 			 */
 			throw new UnsupportedOperationException(
 					"Writing one XML configuration to multiple files is not supported yet.");
@@ -76,7 +76,7 @@ public abstract class AbstractXMLConfiguration {
 			writeToXML(usableFile, getStreamer());
 		}
 	}
-
+	
 	public void readFromPersistence(File file) throws IOException {
 		File usableFile = getUsableFile(file);
 		if (usableFile.isDirectory()) {

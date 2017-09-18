@@ -3,7 +3,7 @@
 	<presets>
 		<montageGenerators>
 			<eegSystemName>
-				<eegSystemSymbol>EEG 10_10 Cap33</eegSystemSymbol>
+				<eegSystemSymbol>EEG GEL CAP 10_10</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<generators>
@@ -11,8 +11,8 @@
 					<name>Longitudinal I</name>
 					<type>BIPOLAR_REFERENCE</type>
 					<channels>
-						<pair><channel>Fp1</channel><channel>Fp2</channel></pair>
-						<pair><channel>Fp2</channel><channel>F9</channel></pair>
+						<pair><channel>M1</channel><channel>M2</channel></pair>
+						<pair><channel>M2</channel><channel>M1</channel></pair>
 					</channels>
 				</montageGenerator>
 			</generators>

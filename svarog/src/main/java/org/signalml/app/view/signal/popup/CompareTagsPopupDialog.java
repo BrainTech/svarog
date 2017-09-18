@@ -31,7 +31,6 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.exception.SanityCheckException;
@@ -96,7 +95,7 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 		JPanel graphicalComparePanel = new JPanel();
 		graphicalComparePanel.setLayout(new BoxLayout(graphicalComparePanel, BoxLayout.Y_AXIS));
 		graphicalComparePanel.setBorder(new CompoundBorder(
-											new TitledCrossBorder(_("Graphical comparison"), true),
+											new TitledBorder(_("Graphical comparison")),
 											new EmptyBorder(3,3,3,3)
 										));
 
@@ -227,17 +226,7 @@ public class CompareTagsPopupDialog extends AbstractPopupDialog {
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
-		return true;
-	}
-
-	@Override
-	public boolean isFormClickApproving() {
 		return true;
 	}
 

@@ -26,7 +26,6 @@ import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.model.components.LogarithmicJSlider;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
@@ -90,7 +89,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 		JPanel visibilityPanel = new JPanel();
 		visibilityPanel.setLayout(new BoxLayout(visibilityPanel, BoxLayout.Y_AXIS));
 		border = new CompoundBorder(
-			new TitledCrossBorder(_("Visibility"), true),
+			new TitledBorder(_("Visibility")),
 			new EmptyBorder(3,3,3,3)
 		);
 		visibilityPanel.setBorder(border);
@@ -220,18 +219,8 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
 		return false;
-	}
-
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
 	}
 
 	/*

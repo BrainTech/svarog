@@ -1,0 +1,1 @@
+package org.signalml.plugin.fftsignaltool.dialogs.components;

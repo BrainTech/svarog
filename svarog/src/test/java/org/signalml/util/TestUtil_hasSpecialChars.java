@@ -1,10 +1,11 @@
 package org.signalml.util;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import static org.junit.Assert.*;
 import static org.signalml.util.Util.hasSpecialChars;
 
-public class TestUtil_hasSpecialChars {
+public class TestUtil_hasSpecialChars extends BaseTestCase {
 	@Test public void test_text_with_spaces() {
 		assertFalse(hasSpecialChars("goo goo goo"));
 	}

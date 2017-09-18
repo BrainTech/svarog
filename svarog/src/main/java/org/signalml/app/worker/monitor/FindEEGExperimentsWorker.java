@@ -34,26 +34,26 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 	
 	//OBCI assumes that long requests will be finished in 10 seconds
 	private int PULL_TIMEOUT = 10;
+	private int BLUETOOTH_PULL_TIMEOUT = 60 * 5;  //~30s required for one tmsi device.
 	
 	public FindEEGExperimentsWorker() {
 		
 	}
+	
+	protected void mainWork() throws OpenbciCommunicationException {
 
+		getRunningExperiments(true);
+		getRunningExperiments(false);
+		
+	}
+	
 	@Override
 	protected Void doInBackground() throws OpenbciCommunicationException {
 
 		openbciIpAddress = Helper.getOpenBCIIpAddress();
 		openbciPort = Helper.getOpenbciPort();
 
-		getRunningExperiments(true);
-		getRunningExperiments(false);
-	
-		for (AmplifierType amplifierType: AmplifierType.values()) {
-			if (isCancelled())
-				break;
-
-			getNewExperiments(amplifierType);
-		}
+		mainWork();
 		
 		if (!isCancelled())
 			log(_("Refreshing successfully accomplished!"));
@@ -74,13 +74,6 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		getExperiments(findEEGExperimentsRequest, null, MessageType.EEG_EXPERIMENTS_RESPONSE);
 
 	}
-
-	protected void getNewExperiments(AmplifierType amplifierType) {
-		FindEEGAmplifiersRequest findEEGAmplifiersRequest = new FindEEGAmplifiersRequest(amplifierType);
-		
-		log(_R("Requesting the list of available {0} amplifiers...", amplifierType));
-		getExperiments(findEEGAmplifiersRequest, amplifierType, MessageType.EEG_AMPLIFIERS_RESPONSE);
-	}
 	
 	protected void getExperiments(LongRequest request, AmplifierType amplifierType, MessageType type){
 		ObciPullSocket pullsocket = new ObciPullSocket();
@@ -91,10 +84,13 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 		
 			LocalDateTime started = LocalDateTime.now();
 			AbstractEEGExperimentsMsg result = null;
-			while (result == null & Duration.between(started, LocalDateTime.now()).getSeconds() < PULL_TIMEOUT & !isCancelled())
-				result = (AbstractEEGExperimentsMsg)pullsocket.getAndParsePushPullResponse(type);
+			while (result == null & Duration.between(started, LocalDateTime.now()).getSeconds() <
+					(amplifierType == amplifierType.BLUETOOTH ? BLUETOOTH_PULL_TIMEOUT : PULL_TIMEOUT) & !isCancelled())
+				result = (AbstractEEGExperimentsMsg) pullsocket.getAndParsePushPullResponse(type);
 			if (!isCancelled() & result != null){
-				publish(result.getExperiments());			
+				List<ExperimentDescriptor> experiments = result.getExperiments();
+				for (ExperimentDescriptor e : experiments) e.getAmplifier().setAmplifierType(amplifierType);
+				publish(experiments);
 				logln(_("OK"));
 			}
 		}

@@ -6,11 +6,12 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.math.ArrayOperations;
 
-public class ReversedMultichannelSampleProcessorTest {
+public class ReversedMultichannelSampleProcessorTest extends BaseTestCase {
 
 	private File file;
 	private SignalExportDescriptor descriptor = new SignalExportDescriptor();

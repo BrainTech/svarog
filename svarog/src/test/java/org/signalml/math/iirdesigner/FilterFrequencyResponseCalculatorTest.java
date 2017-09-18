@@ -4,6 +4,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.ArrayOperations;
 import org.signalml.math.iirdesigner.FilterCoefficients;
 import org.signalml.math.iirdesigner.FilterFrequencyResponse;
@@ -17,7 +18,7 @@ import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
  *
  * @author Piotr Szachewicz
  */
-public class FilterFrequencyResponseCalculatorTest {
+public class FilterFrequencyResponseCalculatorTest extends BaseTestCase {
 
 	/**
 	 * A test method for {@link FilterResponseCalculator#getGroupDelayResponse() }.

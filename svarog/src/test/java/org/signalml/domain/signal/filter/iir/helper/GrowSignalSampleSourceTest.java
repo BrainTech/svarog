@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.TestingSignals;
 import org.signalml.domain.signal.filter.iir.helper.GrowSignalSampleSource;
@@ -16,7 +17,7 @@ import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.math.iirdesigner.IIRDesigner;
 import org.signalml.math.iirdesigner.InitialStateCalculator;
 
-public class GrowSignalSampleSourceTest {
+public class GrowSignalSampleSourceTest extends BaseTestCase {
 
 	@Test
 	public void testGetSamples() {

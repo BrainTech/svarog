@@ -75,6 +75,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 		OptionSet.readXMLManifest.setFilters(xml);
 		OptionSet.exportSignal.setFilters(binary);
+		OptionSet.exportCSVSignal.setFilters(csv);
 		OptionSet.exportASCIISignal.setFilters(ascii);
 		OptionSet.exportEEGLabSignal.setFilters(eeglabDataset);
 		OptionSet.exportMatlabSignal.setFilters(matlab);
@@ -198,6 +199,10 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 	@Override
 	public synchronized File chooseExportSignalFile(Component parent, File fileSuggestion) {
 		return chooseFile(parent, OptionSet.exportSignal, fileSuggestion);
+	}
+
+	public synchronized File chooseExportCSVSignalFile(Component parent, File fileSuggestion) {
+		return chooseFile(parent, OptionSet.exportCSVSignal, fileSuggestion);
 	}
 
 	public synchronized File chooseExportASCIISignalFile(Component parent, File fileSuggestion) {
@@ -515,6 +520,7 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 				      false, false, FILES_ONLY),
 		exportSignal(Operation.save, _("Choose file to save to"),
 			     null, _("Export")),
+                exportCSVSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportASCIISignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportEEGLabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportMatlabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),

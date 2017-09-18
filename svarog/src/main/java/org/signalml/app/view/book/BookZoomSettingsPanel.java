@@ -30,7 +30,6 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.view.book.tools.ZoomBookTool;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.domain.book.StandardBookSegment;
 
 import org.springframework.validation.Errors;
@@ -101,11 +100,6 @@ public class BookZoomSettingsPanel extends JPanel {
 	 * the maximal value of the frequency that can be set in the spinners
 	 */
 	private double frequencyLimit;
-	/**
-	 * {@code true} if this panel should contain a cross which closes this
-	 * panel, {@code false} otherwise
-	 */
-	private boolean hasCloseCross;
 
 	/**
 	 * Constructor. Sets the source of messages, if this panel should contain
@@ -113,9 +107,8 @@ public class BookZoomSettingsPanel extends JPanel {
 	 * @param hasCloseCross @code true} if this panel should contain a cross
 	 * which closes this panel, {@code false} otherwise
 	 */
-	public BookZoomSettingsPanel(boolean hasCloseCross) {
+	public BookZoomSettingsPanel() {
 		super();
-		this.hasCloseCross = hasCloseCross;
 		initialize();
 	}
 
@@ -135,7 +128,7 @@ public class BookZoomSettingsPanel extends JPanel {
 		JPanel rangePanel = new JPanel();
 
 		rangePanel.setBorder(new CompoundBorder(
-								 new TitledCrossBorder(_("Range"), hasCloseCross),
+								 new TitledBorder(_("Range")),
 								 new EmptyBorder(3,3,3,3)
 							 ));
 

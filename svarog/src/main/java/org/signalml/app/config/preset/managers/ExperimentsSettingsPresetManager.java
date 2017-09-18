@@ -11,7 +11,7 @@ import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("experimentsPresets")
-public class ExperimentsSettingsPresetManager extends AbstractPresetManager {
+public class ExperimentsSettingsPresetManager extends AbstractMultifileResourcesPresetManager {
 
 	@Override
 	public Class<?> getPresetClass() {
@@ -21,6 +21,21 @@ public class ExperimentsSettingsPresetManager extends AbstractPresetManager {
 	@Override
 	public String getStandardFilename() {
 		return "experimentsPresets.xml";
+	}
+
+	@Override
+	public String getDirectoryName() {
+		return "eegSystems/presets/";
+}
+	@Override
+	public String[] getDefaultFileNames() {
+		return new String[] {
+			"default_EEG_10_10_easy_cap.xml",
+			"default_EEG_10_20_easy_cap.xml",
+			"default_EEG_10_10_gel_cap.xml",
+			"default_EEG_10_20_blue_water_cap.xml",
+			"default_EEG_10_20_black_water_cap.xml",
+		};
 	}
 
 	@Override
@@ -36,10 +51,7 @@ public class ExperimentsSettingsPresetManager extends AbstractPresetManager {
 					AmplifierChannel.class,
 					SignalParameters.class
 				);
-
-			streamer.setMode(XStream.XPATH_RELATIVE_REFERENCES);
 		}
 		return streamer;
 	}
-
 }

@@ -2485,10 +2485,6 @@ msgstr ""
 msgid "Other data"
 msgstr ""
 
-#: org/signalml/app/view/dialog/OptionPane.java:970
-msgid "Other documents depend on this one. Close all?"
-msgstr ""
-
 #: org/signalml/app/view/montage/VisualReferenceModel.java:164
 msgid "Others"
 msgstr ""
@@ -2715,7 +2711,7 @@ msgid "Previous topic"
 msgstr ""
 
 #: org/signalml/app/montage/MontageTableModel.java:90
-msgid "Primary label"
+msgid "Reference"
 msgstr ""
 
 #: org/signalml/app/view/montage/VisualReferenceModel.java:166

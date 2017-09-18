@@ -785,6 +785,23 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return startChannel;
 	}
 
+	/**
+	 * Compute how many (at most) channels may be visible
+	 * in a viewport of a given height.
+	 *
+	 * @param height  viewport height, in pixels
+	 * @return number of visible channels
+	 */
+	private int computeVisibleChannelCount(int height) {
+		int channelsRoundedUp = (height + pixelPerChannel - 1) / pixelPerChannel;
+		return Math.min(
+			channelCount,
+			channelsRoundedUp + 1
+			// we have to add 1 since partially displayed channels can be both
+			// above and below the channels displayed in full
+		);
+	}
+
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
@@ -836,7 +853,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int channel, visibleCount;
 		int startChannel = this.computePaintStartChannel(clip.y);
-		int maxNumberOfChannels = (int) Math.min(channelCount, Math.ceil(((double)(clip.height - 1)) / pixelPerChannel));
+		int maxNumberOfChannels = computeVisibleChannelCount(clip.height);
 
 		if (channelLinesVisible && pixelPerChannel > 10) {
 			g.setColor(Color.BLUE);
@@ -868,7 +885,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				Dimension viewportSize = viewport.getExtentSize();
 
 				startChannel = this.computePaintStartChannel(viewportPoint.y);
-				maxNumberOfChannels = (int) Math.min(channelCount, Math.ceil(((double)(viewportSize.height-1)) / pixelPerChannel));
+				maxNumberOfChannels = computeVisibleChannelCount(viewportSize.height);
 			}
 		}
 

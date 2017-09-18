@@ -141,7 +141,7 @@ public class FourierTransform {
 	public double[] calculatePowerSpectrum(double[] samples) {
 
 		Complex[] fftTransformedData = forwardFFT(samples);
-		int dataLength = samples.length;
+		int dataLength = getPowerOfTwoSize(samples.length);
 		int size = dataLength/2;
 
 		double[] powerSpectrum = new double[size];

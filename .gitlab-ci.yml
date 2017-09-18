@@ -1,7 +1,7 @@
 stages:
+  - test
   - builddeb
   - sign
-  - test
   - deploy
   
 

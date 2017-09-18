@@ -5,6 +5,7 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
@@ -53,41 +54,13 @@ public abstract class AbstractPopupDialog extends AbstractDialog {
 	public boolean isCancellable() {
 		return true;
 	}
-
-	/**
-	 * Returns true if clicking on the form should be approving action
-	 * ({@code OkAction}), false if it should be a canceling action
-	 * ({@code CancelAction}).
-	 * @return true if clicking on the form should be approving action,
-	 * false if it should be a canceling action
-	 */
-	public boolean isFormClickApproving() {
-		return false;
-	}
-
+	
 	@Override
 	protected void initialize() {
-
-		setUndecorated(true);
+		setUndecorated(false);
+		setResizable(false);
 		getRootPane().setBorder(new LineBorder(Color.LIGHT_GRAY));
 		super.initialize();
-
-		MouseAdapter ma = new MouseAdapter() {
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				if (isFormClickApproving()) {
-					getOkAction().actionPerformed(new ActionEvent(this, 0, "ok"));
-				} else {
-					getCancelAction().actionPerformed(new ActionEvent(this, 0, "cancel"));
-				}
-				e.consume();
-			}
-
-		};
-
-		addMouseListener(ma);
-
 	}
 
 }

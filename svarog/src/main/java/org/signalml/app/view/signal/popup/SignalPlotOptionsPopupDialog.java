@@ -30,10 +30,10 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
 
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.components.ResolvableComboBox;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
@@ -76,7 +76,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		createButtons();
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
-		interfacePanel.setBorder(new TitledCrossBorder(_("Plot options"), true));
+		interfacePanel.setBorder(new TitledBorder(_("Plot options")));
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBorder(new EmptyBorder(3,3,3,3));
@@ -381,16 +381,6 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	@Override
 	public boolean isCancellable() {
-		return false;
-	}
-
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
-	}
-
-	@Override
-	public boolean isControlPanelEquipped() {
 		return false;
 	}
 

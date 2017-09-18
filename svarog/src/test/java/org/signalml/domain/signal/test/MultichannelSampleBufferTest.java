@@ -8,6 +8,7 @@ import static junit.framework.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.domain.signal.MultichannelSampleBuffer;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.test.Util;
@@ -17,7 +18,7 @@ import org.signalml.test.Util;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class MultichannelSampleBufferTest {
+public class MultichannelSampleBufferTest extends BaseTestCase {
 
 	private MultichannelSampleSource source;
 	private MultichannelSampleBuffer buffer;

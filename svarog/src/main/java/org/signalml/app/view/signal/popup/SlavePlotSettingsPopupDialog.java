@@ -30,7 +30,6 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
-import org.signalml.app.view.common.components.TitledCrossBorder;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
@@ -78,7 +77,7 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 		synchronizationPanel.setLayout(new BoxLayout(synchronizationPanel, BoxLayout.Y_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledCrossBorder(_("Synchronization"), true),
+			new TitledBorder(_("Synchronization")),
 			new EmptyBorder(3,3,3,3)
 		);
 		synchronizationPanel.setBorder(border);
@@ -256,18 +255,8 @@ public class SlavePlotSettingsPopupDialog extends AbstractPopupDialog {
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
 		return false;
-	}
-
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
 	}
 
 	public SignalMontageDialog getSignalMontageDialog() {

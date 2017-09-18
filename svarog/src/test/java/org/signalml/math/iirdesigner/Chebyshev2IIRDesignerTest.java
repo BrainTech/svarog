@@ -9,6 +9,7 @@ import org.apache.commons.math.complex.Complex;
 import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 import org.junit.Test;
+import org.signalml.BaseTestCase;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.Chebyshev2IIRDesigner;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -22,7 +23,7 @@ import java.lang.Math.*;
  *
  * @author Piotr Szachewicz
  */
-public class Chebyshev2IIRDesignerTest {
+public class Chebyshev2IIRDesignerTest extends BaseTestCase {
 
 	/**
 	 * an instance of {@link Chebyshev2IIRDesigner} needed to all the tested methods

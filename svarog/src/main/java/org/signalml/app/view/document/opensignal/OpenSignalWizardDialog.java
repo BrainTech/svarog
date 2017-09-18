@@ -7,6 +7,7 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
@@ -28,9 +29,12 @@ import org.signalml.app.view.montage.SignalMontagePanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.monitor.ConnectToExperimentWorker;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
+import org.signalml.domain.signal.ascii.AsciiBackingFilesRepository;
+import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
@@ -98,7 +102,12 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 			String[] channelLabels = openSignalDescriptor.getChannelLabels();
 			for (int i = 0; i < channelLabels.length; i++) {
+				try{
 				createdMontage.setSourceChannelLabelAt(i, channelLabels[i]);
+				}catch(MontageException e){
+					Dialogs.showError(e.getMessage());
+					return false;
+				}
 			}
 			createdMontage.getMontageGenerator().createMontage(createdMontage);
 
@@ -160,6 +169,17 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		else {
 			openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
 			File file = getStepOnePanel().getSignalSourceTabbedPane().getFileChooserPanel().getSelectedFile();
+
+			if (openSignalDescriptor instanceof RawSignalDescriptor) {
+				// for ASCII file opened as RAW, the temporary file should be opened
+				// instead of the file selected by the user
+				RawSignalDescriptor descriptor = (RawSignalDescriptor) openSignalDescriptor;
+				if (descriptor.getAsciiFilePath() != null) try {
+					file = AsciiBackingFilesRepository.prepare(file).raw;
+				} catch (IOException ex) {
+					throw new SignalMLException("could not finalize opening ASCII file", ex);
+				}
+			}
 			openDocumentDescriptor.setFile(file);
 		}
 		openSignalDescriptor.setMontage(getSignalMontagePanel().getCurrentMontage());
@@ -215,6 +235,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	@Override
 	protected void onDialogClose() {
 		super.onDialogClose();
+
 
 		getStepOnePanel().getSignalSourceTabbedPane().getChooseExperimentPanel().clearExperiments();
 	}

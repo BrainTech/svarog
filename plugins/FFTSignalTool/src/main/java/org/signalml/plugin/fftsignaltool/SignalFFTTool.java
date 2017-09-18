@@ -22,6 +22,7 @@ import org.signalml.plugin.export.signal.AbstractSignalTool;
 import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
+import org.signalml.plugin.fftsignaltool.actions.SaveToCSV;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}
@@ -68,7 +69,7 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	private double[] powerSpectrum;
 	private double[] frequencies;
 
-	private SignalFFTPopupAction popupAction;
+	private SaveToCSV popupAction;
 
 	/**
 	 * Constructor. Sets the source of messages and the {@link
@@ -76,7 +77,7 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	 * created.
 	 * @param signalView the signal view
 	 */
-	public SignalFFTTool(SignalFFTPopupAction popupAction, ExportedSignalView signalView) {
+	public SignalFFTTool(SaveToCSV popupAction, ExportedSignalView signalView) {
 		super(signalView);
 		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();
@@ -88,7 +89,7 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	 * ExportedSignalView signal view} for which this FFT tool is
 	 * created must be set separately.
 	 */
-	public SignalFFTTool(SignalFFTPopupAction popupAction) {
+	public SignalFFTTool(SaveToCSV popupAction) {
 		super();
 		fftPlot = new SignalFFTPlot();
 		settings = new SignalFFTSettings();

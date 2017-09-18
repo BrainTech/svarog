@@ -27,6 +27,9 @@ import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
+import org.signalml.domain.signal.ascii.AsciiBackingFileEntry;
+import org.signalml.domain.signal.ascii.AsciiBackingFilesRepository;
+import org.signalml.domain.signal.ascii.AsciiToRawSignalConverter;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.util.Util;
@@ -42,14 +45,18 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	 */
 	private FileChooserPanel fileChooserPanel;
 	private ChooseExperimentPanel chooseExperimentPanel;
+	private ChooseAmplifierPanel chooseAmplifierPanel;
+
 
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 	private Object fileTypeMethod = FileOpenSignalMethod.AUTODETECT;
 
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
-		addTab(_("FILE"), getFileChooserPanel());
-		addTab(_("ONLINE"), getChooseExperimentPanel());
+		addTab(_("File"), getFileChooserPanel());
+		addTab(_("Online experiments"), getChooseExperimentPanel());
+		addTab(_("Online amplifiers"), getChooseAmplifierPanel());
+
 	}
 
 	/**
@@ -74,6 +81,14 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		}
 		return chooseExperimentPanel;
 	}
+	
+	public ChooseAmplifierPanel getChooseAmplifierPanel() {
+		if (chooseAmplifierPanel == null) {
+			chooseAmplifierPanel = new ChooseAmplifierPanel();
+			chooseAmplifierPanel.addPropertyChangeListener(this);
+		}
+		return chooseAmplifierPanel;
+	}
 
 	public SignalSource getSelectedSignalSource() {
 		if (getSelectedComponent() == getFileChooserPanel())
@@ -92,6 +107,11 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor = null;
 			fireOpenSignalDescriptorChanged();
 		}
+		
+		else if (ChooseAmplifierPanel.AMPLIFIER_SELECTED_PROPERTY.equals(propertyName)) {
+			updateSelectedAmplifier();
+		}
+		
 		else if (ChooseExperimentPanel.EXPERIMENT_SELECTED_PROPERTY.equals(propertyName)) {
 			updateSelectedExperiment();
 		}
@@ -99,6 +119,11 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 	protected void updateSelectedExperiment() {
 		openSignalDescriptor = chooseExperimentPanel.getSelectedExperiment();
+		fireOpenSignalDescriptorChanged();
+	}
+	
+	protected void updateSelectedAmplifier() {
+		openSignalDescriptor = chooseAmplifierPanel.getSelectedAmplifier();
 		fireOpenSignalDescriptorChanged();
 	}
 
@@ -113,6 +138,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 		if (fileTypeMethod == FileOpenSignalMethod.AUTODETECT)
 			autodetectFileTypeAndReadMetadata(file);
+		else if (fileTypeMethod == FileOpenSignalMethod.ASCII)
+			readAsciiFileMetadata(file);
 		else if (fileTypeMethod == FileOpenSignalMethod.RAW)
 			readRawFileMetadata(file);
 		else if (fileTypeMethod instanceof SignalMLCodec) {
@@ -149,6 +176,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			}
 
 			readSignalMLMetadata(file, codec);
+		} else if ("csv".equalsIgnoreCase(extension)) {
+			readAsciiFileMetadata(file);
 		} else {
 			readRawFileMetadata(file);
 		}
@@ -174,6 +203,22 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			Dialogs.showError(_R("There was an error while loading the file - did you select a correct SignalML file?"));
 			logger.error("", e);
 			openSignalDescriptor = null;
+		}
+	}
+
+	protected void readAsciiFileMetadata(File signalFile) {
+		try {
+			AsciiBackingFileEntry entry = AsciiBackingFilesRepository.prepare(signalFile);
+			readRawFileMetadata(entry.raw);
+			if (openSignalDescriptor instanceof RawSignalDescriptor) {
+				((RawSignalDescriptor) openSignalDescriptor).setAsciiFilePath(signalFile.getAbsolutePath());
+			}
+
+		} catch (Exception ex) {
+			logger.error("error while reading ASCII file", ex);
+			Dialogs.showError("Could not read contents of ASCII signal file!");
+			openSignalDescriptor = new RawSignalDescriptor();
+			openSignalDescriptor.setCorrectlyRead(false);
 		}
 	}
 
@@ -221,6 +266,12 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		if (this.getSelectedComponent() == fileChooserPanel) {
 			updatedSelectedFile();
 		}
+		
+		else if (this.getSelectedComponent() == chooseAmplifierPanel)
+		{
+			updateSelectedAmplifier();
+		}
+		
 		else {
 			updateSelectedExperiment();
 		}

@@ -16,6 +16,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -2127,12 +2128,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		public void actionPerformed(ActionEvent e) {
 			SignalPlotOptionsPopupDialog dialog = getPlotOptionsDialog();
 			dialog.initializeNow();
-			Container ancestor = getTopLevelAncestor();
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(plotOptionsButton, new Point(0,0), ancestor);
-			location.translate(containerLocation.x-(dialog.getSize().width-plotOptionsButton.getSize().width)/2, containerLocation.y);
-			dialog.setLocation(location);
-			dialog.showDialog(null);
+			dialog.showDialog(null, true);
 		}
 
 	}
@@ -2277,59 +2273,97 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		public void actionPerformed(ActionEvent e) {
 
 			if (document instanceof MonitorSignalDocument) {
-				// user tags in monitor mode
-				MonitorSignalDocument monitor = (MonitorSignalDocument) document;
-				if (tagStyle.getType() == SignalSelectionType.CHANNEL) {
-					final MonitorTag tag = new MonitorTag(tagStyle, 0.001*System.currentTimeMillis(), 1.0, -1);
-					monitor.getMonitorWorker().acceptUserTag(tag);
+				createUserTagInMonitorMode();
+			}
+			else if (currentSignalTool instanceof SelectionSignalTool && signalSelection != null) {
+				createTagForSignalSelection();
+			} else {
+				if (currentSignalTool instanceof TaggingSignalTool) {
+					changeSelectedTagType();
+				}
+				createTagForCurrentPageOrBlock();
+			}
+		}
+
+		private void changeSelectedTagType() {
+			SignalSelectionType currentTagType = getCurrentTagType();
+			SignalSelectionType desiredTagType = tagStyle.getType();
+
+			if (currentTagType != desiredTagType) {
+				// change selected style type
+				if (desiredTagType.isPage()) {
+					tagPageToolButton.doClick();
+				} else if (desiredTagType.isBlock()) {
+					tagBlockToolButton.doClick();
+				} else if (desiredTagType.isChannel()) {
+					tagChannelToolButton.doClick();
+				} else {
+					throw new SanityCheckException("Bad selection type");
 				}
 			}
-			else if (currentSignalTool instanceof SelectionSignalTool) {
 
-				if (signalSelection == null) {
-					return;
-				}
-
-				SignalSelectionType currentTagType = signalSelection.getType();
-				SignalSelectionType desiredTagType = tagStyle.getType();
-
-				if (currentTagType != desiredTagType) {
-					// ignore bindings to other style types
-					return;
-				}
-
-				getTagSelectionAction().actionPerformed(new ActionEvent(this, 0, "tag"));
-
-			}
-			else if (currentSignalTool instanceof TaggingSignalTool) {
-
-				SignalSelectionType currentTagType = getCurrentTagType();
-				SignalSelectionType desiredTagType = tagStyle.getType();
-
-				if (currentTagType != desiredTagType) {
-					// change selected style type
-					if (desiredTagType.isPage()) {
-						tagPageToolButton.doClick();
-					}
-					else if (desiredTagType.isBlock()) {
-						tagBlockToolButton.doClick();
-					}
-					else if (desiredTagType.isChannel()) {
-						tagChannelToolButton.doClick();
-					} else {
-						throw new SanityCheckException("Bad selection type");
-					}
-				}
-
-				TagStyleToolBar toolBar = getTagStyleToolBar(desiredTagType);
-				if (toolBar == null) {
-					return;
-				}
-
-				toolBar.setSelectedStyle(tagStyle);
-
+			TagStyleToolBar toolBar = getTagStyleToolBar(desiredTagType);
+			if (toolBar == null) {
+				return;
 			}
 
+			toolBar.setSelectedStyle(tagStyle);
+		}
+
+		private void createUserTagInMonitorMode() {
+			MonitorSignalDocument monitor = (MonitorSignalDocument) document;
+			if (tagStyle.getType() == SignalSelectionType.CHANNEL) {
+				final MonitorTag tag = new MonitorTag(tagStyle, 0.001*System.currentTimeMillis(), 1.0, -1);
+				monitor.getMonitorWorker().acceptUserTag(tag);
+			}
+		}
+
+		private void createTagForCurrentPageOrBlock() {
+			if (plots.size() != 1) {
+				logger.debug("no active plot");
+				return;
+			}
+			SignalPlot plot = plots.getFirst();
+			TagDocument tagDocument = plot.getDocument().getActiveTag();
+			if (tagDocument == null) {
+				logger.debug("no active tag document");
+				return;
+			}
+			SignalSelectionType desiredTagType = tagStyle.getType();
+			Rectangle view = plot.getViewport().getViewRect();
+
+			int segmentIndex;
+			double segmentSize;
+
+			if (desiredTagType.isBlock()) {
+				segmentIndex = (int) (view.getCenterX() / plot.getPixelPerBlock());
+				segmentSize = plot.getBlockSize();
+			} else if (desiredTagType.isPage()) {
+				segmentIndex = (int) (view.getCenterX() / plot.getPixelPerPage());
+				segmentSize = plot.getPageSize();
+			} else {
+				// other tag types are not supported here
+				return;
+			}
+
+			SignalSelection selection = new SignalSelection(desiredTagType, segmentIndex * segmentSize, segmentSize);
+			plot.tagSelection(tagDocument, tagStyle, selection, false);
+		}
+
+		private void createTagForSignalSelection() {
+			if (signalSelection == null) {
+				return;
+			}
+
+			SignalSelectionType currentTagType = signalSelection.getType();
+			SignalSelectionType desiredTagType = tagStyle.getType();
+
+			if (currentTagType != desiredTagType) {
+				// ignore bindings to other style types
+				return;
+			}
+
+			getTagSelectionAction().actionPerformed(new ActionEvent(this, 0, "tag"));
 		}
 
 		@Override

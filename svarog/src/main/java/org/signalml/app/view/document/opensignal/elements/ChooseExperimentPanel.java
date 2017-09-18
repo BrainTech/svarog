@@ -32,8 +32,8 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
 	private static Logger logger = Logger.getLogger(ChooseExperimentPanel.class);
-
-	private ChooseExperimentTable chooseExperimentTable;
+	
+	protected ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 
 	private JButton refreshButton;
@@ -47,13 +47,22 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 		createInterface();
 	}
 
-	protected void createInterface() {
-		setTitledBorder(_("Choose experiment"));
+	//private methods are not 'virtual' in java
+	protected ChooseExperimentTableModel getTableModel()
+	{
+		return new ChooseExperimentTableModel();
+	}
 
-		chooseExperimentTableModel = new ChooseExperimentTableModel();
+	protected void setTitledBorder()
+	{
+		super.setTitledBorder(_("Choose experiment"));
+	}
+	
+	protected void createInterface() {
+		setTitledBorder();
+		chooseExperimentTableModel = getTableModel();
 		chooseExperimentTable = new ChooseExperimentTable(chooseExperimentTableModel);
 		chooseExperimentTable.getSelectionModel().addListSelectionListener(this);
-
 		setLayout(new BorderLayout());
 		JScrollPane scrollPane = new JScrollPane(chooseExperimentTable);
 		scrollPane.setPreferredSize(new Dimension(300, 200));
@@ -152,6 +161,10 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 			chooseExperimentTableModel.clearExperiments();
 		getLogTextField().setText("");
 	}
+	
+	public FindEEGExperimentsWorker getWorker(){
+		return new FindEEGExperimentsWorker();
+	}
 
 	class RefreshButtonAction extends AbstractSignalMLAction implements PropertyChangeListener {
 		private boolean executing = false;
@@ -171,8 +184,8 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 				executing = true;
 				setEnabled(false);
 			}
-
-			worker = new FindEEGExperimentsWorker();
+			
+			worker = getWorker();
 			worker.addPropertyChangeListener(this);
 			getProgressBar().setIndeterminate(true);
 			getLogTextField().setText("");

@@ -31,7 +31,7 @@ public class BookZoomPopupDialog extends AbstractPopupDialog {
 	@Override
 	public JComponent createInterface() {
 
-		bookZoomSettingsPanel = new BookZoomSettingsPanel(true);
+		bookZoomSettingsPanel = new BookZoomSettingsPanel();
 
 		return bookZoomSettingsPanel;
 
@@ -58,18 +58,8 @@ public class BookZoomPopupDialog extends AbstractPopupDialog {
 	}
 
 	@Override
-	public boolean isControlPanelEquipped() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancellable() {
 		return false;
-	}
-
-	@Override
-	public boolean isFormClickApproving() {
-		return true;
 	}
 
 }
