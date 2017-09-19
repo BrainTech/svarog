@@ -251,21 +251,22 @@ public class DocumentFlowIntegrator {
 						// cancel parent operation
 						return false;
 					}
+				
+
+					String closeString = _("Close");
+					String cancelString = _("Cancel");
+
+					int res = showOptionDialog(optionPaneParent,
+							_("Are you sure you want to close the preview?"),
+							closeString + "?",
+							JOptionPane.OK_OPTION,
+							JOptionPane.QUESTION_MESSAGE,
+							IconUtils.getQuestionIcon(),
+							new Object[]{closeString, cancelString},
+							closeString
+					);
+					if (res != 0) return false;
 				}
-
-				String closeString = _("Close");
-				String cancelString = _("Cancel");
-
-				int res = showOptionDialog(optionPaneParent,
-						_("Are you sure you want to close the preview?"),
-						closeString + "?",
-						JOptionPane.OK_OPTION,
-						JOptionPane.QUESTION_MESSAGE,
-						IconUtils.getQuestionIcon(),
-						new Object[]{closeString, cancelString},
-						closeString
-				);
-				if (res != 0) return false;
 
 
 				boolean dependantsOk = assertDocumentDependantsClosed(document, force);
