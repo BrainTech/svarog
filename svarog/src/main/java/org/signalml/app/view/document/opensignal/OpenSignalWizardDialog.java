@@ -7,7 +7,6 @@ import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 
@@ -33,8 +32,6 @@ import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.signal.ascii.AsciiBackingFilesRepository;
-import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
@@ -83,6 +80,10 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 			}
 			if (openSignalDescriptor.getChannelLabels().length == 0) {
 				Dialogs.showError(_("Please select some channels!"));
+				return false;
+			}
+			if (openSignalDescriptor.getSignalParameters().getSamplingFrequency() <= 0.0f) {
+				Dialogs.showError(_("Please specify the sampling frequency."));
 				return false;
 			}
 
@@ -169,17 +170,6 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		else {
 			openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
 			File file = getStepOnePanel().getSignalSourceTabbedPane().getFileChooserPanel().getSelectedFile();
-
-			if (openSignalDescriptor instanceof RawSignalDescriptor) {
-				// for ASCII file opened as RAW, the temporary file should be opened
-				// instead of the file selected by the user
-				RawSignalDescriptor descriptor = (RawSignalDescriptor) openSignalDescriptor;
-				if (descriptor.getAsciiFilePath() != null) try {
-					file = AsciiBackingFilesRepository.prepare(file).raw;
-				} catch (IOException ex) {
-					throw new SignalMLException("could not finalize opening ASCII file", ex);
-				}
-			}
 			openDocumentDescriptor.setFile(file);
 		}
 		openSignalDescriptor.setMontage(getSignalMontagePanel().getCurrentMontage());

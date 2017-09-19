@@ -27,9 +27,7 @@ import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
-import org.signalml.domain.signal.ascii.AsciiBackingFileEntry;
-import org.signalml.domain.signal.ascii.AsciiBackingFilesRepository;
-import org.signalml.domain.signal.ascii.AsciiToRawSignalConverter;
+import org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.util.Util;
@@ -207,13 +205,10 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	}
 
 	protected void readAsciiFileMetadata(File signalFile) {
+		AsciiSignalDescriptorReader reader = new AsciiSignalDescriptorReader();
 		try {
-			AsciiBackingFileEntry entry = AsciiBackingFilesRepository.prepare(signalFile);
-			readRawFileMetadata(entry.raw);
-			if (openSignalDescriptor instanceof RawSignalDescriptor) {
-				((RawSignalDescriptor) openSignalDescriptor).setAsciiFilePath(signalFile.getAbsolutePath());
-			}
-
+			openSignalDescriptor = reader.readDocument(signalFile);
+			openSignalDescriptor.setCorrectlyRead(true);
 		} catch (Exception ex) {
 			logger.error("error while reading ASCII file", ex);
 			Dialogs.showError("Could not read contents of ASCII signal file!");
