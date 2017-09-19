@@ -136,8 +136,8 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 		if (fileTypeMethod == FileOpenSignalMethod.AUTODETECT)
 			autodetectFileTypeAndReadMetadata(file);
-		else if (fileTypeMethod == FileOpenSignalMethod.ASCII)
-			readAsciiFileMetadata(file);
+		else if (fileTypeMethod == FileOpenSignalMethod.CSV)
+			readCsvFileMetadata(file);
 		else if (fileTypeMethod == FileOpenSignalMethod.RAW)
 			readRawFileMetadata(file);
 		else if (fileTypeMethod instanceof SignalMLCodec) {
@@ -175,7 +175,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 
 			readSignalMLMetadata(file, codec);
 		} else if ("csv".equalsIgnoreCase(extension)) {
-			readAsciiFileMetadata(file);
+			readCsvFileMetadata(file);
 		} else {
 			readRawFileMetadata(file);
 		}
@@ -204,14 +204,14 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		}
 	}
 
-	protected void readAsciiFileMetadata(File signalFile) {
+	protected void readCsvFileMetadata(File signalFile) {
 		AsciiSignalDescriptorReader reader = new AsciiSignalDescriptorReader();
 		try {
 			openSignalDescriptor = reader.readDocument(signalFile);
 			openSignalDescriptor.setCorrectlyRead(true);
 		} catch (Exception ex) {
-			logger.error("error while reading ASCII file", ex);
-			Dialogs.showError("Could not read contents of ASCII signal file!");
+			logger.error("error while reading CSV file", ex);
+			Dialogs.showError("Could not read contents of CSV signal file!");
 			openSignalDescriptor = new RawSignalDescriptor();
 			openSignalDescriptor.setCorrectlyRead(false);
 		}

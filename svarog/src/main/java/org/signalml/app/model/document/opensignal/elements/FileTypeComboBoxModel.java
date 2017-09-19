@@ -38,7 +38,7 @@ public class FileTypeComboBoxModel extends AbstractListModel implements ComboBox
 		case 1:
 			return FileOpenSignalMethod.RAW;
 		case 2:
-			return FileOpenSignalMethod.ASCII;
+			return FileOpenSignalMethod.CSV;
 		default:
 			return codecManager.getCodecAt(index - 3);
 		}
