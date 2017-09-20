@@ -93,7 +93,7 @@
 			</channelLabels>
 			<correctlyRead>false</correctlyRead>
 			<tryToOpenTagDocument>true</tryToOpenTagDocument>
-			<name>default_EEG_10_10_easy_cap.xml</name>
+			<name>default_EEG_10_10_gel_cap.xml</name>
 			<amplifier>
 				<name>SynFi_F1_F2</name>
 				<samplesPerPacket>0</samplesPerPacket>
