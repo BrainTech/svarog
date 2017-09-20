@@ -1,7 +1,3 @@
-/* RawSignalMRUDEntry.java created 2008-01-30
- *
- */
-
 package org.signalml.app.document.signal;
 
 import org.signalml.app.document.ManagedDocumentType;
@@ -12,12 +8,9 @@ import org.signalml.plugin.export.signal.Document;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
- * Serializable description of a file with a signal stored in it in a raw
- * form. Contains:
- * <ul>
- * <li>the {@link RawSignalDescriptor descriptor} of the parameters of the
- * signal</li>
- * </ul>
+ * Serializable description of a file with a signal stored in it
+ * in a raw or ASCII form. Contains the {@link RawSignalDescriptor descriptor}
+ * of the parameters of the signal.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */

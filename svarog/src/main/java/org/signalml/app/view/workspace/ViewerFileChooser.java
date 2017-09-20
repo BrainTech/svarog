@@ -47,7 +47,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
 		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("Comma-separated values (*.csv)"), "csv");
 		FileNameExtensionFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
-		FileNameExtensionFilter ascii = new FileNameExtensionFilter(_("ASCII files (*.ascii)"), "ascii");
 		FileNameExtensionFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab datasets (*.set)"), "set");
 		FileNameExtensionFilter matlab = new FileNameExtensionFilter(_("MATLAB MAT-files (*.mat)"), "mat");
 		FileNameExtensionFilter xml = new FileNameExtensionFilter(_("XML files (*.xml)"), "xml");
@@ -76,7 +75,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		OptionSet.readXMLManifest.setFilters(xml);
 		OptionSet.exportSignal.setFilters(binary);
 		OptionSet.exportCSVSignal.setFilters(csv);
-		OptionSet.exportASCIISignal.setFilters(ascii);
 		OptionSet.exportEEGLabSignal.setFilters(eeglabDataset);
 		OptionSet.exportMatlabSignal.setFilters(matlab);
 		OptionSet.exportBook.setFilters(book);
@@ -203,10 +201,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	public synchronized File chooseExportCSVSignalFile(Component parent, File fileSuggestion) {
 		return chooseFile(parent, OptionSet.exportCSVSignal, fileSuggestion);
-	}
-
-	public synchronized File chooseExportASCIISignalFile(Component parent, File fileSuggestion) {
-		return chooseFile(parent, OptionSet.exportASCIISignal, fileSuggestion);
 	}
 
 	public synchronized File chooseExportEEGLabSignalFile(Component parent, File fileSuggestion) {
@@ -521,7 +515,6 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 		exportSignal(Operation.save, _("Choose file to save to"),
 			     null, _("Export")),
                 exportCSVSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
-		exportASCIISignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportEEGLabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportMatlabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportBook(Operation.save, _("Export book"),

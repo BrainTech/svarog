@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.video.OfflineVideoFrame;
-import org.signalml.app.video.VideoFrame;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
@@ -23,22 +22,13 @@ import org.signalml.plugin.export.SignalMLException;
 /**
  * The document with the signal stored in the raw form (without
  * a {@link SignalMLCodec}).
- * Apart from the functions of {@link AbstractFileSignal} this class:
- * <ul>
- * <li>implements opening and closing this document,</li>
- * <li>contains the {@link RawSignalDescriptor descriptor} of the
- * raw signal and returns it,</li>
- * </ul>
+ * This is a simple subclass derived from BaseSignalDocument,
+ * designed to be used with {@link RawSignalSampleSource}.
+ * It also includes some additional data (e.g. video) specific for RAW signals.
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class RawSignalDocument extends AbstractFileSignal {
-
-	/**
-	 * the {@link RawSignalDescriptor descriptor} of the signal in this
-	 * document
-	 */
-	private RawSignalDescriptor descriptor;
+public class RawSignalDocument extends BaseSignalDocument {
 
 	/**
 	 * optional video preview for this signal
@@ -50,23 +40,12 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 */
 	private float videoOffset;
 
-	/**
-	 * Constructor. Sets the {@link SignalType type} and
-	 * {@link RawSignalDescriptor descriptor}.
-	 * @param type the type of the signal
-	 * @param descriptor the descriptor of the signal.
-	 */
 	public RawSignalDocument(RawSignalDescriptor descriptor) {
-		super();
-		this.descriptor = descriptor;
+		super(descriptor);
 	}
 
 	@Override
 	public void closeDocument() throws SignalMLException {
-		if (sampleSource != null) {
-			((RawSignalSampleSource) sampleSource).close();
-			sampleSource = null;
-		}
 		if (videoFrame != null) {
 			videoFrame.dispose();
 		}
@@ -74,26 +53,14 @@ public class RawSignalDocument extends AbstractFileSignal {
 	}
 
 	@Override
-	public void openDocument() throws SignalMLException, IOException {
-		if (backingFile == null) {
-			throw new SignalMLException("error.noBackingFile");
-		}
-		RawSignalSampleSource sampleSource = new RawSignalSampleSource(backingFile.getAbsoluteFile(), descriptor.getChannelCount(), descriptor.getSamplingFrequency(), descriptor.getSampleType(), descriptor.getByteOrder());
-		sampleSource.setCalibrationGain(descriptor.getCalibrationGain());
-		sampleSource.setCalibrationOffset(descriptor.getCalibrationOffset());
-		sampleSource.setLabels(descriptor.getChannelLabels());
-		sampleSource.setFirstSampleTimestamp(descriptor.getFirstSampleTimestamp());
-
-		this.sampleSource = sampleSource;
-	}
-
-	/**
-	 * Returns the {@link RawSignalDescriptor descriptor} of the signal in this
-	 * document.
-	 * @return the descriptor of the signal in this document
-	 */
-	public RawSignalDescriptor getDescriptor() {
-		return descriptor;
+	protected BaseSignalSampleSource createSampleSource() throws IOException {
+		return new RawSignalSampleSource(
+			getBackingFile().getAbsoluteFile(),
+			getDescriptor().getChannelCount(),
+			getDescriptor().getSamplingFrequency(),
+			getDescriptor().getSampleType(),
+			getDescriptor().getByteOrder()
+		);
 	}
 
 	@Override
@@ -107,7 +74,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 * @return the type of samples
 	 */
 	public RawSignalSampleType getSampleType() {
-		return descriptor.getSampleType();
+		return getDescriptor().getSampleType();
 	}
 
 	/**
@@ -117,7 +84,7 @@ public class RawSignalDocument extends AbstractFileSignal {
 	 * @return the order of bytes in the file with the signal.
 	 */
 	public RawSignalByteOrder getByteOrder() {
-		return descriptor.getByteOrder();
+		return getDescriptor().getByteOrder();
 	}
 
 	@Override
@@ -163,4 +130,3 @@ public class RawSignalDocument extends AbstractFileSignal {
 	}
 
 }
-

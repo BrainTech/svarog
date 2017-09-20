@@ -12,6 +12,11 @@ import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.book.WignerMapScaleType;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.util.Iterator;
+import org.signalml.app.SvarogApplication;
+import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.view.signal.SignalView;
+import org.signalml.plugin.export.signal.Document;
 
 /**
  * ApplicationConfiguration
@@ -117,7 +122,16 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 		ToolTipManager toolTipManager = ToolTipManager.sharedInstance();
 		toolTipManager.setInitialDelay(toolTipInitialDelay);
 		toolTipManager.setDismissDelay(toolTipDismissDelay);
+		SvarogApplication sharedInstance = SvarogApplication.getSharedInstance();
 
+		if(sharedInstance.getViewerElementManager() != null){
+			Iterator<Document> it = sharedInstance.getViewerElementManager().getDocumentManager().iterator(ManagedDocumentType.SIGNAL);
+			while(it.hasNext()){
+				Document Doc = it.next();
+				SignalView currentSignal = (SignalView)(Doc.getDocumentView());
+				currentSignal.notifyApplicationConfigChanged(this);
+			}
+		}
 	}
 
 	@Override

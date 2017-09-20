@@ -15,7 +15,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.nio.file.Path;
 
 /**
- * This class represents the descriptor of a raw signal.
+ * This class represents the descriptor of a raw or ASCII signal.
  * I consists of basic parameters of the signal, such as the number of channels,
  * the frequency of sampling, length, associated files (source and destination),
  * {@link SourceSignalType source type}, {@link RawSignalSampleType sample type}
@@ -27,8 +27,8 @@ import java.nio.file.Path;
 public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 
 	/**
-	 * This enumerator tells if the signal is stored as raw or described
-	 * by signalML codec.
+	 * This enumerator tells if the signal is stored as raw, ASCII,
+	 * or described by signalML codec.
 	 */
 	public enum SourceSignalType {
 
@@ -37,7 +37,12 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 		 */
 		RAW,
 		/**
+		 * ASCII signal
+		 */
+		ASCII,
+		/**
 		 * the signal described by signalML codec
+		 * (however, usually SignalMLDescriptor is used for such files instead)
 		 */
 		SIGNALML
 
@@ -110,14 +115,6 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	private boolean isBackup;
 
 	/**
-	 * Path to the ASCII signal file.
-	 * This field is not null only for ASCII files, for which it represents
-	 * the path to the source ASCII signal file, while the backingFile attribute
-	 * in {@link RawSignalDocument} will represent the converted binary file.
-	 */
-	private String asciiFilePath;
-
-	/**
 	 * Constructor. Creates an empty descriptor of a raw signal.
 	 */
 	public RawSignalDescriptor() {
@@ -171,23 +168,6 @@ public class RawSignalDescriptor extends AbstractOpenSignalDescriptor {
 	 */
 	public void setIsBackup(boolean isBackup) {
 		this.isBackup = isBackup;
-	}
-
-	/**
-	 * Return the path to the ASCII signal file,
-	 * if the signal was converted from ASCII. Otherwise, return null.
-	 * @return path to ASCII signal file or null
-	 */
-	public String getAsciiFilePath() {
-		return asciiFilePath;
-	}
-
-	/**
-	 * Mark the signal as an ASCII file, setting its path.
-	 * @param asciiFilePath path to ASCII signal file
-	 */
-	public void setAsciiFilePath(String asciiFilePath) {
-		this.asciiFilePath = asciiFilePath;
 	}
 
 	/**

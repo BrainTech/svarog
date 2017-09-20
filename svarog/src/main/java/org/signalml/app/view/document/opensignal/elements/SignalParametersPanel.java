@@ -301,6 +301,10 @@ public class SignalParametersPanel extends JPanel {
 		if (openSignalDescriptor instanceof RawSignalDescriptor) {
 			setEnabledToAll(true);
 			getSamplingFrequencyComboBox().setEditable(true);
+			if (RawSignalDescriptor.SourceSignalType.RAW != ((RawSignalDescriptor) openSignalDescriptor).getSourceSignalType()) {
+				getByteOrderComboBox().setEnabled(false);
+				getSampleTypeComboBox().setEnabled(false);
+			}
 		}
 		else if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			ExperimentDescriptor experiment = (ExperimentDescriptor) openSignalDescriptor;
