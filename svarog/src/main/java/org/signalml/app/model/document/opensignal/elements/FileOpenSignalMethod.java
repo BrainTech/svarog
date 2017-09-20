@@ -15,7 +15,7 @@ package org.signalml.app.model.document.opensignal.elements;
 public enum FileOpenSignalMethod {
 
 	AUTODETECT,
-	ASCII,
+	CSV,
 	RAW,
 	SIGNALML_CODEC;
 

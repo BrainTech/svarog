@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.signalml.domain.signal.export.ascii;
+package org.signalml.domain.signal.export.csv;
 
 import java.io.File;
 import java.io.FileWriter;

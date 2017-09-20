@@ -939,6 +939,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		selectToolButton.setSelected(true);
 
 	}
+	public void notifyApplicationConfigChanged(ApplicationConfiguration config){
+		timeScaleSlider.setMinimum((int)(config.getMinTimeScale()*1000));
+		timeScaleSlider.setMaximum((int)(config.getMaxTimeScale()*1000));
+		valueScaleSlider.setMinimum(config.getMinValueScale());
+		valueScaleSlider.setMaximum(config.getMaxValueScale());
+		channelHeightSlider.setMinimum(config.getMinChannelHeight());
+		channelHeightSlider.setMaximum(config.getMaxChannelHeight());
+	}
 
 	private void buildMainToolBar() {
 

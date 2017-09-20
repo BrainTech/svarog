@@ -39,8 +39,6 @@ public class ExportFormatPanel extends JPanel {
 
 	private RawExportOptionsPanel rawOptionsPanel;
 
-	private ASCIIExportOptionsPanel asciiOptionsPanel;
-
 	private EEGLabExportOptionsPanel eegLabOptionsPanel;
 
 	/**
@@ -90,13 +88,6 @@ public class ExportFormatPanel extends JPanel {
 		return rawOptionsPanel;
 	}
 
-	public ASCIIExportOptionsPanel getASCIIOptionsPanel() {
-		if (asciiOptionsPanel == null) {
-			asciiOptionsPanel = new ASCIIExportOptionsPanel();
-		}
-		return asciiOptionsPanel;
-	}
-
 	public EEGLabExportOptionsPanel getEEGLabOptionsPanel() {
 		if (eegLabOptionsPanel == null) {
 			eegLabOptionsPanel = new EEGLabExportOptionsPanel();
@@ -109,7 +100,6 @@ public class ExportFormatPanel extends JPanel {
 			optionsPanel = new JPanel(new CardLayout());
 			optionsPanel.add(getRawOptionsPanel(), ExportFormatType.RAW.toString());
 			optionsPanel.add(new JPanel(), ExportFormatType.CSV.toString());
-			optionsPanel.add(getASCIIOptionsPanel(), ExportFormatType.ASCII.toString());
 			optionsPanel.add(getEEGLabOptionsPanel(), ExportFormatType.EEGLab.toString());
 			optionsPanel.add(new JPanel(), ExportFormatType.MATLAB.toString());
 		}
@@ -147,7 +137,6 @@ public class ExportFormatPanel extends JPanel {
 		getFormatComboBox().setSelectedItem(descriptor.getFormatType());
 
 		getEEGLabOptionsPanel().fillPanelFromModel(descriptor);
-		getASCIIOptionsPanel().fillPanelFromModel(descriptor);
 		getRawOptionsPanel().fillPanelFromModel(descriptor);
 	}
 
@@ -164,8 +153,7 @@ public class ExportFormatPanel extends JPanel {
 		descriptor.setFormatType(selectedFormatType);
 
 		switch(selectedFormatType) {
-                        case CSV: descriptor.setSeparator(","); break;
-			case ASCII: getASCIIOptionsPanel().fillModelFromPanel(descriptor); break;
+            case CSV: descriptor.setSeparator(","); break;
 			case RAW: getRawOptionsPanel().fillModelFromPanel(descriptor); break;
 			case EEGLab: getEEGLabOptionsPanel().fillModelFromPanel(descriptor); break;
 		}

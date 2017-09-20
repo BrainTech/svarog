@@ -27,6 +27,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.document.mrud.MRUDRegistry;
 import org.signalml.app.document.signal.AbstractFileSignal;
+import org.signalml.app.document.signal.BaseSignalDocument;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.document.signal.RawSignalMRUDEntry;
 import org.signalml.app.document.signal.SignalDocument;
@@ -59,7 +60,7 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
-import org.signalml.domain.signal.ascii.AsciiBackingFilesRepository;
+import org.signalml.app.document.signal.AsciiSignalDocument;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
@@ -609,16 +610,6 @@ public class DocumentFlowIntegrator {
 
 				RawSignalMRUDEntry rawEntry = (RawSignalMRUDEntry) mrud;
 				odd.setOpenSignalDescriptor(rawEntry.getDescriptor());
-				if (rawEntry.getDescriptor().getAsciiFilePath() != null) {
-					// ASCII files need to be converted to RAW when restoring
-					try {
-						File asciiFile = new File(rawEntry.getDescriptor().getAsciiFilePath());
-						odd.setFile(AsciiBackingFilesRepository.prepare(asciiFile).raw);
-					} catch (Exception ex) {
-						logger.error("Cannot restore opened ASCII file", ex);
-						return null;
-					}
-				}
 
 			} else {
 				logger.error("Don't know how to open this kind of mrud [" + mrud.getClass().getName() + "]");
@@ -787,14 +778,16 @@ public class DocumentFlowIntegrator {
 				throw new NullPointerException();
 			}
 
-			RawSignalDocument rawSignalDocument = new RawSignalDocument(rawDescriptor);
-			rawSignalDocument.setMontage(montage);
+			boolean isAsciiSignal = (rawDescriptor.getSourceSignalType() == RawSignalDescriptor.SourceSignalType.ASCII);
+			BaseSignalDocument signalDocument =
+				isAsciiSignal ? new AsciiSignalDocument(rawDescriptor) : new RawSignalDocument(rawDescriptor);
+			signalDocument.setMontage(montage);
 
-			rawSignalDocument.setBackingFile(file);
-			rawSignalDocument.openDocument();
+			signalDocument.setBackingFile(file);
+			signalDocument.openDocument();
 
-			rawSignalDocument.setPageSize(rawDescriptor.getPageSize());
-			rawSignalDocument.setBlocksPerPage(rawDescriptor.getBlocksPerPage());
+			signalDocument.setPageSize(rawDescriptor.getPageSize());
+			signalDocument.setBlocksPerPage(rawDescriptor.getBlocksPerPage());
 
 			String videoFilePath = null;
 			String videoFileName = null;
@@ -819,22 +812,22 @@ public class DocumentFlowIntegrator {
 
 			// start background checksum calculation
 			if (applicationConfig.isPrecalculateSignalChecksums()) {
-				SignalChecksumWorker checksummer = new SignalChecksumWorker(rawSignalDocument, null, new String[] { "crc32" });
-				rawSignalDocument.setPrecalculatingWorker(checksummer);
+				SignalChecksumWorker checksummer = new SignalChecksumWorker(signalDocument, null, new String[] { "crc32" });
+				signalDocument.setPrecalculatingWorker(checksummer);
 				checksummer.lowerPriority();
 				checksummer.execute();
 			}
 
-			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, rawSignalDocument.getClass(), file.getAbsolutePath(), rawDescriptor);
+			RawSignalMRUDEntry mrud = new RawSignalMRUDEntry(ManagedDocumentType.SIGNAL, signalDocument.getClass(), file.getAbsolutePath(), rawDescriptor);
 			mrud.setLastTimeOpened(new Date());
 			mrudRegistry.registerMRUDEntry(mrud);
 
-			if (videoFilePath != null) {
+			if (videoFilePath != null && signalDocument instanceof RawSignalDocument) {
 				// VideoFrame needs to be created before onCommonDocumentAdded
 				// for SignalView to respond properly
 				OfflineVideoFrame frame = new OfflineVideoFrame(videoFileName);
 				frame.open(videoFilePath);
-				rawSignalDocument.setVideoFrame(frame, videoFileOffset);
+				((RawSignalDocument) signalDocument).setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);
 				frame.init();
 
@@ -844,16 +837,16 @@ public class DocumentFlowIntegrator {
 				}
 			}
 
-			onSignalDocumentAdded(rawSignalDocument, descriptor.isMakeActive());
-			onCommonDocumentAdded(rawSignalDocument);
+			onSignalDocumentAdded(signalDocument, descriptor.isMakeActive());
+			onCommonDocumentAdded(signalDocument);
 
 			if (descriptor.isMakeActive()) {
-				actionFocusManager.setActiveDocument(rawSignalDocument);
+				actionFocusManager.setActiveDocument(signalDocument);
 			}
 
 			logger.debug("open end");
 
-			return rawSignalDocument;
+			return signalDocument;
 
 		} else {
 			// other methods are not supported now
