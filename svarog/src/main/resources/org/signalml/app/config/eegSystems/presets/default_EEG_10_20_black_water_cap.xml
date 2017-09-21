@@ -19,17 +19,13 @@
 				<eegSystemType></eegSystemType>
 			</eegSystemName>
 			<channelLabels>
-				<string>M1</string>
-				<string>O1</string>
-				<string>PZ</string>
-				<string>O2</string>
-				<string>M2</string>
-				<string>Cz</string>
-				<string>Oz</string>
-				<string>PO3</string>
-				<string>PO4</string>
 				<string>PO7</string>
+				<string>PO3</string>
+				<string>POz</string>
+				<string>PO4</string>
 				<string>PO8</string>
+				<string>Cz</string>
+				<string>Fz</string>
 				<string></string>
 				<string></string>
 				<string></string>
@@ -52,6 +48,10 @@
 				<string></string>
 				<string></string>
 				<string></string>
+				<string></string>
+				<string></string>
+				<string></string>
+				<string>Digi</string>
 				<string>Saw</string>
 				<string>Sample_Counter</string>
 				<string>trig</string>
@@ -75,7 +75,7 @@
 					<channel>
 						<selected>true</selected>
 						<number>1</number>
-						<label>M1</label>
+						<label>PO7</label>
 						<originalName>ExG1</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -84,7 +84,7 @@
 					<channel>
 						<selected>true</selected>
 						<number>2</number>
-						<label>O1</label>
+						<label>PO3</label>
 						<originalName>ExG2</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -93,7 +93,7 @@
 					<channel>
 						<selected>true</selected>
 						<number>3</number>
-						<label>Pz</label>
+						<label>POz</label>
 						<originalName>ExG3</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -102,7 +102,7 @@
 					<channel>
 						<selected>true</selected>
 						<number>4</number>
-						<label>O2</label>
+						<label>PO4</label>
 						<originalName>ExG4</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -111,7 +111,7 @@
 					<channel>
 						<selected>true</selected>
 						<number>5</number>
-						<label>M2</label>
+						<label>PO8</label>
 						<originalName>ExG5</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -129,34 +129,34 @@
 					<channel>
 						<selected>true</selected>
 						<number>7</number>
-						<label>PO3</label>
+						<label>Fz</label>
 						<originalName>ExG7</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
 						<idle>-2.147483648E9</idle>
 					</channel>
 					<channel>
-						<selected>true</selected>
+						<selected>false</selected>
 						<number>8</number>
-						<label>PO4</label>
+						<label></label>
 						<originalName>ExG8</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
 						<idle>-2.147483648E9</idle>
 					</channel>
 					<channel>
-						<selected>true</selected>
+						<selected>false</selected>
 						<number>9</number>
-						<label>PO7</label>
+						<label></label>
 						<originalName>ExG9</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
 						<idle>-2.147483648E9</idle>
 					</channel>
 					<channel>
-						<selected>true</selected>
+						<selected>false</selected>
 						<number>10</number>
-						<label>PO8</label>
+						<label></label>
 						<originalName>ExG10</originalName>
 						<calibrationGain>0.0715</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -361,9 +361,9 @@
 						<idle>-2.147483648E9</idle>
 					</channel>
 					<channel>
-						<selected>false</selected>
+						<selected>true</selected>
 						<number>33</number>
-						<label></label>
+						<label>Digi</label>
 						<originalName>Digi</originalName>
 						<calibrationGain>1.0</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>

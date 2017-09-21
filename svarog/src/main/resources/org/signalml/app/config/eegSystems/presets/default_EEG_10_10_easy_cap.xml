@@ -51,7 +51,7 @@
 				<string></string>
 				<string></string>
 				<string></string>
-				<string></string>
+				<string>Digi1</string>
 				<string>CP6</string>
 				<string>TP8</string>
 				<string>TP10</string>
@@ -84,7 +84,7 @@
 				<string></string>
 				<string></string>
 				<string></string>
-				<string></string>
+				<string>Digi2</string>
 				<string>Saw</string>
 				<string>Sample_Counter</string>
 				<string>trig</string>
@@ -396,7 +396,7 @@
 					<channel>
 						<selected>false</selected>
 						<number>33</number>
-						<label></label>
+						<label>Digi1</label>
 						<originalName>F1_Digi</originalName>
 						<calibrationGain>1.0</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -693,7 +693,7 @@
 					<channel>
 						<selected>false</selected>
 						<number>66</number>
-						<label></label>
+						<label>Digi2</label>
 						<originalName>F2_Digi</originalName>
 						<calibrationGain>1.0</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
