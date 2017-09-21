@@ -51,7 +51,7 @@
 				<string></string>
 				<string></string>
 				<string></string>
-				<string></string>
+				<string>Digi1</string>
 				<string>Cz</string>
 				<string>C2</string>
 				<string>C4</string>
@@ -84,7 +84,7 @@
 				<string></string>
 				<string></string>
 				<string></string>
-				<string></string>
+				<string>Digi2</string>
 				<string>Saw</string>
 				<string>Sample_Counter</string>
 				<string>trig</string>
@@ -394,9 +394,9 @@
 						<idle>-8388608.0</idle>
 					</channel>
 					<channel>
-						<selected>false</selected>
+						<selected>true</selected>
 						<number>33</number>
-						<label></label>
+						<label>Digi1</label>
 						<originalName>F1_Digi</originalName>
 						<calibrationGain>1.0</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
@@ -693,7 +693,7 @@
 					<channel>
 						<selected>false</selected>
 						<number>66</number>
-						<label></label>
+						<label>Digi2</label>
 						<originalName>F2_Digi</originalName>
 						<calibrationGain>1.0</calibrationGain>
 						<calibrationOffset>0.0</calibrationOffset>
