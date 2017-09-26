@@ -17,18 +17,18 @@
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>Pz</label>
+					<label>Fz</label>
 					<polarPosition>
-						<theta>180</theta>
+						<theta>-0</theta>
 						<phi>44</phi>
 						<radius>1</radius>
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>Oz</label>
+					<label>POz</label>
 					<polarPosition>
-						<theta>180</theta>
-						<phi>-2</phi>
+						<theta>-180</theta>
+						<phi>21</phi>
 						<radius>1</radius>
 					</polarPosition>
 				</eegElectrode>
@@ -49,41 +49,9 @@
 					</polarPosition>
 				</eegElectrode>
 				<eegElectrode>
-					<label>M1</label>
-					<polarPosition>
-						<theta>144</theta>
-						<phi>-2</phi>
-						<radius>1</radius>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
 					<label>PO7</label>
 					<polarPosition>
 						<theta>144</theta>
-						<phi>-2</phi>
-						<radius>1</radius>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>O1</label>
-					<polarPosition>
-						<theta>162</theta>
-						<phi>-2</phi>
-						<radius>1</radius>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>O2</label>
-					<polarPosition>
-						<theta>-162</theta>
-						<phi>-2</phi>
-						<radius>1</radius>
-					</polarPosition>
-				</eegElectrode>
-				<eegElectrode>
-					<label>M2</label>
-					<polarPosition>
-						<theta>-144</theta>
 						<phi>-2</phi>
 						<radius>1</radius>
 					</polarPosition>
