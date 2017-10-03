@@ -14,7 +14,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
  */
 public class AsciiSignalDescriptorReader {
 
-	public static final String SEPARATOR = ",";
+	public static final String SEPARATOR_REGEX = "[ \t,]+";
 	public static final char FIRST_LINE_START = '#';
 
 	/**
@@ -47,10 +47,10 @@ public class AsciiSignalDescriptorReader {
 			}
 			if (firstLine.startsWith(String.valueOf(FIRST_LINE_START))) {
 				// we have channel names
-				return firstLine.substring(1).split(SEPARATOR);
+				return firstLine.substring(1).split(SEPARATOR_REGEX);
 			} else {
 				// values for first sample
-				int channelCount = firstLine.split(SEPARATOR).length;
+				int channelCount = firstLine.split(SEPARATOR_REGEX).length;
 				return generateChannelNames(channelCount);
 			}
 		}

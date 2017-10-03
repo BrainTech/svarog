@@ -174,7 +174,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			}
 
 			readSignalMLMetadata(file, codec);
-		} else if ("csv".equalsIgnoreCase(extension)) {
+		} else if ("csv".equalsIgnoreCase(extension) || "txt".equalsIgnoreCase(extension)) {
 			readCsvFileMetadata(file);
 		} else {
 			readRawFileMetadata(file);
