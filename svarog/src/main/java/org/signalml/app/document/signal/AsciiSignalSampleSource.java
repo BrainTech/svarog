@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.FIRST_LINE_START;
-import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.SEPARATOR;
+import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.SEPARATOR_REGEX;
 
 /**
  * Sample source for ASCII files.
@@ -65,7 +65,7 @@ public class AsciiSignalSampleSource extends BaseSignalSampleSource {
 		try {
 			for (int i=0; i<count; ++i) {
 				String line = index.getLine(lineOffset + i);
-				String[] values = line.split(SEPARATOR);
+				String[] values = line.split(SEPARATOR_REGEX);
 				if (values.length != channelCount) {
 					throw new IOException("invalid data format");
 				}
