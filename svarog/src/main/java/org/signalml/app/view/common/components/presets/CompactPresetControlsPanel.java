@@ -85,11 +85,11 @@ public class CompactPresetControlsPanel extends AbstractPanel {
 		add(getSavePresetButton());
 		add(getRemovePresetButton());
 	}
-
+	
 	public JComboBox getPresetComboBox() {
 		if (presetComboBox == null) {
 			presetComboBox = new JComboBox(getPresetComboBoxModel());
-			presetComboBox.setPreferredSize(new Dimension(240, 26));
+			presetComboBox.setPreferredSize(new Dimension(340, 26));
 
 			presetComboBox.addActionListener(new LoadPresetAction());
 			resetPresetComboBoxSelection();

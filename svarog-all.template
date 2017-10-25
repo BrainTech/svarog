@@ -7,7 +7,7 @@ Priority: optional
 Standards-Version: 3.9.2
 
 Package: svarog-all
-Version: GIT_VERSION
+Version: VERSION
 # Maintainer: Your Name <yourname@example.com>
 # Pre-Depends: <comma-separated list of packages>
 Depends: svarog-artifact, svarog-bookreporter, svarog-fftsignaltool, svarog-plugintoolcommon, svarog-signalanalysisplugin, svarog-stager, svarog, empi, vlc

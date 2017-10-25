@@ -60,14 +60,22 @@ public class IndexedTextFile {
 			logger.debug("error while closing indexed text file", ex);
 		}
 	}
-	
+
+	/**
+	 * Return a single line of the text file.
+	 * Trailing and leading whitespace will be removed.
+	 *
+	 * @param lineIndex line index, where first line has index of 0
+	 * @return n-th line of text
+	 * @throws IOException  if line index is outside bounds
+	 */
 	public String getLine(int lineIndex) throws IOException {
 		if (lineIndex < 0 || lineIndex >= lineCount) {
 			throw new IOException("trying to read outside end-of-file");
 		}
 		int lineIndexInBlock = lineIndex % blockSize;
 		BlockOfLines block = getBlockOfLines(lineIndex / blockSize);
-		return block.lines[lineIndexInBlock];
+		return block.lines[lineIndexInBlock].trim();
 	}
 	
 	public int getLineCount() {

@@ -252,6 +252,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 			TagPresetComboBoxModel model = new TagPresetComboBoxModel(
 					SvarogApplication.getManagerOfPresetsManagers().getStyledTagSetPresetManager());
 			tagPresetComboBox = new JComboBox(model);
+			tagPresetComboBox.setMinimumSize(new Dimension(100,20));
 			tagPresetComboBox.setSelectedIndex(0);
 		}
 		return tagPresetComboBox;
