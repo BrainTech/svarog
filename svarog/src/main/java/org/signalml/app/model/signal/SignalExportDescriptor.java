@@ -30,6 +30,7 @@ public class SignalExportDescriptor implements Preset {
 	private ExportFormatType formatType;
 
 	private boolean exportTags;
+	private boolean exportChannelNames;
 
 	private transient StyledTagSet tagSet;
 	private transient float pageSize;
@@ -53,6 +54,7 @@ public class SignalExportDescriptor implements Preset {
 		saveXML = true;
 		normalize = false;
 		exportTags = true;
+		exportChannelNames = true;
 	}
 
 	@Override
@@ -71,6 +73,14 @@ public class SignalExportDescriptor implements Preset {
 
 	public void setExportTags(boolean exportTags){
 		this.exportTags = exportTags;
+	}
+
+	public boolean isExportChannelNames(){
+		return exportChannelNames;
+	}
+
+	public void setExportChannelNames(boolean exportChannelNames){
+		this.exportChannelNames = exportChannelNames;
 	}
 
 	public String getSeparator(){
