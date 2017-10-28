@@ -4,7 +4,6 @@
 
 package org.signalml.app.view.signal;
 
-import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
@@ -21,7 +20,6 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -59,7 +57,6 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
-import org.signalml.domain.signal.samplesource.ChangeableMultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
@@ -147,7 +144,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private int blocksPerPage;
 	private final long firstSampleTimestamp;
 
-	private GeneralPath generalPath = new GeneralPath(GeneralPath.WIND_EVEN_ODD,50000);
+	private final SignalRenderer renderer = new SignalRenderer();
 
 	private SignalPlotColumnHeader signalPlotColumnHeader = null;
 	private SignalPlotRowHeader signalPlotRowHeader = null;
@@ -805,7 +802,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	@Override
 	protected void paintComponent(Graphics gOrig) {
 
-		int i;
 		Graphics2D g = (Graphics2D)gOrig;
 		Rectangle clip = g.getClipBounds();
 
@@ -832,7 +828,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			int endBlock = (int) Math.ceil(clipEndX / pixelPerBlock);
 
 			g.setColor(Color.GRAY);
-			for (i=startBlock; i <= endBlock; i++) {
+			for (int i=startBlock; i <= endBlock; i++) {
 				g.drawLine((int)(i * pixelPerBlock), clip.y, (int)(i * pixelPerBlock), clipEndY);
 			}
 		}
@@ -846,7 +842,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			int endPage = (int) Math.ceil(clipEndX / pixelPerPage);
 
 			g.setColor(Color.RED);
-			for (i=startPage; i <= endPage; i++) {
+			for (int i=startPage; i <= endPage; i++) {
 				g.drawLine((int)(i * pixelPerPage), clip.y, (int)(i * pixelPerPage), clipEndY);
 			}
 		}
@@ -900,11 +896,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			g.setComposite(AlphaComposite.SrcOver);
 		}
 
-		int firstSample, lastSample, length;
-		double realX, x, y;
-		double lastX = 0;
-		double lastY = 0;
-
 		visibleCount = 0;
 		channel=startChannel;
 		while (visibleCount < maxNumberOfChannels && channel<channelCount) {
@@ -915,12 +906,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			visibleCount ++;
 			// those must be offset by one to get correct partial redraw
 			// offset again by one, this time in terms of samples
-			firstSample = (int) Math.max(0, Math.floor((clip.x-1) / timeZoomFactor) - 1);
-			lastSample = (int) Math.min(sampleCount[channel] - 1, Math.ceil((clipEndX+1) / timeZoomFactor) + 1);
+			int firstSample = (int) Math.max(0, Math.floor((clip.x-1) / timeZoomFactor) - 1);
+			int lastSample = (int) Math.min(sampleCount[channel] - 1, Math.ceil((clipEndX+1) / timeZoomFactor) + 1);
 			if (lastSample < firstSample) {
 				continue;
 			}
-			length = 1 + lastSample - firstSample;
+			int length = 1 + lastSample - firstSample;
 			if (samples == null || samples.length < length) {
 				samples = new double[length];
 			}
@@ -935,118 +926,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				throw ex;
 			}
 
-			realX = firstSample * timeZoomFactor;
-
 			double pixelPerValueForChannel= channelsPlotOptionsModel.getPixelsPerValue(channel);
-			y = samples[0] * pixelPerValueForChannel;
 
-			if (clamped)
-			{
-				if (y > clampLimit) {
-					y = channelLevel[channel] - clampLimit;
-				} else if (y < -clampLimit) {
-					y = channelLevel[channel] + clampLimit;
-				} else {
-					y = channelLevel[channel] - y;
-				}
-			} else {
-				y = channelLevel[channel] - y;
-			}
+			renderer.render(
+					g, channel, samples, length, firstSample, clip,
+					channelLevel[channel], timeZoomFactor, pixelPerValueForChannel,
+					clamped ? clampLimit : null
+			);
 
-			generalPath.reset();
-
-			if (!antialiased) {
-
-				x = StrictMath.floor(realX + 0.5);
-				y = StrictMath.floor(y + 0.5);
-
-				generalPath.moveTo(x, y);
-
-				lastX = x;
-				lastY = y;
-
-			} else {
-
-				generalPath.moveTo(realX, y);
-
-			}
-
-			int sampleSkip = 1;
-
-			if (optimizeSignalDisplaying) {
-				//optimize signal display displays at most two sample for each pixel.
-				sampleSkip = (int) (1/timeZoomFactor);
-				sampleSkip /= 2;
-				if (sampleSkip < 1)
-					sampleSkip = 1;
-			}
-
-			//if the user selects a piece of the signal, we shouldn't break the rule
-			//that we always take the sampleSkip's sample!
-			int startingFrom = sampleSkip - firstSample % sampleSkip;
-			if (firstSample % sampleSkip == 0)
-				startingFrom = 0;
-
-			if (optimizeSignalDisplaying) {
-				//in each step we want to display the same samples even though few new were added
-				OriginalMultichannelSampleSource source = signalChain.getSource();
-				if (source instanceof ChangeableMultichannelSampleSource) {
-					ChangeableMultichannelSampleSource changeableSource = (ChangeableMultichannelSampleSource) source;
-					long addedSamples = changeableSource.getAddedSamplesCount();
-
-					int changeableCorrection = 0;
-					if (addedSamples % sampleSkip != 0)
-						changeableCorrection = (int) (sampleSkip - addedSamples % sampleSkip);
-					startingFrom += changeableCorrection;
-					if (startingFrom >= sampleSkip)
-						startingFrom -= sampleSkip;
-				}
-			}
-
-			for (i=startingFrom; i<length; i += sampleSkip) {
-
-				y = samples[i] * pixelPerValueForChannel;
-
-				if (clamped)
-				{
-					if (y > clampLimit) {
-						y = channelLevel[channel] - clampLimit;
-					} else if (y < -clampLimit) {
-						y = channelLevel[channel] + clampLimit;
-					} else {
-						y = channelLevel[channel] - y;
-					}
-				} else {
-					y = channelLevel[channel] - y;
-				}
-
-				realX = ((firstSample+i) * timeZoomFactor);
-
-				if (antialiased) {
-
-					generalPath.lineTo(realX, y);
-
-				} else {
-
-					// if not antialiased then round to integer in order to prevent aliasing affects
-					// (which cause slave plots to display the signal slightly differently)
-					// expand Math.round for performance, StrictMath.floor is native
-					x = StrictMath.floor(realX + 0.5);
-					y = StrictMath.floor(y + 0.5);
-
-					if (x != lastX || y != lastY) {
-						generalPath.lineTo(x, y);
-					}
-
-					lastX = x;
-					lastY = y;
-
-				}
-
-
-			}
-
-			g.draw(generalPath);
 			channel++;
 		}
 
