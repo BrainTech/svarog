@@ -44,6 +44,7 @@ import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
+import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
@@ -1360,7 +1361,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			plotSize = getSize();
 
 			Point newP = toPixelSpace(p2);
-			newP.x = newP.x - viewportSize.width/2;
+			if (document instanceof MonitorSignalDocument && timeZoomFactor != -1) {
+				// fix viewport to the right side for online signal on timescale change.
+			} else {
+				newP.x = newP.x - viewportSize.width/2;
+			}
 			newP.y = newP.y - viewportSize.height/2;
 
 			newP.x = Math.max(0, Math.min(plotSize.width - viewportSize.width, newP.x));
