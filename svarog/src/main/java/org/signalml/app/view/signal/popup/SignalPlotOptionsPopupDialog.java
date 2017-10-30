@@ -229,6 +229,10 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		final JToggleButton antialiasButton = new JToggleButton(_("Antialiasing"), IconUtils.loadClassPathIcon("org/signalml/app/icon/antialias.png"));
 		antialiasButton.setToolTipText(_("Toggle plot antialiasing"));
 		antialiasButton.setSelected(plot.isAntialiased());
+		
+		final JToggleButton dcOffsetButton = new JToggleButton(_("Remove DC-offset"));
+		dcOffsetButton.setToolTipText(_("Toggle DC-offset removal from visualisation"));
+		dcOffsetButton.setSelected(plot.isDCOffsetRemoved());
 
 		final JToggleButton clampButton = new JToggleButton(_("Clamp values"), IconUtils.loadClassPathIcon("org/signalml/app/icon/clamp.png"));
 		clampButton.setToolTipText(_("Toggle value clamping (causes faster drawing)"));
@@ -270,6 +274,17 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 			public void actionPerformed(ActionEvent e) {
 				for (SignalPlot plot : signalView.getPlots()) {
 					plot.setAntialiased(antialiasButton.isSelected());
+				}
+			}
+
+		});
+		
+		dcOffsetButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (SignalPlot plot : signalView.getPlots()) {
+					plot.setDCOffsetRemoved(dcOffsetButton.isSelected());
 				}
 			}
 
@@ -359,6 +374,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		buttonPanelComponents.add(antialiasButton);
 		buttonPanelComponents.add(clampButton);
 		buttonPanelComponents.add(offscreenChannelsDrawnButton);
+		buttonPanelComponents.add(dcOffsetButton);
 		buttonPanelComponents.add(optimizeDisplayingButton);
 
 	}

@@ -112,6 +112,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private double timeZoomFactor; // equiv to "samplesPerPixel"
 
 	private boolean antialiased;
+	private boolean dcOffsetRemoved;
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
@@ -328,6 +329,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 
 		});
+		if(document instanceof MonitorSignalDocument)
+		{
+			//for online signals renderrer should know that it's online
+			renderer.setOnline(true);
+		}
 
 	}
 
@@ -932,7 +938,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			renderer.render(
 					g, channel, samples, length, firstSample, clip,
 					channelLevel[channel], timeZoomFactor, pixelPerValueForChannel,
-					clamped ? clampLimit : null
+					clamped ? clampLimit : null, dcOffsetRemoved
 			);
 
 			channel++;
@@ -2495,6 +2501,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public boolean isClamped() {
 		return clamped;
+	}
+	
+	public boolean isDCOffsetRemoved() {
+		return dcOffsetRemoved;
+	}
+	
+	public void setDCOffsetRemoved(boolean dcOffset) {
+		this.dcOffsetRemoved = dcOffset;
+		repaint();
 	}
 
 	public void setClamped(boolean clamped) {
