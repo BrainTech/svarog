@@ -100,10 +100,13 @@ public class CSVSignalWriter implements ISignalWriter {
 	 * @throws IOException
 	 */
         private void writeMultiChannelSamplesHeader(FileWriter output, SignalExportDescriptor descriptor, MultichannelSampleSource sampleSource) throws IOException {
-            for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
-                output.write(sampleSource.getLabel(channelNumber) + descriptor.getSeparator());
+            if (descriptor.isExportChannelNames()) {
+                output.write("#");
+                for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++) {
+                    output.write(sampleSource.getLabel(channelNumber) + descriptor.getSeparator());
+                }
+                output.write(sampleSource.getLabel(this.channelCount - 1) + "\n");
             }
-            output.write(sampleSource.getLabel(this.channelCount - 1) + "\n");
         }
     
 }
