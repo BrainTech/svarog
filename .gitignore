@@ -24,6 +24,7 @@ svarog/output.bin
 # NetBeans configuration
 nb-configuration.xml
 nbactions.xml
+nbproject/
 
 # InteliJ
 .idea
