@@ -56,6 +56,10 @@ public final class TimeDomainSampleFilterValidator {
 		case BANDSTOP:
 			isValid = isBandstopValid();
 			break;
+		case NOTCH:
+		case PEAK:
+			isValid = isNotchOrPeakValid();
+			return; // no ripple and attenuation checking
 		}
 
 		boolean isRippleValid = isRippleAndAttenuationValid();
@@ -89,6 +93,21 @@ public final class TimeDomainSampleFilterValidator {
 	 */
 	protected void addErrorMessage(String message) {
 		errorMessages.add(message);
+	}
+
+	/**
+	 * Checks if the filter fulfills the requirements for a notch or peak filter.
+	 * If the filter is not correct, this method sets an error message
+	 * which describes the problem.
+	 * @return true if the filter is correct, false otherwise
+	 */
+	private boolean isNotchOrPeakValid() {
+		if (filter.getQualityParameter() > 0) {
+			return true;
+		} else {
+			addErrorMessage(_("Quality parameter for notch and peak filters must be positive."));
+			return false;
+		}
 	}
 
 	/**

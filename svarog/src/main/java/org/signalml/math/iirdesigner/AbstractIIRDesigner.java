@@ -196,6 +196,10 @@ abstract class AbstractIIRDesigner {
 	 */
 	protected FilterCoefficients designFilter(FilterType type, int filterOrder, double[] naturalFrequencies, double gpass, double gstop, boolean analog) throws BadFilterParametersException {
 
+		if (type.isNotch() || type.isPeak()) {
+			throw new IllegalArgumentException("designFilter does not support notch and peak filters");
+		}
+
 		double samplingFrequency = 2.0;
 		if (!analog) {
 			for (int i = 0; i < naturalFrequencies.length; i++)

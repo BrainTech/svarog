@@ -42,7 +42,7 @@ public class IIRDesignerTest extends BaseTestCase {
 							   };
 
 		coeffs = IIRDesigner.designDigitalFilter(ApproximationFunctionType.BUTTERWORTH, FilterType.HIGHPASS,
-				 new double[] {10, 0.0}, new double[] {5, 0.0}, 3.0, 40.0, 200.0);
+				 new double[] {10, 0.0}, new double[] {5, 0.0}, 3.0, 40.0, Double.NaN, 200.0);
 
 		assertEquals(new FilterCoefficients(pythonB, pythonA), coeffs, 1e-8);
 

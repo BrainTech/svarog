@@ -41,6 +41,12 @@ import org.springframework.validation.Errors;
  */
 public class TimeDomainFilterParametersPanel extends JPanel {
 
+	private static final String PASSBAND_FREQUENCY_CAPTION_STANDARD = "Passband edge frequency 1 [Hz]";
+	private static final String PASSBAND_FREQUENCY_CAPTION_NOTCH = "Passband center frequency [Hz]";
+
+	private static final String STOPBAND_FREQUENCY_CAPTION_STANDARD = "Stopband edge frequency 1 [Hz]";
+	private static final String STOPBAND_FREQUENCY_CAPTION_NOTCH = "Stopband center frequency [Hz]";
+
 	/**
 	 * A value of step size for passband and stop band edge frequency
 	 * spinners.
@@ -82,6 +88,10 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	 */
 	private ResolvableComboBox filterFamilyComboBox;
 	/**
+	 * Label for passbandEdgeFrequency1Spinner.
+	 */
+	private final JLabel passbandEdgeFrequency1Label;
+	/**
 	 * The spinner controlling the value of the first passband edge
 	 * frequency of the filter.
 	 */
@@ -91,6 +101,10 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	 * frequency of the filter.
 	 */
 	private DoubleSpinner passbandEdgeFrequency2Spinner;
+	/**
+	 * Label for stopbandEdgeFrequency1Spinner.
+	 */
+	private final JLabel stopbandEdgeFrequency1Label;
 	/**
 	 * A {@link JSpinner} controlling the value of the first stopband edge
 	 * frequency of the filter.
@@ -111,18 +125,25 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	 * attenuation in the stopband.
 	 */
 	private DoubleSpinner stopbandAttenuationSpinner;
+	/**
+	 * A {@link JSpinner} controlling the value of filter's
+	 * dimensionless quality parameter (df/f0).
+	 */
+	private DoubleSpinner qualityParameterSpinner;
 
 	/**
 	 * Constructor.
 	 */
 	public TimeDomainFilterParametersPanel() {
+		passbandEdgeFrequency1Label = new JLabel(PASSBAND_FREQUENCY_CAPTION_STANDARD);
+		stopbandEdgeFrequency1Label = new JLabel(STOPBAND_FREQUENCY_CAPTION_STANDARD);
 		createInterface();
 	}
 
 	/**
 	 * Creates all components and puts them in appropriate places on this panel.
 	 */
-	protected void createInterface() {
+	protected final void createInterface() {
 		JPanel filterParametersPanel = new JPanel(null);
 
 		filterParametersPanel.setBorder(new EmptyBorder(3, 3, 3, 3));
@@ -135,20 +156,19 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 		JLabel descriptionLabel = new JLabel(_("Filter description"));
 		JLabel filterTypeLabel = new JLabel(_("Filter type"));
 		JLabel filterFamilyLabel = new JLabel(_("Filter family"));
-		JLabel passbandEdgeFrequency1Label = new JLabel(_("Passband edge frequency 1 [Hz]"));
 		JLabel passbandEdgeFrequency2Label = new JLabel(_("Passband edge frequency 2 [Hz]"));
-		JLabel stopbandEdgeFrequency1Label = new JLabel(_("Stopband edge frequency 1 [Hz]"));
 		JLabel stopbandEdgeFrequency2Label = new JLabel(_("Stopband edge frequency 2 [Hz]"));
 		JLabel passbandRippleLabel = new JLabel(_("Passband ripple [dB]"));
 		JLabel stopbandAttenuationLabel = new JLabel(_("Stopband attenuation [dB]"));
+		JLabel qualityParameterLabel = new JLabel(_("Quality parameter (dimensionless)"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(descriptionLabel).addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel));
+			layout.createParallelGroup().addComponent(descriptionLabel).addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel).addComponent(qualityParameterLabel));
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(getDescriptionTextField()).addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()));
+			layout.createParallelGroup().addComponent(getDescriptionTextField()).addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()).addComponent(getQualityParameterSpinner()));
 
 		hGroup.addGroup(
 			layout.createParallelGroup().addComponent(filterFamilyLabel).addComponent(passbandEdgeFrequency2Label).addComponent(stopbandEdgeFrequency2Label).addComponent(stopbandAttenuationLabel));
@@ -172,6 +192,8 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 			layout.createParallelGroup(Alignment.BASELINE).addComponent(stopbandEdgeFrequency1Label).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(stopbandEdgeFrequency2Label).addComponent(getStopbandEdgeFrequency2Spinner()));
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.BASELINE).addComponent(passbandRippleLabel).addComponent(getPassbandRippleSpinner()).addComponent(stopbandAttenuationLabel).addComponent(getStopbandAttenuationSpinner()));
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.BASELINE).addComponent(qualityParameterLabel).addComponent(getQualityParameterSpinner()));
 
 		layout.setVerticalGroup(vGroup);
 
@@ -213,18 +235,24 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 			DefaultComboBoxModel model = new DefaultComboBoxModel(filterTypes);
 			filterTypeComboBox.setModel(model);
 
-			filterTypeComboBox.addItemListener(new ItemListener() {
-
-				@Override
-				public void itemStateChanged(ItemEvent e) {
-					if (((FilterType) filterTypeComboBox.getSelectedItem()).isHighpass() || ((FilterType) filterTypeComboBox.getSelectedItem()).isLowpass()) {
-						getPassbandEdgeFrequency2Spinner().setEnabled(false);
-						getStopbandEdgeFrequency2Spinner().setEnabled(false);
-					} else {
-						getPassbandEdgeFrequency2Spinner().setEnabled(true);
-						getStopbandEdgeFrequency2Spinner().setEnabled(true);
-					}
-				}
+			filterTypeComboBox.addItemListener((ItemEvent e) -> {
+				FilterType filterType = (FilterType) filterTypeComboBox.getSelectedItem();
+				boolean isQualityEnabled = filterType.isNotch() || filterType.isPeak();
+				boolean isSecondSpinnerEnabled = filterType.needsSecondFrequency();
+				getPassbandEdgeFrequency1Spinner().setEnabled(!filterType.isNotch());
+				getStopbandEdgeFrequency1Spinner().setEnabled(!filterType.isPeak());
+				getPassbandEdgeFrequency2Spinner().setEnabled(isSecondSpinnerEnabled);
+				getStopbandEdgeFrequency2Spinner().setEnabled(isSecondSpinnerEnabled);
+				getPassbandRippleSpinner().setEnabled(!isQualityEnabled);
+				getStopbandAttenuationSpinner().setEnabled(!isQualityEnabled);
+				getQualityParameterSpinner().setEnabled(isQualityEnabled);
+				getFilterFamilyComboBox().setEnabled(!isQualityEnabled);
+				passbandEdgeFrequency1Label.setText(
+					isQualityEnabled ? PASSBAND_FREQUENCY_CAPTION_NOTCH : PASSBAND_FREQUENCY_CAPTION_STANDARD
+				);
+				stopbandEdgeFrequency1Label.setText(
+					isQualityEnabled ? STOPBAND_FREQUENCY_CAPTION_NOTCH : STOPBAND_FREQUENCY_CAPTION_STANDARD
+				);
 			});
 
 		}
@@ -388,6 +416,27 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 	}
 
 	/**
+	 * Returns the {@link JSpinner} used in this window to control the
+	 * quality parameter for this filter.
+	 * @return the {@link JSpinner} for this window, which can be used
+	 * to control the quality parameter of this filter
+	 */
+	public DoubleSpinner getQualityParameterSpinner() {
+
+		if (qualityParameterSpinner == null) {
+
+			qualityParameterSpinner = new DoubleSpinner(new SpinnerNumberModel(20.0, 1.0, 1000.0, 0.1));
+			qualityParameterSpinner.setPreferredSize(new Dimension(80, 25));
+
+			qualityParameterSpinner.setEditor(new JSpinner.NumberEditor(qualityParameterSpinner, "0.0"));
+			qualityParameterSpinner.setFont(qualityParameterSpinner.getFont().deriveFont(Font.PLAIN));
+			qualityParameterSpinner.setEnabled(false);
+
+		}
+		return qualityParameterSpinner;
+	}
+
+	/**
 	 * Returns a {@link SpinnerNumberModel} which should be used for
 	 * passband and stopband edge frequency spinners.
 	 * @return a {@link SpinnerNumberModel} to be used with frequency
@@ -415,6 +464,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 		getStopbandEdgeFrequency2Spinner().setValue((double) currentFilter.getStopbandEdgeFrequencies()[1]);
 		getPassbandRippleSpinner().setValue((double) currentFilter.getPassbandRipple());
 		getStopbandAttenuationSpinner().setValue((double) currentFilter.getStopbandAttenuation());
+		getQualityParameterSpinner().setValue((double) currentFilter.getQualityParameter());
 
 	}
 
@@ -440,6 +490,7 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 			});
 		currentFilter.setPassbandRipple(getPassbandRippleSpinner().getValue());
 		currentFilter.setStopbandAttenuation(getStopbandAttenuationSpinner().getValue());
+		currentFilter.setQualityParameter(getQualityParameterSpinner().getValue());
 
 		currentFilter.setSamplingFrequency(getCurrentSamplingFrequency());
 
