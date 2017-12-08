@@ -41,20 +41,6 @@ public class NewSamplesData {
 	/**
 	 * Constructor. Creates an object containing samples data.
 	 * @param sampleValues the values of the samples for each channel
-	 * @param samplesTimestamp the timestamp of the samples
-	 */
-	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
-		this.sampleValues = sampleValues;
-		this.samplesTimestamp = samplesTimestamp;
-		this.sampleImpedanceFlags = new int[this.sampleValues.length];
-		for (short idx=0; idx<this.sampleImpedanceFlags.length; ++idx) {
-			this.sampleImpedanceFlags[idx] = 0; // UNKNOWN
-		}
-		this.sampleImpedance = null;
-	}
-	/**
-	 * Constructor. Creates an object containing samples data.
-	 * @param sampleValues the values of the samples for each channel
 	 * @param sampleImpedanceFlags the values of the samples impedance for each channel
 	 * @param samplesTimestamp the timestamp of the samples
 	 */
@@ -88,20 +74,14 @@ public class NewSamplesData {
 		this.sampleImpedance = sampleImpedance;
 	}
 
-	public float[] getSampleValues() {
-		return sampleValues;
-	}
+	float[] getSampleValues() { return sampleValues; }
 
-	public void setSampleValues(float[] sampleValues) {
-		this.sampleValues = sampleValues;
-	}
+	int[] getSampleImpedanceFlags() { return sampleImpedanceFlags; }
 
-	public double getSamplesTimestamp() {
+	Map<Integer, Float> getSampleImpedance() { return sampleImpedance; }
+
+	double getSamplesTimestamp() {
 		return samplesTimestamp;
 	}
 
-	public void setSamplesTimestamp(double samplesTimestamp) {
-		this.samplesTimestamp = samplesTimestamp;
-	}
-	
 }
