@@ -13,11 +13,7 @@ import static org.signalml.app.worker.monitor.messages.LauncherMessage.parseMess
 import org.signalml.app.worker.monitor.NewSamplesData;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 
 public class SignalMsg extends BaseMessage{
@@ -65,15 +61,50 @@ public class SignalMsg extends BaseMessage{
 			for (int sample=0; sample<sampleCount; ++sample) {
 				timestamps[sample] = data.readDouble();
 			}
-			for (int sample=0; sample<sampleCount; ++sample) {
-				float[] newSamplesArray = new float[channelCount];
-				for (int i=0; i<channelCount; ++i) {
-					newSamplesArray[i] = data.readFloat();
-				}
 
-				double samplesTimestamp = timestamps[sample];
-				NewSamplesData newSamplesPackage = new NewSamplesData(newSamplesArray, samplesTimestamp);
-				samples.add(newSamplesPackage);
+			float[][] samplesMatrix = new float[sampleCount][channelCount];
+			for (int sample=0; sample<sampleCount; ++sample) {
+				for (int i=0; i<channelCount; ++i) {
+					samplesMatrix[sample][i] = data.readFloat();
+				}
+			}
+
+			int[] impedanceFlags = new int[channelCount];
+			Set<Integer> channelsWithImpedance = new HashSet<>();
+			for (int channel=0; channel<channelCount; ++channel) {
+				impedanceFlags[channel] = data.readShort();
+				if (impedanceFlags[channel] == 2) {
+					channelsWithImpedance.add(channel);
+				}
+			}
+
+			if (!channelsWithImpedance.isEmpty()) {
+				for (int sample=0; sample<sampleCount; ++sample) {
+					Map<Integer, Float> impedanceMap = new HashMap<>();
+					for (Integer channel: channelsWithImpedance) {
+						impedanceMap.put(channel, data.readFloat());
+					}
+
+					double samplesTimestamp = timestamps[sample];
+					NewSamplesData newSamplesPackage = new NewSamplesData(
+							samplesMatrix[sample],
+							impedanceFlags,
+							impedanceMap,
+							samplesTimestamp
+					);
+					samples.add(newSamplesPackage);
+				}
+			}
+			else {
+				for (int sample=0; sample<sampleCount; ++sample) {
+					double samplesTimestamp = timestamps[sample];
+					NewSamplesData newSamplesPackage = new NewSamplesData(
+							samplesMatrix[sample],
+							impedanceFlags,
+							samplesTimestamp
+					);
+					samples.add(newSamplesPackage);
+				}
 			}
 		} catch (Exception ex) {
 			logger.error("cannot process signal message", ex);
