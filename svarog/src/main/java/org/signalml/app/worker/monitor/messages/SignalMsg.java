@@ -7,6 +7,8 @@ package org.signalml.app.worker.monitor.messages;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+
+import org.signalml.app.worker.monitor.Impedance;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.NewSamplesData;
 import java.io.ByteArrayInputStream;
@@ -61,42 +63,15 @@ public class SignalMsg extends BaseMessage{
 				}
 			}
 
-			int[] impedanceFlags = new int[channelCount];
-			Set<Integer> channelsWithImpedance = new HashSet<>();
-			for (int channel=0; channel<channelCount; ++channel) {
-				impedanceFlags[channel] = data.readShort();
-				if (impedanceFlags[channel] == 2) {
-					channelsWithImpedance.add(channel);
-				}
-			}
-
-			if (!channelsWithImpedance.isEmpty()) {
-				for (int sample=0; sample<sampleCount; ++sample) {
-					Map<Integer, Float> impedanceMap = new HashMap<>();
-					for (Integer channel: channelsWithImpedance) {
-						impedanceMap.put(channel, data.readFloat());
-					}
-
-					double samplesTimestamp = timestamps[sample];
-					NewSamplesData newSamplesPackage = new NewSamplesData(
-							samplesMatrix[sample],
-							impedanceFlags,
-							impedanceMap,
-							samplesTimestamp
-					);
-					samples.add(newSamplesPackage);
-				}
-			}
-			else {
-				for (int sample=0; sample<sampleCount; ++sample) {
-					double samplesTimestamp = timestamps[sample];
-					NewSamplesData newSamplesPackage = new NewSamplesData(
-							samplesMatrix[sample],
-							impedanceFlags,
-							samplesTimestamp
-					);
-					samples.add(newSamplesPackage);
-				}
+			Impedance impedance = new Impedance(data, channelCount, sampleCount);
+			for (int sampleId=0; sampleId<sampleCount; ++sampleId) {
+				double samplesTimestamp = timestamps[sampleId];
+				NewSamplesData newSamplesPackage = new NewSamplesData(
+						samplesMatrix[sampleId],
+						impedance.sample(sampleId),
+						samplesTimestamp
+				);
+				samples.add(newSamplesPackage);
 			}
 		} catch (Exception ex) {
 			logger.error("cannot process signal message", ex);

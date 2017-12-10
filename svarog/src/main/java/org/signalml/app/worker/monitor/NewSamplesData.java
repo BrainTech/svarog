@@ -6,7 +6,6 @@
 package org.signalml.app.worker.monitor;
 
 import java.util.Map;
-import java.util.stream.IntStream;
 
 /**
  * This class holds information about the newest samples package that was received
@@ -24,15 +23,9 @@ public class NewSamplesData {
 	 */
 	private float[] sampleValues;
 	/**
-	 * The values of the impedance. The size of the array is equal to the number
-	 * of channels with impedance in the signal.
+	 * The values of the impedance and timestamps.
 	 */
-	private Map<Integer, Float> sampleImpedance;
-	/**
-	 * The values of the impedance flags. The size of the array is equal to the number
-	 * of channels in the signal.
-	 */
-	private int[] sampleImpedanceFlags;
+	private Impedance.ImpedanceData sampleImpedance;
 	/**
 	 * The timestamp of the samples represented by the sampleValues array.
 	 */
@@ -41,44 +34,24 @@ public class NewSamplesData {
 	/**
 	 * Constructor. Creates an object containing samples data.
 	 * @param sampleValues the values of the samples for each channel
-	 * @param sampleImpedanceFlags the values of the samples impedance for each channel
-	 * @param samplesTimestamp the timestamp of the samples
-	 */
-	public NewSamplesData(float[] sampleValues, int[] sampleImpedanceFlags, double samplesTimestamp) {
-		this.sampleValues = sampleValues;
-		this.samplesTimestamp = samplesTimestamp;
-		this.sampleImpedanceFlags = sampleImpedanceFlags;
-		assert !IntStream.of(this.sampleImpedanceFlags
-			).anyMatch(flag -> flag == 2) : "None IMPEDANCE_PRESENT flags should be present."; // 2-> PRESENT
-		this.sampleImpedance = null;
-	}
-	/**
-	 * Constructor. Creates an object containing samples data.
-	 * @param sampleValues the values of the samples for each channel
-	 * @param sampleImpedanceFlags the values of the samples impedance flags for each channel
-	 * @param sampleImpedance the values of the samples impedance for each channel with impedance
+	 * @param sampleImpedance the values of the samples impedance with flags for each channel with impedance
 	 * @param samplesTimestamp the timestamp of the samples
 	 */
 	public NewSamplesData(
 			float[] sampleValues,
-			int[] sampleImpedanceFlags,
-			Map<Integer, Float> sampleImpedance,
+			Impedance.ImpedanceData sampleImpedance,
 			double samplesTimestamp
 	) {
 		this.sampleValues = sampleValues;
 		this.samplesTimestamp = samplesTimestamp;
-		this.sampleImpedanceFlags = sampleImpedanceFlags;
-		assert IntStream.of(this.sampleImpedanceFlags
-			).anyMatch(flag -> flag == 2): "At least 1 IMPEDANCE_PRESENT flag should be present."; // 2-> PRESENT
-		assert !sampleImpedance.isEmpty() : "Impedance map shouldn't be empty when IMPEDANCE_PRESENT flag is present";
 		this.sampleImpedance = sampleImpedance;
 	}
 
 	float[] getSampleValues() { return sampleValues; }
 
-	int[] getSampleImpedanceFlags() { return sampleImpedanceFlags; }
+	int[] getSampleImpedanceFlags() { return sampleImpedance.flags; }
 
-	Map<Integer, Float> getSampleImpedance() { return sampleImpedance; }
+	Map<Integer, Float> getSampleImpedance() { return sampleImpedance.data; }
 
 	double getSamplesTimestamp() {
 		return samplesTimestamp;
