@@ -23,13 +23,17 @@ public class Impedance {
 		this.data = this.channels.isEmpty() ? null : readImpedanceData(data, this.channels.size(), sampleCount);
 	}
 
-	private int[] readImpedanceFlags(DataInputStream data, int channelCount) throws IOException
+	private int[] readImpedanceFlags(DataInputStream data, int channelCount)
 	{
-		int[] flags = new int[channelCount];
-		for (int channel=0; channel<channelCount; ++channel) {
-			flags[channel] = data.readShort();
+		try {
+			int[] flags = new int[channelCount];
+			for (int channel = 0; channel < channelCount; ++channel) {
+				flags[channel] = data.readShort();
+			}
+			return flags;
+		} catch (IOException e) {
+			return new int[0];
 		}
-		return flags;
 	}
 
 	private Set<Integer> channelsWithImpedance()
