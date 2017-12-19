@@ -41,7 +41,12 @@ public class SignalMsg extends BaseMessage{
 		super(MessageType.AMPLIFIER_SIGNAL_MESSAGE);
 		parseSamples(data);
 	}
-	
+
+	public SignalMsg()
+	{
+		super(MessageType.AMPLIFIER_SIGNAL_MESSAGE);
+	}
+
 	@JsonIgnore
 	private void parseSamples(byte[] sampleMsgData)
 	{
