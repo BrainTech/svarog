@@ -5,6 +5,8 @@
  */
 package org.signalml.app.worker.monitor;
 
+import java.util.Map;
+
 /**
  * This class holds information about the newest samples package that was received
  * by Svarog and published by the doInTheBackground method.
@@ -21,6 +23,10 @@ public class NewSamplesData {
 	 */
 	private float[] sampleValues;
 	/**
+	 * The values of the impedance and timestamps.
+	 */
+	private Impedance.ImpedanceData sampleImpedance;
+	/**
 	 * The timestamp of the samples represented by the sampleValues array.
 	 */
 	private double samplesTimestamp;
@@ -28,27 +34,27 @@ public class NewSamplesData {
 	/**
 	 * Constructor. Creates an object containing samples data.
 	 * @param sampleValues the values of the samples for each channel
+	 * @param sampleImpedance the values of the samples impedance with flags for each channel with impedance
 	 * @param samplesTimestamp the timestamp of the samples
 	 */
-	public NewSamplesData(float[] sampleValues, double samplesTimestamp) {
+	public NewSamplesData(
+			float[] sampleValues,
+			Impedance.ImpedanceData sampleImpedance,
+			double samplesTimestamp
+	) {
 		this.sampleValues = sampleValues;
 		this.samplesTimestamp = samplesTimestamp;
+		this.sampleImpedance = sampleImpedance;
 	}
 
-	public float[] getSampleValues() {
-		return sampleValues;
-	}
+	float[] getSampleValues() { return sampleValues; }
 
-	public void setSampleValues(float[] sampleValues) {
-		this.sampleValues = sampleValues;
-	}
+	int[] getSampleImpedanceFlags() { return sampleImpedance.flags; }
 
-	public double getSamplesTimestamp() {
+	Map<Integer, Float> getSampleImpedance() { return sampleImpedance.data; }
+
+	double getSamplesTimestamp() {
 		return samplesTimestamp;
 	}
 
-	public void setSamplesTimestamp(double samplesTimestamp) {
-		this.samplesTimestamp = samplesTimestamp;
-	}
-	
 }
