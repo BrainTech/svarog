@@ -8,8 +8,6 @@ import java.util.Arrays;
 
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.FilterType;
-import org.signalml.util.ResolvableString;
-import org.springframework.context.MessageSourceResolvable;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.text.DecimalFormat;
@@ -24,12 +22,7 @@ import org.signalml.app.config.preset.Preset;
 @XStreamAlias("timeDomainSampleFilter")
 public class TimeDomainSampleFilter extends SampleFilterDefinition implements Preset {
 
-	private static final long serialVersionUID = 1L;
-
-	/**
-	 * codes describing the effect the filter has on the signal
-	 */
-	private static final String[] EFFECT_CODES = new String[] {"timeDomainFilter.effect"};
+	private static final long serialVersionUID = 2L;
 
 	/**
 	 * the name of the filter for the use of the {@link Preset} interface
@@ -37,7 +30,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	private String name;
 
 	/**
-	 * the type of the filter (LOWPASS/HIGHPASS/BANDPASS/BANDSTOP)
+	 * the type of the filter (LOWPASS/HIGHPASS/BANDPASS/BANDSTOP/NOTCH/PEAK)
 	 */
 	private FilterType filterType;
 
@@ -45,6 +38,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	 * the type of approximation function which will be used to fulfill
 	 * the requirements specified by the edge freuencies, passband ripple,
 	 * stopband attenuation etc.
+	 * This parameter is ignored for "notch" and "peak" filters.
 	 */
 	private ApproximationFunctionType approximationFunctionType;
 
@@ -67,14 +61,23 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	/**
 	 * The maximum value (in decibels) of variations in the frequency
 	 * magnitude response within the passband of a filter.
+	 * This parameter is ignored for "notch" and "peak" filters.
 	 */
 	private double passbandRipple;
 
 	/**
 	 * The minimum value (in decibels) of attenuation for the stopband
 	 * within the filter's frequency response.
+	 * This parameter is ignored for "notch" and "peak" filters.
 	 */
 	private double stopbandAttenuation;
+
+	/**
+	 * Quality factor. Dimensionless parameter that characterizes notch
+	 * filter -3 dB bandwidth relative to its center frequency, Q = w0/bw.
+	 * This parameter is needed for "notch" and "peak" filters only.
+	 */
+	private double quality;
 
 	/**
 	 * The sampling frequency for which the filter's coefficients
@@ -120,16 +123,46 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	 * in the frequency magnitude response within the passband of a filter.
 	 * @param stopbandAttenuation the minimum value (in decibels) of
 	 * attenuation for the stopband within the filter's frequency response.
+	 * @param quality quality factor, for notch and peak filters only
 	 */
-	public TimeDomainSampleFilter(FilterType filterType, ApproximationFunctionType approximationFunctionType, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation) {
-
+	public TimeDomainSampleFilter(FilterType filterType, ApproximationFunctionType approximationFunctionType, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation, double quality) {
 		this.filterType = filterType;
 		this.approximationFunctionType = approximationFunctionType;
 		this.passbandEdgeFrequencies = passbandEdgeFrequencies.clone();
 		this.stopbandEdgeFrequencies = stopbandEdgeFrequencies.clone();
 		this.passbandRipple = passbandRipple;
 		this.stopbandAttenuation = stopbandAttenuation;
+		this.quality = quality;
+	}
 
+	/**
+	 * Creates a new filter characterized by the given parameters.
+	 * @param filterType the type of the filter (low-pass/high-pass etc.)
+	 * @param approximationFunctionType the type of approximation function
+	 * which will be used to calculate the filter coefficients (Butterworth,
+	 * ChebyshevI, etc.)
+	 * @param passbandEdgeFrequencies an array containing two (or one - if
+	 * the filter is low-pass or high-pass) edge frequencies at which the
+	 * passband should begin and/or end. If the filter is a low-pass or a
+	 * high-pass filter, then only one passbandband edge frequency
+	 * is needed. In that case, the value of the passbandEdgeFrequencies[1]
+	 * is never read.
+	 * @param stopbandEdgeFrequencies an array containing two (or one - if
+	 * the filter is low-pass or high-pass) edge frequencies at which the
+	 * stopband should begin and/or end. If the filter is a low-pass or a
+	 * high-pass filter, then only one stopbandband edge frequency
+	 * is needed. In that case, the value of the stopbandEdgeFrequencies[1]
+	 * is never read.
+	 * @param passbandRipple the maximum value (in decibels) of variations
+	 * in the frequency magnitude response within the passband of a filter.
+	 * @param stopbandAttenuation the minimum value (in decibels) of
+	 * attenuation for the stopband within the filter's frequency response.
+	 */
+	public TimeDomainSampleFilter(FilterType filterType, ApproximationFunctionType approximationFunctionType, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation) {
+		this(filterType, approximationFunctionType,
+			passbandEdgeFrequencies, stopbandEdgeFrequencies,
+			passbandRipple, stopbandAttenuation,
+			Double.NaN); // quality is meaningless for most filters
 	}
 
 	/**
@@ -257,6 +290,26 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	}
 
 	/**
+	 * Reeturn required quality of the filter, e.g -3 dB bandwidth
+	 * relative to its center frequency, Q = w0/bw.
+	 * This parameter is meaningful for "notch" and "peak" filters only.
+	 * @return quality parameter
+	 */
+	public double getQualityParameter() {
+		return quality;
+	}
+
+	/**
+	 * Set required quality of the filter, e.g -3 dB bandwidth
+	 * relative to its center frequency, Q = w0/bw.
+	 * This parameter is meaningful for "notch" and "peak" filters only.
+	 * @param quality quality parameter
+	 */
+	public void setQualityParameter(double quality) {
+		this.quality = quality;
+	}
+
+	/**
 	 * Returns the sampling frequency for which the coefficients of this filter
 	 * will be calculated.
 	 * @return the sampling frequency for which this filter will operate
@@ -298,6 +351,10 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 			effectString += passbandEdgeFrequency0 + " - " + passbandEdgeFrequency1;
 		else if (filterType.isBandstop())
 			effectString += stopbandEdgeFrequency0 + " - " + stopbandEdgeFrequency1;
+		else if (filterType.isNotch())
+			effectString += stopbandEdgeFrequency0;
+		else if (filterType.isPeak())
+			effectString += passbandEdgeFrequency0;
 		effectString += " Hz";
 
 		effectString += ")";
@@ -341,7 +398,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 	     * @param filter a filter which parameters are to be copied
 	     * to this filter
 	     */
-	public void copyFrom(TimeDomainSampleFilter filter) {
+	public final void copyFrom(TimeDomainSampleFilter filter) {
 
 		filterType = filter.filterType;
 		approximationFunctionType = filter.approximationFunctionType;
@@ -349,6 +406,7 @@ public class TimeDomainSampleFilter extends SampleFilterDefinition implements Pr
 		stopbandEdgeFrequencies = filter.stopbandEdgeFrequencies.clone();
 		passbandRipple = filter.passbandRipple;
 		stopbandAttenuation = filter.stopbandAttenuation;
+		quality = filter.quality;
 		samplingFrequency = filter.samplingFrequency;
 
 		description = filter.description;

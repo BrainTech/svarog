@@ -31,12 +31,18 @@ public class IIRDesigner {
 	 * @param stopbandEdgeFrequencies the stopband edge frequencies
 	 * @param passbandRipple maximum ripple allowed for the filter to have in the passband [dB]
 	 * @param stopbandAttenuation minimum attenuation required for the filter to have in the stopband [dB]
+	 * @param quality relative bandwidth (df/f0) for -3 dB attenuation (for notch and peak filters only)
 	 * @param samplingFrequency the sampling frequency at which the filter will operate
 	 * @return the {@link FilterCoefficients} of the filter designed which meets given specification.
 	 * @throws BadFilterParametersException thrown when the filter cannot
 	 * design a filter for the given parameters.
 	 */
-	public static FilterCoefficients designDigitalFilter(ApproximationFunctionType approximationFunctionType, FilterType type, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation, double samplingFrequency) throws BadFilterParametersException {
+	public static FilterCoefficients designDigitalFilter(ApproximationFunctionType approximationFunctionType, FilterType type, double[] passbandEdgeFrequencies, double[] stopbandEdgeFrequencies, double passbandRipple, double stopbandAttenuation, double quality, double samplingFrequency) throws BadFilterParametersException {
+
+		if (type.isNotch() || type.isPeak()) {
+			NotchIIRDesigner iirdesigner = new NotchIIRDesigner();
+			return iirdesigner.designDigitalFilter(samplingFrequency, type, passbandEdgeFrequencies, stopbandEdgeFrequencies, quality);
+		}
 
 		if (approximationFunctionType.isButterworth()) {
 
@@ -84,7 +90,8 @@ public class IIRDesigner {
 
 		return IIRDesigner.designDigitalFilter(filterDefinition.getApproximationFunctionType(), filterDefinition.getFilterType(),
 											   filterDefinition.getPassbandEdgeFrequencies(), filterDefinition.getStopbandEdgeFrequencies(),
-											   filterDefinition.getPassbandRipple(), filterDefinition.getStopbandAttenuation(), filterDefinition.getSamplingFrequency());
+											   filterDefinition.getPassbandRipple(), filterDefinition.getStopbandAttenuation(),
+											   filterDefinition.getQualityParameter(), filterDefinition.getSamplingFrequency());
 
 	}
 
