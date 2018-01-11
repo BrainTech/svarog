@@ -1,5 +1,7 @@
-#!/bin/bash
-source ./functions.sh
+#!/usr/bin/env bash
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source "$SCRIPTPATH/common/functions.sh"
 set -e
 
 build

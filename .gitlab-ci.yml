@@ -10,7 +10,7 @@ build:
   image: svarog-build-test-image:u1604
   stage: builddeb
   script:
-    - ./builddeb.sh
+    - ./scripts/ci/builddeb.sh
   artifacts:
     name: svarog_deb_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
     paths: 
@@ -23,7 +23,7 @@ buildstandalone:
     - apt-get update -y
     - apt-get install -y zip
   script:
-    - ./buildzip.sh
+    - ./scripts/ci/buildzip.sh
   artifacts:
     name: Svarog_standalone_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
     paths: 
@@ -41,7 +41,7 @@ signdebs:
   before_script:
   - apt-get update -qq
   - apt-get install -y gnupg debsigs
-  script: ./signdebs.sh
+  script: ./scripts/ci/signdebs.sh
   dependencies:
   - build
   artifacts:
@@ -64,7 +64,7 @@ deploy_xenial_development:
     - export DEB_USER=$DEB_NIGHTLY_USER
     - export SSHPASS=$DEB_NIGHTLY_PASSWD
     - export RELEASE=xenial
-    - ./deploydebs.sh
+    - ./scripts/ci/deploydebs.sh
   environment: nightly_ubuntu1604
 
 deploy_xenial_testing:
@@ -82,7 +82,7 @@ deploy_xenial_testing:
     - export DEB_USER=$DEB_TESTING_USER
     - export SSHPASS=$DEB_TESTING_PASSWD
     - export RELEASE=xenial
-    - ./deploydebs.sh
+    - ./scripts/ci/deploydebs.sh
   environment: testing_ubuntu1604
 
 deploy_xenial_master:
@@ -101,7 +101,7 @@ deploy_xenial_master:
     - export DEB_USER=$DEB_STABLE_USER
     - export SSHPASS=$DEB_STABLE_PASSWD
     - export RELEASE=xenial
-    - ./deploydebs.sh
+    - ./scripts/ci/deploydebs.sh
   environment: production_ubuntu1604
 
 deploy_standalone_braintech:
@@ -118,7 +118,7 @@ deploy_standalone_braintech:
     - export ADDRESS=$BRAINTECH_SRV
     - export USR=$BRAINTECH_USR
     - export PSW=$BRAINTECH_PWD
-    - ./deployjar.sh
+    - ./scripts/ci/deployjar.sh
   when: manual
   environment: braintech_pl_standalone_jar_production
 

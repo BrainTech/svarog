@@ -12,10 +12,11 @@ I. Przygotowanie
 1. Ściągamy repozytorium Svaroga, dostępne pod adresem:
   git@gitlab.com:braintech/svarog2.git
 
-2. Uruchamiamy (jako administrator) skrypt „install-dev-env.sh” (warto
-go obejrzeć przed uruchomieniem). Zainstaluje on przede wszystkim
-środowisko NetBeans, jak również wszystkie wymagane zależności, włącznie
-z Oracle'ową wersją Java 8.
+2. Uruchamiamy (jako administrator) skrypt „install-dev-env.sh”
+z katalogu scripts (warto go obejrzeć przed uruchomieniem).
+Zainstaluje on przede wszystkim środowisko NetBeans,
+jak również wszystkie wymagane zależności, włącznie z Oracle'ową
+wersją Java 8.
 
 
 II. Wytwarzanie plików JAR
