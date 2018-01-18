@@ -1,0 +1,9 @@
+Package: svarog-psychopyplugin
+Version: [[version]]
+Section: misc
+Priority: optional
+Architecture: all
+Depends: svarog
+Maintainer: Konrad Jan Bednarek <konrad.jan.bednarek@braintech.pl>
+Description: Psychopy experiment runner plugin for svarog
+ License: GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)

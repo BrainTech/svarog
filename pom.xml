@@ -21,6 +21,7 @@
 
 	<modules>
 		<module>svarog</module>
+		<module>plugins/Psychopy</module>
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/SignalAnalysisPlugin</module>
 		<module>plugins/PluginToolCommon</module>
