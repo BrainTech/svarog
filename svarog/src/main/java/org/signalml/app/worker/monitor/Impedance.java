@@ -2,10 +2,10 @@ package org.signalml.app.worker.monitor;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class Impedance {
 	public final static int UNKNOWN = 0;
@@ -14,7 +14,7 @@ public class Impedance {
 
 	private int[] flags;
 	private float[][] data;
-	private Set<Integer> channels;
+	private List<Integer> channels;
 
 	public Impedance(DataInputStream data, int channelCount, int sampleCount) throws IOException
 	{
@@ -28,7 +28,7 @@ public class Impedance {
 		try {
 			int[] flags = new int[channelCount];
 			for (int channel = 0; channel < channelCount; ++channel) {
-				flags[channel] = data.readShort();
+				flags[channel] = data.readByte();
 			}
 			return flags;
 		} catch (IOException e) {
@@ -36,9 +36,9 @@ public class Impedance {
 		}
 	}
 
-	private Set<Integer> channelsWithImpedance()
+	private List<Integer> channelsWithImpedance()
 	{
-		Set<Integer> channels = new HashSet<>();
+		List<Integer> channels = new ArrayList<>();
 		for (int channel=0; channel<this.flags.length; ++channel) {
 			if (this.flags[channel] == PRESENT) {
 				channels.add(channel);
@@ -72,9 +72,10 @@ public class Impedance {
 	public ImpedanceData sample(int timestampId)
 	{
 		Map<Integer, Float> data = new HashMap<>();
-		for (Integer channel: this.channels)
+		for (int i=0; i < channels.size(); i++)
 		{
-			data.put(channel, this.data[channel][timestampId]);
+			Integer channel = channels.get(i);
+			data.put(channel, this.data[i][timestampId]);
 		}
 		return new ImpedanceData(this.flags, data);
 	}
