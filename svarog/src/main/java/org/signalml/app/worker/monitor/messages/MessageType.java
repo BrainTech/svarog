@@ -1,18 +1,11 @@
 package org.signalml.app.worker.monitor.messages;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParseException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.codehaus.jackson.type.TypeReference;
 import org.signalml.app.worker.monitor.messages.parsing.MessageTypeDeserializer;
 import org.signalml.app.worker.monitor.messages.parsing.MessageTypeSerializer;
+import org.signalml.psychopy.messages.*;
 
 @JsonSerialize(using=MessageTypeSerializer.class)
 @JsonDeserialize(using=MessageTypeDeserializer.class)
@@ -33,6 +26,11 @@ public enum MessageType {
 	SAVE_VIDEO_OK("SAVE_VIDEO_OK", SaveVideoOkMsg.class),
 	SAVE_VIDEO_DONE("SAVE_VIDEO_DONE", SaveVideoDoneMsg.class),
 	FINISH_SAVING_VIDEO("FINISH_SAVING_VIDEO", FinishSavingVideoMsg.class),
+
+	RUN_PSYCHOPY_EXPERIMENT("run_psychopy_experiment", RunPsychopyExperiment.class),
+	PSYCHOPY_EXPERIMENT_STARTED("psychopy_experiment_started", PsychopyExperimentStarted.class),
+	PSYCHOPY_EXPERIMENT_FINISHED("psychopy_experiment_finished", PsychopyExperimentFinished.class),
+	PSYCHOPY_EXPERIMENT_ERROR("psychopy_experiment_error", PsychopyExperimentError.class),
 
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
 	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", EEGExperimentsMsg.class),

@@ -102,7 +102,6 @@ import org.signalml.app.view.common.dialogs.HelpDialog;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
-import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
@@ -129,6 +128,8 @@ import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ViewerTreePane;
+import org.signalml.psychopy.view.PsychopyExperimentDialog;
+import org.signalml.psychopy.action.ShowPsychopyDialogButton;
 import org.signalml.util.SvarogConstants;
 
 import com.thoughtworks.xstream.XStream;
@@ -246,6 +247,7 @@ public class ViewerElementManager {
 	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
+	private PsychopyExperimentDialog psychopyExperimentDialog;
 	/**
 	 * A dialog shown when the user wants to start a recording of a monitor
 	 * signal. Recording target files can be set using this dialog.
@@ -312,6 +314,7 @@ public class ViewerElementManager {
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
 
+	private ShowPsychopyDialogButton showPsychopyDialogButton;
 	/**
 	 * Represents an {@link Action} invoked when the user wants to start
 	 * a monitor signal recording.
@@ -339,6 +342,7 @@ public class ViewerElementManager {
 	private JMenu editMenu;
 	private JMenu viewMenu;
 
+	private JMenu psychopyMenu;
 	/**
 	 * A {@link JMenu} for operating on a monitor signal.
 	 */
@@ -838,7 +842,7 @@ public class ViewerElementManager {
 	public ViewerTabbedPane getPropertyTabbedPane() {
 		if (propertyTabbedPane == null) {
 			propertyTabbedPane = new ViewerTabbedPane();
-			propertyTabbedPane.addTab(_("Console"), (String) null, getConsole(), _("Application message console"));
+			propertyTabbedPane.addTab(_("Console"), (String) null, getConsole(), _("Application messages console"));
 			propertyTabbedPane.addTab(_("Tasks"), (String) null, getTaskTablePane(), _("Lists active tasks that run in the background or on the server"));
 			propertyTabbedPane.addTab(_("Properties"), (String) null, getPropertySheetPane(), _("Shows properties of selected objects"));
 		}
@@ -1163,6 +1167,13 @@ public class ViewerElementManager {
 		return editTimeDomainSampleFilterDialog;
 	}
 
+	public PsychopyExperimentDialog getPsychopyExperimentDialog() {
+		if (psychopyExperimentDialog == null) {
+			psychopyExperimentDialog = new PsychopyExperimentDialog(getDialogParent(), true);
+		}
+		return psychopyExperimentDialog;
+	}
+
 	/**
 	 * Returns a {@link StartMonitorRecordingDialog} used by this
 	 * ViewerElementManager.
@@ -1286,6 +1297,14 @@ public class ViewerElementManager {
 			checkSignalAction.setCheckSignalDialog(getCheckSignalDialog());
 		}
 		return checkSignalAction;
+	}
+
+	public ShowPsychopyDialogButton getSelectPsychopyExperimentAction() {
+		if (showPsychopyDialogButton == null) {
+			showPsychopyDialogButton = new ShowPsychopyDialogButton(getActionFocusManager());
+			showPsychopyDialogButton.setSelectPsychopyExperimentDialog(getPsychopyExperimentDialog());
+		}
+		return showPsychopyDialogButton;
 	}
 
 	/**
@@ -1655,6 +1674,7 @@ public class ViewerElementManager {
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
+			signalView.setPsychopyExperimentDialog(getPsychopyExperimentDialog());
 			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());

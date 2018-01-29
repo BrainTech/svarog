@@ -148,6 +148,8 @@ import org.signalml.plugin.export.view.ExportedPositionedTag;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.impl.PluginAccessClass;
+import org.signalml.psychopy.view.PsychopyExperimentDialog;
+import org.signalml.psychopy.action.ShowPsychopyDialogButton;
 import org.signalml.util.Util;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -232,6 +234,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private NewTagDialog newTagDialog;
 	private ViewerFileChooser fileChooser;
 	private SignalSelectionDialog signalSelectionDialog;
+	private PsychopyExperimentDialog psychopyExperimentDialog;
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
@@ -245,6 +248,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
 
+	private ShowPsychopyDialogButton showPsychopyDialogButtonAction;
 	/**
 	 * An {@link Action} responsible for starting a monitor recording.
 	 */
@@ -1060,6 +1064,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		mainToolBar.add(Box.createHorizontalGlue());
+		mainToolBar.add(getShowPsychopyDialogButtonAction());
 		mainToolBar.add(getStartMonitorRecordingAction());
 		mainToolBar.add(getStopMonitorRecordingAction());
 		mainToolBar.add(getStartVideoPreviewAction());
@@ -1339,6 +1344,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return playPauseVideoAction;
 	}
 
+	public ShowPsychopyDialogButton getShowPsychopyDialogButtonAction() {
+		if (showPsychopyDialogButtonAction == null) {
+			showPsychopyDialogButtonAction = new ShowPsychopyDialogButton(getActionFocusManager());
+			showPsychopyDialogButtonAction.setSelectPsychopyExperimentDialog(psychopyExperimentDialog);
+		}
+		return showPsychopyDialogButtonAction;
+	}
+
 	/**
 	 * Returns an {@link Action} responsible for starting a new monitor
 	 * recording (it shows a dialog which allows to select recording target
@@ -1536,8 +1549,17 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		this.signalSelectionDialog = signalSelectionDialog;
 	}
 
+	public PsychopyExperimentDialog getPsychopyExperimentDialog() {
+		return psychopyExperimentDialog;
+	}
+
 	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
 		return startMonitorRecordingDialog;
+	}
+
+	public void setPsychopyExperimentDialog(PsychopyExperimentDialog psychopyExperimentDialog) {
+		this.psychopyExperimentDialog = psychopyExperimentDialog;
+		getShowPsychopyDialogButtonAction().setSelectPsychopyExperimentDialog(psychopyExperimentDialog);
 	}
 
 	public void setStartMonitorRecordingDialog(StartMonitorRecordingDialog startMonitorRecordingDialog) {
