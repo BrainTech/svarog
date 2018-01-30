@@ -9,10 +9,13 @@ import org.signalml.psychopy.PsychopyExperiment;
 import org.signalml.psychopy.view.PsychopyExperimentDialog;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 
-public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
+public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> implements PropertyChangeListener {
 
 	private PsychopyExperimentDialog dialog;
 
@@ -21,6 +24,15 @@ public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<Si
 		setIconPath("org/signalml/psychopy/icon/psychopy.png");
 	}
 
+	@Override
+	public void actionFocusChanged(ActionFocusEvent e) {
+		super.actionFocusChanged(e);
+		if (this.getActionFocusSelector().getActiveDocument() instanceof MonitorSignalDocument) {
+			SignalDocument sd = getActionFocusSelector().getActiveSignalDocument();
+			sd.addPropertyChangeListener(this);
+		}
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
@@ -64,6 +76,13 @@ public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<Si
 			setEnabled(true);
 		} else {
 			setEnabled(false);
+		}
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals(MonitorSignalDocument.IS_RECORDING_PROPERTY)) {
+			setEnabledAsNeeded();
 		}
 	}
 
