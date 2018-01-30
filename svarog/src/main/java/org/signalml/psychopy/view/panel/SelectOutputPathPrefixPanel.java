@@ -14,7 +14,7 @@ import java.io.File;
 import static org.signalml.psychopy.FilePathValidator.isDirectory;
 import static org.signalml.psychopy.FilePathValidator.fileWithPrefixExists;
 
-public class SelectOutputDirectoryPanel extends SelectFilePanel {
+public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 
 	@Override
 	JLabel createPathLabel() {
@@ -79,12 +79,12 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 	@Override
 	public void fillPanelFromModel(Object model) {
 		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
-		setPath(psychopyExperiment.outputDirectoryPath);
+		setPath(psychopyExperiment.outputPathPrefix);
 	}
 
 	@Override
 	public void fillModelFromPanel(Object model) {
 		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
-		psychopyExperiment.outputDirectoryPath = selectedPath();
+		psychopyExperiment.outputPathPrefix = selectedPath();
 	}
 }
