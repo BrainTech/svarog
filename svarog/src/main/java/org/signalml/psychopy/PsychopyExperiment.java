@@ -1,25 +1,28 @@
 package org.signalml.psychopy;
 
-import java.io.File;
-import javax.swing.JOptionPane;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
-import static org.signalml.app.worker.monitor.messages.MessageType.PSYCHOPY_EXPERIMENT_STARTED;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.peer.Peer;
 import org.signalml.psychopy.messages.FinishPsychopyExperiment;
 import org.signalml.psychopy.messages.PsychopyExperimentError;
+import org.signalml.psychopy.messages.PsychopyExperimentFinished;
 import org.signalml.psychopy.messages.RunPsychopyExperiment;
 import org.signalml.util.Util;
+
+import javax.swing.*;
+import java.io.File;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.worker.monitor.messages.MessageType.PSYCHOPY_EXPERIMENT_STARTED;
 
 public class PsychopyExperiment {
 	private final Peer peer;
@@ -56,39 +59,88 @@ public class PsychopyExperiment {
 	}
 	public void updateStatus(BaseMessage msg){		
 		if (msg.getType() == MessageType.PSYCHOPY_EXPERIMENT_FINISHED) {
-			JOptionPane.showMessageDialog(null,
-				_("Psychopy Experiment finished"),
-				_("Psychopy Experiment finished"),
-				JOptionPane.INFORMATION_MESSAGE
-			);
-			DocumentFlowIntegrator integrator = SvarogApplication.getSharedInstance().getViewerElementManager().getDocumentFlowIntegrator();
+			String[] createdFiles = ((PsychopyExperimentFinished) msg).createdFiles;
+			String rawSignalFile = getRawSignalFilePath(createdFiles);
 
-			OpenDocumentDescriptor doc_descriptor = new OpenDocumentDescriptor();
-			File signal_file = new File(this.outputPathPrefix + ".raw");
-			doc_descriptor.setFile(signal_file);
-			doc_descriptor.setType(ManagedDocumentType.SIGNAL);
-			doc_descriptor.setMakeActive(true);
-			RawSignalDescriptorReader reader = new RawSignalDescriptorReader();
-			RawSignalDescriptor openSignalDescriptor = new RawSignalDescriptor();
-			try {
-				openSignalDescriptor = reader.readDocument(Util.changeOrAddFileExtension(signal_file, "xml"));
-				openSignalDescriptor.setCorrectlyRead(true);
-			} catch (Exception e) {
-				Dialogs.showError(_("There was an error while reading the XML manifest."));
-				return;
-			}
-			openSignalDescriptor.setMontage(document.getMontage());
-			doc_descriptor.setOpenSignalDescriptor(openSignalDescriptor);
-			integrator.maybeOpenDocument(doc_descriptor);
-
+			showFinishedDialog(createdFiles);
+			maybeOpenDocument(rawSignalFile);
 		} else if (msg.getType() == MessageType.PSYCHOPY_EXPERIMENT_ERROR) {
-			JOptionPane.showMessageDialog(null,
-				"Psychopy Error: " + ((PsychopyExperimentError) msg).details,
-				"Psychopy Error",
-				JOptionPane.ERROR_MESSAGE
-			);
+			showErrorDialog(((PsychopyExperimentError) msg).details);
 		}
 		isRunning = msg.getType() == PSYCHOPY_EXPERIMENT_STARTED;
+	}
+
+	private String getRawSignalFilePath(String[] files) {
+		for (String filePath : files) {
+			if (filePath.endsWith(".raw")) {
+				return filePath;
+			}
+		}
+		assert false: "Raw file should be always generated";
+		return null;
+	}
+
+	private void maybeOpenDocument(String rawSignalFile) {
+		DocumentFlowIntegrator integrator = SvarogApplication.getSharedInstance().getViewerElementManager().getDocumentFlowIntegrator();
+		OpenDocumentDescriptor documentDescriptor = getOpenDocumentDescriptor(rawSignalFile);
+		if (documentDescriptor != null) {
+			integrator.maybeOpenDocument(documentDescriptor);
+		}
+	}
+
+	private OpenDocumentDescriptor getOpenDocumentDescriptor(String rawSignalFilePath) {
+		File signalFile = new File(rawSignalFilePath);
+		RawSignalDescriptor openSignalDescriptor = getOpenSignalDescriptor(signalFile);
+		if (openSignalDescriptor != null) {
+			OpenDocumentDescriptor documentDescriptor = new OpenDocumentDescriptor();
+			documentDescriptor.setFile(signalFile);
+			documentDescriptor.setType(ManagedDocumentType.SIGNAL);
+			documentDescriptor.setMakeActive(true);
+			documentDescriptor.setOpenSignalDescriptor(openSignalDescriptor);
+			return documentDescriptor;
+		} else {
+			return null;
+		}
+	}
+
+	private RawSignalDescriptor getOpenSignalDescriptor(File signalFile) {
+		RawSignalDescriptorReader reader = new RawSignalDescriptorReader();
+		RawSignalDescriptor openSignalDescriptor = new RawSignalDescriptor();
+		try {
+			openSignalDescriptor = reader.readDocument(Util.changeOrAddFileExtension(signalFile, "xml"));
+			openSignalDescriptor.setCorrectlyRead(true);
+			openSignalDescriptor.setMontage(document.getMontage());
+			return openSignalDescriptor;
+		} catch (Exception e) {
+			Dialogs.showError(_("There was an error while reading the XML manifest."));
+			return null;
+		}
+	}
+
+	private void showFinishedDialog(String[] filePaths) {
+		String message = String.join(
+			"\n",
+			_("Psychopy Experiment finished. Created files:"),
+			String.join(
+				"\n",
+				filePaths
+			)
+		);
+		JOptionPane.showMessageDialog(
+			null,
+			message,
+			_("Psychopy Experiment finished"),
+			JOptionPane.INFORMATION_MESSAGE
+		);
+	}
+
+	private void showErrorDialog(String details) {
+		JOptionPane.showMessageDialog(
+			null,
+			"Psychopy Error: " + details,
+			"Psychopy Error",
+			JOptionPane.ERROR_MESSAGE
+		);
 	}
 
 	public void run() {
