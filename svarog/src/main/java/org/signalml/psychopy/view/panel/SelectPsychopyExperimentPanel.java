@@ -40,9 +40,9 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 
 	@Override
 	public void validate(ValidationErrors errors) {
+		makePathAbsolute();
 		if (!pathIsValid(this.selectedPath())) {
-			errors.addError(_("Psychopy experiment path has not been selected."));
-			clearPath();
+			errors.addError(_("Wrong procedure filename."));
 		}
 	}
 

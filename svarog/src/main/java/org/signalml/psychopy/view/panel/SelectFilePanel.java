@@ -105,10 +105,20 @@ public abstract class SelectFilePanel extends JPanel {
 		return this.path.getText();
 	}
 
-	public void clearPath() {
-		this.path.setText("");
-	}
-
 	public void setPath(String path) { this.path.setText(path); }
+
+	void makePathAbsolute() {
+		String home = System.getProperty("user.home");
+		if (
+				!this.selectedPath().startsWith("~")
+						&& !this.selectedPath().startsWith("/")
+				) {
+			File file = new File(home + "/" + this.selectedPath());
+			this.setPath(file.getAbsolutePath());
+		} else if (this.selectedPath().startsWith("~")) {
+			File file = new File(home + this.selectedPath().substring(1));
+			this.setPath(file.getAbsolutePath());
+		}
+	}
 
 }

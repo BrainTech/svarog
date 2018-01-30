@@ -26,7 +26,7 @@ public class PsychopyExperiment {
 	private final String peerId;
 	private final MonitorSignalDocument document;
 	public String experimentPath;
-	public String outputDirectoryPath;
+	public String outputPathPrefix;
 	public boolean isRunning = false;
 	
 
@@ -45,13 +45,13 @@ public class PsychopyExperiment {
 		Peer peer,
 		String peerId,
 		String experimentPath,
-		String outputDirectoryPath,
+		String outputPathPrefix,
 		MonitorSignalDocument document
 	) {
 		this.peer = peer;
 		this.peerId = peerId;
 		this.experimentPath = experimentPath;
-		this.outputDirectoryPath = outputDirectoryPath;
+		this.outputPathPrefix = outputPathPrefix;
 		this.document = document;
 	}
 	public void updateStatus(BaseMessage msg){		
@@ -64,7 +64,7 @@ public class PsychopyExperiment {
 			DocumentFlowIntegrator integrator = SvarogApplication.getSharedInstance().getViewerElementManager().getDocumentFlowIntegrator();
 
 			OpenDocumentDescriptor doc_descriptor = new OpenDocumentDescriptor();
-			File signal_file = new File(this.outputDirectoryPath + ".raw");
+			File signal_file = new File(this.outputPathPrefix + ".raw");
 			doc_descriptor.setFile(signal_file);
 			doc_descriptor.setType(ManagedDocumentType.SIGNAL);
 			doc_descriptor.setMakeActive(true);
@@ -96,7 +96,7 @@ public class PsychopyExperiment {
 			new RunPsychopyExperiment(
 				this.peerId,
 				this.experimentPath,
-				this.outputDirectoryPath
+				this.outputPathPrefix
 			)
 		);
 	}
