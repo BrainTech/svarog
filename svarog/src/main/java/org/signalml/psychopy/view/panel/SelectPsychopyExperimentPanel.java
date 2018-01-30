@@ -42,7 +42,6 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 	public void validate(ValidationErrors errors) {
 		if (!pathIsValid(this.selectedPath())) {
 			errors.addError(_("Psychopy experiment path has not been selected."));
-			clearPath();
 		}
 	}
 

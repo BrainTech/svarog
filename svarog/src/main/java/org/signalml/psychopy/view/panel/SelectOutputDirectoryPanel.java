@@ -1,6 +1,5 @@
 package org.signalml.psychopy.view.panel;
 
-import java.io.File;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.psychopy.PsychopyExperiment;
 
@@ -9,8 +8,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import static org.signalml.psychopy.FilePathValidator.isEmptyDirectory;
-import static org.signalml.psychopy.FilePathValidator.pathIsValid;
+
+import java.io.File;
+
+import static org.signalml.psychopy.FilePathValidator.isDirectory;
+import static org.signalml.psychopy.FilePathValidator.fileWithPrefixExists;
 
 public class SelectOutputDirectoryPanel extends SelectFilePanel {
 
@@ -42,24 +44,32 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 	
 	@Override
 	public void validate(ValidationErrors errors) {
-		File f = new File(this.selectedPath());
-		if (f.isDirectory()) {
+		if (this.selectedPath() == null || this.selectedPath().isEmpty()) {
+			errors.addError(_("Results path should not be empty"));
+		}
+		if (isDirectory(this.selectedPath())) {
 			errors.addError(_("Results path is a directory."));
 		}
-		File dir = f.getParentFile();
-		for (File file : dir.listFiles()) {
-			if (file.getName().startsWith(f.getName())) {
-				if (Dialogs.showWarningYesNoDialog(_("Are you sure you want to overrite data in this location?")) == Dialogs.DIALOG_OPTIONS.NO) {
-					errors.addError(_("Choose different file name prefix"));
-				}
-				break;
+		if (this.selectedPath().endsWith(File.separator)) {
+			errors.addError(_("Results path should not end with path separator"));
+		}
+		if (fileWithPrefixExists(this.selectedPath())) {
+			Dialogs.DIALOG_OPTIONS overwrite = Dialogs.showWarningYesNoDialog(
+				_("Are you sure you want to overrite data in this location?")
+			);
+			if (overwrite == Dialogs.DIALOG_OPTIONS.NO) {
+				errors.addError(_("Choose different file name prefix"));
 			}
 		}
-		String name = f.getName();
-		if (name.endsWith(".xml")) {
-			name = name.substring(0, name.lastIndexOf(".xml"));
+		cutXmlFileExtension();
+	}
+
+	private void cutXmlFileExtension() {
+		if (this.selectedPath().endsWith(".xml")) {
+			String path = this.selectedPath();
+			String pathWithoutExtension = path.substring(0, path.lastIndexOf(".xml"));
+			this.setPath(pathWithoutExtension);
 		}
-		this.setPath((new File(dir, name)).toString());
 	}
 
 	@Override
