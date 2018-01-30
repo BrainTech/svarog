@@ -47,6 +47,9 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 		if (this.selectedPath() == null || this.selectedPath().isEmpty()) {
 			errors.addError(_("Results path should not be empty"));
 		}
+
+		makePathAbsolute();
+
 		if (isDirectory(this.selectedPath())) {
 			errors.addError(_("Results path is a directory."));
 		}
@@ -61,6 +64,7 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 				errors.addError(_("Choose different file name prefix"));
 			}
 		}
+
 		cutXmlFileExtension();
 	}
 
