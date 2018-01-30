@@ -33,6 +33,11 @@ public class FilePathValidator {
 		return file.isDirectory();
 	}
 
+	public static boolean isFile(String path) {
+		File file = new File(path);
+		return file.isFile();
+	}
+
 }
 
 

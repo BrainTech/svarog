@@ -8,6 +8,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.psychopy.FilePathValidator.pathIsValid;
+import static org.signalml.psychopy.FilePathValidator.isFile;
 
 public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 
@@ -41,9 +42,18 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 	@Override
 	public void validate(ValidationErrors errors) {
 		makePathAbsolute();
-		if (!pathIsValid(this.selectedPath())) {
+		if (!validPsychopyFileIsSelected()) {
 			errors.addError(_("Wrong procedure filename."));
 		}
+	}
+
+	private boolean validPsychopyFileIsSelected() {
+		return pathIsValid(this.selectedPath())
+				&& isFile(this.selectedPath())
+				&& (
+					this.selectedPath().endsWith(".psyexp")
+					|| this.selectedPath().endsWith(".py")
+				);
 	}
 
 	@Override
