@@ -20,18 +20,20 @@ import org.signalml.util.Util;
 
 import javax.swing.*;
 import java.io.File;
+import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.document.OpenTagDescriptor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.worker.monitor.messages.MessageType.PSYCHOPY_EXPERIMENT_STARTED;
 
 public class PsychopyExperiment {
+
 	private final Peer peer;
 	private final String peerId;
 	private final MonitorSignalDocument document;
 	public String experimentPath;
 	public String outputPathPrefix;
 	public boolean isRunning = false;
-	
 
 	public PsychopyExperiment(ExperimentDescriptor experimentDescriptor,
 		MonitorSignalDocument document) {
@@ -57,7 +59,8 @@ public class PsychopyExperiment {
 		this.outputPathPrefix = outputPathPrefix;
 		this.document = document;
 	}
-	public void updateStatus(BaseMessage msg){		
+
+	public void updateStatus(BaseMessage msg) {
 		if (msg.getType() == MessageType.PSYCHOPY_EXPERIMENT_FINISHED) {
 			String[] createdFiles = ((PsychopyExperimentFinished) msg).createdFiles;
 			String rawSignalFile = getRawSignalFilePath(createdFiles);
@@ -76,7 +79,7 @@ public class PsychopyExperiment {
 				return filePath;
 			}
 		}
-		assert false: "Raw file should be always generated";
+		assert false : "Raw file should be always generated";
 		return null;
 	}
 
@@ -84,8 +87,35 @@ public class PsychopyExperiment {
 		DocumentFlowIntegrator integrator = SvarogApplication.getSharedInstance().getViewerElementManager().getDocumentFlowIntegrator();
 		OpenDocumentDescriptor documentDescriptor = getOpenDocumentDescriptor(rawSignalFile);
 		if (documentDescriptor != null) {
-			integrator.maybeOpenDocument(documentDescriptor);
+			SignalDocument signalDocument = (SignalDocument) integrator.maybeOpenDocument(documentDescriptor);
+			OpenDocumentDescriptor tagDocumentDescriptor = getTagDocumentDescriptor(rawSignalFile);
+			if (tagDocumentDescriptor != null) {
+				OpenTagDescriptor openTagDescriptor = new OpenTagDescriptor();
+				openTagDescriptor.setParent(signalDocument);
+				tagDocumentDescriptor.setTagOptions(openTagDescriptor);
+				integrator.maybeOpenDocument(tagDocumentDescriptor);
+			}
 		}
+	}
+
+	private OpenDocumentDescriptor getTagDocumentDescriptor(String rawSignalFile) {
+		boolean tagFileExists = false;
+		File tagFile = null;
+		for (String ext : ManagedDocumentType.TAG.getAllFileExtensions()) {
+			tagFile = Util.changeOrAddFileExtension(new File(rawSignalFile), ext);
+			if (tagFile.exists()) {
+				tagFileExists = true;
+				break;
+			}
+		}
+		if (!tagFileExists) {
+			return null;
+		}
+
+		OpenDocumentDescriptor tagDocumentDescriptor = new OpenDocumentDescriptor();
+		tagDocumentDescriptor.setType(ManagedDocumentType.TAG);
+		tagDocumentDescriptor.setFile(tagFile);
+		return tagDocumentDescriptor;
 	}
 
 	private OpenDocumentDescriptor getOpenDocumentDescriptor(String rawSignalFilePath) {
@@ -110,6 +140,7 @@ public class PsychopyExperiment {
 			openSignalDescriptor = reader.readDocument(Util.changeOrAddFileExtension(signalFile, "xml"));
 			openSignalDescriptor.setCorrectlyRead(true);
 			openSignalDescriptor.setMontage(document.getMontage());
+			openSignalDescriptor.setTryToOpenTagDocument(true);
 			return openSignalDescriptor;
 		} catch (Exception e) {
 			Dialogs.showError(_("There was an error while reading the XML manifest."));
