@@ -1,6 +1,7 @@
 package org.signalml.psychopy.view.panel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.psychopy.PsychopyExperiment;
 
 import javax.swing.*;
 
@@ -33,5 +34,17 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 			errors.addError(_("Selected directory is not empty. Please select an empty directory."));
 			clearPath();
 		}
+	}
+
+	@Override
+	public void fillPanelFromModel(Object model) {
+		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
+		setPath(psychopyExperiment.outputDirectoryPath);
+	}
+
+	@Override
+	public void fillModelFromPanel(Object model) {
+		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
+		psychopyExperiment.outputDirectoryPath = selectedPath();
 	}
 }

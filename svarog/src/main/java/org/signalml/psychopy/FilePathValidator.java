@@ -4,13 +4,7 @@ import java.io.File;
 
 public class FilePathValidator {
 	public static boolean pathIsValid(String path) {
-		if (path == null || path.isEmpty()) {
-			return false;
-		} else if (!pathExists(path)) {
-			return false;
-		} else {
-			return true;
-		}
+		return path != null && !path.isEmpty() && pathExists(path);
 	}
 
 	public static boolean pathExists(String path) {

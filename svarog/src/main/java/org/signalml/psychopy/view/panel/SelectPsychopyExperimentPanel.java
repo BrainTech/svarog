@@ -1,6 +1,7 @@
 package org.signalml.psychopy.view.panel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.psychopy.PsychopyExperiment;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -34,6 +35,18 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 			errors.addError(_("Psychopy experiment path has not been selected."));
 			clearPath();
 		}
+	}
+
+	@Override
+	public void fillPanelFromModel(Object model) {
+		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
+		setPath(psychopyExperiment.experimentPath);
+	}
+
+	@Override
+	public void fillModelFromPanel(Object model) {
+		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
+		psychopyExperiment.experimentPath = selectedPath();
 	}
 
 }

@@ -3,7 +3,6 @@ package org.signalml.psychopy.view.panel;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.util.IconUtils;
 
 import javax.swing.*;
@@ -56,6 +55,10 @@ public abstract class SelectFilePanel extends JPanel {
 
 	abstract JFileChooser createFileChooser();
 
+	public abstract void fillPanelFromModel(Object model);
+
+	public abstract void fillModelFromPanel(Object model);
+
 	public abstract void validate(ValidationErrors errors);
 
 	public String selectedPath() {
@@ -68,12 +71,4 @@ public abstract class SelectFilePanel extends JPanel {
 
 	public void setPath(String path) { this.path.setText(path); }
 
-	public void fillPanelFromModel(Object model) {
-		ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) model;
-		// todo: finish
-	}
-
-	public void fillModelFromPanel(Object model) {
-		// todo: finish
-	}
 }
