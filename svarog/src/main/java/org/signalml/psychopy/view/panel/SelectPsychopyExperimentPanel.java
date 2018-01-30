@@ -22,8 +22,8 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.addChoosableFileFilter(
 			new FileNameExtensionFilter(
-				_("Psychopy experiment files (*.psyexp)"),
-				"psyexp"
+				_("Psychopy experiment files (*.psyexp, *.py)"),
+				"psyexp","py"
 			)
 		);
 		return fileChooser;

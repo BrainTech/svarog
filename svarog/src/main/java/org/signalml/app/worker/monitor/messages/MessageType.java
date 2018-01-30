@@ -31,6 +31,7 @@ public enum MessageType {
 	PSYCHOPY_EXPERIMENT_STARTED("psychopy_experiment_started", PsychopyExperimentStarted.class),
 	PSYCHOPY_EXPERIMENT_FINISHED("psychopy_experiment_finished", PsychopyExperimentFinished.class),
 	PSYCHOPY_EXPERIMENT_ERROR("psychopy_experiment_error", PsychopyExperimentError.class),
+	FINISH_PSYCHOPY_EXPERIMENT("finish_psychopy_experiment", FinishPsychopyExperiment.class),
 
 	FIND_EEG_EXPERIMENTS_REQUEST("find_eeg_experiments", FindEEGExperimentsRequest.class),
 	EEG_EXPERIMENTS_RESPONSE("eeg_experiments", EEGExperimentsMsg.class),

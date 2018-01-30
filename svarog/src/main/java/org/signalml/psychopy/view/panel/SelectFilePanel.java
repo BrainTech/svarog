@@ -1,5 +1,6 @@
 package org.signalml.psychopy.view.panel;
 
+import java.awt.Dimension;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
@@ -21,12 +22,15 @@ public abstract class SelectFilePanel extends JPanel {
 		this.path = new JTextField(DEFAULT_PATH_COLUMNS_NUMBER);
 		this.pathLabel = createPathLabel();
 		this.pathLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+		
 		initializeUI();
 		connectListeners();
 	}
 
 	private void initializeUI() {
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		this.add(pathLabel);
+		pathLabel.setPreferredSize(new Dimension(180,30));
 		this.add(path);
 		this.add(browseButton);
 	}

@@ -41,6 +41,7 @@ import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.SignalMsg;
 import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
+import org.signalml.psychopy.PsychopyStatusListener;
 import org.zeromq.ZMQException;
 /** MonitorWorker
  *
@@ -68,6 +69,10 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	 * This object's method is called whenever video recording starts or stops.
 	 */
 	private final Set<VideoRecordingStatusListener> videoRecordingStatusListeners = new HashSet<>();
+	/**
+	 * This object's method is called whenever Psychopy experiment status changes.
+	 */
+	private final Set<PsychopyStatusListener> psychopyStatusListeners = new HashSet<>();
 
 	/**
 	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
@@ -121,6 +126,9 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		peer.subscribe(MessageType.SAVE_VIDEO_ERROR.getMessageCode());
 		peer.subscribe(MessageType.SAVE_VIDEO_OK.getMessageCode());
 		peer.subscribe(MessageType.SAVE_VIDEO_DONE.getMessageCode());
+		peer.subscribe(MessageType.PSYCHOPY_EXPERIMENT_ERROR.getMessageCode());
+		peer.subscribe(MessageType.PSYCHOPY_EXPERIMENT_FINISHED.getMessageCode());
+		peer.subscribe(MessageType.PSYCHOPY_EXPERIMENT_STARTED.getMessageCode());
 
 		while (!isCancelled()) {
 			try {
@@ -177,6 +185,11 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 				break;
 			case SAVE_VIDEO_DONE:
 				parseVideoSavingDone(sampleMsg);
+				break;
+			case PSYCHOPY_EXPERIMENT_ERROR:
+			case PSYCHOPY_EXPERIMENT_FINISHED:
+			case PSYCHOPY_EXPERIMENT_STARTED:
+				notifyPsychopyExperimentStatusChange(sampleMsg);
 				break;
 			default:
 				logger.error("received unknown reply: " +  sampleType);
@@ -289,7 +302,19 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			});
 		}
 	}
-
+	
+	private void notifyPsychopyExperimentStatusChange(BaseMessage msg){
+		Set<PsychopyStatusListener> listeners;
+		synchronized (psychopyStatusListeners) {
+			listeners = new HashSet<>(psychopyStatusListeners);
+		}
+		for (PsychopyStatusListener listener : listeners) {
+			SwingUtilities.invokeLater(() -> {
+				listener.psychopyStatusChanged(msg);
+			});
+		}
+	}
+	
 	@Override
 	protected void process(List<Object> objs) {
 		for (Object o : objs) {
@@ -405,6 +430,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		}
 	}
 
+
 	/**
 	 * Disconnects a previously connected {@link VideoRecordingStatusListener}
 	 * object to be no longer notified whenever video recording starts or stops.
@@ -416,7 +442,19 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			videoRecordingStatusListeners.remove(listener);
 		}
 	}
-
+	
+	/**
+	 * Connects a {@link PsychopyStatusListener} object to be notified
+	 * whenever video recording starts or stops.
+	 *
+	 * @param listener  object with psychopyStatusChanged method
+	 */
+	public void connectPsychopyStatusListener(PsychopyStatusListener listener) {
+		synchronized (psychopyStatusListeners) {
+			psychopyStatusListeners.add(listener);
+		}
+	}
+	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		super.propertyChange(evt);

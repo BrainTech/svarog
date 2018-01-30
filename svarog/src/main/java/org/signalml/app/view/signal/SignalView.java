@@ -1559,7 +1559,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	public void setPsychopyExperimentDialog(PsychopyExperimentDialog psychopyExperimentDialog) {
 		this.psychopyExperimentDialog = psychopyExperimentDialog;
-		getShowPsychopyDialogButtonAction().setSelectPsychopyExperimentDialog(psychopyExperimentDialog);
+		this.getShowPsychopyDialogButtonAction().setSelectPsychopyExperimentDialog(psychopyExperimentDialog);
 	}
 
 	public void setStartMonitorRecordingDialog(StartMonitorRecordingDialog startMonitorRecordingDialog) {

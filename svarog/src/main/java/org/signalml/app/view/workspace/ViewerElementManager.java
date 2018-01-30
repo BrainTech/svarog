@@ -1673,9 +1673,9 @@ public class ViewerElementManager {
 			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
-			signalView.setSignalMontageDialog(getSignalMontageDialog());
-			signalView.setPsychopyExperimentDialog(getPsychopyExperimentDialog());
+			signalView.setSignalMontageDialog(getSignalMontageDialog());			
 			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
+			signalView.setPsychopyExperimentDialog(getPsychopyExperimentDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setTagStylePaletteDialog(getTagStylePaletteDialog());

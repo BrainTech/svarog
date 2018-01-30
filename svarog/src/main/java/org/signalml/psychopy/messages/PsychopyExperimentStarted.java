@@ -6,10 +6,4 @@ import org.signalml.app.worker.monitor.messages.MessageType;
 
 public class PsychopyExperimentStarted extends BaseMessage{
 
-	@JsonIgnore
-	public PsychopyExperimentStarted(String sender) {
-		super(MessageType.PSYCHOPY_EXPERIMENT_STARTED);
-		setSender(sender);
 	}
-
-}
