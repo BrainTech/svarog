@@ -16,6 +16,15 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 		return new JLabel(_("Procedure filename:"));
 	}
 
+	protected JLabel createInfoLabel()
+	{
+		return new JLabel(_("Choose Psychopy procedure that will run after you click \"Ok\""));
+	}
+	protected String createBorderTitle()
+	{
+		return _("Input: Psychopy procedure");
+	}
+	
 	@Override
 	JFileChooser createFileChooser() {
 		JFileChooser fileChooser = new JFileChooser();

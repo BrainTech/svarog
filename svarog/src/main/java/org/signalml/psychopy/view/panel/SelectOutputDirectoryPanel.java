@@ -16,7 +16,7 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 
 	@Override
 	JLabel createPathLabel() {
-		return new JLabel(_("Results file path:"));
+		return new JLabel(_("Signal filename:"));
 	}
 
 	@Override
@@ -30,6 +30,16 @@ public class SelectOutputDirectoryPanel extends SelectFilePanel {
 		return fileChooser;
 	}
 
+	
+	protected JLabel createInfoLabel()
+	{
+		return new JLabel(_("<html>Choose files to which signal, tags and Psychopy results will be saved.<br>File Extensions will be added automatically</html>"));
+	}
+	protected String createBorderTitle()
+	{
+		return _("Output: Experiment results");
+	}
+	
 	@Override
 	public void validate(ValidationErrors errors) {
 		File f = new File(this.selectedPath());
