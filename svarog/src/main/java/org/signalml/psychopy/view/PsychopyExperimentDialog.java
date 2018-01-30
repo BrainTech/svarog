@@ -2,6 +2,7 @@ package org.signalml.psychopy.view;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.psychopy.PsychopyExperiment;
 import org.signalml.psychopy.view.panel.SelectOutputPathPrefixPanel;
@@ -10,6 +11,7 @@ import org.signalml.psychopy.view.panel.SelectPsychopyExperimentPanel;
 import javax.swing.*;
 import java.awt.*;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.psychopy.FilePathValidator.fileWithPrefixExists;
 
 public class PsychopyExperimentDialog extends AbstractDialog {
 
@@ -60,6 +62,19 @@ public class PsychopyExperimentDialog extends AbstractDialog {
 	public void validateDialog(Object model, ValidationErrors errors) throws SignalMLException {
 		experimentPanel.validate(errors);
 		outputPathPrefixPanel.validate(errors);
+	}
+
+	public boolean validateDialog() {
+		Boolean isValid = super.validateDialog();
+		if (isValid && fileWithPrefixExists(outputPathPrefixPanel.selectedPath())) {
+			Dialogs.DIALOG_OPTIONS overwrite = Dialogs.showWarningYesNoDialog(
+				_("Are you sure you want to overrite data in this location?")
+			);
+			return overwrite == Dialogs.DIALOG_OPTIONS.YES;
+		} else {
+			return isValid;
+		}
+
 	}
 
 }

@@ -7,12 +7,10 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
-import org.signalml.app.view.common.dialogs.errors.Dialogs;
 
 import java.io.File;
 
 import static org.signalml.psychopy.FilePathValidator.isDirectory;
-import static org.signalml.psychopy.FilePathValidator.fileWithPrefixExists;
 
 public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 
@@ -46,23 +44,18 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 	public void validate(ValidationErrors errors) {
 		if (this.selectedPath() == null || this.selectedPath().isEmpty()) {
 			errors.addError(_("Results path should not be empty"));
+			return;
 		}
 
 		makePathAbsolute();
 
 		if (isDirectory(this.selectedPath())) {
 			errors.addError(_("Results path is a directory."));
+			return;
 		}
 		if (this.selectedPath().endsWith(File.separator)) {
 			errors.addError(_("Results path should not end with path separator"));
-		}
-		if (fileWithPrefixExists(this.selectedPath())) {
-			Dialogs.DIALOG_OPTIONS overwrite = Dialogs.showWarningYesNoDialog(
-				_("Are you sure you want to overrite data in this location?")
-			);
-			if (overwrite == Dialogs.DIALOG_OPTIONS.NO) {
-				errors.addError(_("Choose different file name prefix"));
-			}
+			return;
 		}
 
 		cutXmlFileExtension();
