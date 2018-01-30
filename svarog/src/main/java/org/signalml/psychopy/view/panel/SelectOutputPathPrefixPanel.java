@@ -10,6 +10,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.io.File;
 
+import static org.signalml.psychopy.FilePathValidator.cutXmlFileExtension;
 import static org.signalml.psychopy.FilePathValidator.isDirectory;
 
 public class SelectOutputPathPrefixPanel extends SelectFilePanel {
@@ -58,15 +59,7 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 			return;
 		}
 
-		cutXmlFileExtension();
-	}
-
-	private void cutXmlFileExtension() {
-		if (this.selectedPath().endsWith(".xml")) {
-			String path = this.selectedPath();
-			String pathWithoutExtension = path.substring(0, path.lastIndexOf(".xml"));
-			this.setPath(pathWithoutExtension);
-		}
+		this.setPath(cutXmlFileExtension(this.selectedPath()));
 	}
 
 	@Override
