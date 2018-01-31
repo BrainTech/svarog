@@ -31,16 +31,14 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 		return fileChooser;
 	}
 
-	
-	protected JLabel createInfoLabel()
-	{
+	protected JLabel createInfoLabel() {
 		return new JLabel(_("<html>Choose files to which signal, tags and Psychopy results will be saved.<br>File Extensions will be added automatically</html>"));
 	}
-	protected String createBorderTitle()
-	{
+
+	protected String createBorderTitle() {
 		return _("Output: Experiment results");
 	}
-	
+
 	@Override
 	public void validate(ValidationErrors errors) {
 		if (this.selectedPath() == null || this.selectedPath().isEmpty()) {
@@ -58,7 +56,11 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 			errors.addError(_("Results path should not end with path separator"));
 			return;
 		}
-
+		File filePath = new File(this.selectedPath());
+		if (!filePath.getParentFile().canWrite()) {
+			errors.addError(_("Results path is not writable"));
+			return;
+		}
 		this.setPath(cutXmlFileExtension(this.selectedPath()));
 	}
 

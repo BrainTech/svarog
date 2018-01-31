@@ -17,13 +17,16 @@ public class FilePathValidator {
 		File filePath = new File(path);
 		File parentDirectory = filePath.getParentFile();
 
-		String prefix = cutXmlFileExtension(filePath.getName());
+		String prefix = filePath.getName();
 
 		if (parentDirectory != null) {
 			File[] files = parentDirectory.listFiles();
 			if (files != null) {
 				for (File file : parentDirectory.listFiles()) {
-					if (Objects.equals(file.getName(), prefix)) {
+					if (file.isDirectory())
+						continue;
+					String name = file.getName();					
+					if (name.contains(".") && name.substring(0, name.lastIndexOf('.')).equals(prefix)) {
 						return true;
 					}
 				}
