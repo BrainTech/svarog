@@ -12,9 +12,10 @@ I. Preparation
 1. Download Svarog's repository from:
   git@gitlab.com:braintech/svarog2.git
 
-2. Run (as root) script “install-dev-env.sh” (you should at least look
-at it before you run it). The script will install NetBeans IDE, as well
-as all dependencies required to develop Svarog, including Oracle Java 8.
+2. Run (as root) script “install-dev-env.sh” from scripts catalogue
+(you should at least look at it before you run it). The script will
+install NetBeans IDE, as well as all dependencies required to develop
+Svarog, including Oracle Java 8.
 
 
 II. Generating JAR files
