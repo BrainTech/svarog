@@ -56,8 +56,9 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 			errors.addError(_("Results path should not end with path separator"));
 			return;
 		}
-		File filePath = new File(this.selectedPath());
-		if (!filePath.getParentFile().canWrite()) {
+		File existingDir = new File(this.selectedPath()).getParentFile();
+		while (!existingDir.exists()) existingDir = existingDir.getParentFile();
+		if (!existingDir.canWrite()) {
 			errors.addError(_("Results path is not writable"));
 			return;
 		}
