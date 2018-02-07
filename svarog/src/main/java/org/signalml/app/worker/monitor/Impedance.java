@@ -23,7 +23,7 @@ public class Impedance {
 		this.data = this.channels.isEmpty() ? null : readImpedanceData(data, this.channels.size(), sampleCount);
 	}
 
-	private int[] readImpedanceFlags(DataInputStream data, int channelCount)
+	private static int[] readImpedanceFlags(DataInputStream data, int channelCount)
 	{
 		try {
 			int[] flags = new int[channelCount];

@@ -4,10 +4,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.beans.PropertyChangeEvent;
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -34,9 +30,6 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.FormatUtils;
 
-import org.signalml.peer.CommunicationException;
-import org.signalml.peer.Converter;
-import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.SignalMsg;
 import org.signalml.app.worker.monitor.messages.TagMsg;
@@ -324,7 +317,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 				sampleSource.lock();
 				tagSet.lock();
-				sampleSource.addSamples(data.getSampleValues());
+				sampleSource.addSamples(data);
 				tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
 				sampleSource.unlock();

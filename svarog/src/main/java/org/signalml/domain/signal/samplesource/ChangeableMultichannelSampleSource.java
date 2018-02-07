@@ -5,6 +5,7 @@
 package org.signalml.domain.signal.samplesource;
 
 import java.util.List;
+import org.signalml.app.worker.monitor.NewSamplesData;
 
 /**
  * This interface represents a multichannel sample source which can be changed
@@ -21,11 +22,9 @@ public interface ChangeableMultichannelSampleSource {
 	 */
 	long getAddedSamplesCount();
 
-	void addSampleChunk(float[] newSamples);
+	void addSamples(NewSamplesData newSample);
 
-	void addSamples(List<float[]> newSamples);
-
-	void addSamples(float[] newSamples);
+	void addSamples(List<NewSamplesData> newSamples);
 
 	/**
 	 * Acquires the built in binary semaphore. It does not prevent other threads
