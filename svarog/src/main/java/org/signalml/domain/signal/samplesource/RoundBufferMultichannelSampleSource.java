@@ -4,12 +4,12 @@
 
 package org.signalml.domain.signal.samplesource;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import javax.swing.event.EventListenerList;
 import org.apache.log4j.Logger;
+import org.signalml.app.worker.monitor.NewSamplesData;
 
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
@@ -46,6 +46,11 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 	private float[] calibrationOffset;
 
 	/**
+	 * Current impedance value for each channel. (kΩ)
+	 */
+	protected final double[] impedances;
+
+	/**
 	 * Semaphore preventing simultaneous read/write/newSamplesCount operations.
 	 */
 	private Semaphore semaphore;
@@ -59,6 +64,7 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 		super(null, channelCount, sampleCount);
 		this.samples = new double[channelCount][sampleCount];
+		this.impedances = new double[channelCount];
 		nextInsertPos = 0;
 		full = false;
 		semaphore = new Semaphore(1);
@@ -92,8 +98,8 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 		return this.samples;
 	}
 
-	synchronized void setSamples(double[][] samples) {
-		this.samples = samples;
+	synchronized public double getImpedance(int channel) {
+		return impedances[channel];
 	}
 
 	protected synchronized void incrNextInsertPos() {
@@ -106,31 +112,40 @@ public class RoundBufferMultichannelSampleSource extends DoubleArraySampleSource
 
 	}
 
-	@Override
-	public synchronized void addSampleChunk(float[] newSamples) {
-
+	private void addSampleChunk(float[] values) {
 		for (int i = 0; i < channelCount; i++) {
-			samples[i][nextInsertPos] = newSamples[i];
+			samples[i][nextInsertPos] = values[i];
 		}
 		incrNextInsertPos();
 		addedSamplesCount++;
+	}
 
+	private void addSampleChunk(NewSamplesData newSample) {
+		float[] values = newSample.getSampleValues();
+		addSampleChunk(values);
+		for (int channel=0; channel<impedances.length; ++channel) {
+			Float impedance = newSample.getSampleImpedance().get(channel);
+			impedances[channel] = (impedance != null) ? impedance.doubleValue() : Double.NaN;
+		}
+	}
+
+	// for backward compatibility, does not update impedance values
+	public synchronized void addSamples(float[] newSample) {
+		addSampleChunk(newSample);
 		fireNewSamplesAddedEvent();
 	}
 
 	@Override
-	public synchronized void addSamples(float[] newSamples) {
-
-		addSampleChunk(newSamples);
+	public synchronized void addSamples(NewSamplesData newSample) {
+		addSampleChunk(newSample);
 		fireNewSamplesAddedEvent();
-
 	}
 
 	@Override
-	public synchronized void addSamples(List<float[]> newSamples) {
-
-		for (Iterator< float[]> i = newSamples.iterator(); i.hasNext();)
-			addSampleChunk(i.next());
+	public synchronized void addSamples(List<NewSamplesData> newSamples) {
+		for (NewSamplesData newSample : newSamples) {
+			addSampleChunk(newSample);
+		}
 		fireNewSamplesAddedEvent();
 	}
 

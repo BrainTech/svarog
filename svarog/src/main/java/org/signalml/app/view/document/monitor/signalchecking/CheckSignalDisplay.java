@@ -232,7 +232,7 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 		int textY = location.y - TEXT_SPACE;
 		paintLabelWithBackground(toWrite, textX, textY, textWidth, textHeight, g);
 
-		toWrite = formatDouble(data.getCurrent());
+		toWrite = formatDouble(data.getCurrent()) + " kΩ";
 		rect = channelLabelFontMetrics.getStringBounds(toWrite, g);
 		textHeight = (int)rect.getHeight();
 		textWidth = (int)rect.getWidth();
@@ -275,10 +275,9 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 	 * @return input as {@link String}
 	 */
 	private String formatDouble(double input) {
-
 		NumberFormat formatter;
-		if (input < 1e6)
-			formatter = new DecimalFormat("00.00");
+		if (input < 1e3)
+			formatter = new DecimalFormat("0.00");
 		else
 			formatter = new DecimalFormat("0E00");
 

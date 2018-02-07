@@ -24,14 +24,16 @@ public class AmplifierDignosisManufacture {
 	 * @param parameters hashmap of parameters for the amp diagnosis
 	 * @return a {@link GenericAmplifierDiagnosis} object for the given amplifier model
 	 */
-	public static GenericAmplifierDiagnosis getAmplifierDiagnosis(SignalCheckingMethod method, MonitorSignalDocument monitorSignalDocument, HashMap<String, Object> paramters) {
+	public static GenericAmplifierDiagnosis getAmplifierDiagnosis(SignalCheckingMethod method, MonitorSignalDocument monitorSignalDocument, HashMap<String, Object> parameters) {
 
 		if (method.isAmpNull())
-			return new AmplifierNullDiagnosis(monitorSignalDocument, paramters);
+			return new AmplifierNullDiagnosis(monitorSignalDocument, parameters);
 		else if (method.isDC())
-			return new DCDiagnosis(monitorSignalDocument, paramters);
+			return new DCDiagnosis(monitorSignalDocument, parameters);
 		else if (method.isFFT())
-			return new FFTDiagnosis(monitorSignalDocument, paramters);
+			return new FFTDiagnosis(monitorSignalDocument, parameters);
+		else if (method.isImpedance())
+			return new ImpedanceDiagnosis(monitorSignalDocument, parameters);
 
 		else return null;
 	}
