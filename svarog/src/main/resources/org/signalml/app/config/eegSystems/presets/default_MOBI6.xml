@@ -7,7 +7,7 @@
 				<blocksPerPage>5</blocksPerPage>
 				<pageSizeEditable>true</pageSizeEditable>
 				<blocksPerPageEditable>true</blocksPerPageEditable>
-				<samplingFrequency>1024.0</samplingFrequency>
+				<samplingFrequency>512.0</samplingFrequency>
 				<channelCount>0</channelCount>
 				<calibrationGain/>
 				<calibrationOffset/>
