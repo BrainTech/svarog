@@ -12,7 +12,8 @@ public enum SignalCheckingMethod {
 
 	AMPNULL,
 	DC,
-	FFT;
+	FFT,
+	IMPEDANCE;
 
 	/**
 	 * Whether is amp null
@@ -36,5 +37,13 @@ public enum SignalCheckingMethod {
 	 */
 	public boolean isFFT() {
 		return (this == FFT);
+	}
+
+	/**
+	 * Whether is IMPEDANCE
+	 * @return true if is IMPEDANCE
+	 */
+	public boolean isImpedance() {
+		return (this == IMPEDANCE);
 	}
 }
