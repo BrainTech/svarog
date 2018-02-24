@@ -1146,7 +1146,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		Dimension size = getSize();
 
 		position.x = (int)(currentPage * pixelPerPage);
-		position.x = Math.min(size.width-extent.width, position.x);
+		// there is no atomic way to get size and extent atomically from JViewport
+		// so ocassionally the value below can be negative (e.g. -1)
+		// and should be shifted to 0 to avoid rendering errors
+		position.x = Math.max(0, Math.min(size.width-extent.width, position.x));
 
 		boolean oldHorizontalLock = horizontalLock;
 		boolean oldVerticalLock = verticalLock;
