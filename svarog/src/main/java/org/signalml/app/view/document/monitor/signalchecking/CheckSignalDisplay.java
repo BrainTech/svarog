@@ -5,11 +5,12 @@
 package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.awt.BasicStroke;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Point;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -63,13 +64,19 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 	private List<HashMap<String, ChannelState>> channels;
 
 	/**
-	 * Default construcot only calls super.
+	 * Create a new Check Signal display component.
 	 *
-	 * @param model super parameter
+	 * @param model visual reference data
 	 */
 	public CheckSignalDisplay(VisualReferenceModel model) {
 
 		super(model);
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				CheckSignalDisplay.this.repaint();
+			}
+		});
 	}
 
 	/**
