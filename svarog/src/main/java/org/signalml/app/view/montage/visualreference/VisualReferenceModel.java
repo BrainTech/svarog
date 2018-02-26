@@ -44,6 +44,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private transient PropertyChangeSupport pcSupport;
 	private transient EventListenerList listenerList = new EventListenerList();
 
+	private final boolean leaveSpaceForImpedance;
 	private boolean bipolarMode;
 	private boolean bipolarCompatible;
 	private VisualReferenceArrow activeArrow;
@@ -58,6 +59,11 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 	private ArrayList<VisualReferenceArrow> arrows;
 
 	public VisualReferenceModel() {
+		this(false);
+	}
+
+	public VisualReferenceModel(boolean leaveSpaceForImpedance) {
+		this.leaveSpaceForImpedance = leaveSpaceForImpedance;
 		pcSupport = new PropertyChangeSupport(this);
 		readAllFromMontage();
 	}
@@ -92,7 +98,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 		channels = new ArrayList<VisualReferenceChannel>();
 		channelLists = new ArrayList<LinkedList<VisualReferenceChannel>>();
 		arrows = new ArrayList<VisualReferenceArrow>();
-		othersBin = new VisualReferenceChessboardBin();
+		othersBin = new VisualReferenceChessboardBin(leaveSpaceForImpedance);
 		positionedBin = new VisualReferencePositionedBin();
 
 		if (montage != null) {
