@@ -1458,7 +1458,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public int getInvisibleChannelsBeforeChannel(int channel) {
 		int numberOfInvisibleChannels = 0;
-		for (int i = 0; i < channel + numberOfInvisibleChannels && i < getChannelCount(); i++) {
+		for (int i = 0; i < channel; i++) {
 			if (!isChannelVisible(i))
 				numberOfInvisibleChannels++;
 		}
