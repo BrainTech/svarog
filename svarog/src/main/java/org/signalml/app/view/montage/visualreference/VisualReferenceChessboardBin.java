@@ -14,9 +14,17 @@ import java.awt.Point;
  */
 public class VisualReferenceChessboardBin extends VisualReferenceBin {
 
+	private static final int X_PADDING_FOR_IMPEDANCE = 40;
+	private static final int Y_PADDING_FOR_IMPEDANCE = 40;
+
+	private final boolean leaveSpaceForImpedance;
 	private float overheadPerCell;
 	private int vCnt;
 	private Dimension cellSize;
+
+	public VisualReferenceChessboardBin(boolean leaveSpaceForImpedance) {
+		this.leaveSpaceForImpedance = leaveSpaceForImpedance;
+	}
 
 	// this requires max height
 
@@ -38,6 +46,10 @@ public class VisualReferenceChessboardBin extends VisualReferenceBin {
 		}
 		else if (cellSize.height > cellSize.width) {
 			cellSize.width = cellSize.height;
+		}
+		if (leaveSpaceForImpedance) {
+			cellSize.width += X_PADDING_FOR_IMPEDANCE;
+			cellSize.height += Y_PADDING_FOR_IMPEDANCE;
 		}
 
 		// calculate available height
@@ -106,6 +118,9 @@ public class VisualReferenceChessboardBin extends VisualReferenceBin {
 				y = location.y + HEADER_HEIGHT + margin.top + (2*row+1)*(overheadPerCell/2) + row * (cellSize.height+vGap);
 				if (even) {
 					y += evenMargin;
+				}
+				if (leaveSpaceForImpedance) {
+					y += Y_PADDING_FOR_IMPEDANCE;
 				}
 				channel.setLocation(new Point((int) Math.round(x), (int) Math.round(y)));
 				row++;

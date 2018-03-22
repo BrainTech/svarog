@@ -112,7 +112,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 		JPanel editorPanel = new JPanel(new BorderLayout());
 
-		visualReferenceModel = new VisualReferenceModel();
+		visualReferenceModel = new VisualReferenceModel(true);
 		checkSignalDisplay = new CheckSignalDisplay(visualReferenceModel);
 		checkSignalDisplay.setBackground(Color.WHITE);
 
