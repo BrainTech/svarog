@@ -60,7 +60,7 @@ public class EEGExperimentsMsg extends AbstractEEGExperimentsMsg{
 
 		readSamplingFrequencies(amplifierParams, experiment);
 
-		experiment.getSignalParameters().setSamplingFrequency(new Float((String) amplifierParams.get("sampling_rate")));
+		experiment.getSignalParameters().setSamplingFrequency(new Float(amplifierParams.get("sampling_rate").toString()));
 
 		List<Object> channelsInfo = (List<Object>) amplifierParams.get("channels_info");
 		readChannelsList(channelsInfo, experiment);
