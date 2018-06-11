@@ -226,11 +226,16 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
 			tagSet.addStyle(style);
 		}
+		int channel = -1;
+		try{
+		    channel = Integer.parseInt(tagMsg.getChannels());
+		}
+		catch(NumberFormatException e){}
 
 		final MonitorTag tag = new MonitorTag(style,
 						  tagMsg.getStartTimestamp(),
 						  tagLen,
-						  -1);
+						  channel);
 
 		tagMsg.getDescription().forEach((key, value) -> {     
 			if (key.equals("annotation")) {
