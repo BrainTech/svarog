@@ -8,12 +8,18 @@ public class MonitorTag extends Tag {
 	private static final long serialVersionUID = 1L;
 
 	protected StyledMonitorTagSet parent;
-	private double timestamp;
+	private final double timestamp;
+	private final String id;
 
 	public MonitorTag(TagStyle style, double timestamp, double length,
-					  int channel) {
+					  int channel, String id) {
 		super(style, 0, length, channel); //the position argument doesn't realy matter
 		this.timestamp = timestamp;
+		this.id = id;
+	}
+
+	public boolean isComplete() {
+		return !Double.isInfinite(length);
 	}
 
 	@Override
@@ -24,6 +30,28 @@ public class MonitorTag extends Tag {
 	@Override
 	public double getTimestamp() {
 		return this.timestamp;
+	}
+
+	public String getID() {
+		return this.id;
+	}
+
+	@Override
+	public double getEndPosition() {
+		if (isComplete()) {
+			return getPosition() + length;
+		} else {
+			return getCurrentTimestamp();
+		}
+	}
+
+	@Override
+	public double getLength() {
+		if (isComplete()) {
+			return length;
+		} else {
+			return getCurrentTimestamp() - getPosition();
+		}
 	}
 
 	public void setParent(StyledMonitorTagSet parent) {
@@ -38,4 +66,7 @@ public class MonitorTag extends Tag {
 		return (this.compareTo((Tag) obj) == 0);
 	}
 
+	public static double getCurrentTimestamp() {
+		return 0.001 * System.currentTimeMillis();
+	}
 }

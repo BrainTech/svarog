@@ -52,12 +52,6 @@ public interface ExportedSignalSelection {
 	double getLength();
 
 	/**
-	 * returns position of the middle of selection
-	 * @return middle of selection
-	 */
-	double getCenterPosition();
-
-	/**
 	 * returns position where selection is ending
 	 * @return position where selection is ending
 	 */

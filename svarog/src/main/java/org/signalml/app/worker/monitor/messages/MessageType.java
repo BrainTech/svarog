@@ -14,6 +14,7 @@ public enum MessageType {
 	PING("ping", LauncherMessage.class),
 	PONG("pong", LauncherMessage.class),
 
+	INCOMPLETE_TAG_MSG("INCOMPLETE_TAG", IncompleteTagMsg.class),
 	TAG_MSG("TAG", TagMsg.class),
 	
 	BROKER_HELLO("BROKER_HELLO", BrokerHelloMsg.class),

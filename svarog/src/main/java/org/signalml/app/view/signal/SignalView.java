@@ -2343,7 +2343,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		private void createUserTagInMonitorMode() {
 			MonitorSignalDocument monitor = (MonitorSignalDocument) document;
 			if (tagStyle.getType() == SignalSelectionType.CHANNEL) {
-				final MonitorTag tag = new MonitorTag(tagStyle, 0.001*System.currentTimeMillis(), 1.0, -1);
+				final MonitorTag tag = new MonitorTag(tagStyle, MonitorTag.getCurrentTimestamp(), 1.0, -1, null);
 				monitor.getMonitorWorker().acceptUserTag(tag);
 			}
 		}
