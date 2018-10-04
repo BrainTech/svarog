@@ -184,22 +184,19 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	public int compareTo(Tag t) {
 
-		double test = this.getTimestamp() - t.getTimestamp();
+		int test = Double.compare(getTimestamp(), t.getTimestamp());
 		if (test == 0) {
-			test = length - t.length;
+			test = Double.compare(length, t.length);
 			if (test == 0) {
-				test = channel - t.channel;
-				if (((int) test) == 0) {
+				test = Integer.compare(channel, t.channel);
+				if (test == 0) {
 					if (style != null && t.style != null) {
 						return style.compareTo(t.style);
-					} else {
-						return 0;
 					}
 				}
 			}
 		}
-		return (int) Math.signum(test);
-
+		return test;
 	}
 
 	/**

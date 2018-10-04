@@ -5,8 +5,10 @@ import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.SwingUtilities;
 
@@ -32,6 +34,7 @@ import org.signalml.util.FormatUtils;
 
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.SignalMsg;
+import org.signalml.app.worker.monitor.messages.IncompleteTagMsg;
 import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
 import org.signalml.psychopy.PsychopyStatusListener;
@@ -88,12 +91,15 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 	private ExperimentDescriptor experimentDescriptor;
 
+	private final Map<String, MonitorTag> tagsPerID;
+
 	public MonitorWorker(ExperimentDescriptor experimentDescriptor, RoundBufferMultichannelSampleSource sampleSource, StyledMonitorTagSet tagSet) {
 		super(null);
 		this.experimentDescriptor = experimentDescriptor;
 		this.peer = experimentDescriptor.getPeer();
 		this.sampleSource = sampleSource;
 		this.tagSet = tagSet;
+		this.tagsPerID = new HashMap<>();
 
 		//TODO blocksPerPage - is that information sent to the monitor worker? Can we substitute default PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE
 		//with a real value?
@@ -116,6 +122,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 		peer.subscribe(MessageType.AMPLIFIER_SIGNAL_MESSAGE.getMessageCode());
 		peer.subscribe(MessageType.TAG_MSG.getMessageCode());
+		peer.subscribe(MessageType.INCOMPLETE_TAG_MSG.getMessageCode());
 		peer.subscribe(MessageType.SAVE_VIDEO_ERROR.getMessageCode());
 		peer.subscribe(MessageType.SAVE_VIDEO_OK.getMessageCode());
 		peer.subscribe(MessageType.SAVE_VIDEO_DONE.getMessageCode());
@@ -167,6 +174,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			case AMPLIFIER_SIGNAL_MESSAGE:
 				publishSamples(sampleMsg);
 				break;
+			case INCOMPLETE_TAG_MSG:
 			case TAG_MSG:
 				publishTagFromMessage(sampleMsg);
 				break;
@@ -216,9 +224,9 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		
 		logger.info("Tag recorder: got a tag!");
 
-		TagMsg tagMsg = (TagMsg)msg;
+		IncompleteTagMsg tagMsg = (IncompleteTagMsg) msg;
 		// TODO: By now we ignore field channels and assume that tag if for all channels
-		final double tagLen = tagMsg.getEndTimestamp() - tagMsg.getStartTimestamp();
+		double tagLen = tagMsg.getDuration();
 
 		TagStyle style = tagSet.getStyle(SignalSelectionType.CHANNEL, tagMsg.getName());
 
@@ -233,9 +241,11 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		catch(NumberFormatException e){}
 
 		final MonitorTag tag = new MonitorTag(style,
-						  tagMsg.getStartTimestamp(),
-						  tagLen,
-						  channel);
+				tagMsg.getStartTimestamp(),
+				tagLen,
+				channel,
+				tagMsg.getID()
+		);
 
 		tagMsg.getDescription().forEach((key, value) -> {     
 			if (key.equals("annotation")) {
@@ -339,20 +349,41 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 						signalRecorderWorker.setFirstSampleTimestamp(data.getSamplesTimestamp());
 				}
 
-			} else {
+			} else if (o instanceof MonitorTag) {
 				MonitorTag tag = (MonitorTag) o;
 
+				String id = tag.getID();
+				MonitorTag previous = null;
+				System.out.printf("RECEIVED TAG %s %d\n", id, tag.isComplete() ? 1 : 0);
+				if (id != null && !id.isEmpty()) {
+					synchronized (tagsPerID) {
+						previous = tagsPerID.get(id);
+						if (previous != null && previous.isComplete()) {
+							// only incomplete tags can be updated
+							logger.warn("received update request for complete tag");
+							return;
+						}
+						tagsPerID.put(id, tag);
+					}
+				}
+
 				tagSet.lock();
-				tagSet.addTag(tag);
+				if (previous != null) {
+					tagSet.updateTag(previous, tag);
+				} else {
+					tagSet.addTag(tag);
+				}
 				tagSet.unlock();
 
 				//record tag
-
-				if (tagRecorderWorker != null) {
+				if (tagRecorderWorker != null && tag.isComplete()) {
 					tagRecorderWorker.offerTag(tag);
 				}
 
 				firePropertyChange("newTag", null, (MonitorTag) o);
+			} else {
+				String className = (o == null) ? "null" : o.getClass().getSimpleName();
+				logger.error("unsupported object ("+className+") passed to MonitorWorker");
 			}
 		}
 	}
