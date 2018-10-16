@@ -177,15 +177,6 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	}
 
 	/**
-	 * returns position of the middle of selection
-	 * @return middle of selection
-	 */
-	@Override
-	public double getCenterPosition() {
-		return position + length / 2;
-	}
-
-	/**
 	 * returns position where selection is ending
 	 * @return position where selection is ending
 	 */
@@ -220,7 +211,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	 */
 	@Override
 	public int getStartSegment(float segmentSize) {
-		return (int)(position / segmentSize);
+		return (int)(getPosition() / segmentSize);
 	}
 
 	/**
@@ -231,7 +222,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	// this is exclusive (returns first segment after the segment in which the selection ends) <- ???
 	@Override
 	public int getEndSegment(float segmentSize) {
-		return (int)((position+length) / segmentSize);
+		return (int)(getEndPosition() / segmentSize);
 	}
 
 	/**
@@ -241,7 +232,7 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	 */
 	@Override
 	public int getSegmentLength(float segmentSize) {
-		return (int)(length / segmentSize);
+		return (int)(getLength() / segmentSize);
 	}
 
 	/**
@@ -284,13 +275,16 @@ public class SignalSelection implements Serializable, ExportedSignalSelection {
 	 * @return true if the two SignalSelection objects overlap, otherwise false.
 	 */
 	public boolean overlaps(ExportedSignalSelection selection) {
+		// implementation of this method seems to be faulty but since it is
+		// backed up by a unit test and possibly has some obscure logic quirks
+		// I decided not to rewrite it (PR)
 
 		double sPosition = selection.getPosition();
-		double sEndPosition = sPosition + selection.getLength();
-		if (sPosition <= position && sEndPosition <= position) {
+		double sEndPosition = selection.getEndPosition();
+		if (sPosition <= getPosition() && sEndPosition <= getPosition()) {
 			return false;
 		}
-		double endPosition = position + length;
+		double endPosition = getEndPosition();
 		if (sPosition >= endPosition && sEndPosition >= endPosition) {
 			return false;
 		}

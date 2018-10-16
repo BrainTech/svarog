@@ -66,6 +66,11 @@ public class StyledMonitorTagSet extends StyledTagSet implements ActionListener 
 		super.addTag(tag);
 	}
 
+	public void updateTag(Tag oldTag, MonitorTag tag) {
+		tag.setParent(this);
+		super.updateTag(oldTag, tag);
+	}
+
 	public void lock() {
 		try {
 			this.semaphore.acquire();
