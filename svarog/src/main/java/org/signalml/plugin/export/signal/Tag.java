@@ -12,6 +12,7 @@ import java.util.List;
 import org.signalml.app.model.components.ChannelPropertyEditor;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import org.signalml.domain.tag.MonitorTag;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
@@ -277,22 +278,24 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	 */
 	@Override
 	public int compareTo(ExportedTag t) {
-		double test = this.getTimestamp() - t.getTimestamp();
+		if (t instanceof MonitorTag) {
+			// the other method correctly treats infinite lengths
+			return compareTo((Tag) t);
+		}
+		int test = Double.compare(getTimestamp(), t.getTimestamp());
 		if (test == 0) {
-			test = length - t.getLength();
+			test = Double.compare(getLength(), t.getLength());
 			if (test == 0) {
-				test = channel - t.getChannel();
-				if (((int) test) == 0) {
+				test = Integer.compare(getChannel(), t.getChannel());
+				if (test == 0) {
 					if (style != null && t.getStyle() != null) {
 						TagStyle newStyle = new TagStyle(t.getStyle());
 						return style.compareTo(newStyle);
-					} else {
-						return 0;
 					}
 				}
 			}
 		}
-		return (int) Math.signum(test);
+		return test;
 	}
 
 	/**

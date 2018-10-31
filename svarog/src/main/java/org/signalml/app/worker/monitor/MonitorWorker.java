@@ -361,7 +361,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 
 				String id = tag.getID();
 				MonitorTag previous = null;
-				System.out.printf("RECEIVED TAG %s %d\n", id, tag.isComplete() ? 1 : 0);
 				if (id != null && !id.isEmpty()) {
 					synchronized (tagsPerID) {
 						previous = tagsPerID.get(id);
