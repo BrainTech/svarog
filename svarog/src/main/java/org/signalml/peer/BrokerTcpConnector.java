@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Connects to broker with simplified TCP/IP communication to obtain socket
@@ -104,7 +105,7 @@ public class BrokerTcpConnector {
 			BrokerInfo brokerInfo = new BrokerInfo(brokerURL, pubURLs, repURLs);
 			return brokerInfo;
 		} catch (IOException | JSONException ex) {
-			throw new CommunicationException("failed to fetch broker addresses", ex);
+			throw new CommunicationException(_("failed to fetch broker addresses"), ex);
 		}
 	}
 

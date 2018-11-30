@@ -4,6 +4,7 @@ import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 public abstract class AbstractPluginComputationMgrStep<Data extends PluginComputationMgrStepData<?>>
 	implements IPluginComputationMgrStep {
@@ -32,7 +33,7 @@ public abstract class AbstractPluginComputationMgrStep<Data extends PluginComput
 			this.doInitialize();
 		} catch (Exception e) {
 			this.cleanup();
-			throw new ComputationException("Error in step initialization", e);
+			throw new ComputationException(_("Error in step initialization"), e);
 		}
 	}
 

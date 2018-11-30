@@ -14,6 +14,7 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SignalSelection;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Setup dialog for ICA method. Allows to select time interval of the signal
@@ -32,7 +33,7 @@ public class IcaDialog extends AbstractDialog {
 
 	public IcaDialog(Window parent, SignalSpaceConstraints signalSpaceConstraints, ExportedSignalSelection selection) {
 		super(parent, true);
-		setTitle("Compute ICA");
+		setTitle(_("Compute ICA"));
 		this.signalSpaceConstraints = signalSpaceConstraints;
 		this.selection = selection;
 	}

@@ -39,7 +39,7 @@ public class BookReporterConfigPanel extends JPanel {
 		private final Dialog dialogParent;
 
 		public AddChartAction(Dialog dialogParent) {
-			super("Add new chart");
+			super(_("Add new chart"));
 			this.dialogParent = dialogParent;
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/add.png"));
 		}

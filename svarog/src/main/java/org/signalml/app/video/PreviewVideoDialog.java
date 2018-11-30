@@ -10,6 +10,7 @@ import javax.swing.Timer;
 import org.signalml.app.video.components.OnlineMediaPlayerComponent;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import uk.co.caprica.vlcj.player.MediaPlayer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Simple modal dialog for displaying a preview of a single RTSP stream.
@@ -25,7 +26,7 @@ public final class PreviewVideoDialog extends JDialog {
 	private final String rtspURL;
 
 	public PreviewVideoDialog(Window parentWindow, VideoStreamSpecification stream) throws OpenbciCommunicationException {
-		super(parentWindow, "video preview (close to continue)");
+		super(parentWindow, _("video preview (close to continue)"));
 		OnlineMediaPlayerComponent component = new OnlineMediaPlayerComponent();
 		player = component.getMediaPlayer();
 		manager = component.getManager();

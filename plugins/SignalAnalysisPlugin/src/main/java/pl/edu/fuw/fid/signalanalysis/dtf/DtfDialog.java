@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Dialog for displaying results of DTF method, consisting of a single
@@ -20,7 +21,7 @@ public class DtfDialog extends AbstractDialog {
 
 	public DtfDialog(Window parent, XYSeriesWithLegend[] criteria, String[] channels, ArModel[] models, int spectrumSize, Montage sources) {
 		super(parent, false);
-		setTitle("DTF results");
+		setTitle(_("DTF results"));
 		pane = new DtfTabbedPane(criteria, channels, models, spectrumSize, sources);
 	}
 

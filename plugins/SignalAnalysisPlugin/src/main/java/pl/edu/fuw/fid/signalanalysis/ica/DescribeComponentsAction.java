@@ -11,6 +11,7 @@ import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Action triggered when user selects "Describe components" from ICA menu.
@@ -20,7 +21,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
  */
 public class DescribeComponentsAction extends AbstractSignalMLAction {
 
-	private static final String TITLE = "Describe components";
+	private static final String TITLE = _("Describe components");
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;
@@ -45,7 +46,7 @@ public class DescribeComponentsAction extends AbstractSignalMLAction {
 			RealMatrix icaFromRaw = icaDocument.getIcaMatrix(true);
 
 			DescribeComponentsPanel panel = new DescribeComponentsPanel(montage, icaFromRaw);
-			JDialog dialog = new JDialog(guiAccess.getDialogParent(), "Topography of ICA components");
+			JDialog dialog = new JDialog(guiAccess.getDialogParent(), _("Topography of ICA components"));
 			dialog.setContentPane(panel);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setMinimumSize(new Dimension(400, 300));
@@ -53,7 +54,7 @@ public class DescribeComponentsAction extends AbstractSignalMLAction {
 			dialog.setVisible(true);
 
 		} catch (NoActiveObjectException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose a tab with an existing ICA analysis.", "Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Choose a tab with an existing ICA analysis."), _("Error"), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 }

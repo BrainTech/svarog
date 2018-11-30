@@ -22,6 +22,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import org.signalml.domain.montage.system.EegSystemName;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.w3c.dom.Document;
@@ -282,9 +283,9 @@ public class RawSignalDescriptorWriter {
 			xformer.transform(source, result);
 
 		} catch (TransformerConfigurationException ex) {
-			throw new IOException("Failed to write xml", ex);
+			throw new IOException(_("Failed to write xml"), ex);
 		} catch (TransformerException ex) {
-			throw new IOException("Failed to write xml", ex);
+			throw new IOException(_("Failed to write xml"), ex);
 		} finally {
 			if (fileOutputStream != null) {
 				try {

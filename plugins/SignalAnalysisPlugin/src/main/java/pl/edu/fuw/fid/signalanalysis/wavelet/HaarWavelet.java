@@ -1,6 +1,7 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Implementation of the Haar wavelet.
@@ -23,7 +24,7 @@ public class HaarWavelet extends MotherWavelet {
 
 	@Override
 	public String getLabel() {
-		return "Haar";
+		return _("Haar");
 	}
 
 	@Override

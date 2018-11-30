@@ -187,7 +187,7 @@ public class BookDocument extends AbstractFileDocument {
 						String filterName = filter.getName();
 						logger.warn("Filter [" + filterName + "] failed to initialize", ex);
 
-						String message = "Filter initialization failed";
+						String message;
 						{
 							String exMessage =
 								new ResolvableException(ex).getDefaultMessage();

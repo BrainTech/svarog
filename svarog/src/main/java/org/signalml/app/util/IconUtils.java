@@ -20,6 +20,8 @@ import org.signalml.task.TaskStatus;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 /** IconUtils
  *
  *
@@ -175,7 +177,7 @@ public abstract class IconUtils {
 			Image image = loadClassPathImage("org/signalml/app/icon/transparent.png");
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
 			Dimension d = toolkit.getBestCursorSize(32, 32);
-			emptyCursor = toolkit.createCustomCursor(image, new Point(d.width/2,d.height/2), "Invisible cursor");
+			emptyCursor = toolkit.createCustomCursor(image, new Point(d.width/2,d.height/2), _("Invisible cursor"));
 		}
 		return emptyCursor;
 	}
@@ -187,7 +189,7 @@ public abstract class IconUtils {
 			Dimension d = toolkit.getBestCursorSize(32, 32);
 			int x = (int)(d.width * (15F/32F));
 			int y = (int)(d.height * (16F/32F));
-			crosshairCursor = toolkit.createCustomCursor(image, new Point(x,y), "Contrasting crosshair cursor");
+			crosshairCursor = toolkit.createCustomCursor(image, new Point(x,y), _("Contrasting crosshair cursor"));
 		}
 		return crosshairCursor;
 	}
@@ -197,7 +199,7 @@ public abstract class IconUtils {
 			Image image = loadClassPathImage("org/signalml/app/icon/handcursor.png");
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
 			Dimension d = toolkit.getBestCursorSize(32, 32);
-			handCursor = toolkit.createCustomCursor(image, new Point(d.width/2,d.height/2), "All finger hand");
+			handCursor = toolkit.createCustomCursor(image, new Point(d.width/2,d.height/2), _("All finger hand"));
 		}
 		return handCursor;
 	}

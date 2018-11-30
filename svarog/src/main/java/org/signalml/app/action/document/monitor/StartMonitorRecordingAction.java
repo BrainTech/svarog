@@ -75,7 +75,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 				logger.error("The files to which you want to record signal/tags were not found", ex);
                         }
                         catch (OpenbciCommunicationException ex) {
-                                ex.showErrorDialog("Failed to start video recording");
+                                ex.showErrorDialog(_("Failed to start video recording"));
                                 logger.error("Failed to start video recording", ex);
                         }
 

@@ -123,7 +123,7 @@ public class FFTWindowTypePanel extends JPanel {
 					WindowType type = getWindowTypeForRadio((JRadioButton) e
 															.getSource());
 					if (type == null) {
-						throw new NullPointerException("No type for radio");
+						throw new NullPointerException(_("No type for radio"));
 					}
 					boolean parametrized = type.isParametrized();
 					if (parametrized) {

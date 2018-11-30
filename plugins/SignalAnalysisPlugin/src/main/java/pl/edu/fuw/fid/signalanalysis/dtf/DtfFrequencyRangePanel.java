@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Panel consisting of two labeled text fields for entering frequency range.
@@ -31,7 +32,7 @@ public class DtfFrequencyRangePanel extends JPanel {
 		freqMin = new JTextField(Double.toString(freqMinDefault), 8);
 		freqMax = new JTextField(Double.toString(freqMaxDefault), 8);
 
-		add(new JLabel("Frequency range [Hz]:"));
+		add(new JLabel(_("Frequency range [Hz]:")));
 		add(freqMin);
 		add(new JLabel("–"));
 		add(freqMax);

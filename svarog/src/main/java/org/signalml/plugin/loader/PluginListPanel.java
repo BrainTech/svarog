@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This panel contains a table with information which plug-ins are active.
@@ -44,7 +45,7 @@ public class PluginListPanel extends JPanel {
 	 */
 	public PluginListPanel(ArrayList<PluginState> pluginDescriptions) {
 		CompoundBorder cb = new CompoundBorder(
-			new TitledBorder("List of plugins"),
+			new TitledBorder(_("List of plugins")),
 			null
 		);
 

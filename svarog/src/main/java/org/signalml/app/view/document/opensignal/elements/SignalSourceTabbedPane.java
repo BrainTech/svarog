@@ -211,7 +211,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor.setCorrectlyRead(true);
 		} catch (Exception ex) {
 			logger.error("error while reading CSV file", ex);
-			Dialogs.showError("Could not read contents of CSV signal file!");
+			Dialogs.showError(_("Could not read contents of CSV signal file!"));
 			openSignalDescriptor = new RawSignalDescriptor();
 			openSignalDescriptor.setCorrectlyRead(false);
 		}

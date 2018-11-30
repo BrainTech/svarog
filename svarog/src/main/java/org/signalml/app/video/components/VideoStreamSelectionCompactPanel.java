@@ -3,7 +3,6 @@ package org.signalml.app.video.components;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -14,6 +13,7 @@ import javax.swing.JPanel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.video.VideoSourceSpecification;
 import org.signalml.app.video.VideoStreamSpecification;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel for selecting video stream from a list of available streams.
@@ -41,7 +41,7 @@ public final class VideoStreamSelectionCompactPanel extends JPanel {
 		previewButton.addActionListener((ActionEvent e) -> {
 			VideoStreamSpecification stream = getSelectedVideoStream();
 			if (stream == null) {
-				JOptionPane.showMessageDialog(this, "You have to select a valid video stream.", "Preview not available", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, _("You have to select a valid video stream."), _("Preview not available"), JOptionPane.ERROR_MESSAGE);
 			} else {
 				listener.previewRequested(stream);
 			}
@@ -86,7 +86,7 @@ public final class VideoStreamSelectionCompactPanel extends JPanel {
 				hasSomeStreams = true;
 			}
 		}
-		String dummyItemLabel = hasSomeStreams ? "(select video stream)" : "(no streams available)";
+		String dummyItemLabel = hasSomeStreams ? _("(select video stream)") : _("(no streams available)");
 		streamModel.insertElementAt(dummyItemLabel, 0);
 		streamModel.setSelectedItem(dummyItemLabel);
 	}

@@ -10,6 +10,7 @@ import org.signalml.app.worker.monitor.messages.BrokerHelloMsg;
 import org.signalml.app.worker.monitor.messages.BrokerHelloResponseMsg;
 import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
 
@@ -159,11 +160,11 @@ public class Peer {
 			return null;
 		}
 		if (!isRcvMore(socket)) {
-			throw new OpenbciCommunicationException("received invalid one-part message");
+			throw new OpenbciCommunicationException(_("received invalid one-part message"));
 		}
 		byte[] data = socket.recv();
 		if (isRcvMore(socket)) {
-			throw new OpenbciCommunicationException("received message with more than two parts");
+			throw new OpenbciCommunicationException(_("received message with more than two parts"));
 		}
 		return BaseMessage.deserialize(header, data);
 	}
@@ -192,7 +193,7 @@ public class Peer {
 
 	public void publish(BaseMessage message) {
 		if (this.closed){
-			throw new ZMQException("sockets are closed", 5);
+			throw new ZMQException(_("sockets are closed"), 5);
 		}
 		try {
 			pub.send(message.getHeader(), ZMQ.SNDMORE);

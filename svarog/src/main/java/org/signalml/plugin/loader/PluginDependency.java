@@ -1,9 +1,7 @@
-/**
- *
- */
 package org.signalml.plugin.loader;
 
 import java.util.ArrayList;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents the dependency of the plug-in.
@@ -37,7 +35,7 @@ public class PluginDependency {
 	/**
 	 * the name of the main application
 	 */
-	public static String svarogName = "Svarog API";
+	public static String svarogName = _("Svarog API");
 
 	/**
 	 * the version of the main application

@@ -10,6 +10,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Several, mostly self-explanatory functions used in multiple places
@@ -79,7 +80,7 @@ public class SignalAnalysisTools {
 			int start = (int) Math.round(selection.getPosition() * source.getSamplingFrequency());
 			int length = (int) Math.round(selection.getLength() * source.getSamplingFrequency());
 			if (start < 0 || length <= 0 || start + length > sampleCount) {
-				throw new IllegalArgumentException("invalid selection");
+				throw new IllegalArgumentException(_("invalid selection"));
 			}
 			double[] buffer = new double[length];
 			data = new Array2DRowRealMatrix(channels.length, length);

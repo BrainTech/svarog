@@ -8,6 +8,7 @@ import org.signalml.plugin.export.Plugin;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 public class PluginResourceRepository {
 
@@ -29,7 +30,7 @@ public class PluginResourceRepository {
 
 		BeanFactory factory = beanFactoryMap.get(pluginClass);
 		if (factory == null) {
-			throw new PluginException("No enclosing bean factory found");
+			throw new PluginException(_("No enclosing bean factory found"));
 		}
 
 		try {
@@ -43,7 +44,7 @@ public class PluginResourceRepository {
 	throws PluginException {
 		Class<? extends Plugin> pluginClass = PluginContextHelper.FindContextPluginClass();
 		if (pluginClass == null)
-			throw new PluginException("No enclosing plugin class found");
+			throw new PluginException(_("No enclosing plugin class found"));
 
 		return GetResource(resourceName, pluginClass);
 	}

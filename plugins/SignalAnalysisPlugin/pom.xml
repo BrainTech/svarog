@@ -109,6 +109,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.signalml.plugin</groupId>
+			<artifactId>PluginToolCommon</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>org.fuin</groupId>
 			<artifactId>utils4j</artifactId>
 			<version>0.7.0</version>

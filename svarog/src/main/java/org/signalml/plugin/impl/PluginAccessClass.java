@@ -16,6 +16,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.export.resources.SvarogAccessResources;
 import org.signalml.plugin.impl.change.SvarogAccessChangeSupportImpl;
 import org.signalml.plugin.loader.PluginHead;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /**
  * Implementation of {@link SvarogAccess} interface.
@@ -84,7 +85,7 @@ public class PluginAccessClass implements SvarogAccess {
 	 */
 	public synchronized static void addPlugin(PluginHead head) {
 		if (pluginMap.containsKey(head)) {
-			throw new IllegalArgumentException("Duplicate plugin auth! (" + head + ")");
+			throw new IllegalArgumentException(_R("Duplicate plugin auth! ({0})", head));
 		}
 		pluginMap.put(head, head);
 		logger.debug("addPlugin: " + head + " --> " + head);

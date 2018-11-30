@@ -115,7 +115,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private MultichannelSampleSource getOutput() throws NoActiveObjectException {
 		SignalPlot plot = getFocusManager().getActiveSignalPlot();
-		if (plot == null) throw new NoActiveObjectException("no active signal plot");
+		if (plot == null) throw new NoActiveObjectException(_("no active signal plot"));
 		MultichannelSampleSource output = plot.getSignalOutput();
 		if (output == null) throw new RuntimeException("output of signal samples is null");
 		return output;
@@ -236,7 +236,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private OriginalMultichannelSampleSource getOriginalSource() throws NoActiveObjectException {
 		SignalPlot plot = getFocusManager().getActiveSignalPlot();
-		if (plot == null) throw new NoActiveObjectException("no active signal plot");
+		if (plot == null) throw new NoActiveObjectException(_("no active signal plot"));
 		OriginalMultichannelSampleSource originalSource = plot.getSignalSource();
 		if (originalSource == null) throw new RuntimeException("original source of samples is null");
 		return originalSource;
@@ -375,7 +375,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private MultichannelSampleSource getOriginalSourceFromDocument(ExportedSignalDocument document) throws InvalidClassException {
 		SignalPlot signalPlot = getSignalPlotFromDocument(document);
-		if (signalPlot == null) throw new RuntimeException("signal plot is null");
+		if (signalPlot == null) throw new RuntimeException(_("signal plot is null"));
 		MultichannelSampleSource source = signalPlot.getSignalSource();
 		if (source == null) throw new RuntimeException("source of samples is null");
 		return source;
@@ -417,7 +417,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public Set<ExportedTag> getTagsFromActiveDocument() throws NoActiveObjectException {
 		TagDocument tagDocument = getFocusManager().getActiveTagDocument();
-		if (tagDocument == null) throw new NoActiveObjectException("no active tag document");
+		if (tagDocument == null) throw new NoActiveObjectException(_("no active tag document"));
 		return new TreeSet<ExportedTag>(tagDocument.getSetOfTags());
 	}
 
@@ -427,7 +427,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public List<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (signalDocument == null) throw new NoActiveObjectException("no active signal document");
+		if (signalDocument == null) throw new NoActiveObjectException(_("no active signal document"));
 		try {
 			return getTagsFromSignalDocument(signalDocument);
 		} catch (InvalidClassException e) {
@@ -459,12 +459,12 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTag getActiveTag() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (signalDocument ==  null) throw new NoActiveObjectException("no active singal document");
+		if (signalDocument ==  null) throw new NoActiveObjectException(_("no active singal document"));
 		DocumentView documentView = signalDocument.getDocumentView();
 		if (!(documentView instanceof SignalView)) throw new RuntimeException("signal documetn didn't return a valid SignalView");
 		SignalView signalView = (SignalView) documentView;
 		PositionedTag positionedTag = signalView.getActiveTag();
-		if (positionedTag == null) throw new NoActiveObjectException("no active tag");
+		if (positionedTag == null) throw new NoActiveObjectException(_("no active tag"));
 		return positionedTag.getTag();
 	}
 
@@ -489,10 +489,10 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedSignalSelection getActiveSelection() throws NoActiveObjectException {
 		SignalPlot signalPlot = getFocusManager().getActiveSignalPlot();
-		if (signalPlot == null) throw new NoActiveObjectException("no active signal plot");
+		if (signalPlot == null) throw new NoActiveObjectException(_("no active signal plot"));
 		SignalView signalView = signalPlot.getView();
 		ExportedSignalSelection selection = signalView.getSignalSelection();
-		if (selection == null) throw new NoActiveObjectException("no active signal selection");
+		if (selection == null) throw new NoActiveObjectException(_("no active signal selection"));
 		return selection;
 	}
 
@@ -589,7 +589,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTagDocument[] getTagDocumentsFromActiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (signalDocument == null) throw new NoActiveObjectException("no active signal document");
+		if (signalDocument == null) throw new NoActiveObjectException(_("no active signal document"));
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
 		return tagDocuments.toArray(new TagDocument[tagDocuments.size()]);
 	}
@@ -600,7 +600,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTagDocument getActiveTagDocument() throws NoActiveObjectException {
 		ExportedTagDocument exportedTagDocument = getFocusManager().getActiveTagDocument();
-		if (exportedTagDocument == null) throw new NoActiveObjectException("no active tag document");
+		if (exportedTagDocument == null) throw new NoActiveObjectException(_("no active tag document"));
 		return exportedTagDocument;
 	}
 
@@ -610,7 +610,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public Document getActiveDocument() throws NoActiveObjectException {
 		Document document = getFocusManager().getActiveDocument();
-		if (document == null) throw new NoActiveObjectException("no active document");
+		if (document == null) throw new NoActiveObjectException(_("no active document"));
 		return document;
 	}
 
@@ -623,8 +623,8 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setMakeActive(true);
 		if (file == null) throw new NullPointerException("file can not be null");
-		if (!file.exists()) throw new IOException("file doesn't exist");
-		if (!file.canRead()) throw new IOException("can not access file");
+		if (!file.exists()) throw new IOException(_("file doesn't exist"));
+		if (!file.canRead()) throw new IOException(_("can not access file"));
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
 
@@ -639,7 +639,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		ofd.setOpenSignalDescriptor(descriptor);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
-			throw new SignalMLException("failed to open document");
+			throw new SignalMLException(_("failed to open document"));
 	}
 
 	/* (non-Javadoc)
@@ -651,8 +651,8 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		if (file == null) throw new NullPointerException("file can not be null");
 		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
 		SignalDocument signalDocument = (SignalDocument) document;
-		if (!file.exists()) throw new IOException("file doesn't exist");
-		if (!file.canRead()) throw new IOException("can not access file");
+		if (!file.exists()) throw new IOException(_("file doesn't exist"));
+		if (!file.canRead()) throw new IOException(_("can not access file"));
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setType(ManagedDocumentType.TAG);
 		ofd.setMakeActive(activeFlag);
@@ -684,7 +684,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		//if (documentFlowIntegrator == null) return false;
 		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
-			throw new SignalMLException("failed to open document");
+			throw new SignalMLException(_("failed to open document"));
 	}
 
 	/**
@@ -701,7 +701,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		if (!(documentView instanceof SignalView)) throw new RuntimeException("view is not of type SignalView");
 		SignalView signalView = (SignalView) documentView;
 		SignalPlot signalPlot = signalView.getMasterPlot();
-		if (signalPlot == null) throw new RuntimeException("no master plot for signal view");
+		if (signalPlot == null) throw new RuntimeException(_("no master plot for signal view"));
 		return signalPlot;
 	}
 
@@ -756,10 +756,10 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SignalParameters spd = signalMLDescriptor.getSignalParameters();
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (file == null) throw new NullPointerException("file can not be null");
-		if (!file.exists()) throw new IOException("file doesn't exist");
-		if (!file.canRead()) throw new IOException("can not access file");
+		if (!file.exists()) throw new IOException(_("file doesn't exist"));
+		if (!file.canRead()) throw new IOException(_("can not access file"));
 		SignalMLCodec codec = codecManager.getCodecForFormat(codecFormatName);
-		if (codec == null) throw new IllegalArgumentException("codec of this name doesn't exist");
+		if (codec == null) throw new IllegalArgumentException(_("codec of this name doesn't exist"));
 
 		signalMLDescriptor.setCodec(codec);
 		if (spd.isBlocksPerPageEditable()) {
@@ -770,7 +770,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		}
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
-			throw new SignalMLException("failed to open document");
+			throw new SignalMLException(_("failed to open document"));
 	}
 
 	/* (non-Javadoc)
@@ -780,13 +780,13 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	public void addCodec(File codecFile, String codecFormatName) throws IOException {
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
 		if (codecFile == null) throw new NullPointerException("file can not be null");
-		if (!codecFile.exists()) throw new IOException("file doesn't exist");
-		if (!codecFile.canRead()) throw new IOException("can not access file");
+		if (!codecFile.exists()) throw new IOException(_("file doesn't exist"));
+		if (!codecFile.canRead()) throw new IOException(_("can not access file"));
 		SignalMLCodec codec;
 		try {
 			codec = new XMLSignalMLCodec(codecFile, ConfigAccessImpl.getInstance().getProfileDirectory());
 		} catch (XMLCodecException e) {
-			throw new IOException("failed to read codec");
+			throw new IOException(_("failed to read codec"));
 		}
 		codec.setFormatName(codecFormatName);
 		codecManager.registerSignalMLCodec(codec);
@@ -799,14 +799,14 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	public void openBook(File file) throws IOException, SignalMLException {
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		if (file == null) throw new NullPointerException("file can not be null");
-		if (!file.exists()) throw new IOException("file doesn't exist");
-		if (!file.canRead()) throw new IOException("can not access file");
+		if (!file.exists()) throw new IOException(_("file doesn't exist"));
+		if (!file.canRead()) throw new IOException(_("can not access file"));
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.BOOK);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
-			throw new SignalMLException("failed to open book document");
+			throw new SignalMLException(_("failed to open book document"));
 	}
 
 	/**
@@ -824,7 +824,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	public ExportedSignalDocument getActiveSignalDocument()
 	throws NoActiveObjectException {
 		Document document = getActiveDocument();
-		if (!(document instanceof ExportedSignalDocument)) throw new NoActiveObjectException("no active signal document");
+		if (!(document instanceof ExportedSignalDocument)) throw new NoActiveObjectException(_("no active signal document"));
 		return (ExportedSignalDocument) document;
 	}
 
@@ -839,7 +839,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		for (RawSignalByteOrder rawByteOrder : rawByteOrders) {
 			if (rawByteOrder.getByteOrder().equals(order)) return rawByteOrder;
 		}
-		throw new InvalidClassException("No such byte order");
+		throw new InvalidClassException(_("No such byte order"));
 	}
 
 	/**
@@ -981,7 +981,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 			// ignore
 		} catch (ExecutionException ex) {
 			logger.error("Worker failed to save", ex.getCause());
-			throw new SignalMLException("failed to export signal", ex);
+			throw new SignalMLException(_("failed to export signal"), ex);
 		}
 
 
@@ -992,7 +992,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		File profileDirectory = getViewerElementManager().getProfileDir().getAbsoluteFile();
 		File tempDirectory = new File(profileDirectory, "temp");
 		if (tempDirectory.exists() && !tempDirectory.isDirectory())
-			throw new IOException("can not create the directory for temporary files");
+			throw new IOException(_("can not create the directory for temporary files"));
 		if (!tempDirectory.exists())
 			tempDirectory.mkdir();
 		File tempFile = File.createTempFile("temp", extension, tempDirectory);

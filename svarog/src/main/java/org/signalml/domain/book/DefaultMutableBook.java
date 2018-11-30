@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.Vector;
 
 import org.signalml.util.Util;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /** DefaultMutableBook
  *
@@ -68,7 +69,7 @@ public class DefaultMutableBook extends AbstractMutableBook implements MutableBo
 	public int addSegment(StandardBookSegment[] segments) throws IllegalArgumentException {
 
 		if (segments.length != channelCount) {
-			throw new IllegalArgumentException("Bad array length [" + segments.length + "] expected [" + channelCount + "]");
+			throw new IllegalArgumentException(_R("Bad array length [{0}] expected [{1}]", segments.length, channelCount));
 		}
 
 		int segmentIndex = this.segments.size();

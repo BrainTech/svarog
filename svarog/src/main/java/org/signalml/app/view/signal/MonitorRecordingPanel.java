@@ -95,7 +95,7 @@ public class MonitorRecordingPanel extends AbstractPanel {
 		if (enableRecordingPanel == null) {
 			enableRecordingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			enableRecordingPanel.add(getEnableRecordingCheckbox());
-			enableRecordingPanel.add(new JLabel("enable recording"));
+			enableRecordingPanel.add(new JLabel(_("enable recording")));
 		}
 		return enableRecordingPanel;
 	}

@@ -13,6 +13,7 @@ import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Base class for dialogs allowing to select options
@@ -36,7 +37,7 @@ public abstract class AveragedBaseDialog<P> extends AbstractDialog {
 	protected JComponent createInterface() {
 		JPanel panel = new JPanel(new GridLayout(1, 2));
 
-		tagPanel = new TagSelectionPanel("Tags");
+		tagPanel = new TagSelectionPanel(_("Tags"));
 
 		averagePanel = new BookAverageMethodPanel();
 		averagePanel.setPageSelectionEnabled(false);
@@ -97,7 +98,7 @@ public abstract class AveragedBaseDialog<P> extends AbstractDialog {
 		channelPanel.validatePanel(errors);
 		tagPanel.validatePanel(errors);
 		if (tagPanel.getSelectedTagStyles().isEmpty()) {
-			errors.addError("At least one tag style must be selected");
+			errors.addError(_("At least one tag style must be selected"));
 		}
 	}
 

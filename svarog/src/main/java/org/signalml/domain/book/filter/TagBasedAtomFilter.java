@@ -18,6 +18,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -161,7 +162,7 @@ public class TagBasedAtomFilter extends AbstractAtomFilter {
 
 	@Override
 	public String getDefaultMessage() {
-		return "Tag based atom filter";
+		return _("Tag based atom filter");
 	}
 
 	@Override

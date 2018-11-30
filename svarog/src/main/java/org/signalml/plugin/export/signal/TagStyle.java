@@ -469,7 +469,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 
 	@Override
 	public String getDefaultMessage() {
-		return "Style: " + name;
+		return _("Style:") + " " + name;
 	}
 
 	@Override

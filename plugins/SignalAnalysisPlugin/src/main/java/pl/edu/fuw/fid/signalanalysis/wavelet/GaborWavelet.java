@@ -1,6 +1,7 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Implementation of a Morlet (aka Gabor) wavelet.
@@ -32,7 +33,7 @@ public class GaborWavelet extends ParamWavelet {
 
 	@Override
 	public String getLabel() {
-		return "Morlet";
+		return _("Morlet");
 	}
 
 	@Override

@@ -595,7 +595,7 @@ public class SettingsPanel extends JPanel {
 				settings.setWindowWidth(Integer
 										.parseInt(customWindowWidthTextField.getText()));
 			} else {
-				throw new RuntimeException("Nothing selected");
+				throw new RuntimeException(_("Nothing selected"));
 			}
 		}
 

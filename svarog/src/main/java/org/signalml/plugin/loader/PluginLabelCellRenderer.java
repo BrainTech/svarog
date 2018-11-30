@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a renderer for cells containing
@@ -50,9 +51,9 @@ public class PluginLabelCellRenderer extends JLabel implements TableCellRenderer
 			setBackground(Color.RED);
 			String message = new String();
 			if (state.isFailedToLoad()) {
-				message += "failed to load";
+				message += _("failed to load");
 			} else {
-				message += "missing dependencies: ";
+				message += _("missing dependencies") + ": ";
 				message += descriptions.get(row).missingDependenciesToString();
 			}
 			setToolTipText(message);

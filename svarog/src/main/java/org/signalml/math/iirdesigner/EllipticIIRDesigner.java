@@ -9,6 +9,7 @@ import org.signalml.math.iirdesigner.math.SpecialMath;
 import org.apache.commons.math.complex.Complex;
 import java.util.ArrayList;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a designer which is capable of designing an Elliptic filter.
@@ -108,7 +109,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		double ck1p = Math.sqrt(1 - ck1 * ck1);
 
 		if (ck1 == 1)
-			throw new BadFilterParametersException("Cannot design a filter with given rp and rs specifications.");
+			throw new BadFilterParametersException(_("Cannot design a filter with given rp and rs specifications."));
 
 		double[] val = new double[2];
 		val[0] = SpecialMath.calculateCompleteEllipticIntegralOfTheFirstKind(ck1 * ck1);
@@ -270,7 +271,7 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(d0[0] * d1[1] / (d0[1] * d1[0])));
 
 		if (filterOrder == 0)
-			throw new BadFilterParametersException("Filter order is zero - check the input parameters!");
+			throw new BadFilterParametersException(_("Filter order is zero - check the input parameters!"));
 
 		return filterOrder;
 

@@ -24,6 +24,8 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.fftsignaltool.actions.SaveToCSV;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}
  * with the {@link FourierTransform#powerSpectrumReal(double[], double) power
@@ -192,7 +194,7 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 	 */
 	public void setSettings(SignalFFTSettings settings) {
 		if (settings == null) {
-			throw new NullPointerException("No settings");
+			throw new NullPointerException(_("No settings"));
 		}
 		this.settings = settings;
 	}
@@ -278,7 +280,7 @@ public class SignalFFTTool extends AbstractSignalTool implements PluginSignalCha
 								plot.getChannelSelection(startPosition,
 														 endPosition, channel));
 						} catch (InvalidClassException e) {
-							throw new RuntimeException("invalid plot");
+							throw new RuntimeException(_("invalid plot"));
 						}
 					}
 				}

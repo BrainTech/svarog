@@ -34,6 +34,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 /**
  * Class responsible for loading plug-ins (high level). Its main functions are:
  * <ul>
@@ -189,7 +191,7 @@ public class PluginLoaderHi {
 	}
 
 	final static FilenameFilter xml_file_filter =
-		new FilesystemFilter("xml", "Xml File", false);
+		new FilesystemFilter("xml", _("XML File"), false);
 
 	/**
 	 * Scans the given directory to find plug-ins.

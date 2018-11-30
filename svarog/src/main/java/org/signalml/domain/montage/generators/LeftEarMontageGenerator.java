@@ -2,6 +2,7 @@ package org.signalml.domain.montage.generators;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 
@@ -34,9 +35,9 @@ public class LeftEarMontageGenerator extends SingleReferenceMontageGenerator {
 		SourceChannel sourceChannelAlt = sourceMontage.getSourceChannelByLabel(SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE);
 		if (sourceChannelOrig == null && sourceChannelAlt == null)
 		{
-			errors.addError(_("One of required channels not identified: "
-				+ SourceChannel.LEFT_EAR_CHANNEL_NAME
-				+ " or "+SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE));
+			errors.addError(_R("One of required channels not identified: {0} or {1}",
+				SourceChannel.LEFT_EAR_CHANNEL_NAME,
+				SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE));
 			return false;
 		}
 		if (sourceChannelOrig == null && sourceChannelAlt != null)

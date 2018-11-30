@@ -33,6 +33,7 @@ import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Util provides various String to Date conversions, signal checksums, file and String MD5 sums.
@@ -649,7 +650,7 @@ public abstract class Util {
 		} while (cnt > 0);
 
 		if (!inflater.finished()) {
-			throw new DataFormatException("Bad compressed data");
+			throw new DataFormatException(_("Bad compressed data"));
 		}
 
 		inflater.end();
@@ -671,7 +672,7 @@ public abstract class Util {
 		try {
 			digest = MessageDigest.getInstance("md5");
 		} catch (NoSuchAlgorithmException ex) {
-			throw new SanityCheckException("Md5 not supported", ex);
+			throw new SanityCheckException(_("MD5 not supported"), ex);
 		}
 
 		String input = userName + "!" + org.signalml.util.FormatUtils.formatTime(loginTime) + "!" + sharedSecret;

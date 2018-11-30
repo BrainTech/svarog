@@ -23,6 +23,8 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 public class PluginTagWriter implements IPluginTagWriter {
 
 	private final static Color FILL_COLOR = new Color(0xc0c0c0);
@@ -52,9 +54,9 @@ public class PluginTagWriter implements IPluginTagWriter {
 				stretchFactor = tagGroup.stretchFactor;
 			} else {
 				if (stretchFactor != tagGroup.stretchFactor) {
-					throw new SanityCheckException(
-							"Inconsistent stretchFactor " + tagGroup
-									+ " (should be: " + stretchFactor + " )");
+					throw new SanityCheckException(String.format(
+							_("Inconsistent stretchFactor %s (should be: %f)"),
+							tagGroup, stretchFactor));
 				}
 			}
 		}
@@ -91,7 +93,7 @@ public class PluginTagWriter implements IPluginTagWriter {
 			return null;
 		} else {
 			return name.length() == 1 ? KeyStroke.getKeyStroke(name.charAt(0))
-					: KeyStroke.getKeyStroke("typed " + name);
+					: KeyStroke.getKeyStroke(_("typed ") + name);
 		}
 	}
 

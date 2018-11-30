@@ -108,7 +108,7 @@ public class ExceptionDialog extends AbstractMessageDialog  {
 		StringBuilder sb = new StringBuilder();
 
 		if (throwable.getLocalizedMessage() != null) {
-			sb.append("message: " + throwable.getLocalizedMessage());
+			sb.append(_("message:") + " " + throwable.getLocalizedMessage());
 		}
 		sb.append("\n");
 		sb.append(throwable.getClass().toString());

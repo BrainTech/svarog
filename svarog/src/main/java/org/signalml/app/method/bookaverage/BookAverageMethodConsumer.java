@@ -1,7 +1,3 @@
-/* BookAverageMethodConsumer.java created 2007-10-23
- *
- */
-
 package org.signalml.app.method.bookaverage;
 
 import java.awt.Window;
@@ -12,6 +8,7 @@ import org.signalml.method.bookaverage.BookAverageData;
 import org.signalml.method.bookaverage.BookAverageResult;
 import org.signalml.method.bookaverage.TimeFrequencyMapPresenter;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * BookAverageMethodConsumer
@@ -34,7 +31,7 @@ public class BookAverageMethodConsumer implements InitializingMethodResultConsum
 		BookAverageResult result = (BookAverageResult) methodResult;
 
 		TimeFrequencyMapPresenter presenter = new TimeFrequencyMapPresenter(dialogParent);
-		presenter.showResults("Average map of MP decomposition", result.getMap(), data.getMinFrequency(), data.getMaxFrequency(), data.getMaxPosition() - data.getMinPosition());
+		presenter.showResults(_("Average map of MP decomposition"), result.getMap(), data.getMinFrequency(), data.getMaxFrequency(), data.getMaxPosition() - data.getMinPosition());
 		return true;
 	}
 }

@@ -13,6 +13,7 @@ import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.bookreporter.logic.intervals.BookReporterTimeInterval;
 import org.signalml.plugin.bookreporter.logic.intervals.BookReporterTimeIntervalSet;
 import org.signalml.plugin.export.signal.TagStyle;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -23,7 +24,7 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 
 	@Override
 	public String getCaption() {
-		return "<html>time % of<br>" + getWavesName() + "<br>per " + getTimeInterval() + " s</html>";
+		return "<html>" + String.format(_("<html>time %% of<br>%s<br>per %d s"), getWavesName(), getTimeInterval()) + "</html>";
 	}
 
 	public void setShowHorizontalLines(boolean showHorizontalLines) {
@@ -51,7 +52,7 @@ public class BookReporterChartPresetPercentage extends BookReporterChartPresetPe
 
 			@Override
 			public XYPlot getPlot() {
-				XYIntervalSeries data = new XYIntervalSeries("% occupied in "+getTimeInterval()+" s");
+				XYIntervalSeries data = new XYIntervalSeries(String.format(_("%% occupied in %d s"), getTimeInterval()));
 				int dataPointCount = (int) Math.ceil(signalLength/timeInterval);
 				for (int i=0; i<dataPointCount; i++) {
 					double secondsLeft = i * timeInterval;

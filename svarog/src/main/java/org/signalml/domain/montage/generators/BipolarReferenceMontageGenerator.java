@@ -14,6 +14,7 @@ import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import org.springframework.validation.Errors;
 
@@ -75,14 +76,14 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 			String channelName = channelPairs[i][0];
 			SourceChannel sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
-				throw new MontageException("Cannot find primary channel " + channelName);
+				throw new MontageException(_R("Cannot find primary channel {0}", channelName));
 			}
 			primaryChannels.add(sourceChannel);
 
 			channelName = channelPairs[i][1];
 			sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
-				throw new MontageException("Cannot find reference channel " + channelName);
+				throw new MontageException(_R("Cannot find reference channel {0}", channelName));
 			}
 			referenceChannels.add(sourceChannel);
 		}

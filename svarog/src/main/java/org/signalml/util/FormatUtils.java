@@ -8,8 +8,10 @@ import java.util.Date;
 import java.util.Formatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.text.NumberFormatter;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import org.apache.log4j.Logger;
 
@@ -88,7 +90,7 @@ public class FormatUtils {
 		}
 		Matcher matcher = datePattern.matcher(time);
 		if (!matcher.matches()) {
-			throw new ParseException("Bad date format [" + time + "]", 0);
+			throw new ParseException(_R("Bad date format [{0}]", time), 0);
 		}
 
 		try {
@@ -107,7 +109,7 @@ public class FormatUtils {
 			return cal.getTime();
 
 		} catch (NumberFormatException ex) {
-			throw new ParseException("Bad date format [" + time + "]", 0);
+			throw new ParseException(_R("Bad date format [{0}]", time), 0);
 		}
 
 	}
@@ -147,7 +149,7 @@ public class FormatUtils {
 		}
 
 		sb.append(" (").append(mmin).append(" min");
-		sb.append(" / " + epochs).append(" epochs)");
+		sb.append(" / " + epochs).append(" " + _("epochs") + ")");
 
 		return sb.toString();
 	}

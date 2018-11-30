@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.TitledBorder;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This panel contains only a text field with the string containing
@@ -39,7 +40,7 @@ public class PluginDirsPanel extends JPanel {
 		this.pluginDirs = pluginDirs;
 		setLayout(new BorderLayout());
 		CompoundBorder cb = new CompoundBorder(
-			new TitledBorder("Plugin directories"),
+			new TitledBorder(_("Plugin directories")),
 			null
 		);
 

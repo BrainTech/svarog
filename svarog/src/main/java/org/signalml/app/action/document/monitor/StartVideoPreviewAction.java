@@ -84,7 +84,7 @@ public class StartVideoPreviewAction extends AbstractSignalMLAction implements V
 	private void updateToolTip() {
 		String toolTip = toolTipBase;
 		if (toolTip != null) {
-			toolTip += isVideoRecording ? "recording" : "stopped";
+			toolTip += isVideoRecording ? _("recording") : _("stopped");
 		}
 		setToolTip(toolTip);
 	}

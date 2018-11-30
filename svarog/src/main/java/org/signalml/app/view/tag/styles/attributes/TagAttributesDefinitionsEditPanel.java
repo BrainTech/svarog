@@ -11,6 +11,7 @@ import org.signalml.app.view.tag.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The panel for editing tag attributes definitions for the current tag style.
@@ -50,7 +51,7 @@ public class TagAttributesDefinitionsEditPanel extends AbstractPanel {
 	 */
 	protected void createInterface() {
 		this.setLayout(new BorderLayout(10, 10));
-		this.setBorder(new TitledBorder("Tag attributes"));
+		this.setBorder(new TitledBorder(_("Tag attributes")));
 
 		table = new JTable();
 		JScrollPane scrollPane = new JScrollPane(table);

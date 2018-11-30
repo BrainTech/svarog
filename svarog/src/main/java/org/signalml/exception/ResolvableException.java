@@ -88,7 +88,7 @@ public class ResolvableException extends SignalMLException implements MessageSou
 
 			this.arguments = new String[] { cause.getClass().getName(), message != null ? message : "" };
 
-			this.defaultMessage = message != null ? message : "Exception occured";
+			this.defaultMessage = message != null ? message : _("Exception occured");
 
 		}
 	}

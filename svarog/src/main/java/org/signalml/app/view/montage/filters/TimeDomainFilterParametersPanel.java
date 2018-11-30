@@ -41,11 +41,11 @@ import org.springframework.validation.Errors;
  */
 public class TimeDomainFilterParametersPanel extends JPanel {
 
-	private static final String PASSBAND_FREQUENCY_CAPTION_STANDARD = "Passband edge frequency 1 [Hz]";
-	private static final String PASSBAND_FREQUENCY_CAPTION_NOTCH = "Passband center frequency [Hz]";
+	private static final String PASSBAND_FREQUENCY_CAPTION_STANDARD = _("Passband edge frequency 1 [Hz]");
+	private static final String PASSBAND_FREQUENCY_CAPTION_NOTCH = _("Passband center frequency [Hz]");
 
-	private static final String STOPBAND_FREQUENCY_CAPTION_STANDARD = "Stopband edge frequency 1 [Hz]";
-	private static final String STOPBAND_FREQUENCY_CAPTION_NOTCH = "Stopband center frequency [Hz]";
+	private static final String STOPBAND_FREQUENCY_CAPTION_STANDARD = _("Stopband edge frequency 1 [Hz]");
+	private static final String STOPBAND_FREQUENCY_CAPTION_NOTCH = _("Stopband center frequency [Hz]");
 
 	/**
 	 * A value of step size for passband and stop band edge frequency

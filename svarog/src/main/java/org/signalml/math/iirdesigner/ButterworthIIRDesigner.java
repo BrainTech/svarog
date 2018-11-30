@@ -5,6 +5,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.apache.commons.math.complex.Complex;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a designer which is capable of designing a Butterworth filter.
@@ -158,7 +159,7 @@ class ButterworthIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(Math.log10((GSTOP - 1.0) / (GPASS - 1.0)) / (2 * Math.log10(frequencyRatio))));
 
 		if (filterOrder == 0)
-			throw new BadFilterParametersException("Filter order is zero - check the input parameters!");
+			throw new BadFilterParametersException(_("Filter order is zero - check the input parameters!"));
 
 		return filterOrder;
 

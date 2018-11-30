@@ -18,6 +18,7 @@ import pl.edu.fuw.fid.signalanalysis.stft.ImageRendererForSTFT;
 import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseAction;
 import pl.edu.fuw.fid.signalanalysis.wavelet.AveragedWaveletDialog;
 import pl.edu.fuw.fid.signalanalysis.wavelet.ImageRendererForWavelet;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Main class for the Signal Analysis plugin.
@@ -52,7 +53,7 @@ public class SignalAnalysisPlugin implements Plugin {
 		guiAccess = access.getGUIAccess();
 		signalAccess = access.getSignalAccess();
 
-		JMenu icaMenu = new JMenu("Independent Component Analysis");
+		JMenu icaMenu = new JMenu(_("Independent Component Analysis"));
 		icaMenu.add(new IcaMethodAction(guiAccess, signalAccess));
 		icaMenu.add(new DescribeComponentsAction(guiAccess, signalAccess));
 		icaMenu.add(new ZeroMethodAction(guiAccess, signalAccess));
@@ -60,7 +61,7 @@ public class SignalAnalysisPlugin implements Plugin {
 		guiAccess.addSubmenuToToolsMenu(icaMenu);
 		guiAccess.addButtonToToolsMenu(new DtfMethodAction(guiAccess, signalAccess));
 
-		JMenu stftMenu = new JMenu("Short-Time Fourier Transform");
+		JMenu stftMenu = new JMenu(_("Short-Time Fourier Transform"));
 		stftMenu.add(new PopupActionForSTFT(signalAccess));
 		try {
 			stftMenu.add(new AveragedBaseAction(guiAccess, signalAccess, AveragedStftDialog.class, ImageRendererForSTFT.class));
@@ -69,7 +70,7 @@ public class SignalAnalysisPlugin implements Plugin {
 		}
 		guiAccess.addSubmenuToToolsMenu(stftMenu);
 
-		JMenu wtMenu = new JMenu("Wavelet Transform");
+		JMenu wtMenu = new JMenu(_("Wavelet Transform"));
 		wtMenu.add(new PopupActionForWavelet(signalAccess));
 		try {
 			wtMenu.add(new AveragedBaseAction(guiAccess, signalAccess, AveragedWaveletDialog.class, ImageRendererForWavelet.class));

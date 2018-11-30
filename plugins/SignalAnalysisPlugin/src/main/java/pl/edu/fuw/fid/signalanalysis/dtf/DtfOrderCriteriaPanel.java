@@ -16,6 +16,7 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Panel displaying plot of AR criteria value vs selected model order.
@@ -33,7 +34,7 @@ public class DtfOrderCriteriaPanel extends ChartPanel {
 		for (XYSeries serie : criteria) {
 			dataset.addSeries(serie);
 		}
-		final JFreeChart chart = ChartFactory.createXYLineChart("Model order selection", "model order", "criterion value", dataset, PlotOrientation.VERTICAL, true, false, false);
+		final JFreeChart chart = ChartFactory.createXYLineChart(_("Model order selection"), _("model order"), _("criterion value"), dataset, PlotOrientation.VERTICAL, true, false, false);
 		final XYPlot plot = chart.getXYPlot();
 		((NumberAxis) plot.getDomainAxis()).setTickUnit(new NumberTickUnit(1.0));
 		final XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();

@@ -7,6 +7,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Subclass of XYChart (from JFreeChart) adapted to display time-frequency data
@@ -49,12 +50,12 @@ public class ImageChart extends XYChart<Number, Number> {
 
 	@Override
 	protected void dataItemAdded(Series series, int itemIndex, Data item) {
-		throw new UnsupportedOperationException("this operation is not supported");
+		throw new UnsupportedOperationException(_("this operation is not supported"));
 	}
 
 	@Override
 	protected void dataItemRemoved(Data item, Series series) {
-		throw new UnsupportedOperationException("this operation is not supported");
+		throw new UnsupportedOperationException(_("this operation is not supported"));
 	}
 
 	@Override
@@ -66,17 +67,17 @@ public class ImageChart extends XYChart<Number, Number> {
 
 	@Override
 	protected void dataItemChanged(Data item) {
-		throw new UnsupportedOperationException("this operation is not supported");
+		throw new UnsupportedOperationException(_("this operation is not supported"));
 	}
 
 	@Override
 	protected void seriesAdded(Series series, int seriesIndex) {
-		throw new UnsupportedOperationException("this operation is not supported");
+		throw new UnsupportedOperationException(_("this operation is not supported"));
 	}
 
 	@Override
 	protected void seriesRemoved(Series series) {
-		throw new UnsupportedOperationException("this operation is not supported");
+		throw new UnsupportedOperationException(_("this operation is not supported"));
 	}
 
 	public void setOnCursorOnChart(EventHandler<? super MouseEvent> value) {

@@ -4,6 +4,7 @@
 package org.signalml.app.view.document.monitor;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -169,7 +170,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	protected EnableRecordingPanel getEnableTagRecordingPanel() {
 		if (enableTagRecordingPanel == null) {
 			enableTagRecordingPanel = new EnableRecordingPanel(getSelectTagsRecordingFilePanel());
-			enableTagRecordingPanel.setText("Record Tags");
+			enableTagRecordingPanel.setText(_("Record Tags"));
 		}
 		return enableTagRecordingPanel;
 	}
@@ -182,7 +183,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	protected EnableRecordingPanel getEnableVideoRecordingPanel() {
 		if (enableVideoRecordingPanel == null) {
 			enableVideoRecordingPanel = new EnableRecordingPanel(getSelectVideoRecordingFilePanel());
-			enableVideoRecordingPanel.setText("Record video");
+			enableVideoRecordingPanel.setText(_("Record video"));
 		}
 		return enableVideoRecordingPanel;
 	}
@@ -257,11 +258,11 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 
 	private static void validateRecordingFileName(String type, String recordingFileName, ValidationErrors errors) {
 		if (recordingFileName.isEmpty()) {
-			errors.addError(_("Please input a correct "+type.toLowerCase()+" filename"));
+			errors.addError(_R("Please input a correct {0} filename", type.toLowerCase()));
 		}
 		else if ((new File(recordingFileName)).exists()) {
 			int answer = JOptionPane.showConfirmDialog(null,
-						 _(type + " recording target file already exists! Do you want to overwrite?"));
+						 _R("{0} recording target file already exists! Do you want to overwrite?", type));
 			if (answer == JOptionPane.CANCEL_OPTION || answer == JOptionPane.NO_OPTION)
 				errors.addError("");
 		}

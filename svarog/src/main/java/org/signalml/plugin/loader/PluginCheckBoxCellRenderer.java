@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.signalml.plugin.loader;
 
 import java.awt.Color;
@@ -11,6 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.TableCellRenderer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a renderer for cells containing
@@ -55,9 +53,9 @@ public class PluginCheckBoxCellRenderer extends JCheckBox implements
 			setBackground(Color.RED);
 			String message = new String();
 			if (state.isFailedToLoad()) {
-				message += "failed to load";
+				message += _("failed to load");
 			} else {
-				message += "missing dependencies: ";
+				message += _("missing dependencies") + ": ";
 				message += state.missingDependenciesToString();
 			}
 			setToolTipText(message);

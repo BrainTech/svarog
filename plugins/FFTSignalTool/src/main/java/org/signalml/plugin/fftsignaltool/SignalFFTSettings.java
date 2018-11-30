@@ -29,6 +29,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+
 /**
  * Settings how the power spectrum of the signal should be displayed.
  * For more information read them description of the parameters below.
@@ -168,7 +170,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	 */
 	public void setPlotSize(Dimension size) {
 		if (size == null) {
-			throw new NullPointerException("No size");
+			throw new NullPointerException(_("No size"));
 		}
 		plotSize = size;
 	}
@@ -217,7 +219,7 @@ public class SignalFFTSettings implements FFTWindowTypeSettings, Serializable {
 	@Override
 	public void setWindowType(WindowType windowType) {
 		if (windowType == null) {
-			throw new NullPointerException("No window type");
+			throw new NullPointerException(_("No window type"));
 		}
 		this.windowType = windowType;
 	}

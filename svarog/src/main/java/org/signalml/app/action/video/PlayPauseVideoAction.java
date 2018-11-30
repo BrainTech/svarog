@@ -9,6 +9,7 @@ import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Action for video play/pause button.
@@ -87,7 +88,7 @@ public final class PlayPauseVideoAction extends AbstractSignalMLAction {
 		this.videoFrame = videoFrame;
 		this.videoRateSlider = new VideoRateSlider();
 		this.onClick = onClickWhenPaused;
-		setText("Play/pause video preview");
+		setText(_("Play/pause video preview"));
 		setIconPath(composeIconPath("resume"));
 		videoFrame.addListener(new VideoFrameListener());
 		videoRateSlider.addChangeListener(new VideoRateSliderListener());

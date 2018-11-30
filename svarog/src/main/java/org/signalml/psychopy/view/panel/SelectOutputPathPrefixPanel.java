@@ -24,7 +24,7 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 	JFileChooser createFileChooser() {
 		JFileChooser fileChooser = new JFileChooser();
 		FileNameExtensionFilter xmlfilter = new FileNameExtensionFilter(
-			"xml files (*.xml)", "xml");
+			_("XML files (*.xml)"), "xml");
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fileChooser.setFileFilter(xmlfilter);
 		fileChooser.setAcceptAllFileFilterUsed(false);

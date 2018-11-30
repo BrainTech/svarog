@@ -7,6 +7,7 @@ import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Base class for video display window in Svarog.
@@ -47,7 +48,7 @@ public class VideoFrame<T extends EmbeddedMediaPlayerComponent> extends JFrame {
 	public VideoFrame(T mediaPlayerComponent, String title, int defaultCloseOperation) {
 		super(title);
 		if (!AVAILABLE) {
-			throw new RuntimeException("video playback is unavailable on this machine");
+			throw new RuntimeException(_("video playback is unavailable on this machine"));
 		}
 		component = mediaPlayerComponent;
 		setDefaultCloseOperation(defaultCloseOperation);

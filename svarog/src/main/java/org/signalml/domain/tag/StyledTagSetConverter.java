@@ -27,6 +27,9 @@ import org.signalml.util.ColorConverter;
 import org.signalml.util.FloatArrayConverter;
 import org.signalml.util.KeyStrokeConverter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
@@ -280,7 +283,7 @@ public class StyledTagSetConverter implements Converter {
 		Montage montage = null;
 
 		if (Double.parseDouble(reader.getAttribute("formatVersion")) != formatVersion) {
-			throw new SanityCheckException("Unsupported tag file format version. Svarog supports only tag file with format version equal to " + formatVersion + ".");
+			throw new SanityCheckException(_R("Unsupported tag file format version. Svarog supports only tag file with format version equal to {0}.", formatVersion));
 		}
 
 		while (reader.hasMoreChildren()) {
@@ -487,7 +490,7 @@ public class StyledTagSetConverter implements Converter {
 		}
 
 		if (name == null || fillColor == null || outlineColor == null) {
-			throw new NullPointerException("Bad tag file format");
+			throw new NullPointerException(_("Bad tag file format"));
 		}
 
 		if (reader.hasMoreChildren()) {

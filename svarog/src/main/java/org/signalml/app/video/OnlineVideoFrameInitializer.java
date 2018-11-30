@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Asynchronously waits for GetAvailableVideoWorker to finish querying OBCI
@@ -35,7 +36,7 @@ public class OnlineVideoFrameInitializer implements PropertyChangeListener {
 				List<VideoSourceSpecification> cameras = worker.get();
 				OnlineVideoFrame videoFrame = existingFrame;
 				if (videoFrame == null) {
-					videoFrame = new OnlineVideoFrame("Camera preview");
+					videoFrame = new OnlineVideoFrame(_("Camera preview"));
 				}
 				videoFrame.setAvailableSources(cameras);
 				videoFrame.setVisible(true);

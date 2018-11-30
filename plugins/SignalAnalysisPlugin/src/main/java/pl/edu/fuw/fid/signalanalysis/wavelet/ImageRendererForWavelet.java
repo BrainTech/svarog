@@ -7,6 +7,7 @@ import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
 import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Computes Wavelet Transform coefficients for parameters selected by the user.
@@ -37,7 +38,7 @@ public class ImageRendererForWavelet extends ImageRenderer<PreferencesForWavelet
 		}
 
 		final Complex[][] windows = new Complex[preferences.height][];
-		ImageResult result = new ImageResult(preferences.width, preferences.height, "Averaged wavelet transform ("+prefs.wavelet.getLabel()+")");
+		ImageResult result = new ImageResult(preferences.width, preferences.height, String.format(_("Averaged wavelet transform (%s)"), prefs.wavelet.getLabel()));
 
 		// prepare windows
 		Complex[] window = new Complex[windowLength];

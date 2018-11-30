@@ -10,6 +10,7 @@ import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Computes Short-Time Fourier Transform coefficients
@@ -73,7 +74,7 @@ public class ImageRendererForSTFT extends ImageRenderer<PreferencesForSTFT> {
 	@Override
 	protected ImageResult compute(PreferencesWithAxes<PreferencesForSTFT> preferences, AsyncStatus status) throws Exception {
 		final PreferencesForSTFT prefs = preferences.prefs;
-		final ImageResult result = new ImageResult(preferences.width, preferences.height, "Averaged Short-Time Fourier Transform");
+		final ImageResult result = new ImageResult(preferences.width, preferences.height, _("Averaged Short-Time Fourier Transform"));
 		final FastFourierTransformer fft = new FastFourierTransformer();
 
 		double paddedLengthMin = prefs.windowLength;

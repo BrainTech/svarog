@@ -166,10 +166,11 @@ public class PsychopyExperiment {
 	}
 
 	private void showErrorDialog(String details) {
+		String errorMsg = _("Psychopy Error");
 		JOptionPane.showMessageDialog(
 			null,
-			"Psychopy Error: " + details,
-			"Psychopy Error",
+			errorMsg + ": " + details,
+			errorMsg,
 			JOptionPane.ERROR_MESSAGE
 		);
 	}

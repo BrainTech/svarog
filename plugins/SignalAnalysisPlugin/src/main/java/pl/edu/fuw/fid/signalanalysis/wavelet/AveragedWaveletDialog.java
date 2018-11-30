@@ -1,15 +1,8 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +13,7 @@ import pl.edu.fuw.fid.signalanalysis.LeftAlignedBoxPanel;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseDialog;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Dialog for selecting settings for averaged Wavelet Transform.
@@ -39,7 +33,7 @@ public class AveragedWaveletDialog extends AveragedBaseDialog<PreferencesForWave
 
 	public AveragedWaveletDialog(Window w, Boolean isModal) {
 		super(w, isModal);
-		setTitle("Averaged Wavelet Transform");
+		setTitle(_("Averaged Wavelet Transform"));
 	}
 
 	@Override
@@ -62,9 +56,9 @@ public class AveragedWaveletDialog extends AveragedBaseDialog<PreferencesForWave
 		});
 
 		JPanel wtPanel = new LeftAlignedBoxPanel();
-		wtPanel.add(new JLabel("wavelet type:"));
+		wtPanel.add(new JLabel(_("wavelet type:")));
 		wtPanel.add(waveletTypeComboBox);
-		wtPanel.add(new JLabel("width parameter:"));
+		wtPanel.add(new JLabel(_("width parameter:")));
 		wtPanel.add(waveletParamSlider);
 
 		return wtPanel;

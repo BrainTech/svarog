@@ -309,12 +309,12 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 			boolean ok = workingDirectory.mkdir();
 			if (!ok) {
 				logger.error("Failed to create working directory");
-				throw new ComputationException(new IOException("Failed to create working dir"));
+				throw new ComputationException(new IOException(_("Failed to create working dir")));
 			}
 		} else {
 			if (!workingDirectory.canWrite()) {
 				logger.error("Working directory not writeable");
-				throw new ComputationException(new IOException("Working directory not writeable"));
+				throw new ComputationException(new IOException(_("Working directory not writeable")));
 			}
 		}
 
@@ -329,7 +329,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 			if (!errors.hasErrors()) {
 				MP5Executor executor = executorLocator.findExecutor(data.getExecutorUID());
 				if (executor == null) {
-					errors.rejectValue("executorUID", "error.mp5.executorNotFound", new Object[] { data.getExecutorUID() }, "Executor not found");
+					errors.rejectValue("executorUID", "error.mp5.executorNotFound", new Object[] { data.getExecutorUID() }, _("Executor not found"));
 				}
 			}
 		}

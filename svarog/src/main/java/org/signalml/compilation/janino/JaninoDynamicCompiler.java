@@ -20,6 +20,8 @@ import org.codehaus.janino.JavaSourceClassLoader;
 import org.signalml.compilation.CompilationException;
 import org.signalml.compilation.DynamicCompiler;
 import org.signalml.compilation.JavaCodeProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /** JaninoDynamicCompiler
  *
@@ -37,7 +39,7 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 		boolean ok;
 
 		if (parts.length < 1) {
-			throw new CompilationException("Bad class name [" + fqClassName + "]");
+			throw new CompilationException(_R("Bad class name [{0}]", fqClassName));
 		}
 		File dir = srcDir.getAbsoluteFile();
 		for (int i=0; i<parts.length-1; i++) {
@@ -45,7 +47,7 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 			if (!dir.exists()) {
 				ok = dir.mkdir();
 				if (!ok) {
-					throw new CompilationException("Failed to create directory [" + dir.getAbsolutePath() + "]");
+					throw new CompilationException(_R("Failed to create directory [{0}]", dir.getAbsolutePath()));
 				}
 			}
 		}
@@ -99,7 +101,7 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 			url = new URL(urlPath);
 		} catch (MalformedURLException ex) {
 			logger.error("Failed to parse URL [" + urlPath + "]", ex);
-			throw new CompilationException("Failed to parse URL", ex);
+			throw new CompilationException(_("Failed to parse URL"), ex);
 		}
 
 		return loadClassInternal(new URL[] { url }, new File[] { srcDir }, fqClassName, parentClassLoader);
@@ -168,11 +170,11 @@ public class JaninoDynamicCompiler implements DynamicCompiler {
 		try {
 			clazz = cl.loadClass(fqClassName);
 		} catch (ClassNotFoundException ex) {
-			throw new CompilationException("Failed to load class", ex);
+			throw new CompilationException(_("Failed to load class"), ex);
 		}
 
 		if (clazz == null) {
-			throw new CompilationException("Failed to load class, null returned");
+			throw new CompilationException(_("Failed to load class, null returned"));
 		}
 
 		return clazz;

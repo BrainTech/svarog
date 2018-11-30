@@ -87,7 +87,7 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
 						PreviewVideoDialog dialog = new PreviewVideoDialog(parentWindow, stream);
 						dialog.setVisible(true);
 					} catch (OpenbciCommunicationException ex) {
-						ex.showErrorDialog("Cannot display video preview");
+						ex.showErrorDialog(_("Cannot display video preview"));
 					}
 				}
 				@Override

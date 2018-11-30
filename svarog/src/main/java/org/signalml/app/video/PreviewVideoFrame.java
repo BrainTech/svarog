@@ -4,6 +4,7 @@ import org.signalml.app.video.components.OnlineMediaPlayerComponent;
 import javax.swing.JFrame;
 import org.signalml.app.video.components.OnlineMediaPlayerPanel;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Simple video frame for displaying only a single RTSP stream.
@@ -22,7 +23,7 @@ public final class PreviewVideoFrame extends VideoFrame<OnlineMediaPlayerCompone
 	 * @throws OpenbciCommunicationException if RTSP URL cannot be acquired
 	 */
 	public PreviewVideoFrame(VideoStreamSpecification stream) throws OpenbciCommunicationException {
-		super(new OnlineMediaPlayerComponent(), "video preview", JFrame.DISPOSE_ON_CLOSE);
+		super(new OnlineMediaPlayerComponent(), _("video preview"), JFrame.DISPOSE_ON_CLOSE);
 		manager = component.getManager();
 		rtspURL = manager.replace(stream);
 		OnlineMediaPlayerPanel previewPanel = new OnlineMediaPlayerPanel(component);

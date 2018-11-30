@@ -22,6 +22,7 @@ import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -80,17 +81,17 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
         chartPanelContainer = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Book reporting result");
+        setTitle(_("Book reporting result"));
         setMinimumSize(new java.awt.Dimension(300, 300));
 
-        pngSaveButton.setText("Export diagram as PNG");
+        pngSaveButton.setText(_("Export diagram as PNG"));
         pngSaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pngSaveButtonActionPerformed(evt);
             }
         });
 
-        tagsSaveButton.setText("Export tags");
+        tagsSaveButton.setText(_("Export tags"));
         tagsSaveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tagsSaveButtonActionPerformed(evt);
@@ -142,9 +143,9 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 				BufferedImage image = this.generateBufferedImage(exportDialog.getPixelWidth(), exportDialog.getPixelHeight(), exportDialog.getScale());
 				try {
 					ImageIO.write(image, "png", outputFile);
-					JOptionPane.showMessageDialog(this, "Image was saved successfully!", "Image saved to file", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(this, _("Image was saved successfully!"), _("Image saved to file"), JOptionPane.INFORMATION_MESSAGE);
 				} catch (IOException ex) {
-					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error saving image", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, ex.getMessage(), _("Error saving image"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -152,7 +153,7 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 
     private void tagsSaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tagsSaveButtonActionPerformed
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setFileFilter(new FileNameExtensionFilter("tag files", "tag"));
+		fileChooser.setFileFilter(new FileNameExtensionFilter(_("tag files"), "tag"));
 		if (fileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
 			File outputFile = fileChooser.getSelectedFile();
 			if (outputFile != null) {
@@ -161,12 +162,12 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 					try {
 						document.setBackingFile(outputFile);
 						document.saveDocument();
-						JOptionPane.showMessageDialog(this, "Tags were saved successfully!", "Tags saved to file", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(this, _("Tags were saved successfully!"), _("Tags saved to file"), JOptionPane.INFORMATION_MESSAGE);
 					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(this, ex.getMessage(), "Error saving tags", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(this, ex.getMessage(), _("Error saving tags"), JOptionPane.ERROR_MESSAGE);
 					}
 				} catch (SignalMLException ex) {
-					JOptionPane.showMessageDialog(this, ex.getMessage(), "Error processing tags", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, ex.getMessage(), _("Error processing tags"), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}

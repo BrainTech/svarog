@@ -27,6 +27,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.PluginAccessClass;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Action triggered when user decides to compute ICA
@@ -36,7 +37,7 @@ import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
  */
 public class IcaMethodAction extends AbstractSignalMLAction {
 
-	private static final String TITLE = "Compute ICA";
+	private static final String TITLE = _("Compute ICA");
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;
@@ -127,15 +128,15 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				dfi.getActionFocusManager().setActiveDocument(newDocument);
 			}
 		} catch (IcaMethodException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "ICA method failed: "+ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("ICA method failed: ")+ex.getMessage(), _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (MontageMismatchException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Montage mismatch.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Montage mismatch."), _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (NoActiveObjectException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose an active signal first.", "Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Choose an active signal first."), _("Error"), JOptionPane.WARNING_MESSAGE);
 		} catch (SignalMLException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Error: ")+ex, _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Error: ")+ex, _("Error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

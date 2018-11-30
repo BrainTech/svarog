@@ -1,6 +1,7 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Implementation of the complex Shannon wavelet.
@@ -21,7 +22,7 @@ public class ShannonWavelet extends MotherWavelet {
 
 	@Override
 	public String getLabel() {
-		return "Shannon";
+		return _("Shannon");
 	}
 
 	@Override
