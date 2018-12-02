@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: svarog\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-12-01 17:25+0100\n"
-"PO-Revision-Date: 2018-12-01 17:32+0100\n"
-"Last-Translator: Piotr Różański <piotr.rozanski@braintech.pl>\n"
+"PO-Revision-Date: 2018-11-30 23:41+0100\n"
+"Last-Translator: Piotr Rozanski <piotr.rozanski@braintech.pl>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr "(domyślna)"
 
 #: org/signalml/app/view/book/BookPlot.java:1012
 msgid "(no signal to paint)"
-msgstr "(brak sygnału do malowania)"
+msgstr "(brak sygnału do wyświetlenia)"
 
 #: org/signalml/app/video/components/VideoStreamSelectionCompactPanel.java:89
 msgid "(no streams available)"
@@ -36,7 +36,7 @@ msgstr "(brak dostępnych strumieni)"
 #: org/signalml/app/view/tag/TagStyleListCellRenderer.java:34
 #: org/signalml/app/view/tag/comparison/TagStyleTableCellRenderer.java:41
 msgid "(none)"
-msgstr "(Żaden)"
+msgstr "(brak)"
 
 #: org/signalml/app/video/components/VideoStreamSelectionPanel.java:73
 msgid "(select source)"
@@ -48,41 +48,41 @@ msgstr "(wybierz strumień wideo)"
 
 #: org/signalml/app/config/preset/managers/StyledTagSetPresetManager.java:34
 msgid "< Empty preset - no styles defined >"
-msgstr "< Pusty preset - brak zdefiniowanych stylów >"
+msgstr "<Pusty preset — brak zdefiniowanych stylów>"
 
 #: org/signalml/app/view/common/components/presets/CompactPresetControlsPanel.java:468
 #: org/signalml/app/view/common/components/presets/ChoosePresetDialog.java:148
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:1055
 msgid "<< select to choose preset >>"
-msgstr "<< wybierz, aby wybrać ustawienie >>"
+msgstr "<< wybierz, aby wybrać preset >>"
 
 #: org/signalml/app/view/common/components/presets/CompactPresetControlsPanel.java:41
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:263
 msgid "<< select to load preset >>"
-msgstr "<< wybierz, aby załadować ustawienie wstępne >>"
+msgstr "<< wybierz, aby załadować preset >>"
 
 #: org/signalml/app/view/common/components/filechooser/EmbeddedFileChooserFavorites.java:237
 msgid "<Select item>"
-msgstr "<Select item>"
+msgstr "<Wybierz element>"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:836
 msgid ""
 "<html><body>Opened video file has no time index.<br>It may not be possible "
 "to change time position.</body></html>"
-msgstr ""
+msgstr "<html> <body> Otwarty plik wideo nie ma indeksu czasu. <br> Zmiana pozycji czasu może nie być możliwa. </body> </html>"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:805
 msgid ""
 "<html><body>VLC libraries are missing. Video preview will not be available."
 "<br>The VLC player can be downloaded from http://www.videolan.org/vlc/ or "
 "your system's repositiories.</body></html>"
-msgstr ""
+msgstr "<html> <body> Brakuje bibliotek VLC. Podgląd wideo nie będzie dostępny. <br> Odtwarzacz VLC można pobrać ze strony http://www.videolan.org/vlc/ lub repozytorium systemu. </body> </ html>"
 
 #: org/signalml/psychopy/view/panel/SelectOutputPathPrefixPanel.java:35
 msgid ""
 "<html>Choose files to which signal, tags and Psychopy results will be saved."
 "<br>File Extensions will be added automatically</html>"
-msgstr ""
+msgstr "<html> Wybierz pliki, do których zostaną zapisane wyniki, tagi i wyniki PsychoPy. <br> Rozszerzenia plików zostaną dodane automatycznie </html>"
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetPercentage.java:27
 msgid "<html>time %% of<br>%s<br>per %d s"
@@ -107,19 +107,19 @@ msgstr "AIC"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:73
 msgid "AIC(order) = log(det(V)) + 2 × order × channels² / samples"
-msgstr "AIC (kolejność) = log (det (V)) + 2 × kolejność × kanały² / sample"
+msgstr "AIC(rząd) = log (det (V)) + 2 × rząd × kanały² / próbki"
 
 #: org/signalml/app/action/workspace/tasks/AbortTaskAction.java:28
 msgid "Abort"
-msgstr "Anulować"
+msgstr "Przerwij"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:575
 msgid "Abort (will be lost)"
-msgstr "Przerwij (zaginie)"
+msgstr "Przerwij (przepadnie)"
 
 #: org/signalml/app/action/workspace/tasks/AbortAllTasksAction.java:35
 msgid "Abort all abortable tasks"
-msgstr "Przerwij wszystkie przerywane zadania"
+msgstr "Przerwij wszystkie przerywalne zadania"
 
 #: org/signalml/app/action/workspace/tasks/AbortAllTasksAction.java:33
 msgid "Abort all tasks"
@@ -131,7 +131,7 @@ msgstr "Przerwij to zadanie (zadanie może nie zakończyć się natychmiast)"
 
 #: org/signalml/task/TaskStatus.java:202
 msgid "Aborted"
-msgstr "Niedonoszony"
+msgstr "Przerwany"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:466
 msgid "Accept edit"
@@ -147,7 +147,7 @@ msgstr "Dodaj filtr FFT"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:912
 msgid "Add a custom-made time domain filter"
-msgstr "Dodaj niestandardowy filtr domeny czasu"
+msgstr "Dodaj niestandardowy filtr w domenie czasu"
 
 #: org/signalml/app/view/book/filter/BookFilterTablePanel.java:285
 msgid "Add a filter that filters based on a signal tag"
@@ -174,6 +174,7 @@ msgid "Add channels names to csv file"
 msgstr "Dodaj nazwy kanałów do pliku csv"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:93
+#, fuzzy
 msgid "Add chart"
 msgstr "Dodaj wykres"
 
@@ -205,7 +206,7 @@ msgstr "Dodaj lokalnie"
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:219
 msgid "Add local process MP executor"
-msgstr "Dodaj lokalny procesor MP executor"
+msgstr "Dodaj lokalny program wykonywalny MP"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:852
 msgid "Add new block style"
@@ -216,6 +217,7 @@ msgid "Add new channel style"
 msgstr "Dodaj nowy styl kanału"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:42
+#, fuzzy
 msgid "Add new chart"
 msgstr "Dodaj nowy wykres"
 
@@ -237,7 +239,7 @@ msgstr "Dodaj filtr parametrów"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:867
 msgid "Add selected time domain filter"
-msgstr "Dodaj wybrany filtr domeny czasu"
+msgstr "Dodaj wybrany filtr w domenie czasu"
 
 #: org/signalml/app/view/book/filter/BookFilterTablePanel.java:284
 msgid "Add tag based filter"
@@ -245,11 +247,11 @@ msgstr "Dodaj filtr oparty na tagach"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:335
 msgid "Add time domain filter"
-msgstr "Dodaj filtr domeny czasu"
+msgstr "Dodaj filtr w domenie czasu"
 
 #: org/signalml/app/method/mp5/MP5ExpertConfigPanel.java:49
 msgid "Additional config (will be appended to config file as is)"
-msgstr "Dodatkowa konfiguracja (zostanie dołączona do pliku konfiguracyjnego)"
+msgstr "Dodatkowa konfiguracja (zostanie dołączona do pliku konfiguracyjnego bez zmian)"
 
 #: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:54
 msgid "Advanced decomposition settings"
@@ -261,11 +263,11 @@ msgstr "Ustawienia zaawansowane"
 
 #: org/signalml/method/ep/EvokedPotentialParameters.java:53
 msgid "After ERP averaging filter"
-msgstr "Po uśrednieniu filtru ERP"
+msgstr "Po uśredniającym filtrze ERP"
 
 #: org/signalml/domain/tag/EEGLabTagExporter.java:52
 msgid "Align event latencies to data events: NaN"
-msgstr "Wyrównaj opóźnienia zdarzeń do zdarzeń danych: NaN"
+msgstr "Wyrównaj opóźnienia zdarzeń do zdarzeń w danych: NaN"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:707
 msgid "All aborted tasks will be removed."
@@ -290,11 +292,11 @@ msgstr "Wszystkie ręce palcami"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:677
 msgid "All non running tasks will be removed."
-msgstr "Wszystkie niedziałające zadania zostaną usunięte."
+msgstr "Wszystkie nieaktywne zadania zostaną usunięte."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:645
 msgid "All running suspendable tasks will be suspended."
-msgstr "Wszystkie uruchomione zawieszane zadania zostaną zawieszone."
+msgstr "Wszystkie uruchomione zawieszalne zadania zostaną zawieszone."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:629
 msgid "All running tasks will be aborted."
@@ -328,8 +330,9 @@ msgid "Amplitude"
 msgstr "Amplituda"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:120
+#, fuzzy
 msgid "Amplitude [µV]"
-msgstr "Amplituda [μV]"
+msgstr "Amplituda [µV]"
 
 #: org/signalml/app/view/tag/NewTagPanel.java:151
 msgid "An empty tag with no styles"
@@ -345,7 +348,7 @@ msgstr "Wystąpił błąd podczas zapisywania pliku."
 
 #: org/signalml/app/worker/monitor/GetAvailableVideoWorker.java:131
 msgid "An error occurred in communication with video server"
-msgstr "Wystąpił błąd podczas komunikacji z serwerem wideo"
+msgstr "Wystąpił błąd w komunikacji z serwerem wideo"
 
 #: org/signalml/app/worker/monitor/ConnectToExperimentWorker.java:174
 msgid "An error occurred while connecting to experiment"
@@ -354,7 +357,7 @@ msgstr "Wystąpił błąd podczas łączenia z eksperymentem"
 #: org/signalml/app/worker/monitor/messages/BaseMessage.java:189
 #, java-format
 msgid "An error occurred while parsing the JSON message ({0})"
-msgstr "Wystąpił błąd podczas analizowania komunikatu JSON ({0})"
+msgstr "Wystąpił błąd podczas przetwarzania składni komunikatu JSON ({0})"
 
 #: org/signalml/app/worker/monitor/FindEEGExperimentsWorker.java:138
 msgid "An error occurred while refreshing experiments"
@@ -377,8 +380,9 @@ msgid "Anonymous plugin classes not supported"
 msgstr "Anonimowe klasy wtyczek nie są obsługiwane"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:439
+#, fuzzy
 msgid "Antialias"
-msgstr "Antialias"
+msgstr "Wygładzanie krawędzi"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:229
 msgid "Antialiasing"
@@ -394,7 +398,7 @@ msgstr "Konsola komunikatów aplikacji"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:64
 msgid "Apply"
-msgstr "Zastosować"
+msgstr "Zastosuj"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:983
 msgid "Apply changes"
@@ -414,7 +418,7 @@ msgstr "Przybliżone zużycie pamięci RAM"
 
 #: org/signalml/app/view/workspace/ViewerMainFrame.java:269
 msgid "Are you sure you want to close Svarog?"
-msgstr "Czy na pewno chcesz zamknąć Svarog?"
+msgstr "Czy na pewno chcesz zamknąć Svaroga?"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:260
 msgid "Are you sure you want to close the preview?"
@@ -422,7 +426,7 @@ msgstr "Czy na pewno chcesz zamknąć podgląd?"
 
 #: org/signalml/psychopy/view/PsychopyExperimentDialog.java:71
 msgid "Are you sure you want to overrite data in this location?"
-msgstr "Czy na pewno chcesz przesłonić dane w tej lokalizacji?"
+msgstr "Czy na pewno chcesz zastąpić dane w tej lokalizacji?"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:614
 #: org/signalml/app/view/common/dialogs/OptionPane.java:630
@@ -461,19 +465,20 @@ msgstr "Wymagany jest co najmniej jeden wpis ścieżki klasy"
 #: org/signalml/domain/montage/generators/LinkedEarsMontageGenerator.java:46
 #, java-format
 msgid "At least one set of ears should be available: {0}, {1} or {2}, {3}."
-msgstr "Powinien być dostępny co najmniej jeden zestaw uszu: {0}, {1} lub {2}, {3}."
+msgstr "Powinien być dostępny co najmniej jeden zestaw elektrod usznych: {0} , {1} lub {2} , {3} ."
 
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseDialog.java:101
+#, fuzzy
 msgid "At least one tag style must be selected"
-msgstr "Musisz wybrać co najmniej jeden styl tagu"
+msgstr "Musi zostać wybrany co najmniej jeden styl znaczników"
 
 #: org/signalml/method/mp5/MP5Method.java:351
 msgid "Atom (non-linear progress)"
-msgstr "Atom (nieliniowy postęp)"
+msgstr "Atom (postęp nieliniowy)"
 
 #: org/signalml/app/view/book/AtomTableDialog.java:70
 msgid "Atom table"
-msgstr "Stół atomowy"
+msgstr "Tablica parametrów atomów"
 
 #: org/signalml/app/view/book/BookPlot.java:1305
 #, java-format
@@ -494,7 +499,7 @@ msgstr "Atomy do włączenia do słownika"
 
 #: org/signalml/domain/tag/EEGLabTagExporter.java:53
 msgid "Auto adjust new events sampling rate: unchecked"
-msgstr "Automatycznie dostosuj częstotliwość próbkowania nowych zdarzeń: niezaznaczone"
+msgstr "Automatycznie dostosuj częstość próbkowania nowych zdarzeń: niezaznaczone"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:282
 msgid "Automatically add a high-pass filter to each signal"
@@ -506,17 +511,17 @@ msgstr "Automatycznie ładuj domyślny montaż przy otwieraniu sygnałów (jeśl
 
 #: org/signalml/app/view/document/opensignal/elements/OtherSettingsPanel.java:54
 msgid "Automatically try to open tags"
-msgstr "Automatycznie próbuj otwierać tagi"
+msgstr "Próbuj automatycznie otwierać tagi"
 
 #: org/signalml/app/view/document/opensignal/elements/OtherSettingsPanel.java:55
 msgid "Automatically try to open video"
-msgstr "Automatycznie próbuj otworzyć wideo"
+msgstr "Próbuj automatycznie otworzyć wideo"
 
 #: org/signalml/app/view/signal/SignalPlot.java:2669
 #, java-format
 msgid ""
 "Auxiliary signal plot ({0}, horizontal synchro {1}, vertical synchro {2})"
-msgstr ""
+msgstr "Wykres sygnału pomocniczego ({0} , synchronizacja pozioma {1} , synchronizacja pionowa {2})"
 
 #: org/signalml/app/view/document/opensignal/elements/ChannelSelectPanel.java:66
 msgid "Available channels"
@@ -524,24 +529,25 @@ msgstr "Dostępne kanały"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDescriptor.java:29
 msgid "Average books"
-msgstr "Średnia książek"
+msgstr "Uśrednianie książek"
 
 #: org/signalml/app/method/ep/EvokedPotentialMethodDescriptor.java:37
 msgid "Average evoked potentials"
-msgstr "Średnie potencjały wywołane"
+msgstr "Uśrednione potencjały wywołane"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodConsumer.java:34
 msgid "Average map of MP decomposition"
-msgstr "Średnia mapa rozkładu MP"
+msgstr "Średnia mapa gęstości energii z rozkładu MP"
 
 #: pl/edu/fuw/fid/signalanalysis/stft/AveragedStftDialog.java:30
 #: pl/edu/fuw/fid/signalanalysis/stft/ImageRendererForSTFT.java:77
 msgid "Averaged Short-Time Fourier Transform"
-msgstr "Uśredniona krótkoterminowa transformata Fouriera"
+msgstr "Uśredniona krótkoczasowa transformata Fouriera"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/AveragedWaveletDialog.java:36
+#, fuzzy
 msgid "Averaged Wavelet Transform"
-msgstr "Uśredniona transformacja falkowa"
+msgstr "Uśredniona transformata falkowa"
 
 #: org/signalml/app/method/ep/view/tags/AveragedTagSelectionPanel.java:32
 msgid "Averaged tags"
@@ -561,7 +567,7 @@ msgstr "Czas uśredniania"
 
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:114
 msgid "B"
-msgstr "b"
+msgstr "B"
 
 #: org/signalml/app/view/common/dialogs/AbstractWizardDialog.java:415
 msgid "Back"
@@ -569,16 +575,16 @@ msgstr "Z powrotem"
 
 #: org/signalml/app/view/preferences/MonitorConfigPanel.java:61
 msgid "Backup frequency [s]"
-msgstr "Częstotliwość zapasowa [s]"
+msgstr "Częstość zapasowa [s]"
 
 #: org/signalml/app/view/preferences/MonitorConfigPanel.java:189
 msgid "Bad IP address value!"
-msgstr "Zła wartość adresu IP!"
+msgstr "Zły adres IP!"
 
 #: org/signalml/domain/book/DefaultMutableBook.java:72
 #, java-format
 msgid "Bad array length [{0}] expected [{1}]"
-msgstr "Nieprawidłowa długość tablicy [{0}] [{1}]"
+msgstr "Nieprawidłowa długość tablicy [{0}], oczekiwane [{1}]"
 
 #: org/signalml/compilation/janino/JaninoDynamicCompiler.java:42
 #, java-format
@@ -600,31 +606,31 @@ msgstr "Zły format daty [{0}]"
 
 #: org/signalml/method/mp5/MP5Parameters.java:96
 msgid "Bad energy error"
-msgstr "Zły błąd energetyczny"
+msgstr "Zły błąd energii"
 
 #: org/signalml/method/mp5/MP5Parameters.java:99
 msgid "Bad energy error percentage"
-msgstr "Zły procent błędu błędu"
+msgstr "Zły procent błędu energii"
 
 #: org/signalml/method/mp5/MP5Parameters.java:105
 msgid "Bad energy percent"
-msgstr "Zła procentowa energia"
+msgstr "Zły procent energii"
 
 #: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:317
 msgid "Bad filter parameters, please correct them."
-msgstr "Złe parametry filtra, popraw je."
+msgstr "Złe parametry filtra, popraw je proszę."
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:784
 msgid "Bad frequency axis range - min must be lower than max"
-msgstr "Zły zakres osi częstotliwości - min musi być mniejszy niż max"
+msgstr "Zły zakres osi częstości — min musi być mniejsze niż max"
 
 #: org/signalml/method/mp5/MP5Parameters.java:102
 msgid "Bad max iteration count"
-msgstr "Zła liczba iteracji"
+msgstr "Zła maksymalna liczba iteracji"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:755
 msgid "Bad power axis range - min must be lower than max"
-msgstr "Zły zakres osi mocy - min musi być mniejszy niż max"
+msgstr "Zły zakres osi mocy — min musi być mniejsze niż max"
 
 #: org/signalml/domain/montage/MontageChannel.java:252
 #: org/signalml/domain/montage/MontageChannel.java:257
@@ -643,7 +649,7 @@ msgstr "Zły format pliku znaczników"
 #: org/signalml/app/view/montage/filters/FFTWindowTypePanel.java:249
 #: org/signalml/plugin/fftsignaltool/dialogs/components/FFTWindowTypePanel.java:278
 msgid "Bad window parameter. Allowed range: "
-msgstr "Niepoprawny parametr okna. Dozwolony zakres:"
+msgstr "Niepoprawny parametr okna. Dozwolony zakres: "
 
 #: org/signalml/app/view/montage/filters/FFTWindowTypePanel.java:252
 #: org/signalml/plugin/fftsignaltool/dialogs/components/FFTWindowTypePanel.java:281
@@ -659,7 +665,7 @@ msgstr "Zła szerokość okna. Musi być liczbą całkowitą większą niż 7"
 msgid ""
 "Badly conditioned filter coefficients (numerator): the results may be "
 "meaningless"
-msgstr ""
+msgstr "Źle dobrane współczynniki filtra (licznik): wyniki mogą być bez znaczenia"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:114
 msgid "Base method configuration"
@@ -667,13 +673,13 @@ msgstr "Podstawowa konfiguracja metody"
 
 #: org/signalml/app/method/ep/view/time/BaselineSelectionPanel.java:17
 msgid "Baseline correction"
-msgstr "Korekta linii podstawowej"
+msgstr "Korekta linii bazowej (baseline)"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:296
 msgid ""
 "Be aware that if number which is a power of 2 will not be supplied, then the "
 "nearest greater power of 2 will be used."
-msgstr ""
+msgstr "Pamiętaj, że jeśli podana liczba nie będzie potęgą 2, zostanie użyta najbliższa większa liczba będąca potęgą 2."
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:49
 msgid "Binary files (*.bin)"
@@ -681,7 +687,7 @@ msgstr "Pliki binarne (* .bin)"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:289
 msgid "Bipolar mode"
-msgstr "Tryb dwubiegunowy"
+msgstr "Tryb dwubiegunowy (bipolarny)"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:323
 msgid "Block comparison"
@@ -702,7 +708,7 @@ msgstr "Wybór bloku"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:322
 msgid "Block statistic"
-msgstr "Zablokuj statystykę"
+msgstr "Statystyka bloków"
 
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:121
 msgid "Block tag"
@@ -710,7 +716,7 @@ msgstr "Zablokuj tag"
 
 #: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:90
 msgid "Blocking"
-msgstr "Bloking"
+msgstr "Blokowanie"
 
 #: org/signalml/app/document/ManagedDocumentType.java:55
 msgid "Book"
@@ -718,28 +724,29 @@ msgstr "Książka"
 
 #: org/signalml/app/method/mp5/MP5ExpertConfigPanel.java:60
 msgid "Book comment"
-msgstr "Zarezerwuj komentarz"
+msgstr "Komentarz w książce"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDescriptor.java:89
 msgid "Book contains no valid segments!"
-msgstr "Książka nie zawiera ważnych segmentów!"
+msgstr "Książka nie zawiera poprawnych segmentów!"
 
 #: org/signalml/app/method/mp5/MP5ResultBookPanel.java:64
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:62
 msgid "Book file"
-msgstr "Zarezerwuj plik"
+msgstr "Plik książki"
 
 #: org/signalml/app/method/mp5/MP5ResultBookPanel.java:139
 msgid "Book file not chosen"
 msgstr "Plik książki nie został wybrany"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:139
+#, fuzzy
 msgid "Book file not chosen, doesn't exist or unreadable"
 msgstr "Plik książki nie został wybrany, nie istnieje lub jest nieczytelny"
 
 #: org/signalml/app/method/mp5/MP5ResultBookPanel.java:143
 msgid "Book file parent directory doesn't exist or not writable"
-msgstr "Katalog macierzysty pliku książki nie istnieje lub nie można go zapisać"
+msgstr "Katalog nadrzędny pliku książki nie istnieje lub nie można go zapisać"
 
 #: org/signalml/app/document/ManagedDocumentType.java:57
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:53
@@ -751,12 +758,14 @@ msgid "Book is empty"
 msgstr "Książka jest pusta"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterMethodDialog.java:66
+#, fuzzy
 msgid "Book reporter configuration"
-msgstr "Zarezerwuj konfigurację reportera"
+msgstr "Konfiguracja raportów z książek"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:84
+#, fuzzy
 msgid "Book reporting result"
-msgstr "Wynik raportowania książki"
+msgstr "Raportowanie wyników z książek"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:814
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:39
@@ -766,11 +775,11 @@ msgstr "Książki"
 #: org/signalml/app/view/common/components/filechooser/FileSelectPanel.java:134
 #: org/signalml/psychopy/view/panel/SelectFilePanel.java:89
 msgid "Browse"
-msgstr "Paść się"
+msgstr "Przeglądaj"
 
 #: org/signalml/app/view/common/dialogs/SplashScreen.java:319
 msgid "Build "
-msgstr "Budować"
+msgstr "Buduj "
 
 #: org/signalml/app/view/signal/export/RawExportOptionsPanel.java:203
 msgid "Byte order"
@@ -778,7 +787,7 @@ msgstr "Kolejność bajtów"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalParametersPanel.java:106
 msgid "Byte order: "
-msgstr "Kolejność bajtów:"
+msgstr "Kolejność bajtów: "
 
 #: org/signalml/app/worker/monitor/FindEEGExperimentsWorker.java:103
 msgid "CANCELLED"
@@ -789,6 +798,7 @@ msgid "CSV"
 msgstr "CSV"
 
 #: org/signalml/plugin/fftsignaltool/actions/SaveToCSV.java:51
+#, fuzzy
 msgid "CSV Files"
 msgstr "Pliki CSV"
 
@@ -798,7 +808,7 @@ msgstr "Plik CSV jest źle sformatowany. Niektóre dane mogą nie być wyświetl
 
 #: org/signalml/method/mp5/MP5LocalProcessController.java:64
 msgid "Calculating"
-msgstr "Obliczenie"
+msgstr "Obliczanie"
 
 #: org/signalml/app/video/OnlineVideoFrameInitializer.java:39
 msgid "Camera preview"
@@ -806,11 +816,11 @@ msgstr "Podgląd kamery"
 
 #: org/signalml/app/video/components/VideoStreamSelectionPanel.java:106
 msgid "Camera:"
-msgstr "Aparat fotograficzny:"
+msgstr "Kamera:"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:892
 msgid "Can only remove ONE and ZERO channels from source montage!"
-msgstr "Może usuwać tylko kanały ONE i ZERO z montażu źródłowego!"
+msgstr "Może usuwać tylko kanały JEDEN i ZERO z montażu źródłowego!"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:257
 #: org/signalml/app/view/document/opensignal/elements/ChooseExperimentPanel.java:222
@@ -823,7 +833,7 @@ msgstr "Anuluj"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:58
 msgid "Cannot compute DTF. Lag autocorrelation matrix is singular."
-msgstr "Nie można obliczyć DTF. Macierz autokorelacji opóźniającej jest liczbą pojedynczą."
+msgstr "Nie można obliczyć DTF. Macierz opóźnień autokorelacji jest osobliwa."
 
 #: org/signalml/math/iirdesigner/EllipticIIRDesigner.java:112
 msgid "Cannot design a filter with given rp and rs specifications."
@@ -831,26 +841,26 @@ msgstr "Nie można zaprojektować filtra z podanymi specyfikacjami rp i rs."
 
 #: org/signalml/app/method/ep/view/FilterParametersPanel.java:85
 msgid "Cannot design the EP filter - please correct its parameters."
-msgstr "Nie można zaprojektować filtra EP - popraw parametry."
+msgstr "Nie można zaprojektować filtra EP, proszę popraw parametry."
 
 #: org/signalml/app/view/document/monitor/ChooseVideoForMonitorRecordingPanel.java:90
 msgid "Cannot display video preview"
 msgstr "Nie można wyświetlić podglądu wideo"
 
 #: org/signalml/domain/montage/generators/BipolarReferenceMontageGenerator.java:79
-#, java-format
+#, fuzzy, java-format
 msgid "Cannot find primary channel {0}"
-msgstr "Nie można znaleźć kanału podstawowego {0}"
+msgstr "Nie można znaleźć kanału głównego ({0})"
 
 #: org/signalml/domain/montage/generators/BipolarReferenceMontageGenerator.java:86
-#, java-format
+#, fuzzy, java-format
 msgid "Cannot find reference channel {0}"
 msgstr "Nie można znaleźć kanału referencyjnego {0}"
 
 #: org/signalml/domain/montage/generators/SingleReferenceMontageGenerator.java:72
 #, java-format
 msgid "Cannot find {0} source channel for single reference montage generator"
-msgstr "Nie można znaleźć kanału źródłowego {0} dla pojedynczego generatora referencyjnego"
+msgstr "Nie można znaleźć kanału źródłowego {0} dla generatora montażu pojedynczej referencji"
 
 #: org/signalml/plugin/tool/PluginContextHelper.java:52
 msgid "Cannot get plugin package"
@@ -866,12 +876,12 @@ msgstr "Klawisz przechwytywania"
 
 #: org/signalml/app/action/tag/ChooseActiveTagAction.java:39
 msgid "Change active tag (the tag that is being edited)"
-msgstr "Zmień aktywny znacznik (tag, który jest edytowany)"
+msgstr "Zmień aktywny tag (tag, który jest edytowany)"
 
 #: org/signalml/app/view/signal/SignalView.java:1019
 #: org/signalml/app/view/book/BookView.java:418
 msgid "Change plot options"
-msgstr "Zmień opcje wydruku"
+msgstr "Zmień opcje kreślenia"
 
 #: org/signalml/app/action/montage/EditSignalMontageAction.java:36
 msgid "Change signal montage"
@@ -883,11 +893,11 @@ msgstr "Zmień parametry sygnału"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:1016
 msgid "Change the key stroke associated with this style"
-msgstr "Zmień kluczowy skok powiązany z tym stylem"
+msgstr "Zmień klawisz powiązany z tym stylem"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:613
 msgid "Changes to the raw config will be lost."
-msgstr "Zmiany w konfiguracji raw zostaną utracone."
+msgstr "Zmiany w surowej konfiguracji zostaną utracone."
 
 #: org/signalml/app/view/signal/signalselection/ChannelSignalSelectionPanel.java:96
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:63
@@ -908,7 +918,7 @@ msgstr "Liczba kanałów musi być dodatnia"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalParametersPanel.java:105
 msgid "Channel count: "
-msgstr "Liczba kanałów:"
+msgstr "Liczba kanałów: "
 
 #: org/signalml/app/view/signal/SignalView.java:1091
 msgid "Channel height"
@@ -920,11 +930,11 @@ msgstr "Wysokość kanału [px]"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:256
 msgid "Channel lines"
-msgstr "Linie kanału"
+msgstr "Linie kanałów"
 
 #: org/signalml/app/view/document/monitor/ChannelDefinitionsTable.java:258
 msgid "Channel no.: "
-msgstr "Numer kanału:"
+msgstr "Numer kanału: "
 
 #: org/signalml/method/mp5/MP5Method.java:349
 msgid "Channel progress"
@@ -933,7 +943,7 @@ msgstr "Postęp w kanale"
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:118
 #: org/signalml/app/view/signal/signalselection/ChannelSpacePanel.java:127
 msgid "Channel selection"
-msgstr "Wybór programu"
+msgstr "Wybór kanału"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:324
 msgid "Channel statistic"
@@ -945,12 +955,12 @@ msgstr "Przełączanie kanałów"
 
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:122
 msgid "Channel tag"
-msgstr "Tag kanału"
+msgstr "Tag kanałowy"
 
 #: org/signalml/domain/montage/SourceMontage.java:462
 msgid ""
 "Channel with this function are immutable - their function cannot be changed"
-msgstr ""
+msgstr "Kanał z tą funkcją jest niezmienny — ich funkcja nie może być zmieniona"
 
 #: org/signalml/app/view/document/monitor/signalchecking/CheckSignalDialog.java:122
 #: org/signalml/app/view/montage/MontageEditionPanel.java:66
@@ -971,7 +981,7 @@ msgstr "Sprawdź, czy sygnał jest w porządku"
 
 #: org/signalml/app/action/document/monitor/CheckSignalAction.java:47
 msgid "Check signal..."
-msgstr "Sprawdź sygnał ..."
+msgstr "Sprawdź sygnał..."
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:495
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:501
@@ -983,7 +993,7 @@ msgstr "Sprawdź sygnał ..."
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:531
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:534
 msgid "Choose"
-msgstr "Wybierać"
+msgstr "Wybierz"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:475
 msgid "Choose CSV file to save"
@@ -991,7 +1001,7 @@ msgstr "Wybierz plik CSV do zapisania"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:484
 msgid "Choose MP config file to save"
-msgstr "Wybierz plik konfiguracyjny MP do zapisania"
+msgstr "Wybierz plik konfiguracji MP do zapisania"
 
 #: org/signalml/app/method/mp5/MP5ExecutablePanel.java:153
 msgid "Choose MP executable file"
@@ -1003,7 +1013,7 @@ msgstr "Wybierz plik sygnału MP do zapisania"
 
 #: org/signalml/psychopy/view/panel/SelectPsychopyExperimentPanel.java:22
 msgid "Choose Psychopy procedure that will run after you click \"Ok\""
-msgstr "Wybierz procedurę Psychopy, która uruchomi się po kliknięciu \ &quot;Ok \&quot;"
+msgstr "Wybierz procedurę Psychopy, która uruchomi się po kliknięciu \"Ok\""
 
 #: org/signalml/app/view/signal/signalml/RegisterCodecStepOnePanel.java:74
 msgid "Choose XML definition file"
@@ -1016,8 +1026,9 @@ msgid "Choose a book file"
 msgstr "Wybierz plik książki"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:173
+#, fuzzy
 msgid "Choose a book file for this signal"
-msgstr "Wybierz plik księgi dla tego sygnału"
+msgstr "Wybierz plik książki dla tego sygnału"
 
 #: org/signalml/app/method/mp5/MP5ResultBookPanel.java:163
 msgid "Choose a book file to save"
@@ -1046,8 +1057,9 @@ msgstr "Wybierz wzmacniacz"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:135
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:62
+#, fuzzy
 msgid "Choose an active signal first."
-msgstr "Najpierw wybierz aktywny sygnał."
+msgstr "Wybierz najpierw aktywny sygnał."
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:480
 msgid "Choose binary file to save"
@@ -1064,7 +1076,7 @@ msgstr "Wybierz kanały do ​​uwzględnienia"
 
 #: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:96
 msgid "Choose class path"
-msgstr "Wybierz ścieżkę zajęć"
+msgstr "Wybierz ścieżkę klas"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:527
 msgid "Choose class path directories"
@@ -1091,15 +1103,15 @@ msgstr "Wybierz tag eksperta"
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:518
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:519
 msgid "Choose file to save to"
-msgstr "Wybierz plik, który chcesz zapisać"
+msgstr "Wybierz plik, do którego chcesz zapisać"
 
 #: org/signalml/app/view/document/monitor/ChooseFilesForMonitorRecordingPanel.java:85
 msgid "Choose files to which signal and tags will be recorded."
-msgstr "Wybierz pliki, do których będzie rejestrowany sygnał i tagi."
+msgstr "Wybierz pliki, do których będą zapisywane sygnał i tagi."
 
 #: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:118
 msgid "Choose fully qualified filter class name"
-msgstr "Wybierz pełną nazwę klasy filtra"
+msgstr "Wybierz w pełni kwalifikowaną nazwę klasy filtra"
 
 #: org/signalml/app/view/montage/MontageGeneratorPanel.java:165
 msgid "Choose generator"
@@ -1115,7 +1127,7 @@ msgstr "Wybierz limity"
 
 #: org/signalml/app/view/common/components/filechooser/EmbeddedFileChooserFavorites.java:383
 msgid "Choose location"
-msgstr "Wybierz lokacje"
+msgstr "Wybierz lokalizację"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1258
 msgid "Choose montage"
@@ -1123,7 +1135,7 @@ msgstr "Wybierz montaż"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1211
 msgid "Choose montage to save"
-msgstr "Wybierz montaż, aby zapisać"
+msgstr "Wybierz montaż do zapisania"
 
 #: org/signalml/app/view/tag/NewTagDialog.java:90
 #: org/signalml/app/view/tag/NewTagPanel.java:123
@@ -1148,7 +1160,7 @@ msgstr "Wybierz dokumenty znaczników (2 wymagane)"
 
 #: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:54
 msgid "Choose tag file"
-msgstr "Wybierz plik znacznika"
+msgstr "Wybierz plik znacznika (tag)"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:96
 msgid "Choose tag types"
@@ -1181,7 +1193,7 @@ msgstr "Wybierz katalog roboczy"
 #: org/signalml/app/method/mp5/MP5ResultBookPanel.java:161
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:167
 msgid "Choose..."
-msgstr "Wybierać..."
+msgstr "Wybierz..."
 
 #: org/signalml/app/view/book/BookPlot.java:1166
 msgid "Chosen"
@@ -1189,11 +1201,11 @@ msgstr "Wybrany"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:237
 msgid "Clamp values"
-msgstr "Wartości zaciskania"
+msgstr "Przycinaj wartości"
 
 #: org/signalml/app/view/workspace/ViewerConsolePane.java:208
 msgid "Clear"
-msgstr "Jasny"
+msgstr "Wyczyść"
 
 #: org/signalml/app/view/document/opensignal/elements/ChannelSelectPanel.java:119
 #: org/signalml/app/view/common/components/panels/AbstractSelectionPanel.java:104
@@ -1203,7 +1215,7 @@ msgstr "Wyczyść wszystko"
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:479
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:481
 msgid "Clear filter"
-msgstr "Czysty filtr"
+msgstr "Wyczyść filtr"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:931
 msgid "Clear montage"
@@ -1222,7 +1234,7 @@ msgstr "Kliknij, aby zobaczyć błędy"
 #: org/signalml/app/view/common/dialogs/OptionPane.java:73
 #: org/signalml/app/action/document/CloseDocumentAction.java:32
 msgid "Close"
-msgstr "Blisko"
+msgstr "Zamknij"
 
 #: org/signalml/app/action/tag/CloseTagAction.java:36
 msgid "Close Tag"
@@ -1238,7 +1250,7 @@ msgstr "Zamknij aktywny dokument"
 
 #: org/signalml/app/action/components/CloseWindowAction.java:31
 msgid "Close the window and exit the aplication"
-msgstr "Zamknij okno i zamknij aplikację"
+msgstr "Zamknij okno i zakończ aplikację"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:58
 msgid "Code files (*.java, *.class)"
@@ -1259,15 +1271,15 @@ msgstr "Wartości rozdzielane przecinkami (* .csv)"
 
 #: org/signalml/domain/montage/generators/CommonAverageMontageGenerator.java:32
 msgid "Common average montage"
-msgstr "Częsty średni montaż"
+msgstr "Montaż \"common average\""
 
 #: org/signalml/app/document/ManagedDocumentType.java:40
 msgid "Common signal files (*.d, *.edf, *.raw, *.bin, *.csv, *.txt)"
-msgstr "Popularne pliki sygnatur (* .d, * .edf, * .raw, * .bin, * .csv, * .txt)"
+msgstr "Popularne formaty sygnałów (* .d, * .edf, * .raw, * .bin, * .csv, * .txt)"
 
 #: org/signalml/app/model/montage/MontageGeneratorListModel.java:25
 msgid "Common user defined"
-msgstr "Wspólny użytkownik zdefiniowany"
+msgstr "Definiowane przez użytkownika"
 
 #: org/signalml/app/view/signal/SignalPlotColumnHeader.java:675
 msgid "Compact mode"
@@ -1329,7 +1341,7 @@ msgstr "Skonfiguruj książkę do oznaczenia"
 
 #: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:56
 msgid "Configure local executor"
-msgstr "Skonfiguruj lokalnego executora"
+msgstr "Skonfiguruj lokalny plik wykonywalny"
 
 #: org/signalml/app/method/example/ExampleMethodDialog.java:87
 #: org/signalml/app/method/example/ExampleMethodDialog.java:106
@@ -1338,7 +1350,7 @@ msgstr "Skonfiguruj wyszukiwanie"
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:268
 msgid "Configure selected MP executor"
-msgstr "Skonfiguruj wybranego executora MP"
+msgstr "Skonfiguruj wybrany plik wykonywalny MP"
 
 #: org/signalml/app/view/signal/SlaveSignalPlotCorner.java:96
 msgid "Configure signal plot"
@@ -1354,7 +1366,7 @@ msgstr "Łączenie z eksperymentem"
 
 #: org/signalml/app/view/document/opensignal/elements/ChooseExperimentPanel.java:84
 msgid "Connection log"
-msgstr "Dziennik połączeń"
+msgstr "Log połączenia"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:845
 msgid "Console"
@@ -1388,15 +1400,15 @@ msgstr "Skopiuj do schowka"
 
 #: org/signalml/app/worker/monitor/DisconnectFromExperimentWorker.java:81
 msgid "Could not kill this experiment in openBCI (error code: %s)"
-msgstr "Nie można zabić tego eksperymentu w openBCI (kod błędu: %s)"
+msgstr "Nie można zabić tego eksperymentu w openBCI (kod błędu: %s )"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:214
 msgid "Could not read contents of CSV signal file!"
-msgstr "Nie można odczytać zawartości pliku z sygnaturą CSV!"
+msgstr "Nie można odczytać zawartości pliku z sygnałem CSV!"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:75
 msgid "Create"
-msgstr "Stwórz"
+msgstr "Utwórz"
 
 #: org/signalml/app/action/tag/NewTagAction.java:47
 msgid "Create a new tag for this signal"
@@ -1404,11 +1416,11 @@ msgstr "Utwórz nowy znacznik dla tego sygnału"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:181
 msgid "Create block tags"
-msgstr "Utwórz tagi bloków"
+msgstr "Utwórz tagi blokowe"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:188
 msgid "Create channel tags"
-msgstr "Utwórz tagi kanału"
+msgstr "Utwórz tagi kanałowe"
 
 #: org/signalml/app/view/signal/MasterSignalPlotCorner.java:48
 msgid "Create new signal plot"
@@ -1416,11 +1428,11 @@ msgstr "Utwórz nowy wykres sygnału"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:174
 msgid "Create page tags"
-msgstr "Utwórz tagi stron"
+msgstr "Utwórz tagi stronowe"
 
 #: org/signalml/app/model/components/TaskTableModel.java:99
 msgid "Created"
-msgstr "Stworzony"
+msgstr "Utworzony"
 
 #: org/signalml/method/mp5/MP5Method.java:109
 msgid "Creating files"
@@ -1432,7 +1444,7 @@ msgstr "Tworzenie interfejsu"
 
 #: org/signalml/app/SvarogApplication.java:720
 msgid "Creating main window"
-msgstr "Tworzenie głównego okna"
+msgstr "Tworzenie okna głównego"
 
 #: org/signalml/method/mp5/MP5Method.java:353
 msgid "Current atom matching progress"
@@ -1452,13 +1464,14 @@ msgstr "Aktualne style"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:288
 msgid "Custom"
-msgstr "Zwyczaj"
+msgstr "Niestandardowy"
 
 #: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:77
 msgid "Custom atom filter"
 msgstr "Niestandardowy filtr atomów"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfDialog.java:24
+#, fuzzy
 msgid "DTF results"
 msgstr "Wyniki DTF"
 
@@ -1484,11 +1497,11 @@ msgstr "Domyślne linie kanałów"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:324
 msgid "Default clamp values"
-msgstr "Domyślne wartości zacisków"
+msgstr "Domyślnie przycinaj wartości"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:338
 msgid "Default draw offscreen channels"
-msgstr "Domyślne kanały poza ekranem"
+msgstr "Domyślnie rysuj kanały poza ekranem"
 
 #: org/signalml/app/action/montage/ApplyDefaultMontageAction.java:32
 msgid "Default montage"
@@ -1496,7 +1509,7 @@ msgstr "Domyślny montaż"
 
 #: org/signalml/app/view/document/monitor/ChannelDefinitionsTable.java:264
 msgid "Default name: "
-msgstr "Domyślna nazwa:"
+msgstr "Domyślna nazwa: "
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:345
 msgid "Default optimize signal displaying"
@@ -1504,7 +1517,7 @@ msgstr "Domyślna optymalizacja wyświetlania sygnału"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:373
 msgid "Default page lines"
-msgstr "Domyślne linie strony"
+msgstr "Domyślne linie stron"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:246
 msgid "Default signal XOR"
@@ -1520,25 +1533,27 @@ msgstr "Domyślny tryb malowania tagów"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:359
 msgid "Default tag tool tips"
-msgstr "Domyślne porady na temat tagów"
+msgstr "Domyślne podpowiedzi na temat tagów"
 
 #: org/signalml/domain/book/filter/DelegatingAtomFilter.java:183
 msgid "Delegating atom filter"
-msgstr "Delegowanie filtra atomowego"
+msgstr "Delegowanie filtra atomów"
 
 #: org/signalml/method/example/ExampleMethod.java:151
 msgid "Deliberating"
 msgstr "Rozmyślanie"
 
 #: org/signalml/plugin/fftsignaltool/actions/SaveToCSV.java:64
+#, fuzzy
 msgid "Delimiter selection"
-msgstr "Wybór separatora"
+msgstr "Wybór ograniczenia"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:113
 msgid "Delta waves"
 msgstr "Fale delta"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/DescribeComponentsAction.java:24
+#, fuzzy
 msgid "Describe components"
 msgstr "Opisz składniki"
 
@@ -1568,7 +1583,7 @@ msgstr "Typ słownika"
 msgid ""
 "Did not receive any samples in {0} seconds, maybe the experiment is down?\n"
 "Do you wish to wait some more? Press No to disconnect from the experiment."
-msgstr ""
+msgstr "Nie otrzymałem żadnych próbek w ciągu {0} sekund, może eksperyment nie działa?\nCzy chcesz poczekać trochę dłużej? Naciśnij Nie, aby rozłączyć się z eksperymentem."
 
 #: org/signalml/method/mp5/MP5AtomType.java:17
 msgid "Dirac"
@@ -1582,25 +1597,25 @@ msgstr "Directed Transfer Function"
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1028
 #, java-format
 msgid "Directory [{0}] not accessible."
-msgstr "Katalog [{0}] jest niedostępny."
+msgstr "Folder [{0}] jest niedostępny."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:993
 #, java-format
 msgid "Directory [{0}] not found or inaccessible."
-msgstr "Katalog [{0}] nie został znaleziony lub jest niedostępny."
+msgstr "Folder [{0}] nie został znaleziony lub jest niedostępny."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:310
 #, java-format
 msgid "Directory [{0}] not found. Create?"
-msgstr "Katalog [{0}] nie został odnaleziony. Stwórz?"
+msgstr "Folder [{0}] nie został odnaleziony. Uworzyć?"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1022
 msgid "Directory not accessible."
-msgstr "Katalog niedostępny."
+msgstr "Folder niedostępny."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:72
 msgid "Discard"
-msgstr "Odrzucać"
+msgstr "Odrzuć"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:505
 msgid "Discard edit"
@@ -1641,7 +1656,7 @@ msgstr "Dokumenty"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:268
 msgid "Does not draw all of the signal samples"
-msgstr "Nie pobiera wszystkich próbek sygnału"
+msgstr "Nie rysuje wszystkich próbek sygnału"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:818
 msgid "Don't resume"
@@ -1657,7 +1672,7 @@ msgstr "Narysuj odpowiedzi filtra"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:241
 msgid "Draw offscreen channels"
-msgstr "Rysuj poza ekranem kanały"
+msgstr "Rysuj kanały poza ekranem"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:293
 msgid "Drop target channels here to delete them"
@@ -1666,7 +1681,7 @@ msgstr "Upuść tutaj docelowe kanały, aby je usunąć"
 #: org/signalml/plugin/impl/PluginAccessClass.java:88
 #, java-format
 msgid "Duplicate plugin auth! ({0})"
-msgstr "Duplicate auth plugin! ({0})"
+msgstr "Duplicate plugin auth! ({0})"
 
 #: org/signalml/domain/montage/system/ChannelFunction.java:26
 msgid "ECG"
@@ -1698,7 +1713,7 @@ msgstr "EEGLab"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:50
 msgid "EEGLab datasets (*.set)"
-msgstr "Zbiory danych EEGLab (* .set)"
+msgstr "Pliki w formacie EEGLab (* .set)"
 
 #: org/signalml/domain/montage/system/ChannelFunction.java:27
 msgid "EMG"
@@ -1706,15 +1721,15 @@ msgstr "EMG"
 
 #: org/signalml/domain/montage/system/ChannelFunction.java:22
 msgid "EOG (left)"
-msgstr "EOG (po lewej)"
+msgstr "EOG (lewy)"
 
 #: org/signalml/domain/montage/system/ChannelFunction.java:23
 msgid "EOG (right)"
-msgstr "EOG (po prawej)"
+msgstr "EOG (prawy)"
 
 #: org/signalml/app/method/ep/view/FilterPanel.java:20
 msgid "EP averaging result filtering"
-msgstr "EP uśredniające filtrowanie wyników"
+msgstr "Filtrowanie wyników uśredniania potencjałów"
 
 #: org/signalml/app/method/ep/EvokedPotentialMethodDialog.java:69
 msgid "ERP settings"
@@ -1728,11 +1743,11 @@ msgstr "BŁĄD"
 msgid ""
 "ERROR - there was an error while parsing experiment data! (Bad message "
 "format?)\n"
-msgstr ""
+msgstr "BŁĄD — wystąpił błąd podczas analizowania danych eksperymentu! (Zły format wiadomości?)\n"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:611
 msgid "Edit"
-msgstr "Edytować"
+msgstr "Edycja"
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:121
 msgid "Edit FFT sample filter"
@@ -1784,7 +1799,7 @@ msgstr "Edytuj zmodyfikowany montaż"
 
 #: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:277
 msgid "Edit montage for this plot"
-msgstr "Edytuj montaż tego wykresu"
+msgstr "Edytuj montaż dla tego wykresu"
 
 #: org/signalml/app/action/workspace/EditPreferencesAction.java:33
 msgid "Edit preferences"
@@ -1797,7 +1812,7 @@ msgstr "Edytuj surową konfigurację"
 #: org/signalml/app/view/montage/MatrixReferenceEditorPanel.java:73
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:116
 msgid "Edit reference"
-msgstr "Edytuj odniesienie"
+msgstr "Edytuj referencję"
 
 #: org/signalml/app/action/tag/EditTagAnnotationAction.java:36
 msgid "Edit tag annotation (Ctrl-A)"
@@ -1815,15 +1830,15 @@ msgstr "Edytuj szablony stylów tagów"
 
 #: org/signalml/app/action/tag/EditTagStylesAction.java:38
 msgid "Edit tag styles"
-msgstr "Edytuj style znaczników"
+msgstr "Edytuj style znaczników (tagów)"
 
 #: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:105
 msgid "Edit time domain filter"
-msgstr "Edytuj filtr domeny czasu"
+msgstr "Edytuj filtr w domenie czasu"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:497
 msgid "Edit..."
-msgstr "Edytować..."
+msgstr "Edytuj..."
 
 #: org/signalml/app/model/montage/MontageFiltersTableModel.java:84
 msgid "Effect"
@@ -1863,11 +1878,11 @@ msgstr "Włączone"
 
 #: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:66
 msgid "Energy error"
-msgstr "Błąd energetyczny"
+msgstr "Błąd energii"
 
 #: org/signalml/app/method/mp5/MP5DictionaryDensityConfigPanel.java:67
 msgid "Energy error percentage chosen [%]"
-msgstr "Wybrany procent błędu energetycznego [%]"
+msgstr "Wybrany procent błędu energii [%]"
 
 #: org/signalml/app/method/mp5/MP5StoppingCriteriaConfigPanel.java:63
 msgid "Energy percent"
@@ -1875,7 +1890,7 @@ msgstr "Procent energii"
 
 #: org/signalml/app/model/montage/ReferenceTableModel.java:182
 msgid "Enter valid floating point number."
-msgstr "Wprowadź poprawny numer zmiennoprzecinkowy."
+msgstr "Wprowadź poprawną liczbę zmiennoprzecinkową."
 
 #: org/signalml/app/view/tag/TagEraserToggleButton.java:29
 #: org/signalml/app/view/tag/TagEraserMenuItem.java:26
@@ -1911,19 +1926,22 @@ msgstr "Błąd podczas inicjowania kroku"
 
 #: org/signalml/app/video/OnlineVideoFrame.java:60
 msgid "Error initializing video preview"
-msgstr "Błąd podczas inicjowania podglądu wideo"
+msgstr "Błąd inicjalizacji podglądu wideo"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:170
+#, fuzzy
 msgid "Error processing tags"
-msgstr "Błąd przetwarzania znaczników"
+msgstr "Błąd przetwarzania tagów"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:148
+#, fuzzy
 msgid "Error saving image"
-msgstr "Błąd podczas zapisywania obrazu"
+msgstr "Błąd zapisu obrazu"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:167
+#, fuzzy
 msgid "Error saving tags"
-msgstr "Błąd podczas zapisywania tagów"
+msgstr "Błąd zapisu tagów"
 
 #: org/signalml/app/view/common/dialogs/errors/AbstractErrorsDialog.java:77
 #: org/signalml/app/view/common/dialogs/OptionPane.java:66
@@ -1934,6 +1952,7 @@ msgstr "Błąd!"
 #: pl/edu/fuw/fid/signalanalysis/ica/ZeroMethodAction.java:114
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:137
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:139
+#, fuzzy
 msgid "Error: "
 msgstr "Błąd:"
 
@@ -1943,11 +1962,11 @@ msgstr "Błędy w danych"
 
 #: org/signalml/app/method/ep/EvokedPotentialMethodDialog.java:58
 msgid "Evoked potential averaging configuration"
-msgstr "Wywoływana potencjalna konfiguracja uśredniająca"
+msgstr "Konfiguracja uśredniania potencjałów wywołanych"
 
 #: org/signalml/app/method/ep/EvokedPotentialResultDialog.java:71
 msgid "Evoked potential averaging result"
-msgstr "Wywołany wynik uśredniania"
+msgstr "Wynik uśredniania potencjałów"
 
 #: org/signalml/exception/ResolvableException.java:85
 #, java-format
@@ -1968,11 +1987,11 @@ msgstr "Pliki wykonywalne (* .exe)"
 
 #: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:70
 msgid "Executor name"
-msgstr "Nazwa executora"
+msgstr "Nazwa pliki wykonywalnego"
 
 #: org/signalml/method/mp5/MP5Method.java:332
 msgid "Executor not found"
-msgstr "Executor nie został znaleziony"
+msgstr "Plik wykonywalny nie został znaleziony"
 
 #: org/signalml/app/action/components/CloseWindowAction.java:29
 msgid "Exit"
@@ -1981,7 +2000,7 @@ msgstr "Wyjście"
 #: org/signalml/app/view/common/dialogs/TaskStatusDialog.java:836
 #, java-format
 msgid "Expected to end in {0}:{1} min:sec"
-msgstr "Oczekiwano końca w {0}: {1} min: sek"
+msgstr "Oczekiwany koniec w {0}:{1} min:sek"
 
 #: org/signalml/app/model/document/opensignal/elements/ChooseExperimentTableModel.java:97
 msgid "Experiment"
@@ -1999,11 +2018,12 @@ msgstr "Eksport"
 
 #: org/signalml/app/action/book/ExportBookAction.java:45
 msgid "Export Book..."
-msgstr "Eksportuj książkę ..."
+msgstr "Eksportuj książkę..."
 
 #: org/signalml/plugin/fftsignaltool/actions/SaveToCSV.java:36
+#, fuzzy
 msgid "Export FFT to CSV"
-msgstr "Eksportuj FFT do CSV"
+msgstr "Eksportowanie FFT do CSV"
 
 #: org/signalml/app/action/signal/ExportSignalAction.java:75
 msgid "Export Signal"
@@ -2015,15 +2035,17 @@ msgstr "Eksportuj książkę"
 
 #: org/signalml/app/action/book/ExportBookAction.java:46
 msgid "Export book to file"
-msgstr "Eksportuj książkę do pliku"
+msgstr "Eksportowanie książki do pliku"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterChartExportDialog.java:91
+#, fuzzy
 msgid "Export chart as PNG"
 msgstr "Eksportuj wykres jako PNG"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:87
+#, fuzzy
 msgid "Export diagram as PNG"
-msgstr "Wyeksportuj diagram jako PNG"
+msgstr "Eksportuj diagram jako PNG"
 
 #: org/signalml/app/view/signal/export/ExportFormatPanel.java:69
 msgid "Export format"
@@ -2043,11 +2065,11 @@ msgstr "Opcje eksportu"
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:785
 msgid "Export preset to file..."
-msgstr "Eksportuj gotowe ustawienie do pliku ..."
+msgstr "Eksportuj gotowe ustawienie (preset) do pliku ..."
 
 #: org/signalml/app/view/signal/export/ExportSignalDialog.java:78
 msgid "Export signal"
-msgstr "Sygnał eksportu"
+msgstr "Eksportuj sygnał"
 
 #: org/signalml/app/action/signal/ExportSignalAction.java:76
 msgid "Export signal to simple binary, ASCII or EEGLab format"
@@ -2056,11 +2078,11 @@ msgstr "Eksportuj sygnał do prostego formatu binarnego, ASCII lub EEGLab"
 #: org/signalml/app/view/signal/export/EEGLabExportOptionsPanel.java:54
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:94
 msgid "Export tags"
-msgstr "Eksportuj tagi"
+msgstr "Eksportuj znaczniki (tagi)"
 
 #: org/signalml/app/action/tag/ExportEEGLabTagAction.java:30
 msgid "Export tags to EEGLab events ASCII file format"
-msgstr "Eksportuj znaczniki do pliku EEGLab w formacie ASCII"
+msgstr "Eksportuj znaczniki do pliku zdarzeń EEGLab w formacie ASCII"
 
 #: org/signalml/app/action/tag/ExportEEGLabTagAction.java:29
 msgid "Export to EEGLab..."
@@ -2098,11 +2120,11 @@ msgstr "FP"
 
 #: org/signalml/app/view/signal/roc/RocTableModel.java:79
 msgid "FP rate"
-msgstr "Wskaźnik FP"
+msgstr "Stosunek FP"
 
 #: org/signalml/app/video/components/OnlineMediaPlayerComponent.java:72
 msgid "Failed due to error in VLC preview"
-msgstr "Błąd z powodu błędu w podglądzie VLC"
+msgstr "Nieudane z powodu błędu w podglądzie VLC"
 
 #: org/signalml/domain/montage/SourceMontage.java:109
 msgid "Failed to build default source montage"
@@ -2111,12 +2133,12 @@ msgstr "Nie można zbudować domyślnego montażu źródła"
 #: org/signalml/app/action/document/RegisterCodecAction.java:108
 #, java-format
 msgid "Failed to compile file {0}: {1}"
-msgstr "Nie można skompilować pliku {0}: {1}"
+msgstr "Nie udało się skompilować pliku {0}: {1}"
 
 #: org/signalml/app/view/signal/signalml/RegisterCodecDialog.java:171
 #: org/signalml/app/action/document/RegisterCodecAction.java:151
 msgid "Failed to compile the codec"
-msgstr "Nie można skompilować kodeka"
+msgstr "Nie udało się skompilować kodeka"
 
 #: org/signalml/compilation/janino/JaninoDynamicCompiler.java:50
 #, java-format
@@ -2134,7 +2156,7 @@ msgstr "Nie udało się utworzyć katalogu."
 
 #: org/signalml/method/mp5/MP5Method.java:312
 msgid "Failed to create working dir"
-msgstr "Nie udało się utworzyć działającego reż"
+msgstr "Nie udało się utworzyć katalogu roboczego"
 
 #: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:423
 #: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:282
@@ -2151,7 +2173,7 @@ msgstr "Nie udało się wczytać klasy, zwrócono wartość null"
 
 #: org/signalml/compilation/janino/JaninoDynamicCompiler.java:104
 msgid "Failed to parse URL"
-msgstr "Nie można przeanalizować adresu URL"
+msgstr "Nie można wczytać adresu URL"
 
 #: org/signalml/app/view/signal/signalml/RegisterCodecDialog.java:168
 msgid "Failed to read file"
@@ -2163,16 +2185,16 @@ msgstr "Nie udało się uruchomić podglądu wideo"
 
 #: org/signalml/app/action/document/monitor/StartMonitorRecordingAction.java:78
 msgid "Failed to start video recording"
-msgstr "Nie można rozpocząć nagrywania wideo"
+msgstr "Nie udało się rozpocząć nagrywania wideo"
 
 #: org/signalml/domain/signal/raw/RawSignalDescriptorWriter.java:286
 #: org/signalml/domain/signal/raw/RawSignalDescriptorWriter.java:288
 msgid "Failed to write xml"
-msgstr "Nie udało się napisać xml"
+msgstr "Nie udało się zapisać xml"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:183
 msgid "False positive rate"
-msgstr "Fałszywa stopa pozytywna"
+msgstr "False Positive Rate (FPR)"
 
 #: org/signalml/app/view/common/components/filechooser/EmbeddedFileChooserFavorites.java:352
 msgid "Favorites"
@@ -2215,17 +2237,17 @@ msgstr "Typ pliku"
 #: org/signalml/app/view/common/dialogs/OptionPane.java:782
 #, java-format
 msgid "File {0} already exists. Overwrite?"
-msgstr "Plik {0} już istnieje. Przepisać?"
+msgstr "Plik {0} już istnieje. Zastąpić?"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:242
 msgid "Fill style"
-msgstr "Wypełnij styl"
+msgstr "Styl wypełnienia"
 
 #: org/signalml/app/document/BookDocument.java:200
 #, java-format
 msgid ""
 "Filter [{0}] failed to initialize with message [{1}] and has been disabled."
-msgstr ""
+msgstr "Nie udało się zaincjalizować filtra [{0}] bo [{1}] i filtr został wyłączony."
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:189
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:156
@@ -2235,15 +2257,15 @@ msgstr "Opis filtra"
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:603
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:552
 msgid "Filter description must not contain control characters"
-msgstr "Opis filtru nie może zawierać znaków kontrolnych"
+msgstr "Opis filtra nie może zawierać znaków kontrolnych"
 
 #: org/signalml/app/view/montage/filters/charts/FFTFilterResponseChartGroupPanel.java:170
 msgid "Filter design graph"
-msgstr "Filtrowanie wykresu projektu"
+msgstr "Wykres projektowania filtru"
 
 #: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:261
 msgid "Filter design graphs"
-msgstr "Filtruj wykresy projektowe"
+msgstr "Wykresy projektowania filtru"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:377
 msgid "Filter enable table"
@@ -2251,11 +2273,11 @@ msgstr "Tabela włączania filtrów"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:158
 msgid "Filter family"
-msgstr "Filtruj rodzinę"
+msgstr "Rodzina filtrów"
 
 #: org/signalml/app/view/montage/filters/charts/elements/TimeDomainFilterFrequencyResponseChartPanel.java:30
 msgid "Filter frequency response [decibels]"
-msgstr "Filtruj odpowiedź częstotliwościową [decybele]"
+msgstr "Odpowiedź częstościowa filtru [decybele]"
 
 #: org/signalml/app/view/book/filter/BookFilterTablePanel.java:97
 msgid "Filter list"
@@ -2273,11 +2295,11 @@ msgstr "Nazwa filtru nie może zawierać znaków kontrolnych"
 #: org/signalml/math/iirdesigner/EllipticIIRDesigner.java:274
 #: org/signalml/math/iirdesigner/ChebyshevIIRDesigner.java:50
 msgid "Filter order is zero - check the input parameters!"
-msgstr "Kolejność filtrowania wynosi zero - sprawdź parametry wejściowe!"
+msgstr "Rząd filtra wynosi zero — sprawdź parametry wejściowe!"
 
 #: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:120
 msgid "Filter parameters"
-msgstr "Filtruj parametry"
+msgstr "Parametry filtra"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:157
 msgid "Filter type"
@@ -2285,7 +2307,7 @@ msgstr "Typ filtra"
 
 #: org/signalml/app/view/signal/export/SignalSourceLevelPanel.java:134
 msgid "Filtered signal"
-msgstr "Filtrowany sygnał"
+msgstr "Sygnał przefiltrowany"
 
 #: org/signalml/app/action/signal/SignalFilterSwitchAction.java:31
 #: org/signalml/app/action/book/BookFilterSwitchAction.java:31
@@ -2303,7 +2325,7 @@ msgstr "Filtrowanie jest włączone dla wykresu głównego"
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:398
 #: org/signalml/app/view/book/filter/BookFilterDialog.java:98
 msgid "Filtering master switch"
-msgstr "Filtrowanie głównego przełącznika"
+msgstr "Główny przełącznik filtrowania"
 
 #: org/signalml/app/view/montage/SignalMontagePanel.java:119
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:320
@@ -2312,7 +2334,7 @@ msgstr "Filtry"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:419
 msgid "Filtfilt filtering switch"
-msgstr "Przełącznik filtrowania Filtfilt"
+msgstr "Przełącznik filtrowania filtfilt"
 
 #: org/signalml/app/method/example/ExampleMethodDescriptor.java:24
 msgid "Find the meaning of life"
@@ -2320,11 +2342,11 @@ msgstr "Znajdź sens życia"
 
 #: org/signalml/app/worker/signal/FindSignalSlopesWorker.java:36
 msgid "Finding trigger activating slopes."
-msgstr "Znajdowanie skłonów aktywujących wyzwalacza."
+msgstr "Znajdowanie skoków aktywujących wyzwalacz (tryger)."
 
 #: org/signalml/app/view/common/dialogs/AbstractWizardDialog.java:186
 msgid "Finish"
-msgstr "koniec"
+msgstr "Koniec"
 
 #: org/signalml/method/ep/EvokedPotentialMethod.java:110
 #: org/signalml/method/mp5/MP5Method.java:266
@@ -2334,7 +2356,7 @@ msgstr "Skończone"
 
 #: org/signalml/app/view/workspace/ViewerMainFrame.java:148
 msgid "Finishing"
-msgstr "Wykończeniowy"
+msgstr "Kończę"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonDialog.java:113
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:241
@@ -2361,33 +2383,33 @@ msgstr "Dla wszystkich tagów"
 msgid ""
 "For band-pass filters the frequencies must fulfill: stopband frequency 1 < "
 "passband frequency 1 < passband frequency 2 < stopband frequency 2."
-msgstr ""
+msgstr "W przypadku filtrów pasmowoprzepustowych częstości muszą spełniać: częstość pasma zatrzymania 1 < częstość pasma przenoszenia 1 < częstość pasma przenoszenia 2 < częstość pasma zatrzymania 2."
 
 #: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:176
 msgid ""
 "For band-stop filters the frequencies must fulfill: passband frequency 1 < "
 "stopband frequency 1 < stopband frequency 2 < passband frequency 2."
-msgstr ""
+msgstr "W przypadku filtrów pasmowo zaporowych częstości muszą spełniać: częstość pasma przepustowego 1 < częstość pasma zatrzymania 1 < częstość pasma zatrzymania 2 < częstość pasma przepustowego 2."
 
 #: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:124
 msgid ""
 "For high-pass filters the frequencies must fulfill: stopband frequency 1 < "
 "passband frequency 1."
-msgstr ""
+msgstr "W przypadku filtrów górnoprzepustowych częstości muszą spełniać: częstość pasma zatrzymania 1 < częstość pasma przepustowego 1."
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:761
 msgid "For logarithmic scale for Y axis min cannot be equal to 0."
-msgstr "Dla skali logarytmicznej dla osi Y min. Nie może być równe 0."
+msgstr "Dla skali logarytmicznej dla osi Y minimum nie może być równe 0."
 
 #: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:140
 msgid ""
 "For low-pass filters the frequencies must fulfill: passband frequency 1 < "
 "stopband frequency 1."
-msgstr ""
+msgstr "W przypadku filtrów dolnoprzepustowych częstości muszą spełniać: częstość pasma przepustowego 1 < częstotliwość pasma zatrzymania 1."
 
 #: org/signalml/app/view/signal/signalml/RegisterCodecStepTwoPanel.java:88
 msgid "Format name"
-msgstr "Formatuj nazwę"
+msgstr "Nazwa formatu"
 
 #: org/signalml/app/view/signal/signalml/RegisterCodecDialog.java:177
 msgid "Format name must be set"
@@ -2399,40 +2421,41 @@ msgstr "Nazwa formatu nie może zawierać znaków kontrolnych"
 
 #: org/signalml/app/view/signal/signalselection/SignalSelectionTypePanel.java:130
 msgid "Free (channel) selection"
-msgstr "Darmowy wybór (kanał)"
+msgstr "Dowolny wybór (kanałów)"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:445
 msgid "Freq. lables"
-msgstr "Freq. lables"
+msgstr "Oznaczenia częstości"
 
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:100
 #: org/signalml/app/view/book/BookZoomSettingsPanel.java:141
 #: org/signalml/app/view/book/AtomTableModel.java:143
 #: org/signalml/app/view/book/BookPlot.java:1316
 msgid "Frequency"
-msgstr "Częstotliwość"
+msgstr "Częstość"
 
 #: org/signalml/app/view/montage/filters/charts/elements/GroupDelayResponseChartPanel.java:31
 #: org/signalml/app/view/montage/filters/charts/elements/FrequencyResponseChartPanel.java:41
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:123
 msgid "Frequency [Hz]"
-msgstr "Częstotliwość [Hz]"
+msgstr "Częstość [Hz]"
 
 #: org/signalml/app/model/montage/FFTSampleFilterTableModel.java:66
 msgid "Frequency range [Hz]"
-msgstr "Zakres częstotliwości [Hz]"
+msgstr "Zakres częstości [Hz]"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfFrequencyRangePanel.java:35
+#, fuzzy
 msgid "Frequency range [Hz]:"
-msgstr "Zakres częstotliwości [Hz]:"
+msgstr "Zakres częstości [Hz]:"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:775
 msgid "Frequency range end: positive integer required"
-msgstr "Koniec zakresu częstotliwości: wymagana liczba całkowita dodatnia"
+msgstr "Koniec zakresu częstości: wymagana liczba całkowita dodatnia"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:767
 msgid "Frequency range start: positive integer required"
-msgstr "Początek zakresu częstotliwości: wymagana jest dodatnia liczba całkowita"
+msgstr "Początek zakresu częstości: wymagana jest dodatnia liczba całkowita"
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:309
 msgid "From (incl.) [Hz]"
@@ -2444,7 +2467,7 @@ msgstr "Wymagana jest w pełni kwalifikowana nazwa klasy"
 
 #: org/signalml/app/model/montage/SourceMontageTableModel.java:133
 msgid "Function"
-msgstr "Funkcjonować"
+msgstr "Funkcja"
 
 #: org/signalml/method/mp5/MP5AtomType.java:20
 msgid "Gabor"
@@ -2452,17 +2475,17 @@ msgstr "Gabor"
 
 #: org/signalml/app/view/document/monitor/ChannelDefinitionsTable.java:260
 msgid "Gain: "
-msgstr "Zdobyć:"
+msgstr "Wzmocnienie: "
 
 #: org/signalml/method/mp5/MP5AtomType.java:18
 msgid "Gauss"
-msgstr "Gaus"
+msgstr "Gauss"
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:173
 #: org/signalml/app/view/preferences/TaggingConfigPanel.java:77
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:505
 msgid "General"
-msgstr "Generał"
+msgstr "Ogólny"
 
 #: org/signalml/app/view/montage/MontageGeneratorPanel.java:525
 msgid "Generate again"
@@ -2496,7 +2519,7 @@ msgstr "Otrzymano błąd żądania od serwera (kod: {0})"
 #: org/signalml/app/worker/monitor/Helper.java:165
 #, java-format
 msgid "Got unexpected response from the server: {0},{1}"
-msgstr "Otrzymano nieoczekiwaną odpowiedź z serwera: {0}, {1}"
+msgstr "Otrzymano nieoczekiwaną odpowiedź z serwera: {0},{1}"
 
 #: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:98
 msgid "Graphical comparison"
@@ -2517,11 +2540,11 @@ msgstr "Opóźnienie grupowe [próbki]"
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:74
 msgid ""
 "HQ(order) = log(det(V)) + 2 × log(log(samples)) × order × channels² / samples"
-msgstr ""
+msgstr "HQ(rząd) = log (det (V)) + 2 × log(log (sample)) × order × channels² / samples"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/HaarWavelet.java:27
 msgid "Haar"
-msgstr "Zimna mgła morska"
+msgstr "Haar"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:74
 msgid "Hannan-Quin"
@@ -2529,11 +2552,11 @@ msgstr "Hannan-Quin"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:735
 msgid "Help"
-msgstr "Wsparcie"
+msgstr "Pomoc"
 
 #: org/signalml/app/view/common/dialogs/HelpDialog.java:473
 msgid "Help contents"
-msgstr "Pomoc w treści"
+msgstr "Zawartość pomocy"
 
 #: org/signalml/app/view/common/dialogs/HelpDialog.java:123
 msgid "Help for signalml"
@@ -2541,7 +2564,7 @@ msgstr "Pomoc dla signalml"
 
 #: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:125
 msgid "Hide"
-msgstr "Ukryć"
+msgstr "Ukryj"
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:316
 msgid "Hide bottom panel"
@@ -2573,7 +2596,7 @@ msgstr "Pozioma blokada przewijania"
 
 #: org/signalml/app/model/document/opensignal/elements/ChooseExperimentTableModel.java:103
 msgid "Host"
-msgstr "Gospodarz"
+msgstr "Host"
 
 #: org/signalml/app/method/example/ExampleMethodDialog.java:75
 msgid "Hurry up"
@@ -2581,17 +2604,17 @@ msgstr "Pośpiesz się"
 
 #: org/signalml/app/view/signal/HypnogramPlot.java:374
 msgid "Hypnogram"
-msgstr "Hipnotogram"
+msgstr "Hipnogram"
 
 #: org/signalml/app/view/signal/HypnogramPlot.java:350
 #, java-format
 msgid "Hypnogram for new tag {0}"
-msgstr "Hipnotogram dla nowego tagu {0}"
+msgstr "Hipnogram dla nowego tagu {0}"
 
 #: org/signalml/app/view/signal/HypnogramPlot.java:352
 #, java-format
 msgid "Hypnogram for {0}"
-msgstr "Hipnotogram dla {0}"
+msgstr "Hipnogram dla {0}"
 
 #: org/signalml/method/example/ExampleMethod.java:136
 msgid "I don't know what I'm doing here"
@@ -2599,15 +2622,16 @@ msgstr "Nie wiem, co tu robię"
 
 #: org/signalml/method/example/ExampleMethod.java:140
 msgid "I'll just sit here for a while"
-msgstr "Po prostu siedzę tu przez chwilę"
+msgstr "Po prostu posiedzę tu przez chwilę"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:131
 msgid "ICA method failed: "
 msgstr "Nieudana metoda ICA:"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:146
+#, fuzzy
 msgid "Image saved to file"
-msgstr "Obraz zapisany w pliku"
+msgstr "Zapisz próbki do pliku"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:146
 msgid "Image was saved successfully!"
@@ -2624,11 +2648,11 @@ msgstr "Importuj starsze znaczniki"
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:865
 msgid "Import preset from file..."
-msgstr "Importuj gotowe ustawienia z pliku ..."
+msgstr "Importuj gotowe ustawienia (preset) z pliku ..."
 
 #: org/signalml/app/view/montage/filters/charts/elements/ImpulseResponseChartPanel.java:19
 msgid "Impulse response [amplitude]"
-msgstr "Reakcja impulsowa [amplituda]"
+msgstr "Odpowiedź impulsowa [amplituda]"
 
 #: org/signalml/plugin/io/PluginTagWriter.java:58
 msgid "Inconsistent stretchFactor %s (should be: %f)"
@@ -2636,7 +2660,7 @@ msgstr "Niespójny współczynnik rozciągnięcia %s (powinien być: %f)"
 
 #: pl/edu/fuw/fid/signalanalysis/SignalAnalysisPlugin.java:56
 msgid "Independent Component Analysis"
-msgstr "Niezależna analiza składników"
+msgstr "Analiza składników niezależnych (ICA)"
 
 #: org/signalml/app/view/signal/roc/RocTableModel.java:64
 #: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:81
@@ -2656,31 +2680,31 @@ msgstr "Inicjowanie"
 
 #: org/signalml/app/SvarogApplication.java:525
 msgid "Initializing codecs"
-msgstr "Inicjowanie kodeków"
+msgstr "Inicjalizacja kodeków"
 
 #: org/signalml/app/SvarogApplication.java:541
 msgid "Initializing document manager"
-msgstr "Inicjowanie menedżera dokumentów"
+msgstr "Inicjalizacja managera dokumentów"
 
 #: org/signalml/app/view/workspace/ViewerMainFrame.java:108
 msgid "Initializing main window"
-msgstr "Inicjowanie głównego okna"
+msgstr "Inicjalizowanie głównego okna"
 
 #: org/signalml/app/SvarogApplication.java:588
 msgid "Initializing presets"
-msgstr "Inicjowanie ustawień wstępnych"
+msgstr "Inicjalizacja presetów"
 
 #: org/signalml/app/SvarogApplication.java:557
 msgid "Initializing services"
-msgstr "Inicjowanie usług"
+msgstr "Inicjalizacja serwisów"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:610
 msgid "Initially passing filter"
-msgstr "Początkowo przekazywanie filtra"
+msgstr "Początkowo przepuszczający filtr"
 
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:611
 msgid "Initially stopping filter"
-msgstr "Początkowo zatrzymywanie filtra"
+msgstr "Początkowo zatrzymujący filtr"
 
 #: org/signalml/app/method/InputSignalPanel.java:41
 msgid "Input data"
@@ -2688,27 +2712,28 @@ msgstr "Dane wejściowe"
 
 #: org/signalml/domain/tag/EEGLabTagExporter.java:49
 msgid "Input field (column) names: 'type latency duration tag_type channel'"
-msgstr "Nazwy pól wejściowych (kolumn): &quot;czas opóźnienia typu tag_type channel&quot;"
+msgstr "Nazwy pól wejściowych (kolumn): \"typ latencja czas_trwania typ_tagu kanał\""
 
 #: org/signalml/psychopy/view/panel/SelectPsychopyExperimentPanel.java:26
 msgid "Input: Psychopy procedure"
-msgstr "Wejście: procedura psychopedyczna"
+msgstr "Wejście: procedura PsychoPy"
 
 #: org/signalml/app/view/preferences/CodecManagerConfigPanel.java:138
 msgid "Installed codecs"
 msgstr "Zainstalowane kodeki"
 
 #: org/signalml/plugin/domain/montage/PluginChannelAccessHelper.java:21
+#, fuzzy
 msgid "Invalid channel %s"
 msgstr "Nieprawidłowy kanał %s"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:91
 msgid "Invalid end time."
-msgstr "Nieprawidłowy czas zakończenia."
+msgstr "Nieprawidłowy czas końcowy."
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:106
 msgid "Invalid frequency interval."
-msgstr "Nieprawidłowy interwał częstotliwości."
+msgstr "Nieprawidłowy przedział częstości."
 
 #: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:270
 msgid "Invalid fully qualified class name"
@@ -2716,7 +2741,7 @@ msgstr "Nieprawidłowa w pełni kwalifikowana nazwa klasy"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:100
 msgid "Invalid highest frequency."
-msgstr "Nieprawidłowa najwyższa częstotliwość."
+msgstr "Nieprawidłowa najwyższa częstość."
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:109
 msgid "Invalid image dimensions."
@@ -2724,7 +2749,7 @@ msgstr "Nieprawidłowe wymiary obrazu."
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:103
 msgid "Invalid lowest frequency."
-msgstr "Nieprawidłowa najniższa częstotliwość."
+msgstr "Nieprawidłowa najniższa częstość."
 
 #: org/signalml/app/view/signal/PagingParametersPanel.java:281
 #: org/signalml/app/view/signal/PagingParametersPanel.java:289
@@ -2746,7 +2771,7 @@ msgstr "Nieprawidłowy przedział czasu."
 
 #: org/signalml/app/action/util/ListSelectInvertAction.java:27
 msgid "Invert"
-msgstr "Odwracać"
+msgstr "Odwróć"
 
 #: org/signalml/app/util/IconUtils.java:180
 msgid "Invisible cursor"
@@ -2754,7 +2779,7 @@ msgstr "Niewidzialny kursor"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:719
 msgid "Iterate"
-msgstr "Powtarzać"
+msgstr "Iteruj"
 
 #: org/signalml/app/method/example/ExampleMethodDescriptor.java:48
 msgid "Iterate finding the meaning of life"
@@ -2763,7 +2788,7 @@ msgstr "Iteruj znajdowanie sensu życia"
 #: org/signalml/app/action/workspace/IterateMethodAction.java:72
 #, java-format
 msgid "Iterate method {0}"
-msgstr "Metoda iteracji {0}"
+msgstr "Iteruj metodę {0}"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:136
 msgid "Iterate this parameter"
@@ -2780,7 +2805,7 @@ msgstr "Konfiguracja iteracji"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:134
 msgid "Iteration count"
-msgstr "Iteracja"
+msgstr "Licznik iteracji"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:138
 msgid "Iteration end value"
@@ -2788,7 +2813,7 @@ msgstr "Wartość końcowa iteracji"
 
 #: org/signalml/method/iterator/MethodIteratorMethod.java:146
 msgid "Iteration progress"
-msgstr "Postęp iteracyjny"
+msgstr "Postęp iteracji"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:137
 msgid "Iteration start value"
@@ -2800,7 +2825,7 @@ msgstr "Pliki jar (* .jar)"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:117
 msgid "K-Complex"
-msgstr "K-Complex"
+msgstr "Kompleks K"
 
 #: org/signalml/plugin/bookreporter/data/BookReporterFASPThreshold.java:46
 msgid "K-comp."
@@ -2808,11 +2833,11 @@ msgstr "K-comp."
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:361
 msgid "Keep Y-axis fixed"
-msgstr "Utrzymuj oś Y na stałe"
+msgstr "Utrzymuj stałe wartości osi Y "
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1253
 msgid "Keep current"
-msgstr "Bądź na bieżąco"
+msgstr "Zatrzymaj bieżący"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1205
 msgid "Keep original"
@@ -2824,7 +2849,7 @@ msgstr "Klawisz"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:678
 msgid "Key already used on another style. Choose another."
-msgstr "Klucz już użyty w innym stylu. Wybierz inny."
+msgstr "Klawisz już użyty w innym stylu. Wybierz inny."
 
 #: org/signalml/app/model/montage/MontageTableModel.java:94
 #: org/signalml/app/model/montage/SourceMontageTableModel.java:130
@@ -2837,7 +2862,7 @@ msgstr "Ostatnie katalogi"
 
 #: org/signalml/domain/montage/generators/LeftEarMontageGenerator.java:21
 msgid "Left ear montage"
-msgstr "Montaż lewego ucha"
+msgstr "Montaż do lewego ucha"
 
 #: org/signalml/app/view/signal/signalselection/MarkedTimeSpacePanel.java:278
 msgid "Length"
@@ -2865,7 +2890,7 @@ msgstr "Próg długości"
 
 #: org/signalml/app/view/tag/synchronize/LengthThresholdValuePanel.java:18
 msgid "Length threshold value [s]"
-msgstr "Wartość progowa długości [s]"
+msgstr "Wartość progu długości [s]"
 
 #: org/signalml/method/example/ExampleMethod.java:187
 #: org/signalml/method/example/ExampleMethod.java:197
@@ -2886,7 +2911,7 @@ msgstr "Liniowy"
 
 #: org/signalml/domain/montage/generators/LinkedEarsMontageGenerator.java:26
 msgid "Linked ears montage"
-msgstr "Połączony montaż uszu"
+msgstr "Montaż do połączonych uszu"
 
 #: org/signalml/plugin/loader/PluginListPanel.java:48
 msgid "List of plugins"
@@ -2904,7 +2929,7 @@ msgstr "Obciążenie"
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:496
 msgid "Load default"
-msgstr "Załadować domyślnie"
+msgstr "Załaduj wartości domyślne"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1252
 msgid "Load montage from tag"
@@ -2916,7 +2941,7 @@ msgstr "Załaduj ustawienie z pliku"
 
 #: org/signalml/app/view/common/dialogs/AbstractSignalSpaceAwarePresetDialog.java:90
 msgid "Load signal selection from loaded preset"
-msgstr "Wybór sygnału obciążenia z załadowanego ustawienia wstępnego"
+msgstr "Załaduj wybór sygnału z załadowanego presetu"
 
 #: org/signalml/app/view/workspace/ViewerConsolePane.java:188
 msgid "Lock scroll"
@@ -2933,7 +2958,7 @@ msgstr "MATLAB"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:51
 msgid "MATLAB MAT-files (*.mat)"
-msgstr "Pliki MATLAB MAT (* .mat)"
+msgstr "Pliki MATLABa MAT (* .mat)"
 
 #: org/signalml/util/Util.java:675
 msgid "MD5 not supported"
@@ -2965,11 +2990,11 @@ msgstr "Plik wykonywalny MP nie został znaleziony lub nie jest dostępny"
 
 #: org/signalml/app/method/mp5/MP5ExecutorPanel.java:47
 msgid "MP executor"
-msgstr "MP executor"
+msgstr "Plik wykonywalny MP"
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:92
 msgid "MP executors"
-msgstr "MP executory"
+msgstr "Pliki wykonywalne MP"
 
 #: org/signalml/app/method/mp5/MP5AlgorithmConfigPanel.java:64
 msgid "MP version"
@@ -2981,7 +3006,7 @@ msgstr "WIELOKANAŁOWE TAGI"
 
 #: org/signalml/app/view/signal/SignalView.java:1035
 msgid "Magnify the signal (for settings press and hold the mouse button here)"
-msgstr "Powiększ sygnał (dla ustawień naciśnij i przytrzymaj przycisk myszy)"
+msgstr "Powiększ sygnał (dla ustawień naciśnij tutaj i przytrzymaj przycisk myszy)"
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:428
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:306
@@ -2990,7 +3015,7 @@ msgstr "Ustaw jako domyślne"
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:308
 msgid "Make selecte executor default"
-msgstr "Ustaw jako domyślny executor wyboru"
+msgstr "Ustaw wybrany plik wykonywalny jako domyślny"
 
 #: org/signalml/app/view/document/opensignal/elements/OtherSettingsPanel.java:53
 msgid "Manage SignalML codecs"
@@ -3002,7 +3027,7 @@ msgstr "Współczynnik proporcji mapy"
 
 #: org/signalml/app/view/signal/signalselection/TimeSpacePanel.java:161
 msgid "Marked"
-msgstr "Wyraźny"
+msgstr "Zaznaczony"
 
 #: org/signalml/app/view/signal/signalselection/MarkedTimeSpacePanel.java:164
 msgid "Marker channel"
@@ -3019,32 +3044,32 @@ msgstr "Styl znacznika"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:741
 msgid "Max Y axis: positive double required "
-msgstr "Maksymalna oś Y: wymagane podwójne dodatnie"
+msgstr "Maksimum osi Y: wymagana liczba dodatnia"
 
 #: org/signalml/app/method/mp5/MP5StoppingCriteriaConfigPanel.java:62
 msgid "Max iterations"
-msgstr "Max iteracje"
+msgstr "Max iteracji"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfSettingsPanel.java:32
 msgid "Max order of AR model:"
-msgstr "Maksymalna kolejność modeli AR:"
+msgstr "Maksymalny rząd modelu AR:"
 
 #: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:67
 msgid "Max scale / period"
-msgstr "Maksymalna skala / okres"
+msgstr "Maks. skala / okres"
 
 #: org/signalml/app/action/workspace/ViewModeAction.java:32
 msgid "Maximize the document view (see preferences for settings)"
-msgstr "Maksymalizuj widok dokumentu (zobacz preferencje ustawień)"
+msgstr "Maksymalizuj widok dokumentu (zobacz preferencje dla ustawień)"
 
 #: org/signalml/app/view/montage/filters/charts/FFTFilterResponseChartGroupPanel.java:57
 #: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:143
 msgid "Maximum graph frequency [Hz]"
-msgstr "Maksymalna częstotliwość wykresów [Hz]"
+msgstr "Maksymalna częstość na wykresie [Hz]"
 
 #: org/signalml/app/view/montage/filters/charts/TimeDomainFilterResponseChartGroupPanel.java:160
 msgid "Maximum graph time value [s]"
-msgstr "Maksymalna wartość czasu wykresu [s]"
+msgstr "Maksymalna wartość czasu na wykresie [s]"
 
 #: org/signalml/app/view/signal/SignalView.java:1039
 msgid "Measure the signal"
@@ -3057,19 +3082,19 @@ msgstr "Wiadomość"
 
 #: org/signalml/app/model/components/TaskTableModel.java:96
 msgid "Method"
-msgstr "metoda"
+msgstr "Metoda"
 
 #: org/signalml/app/method/iterate/IterationSetupDialog.java:99
 msgid "Method iteration"
-msgstr "Metoda iteracji"
+msgstr "Iteracja metody"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:745
 msgid "Min Y axis: positive double required "
-msgstr "Min. Oś Y: wymagane podwójne dodatnie"
+msgstr "Min. Oś Y: wymagana liczba dodatnia"
 
 #: org/signalml/app/method/ep/view/minmax/MinMaxDialog.java:41
 msgid "Min/max dialog"
-msgstr "Okno dialogowe Min. / Maks"
+msgstr "Okno dialogowe Min. / Maks."
 
 #: org/signalml/app/view/montage/SignalMontagePanel.java:120
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:273
@@ -3077,12 +3102,14 @@ msgid "Miscellaneous"
 msgstr "Różne"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfTabbedPane.java:167
+#, fuzzy
 msgid "Model order"
-msgstr "Kolejność modeli"
+msgstr "Kolejność bajtów"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfOrderCriteriaPanel.java:37
+#, fuzzy
 msgid "Model order selection"
-msgstr "Wybór kolejności modelu"
+msgstr "Wybór bloku"
 
 #: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:174
 msgid "Modified"
@@ -3098,7 +3125,7 @@ msgstr "Moduł"
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:272
 #: org/signalml/app/view/workspace/ViewerElementManager.java:649
 msgid "Monitor"
-msgstr "Monitor"
+msgstr "Online"
 
 #: org/signalml/app/view/signal/MonitorRecordingPanel.java:65
 msgid "Monitor recording"
@@ -3119,6 +3146,7 @@ msgid "Montage description"
 msgstr "Opis montażu"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/ZeroMethodAction.java:106
+#, fuzzy
 msgid "Montage error."
 msgstr "Błąd montażu."
 
@@ -3142,7 +3170,7 @@ msgstr "Morlet"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:635
 msgid "Move down"
-msgstr "Padnij"
+msgstr "Przesuń w dół"
 
 #: org/signalml/app/view/signal/SignalView.java:1023
 msgid "Move signal with the mouse"
@@ -3150,17 +3178,17 @@ msgstr "Przesuwaj sygnał za pomocą myszy"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:583
 msgid "Move up"
-msgstr "Podnieść"
+msgstr "Przesuń w górę"
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:313
 msgid "Multiply"
-msgstr "Zwielokrotniać"
+msgstr "Powiel"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1438
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:471
 #: org/signalml/app/view/book/filter/AtomFilterChainTableModel.java:84
 msgid "Name"
-msgstr "Imię"
+msgstr "Nazwa"
 
 #: org/signalml/app/view/signal/signalml/RegisterCodecStepTwoPanel.java:122
 msgid "Name exists. Current codec will be replaced!"
@@ -3213,8 +3241,9 @@ msgid "New channel style"
 msgstr "Nowy styl kanału"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:62
+#, fuzzy
 msgid "New chart properties"
-msgstr "Nowe właściwości wykresu"
+msgstr "Właściwości nowego wykresu"
 
 #: org/signalml/app/view/book/filter/BookFilterTablePanel.java:329
 msgid "New custom filter"
@@ -3222,7 +3251,7 @@ msgstr "Nowy niestandardowy filtr"
 
 #: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:106
 msgid "New local executor"
-msgstr "Nowy lokalny executor"
+msgstr "Nowy lokalny plik wykonywalny"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:818
 msgid "New page style"
@@ -3253,12 +3282,12 @@ msgstr "Nowe zadanie"
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:888
 #: org/signalml/app/view/montage/MontageFiltersPanel.java:935
 msgid "New time domain filter"
-msgstr "Nowy filtr domeny czasu"
+msgstr "Nowy filtr w domenie czasu"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:420
 #: org/signalml/app/view/common/dialogs/AbstractWizardDialog.java:378
 msgid "Next"
-msgstr "Kolejny"
+msgstr "Następny"
 
 #: org/signalml/app/action/book/ShowNextBookChannelAction.java:31
 msgid "Next channel"
@@ -3266,7 +3295,7 @@ msgstr "Następny kanał"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:422
 msgid "Next channel (Space)"
-msgstr "Następny kanał (kosmos)"
+msgstr "Następny kanał (przestrzeń)"
 
 #: org/signalml/app/action/book/ShowNextBookSegmentAction.java:31
 msgid "Next segment"
@@ -3287,11 +3316,11 @@ msgstr "Nie obliczono FFT"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:171
 msgid "No SignalML codec was found to open this file!"
-msgstr "Nie znaleziono kodek SignalML, aby otworzyć ten plik!"
+msgstr "Nie znaleziono właściwego kodeka SignalML, aby otworzyć ten plik!"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1329
 msgid "No active book. Choose a book tab first."
-msgstr "Brak aktywnej książki. Najpierw wybierz zakładkę książki."
+msgstr "Brak aktywnej książki. Najpierw wybierz kartę książki."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1291
 msgid "No active signal. Choose a signal tab first."
@@ -3307,16 +3336,16 @@ msgstr "Brak szczegółowych informacji o postępach"
 
 #: org/signalml/plugin/tool/PluginResourceRepository.java:33
 msgid "No enclosing bean factory found"
-msgstr "Nie znaleziono zamkniętej fabryki fasoli"
+msgstr "No enclosing bean factory found"
 
 #: org/signalml/plugin/tool/PluginResourceRepository.java:47
 msgid "No enclosing plugin class found"
-msgstr "Nie znaleziono zamkniętej klasy wtyczek"
+msgstr "Nie znaleziono obejmującej klasy wtyczek"
 
 #: org/signalml/app/method/mp5/MP5ExecutorPanel.java:94
 #: org/signalml/method/mp5/MP5Data.java:122
 msgid "No executor"
-msgstr "Brak executora"
+msgstr "Brak pliku wykonywalnego"
 
 #: org/signalml/app/view/book/BookPlot.java:1356
 msgid "No nearby atom"
@@ -3324,48 +3353,51 @@ msgstr "Brak pobliskiego atomu"
 
 #: org/signalml/app/worker/monitor/Helper.java:143
 msgid "No response data is being sent!"
-msgstr "Brak danych odpowiedzi!"
+msgstr "Nie wysłano danych odpowiedzi!"
 
 #: org/signalml/app/method/mp5/MP5MethodConsumer.java:68
 msgid "No result book"
-msgstr "Brak książki wyników"
+msgstr "Brak książki z wynikami"
 
 #: org/signalml/method/mp5/MP5Data.java:128
 msgid "No sample source"
 msgstr "Brak źródła próbki"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTTool.java:197
+#, fuzzy
 msgid "No settings"
 msgstr "Brak ustawień"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1373
 msgid "No signal selection. Choose a signal fragment first."
-msgstr "Brak wyboru sygnału. Najpierw wybierz fragment sygnału."
+msgstr "Nie wybrano sygnału. Najpierw wybierz fragment sygnału."
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:634
 #: org/signalml/plugin/fftsignaltool/SignalFFTSettings.java:173
+#, fuzzy
 msgid "No size"
-msgstr "Bez rozmiaru"
+msgstr "Brak rozmiaru"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:842
 msgid "No such byte order"
-msgstr "Brak takiej kolejności bajtów"
+msgstr "Nie ma takiej kolejności bajtów"
 
 #: org/signalml/plugin/bookreporter/method/BookReporterMethod.java:150
 msgid "No ticker [%d]"
-msgstr "Brak tagu [%d]"
+msgstr "No ticker [%d]"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/FFTWindowTypePanel.java:126
 msgid "No type for radio"
 msgstr "Brak typu dla radia"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTSettings.java:222
+#, fuzzy
 msgid "No window type"
 msgstr "Brak typu okna"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:404
 msgid "Normalize"
-msgstr "Normalizować"
+msgstr "Normalizuj"
 
 #: org/signalml/app/view/signal/export/RawExportOptionsPanel.java:205
 msgid "Normalize samples"
@@ -3373,16 +3405,18 @@ msgstr "Normalizuj próbki"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:248
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:252
+#, fuzzy
 msgid "Not enough signal points"
-msgstr "Za mało punktów sygnałowych"
+msgstr "Za mało punktów sygnału"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:598
+#, fuzzy
 msgid "Nothing selected"
 msgstr "Nic nie zostało zaznaczone"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:293
 msgid "Null spectrum returned"
-msgstr "Sprowadzono zerowe widmo"
+msgstr "Zwrócono zerowe widmo"
 
 #: org/signalml/app/method/ep/EvokedPotentialResultWrapper.java:61
 msgid "Number of artifact rejected segments"
@@ -3398,7 +3432,7 @@ msgstr "Liczba bloków na stronę"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalParametersPanel.java:109
 msgid "Number of blocks per page: "
-msgstr "Liczba bloków na stronę:"
+msgstr "Liczba bloków na stronę: "
 
 #: org/signalml/app/view/signal/RequiredSignalParametersPanel.java:86
 msgid "Number of channels"
@@ -3418,15 +3452,15 @@ msgstr "Liczba całych stron"
 
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:125
 msgid "OFF"
-msgstr "POZA"
+msgstr "OFF"
 
 #: org/signalml/app/worker/monitor/FindEEGExperimentsWorker.java:94
 msgid "OK"
-msgstr "dobrze"
+msgstr "OK"
 
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:124
 msgid "ON"
-msgstr "NA"
+msgstr "ON"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:835
 #: org/signalml/domain/montage/system/ChannelFunction.java:33
@@ -3435,7 +3469,7 @@ msgstr "JEDEN"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:250
 msgid "ONEs channel"
-msgstr "JEDEN kanał"
+msgstr "Kanał jedynek"
 
 #: org/signalml/domain/roc/RocData.java:424
 msgid "OSS intersection TP"
@@ -3443,7 +3477,7 @@ msgstr "Przecięcie OSS TP"
 
 #: org/signalml/app/view/document/monitor/ChannelDefinitionsTable.java:262
 msgid "Offset: "
-msgstr "Offsetowy:"
+msgstr "Offset: "
 
 #: org/signalml/app/view/common/components/filechooser/FileSelectPanel.java:224
 #: org/signalml/app/view/common/components/filechooser/FileSelectPanel.java:236
@@ -3451,17 +3485,17 @@ msgstr "Offsetowy:"
 #: org/signalml/app/view/common/dialogs/OptionPane.java:63
 #: org/signalml/psychopy/view/PsychopyExperimentDialog.java:58
 msgid "Ok"
-msgstr "Dobrze"
+msgstr "Ok"
 
 #: org/signalml/domain/montage/generators/AbstractMontageGenerator.java:34
 msgid "One of required channels not identified: "
-msgstr "Jeden z wymaganych kanałów nie został zidentyfikowany:"
+msgstr "Jeden z wymaganych kanałów nie został zidentyfikowany: "
 
 #: org/signalml/domain/montage/generators/RightEarMontageGenerator.java:38
 #: org/signalml/domain/montage/generators/LeftEarMontageGenerator.java:38
 #, java-format
 msgid "One of required channels not identified: {0} or {1}"
-msgstr "Jeden z wymaganych niezidentyfikowanych kanałów: {0} lub {1}"
+msgstr "Jeden z wymaganych kanałów nie został zidentyfikowany: {0} lub {1}"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:56
 msgid "Online amplifiers"
@@ -3475,7 +3509,7 @@ msgstr "Eksperymenty online"
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:493
 #: org/signalml/app/action/document/OpenMRUDAction.java:35
 msgid "Open"
-msgstr "otwarty"
+msgstr "Otwórz"
 
 #: org/signalml/app/action/tag/OpenTagAction.java:43
 msgid "Open Tag..."
@@ -3491,7 +3525,7 @@ msgstr "Otwórz plik z tagami dla tego sygnału"
 
 #: org/signalml/app/action/book/OpenBookDocumentAction.java:47
 msgid "Open book"
-msgstr "Otwarta książka"
+msgstr "Otwórz książkę"
 
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:34
 msgid "Open books"
@@ -3499,7 +3533,7 @@ msgstr "Otwórz książki"
 
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:31
 msgid "Open documents"
-msgstr "Otwórz dokumenty"
+msgstr "Otwórz pliki"
 
 #: org/signalml/app/method/mp5/MP5ResultDialog.java:88
 msgid "Open in the viewer"
@@ -3507,7 +3541,7 @@ msgstr "Otwórz w przeglądarce"
 
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:33
 msgid "Open monitors"
-msgstr "Otwórz monitory"
+msgstr "Otwórz monitorowanie"
 
 #: org/signalml/app/action/video/AddCameraAction.java:26
 msgid "Open preview of the selected camera"
@@ -3520,7 +3554,7 @@ msgstr "Otwórz ostatnio używany dokument"
 #: org/signalml/app/view/document/opensignal/OpenSignalWizardDialog.java:55
 #: org/signalml/app/action/document/OpenSignalWizardAction.java:45
 msgid "Open signal"
-msgstr "Otwarty sygnał"
+msgstr "Otwórz sygnał"
 
 #: org/signalml/app/action/document/OpenSignalWizardAction.java:47
 msgid "Open signal and set montage for it"
@@ -3528,7 +3562,7 @@ msgstr "Otwórz sygnał i ustaw dla niego montaż"
 
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:32
 msgid "Open signals"
-msgstr "Otwarte sygnały"
+msgstr "Otwórz sygnały"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:492
 msgid "Open tag"
@@ -3536,7 +3570,7 @@ msgstr "Otwórz tag"
 
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:35
 msgid "Open tags"
-msgstr "Otwórz tagi"
+msgstr "Otwór tagi"
 
 #: org/signalml/app/view/preferences/MonitorConfigPanel.java:89
 msgid "OpenBCI Address"
@@ -3555,6 +3589,7 @@ msgid "Optimize signal displaying"
 msgstr "Zoptymalizuj wyświetlanie sygnału"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:430
+#, fuzzy
 msgid "Options"
 msgstr "Opcje"
 
@@ -3568,7 +3603,7 @@ msgstr "Inne ustawienia"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceModel.java:147
 msgid "Others"
-msgstr "Inni"
+msgstr "Inne"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:408
 msgid "Outline dash style"
@@ -3580,15 +3615,15 @@ msgstr "Zarys stylu"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:407
 msgid "Outline width"
-msgstr "Szerokość konspektu"
+msgstr "Szerokość zarysu"
 
 #: org/signalml/psychopy/view/panel/SelectOutputPathPrefixPanel.java:39
 msgid "Output: Experiment results"
-msgstr "Wynik: wyniki eksperymentu"
+msgstr "Wyjście: wyniki eksperymentu"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:69
 msgid "Overwrite"
-msgstr "Przepisać"
+msgstr "Zastąp"
 
 #: org/signalml/app/view/workspace/ViewerStatusBar.java:113
 msgid "P"
@@ -3604,7 +3639,7 @@ msgstr "Obrazy PNG"
 
 #: org/signalml/app/view/signal/PagingParametersPanel.java:83
 msgid "Page & block parameters"
-msgstr "Strona i parametry blokowe"
+msgstr "Parametry strony i bloków"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:321
 msgid "Page comparison"
@@ -3621,7 +3656,7 @@ msgstr "Wybór strony"
 
 #: org/signalml/app/view/signal/PagingParametersPanel.java:94
 msgid "Page size (s)"
-msgstr "Rozmiar strony"
+msgstr "Rozmiar strony (s)"
 
 #: org/signalml/app/view/signal/signalselection/WholeTimeSpacePanel.java:102
 msgid "Page size [s]"
@@ -3633,7 +3668,7 @@ msgstr "Rozmiar strony musi być dodatni"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalParametersPanel.java:108
 msgid "Page size: "
-msgstr "Rozmiar strony:"
+msgstr "Rozmiar strony: "
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:320
 msgid "Page statistic"
@@ -3650,7 +3685,7 @@ msgstr "Parametr"
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:66
 #: org/signalml/domain/book/filter/ParameterRangeAtomFilter.java:136
 msgid "Parameter range atom filter"
-msgstr "Filtr atomu zakresu parametrów"
+msgstr "Filtr zakresu parametrów atomów"
 
 #: org/signalml/app/view/tag/synchronize/SynchronizeTagsWithTriggerParametersPanel.java:32
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:78
@@ -3659,23 +3694,23 @@ msgstr "Parametry"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:45
 msgid "Passband center frequency [Hz]"
-msgstr "Częstotliwość środkowa pasma [Hz]"
+msgstr "Częstość środkowa pasma przenoszenia [Hz]"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:44
 msgid "Passband edge frequency 1 [Hz]"
-msgstr "Częstotliwość krawędzi pasma 1 [Hz]"
+msgstr "Częstość krawędzi pasma  przenoszenia 1 [Hz]"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:159
 msgid "Passband edge frequency 2 [Hz]"
-msgstr "Częstotliwość krawędzi pasma 2 [Hz]"
+msgstr "Częstość krawędzi pasma przenoszenia 2 [Hz]"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:161
 msgid "Passband ripple [dB]"
-msgstr "Szumienie pasma [dB]"
+msgstr "Niejednorodność (ripple) w paśmie przenoszenia [dB]"
 
 #: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:190
 msgid "Passband ripple should be less than stopband attenuation."
-msgstr "Tętnienie pasma powinno być mniejsze niż tłumienie pasma."
+msgstr "Niejednorodność (ripple) w paśmie przenoszenia powinna być mniejsza niż tłumienie w paśmie zaporowym."
 
 #: org/signalml/app/method/mp5/MP5ExecutablePanel.java:65
 msgid "Path to binary"
@@ -3688,6 +3723,7 @@ msgid "Phase"
 msgstr "Faza"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:129
+#, fuzzy
 msgid "Phase [rad]"
 msgstr "Faza [rad]"
 
@@ -3714,7 +3750,7 @@ msgstr "Proszę wybrać ustawienie wstępne!"
 
 #: org/signalml/app/view/document/opensignal/OpenSignalWizardDialog.java:78
 msgid "Please select a proper file or monitor signal source!"
-msgstr "Proszę wybrać właściwe źródło sygnału pliku lub monitora!"
+msgstr "Proszę wybrać właściwy plik lub źródło sygnału!"
 
 #: org/signalml/app/view/document/monitor/ChooseVideoForMonitorRecordingPanel.java:164
 msgid "Please select a video stream to be recorded"
@@ -3722,15 +3758,15 @@ msgstr "Wybierz strumień wideo, który chcesz nagrać"
 
 #: org/signalml/app/method/ep/view/tags/AveragedTagSelectionPanel.java:110
 msgid "Please select at least one tag to average."
-msgstr "Wybierz co najmniej jeden tag jako średni."
+msgstr "Wybierz co najmniej jeden tag do uśredniania."
 
 #: org/signalml/app/view/document/opensignal/OpenSignalWizardDialog.java:82
 msgid "Please select some channels!"
-msgstr "Proszę wybrać kilka kanałów!"
+msgstr "Proszę wybrać jakieś kanały!"
 
 #: org/signalml/app/view/document/opensignal/OpenSignalWizardDialog.java:86
 msgid "Please specify the sampling frequency."
-msgstr "Proszę podać częstotliwość pobierania próbek."
+msgstr "Proszę podać częstość próbkowania."
 
 #: org/signalml/app/view/common/dialogs/BusyDialog.java:55
 msgid "Please wait"
@@ -3744,15 +3780,16 @@ msgstr "Proszę czekać..."
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:79
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:88
 msgid "Plot options"
-msgstr "Opcje wydruku"
+msgstr "Opcje wykresu"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:410
 msgid "Plot window height"
-msgstr "Wysokość okna plotera"
+msgstr "Wysokość okna wykresu"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:390
+#, fuzzy
 msgid "Plot window width"
-msgstr "Szerokość okna plotera"
+msgstr "Szerokość okna wykresu"
 
 #: org/signalml/plugin/tool/PluginContextHelper.java:61
 msgid "Plugin class %s already registered"
@@ -3815,11 +3852,11 @@ msgstr "Preset już istnieje, czy naprawdę chcesz go zastąpić?"
 msgid ""
 "Preset is incompatible with this montage - bad channels count in the preset "
 "montage!"
-msgstr ""
+msgstr "Ustawienie wstępne (preset) jest niekompatybilne z tym montażem — zła liczba kanałów w montażu z preset!"
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:188
 msgid "Presets"
-msgstr "Presets"
+msgstr "Ustawienia wstępne (presets)"
 
 #: org/signalml/app/view/common/dialogs/KeyStrokeCaptureDialog.java:84
 msgid "Press a key..."
@@ -3831,7 +3868,7 @@ msgstr "Zapobiegaj przewijaniu konsoli po dodaniu nowego tekstu"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:366
 msgid "Preview"
-msgstr "Zapowiedź"
+msgstr "Podgląd"
 
 #: org/signalml/app/video/components/VideoStreamSelectionCompactPanel.java:44
 msgid "Preview not available"
@@ -3847,7 +3884,7 @@ msgstr "Poprzedni kanał"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:404
 msgid "Previous channel (Shift-Space)"
-msgstr "Poprzedni kanał (Shift-Space)"
+msgstr "Poprzedni kanał (Shift-Spacja)"
 
 #: org/signalml/app/action/book/ShowPreviousBookSegmentAction.java:31
 msgid "Previous segment"
@@ -3868,7 +3905,7 @@ msgstr "Kontynuować"
 
 #: org/signalml/method/ep/EvokedPotentialMethod.java:224
 msgid "Processing markers"
-msgstr "Markery przetwarzania"
+msgstr "Przetwarzanie znaczników"
 
 #: org/signalml/method/mp5/MP5Method.java:149
 #, java-format
@@ -3882,40 +3919,40 @@ msgstr "Postęp"
 #: org/signalml/app/view/common/dialogs/OptionPane.java:287
 #, java-format
 msgid "Project [{0}] exists. Reuse or replace?"
-msgstr "Projekt [{0}] istnieje. Ponownie użyć lub wymienić?"
+msgstr "Projekt [{0}] istnieje. Ponownie użyć czy zamienić?"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:847
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:462
 msgid "Properties"
-msgstr "Nieruchomości"
+msgstr "Własności"
 
 #: org/signalml/app/model/components/PropertySheetModel.java:56
 msgid "Property name"
-msgstr "Nazwa właściwości"
+msgstr "Nazwa własności"
 
 #: org/signalml/psychopy/PsychopyExperiment.java:169
 msgid "Psychopy Error"
-msgstr "Błąd psychop"
+msgstr "Błąd PsychoPy"
 
 #: org/signalml/psychopy/PsychopyExperiment.java:163
 msgid "Psychopy Experiment finished"
-msgstr "Eksperyment psychopoznania zakończony"
+msgstr "Eksperyment PsychoPy zakończony"
 
 #: org/signalml/psychopy/PsychopyExperiment.java:154
 msgid "Psychopy Experiment finished. Created files:"
-msgstr "Eksperyment psychopoznania zakończony. Utworzone pliki:"
+msgstr "Eksperyment PsychoPy zakończony. Utworzone pliki:"
 
 #: org/signalml/psychopy/action/ShowPsychopyDialogButton.java:62
 msgid "Psychopy experiment can not be run in offline mode."
-msgstr "Eksperymentu z psychopresją nie można uruchomić w trybie offline."
+msgstr "Eksperymentu PsychoPy nie można uruchomić w trybie offline."
 
 #: org/signalml/psychopy/action/ShowPsychopyDialogButton.java:60
 msgid "Psychopy experiment can not be run on remote host."
-msgstr "Eksperymentu z psychopresją nie można uruchomić na zdalnym hoście."
+msgstr "Eksperymentu PsychoPy nie można uruchomić na zdalnym hoście."
 
 #: org/signalml/psychopy/view/panel/SelectPsychopyExperimentPanel.java:35
 msgid "Psychopy experiment files (*.psyexp, *.py)"
-msgstr "Pliki eksperymentów z psychoparami (* .psyexp, * .py)"
+msgstr "Pliki eksperymentów PsychoPy (* .psyexp, * .py)"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:163
 msgid "Quality parameter (dimensionless)"
@@ -3923,7 +3960,7 @@ msgstr "Parametr jakości (bezwymiarowy)"
 
 #: org/signalml/domain/montage/filter/TimeDomainSampleFilterValidator.java:108
 msgid "Quality parameter for notch and peak filters must be positive."
-msgstr "Parametr jakości dla filtra wycinającego i szczytowego musi być dodatni."
+msgstr "Parametr jakości dla filtra wycinającego i podbijającego musi być dodatni."
 
 #: org/signalml/app/view/book/filter/DelegatingFilterDialog.java:306
 msgid "Quick file"
@@ -3956,12 +3993,12 @@ msgstr "Zachowanie proporcji"
 #: org/signalml/app/method/mp5/MP5RawConfigPanel.java:54
 msgid ""
 "Raw config (signal input/output/range directives will be added/replaced)"
-msgstr ""
+msgstr "Konfiguracja surowa (dyrektywy wejścia/wyjścia/zakresu sygnału zostaną dodane/zastąpione)"
 
 #: org/signalml/app/view/signal/export/SignalSourceLevelPanel.java:100
 #: org/signalml/domain/montage/generators/RawMontageGenerator.java:29
 msgid "Raw signal"
-msgstr "Surowy sygnał"
+msgstr "Sygnał surowy"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:523
 msgid "Read"
@@ -4001,23 +4038,23 @@ msgstr "Zarejestruj sygnał i tagi z tego monitora do pliku"
 
 #: org/signalml/app/view/document/monitor/ChooseFilesForMonitorRecordingPanel.java:186
 msgid "Record video"
-msgstr "Nagrać wideo"
+msgstr "Nagraj wideo"
 
 #: org/signalml/app/model/montage/MontageTableModel.java:91
 msgid "Reference"
-msgstr "Odniesienie"
+msgstr "Referencja"
 
 #: org/signalml/app/view/montage/MontageEditionPanel.java:67
 msgid "Reference GUI"
-msgstr "Reference GUI"
+msgstr "GUI referencji"
 
 #: org/signalml/app/view/montage/MontageEditionPanel.java:68
 msgid "Reference matrix"
-msgstr "Macierz referencyjna"
+msgstr "Macierz referencji"
 
 #: org/signalml/app/view/document/opensignal/elements/ChooseExperimentPanel.java:173
 msgid "Refresh"
-msgstr "Odświeżać"
+msgstr "Odśwież"
 
 #: org/signalml/app/worker/monitor/FindEEGExperimentsWorker.java:59
 msgid "Refreshing successfully accomplished!"
@@ -4037,7 +4074,7 @@ msgstr "Zarejestruj nowy kodek"
 
 #: org/signalml/app/method/mp5/MP5AdvancedDecompositionConfigPanel.java:66
 msgid "Reinit dictionary"
-msgstr "Reinit słownik"
+msgstr "Reinicjalizuj słownik"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:68
 msgid "Reload"
@@ -4059,7 +4096,7 @@ msgstr "Usunąć"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:233
 msgid "Remove DC-offset"
-msgstr "Usuń przesunięcie DC"
+msgstr "Usuń offset DC"
 
 #: org/signalml/app/action/workspace/tasks/RemoveAllAbortedTasksAction.java:34
 #: org/signalml/app/action/workspace/tasks/RemoveAllAbortedTasksAction.java:36
@@ -4106,11 +4143,11 @@ msgstr "Usuń z ulubionych"
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:696
 msgid "Remove range"
-msgstr "Usuń zasięg"
+msgstr "Usuń zakres"
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:244
 msgid "Remove selected MP executor"
-msgstr "Usuń wybrany executor MP"
+msgstr "Usuń wybrany plik wykonywalny MP"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:919
 msgid "Remove selected style"
@@ -4130,7 +4167,7 @@ msgstr "Usuń styl"
 
 #: org/signalml/app/action/tag/RemoveTagAction.java:32
 msgid "Remove tag"
-msgstr "Usuń oznaczenie"
+msgstr "Usuń oznaczenie (tag)"
 
 #: org/signalml/app/action/workspace/tasks/RemoveTaskAction.java:32
 msgid "Remove task"
@@ -4138,7 +4175,7 @@ msgstr "Usuń zadanie"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:440
 msgid "Remove this reference (Delete)"
-msgstr "Usuń ten odnośnik (Usuń)"
+msgstr "Usuń ten odnośnik (klawisz \"delete\")"
 
 #: org/signalml/app/action/workspace/tasks/RemoveTaskAction.java:34
 msgid "Remove this task"
@@ -4146,7 +4183,7 @@ msgstr "Usuń to zadanie"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:532
 msgid "Replace"
-msgstr "Zastąpić"
+msgstr "Zastąp"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1206
 msgid "Replace with current"
@@ -4177,15 +4214,17 @@ msgstr "Resetuje mapę do domyślnego widoku"
 msgid ""
 "Resize time scale so that exactly one page fits in the view & align view on "
 "page boundary"
-msgstr ""
+msgstr "Skaluj oś czasu tak, aby dokładnie jedna strona zmieściła się w widoku i wyrównaj widok na granicy strony"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterMethodDialog.java:196
+#, fuzzy
 msgid "Restore default method configuration"
 msgstr "Przywróć domyślną konfigurację metody"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterMethodDialog.java:190
+#, fuzzy
 msgid "Restore defaults"
-msgstr "Przywróć domyślne"
+msgstr "Przywróc domyślne"
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:274
 msgid "Restore the workspace when the application loads"
@@ -4193,7 +4232,7 @@ msgstr "Przywróć obszar roboczy po załadowaniu aplikacji"
 
 #: org/signalml/app/SvarogApplication.java:510
 msgid "Restoring configuration"
-msgstr "Przywracanie konfiguracji"
+msgstr "Odtwarzanie konfiguracji"
 
 #: org/signalml/app/view/workspace/ViewerMainFrame.java:144
 msgid "Restoring tasks"
@@ -4205,7 +4244,7 @@ msgstr "Przywracanie obszaru roboczego"
 
 #: org/signalml/psychopy/view/panel/SelectOutputPathPrefixPanel.java:52
 msgid "Results path is a directory."
-msgstr "Ścieżka wyników to katalog."
+msgstr "Ścieżka wyników to katalog (folder)."
 
 #: org/signalml/psychopy/view/panel/SelectOutputPathPrefixPanel.java:62
 msgid "Results path is not writable"
@@ -4246,27 +4285,27 @@ msgstr "Kliknij prawym przyciskiem myszy, aby przesunąć stronę (przytrzymaj k
 
 #: org/signalml/domain/montage/generators/RightEarMontageGenerator.java:21
 msgid "Right ear montage"
-msgstr "Montaż prawego ucha"
+msgstr "Montaż do prawego ucha"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:105
 msgid "Roc curve chart"
-msgstr "Wykres krzywej Roc"
+msgstr "Wykres krzywej ROC"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:113
 msgid "Roc parameters"
-msgstr "Parametry Roc"
+msgstr "Parametry ROC"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:140
 msgid "Roc point properties"
-msgstr "Właściwości punktu Roc"
+msgstr "Właściwości punktu ROC"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:131
 msgid "Roc properties"
-msgstr "Właściwości Roc"
+msgstr "Właściwości ROC"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:92
 msgid "Roc result"
-msgstr "Wynik Roca"
+msgstr "Wynik ROC"
 
 #: org/signalml/app/action/RunMethodAction.java:53
 #, java-format
@@ -4279,7 +4318,7 @@ msgstr "S"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:75
 msgid "SC(order) = log(det(V)) + log(samples) × order × channels² / samples"
-msgstr "SC (kolejność) = log (det (V)) + log (sample) × order × channels² / samples"
+msgstr "SC(rząd) = log (det (V)) + log (samples) × order × channels² / samples"
 
 #: org/signalml/plugin/bookreporter/data/BookReporterFASPThreshold.java:52
 msgid "SWA"
@@ -4295,27 +4334,27 @@ msgstr "Rodzaj próbki"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalParametersPanel.java:107
 msgid "Sample type: "
-msgstr "Typ próbki:"
+msgstr "Rodzaj próbki: "
 
 #: org/signalml/app/view/signal/RequiredSignalParametersPanel.java:85
 msgid "Sampling Frequency (Hz)"
-msgstr "Częstotliwość próbkowania (Hz)"
+msgstr "Częstość próbkowania (Hz)"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalParametersPanel.java:104
 msgid "Sampling frequency: "
-msgstr "Częstotliwość próbkowania:"
+msgstr "Częstość próbkowania: "
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:260
 msgid "Sanity failed - sample count different than window size"
-msgstr "Poczytalność nie powiodła się - liczba próbek różni się od rozmiaru okna"
+msgstr "Sanity failed — liczba próbek różna od rozmiaru okna"
 
 #: org/signalml/app/view/book/filter/BookFilterDialog.java:170
 msgid "Satisfy all (AND)"
-msgstr "Satisfy all (AND)"
+msgstr "Spełnienie wszystkich (AND)"
 
 #: org/signalml/app/view/book/filter/BookFilterDialog.java:198
 msgid "Satisfy any (OR)"
-msgstr "Satisfy any (OR)"
+msgstr "Spełnienie dowolnego (OR)"
 
 #: org/signalml/app/view/common/components/presets/CompactPresetControlsPanel.java:176
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:592
@@ -4333,7 +4372,7 @@ msgstr "Satisfy any (OR)"
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:503
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:511
 msgid "Save"
-msgstr "Zapisać"
+msgstr "Zapisz"
 
 #: org/signalml/app/action/document/SaveAllDocumentsAction.java:34
 msgid "Save All"
@@ -4345,7 +4384,7 @@ msgstr "Zapisz konfigurację MP"
 
 #: org/signalml/app/action/tag/SaveTagAction.java:36
 msgid "Save Tag"
-msgstr "Zapisz tag"
+msgstr "Zapisz znaczniki (tag)"
 
 #: org/signalml/app/action/tag/SaveTagAsAction.java:36
 msgid "Save Tag As..."
@@ -4406,11 +4445,11 @@ msgstr "Zapisz do późniejszego wykorzystania"
 
 #: org/signalml/app/view/preferences/TaggingConfigPanel.java:99
 msgid "Save full montage with tag file"
-msgstr "Zapisz pełny montaż za pomocą pliku znaczników"
+msgstr "Zapisz pełny montaż do pliku znaczników (tag)"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:502
 msgid "Save preset to file"
-msgstr "Zapisz ustawienie wstępne do pliku"
+msgstr "Zapisz ustawienie wstępne (preset) do pliku"
 
 #: org/signalml/app/method/ep/action/ExportAllEPSamplesToFloatFileAction.java:39
 #: org/signalml/app/method/ep/action/ExportAllEPSamplesToFloatFileAction.java:40
@@ -4441,7 +4480,7 @@ msgstr "Zapisz do pliku"
 #: org/signalml/app/document/MonitorSignalDocument.java:355
 msgid ""
 "Saving monitor document is not supported - use monitor recording instead."
-msgstr ""
+msgstr "Zapisywanie dokumentu monitora nie jest obsługiwane — zamiast tego użyj nagrywania monitora."
 
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:99
 #: org/signalml/app/view/book/AtomTableModel.java:140
@@ -4451,7 +4490,7 @@ msgstr "Skala"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:665
 msgid "Scale limits (changes do affect all signals already open)"
-msgstr "Limity skali (zmiany wpływają na wszystkie sygnały już otwarte)"
+msgstr "Zakresy skali (zmiany wpływają na wszystkie sygnały już otwarte)"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:75
 msgid "Schwartz"
@@ -4468,7 +4507,7 @@ msgstr "Sekund po"
 
 #: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:241
 msgid "Seconds before"
-msgstr "Kilka sekund wcześniej"
+msgstr "Sekund przed"
 
 #: org/signalml/method/mp5/MP5Method.java:347
 msgid "Segment progress"
@@ -4483,7 +4522,7 @@ msgstr "Segmenty przetworzone"
 msgid ""
 "Select a single java or class file. Contained class must be in default "
 "package"
-msgstr ""
+msgstr "Wybierz pojedynczy plik Javy lub klasy. Zawarta klasa musi być w domyślnym pakiecie"
 
 #: org/signalml/app/view/document/opensignal/elements/ChannelSelectPanel.java:100
 #: org/signalml/app/view/common/components/panels/AbstractSelectionPanel.java:86
@@ -4496,16 +4535,17 @@ msgid "Select at least one channel"
 msgstr "Wybierz co najmniej jeden kanał"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:52
+#, fuzzy
 msgid "Select at least one channel."
 msgstr "Wybierz co najmniej jeden kanał."
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:271
 msgid "Select at least one tag type"
-msgstr "Wybierz co najmniej jeden typ tagu"
+msgstr "Wybierz co najmniej jeden typ tagu (znacznika)"
 
 #: org/signalml/app/action/util/ListSelectNoneAction.java:27
 msgid "Select none"
-msgstr "Wybierz brak"
+msgstr "Odznacz wszystko"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:380
 msgid "Select or add a style"
@@ -4519,17 +4559,17 @@ msgstr "Wybierz dokładnie"
 #: org/signalml/app/view/common/components/presets/ChoosePresetDialog.java:101
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:1008
 msgid "Select preset"
-msgstr "Wybierz ustawienie wstępne"
+msgstr "Wybierz ustawienie wstępne (preset)"
 
 #: org/signalml/app/view/common/components/presets/CompactPresetControlsPanel.java:439
 #: org/signalml/app/view/common/components/presets/ChoosePresetDialog.java:119
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:1026
 msgid "Select preset name"
-msgstr "Wybierz nazwę ustawienia wstępnego"
+msgstr "Wybierz nazwę ustawienia wstępnego (preset)"
 
 #: org/signalml/psychopy/action/ShowPsychopyDialogButton.java:58
 msgid "Select psychopy experiment to run"
-msgstr "Wybierz eksperyment psychologiczny do uruchomienia"
+msgstr "Wybierz eksperyment PsychoPy do uruchomienia"
 
 #: org/signalml/app/view/signal/SignalView.java:1030
 msgid "Select signal blocks"
@@ -4537,19 +4577,19 @@ msgstr "Wybierz bloki sygnału"
 
 #: org/signalml/app/action/signal/PreciseSelectionAction.java:38
 msgid "Select signal fragments using selection dialog"
-msgstr "Wybierz fragmenty sygnału za pomocą okna dialogowego wyboru"
+msgstr "Wybierz fragmenty sygnału za pomocą okna dialogowego"
 
 #: org/signalml/app/view/signal/SignalView.java:1028
 msgid "Select signal pages"
-msgstr "Wybierz strony z sygnałami"
+msgstr "Wybierz strony sygnału"
 
 #: org/signalml/app/view/signal/SignalView.java:1032
 msgid "Select single channel or multichannel custom size signal fragments"
-msgstr "Wybierz pojedyncze lub wielokanałowe fragmenty sygnału o niestandardowym rozmiarze"
+msgstr "Wybierz jedno- lub wielo-kanałowe fragmenty sygnału o niestandardowym rozmiarze"
 
 #: org/signalml/app/method/ep/SelectTagGroupDialog.java:34
 msgid "Select tag group"
-msgstr "Wybierz grupę tagów"
+msgstr "Zaznacz grupę tagów"
 
 #: org/signalml/app/view/signal/SignalView.java:1025
 msgid "Select tags"
@@ -4558,6 +4598,7 @@ msgstr "Wybierz tagi"
 #: pl/edu/fuw/fid/signalanalysis/wavelet/PopupActionForWavelet.java:55
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseAction.java:166
 #: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:55
+#, fuzzy
 msgid "Select valid single-channel signal fragment."
 msgstr "Wybierz poprawny jednokanałowy fragment sygnału."
 
@@ -4599,16 +4640,16 @@ msgstr "Sentry Site"
 
 #: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:79
 msgid "Separator: "
-msgstr "Separator:"
+msgstr "Separator: "
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1439
 msgid "Set preset name"
-msgstr "Ustaw nazwę ustawienia"
+msgstr "Ustaw nazwę presetu"
 
 #: org/signalml/app/view/tag/EditTagAnnotationDialog.java:83
 #: org/signalml/app/view/tag/EditTagAnnotationDialog.java:94
 msgid "Set tag annotation"
-msgstr "Ustaw adnotację znacznika"
+msgstr "Ustaw adnotację znacznika (tagu)"
 
 #: org/signalml/app/view/tag/EditTagDescriptionDialog.java:110
 msgid "Set tag document description"
@@ -4624,17 +4665,18 @@ msgid "Settings"
 msgstr "Ustawienia"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/ShannonWavelet.java:25
+#, fuzzy
 msgid "Shannon"
 msgstr "Shannon"
 
 #: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:26
 #: pl/edu/fuw/fid/signalanalysis/SignalAnalysisPlugin.java:64
 msgid "Short-Time Fourier Transform"
-msgstr "Krótkotrwała transformata Fouriera"
+msgstr "Krótkoczasowa transformata Fouriera"
 
 #: org/signalml/app/action/document/ActivateDocumentAction.java:36
 msgid "Show"
-msgstr "Pokazać"
+msgstr "Pokaż"
 
 #: org/signalml/app/view/workspace/ViewerConsolePane.java:79
 msgid "Show all log messages in the console, including debug messages"
@@ -4642,7 +4684,7 @@ msgstr "Pokaż wszystkie komunikaty dziennika w konsoli, w tym komunikaty debugo
 
 #: org/signalml/app/view/signal/popup/CompareTagsPopupDialog.java:301
 msgid "Show analytical comparison summary"
-msgstr "Pokaż podsumowanie porównania analitycznego"
+msgstr "Pokaż analityczne podsumowanie porównania"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:532
 msgid "Show as percent"
@@ -4675,7 +4717,7 @@ msgstr "Pokaż kanał"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:258
 msgid "Show channel center zero levels (only if not too dense)"
-msgstr "Pokaż poziomy centrum zerowego kanału (tylko jeśli nie jest zbyt gęsty)"
+msgstr "Pokaż poziomy centrum zera kanału (tylko jeśli nie jest zbyt gęste)"
 
 #: org/signalml/app/action/workspace/tasks/ShowTaskDialogAction.java:32
 msgid "Show dialog"
@@ -4690,8 +4732,9 @@ msgid "Show favorites"
 msgstr "Pokaż ulubione"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:331
+#, fuzzy
 msgid "Show fq range [Hz]"
-msgstr "Pokaż zakres fq [Hz]"
+msgstr "Pokaż zakres częstości [Hz]"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:261
 msgid "Show full reconstruction"
@@ -4713,7 +4756,7 @@ msgstr "Pokaż główny pasek narzędzi"
 
 #: org/signalml/app/method/ep/ShowMinMaxAction.java:29
 msgid "Show min/max"
-msgstr "Pokaż min / maks"
+msgstr "Pokaż min/maks"
 
 #: org/signalml/app/view/workspace/ViewerConsolePane.java:75
 msgid "Show only warning and error log messages in the console"
@@ -4729,11 +4772,11 @@ msgstr "Pokaż stronę"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:248
 msgid "Show page boundaries (only if not too dense)"
-msgstr "Pokaż granice strony (tylko jeśli nie jest zbyt gęsta)"
+msgstr "Pokaż granice strony (tylko jeśli nie zbyt gęste)"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:280
 msgid "Show reconstruction"
-msgstr "Pokaż odbudowę"
+msgstr "Pokaż rekonstrukcję"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:318
 msgid "Show scale"
@@ -4766,11 +4809,11 @@ msgstr "Pokaż okno dialogowe stanu"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:263
 msgid "Show tool tips when mouse hovers over a tag"
-msgstr "Pokaż wskazówki dotyczące narzędzi, gdy mysz unosi się nad tagiem"
+msgstr "Pokaż wskazówki narzędzi, gdy mysz unosi się nad tagiem"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:358
 msgid "Show tool tips when mouse hovers over an atom"
-msgstr "Pokaż wskazówki dotyczące narzędzi, gdy mysz unosi się nad atomem"
+msgstr "Pokaż wskazówki narzędzi, gdy mysz unosi się nad atomem"
 
 #: org/signalml/app/action/document/monitor/StartVideoPreviewAction.java:36
 msgid "Show video preview"
@@ -4805,16 +4848,18 @@ msgid "Signal"
 msgstr "Sygnał"
 
 #: org/signalml/plugin/fftsignaltool/FFTSignalPlugin.java:99
+#, fuzzy
 msgid "Signal FFT (for settings press right mouse button)"
-msgstr "Sygnał FFT (dla ustawień naciśnij prawy przycisk myszy)"
+msgstr "FFT sygnału (dla ustawień naciśnij tutaj i przytrzymaj przycisk myszy)"
 
 #: org/signalml/plugin/fftsignaltool/actions/ShowSettings.java:44
+#, fuzzy
 msgid "Signal FFT Settings"
 msgstr "Ustawienia FFT sygnału"
 
 #: org/signalml/app/view/common/dialogs/SplashScreen.java:296
 msgid "Signal Viewer, Analyzer and Recorder On GPL"
-msgstr "Przeglądarka sygnałów, analizator i rejestrator na GPL"
+msgstr "Przeglądarka, analizator i rejestrator sygnałów na licencji GPL"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:224
 msgid "Signal antialiasing"
@@ -4871,7 +4916,7 @@ msgstr "Próg sygnału"
 #: org/signalml/app/view/common/dialogs/OptionPane.java:408
 msgid ""
 "Signal values exceed type capacity. Normalization is necessary. Normalize?"
-msgstr ""
+msgstr "Wartości sygnałów przekraczają pojemność typu. Normalizacja jest konieczna. Normalizować?"
 
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:269
 msgid "Signal viewing"
@@ -4879,11 +4924,11 @@ msgstr "Oglądanie sygnału"
 
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:270
 msgid "Signal zooming"
-msgstr "Powiększanie sygnału"
+msgstr "Powiększanie sygnału (zoom)"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:701
 msgid "SignalML Codec not found!"
-msgstr "Nie znaleziono kodera SignalML!"
+msgstr "Nie znaleziono kodeka SignalML!"
 
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:291
 msgid "SignalML Codecs"
@@ -4896,7 +4941,7 @@ msgstr "Sygnały"
 
 #: org/signalml/method/mp5/MP5AtomType.java:19
 msgid "Sin/cos"
-msgstr "Sin / cos"
+msgstr "sin/cos"
 
 #: org/signalml/domain/montage/system/ChannelFunction.java:30
 msgid "Skin conductance"
@@ -4908,7 +4953,7 @@ msgstr "Potencjał skóry"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:116
 msgid "Sleep spindles"
-msgstr "Wrzeciona spania"
+msgstr "Wrzeciona snu"
 
 #: org/signalml/app/view/tag/synchronize/SynchronizeTagsWithTriggerParametersPanel.java:45
 msgid "Slope"
@@ -4924,11 +4969,11 @@ msgstr "Przyciągaj do strony"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:579
 msgid "Some running tasks can be suspended and saved."
-msgstr "Niektóre uruchomione zadania można zawiesić i zapisać."
+msgstr "Niektóre z uruchomionych zadań można zawiesić i zapisać."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:270
 msgid "Some running tasks will have to be aborted."
-msgstr "Niektóre uruchomione zadania będą musiały zostać przerwane."
+msgstr "Niektóre z uruchomionych zadań będą musiały zostać przerwane."
 
 #: org/signalml/domain/montage/SourceMontage.java:425
 msgid "Source channel label cannot be duplicated!"
@@ -4953,12 +4998,12 @@ msgstr "Montaż źródła"
 
 #: org/signalml/domain/montage/Montage.java:570
 msgid "Special character are not allowed in montage label."
-msgstr "Specjalne znaki nie są dozwolone na etykiecie montażowej."
+msgstr "Specjalne znaki nie są dozwolone na etykiecie montażu."
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:800
 msgid ""
 "Specified video file could not be found. Video preview will not be available."
-msgstr ""
+msgstr "Nie można znaleźć określonego pliku wideo. Podgląd wideo nie będzie dostępny."
 
 #: org/signalml/domain/book/WignerMapScaleType.java:30
 msgid "Square root"
@@ -4970,16 +5015,16 @@ msgstr "Standard"
 
 #: org/signalml/psychopy/view/PsychopyExperimentDialog.java:51
 msgid "Start Psychopy Experiment"
-msgstr "Rozpocznij Eksperyment Psychop"
+msgstr "Rozpocznij Eksperyment PsychoPy"
 
 #: org/signalml/app/view/signal/signalselection/BlockSignalSelectionPanel.java:89
 msgid "Start block"
-msgstr "Rozpocznij blok"
+msgstr "Blok początkowy"
 
 #: org/signalml/app/view/document/monitor/StartMonitorRecordingDialog.java:42
 #: org/signalml/app/action/document/monitor/StartMonitorRecordingAction.java:47
 msgid "Start monitor recording"
-msgstr "Rozpocznij nagrywanie monitora"
+msgstr "Rozpocznij nagrywanie"
 
 #: org/signalml/app/view/signal/signalselection/PageSignalSelectionPanel.java:78
 #: org/signalml/app/view/signal/signalselection/BlockSignalSelectionPanel.java:88
@@ -5009,12 +5054,13 @@ msgid "Step response [amplitude]"
 msgstr "Odpowiedź skokowa [amplituda]"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:435
+#, fuzzy
 msgid "Sticky channel"
-msgstr "Przyklejony kanał"
+msgstr "Kanał \"sticky\""
 
 #: org/signalml/app/action/document/monitor/StopMonitorRecordingAction.java:40
 msgid "Stop monitor recording"
-msgstr "Zatrzymaj nagrywanie monitora"
+msgstr "Zatrzymaj nagrywanie"
 
 #: org/signalml/app/action/document/monitor/StopMonitorRecordingAction.java:41
 msgid "Stop to record signal and tags to a file"
@@ -5022,23 +5068,23 @@ msgstr "Zatrzymaj, aby nagrać sygnał i znaczniki do pliku"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:162
 msgid "Stopband attenuation [dB]"
-msgstr "Tłumienie pasma [dB]"
+msgstr "Tłumienie pasma zaporowego [dB]"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:48
 msgid "Stopband center frequency [Hz]"
-msgstr "Częstotliwość środkowa pasma [Hz]"
+msgstr "Częstość środkowa pasma zaporowego [Hz]"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:47
 msgid "Stopband edge frequency 1 [Hz]"
-msgstr "Częstotliwość krawędzi pasma 1 [Hz]"
+msgstr "Częstość krawędzi pasma zaporowego 1 [Hz]"
 
 #: org/signalml/app/view/montage/filters/TimeDomainFilterParametersPanel.java:160
 msgid "Stopband edge frequency 2 [Hz]"
-msgstr "Częstotliwość krawędzi pasma 2 [Hz]"
+msgstr "Częstość krawędzi pasma zaporowego 2 [Hz]"
 
 #: org/signalml/app/method/mp5/MP5StoppingCriteriaConfigPanel.java:51
 msgid "Stopping criteria"
-msgstr "Zatrzymanie kryteriów"
+msgstr "Kryteria stopu"
 
 #: org/signalml/app/video/components/VideoStreamSelectionPanel.java:120
 msgid "Stream:"
@@ -5055,11 +5101,11 @@ msgstr "Nie można usunąć stylów {0}!"
 
 #: org/signalml/method/ep/EvokedPotentialMethod.java:78
 msgid "Summing"
-msgstr "Podsumowując"
+msgstr "Sumowanie"
 
 #: org/signalml/app/action/workspace/tasks/SuspendTaskAction.java:28
 msgid "Suspend"
-msgstr "Zawieszać"
+msgstr "Zawieszenie"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:574
 msgid "Suspend & save"
@@ -5067,7 +5113,7 @@ msgstr "Zawieś i zapisz"
 
 #: org/signalml/app/action/workspace/tasks/SuspendAllTasksAction.java:36
 msgid "Suspend all suspendable tasks"
-msgstr "Zawieś wszystkie zawieszane zadania"
+msgstr "Zawieś wszystkie zawieszalne zadania"
 
 #: org/signalml/app/action/workspace/tasks/SuspendAllTasksAction.java:34
 msgid "Suspend all tasks"
@@ -5075,7 +5121,7 @@ msgstr "Zawieś wszystkie zadania"
 
 #: org/signalml/app/action/workspace/tasks/SuspendTaskAction.java:30
 msgid "Suspend this task (the task might not suspend immediately)"
-msgstr "Zawieś to zadanie (zadanie może nie zostać natychmiast zawieszone)"
+msgstr "Zawieś to zadanie (zadanie może nie zostać zawieszone natychmiast)"
 
 #: org/signalml/task/TaskStatus.java:198
 msgid "Suspended"
@@ -5091,11 +5137,11 @@ msgstr "Svarog"
 
 #: org/signalml/plugin/loader/PluginDependency.java:38
 msgid "Svarog API"
-msgstr "Svarog API"
+msgstr "API Svaroga"
 
 #: org/signalml/psychopy/action/ShowPsychopyDialogButton.java:65
 msgid "Svarog do not support opening offline signals from remote experiments."
-msgstr "Svarog nie obsługuje otwierania sygnałów offline z odległych eksperymentów."
+msgstr "Svarog nie obsługuje otwierania sygnałów offline ze zdalnych eksperymentów."
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:198
 msgid "Svarog needs to be restarted for changes to take effect"
@@ -5104,7 +5150,7 @@ msgstr "Svarog musi zostać ponownie uruchomiony, aby zmiany zaczęły obowiązy
 #: org/signalml/app/view/workspace/ViewerMainFrame.java:110
 #, java-format
 msgid "Svarog v.{0}"
-msgstr "Svarog v. {0}"
+msgstr "Svarog v.{0}"
 
 #: org/signalml/app/view/preferences/SignalZoomSettingsPanel.java:149
 msgid "Switch channels as mouse moves"
@@ -5113,7 +5159,7 @@ msgstr "Przełącz kanały, gdy mysz się porusza"
 #: org/signalml/app/action/signal/SignalFilterSwitchAction.java:33
 #: org/signalml/app/action/book/BookFilterSwitchAction.java:33
 msgid "Switch filtering on/off"
-msgstr "Włącz / wyłącz filtrowanie"
+msgstr "Włącz/wyłącz filtrowanie"
 
 #: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:80
 msgid "Synchronization"
@@ -5125,26 +5171,26 @@ msgstr "Synchronizuj teraz"
 
 #: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:308
 msgid "Synchronize plot with master plot"
-msgstr "Synchronizuj wykres z głównym działaniem"
+msgstr "Synchronizuj wykres z wykresem głównym"
 
 #: org/signalml/app/view/tag/synchronize/SynchronizeTagsWithTriggerDialog.java:28
 #: org/signalml/app/action/tag/SynchronizeTagsWithTriggerAction.java:43
 msgid "Synchronize tags with trigger"
-msgstr "Synchronizuj tagi z wyzwalaczem"
+msgstr "Synchronizuj tagi z wyzwalaczem (triggerem)"
 
 #: org/signalml/app/worker/signal/SynchronizeTagsWithTriggerWorker.java:28
 msgid "Synchronizing tags with trigger."
-msgstr "Synchronizacja tagów z wyzwalaczem."
+msgstr "Synchronizacja tagów z wyzwalaczem (triggerem)."
 
 #: org/signalml/app/view/signal/SignalPlotColumnHeader.java:554
 #, java-format
 msgid "T: {0} [P: {1}, B: {2}]"
-msgstr "T: {0} [P: {1}, B: {2}]"
+msgstr "T: {0} [P: {1} , B: {2}]"
 
 #: org/signalml/app/view/signal/SignalPlot.java:1192
 #, java-format
 msgid "T: {0}, V:{1} [P: {2}, B: {3}, C: {4}]"
-msgstr "T: {0}, V: {1} [P: {2}, B: {3}, C: {4}]"
+msgstr "T: {0} , V: {1} [P: {2} , B: {3} , C: {4}]"
 
 #: org/signalml/app/view/signal/roc/RocTableModel.java:73
 msgid "TN"
@@ -5156,44 +5202,44 @@ msgstr "TP"
 
 #: org/signalml/app/view/signal/roc/RocTableModel.java:82
 msgid "TP rate"
-msgstr "Stawka TP"
+msgstr "Stosunek TP"
 
 #: org/signalml/app/document/ManagedDocumentType.java:65
 msgid "Tag"
-msgstr "Etykietka"
+msgstr "Etykieta (tag)"
 
 #: org/signalml/app/view/tag/styles/attributes/TagAttributesDefinitionsEditPanel.java:54
 msgid "Tag attributes"
-msgstr "Atrybuty tagów"
+msgstr "Atrybuty etykiet (tagów)"
 
 #: org/signalml/app/view/book/filter/TagBasedFilterDialog.java:91
 #: org/signalml/domain/book/filter/TagBasedAtomFilter.java:165
 msgid "Tag based atom filter"
-msgstr "Filtr atomów oparty na znacznikach"
+msgstr "Filtr atomów oparty na znacznikach (tagach)"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDescriptor.java:26
 msgid "Tag book atoms"
-msgstr "Atomy książki znaczników"
+msgstr "Oznacz (taguj) atomy książki"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonDialog.java:71
 msgid "Tag comparison"
-msgstr "Porównanie znaczników"
+msgstr "Porównanie znaczników (tagów)"
 
 #: org/signalml/app/view/tag/EditTagDescriptionDialog.java:127
 msgid "Tag document description"
-msgstr "Opisuj opis dokumentu"
+msgstr "Opis dokumentu znaczników (tagów)"
 
 #: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:64
 msgid "Tag file"
-msgstr "Plik znacznika"
+msgstr "Plik znacznika (tag)"
 
 #: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:145
 msgid "Tag file doesn't exist or is unreadable"
-msgstr "Plik tagu nie istnieje lub jest nieczytelny"
+msgstr "Plik znaczników (tag) nie istnieje lub jest nieczytelny"
 
 #: org/signalml/app/view/book/filter/BookFilterChooseTagPanel.java:142
 msgid "Tag file not chosen"
-msgstr "Plik tagu nie został wybrany"
+msgstr "Plik znaczników (tag) nie został wybrany"
 
 #: org/signalml/app/document/ManagedDocumentType.java:67
 msgid "Tag files (*.tag)"
@@ -5201,7 +5247,7 @@ msgstr "Pliki znaczników (* .tag)"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:112
 msgid "Tag mode"
-msgstr "Tryb tagu"
+msgstr "Tryb znaczników"
 
 #: org/signalml/app/action/tag/TagSelectionAction.java:35
 msgid "Tag selection"
@@ -5209,35 +5255,35 @@ msgstr "Wybór znaczników"
 
 #: org/signalml/app/view/signal/SignalView.java:1120
 msgid "Tag signal blocks"
-msgstr "Blokuj sygnały"
+msgstr "Oznaczaj bloki sygnału"
 
 #: org/signalml/app/view/signal/SignalView.java:1118
 msgid "Tag signal pages"
-msgstr "Strony z tagami"
+msgstr "Oznaczaj strony sygnału"
 
 #: org/signalml/app/view/signal/SignalView.java:1122
 msgid "Tag single channel or multichannel custom size signal fragments"
-msgstr "Oznaczaj pojedyncze lub wielokanałowe fragmenty sygnałów o niestandardowych rozmiarach"
+msgstr "Oznaczaj jedno- lub wielo-kanałowe fragmenty sygnałów o niestandardowych rozmiarach"
 
 #: org/signalml/app/method/ep/view/tags/TagSelectionTableModel.java:104
 msgid "Tag style"
-msgstr "Styl tagu"
+msgstr "Styl znacznika (tagu)"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1162
 msgid "Tag style has been modified. Apply changes?"
-msgstr "Styl tagu został zmodyfikowany. Zatwierdź zmiany?"
+msgstr "Styl znacznika (tagu) został zmodyfikowany. Zastosować zmiany?"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:671
 msgid "Tag style name already used. Choose another."
-msgstr "Nazwa stylu tagu jest już używana. Wybierz inny."
+msgstr "Nazwa stylu znacznika (tagu) jest już używana. Wybierz inną."
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:996
 msgid "Tag style name cannot be empty"
-msgstr "Nazwa stylu tagu nie może być pusta"
+msgstr "Nazwa stylu znacznika (tagu) nie może być pusta"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:999
 msgid "Tag style name must not contain control characters"
-msgstr "Nazwa stylu tagu nie może zawierać znaków sterujących"
+msgstr "Nazwa stylu znacznika (tagu) nie może zawierać znaków sterujących"
 
 #: org/signalml/app/view/tag/TagStylePaletteDialog.java:226
 msgid "Tag style palette"
@@ -5249,7 +5295,7 @@ msgstr "Style znaczników"
 
 #: org/signalml/app/view/document/opensignal/elements/OtherSettingsPanel.java:51
 msgid "Tag styles preset"
-msgstr "Style znaczników"
+msgstr "Preset styli znaczników"
 
 #: org/signalml/app/action/tag/TagSelectionAction.java:36
 msgid "Tag the selected signal fragment"
@@ -5257,7 +5303,7 @@ msgstr "Oznacz wybrany fragment sygnału"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:261
 msgid "Tag tool tips"
-msgstr "Wskazówki dotyczące tagów"
+msgstr "Wskazówki dotyczące znaczników (tagów)"
 
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:271
 msgid "Tagging"
@@ -5277,11 +5323,12 @@ msgstr "Tagi Zsynchronizowane"
 
 #: org/signalml/app/view/document/monitor/ChooseFilesForMonitorRecordingPanel.java:144
 msgid "Tags filename:"
-msgstr "Tagi nazwa pliku:"
+msgstr "Nazwa pliku z tagami:"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:165
+#, fuzzy
 msgid "Tags saved to file"
-msgstr "Tagi zapisane w pliku"
+msgstr "Znaczniki (tagi) zapisane do pliku"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:165
 msgid "Tags were saved successfully!"
@@ -5365,11 +5412,11 @@ msgstr "Pliki tekstowe (* .txt)"
 msgid ""
 "The default montage is not compatible with this signal and cannot be loaded. "
 "Please use the montage editor."
-msgstr ""
+msgstr "Domyślny montaż nie jest zgodny z tym sygnałem i nie można go załadować. Proszę użyć edytora montażu."
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:462
 msgid "The default preset will be permanently overwritten. Are you sure?"
-msgstr "Domyślne ustawienie zostanie trwale nadpisane. Jesteś pewny?"
+msgstr "Domyślne ustawienie (preset) zostanie trwale nadpisane. Jesteś pewny?"
 
 #: org/signalml/math/iirdesigner/FilterNotStableException.java:17
 msgid "The filter designed is not stable."
@@ -5388,12 +5435,12 @@ msgstr "Lista znaczników artefaktów nie może zawierać uśrednionych znacznik
 msgid ""
 "The logarithmic range should be include to ]0,Double.MAX_VALUE] and the "
 "lowerBound should be less than the upperBound"
-msgstr ""
+msgstr "Zakres logarytmiczny powinien zawierać się w ]0, Double.MAX_VALUE], a lowerBound powinien być mniejszy niż upperBound"
 
 #: org/signalml/app/method/example/ExampleMethodConsumer.java:24
 #, java-format
 msgid "The meaning of life turns out to be {0}"
-msgstr "Sens życia okazuje się być {0}"
+msgstr "Sensem życia okazuje się być {0}"
 
 #: org/signalml/app/view/montage/SignalMontagePanel.java:286
 msgid "The montage is empty. Please add some target channels"
@@ -5401,29 +5448,29 @@ msgstr "Montaż jest pusty. Dodaj kilka kanałów docelowych"
 
 #: org/signalml/math/iirdesigner/AbstractIIRDesigner.java:175
 msgid "The order of the filter is too big - the parameters are too strict."
-msgstr "Kolejność filtra jest zbyt duża - parametry są zbyt rygorystyczne."
+msgstr "Rząd filtra jest zbyt duży — parametry są zbyt rygorystyczne."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:859
 msgid ""
 "The signal and the tag are not compatible in terms of page and block size. "
 "Are you sure?"
-msgstr ""
+msgstr "Sygnał i znacznik nie są zgodne pod względem rozmiaru strony i bloku. Jesteś pewny?"
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:899
 msgid ""
 "There was a problem while loading the preset file - is it a correct file?"
-msgstr ""
+msgstr "Wystąpił problem podczas ładowania pliku preset — czy jest to poprawny plik?"
 
 #: org/signalml/app/worker/monitor/DisconnectFromExperimentWorker.java:96
 #, java-format
 msgid "There was an error while disconnecting from the experiment ({0})"
-msgstr "Podczas odłączania się od eksperymentu wystąpił błąd ({0})"
+msgstr "Podczas odłączania się od eksperymentu wystąpił błąd ( {0} )"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:201
 msgid ""
 "There was an error while loading the file - did you select a correct "
 "SignalML file?"
-msgstr ""
+msgstr "Wystąpił błąd podczas ładowania pliku — czy wybrałeś poprawny plik SignalML?"
 
 #: org/signalml/psychopy/PsychopyExperiment.java:146
 msgid "There was an error while reading the XML manifest."
@@ -5433,19 +5480,19 @@ msgstr "Wystąpił błąd podczas odczytu manifestu XML."
 msgid ""
 "There was an error while reading the XML manifest. Please input the signal "
 "parameters manually."
-msgstr ""
+msgstr "Wystąpił błąd podczas odczytu manifestu XML. Wprowadź parametry sygnału ręcznie."
 
 #: org/signalml/app/action/tag/SynchronizeTagsWithTriggerAction.java:92
 #, java-format
 msgid "There were less tags ({0}) then activating trigger slopes ({1})."
-msgstr "Było mniej znaczników ({0}), a następnie aktywowano zbocza wyzwalacza ({1})."
+msgstr "Było mniej znaczników ({0}) niż aktywujących zboczy wyzwalacza ({1})."
 
 #: org/signalml/app/action/tag/SynchronizeTagsWithTriggerAction.java:90
 #, java-format
 msgid ""
 "There were more tags ({0}) than activating trigger slopes ({1}). Excessive "
 "tags have been removed!"
-msgstr ""
+msgstr "Było więcej znaczników ({0}) niż aktywujących zbiczy trigera ({1}). Nadmiarowe znaczniki zostały usunięte!"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:114
 msgid "Theta waves"
@@ -5454,32 +5501,32 @@ msgstr "Fale Theta"
 #: org/signalml/math/iirdesigner/IIRDesigner.java:77
 msgid ""
 "This approximation function type is not supported by the IIRFilterDesigner."
-msgstr ""
+msgstr "Ten typ funkcji aproksymacji nie jest obsługiwany przez IIRFilterDesigner."
 
 #: org/signalml/app/view/book/BookPlot.java:1185
 msgid ""
 "This book cannot be rendered because of lack of memory. Please close other "
 "books to free some memory."
-msgstr ""
+msgstr "Ta książka nie może być renderowana z powodu braku pamięci. Zamknij inne książki, aby zwolnić trochę pamięci."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:238
 msgid "This document is already open. Reload?"
-msgstr "Ten dokument jest już otwarty. Przeładować?"
+msgstr "Ten dokument jest już otwarty. Załadować ponownie?"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:744
 msgid "This file already exists. Overwrite?"
-msgstr "Ten plik już istnieje. Przepisać?"
+msgstr "Ten plik już istnieje. Nadpisać?"
 
 #: org/signalml/domain/tag/EEGLabTagExporter.java:45
 msgid "This is ASCII representation of tags from svarog"
-msgstr "To jest reprezentacja ASCII znaczników z svarog"
+msgstr "To jest reprezentacja ASCII znaczników ze Svaroga"
 
 #: org/signalml/app/view/signal/PagingParametersPanel.java:193
 #: org/signalml/app/view/signal/PagingParametersPanel.java:201
 msgid ""
 "This parameter is inherited from the active tag and may not be changed as "
 "long as any tags are open"
-msgstr ""
+msgstr "Ten parametr jest dziedziczony z aktywnego znacznika i nie można go zmienić, dopóki są otwarte jakiekolwiek znaczniki (tagi)"
 
 #: org/signalml/app/view/signal/RequiredSignalParametersPanel.java:181
 msgid "This parameter may not be changed for this signal file"
@@ -5487,24 +5534,24 @@ msgstr "Ten parametr nie może zostać zmieniony dla tego pliku sygnału"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:928
 msgid "This path is used by another open document. Choose another."
-msgstr "Ta ścieżka jest używana przez inny otwarty dokument. Wybierz inny."
+msgstr "Ta ścieżka jest używana przez inny otwarty dokument. Wybierz inną."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1112
 msgid ""
 "This preset is not compatible with current signal and had to be altered "
 "accordingly. Please review settings."
-msgstr ""
+msgstr "To ustawienie wstępne nie jest zgodne z bieżącym sygnałem i musiało zostać odpowiednio zmienione. Sprawdź ustawienia."
 
 #: org/signalml/app/view/document/opensignal/OpenSignalWizardStepOnePanel.java:215
 msgid ""
 "This preset is not compatible with the current experiment - different number "
 "of channels."
-msgstr ""
+msgstr "To ustawienie nie jest zgodne z bieżącym eksperymentem—inna liczba kanałów."
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:896
 msgid ""
 "This source channel is used in the target montage and cannot be removed."
-msgstr ""
+msgstr "Ten kanał źródłowy jest używany w docelowym montażu i nie można go usunąć."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1210
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1257
@@ -5513,17 +5560,17 @@ msgstr "Ten dokument znacznika różni się od aktualnego montażu"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1134
 msgid "This tag style is in use and cannot be removed."
-msgstr "Ten styl tagu jest w użyciu i nie można go usunąć."
+msgstr "Ten styl znacznika (tagu) jest w użyciu i nie można go usunąć."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:896
 msgid ""
 "This tag's signature does not match the signature of the signal. Are you "
 "sure?"
-msgstr ""
+msgstr "Sygnatura tego znacznika nie pasuje do sygnatury sygnału. Jesteś pewny?"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1307
 msgid "This tool works only for non-monitor signals."
-msgstr "To narzędzie działa tylko dla sygnałów innych niż monitorowane."
+msgstr "To narzędzie działa tylko dla sygnałów offline."
 
 #: org/signalml/app/view/montage/filters/charts/elements/TimeDomainResponseChartPanel.java:27
 #: org/signalml/app/method/ep/EvokedPotentialChart.java:117
@@ -5542,15 +5589,16 @@ msgstr "Skala czasu"
 
 #: org/signalml/app/view/preferences/SignalViewingConfigPanel.java:681
 msgid "Time scale [px/sample]"
-msgstr "Skala czasu [px / próbka]"
+msgstr "Skala czasu [px/próbka]"
 
 #: org/signalml/domain/tag/EEGLabTagExporter.java:51
 msgid "Time unit: 1"
 msgstr "Jednostka czasu: 1"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:126
+#, fuzzy
 msgid "Time width [s]"
-msgstr "Szerokość czasu [s]"
+msgstr "Szerokość w czasie [s]"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:443
 msgid "Title"
@@ -5572,7 +5620,7 @@ msgstr "Ukryć"
 msgid ""
 "To import it to EEGLab, run File->Import event info->From Matlab array or "
 "ASCII File"
-msgstr ""
+msgstr "Aby zaimportować do EEGLab, uruchom File-> Import event info-> From Matlab array or ASCII File"
 
 #: org/signalml/app/method/mp5/MP5MethodDialog.java:361
 #: org/signalml/app/method/mp5/MP5MethodDialog.java:665
@@ -5581,21 +5629,21 @@ msgstr "Do trybu surowego"
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:208
 msgid "To show"
-msgstr "Pokazywać"
+msgstr "Pokazać"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:234
 msgid "Toggle DC-offset removal from visualisation"
-msgstr "Przełącz usuwanie przesunięcia DC z wizualizacji"
+msgstr "Przełącz usuwanie offsetu DC z wizualizacji"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:243
 msgid ""
 "Toggle drawing of channels whose normal drawing area is completely outside "
 "the window (causes slower drawing)"
-msgstr ""
+msgstr "Przełączanie rysowanie kanałów, których normalny obszar rysowania znajduje się całkowicie poza oknem (powoduje wolniejsze rysowanie)"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:230
 msgid "Toggle plot antialiasing"
-msgstr "Przełącz antyaliasing fabuły"
+msgstr "Przełącz antyaliasing rysowania"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:225
 msgid "Toggle reconstruction antialiasing"
@@ -5603,7 +5651,7 @@ msgstr "Przełącz wygładzanie rekonstrukcji"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:263
 msgid "Toggle showing full reconstruction graph"
-msgstr "Przełącz pokazujący pełny wykres rekonstrukcji"
+msgstr "Przełącz pokazywanie pełnego wykresu rekonstrukcji"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:339
 msgid "Toggle showing map axes"
@@ -5611,7 +5659,7 @@ msgstr "Przełącz wyświetlanie osi mapy"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:320
 msgid "Toggle showing map scale"
-msgstr "Przełączaj wyświetlanie skali mapy"
+msgstr "Przełącz wyświetlanie skali mapy"
 
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:244
 msgid "Toggle showing original signal graph"
@@ -5627,11 +5675,11 @@ msgstr "Przełącz wyświetlanie legendy rekonstrukcji"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:238
 msgid "Toggle value clamping (causes faster drawing)"
-msgstr "Przełączanie wartości przełączania (powoduje szybsze rysowanie)"
+msgstr "Przełącz przycinanie wartości (powoduje szybsze rysowanie)"
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:204
 msgid "Tool tip settings"
-msgstr "Ustawienia końcówki narzędzia"
+msgstr "Ustawienia podpowiedzi narzędzi"
 
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:290
 #: org/signalml/app/view/workspace/ViewerElementManager.java:708
@@ -5640,7 +5688,7 @@ msgstr "Przybory"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/DescribeComponentsAction.java:49
 msgid "Topography of ICA components"
-msgstr "Topografia składników ICA"
+msgstr "Topografia komponentów ICA"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfTabbedPane.java:168
 msgid "Transfer functions"
@@ -5652,17 +5700,18 @@ msgstr "Przenieś wykres"
 
 #: org/signalml/domain/montage/system/ChannelFunction.java:24
 msgid "Trigger"
-msgstr "Spust"
+msgstr "Spust (trigger)"
 
 #: org/signalml/app/view/tag/synchronize/SynchronizeTagsWithTriggerParametersPanel.java:42
 msgid "Trigger channel"
-msgstr "Kanał wyzwalania"
+msgstr "Kanał wyzwalania (trigger)"
 
 #: org/signalml/app/view/signal/roc/RocDialog.java:189
 msgid "True positive rate"
-msgstr "Rzeczywista stopa pozytywna"
+msgstr "Stosunek TP"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:52
+#, fuzzy
 msgid "Try again"
 msgstr "Spróbuj ponownie"
 
@@ -5704,7 +5753,7 @@ msgstr "Nieznany typ wiadomości"
 msgid ""
 "Unsupported tag file format version. Svarog supports only tag file with "
 "format version equal to {0}."
-msgstr ""
+msgstr "Nieobsługiwana wersja formatu pliku znacznika (tag). Svarog obsługuje tylko pliki znaczników z wersją formatu równą {0} ."
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:312
 msgid "Up to Fn"
@@ -5715,12 +5764,13 @@ msgid "Use local scale"
 msgstr "Użyj skali lokalnej"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:441
+#, fuzzy
 msgid "Use splines (experimental)"
-msgstr "Użyj splajnów (eksperymentalnych)"
+msgstr "Użyj funkcji sklejanych (experymentalne)"
 
 #: org/signalml/app/view/tag/NewTagPanel.java:168
 msgid "Use standard sleep staging styles"
-msgstr "Użyj standardowych trybów snu"
+msgstr "Użyj standardowych styli dla stadiów snu"
 
 #: org/signalml/app/view/tag/NewTagPanel.java:227
 msgid "Use styles from selected file"
@@ -5728,7 +5778,7 @@ msgstr "Użyj stylów z wybranego pliku"
 
 #: org/signalml/app/view/tag/NewTagPanel.java:198
 msgid "Use styles from selected styles preset"
-msgstr "Użyj stylów z wybranych stylów"
+msgstr "Użyj stylów z wybranych presetów"
 
 #: org/signalml/app/method/example/ExampleMethodDialog.java:64
 msgid "Useless deliberation count"
@@ -5767,7 +5817,7 @@ msgstr "Podgląd wideo nie będzie działał, dopóki nie uruchomisz ponownie Sv
 #: org/signalml/app/document/MonitorSignalDocument.java:465
 msgid ""
 "Video saving has not been finalized! Video data may be missing from XML file."
-msgstr ""
+msgstr "Zapis wideo nie został sfinalizowany! W pliku XML może brakować danych wideo."
 
 #: org/signalml/app/document/MonitorSignalDocument.java:466
 msgid "Video saving issue"
@@ -5775,7 +5825,7 @@ msgstr "Problem z zapisywaniem wideo"
 
 #: org/signalml/app/video/components/OnlineMediaPlayerComponent.java:74
 msgid "Video saving will continue to operate normally."
-msgstr "Oszczędność wideo będzie nadal działać normalnie."
+msgstr "Zapis wideo będzie nadal działać normalnie."
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:627
 msgid "View"
@@ -5847,7 +5897,7 @@ msgstr "Typ okna"
 
 #: org/signalml/method/mp5/MP5Method.java:317
 msgid "Working directory not writeable"
-msgstr "Nie można zapisać katalogu roboczego"
+msgstr "Nie można zapisać do katalogu roboczego"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:815
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:30
@@ -5856,7 +5906,7 @@ msgstr "Obszar roboczy"
 
 #: org/signalml/method/mp5/MP5LocalProcessExecutor.java:117
 msgid "Writing signal file"
-msgstr "Zapisywanie pliku sygnałowego"
+msgstr "Zapis sygnału"
 
 #: org/signalml/psychopy/view/panel/SelectPsychopyExperimentPanel.java:46
 msgid "Wrong procedure filename."
@@ -5864,11 +5914,12 @@ msgstr "Zła nazwa pliku procedury."
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:798
 msgid "X-Axis label count should be greater than 0!"
-msgstr "Liczba etykiet X-Axis powinna być większa niż 0!"
+msgstr "Liczba etykiet osi X powinna być większa niż 0!"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:347
+#, fuzzy
 msgid "X-axis label count"
-msgstr "Liczba etykiet osi X."
+msgstr "liczba etykiet osi X"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:792
 msgid "X-axis label count: positive integer required"
@@ -5886,7 +5937,7 @@ msgstr "Pliki XML (* .xml)"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:230
 msgid "XML manifest not found - would you like to choose the XML file manualy?"
-msgstr "Nie znaleziono manifestu XML - czy chcesz wybrać plik XML ręcznie?"
+msgstr "Nie znaleziono manifestu XML — czy chcesz wybrać plik XML ręcznie?"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:206
 msgid "XOR"
@@ -5895,7 +5946,7 @@ msgstr "XOR"
 #: org/signalml/app/view/common/dialogs/errors/Dialogs.java:27
 #: org/signalml/app/model/components/PropertySheetModel.java:124
 msgid "Yes"
-msgstr "tak"
+msgstr "Tak"
 
 #: org/signalml/app/video/components/OnlineMediaPlayerComponent.java:75
 msgid "You can open preview in any other video player, by opening this link:"
@@ -5911,7 +5962,7 @@ msgstr "Musisz wybrać przynajmniej jeden parametr do iteracji"
 
 #: org/signalml/app/method/mp5/MP5ToolConfigDialog.java:85
 msgid "You must configure at least one executor"
-msgstr "Musisz skonfigurować co najmniej jeden executor"
+msgstr "Musisz skonfigurować co najmniej jeden executor (plik wykonywalny)"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:832
 #: org/signalml/domain/montage/system/ChannelFunction.java:32
@@ -5920,25 +5971,26 @@ msgstr "ZERO"
 
 #: org/signalml/app/view/montage/MontageChannelsPanel.java:249
 msgid "ZEROs channel"
-msgstr "Kanał ZERO"
+msgstr "Kanał ZER"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/ZeroMethodAction.java:39
+#, fuzzy
 msgid "Zero selected components"
-msgstr "Zeruj wybrane komponenty"
+msgstr "Wyzeruj wybrane składniki"
 
 #: org/signalml/app/view/preferences/SignalZoomSettingsPanel.java:105
 msgid "Zoom factor"
-msgstr "Współczynnik powiększenia"
+msgstr "Współczynnik powiększenia (zoom)"
 
 #: org/signalml/app/view/preferences/SignalZoomSettingsPanel.java:126
 msgid "Zoom window size"
-msgstr "Powiększ rozmiar okna"
+msgstr "Rozmiar okna powiększenia (zoom)"
 
 #: org/signalml/app/view/book/BookView.java:425
 msgid ""
 "Zooms the map (hold down Ctrl to zoom out; hold down mouse button for "
 "options)"
-msgstr ""
+msgstr "Powiększa mapę (przytrzymaj klawisz Ctrl, aby pomniejszyć, przytrzymaj przycisk myszy, aby wyświetlić opcje)"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonResultPanel.java:97
 msgid "[%]"
@@ -5969,8 +6021,9 @@ msgid "amplitude"
 msgstr "amplituda"
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetOccurences.java:55
+#, fuzzy
 msgid "amplitudes [µV]"
-msgstr "amplitudy [μV]"
+msgstr "amplitudy [µV]"
 
 #: org/signalml/plugin/export/signal/Tag.java:270
 msgid "annotation"
@@ -5994,7 +6047,7 @@ msgstr "application.tagPaintMode"
 
 #: org/signalml/domain/roc/RocData.java:417
 msgid "area under curve"
-msgstr "obszar pod krzywą"
+msgstr "obszar pod krzywą (AUC)"
 
 #: org/signalml/app/model/book/BookSegmentTreeNode.java:110
 msgid "atom count"
@@ -6002,9 +6055,10 @@ msgstr "liczba atomów"
 
 #: org/signalml/method/mp5/MP5ConfigCreator.java:91
 msgid "auto created by SignalML version [%s] on [%s]"
-msgstr "auto stworzone przez wersję SignalML [%s] na [%s]"
+msgstr "automatycznie stworzone przez SignalML wersja [%s] na [%s]"
 
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseAction.java:47
+#, fuzzy
 msgid "averaged"
 msgstr "uśrednione"
 
@@ -6031,10 +6085,11 @@ msgstr "bloki na stronę"
 
 #: org/signalml/app/document/BookDocument.java:357
 msgid "book comment"
-msgstr "komentarz do książki"
+msgstr "komentarz książki"
 
 #: org/signalml/plugin/bookreporter/io/BookReporterBookReader.java:46
 #: org/signalml/plugin/bookreporter/io/BookReporterBookReader.java:57
+#, fuzzy
 msgid "book is already closed"
 msgstr "książka jest już zamknięta"
 
@@ -6044,7 +6099,7 @@ msgstr "broker_url"
 
 #: org/signalml/app/document/signal/RawSignalDocument.java:96
 msgid "byte order"
-msgstr "Kolejność bajtów"
+msgstr "kolejność bajtów"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:1383
 #: org/signalml/app/document/DocumentFlowIntegrator.java:1404
@@ -6097,7 +6152,7 @@ msgstr "indeks kanału"
 
 #: org/signalml/app/method/ep/action/SaveStatisticsAction.java:56
 msgid "channel_name"
-msgstr "Nazwa kanału"
+msgstr "nazwa kanału"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:762
 msgid "codec of this name doesn't exist"
@@ -6108,28 +6163,31 @@ msgid "comma"
 msgstr "przecinek"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfTabbedPane.java:101
+#, fuzzy
 msgid "copy model coefficients to clipboard"
-msgstr "skopiować współczynniki modelu do schowka"
+msgstr "Skopiuj współczynniki modelu do schowka"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:68
+#, fuzzy
 msgid "count (per time interval) of..."
-msgstr "liczba (na przedział czasu) z ..."
+msgstr "liczba (na przedział czasu)..."
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetCount.java:21
 msgid "count of<br>%s<br>per %d s"
-msgstr "liczba<br>%s<br>w %d s"
+msgstr "liczba <br>%s<br>w %d s"
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetCount.java:43
 msgid "count per %d s"
-msgstr "liczyć na %d s"
+msgstr "liczba na %d s"
 
 #: org/signalml/app/action/document/RegisterCodecAction.java:134
 msgid "creating codec reader"
-msgstr "tworzenie czytnika kodów"
+msgstr "tworzenie kodeka do wczytywania"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfOrderCriteriaPanel.java:37
+#, fuzzy
 msgid "criterion value"
-msgstr "wartość kryterium"
+msgstr "Wartość kryterium"
 
 #: org/signalml/app/document/BookDocument.java:358
 msgid "date"
@@ -6186,7 +6244,7 @@ msgstr "włącz nagrywanie"
 #: org/signalml/app/model/signal/SignalPageTreeNode.java:60
 #: org/signalml/app/model/book/BookSegmentTreeNode.java:109
 msgid "end time"
-msgstr "Koniec czasu"
+msgstr "koniec w czasie"
 
 #: org/signalml/app/document/BookDocument.java:359
 msgid "energy percent"
@@ -6194,11 +6252,11 @@ msgstr "procent energii"
 
 #: org/signalml/util/FormatUtils.java:152
 msgid "epochs"
-msgstr "epoki"
+msgstr "odcinki"
 
 #: org/signalml/method/mp5/MP5LocalProcessExecutor.java:183
 msgid "execute from $PATH"
-msgstr "wykonać z $ PATH"
+msgstr "wykonać z $PATH"
 
 #: org/signalml/app/action/book/ExportBookAction.java:100
 msgid "exporting book"
@@ -6212,7 +6270,7 @@ msgstr "eksportowanie sygnału"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:984
 msgid "failed to export signal"
-msgstr "nie udało się wyeksportować sygnału"
+msgstr "eksportowanie sygnału nie powiodło się"
 
 #: org/signalml/peer/BrokerTcpConnector.java:108
 msgid "failed to fetch broker addresses"
@@ -6225,13 +6283,13 @@ msgstr "nie udało się załadować"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:809
 msgid "failed to open book document"
-msgstr "nie udało się otworzyć dokumentu książki"
+msgstr "nie udało się otworzyć pliku książki"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:642
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:687
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:773
 msgid "failed to open document"
-msgstr "nie udało się otworzyć dokumentu"
+msgstr "zachowywanie dokumentu"
 
 #: org/signalml/app/document/TagDocument.java:205
 msgid "failed to read XML, element %s"
@@ -6243,19 +6301,19 @@ msgstr "nie udało się odczytać kodeka"
 
 #: org/signalml/domain/roc/RocDataPoint.java:120
 msgid "false discovery rate"
-msgstr "współczynnik fałszywych odkryć"
+msgstr "false discovery rate (FDR)"
 
 #: org/signalml/domain/roc/RocDataPoint.java:112
 msgid "false negative count"
-msgstr "liczba fałszywych ujemnych"
+msgstr "liczba fałszywych negatywów (FN)"
 
 #: org/signalml/domain/roc/RocDataPoint.java:110
 msgid "false positive count"
-msgstr "liczba fałszywych pozytywów"
+msgstr "liczba fałszywych pozytywów (FP)"
 
 #: org/signalml/domain/roc/RocDataPoint.java:113
 msgid "false rate"
-msgstr "fałszywa stopa"
+msgstr "wkaźnik fałszywych"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:626
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:654
@@ -6284,16 +6342,17 @@ msgstr "nazwa formatu"
 
 #: org/signalml/app/model/book/BookAtomTreeNode.java:85
 msgid "frequency"
-msgstr "częstotliwość"
+msgstr "częstość"
 
 #: org/signalml/method/bookaverage/TimeFrequencyMapPanel.java:74
 msgid "frequency (Hz)"
-msgstr "częstotliwość (Hz)"
+msgstr "częstość (Hz)"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfPlotsPanel.java:53
 #: pl/edu/fuw/fid/signalanalysis/stft/PaneForSTFT.java:90
+#, fuzzy
 msgid "frequency [Hz]"
-msgstr "częstotliwość [Hz]"
+msgstr "częstość [Hz]"
 
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:103
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:104
@@ -6307,6 +6366,7 @@ msgstr "z"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/PopupActionForWavelet.java:39
 #: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:39
+#, fuzzy
 msgid "from selection"
 msgstr "z wyboru"
 
@@ -6319,20 +6379,23 @@ msgid "in each"
 msgstr "w każdym"
 
 #: org/signalml/plugin/bookreporter/logic/intervals/BookReporterTimeInterval.java:30
+#, fuzzy
 msgid "invalid endpoints for time interval"
-msgstr "nieprawidłowe punkty końcowe dla przedziału czasu"
+msgstr "nieprawidłowe brzegi dla przedziału czasu"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTTool.java:283
+#, fuzzy
 msgid "invalid plot"
 msgstr "nieprawidłowy wykres"
 
 #: pl/edu/fuw/fid/signalanalysis/SignalAnalysisTools.java:83
+#, fuzzy
 msgid "invalid selection"
 msgstr "nieprawidłowy wybór"
 
 #: org/signalml/app/document/MonitorSignalDocument.java:560
 msgid "is psychopy experiment running"
-msgstr "jest uruchomiony eksperyment psychologiczny"
+msgstr "czy jest uruchomiony eksperyment PsychoPy"
 
 #: org/signalml/app/document/MonitorSignalDocument.java:559
 msgid "is recording"
@@ -6340,7 +6403,7 @@ msgstr "nagrywa"
 
 #: org/signalml/app/document/MonitorSignalDocument.java:558
 msgid "is video saving"
-msgstr "jest zapisywanie wideo"
+msgstr "jest zapisywane wideo"
 
 #: org/signalml/app/model/book/BookAtomTreeNode.java:79
 msgid "iteration"
@@ -6348,7 +6411,7 @@ msgstr "iteracja"
 
 #: org/signalml/plugin/export/signal/TagStyle.java:487
 msgid "key stroke"
-msgstr "kluczowy skok"
+msgstr "klawisz"
 
 #: org/signalml/app/model/document/opensignal/elements/ChannelSelectTableModel.java:158
 #: org/signalml/app/model/book/BookChannelTreeNode.java:54
@@ -6357,12 +6420,12 @@ msgstr "etykieta"
 
 #: org/signalml/app/document/mrud/MRUDEntry.java:182
 msgid "last time opened"
-msgstr "Ostatni raz otwarty"
+msgstr "ostatni raz otwarty"
 
 #: org/signalml/app/view/signal/SignalPlot.java:2719
 #, java-format
 msgid "leading by {0,number,#.##}s"
-msgstr "prowadzenie przez {0, numer, #. ##} s"
+msgstr "prowadzenie przez {0,number,#.##}s"
 
 #: org/signalml/plugin/export/signal/Tag.java:264
 msgid "length"
@@ -6398,7 +6461,7 @@ msgstr "max_time"
 
 #: org/signalml/app/method/ep/action/SaveStatisticsAction.java:60
 msgid "max_value"
-msgstr "maksymalna wartość"
+msgstr "max_value"
 
 #: org/signalml/domain/roc/RocData.java:419
 msgid "maximal accuracy"
@@ -6430,7 +6493,7 @@ msgstr "min"
 
 #: org/signalml/app/method/ep/model/minmax/MinMaxTableModel.java:77
 msgid "min time"
-msgstr "min czas"
+msgstr "minimalny czas"
 
 #: org/signalml/app/method/ep/model/minmax/MinMaxTableModel.java:78
 msgid "min value"
@@ -6440,8 +6503,9 @@ msgstr "minimalna wartość"
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:124
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:127
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:130
+#, fuzzy
 msgid "min/max"
-msgstr "minimum maksimum"
+msgstr "min/maks"
 
 #: org/signalml/app/method/ep/action/SaveStatisticsAction.java:57
 msgid "min_time"
@@ -6461,8 +6525,9 @@ msgid "missing dependencies"
 msgstr "brakujące zależności"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfOrderCriteriaPanel.java:37
+#, fuzzy
 msgid "model order"
-msgstr "kolejność modeli"
+msgstr "rząd modelu"
 
 #: org/signalml/app/view/signal/SignalPlot.java:2663
 msgid "modified montage"
@@ -6482,7 +6547,7 @@ msgstr "montaż z dokumentu"
 
 #: org/signalml/plugin/export/signal/TagStyle.java:481
 msgid "name"
-msgstr "imię"
+msgstr "nazwa"
 
 #: org/signalml/domain/roc/RocDataPoint.java:119
 msgid "negative predictive value"
@@ -6496,7 +6561,7 @@ msgstr "brak aktywnego dokumentu"
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:592
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:827
 msgid "no active signal document"
-msgstr "brak aktywnego dokumentu sygnałowego"
+msgstr "brak aktywnego dokumentu z sygnałem"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:118
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:239
@@ -6510,7 +6575,7 @@ msgstr "brak aktywnego wyboru sygnału"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:462
 msgid "no active singal document"
-msgstr "brak aktywnego dokumentu singal"
+msgstr "brak aktywnego dokumentu sygnału"
 
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:467
 msgid "no active tag"
@@ -6519,9 +6584,10 @@ msgstr "brak aktywnego tagu"
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:420
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:603
 msgid "no active tag document"
-msgstr "brak aktywnego dokumentu znacznika"
+msgstr "brak aktywnego dokumentu znaczników (tag)"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodComputer.java:34
+#, fuzzy
 msgid "no channels selected"
 msgstr "nie wybrano żadnych kanałów"
 
@@ -6538,16 +6604,18 @@ msgid "no profile directories stored"
 msgstr "nie zapisano żadnych katalogów profilu"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfNormRadioPanel.java:43
+#, fuzzy
 msgid "normalized"
 msgstr "znormalizowany"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfNormRadioPanel.java:44
+#, fuzzy
 msgid "not normalized"
 msgstr "nie znormalizowany"
 
 #: org/signalml/app/model/document/opensignal/elements/ChannelSelectTableModel.java:156
 msgid "number"
-msgstr "numer"
+msgstr "liczba"
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetOccurences.java:35
 msgid "occurences of<br>%s"
@@ -6556,12 +6624,12 @@ msgstr "wystąpienia<br>%s"
 #: org/signalml/app/view/signal/SignalPlot.java:2666
 #: org/signalml/app/view/signal/SignalPlot.java:2667
 msgid "off"
-msgstr "poza"
+msgstr "wyłączone"
 
 #: org/signalml/app/view/signal/SignalPlot.java:2666
 #: org/signalml/app/view/signal/SignalPlot.java:2667
 msgid "on"
-msgstr "na"
+msgstr "włączone"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:924
 msgid "opening book"
@@ -6569,11 +6637,11 @@ msgstr "otwieranie książki"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:710
 msgid "opening signal"
-msgstr "sygnał otwarcia"
+msgstr "otwieranie sygnału"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:1013
 msgid "opening tag"
-msgstr "otwieranie tagu"
+msgstr "otwieranie taga"
 
 #: org/signalml/plugin/export/signal/TagStyle.java:484
 msgid "outline color"
@@ -6593,7 +6661,7 @@ msgstr "strona"
 
 #: org/signalml/app/document/signal/AbstractSignal.java:354
 msgid "page count"
-msgstr "Liczba stron"
+msgstr "liczba stron"
 
 #: org/signalml/app/document/signal/AbstractSignal.java:349
 msgid "page size"
@@ -6609,7 +6677,7 @@ msgstr "faza"
 
 #: org/signalml/domain/roc/RocData.java:420
 msgid "point abose OSS iteration"
-msgstr "punkt na iterację OSS"
+msgstr "punkt powyżej iteracji OSS"
 
 #: org/signalml/domain/roc/RocData.java:421
 msgid "point above OSS distance"
@@ -6634,15 +6702,16 @@ msgstr "dodatnia wartość predykcyjna"
 
 #: org/signalml/peer/Peer.java:163
 msgid "received invalid one-part message"
-msgstr "Otrzymano niepoprawną wiadomość jednoczęściową"
+msgstr "otrzymano niepoprawną wiadomość jednoczęściową"
 
 #: org/signalml/peer/Peer.java:167
 msgid "received message with more than two parts"
-msgstr "otrzymał wiadomość z więcej niż dwiema częściami"
+msgstr "otrzymano wiadomość z więcej niż dwiema częściami"
 
 #: org/signalml/app/action/document/monitor/StartVideoPreviewAction.java:87
+#, fuzzy
 msgid "recording"
-msgstr "nagranie"
+msgstr "nagrywa"
 
 #: org/signalml/app/document/signal/RawSignalDocument.java:95
 msgid "sample type"
@@ -6651,11 +6720,11 @@ msgstr "typ próbki"
 #: org/signalml/app/document/BookDocument.java:355
 #: org/signalml/app/document/signal/AbstractSignal.java:347
 msgid "sampling frequency"
-msgstr "częstotliwość próbkowania"
+msgstr "częstość próbkowania"
 
 #: org/signalml/app/document/DocumentFlowIntegrator.java:510
 msgid "saving document"
-msgstr "zapisywanie dokumentu"
+msgstr "zachowywanie dokumentu"
 
 #: org/signalml/app/model/book/BookAtomTreeNode.java:84
 msgid "scale"
@@ -6664,11 +6733,12 @@ msgstr "skala"
 #: org/signalml/plugin/impl/SignalsAccessImpl.java:918
 #: org/signalml/app/action/signal/ExportSignalAction.java:256
 msgid "scanning signal"
-msgstr "sygnał skanowania"
+msgstr "skanowanie sygnału"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:122
+#, fuzzy
 msgid "second interval"
-msgstr "druga przerwa"
+msgstr "drugi przedział"
 
 #: org/signalml/app/document/BookDocument.java:354
 msgid "segment count"
@@ -6676,23 +6746,23 @@ msgstr "liczba segmentów"
 
 #: org/signalml/app/model/book/BookSegmentTreeNode.java:106
 msgid "segment index"
-msgstr "indeks segmentów"
+msgstr "indeks segmentu"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfPlotsPanel.java:41
 msgid "select AR model order to display graphs"
-msgstr "wybierz kolejność modeli AR, aby wyświetlić wykresy"
+msgstr "wybierz rząd modelu AR, aby wyświetlić wykresy"
 
 #: org/signalml/app/model/document/opensignal/elements/ChannelSelectTableModel.java:154
 msgid "selected"
-msgstr "wybrany"
+msgstr "wybrane"
 
 #: org/signalml/domain/roc/RocDataPoint.java:115
 msgid "sensitivity"
-msgstr "wrażliwość"
+msgstr "czułość"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfPlotsPanel.java:47
 msgid "series[][] is not a square array"
-msgstr "seria [] [] nie jest tablicą kwadratową"
+msgstr "seria[][] nie jest macierzą kwadratową"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:143
 msgid "show horizontal lines for 20% and 50%"
@@ -6707,6 +6777,7 @@ msgid "signal energy"
 msgstr "energia sygnału"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodComputer.java:38
+#, fuzzy
 msgid "signal is empty"
 msgstr "sygnał jest pusty"
 
@@ -6724,7 +6795,7 @@ msgstr "wybielenie sygnału nie powiodło się"
 
 #: org/signalml/method/mp5/MP5ConfigCreator.java:90
 msgid "signalml MP configuration"
-msgstr "konfiguracja sygnału MP"
+msgstr "konfiguracja MP"
 
 #: org/signalml/app/view/common/dialogs/TaskStatusDialog.java:276
 #, java-format
@@ -6780,19 +6851,20 @@ msgstr "zsynchronizowany"
 
 #: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:25
 msgid "tab"
-msgstr "patka"
+msgstr "tab"
 
 #: org/signalml/app/document/TagDocument.java:383
 msgid "tag count"
 msgstr "liczba tagów"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:156
+#, fuzzy
 msgid "tag files"
-msgstr "pliki znaczników"
+msgstr "Plik znacznika (tag)"
 
 #: org/signalml/app/document/TagDocument.java:382
 msgid "tag style count"
-msgstr "liczba stylów tagów"
+msgstr "liczba styli tagów"
 
 #: org/signalml/app/document/BookDocument.java:364
 msgid "text info"
@@ -6803,7 +6875,7 @@ msgstr "informacje tekstowe"
 msgid ""
 "the xml file ({0})) doesn't contain all necessary values. Missing values: "
 "{1}."
-msgstr ""
+msgstr "plik xml ({0}) nie zawiera wszystkich niezbędnych wartości. Brakujące wartości: {1} ."
 
 #: org/signalml/plugin/bookreporter/data/BookReporterFASPThreshold.java:34
 msgid "theta"
@@ -6819,24 +6891,26 @@ msgstr "ta operacja nie jest obsługiwana"
 
 #: org/signalml/method/bookaverage/TimeFrequencyMapPanel.java:72
 msgid "time (s)"
-msgstr "czas (czasy)"
+msgstr "czas (s)"
 
 #: org/signalml/plugin/bookreporter/method/BookReporterMethod.java:80
+#, fuzzy
 msgid "time [hours]"
-msgstr "czas [godziny]"
+msgstr "czas [godzin]"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/PaneForWavelet.java:186
 #: pl/edu/fuw/fid/signalanalysis/stft/PaneForSTFT.java:121
+#, fuzzy
 msgid "time [s]"
 msgstr "czas [s]"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:77
 msgid "time percentage occupied by..."
-msgstr "Procent czasu zajmowany przez ..."
+msgstr "procent czasu zajmowany przez ..."
 
 #: org/signalml/app/logging/ObciConnection.java:60
 msgid "timestamp"
-msgstr "znak czasu"
+msgstr "znacznik czasu"
 
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:111
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:112
@@ -6851,19 +6925,19 @@ msgstr "do"
 #: org/signalml/app/view/signal/SignalPlot.java:2717
 #, java-format
 msgid "trailing by {0,number,#.##}s"
-msgstr "końcowe z {0, number, #. ##} s"
+msgstr "kończenie za pomocą {0,number,#.##}s"
 
 #: org/signalml/domain/roc/RocDataPoint.java:111
 msgid "true negative count"
-msgstr "true negative count"
+msgstr "liczba poprawnie negatywnych (TN)"
 
 #: org/signalml/domain/roc/RocDataPoint.java:109
 msgid "true positive count"
-msgstr "prawdziwa liczba dodatnia"
+msgstr "liczba poprawnie pozytywnych (TP)"
 
 #: org/signalml/domain/roc/RocDataPoint.java:114
 msgid "true rate"
-msgstr "prawdziwa stawka"
+msgstr "true rate"
 
 #: org/signalml/plugin/export/signal/TagStyle.java:480
 #: org/signalml/app/model/book/BookAtomTreeNode.java:80
@@ -6871,8 +6945,9 @@ msgid "type"
 msgstr "rodzaj"
 
 #: org/signalml/plugin/io/PluginTagWriter.java:96
+#, fuzzy
 msgid "typed "
-msgstr "wpisane"
+msgstr "typed"
 
 #: org/signalml/app/view/common/components/panels/UnlimitedSpinnerPanel.java:84
 msgid "un."
@@ -6880,7 +6955,7 @@ msgstr "un."
 
 #: org/signalml/app/view/common/components/panels/UnlimitedSpinnerPanel.java:86
 msgid "unlimited"
-msgstr "Nieograniczony"
+msgstr "nieograniczony"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/PaneForWavelet.java:187
 #: pl/edu/fuw/fid/signalanalysis/stft/PaneForSTFT.java:122
@@ -6901,7 +6976,7 @@ msgstr "podgląd wideo"
 
 #: org/signalml/app/video/PreviewVideoDialog.java:29
 msgid "video preview (close to continue)"
-msgstr "podgląd wideo (blisko, aby kontynuować)"
+msgstr "podgląd wideo (zamknij, aby kontynuować)"
 
 #: org/signalml/plugin/export/signal/TagStyle.java:488
 msgid "visibility"
@@ -6912,22 +6987,26 @@ msgid "waiting for task"
 msgstr "czekanie na zadanie"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/AveragedWaveletDialog.java:59
+#, fuzzy
 msgid "wavelet type:"
-msgstr "rodzaj falki:"
+msgstr "rodzaj falki: "
 
 #: org/signalml/app/document/BookDocument.java:365
 msgid "web site info"
 msgstr "informacje o witrynie internetowej"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/AveragedWaveletDialog.java:61
+#, fuzzy
 msgid "width parameter:"
 msgstr "parametr szerokości:"
 
 #: pl/edu/fuw/fid/signalanalysis/stft/AveragedStftDialog.java:50
+#, fuzzy
 msgid "window size:"
 msgstr "rozmiar okna:"
 
 #: pl/edu/fuw/fid/signalanalysis/stft/AveragedStftDialog.java:48
+#, fuzzy
 msgid "window type:"
 msgstr "typ okna:"
 
@@ -6954,7 +7033,7 @@ msgstr "{0} zostało zmodyfikowane. Zapisać?"
 #: org/signalml/app/view/signal/SignalView.java:968
 #, java-format
 msgid "{0} pixels/sample"
-msgstr "{0} piksele / próbka"
+msgstr "{0} pikseli/próbkę"
 
 #: org/signalml/app/view/signal/SignalView.java:1000
 #: org/signalml/app/view/book/BookView.java:734
@@ -6963,11 +7042,17 @@ msgid "{0} px"
 msgstr "{0} px"
 
 #: org/signalml/app/view/document/monitor/ChooseFilesForMonitorRecordingPanel.java:265
-#, java-format
+#, fuzzy, java-format
 msgid "{0} recording target file already exists! Do you want to overwrite?"
-msgstr "Docelowy plik {0} już istnieje! Chcesz nadpisać?"
+msgstr "Docelowy plik zapisu {0} już istnieje! Chcesz nadpisać?"
 
 #: org/signalml/app/worker/monitor/exceptions/OpenbciCommunicationException.java:14
 #, java-format
 msgid "{0}. ({1})"
 msgstr "{0}. ({1})"
+
+#~ msgid "Bad port number!"
+#~ msgstr "Zły numer portu!"
+
+#~ msgid "Disconnect"
+#~ msgstr "Rozłącz"
