@@ -110,6 +110,7 @@ public class SvarogApplication implements java.lang.Runnable {
 	private File profileDir = null;
 
 	private ApplicationConfiguration applicationConfig = new ApplicationConfiguration();
+	private GeneralConfiguration generalConfig = new GeneralConfiguration();
 
 	private DefaultSignalMLCodecManager signalMLCodecManager = null;
 	private DefaultDocumentManager documentManager = null;
@@ -417,11 +418,12 @@ public class SvarogApplication implements java.lang.Runnable {
 			System.exit(1);
 		}
 
-		GeneralConfiguration config = new GeneralConfiguration();
+		generalConfig.setProfileDir(profileDir);
+		generalConfig.setStreamer(streamer);
 		if (!firstTime) {
 			try {
-				config.readFromXML(config.getStandardFile(profileDir), streamer);
-				locale = new Locale(config.getLocale());
+				generalConfig.readFromXML(generalConfig.getStandardFile(profileDir), streamer);
+				locale = new Locale(generalConfig.getLocale());
 				return; // initialized!
 			} catch (FileNotFoundException ex) {
 				logger.debug("Failed to read configuration - file not found, will have to reinitialize");
@@ -432,8 +434,8 @@ public class SvarogApplication implements java.lang.Runnable {
 		if (locale == null) {
 			locale = Locale.ENGLISH;
 			try {
-				config.setLocale(locale.toString());
-				config.writeToXML(config.getStandardFile(profileDir), streamer);
+				generalConfig.setLocale(locale.toString());
+				generalConfig.writeToXML(generalConfig.getStandardFile(profileDir), streamer);
 			} catch (IOException ex) {
 				logger.error("Failed to write configuration", ex);
 			}
@@ -774,6 +776,12 @@ public class SvarogApplication implements java.lang.Runnable {
 		}
 
 		try {
+			generalConfig.writeToPersistence(null);
+		} catch (Exception ex) {
+			logger.error("Failed to write general configuration", ex);
+		}
+
+		try {
 			mp5ExecutorManager.writeToPersistence(null);
 		} catch (Exception ex) {
 			logger.error("Failed to write MP executor manager configuration", ex);
@@ -841,6 +849,14 @@ public class SvarogApplication implements java.lang.Runnable {
 	 */
 	public static ApplicationConfiguration getApplicationConfiguration() {
 		return getSharedInstance().applicationConfig;
+	}
+
+	/**
+	 * Returns the {@link GeneralConfiguration} used for Svarog.
+	 * @return the {@link GeneralConfiguration} used.
+	 */
+	public static GeneralConfiguration getGeneralConfiguration() {
+		return getSharedInstance().generalConfig;
 	}
 
 	public static ManagerOfPresetManagers getManagerOfPresetsManagers() {

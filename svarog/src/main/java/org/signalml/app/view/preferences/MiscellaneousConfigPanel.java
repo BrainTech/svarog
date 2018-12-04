@@ -8,10 +8,12 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.util.Locale;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -22,8 +24,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.signalml.SignalMLOperationMode;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.util.i18n.SvarogI18n;
 
 /**
  * Panel with various options of (tooltips, "view mode", warning dialogs):
@@ -59,6 +63,11 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 public class MiscellaneousConfigPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+
+	/**
+	 * combo box for language selection
+	 */
+	private JComboBox languageComboBox;
 
 	/**
 	 * the check-box if configuration files should be saved after every change
@@ -175,8 +184,25 @@ public class MiscellaneousConfigPanel extends JPanel {
 							   ));
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
-			generalPanel.add(getSaveConfigOnEveryChangeCheckBox());
-			generalPanel.add(getRestoreWorkspaceCheckBox());
+			JPanel applicationPanel = new JPanel();
+			applicationPanel.setLayout(new BoxLayout(applicationPanel, BoxLayout.X_AXIS));
+
+			JPanel applicationPanelLeft = new JPanel();
+			applicationPanelLeft.setLayout(new BoxLayout(applicationPanelLeft, BoxLayout.X_AXIS));
+			applicationPanelLeft.add(new JLabel(_("Language")));
+			applicationPanelLeft.add(Box.createHorizontalStrut(5));
+			applicationPanelLeft.add(getLanguageComboBox());
+
+			JPanel applicationPanelRight = new JPanel();
+			applicationPanelRight.setLayout(new BoxLayout(applicationPanelRight, BoxLayout.Y_AXIS));
+			applicationPanelRight.add(getSaveConfigOnEveryChangeCheckBox());
+			applicationPanelRight.add(getRestoreWorkspaceCheckBox());
+
+			applicationPanel.add(applicationPanelLeft);
+			applicationPanel.add(Box.createHorizontalGlue());
+			applicationPanel.add(applicationPanelRight);
+
+			generalPanel.add(applicationPanel);
 		}
 
 		JPanel sentryPanel = new JPanel();
@@ -246,6 +272,19 @@ public class MiscellaneousConfigPanel extends JPanel {
 
 		add(southPanel, BorderLayout.SOUTH);
 
+	}
+
+	/**
+	 * Return the combo-box for UI language selection.
+	 * If the combo box doesn't exist, it is created.
+	 *
+	 * @return combo box instance
+	 */
+	public JComboBox getLanguageComboBox() {
+		if (languageComboBox == null) {
+			languageComboBox = new JComboBox(SvarogI18n.LANGUAGES);
+		}
+		return languageComboBox;
 	}
 
 	/**
@@ -409,6 +448,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) {
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
+			getLanguageComboBox().setSelectedItem(SvarogApplication.getGeneralConfiguration().getLocale());
 			getSaveConfigOnEveryChangeCheckBox().setSelected(applicationConfig.isSaveConfigOnEveryChange());
 			getRestoreWorkspaceCheckBox().setSelected(applicationConfig.isRestoreWorkspace());
 		}
@@ -437,6 +477,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) {
 
 		if (mode == SignalMLOperationMode.APPLICATION) {
+			SvarogApplication.getGeneralConfiguration().setLocale((String) getLanguageComboBox().getSelectedItem());
 			applicationConfig.setSaveConfigOnEveryChange(getSaveConfigOnEveryChangeCheckBox().isSelected());
 			applicationConfig.setRestoreWorkspace(getRestoreWorkspaceCheckBox().isSelected());
 		}

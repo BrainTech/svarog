@@ -1,5 +1,7 @@
 package org.signalml.plugin.i18n;
 
+import java.net.URL;
+
 public class PluginI18n {
 
 	private static IPluginI18nAccess Access = new PluginGenericI18nAccess();
@@ -10,6 +12,10 @@ public class PluginI18n {
 
 	public static String _R(String msgKey, Object... arguments) {
 		return getSharedInstance()._R(msgKey, arguments);
+	}
+
+	public static URL _H(String htmlName) {
+		return getSharedInstance()._H(htmlName);
 	}
 
 	public static IPluginI18nAccess getSharedInstance() {

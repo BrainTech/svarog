@@ -9,7 +9,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.AbstractAction;
@@ -24,13 +23,13 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;
 import org.signalml.math.iirdesigner.BadFilterParametersException;
 import org.signalml.math.iirdesigner.FilterNotStableException;
 import org.signalml.plugin.export.SignalMLException;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * This class represents a dialog for {@link TimeDomainSampleFilter
@@ -234,12 +233,7 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 
 	@Override
 	protected URL getContextHelpURL() {
-		URL contextHelpURL = null;
-		try {
-			contextHelpURL = (new ClassPathResource("org/signalml/help/editTimeDomainSampleFilterDialog.html")).getURL();
-		} catch (IOException ex) {
-			logger.error("Failed to get help URL", ex);
-		}
+		URL contextHelpURL = SvarogI18n._H("editTimeDomainSampleFilterDialog.html");
 		return contextHelpURL;
 	}
 

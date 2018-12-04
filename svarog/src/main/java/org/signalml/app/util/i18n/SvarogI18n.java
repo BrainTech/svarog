@@ -1,5 +1,8 @@
 package org.signalml.app.util.i18n;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Locale;
 
@@ -7,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
+import org.springframework.core.io.ClassPathResource;
 import org.xnap.commons.i18n.I18n;
 import org.xnap.commons.i18n.I18nFactory;
 
@@ -19,6 +23,11 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	protected static final Logger log = Logger.getLogger(SvarogI18n.class);
 
 	private final I18n i18n;
+
+	/**
+	 * List of supported language versions for Svarog.
+	 */
+	public static final String[] LANGUAGES = { "en", "pl" };
 
 	/**
 	 * Initializes i18n resources using classloader of klass, from catalog
@@ -36,6 +45,52 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 */
 	public SvarogI18n(Class klass) {
 		this(klass, klass.getPackage().getName());
+	}
+
+	private URL _getHelpURL(String htmlName, String language) throws IOException {
+		return (new ClassPathResource("org/signalml/help/"+language+"/"+htmlName)).getURL();
+	}
+
+	/**
+	 * Return URL to localized help file of a given name.
+	 * If a localized version is not available, return the english version.
+	 *
+	 * @param htmlName name of the help file e.g. "mp.html"
+	 * @return URL instance or null if not found.
+	 */
+	@Override
+	public URL getHelpURL(String htmlName) {
+		try {
+			return _getHelpURL(htmlName, Locale.getDefault().getLanguage());
+		} catch (IOException ex_) {
+			log.debug("Failed to get localized help URL for " + htmlName);
+			try {
+				return _getHelpURL(htmlName, Locale.ENGLISH.getLanguage());
+			} catch (IOException ex) {
+				log.error("Failed to get help URL for " + htmlName, ex);
+				return null;
+			}
+		}
+	}
+
+	/**
+	 * Return URL to localized help file of a given name and section.
+	 * If a localized version is not available, return the english version.
+	 *
+	 * @param htmlName name of the help file e.g. "mp.html"
+	 * @param section name of the section (without leading #) to be added to the URL
+	 * @return URL instance or null if not found.
+	 */
+	public URL getHelpURL(String htmlName, String section) {
+		URL url = getHelpURL(htmlName);
+		if (url != null) {
+			try {
+				url = new URL(url.toExternalForm() + "#" + section);
+			} catch (MalformedURLException ex) {
+				log.error("Failed to prepare help URL", ex);
+			}
+		}
+		return url;
 	}
 
 	/**
@@ -139,6 +194,29 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 */
 	public static String _R(String key, Object... arguments) {
 		return render(_(key), arguments);
+	}
+
+	/**
+	 * Return URL to localized help file of a given name.
+	 * If a localized version is not available, return the english version.
+	 *
+	 * @param htmlName name of the help file e.g. "mp.html"
+	 * @return URL instance or null if not found.
+	 */
+	public static URL _H(String htmlName) {
+		return getInstance().getHelpURL(htmlName);
+	}
+
+	/**
+	 * Return URL to localized help file of a given name and section.
+	 * If a localized version is not available, return the english version.
+	 *
+	 * @param htmlName name of the help file e.g. "mp.html"
+	 * @param section name of the section (without leading #) to be added to the URL
+	 * @return URL instance or null if not found.
+	 */
+	public static URL _H(String htmlName, String section) {
+		return getInstance().getHelpURL(htmlName, section);
 	}
 
 	/**

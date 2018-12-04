@@ -1,5 +1,7 @@
 package org.signalml.plugin.export.i18n;
 
+import java.net.URL;
+
 /**
  * i18n support for plugins.
  *
@@ -68,4 +70,13 @@ public interface SvarogAccessI18n {
 	 *         with arguments rendered in, or keyPlural if not found
 	 */
 	public String translateNR(String key, String keyPlural, long n, Object ... arguments);
+
+	/**
+	 * Return URL to localized help file of a given name.
+	 * If a localized version is not available, return the english version.
+	 *
+	 * @param htmlName name of the help file e.g. "mp.html"
+	 * @return URL instance or null if not found.
+	 */
+	public URL getHelpURL(String htmlName);
 }

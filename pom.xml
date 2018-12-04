@@ -24,8 +24,6 @@
 		<module>plugins/FFTSignalTool</module>
 		<module>plugins/SignalAnalysisPlugin</module>
 		<module>plugins/PluginToolCommon</module>
-		<module>plugins/Artifact</module>
-		<module>plugins/Stager</module>
 		<module>plugins/BookReporter</module>
 		<module>svarog-standalone</module>
 	</modules>
@@ -38,7 +36,7 @@
 				<module>plugins/FFTSignalTool</module>
 				<module>plugins/SignalAnalysisPlugin</module>
 				<module>plugins/PluginToolCommon</module>
-				<module>plugins/Artifact</module>
+				<module>plugins/BookReporter</module>
 				<module>svarog-standalone</module>
 			</modules>
 		</profile>

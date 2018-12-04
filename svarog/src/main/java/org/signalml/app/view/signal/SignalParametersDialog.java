@@ -6,21 +6,19 @@ package org.signalml.app.view.signal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.JComponent;
-import org.omg.CORBA.Request;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.preferences.SignalParametersPanel;
 import org.signalml.plugin.export.SignalMLException;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Errors;
 
 /**
@@ -132,12 +130,7 @@ public class SignalParametersDialog extends AbstractDialog  {
 	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
-			try {
-				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
-				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#sigparams");
-			} catch (IOException ex) {
-				logger.error("Failed to get help URL", ex);
-			}
+			contextHelpURL = SvarogI18n._H("contents.html", "sigparams");
 		}
 		return contextHelpURL;
 	}
