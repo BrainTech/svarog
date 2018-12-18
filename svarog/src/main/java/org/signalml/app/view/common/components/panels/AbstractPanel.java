@@ -38,12 +38,10 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 	 */
 	public AbstractPanel() {
 		super();
-		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
 	public AbstractPanel(String panelTitle) {
 		super();
-		propertyChangeSupport = new PropertyChangeSupport(this);
 		setTitledBorder(panelTitle);
 	}
 
@@ -107,7 +105,7 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		propertyChangeSupport.addPropertyChangeListener(listener);
+		getPropertyChangeSupport().addPropertyChangeListener(listener);
 	}
 
 	@Override
@@ -116,12 +114,17 @@ public class AbstractPanel extends JPanel implements PropertyChangeListener {
 
 	@Override
 	protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-		if (propertyChangeSupport != null)
-			propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+		getPropertyChangeSupport().firePropertyChange(propertyName, oldValue, newValue);
 	}
 
 	public void validatePanel(ValidationErrors errors) {
 		//do nothing
 	}
 
+	private PropertyChangeSupport getPropertyChangeSupport() {
+		if (propertyChangeSupport == null) {
+			propertyChangeSupport = new PropertyChangeSupport(this);
+		}
+		return propertyChangeSupport;
+	}
 }

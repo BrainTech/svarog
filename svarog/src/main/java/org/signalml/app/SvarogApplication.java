@@ -3,6 +3,7 @@
  */
 package org.signalml.app;
 
+import com.alee.laf.WebLookAndFeel;
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -335,6 +336,14 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		// TODO check nested modal dialogs
 		// setupGUIExceptionHandler();
+
+		try {
+			SwingUtilities.invokeAndWait(() -> {
+				WebLookAndFeel.install();
+			});
+		} catch (InterruptedException|InvocationTargetException ex) {
+			logger.error("Initializing L&F failed", ex);
+		}
 
 		if (!line.hasOption("nosplash")) {
 			try {

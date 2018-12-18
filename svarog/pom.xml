@@ -566,6 +566,12 @@
 			<artifactId>raven-log4j</artifactId>
 			<version>7.8.0</version>
 		</dependency>
+		<dependency>
+			<groupId>de.sciss</groupId>
+			<artifactId>weblaf</artifactId>
+			<version>2.1.4</version>
+			<type>pom</type>
+		</dependency>
 
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>
