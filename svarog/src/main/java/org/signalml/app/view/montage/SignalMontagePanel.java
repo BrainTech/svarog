@@ -321,7 +321,7 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 		int thisChannelsCount = getNormalChannelsCount(getCurrentMontage());
 
 		if (presetChannelsCount != thisChannelsCount) {
-			Dialogs.showError(_("Preset is incompatible with this montage - bad channels count in the preset montage!"));
+			Dialogs.showError(_("Preset is incompatible with this montage—bad channels count in the preset montage!"));
 			logger.error("Preset incompatible: current montage 'normal' channel count = " +
 						 + thisChannelsCount + " preset channel count = " + presetChannelsCount);
 			return false;

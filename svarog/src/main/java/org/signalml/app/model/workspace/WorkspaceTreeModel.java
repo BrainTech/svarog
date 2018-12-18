@@ -30,12 +30,12 @@ public class WorkspaceTreeModel extends AbstractTreeModel implements DocumentMan
 	private static final String ROOT_NODE = _("Workspace");
 	private static final String OPEN_DOCUMENTS_NODE = _("Open documents");
 	private static final String OPEN_SIGNALS_NODE = _("Open signals");
-	private static final String OPEN_MONITORS_NODE = _("Open monitors");
+	private static final String OPEN_MONITORS_NODE = _("Open online signals");
 	private static final String OPEN_BOOKS_NODE = _("Open books");
 	private static final String OPEN_TAGS_NODE = _("Open tags");
 	private static final String RECENT_DOCUMENTS_NODE = _("Documents");
 	private static final String RECENT_SIGNALS_NODE = _("Signals");
-	private static final String RECENT_MONITORS_NODE = _("Monitors");
+	private static final String RECENT_MONITORS_NODE = _("Online");
 	private static final String RECENT_BOOKS_NODE = _("Books");
 	private static final String RECENT_TAGS_NODE = _("Tags");
 

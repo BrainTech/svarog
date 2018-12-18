@@ -352,7 +352,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public final void saveDocument() throws SignalMLException, IOException {
-		throw new UnsupportedOperationException(_("Saving monitor document is not supported - use monitor recording instead."));
+		throw new UnsupportedOperationException(_("Saving monitor document is not supported—use online recording instead."));
 	}
 
 	@Override

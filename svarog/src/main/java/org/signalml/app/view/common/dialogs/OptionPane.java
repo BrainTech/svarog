@@ -1304,7 +1304,7 @@ public class OptionPane extends JOptionPane {
 		}
 		showOptionDialog(
 			parent,
-			_("This tool works only for non-monitor signals."),
+			_("This tool works only for offline signals."),
 			warningString,
 			JOptionPane.OK_OPTION,
 			JOptionPane.WARNING_MESSAGE,

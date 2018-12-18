@@ -89,7 +89,7 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 				if (slopes.length < tagCount) {
 					Dialogs.showWarningMessage(_R("There were more tags ({0}) than activating trigger slopes ({1}). Excessive tags have been removed!", tagCount, slopes.length));
 				} else if (slopes.length > tagCount) {
-					Dialogs.showWarningMessage(_R("There were less tags ({0}) then activating trigger slopes ({1}).", tagCount, slopes.length));
+					Dialogs.showWarningMessage(_R("There were less tags ({0}) than activating trigger slopes ({1}).", tagCount, slopes.length));
 				} else {
 					Dialogs.showMessage(_("Tags Synchronized"), _("Tags were successfully synchronized with the trigger channel."));
 				}

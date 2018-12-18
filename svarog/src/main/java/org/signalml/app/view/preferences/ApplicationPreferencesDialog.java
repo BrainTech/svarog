@@ -269,7 +269,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 		tabbedPane.addTab(_("Signal viewing"), signalViewingContainPanel);
 		tabbedPane.addTab(_("Signal zooming"), zoomSettingsContainPanel);
 		tabbedPane.addTab(_("Tagging"), taggingContainPanel);
-		tabbedPane.addTab(_("Monitor"), signalRecordingContainPanel);
+		tabbedPane.addTab(_("Online"), signalRecordingContainPanel);
 		tabbedPane.addTab(_("Miscellaneous"), miscellaneousContainPanel);
 
 		if (mode == SignalMLOperationMode.APPLICATION) {

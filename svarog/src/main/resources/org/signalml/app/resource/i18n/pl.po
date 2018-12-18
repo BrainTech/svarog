@@ -47,8 +47,8 @@ msgid "(select video stream)"
 msgstr "(wybierz strumień wideo)"
 
 #: org/signalml/app/config/preset/managers/StyledTagSetPresetManager.java:34
-msgid "< Empty preset - no styles defined >"
-msgstr "<Pusty preset — brak zdefiniowanych stylów>"
+msgid "< Empty preset—no styles defined >"
+msgstr "< Pusty preset — brak zdefiniowanych stylów >"
 
 #: org/signalml/app/view/common/components/presets/CompactPresetControlsPanel.java:468
 #: org/signalml/app/view/common/components/presets/ChoosePresetDialog.java:148
@@ -288,7 +288,7 @@ msgstr "Wszystkie filtry"
 
 #: org/signalml/app/util/IconUtils.java:202
 msgid "All finger hand"
-msgstr "Wszystkie ręce palcami"
+msgstr "Ręka z palcami"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:677
 msgid "All non running tasks will be removed."
@@ -425,7 +425,7 @@ msgid "Are you sure you want to close the preview?"
 msgstr "Czy na pewno chcesz zamknąć podgląd?"
 
 #: org/signalml/psychopy/view/PsychopyExperimentDialog.java:71
-msgid "Are you sure you want to overrite data in this location?"
+msgid "Are you sure you want to overwrite data in this location?"
 msgstr "Czy na pewno chcesz zastąpić dane w tej lokalizacji?"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:614
@@ -621,7 +621,7 @@ msgid "Bad filter parameters, please correct them."
 msgstr "Złe parametry filtra, popraw je proszę."
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:784
-msgid "Bad frequency axis range - min must be lower than max"
+msgid "Bad frequency axis range—min must be lower than max"
 msgstr "Zły zakres osi częstości — min musi być mniejsze niż max"
 
 #: org/signalml/method/mp5/MP5Parameters.java:102
@@ -629,7 +629,7 @@ msgid "Bad max iteration count"
 msgstr "Zła maksymalna liczba iteracji"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:755
-msgid "Bad power axis range - min must be lower than max"
+msgid "Bad power axis range—min must be lower than max"
 msgstr "Zły zakres osi mocy — min musi być mniejsze niż max"
 
 #: org/signalml/domain/montage/MontageChannel.java:252
@@ -840,7 +840,7 @@ msgid "Cannot design a filter with given rp and rs specifications."
 msgstr "Nie można zaprojektować filtra z podanymi specyfikacjami rp i rs."
 
 #: org/signalml/app/method/ep/view/FilterParametersPanel.java:85
-msgid "Cannot design the EP filter - please correct its parameters."
+msgid "Cannot design the EP filter—please correct its parameters."
 msgstr "Nie można zaprojektować filtra EP, proszę popraw parametry."
 
 #: org/signalml/app/view/document/monitor/ChooseVideoForMonitorRecordingPanel.java:90
@@ -959,7 +959,7 @@ msgstr "Tag kanałowy"
 
 #: org/signalml/domain/montage/SourceMontage.java:462
 msgid ""
-"Channel with this function are immutable - their function cannot be changed"
+"Channel with this function are immutable—their function cannot be changed"
 msgstr "Kanał z tą funkcją jest niezmienny — ich funkcja nie może być zmieniona"
 
 #: org/signalml/app/view/document/monitor/signalchecking/CheckSignalDialog.java:122
@@ -1741,7 +1741,7 @@ msgstr "BŁĄD"
 
 #: org/signalml/app/worker/monitor/messages/AbstractEEGExperimentsMsg.java:49
 msgid ""
-"ERROR - there was an error while parsing experiment data! (Bad message "
+"ERROR: there was an error while parsing experiment data! (Bad message "
 "format?)\n"
 msgstr "BŁĄD — wystąpił błąd podczas analizowania danych eksperymentu! (Zły format wiadomości?)\n"
 
@@ -2294,7 +2294,7 @@ msgstr "Nazwa filtru nie może zawierać znaków kontrolnych"
 #: org/signalml/math/iirdesigner/ButterworthIIRDesigner.java:162
 #: org/signalml/math/iirdesigner/EllipticIIRDesigner.java:274
 #: org/signalml/math/iirdesigner/ChebyshevIIRDesigner.java:50
-msgid "Filter order is zero - check the input parameters!"
+msgid "Filter order is zero—check the input parameters!"
 msgstr "Rząd filtra wynosi zero — sprawdź parametry wejściowe!"
 
 #: org/signalml/app/view/montage/filters/EditTimeDomainSampleFilterDialog.java:120
@@ -3014,7 +3014,7 @@ msgid "Make default"
 msgstr "Ustaw jako domyślne"
 
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:308
-msgid "Make selecte executor default"
+msgid "Make selected executor default"
 msgstr "Ustaw wybrany plik wykonywalny jako domyślny"
 
 #: org/signalml/app/view/document/opensignal/elements/OtherSettingsPanel.java:53
@@ -3122,19 +3122,8 @@ msgid "Modulus"
 msgstr "Moduł"
 
 #: org/signalml/app/document/ManagedDocumentType.java:48
-#: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:272
-#: org/signalml/app/view/workspace/ViewerElementManager.java:649
 msgid "Monitor"
-msgstr "Online"
-
-#: org/signalml/app/view/signal/MonitorRecordingPanel.java:65
-msgid "Monitor recording"
-msgstr "Monitoruj nagrywanie"
-
-#: org/signalml/app/view/workspace/ViewerElementManager.java:813
-#: org/signalml/app/model/workspace/WorkspaceTreeModel.java:38
-msgid "Monitors"
-msgstr "Monitory"
+msgstr "Monitor"
 
 #: org/signalml/app/view/montage/SignalMontagePanel.java:118
 #: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:95
@@ -3497,6 +3486,13 @@ msgstr "Jeden z wymaganych kanałów nie został zidentyfikowany: "
 msgid "One of required channels not identified: {0} or {1}"
 msgstr "Jeden z wymaganych kanałów nie został zidentyfikowany: {0} lub {1}"
 
+#: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:272
+#: org/signalml/app/view/workspace/ViewerElementManager.java:649
+#: org/signalml/app/view/workspace/ViewerElementManager.java:813
+#: org/signalml/app/model/workspace/WorkspaceTreeModel.java:38
+msgid "Online"
+msgstr "Online"
+
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:56
 msgid "Online amplifiers"
 msgstr "Wzmacniacze online"
@@ -3540,8 +3536,8 @@ msgid "Open in the viewer"
 msgstr "Otwórz w przeglądarce"
 
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:33
-msgid "Open monitors"
-msgstr "Otwórz monitorowanie"
+msgid "Open online signals"
+msgstr "Otwarte sygnały online"
 
 #: org/signalml/app/action/video/AddCameraAction.java:26
 msgid "Open preview of the selected camera"
@@ -3850,7 +3846,7 @@ msgstr "Preset już istnieje, czy naprawdę chcesz go zastąpić?"
 
 #: org/signalml/app/view/montage/SignalMontagePanel.java:324
 msgid ""
-"Preset is incompatible with this montage - bad channels count in the preset "
+"Preset is incompatible with this montage—bad channels count in the preset "
 "montage!"
 msgstr "Ustawienie wstępne (preset) jest niekompatybilne z tym montażem — zła liczba kanałów w montażu z preset!"
 
@@ -4039,6 +4035,10 @@ msgstr "Zarejestruj sygnał i tagi z tego monitora do pliku"
 #: org/signalml/app/view/document/monitor/ChooseFilesForMonitorRecordingPanel.java:186
 msgid "Record video"
 msgstr "Nagraj wideo"
+
+#: org/signalml/app/view/signal/MonitorRecordingPanel.java:65
+msgid "Recording"
+msgstr "Nagrywanie"
 
 #: org/signalml/app/model/montage/MontageTableModel.java:91
 msgid "Reference"
@@ -4345,7 +4345,7 @@ msgid "Sampling frequency: "
 msgstr "Częstość próbkowania: "
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:260
-msgid "Sanity failed - sample count different than window size"
+msgid "Sanity failed—sample count different than window size"
 msgstr "Sanity failed — liczba próbek różna od rozmiaru okna"
 
 #: org/signalml/app/view/book/filter/BookFilterDialog.java:170
@@ -4478,8 +4478,7 @@ msgid "Save to file"
 msgstr "Zapisz do pliku"
 
 #: org/signalml/app/document/MonitorSignalDocument.java:355
-msgid ""
-"Saving monitor document is not supported - use monitor recording instead."
+msgid "Saving monitor document is not supported—use online recording instead."
 msgstr "Zapisywanie dokumentu monitora nie jest obsługiwane — zamiast tego użyj nagrywania monitora."
 
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:99
@@ -4819,13 +4818,13 @@ msgstr "Pokaż wskazówki narzędzi, gdy mysz unosi się nad atomem"
 msgid "Show video preview"
 msgstr "Pokaż podgląd wideo"
 
+#: org/signalml/app/view/workspace/ViewerElementManager.java:813
+msgid "Shows online signals"
+msgstr "Pokazuje sygnały online"
+
 #: org/signalml/app/view/workspace/ViewerElementManager.java:814
 msgid "Shows open books"
 msgstr "Pokazuje otwarte książki"
-
-#: org/signalml/app/view/workspace/ViewerElementManager.java:813
-msgid "Shows open monitors"
-msgstr "Pokazuje otwarte monitory"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:812
 msgid "Shows open signals"
@@ -5021,15 +5020,15 @@ msgstr "Rozpocznij Eksperyment PsychoPy"
 msgid "Start block"
 msgstr "Blok początkowy"
 
-#: org/signalml/app/view/document/monitor/StartMonitorRecordingDialog.java:42
-#: org/signalml/app/action/document/monitor/StartMonitorRecordingAction.java:47
-msgid "Start monitor recording"
-msgstr "Rozpocznij nagrywanie"
-
 #: org/signalml/app/view/signal/signalselection/PageSignalSelectionPanel.java:78
 #: org/signalml/app/view/signal/signalselection/BlockSignalSelectionPanel.java:88
 msgid "Start page"
 msgstr "Strona startowa"
+
+#: org/signalml/app/view/document/monitor/StartMonitorRecordingDialog.java:42
+#: org/signalml/app/action/document/monitor/StartMonitorRecordingAction.java:47
+msgid "Start recording"
+msgstr "Rozpocznij nagrywanie"
 
 #: org/signalml/app/view/signal/signalselection/ChannelSignalSelectionPanel.java:97
 #: org/signalml/app/view/signal/signalselection/MarkedTimeSpacePanel.java:277
@@ -5059,7 +5058,7 @@ msgid "Sticky channel"
 msgstr "Kanał \"sticky\""
 
 #: org/signalml/app/action/document/monitor/StopMonitorRecordingAction.java:40
-msgid "Stop monitor recording"
+msgid "Stop recording"
 msgstr "Zatrzymaj nagrywanie"
 
 #: org/signalml/app/action/document/monitor/StopMonitorRecordingAction.java:41
@@ -5433,7 +5432,7 @@ msgstr "Lista znaczników artefaktów nie może zawierać uśrednionych znacznik
 
 #: pl/edu/fuw/fid/signalanalysis/logaxis/LogarithmicAxis.java:90
 msgid ""
-"The logarithmic range should be include to ]0,Double.MAX_VALUE] and the "
+"The logarithmic range should be contained in ]0,Double.MAX_VALUE] and the "
 "lowerBound should be less than the upperBound"
 msgstr "Zakres logarytmiczny powinien zawierać się w ]0, Double.MAX_VALUE], a lowerBound powinien być mniejszy niż upperBound"
 
@@ -5447,7 +5446,7 @@ msgid "The montage is empty. Please add some target channels"
 msgstr "Montaż jest pusty. Dodaj kilka kanałów docelowych"
 
 #: org/signalml/math/iirdesigner/AbstractIIRDesigner.java:175
-msgid "The order of the filter is too big - the parameters are too strict."
+msgid "The order of the filter is too big—the parameters are too strict."
 msgstr "Rząd filtra jest zbyt duży — parametry są zbyt rygorystyczne."
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:859
@@ -5458,7 +5457,7 @@ msgstr "Sygnał i znacznik nie są zgodne pod względem rozmiaru strony i bloku.
 
 #: org/signalml/app/view/common/components/presets/ComplexPresetControlsPanel.java:899
 msgid ""
-"There was a problem while loading the preset file - is it a correct file?"
+"There was a problem while loading the preset file—is it a correct file?"
 msgstr "Wystąpił problem podczas ładowania pliku preset — czy jest to poprawny plik?"
 
 #: org/signalml/app/worker/monitor/DisconnectFromExperimentWorker.java:96
@@ -5467,9 +5466,7 @@ msgid "There was an error while disconnecting from the experiment ({0})"
 msgstr "Podczas odłączania się od eksperymentu wystąpił błąd ( {0} )"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:201
-msgid ""
-"There was an error while loading the file - did you select a correct "
-"SignalML file?"
+msgid "There was an error while loading the file—did you select a correct SignalML file?"
 msgstr "Wystąpił błąd podczas ładowania pliku — czy wybrałeś poprawny plik SignalML?"
 
 #: org/signalml/psychopy/PsychopyExperiment.java:146
@@ -5484,7 +5481,7 @@ msgstr "Wystąpił błąd podczas odczytu manifestu XML. Wprowadź parametry syg
 
 #: org/signalml/app/action/tag/SynchronizeTagsWithTriggerAction.java:92
 #, java-format
-msgid "There were less tags ({0}) then activating trigger slopes ({1})."
+msgid "There were less tags ({0}) than activating trigger slopes ({1})."
 msgstr "Było mniej znaczników ({0}) niż aktywujących zboczy wyzwalacza ({1})."
 
 #: org/signalml/app/action/tag/SynchronizeTagsWithTriggerAction.java:90
@@ -5544,7 +5541,7 @@ msgstr "To ustawienie wstępne nie jest zgodne z bieżącym sygnałem i musiało
 
 #: org/signalml/app/view/document/opensignal/OpenSignalWizardStepOnePanel.java:215
 msgid ""
-"This preset is not compatible with the current experiment - different number "
+"This preset is not compatible with the current experiment—different number "
 "of channels."
 msgstr "To ustawienie nie jest zgodne z bieżącym eksperymentem—inna liczba kanałów."
 
@@ -5569,7 +5566,7 @@ msgid ""
 msgstr "Sygnatura tego znacznika nie pasuje do sygnatury sygnału. Jesteś pewny?"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1307
-msgid "This tool works only for non-monitor signals."
+msgid "This tool works only for offline signals."
 msgstr "To narzędzie działa tylko dla sygnałów offline."
 
 #: org/signalml/app/view/montage/filters/charts/elements/TimeDomainResponseChartPanel.java:27
@@ -5936,7 +5933,7 @@ msgid "XML files (*.xml)"
 msgstr "Pliki XML (* .xml)"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:230
-msgid "XML manifest not found - would you like to choose the XML file manualy?"
+msgid "XML manifest not found—would you like to choose the XML file manualy?"
 msgstr "Nie znaleziono manifestu XML — czy chcesz wybrać plik XML ręcznie?"
 
 #: org/signalml/app/view/signal/popup/SignalPlotOptionsPopupDialog.java:206
@@ -6676,7 +6673,7 @@ msgid "phase"
 msgstr "faza"
 
 #: org/signalml/domain/roc/RocData.java:420
-msgid "point abose OSS iteration"
+msgid "point above OSS iteration"
 msgstr "punkt powyżej iteracji OSS"
 
 #: org/signalml/domain/roc/RocData.java:421
@@ -7050,9 +7047,3 @@ msgstr "Docelowy plik zapisu {0} już istnieje! Chcesz nadpisać?"
 #, java-format
 msgid "{0}. ({1})"
 msgstr "{0}. ({1})"
-
-#~ msgid "Bad port number!"
-#~ msgstr "Zły numer portu!"
-
-#~ msgid "Disconnect"
-#~ msgstr "Rozłącz"

@@ -172,7 +172,7 @@ abstract class AbstractIIRDesigner {
 		int filterOrder = calculateFilterOrder(type, passb, stopb, gpass, gstop, analog);
 		debug("filter order: " + filterOrder);
 		if (filterOrder > maximumFilterOrder)
-			throw new FilterOrderTooBigException(_("The order of the filter is too big - the parameters are too strict."));
+			throw new FilterOrderTooBigException(_("The order of the filter is too big—the parameters are too strict."));
 
 		double[] naturalFrequencies = calculateNaturalFrequency(type, filterOrder, passb, stopb, gpass, gstop, analog);
 

@@ -47,7 +47,7 @@ abstract class ChebyshevIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(SpecialMath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / SpecialMath.acosh(frequencyRatio)));
 
 		if (filterOrder == 0)
-			throw new BadFilterParametersException(_("Filter order is zero - check the input parameters!"));
+			throw new BadFilterParametersException(_("Filter order is zero—check the input parameters!"));
 
 		return filterOrder;
 

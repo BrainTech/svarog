@@ -87,7 +87,7 @@ public class LogarithmicAxis extends ValueAxis<Number> {
 	private void validateBounds(double lowerBound, double upperBound) throws IllegalLogarithmicRangeException {
 		if (lowerBound < 0 || upperBound < 0 || lowerBound > upperBound) {
 			throw new IllegalLogarithmicRangeException(
-					_("The logarithmic range should be include to ]0,Double.MAX_VALUE] and the lowerBound should be less than the upperBound"));
+					_("The logarithmic range should be contained in ]0,Double.MAX_VALUE] and the lowerBound should be less than the upperBound"));
 		}
 	}
 

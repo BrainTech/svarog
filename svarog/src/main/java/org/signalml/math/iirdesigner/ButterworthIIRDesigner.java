@@ -159,7 +159,7 @@ class ButterworthIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(Math.log10((GSTOP - 1.0) / (GPASS - 1.0)) / (2 * Math.log10(frequencyRatio))));
 
 		if (filterOrder == 0)
-			throw new BadFilterParametersException(_("Filter order is zero - check the input parameters!"));
+			throw new BadFilterParametersException(_("Filter order is zero—check the input parameters!"));
 
 		return filterOrder;
 

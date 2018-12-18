@@ -212,7 +212,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 		int currentNumberOfChannels = currentExperimentDescriptor.getAmplifier().getChannels().size();
 
 		if (newNumberOfChannels != currentNumberOfChannels) {
-			Dialogs.showError(_("This preset is not compatible with the current experiment - different number of channels."));
+			Dialogs.showError(_("This preset is not compatible with the current experiment—different number of channels."));
 			return false;
 		}
 

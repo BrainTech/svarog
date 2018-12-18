@@ -82,7 +82,7 @@ public class FilterParametersPanel extends AbstractPanel {
 			IIRDesigner.designDigitalFilter(filter);
 		} catch (BadFilterParametersException e) {
 			logger.error("", e);
-			errors.addError(_("Cannot design the EP filter - please correct its parameters."));
+			errors.addError(_("Cannot design the EP filter—please correct its parameters."));
 		}
 	}
 

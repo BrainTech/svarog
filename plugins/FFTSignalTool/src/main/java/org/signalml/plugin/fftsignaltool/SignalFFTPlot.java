@@ -257,7 +257,7 @@ public class SignalFFTPlot extends JComponent {
 		int sampleCnt = lastSample - firstSample;
 		if (sampleCnt != windowWidth) {
 			throw new SanityCheckException(
-				_("Sanity failed - sample count different than window size"));
+				_("Sanity failed—sample count different than window size"));
 		}
 
 		if (samples == null || samples.length != sampleCnt) {

@@ -62,7 +62,7 @@ public class MonitorRecordingPanel extends AbstractPanel {
 		setLayout(new BorderLayout(10, 10));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("Monitor recording")),
+			new TitledBorder(_("Recording")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 

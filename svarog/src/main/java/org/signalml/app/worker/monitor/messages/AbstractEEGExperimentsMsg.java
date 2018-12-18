@@ -46,7 +46,7 @@ public abstract class AbstractEEGExperimentsMsg extends LauncherMessage{
 			} catch (Exception e) {
 				if (!errorAlreadyOcurred) {
 					//we want this message to be appended only once!
-					log.append(_("ERROR - there was an error while parsing experiment data! (Bad message format?)\n"));
+					log.append(_("ERROR: there was an error while parsing experiment data! (Bad message format?)\n"));
 					errorAlreadyOcurred = true;
 				}
 				logger.error("There was an error parsing an experiment: " + e.getMessage());
