@@ -748,21 +748,24 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	protected void onOkPressed() {
-		if (validateDialog() == false)
-			return;
+		Object model;
+		synchronized (this) {
+			model = currentModel;
+			if (validateDialog() == false || model == null)
+				return;
+			currentModel = null;
+		}
 
 		try {
-			fillModelFromDialog(currentModel);
+			fillModelFromDialog(model);
 		} catch (SignalMLException ex) {
 			logger.error("Exception when filling the model from the dialog", ex);
 			Dialogs.showExceptionDialog(AbstractDialog.this, ex);
-			currentModel = null;
 			closedWithOk = false;
 			setVisible(false);
 			return;
 		}
 
-		currentModel = null;
 		closedWithOk = true;
 		setVisible(false);
 
