@@ -9,6 +9,7 @@ import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This is an abstract class representing a Designer capable of designing an IIR Filter.
@@ -171,7 +172,7 @@ abstract class AbstractIIRDesigner {
 		int filterOrder = calculateFilterOrder(type, passb, stopb, gpass, gstop, analog);
 		debug("filter order: " + filterOrder);
 		if (filterOrder > maximumFilterOrder)
-			throw new FilterOrderTooBigException("The order of the filter is too big - the parameters are too strict.");
+			throw new FilterOrderTooBigException(_("The order of the filter is too big—the parameters are too strict."));
 
 		double[] naturalFrequencies = calculateNaturalFrequency(type, filterOrder, passb, stopb, gpass, gstop, analog);
 

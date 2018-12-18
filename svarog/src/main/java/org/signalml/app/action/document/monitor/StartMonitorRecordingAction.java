@@ -44,7 +44,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 	 */
 	public StartMonitorRecordingAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
-		setText(_("Start monitor recording"));
+		setText(_("Start recording"));
 		setIconPath("org/signalml/app/icon/record.png");
 		setToolTip(_("Record signal and tags from this monitor to a file"));
 		setMnemonic(KeyEvent.VK_S);
@@ -75,7 +75,7 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 				logger.error("The files to which you want to record signal/tags were not found", ex);
                         }
                         catch (OpenbciCommunicationException ex) {
-                                ex.showErrorDialog("Failed to start video recording");
+                                ex.showErrorDialog(_("Failed to start video recording"));
                                 logger.error("Failed to start video recording", ex);
                         }
 

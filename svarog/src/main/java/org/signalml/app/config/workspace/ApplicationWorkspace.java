@@ -26,6 +26,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 import org.signalml.app.config.AbstractXMLConfiguration;
 import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** ApplicationWorkspace
  *

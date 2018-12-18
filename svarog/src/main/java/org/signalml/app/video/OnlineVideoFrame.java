@@ -6,16 +6,14 @@ import org.signalml.app.video.components.ImageSeparator;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.signalml.app.video.components.OnlineMediaPlayerPanel;
 import org.signalml.app.video.components.VideoStreamSelectionListener;
 import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Video frame for displaying on-line RTSP streams and a list
@@ -59,7 +57,7 @@ public final class OnlineVideoFrame extends VideoFrame<OnlineMediaPlayerComponen
 					play();
 				} catch (OpenbciCommunicationException ex) {
 					streamSelectionPanel.clearSelection();
-					ex.showErrorDialog("Error initializing video preview");
+					ex.showErrorDialog(_("Error initializing video preview"));
 				}
 			}
 		}

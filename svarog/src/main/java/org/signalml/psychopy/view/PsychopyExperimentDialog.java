@@ -68,7 +68,7 @@ public class PsychopyExperimentDialog extends AbstractDialog {
 		Boolean isValid = super.validateDialog();
 		if (isValid && fileWithPrefixExists(outputPathPrefixPanel.selectedPath())) {
 			Dialogs.DIALOG_OPTIONS overwrite = Dialogs.showWarningYesNoDialog(
-				_("Are you sure you want to overrite data in this location?")
+				_("Are you sure you want to overwrite data in this location?")
 			);
 			return overwrite == Dialogs.DIALOG_OPTIONS.YES;
 		} else {

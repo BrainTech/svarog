@@ -5,6 +5,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a designer capable of designing digital filters, i.e. calculating
@@ -73,7 +74,7 @@ public class IIRDesigner {
 
 		}
 		else
-			throw new BadFilterParametersException("This approximation function type is not supported by the IIRFilterDesigner.");
+			throw new BadFilterParametersException(_("This approximation function type is not supported by the IIRFilterDesigner."));
 
 	}
 

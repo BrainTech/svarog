@@ -19,6 +19,7 @@ import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Result;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.FileUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** MP5MethodConsumer
  *
@@ -64,7 +65,7 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 		}
 
 		if (bookFilePath == null) {
-			throw new SignalMLException("No result book");
+			throw new SignalMLException(_("No result book"));
 		}
 
 		MP5ResultTargetDescriptor descriptor = new MP5ResultTargetDescriptor();

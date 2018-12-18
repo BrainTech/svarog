@@ -646,7 +646,7 @@ public class ViewerElementManager {
 	 */
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
-			monitorMenu = new JMenu(_("Monitor"));
+			monitorMenu = new JMenu(_("Online"));
 			monitorMenu.setMnemonic(KeyEvent.VK_R);
 
 			monitorMenu.add(getAddCameraAction());
@@ -810,7 +810,7 @@ public class ViewerElementManager {
 			treeTabbedPane = new ViewerTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
 			treeTabbedPane.addTab(_("Tags"), (String) null, getTagTreePane(), _("Shows open tags"));
 			treeTabbedPane.addTab(_("Signals"), (String) null, getSignalTreePane(), _("Shows open signals"));
-			treeTabbedPane.addTab(_("Monitors"), (String) null, getMonitorTreePane(), _("Shows open monitors"));
+			treeTabbedPane.addTab(_("Online"), (String) null, getMonitorTreePane(), _("Shows online signals"));
 			treeTabbedPane.addTab(_("Books"), (String) null, getBookTreePane(), _("Shows open books"));
 			treeTabbedPane.addTab(_("Workspace"), (String) null, getWorkspaceTreePane(), _("Shows workspace"));
 			treeTabbedPane.setSelectedIndex(3);

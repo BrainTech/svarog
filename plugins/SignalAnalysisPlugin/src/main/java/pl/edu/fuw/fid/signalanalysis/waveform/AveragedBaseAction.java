@@ -22,6 +22,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
 import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Base class for action requesting computation of averaged time-frequency maps.
@@ -43,7 +44,7 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 		this.signalAccess = signalAccess;
 		this.dialog = dialogClass.getConstructor(Window.class, Boolean.class).newInstance(guiAccess.getDialogParent(), true);
 		this.clazz = rendererClass;
-		setText("averaged");
+		setText(_("averaged"));
 	}
 
 	@Override
@@ -154,7 +155,7 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 								@Override
 								public void run() {
 									progressMonitor.close();
-									JOptionPane.showMessageDialog(guiAccess.getDialogParent(), ex, "Error", JOptionPane.ERROR_MESSAGE);
+									JOptionPane.showMessageDialog(guiAccess.getDialogParent(), ex, _("Error"), JOptionPane.ERROR_MESSAGE);
 								}
 							});
 						}
@@ -162,7 +163,7 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 				}).start();
 			}
 		} catch (NoActiveObjectException ex) {
-			JOptionPane.showMessageDialog(null, "Select valid single-channel signal fragment.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, _("Select valid single-channel signal fragment."), _("Error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

@@ -459,7 +459,7 @@ public class SourceMontage {
 				throw new MontageException(_("Channels with this function cannot be duplicated."));
 			}
 			if (!oldFunction.isMutable()) {
-				throw new MontageException(_("Channel with this function are immutable - their function cannot be changed"));
+				throw new MontageException(_("Channel with this function are immutable—their function cannot be changed"));
 			}
 			LinkedList<SourceChannel> oldList = getSourceChannelsByFunctionList(oldFunction);
 			oldList.remove(channel);

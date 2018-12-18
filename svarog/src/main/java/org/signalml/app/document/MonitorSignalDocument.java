@@ -73,7 +73,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * The name of this document.
 	 */
-	private String name = "Signal online";
+	private String name = _("Signal online");
 
 	/**
 	 * Describes the parameters of the monitor connected to this
@@ -352,7 +352,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public final void saveDocument() throws SignalMLException, IOException {
-		throw new UnsupportedOperationException("Saving monitor document is not supported - use monitor recording instead.");
+		throw new UnsupportedOperationException(_("Saving monitor document is not supported—use online recording instead."));
 	}
 
 	@Override
@@ -437,7 +437,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 				previewVideoFrame = new PreviewVideoFrame(videoSpecs);
 				previewVideoFrame.setVisible(true);
 			} catch (OpenbciCommunicationException ex) {
-				ex.showErrorDialog("Failed to start video preview");
+				ex.showErrorDialog(_("Failed to start video preview"));
 				logger.error("Failed to start video preview", ex);
 			}
 		}

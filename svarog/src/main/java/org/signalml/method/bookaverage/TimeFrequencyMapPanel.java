@@ -18,6 +18,7 @@ import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.book.wignermap.WignerMapPaletteComboBoxCellRenderer;
 import org.signalml.app.view.book.wignermap.WignerMapScaleComboBoxCellRenderer;
 import org.signalml.domain.book.WignerMapScaleType;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author ptr@mimuw.edu.pl
@@ -68,9 +69,9 @@ public class TimeFrequencyMapPanel extends JPanel {
 	}
 
 	private static XYPlot createPlot(double freqMin, double freqMax, double timeRange) {
-		ValueAxis ax = new NumberAxis("time (s)");
+		ValueAxis ax = new NumberAxis(_("time (s)"));
 		ax.setRange(0, timeRange);
-		ValueAxis ay = new NumberAxis("frequency (Hz)");
+		ValueAxis ay = new NumberAxis(_("frequency (Hz)"));
 		ay.setRange(freqMin, freqMax);
 		XYPlot result = new XYPlot(new XYSeriesCollection(), ax, ay, null) {
 			@Override

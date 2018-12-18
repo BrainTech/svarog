@@ -9,6 +9,7 @@ import org.jfree.data.xy.XYIntervalSeriesCollection;
 import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.export.signal.TagStyle;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -17,7 +18,7 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 	
 	@Override
 	public String getCaption() {
-		return "<html>count of<br>" + getWavesName() + "<br>per " + getTimeInterval() + " s</html>";
+		return "<html>"+String.format(_("count of<br>%s<br>per %d s"), getWavesName(), getTimeInterval())+"</html>";
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class BookReporterChartPresetCount extends BookReporterChartPresetPerInte
 
 			@Override
 			public XYPlot getPlot() {
-				XYIntervalSeries data = new XYIntervalSeries("count per "+getTimeInterval()+" s");
+				XYIntervalSeries data = new XYIntervalSeries(String.format(_("count per %d s"), getTimeInterval()));
 				for (int i=0; i<this.counts.length; i++) {
 					double secondsLeft = i * timeInterval;
 					double secondsCenter = (i+0.5) * timeInterval;

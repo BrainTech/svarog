@@ -9,6 +9,7 @@ import org.apache.commons.math.linear.FieldMatrix;
 import org.apache.commons.math.linear.LUDecompositionImpl;
 import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * AR model class. Contains a factory method compute, calculating
@@ -36,7 +37,7 @@ public class ArModel {
 	public ArModel(int C, RealMatrix[] A, RealMatrix V, double freqSampling) {
 		for (RealMatrix M : A) {
 			if (M.getRowDimension() != C || M.getColumnDimension() != C) {
-				throw new RuntimeException("matrix dimension mismatch");
+				throw new RuntimeException(_("matrix dimension mismatch"));
 			}
 		}
 		this.C = C;

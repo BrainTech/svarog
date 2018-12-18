@@ -305,7 +305,7 @@ public class MP5ToolExecutorConfigPanel extends JPanel {
 		public MakeDefaultAction() {
 			super(_("Make default"));
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/makedefault.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Make selecte executor default"));
+			putValue(AbstractAction.SHORT_DESCRIPTION,_("Make selected executor default"));
 			setEnabled(false);
 		}
 

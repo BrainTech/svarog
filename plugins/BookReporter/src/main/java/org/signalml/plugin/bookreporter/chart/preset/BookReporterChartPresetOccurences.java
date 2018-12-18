@@ -11,6 +11,7 @@ import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.BookReporterConstants;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.export.signal.TagStyle;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -31,7 +32,7 @@ public class BookReporterChartPresetOccurences extends BookReporterChartPreset {
 
 	@Override
 	public String getCaption() {
-		return "<html>occurences of<br>" + getWavesName() + "</html>";
+		return "<html>" + String.format(_("occurences of<br>%s"), getWavesName()) + "</html>";
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class BookReporterChartPresetOccurences extends BookReporterChartPreset {
 
 			@Override
 			public XYPlot getPlot() {
-				XYIntervalSeries data = new XYIntervalSeries("amplitudes [µV]");
+				XYIntervalSeries data = new XYIntervalSeries(_("amplitudes [µV]"));
 				for (Occurrence o : occurrences) {
 					data.add(o.time, o.time-0.5*o.length, o.time+0.5*o.length, o.value, o.value, o.value);
 				}

@@ -5,6 +5,7 @@ import javax.swing.DefaultComboBoxModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.bookreporter.chart.preset.*;
 import org.signalml.plugin.bookreporter.data.BookReporterFASPThreshold;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -58,13 +59,13 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         showHorizontalLinesCheckBox = new javax.swing.JCheckBox();
 
-        setTitle("New chart properties");
+        setTitle(_("New chart properties"));
         setModal(true);
         setName("newChartDialog"); // NOI18N
         setResizable(false);
 
         diagramTypeButtonGroup.add(waveCountDiagramButton);
-        waveCountDiagramButton.setText("count (per time interval) of...");
+        waveCountDiagramButton.setText(_("count (per time interval) of..."));
         waveCountDiagramButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 waveCountDiagramButtonActionPerformed(evt);
@@ -73,7 +74,7 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
 
         diagramTypeButtonGroup.add(timePercentageDiagramButton);
         timePercentageDiagramButton.setSelected(true);
-        timePercentageDiagramButton.setText("time percentage occupied by...");
+        timePercentageDiagramButton.setText(_("time percentage occupied by..."));
         timePercentageDiagramButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 timePercentageDiagramButtonActionPerformed(evt);
@@ -81,7 +82,7 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
         });
 
         diagramTypeButtonGroup.add(singleOccurenceDiagramButton);
-        singleOccurenceDiagramButton.setText("single occurences of...");
+        singleOccurenceDiagramButton.setText(_("single occurences of..."));
         singleOccurenceDiagramButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 singleOccurenceDiagramButtonActionPerformed(evt);
@@ -89,7 +90,7 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
         });
 
         addChartButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/add.png"));
-        addChartButton.setText("Add chart");
+        addChartButton.setText(_("Add chart"));
         addChartButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addChartButtonActionPerformed(evt);
@@ -97,7 +98,7 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
         });
 
         cancelButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/cancel.png"));
-        cancelButton.setText("Cancel");
+        cancelButton.setText(_("Cancel"));
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
@@ -116,9 +117,9 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
         timeIntervalSpinner.setMinimumSize(new java.awt.Dimension(80, 28));
         timeIntervalSpinner.setPreferredSize(new java.awt.Dimension(80, 28));
 
-        jLabel1.setText("in each");
+        jLabel1.setText(_("in each"));
 
-        jLabel2.setText("second interval");
+        jLabel2.setText(_("second interval"));
 
         javax.swing.GroupLayout timeIntervalPanelLayout = new javax.swing.GroupLayout(timeIntervalPanel);
         timeIntervalPanel.setLayout(timeIntervalPanelLayout);
@@ -139,7 +140,7 @@ public class BookReporterNewChartDialog extends javax.swing.JDialog {
                 .addComponent(jLabel2))
         );
 
-        showHorizontalLinesCheckBox.setText("show horizontal lines for 20% and 50%");
+        showHorizontalLinesCheckBox.setText(_("show horizontal lines for 20% and 50%"));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

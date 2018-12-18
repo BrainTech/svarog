@@ -3,6 +3,8 @@ package org.signalml.domain.montage.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -16,19 +18,19 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 @XStreamAlias("eegchannel")
 public enum ChannelFunction implements IChannelFunction {
 
-	UNKNOWN("Unknown", false, true, "uV", 800),
-	EOG_LEFT("EOG (left)", false ,true, "uV", 1000), //1-few mV
-	EOG_RIGHT("EOG (right)", false ,true, "uV", 1000),
-	TRIGGER("Trigger", false, true, "", 1),
-	EEG("EEG", false, true, "uV", 20), // 100uV
-	ECG("ECG", false, true, "uV", 400), //5mV
-	EMG("EMG", false, true, "uV", 1000), //few mV
-	RESP("RESP", false, true, "", 20),
-	SAO2("SaO2", false, true, "%", 100),
-	SC("Skin conductance", false, true, "uS", 20), //20uS
-	SP("Skin potential", false, true, "mV", 60000), //0 -60 mV
-	ZERO("ZERO", true, false, "bit", 100),
-	ONE("ONE", true, false, "bit", 100);
+	UNKNOWN(_("Unknown"), false, true, "uV", 800),
+	EOG_LEFT(_("EOG (left)"), false ,true, "uV", 1000), //1-few mV
+	EOG_RIGHT(_("EOG (right)"), false ,true, "uV", 1000),
+	TRIGGER(_("Trigger"), false, true, "", 1),
+	EEG(_("EEG"), false, true, "uV", 20), // 100uV
+	ECG(_("ECG"), false, true, "uV", 400), //5mV
+	EMG(_("EMG"), false, true, "uV", 1000), //few mV
+	RESP(_("RESP"), false, true, "", 20),
+	SAO2(_("SaO2"), false, true, "%", 100),
+	SC(_("Skin conductance"), false, true, "uS", 20), //20uS
+	SP(_("Skin potential"), false, true, "mV", 60000), //0 -60 mV
+	ZERO(_("ZERO"), true, false, "bit", 100),
+	ONE(_("ONE"), true, false, "bit", 100);
 
 	/**
 	 * a name of this channel

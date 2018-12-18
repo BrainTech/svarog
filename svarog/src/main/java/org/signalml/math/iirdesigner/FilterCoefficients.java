@@ -7,6 +7,7 @@ import org.signalml.math.iirdesigner.math.SpecialMath;
 
 import java.util.Arrays;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class contains the values of the feedback and feedforward coefficients (B & A coefficients)
@@ -132,7 +133,7 @@ public class FilterCoefficients {
 				newBCoefficients[i] = bCoefficients[firstNotCloseToZero + i];
 			bCoefficients = newBCoefficients;
 
-			throw new BadFilterParametersException("Badly conditioned filter coefficients (numerator): the results may be meaningless");
+			throw new BadFilterParametersException(_("Badly conditioned filter coefficients (numerator): the results may be meaningless"));
 		}
 
 	}

@@ -18,6 +18,7 @@ import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.peer.Peer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 
@@ -77,7 +78,7 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		MessageType type = response.getType();
 		if (type == MessageType.REQUEST_ERROR_RESPONSE) {
 			RequestErrorResponse msg = (RequestErrorResponse) response;
-			Dialogs.showError("Could not kill this experiment in openBCI (error code: " + msg.getErrorCode() + ")");
+			Dialogs.showError(String.format(_("Could not kill this experiment in openBCI (error code: %s)"), msg.getErrorCode()));
 		}
 	}
 

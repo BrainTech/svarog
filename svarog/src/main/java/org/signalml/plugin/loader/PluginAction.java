@@ -1,12 +1,10 @@
-/**
- *
- */
 package org.signalml.plugin.loader;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * A button used to create a
@@ -33,7 +31,7 @@ public class PluginAction extends AbstractAction {
 	 * @param descriptions an array of plug-in {@link PluginState states}
 	 */
 	public PluginAction(ArrayList<PluginState> descriptions) {
-		super("Plugins options");
+		super(_("Plugins options"));
 		this.descriptions = descriptions;
 	}
 

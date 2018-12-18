@@ -18,6 +18,7 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -179,7 +180,7 @@ public class DelegatingAtomFilter extends AbstractAtomFilter {
 
 	@Override
 	public String getDefaultMessage() {
-		return "Delegating atom filter";
+		return _("Delegating atom filter");
 	}
 
 	private class UnimplementingFilterWrapper implements AtomFilter {

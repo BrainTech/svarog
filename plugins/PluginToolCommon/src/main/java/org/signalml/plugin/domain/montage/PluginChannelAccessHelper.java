@@ -3,6 +3,7 @@ package org.signalml.plugin.domain.montage;
 import java.util.Map;
 
 import org.signalml.plugin.exception.PluginAlgorithmDataException;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 public class PluginChannelAccessHelper {
 	public static double[] GetChannelSignal(Map<String, Integer> channels,
@@ -17,8 +18,7 @@ public class PluginChannelAccessHelper {
 		Integer channelNum = channels.get(channel.toString());
 		if (channelNum == null || channelNum < 0
 				|| (signal != null && channelNum >= signal.length)) {
-			throw new PluginAlgorithmDataException("Invalid channel "
-												   + channel.toString());
+			throw new PluginAlgorithmDataException(String.format(_("Invalid channel %s"), channel.toString()));
 		}
 		return channelNum;
 	}

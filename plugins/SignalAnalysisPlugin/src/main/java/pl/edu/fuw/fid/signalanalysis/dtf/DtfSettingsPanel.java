@@ -9,6 +9,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Panel for DTF method settings: selected channels
@@ -28,7 +29,7 @@ public final class DtfSettingsPanel extends JPanel {
 		this.orderSpinner = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
 
 		JPanel bottomPanel = new JPanel(new BorderLayout());
-		bottomPanel.add(new JLabel("Max order of AR model:"), BorderLayout.WEST);
+		bottomPanel.add(new JLabel(_("Max order of AR model:")), BorderLayout.WEST);
 		bottomPanel.add(orderSpinner, BorderLayout.CENTER);
 
 		add(channelPanel, BorderLayout.CENTER);
@@ -44,7 +45,7 @@ public final class DtfSettingsPanel extends JPanel {
 	}
 
 	public int showAsConfirmDialog(Component parentComponent) {
-		return JOptionPane.showConfirmDialog(parentComponent, this, "Directed Transfer Function", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+		return JOptionPane.showConfirmDialog(parentComponent, this, _("Directed Transfer Function"), JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 	}
 
 }

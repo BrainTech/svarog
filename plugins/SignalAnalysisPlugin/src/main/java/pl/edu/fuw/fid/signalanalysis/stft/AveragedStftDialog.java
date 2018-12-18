@@ -12,6 +12,7 @@ import org.signalml.math.fft.WindowType;
 import org.signalml.plugin.export.SignalMLException;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseDialog;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Dialog for selecting settings for averaged Short-Time Fourier Transform.
@@ -26,7 +27,7 @@ public class AveragedStftDialog extends AveragedBaseDialog<PreferencesForSTFT> {
 
 	public AveragedStftDialog(Window w, Boolean isModal) {
 		super(w, isModal);
-		setTitle("Averaged Short-Time Fourier Transform");
+		setTitle(_("Averaged Short-Time Fourier Transform"));
 	}
 
 	@Override
@@ -44,9 +45,9 @@ public class AveragedStftDialog extends AveragedBaseDialog<PreferencesForSTFT> {
 		windowLengthComboBox.setEditable(true);
 
 		JPanel fftPanel = new JPanel(new GridLayout(0, 2));
-		fftPanel.add(new JLabel("window type:"));
+		fftPanel.add(new JLabel(_("window type:")));
 		fftPanel.add(windowTypeComboBox);
-		fftPanel.add(new JLabel("window size:"));
+		fftPanel.add(new JLabel(_("window size:")));
 		fftPanel.add(windowLengthComboBox);
 
 		return fftPanel;
@@ -66,7 +67,7 @@ public class AveragedStftDialog extends AveragedBaseDialog<PreferencesForSTFT> {
 		super.validateDialog(model, errors);
 		Integer windowLength = SignalAnalysisTools.parsePositiveInteger(windowLengthComboBox.getSelectedItem());
 		if (windowLength == null) {
-			errors.addError("Window length is invalid");
+			errors.addError(_("Window length is invalid"));
 		}
 	}
 

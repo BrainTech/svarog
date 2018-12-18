@@ -12,6 +12,8 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.springframework.validation.Errors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /**
  * This class represents a generator for a single reference montage.
@@ -48,7 +50,7 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 	 */
 	public SingleReferenceMontageGenerator(String referenceChannelName) {
 		if (referenceChannelName == null) {
-			throw new NullPointerException("Channel cannot be null");
+			throw new NullPointerException(_("Channel cannot be null"));
 		}
 		this.referenceChannelName = referenceChannelName;
 	}
@@ -66,7 +68,10 @@ public class SingleReferenceMontageGenerator extends AbstractMontageGenerator {
 		SourceChannel referenceSourceChannel = montage.getSourceChannelByLabel(referenceChannelName);
 
 		if (referenceSourceChannel == null) {
-			throw new MontageException("Cannot find " + referenceChannelName + " source channel for single reference montage generator ");
+			throw new MontageException(_R(
+				"Cannot find {0} source channel for single reference montage generator",
+				referenceChannelName
+			));
 		}
 
 		boolean oldMajorChange = montage.isMajorChange();

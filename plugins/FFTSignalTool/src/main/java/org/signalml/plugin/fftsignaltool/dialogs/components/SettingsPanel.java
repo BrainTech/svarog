@@ -595,7 +595,7 @@ public class SettingsPanel extends JPanel {
 				settings.setWindowWidth(Integer
 										.parseInt(customWindowWidthTextField.getText()));
 			} else {
-				throw new RuntimeException("Nothing selected");
+				throw new RuntimeException(_("Nothing selected"));
 			}
 		}
 
@@ -752,7 +752,7 @@ public class SettingsPanel extends JPanel {
 			minY = Double.parseDouble(customMinYAxis.getText());
 
 			if (maxY <= minY)
-			errors.addError(_("Bad power axis range - min must be lower than max"));
+			errors.addError(_("Bad power axis range—min must be lower than max"));
 		}
 		
 
@@ -781,7 +781,7 @@ public class SettingsPanel extends JPanel {
 			int minX = Integer.parseInt(visibleRangeStartTextField.getText());
 
 			if (maxX <= minX)
-			errors.addError(_("Bad frequency axis range - min must be lower than max"));
+			errors.addError(_("Bad frequency axis range—min must be lower than max"));
 		}
 		fftWindowTypePanel.validatePanel(errors);
 

@@ -9,13 +9,14 @@ import org.apache.log4j.Logger;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 /**
  * This class allows to export a {@link StyledTagSet StyledTagSet} to
  * an ASCII file, which can be imported into EEGLab
  *
  * @author Maciej Pawlisz, Titanis
  */
-
 public class EEGLabTagExporter {
 	protected static final Logger logger = Logger.getLogger(EEGLabTagExporter.class);
 	/**
@@ -41,15 +42,15 @@ public class EEGLabTagExporter {
 
 	private String convertToString(StyledTagSet tagSet) {
 		StringBuffer str=new StringBuffer();
-		str.append("#This is ASCII representation of tags from svarog\n");
-		str.append("#To import it to EEGLab, run File->Import event info->From Matlab array or ASCII File\n");
-		str.append("#Set the folowing parameters in the import dialog:\n");
-		str.append("#Append events: unchecked\n");
-		str.append("#Input field (column) names: 'type latency duration tag_type channel'\n");
-		str.append("#Number of file header lines: 10\n");
-		str.append("#Time unit: 1\n");
-		str.append("#Align event latencies to data events: NaN\n");
-		str.append("#Auto adjust new events sampling rate: unchecked\n");
+		str.append("#"+_("This is ASCII representation of tags from svarog")+"\n");
+		str.append("#"+_("To import it to EEGLab, run File->Import event info->From Matlab array or ASCII File")+"\n");
+		str.append("#"+_("Set the folowing parameters in the import dialog:")+"\n");
+		str.append("#"+_("Append events: unchecked")+"\n");
+		str.append("#"+_("Input field (column) names: 'type latency duration tag_type channel'")+"\n");
+		str.append("#"+_("Number of file header lines: 10")+"\n");
+		str.append("#"+_("Time unit: 1")+"\n");
+		str.append("#"+_("Align event latencies to data events: NaN")+"\n");
+		str.append("#"+_("Auto adjust new events sampling rate: unchecked")+"\n");
 		str.append("#type\tlatency\tduration\ttag_type\tchannel\n");
 		for (Iterator<Tag> it=tagSet.getTags().iterator(); it.hasNext();)
 		{

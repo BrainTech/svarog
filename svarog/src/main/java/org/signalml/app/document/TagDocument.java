@@ -201,8 +201,10 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		try {
 			tagSet = (StyledTagSet) streamer.fromXML(is);
 		} catch (CannotResolveClassException e) {
-			throw new RuntimeException("failed to read XML, element "
-									   + e.getMessage());
+			throw new RuntimeException(String.format(
+					_("failed to read XML, element %s"),
+					e.getMessage()
+			));
 		}
 	}
 

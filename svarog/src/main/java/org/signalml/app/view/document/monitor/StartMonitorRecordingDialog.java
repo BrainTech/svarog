@@ -39,7 +39,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle(_("Start monitor recording"));
+		setTitle(_("Start recording"));
 		super.initialize();
 	}
 

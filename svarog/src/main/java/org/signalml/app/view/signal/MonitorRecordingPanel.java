@@ -62,7 +62,7 @@ public class MonitorRecordingPanel extends AbstractPanel {
 		setLayout(new BorderLayout(10, 10));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("Monitor recording")),
+			new TitledBorder(_("Recording")),
 			new EmptyBorder(3, 3, 3, 3));
 		setBorder(border);
 
@@ -95,7 +95,7 @@ public class MonitorRecordingPanel extends AbstractPanel {
 		if (enableRecordingPanel == null) {
 			enableRecordingPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 			enableRecordingPanel.add(getEnableRecordingCheckbox());
-			enableRecordingPanel.add(new JLabel("enable recording"));
+			enableRecordingPanel.add(new JLabel(_("enable recording")));
 		}
 		return enableRecordingPanel;
 	}

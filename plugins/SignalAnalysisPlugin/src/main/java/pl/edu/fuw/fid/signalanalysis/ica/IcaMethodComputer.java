@@ -5,6 +5,7 @@ import org.apache.commons.math.linear.EigenDecomposition;
 import org.apache.commons.math.linear.EigenDecompositionImpl;
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealVector;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * The core calculations of ICA (Independent Component Analysis) method.
@@ -30,11 +31,11 @@ public class IcaMethodComputer {
 	public RealMatrix compute(RealMatrix data) throws IcaMethodException {
 		final int C = data.getRowDimension();
 		if (C == 0) {
-			throw new IcaMethodException("no channels selected");
+			throw new IcaMethodException(_("no channels selected"));
 		}
 		final int N = data.getColumnDimension();
 		if (N == 0) {
-			throw new IcaMethodException("signal is empty");
+			throw new IcaMethodException(_("signal is empty"));
 		}
 
 		// mean elimination
@@ -58,7 +59,7 @@ public class IcaMethodComputer {
 		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
 			double value = V.getEntry(i, j);
 			if (Double.isInfinite(value) || Double.isNaN(value)) {
-				throw new IcaMethodException("signal whitening failed");
+				throw new IcaMethodException(_("signal whitening failed"));
 			}
 		}
 

@@ -30,6 +30,7 @@ import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageRefresher;
 import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
 import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * User interface for interactive Short-Time Fourier Transform.
@@ -86,7 +87,7 @@ public class PaneForSTFT {
 		double tMax = selection.getEndPosition();
 		final NumberAxis xAxis = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis yAxis = new NumberAxis(0.0, nyquistFrequency, 10.0);
-		yAxis.setLabel("frequency [Hz]");
+		yAxis.setLabel(_("frequency [Hz]"));
 		yAxis.setPrefWidth(50);
 
 		final Slider maxFrequency = (Slider) fxmlLoader.getNamespace().get("frequencySlider");
@@ -117,8 +118,8 @@ public class PaneForSTFT {
 
 		final NumberAxis xAxisSignal = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis yAxisSignal = new NumberAxis();
-		xAxisSignal.setLabel("time [s]");
-		yAxisSignal.setLabel("value [µV]");
+		xAxisSignal.setLabel(_("time [s]"));
+		yAxisSignal.setLabel(_("value [µV]"));
 		yAxisSignal.setPrefWidth(50);
 		final SignalChart signalChart = new SignalChart(signal, tMin, tMax, xAxisSignal, yAxisSignal);
 

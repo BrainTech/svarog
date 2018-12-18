@@ -5,6 +5,7 @@
 package org.signalml.math.iirdesigner;
 
 import org.signalml.math.iirdesigner.math.SpecialMath;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This abstract class represents a designer which is capable of designing a Chebyshev filter.
@@ -46,7 +47,7 @@ abstract class ChebyshevIIRDesigner extends AbstractIIRDesigner {
 		int filterOrder = (int)(Math.ceil(SpecialMath.acosh(Math.sqrt((GSTOP - 1.0) / (GPASS - 1.0))) / SpecialMath.acosh(frequencyRatio)));
 
 		if (filterOrder == 0)
-			throw new BadFilterParametersException("Filter order is zero - check the input parameters!");
+			throw new BadFilterParametersException(_("Filter order is zero—check the input parameters!"));
 
 		return filterOrder;
 

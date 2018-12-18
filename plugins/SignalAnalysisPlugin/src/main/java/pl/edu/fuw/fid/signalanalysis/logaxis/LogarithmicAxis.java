@@ -12,6 +12,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.chart.ValueAxis;
 import javafx.util.Duration;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * A logarithmic axis implementation for JavaFX 2 charts.
@@ -86,7 +87,7 @@ public class LogarithmicAxis extends ValueAxis<Number> {
 	private void validateBounds(double lowerBound, double upperBound) throws IllegalLogarithmicRangeException {
 		if (lowerBound < 0 || upperBound < 0 || lowerBound > upperBound) {
 			throw new IllegalLogarithmicRangeException(
-					"The logarithmic range should be include to ]0,Double.MAX_VALUE] and the lowerBound should be less than the upperBound");
+					_("The logarithmic range should be contained in ]0,Double.MAX_VALUE] and the lowerBound should be less than the upperBound"));
 		}
 	}
 

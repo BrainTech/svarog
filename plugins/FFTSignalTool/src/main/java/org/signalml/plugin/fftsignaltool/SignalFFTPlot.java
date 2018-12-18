@@ -257,7 +257,7 @@ public class SignalFFTPlot extends JComponent {
 		int sampleCnt = lastSample - firstSample;
 		if (sampleCnt != windowWidth) {
 			throw new SanityCheckException(
-				"Sanity failed - sample count different than window size");
+				_("Sanity failed—sample count different than window size"));
 		}
 
 		if (samples == null || samples.length != sampleCnt) {
@@ -290,7 +290,7 @@ public class SignalFFTPlot extends JComponent {
 			frequencies = fourierTransform.getFrequencies(samples, channelSamples.getSamplingFrequency());
 
 			if (powerSpectrum == null) {
-				throw new NullPointerException("Null spectrum returned");
+				throw new NullPointerException(_("Null spectrum returned"));
 			}
 			logger.debug("powerSpectrum length = " + powerSpectrum.length);
 
@@ -631,7 +631,7 @@ public class SignalFFTPlot extends JComponent {
 	 */
 	public void setPlotSize(Dimension plotSize) {
 		if (plotSize == null) {
-			throw new NullPointerException("No size");
+			throw new NullPointerException(_("No size"));
 		}
 		if (!plotSize.equals(this.plotSize)) {
 			this.plotSize = plotSize;

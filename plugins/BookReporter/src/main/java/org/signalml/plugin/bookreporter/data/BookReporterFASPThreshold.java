@@ -2,6 +2,7 @@ package org.signalml.plugin.bookreporter.data;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -12,43 +13,43 @@ public class BookReporterFASPThreshold implements Serializable {
 	private static class Predefined extends HashMap<String, BookReporterFASPThreshold> {
 		public Predefined() {
 			super();
-			put("alpha", new BookReporterFASPThreshold(
+			put(_("alpha"), new BookReporterFASPThreshold(
 				8.0,  12.0,  // f
 				5.0,  null,  // a
 				1.5,  null,  // s
 				null, null   // p
 			));
-			put("beta", new BookReporterFASPThreshold(
+			put(_("beta"), new BookReporterFASPThreshold(
 				15.0, 25.0,  // f
 				5.0,  null,  // a
 				0.5,  null,  // s
 				null, null   // p
 			));
-			put("delta", new BookReporterFASPThreshold(
+			put(_("delta"), new BookReporterFASPThreshold(
 				0.2,  4.0,   // f
 				65.0, null,  // a
 				0.5,  6.0,   // s
 				null, null   // p
 			));
-			put("theta", new BookReporterFASPThreshold(
+			put(_("theta"), new BookReporterFASPThreshold(
 				4.0,  8.0,   // f
 				15.0, null,  // a
 				1.0,  null,  // s
 				null, null   // p
 			));
-			put("spindles", new BookReporterFASPThreshold(
+			put(_("spindles"), new BookReporterFASPThreshold(
 				11.0, 15.0,  // f
 				12.0, null,  // a
 				0.5,  2.5,   // s
 				null, null   // p
 			));
-			put("K-comp.", new BookReporterFASPThreshold(
+			put(_("K-comp."), new BookReporterFASPThreshold(
 				0.03, 25.0,  // f
 				100.0, null, // a
 				0.3, 1.5,    // s
 				-0.5, +0.5   // p
 			));
-			put("SWA", new BookReporterFASPThreshold(
+			put(_("SWA"), new BookReporterFASPThreshold(
 				0.2,  4.0,   // f
 				70.0, null,  // a
 				0.5,  null,  // s

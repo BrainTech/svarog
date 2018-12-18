@@ -65,9 +65,9 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	public JComponent createInterface() {
 
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add("Signal selection", getSignalSpacePanel());
-		tabbedPane.add("ERP settings", getEvokedPotentialSettingsPanel());
-		tabbedPane.add("Artifact rejection", getArtifactRejectionPanel());
+		tabbedPane.add(_("Signal selection"), getSignalSpacePanel());
+		tabbedPane.add(_("ERP settings"), getEvokedPotentialSettingsPanel());
+		tabbedPane.add(_("Artifact rejection"), getArtifactRejectionPanel());
 
 		return tabbedPane;
 	}

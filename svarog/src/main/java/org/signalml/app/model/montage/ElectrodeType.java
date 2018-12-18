@@ -1,9 +1,10 @@
 package org.signalml.app.model.montage;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public enum ElectrodeType {
 
-	STANDARD_SIGNAL_VALUES("Standard", 0, 10000, 15000),
-	HIGH_SIGNAL_VALUES("High signal values", 100, 100000, 150000);
+	STANDARD_SIGNAL_VALUES(_("Standard"), 0, 10000, 15000),
+	HIGH_SIGNAL_VALUES(_("High signal values"), 100, 100000, 150000);
 
 	private String name;
 	private int min;

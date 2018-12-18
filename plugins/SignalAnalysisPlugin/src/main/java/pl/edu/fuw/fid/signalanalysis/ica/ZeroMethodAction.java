@@ -25,6 +25,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.PluginAccessClass;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Action triggered whenever user chooses to zero some ICA components
@@ -35,7 +36,7 @@ import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
  */
 public class ZeroMethodAction extends AbstractSignalMLAction {
 
-	private static final String TITLE = "Zero selected components";
+	private static final String TITLE = _("Zero selected components");
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;
@@ -102,15 +103,15 @@ public class ZeroMethodAction extends AbstractSignalMLAction {
 				dfi.getActionFocusManager().setActiveDocument(newDocument);
 			}
 		} catch (MontageException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Montage error.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Montage error."), _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (MontageMismatchException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Montage mismatch.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Montage mismatch."), _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (NoActiveObjectException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose a signal with an existing ICA analysis.", "Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Choose a signal with an existing ICA analysis."), _("Error"), JOptionPane.WARNING_MESSAGE);
 		} catch (IOException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Error: ")+ex, _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (SignalMLException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Error: "+ex, "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Error: ")+ex, _("Error"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

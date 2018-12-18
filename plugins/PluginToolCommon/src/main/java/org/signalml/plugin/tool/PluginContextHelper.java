@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.Plugin;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 public class PluginContextHelper {
 
@@ -43,22 +44,21 @@ public class PluginContextHelper {
 	throws PluginException {
 		Class<? extends Plugin> klass = plugin.getClass();
 		if (klass.isAnonymousClass()) {
-			throw new PluginException("Anonymous plugin classes not supported");
+			throw new PluginException(_("Anonymous plugin classes not supported"));
 		}
 
 		Package _package = klass.getPackage();
 		if (_package == null) {
-			throw new PluginException("Cannot get plugin package");
+			throw new PluginException(_("Cannot get plugin package"));
 		}
 
 		String packageName = _package.getName();
 		if (packageName == null) {
-			throw new PluginException("Cannot get plugin package name");
+			throw new PluginException(_("Cannot get plugin package name"));
 		}
 
 		if (PluginPackages.containsKey(packageName)) {
-			throw new PluginException("Plugin class " + packageName
-									  + " already registered");
+			throw new PluginException(String.format(_("Plugin class %s already registered"), packageName));
 		}
 
 		PluginPackages.put(packageName, klass);

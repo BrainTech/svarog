@@ -11,6 +11,7 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.bookreporter.exception.BookReporterBookReaderException;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -42,7 +43,7 @@ public class BookReporterBookReader {
 
 	public void close() throws BookReporterBookReaderException {
 		if (this.bookDocument == null) {
-			throw new RuntimeException("book is already closed");
+			throw new RuntimeException(_("book is already closed"));
 		} else try {
 			this.bookDocument.closeDocument();
 			this.bookDocument = null;
@@ -53,7 +54,7 @@ public class BookReporterBookReader {
 	
 	public Collection<BookReporterAtom> getAtomsFromNextSegment() {
 		if (this.bookDocument == null) {
-			throw new RuntimeException("book is already closed");
+			throw new RuntimeException(_("book is already closed"));
 		} else if (this.nextSegment >= this.segmentCount) {
 			return null;
 		} else {

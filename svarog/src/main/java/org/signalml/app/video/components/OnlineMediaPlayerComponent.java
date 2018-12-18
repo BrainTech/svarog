@@ -11,6 +11,7 @@ import org.signalml.app.worker.monitor.messages.CameraControlRequest;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 
 /**
@@ -68,11 +69,10 @@ public class OnlineMediaPlayerComponent extends SvarogMediaPlayerComponent {
 
 	public void reportReconnects() {
 		String rtspURL = manager.getCurrentStreamURL();
-		Dialogs.showWarningMessage(_("Failed due to error in VLC preview\n"
-			+ "Video preview will not work until you restart Svarog.\n"
-			+ "Video saving will continue to operate normally.\n"
-			+ "You can open preview in any "
-			+ "other video player, by opening this link: \n") + rtspURL);
+		Dialogs.showWarningMessage(_("Failed due to error in VLC preview")+"\n"
+			+ _("Video preview will not work until you restart Svarog.")+"\n"
+			+ _("Video saving will continue to operate normally.")+"\n"
+			+ _("You can open preview in any other video player, by opening this link:")+"\n"+rtspURL);
         }
 
 	/**

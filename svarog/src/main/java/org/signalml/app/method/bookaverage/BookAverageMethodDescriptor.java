@@ -86,7 +86,7 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 		BookView bookView = (BookView) bookDocument.getDocumentView();
 		StandardBook book = bookDocument.getBook();
 		if (book.getSegmentCount() == 0 || book.getSegmentAt(0).length == 0) {
-			OptionPane.showError(methodManager.getDialogParent(), "Book contains no valid segments!");
+			OptionPane.showError(methodManager.getDialogParent(), _("Book contains no valid segments!"));
 			return null;
 		}
 

@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
@@ -86,8 +87,8 @@ public class MP5ConfigCreator {
 		Formatter formatter = new Formatter(new Locale("en_EN"));
 
 		if (addHeader) {
-			formatter.format("# signalml MP configuration%n");
-			formatter.format("# auto created by SignalML version [%s] on [%s]%n", SvarogConstants.VERSION, (new Date()).toString());
+			formatter.format("# " + _("signalml MP configuration") + "%n");
+			formatter.format("# " + _("auto created by SignalML version [%s] on [%s]") + "%n", SvarogConstants.VERSION, (new Date()).toString());
 			formatter.format("%n");
 		}
 

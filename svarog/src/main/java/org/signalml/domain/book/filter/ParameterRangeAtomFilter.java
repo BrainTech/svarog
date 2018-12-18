@@ -9,6 +9,7 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.util.MinMaxRange;
 import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
@@ -132,7 +133,7 @@ public class ParameterRangeAtomFilter extends AbstractAtomFilter {
 
 	@Override
 	public String getDefaultMessage() {
-		return "Parameter range atom filter";
+		return _("Parameter range atom filter");
 	}
 
 }

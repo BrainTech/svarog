@@ -37,7 +37,7 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 
 		super(signalDocumentFocusSelector);
 		setIconPath("org/signalml/app/icon/stop-recording.png");
-		setText(_("Stop monitor recording"));
+		setText(_("Stop recording"));
 		setToolTip(_("Stop to record signal and tags to a file"));
 		setMnemonic(KeyEvent.VK_P);
 

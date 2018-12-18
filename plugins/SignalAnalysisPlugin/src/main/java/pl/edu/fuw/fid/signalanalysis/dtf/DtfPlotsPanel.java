@@ -14,6 +14,7 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Panel displaying precomputed spectral features of the AR model,
@@ -37,19 +38,19 @@ public class DtfPlotsPanel extends JPanel {
 		normalizable = new boolean[dimension * dimension];
 
 		// add placeholder which shall be visible until the user selects model order
-		add(new JLabel("select AR model order to display graphs", SwingConstants.CENTER), BorderLayout.CENTER);
+		add(new JLabel(_("select AR model order to display graphs"), SwingConstants.CENTER), BorderLayout.CENTER);
 
 		// prepare charts to be displayed
 		int index = 0;
 		for (int i=0; i<series.length; ++i) {
 			if (series[i].length != dimension) {
-				throw new RuntimeException("series[][] is not a square array");
+				throw new RuntimeException(_("series[][] is not a square array"));
 			}
 			for (int j=0; j<series.length; ++j) {
 				XYSeries serie = series[i][j];
 				if (serie != null) {
 					final int indexFinal = index;
-					JFreeChart chart = ChartFactory.createXYAreaChart(serie.getDescription(), "frequency [Hz]", null, new XYSeriesCollection(serie), PlotOrientation.VERTICAL, false, false, false);
+					JFreeChart chart = ChartFactory.createXYAreaChart(serie.getDescription(), _("frequency [Hz]"), null, new XYSeriesCollection(serie), PlotOrientation.VERTICAL, false, false, false);
 					ChartPanel panel = new ChartPanel(chart);
 					panel.setDomainZoomable(false);
 					panel.setRangeZoomable(false);

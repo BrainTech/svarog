@@ -15,6 +15,8 @@ import org.apache.commons.math.linear.RealMatrix;
 import org.jfree.data.xy.XYSeries;
 import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
 import org.signalml.domain.montage.Montage;
+import static org.signalml.plugin.i18n.PluginI18n._;
+import static org.signalml.plugin.i18n.PluginI18n._R;
 
 /**
  * Tabbed display of the results from the DTF method.
@@ -82,7 +84,7 @@ public class DtfTabbedPane extends JTabbedPane {
 		for (int i=0; i<C; ++i) {
 			for (int j=0; j<C; ++j) {
 				String label = (i == j)
-					? "spectrum of "+channels[i]
+					? _R("spectrum of {0}", channels[i])
 					: channels[j]+"→"+channels[i]; // display is transposed
 				series[i][j] = new XYSeries(label);
 				series[i][j].setDescription(label);
@@ -96,7 +98,7 @@ public class DtfTabbedPane extends JTabbedPane {
 		final DtfNormRadioPanel normPanel = new DtfNormRadioPanel();
 		final DtfPlotsPanel plotsPanel = new DtfPlotsPanel(series);
 
-		final JButton copyModelDataButton = new JButton("copy model coefficients to clipboard");
+		final JButton copyModelDataButton = new JButton(_("copy model coefficients to clipboard"));
 		final JPanel copyModelDataPanel = new JPanel(new BorderLayout());
 		copyModelDataButton.setEnabled(false);
 		copyModelDataButton.addActionListener(new ActionListener() {
@@ -162,9 +164,9 @@ public class DtfTabbedPane extends JTabbedPane {
 			}
 		});
 
-		add("Model order", orderPanel);
-		add("Transfer functions", mainPanel);
-		add("Transfer graph", visualPanel);
+		add(_("Model order"), orderPanel);
+		add(_("Transfer functions"), mainPanel);
+		add(_("Transfer graph"), visualPanel);
 	}
 
 }

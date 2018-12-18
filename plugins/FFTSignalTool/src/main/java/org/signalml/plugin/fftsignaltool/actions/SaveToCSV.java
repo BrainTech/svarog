@@ -33,7 +33,7 @@ public class SaveToCSV extends AbstractSignalMLAction {
 	public SaveToCSV(I18nDelegator i18nDelegate) {
 		super();
 		this.i18nDelegate = i18nDelegate;
-		setText("Export FFT to CSV");
+		setText(_("Export FFT to CSV"));
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class SaveToCSV extends AbstractSignalMLAction {
 			return;
 		}
 		JFileChooser fc = new JFileChooser();
-		fc.setFileFilter(new FileNameExtensionFilter("CSV Files", "csv"));
+		fc.setFileFilter(new FileNameExtensionFilter(_("CSV Files"), "csv"));
 		fc.setMultiSelectionEnabled(false);
 		int returnVal = fc.showSaveDialog(null);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {

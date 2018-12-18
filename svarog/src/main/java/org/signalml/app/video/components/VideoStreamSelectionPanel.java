@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.video.VideoSourceSpecification;
 import org.signalml.app.video.VideoStreamSpecification;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel for selecting video source and stream from a list of available sources.
@@ -69,7 +70,7 @@ public final class VideoStreamSelectionPanel extends JPanel {
 	public void setAvailableSources(List<VideoSourceSpecification> cameras) {
 		cameraModel.removeAllElements();
 		cameraModel.addElement(new VideoSourceSpecification(
-			"(select source)",
+			_("(select source)"),
 			Collections.EMPTY_LIST
 		));
 		for (VideoSourceSpecification camera : cameras) {
@@ -102,7 +103,7 @@ public final class VideoStreamSelectionPanel extends JPanel {
 			listener.refreshRequested();
 		});
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
-		panel.add(new JLabel("Camera:"), BorderLayout.NORTH);
+		panel.add(new JLabel(_("Camera:")), BorderLayout.NORTH);
 		panel.add(cameraCombo, BorderLayout.CENTER);
 		panel.add(refreshButton, BorderLayout.EAST);
 		return panel;
@@ -116,7 +117,7 @@ public final class VideoStreamSelectionPanel extends JPanel {
 			}
 		});
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
-		panel.add(new JLabel("Stream:"), BorderLayout.NORTH);
+		panel.add(new JLabel(_("Stream:")), BorderLayout.NORTH);
 		panel.add(streamListContainer, BorderLayout.CENTER);
 		return panel;
 	}

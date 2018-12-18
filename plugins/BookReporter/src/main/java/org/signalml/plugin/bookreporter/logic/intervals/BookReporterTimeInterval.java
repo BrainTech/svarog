@@ -1,5 +1,7 @@
 package org.signalml.plugin.bookreporter.logic.intervals;
 
+import static org.signalml.plugin.i18n.PluginI18n._;
+
 /**
  * @author piotr@develancer.pl
  */
@@ -25,7 +27,7 @@ public class BookReporterTimeInterval implements Comparable<BookReporterTimeInte
 		if (start <= end) {
 			return new BookReporterTimeInterval(start, end);
 		} else {
-			throw new RuntimeException("invalid endpoints for time interval");
+			throw new RuntimeException(_("invalid endpoints for time interval"));
 		}
 	}
 

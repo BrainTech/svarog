@@ -11,6 +11,7 @@ import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Action performed when user requests interactive Short-Time Fourier Transform
@@ -22,7 +23,7 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PopupActionForSTFT.class);
 
-	private static final String TITLE = "Short-Time Fourier Transform";
+	private static final String TITLE = _("Short-Time Fourier Transform");
 
 	private final SvarogAccessSignal signalAccess;
 
@@ -35,7 +36,7 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 	public PopupActionForSTFT(SvarogAccessSignal signalAccess) {
 		super();
 		this.signalAccess = signalAccess;
-		setText("from selection");
+		setText(_("from selection"));
 	}
 
 	private ExportedSignalSelection getActiveSelection() {
@@ -51,7 +52,7 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 		// This method is invoked on Swing thread
 		final ExportedSignalSelection selection = getActiveSelection();
 		if (selection == null) {
-			JOptionPane.showMessageDialog(null, "Select valid single-channel signal fragment.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, _("Select valid single-channel signal fragment."), _("Error"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 

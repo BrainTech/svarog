@@ -2,6 +2,7 @@ package org.signalml.plugin.bookreporter.ui;
 
 import java.io.File;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -87,7 +88,7 @@ public class BookReporterChartExportDialog extends javax.swing.JDialog {
         fileChooser = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Export chart as PNG");
+        setTitle(_("Export chart as PNG"));
 
         xSize.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(100), Integer.valueOf(1), null, Integer.valueOf(1)));
 
@@ -152,7 +153,7 @@ public class BookReporterChartExportDialog extends javax.swing.JDialog {
         );
 
         fileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        fileChooser.setFileFilter(new FileNameExtensionFilter("PNG images", "png"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter(_("PNG images"), "png"));
         fileChooser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileChooserActionPerformed(evt);

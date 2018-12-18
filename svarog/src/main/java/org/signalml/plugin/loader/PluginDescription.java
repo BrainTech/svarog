@@ -1,6 +1,3 @@
-/**
- *
- */
 package org.signalml.plugin.loader;
 
 import java.io.File;
@@ -22,6 +19,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /**
  * This class describes the plug-in. Extends the {@link PluginState state} of
@@ -154,7 +152,7 @@ public class PluginDescription extends PluginState {
 		missingValues = addMissing(missingValues, jarFile, "jar-file");
 		missingValues = addMissing(missingValues, startingClass, "starting-class");
 		if (missingValues.length() > 0)
-			throw new ParseException("the xml file (" + fileName + ") doesn't contain all necessary values. Missing values: " + missingValues + ".");
+			throw new ParseException(_R("the xml file ({0})) doesn't contain all necessary values. Missing values: {1}.", fileName, missingValues));
 	}
 
 	/**

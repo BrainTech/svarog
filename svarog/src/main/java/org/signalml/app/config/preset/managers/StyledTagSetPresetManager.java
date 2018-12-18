@@ -31,7 +31,7 @@ import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
 @XStreamAlias("styledTagSets")
 public class StyledTagSetPresetManager extends AbstractPresetManager {
 
-	public static String EMPTY_PRESET_NAME = _("< Empty preset - no styles defined >");
+	public static String EMPTY_PRESET_NAME = _("< Empty preset—no styles defined >");
 
 	@Override
 	public String getStandardFilename() {

@@ -33,6 +33,7 @@ import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageRefresher;
 import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
 import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * User interface for interactive Wavelet Transform.
@@ -182,8 +183,8 @@ public class PaneForWavelet {
 
 		final NumberAxis xAxisSignal = new NumberAxis(tMin, tMax, 1.0);
 		final NumberAxis yAxisSignal = new NumberAxis();
-		xAxisSignal.setLabel("time [s]");
-		yAxisSignal.setLabel("value [µV]");
+		xAxisSignal.setLabel(_("time [s]"));
+		yAxisSignal.setLabel(_("value [µV]"));
 		yAxisSignal.setPrefWidth(50);
 		final SignalChart signalChart = new SignalChart(signal, tMin, tMax, xAxisSignal, yAxisSignal);
 

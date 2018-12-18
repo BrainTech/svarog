@@ -17,6 +17,7 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
+import static org.signalml.plugin.i18n.PluginI18n._;
 
 /**
  * Manages DTF method computation. Gathers data and presents results.
@@ -26,7 +27,7 @@ import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 public class DtfMethodAction extends AbstractSignalMLAction {
 
 	private static final int SPECTRUM_SIZE = 100;
-	private static final String TITLE = "Directed Transfer Function";
+	private static final String TITLE = _("Directed Transfer Function");
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;
@@ -48,17 +49,17 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 				int maxModelOrder = settingsPanel.getMaxModelOrder();
 				int[] selectedChannels = settingsPanel.getSelectedChannels();
 				if (selectedChannels.length == 0) {
-					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Select at least one channel.", "Try again", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Select at least one channel."), _("Try again"), JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				proceedToComputation(signalDocument, selectedChannels, maxModelOrder);
 			}
 		} catch (SingularMatrixException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Cannot compute DTF. Lag autocorrelation matrix is singular.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Cannot compute DTF. Lag autocorrelation matrix is singular."), _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (MontageMismatchException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Montage mismatch.", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Montage mismatch."), _("Error"), JOptionPane.ERROR_MESSAGE);
 		} catch (NoActiveObjectException ex) {
-			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), "Choose an active signal first.", "Error", JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(guiAccess.getDialogParent(), _("Choose an active signal first."), _("Error"), JOptionPane.WARNING_MESSAGE);
 		}
 	}
 
@@ -69,9 +70,9 @@ public class DtfMethodAction extends AbstractSignalMLAction {
 	 * @return
 	 */
 	private XYSeriesWithLegend[] computeCriteria(ArModel[] models, int N) {
-		XYSeriesWithLegend serieAIC = new XYSeriesWithLegend("AIC", "AIC(order) = log(det(V)) + 2 × order × channels² / samples");
-		XYSeriesWithLegend serieHQ = new XYSeriesWithLegend("Hannan-Quin", "HQ(order) = log(det(V)) + 2 × log(log(samples)) × order × channels² / samples");
-		XYSeriesWithLegend serieSch = new XYSeriesWithLegend("Schwartz", "SC(order) = log(det(V)) + log(samples) × order × channels² / samples");
+		XYSeriesWithLegend serieAIC = new XYSeriesWithLegend(_("AIC"), _("AIC(order) = log(det(V)) + 2 × order × channels² / samples"));
+		XYSeriesWithLegend serieHQ = new XYSeriesWithLegend(_("Hannan-Quin"), _("HQ(order) = log(det(V)) + 2 × log(log(samples)) × order × channels² / samples"));
+		XYSeriesWithLegend serieSch = new XYSeriesWithLegend(_("Schwartz"), _("SC(order) = log(det(V)) + log(samples) × order × channels² / samples"));
 		int order = 1;
 		for (ArModel model : models) {
 			double det = model.getErrorDeterminant();

@@ -138,7 +138,7 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 		}
 
 		if (channelCount <=0 || segmentCount <= 0) {
-			throw new ComputationException("Empty book");
+			throw new ComputationException(_("Book is empty"));
 		}
 
 		int stepCount = channelCount * segmentCount;

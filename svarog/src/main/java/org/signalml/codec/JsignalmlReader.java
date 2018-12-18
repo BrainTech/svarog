@@ -7,6 +7,7 @@ import java.nio.FloatBuffer;
 import java.nio.DoubleBuffer;
 import java.nio.BufferUnderflowException;
 import static java.lang.String.format;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import org.apache.log4j.Logger;
 
@@ -31,9 +32,9 @@ public class JsignalmlReader implements SignalMLCodecReader {
 		try {
 			this.source.open(new File(filename));
 		} catch(FileNotFoundException e) {
-			throw new SignalMLCodecException("cannot open file", e);
+			throw new SignalMLCodecException(_("cannot open file"), e);
 		} catch(IOException e) {
-			throw new SignalMLCodecException("cannot read file", e);
+			throw new SignalMLCodecException(_("cannot read file"), e);
 		}
 	}
 

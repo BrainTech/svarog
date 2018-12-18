@@ -198,7 +198,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor.setCorrectlyRead(true);
 			signalMLDocument.closeDocument();
 		} catch (Exception e) {
-			Dialogs.showError(_R("There was an error while loading the file - did you select a correct SignalML file?"));
+			Dialogs.showError(_R("There was an error while loading the file—did you select a correct SignalML file?"));
 			logger.error("", e);
 			openSignalDescriptor = null;
 		}
@@ -211,7 +211,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 			openSignalDescriptor.setCorrectlyRead(true);
 		} catch (Exception ex) {
 			logger.error("error while reading CSV file", ex);
-			Dialogs.showError("Could not read contents of CSV signal file!");
+			Dialogs.showError(_("Could not read contents of CSV signal file!"));
 			openSignalDescriptor = new RawSignalDescriptor();
 			openSignalDescriptor.setCorrectlyRead(false);
 		}
@@ -227,7 +227,7 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 		RawSignalDescriptorReader reader = new RawSignalDescriptorReader();
 		openSignalDescriptor = null;
 		if (!xmlManifestFile.exists()) {
-			if (Dialogs.DIALOG_OPTIONS.YES == Dialogs.showWarningYesNoDialog(_("XML manifest not found - would you like to choose the XML file manualy?"))) {
+			if (Dialogs.DIALOG_OPTIONS.YES == Dialogs.showWarningYesNoDialog(_("XML manifest not found—would you like to choose the XML file manualy?"))) {
 				JFileChooser fileChooser = new JFileChooser(signalFile);
 				fileChooser.showOpenDialog(null);
 				xmlManifestFile =  fileChooser.getSelectedFile();

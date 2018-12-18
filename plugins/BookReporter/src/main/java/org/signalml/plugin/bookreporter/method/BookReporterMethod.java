@@ -60,7 +60,7 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 		BookReporterChartPreset[] chartPresets = bookReporterData.getParameters().chartPresets;
 		BookReporterChartData[] chartData = new BookReporterChartData[chartPresets.length];
 		for (int i=0; i<chartPresets.length; i++) {
-			TagStyle tagStyle = new TagStyle(SignalSelectionType.CHANNEL, chartPresets[i].getWavesName(), "EEG profiling tag", Color.RED, Color.BLACK, 1.0f);
+			TagStyle tagStyle = new TagStyle(SignalSelectionType.CHANNEL, chartPresets[i].getWavesName(), _("EEG profiling tag"), Color.RED, Color.BLACK, 1.0f);
 			chartData[i] = chartPresets[i].createEmptyData(signalLength, tagStyle);
 			tagStyles.addStyle(tagStyle);
 		}
@@ -77,7 +77,7 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 			tracker.setTicker(0, reader.getProcessedSegmentsCount());
 		}
 
-		NumberAxis timeAxis = new NumberAxis("time [hours]");
+		NumberAxis timeAxis = new NumberAxis(_("time [hours]"));
 		timeAxis.setRange(0.0, signalLength/3600.0);
 		
 		BookReporterResult result = new BookReporterResult(tagStyles);
@@ -147,7 +147,7 @@ public class BookReporterMethod extends PluginAbstractMethod implements
 		if (ticker == 0) {
 			return _("EEG profiles");
 		} else {
-			throw new IndexOutOfBoundsException("No ticker [" + ticker + "]");
+			throw new IndexOutOfBoundsException(String.format(_("No ticker [%d]"), ticker));
 		}
 	}
 
