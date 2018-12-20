@@ -13,7 +13,9 @@ _update_version_in_file () {
 
 update_version_in_files () {
   _update_version_in_file "LICENSE.txt"
-  _update_version_in_file "svarog/src/main/resources/org/signalml/help/contents.html"
+  for L in svarog/src/main/resources/org/signalml/help/* ; do
+    _update_version_in_file "$L/contents.html"
+  done
   _update_version_in_file "svarog-standalone/src/deb/control/control"
   _update_version_in_file "svarog-all.template"
 }

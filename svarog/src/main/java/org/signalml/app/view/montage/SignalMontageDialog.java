@@ -8,7 +8,6 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.JComponent;
@@ -17,11 +16,11 @@ import javax.swing.JPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
-import org.springframework.core.io.ClassPathResource;
 
 /** SignalMontageDialog
  *
@@ -97,12 +96,7 @@ public class SignalMontageDialog extends AbstractDialog {
 	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
-			try {
-				contextHelpURL = new ClassPathResource("org/signalml/help/contents.html").getURL();
-				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#montage");
-			} catch (IOException ex) {
-				logger.error("Failed to get help URL", ex);
-			}
+			contextHelpURL = SvarogI18n._H("contents.html", "montage");
 		}
 		return contextHelpURL;
 	}

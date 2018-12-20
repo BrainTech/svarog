@@ -3,7 +3,6 @@ package org.signalml.plugin.bookreporter.ui;
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,8 +22,8 @@ import org.signalml.plugin.bookreporter.data.BookReporterParameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPluginPresetDialog;
 import static org.signalml.plugin.i18n.PluginI18n._;
+import static org.signalml.plugin.i18n.PluginI18n._H;
 import org.signalml.plugin.method.helper.PluginPresetManagerFilter;
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * @author piotr@develancer.pl
@@ -72,12 +71,7 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
-			try {
-				contextHelpURL = (new ClassPathResource(
-						"org/signalml/help/profilesEEG.html")).getURL();
-			} catch (IOException ex) {
-				logger.error("Failed to get help URL", ex);
-			}
+			contextHelpURL = _H("profilesEEG.html");
 		}
 		return contextHelpURL;
 	}

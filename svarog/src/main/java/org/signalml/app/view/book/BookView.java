@@ -69,6 +69,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
@@ -89,7 +90,6 @@ import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
-import org.springframework.core.io.ClassPathResource;
 
 /** BookView
  *
@@ -590,7 +590,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 	}
 
 	public AbstractAction getContextHelpAction() throws IOException {
-		final URL contextHelpURL = (new ClassPathResource("org/signalml/help/viewerBookMP5.html")).getURL();
+		final URL contextHelpURL = SvarogI18n._H("viewerBookMP5.html");
 		AbstractAction action = new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

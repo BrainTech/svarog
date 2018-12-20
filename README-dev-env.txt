@@ -93,7 +93,43 @@ starting in:
   plugins/PLUGIN-NAME/src/main/java
 
 
-IV. Modifying Svarog version
+IV. Working with translations
+-----------------------------
+
+The first step is to generate *.pot files from Svarog's code, as well as from
+the source code of all the plugins. It is done by executing
+
+  mvn gettext:gettext
+
+in the "svarog" directory as well as in the directory of each plugin.
+
+Next, the resulting *.pot files have to be merged into one *.pot file.
+Utility "msgmerge" can be used to accomplish this, and it is preferable
+to call it with "-s" ("--sort-output") flag.
+
+The resulting *.pot file can be used to initialize a new translation
+by the use of "msginit" command. This will create an empty *.po
+(translation) file suited to the given language. These files should be
+edited either by hand or with the help of some GUI. Finished translation
+files (e.g. "pl.po") should be added to the directory
+
+  svarog/src/main/resources/org/signalml/app/resource/i18n/
+
+and will be automatically included in the JAR file. Also, every available
+language should be added to list LANGUAGES in file SvarogI18n.java.
+
+Translating help files, however, is mostly manual. Help files are stored
+in a versioned directory
+
+  svarog/src/main/resources/org/signalml/help/
+
+where the subdirectories (e.g. "en") mark the different language versions.
+To create the help files for another language, simply create a directory for
+a given language, and put the translations with the same names as original
+versions.
+
+
+V. Modifying Svarog version
 ---------------------------
 
 Svarog's version number is automatically created by Maven based on
@@ -117,8 +153,8 @@ therefore, to create JAR with a new version number, it is necessary to:
 2. You can now build the JAR file; it will have the new version number.
 
 
-V. Creating ZIP file for github Releases
-----------------------------------------
+VI. Creating ZIP file for github Releases
+-----------------------------------------
 
 ZIP package consists of:
 a) Svarog's JAR file
@@ -136,8 +172,8 @@ a) and b). Afterwards, it is necessary to:
   corresponds to the package's main directory)
 
 
-VI. Known problems
-------------------
+VII. Known problems
+-------------------
 
 It is known that sometimes, especially when working in virtual machine
 environment, any change of the display resolution or energy-saving

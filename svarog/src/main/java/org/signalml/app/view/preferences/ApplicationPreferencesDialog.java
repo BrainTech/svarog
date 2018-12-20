@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import org.signalml.SignalMLOperationMode;
+import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.action.signal.RemoveCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -382,6 +383,11 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 					config.writeToPersistence(null);
 				} catch (Exception ex) {
 					logger.error("Failed to save configuration", ex);
+				}
+				try {
+					SvarogApplication.getGeneralConfiguration().writeToPersistence(null);
+				} catch (Exception ex) {
+					logger.error("Failed to save general configuration", ex);
 				}
 			}
 

@@ -48,6 +48,7 @@ import org.signalml.app.method.PresetEquippedMethodConfigurer;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.common.dialogs.AbstractSignalSpaceAwarePresetDialog;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
@@ -80,7 +81,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.util.Util;
-import org.springframework.core.io.ClassPathResource;
 
 /** MP5MethodDialog
  *
@@ -96,20 +96,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	private static final long MEMORY_MB = 1024L*1024L;
 	private static final long MEMORY_GB = 1024L*1024L*1024L;
 	private static final long MEMORY_TB = 1024L*1024L*1024L*1024L;
-
-//	public static final String HELP_ALGORITHM 					= "org/signalml/help/decompMP5.html#algorithm";
-//	public static final String HELP_BOOK_COMMENT 				= "org/signalml/help/decompMP5.html#bookComment";
-//	public static final String HELP_MAX_ITERATION_COUNT			= "org/signalml/help/decompMP5.html#maxIterationCount";
-//	public static final String HELP_ENERGY_PERCENT 				= "org/signalml/help/decompMP5.html#energyPercent";
-//	public static final String HELP_ENERGY_ERROR				= "org/signalml/help/decompMP5.html#energyError";
-//	public static final String HELP_ATOM_COUNT	 				= "org/signalml/help/decompMP5.html#atomCount";
-//	public static final String HELP_RAM_USAGE	 				= "org/signalml/help/decompMP5.html#ramUsage";
-//	public static final String HELP_DICTIONARY_TYPE				= "org/signalml/help/decompMP5.html#dictionaryType";
-//	public static final String HELP_DICTIONARY_REINIT_TYPE		= "org/signalml/help/decompMP5.html#dictionaryReinitType";
-//	public static final String HELP_SCALE_TO_PERIOD_FACTOR  	= "org/signalml/help/decompMP5.html#scaleToPeriodFactor";
-//	public static final String HELP_BOOK_WITH_SIGNAL			= "org/signalml/help/decompMP5.html#bookWithSignal";
-//	public static final String HELP_ADDITIONAL_CONFIG			= "org/signalml/help/decompMP5.html#additionalConfig";
-//	public static final String HELP_RAW_CONFIG					= "org/signalml/help/decompMP5.html#rawConfig";
 
 	private PleaseWaitDialog pleaseWaitDialog;
 	private MP5ExecutorManager executorManager;
@@ -188,11 +174,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
-			try {
-				contextHelpURL = (new ClassPathResource("org/signalml/help/decompMP5.html")).getURL();
-			} catch (IOException ex) {
-				logger.error("Failed to get help URL", ex);
-			}
+			contextHelpURL = SvarogI18n._H("decompMP5.html");
 		}
 		return contextHelpURL;
 	}

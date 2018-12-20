@@ -1,5 +1,6 @@
 package org.signalml.plugin.i18n;
 
+import java.net.URL;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.tool.PluginAccessHelper;
 
@@ -23,4 +24,12 @@ public class PluginGenericI18nAccess implements IPluginI18nAccess {
 		return access.getI18nAccess().translateR(msgKey, arguments);
 	}
 
+	@Override
+	public URL _H(String htmlName) {
+		SvarogAccess access = PluginAccessHelper.GetSvarogAccess();
+		if (access == null) {
+			return null;
+		}
+		return access.getI18nAccess().getHelpURL(htmlName);
+	}
 }

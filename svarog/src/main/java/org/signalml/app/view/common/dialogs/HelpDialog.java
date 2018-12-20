@@ -28,9 +28,8 @@ import javax.swing.event.HyperlinkEvent.EventType;
 import javax.swing.text.Document;
 
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.plugin.export.SignalMLException;
-
-import org.springframework.core.io.ClassPathResource;
 
 /**
  * Dialog which displays the help for Svarog.
@@ -219,12 +218,7 @@ public class HelpDialog extends AbstractDialog  {
 	 */
 	public URL getHomeURL() throws SignalMLException {
 		if (helpContentsURL == null) {
-			try {
-				helpContentsURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
-			} catch (IOException ex) {
-				logger.error("Failed to get help contents", ex);
-				throw new SignalMLException(ex);
-			}
+			helpContentsURL = SvarogI18n._H("contents.html");
 		}
 		return helpContentsURL;
 	}

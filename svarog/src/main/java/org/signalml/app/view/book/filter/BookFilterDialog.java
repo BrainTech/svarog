@@ -12,7 +12,6 @@ import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.IOException;
 import java.net.URL;
 
 import javax.swing.ButtonGroup;
@@ -30,13 +29,10 @@ import org.signalml.app.config.preset.managers.BookFilterPresetManager;
 import org.signalml.app.model.book.BookFilterDescriptor;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
-
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 
 /** BookFilterDialog
  *
@@ -77,12 +73,7 @@ public class BookFilterDialog extends AbstractPresetDialog {
 	@Override
 	protected URL getContextHelpURL() {
 		if (contextHelpURL == null) {
-			try {
-				contextHelpURL = (new ClassPathResource("org/signalml/help/contents.html")).getURL();
-				contextHelpURL = new URL(contextHelpURL.toExternalForm() + "#bookFilter");
-			} catch (IOException ex) {
-				logger.error("Failed to get help URL", ex);
-			}
+			contextHelpURL = SvarogI18n._H("contents.html", "bookFilter");
 		}
 		return contextHelpURL;
 	}
