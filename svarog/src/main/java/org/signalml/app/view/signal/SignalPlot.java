@@ -1288,6 +1288,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				this.setLocalMontage(newMontage);
 				reset();
 			}
+			if (name.equals(SignalDocument.PAGE_SIZE_PROPERTY) || name.equals(SignalDocument.BLOCKS_PER_PAGE_PROPERTY)) {
+				reset();
+			}
 		}
 		else if (masterPlot != null && source == masterPlot) {
 			if (TIME_ZOOM_FACTOR_PROPERTY.equals(name)) {

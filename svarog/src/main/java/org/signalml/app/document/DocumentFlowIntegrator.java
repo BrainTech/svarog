@@ -1095,6 +1095,8 @@ public class DocumentFlowIntegrator {
 
 			// this adds to tag list
 			tagDocument.setParent(parent);
+			parent.setPageSize(tagDocument.getPageSize());
+			parent.setBlocksPerPage(tagDocument.getBlocksPerPage());
 
 			onTagDocumentAdded(tagDocument, descriptor.isMakeActive());
 			onCommonDocumentAdded(tagDocument);
