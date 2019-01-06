@@ -885,7 +885,7 @@ public class MontageFiltersPanel extends JPanel {
 			TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilterAt(currentSamplingFrequency, index);
 			if (filter == null)
 				return;
-			filter.setDescription(_("New time domain filter"));
+			filter.setDescription(filter.getEffect());
 			filter.setSamplingFrequency(currentSamplingFrequency);
 			montage.addSampleFilter(filter);
 		}
