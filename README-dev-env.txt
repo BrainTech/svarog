@@ -15,7 +15,7 @@ I. Preparation
 2. Run (as root) script “install-dev-env.sh” from scripts catalogue
 (you should at least look at it before you run it). The script will
 install NetBeans IDE, as well as all dependencies required to develop
-Svarog, including Oracle Java 8.
+Svarog, including Java JDK (e.g. OpenJDK 8 and OpenJFX).
 
 
 II. Generating JAR files

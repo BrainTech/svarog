@@ -1,6 +1,6 @@
 <plugin>
 	<name>Signal Analysis Plugin</name>
-	<version> 0.2 </version>
+	<version>0.2</version>
 	<jar-file>SignalAnalysisPlugin.jar</jar-file>
 	<starting-class>
 		pl.edu.fuw.fid.signalanalysis.SignalAnalysisPlugin
@@ -9,6 +9,10 @@
 		<dependency>
 			<name>Svarog API</name>
 			<version>0.5</version>
+		</dependency>
+		<dependency>
+			<name>Plugin Common Tools</name>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 </plugin>
