@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.stream.IntStream;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -29,6 +30,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
+
+import org.apache.log4j.Logger;
 
 import org.signalml.app.model.montage.ReferenceTableModel;
 import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
@@ -50,6 +53,8 @@ import org.signalml.domain.montage.MontageChannel;
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
 public class ReferenceTable extends JTable implements ActionListener {
+
+	private static final Logger logger = Logger.getLogger(ReferenceTable.class);
 
 	/**
 	 * the default serialization constant
@@ -322,19 +327,38 @@ public class ReferenceTable extends JTable implements ActionListener {
 		//If current action is 'paste' then copy string from the clipboard and paste it to current cell
 		if (evt.getActionCommand().compareTo("Paste")==0) {
 			Clipboard system = Toolkit.getDefaultToolkit().getSystemClipboard();
-			String trstring="";
 			try {
-				trstring = (String)(system.getContents(this).getTransferData(DataFlavor.stringFlavor));
-			} catch (UnsupportedFlavorException e) {
-				return;
-			} catch (IOException e) {
-				return;
+				String trstring = (String)(system.getContents(this).getTransferData(DataFlavor.stringFlavor));
+				String[] lines = trstring.split("\\R"); // split by newline
+
+				int[] cols = this.getSelectedColumns();
+				int[] rows = this.getSelectedRows();
+				if (lines.length == 1 && lines[0].split("\\s").length == 1) {
+					// if only one cell was copied,
+					// it will be multiplied to all selected cells
+					for (int i = 0; i < rows.length; i++)
+						for (int j = 0; j < cols.length; j++)
+							this.setValueAt(trstring, rows[i], cols[j]);
+				} else {
+					// multiple cells were copied
+					if (cols.length == 1 && rows.length == 1) {
+						// if only one cell is selected,
+						// we will paste to consecutive columns and rows
+						cols = IntStream.range(cols[0], this.getColumnCount()).toArray();
+						rows = IntStream.range(rows[0], this.getRowCount()).toArray();
+					}
+					int rowCount = Integer.min(lines.length, rows.length);
+					for (int i = 0; i < rowCount; i++) {
+						String[] items = lines[i].split("\\s"); // split by whitespace
+						int colCount = Integer.min(items.length, cols.length);
+						for (int j = 0; j < colCount; j++)
+							this.setValueAt(items[j], rows[i], cols[j]);
+					}
+				}
+
+			} catch (IOException|UnsupportedFlavorException e) {
+				logger.info("cannot paste contents to reference table");
 			}
-			int[] cols = this.getSelectedColumns();
-			int[] rows = this.getSelectedRows();
-			for (int i = 0; i < rows.length; i++)
-				for (int j = 0; j < cols.length; j++)
-					this.setValueAt(trstring, rows[i], cols[j]);
 		}
 	}
 
