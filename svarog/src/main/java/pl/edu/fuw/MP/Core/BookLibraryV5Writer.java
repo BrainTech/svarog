@@ -178,11 +178,11 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 
 		out.writeBytes("MPv5.0");
 
-		/*if (comment!=null) {
+		if (comment!=null) {
 			out.writeByte(FormatComponentV5.COMMENT_SEGMENT_IDENTITY);
 			out.writeInt(comment.length());
 			out.writeBytes(comment);
-		}*/
+		}
 
 		out.writeByte(FormatComponentV5.FILE_HEADER);
 		out.writeInt(getFieldSize());
