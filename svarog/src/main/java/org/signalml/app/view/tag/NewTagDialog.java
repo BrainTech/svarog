@@ -54,12 +54,6 @@ public class NewTagDialog extends AbstractDialog  {
 	 */
 	private NewTagPanel newTagPanel;
 	/**
-	 * the {@link PagingParametersPanel panel} which allows to select the size
-	 * of the block and the page of the signal that should be set in the new
-	 * {@link TagDocument tag document}
-	 */
-	private PagingParametersPanel pagingParametersPanel;
-	/**
 	 * the {@link ApplicationConfiguration configuration} of Svarog
 	 */
 	private ApplicationConfiguration applicationConfig;
@@ -110,10 +104,8 @@ public class NewTagDialog extends AbstractDialog  {
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 
 		newTagPanel = new NewTagPanel(styledTagSetPresetManager);
-		pagingParametersPanel = new PagingParametersPanel();
 
 		interfacePanel.add(newTagPanel, BorderLayout.CENTER);
-		interfacePanel.add(pagingParametersPanel, BorderLayout.SOUTH);
 
 		return interfacePanel;
 
@@ -160,9 +152,6 @@ public class NewTagDialog extends AbstractDialog  {
 			String lastPath = applicationConfig.getLastFileChooserPath();
 			newTagPanel.getFileChooser().setCurrentDirectory(new File(lastPath));
 		}
-
-		pagingParametersPanel.fillPanelFromModel(descriptor);
-
 	}
 
 	/**
@@ -199,9 +188,6 @@ public class NewTagDialog extends AbstractDialog  {
 			descriptor.setMode(NewTagTypeMode.FROM_FILE);
 			descriptor.setFile(newTagPanel.getFileChooser().getSelectedFile());
 		}
-
-		pagingParametersPanel.fillModelFromPanel(descriptor);
-
 	}
 
 	/**
@@ -226,9 +212,6 @@ public class NewTagDialog extends AbstractDialog  {
 			if (newTagPanel.getPresetComboBox().getSelectedItem() == null)
 				errors.addError(_("Please select a preset!"));
 		}
-
-		pagingParametersPanel.validatePanel(errors);
-
 	}
 
 	/**
