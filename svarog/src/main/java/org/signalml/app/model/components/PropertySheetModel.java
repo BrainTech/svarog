@@ -11,6 +11,7 @@ import java.beans.PropertyEditor;
 import java.beans.PropertyEditorManager;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
@@ -91,7 +92,11 @@ public class PropertySheetModel extends AbstractTableModel implements TreeSelect
 		case 1 :
 			Object value;
 			try {
-				value = descriptors[row].getReadMethod().invoke(subject);
+				Method method = descriptors[row].getReadMethod();
+				if (method == null) {
+					return "-";
+				}
+				value = method.invoke(subject);
 			} catch (IllegalArgumentException ex) {
 				logger.error("Failed to invoke getter", ex);
 				return "???";
