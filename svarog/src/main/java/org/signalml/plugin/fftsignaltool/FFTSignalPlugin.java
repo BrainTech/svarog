@@ -3,10 +3,12 @@ package org.signalml.plugin.fftsignaltool;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 
 import org.apache.log4j.Logger;
+
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
@@ -31,7 +33,6 @@ import org.signalml.plugin.impl.ToolButtonParameters;
  */
 public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 	protected static final Logger log = Logger.getLogger(FFTSignalPlugin.class);
-	private static I18nDelegator i18nDelegate;
 
 	/**
 	 * the {@link SvarogAccessGUI} access to Svarog GUI
@@ -79,7 +80,6 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 	public void register(SvarogAccess access)
 	throws IOException {
 
-		i18nDelegate = new I18nDelegator(access);
 		guiAccess = access.getGUIAccess();
 		configAccess = access.getConfigAccess();
 		access.getChangeSupport().addCloseListener(this);
@@ -89,11 +89,11 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 		if (settingsFile.exists()) signalFFTSettings.readFromXMLFile(settingsFile);
 
 		//creates and adds the signal tool
-		SaveToCSV popupAction = new SaveToCSV(i18nDelegate);
+		SaveToCSV popupAction = new SaveToCSV();
 		tool = new SignalFFTTool(popupAction);
 		tool.setSettings(signalFFTSettings);
 		tool.setSvarogAccess(access); 
-		final ImageIcon icon = access.getResourcesAccess().loadClassPathIcon("/icon/fft.png");
+		final ImageIcon icon = IconUtils.loadClassPathIcon("org/signalml/app/icon/fft.png");
 		ShowSettings action = new ShowSettings(signalFFTSettings);
 
 		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press right mouse button)"), icon, null, action);
@@ -115,35 +115,6 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 		for (File file: temporaryFiles)
 			file.delete();
 		signalFFTSettings.storeInXMLFile(settingsFile);
-	}
-
-	/**
-	 * I18n shortcut.
-	 *
-	 * @param msgKey message to translate (English version)
-	 * @return
-	 */
-	public static String _(String msgKey) {
-		return i18nDelegate._(msgKey);
-	}
-
-	/**
-	 * I18n shortcut.
-	 *
-	 * @param msgKey message to translate (English version)
-	 * @param arguments the values to render
-	 * @return
-	 */
-	public static String _R(String msgKey, Object ... arguments) {
-		return i18nDelegate._R(msgKey, arguments);
-	}
-
-	/**
-	 * Svarog i18n delegate getter.
-	 * @return the shared delegate instance
-	 */
-	public static I18nDelegator i18n() {
-		return i18nDelegate;
 	}
 
 }

@@ -3,7 +3,7 @@
  */
 package org.signalml.plugin.fftsignaltool.dialogs.components;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -30,7 +30,6 @@ import org.apache.log4j.Logger;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.math.fft.WindowType;
-import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 
 /**

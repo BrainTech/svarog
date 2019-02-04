@@ -24,7 +24,7 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.fftsignaltool.actions.SaveToCSV;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}

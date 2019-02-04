@@ -1,5 +1,7 @@
 package org.signalml.plugin.fftsignaltool.actions;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.signalml.plugin.fftsignaltool.I18nDelegator;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
 
 public class SaveToCSV extends AbstractSignalMLAction {
@@ -25,14 +26,11 @@ public class SaveToCSV extends AbstractSignalMLAction {
 
 	private double[] frequencies;
 
-	private static I18nDelegator i18nDelegate;
-
 	protected static final Logger logger = Logger
 			   .getLogger(SaveToCSV.class);
 	
-	public SaveToCSV(I18nDelegator i18nDelegate) {
+	public SaveToCSV() {
 		super();
-		this.i18nDelegate = i18nDelegate;
 		setText(_("Export FFT to CSV"));
 	}
 
@@ -87,8 +85,4 @@ public class SaveToCSV extends AbstractSignalMLAction {
 		this.frequencies = frequencies;
 	}
 	
-	public static String _(String msgKey) {
-		return i18nDelegate._(msgKey);
-	}
-
 }

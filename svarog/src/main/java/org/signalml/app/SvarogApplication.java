@@ -81,7 +81,7 @@ import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.plugin.loader.PluginLoaderHi;
+import org.signalml.plugin.loader.PluginLoader;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -382,7 +382,7 @@ public class SvarogApplication implements java.lang.Runnable {
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
 
 		ObciServerCapabilities.getSharedInstance().initialize();
-		PluginLoaderHi.getInstance().loadPlugins();
+		PluginLoader.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -480,7 +480,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		profileDir = file;
 
-		PluginLoaderHi.createInstance(profileDir);
+		PluginLoader.createInstance(profileDir);
 		return true;
 	}
 

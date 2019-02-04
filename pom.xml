@@ -21,10 +21,6 @@
 
 	<modules>
 		<module>svarog</module>
-		<module>plugins/FFTSignalTool</module>
-		<module>plugins/SignalAnalysisPlugin</module>
-		<module>plugins/PluginToolCommon</module>
-		<module>plugins/BookReporter</module>
 		<module>svarog-standalone</module>
 	</modules>
 
@@ -33,10 +29,6 @@
 			<id>installer</id>
 			<modules>
 				<module>svarog</module>
-				<module>plugins/FFTSignalTool</module>
-				<module>plugins/SignalAnalysisPlugin</module>
-				<module>plugins/PluginToolCommon</module>
-				<module>plugins/BookReporter</module>
 				<module>svarog-standalone</module>
 			</modules>
 		</profile>

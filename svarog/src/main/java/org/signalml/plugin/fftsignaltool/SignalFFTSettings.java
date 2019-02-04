@@ -29,7 +29,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import static org.signalml.plugin.fftsignaltool.FFTSignalPlugin._;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Settings how the power spectrum of the signal should be displayed.

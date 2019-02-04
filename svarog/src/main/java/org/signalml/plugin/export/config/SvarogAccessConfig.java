@@ -17,10 +17,4 @@ public interface SvarogAccessConfig {
 	 * @return the profile directory
 	 */
 	File getProfileDirectory();
-
-	/**
-	 * Returns an array containing plug-in directories.
-	 * @return an array containing plug-in directories
-	 */
-	File[] getPluginDirectories();
 }
