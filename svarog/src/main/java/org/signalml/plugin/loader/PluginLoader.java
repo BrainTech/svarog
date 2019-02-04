@@ -2,9 +2,11 @@ package org.signalml.plugin.loader;
 
 import java.io.File;
 import org.apache.log4j.Logger;
+import org.signalml.plugin.bookreporter.BookReporterPlugin;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.fftsignaltool.FFTSignalPlugin;
+import org.signalml.plugin.tool.PluginToolCommon;
 
 /**
  * Class responsible for loading plug-ins (high level). Its main functions are:
@@ -70,7 +72,9 @@ public class PluginLoader {
 	public void loadPlugins()
 	{
 		startedLoading = true;
+		loadPlugin(PluginToolCommon.class);
 		loadPlugin(FFTSignalPlugin.class);
+		loadPlugin(BookReporterPlugin.class);
 	}
 
 	/**
