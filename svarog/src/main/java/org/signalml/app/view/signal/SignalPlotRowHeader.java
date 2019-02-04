@@ -149,7 +149,6 @@ public class SignalPlotRowHeader extends JComponent {
 	private void calculateChannelsData(Graphics2D g) {
 		StringBuilder sb;
 		ChannelPlotOptionsModel m;
-		int globalScale = this.plot.getValueScaleRangeModel().getValue();
 		double max = 0;
 
 		for (int i = 0; i < channelCount; i++) {

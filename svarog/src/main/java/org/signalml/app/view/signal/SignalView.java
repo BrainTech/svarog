@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal;
 
+import com.alee.laf.toolbar.WebToolBar;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
@@ -99,12 +100,12 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.app.model.components.LogarithmicJSlider;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.ResnapToPageRunnable;
 import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.view.common.components.LockableJSplitPane;
+import org.signalml.app.view.common.components.models.LogarithmicBoundedRangeModel;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.monitor.MonitorRecordingDurationPanel;
@@ -977,13 +978,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		timeScaleSlider.setMinimumSize(d);
 		timeScaleSlider.setMaximumSize(d);
 
-		valueScaleSlider = new LogarithmicJSlider(plot.getValueScaleRangeModel()) {
+		valueScaleSlider = new JSlider(plot.getValueScaleRangeModel()) {
 
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return getValue() + "%";
+				LogarithmicBoundedRangeModel model = (LogarithmicBoundedRangeModel) getModel();
+				return Math.round(model.getRealValue()) + "%";
 			}
 
 		};
@@ -1115,7 +1117,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 		styleToolBarMap = new HashMap<String, TagStyleToolBar>();
 
-		tagToolBar = new JToolBar(JToolBar.VERTICAL);
+		tagToolBar = new WebToolBar();
+		tagToolBar.setOrientation(WebToolBar.VERTICAL);
 		tagToolBar.setFloatable(false);
 		tagToolBar.setVisible(false);
 
@@ -1142,8 +1145,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		tagToolBarLayout = new CardLayout();
 		tagToolBarPanel = new JPanel(tagToolBarLayout);
 		tagToolBarPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		tagToolBarPanel.add(new JPanel(), "none");
 
 		tagToolBar.add(tagToolBarPanel);
 

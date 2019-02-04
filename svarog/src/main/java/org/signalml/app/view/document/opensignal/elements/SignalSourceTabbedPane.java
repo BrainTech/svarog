@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.JTabbedPane;
+import com.alee.laf.tabbedpane.WebTabbedPane;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
@@ -33,7 +33,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.util.Util;
 
-public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
+public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyChangeListener, ItemListener {
 	protected static final Logger logger = Logger.getLogger(SignalSourceTabbedPane.class);
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";

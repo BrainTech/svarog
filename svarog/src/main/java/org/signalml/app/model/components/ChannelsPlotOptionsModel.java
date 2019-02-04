@@ -43,7 +43,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		channelsOptions = new ChannelPlotOptionsModel[numOfChannels];
 		for (int i = 0; i < channelsOptions.length; i++) {
 			channelsOptions[i] = new ChannelPlotOptionsModel(this, this.plot
-					.getValueScaleRangeModel().getValue());
+					.getValueScaleRangeModel().getRealValue());
 		}
 	}
 
@@ -64,7 +64,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 					.getMontageChannelLabelAt(i));
 			if (previousIndex == -1 || channelsOptions.length <= previousIndex)
 				newChannelsOptions[i] = new ChannelPlotOptionsModel(this,
-						this.plot.getValueScaleRangeModel().getValue());
+						this.plot.getValueScaleRangeModel().getRealValue());
 			else
 				newChannelsOptions[i] = channelsOptions[previousIndex];
 		}
@@ -77,7 +77,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 * @param scaleValue
 	 *            parent plot's scale value
 	 */
-	public void globalScaleChanged(int scaleValue) {
+	public void globalScaleChanged(double scaleValue) {
 		for (int i = 0; i < channelsOptions.length; i++) {
 			channelsOptions[i].globalScaleChanged(scaleValue);
 		}
@@ -133,7 +133,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
 		if (source == plot.getValueScaleRangeModel())
-			this.globalScaleChanged(plot.getValueScaleRangeModel().getValue());
+			this.globalScaleChanged(plot.getValueScaleRangeModel().getRealValue());
 
 	}
 
@@ -149,7 +149,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		ChannelPlotOptionsModel channelOptions = getModelAt(channel);
 		double channelsPixelPerValue;
 		if (channelOptions.isUseLocalScale()) {
-			int localScale = channelOptions.getVoltageScale();
+			double localScale = channelOptions.getVoltageScale();
 			double localVoltageZoomFactor = (localScale * plot
 					.getVoltageZoomFactorRatioFor(channel));
 			channelsPixelPerValue = plot.getPixelPerChannel()

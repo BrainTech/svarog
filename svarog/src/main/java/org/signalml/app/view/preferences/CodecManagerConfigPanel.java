@@ -32,7 +32,7 @@ import org.signalml.codec.SignalMLCodec;
  * registration}, {@link RemoveCodecAction removal}).
  * Contains two panels:
  * <ul>
- * <li>the {@link #getCodecListScrollPane() scroll pane} with the
+ * <li>the {@link #getCodecListScrollPane() scroll panel} with the
  * {@link #getCodecList() list} of installed {@link SignalMLCodec codecs},
  * </li><li>the {@link #getButtonPanel() panel} with
  * codec {@link #getRegisterCodecButton() registration} and
@@ -50,10 +50,10 @@ public class CodecManagerConfigPanel extends JPanel {
 	private JList codecList;
 
 	/**
-	 * the scroll pane with the {@link #codecList list} of installed
+	 * the scroll panel with the {@link #codecList list} of installed
 	 * {@link SignalMLCodec codecs}
 	 */
-	private JScrollPane codeclListScrollPane;
+	private JPanel codecListScrollPanel;
 
 	/**
 	 * the button which activates the {@link RegisterCodecAction registration}
@@ -86,7 +86,7 @@ public class CodecManagerConfigPanel extends JPanel {
 	 * Initializes this dialog with the {@link BorderLayout} and two
 	 * panels:
 	 * <ul>
-	 * <li>the {@link #getCodecListScrollPane() scroll pane} with the
+	 * <li>the {@link #getCodecListScrollPanel() scroll panel} with the
 	 * {@link #getCodecList() list} of installed {@link SignalMLCodec codecs},
 	 * </li><li>the {@link #getButtonPanel() panel} with
 	 * codec {@link #getRegisterCodecButton() registration} and
@@ -97,7 +97,7 @@ public class CodecManagerConfigPanel extends JPanel {
 		setBorder(new EmptyBorder(3,3,3,3));
 		setLayout(new BorderLayout());
 
-		add(getCodecListScrollPane(),BorderLayout.CENTER);
+		add(getCodecListScrollPanel(),BorderLayout.CENTER);
 		add(getButtonPanel(),BorderLayout.SOUTH);
 
 	}
@@ -117,7 +117,7 @@ public class CodecManagerConfigPanel extends JPanel {
 					JList list = (JList) e.getSource();
 					getRemoveCodecButton().getAction().setEnabled(list.getSelectedIndex() >= 0);
 
-				}
+		}
 
 			});
 
@@ -126,22 +126,24 @@ public class CodecManagerConfigPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the scroll pane with the {@link #getCodecList() list} of
+	 * Returns the scroll panel with the {@link #getCodecList() list} of
 	 * installed {@link SignalMLCodec codecs}.
 	 * If the pane doesn't exist it is created.
-	 * @return the scroll pane with the list of installed codecs
+	 * @return the scroll panel with the list of installed codecs
 	 */
-	public JScrollPane getCodecListScrollPane() {
-		if (codeclListScrollPane == null) {
-			codeclListScrollPane = new JScrollPane(getCodecList(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	public JPanel getCodecListScrollPanel() {
+		if (codecListScrollPanel == null) {
+			JScrollPane codecListScrollPane = new JScrollPane(getCodecList(), JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			codecListScrollPanel = new JPanel(new BorderLayout());
+			codecListScrollPanel.add(codecListScrollPane, BorderLayout.CENTER);
 			CompoundBorder cb = new CompoundBorder(
 				new TitledBorder(_("Installed codecs")),
 				new EmptyBorder(3,3,3,3)
 			);
-			codeclListScrollPane.setBorder(cb);
+			codecListScrollPanel.setBorder(cb);
 
 		}
-		return codeclListScrollPane;
+		return codecListScrollPanel;
 	}
 
 	/**

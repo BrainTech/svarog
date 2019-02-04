@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.tag.comparison;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
@@ -315,7 +316,7 @@ public class TagComparisonResultPanel extends JPanel {
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 
-			tabbedPane = new JTabbedPane();
+			tabbedPane = new WebTabbedPane();
 
 			tabbedPane.addTab(_("Page statistic"), getPageStatisticPanel());
 			tabbedPane.addTab(_("Page comparison"), getPageComparisonPanel());

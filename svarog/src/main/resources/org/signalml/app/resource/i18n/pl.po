@@ -1305,9 +1305,9 @@ msgid "Common average montage"
 msgstr "Montaż \"common average\""
 
 #: org/signalml/app/document/ManagedDocumentType.java:40
-msgid "Common signal files (*.d, *.edf, *.raw, *.bin, *.csv, *.txt)"
+msgid "Common signal files (*.d, *.edf, *.raw, *.bin, ...)"
 msgstr ""
-"Popularne formaty sygnałów (* .d, * .edf, * .raw, * .bin, * .csv, * .txt)"
+"Popularne formaty sygnałów (* .d, * .edf, * .raw, * .bin, ...)"
 
 #: org/signalml/app/model/montage/MontageGeneratorListModel.java:25
 msgid "Common user defined"

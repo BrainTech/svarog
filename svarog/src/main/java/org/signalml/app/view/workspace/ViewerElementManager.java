@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.workspace;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
@@ -22,7 +23,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
 import org.signalml.SignalMLOperationMode;
@@ -826,7 +826,7 @@ public class ViewerElementManager {
 
 	public ViewerTabbedPane getTreeTabbedPane() {
 		if (treeTabbedPane == null) {
-			treeTabbedPane = new ViewerTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+			treeTabbedPane = new ViewerTabbedPane(WebTabbedPane.TOP);
 			treeTabbedPane.addTab(_("Tags"), (String) null, getTagTreePane(), _("Shows open tags"));
 			treeTabbedPane.addTab(_("Signals"), (String) null, getSignalTreePane(), _("Shows open signals"));
 			treeTabbedPane.addTab(_("Online"), (String) null, getMonitorTreePane(), _("Shows online signals"));

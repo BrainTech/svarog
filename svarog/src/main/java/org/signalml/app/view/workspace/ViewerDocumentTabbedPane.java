@@ -3,12 +3,12 @@
  */
 package org.signalml.app.view.workspace;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JTabbedPane;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 
@@ -35,7 +35,7 @@ import org.springframework.context.MessageSourceResolvable;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentManagerListener, ActionFocusListener {
+public class ViewerDocumentTabbedPane extends WebTabbedPane implements DocumentManagerListener, ActionFocusListener {
 
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(ViewerDocumentTabbedPane.class);
@@ -54,7 +54,7 @@ public class ViewerDocumentTabbedPane extends JTabbedPane implements DocumentMan
 	private DocumentFlowIntegrator documentFlowIntegrator;
 
 	public ViewerDocumentTabbedPane() {
-		super(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		super(WebTabbedPane.TOP);
 	}
 
 	public void initialize() {
