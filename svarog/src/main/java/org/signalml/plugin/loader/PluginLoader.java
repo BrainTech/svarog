@@ -7,6 +7,7 @@ import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.fftsignaltool.FFTSignalPlugin;
 import org.signalml.plugin.tool.PluginToolCommon;
+import pl.edu.fuw.fid.signalanalysis.SignalAnalysisPlugin;
 
 /**
  * Class responsible for loading plug-ins (high level). Its main functions are:
@@ -75,6 +76,7 @@ public class PluginLoader {
 		loadPlugin(PluginToolCommon.class);
 		loadPlugin(FFTSignalPlugin.class);
 		loadPlugin(BookReporterPlugin.class);
+		loadPlugin(SignalAnalysisPlugin.class);
 	}
 
 	/**
