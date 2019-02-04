@@ -5134,10 +5134,6 @@ msgstr "Zawieszone zadania zostały przywrócone. Czy chcesz je wznowić?"
 msgid "Svarog"
 msgstr "Svarog"
 
-#: org/signalml/plugin/loader/PluginDependency.java:38
-msgid "Svarog API"
-msgstr "API Svaroga"
-
 #: org/signalml/psychopy/action/ShowPsychopyDialogButton.java:65
 msgid "Svarog do not support opening offline signals from remote experiments."
 msgstr "Svarog nie obsługuje otwierania sygnałów offline ze zdalnych eksperymentów."

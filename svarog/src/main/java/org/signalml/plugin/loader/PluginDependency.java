@@ -35,7 +35,7 @@ public class PluginDependency {
 	/**
 	 * the name of the main application
 	 */
-	public static String svarogName = _("Svarog API");
+	public static String svarogName = "Svarog API";
 
 	/**
 	 * the version of the main application
