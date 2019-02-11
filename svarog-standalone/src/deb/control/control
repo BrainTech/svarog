@@ -3,7 +3,7 @@ Version: VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: oracle-java8-installer | openjfx
+Depends: openjfx | oracle-java8-installer
 Recommends: vlc
 Suggests: empi
 Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
