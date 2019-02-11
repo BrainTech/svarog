@@ -133,6 +133,9 @@ import org.signalml.psychopy.action.ShowPsychopyDialogButton;
 import org.signalml.util.SvarogConstants;
 
 import com.thoughtworks.xstream.XStream;
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 
 
 /** ViewerElementManager
@@ -314,7 +317,6 @@ public class ViewerElementManager {
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
 
-	private ShowPsychopyDialogButton showPsychopyDialogButton;
 	/**
 	 * Represents an {@link Action} invoked when the user wants to start
 	 * a monitor signal recording.
@@ -655,6 +657,23 @@ public class ViewerElementManager {
 			monitorMenu.add(getStopMonitorRecordingAction());
 			monitorMenu.addSeparator();
 			monitorMenu.add(getCheckSignalAction());
+
+			monitorMenu.addMenuListener(new MenuListener() {
+				@Override
+				public void menuSelected(MenuEvent me) {
+					getAddCameraAction().setEnabled(
+						ObciServerCapabilities.getSharedInstance().hasCameraServer()
+					);
+				}
+				@Override
+				public void menuDeselected(MenuEvent me) {
+					// nothing here
+				}
+				@Override
+				public void menuCanceled(MenuEvent me) {
+					// nothing here
+				}
+			});
 		}
 		return monitorMenu;
 	}
@@ -1297,14 +1316,6 @@ public class ViewerElementManager {
 			checkSignalAction.setCheckSignalDialog(getCheckSignalDialog());
 		}
 		return checkSignalAction;
-	}
-
-	public ShowPsychopyDialogButton getSelectPsychopyExperimentAction() {
-		if (showPsychopyDialogButton == null) {
-			showPsychopyDialogButton = new ShowPsychopyDialogButton(getActionFocusManager());
-			showPsychopyDialogButton.setSelectPsychopyExperimentDialog(getPsychopyExperimentDialog());
-		}
-		return showPsychopyDialogButton;
 	}
 
 	/**

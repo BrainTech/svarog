@@ -90,6 +90,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.logging.SvarogLoggingConfigurer;
 import org.signalml.app.video.VideoStreamManager;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 
 /**
  * The Svarog application.
@@ -371,6 +372,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
 
+		ObciServerCapabilities.getSharedInstance().initialize();
 		PluginLoaderHi.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {

@@ -122,6 +122,7 @@ import org.signalml.app.view.tag.TagStylePaletteDialog;
 import org.signalml.app.view.tag.TagStyleSelector;
 import org.signalml.app.view.tag.TagStyleToolBar;
 import org.signalml.app.view.workspace.ViewerFileChooser;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
@@ -1064,10 +1065,14 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		}
 
 		mainToolBar.add(Box.createHorizontalGlue());
-		mainToolBar.add(getShowPsychopyDialogButtonAction());
+		if (ObciServerCapabilities.getSharedInstance().hasPsychopyRunner()) {
+			mainToolBar.add(getShowPsychopyDialogButtonAction());
+		}
 		mainToolBar.add(getStartMonitorRecordingAction());
 		mainToolBar.add(getStopMonitorRecordingAction());
-		mainToolBar.add(getStartVideoPreviewAction());
+		if (ObciServerCapabilities.getSharedInstance().hasCameraServer()) {
+			mainToolBar.add(getStartVideoPreviewAction());
+		}
 		mainToolBar.add(getMonitorRecordingDurationPanel());
 
 

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -53,7 +54,9 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(getChooseFilesForMonitorRecordingPanel());
-		panel.add(getChooseVideoForMonitorRecordingPanel());
+		if (ObciServerCapabilities.getSharedInstance().hasVideoSaving()) {
+			panel.add(getChooseVideoForMonitorRecordingPanel());
+		}
 		return panel;
 	}
 

@@ -28,6 +28,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.view.common.components.filechooser.FileSelectPanel;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 
 /**
  * Represents a panel for selecting files used to record monitor.
@@ -101,7 +102,6 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		c.gridy=0;
 		signalRecordPanel.add(getSelectSignalRecordingFilePanel(), c);
 
-		
 		c.gridx=0;
 		c.gridy=1;
 		signalRecordPanel.add(getEnableTagRecordingPanel(), c);
@@ -109,14 +109,14 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		c.gridy=1;
 		signalRecordPanel.add(getSelectTagsRecordingFilePanel(), c);
 
-		
-		c.gridx=0;
-		c.gridy=2;
-		signalRecordPanel.add(getEnableVideoRecordingPanel(), c);
-		c.gridx=1;
-		c.gridy=2;
-		signalRecordPanel.add(getSelectVideoRecordingFilePanel(), c);
-
+		if (ObciServerCapabilities.getSharedInstance().hasVideoSaving()) {
+			c.gridx=0;
+			c.gridy=2;
+			signalRecordPanel.add(getEnableVideoRecordingPanel(), c);
+			c.gridx=1;
+			c.gridy=2;
+			signalRecordPanel.add(getSelectVideoRecordingFilePanel(), c);
+		}
 	}
 
 	/**

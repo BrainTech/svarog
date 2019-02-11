@@ -25,6 +25,7 @@ import org.signalml.app.view.common.components.filechooser.FileChooserPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader;
@@ -52,9 +53,12 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
 		this.viewerElementManager = viewerElementManager;
 		addTab(_("File"), getFileChooserPanel());
-		addTab(_("Online experiments"), getChooseExperimentPanel());
-		addTab(_("Online amplifiers"), getChooseAmplifierPanel());
-
+		if (ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()) {
+			addTab(_("Online experiments"), getChooseExperimentPanel());
+		}
+		if (ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()) {
+			addTab(_("Online amplifiers"), getChooseAmplifierPanel());
+		}
 	}
 
 	/**

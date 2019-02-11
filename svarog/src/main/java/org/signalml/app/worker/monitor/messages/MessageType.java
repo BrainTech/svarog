@@ -46,6 +46,8 @@ public enum MessageType {
 	KILL_EXPERIMENT_REQUEST("kill_experiment", KillExperimentRequest.class),
 	KILL_EXPERIMENT_RESPONSE("kill_sent", KillExperimentResponse.class),
 
+	OBCI_SERVER_CAPABILITIES_REQUEST("obci_server_capabilities_req", ObciServerCapabilitiesRequest.class),
+	OBCI_SERVER_CAPABILITIES_RESPONSE("obci_server_capabilities", ObciServerCapabilitiesResponse.class),
 
 	GET_EXPERIMENT_CONTACT_REQUEST("get_experiment_contact", GetExperimentContactRequest.class),
 	GET_EXPERIMENT_CONTACT_RESPONSE("experiment_contact", GetExperimentContactResponse.class),
