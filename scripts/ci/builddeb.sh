@@ -12,7 +12,3 @@ build
 
 mkdir -p dist
 movedeb svarog-standalone/target/*.deb
-cp svarog-all.template dist/svarog-all
-
-cd dist
-equivs-build svarog-all

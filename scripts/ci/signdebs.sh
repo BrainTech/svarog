@@ -4,4 +4,3 @@ set -e
 echo "$GPG_KEY" | base64 -d | gpg --allow-secret-key-import --import -
 cd dist
 debsigs --sign=origin svarog_*.deb
-debsigs --sign=origin svarog-all_*.deb

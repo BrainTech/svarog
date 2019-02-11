@@ -3,9 +3,9 @@ Version: VERSION
 Section: misc
 Priority: optional
 Architecture: all
-Depends: oracle-java8-installer | default-jre | openjdk-8-jre
+Depends: oracle-java8-installer | openjfx
 Recommends: vlc
-Suggests: svarog-artifact, svarog-bookreporter, svarog-fftsignaltool, svarog-plugintoolcommon, svarog-signalanalysisplugin, svarog-stager, empi
+Suggests: empi
 Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
 Description: Svarog EEG signal viewer
  License: GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
