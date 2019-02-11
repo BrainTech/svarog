@@ -3,11 +3,13 @@ package org.signalml.app.action.document.monitor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.video.VideoStreamSpecification;
-import org.signalml.app.worker.monitor.VideoRecordingStatusListener;
+import org.signalml.app.worker.monitor.recording.RecordingState;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /**
@@ -15,7 +17,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public class StartVideoPreviewAction extends AbstractSignalMLAction implements VideoRecordingStatusListener {
+public class StartVideoPreviewAction extends AbstractSignalMLAction implements PropertyChangeListener {
 
 	private final MonitorSignalDocument monitor;
 	private boolean isVideoRecording = false;
@@ -28,6 +30,7 @@ public class StartVideoPreviewAction extends AbstractSignalMLAction implements V
 		super();
 		if (document instanceof MonitorSignalDocument) {
 			this.monitor = (MonitorSignalDocument) document;
+			this.monitor.addPropertyChangeListener(this);
 		} else {
 			this.monitor = null;
 		}
@@ -48,16 +51,14 @@ public class StartVideoPreviewAction extends AbstractSignalMLAction implements V
 		}
 	}
 
-	/**
-	 * React for start or stop of video recording.
-	 *
-	 * @param recording  current (new) status of the recording
-	 */
 	@Override
-	public void videoRecordingStatusChanged(boolean recording) {
-		isVideoRecording = recording;
-		setEnabledAsNeeded();
-		updateToolTip();
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (MonitorSignalDocument.RECORDING_STATE_PROPERTY.equals(evt.getPropertyName())) {
+			RecordingState state = (RecordingState) evt.getNewValue();
+			boolean enabled = (state == RecordingState.SAVING) && monitor.isVideoRecordingEnabled();
+			setEnabled(enabled);
+			updateToolTip();
+		}
 	}
 
 	/**

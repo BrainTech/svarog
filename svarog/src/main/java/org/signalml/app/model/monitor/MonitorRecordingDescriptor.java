@@ -17,6 +17,8 @@ public class MonitorRecordingDescriptor {
 	private String signalRecordingFilePath;
 	private String tagsRecordingFilePath;
 	private boolean tagsRecordingEnabled = true;
+	private boolean saveImpedance = false;
+	private boolean appendTimestamps = false;
 	private String videoRecordingFilePath;
 	private boolean displayVideoPreviewWhileSaving = true;
 	private VideoStreamSpecification videoStreamSpecification;
@@ -95,6 +97,38 @@ public class MonitorRecordingDescriptor {
 	 */
 	public void setTagsRecordingEnabled(boolean tagsRecordingEnabled) {
 		this.tagsRecordingEnabled = tagsRecordingEnabled;
+	}
+
+	/**
+	 * Returns if the impedance should be saved with the signal.
+	 * @return true if the impedance should be recorded, false otherwise
+	 */
+	public boolean isSaveImpedanceEnabled() {
+		return saveImpedance;
+	}
+
+	/**
+	 * Sets if the impedance should be saved with the signal.
+	 * @param saveImpedance
+	 */
+	public void setSaveImpedanceEnabled(boolean saveImpedance) {
+		this.saveImpedance = saveImpedance;
+	}
+
+	/**
+	 * Returns if the timestamps should be appended.
+	 * @return true if the timestamps should be appended, false otherwise
+	 */
+	public boolean isAppendTimestampsEnabled() {
+		return appendTimestamps;
+	}
+
+	/**
+	 * Sets if the timestamps should be appended.
+	 * @param appendTimestamps
+	 */
+	public void setAppendTimestampsEnabled(boolean appendTimestamps) {
+		this.appendTimestamps = appendTimestamps;
 	}
 
 	/**

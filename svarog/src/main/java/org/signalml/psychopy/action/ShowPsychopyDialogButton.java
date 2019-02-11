@@ -2,20 +2,18 @@ package org.signalml.psychopy.action;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
-import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.psychopy.PsychopyExperiment;
 import org.signalml.psychopy.view.PsychopyExperimentDialog;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import org.signalml.app.action.selector.ActionFocusEvent;
+import org.signalml.app.action.document.monitor.MonitorRecordingAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.worker.monitor.recording.RecordingState;
 
-public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> implements PropertyChangeListener {
+public class ShowPsychopyDialogButton extends MonitorRecordingAction {
 
 	private PsychopyExperimentDialog dialog;
 
@@ -24,15 +22,6 @@ public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<Si
 		setIconPath("org/signalml/psychopy/icon/psychopy.png");
 	}
 
-	@Override
-	public void actionFocusChanged(ActionFocusEvent e) {
-		super.actionFocusChanged(e);
-		if (this.getActionFocusSelector().getActiveDocument() instanceof MonitorSignalDocument) {
-			SignalDocument sd = getActionFocusSelector().getActiveSignalDocument();
-			sd.addPropertyChangeListener(this);
-		}
-	}
-	
 	@Override
 	public void actionPerformed(ActionEvent event) {
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
@@ -71,19 +60,11 @@ public class ShowPsychopyDialogButton extends AbstractFocusableSignalMLAction<Si
 	public void setEnabledAsNeeded() {
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
-		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)
-			&& !((MonitorSignalDocument) signalDocument).isRecording()) {
-			setEnabled(true);
-		} else {
-			setEnabled(false);
+		boolean enabled = false;
+		if (signalDocument != null && signalDocument instanceof MonitorSignalDocument) {
+			MonitorSignalDocument monitor = (MonitorSignalDocument) signalDocument;
+			enabled = (monitor.getRecordingState() == RecordingState.FINISHED) && !monitor.isPsychopyExperimentRunning();
 		}
+		setEnabled(enabled);
 	}
-	
-	@Override
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals(MonitorSignalDocument.IS_RECORDING_PROPERTY)) {
-			setEnabledAsNeeded();
-		}
-	}
-
 }

@@ -22,11 +22,13 @@ public enum MessageType {
 	
 	AMPLIFIER_SIGNAL_MESSAGE("AMPLIFIER_SIGNAL_MESSAGE", SignalMsg.class),
 	
-	SAVE_VIDEO("SAVE_VIDEO", SaveVideoMsg.class),
-	SAVE_VIDEO_ERROR("SAVE_VIDEO_ERROR", SaveVideoErrorMsg.class),
-	SAVE_VIDEO_OK("SAVE_VIDEO_OK", SaveVideoOkMsg.class),
-	SAVE_VIDEO_DONE("SAVE_VIDEO_DONE", SaveVideoDoneMsg.class),
-	FINISH_SAVING_VIDEO("FINISH_SAVING_VIDEO", FinishSavingVideoMsg.class),
+	START_SAVING_SIGNAL("svarog_start_saving_signal", StartSavingSignal.class),
+	SAVING_SIGNAL_STARTING("svarog_saving_signal_starting", SavingSignalStarting.class),
+	FINISH_SAVING_SIGNAL("svarog_finish_saving_signal", FinishSavingSignal.class),
+	SAVING_SIGNAL_FINISHING("svarog_saving_signal_finishing", SavingSignalFinishing.class),
+	SAVING_SIGNAL_ERROR("svarog_saving_signal_error", SavingSignalError.class),
+	CHECK_SAVING_SIGNAL_STATUS("svarog_check_saving_signal_status", CheckSavingSignalStatus.class),
+	SAVING_SIGNAL_STATUS("svarog_saving_signal_status", SavingSignalStatus.class),
 
 	RUN_PSYCHOPY_EXPERIMENT("run_psychopy_experiment", RunPsychopyExperiment.class),
 	PSYCHOPY_EXPERIMENT_STARTED("psychopy_experiment_started", PsychopyExperimentStarted.class),
@@ -48,7 +50,6 @@ public enum MessageType {
 
 	OBCI_SERVER_CAPABILITIES_REQUEST("obci_server_capabilities_req", ObciServerCapabilitiesRequest.class),
 	OBCI_SERVER_CAPABILITIES_RESPONSE("obci_server_capabilities", ObciServerCapabilitiesResponse.class),
-
 	GET_EXPERIMENT_CONTACT_REQUEST("get_experiment_contact", GetExperimentContactRequest.class),
 	GET_EXPERIMENT_CONTACT_RESPONSE("experiment_contact", GetExperimentContactResponse.class),
 

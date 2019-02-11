@@ -17,6 +17,7 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.recording.RecordingState;
 
 /**
  * This class is responsible for actions regarding the menu item which starts
@@ -68,19 +69,13 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 				return;
 			}
 
-			try {                          
-                                monitorSignalDocument.startMonitorRecording();
-			} 
-                        catch (FileNotFoundException ex) {
-				logger.error("The files to which you want to record signal/tags were not found", ex);
-                        }
-                        catch (OpenbciCommunicationException ex) {
-                                ex.showErrorDialog(_("Failed to start video recording"));
-                                logger.error("Failed to start video recording", ex);
-                        }
-
+			try {
+				monitorSignalDocument.startMonitorRecording();
+			} catch (OpenbciCommunicationException ex) {
+				ex.showErrorDialog(_("Failed to start recording"));
+				logger.error("Failed to start recording", ex);
+			}
 		}
-
 	}
 
 	/**
@@ -92,12 +87,12 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
-		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)
-				&& !((MonitorSignalDocument) signalDocument).isRecording())
-			setEnabled(true);
-		else
-			setEnabled(false);
-
+		boolean enabled = false;
+		if (signalDocument != null && signalDocument instanceof MonitorSignalDocument) {
+			MonitorSignalDocument monitor = (MonitorSignalDocument) signalDocument;
+			enabled = (monitor.getRecordingState() == RecordingState.FINISHED) && !monitor.isPsychopyExperimentRunning();
+		}
+		setEnabled(enabled);
 	}
 
 	/**

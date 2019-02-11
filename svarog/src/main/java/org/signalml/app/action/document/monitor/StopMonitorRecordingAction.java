@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.worker.monitor.recording.RecordingState;
 
 /**
  * This class is responsible for actions regarding the menu item which stops the recording of the monitor.
@@ -23,9 +24,18 @@ import org.signalml.app.document.signal.SignalDocument;
 public class StopMonitorRecordingAction extends MonitorRecordingAction {
 
 	/**
+	 * Interface for this action's variants.
+	 */
+	private static interface Action {
+		public void perform(MonitorSignalDocument document) throws IOException;
+	}
+
+	/**
 	 * Logger to save history of execution at.
 	 */
 	protected static final Logger logger = Logger.getLogger(StopMonitorRecordingAction.class);
+
+	private Action action;
 
 	/**
 	 * Constructor.
@@ -54,14 +64,14 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
-			try {
-				setEnabled(false);
-				monitorSignalDocument.stopMonitorRecording();
-			} catch (IOException ex) {
-				logger.error(ex, ex);
+			if (action != null) {
+				try {
+					action.perform(monitorSignalDocument);
+				} catch (IOException ex) {
+					logger.error(ex, ex);
+				}
 			}
 		}
-
 	}
 
 	/**
@@ -73,16 +83,24 @@ public class StopMonitorRecordingAction extends MonitorRecordingAction {
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
-		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
-			if (((MonitorSignalDocument) signalDocument).isRecording()) {
-				setEnabled(true);
+		boolean enabled = false;
+		if (signalDocument != null && signalDocument instanceof MonitorSignalDocument) {
+			MonitorSignalDocument monitor = (MonitorSignalDocument) signalDocument;
+			if (monitor.getRecordingState() == RecordingState.SAVING) {
+				enabled = true;
+				action = (MonitorSignalDocument document) -> {
+					document.stopMonitorRecording();
+				};
+			} else if (monitor.isPsychopyExperimentRunning()) {
+				enabled = true;
+				action = (MonitorSignalDocument document) -> {
+					document.stopPsychopyExperiment();
+				};
 			} else {
-				setEnabled(false);
+				action = null;
 			}
-		} else {
-			setEnabled(false);
 		}
-
+		setEnabled(enabled);
 	}
 
 }

@@ -5,13 +5,11 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import javax.swing.JOptionPane;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.document.monitor.StartVideoPreviewAction;
@@ -21,18 +19,17 @@ import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.video.PreviewVideoFrame;
-import org.signalml.app.video.TimecodeData;
 import org.signalml.app.video.VideoStreamManager;
 import org.signalml.app.video.VideoStreamSpecification;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.worker.monitor.DisconnectFromExperimentWorker;
 import org.signalml.app.worker.monitor.MonitorWorker;
-import org.signalml.app.worker.monitor.SignalRecorderWorker;
-import org.signalml.app.worker.monitor.TagRecorder;
-import org.signalml.app.worker.monitor.VideoRecordingStatusListener;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
+import org.signalml.app.worker.monitor.messages.StartSavingSignal;
+import org.signalml.app.worker.monitor.recording.RecordingManager;
+import org.signalml.app.worker.monitor.recording.RecordingState;
 import org.signalml.domain.montage.MontageMismatchException;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.SignalProcessingChain;
@@ -50,20 +47,15 @@ import org.signalml.psychopy.PsychopyStatusListener;
 public class MonitorSignalDocument extends AbstractSignal implements MutableDocument, PsychopyStatusListener {
 
 	/**
-	 * A property describing whether this document is recording its signal.
+	 * A property describing the state of the recording process.
 	 */
-	public static String IS_RECORDING_PROPERTY = "isRecording";
+	public static String RECORDING_STATE_PROPERTY = "getRecordingState";
 
-	/**
-	 * A property describing whether this document is waiting on video
-	 * saving finalization.
-	 */
-	public static String IS_VIDEO_SAVING_PROPERTY = "isVideoSaving";
 	/**
 	 * A property describing whether this document is waiting on psychopy
 	 * experiment
 	 */
-	public static String IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY = "isPsychopyRunning";
+	public static String IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY = "isPsychopyExperimentRunning";
 
 	/**
 	 * A logger to save history of execution at.
@@ -87,24 +79,19 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	private MonitorWorker monitorWorker;
 
 	/**
-	 * This worker is responsible for recording the samples to a file.
-	 */
-	private SignalRecorderWorker signalRecorderWorker = null;
-
-	/**
-	 * This worker is responsible for recording the tags to a file.
-	 */
-	private TagRecorder tagRecorderWorker = null;
-
-	/**
 	 * Tag set to which the {@link MonitorWorker} saves tags.
 	 */
 	private StyledMonitorTagSet tagSet;
 
 	/**
-	 * Video manager responsible for the RTSP stream being recorded.
+	 * Video manager responsible for allocating and disposing of RTSP stream.
 	 */
-	private final VideoStreamManager videoStreamRecordingManager;
+	private final VideoStreamManager videoStreamManager;
+
+	/**
+	 * Manager responsible for signal and video recording using OBCI.
+	 */
+	private final RecordingManager recordingManager;
 
 	/**
 	 * Currently active frame for video preview.
@@ -115,7 +102,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * Whether the signal was saved.
 	 */
 	private boolean saved = true;
-
+	
 	/**
 	 * How often (in milliseconds) should {@link SignalPlot signal plots} be
 	 * refreshed by the {@link RefreshPlotsTimerTask}.
@@ -134,7 +121,14 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 		super();
 		this.descriptor = descriptor;
-		this.videoStreamRecordingManager = new VideoStreamManager();
+		this.videoStreamManager = new VideoStreamManager();
+		this.recordingManager = new RecordingManager();
+		this.recordingManager.addRecordingListener((RecordingState state) -> {
+			pcSupport.firePropertyChange(RECORDING_STATE_PROPERTY, null, state);
+			if (state == RecordingState.FINISHED) {
+				videoStreamManager.free();
+			}
+		});
 		float freq = descriptor.getSignalParameters().getSamplingFrequency();
 		double ps = descriptor.getSignalParameters().getPageSize();
 		int sampleCount = (int) Math.ceil(ps * freq);
@@ -214,11 +208,7 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		refreshPlotsTimer.cancel();
 
 		//stop recording
-		try {
-			stopMonitorRecording();
-		} catch (IOException ex) {
-			logger.error("Cannot stop monitor recording for this monitor.", ex);
-		}
+		stopMonitorRecording();
 
 		//stop monitor worker
 		if (monitorWorker != null && !monitorWorker.isCancelled()) {
@@ -315,17 +305,32 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	}
 
 	/**
-	 * Returns whether this monitor document is recording the signal (and
-	 * optionally tags) to a file.
+	 * Returns current status of signal (and video) recording.
 	 *
-	 * @return true, if this {@link MonitorSignalDocument} is recording the
-	 * signal (and optionally tags) it monitors, false otherwise
+	 * @return one of the constants from RecordingState
 	 */
-	public boolean isRecording() {
-		if (signalRecorderWorker != null || getPsychopyExperiment().isRunning) {
-			return true;
-		}
-		return false;
+	public RecordingState getRecordingState() {
+		return recordingManager.getRecordingState();
+	}
+
+	/**
+	 * Returns whether the PsychoPy experiment is currently running.
+	 *
+	 * @return true if PsychoPy experiment is running, false otherwise
+	 */
+	public boolean isPsychopyExperimentRunning() {
+		PsychopyExperiment psychopy = psychopyExperiment;
+		return (psychopy != null && psychopy.isRunning);
+	}
+
+	/**
+	 * Returns whether the video recording is enabled.
+	 *
+	 * @return true if video recording is enabled, false otherwise
+	 */
+	public boolean isVideoRecordingEnabled() {
+		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
+		return monitorRecordingDescriptor.isVideoRecordingEnabled();
 	}
 
 	@Override
@@ -369,46 +374,31 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 * calling {@link MonitorSignalDocument#stopMonitorRecording()} the data
 	 * will be written to the given files.
 	 *
-	 * @throws FileNotFoundException thrown when the files for buffering,
-	 * signal and tag recording are not found
 	 * @throws OpenbciCommunicationException thrown when video preview is
 	 * not available
 	 */
-	public void startMonitorRecording() throws FileNotFoundException, OpenbciCommunicationException {
+	public void startMonitorRecording() throws OpenbciCommunicationException {
 
 		MonitorRecordingDescriptor monitorRecordingDescriptor = descriptor.getMonitorRecordingDescriptor();
 
-		// starting signal recorder
-		String dataPath = monitorRecordingDescriptor.getSignalRecordingFilePath();
-		signalRecorderWorker = new SignalRecorderWorker(dataPath, descriptor);
-
-		// if tags recording is enabled: starting tag recorder and connecting it
-		// to signal recorder
-		if (monitorRecordingDescriptor.isTagsRecordingEnabled()) {
-			String tagsPath = monitorRecordingDescriptor.getTagsRecordingFilePath();
-			tagRecorderWorker = new TagRecorder(tagsPath);
-			signalRecorderWorker.setTagRecorder(tagRecorderWorker);
-		}
-
-		// connecting recorders to the monitor worker
-		monitorWorker.connectSignalRecorderWorker(signalRecorderWorker);
-		monitorWorker.connectTagRecorderWorker(tagRecorderWorker);
 		documentView.requestFocusInWindow();  // for user tags in monitor mode
 
-		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, false, true);
+		String targetSignalPath = monitorRecordingDescriptor.getSignalRecordingFilePath();
 
-		// requesting RTSP stream and starting video recording
+		StartSavingSignal request = new StartSavingSignal(descriptor.getId(), "amplifier", targetSignalPath);
+		request.saveTags = monitorRecordingDescriptor.isTagsRecordingEnabled();
+		request.saveImpedance = monitorRecordingDescriptor.isSaveImpedanceEnabled();
+		request.appendTimestamps = monitorRecordingDescriptor.isAppendTimestampsEnabled();
+
+		// requesting RTSP stream for video recording
 		if (monitorRecordingDescriptor.isVideoRecordingEnabled()) {
 
 			StartVideoPreviewAction startVideoPreviewAction = getSignalView().getStartVideoPreviewAction();
-			monitorWorker.connectVideoRecordingStatusListener(startVideoPreviewAction);
-
 			VideoStreamSpecification videoSpecs = monitorRecordingDescriptor.getVideoStreamSpecification();
 
-			String rtcpURL = videoStreamRecordingManager.replace(videoSpecs);
-			String relativeFilePath = monitorRecordingDescriptor.getVideoRecordingFilePathWithExtension();
-			String targetFilePath = (new File(relativeFilePath)).getAbsolutePath();
-			monitorWorker.startVideoSaving(rtcpURL, targetFilePath);
+			request.videoStreamURL = videoStreamManager.replace(videoSpecs);
+			String relativeVideoPath = monitorRecordingDescriptor.getVideoRecordingFilePathWithExtension();
+			request.videoFileName = (new File(relativeVideoPath)).getAbsolutePath();
 
 			// display camera name and status in button's tool tip
 			startVideoPreviewAction.setToolTipFromVideoSpecs(videoSpecs);
@@ -418,6 +408,11 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 			}
 		}
 
+		// starting signal (and video) recording
+		if (!recordingManager.startRecording(request)) {
+			// could not send recording request, so we should free the video stream
+			videoStreamManager.free();
+		}
 	}
 
 	/**
@@ -446,101 +441,15 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	/**
 	 * Stops to record data and writes the recorded data to the files set in
 	 * the {@link ExperimentDescriptor}.
-	 *
-	 * @throws IOException thrown where an error while writing the recorded
-	 * data to the given files occurs
 	 */
-	public void stopMonitorRecording() throws IOException {
-		if (descriptor.getMonitorRecordingDescriptor().isVideoRecordingEnabled()
-			&& signalRecorderWorker != null) {
-			monitorWorker.connectVideoRecordingStatusListener(new VideoRecordingStatusListener() {
-				@Override
-				public void videoRecordingStatusChanged(boolean recording) {
-					if (!recording) {
-						monitorWorker.disconnectVideoRecordingStatusListener(this);
-						videoStreamRecordingManager.free();
-
-						if (!tryToFinalizeVideoRecordingMetadata()) {
-							JOptionPane.showMessageDialog(null,
-								_("Video saving has not been finalized! Video data may be missing from XML file."),
-								_("Video saving issue"),
-								JOptionPane.WARNING_MESSAGE
-							);
-						}
-						pcSupport.firePropertyChange(IS_VIDEO_SAVING_PROPERTY, true, false);
-						stopMonitorRecordingFinalizeMetadata();
-
-					}
-				}
-			});
-			stopMonitorRecordingSignal();
-			pcSupport.firePropertyChange(IS_VIDEO_SAVING_PROPERTY, false, true);
-			monitorWorker.stopVideoSaving();
-		} else if (getPsychopyExperiment().isRunning) {
-			psychopyExperiment.finish();
-		} else {
-			stopMonitorRecordingInternally();
-		}
+	public void stopMonitorRecording() {
+		recordingManager.stopRecording();
 	}
 
-	private void stopMonitorRecordingSignal() {
-		monitorWorker.disconnectTagRecorderWorker();
-		monitorWorker.disconnectSignalRecorderWorker();
-
-		if (signalRecorderWorker != null) {
-			signalRecorderWorker.stopSaving();
-		}
-
-		if (tagRecorderWorker != null) {
-			tagRecorderWorker.save();
-		}
-		tagRecorderWorker = null;
-
-	}
-
-	private void stopMonitorRecordingFinalizeMetadata() {
-		if (signalRecorderWorker != null) {
-			try {
-				signalRecorderWorker.saveMetadata(false);
-			} catch (IOException ex) {
-				logger.error("Failed to write metadata XML", ex);
-			}
-		}
-		signalRecorderWorker = null;
-		if (documentView != null) {
-			// for user tags in monitor mode
-			documentView.requestFocusInWindow();
-		}
-		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, true, false);
-
-	}
-
-	private void stopMonitorRecordingInternally() {
-		stopMonitorRecordingSignal();
-		stopMonitorRecordingFinalizeMetadata();
-	}
-
-	/**
-	 * @return true if success, false if failure
-	 */
-	private boolean tryToFinalizeVideoRecordingMetadata() {
-		String relativeFilePath = descriptor.getMonitorRecordingDescriptor().getVideoRecordingFilePath();
-		File timestampFile = new File(relativeFilePath + ".ts.txt");
-
-		try {
-			TimecodeData timestamps = TimecodeData.readFromFile(timestampFile);
-			if (timestamps.size() < 2) {
-				// we need at least two entries,
-				// since if there is only one, it may be partial
-				return false;
-			}
-			double firstFrameTimestamp = timestamps.get(0) / 1000;
-			signalRecorderWorker.setFirstVideoFrameTimestamp(firstFrameTimestamp);
-			return true;
-
-		} catch (IOException ex) {
-			// timestamp file is not ready yet
-			return false;
+	public void stopPsychopyExperiment() {
+		PsychopyExperiment psychopy = psychopyExperiment;
+		if (psychopy != null && psychopy.isRunning) {
+			psychopy.finish();
 		}
 	}
 
@@ -555,9 +464,8 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 		List<LabelledPropertyDescriptor> list = super.getPropertyList();
-		list.add(new LabelledPropertyDescriptor(_("is video saving"), IS_VIDEO_SAVING_PROPERTY, MonitorSignalDocument.class, null, null));
-		list.add(new LabelledPropertyDescriptor(_("is recording"), IS_RECORDING_PROPERTY, MonitorSignalDocument.class, "isRecording", null));
-		list.add(new LabelledPropertyDescriptor(_("is psychopy experiment running"), IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY, MonitorSignalDocument.class, null, null));
+		list.add(new LabelledPropertyDescriptor(_("recording state"), RECORDING_STATE_PROPERTY, MonitorSignalDocument.class, RECORDING_STATE_PROPERTY, null));
+		list.add(new LabelledPropertyDescriptor(_("is psychopy experiment running"), IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY, MonitorSignalDocument.class, IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY, null));
 		return list;
 	}
 
@@ -605,12 +513,10 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 		boolean previous = psychopyExperiment.isRunning;
 		psychopyExperiment.updateStatus(msg);
 		pcSupport.firePropertyChange(IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY, previous, psychopyExperiment.isRunning);
-		pcSupport.firePropertyChange(IS_RECORDING_PROPERTY, previous, psychopyExperiment.isRunning);
 		if (psychopyExperiment.isRunning) //It is recording, so this action is enabled by default
 		{
 			((SignalView) documentView).getStopMonitorRecordingAction().setEnabled(false);
 		}
-
 	}
 
 }

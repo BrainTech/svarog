@@ -104,7 +104,7 @@ the source code of all the plugins. It is done by executing
 in the "svarog" directory as well as in the directory of each plugin.
 
 Next, the resulting *.pot files have to be merged into one *.pot file.
-Utility "msgmerge" can be used to accomplish this, and it is preferable
+Utility "msgcat" can be used to accomplish this, and it is preferable
 to call it with "-s" ("--sort-output") flag.
 
 The resulting *.pot file can be used to initialize a new translation

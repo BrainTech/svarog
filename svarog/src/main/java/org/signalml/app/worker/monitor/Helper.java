@@ -42,7 +42,9 @@ public class Helper {
 	
 	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
 		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
-		Helper.checkIfResponseIsOK(response, awaitedMessageType);
+		if (awaitedMessageType != null) {
+			Helper.checkIfResponseIsOK(response, awaitedMessageType);
+		}
 
 		return BaseMessage.deserialize(response);
 	}

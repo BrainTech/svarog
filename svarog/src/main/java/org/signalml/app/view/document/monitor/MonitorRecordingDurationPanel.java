@@ -1,5 +1,7 @@
 package org.signalml.app.view.document.monitor;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,6 +16,7 @@ import javax.swing.border.Border;
 
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.worker.monitor.recording.RecordingState;
 import org.signalml.plugin.export.signal.Document;
 
 /**
@@ -26,11 +29,6 @@ import org.signalml.plugin.export.signal.Document;
  * @author Piotr Szachewicz
  */
 public class MonitorRecordingDurationPanel extends AbstractPanel {
-
-	/**
-	 * The document for which this panel is displayed.
-	 */
-	private MonitorSignalDocument document;
 
 	/**
 	 * The label displaying the duration in the format "hh:mm:ss".
@@ -56,7 +54,6 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 		if (!(document instanceof MonitorSignalDocument))
 			return;
 
-		this.document = (MonitorSignalDocument) document;
 		document.addPropertyChangeListener(this);
 
 		createInterface();
@@ -70,21 +67,20 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (MonitorSignalDocument.IS_RECORDING_PROPERTY.equals(evt.getPropertyName())) {
-			boolean recordingStarted = (Boolean) evt.getNewValue();
-			if (recordingStarted)
-				startCountingTime();
-			else
-				stopCountingTime();
-		}
-		if (MonitorSignalDocument.IS_VIDEO_SAVING_PROPERTY.equals(evt.getPropertyName())) {
-			boolean videoIsSaving = (Boolean) evt.getNewValue();
-			if (videoIsSaving) {
-				stopCountingTime();
-				startVideoSavingIndication();
+		if (MonitorSignalDocument.RECORDING_STATE_PROPERTY.equals(evt.getPropertyName())) {
+			RecordingState state = (RecordingState) evt.getNewValue();
+			switch (state) {
+				case SAVING:
+					startCountingTime();
+					break;
+				case FINISHING:
+					stopCountingTime();
+					startSavingInProgressIndication();
+					break;
+				case FINISHED:
+					stopCountingTime();
+					break;
 			}
-			else
-				stopCountingTime();
 		}
 	}
 
@@ -114,9 +110,9 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 	 * Starts the timer which is responsible for displaying animated
 	 * word "Saving..."
 	 */
-	protected void startVideoSavingIndication() {
+	protected void startSavingInProgressIndication() {
 		timer = new Timer();
-		TimerTask task = new VideoSavingTimerTask();
+		TimerTask task = new SavingTimerTask();
 		timer.scheduleAtFixedRate(task, 0, 1000);
 		durationLabel.setForeground(Color.red);
 
@@ -164,11 +160,11 @@ public class MonitorRecordingDurationPanel extends AbstractPanel {
 
 	}
 	
-	class VideoSavingTimerTask extends TimerTask {
-		private String main = "Saving";
-		private String additional = ".";
+	class SavingTimerTask extends TimerTask {
+		private final String main = _("Saving");
+		private final String additional = ".";
 		private int number;
-		
+
 		@Override
 		public void run() {
 			String suffix = "";

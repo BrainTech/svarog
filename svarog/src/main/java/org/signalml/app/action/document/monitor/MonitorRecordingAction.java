@@ -38,7 +38,10 @@ public abstract class MonitorRecordingAction extends AbstractFocusableSignalMLAc
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals(MonitorSignalDocument.IS_RECORDING_PROPERTY)) {
+		String propertyName = evt.getPropertyName();
+		if (propertyName.equals(MonitorSignalDocument.RECORDING_STATE_PROPERTY) ||
+			propertyName.equals(MonitorSignalDocument.IS_PSYCHOPY_EXPERIMENT_RUNNING_PROPERTY))
+		{
 			setEnabledAsNeeded();
 		}
 	}
