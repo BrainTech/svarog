@@ -107,6 +107,10 @@ public class PropertySheetModel extends AbstractTableModel implements TreeSelect
 				logger.error("Getter threw exception", ex.getCause());
 				return "???";
 			}
+			catch (java.lang.NullPointerException ex){
+				logger.error("No getter", ex.getCause());
+				return "???";
+			}
 			if (value == null) {
 				return "-";
 			}
