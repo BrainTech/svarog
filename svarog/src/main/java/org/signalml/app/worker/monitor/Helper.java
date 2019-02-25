@@ -16,6 +16,8 @@ import org.zeromq.ZMQ;
 /**
  * This helper is used to send and receive messages from OpenBCI.
  *
+ * (This implementation is horrible! Needs refactor ASAP.)
+ *
  * @author Piotr Szachewicz
  */
 public class Helper {
@@ -39,16 +41,23 @@ public class Helper {
 		return SvarogApplication.getApplicationConfiguration().getOpenbciPort();
 	}
 
-	
 	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
-		List<byte[]> response = sendRequest(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
+		return sendRequestAndParseResponse(request, destinationIP, destinationPort, awaitedMessageType, true);
+	}
+
+	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType, boolean handleException) throws OpenbciCommunicationException {
+		List<byte[]> response;
+		if (handleException) {
+			response = sendRequest(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
+		} else {
+			response = sendRequestWithoutHandlingExceptions(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
+		}
 		if (awaitedMessageType != null) {
 			Helper.checkIfResponseIsOK(response, awaitedMessageType);
 		}
 
 		return BaseMessage.deserialize(response);
 	}
-	
 
 	public static BaseMessage sendRequestAndGetResponse(BaseMessage request, String url) throws OpenbciCommunicationException {
 		logger.debug("Sending request to: "+url);
@@ -86,12 +95,22 @@ public class Helper {
 
 	private static synchronized List<byte[]> sendRequestWithoutHandlingExceptions(BaseMessage request, String destinationIP,
 			 int destinationPort, int timeout) throws OpenbciCommunicationException {
-		createSocket(destinationIP, destinationPort, timeout);
-		sendMessage(request);
-		List<byte[]> response;
-		response = receiveResponse();
-		socket.close();
-		return response;
+		try {
+			createSocket(destinationIP, destinationPort, timeout);
+			sendMessage(request);
+			List<byte[]> response;
+			response = receiveResponse();
+			return response;
+		} finally {
+			if (socket != null) {
+				socket.close();
+				socket = null;
+			}
+			if (context != null) {
+				context.close();
+				context = null;
+			}
+		}
 	}
 
 	private static void createSocket(String destinationIP, int destinationPort, int timeout) throws OpenbciCommunicationException {

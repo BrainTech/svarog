@@ -51,7 +51,8 @@ public class ObciServerCapabilities {
 						new ObciServerCapabilitiesRequest(),
 						Helper.getOpenBCIIpAddress(),
 						Helper.getOpenbciPort(),
-						MessageType.OBCI_SERVER_CAPABILITIES_RESPONSE
+						MessageType.OBCI_SERVER_CAPABILITIES_RESPONSE,
+						false // means: do not handle exceptions
 					);
 					capabilities = new HashSet<>(Arrays.asList(response.capabilities));
 					failCount = 0;

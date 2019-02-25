@@ -4,7 +4,10 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.io.File;
 
-import javax.swing.JFileChooser;
+import com.alee.extended.list.FileListViewType;
+import com.alee.laf.filechooser.FileChooserViewType;
+import com.alee.laf.filechooser.WebFileChooser;
+import java.io.IOException;
 import javax.swing.filechooser.FileSystemView;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
@@ -15,7 +18,7 @@ import org.signalml.app.model.components.validation.ValidationErrors;
  *
  * @author Piotr Szachewicz
  */
-public class SignalMLFileChooser extends JFileChooser {
+public class SignalMLFileChooser extends WebFileChooser {
 
 	/**
 	 * Constructs a <code>EmbeddedFileChooser</code> pointing to the user's
@@ -24,7 +27,7 @@ public class SignalMLFileChooser extends JFileChooser {
 	 * directory on Unix.
 	 */
 	public SignalMLFileChooser() {
-		super();
+		getFileChooserPanel().setViewType(FileChooserViewType.table);
 		EmbeddedFileChooserFavorites f = new EmbeddedFileChooserFavorites(this);
 		this.setAccessory(f);
 	}

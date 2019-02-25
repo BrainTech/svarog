@@ -751,7 +751,13 @@ public abstract class AbstractDialog extends JDialog {
 		Object model;
 		synchronized (this) {
 			model = currentModel;
-			if (validateDialog() == false || model == null)
+			boolean acceptsNull = false;
+			try {
+				acceptsNull = supportsModelClass(null);
+			} catch (Throwable t) {
+				// nothing here, does not accept null
+			}
+			if (validateDialog() == false || (!acceptsNull && model == null))
 				return;
 			currentModel = null;
 		}

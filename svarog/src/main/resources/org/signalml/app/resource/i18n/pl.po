@@ -708,8 +708,8 @@ msgstr ""
 "najbliższa większa liczba będąca potęgą 2."
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:49
-msgid "Binary files (*.bin)"
-msgstr "Pliki binarne (* .bin)"
+msgid "Binary (*.bin)"
+msgstr "Binarne (*.bin)"
 
 #: org/signalml/app/view/montage/visualreference/VisualReferenceEditorPanel.java:289
 msgid "Bipolar mode"
@@ -776,8 +776,8 @@ msgstr "Katalog nadrzędny pliku książki nie istnieje lub nie można go zapisa
 
 #: org/signalml/app/document/ManagedDocumentType.java:57
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:53
-msgid "Book files (*.b)"
-msgstr "Pliki książek (* .b)"
+msgid "Book (*.b)"
+msgstr "Książki (*.b)"
 
 #: org/signalml/method/booktotag/BookToTagMethod.java:141
 msgid "Book is empty"
@@ -1284,8 +1284,8 @@ msgid "Close the window and exit the aplication"
 msgstr "Zamknij okno i zakończ aplikację"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:58
-msgid "Code files (*.java, *.class)"
-msgstr "Pliki kodu (* .java, * .class)"
+msgid "Code (*.java, *.class)"
+msgstr "Kod (*.java, *.class)"
 
 #: org/signalml/app/view/montage/filters/EditFFTSampleFilterDialog.java:311
 #: org/signalml/app/model/montage/FFTSampleFilterTableModel.java:69
@@ -1297,17 +1297,16 @@ msgid "Collecting results"
 msgstr "Zbieranie wyników"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:48
-msgid "Comma-separated values (*.csv)"
-msgstr "Wartości rozdzielane przecinkami (* .csv)"
+msgid "CSV (*.csv)"
+msgstr "CSV (*.csv)"
 
 #: org/signalml/domain/montage/generators/CommonAverageMontageGenerator.java:32
 msgid "Common average montage"
 msgstr "Montaż \"common average\""
 
 #: org/signalml/app/document/ManagedDocumentType.java:40
-msgid "Common signal files (*.d, *.edf, *.raw, *.bin, ...)"
-msgstr ""
-"Popularne formaty sygnałów (* .d, * .edf, * .raw, * .bin, ...)"
+msgid "Common signal files"
+msgstr "Popularne formaty sygnałów"
 
 #: org/signalml/app/model/montage/MontageGeneratorListModel.java:25
 msgid "Common user defined"
@@ -1355,8 +1354,8 @@ msgid "Condition type"
 msgstr "Rodzaj warunku"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:55
-msgid "Config files (*.cfg)"
-msgstr "Pliki konfiguracyjne (* .cfg)"
+msgid "Config (*.cfg)"
+msgstr "Konfiguracja (*.cfg)"
 
 #: org/signalml/app/view/book/filter/BookFilterTablePanel.java:350
 #: org/signalml/app/method/mp5/MP5ToolExecutorConfigPanel.java:266
@@ -2022,8 +2021,8 @@ msgid "Exception occurred!"
 msgstr "Wystąpił wyjątek!"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:56
-msgid "Executable files (*.exe)"
-msgstr "Pliki wykonywalne (* .exe)"
+msgid "Executable (*.exe)"
+msgstr "Wykonywalne (*.exe)"
 
 #: org/signalml/app/method/mp5/MP5LocalExecutorDialog.java:70
 msgid "Executor name"
@@ -2876,8 +2875,8 @@ msgid "Iteration start value"
 msgstr "Wartość początkowa iteracji"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:57
-msgid "Jar files (*.jar)"
-msgstr "Pliki jar (* .jar)"
+msgid "JAR (*.jar)"
+msgstr "JAR (*.jar)"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:117
 msgid "K-Complex"
@@ -3017,8 +3016,8 @@ msgid "MATLAB"
 msgstr "MATLAB"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:51
-msgid "MATLAB MAT-files (*.mat)"
-msgstr "Pliki MATLABa MAT (* .mat)"
+msgid "MATLAB (*.mat)"
+msgstr "MATLAB (*.mat)"
 
 #: org/signalml/util/Util.java:675
 msgid "MD5 not supported"
@@ -3686,8 +3685,8 @@ msgid "P"
 msgstr "P"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:54
-msgid "PNG graphic files (*.png)"
-msgstr "Pliki graficzne PNG (* .png)"
+msgid "PNG (*.png)"
+msgstr "PNG (*.png)"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterChartExportDialog.java:156
 msgid "PNG images"
@@ -5496,8 +5495,8 @@ msgid "Tasks"
 msgstr "Zadania"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:47
-msgid "Text files (*.txt)"
-msgstr "Pliki tekstowe (* .txt)"
+msgid "Text (*.txt)"
+msgstr "Tekst (* .txt)"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1090
 msgid ""
@@ -6042,8 +6041,8 @@ msgstr "Plik XML"
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:52
 #: org/signalml/app/view/signal/signalml/RegisterCodecStepOnePanel.java:102
 #: org/signalml/psychopy/view/panel/SelectOutputPathPrefixPanel.java:27
-msgid "XML files (*.xml)"
-msgstr "Pliki XML (* .xml)"
+msgid "XML (*.xml)"
+msgstr "XML (*.xml)"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:230
 msgid "XML manifest not found—would you like to choose the XML file manualy?"

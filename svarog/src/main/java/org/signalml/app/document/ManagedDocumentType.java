@@ -37,7 +37,7 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 */
 	SIGNAL(_("Signal"),
 	SignalDocument.class,
-	_("Common signal files (*.d, *.edf, *.raw, *.bin, ...)"),
+	_("Common signal files"),
 	new String[] { "d", "edf", "raw", "bin", "dat", "csv", "txt" },
 	"org/signalml/app/icon/signal.png"
 		  ),

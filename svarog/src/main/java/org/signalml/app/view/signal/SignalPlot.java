@@ -117,7 +117,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
-	private boolean optimizeSignalDisplaying;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -243,7 +242,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			antialiased = config.isAntialiased();
 			clamped = config.isClamped();
 			offscreenChannelsDrawn = config.isOffscreenChannelsDrawn();
-			optimizeSignalDisplaying = config.isOptimizeSignalDisplay();
 
 			pageLinesVisible = config.isPageLinesVisible();
 			blockLinesVisible = config.isBlockLinesVisible();
@@ -268,7 +266,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			antialiased = masterPlot.isAntialiased();
 			clamped = masterPlot.isClamped();
 			offscreenChannelsDrawn = masterPlot.isOffscreenChannelsDrawn();
-			optimizeSignalDisplaying = masterPlot.isOptimizeSignalDisplaying();
 
 			pageLinesVisible = masterPlot.isPageLinesVisible();
 			blockLinesVisible = masterPlot.isBlockLinesVisible();
@@ -291,11 +288,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		if (masterPlot == null) {
 			setTagToolTipsVisible(config.isTagToolTipsVisible());
-			setOptimizeSignalDisplaying(config.isOptimizeSignalDisplay());
-
 		} else {
 			setTagToolTipsVisible(masterPlot.isTagToolTipsVisible());
-			setOptimizeSignalDisplaying(masterPlot.isOptimizeSignalDisplaying());
 		}
 
 		addMouseListener(new MouseAdapter() {
@@ -2548,15 +2542,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				signalPlotColumnHeader.setToolTipText(null);
 			}
 		}
-	}
-
-	public boolean isOptimizeSignalDisplaying() {
-		return optimizeSignalDisplaying;
-	}
-
-	public void setOptimizeSignalDisplaying(boolean optimizeSignalDisplaying) {
-		this.optimizeSignalDisplaying = optimizeSignalDisplaying;
-		repaint();
 	}
 
 	@Override

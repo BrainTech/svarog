@@ -82,7 +82,6 @@ public class ConfigurationDefaults {
 		config.setClamped(getBoolean("application.clamped"));
 		config.setOffscreenChannelsDrawn(getBoolean("application.offscreenChannelsDrawn"));
 		config.setTagToolTipsVisible(getBoolean("application.tagToolTipsVisible"));
-		config.setOptimizeSignalDisplay(getBoolean("application.optimizeSignalDisplay"));
 
 		config.setPageLinesVisible(getBoolean("application.pageLinesVisible"));
 		config.setBlockLinesVisible(getBoolean("application.blockLinesVisible"));

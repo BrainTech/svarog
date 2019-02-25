@@ -3,6 +3,8 @@
  */
 package org.signalml.app.view.workspace;
 
+import com.alee.laf.filechooser.FileChooserViewType;
+import com.alee.laf.filechooser.WebFileChooser;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Component;
@@ -31,7 +33,7 @@ import org.signalml.util.Util;
  * @author Michał Dobaczewski © 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  * @author Zbigniew Jędrzejewski-Szmek © 2010
  */
-public class ViewerFileChooser extends JFileChooser implements org.signalml.plugin.export.view.FileChooser {
+public class ViewerFileChooser extends WebFileChooser implements org.signalml.plugin.export.view.FileChooser {
 
 	private static final long serialVersionUID = 1L;
 	protected static final Logger logger = Logger.getLogger(ViewerFileChooser.class);
@@ -40,22 +42,23 @@ public class ViewerFileChooser extends JFileChooser implements org.signalml.plug
 
 	public ViewerFileChooser() {
 		super();
+		getFileChooserPanel().setViewType(FileChooserViewType.table);
 		this.setPreferredSize(new Dimension(500, 380));
 	}
 
 	public void initialize() {
-		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text files (*.txt)"), "txt");
-		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("Comma-separated values (*.csv)"), "csv");
-		FileNameExtensionFilter binary = new FileNameExtensionFilter(_("Binary files (*.bin)"), "bin");
-		FileNameExtensionFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab datasets (*.set)"), "set");
-		FileNameExtensionFilter matlab = new FileNameExtensionFilter(_("MATLAB MAT-files (*.mat)"), "mat");
-		FileNameExtensionFilter xml = new FileNameExtensionFilter(_("XML files (*.xml)"), "xml");
-		FileNameExtensionFilter book = new FileNameExtensionFilter(_("Book files (*.b)"), "b");
-		FileNameExtensionFilter png = new FileNameExtensionFilter(_("PNG graphic files (*.png)"), "png");
-		FileNameExtensionFilter config = new FileNameExtensionFilter(_("Config files (*.cfg)"), "cfg");
-		FileNameExtensionFilter exe = new FileNameExtensionFilter(_("Executable files (*.exe)"), "exe");
-		FileNameExtensionFilter jar = new FileNameExtensionFilter(_("Jar files (*.jar)"), "jar");
-		FileNameExtensionFilter jar_class = new FileNameExtensionFilter(_("Code files (*.java, *.class)"), "java", "class");
+		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text (*.txt)"), "txt");
+		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("CSV (*.csv)"), "csv");
+		FileNameExtensionFilter binary = new FileNameExtensionFilter(_("Binary (*.bin)"), "bin");
+		FileNameExtensionFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab (*.set)"), "set");
+		FileNameExtensionFilter matlab = new FileNameExtensionFilter(_("MATLAB (*.mat)"), "mat");
+		FileNameExtensionFilter xml = new FileNameExtensionFilter(_("XML (*.xml)"), "xml");
+		FileNameExtensionFilter book = new FileNameExtensionFilter(_("Books (*.b)"), "b");
+		FileNameExtensionFilter png = new FileNameExtensionFilter(_("PNG (*.png)"), "png");
+		FileNameExtensionFilter config = new FileNameExtensionFilter(_("Config (*.cfg)"), "cfg");
+		FileNameExtensionFilter exe = new FileNameExtensionFilter(_("Executable (*.exe)"), "exe");
+		FileNameExtensionFilter jar = new FileNameExtensionFilter(_("JAR (*.jar)"), "jar");
+		FileNameExtensionFilter jar_class = new FileNameExtensionFilter(_("Code (*.java, *.class)"), "java", "class");
 
 		OptionSet.consoleSaveAsText.setFilters(text);
 		OptionSet.saveAsCSV.setFilters(csv);
