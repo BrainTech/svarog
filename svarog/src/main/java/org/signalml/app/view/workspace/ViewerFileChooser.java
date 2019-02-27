@@ -97,12 +97,17 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 
 	protected synchronized int showDialog(Component parent, OptionSet options) {
 		options.use(this);
-		return showDialog(parent, options.buttonLabel);
+		return showOpenDialog(parent);
+	}
+
+	protected synchronized int showSaveDialog(Component parent, OptionSet options) {
+		options.use(this);
+		return showSaveDialog(parent);
 	}
 
 	public synchronized File chooseForReadOrWrite(Component parent, OptionSet options) {
 		do {
-			int result = showDialog(parent, options);
+			int result = showSaveDialog(parent, options);
 			if (result != APPROVE_OPTION)
 				return null;
 

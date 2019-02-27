@@ -1241,7 +1241,7 @@ msgstr "Wyczyść"
 #: org/signalml/app/view/document/opensignal/elements/ChannelSelectPanel.java:119
 #: org/signalml/app/view/common/components/panels/AbstractSelectionPanel.java:104
 msgid "Clear all"
-msgstr "Wyczyść wszystko"
+msgstr "Wyczyść"
 
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:479
 #: org/signalml/app/view/book/filter/ParameterRangeFilterDialog.java:481
@@ -1828,9 +1828,12 @@ msgid "Edit filter"
 msgstr "Edytuj filtr"
 
 #: org/signalml/app/view/document/opensignal/elements/EditGainAndOffsetDialog.java:44
-#: org/signalml/app/view/document/opensignal/elements/ChannelSelectWithGainEditionPanel.java:66
 msgid "Edit gain and offset"
 msgstr "Edytuj wzmocnienie i przesunięcie"
+
+#: org/signalml/app/view/document/opensignal/elements/ChannelSelectWithGainEditionPanel.java:66
+msgid "Gain and offset…"
+msgstr "Wzmocnienie i przesunięcie…"
 
 #: org/signalml/app/view/signal/popup/SlavePlotSettingsPopupDialog.java:275
 msgid "Edit modified montage"
@@ -4611,7 +4614,7 @@ msgstr ""
 #: org/signalml/app/view/common/components/panels/AbstractSelectionPanel.java:86
 #: org/signalml/app/action/util/ListSelectAllAction.java:27
 msgid "Select all"
-msgstr "Zaznacz wszystko"
+msgstr "Wszystkie"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDialog.java:267
 msgid "Select at least one channel"
