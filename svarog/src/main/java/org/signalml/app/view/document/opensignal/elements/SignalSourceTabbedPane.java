@@ -51,14 +51,26 @@ public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyCha
 	private Object fileTypeMethod = FileOpenSignalMethod.AUTODETECT;
 
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
+		this(viewerElementManager, null);
+	}
+
+	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager, String selectedSourceTab) {
 		this.viewerElementManager = viewerElementManager;
 		addTab(_("File"), getFileChooserPanel());
+		int selectedIndex = 0;
 		if (ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()) {
+			if ("Online experiments".equals(selectedSourceTab)) {
+				selectedIndex = getTabCount();
+			}
 			addTab(_("Online experiments"), getChooseExperimentPanel());
 		}
 		if (ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()) {
+			if ("Online amplifiers".equals(selectedSourceTab)) {
+				selectedIndex = getTabCount();
+			}
 			addTab(_("Online amplifiers"), getChooseAmplifierPanel());
 		}
+		setSelectedIndex(selectedIndex);
 	}
 
 	/**

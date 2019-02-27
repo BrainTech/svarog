@@ -650,7 +650,13 @@ public class ViewerElementManager {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(_("Online"));
 			monitorMenu.setMnemonic(KeyEvent.VK_R);
+			
+			final OpenSignalWizardAction onlineExperimentsAction = new OpenSignalWizardAction(this, "Online experiments");
+			final OpenSignalWizardAction onlineAmplifiersAction = new OpenSignalWizardAction(this, "Online amplifiers");
 
+			monitorMenu.add(onlineExperimentsAction);
+			monitorMenu.add(onlineAmplifiersAction);
+			monitorMenu.addSeparator();
 			monitorMenu.add(getAddCameraAction());
 			monitorMenu.addSeparator();
 			monitorMenu.add(getStartMonitorRecordingAction());
@@ -661,6 +667,12 @@ public class ViewerElementManager {
 			monitorMenu.addMenuListener(new MenuListener() {
 				@Override
 				public void menuSelected(MenuEvent me) {
+					onlineExperimentsAction.setEnabled(
+						ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()
+					);
+					onlineAmplifiersAction.setEnabled(
+						ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()
+					);
 					getAddCameraAction().setEnabled(
 						ObciServerCapabilities.getSharedInstance().hasCameraServer()
 					);
@@ -1487,7 +1499,7 @@ public class ViewerElementManager {
 
 	public OpenSignalWizardAction getOpenSignalWizardAction() {
 		if (openSignalWizardAction == null) {
-			openSignalWizardAction = new OpenSignalWizardAction(this);
+			openSignalWizardAction = new OpenSignalWizardAction(this, null);
 		}
 		return openSignalWizardAction;
 	}
