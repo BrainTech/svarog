@@ -308,7 +308,7 @@ public class FileSelectPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			int returnVal = fileChooser.showOpenDialog(FileSelectPanel.this);
+			int returnVal = fileChooser.showSaveDialog(FileSelectPanel.this);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File selectedFile = fileChooser.getSelectedFile();
