@@ -16,7 +16,7 @@ import javax.swing.border.TitledBorder;
 
 public abstract class SelectFilePanel extends JPanel {
 	final static int DEFAULT_PATH_COLUMNS_NUMBER = 18;
-	private JFileChooser fileChooser;
+	protected final JFileChooser fileChooser;
 	private JTextField path;
 	private JLabel pathLabel;
 	private JButton browseButton;
@@ -36,7 +36,8 @@ public abstract class SelectFilePanel extends JPanel {
 
 	abstract protected JLabel createInfoLabel();
 	abstract protected String createBorderTitle();
-	
+	abstract protected int showDialog();
+
 	private void initializeUI() {
 		
 		mainPanel.setLayout(new GridBagLayout());
@@ -76,7 +77,7 @@ public abstract class SelectFilePanel extends JPanel {
 	}
 
 	private void onBrowse() {
-		int returnVal = this.fileChooser.showOpenDialog(this);
+		int returnVal = this.showDialog();
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = this.fileChooser.getSelectedFile();
 			this.path.setText(file.getPath());
