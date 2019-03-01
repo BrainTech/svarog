@@ -4,9 +4,11 @@
 
 package org.signalml.app.view.workspace;
 
-import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+
+import com.alee.laf.tabbedpane.WebTabbedPane;
+import com.thoughtworks.xstream.XStream;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -24,6 +26,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
+
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.HelpContentsAction;
@@ -93,6 +98,7 @@ import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.View;
 import org.signalml.app.view.book.AtomTableDialog;
 import org.signalml.app.view.book.BookView;
@@ -119,6 +125,7 @@ import org.signalml.app.view.tag.NewTagDialog;
 import org.signalml.app.view.tag.TagStylePaletteDialog;
 import org.signalml.app.view.tag.TagStylePresetDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.method.Method;
@@ -129,17 +136,10 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.psychopy.view.PsychopyExperimentDialog;
-import org.signalml.psychopy.action.ShowPsychopyDialogButton;
 import org.signalml.util.SvarogConstants;
 
-import com.thoughtworks.xstream.XStream;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-import org.signalml.app.worker.monitor.ObciServerCapabilities;
-
-
-/** ViewerElementManager
- *
+/**
+ * ViewerElementManager
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -675,6 +675,7 @@ public class ViewerElementManager {
 					);
 					getAddCameraAction().setEnabled(
 						ObciServerCapabilities.getSharedInstance().hasCameraServer()
+						&& VideoFrame.isVideoAvailable()
 					);
 				}
 				@Override

@@ -28,18 +28,12 @@ public class AddCameraAction extends AbstractSignalMLAction {
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
+		if (!VideoFrame.isVideoAvailable()) {
+			return;
+		}
 		GetAvailableVideoWorker worker = new GetAvailableVideoWorker(viewerElementManager.getDialogParent());
 		worker.addPropertyChangeListener(new OnlineVideoFrameInitializer(worker));
 		worker.execute();
-	}
-
-	/**
-	 * Enables this action if and only if
-	 * the software support for video preview is available.
-	 */
-	@Override
-	public void setEnabledAsNeeded() {
-		setEnabled(VideoFrame.isVideoAvailable());
 	}
 
 }
