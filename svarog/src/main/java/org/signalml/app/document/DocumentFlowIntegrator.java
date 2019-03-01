@@ -485,9 +485,6 @@ public class DocumentFlowIntegrator {
 					if (type.equals(ManagedDocumentType.SIGNAL)) {
 						ok = true;
 						// do nothing
-					} else if (type.equals(ManagedDocumentType.MONITOR)) {
-						ok = true;
-						// do nothing
 					} else if (type.equals(ManagedDocumentType.BOOK)) {
 						ok = true;
 						// do nothing

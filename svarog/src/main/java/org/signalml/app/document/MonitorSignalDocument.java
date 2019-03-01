@@ -44,7 +44,7 @@ import org.signalml.psychopy.PsychopyStatusListener;
  * @author Mariusz Podsiadło
  *
  */
-public class MonitorSignalDocument extends AbstractSignal implements MutableDocument, PsychopyStatusListener {
+public class MonitorSignalDocument extends AbstractSignal implements PsychopyStatusListener {
 
 	/**
 	 * A property describing the state of the recording process.
@@ -98,11 +98,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	 */
 	private PreviewVideoFrame previewVideoFrame;
 
-	/**
-	 * Whether the signal was saved.
-	 */
-	private boolean saved = true;
-	
 	/**
 	 * How often (in milliseconds) should {@link SignalPlot signal plots} be
 	 * refreshed by the {@link RefreshPlotsTimerTask}.
@@ -179,8 +174,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 
 	@Override
 	public void openDocument() throws SignalMLException, IOException {
-
-		setSaved(true);
 
 		if (descriptor.getPeer() == null) {
 			throw new IOException();
@@ -336,33 +329,6 @@ public class MonitorSignalDocument extends AbstractSignal implements MutableDocu
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public boolean isSaved() {
-		return saved;
-	}
-
-	@Override
-	public void setSaved(boolean saved) {
-		if (this.saved != saved) {
-			this.saved = saved;
-			pcSupport.firePropertyChange(AbstractMutableFileDocument.SAVED_PROPERTY, !saved, saved);
-		}
-	}
-
-	public void invalidate() {
-		setSaved(false);
-	}
-
-	@Override
-	public final void saveDocument() throws SignalMLException, IOException {
-		throw new UnsupportedOperationException(_("Saving monitor document is not supported—use online recording instead."));
-	}
-
-	@Override
-	public void newDocument() throws SignalMLException {
-
 	}
 
 	/**
