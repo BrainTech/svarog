@@ -6,8 +6,10 @@ import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
+import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.FinishSavingSignal;
 import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.SavingSignalError;
 import org.signalml.app.worker.monitor.messages.SavingSignalStarting;
 import org.signalml.app.worker.monitor.messages.StartSavingSignal;
 
@@ -31,22 +33,30 @@ public class RecordingManager {
 
 	public boolean startRecording(StartSavingSignal request) {
 		if (state.compareAndSet(RecordingState.FINISHED, RecordingState.INITIALIZATION)) {
+			String errorMessage = _("Failed to start recording");
 			try {
-				SavingSignalStarting response = (SavingSignalStarting) Helper.sendRequestAndParseResponse(
+				BaseMessage response = Helper.sendRequestAndParseResponse(
 					request,
 					Helper.getOpenBCIIpAddress(), Helper.getOpenbciPort(),
-					MessageType.SAVING_SIGNAL_STARTING
+					null
 				);
-				savingSessionID = response.savingSessionID;
-				RecordingStateChecker checker = new RecordingStateChecker(savingSessionID, state);
-				checker.start();
-				return true;
+				if (response instanceof SavingSignalStarting) {
+					savingSessionID = ((SavingSignalStarting) response).savingSessionID;
+					RecordingStateChecker checker = new RecordingStateChecker(savingSessionID, state);
+					checker.start();
+					return true;
+				} else if (response instanceof SavingSignalError) {
+					errorMessage += ": " + ((SavingSignalError) response).details.toString();
+				} else {
+					errorMessage += ": received incompatible message type " + response.getClass().getSimpleName();
+				}
 			} catch (OpenbciCommunicationException ex) {
 				logger.error("cannot send recording request", ex);
-				// restoring the original state
-				state.set(RecordingState.FINISHED);
-				Dialogs.showError(_("Failed to start recording"));
+				errorMessage = ": " + ex.getMessage();
 			}
+			// restoring the original state
+			state.set(RecordingState.FINISHED);
+			Dialogs.showError(errorMessage);
 		}
 		return false;
 	}
