@@ -408,4 +408,9 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		return exportedStyles;
 	}
 
+	@Override
+	public boolean isSaveable() {
+		boolean isOnline = parent instanceof MonitorSignalDocument;
+		return !isOnline; // online tags are saved by OBCI
+	}
 }

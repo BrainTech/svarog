@@ -33,6 +33,7 @@ import org.signalml.util.FormatUtils;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.SignalMsg;
 import org.signalml.app.worker.monitor.messages.IncompleteTagMsg;
+import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
 import org.signalml.psychopy.PsychopyStatusListener;
 
@@ -81,7 +82,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	}
 
 	public void acceptUserTag(MonitorTag tag) {
-		process(Collections.singletonList(tag));
+		TagMsg tagMessage = new TagMsg(
+			tag.getID(),
+			tag.getStyle().getName(),
+			Integer.toString(tag.getChannel()),
+			tag.getTimestamp(),
+			tag.getTimestamp() + tag.getLength()
+		);
+		peer.publish(tagMessage);
 	}
 
 	@Override

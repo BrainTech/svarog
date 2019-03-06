@@ -57,21 +57,6 @@ public class DefaultDocumentManager implements DocumentManager {
 	private EventListenerList listenerList = new EventListenerList();
 
 	@Override
-	public boolean isAllSaved() {
-		synchronized (this) {
-			for (Document document : documents) {
-				if (document instanceof MutableDocument) {
-					MutableDocument md = (MutableDocument) document;
-					if (!md.isSaved()) {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-
-	@Override
 	public int getDocumentCount() {
 		synchronized (this) {
 			return documents.size();

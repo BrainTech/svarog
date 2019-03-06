@@ -28,14 +28,6 @@ import org.signalml.plugin.export.signal.Document;
 public interface DocumentManager {
 
 	/**
-	 * Checks if all documents {@link MutableDocument that can be saved} are
-	 * saved.
-	 * @return {@code true} if all documents are saved, {@code false} if at
-	 * least one is not saved
-	 */
-	boolean isAllSaved();
-
-	/**
 	 * Returns the number of all {@link Document documents} in this manager.
 	 * @return the number of all documents in this manager
 	 */

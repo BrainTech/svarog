@@ -191,7 +191,7 @@ public class Peer {
 		return receiveFromSocket(sub, timoutMillis);
 	}
 
-	public void publish(BaseMessage message) {
+	public synchronized void publish(BaseMessage message) {
 		if (this.closed){
 			throw new ZMQException(_("sockets are closed"), 5);
 		}

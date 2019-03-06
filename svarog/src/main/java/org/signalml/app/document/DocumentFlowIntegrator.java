@@ -418,7 +418,7 @@ public class DocumentFlowIntegrator {
 	 */
 	public boolean saveDocument(Document document, boolean saveAsOnly) throws IOException, SignalMLException {
 
-		if (!(document instanceof MutableDocument)) {
+		if (!document.isSaveable()) {
 			return true;
 		}
 
@@ -1508,7 +1508,7 @@ public class DocumentFlowIntegrator {
 
 		boolean ok;
 
-		if (document instanceof MutableDocument) {
+		if (document.isSaveable()) {
 			MutableDocument md = (MutableDocument) document;
 			if (!md.isSaved()) {
 

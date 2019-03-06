@@ -39,6 +39,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -2350,7 +2351,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		private void createUserTagInMonitorMode() {
 			MonitorSignalDocument monitor = (MonitorSignalDocument) document;
 			if (tagStyle.getType() == SignalSelectionType.CHANNEL) {
-				final MonitorTag tag = new MonitorTag(tagStyle, MonitorTag.getCurrentTimestamp(), 1.0, -1, null);
+				String tagID = UUID.randomUUID().toString();
+				final MonitorTag tag = new MonitorTag(tagStyle, MonitorTag.getCurrentTimestamp(), 1.0, -1, tagID);
 				monitor.getMonitorWorker().acceptUserTag(tag);
 			}
 		}
