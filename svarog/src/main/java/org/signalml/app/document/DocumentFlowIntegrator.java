@@ -525,40 +525,6 @@ public class DocumentFlowIntegrator {
 	}
 
 	/**
-	 * {@link #saveDocument(Document, boolean) Saves} all documents stored
-	 * in the {@link DocumentManager document manager}.
-	 * @return {@code true} if the operation is successful,
-	 * {@code false} if saving any of the files failed
-	 * @throws IOException TODO never thrown (???)
-	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
-	 * failed to calculate the checksum
-	 */
-	public boolean saveAllDocuments() throws IOException, SignalMLException {
-
-		boolean allOk = true;
-		int count;
-		Document document;
-		int i;
-		boolean savedOk;
-		synchronized (documentManager) {
-
-			count = documentManager.getDocumentCount();
-			for (i=0; i<count; i++) {
-				document = documentManager.getDocumentAt(i);
-				synchronized (document) {
-					savedOk = saveDocument(document, false);
-				}
-				allOk &= savedOk;
-			}
-
-		}
-
-		return allOk;
-
-	}
-
-	/**
 	 * Creates a {@link OpenDocumentDescriptor descriptor} of a file based
 	 * on a given {@link MRUDEntry} and uses this descriptor to
 	 * {@link #openDocument(OpenDocumentDescriptor) open} a file.

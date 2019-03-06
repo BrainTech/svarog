@@ -4447,10 +4447,6 @@ msgstr "Spełnienie dowolnego (OR)"
 msgid "Save"
 msgstr "Zapisz"
 
-#: org/signalml/app/action/document/SaveAllDocumentsAction.java:34
-msgid "Save All"
-msgstr "Zapisz wszystko"
-
 #: org/signalml/app/method/mp5/MP5SaveForLaterUseDialog.java:73
 msgid "Save MP configuration"
 msgstr "Zapisz konfigurację MP"

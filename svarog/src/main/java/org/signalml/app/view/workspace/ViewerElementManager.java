@@ -39,7 +39,6 @@ import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.document.OpenSignalWizardAction;
-import org.signalml.app.action.document.SaveAllDocumentsAction;
 import org.signalml.app.action.document.monitor.CheckSignalAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
@@ -273,7 +272,6 @@ public class ViewerElementManager {
 	private ShowBottomPanelAction showBottomPanelAction;
 	private OpenBookDocumentAction openBookDocumentAction;
 	private CloseDocumentAction closeActiveDocumentAction;
-	private SaveAllDocumentsAction saveAllDocumentsAction;
 	private NewTagAction newTagAction;
 	private OpenTagAction openTagAction;
 	private CloseTagAction closeTagAction;
@@ -593,7 +591,6 @@ public class ViewerElementManager {
 
 			fileMenu.add(getOpenSignalWizardAction());
 			fileMenu.add(getOpenBookDocumentAction());
-			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 
 			fileMenu.addSeparator();
@@ -793,7 +790,6 @@ public class ViewerElementManager {
 			mainToolBar.setFloatable(false);
 
 			mainToolBar.add(getOpenSignalWizardAction());
-			mainToolBar.add(getSaveAllDocumentsAction());
 			mainToolBar.add(getCloseActiveDocumentAction());
 
 			mainToolBar.add(Box.createHorizontalGlue());
@@ -1377,14 +1373,6 @@ public class ViewerElementManager {
 		return closeActiveDocumentAction;
 	}
 
-	public SaveAllDocumentsAction getSaveAllDocumentsAction() {
-		if (saveAllDocumentsAction == null) {
-			saveAllDocumentsAction = new SaveAllDocumentsAction();
-			saveAllDocumentsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-		}
-		return saveAllDocumentsAction;
-	}
-
 	public NewTagAction getNewTagAction() {
 		if (newTagAction == null) {
 			newTagAction = new NewTagAction(getActionFocusManager());
@@ -1759,7 +1747,6 @@ public class ViewerElementManager {
 		getOpenTagAction().setAccelerator("alt O");
 		getOpenBookDocumentAction().setAccelerator("alt B");
 		getCloseTagAction().setAccelerator("ctrl alt F4");
-		getSaveAllDocumentsAction().setAccelerator("ctrl alt S");
 		getSaveTagAction().setAccelerator("alt S");
 		getSaveTagAsAction().setAccelerator("ctrl alt shift S");
 		getEditPreferencesAction().setAccelerator("ctrl P");
