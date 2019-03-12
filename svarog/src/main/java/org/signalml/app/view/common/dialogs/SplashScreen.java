@@ -74,6 +74,7 @@ public class SplashScreen extends JDialog {
 	public SplashScreen() {
 
 		super((Frame) null, false);
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/mainframe.png"));
 		setUndecorated(true);
 
 		JPanel contentPanel = new JPanel(new BorderLayout());
