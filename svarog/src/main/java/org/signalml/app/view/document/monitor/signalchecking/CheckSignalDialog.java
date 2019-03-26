@@ -123,6 +123,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		editorPanel.add(editorScrollPane, BorderLayout.CENTER);
 
 		JPanel parametersPanel = new AbstractPanel(_("Electrodes type"));
+		/* This switch is specific to DCDiagnosis which is currently not used
 		electrodeTypeComboBox = new JComboBox(ElectrodeType.values());
 		electrodeTypeComboBox.addActionListener(new ActionListener() {
 			@Override
@@ -134,6 +135,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 			}
 		});
 		parametersPanel.add(electrodeTypeComboBox);
+		*/
 
 		interfacePanel.add(editorPanel, BorderLayout.CENTER);
 		interfacePanel.add(parametersPanel, BorderLayout.EAST);
@@ -208,16 +210,28 @@ public class CheckSignalDialog extends AbstractDialog  {
 		EnumMap<SignalCheckingMethod, HashMap<String, Object>> methodList =
 			new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
 
+		// "amp null" diagnosis is commented out since it uses "idle" parameter
+		// which is currently not being correctly sent by any amplifier
+		/*
 		HashMap<String, Object> ampNullParameters = new HashMap<String, Object>();
 		ampNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
 		ampNullParameters.put(AmplifierNullDiagnosis.TEST_TOLERANCE, 0.99);
 		methodList.put(SignalCheckingMethod.AMPNULL, ampNullParameters);
+		*/
 
+		// DC diagnosis is commented out as it is questionable
+		/*
 		HashMap<String, Object> dcNullParameters = new HashMap<String, Object>();
 		dcNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
 		dcNullParameters.put(DCDiagnosis.ELECTRODE_TYPE, electrodeTypeComboBox.getSelectedItem());
 		methodList.put(SignalCheckingMethod.DC, dcNullParameters);
+		*/
 
+		HashMap<String, Object> impedanceParameters = new HashMap<String, Object>();
+		impedanceParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
+		methodList.put(SignalCheckingMethod.IMPEDANCE, impedanceParameters);
+
+		// FFT diagnosis has been commented out since 2012
 		/*HashMap<String, Object> fftNullParameters = new HashMap<String, Object>();
 		fftNullParameters.put(FFTDiagnosis.ELECTRODE_TYPE, electrodeTypeComboBox.getSelectedItem());
 		fftNullParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 0.5);

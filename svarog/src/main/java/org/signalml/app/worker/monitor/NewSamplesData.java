@@ -47,13 +47,13 @@ public class NewSamplesData {
 		this.sampleImpedance = sampleImpedance;
 	}
 
-	float[] getSampleValues() { return sampleValues; }
+	public float[] getSampleValues() { return sampleValues; }
 
-	int[] getSampleImpedanceFlags() { return sampleImpedance.flags; }
+	public int[] getSampleImpedanceFlags() { return sampleImpedance.flags; }
 
-	Map<Integer, Float> getSampleImpedance() { return sampleImpedance.data; }
+	public Map<Integer, Float> getSampleImpedance() { return sampleImpedance.data; }
 
-	double getSamplesTimestamp() {
+	public double getSamplesTimestamp() {
 		return samplesTimestamp;
 	}
 
