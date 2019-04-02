@@ -11,8 +11,8 @@ import org.signalml.app.document.MonitorSignalDocument;
  */
 public class ImpedanceDiagnosis extends GenericAmplifierDiagnosis {
 
-	public static double IMPEDANCE_MAX = 10.0;  // kΩ
-	public static double IMPEDANCE_LIMIT = 5.0; // kΩ
+	public static double IMPEDANCE_MAX = 30.0;  // kΩ
+	public static double IMPEDANCE_LIMIT = 10.0; // kΩ
 
 	/**
 	 * Constructor.
