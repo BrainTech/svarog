@@ -64,7 +64,11 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		}
 		// commented out until opening signal files with impedance works
 //		panel.add(getSaveImpedanceCheckBox());
-		panel.add(getAppendTimestampsCheckBox());
+                JPanel subpanel = new JPanel();
+		subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.X_AXIS));
+                panel.add(subpanel);
+                subpanel.add(getAppendTimestampsCheckBox());
+                subpanel.add(chooseFilesForMonitorRecordingPanel.getEnableTagRecordingPanel());
 		return panel;
 	}
 

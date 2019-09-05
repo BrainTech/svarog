@@ -16,7 +16,7 @@ public class StartSavingSignal extends LauncherMessage {
 
 	@JsonProperty("signal_filename")
 	public String signalFileName;
-
+        
 	@JsonProperty("save_tags")
 	public boolean saveTags = false;
 

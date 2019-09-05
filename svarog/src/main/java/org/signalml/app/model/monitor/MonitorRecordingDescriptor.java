@@ -15,7 +15,6 @@ public class MonitorRecordingDescriptor {
 
 	private boolean recordingEnabled = false;
 	private String signalRecordingFilePath;
-	private String tagsRecordingFilePath;
 	private boolean tagsRecordingEnabled = true;
 	private boolean saveImpedance = false;
 	private boolean appendTimestamps = false;
@@ -43,7 +42,6 @@ public class MonitorRecordingDescriptor {
 									  String tagsRecordingFilePath, boolean isTagsRecordingEnabled,
 									  String videoRecordingFilePath, VideoStreamSpecification videoStreamSpecification) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
-		this.tagsRecordingFilePath = tagsRecordingFilePath;
 		this.tagsRecordingEnabled = isTagsRecordingEnabled;
 		this.videoRecordingFilePath = videoRecordingFilePath;
 		this.videoStreamSpecification = videoStreamSpecification;
@@ -64,23 +62,6 @@ public class MonitorRecordingDescriptor {
 	 */
 	public void setSignalRecordingFilePath(String signalRecordingFilePath) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
-	}
-
-	/**
-	 * Returns the file path to which the tags will be recorded.
-	 * @return the file path to record tags to.
-	 */
-	public String getTagsRecordingFilePath() {
-		return tagsRecordingFilePath;
-	}
-
-	/**
-	 * Sets the file path to which the tags will be recorded.
-	 * @param tagsRecordingFilePath the new file path to which the tags
-	 * will be recorded.
-	 */
-	public void setTagsRecordingFilePath(String tagsRecordingFilePath) {
-		this.tagsRecordingFilePath = tagsRecordingFilePath;
 	}
 
 	/**
