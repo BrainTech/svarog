@@ -18,6 +18,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import static javax.swing.JOptionPane.YES_NO_OPTION;
+import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
@@ -208,7 +210,6 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 * Resets the signal and tag recording filenames to default.
 	 */
 	public void resetFileNames() {
-                // TODO: GET HOME DIR
 		getSelectSignalRecordingFilePanel().setFileName("");
 	}
 
@@ -220,23 +221,24 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	public void validatePanel(Object model, ValidationErrors errors) {
 
 		String recordingFileName = getSelectSignalRecordingFilePanel().getFileName();
-		validateRecordingFileName("Signal", recordingFileName, errors);
+		validateRecordingFileName("Signal", recordingFileName, errors, ".obci.raw");
 
 		if (getEnableVideoRecordingPanel().isRecordingEnabled()) {
 			String videoRecordingFileName = getSelectVideoRecordingFilePanel().getFileName();
-			validateRecordingFileName("Video", videoRecordingFileName, errors);
+			validateRecordingFileName("Video", videoRecordingFileName, errors,  ".mkv");
 		}
 	}
 
-	private static void validateRecordingFileName(String type, String recordingFileName, ValidationErrors errors) {
+	private static void validateRecordingFileName(String type, String recordingFileName, ValidationErrors errors, String ext) {
 		if (recordingFileName.isEmpty()) {
 			errors.addError(_R("Please input a correct {0} filename", type.toLowerCase()));
 		}
-		else if ((new File(recordingFileName)).exists()) {
+		else if ((new File(recordingFileName + ext)).exists()) {
 			int answer = JOptionPane.showConfirmDialog(null,
-						 _R("{0} recording target file already exists! Do you want to overwrite?", type));
-			if (answer == JOptionPane.CANCEL_OPTION || answer == JOptionPane.NO_OPTION)
-				errors.addError("");
+						 _R("{0} recording target file already exists! Do you want to overwrite?", type),
+                                                 UIManager.getString("OptionPane.titleText"),YES_NO_OPTION);
+			if (answer == JOptionPane.NO_OPTION)
+				errors.addError(_R("Please choose different filename for {0} file", type.toLowerCase()));
 		}
 	}
 

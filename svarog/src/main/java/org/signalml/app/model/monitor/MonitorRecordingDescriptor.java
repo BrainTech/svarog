@@ -3,6 +3,7 @@
  */
 package org.signalml.app.model.monitor;
 
+import java.io.File;
 import org.signalml.app.video.VideoStreamSpecification;
 
 /**
@@ -27,19 +28,22 @@ public class MonitorRecordingDescriptor {
 	 * null and recording is disabled.
 	 */
 	public MonitorRecordingDescriptor() {
+            String default_path = System.getProperty("user.home") + File.separator;
+            this.signalRecordingFilePath = default_path;
+            this.videoRecordingFilePath = default_path;
+
 	}
 
 	/**
 	 * Creates a {@link MonitorRecordingDescriptor} with the given parameters.
 	 *
 	 * @param signalRecordingFilePath a file path to record signal to
-	 * @param tagsRecordingFilePath a file path to record tags to
 	 * @param isTagsRecordingEnabled determines if the tags should be recorded
 	 * @param videoRecordingFilePath a file path to record video to
 	 * @param videoStreamSpecification video stream selected by the user
 	 */
 	public MonitorRecordingDescriptor(String signalRecordingFilePath,
-									  String tagsRecordingFilePath, boolean isTagsRecordingEnabled,
+									  boolean isTagsRecordingEnabled,
 									  String videoRecordingFilePath, VideoStreamSpecification videoStreamSpecification) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
 		this.tagsRecordingEnabled = isTagsRecordingEnabled;

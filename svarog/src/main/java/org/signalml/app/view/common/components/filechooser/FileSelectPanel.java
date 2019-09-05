@@ -307,6 +307,16 @@ public class FileSelectPanel extends JPanel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+                        
+                        File file_textbox = new File(getFileNameField().getText());
+                        if (file_textbox.isDirectory())
+                        {
+                            fileChooser.setCurrentDirectory(file_textbox);
+                        }
+                        else
+                        {
+                            
+                        }
 
 			int returnVal = fileChooser.showSaveDialog(FileSelectPanel.this);
 
