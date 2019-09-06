@@ -194,6 +194,23 @@ public class MonitorSignalDocument extends AbstractSignal implements PsychopySta
 		logger.info("Monitor executed.");
 
 	}
+        
+        private void disconnectFromExperiment()
+        {
+            DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(null, descriptor);
+            worker.execute();
+            while (!worker.isDone())
+                {
+                        try
+                        {
+                            Thread.sleep(10);
+			}
+                        catch (InterruptedException e)
+                        {
+                        }
+
+                }
+        }
 
 	@Override
 	public void closeDocument() throws SignalMLException {
@@ -208,7 +225,7 @@ public class MonitorSignalDocument extends AbstractSignal implements PsychopySta
 			monitorWorker.cancel(false);
 			do {
 				try {
-					Thread.sleep(1);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 				}
 			} while (!monitorWorker.isFinished());
@@ -217,14 +234,11 @@ public class MonitorSignalDocument extends AbstractSignal implements PsychopySta
 		tagSet.stopTagsRemoving();
 
 		//disconnect from Jmx
-		DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(descriptor);
-		worker.execute();
-
-		while (!worker.isDone())
-			;
+                disconnectFromExperiment();
 
 		//close document
 		super.closeDocument();
+                logger.debug("Closed document");
 
 	}
 

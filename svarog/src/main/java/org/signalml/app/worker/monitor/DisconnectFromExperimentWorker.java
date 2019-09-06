@@ -1,5 +1,6 @@
 package org.signalml.app.worker.monitor;
 
+import java.awt.Container;
 import java.util.List;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
@@ -19,18 +20,23 @@ import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.peer.Peer;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 
-public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
+public class DisconnectFromExperimentWorker extends SwingWorkerWithBusyDialog<Void, Void> {
 
 	private static Logger logger = Logger.getLogger(DisconnectFromExperimentWorker.class);
 	private ExperimentDescriptor experimentDescriptor;
 
-	public DisconnectFromExperimentWorker(ExperimentDescriptor experimentDescriptor) {
+	public DisconnectFromExperimentWorker(Container parentContainer, ExperimentDescriptor experimentDescriptor) {
+                super(parentContainer);
+                getBusyDialog().setText(_("Disconnecting from experiment"));
+
 		this.experimentDescriptor = experimentDescriptor;
 	}
 
 	@Override
 	protected Void doInBackground() throws Exception {
+                showBusyDialog();
 		logger.debug("Disconnecting from experiment");
 
 		if (!experimentDescriptor.isConnected()) {
@@ -39,7 +45,18 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		}
 
 		disconnectFromMultiplexer();
-		sendLeaveExperimentRequest();
+                try 
+                {
+                    sendLeaveExperimentRequest();
+                }
+                catch (OpenbciCommunicationException e)
+                {
+                    //cannot communicate with server - server down?
+                    // we are disconnected
+                    experimentDescriptor.setConnected(false);
+                    return null;
+                }
+                       
 
 		if (experimentDescriptor.getRecommendedScenario() != null)
 			sendKillExperimentRequest();
@@ -65,7 +82,9 @@ public class DisconnectFromExperimentWorker extends SwingWorker<Void, Void> {
 		Helper.sendRequestAndParseResponse(request,
 						   experimentDescriptor.getFirstRepHost(),
 						   experimentDescriptor.getFirstRepPort(),
-						   MessageType.REQUEST_OK_RESPONSE);
+						   MessageType.REQUEST_OK_RESPONSE,
+                                                   1000
+                                                   );
 	}
 
 	private void sendKillExperimentRequest() throws OpenbciCommunicationException {

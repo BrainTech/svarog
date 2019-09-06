@@ -135,7 +135,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					if (result == DIALOG_OPTIONS.YES) {
 						continue;
 					} else {
-						DisconnectFromExperimentWorker disconnectWorker = new DisconnectFromExperimentWorker(experimentDescriptor);
+						DisconnectFromExperimentWorker disconnectWorker = new DisconnectFromExperimentWorker(null, experimentDescriptor);
 						disconnectWorker.execute();
 						break;
 					}

@@ -33,9 +33,9 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 20;
         public static final int EXPERIMENT_START_TIMEOUT_MILIS = 10000;
-
+        
+        private Container parentContainer;
 	private static Logger logger = Logger.getLogger(ConnectToExperimentWorker.class);
-
 	private ExperimentDescriptor experimentDescriptor;
 
 	private String multiplexerAddress;
@@ -46,6 +46,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 
 	public ConnectToExperimentWorker(Container parentContainer, ExperimentDescriptor experimentDescriptor) {
 		super(parentContainer);
+                this.parentContainer = parentContainer;
 		this.experimentDescriptor = experimentDescriptor;
 		getBusyDialog().setText(_("Connecting to the experiment"));
 		getBusyDialog().setCancellable(false);
@@ -179,7 +180,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 		}
 
 		if (shouldDisconnect) {
-			DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(experimentDescriptor);
+			DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(this.parentContainer, experimentDescriptor);
 			worker.execute();
 		}
 	}

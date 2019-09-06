@@ -44,13 +44,22 @@ public class Helper {
 	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType) throws OpenbciCommunicationException {
 		return sendRequestAndParseResponse(request, destinationIP, destinationPort, awaitedMessageType, true);
 	}
+        
+	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType, int timeout) throws OpenbciCommunicationException {
+		return sendRequestAndParseResponse(request, destinationIP, destinationPort, awaitedMessageType, true, timeout);
+	}
+        
+        public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType, boolean handleException) throws OpenbciCommunicationException {
+                return sendRequestAndParseResponse(request, destinationIP, destinationPort, awaitedMessageType, handleException, DEFAULT_TIMEOUT);
+        
+        }
 
-	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType, boolean handleException) throws OpenbciCommunicationException {
+	public static BaseMessage sendRequestAndParseResponse(LauncherMessage request, String destinationIP, int destinationPort, MessageType awaitedMessageType, boolean handleException, int timeout) throws OpenbciCommunicationException {
 		List<byte[]> response;
 		if (handleException) {
-			response = sendRequest(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
+			response = sendRequest(request, destinationIP, destinationPort, timeout);
 		} else {
-			response = sendRequestWithoutHandlingExceptions(request, destinationIP, destinationPort, DEFAULT_TIMEOUT);
+			response = sendRequestWithoutHandlingExceptions(request, destinationIP, destinationPort, timeout);
 		}
 		if (awaitedMessageType != null) {
 			Helper.checkIfResponseIsOK(response, awaitedMessageType);
