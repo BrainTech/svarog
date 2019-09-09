@@ -27,6 +27,7 @@ import org.signalml.app.video.VideoStreamSpecification;
 import org.signalml.app.video.components.VideoStreamSelectionCompactPanel;
 import org.signalml.app.video.components.VideoStreamSelectionListener;
 import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 
 /**
@@ -149,7 +150,7 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
 	public void fillPanelFromModel(Object model) {
 		ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) model;
 		MonitorRecordingDescriptor monitorRecordingDescriptor = experimentDescriptor.getMonitorRecordingDescriptor();
-		setEnabled(experimentDescriptor.getHasVideoSaver() && monitorRecordingDescriptor.isVideoRecordingEnabled());
+		setEnabled(ObciServerCapabilities.getSharedInstance().hasVideoSaving() && monitorRecordingDescriptor.isVideoRecordingEnabled());
 		previewCheckBox.setSelected(monitorRecordingDescriptor.getDisplayVideoPreviewWhileSaving());
 	}
 

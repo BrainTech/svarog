@@ -137,8 +137,6 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
 		multiplexerAddress = tokenizer.nextToken();
 		multiplexerPort = Integer.parseInt(tokenizer.nextToken());
-		boolean hasVideoSaver = response.getParams().containsKey("has_video_saver") && (Boolean) response.getParams().get("has_video_saver");
-		experimentDescriptor.setHasVideoSaver(hasVideoSaver);
 	}
 
 	protected void connectToMultiplexer() {

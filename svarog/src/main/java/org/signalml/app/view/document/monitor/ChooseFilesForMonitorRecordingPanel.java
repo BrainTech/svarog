@@ -186,7 +186,7 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 		MonitorRecordingDescriptor monitorRecordingDescriptor = experimentDescriptor.getMonitorRecordingDescriptor();
 		getEnableTagRecordingPanel().setRecordingEnabled(monitorRecordingDescriptor.isTagsRecordingEnabled());
 		getEnableVideoRecordingPanel().setRecordingEnabled(monitorRecordingDescriptor.isVideoRecordingEnabled());
-		getEnableVideoRecordingPanel().setEnabled(experimentDescriptor.getHasVideoSaver());
+		getEnableVideoRecordingPanel().setEnabled(ObciServerCapabilities.getSharedInstance().hasVideoSaving());
 		getSelectSignalRecordingFilePanel().setFileName(monitorRecordingDescriptor.getSignalRecordingFilePath());
 		getSelectVideoRecordingFilePanel().setFileName(monitorRecordingDescriptor.getVideoRecordingFilePath());
 	}
