@@ -69,13 +69,9 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 				return;
 			}
 
-			try {
-				monitorSignalDocument.startMonitorRecording();
-			} catch (OpenbciCommunicationException ex) {
-				ex.showErrorDialog(_("Failed to start recording"));
-				logger.error("Failed to start recording", ex);
-			}
-		}
+			
+                        StartMonitorRecordingWorker saving_worker = new StartMonitorRecordingWorker(null, monitorSignalDocument);
+                        saving_worker.execute();		}
 	}
 
 	/**

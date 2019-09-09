@@ -164,17 +164,6 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
                     if (getVideoStreamSelectionPanel().getSelectedVideoStream() == null) {
                         errors.addError(_("Please select a video stream to be recorded"));
                     }
-                    else{
-                        VideoStreamSpecification stream = getVideoStreamSelectionPanel().getSelectedVideoStream();
-                        VideoStreamManager vsm = new VideoStreamManager();
-                        try {
-                            vsm.replace(stream);
-                        } catch (OpenbciCommunicationException ex) {
-                            errors.addError(ex.getMessage()); 
-                        }
-                        vsm.free();
-                    }
-			
 		}
 	}
 
