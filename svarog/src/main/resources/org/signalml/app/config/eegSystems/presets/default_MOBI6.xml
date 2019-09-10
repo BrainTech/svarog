@@ -205,7 +205,6 @@
 				<displayVideoPreviewWhileSaving>true</displayVideoPreviewWhileSaving>
 			</monitorRecordingDescriptor>
 			<tagStylesName>&lt; Empty preset - no styles defined &gt;</tagStylesName>
-			<hasVideoSaver>false</hasVideoSaver>
 		</experiment>
 	</presets>
 </experimentsPresets>
