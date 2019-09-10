@@ -4,7 +4,9 @@
 
 package org.signalml.app.view.signal;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Color;
 
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,6 +26,7 @@ public abstract class SignalPlotCorner extends JPanel {
 	public SignalPlotCorner(SignalPlot plot) {
 		super();
 		setBorder(new EmptyBorder(3,3,3,3));
+                setBackground(new Color(237,237,237));
 		this.plot = plot;
 	}
 

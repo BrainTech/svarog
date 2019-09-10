@@ -237,7 +237,7 @@ public class SignalPlotRowHeader extends JComponent {
 		Dimension size = getSize();
 
 		Rectangle clip = g.getClipBounds();
-		g.setColor(getBackground());
+		g.setColor(new Color(237,237,237));
 		g.fillRect(clip.x,clip.y,clip.width,clip.height);
 
 		size.width -= SignalPlot.SCALE_TO_SIGNAL_GAP;
