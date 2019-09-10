@@ -43,14 +43,17 @@ public final class OnlineVideoFrame extends VideoFrame<OnlineMediaComponent> {
 		public void refreshRequested() {
 			GetAvailableVideoWorker worker = new GetAvailableVideoWorker(getParent());
 			worker.addPropertyChangeListener(new OnlineVideoFrameInitializer(worker, OnlineVideoFrame.this));
-			worker.execute();
+                        worker.execute();
 		}
 
 		@Override
 		public void videoStreamSelected(VideoStreamSpecification stream) {
                     VideoStreamSelectedWorker change_stream_worker = new VideoStreamSelectedWorker(previewPanel, manager, component, streamSelectionPanel, stream);
                     if (!stream.equals(manager.getCurrentStream())) {
-                        change_stream_worker.execute();
+
+                        change_stream_worker.executeWithWialog();
+
+
                     }
 		}
 

@@ -33,8 +33,6 @@ public class VideoStreamSelectedWorker extends SwingWorkerWithBusyDialog<Void, V
         
     	@Override
 	protected Void doInBackground() throws Exception {
-
-            showBusyDialog();
             component.release();
             try {
                     String rtspURL = manager.replace(stream);
@@ -44,8 +42,9 @@ public class VideoStreamSelectedWorker extends SwingWorkerWithBusyDialog<Void, V
                     streamSelectionPanel.clearSelection();
                     ex.showErrorDialog(_("Error initializing video preview"));
             }
-			
-
             return null;
         }
+        
+        
+        
 }
