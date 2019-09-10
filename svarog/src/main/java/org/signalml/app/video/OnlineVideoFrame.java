@@ -48,17 +48,10 @@ public final class OnlineVideoFrame extends VideoFrame<OnlineMediaComponent> {
 
 		@Override
 		public void videoStreamSelected(VideoStreamSpecification stream) {
-			if (!stream.equals(manager.getCurrentStream())) {
-				component.release();
-				try {
-					String rtspURL = manager.replace(stream);
-					previewPanel.setCameraFeatures(stream.features);
-					component.open(rtspURL);
-				} catch (OpenbciCommunicationException ex) {
-					streamSelectionPanel.clearSelection();
-					ex.showErrorDialog(_("Error initializing video preview"));
-				}
-			}
+                    VideoStreamSelectedWorker change_stream_worker = new VideoStreamSelectedWorker(previewPanel, manager, component, streamSelectionPanel, stream);
+                    if (!stream.equals(manager.getCurrentStream())) {
+                        change_stream_worker.execute();
+                    }
 		}
 
 	}
