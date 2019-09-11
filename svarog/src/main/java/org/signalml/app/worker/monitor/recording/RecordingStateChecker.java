@@ -1,6 +1,9 @@
 package org.signalml.app.worker.monitor.recording;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.apache.log4j.Logger;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
@@ -49,6 +52,23 @@ class RecordingStateChecker extends Thread {
 				} else if (response instanceof SavingSignalError) {
 					SavingSignalError error = (SavingSignalError) response;
 					logger.error("recording finished with error: " + error.details);
+                                        String error_text = "";
+                                        for (Object err_text: error.details.values())
+                                                {
+                                                   try{
+                                                       error_text += (String)err_text;
+                                                   }
+                                                   catch(ClassCastException e)
+                                                   {
+                                                       error_text += err_text.toString();
+                                                   }
+                                                   error_text += "\n";
+                                                }
+                                        error_text += "Signal preceeding this error message is not lost.\n";
+                                        String timeStamp = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
+                                        error_text += "Error received at " + timeStamp;
+
+                                        Dialogs.showError("Signal saving error", error_text);
 					lastState = RecordingState.FINISHED;
 				} else {
 					logger.warn("received unexpected response while checking recording status");

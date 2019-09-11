@@ -46,15 +46,21 @@ public class Dialogs {
 	 * Shows a simple dialog with OK button showing the specified error message.
 	 * @param message the error
 	 */
-	public static void showError(final String message) {
+        public static void showError(final String message) {
+            showError("Error", message);
+        }
+        
+	public static void showError(final String title, final String message) {
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
-				JOptionPane.showMessageDialog(dialogParent, message, _("Error"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(dialogParent, message, _(title), JOptionPane.ERROR_MESSAGE);
 			}
 		});
 	}
+        
+        
 
 	/**
 	 * Shows a simple dialog showing the specified information message.
