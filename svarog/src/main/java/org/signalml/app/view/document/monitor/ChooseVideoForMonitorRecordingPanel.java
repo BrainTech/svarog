@@ -50,7 +50,10 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
 		super(new BorderLayout());
 		this.parentWindow = parentWindow;
 		initialize();
-		launchRefreshingWorker();
+                if (ObciServerCapabilities.getSharedInstance().hasVideoSaving())
+                {
+                    launchRefreshingWorker();
+                }
 	}
 
 	/**
