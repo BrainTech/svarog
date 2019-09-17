@@ -23,6 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Logger;
+import static org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel.OBCI_SERVER_RAW_EXTENSION;
+import static org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel.OBCI_SERVER_VIDEO_EXTENSION;
 
 /**
  * This class represents a panel which may be used to select a file.
@@ -154,7 +156,20 @@ public class FileSelectPanel extends JPanel {
 	 * @return a file name which was selected using this panel.
 	 */
 	public String getFileName() {
-		return this.fileNameField.getText();
+            String fileName = this.fileNameField.getText();
+            if (fileName.endsWith(OBCI_SERVER_VIDEO_EXTENSION))
+            {
+                int last_letter_index = fileName.length() - OBCI_SERVER_VIDEO_EXTENSION.length();
+                fileName = fileName.substring(0, last_letter_index);
+
+            }
+            if (fileName.endsWith(OBCI_SERVER_RAW_EXTENSION))
+            {
+                int last_letter_index = fileName.length() - OBCI_SERVER_RAW_EXTENSION.length();
+                fileName = fileName.substring(0, last_letter_index);
+
+            }
+            return fileName;
 	}
 
 	/**
@@ -309,14 +324,7 @@ public class FileSelectPanel extends JPanel {
 		public void actionPerformed(ActionEvent e) {
                         
                         File file_textbox = new File(getFileNameField().getText());
-                        if (file_textbox.isDirectory())
-                        {
-                            fileChooser.setCurrentDirectory(file_textbox);
-                        }
-                        else
-                        {
-                            
-                        }
+                        fileChooser.setCurrentDirectory(file_textbox);
 
 			int returnVal = fileChooser.showSaveDialog(FileSelectPanel.this);
 

@@ -69,6 +69,10 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	 */
 	private EnableRecordingPanel enableVideoRecordingPanel;
 
+        
+        static final public String OBCI_SERVER_RAW_EXTENSION = ".obci.raw";
+        static final public String OBCI_SERVER_VIDEO_EXTENSION = ".mkv";
+
 	/**
 	 * Constructor.
 	 *
@@ -221,11 +225,11 @@ public class ChooseFilesForMonitorRecordingPanel extends JPanel implements Docum
 	public void validatePanel(Object model, ValidationErrors errors) {
 
 		String recordingFileName = getSelectSignalRecordingFilePanel().getFileName();
-		validateRecordingFileName("Signal", recordingFileName, errors, ".obci.raw");
+		validateRecordingFileName("Signal", recordingFileName, errors, OBCI_SERVER_RAW_EXTENSION);
 
 		if (getEnableVideoRecordingPanel().isRecordingEnabled()) {
 			String videoRecordingFileName = getSelectVideoRecordingFilePanel().getFileName();
-			validateRecordingFileName("Video", videoRecordingFileName, errors,  ".mkv");
+			validateRecordingFileName("Video", videoRecordingFileName, errors,  OBCI_SERVER_VIDEO_EXTENSION);
 		}
 	}
 

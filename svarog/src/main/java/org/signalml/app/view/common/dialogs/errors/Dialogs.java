@@ -47,7 +47,7 @@ public class Dialogs {
 	 * @param message the error
 	 */
         public static void showError(final String message) {
-            showError("Error", message);
+            showError(_("Error"), message);
         }
         
 	public static void showError(final String title, final String message) {
@@ -55,7 +55,7 @@ public class Dialogs {
 			@Override
 			public void run() {
 				Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
-				JOptionPane.showMessageDialog(dialogParent, message, _(title), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(dialogParent, message, title, JOptionPane.ERROR_MESSAGE);
 			}
 		});
 	}

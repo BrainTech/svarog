@@ -138,7 +138,7 @@ public class MonitorRecordingDescriptor {
 	 * will be recorded.
 	 */
 	public void setVideoRecordingFilePath(String videoRecordingFilePath) {
-		this.videoRecordingFilePath = videoRecordingFilePath;
+            this.videoRecordingFilePath = videoRecordingFilePath;
 	}
 
 	/**
