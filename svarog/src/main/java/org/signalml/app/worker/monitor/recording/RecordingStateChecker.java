@@ -1,4 +1,5 @@
 package org.signalml.app.worker.monitor.recording;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -51,7 +52,7 @@ class RecordingStateChecker extends Thread {
 					lastState = RecordingState.valueOf(status.status.toUpperCase());
 				} else if (response instanceof SavingSignalError) {
 					SavingSignalError error = (SavingSignalError) response;
-					logger.error("recording finished with error: " + error.details);
+					logger.error(_("recording finished with error: ") + error.details);
                                         String error_text = "";
                                         for (Object err_text: error.details.values())
                                                 {
@@ -64,11 +65,11 @@ class RecordingStateChecker extends Thread {
                                                    }
                                                    error_text += "\n";
                                                 }
-                                        error_text += "Signal preceeding this error message is not lost.\n";
+                                        error_text += _("Signal preceeding this error message is not lost.\n");
                                         String timeStamp = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
-                                        error_text += "Error received at " + timeStamp;
+                                        error_text += _("Error received at ") + timeStamp;
 
-                                        Dialogs.showError("Signal saving error", error_text);
+                                        Dialogs.showError(_("Signal saving error"), error_text);
 					lastState = RecordingState.FINISHED;
 				} else {
 					logger.warn("received unexpected response while checking recording status");
