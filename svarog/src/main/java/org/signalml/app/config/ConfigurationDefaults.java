@@ -133,8 +133,6 @@ public class ConfigurationDefaults {
 		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));
 		config.setReconstructionHeight(getInt("application.reconstructionHeight"));
 
-		config.setBackupFrequency(getFloat("application.signalRecording.frequency"));
-
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 		config.setOpenbciIPAddress(getString("monitor.openbciIPAddress"));
 		config.setOpenbciPort(getInt("monitor.openbciPort"));

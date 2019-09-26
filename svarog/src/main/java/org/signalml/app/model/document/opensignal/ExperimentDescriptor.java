@@ -29,7 +29,6 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	private int multiplexerPort;
 	private Peer peer;
 
-	private Float backupFrequency;
 	private MonitorRecordingDescriptor monitorRecordingDescriptor = new MonitorRecordingDescriptor();
 
 	@XStreamOmitField
@@ -56,8 +55,6 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 		this.experimentRepUrls = other.experimentRepUrls;
 		this.signalParameters = new SignalParameters(other.signalParameters);
 
-		this.backupFrequency = other.backupFrequency;
-
 		this.eegSystemName = other.eegSystemName;
 		this.tagStylesName = other.tagStylesName;
 
@@ -65,7 +62,6 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	}
 
 	public ExperimentDescriptor() {
-		setBackupFrequency(10.0F);
 		signalParameters = new SignalParameters();
 	}
 
@@ -139,14 +135,6 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	}
 	public void setMultiplexerPort(int multiplexerPort) {
 		this.multiplexerPort = multiplexerPort;
-	}
-
-	public Float getBackupFrequency() {
-		return backupFrequency;
-	}
-
-	public void setBackupFrequency(Float backupFrequency) {
-		this.backupFrequency = backupFrequency;
 	}
 
 	public Peer getPeer() {

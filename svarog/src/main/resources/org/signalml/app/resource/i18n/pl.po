@@ -596,10 +596,6 @@ msgstr "B"
 msgid "Back"
 msgstr "Z powrotem"
 
-#: org/signalml/app/view/preferences/MonitorConfigPanel.java:61
-msgid "Backup frequency [s]"
-msgstr "Częstość zapasowa [s]"
-
 #: org/signalml/app/view/preferences/MonitorConfigPanel.java:189
 msgid "Bad IP address value!"
 msgstr "Zły adres IP!"

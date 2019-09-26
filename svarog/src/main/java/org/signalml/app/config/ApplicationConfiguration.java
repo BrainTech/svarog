@@ -95,8 +95,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
-	private float backupFrequency;
-
 	private String openbciIPAddress;
 	private int openbciPort;
 	private String sentryDsn;
@@ -144,14 +142,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setFavouriteDirs(String[] dirs) {
 		this.favouriteDirs = dirs;
-	}
-
-	public float getBackupFrequency() {
-		return backupFrequency;
-	}
-
-	public void setBackupFrequency(float backupFrequency) {
-		this.backupFrequency = backupFrequency;
 	}
 
 	public String[] getLastDirs() {

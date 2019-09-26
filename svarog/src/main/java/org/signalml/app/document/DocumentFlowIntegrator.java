@@ -821,8 +821,6 @@ public class DocumentFlowIntegrator {
 
 		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
 
-		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
-
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 		monitorSignalDocument.setMontage(descriptor.getOpenSignalDescriptor().getMontage());
 		monitorSignalDocument.openDocument();

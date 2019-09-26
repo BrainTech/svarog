@@ -418,7 +418,6 @@
 			</amplifier>
 			<status>NEW</status>
 			<multiplexerPort>0</multiplexerPort>
-			<backupFrequency>10.0</backupFrequency>
 			<monitorRecordingDescriptor>
 				<recordingEnabled>false</recordingEnabled>
 				<tagsRecordingEnabled>true</tagsRecordingEnabled>
