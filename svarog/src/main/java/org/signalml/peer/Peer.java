@@ -91,7 +91,7 @@ public class Peer {
 	 */
 	private static String bindSocket(ZMQ.Socket socket, String address) {
 		socket.bind(address);
-		return (String) socket.base().getsockoptx(zmq.ZMQ.ZMQ_LAST_ENDPOINT);
+		return (String) socket.base().getSocketOptx(zmq.ZMQ.ZMQ_LAST_ENDPOINT);
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Peer {
 	 * @return true if more parts are coming, false otherwise
 	 */
 	private static boolean isRcvMore(ZMQ.Socket socket) {
-		int rcvMore = (Integer) socket.base().getsockoptx(zmq.ZMQ.ZMQ_RCVMORE);
+		int rcvMore = (Integer) socket.base().getSocketOptx(zmq.ZMQ.ZMQ_RCVMORE);
 		return rcvMore == 1;
 	}
 
