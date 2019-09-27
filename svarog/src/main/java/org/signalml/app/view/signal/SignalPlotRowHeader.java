@@ -22,7 +22,9 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.util.IconUtils;
@@ -149,7 +151,6 @@ public class SignalPlotRowHeader extends JComponent {
 	private void calculateChannelsData(Graphics2D g) {
 		StringBuilder sb;
 		ChannelPlotOptionsModel m;
-		int globalScale = this.plot.getValueScaleRangeModel().getValue();
 		double max = 0;
 
 		for (int i = 0; i < channelCount; i++) {
@@ -238,7 +239,10 @@ public class SignalPlotRowHeader extends JComponent {
 		Dimension size = getSize();
 
 		Rectangle clip = g.getClipBounds();
-		g.setColor(getBackground());
+                JPanel color_source = new JPanel();
+                Color color = color_source.getBackground();
+                g.setColor(color);
+                
 		g.fillRect(clip.x,clip.y,clip.width,clip.height);
 
 		size.width -= SignalPlot.SCALE_TO_SIGNAL_GAP;

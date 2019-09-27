@@ -165,23 +165,23 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(descriptionLabel).addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel).addComponent(qualityParameterLabel));
+			layout.createParallelGroup().addComponent(descriptionLabel).addComponent(filterTypeLabel).addComponent(passbandEdgeFrequency1Label).addComponent(stopbandEdgeFrequency1Label).addComponent(passbandRippleLabel));
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(getDescriptionTextField()).addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()).addComponent(getQualityParameterSpinner()));
+			layout.createParallelGroup().addComponent(getDescriptionTextField()).addComponent(getFilterTypeComboBox()).addComponent(getPassbandEdgeFrequency1Spinner()).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(getPassbandRippleSpinner()));
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(filterFamilyLabel).addComponent(passbandEdgeFrequency2Label).addComponent(stopbandEdgeFrequency2Label).addComponent(stopbandAttenuationLabel));
+			layout.createParallelGroup().addComponent(qualityParameterLabel).addComponent(filterFamilyLabel).addComponent(passbandEdgeFrequency2Label).addComponent(stopbandEdgeFrequency2Label).addComponent(stopbandAttenuationLabel));
 
 		hGroup.addGroup(
-			layout.createParallelGroup().addComponent(getFilterFamilyComboBox()).addComponent(getPassbandEdgeFrequency2Spinner()).addComponent(getStopbandEdgeFrequency2Spinner()).addComponent(getStopbandAttenuationSpinner()));
+			layout.createParallelGroup().addComponent(getQualityParameterSpinner()).addComponent(getFilterFamilyComboBox()).addComponent(getPassbandEdgeFrequency2Spinner()).addComponent(getStopbandEdgeFrequency2Spinner()).addComponent(getStopbandAttenuationSpinner()));
 
 		layout.setHorizontalGroup(hGroup);
 
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-			layout.createParallelGroup(Alignment.BASELINE).addComponent(descriptionLabel).addComponent(getDescriptionTextField()));
+			layout.createParallelGroup(Alignment.BASELINE).addComponent(descriptionLabel).addComponent(getDescriptionTextField()).addComponent(qualityParameterLabel).addComponent(getQualityParameterSpinner()));
 
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.BASELINE).addComponent(filterTypeLabel).addComponent(getFilterTypeComboBox()).addComponent(filterFamilyLabel).addComponent(getFilterFamilyComboBox()));
@@ -192,8 +192,6 @@ public class TimeDomainFilterParametersPanel extends JPanel {
 			layout.createParallelGroup(Alignment.BASELINE).addComponent(stopbandEdgeFrequency1Label).addComponent(getStopbandEdgeFrequency1Spinner()).addComponent(stopbandEdgeFrequency2Label).addComponent(getStopbandEdgeFrequency2Spinner()));
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.BASELINE).addComponent(passbandRippleLabel).addComponent(getPassbandRippleSpinner()).addComponent(stopbandAttenuationLabel).addComponent(getStopbandAttenuationSpinner()));
-		vGroup.addGroup(
-			layout.createParallelGroup(Alignment.BASELINE).addComponent(qualityParameterLabel).addComponent(getQualityParameterSpinner()));
 
 		layout.setVerticalGroup(vGroup);
 

@@ -235,15 +235,6 @@
     	</restriction>
     </simpleType>
 
-    <simpleType name="isBackup">
-    	<annotation>
-    		<documentation>
-    			Whether the signal is a backup
-    		</documentation>
-    	</annotation>
-    	<restriction base="boolean" />
-    </simpleType>
-
     <complexType name="rawSignalInfo">
     	<sequence minOccurs="1" maxOccurs="1">
     		<element name="exportFileName" type="rs:fileName"
@@ -413,11 +404,6 @@
 		    <documentation>The timestamp of the first sample in the signal.</documentation>
 		</annotation>
 		</element>
-                <element name="isBackup" type="rs:isBackup" maxOccurs="1" minOccurs="0">
-                <annotation>
-                    <documentation>Whether this signal is a backup or a properly recorded file.</documentation>
-                </annotation>
-                </element>
     	</sequence>
     </complexType>
 

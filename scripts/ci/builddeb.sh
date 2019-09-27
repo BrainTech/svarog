@@ -12,11 +12,3 @@ build
 
 mkdir -p dist
 movedeb svarog-standalone/target/*.deb
-movedeb plugins/BookReporter/target/*.deb
-movedeb plugins/FFTSignalTool/target/*.deb
-movedeb plugins/PluginToolCommon/target/*.deb
-movedeb plugins/SignalAnalysisPlugin/target/*.deb
-cp svarog-all.template dist/svarog-all
-
-cd dist
-equivs-build svarog-all

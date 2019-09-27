@@ -8,12 +8,15 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.plugin.export.SignalMLException;
 
 /**
@@ -26,6 +29,9 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 
 	protected ChooseFilesForMonitorRecordingPanel chooseFilesForMonitorRecordingPanel;
 	protected ChooseVideoForMonitorRecordingPanel chooseVideoForMonitorRecordingPanel;
+
+	private JCheckBox saveImpedanceCheckBox;
+	private JCheckBox appendTimestampsCheckBox;
 
 	/**
 	 * Constructor. Sets message source, parent window and if this dialog
@@ -53,7 +59,16 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(getChooseFilesForMonitorRecordingPanel());
-		panel.add(getChooseVideoForMonitorRecordingPanel());
+		if (ObciServerCapabilities.getSharedInstance().hasVideoSaving()) {
+			panel.add(getChooseVideoForMonitorRecordingPanel());
+		}
+		// commented out until opening signal files with impedance works
+//		panel.add(getSaveImpedanceCheckBox());
+                JPanel subpanel = new JPanel();
+		subpanel.setLayout(new BoxLayout(subpanel, BoxLayout.X_AXIS));
+                panel.add(subpanel);
+                subpanel.add(getAppendTimestampsCheckBox());
+                subpanel.add(chooseFilesForMonitorRecordingPanel.getEnableTagRecordingPanel());
 		return panel;
 	}
 
@@ -76,6 +91,10 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		getChooseFilesForMonitorRecordingPanel().fillPanelFromModel(model);
 		getChooseVideoForMonitorRecordingPanel().fillPanelFromModel(model);
+
+		MonitorRecordingDescriptor monitorRecordingDescriptor = ((ExperimentDescriptor) model).getMonitorRecordingDescriptor();
+		getSaveImpedanceCheckBox().setSelected(monitorRecordingDescriptor.isSaveImpedanceEnabled());
+		getAppendTimestampsCheckBox().setSelected(monitorRecordingDescriptor.isAppendTimestampsEnabled());
 	}
 
 	/**
@@ -87,6 +106,10 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	public void fillModelFromDialog(Object model) throws SignalMLException {
 		getChooseFilesForMonitorRecordingPanel().fillModelFromPanel(model);
 		getChooseVideoForMonitorRecordingPanel().fillModelFromPanel(model);
+
+		MonitorRecordingDescriptor monitorRecordingDescriptor = ((ExperimentDescriptor) model).getMonitorRecordingDescriptor();
+		monitorRecordingDescriptor.setSaveImpedanceEnabled(getSaveImpedanceCheckBox().isSelected());
+		monitorRecordingDescriptor.setAppendTimestampsEnabled(getAppendTimestampsCheckBox().isSelected());
 	}
 
 	/**
@@ -111,6 +134,18 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		if (chooseVideoForMonitorRecordingPanel == null)
 			chooseVideoForMonitorRecordingPanel = new ChooseVideoForMonitorRecordingPanel(this);
 		return chooseVideoForMonitorRecordingPanel;
+	}
+
+	public JCheckBox getSaveImpedanceCheckBox() {
+		if (saveImpedanceCheckBox == null)
+			saveImpedanceCheckBox = new JCheckBox(_("Save impedance"));
+		return saveImpedanceCheckBox;
+	}
+
+	public JCheckBox getAppendTimestampsCheckBox() {
+		if (appendTimestampsCheckBox == null)
+			appendTimestampsCheckBox = new JCheckBox(_("Append timestamps"));
+		return appendTimestampsCheckBox;
 	}
 
 	/**

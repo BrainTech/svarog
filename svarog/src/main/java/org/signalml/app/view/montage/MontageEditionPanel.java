@@ -1,5 +1,6 @@
 package org.signalml.app.view.montage;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
 
@@ -62,7 +63,7 @@ public class MontageEditionPanel extends AbstractPanel {
 		matrixReferenceEditorPanel = new MatrixReferenceEditorPanel();
 		visualReferenceEditorPanel = new VisualReferenceEditorPanel();
 
-		tabbedPane = new JTabbedPane();
+		tabbedPane = new WebTabbedPane();
 		tabbedPane.addTab(_("Channels"), channelsPanel);
 		tabbedPane.addTab(_("Reference GUI"), visualReferenceEditorPanel);
 		tabbedPane.addTab(_("Reference matrix"), matrixReferenceEditorPanel);

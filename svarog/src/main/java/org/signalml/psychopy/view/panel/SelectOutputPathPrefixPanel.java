@@ -39,6 +39,11 @@ public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 		return _("Output: Experiment results");
 	}
 
+	protected int showDialog()
+	{
+		return this.fileChooser.showSaveDialog(this);
+	}
+
 	@Override
 	public void validate(ValidationErrors errors) {
 		if (this.selectedPath() == null || this.selectedPath().isEmpty()) {

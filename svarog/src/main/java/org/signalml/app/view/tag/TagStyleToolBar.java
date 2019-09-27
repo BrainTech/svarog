@@ -4,6 +4,8 @@
 
 package org.signalml.app.view.tag;
 
+import com.alee.laf.toolbar.WebToolBar;
+
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Point;
@@ -23,7 +25,6 @@ import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JButton;
-import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
@@ -41,7 +42,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class TagStyleToolBar extends JToolBar implements TagStyleListener {
+public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -68,7 +69,8 @@ public class TagStyleToolBar extends JToolBar implements TagStyleListener {
 
 	public TagStyleToolBar(StyledTagSet tagSet, SignalSelectionType type, TagIconProducer tagIconProducer, TagSelectionAction tagSelectionAction) {
 
-		super(JToolBar.VERTICAL);
+		super();
+		setOrientation(WebToolBar.VERTICAL);
 		setFloatable(false);
 		setBorder(null);
 		this.tagSelectionAction = tagSelectionAction;

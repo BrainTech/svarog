@@ -11,7 +11,6 @@ import javax.swing.SwingWorker;
 import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.DummyBusyDialog;
 import org.signalml.app.view.common.dialogs.IBusyDialog;
-
 public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> implements PropertyChangeListener {
 
 	private final IBusyDialog busyDialog;
@@ -45,15 +44,29 @@ public abstract class SwingWorkerWithBusyDialog<T, S> extends SwingWorker<T, S> 
 	protected void showBusyDialog() {
 		if (!busyDialogShouldBeShown)
 			return;
-
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				busyDialog.setVisible(busyDialogVisible);
-			}
+                busyDialog.setVisible(busyDialogVisible);
+        }
 		});
 	}
-
+        /** blocking **/
+        public void executeWithWialog()
+        {
+           SwingUtilities.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+                            execute();
+                            }
+                        }
+                        );
+        if (busyDialogShouldBeShown)
+			busyDialog.setVisible(busyDialogVisible);
+        }
+        
+        
 	protected void hideBusyDialog() {
 		busyDialogVisible = false;
 		busyDialog.setVisible(busyDialogVisible);

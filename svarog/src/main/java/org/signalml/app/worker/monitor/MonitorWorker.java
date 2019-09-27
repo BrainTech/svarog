@@ -16,14 +16,12 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
-import org.signalml.app.video.VideoRecordingInitializer;
 import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
-import org.signalml.app.worker.monitor.messages.FinishSavingVideoMsg;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
@@ -38,7 +36,7 @@ import org.signalml.app.worker.monitor.messages.IncompleteTagMsg;
 import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.peer.Peer;
 import org.signalml.psychopy.PsychopyStatusListener;
-import org.zeromq.ZMQException;
+
 /** MonitorWorker
  *
  */
@@ -54,35 +52,9 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	private volatile boolean finished;
 
 	/**
-	 * Object responsible for retrying "start video recording" request.
-	 * Immediately after OBCI server returns RTSP address as a response to
-	 * a "get_stream" request, the RTSP stream may not be ready yet. Therefore,
-	 * there may be a need to retry connecting after first connection fails.
-	 */
-	private volatile VideoRecordingInitializer videoRecordingInitializer;
-
-	/**
-	 * This object's method is called whenever video recording starts or stops.
-	 */
-	private final Set<VideoRecordingStatusListener> videoRecordingStatusListeners = new HashSet<>();
-	/**
 	 * This object's method is called whenever Psychopy experiment status changes.
 	 */
 	private final Set<PsychopyStatusListener> psychopyStatusListeners = new HashSet<>();
-
-	/**
-	 * This object is responsible for recording tags received by this {@link MonitorWorker}.
-	 * It is connected to the monitor by an external object using
-	 * {@link MonitorWorker#connectTagRecorderWorker(org.signalml.app.worker.monitor.TagRecorder)}.
-	 */
-	private TagRecorder tagRecorderWorker;
-
-	/**
-	 * This object is responsible for recording signal received by this {@link MonitorWorker}.
-	 * It is connected to the monitor by an external object using
-	 * {@link MonitorWorker#connectSignalRecorderWorker(org.signalml.app.worker.monitor.SignalRecorderWorker) }.
-	 */
-	private SignalRecorderWorker signalRecorderWorker;
 
 	/**
 	 * Styles generator for monitor tags.
@@ -110,7 +82,14 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	}
 
 	public void acceptUserTag(MonitorTag tag) {
-		process(Collections.singletonList(tag));
+		TagMsg tagMessage = new TagMsg(
+			tag.getID(),
+			tag.getStyle().getName(),
+			Integer.toString(tag.getChannel()),
+			tag.getTimestamp(),
+			tag.getTimestamp() + tag.getLength()
+		);
+		peer.publish(tagMessage);
 	}
 
 	@Override
@@ -123,9 +102,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		peer.subscribe(MessageType.AMPLIFIER_SIGNAL_MESSAGE.getMessageCode());
 		peer.subscribe(MessageType.TAG_MSG.getMessageCode());
 		peer.subscribe(MessageType.INCOMPLETE_TAG_MSG.getMessageCode());
-		peer.subscribe(MessageType.SAVE_VIDEO_ERROR.getMessageCode());
-		peer.subscribe(MessageType.SAVE_VIDEO_OK.getMessageCode());
-		peer.subscribe(MessageType.SAVE_VIDEO_DONE.getMessageCode());
 		peer.subscribe(MessageType.PSYCHOPY_EXPERIMENT_ERROR.getMessageCode());
 		peer.subscribe(MessageType.PSYCHOPY_EXPERIMENT_FINISHED.getMessageCode());
 		peer.subscribe(MessageType.PSYCHOPY_EXPERIMENT_STARTED.getMessageCode());
@@ -159,7 +135,7 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 					if (result == DIALOG_OPTIONS.YES) {
 						continue;
 					} else {
-						DisconnectFromExperimentWorker disconnectWorker = new DisconnectFromExperimentWorker(experimentDescriptor);
+						DisconnectFromExperimentWorker disconnectWorker = new DisconnectFromExperimentWorker(null, experimentDescriptor);
 						disconnectWorker.execute();
 						break;
 					}
@@ -177,15 +153,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			case INCOMPLETE_TAG_MSG:
 			case TAG_MSG:
 				publishTagFromMessage(sampleMsg);
-				break;
-			case SAVE_VIDEO_ERROR:
-				parseVideoSavingError(sampleMsg);
-				break;
-			case SAVE_VIDEO_OK:
-				parseVideoSavingOK(sampleMsg);
-				break;
-			case SAVE_VIDEO_DONE:
-				parseVideoSavingDone(sampleMsg);
 				break;
 			case PSYCHOPY_EXPERIMENT_ERROR:
 			case PSYCHOPY_EXPERIMENT_FINISHED:
@@ -262,56 +229,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 		publish(tag);
 	}
 
-	/**
-	 * Parse error message from video saver peer.
-	 *
-	 * @param sampleMsgData the contents of the message
-	 */
-	private void parseVideoSavingError(BaseMessage msg) {
-		notifyVideoRecordingStatusChange(false);
-		VideoRecordingInitializer initializer = videoRecordingInitializer;
-		if (initializer != null) {
-			initializer.startRecording();
-		}
-	}
-
-	/**
-	 * Parse "done" message from video saver peer.
-	 *
-	 * @param sampleMsgData the contents of the message
-	 */
-	private void parseVideoSavingDone(BaseMessage sampleMsgData) {
-		videoRecordingInitializer = null;
-		notifyVideoRecordingStatusChange(false);
-	}
-
-	/**
-	 * Parse "OK" message from video saver peer.
-	 *
-	 * @param sampleMsgData the contents of the message
-	 */
-	private void parseVideoSavingOK(BaseMessage sampleMsgData) {
-		videoRecordingInitializer = null;
-		notifyVideoRecordingStatusChange(true);
-	}
-
-	/**
-	 * Notifies all listeners about the new recording status.
-	 *
-	 * @param newStatus  true if video is recording, false if not
-	 */
-	private void notifyVideoRecordingStatusChange(boolean newStatus) {
-		Set<VideoRecordingStatusListener> listeners;
-		synchronized (videoRecordingStatusListeners) {
-			listeners = new HashSet<>(videoRecordingStatusListeners);
-		}
-		for (VideoRecordingStatusListener listener : listeners) {
-			SwingUtilities.invokeLater(() -> {
-				listener.videoRecordingStatusChanged(newStatus);
-			});
-		}
-	}
-	
 	private void notifyPsychopyExperimentStatusChange(BaseMessage msg){
 		Set<PsychopyStatusListener> listeners;
 		synchronized (psychopyStatusListeners) {
@@ -337,18 +254,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 				tagSet.newSample(data.getSamplesTimestamp());
 				tagSet.unlock();
 				sampleSource.unlock();
-
-				// set first sample timestamp for the tag recorder
-				if (tagRecorderWorker != null && !tagRecorderWorker.isStartRecordingTimestampSet()) {
-					tagRecorderWorker.setStartRecordingTimestamp(data.getSamplesTimestamp());
-				}
-
-				// sends chunks to the signal recorder
-				if (signalRecorderWorker != null) {
-					signalRecorderWorker.offerChunk(data.getSampleValues());
-					if (!signalRecorderWorker.isFirstSampleTimestampSet())
-						signalRecorderWorker.setFirstSampleTimestamp(data.getSamplesTimestamp());
-				}
 
 			} else if (o instanceof MonitorTag) {
 				MonitorTag tag = (MonitorTag) o;
@@ -376,10 +281,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 				tagSet.unlock();
 
 				//record tag
-				if (tagRecorderWorker != null && tag.isComplete()) {
-					tagRecorderWorker.offerTag(tag);
-				}
-
 				firePropertyChange("newTag", null, (MonitorTag) o);
 			} else {
 				String className = (o == null) ? "null" : o.getClass().getSimpleName();
@@ -404,75 +305,6 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 	}
 
 	/**
-	 * Sets the {@link TagRecorder} to which the tags will be sent by this
-	 * {@link MonitorWorker}. Setting a {@link TagRecorder} using this method
-	 * starts sending all tags received by this {@link MonitorWorker} to the
-	 * given {@link TagRecorder}.
-	 *
-	 * @param tagRecorderWorker the {@link TagRecorder} responsible for recording
-	 * the tags from this {@link MonitorWorker}.
-	 */
-	public void connectTagRecorderWorker(TagRecorder tagRecorderWorker) {
-		this.tagRecorderWorker = tagRecorderWorker;
-	}
-
-	/**
-	 * Allows to disconnect a {@link TagRecorder} which was connected using
-	 * {@link MonitorWorker#connectTagRecorderWorker(org.signalml.app.worker.monitor.TagRecorder)}.
-	 * No more tags are sent to the {@link TagRecorder} after disconnecting.
-	 */
-	public void disconnectTagRecorderWorker() {
-		this.tagRecorderWorker = null;
-	}
-
-	/**
-	 * Sets the {@link SignalRecorderWorker} to which signal will be sent by this
-	 * {@link MonitorWorker}. Setting a {@link SignalRecorderWorker} using this method
-	 * starts sending signal received by this {@link MonitorWorker} to the
-	 * given SignalRecorderWorker.
-	 *
-	 * @param signalRecorderWorker the {@link SignalRecorderWorker} responsible for recording
-	 * signal from this {@link MonitorWorker}.
-	 */
-	public void connectSignalRecorderWorker(SignalRecorderWorker signalRecorderWorker) {
-		this.signalRecorderWorker = signalRecorderWorker;
-	}
-
-	/**
-	 * Disconnects a {@link SignalRecorderWorker} which was connected using
-	 * {@link MonitorWorker#connectSignalRecorderWorker(org.signalml.app.worker.monitor.SignalRecorderWorker) }.
-	 * Signal is no longer sent to the {@link SignalRecorderWorker} after disconnecting.
-	 */
-	public void disconnectSignalRecorderWorker() {
-		this.signalRecorderWorker = null;
-	}
-
-	/**
-	 * Connects a {@link VideoRecordingStatusListener} object to be notified
-	 * whenever video recording starts or stops.
-	 *
-	 * @param listener  object with videoRecordingStatusChanged method
-	 */
-	public void connectVideoRecordingStatusListener(VideoRecordingStatusListener listener) {
-		synchronized (videoRecordingStatusListeners) {
-			videoRecordingStatusListeners.add(listener);
-		}
-	}
-
-
-	/**
-	 * Disconnects a previously connected {@link VideoRecordingStatusListener}
-	 * object to be no longer notified whenever video recording starts or stops.
-	 *
-	 * @param listener  previously connected object
-	 */
-	public void disconnectVideoRecordingStatusListener(VideoRecordingStatusListener listener) {
-		synchronized (videoRecordingStatusListeners) {
-			videoRecordingStatusListeners.remove(listener);
-		}
-	}
-	
-	/**
 	 * Connects a {@link PsychopyStatusListener} object to be notified
 	 * whenever video recording starts or stops.
 	 *
@@ -493,48 +325,4 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			firePropertyChange(MonitorWorker.OPENING_MONITOR_CANCELLED, false, true);
 		}
 	}
-
-	/**
-	 * Send a "start video saving" request. If it fails, it will be automatically
-	 * resent after predefined interval.
-	 *
-	 * @param rtspURL  URL of RTSP stream
-	 * @param targetFilePath  path for target video file
-	 */
-	public void startVideoSaving(String rtspURL, String targetFilePath) {
-		VideoRecordingInitializer initializer = new VideoRecordingInitializer(
-			peer,
-			experimentDescriptor.getPeerId(),
-			rtspURL,
-			targetFilePath
-		);
-		initializer.startRecording();
-		videoRecordingInitializer = initializer;
-	}
-
-	/**
-	 * Send a "stop video saving" request.
-	 */
-	public void stopVideoSaving() {
-		videoRecordingInitializer = null;
-		try{
-			peer.publish(new FinishSavingVideoMsg(experimentDescriptor.getPeerId()));
-		}catch (ZMQException ex){
-			// communication with VideoSaver failed, probaly because experiment has been shutdown.
-			// We no longer have control over it, so assume that video saving is finished (with error)
-			notifyVideoRecordingStatusChange(false);
-		}
-	}
-
-	/**
-	 * Converts milliseconds to a String representing date
-	 * - for debugging purposes
-	public static String msToDate(double timestamp) {
-		long mili = (long) (timestamp * 1000);
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd,yyyy HH:mm:ss,SSS");
-
-		Date resultdate = new Date(mili);
-		return(sdf.format(resultdate));
-	}*/
 }
-

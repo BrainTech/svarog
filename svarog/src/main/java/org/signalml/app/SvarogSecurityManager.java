@@ -10,7 +10,7 @@ import java.util.PropertyPermission;
 import org.apache.log4j.Logger;
 
 import org.signalml.util.FastMutableInt;
-import org.signalml.plugin.loader.PluginLoaderHi;
+import org.signalml.plugin.loader.PluginLoader;
 
 /**
  * Svarog security manager.
@@ -67,7 +67,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 		// Force class initialization
 		new FastMutableInt(5);
 		log.debug("SvarogSecurityManager init...");
-		PluginLoaderHi.getInstance();
+		PluginLoader.getInstance();
 
 		// create and install
 		System.setSecurityManager(new SvarogSecurityManager(enforcing));
@@ -107,7 +107,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	 * @return the first stack frame determined to be plugin code (if found) or null (otherwise)
 	 */
 	private StackTraceElement findPluginCtx(Thread t) {
-		PluginLoaderHi pluginLoaderHi = PluginLoaderHi.getInstance();
+		PluginLoader pluginLoaderHi = PluginLoader.getInstance();
 		if (pluginLoaderHi == null)
 			return null;
 		if (!(pluginLoaderHi.hasStartedLoading()))
@@ -118,12 +118,6 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 
 		for (final StackTraceElement frame : stack) {
 			final String className = frame.getClassName();
-
-			if (pluginLoaderHi.hasLoaded(className)) {
-				// a plugin code frame!
-				// log.debug("PluginCtx: " + className);
-				return frame;
-			}
 
 			if (!hasRoot) {
 				// TODO This is an excerpt from Thread.getStackTrace() API docs:

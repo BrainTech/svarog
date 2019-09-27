@@ -64,7 +64,7 @@ import org.signalml.method.mp5.MP5Method;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.DocumentView;
-import org.signalml.plugin.loader.PluginLoaderHi;
+import org.signalml.plugin.loader.PluginLoader;
 import org.signalml.task.LocalTask;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;
@@ -75,7 +75,7 @@ import org.signalml.util.SvarogConstants;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ViewerMainFrame extends JFrame implements View, DocumentManagerListener, ViewFocusSelector {
+public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 
 	private static final long serialVersionUID = 1L;
 
@@ -217,8 +217,6 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 		documentManager.addDocumentManagerListener(elementManager.getMonitorTreeModel());
 		documentManager.addDocumentManagerListener(elementManager.getTagTreeModel());
 		documentManager.addDocumentManagerListener(elementManager.getBookTreeModel());
-
-		documentManager.addDocumentManagerListener(this);
 
 		actionFocusManager.addActionFocusListener(documentTabbedPane);
 		actionFocusManager.addActionFocusListener(elementManager.getWorkspaceTree());
@@ -447,7 +445,7 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 			return;
 		}
 
-		PluginLoaderHi.getInstance().onClose();
+		PluginLoader.getInstance().onClose();
 
 		saveViewPreferences();
 		setVisible(false);
@@ -749,21 +747,6 @@ public class ViewerMainFrame extends JFrame implements View, DocumentManagerList
 
 	public void setElementManager(ViewerElementManager elementManager) {
 		this.elementManager = elementManager;
-	}
-
-	@Override
-	public void documentAdded(DocumentManagerEvent e) {
-		elementManager.getSaveAllDocumentsAction().setEnabledAsNeeded();
-	}
-
-	@Override
-	public void documentPathChanged(DocumentManagerEvent e) {
-		// this is not interesting
-	}
-
-	@Override
-	public void documentRemoved(DocumentManagerEvent e) {
-		elementManager.getSaveAllDocumentsAction().setEnabledAsNeeded();
 	}
 
 	public void addBootstrap(MainWindowBootstrapTask task) {

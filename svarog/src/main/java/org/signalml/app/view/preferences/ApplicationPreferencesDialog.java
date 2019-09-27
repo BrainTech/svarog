@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.preferences;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
@@ -238,7 +239,7 @@ public class ApplicationPreferencesDialog extends AbstractDialog  {
 	@Override
 	public JComponent createInterface() {
 
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		JTabbedPane tabbedPane = new WebTabbedPane(WebTabbedPane.TOP);
 		tabbedPane.setBorder(new EmptyBorder(3,3,3,3));
 
 		signalViewingConfigPanel = new SignalViewingConfigPanel();

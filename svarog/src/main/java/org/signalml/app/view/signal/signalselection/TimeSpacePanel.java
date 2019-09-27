@@ -3,6 +3,7 @@
  */
 package org.signalml.app.view.signal.signalselection;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
@@ -154,7 +155,7 @@ public class TimeSpacePanel extends JPanel {
 	 */
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
-			tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane = new WebTabbedPane(WebTabbedPane.TOP);
 
 			tabbedPane.addTab(_("Whole signal"), getWholeTimeSpacePanel());
 			tabbedPane.addTab(_("Selected"), getSelectedTimeSpacePanel());

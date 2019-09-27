@@ -83,5 +83,4 @@
     <rs:calibrationParam>0.1</rs:calibrationParam>
     <rs:calibrationParam>0.1</rs:calibrationParam>
   </rs:calibrationOffset>
-  <rs:isBackup>0</rs:isBackup>
 </rs:rawSignal>

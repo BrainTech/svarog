@@ -7,9 +7,8 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JDialog;
 import javax.swing.Timer;
-import org.signalml.app.video.components.OnlineMediaPlayerComponent;
+import org.signalml.app.video.components.OnlineMediaComponent;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
-import uk.co.caprica.vlcj.player.MediaPlayer;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
@@ -21,14 +20,13 @@ public final class PreviewVideoDialog extends JDialog {
 
 	private static final int START_DELAY_MILLIS = 500;
 
-	private final MediaPlayer player;
+	private final OnlineMediaComponent component;
 	private final VideoStreamManager manager;
 	private final String rtspURL;
 
 	public PreviewVideoDialog(Window parentWindow, VideoStreamSpecification stream) throws OpenbciCommunicationException {
 		super(parentWindow, _("video preview (close to continue)"));
-		OnlineMediaPlayerComponent component = new OnlineMediaPlayerComponent();
-		player = component.getMediaPlayer();
+		component = new OnlineMediaComponent();
 		manager = component.getManager();
 		rtspURL = manager.replace(stream);
 
@@ -45,7 +43,7 @@ public final class PreviewVideoDialog extends JDialog {
 		if (b) {
 			// we have to delay start of the player until this dialog is visible
 			Timer delayedStart = new Timer(START_DELAY_MILLIS, (ActionEvent e) -> {
-				player.playMedia(rtspURL);
+				component.open(rtspURL);
 			});
 			delayedStart.setRepeats(false);
 			delayedStart.start();
@@ -55,7 +53,7 @@ public final class PreviewVideoDialog extends JDialog {
 
 	@Override
 	public void dispose() {
-		player.stop();
+		component.release();
 		manager.free();
 		super.dispose();
 	}

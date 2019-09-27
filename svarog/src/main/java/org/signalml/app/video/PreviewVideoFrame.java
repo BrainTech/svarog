@@ -1,6 +1,6 @@
 package org.signalml.app.video;
 
-import org.signalml.app.video.components.OnlineMediaPlayerComponent;
+import org.signalml.app.video.components.OnlineMediaComponent;
 import javax.swing.JFrame;
 import org.signalml.app.video.components.OnlineMediaPlayerPanel;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
@@ -11,7 +11,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public final class PreviewVideoFrame extends VideoFrame<OnlineMediaPlayerComponent> {
+public final class PreviewVideoFrame extends VideoFrame<OnlineMediaComponent> {
 
 	private final VideoStreamManager manager;
 	private final String rtspURL;
@@ -23,7 +23,7 @@ public final class PreviewVideoFrame extends VideoFrame<OnlineMediaPlayerCompone
 	 * @throws OpenbciCommunicationException if RTSP URL cannot be acquired
 	 */
 	public PreviewVideoFrame(VideoStreamSpecification stream) throws OpenbciCommunicationException {
-		super(new OnlineMediaPlayerComponent(), _("video preview"), JFrame.DISPOSE_ON_CLOSE);
+		super(new OnlineMediaComponent(), _("video preview"), JFrame.DISPOSE_ON_CLOSE);
 		manager = component.getManager();
 		rtspURL = manager.replace(stream);
 		OnlineMediaPlayerPanel previewPanel = new OnlineMediaPlayerPanel(component);
@@ -35,12 +35,12 @@ public final class PreviewVideoFrame extends VideoFrame<OnlineMediaPlayerCompone
 	public void setVisible(boolean b) {
 		if (!b) {
 			// stop player when hiding window
-			player.stop();
+			component.release();
 		}
 		super.setVisible(b);
 		if (b) {
 			// start player when window is shown
-			player.playMedia(rtspURL);
+			component.open(rtspURL);
 		}
 	}
 
@@ -50,7 +50,7 @@ public final class PreviewVideoFrame extends VideoFrame<OnlineMediaPlayerCompone
 	 */
 	@Override
 	public void dispose() {
-		player.stop();
+		component.release();
 		manager.free();
 		super.dispose();
 	}

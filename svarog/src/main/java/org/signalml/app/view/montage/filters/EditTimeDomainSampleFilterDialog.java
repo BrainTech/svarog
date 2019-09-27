@@ -123,9 +123,12 @@ public class EditTimeDomainSampleFilterDialog extends EditSampleFilterDialog {
 		JPanel drawFrequencyResponseButtonPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING, 3, 3));
 		drawFrequencyResponseButtonPanel.add(getDrawFrequencyResponseButton());
 
-		editFilterParametersPanel.add(getFilterParametersPanel(), BorderLayout.NORTH);
-		editFilterParametersPanel.add(filterNotValidPanel, BorderLayout.CENTER);
-		editFilterParametersPanel.add(drawFrequencyResponseButtonPanel, BorderLayout.SOUTH);
+		JPanel filterBottomPanel = new JPanel(new BorderLayout());
+		filterBottomPanel.add(filterNotValidPanel, BorderLayout.CENTER);
+		filterBottomPanel.add(drawFrequencyResponseButtonPanel, BorderLayout.EAST);
+
+		editFilterParametersPanel.add(getFilterParametersPanel(), BorderLayout.CENTER);
+		editFilterParametersPanel.add(filterBottomPanel, BorderLayout.SOUTH);
 
 		JPanel interfacePanel = new JPanel(new BorderLayout());
 

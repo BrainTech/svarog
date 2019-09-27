@@ -418,14 +418,12 @@
 			</amplifier>
 			<status>NEW</status>
 			<multiplexerPort>0</multiplexerPort>
-			<backupFrequency>10.0</backupFrequency>
 			<monitorRecordingDescriptor>
 				<recordingEnabled>false</recordingEnabled>
 				<tagsRecordingEnabled>true</tagsRecordingEnabled>
 				<displayVideoPreviewWhileSaving>true</displayVideoPreviewWhileSaving>
 			</monitorRecordingDescriptor>
 			<tagStylesName>&lt; Empty preset - no styles defined &gt;</tagStylesName>
-			<hasVideoSaver>false</hasVideoSaver>
 		</experiment>
 	</presets>
 </experimentsPresets>

@@ -7,6 +7,9 @@ package org.signalml.app.view.workspace;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
+import com.thoughtworks.xstream.XStream;
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -22,8 +25,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
+
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.HelpContentsAction;
@@ -34,7 +39,6 @@ import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.document.OpenSignalWizardAction;
-import org.signalml.app.action.document.SaveAllDocumentsAction;
 import org.signalml.app.action.document.monitor.CheckSignalAction;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
@@ -93,6 +97,7 @@ import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.IconUtils;
+import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.View;
 import org.signalml.app.view.book.AtomTableDialog;
 import org.signalml.app.view.book.BookView;
@@ -119,6 +124,7 @@ import org.signalml.app.view.tag.NewTagDialog;
 import org.signalml.app.view.tag.TagStylePaletteDialog;
 import org.signalml.app.view.tag.TagStylePresetDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.method.Method;
@@ -129,14 +135,10 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.psychopy.view.PsychopyExperimentDialog;
-import org.signalml.psychopy.action.ShowPsychopyDialogButton;
 import org.signalml.util.SvarogConstants;
 
-import com.thoughtworks.xstream.XStream;
-
-
-/** ViewerElementManager
- *
+/**
+ * ViewerElementManager
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -270,7 +272,6 @@ public class ViewerElementManager {
 	private ShowBottomPanelAction showBottomPanelAction;
 	private OpenBookDocumentAction openBookDocumentAction;
 	private CloseDocumentAction closeActiveDocumentAction;
-	private SaveAllDocumentsAction saveAllDocumentsAction;
 	private NewTagAction newTagAction;
 	private OpenTagAction openTagAction;
 	private CloseTagAction closeTagAction;
@@ -314,7 +315,6 @@ public class ViewerElementManager {
 	private RemoveAllAbortedTasksAction removeAllAbortedTasksAction;
 	private RemoveAllFailedTasksAction removeAllFailedTasksAction;
 
-	private ShowPsychopyDialogButton showPsychopyDialogButton;
 	/**
 	 * Represents an {@link Action} invoked when the user wants to start
 	 * a monitor signal recording.
@@ -591,7 +591,6 @@ public class ViewerElementManager {
 
 			fileMenu.add(getOpenSignalWizardAction());
 			fileMenu.add(getOpenBookDocumentAction());
-			fileMenu.add(getSaveAllDocumentsAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 
 			fileMenu.addSeparator();
@@ -648,13 +647,43 @@ public class ViewerElementManager {
 		if (monitorMenu == null) {
 			monitorMenu = new JMenu(_("Online"));
 			monitorMenu.setMnemonic(KeyEvent.VK_R);
+			
+			final OpenSignalWizardAction onlineExperimentsAction = new OpenSignalWizardAction(this, "Online experiments");
+			final OpenSignalWizardAction onlineAmplifiersAction = new OpenSignalWizardAction(this, "Online amplifiers");
 
+			monitorMenu.add(onlineExperimentsAction);
+			monitorMenu.add(onlineAmplifiersAction);
+			monitorMenu.addSeparator();
 			monitorMenu.add(getAddCameraAction());
 			monitorMenu.addSeparator();
 			monitorMenu.add(getStartMonitorRecordingAction());
 			monitorMenu.add(getStopMonitorRecordingAction());
 			monitorMenu.addSeparator();
 			monitorMenu.add(getCheckSignalAction());
+
+			monitorMenu.addMenuListener(new MenuListener() {
+				@Override
+				public void menuSelected(MenuEvent me) {
+					onlineExperimentsAction.setEnabled(
+						ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()
+					);
+					onlineAmplifiersAction.setEnabled(
+						ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()
+					);
+					getAddCameraAction().setEnabled(
+						ObciServerCapabilities.getSharedInstance().hasCameraServer()
+						&& VideoFrame.isVideoAvailable()
+					);
+				}
+				@Override
+				public void menuDeselected(MenuEvent me) {
+					// nothing here
+				}
+				@Override
+				public void menuCanceled(MenuEvent me) {
+					// nothing here
+				}
+			});
 		}
 		return monitorMenu;
 	}
@@ -761,7 +790,6 @@ public class ViewerElementManager {
 			mainToolBar.setFloatable(false);
 
 			mainToolBar.add(getOpenSignalWizardAction());
-			mainToolBar.add(getSaveAllDocumentsAction());
 			mainToolBar.add(getCloseActiveDocumentAction());
 
 			mainToolBar.add(Box.createHorizontalGlue());
@@ -807,7 +835,7 @@ public class ViewerElementManager {
 
 	public ViewerTabbedPane getTreeTabbedPane() {
 		if (treeTabbedPane == null) {
-			treeTabbedPane = new ViewerTabbedPane(JTabbedPane.TOP, JTabbedPane.WRAP_TAB_LAYOUT);
+			treeTabbedPane = new ViewerTabbedPane(WebTabbedPane.TOP);
 			treeTabbedPane.addTab(_("Tags"), (String) null, getTagTreePane(), _("Shows open tags"));
 			treeTabbedPane.addTab(_("Signals"), (String) null, getSignalTreePane(), _("Shows open signals"));
 			treeTabbedPane.addTab(_("Online"), (String) null, getMonitorTreePane(), _("Shows online signals"));
@@ -1299,14 +1327,6 @@ public class ViewerElementManager {
 		return checkSignalAction;
 	}
 
-	public ShowPsychopyDialogButton getSelectPsychopyExperimentAction() {
-		if (showPsychopyDialogButton == null) {
-			showPsychopyDialogButton = new ShowPsychopyDialogButton(getActionFocusManager());
-			showPsychopyDialogButton.setSelectPsychopyExperimentDialog(getPsychopyExperimentDialog());
-		}
-		return showPsychopyDialogButton;
-	}
-
 	/**
 	 * Returns an {@link Action} responsible for starting a new monitor
 	 * recording (it shows a dialog which allows to select recording target
@@ -1351,14 +1371,6 @@ public class ViewerElementManager {
 			closeActiveDocumentAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return closeActiveDocumentAction;
-	}
-
-	public SaveAllDocumentsAction getSaveAllDocumentsAction() {
-		if (saveAllDocumentsAction == null) {
-			saveAllDocumentsAction = new SaveAllDocumentsAction();
-			saveAllDocumentsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-		}
-		return saveAllDocumentsAction;
 	}
 
 	public NewTagAction getNewTagAction() {
@@ -1476,7 +1488,7 @@ public class ViewerElementManager {
 
 	public OpenSignalWizardAction getOpenSignalWizardAction() {
 		if (openSignalWizardAction == null) {
-			openSignalWizardAction = new OpenSignalWizardAction(this);
+			openSignalWizardAction = new OpenSignalWizardAction(this, null);
 		}
 		return openSignalWizardAction;
 	}
@@ -1735,7 +1747,6 @@ public class ViewerElementManager {
 		getOpenTagAction().setAccelerator("alt O");
 		getOpenBookDocumentAction().setAccelerator("alt B");
 		getCloseTagAction().setAccelerator("ctrl alt F4");
-		getSaveAllDocumentsAction().setAccelerator("ctrl alt S");
 		getSaveTagAction().setAccelerator("alt S");
 		getSaveTagAsAction().setAccelerator("ctrl alt shift S");
 		getEditPreferencesAction().setAccelerator("ctrl P");

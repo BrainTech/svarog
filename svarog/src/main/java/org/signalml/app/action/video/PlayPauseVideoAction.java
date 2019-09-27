@@ -23,13 +23,13 @@ public final class PlayPauseVideoAction extends AbstractSignalMLAction {
 	private final Runnable onClickWhenPaused = new Runnable() {
 		@Override
 		public void run() {
-			videoFrame.play();
+			videoFrame.component.play();
 		}
 	};
 	private final Runnable onClickWhenPlaying = new Runnable() {
 		@Override
 		public void run() {
-			videoFrame.pause();
+			videoFrame.component.pause();
 		}
 	};
 	private Runnable onClick; // accessed from Swing thread
@@ -41,7 +41,7 @@ public final class PlayPauseVideoAction extends AbstractSignalMLAction {
 		@Override
 		public void stateChanged(ChangeEvent e) {
 			int percentage = videoRateSlider.getValue();
-			videoFrame.setRate(0.01f * percentage);
+			videoFrame.component.setRate(0.01f * percentage);
 		}
 	}
 

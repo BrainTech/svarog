@@ -7,11 +7,10 @@ set -e
 build
 
 dest="dist/svarog-$VERSION-standalone"
-mkdir -p "$dest/plugins"
+mkdir -p "$dest"
 
 mv standalone-package-files/* "$dest"
 mv svarog-standalone/target/*.jar "$dest/svarog-standalone.jar"
-mv plugins/*/target/*.{jar,xml} "$dest/plugins/"
 cp LICENSE.txt "$dest"
 
 cd dist

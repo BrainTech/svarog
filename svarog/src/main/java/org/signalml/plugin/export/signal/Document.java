@@ -125,4 +125,19 @@ public interface Document {
 	 */
 	public void setActive(boolean active);
 
+	/**
+	 * Return whether the document can be saved to a file by Svarog.
+	 *
+	 * @internal This is a replacement for checking "X instanceof MutableDocument"
+	 * as a fast fix before a release, so that TagDocument in online mode would
+	 * not be treated as mutable, i.e. saveable. Rather, it should be implemented
+	 * by refactoring the class hierarchy and introducing a new class
+	 * MonitorTagDocument which would NOT be a MutableDocument. Also,
+	 * AbstractMutableFileDocument could be removed in the process, as its only
+	 * subclass is TagDocument.
+	 *
+	 * @return true if document is saveable, false otherwise
+	 */
+	public boolean isSaveable();
+
 }

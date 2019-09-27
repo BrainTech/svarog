@@ -49,9 +49,12 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	private OpenSignalWizardStepOnePanel stepOnePanel;
 	private SignalMontagePanel stepTwoPanel;
 
-	public OpenSignalWizardDialog(ViewerElementManager viewerElementManager, Window f, boolean isModal) {
-		super(f, isModal);
+	private final String selectedSourceTab;
+
+	public OpenSignalWizardDialog(ViewerElementManager viewerElementManager, String selectedSourceTab) {
+		super(viewerElementManager.getDialogParent(), true);
 		this.viewerElementManager = viewerElementManager;
+		this.selectedSourceTab = selectedSourceTab;
 		this.setTitle(_("Open signal"));
 	}
 
@@ -137,7 +140,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 	protected OpenSignalWizardStepOnePanel getStepOnePanel() {
 		if (stepOnePanel == null) {
-			stepOnePanel = new OpenSignalWizardStepOnePanel(viewerElementManager);
+			stepOnePanel = new OpenSignalWizardStepOnePanel(viewerElementManager, selectedSourceTab);
 		}
 		return stepOnePanel;
 	}
@@ -148,7 +151,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		}
 		return stepTwoPanel;
 	}
-
+	
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return OpenDocumentDescriptor.class.isAssignableFrom(clazz);

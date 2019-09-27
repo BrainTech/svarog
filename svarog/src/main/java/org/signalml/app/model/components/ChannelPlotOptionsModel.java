@@ -19,16 +19,16 @@ public class ChannelPlotOptionsModel {
 	/*
 	 * channel's local voltage scale value
 	 */
-	private int voltageScale;
+	private double voltageScale;
 
 	/*
 	 * Creates model for given parent and initial voltage scale value
 	 * @param parent parent model
 	 * @param voltageScale initial voltage scale value
 	 */
-	public ChannelPlotOptionsModel(ChannelsPlotOptionsModel parent, int voltageScale) {
+	public ChannelPlotOptionsModel(ChannelsPlotOptionsModel parent, double voltageScale) {
 		this.parent = parent;
-		this.voltageScale=voltageScale;
+		this.voltageScale = voltageScale;
 	}
 
 	public boolean isVisible() {
@@ -42,11 +42,12 @@ public class ChannelPlotOptionsModel {
 		return this.visible;
 	}
 
-	public int getVoltageScale() {
+	public double getVoltageScale() {
 		return voltageScale;
 	}
-	public void setVoltageScale(int volotageScale) {
-		this.voltageScale = volotageScale;
+
+	public void setVoltageScale(double voltageScale) {
+		this.voltageScale = voltageScale;
 		if (useLocalScale)
 			this.parent.modelChanged();
 	}
@@ -63,7 +64,7 @@ public class ChannelPlotOptionsModel {
 	 * Sets local voltage scale value but not performs 'changed' notification
 	 * @param globalScale voltage scale value to be set for this model
 	 */
-	public void globalScaleChanged(int globalScale) {
+	public void globalScaleChanged(double globalScale) {
 		if (!this.useLocalScale)
 			this.voltageScale = globalScale; //Achtung - not calling 'changed' deliberately;
 	}

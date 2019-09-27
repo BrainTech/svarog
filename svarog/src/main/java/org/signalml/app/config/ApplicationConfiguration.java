@@ -46,7 +46,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
-	private boolean optimizeSignalDisplay;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -96,8 +95,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private int reconstructionHeight;
 
-	private float backupFrequency;
-
 	private String openbciIPAddress;
 	private int openbciPort;
 	private String sentryDsn;
@@ -145,14 +142,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setFavouriteDirs(String[] dirs) {
 		this.favouriteDirs = dirs;
-	}
-
-	public float getBackupFrequency() {
-		return backupFrequency;
-	}
-
-	public void setBackupFrequency(float backupFrequency) {
-		this.backupFrequency = backupFrequency;
 	}
 
 	public String[] getLastDirs() {
@@ -234,14 +223,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setTagToolTipsVisible(boolean tagToolTipsVisible) {
 		this.tagToolTipsVisible = tagToolTipsVisible;
-	}
-
-	public boolean isOptimizeSignalDisplay() {
-		return optimizeSignalDisplay;
-	}
-
-	public void setOptimizeSignalDisplay(boolean optimizeSignalDisplay) {
-		this.optimizeSignalDisplay = optimizeSignalDisplay;
 	}
 
 	public boolean isPageLinesVisible() {

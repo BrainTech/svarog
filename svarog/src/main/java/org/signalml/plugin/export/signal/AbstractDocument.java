@@ -132,4 +132,9 @@ public abstract class AbstractDocument implements Document {
 		//if anything should be done after this state change
 		//this method should be overriden.
 	}
+
+	@Override
+	public boolean isSaveable() {
+		return false;
+	}
 }
