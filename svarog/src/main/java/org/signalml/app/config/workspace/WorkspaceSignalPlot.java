@@ -28,7 +28,6 @@ public class WorkspaceSignalPlot {
 	private boolean antialiased;
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
-	private boolean optimizeSignalDisplay;
 	private boolean tagToolTipsVisible;
 
 	private boolean pageLinesVisible;
@@ -60,7 +59,6 @@ public class WorkspaceSignalPlot {
 		antialiased = plot.isAntialiased();
 		clamped = plot.isClamped();
 		offscreenChannelsDrawn = plot.isOffscreenChannelsDrawn();
-		optimizeSignalDisplay = plot.isOptimizeSignalDisplaying();
 		tagToolTipsVisible = plot.isTagToolTipsVisible();
 
 		pageLinesVisible = plot.isPageLinesVisible();
@@ -106,7 +104,6 @@ public class WorkspaceSignalPlot {
 			plot.setAntialiased(antialiased);
 			plot.setClamped(clamped);
 			plot.setOffscreenChannelsDrawn(offscreenChannelsDrawn);
-			plot.setOptimizeSignalDisplaying(optimizeSignalDisplay);
 			plot.setTagToolTipsVisible(tagToolTipsVisible);
 
 			plot.setPageLinesVisible(pageLinesVisible);

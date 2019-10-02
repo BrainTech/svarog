@@ -4,10 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.GeneralPath;
-import static java.lang.Math.exp;
 import java.util.Arrays;
 import java.util.HashMap;
-import sun.util.logging.resources.logging;
 
 /**
  * Class responsible for signal rendering.

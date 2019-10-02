@@ -3,6 +3,7 @@
  */
 package org.signalml.app;
 
+import com.alee.laf.WebLookAndFeel;
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -80,7 +81,7 @@ import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.plugin.loader.PluginLoaderHi;
+import org.signalml.plugin.loader.PluginLoader;
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -90,6 +91,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.logging.SvarogLoggingConfigurer;
 import org.signalml.app.video.VideoStreamManager;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 
 /**
  * The Svarog application.
@@ -335,6 +337,14 @@ public class SvarogApplication implements java.lang.Runnable {
 		// TODO check nested modal dialogs
 		// setupGUIExceptionHandler();
 
+		try {
+			SwingUtilities.invokeAndWait(() -> {
+				WebLookAndFeel.install();
+			});
+		} catch (InterruptedException|InvocationTargetException ex) {
+			logger.error("Initializing L&F failed", ex);
+		}
+
 		if (!line.hasOption("nosplash")) {
 			try {
 				SwingUtilities.invokeAndWait(new Runnable() {
@@ -371,7 +381,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		logger.debug("Application successfully created - main window is showing and should be visible soon");
 
-		PluginLoaderHi.getInstance().loadPlugins();
+		ObciServerCapabilities.getSharedInstance().initialize();
+		PluginLoader.getInstance().loadPlugins();
 
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -469,7 +480,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		profileDir = file;
 
-		PluginLoaderHi.createInstance(profileDir);
+		PluginLoader.createInstance(profileDir);
 		return true;
 	}
 

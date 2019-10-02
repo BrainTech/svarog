@@ -33,8 +33,6 @@ public class MonitorConfigPanel extends AbstractPanel {
 	/**
 	 * The frequency text field.
 	 */
-	private FloatSpinner backupFrequencySpinner;
-
 	private JTextField openbciIpAddressTextField;
 	private IntegerSpinner openbciPortSpinner;
 
@@ -51,37 +49,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 	 */
 	private void initialize() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(createSignalRecordingPanel());
 		add(createOpenbciAddressPanel());
-	}
-
-	protected JPanel createSignalRecordingPanel() {
-		JPanel signalRecordingPanel = new JPanel();
-
-		JLabel backupFrequencyLabel = new JLabel(_("Backup frequency [s]"));
-
-		signalRecordingPanel.setLayout(new GridBagLayout());
-		setTitledBorder(signalRecordingPanel, _("Signal recording"));
-
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.insets = new Insets(3, 3, 3, 3);
-		constraints.weighty = 0;
-
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.gridwidth = 1;
-		constraints.weightx = 0;
-		signalRecordingPanel.add(backupFrequencyLabel, constraints);
-
-		constraints.gridx = 1;
-		constraints.gridy = 0;
-		constraints.gridwidth = 2;
-		constraints.weightx = 1;
-		signalRecordingPanel.add(getBackupFrequencySpinner(), constraints);
-
-		return signalRecordingPanel;
 	}
 
 	protected JPanel createOpenbciAddressPanel() {
@@ -115,17 +83,6 @@ public class MonitorConfigPanel extends AbstractPanel {
 		return openbciAddressPanel;
 	}
 
-	/**
-	 * Returns the frequency text field.
-	 *
-	 * @return the frequency text field
-	 */
-	protected FloatSpinner getBackupFrequencySpinner() {
-		if (backupFrequencySpinner == null) {
-			backupFrequencySpinner = new FloatSpinner(new SpinnerNumberModel(10.0, 0.1, 100000.0, 0.1));
-		}
-		return backupFrequencySpinner;
-	}
 
 	protected JTextField getOpenbciIpAddressTextField() {
 		if (openbciIpAddressTextField == null)
@@ -150,7 +107,6 @@ public class MonitorConfigPanel extends AbstractPanel {
 	 *            the configuration of Svarog
 	 */
 	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) {
-		getBackupFrequencySpinner().setValue(applicationConfig.getBackupFrequency());
 		getOpenbciIpAddressTextField().setText(applicationConfig.getOpenbciIPAddress());
 		getOpenbciPortSpinner().setValue(applicationConfig.getOpenbciPort());
 	}
@@ -163,7 +119,6 @@ public class MonitorConfigPanel extends AbstractPanel {
 	 *            the configuration of Svarog
 	 */
 	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) {
-		applicationConfig.setBackupFrequency(getBackupFrequencySpinner().getValue());
 		applicationConfig.setOpenbciIPAddress(getOpenbciIpAddressTextField().getText());
 		applicationConfig.setOpenbciPort(openbciPortSpinner.getValue());
 	}

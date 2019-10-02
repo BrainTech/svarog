@@ -1,5 +1,6 @@
 package org.signalml.app.method.ep.view.minmax;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
@@ -44,7 +45,7 @@ public class MinMaxDialog extends AbstractDialog {
 
 	@Override
 	protected JComponent createInterface() {
-		tabbedPane = new JTabbedPane();
+		tabbedPane = new WebTabbedPane();
 		return tabbedPane;
 	}
 

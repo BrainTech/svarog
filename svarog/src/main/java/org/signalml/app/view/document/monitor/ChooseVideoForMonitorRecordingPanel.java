@@ -27,6 +27,7 @@ import org.signalml.app.video.VideoStreamSpecification;
 import org.signalml.app.video.components.VideoStreamSelectionCompactPanel;
 import org.signalml.app.video.components.VideoStreamSelectionListener;
 import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 
 /**
@@ -49,7 +50,10 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
 		super(new BorderLayout());
 		this.parentWindow = parentWindow;
 		initialize();
-		launchRefreshingWorker();
+                if (ObciServerCapabilities.getSharedInstance().hasVideoSaving())
+                {
+                    launchRefreshingWorker();
+                }
 	}
 
 	/**
@@ -149,7 +153,7 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
 	public void fillPanelFromModel(Object model) {
 		ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) model;
 		MonitorRecordingDescriptor monitorRecordingDescriptor = experimentDescriptor.getMonitorRecordingDescriptor();
-		setEnabled(experimentDescriptor.getHasVideoSaver() && monitorRecordingDescriptor.isVideoRecordingEnabled());
+		setEnabled(ObciServerCapabilities.getSharedInstance().hasVideoSaving() && monitorRecordingDescriptor.isVideoRecordingEnabled());
 		previewCheckBox.setSelected(monitorRecordingDescriptor.getDisplayVideoPreviewWhileSaving());
 	}
 
@@ -163,17 +167,6 @@ public class ChooseVideoForMonitorRecordingPanel extends JPanel {
                     if (getVideoStreamSelectionPanel().getSelectedVideoStream() == null) {
                         errors.addError(_("Please select a video stream to be recorded"));
                     }
-                    else{
-                        VideoStreamSpecification stream = getVideoStreamSelectionPanel().getSelectedVideoStream();
-                        VideoStreamManager vsm = new VideoStreamManager();
-                        try {
-                            vsm.replace(stream);
-                        } catch (OpenbciCommunicationException ex) {
-                            errors.addError(ex.getMessage()); 
-                        }
-                        vsm.free();
-                    }
-			
 		}
 	}
 

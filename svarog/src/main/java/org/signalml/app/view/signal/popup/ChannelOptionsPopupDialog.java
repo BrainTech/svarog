@@ -12,7 +12,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
@@ -25,11 +24,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
-import org.signalml.app.model.components.LogarithmicJSlider;
+import org.signalml.app.view.common.components.models.LogarithmicBoundedRangeModel;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.signal.SignalPlot;
-import org.signalml.domain.montage.Montage;
-import org.signalml.domain.montage.SourceChannel;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 
@@ -48,7 +45,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	/*
 	 * value scale model for current channel
 	 */
-	private DefaultBoundedRangeModel valueScaleModel;
+	private LogarithmicBoundedRangeModel valueScaleModel;
 	/*
 	 * ignore-global-scale value for current channel
 	 */
@@ -135,18 +132,19 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 */
 	private JPanel getValueScalePanel() {
 
-		valueScaleSlider = new LogarithmicJSlider(new DefaultBoundedRangeModel()) {
+		valueScaleSlider = new JSlider(new LogarithmicBoundedRangeModel()) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public String getToolTipText(MouseEvent ev) {
-				return getValue() + "%";
+				LogarithmicBoundedRangeModel model = (LogarithmicBoundedRangeModel) getModel();
+				return Math.round(model.getRealValue()) + "%";
 			}
 		};
 
-		DefaultBoundedRangeModel m = currentPlot.getValueScaleRangeModel();
-		this.valueScaleModel = (DefaultBoundedRangeModel) valueScaleSlider.getModel();
-		this.valueScaleModel.setRangeProperties(m.getValue(), m.getExtent(), m.getMinimum(), m.getMaximum(), m.getValueIsAdjusting());
+		LogarithmicBoundedRangeModel m = currentPlot.getValueScaleRangeModel();
+		this.valueScaleModel = (LogarithmicBoundedRangeModel) valueScaleSlider.getModel();
+		this.valueScaleModel.setRealRangeProperties(m.getRealValue(), m.getRealMinimum(), m.getRealMaximum());
 
 		Dimension d = valueScaleSlider.getPreferredSize();
 		d.width = 100;
@@ -167,8 +165,8 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	 * Sets scrollBar's initial value.
 	 * @param scale initial value to be set
 	 */
-	private void setInitialVoltageScale(int scale) {
-		this.valueScaleModel.setValue(scale);
+	private void setInitialVoltageScale(double scale) {
+		this.valueScaleModel.setRealValue(scale);
 	}
 
 	/*
@@ -231,7 +229,7 @@ public class ChannelOptionsPopupDialog extends AbstractPopupDialog implements Ch
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
 		if (source == this.valueScaleModel) {
-			this.model.setVoltageScale(this.valueScaleModel.getValue());
+			this.model.setVoltageScale(this.valueScaleModel.getRealValue());
 		}
 
 	}

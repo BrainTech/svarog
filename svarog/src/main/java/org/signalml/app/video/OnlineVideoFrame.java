@@ -1,6 +1,6 @@
 package org.signalml.app.video;
 
-import org.signalml.app.video.components.OnlineMediaPlayerComponent;
+import org.signalml.app.video.components.OnlineMediaComponent;
 import org.signalml.app.video.components.VideoStreamSelectionPanel;
 import org.signalml.app.video.components.ImageSeparator;
 import java.awt.BorderLayout;
@@ -21,7 +21,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  *
  * @author piotr.rozanski@braintech.pl
  */
-public final class OnlineVideoFrame extends VideoFrame<OnlineMediaPlayerComponent> {
+public final class OnlineVideoFrame extends VideoFrame<OnlineMediaComponent> {
 
 	private final VideoStreamManager manager;
 	private final VideoStreamSelectionPanel streamSelectionPanel;
@@ -43,23 +43,18 @@ public final class OnlineVideoFrame extends VideoFrame<OnlineMediaPlayerComponen
 		public void refreshRequested() {
 			GetAvailableVideoWorker worker = new GetAvailableVideoWorker(getParent());
 			worker.addPropertyChangeListener(new OnlineVideoFrameInitializer(worker, OnlineVideoFrame.this));
-			worker.execute();
+                        worker.execute();
 		}
 
 		@Override
 		public void videoStreamSelected(VideoStreamSpecification stream) {
-			if (!stream.equals(manager.getCurrentStream())) {
-				player.stop();
-				try {
-					String rtspURL = manager.replace(stream);
-					previewPanel.setCameraFeatures(stream.features);
-					open(rtspURL);
-					play();
-				} catch (OpenbciCommunicationException ex) {
-					streamSelectionPanel.clearSelection();
-					ex.showErrorDialog(_("Error initializing video preview"));
-				}
-			}
+                    VideoStreamSelectedWorker change_stream_worker = new VideoStreamSelectedWorker(previewPanel, manager, component, streamSelectionPanel, stream);
+                    if (!stream.equals(manager.getCurrentStream())) {
+
+                        change_stream_worker.executeWithWialog();
+
+
+                    }
 		}
 
 	}
@@ -85,7 +80,7 @@ public final class OnlineVideoFrame extends VideoFrame<OnlineMediaPlayerComponen
 	 * @param title  human-readable description to be displayed in the top bar
 	 */
 	public OnlineVideoFrame(String title) {
-		super(new OnlineMediaPlayerComponent(), title, JFrame.DISPOSE_ON_CLOSE);
+		super(new OnlineMediaComponent(), title, JFrame.DISPOSE_ON_CLOSE);
 
 		// communicates with OBCI when needed
 		manager = component.getManager();

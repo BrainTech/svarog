@@ -63,7 +63,7 @@ public class ChannelSelectWithGainEditionPanel extends ChannelSelectPanel {
 				}
 			});
 
-			editGainAndOffsetButton.setText(_("Edit gain and offset"));
+			editGainAndOffsetButton.setText(_("Gain and offset…"));
 			editGainAndOffsetButton.setEnabled(false);
 		}
 		return editGainAndOffsetButton;

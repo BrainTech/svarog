@@ -40,7 +40,6 @@ import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
@@ -419,7 +418,7 @@ public class DocumentFlowIntegrator {
 	 */
 	public boolean saveDocument(Document document, boolean saveAsOnly) throws IOException, SignalMLException {
 
-		if (!(document instanceof MutableDocument)) {
+		if (!document.isSaveable()) {
 			return true;
 		}
 
@@ -485,9 +484,6 @@ public class DocumentFlowIntegrator {
 					if (type.equals(ManagedDocumentType.SIGNAL)) {
 						ok = true;
 						// do nothing
-					} else if (type.equals(ManagedDocumentType.MONITOR)) {
-						ok = true;
-						// do nothing
 					} else if (type.equals(ManagedDocumentType.BOOK)) {
 						ok = true;
 						// do nothing
@@ -525,40 +521,6 @@ public class DocumentFlowIntegrator {
 		}
 
 		return true;
-
-	}
-
-	/**
-	 * {@link #saveDocument(Document, boolean) Saves} all documents stored
-	 * in the {@link DocumentManager document manager}.
-	 * @return {@code true} if the operation is successful,
-	 * {@code false} if saving any of the files failed
-	 * @throws IOException TODO never thrown (???)
-	 * @throws SignalMLException if save worker failed to save the document or
-	 * if {@link SignalChecksumWorker checksum worker} was interrupted or
-	 * failed to calculate the checksum
-	 */
-	public boolean saveAllDocuments() throws IOException, SignalMLException {
-
-		boolean allOk = true;
-		int count;
-		Document document;
-		int i;
-		boolean savedOk;
-		synchronized (documentManager) {
-
-			count = documentManager.getDocumentCount();
-			for (i=0; i<count; i++) {
-				document = documentManager.getDocumentAt(i);
-				synchronized (document) {
-					savedOk = saveDocument(document, false);
-				}
-				allOk &= savedOk;
-			}
-
-		}
-
-		return allOk;
 
 	}
 
@@ -826,12 +788,11 @@ public class DocumentFlowIntegrator {
 				// VideoFrame needs to be created before onCommonDocumentAdded
 				// for SignalView to respond properly
 				OfflineVideoFrame frame = new OfflineVideoFrame(videoFileName);
-				frame.open(videoFilePath);
+				frame.component.open(videoFilePath);
 				((RawSignalDocument) signalDocument).setVideoFrame(frame, videoFileOffset);
 				frame.setVisible(true);
-				frame.init();
 
-				if (!frame.isSeekable()) {
+				if (!frame.component.isSeekable()) {
 					Window dialogParent = SvarogApplication.getSharedInstance().getViewerElementManager().getDialogParent();
 					JOptionPane.showMessageDialog(dialogParent, _("<html><body>Opened video file has no time index.<br>It may not be possible to change time position.</body></html>"), _("Warning"), JOptionPane.WARNING_MESSAGE);
 				}
@@ -859,8 +820,6 @@ public class DocumentFlowIntegrator {
 	private SignalDocument openMonitorDocument(final OpenDocumentDescriptor descriptor) throws IOException, SignalMLException {
 
 		ExperimentDescriptor monitorOptions = (ExperimentDescriptor) descriptor.getOpenSignalDescriptor();
-
-		monitorOptions.setBackupFrequency(getApplicationConfig().getBackupFrequency());
 
 		MonitorSignalDocument monitorSignalDocument = new MonitorSignalDocument(monitorOptions);
 		monitorSignalDocument.setMontage(descriptor.getOpenSignalDescriptor().getMontage());
@@ -1547,7 +1506,7 @@ public class DocumentFlowIntegrator {
 
 		boolean ok;
 
-		if (document instanceof MutableDocument) {
+		if (document.isSaveable()) {
 			MutableDocument md = (MutableDocument) document;
 			if (!md.isSaved()) {
 

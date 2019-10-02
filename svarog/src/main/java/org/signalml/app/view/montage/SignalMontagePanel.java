@@ -1,5 +1,6 @@
 package org.signalml.app.view.montage;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
@@ -105,7 +106,7 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 		interfacePanel.setLayout(new BorderLayout());
 		interfacePanel.setPreferredSize(new Dimension(800, 500));
 
-		tabbedPane = new JTabbedPane();
+		tabbedPane = new WebTabbedPane();
 
 		filtersPanel = new MontageFiltersPanel(predefinedTimeDomainSampleFilterPresetManager);
 		filtersPanel.setEditFFTSampleFilterDialog(getEditFFTSampleFilterDialog());

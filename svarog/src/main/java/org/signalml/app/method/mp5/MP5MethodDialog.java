@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.mp5;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.BorderLayout;
@@ -290,7 +291,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 	public JTabbedPane getTabbedPane() {
 		if (tabbedPane == null) {
 
-			tabbedPane = new JTabbedPane(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+			tabbedPane = new WebTabbedPane(WebTabbedPane.TOP);
 			configureTabbedPaneForRawMode(rawMode);
 
 		}

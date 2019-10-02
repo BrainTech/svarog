@@ -3,9 +3,8 @@ package org.signalml.app.video;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JFrame;
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
+import org.signalml.app.video.components.SvarogMediaComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
-import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -15,16 +14,15 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
  * are necessary for this method to work.
  *
  * @author piotr.rozanski@braintech.pl
- * @param <T>  actual media player implementation
+ * @param <T>  actual media component subclass
  */
-public class VideoFrame<T extends EmbeddedMediaPlayerComponent> extends JFrame {
+public class VideoFrame<T extends SvarogMediaComponent> extends JFrame {
 
 	private static final boolean AVAILABLE = new NativeDiscovery().discover();
 	private static final int DEFAULT_WIDTH = 600;
 	private static final int DEFAULT_HEIGHT = 400;
 
-	protected final MediaPlayer player;
-	protected final T component;
+	public final T component;
 	protected final List<MediaPlayerEventListener> listeners = new LinkedList<>();
 
 	/**
@@ -53,7 +51,6 @@ public class VideoFrame<T extends EmbeddedMediaPlayerComponent> extends JFrame {
 		component = mediaPlayerComponent;
 		setDefaultCloseOperation(defaultCloseOperation);
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-		player = component.getMediaPlayer();
 	}
 
 	/**
@@ -62,7 +59,7 @@ public class VideoFrame<T extends EmbeddedMediaPlayerComponent> extends JFrame {
 	 * @param listener  listener object, cannot be null
 	 */
 	public final void addListener(MediaPlayerEventListener listener) {
-		player.addMediaPlayerEventListener(listener);
+		component.addMediaPlayerEventListener(listener);
 		listeners.add(listener);
 	}
 
@@ -71,29 +68,8 @@ public class VideoFrame<T extends EmbeddedMediaPlayerComponent> extends JFrame {
 	 */
 	@Override
 	public void dispose() {
-		player.release();
+		component.release();
 		super.dispose();
-	}
-
-	/**
-	 * Prepare a new media item for playback, but do not begin playing.
-	 *
-	 * When playing files, depending on the run-time Operating System it may be necessary to pass a URL here
-	 * (beginning with "file://") rather than a local file path.
-	 *
-	 * @param path  path to the video file
-	 */
-	public void open(String path) {
-		player.prepareMedia(path);
-	}
-
-	/**
-	 * Begin playback.
-	 *
-	 * If called when the play-back is paused, the play-back will resume from the current position.
-	 */
-	public void play() {
-		player.play();
 	}
 
 }

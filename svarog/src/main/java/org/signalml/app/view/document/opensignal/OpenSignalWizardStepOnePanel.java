@@ -41,8 +41,11 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 	private AbstractOpenSignalDescriptor openSignalDescriptor;
 
-	public OpenSignalWizardStepOnePanel(ViewerElementManager viewerElementManager) {
+	private final String selectedSourceTab;
+
+	public OpenSignalWizardStepOnePanel(ViewerElementManager viewerElementManager, String selectedSourceTab) {
 		this.viewerElementManager = viewerElementManager;
+		this.selectedSourceTab = selectedSourceTab;
 
 		this.setLayout(new GridLayout(1, 2));
 		this.add(createLeftPanel());
@@ -87,7 +90,7 @@ public class OpenSignalWizardStepOnePanel extends JPanel implements ChangeListen
 
 	protected SignalSourceTabbedPane getSignalSourceTabbedPane() {
 		if (signalSourceTabbedPane == null) {
-			signalSourceTabbedPane = new SignalSourceTabbedPane(viewerElementManager);
+			signalSourceTabbedPane = new SignalSourceTabbedPane(viewerElementManager, selectedSourceTab);
 			signalSourceTabbedPane.addChangeListener(this);
 			signalSourceTabbedPane.addPropertyChangeListener(this);
 			getOtherSettingsPanel().getFileTypeComboBox().addItemListener(signalSourceTabbedPane);

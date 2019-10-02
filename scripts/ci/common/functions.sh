@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-VERSION=`git describe --tags --first-parent`
+VERSION=`git describe --tags`
 
 #usage:
 #update_version_in_file 'file_path'
@@ -17,7 +17,6 @@ update_version_in_files () {
     _update_version_in_file "$L/contents.html"
   done
   _update_version_in_file "svarog-standalone/src/deb/control/control"
-  _update_version_in_file "svarog-all.template"
 }
 
 build () {

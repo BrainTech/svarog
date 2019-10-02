@@ -3,6 +3,7 @@
  */
 package org.signalml.app.model.monitor;
 
+import java.io.File;
 import org.signalml.app.video.VideoStreamSpecification;
 
 /**
@@ -15,8 +16,9 @@ public class MonitorRecordingDescriptor {
 
 	private boolean recordingEnabled = false;
 	private String signalRecordingFilePath;
-	private String tagsRecordingFilePath;
 	private boolean tagsRecordingEnabled = true;
+	private boolean saveImpedance = false;
+	private boolean appendTimestamps = false;
 	private String videoRecordingFilePath;
 	private boolean displayVideoPreviewWhileSaving = true;
 	private VideoStreamSpecification videoStreamSpecification;
@@ -26,22 +28,24 @@ public class MonitorRecordingDescriptor {
 	 * null and recording is disabled.
 	 */
 	public MonitorRecordingDescriptor() {
+            String default_path = System.getProperty("user.home") + File.separator;
+            this.signalRecordingFilePath = default_path;
+            this.videoRecordingFilePath = default_path;
+
 	}
 
 	/**
 	 * Creates a {@link MonitorRecordingDescriptor} with the given parameters.
 	 *
 	 * @param signalRecordingFilePath a file path to record signal to
-	 * @param tagsRecordingFilePath a file path to record tags to
 	 * @param isTagsRecordingEnabled determines if the tags should be recorded
 	 * @param videoRecordingFilePath a file path to record video to
 	 * @param videoStreamSpecification video stream selected by the user
 	 */
 	public MonitorRecordingDescriptor(String signalRecordingFilePath,
-									  String tagsRecordingFilePath, boolean isTagsRecordingEnabled,
+									  boolean isTagsRecordingEnabled,
 									  String videoRecordingFilePath, VideoStreamSpecification videoStreamSpecification) {
 		this.signalRecordingFilePath = signalRecordingFilePath;
-		this.tagsRecordingFilePath = tagsRecordingFilePath;
 		this.tagsRecordingEnabled = isTagsRecordingEnabled;
 		this.videoRecordingFilePath = videoRecordingFilePath;
 		this.videoStreamSpecification = videoStreamSpecification;
@@ -65,23 +69,6 @@ public class MonitorRecordingDescriptor {
 	}
 
 	/**
-	 * Returns the file path to which the tags will be recorded.
-	 * @return the file path to record tags to.
-	 */
-	public String getTagsRecordingFilePath() {
-		return tagsRecordingFilePath;
-	}
-
-	/**
-	 * Sets the file path to which the tags will be recorded.
-	 * @param tagsRecordingFilePath the new file path to which the tags
-	 * will be recorded.
-	 */
-	public void setTagsRecordingFilePath(String tagsRecordingFilePath) {
-		this.tagsRecordingFilePath = tagsRecordingFilePath;
-	}
-
-	/**
 	 * Returns if the tags should be recorded.
 	 * @return true if the tags should be recorded, false otherwise
 	 */
@@ -95,6 +82,38 @@ public class MonitorRecordingDescriptor {
 	 */
 	public void setTagsRecordingEnabled(boolean tagsRecordingEnabled) {
 		this.tagsRecordingEnabled = tagsRecordingEnabled;
+	}
+
+	/**
+	 * Returns if the impedance should be saved with the signal.
+	 * @return true if the impedance should be recorded, false otherwise
+	 */
+	public boolean isSaveImpedanceEnabled() {
+		return saveImpedance;
+	}
+
+	/**
+	 * Sets if the impedance should be saved with the signal.
+	 * @param saveImpedance
+	 */
+	public void setSaveImpedanceEnabled(boolean saveImpedance) {
+		this.saveImpedance = saveImpedance;
+	}
+
+	/**
+	 * Returns if the timestamps should be appended.
+	 * @return true if the timestamps should be appended, false otherwise
+	 */
+	public boolean isAppendTimestampsEnabled() {
+		return appendTimestamps;
+	}
+
+	/**
+	 * Sets if the timestamps should be appended.
+	 * @param appendTimestamps
+	 */
+	public void setAppendTimestampsEnabled(boolean appendTimestamps) {
+		this.appendTimestamps = appendTimestamps;
 	}
 
 	/**
@@ -119,7 +138,7 @@ public class MonitorRecordingDescriptor {
 	 * will be recorded.
 	 */
 	public void setVideoRecordingFilePath(String videoRecordingFilePath) {
-		this.videoRecordingFilePath = videoRecordingFilePath;
+            this.videoRecordingFilePath = videoRecordingFilePath;
 	}
 
 	/**

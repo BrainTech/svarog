@@ -7,7 +7,6 @@ import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.io.ClassPathResource;
@@ -19,7 +18,7 @@ import org.xnap.commons.i18n.I18nFactory;
  *
  * @author Stanislaw Findeisen (Eisenbits)
  */
-public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
+public class SvarogI18n implements ISvarogI18n {
 	protected static final Logger log = Logger.getLogger(SvarogI18n.class);
 
 	private final I18n i18n;
@@ -58,7 +57,6 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	 * @param htmlName name of the help file e.g. "mp.html"
 	 * @return URL instance or null if not found.
 	 */
-	@Override
 	public URL getHelpURL(String htmlName) {
 		try {
 			return _getHelpURL(htmlName, Locale.getDefault().getLanguage());
@@ -96,7 +94,6 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	/**
 	 * Translation method.
 	 */
-	@Override
 	public String translate(String key) {
 		String s = this.i18n.tr(key);
 		log.debug("translate: " + key + " --> " + s);
@@ -106,19 +103,16 @@ public class SvarogI18n implements ISvarogI18n, SvarogAccessI18n {
 	/**
 	 * Translation method (plural version).
 	 */
-	@Override
 	public String translateN(String singular, String plural, long n) {
 		String s = i18n.trn(singular, plural, n);
 		log.debug("translateN: " + singular + " --> " + s);
 		return s;
 	}
 
-	@Override
 	public String translateR(String key, Object ... arguments) {
 		return render(translate(key), arguments);
 	}
 
-	@Override
 	public String translateNR(String singular, String plural, long n, Object... arguments) {
 		return render(translateN(singular, plural, n), arguments);
 	}

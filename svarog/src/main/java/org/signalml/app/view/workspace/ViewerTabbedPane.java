@@ -3,10 +3,10 @@
  */
 package org.signalml.app.view.workspace;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.Component;
 
 import javax.swing.Icon;
-import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import org.apache.log4j.Logger;
@@ -17,19 +17,19 @@ import org.signalml.app.util.IconUtils;
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
-public class ViewerTabbedPane extends JTabbedPane {
+public class ViewerTabbedPane extends WebTabbedPane {
 
 	private static final long serialVersionUID = 1L;
 
 	protected static final Logger logger = Logger.getLogger(ViewerTabbedPane.class);
 
-	public ViewerTabbedPane(int tabLocation, int tabLayout) {
-		super(tabLocation, tabLayout);
+	public ViewerTabbedPane(int tabLocation) {
+		super(tabLocation);
 		setBorder(new EmptyBorder(3,3,3,3));
 	}
 
 	public ViewerTabbedPane() {
-		this(JTabbedPane.TOP, JTabbedPane.SCROLL_TAB_LAYOUT);
+		this(WebTabbedPane.TOP);
 	}
 
 	/**

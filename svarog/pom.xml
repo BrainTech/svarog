@@ -208,7 +208,6 @@
 									  resultproperty="git-describe.result">
 									<arg value="describe" />
 									<arg value="--tags" />
-									<arg value="--first-parent" />
 								</exec>
 								<condition property="svarog.git-version"
 										   value="${git-describe.output}"
@@ -467,7 +466,7 @@
 		<dependency>
 			<groupId>com.thoughtworks.xstream</groupId>
 			<artifactId>xstream</artifactId>
-			<version>1.3.1</version>
+			<version>1.4.3</version>
 			<exclusions>
 				<exclusion>
 					<groupId>xpp3</groupId>
@@ -559,13 +558,19 @@
 		<dependency>
 			<groupId>org.zeromq</groupId>
 			<artifactId>jeromq</artifactId>
-			<version>0.3.5</version>
+			<version>0.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.getsentry.raven</groupId>
 			<artifactId>raven-log4j</artifactId>
 			<version>7.8.0</version>
 		</dependency>
+                     <dependency>
+                        <groupId>com.weblookandfeel</groupId>
+                        <artifactId>weblaf-ui</artifactId>
+                       <!-- SignalMLFileChooser has dirty hacks aimed at this weblaf version, be careful when changing it    -->
+                        <version>1.2.8</version>
+                      </dependency>
 
 		<!-- dependencies below are specified in util/maven/pom.xml -->
 		<dependency>

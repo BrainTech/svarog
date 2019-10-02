@@ -138,4 +138,8 @@ public abstract class AbstractMutableFileDocument extends AbstractFileDocument i
 	 */
 	protected abstract void writeDocument(OutputStream os) throws SignalMLException, IOException;
 
+	@Override
+	public boolean isSaveable() {
+		return true;
+	}
 }

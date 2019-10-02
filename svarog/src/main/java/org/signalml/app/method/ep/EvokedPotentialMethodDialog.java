@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.ep;
 
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Window;
@@ -64,7 +65,7 @@ public class EvokedPotentialMethodDialog extends AbstractPresetDialog {
 	@Override
 	public JComponent createInterface() {
 
-		tabbedPane = new JTabbedPane();
+		tabbedPane = new WebTabbedPane();
 		tabbedPane.add(_("Signal selection"), getSignalSpacePanel());
 		tabbedPane.add(_("ERP settings"), getEvokedPotentialSettingsPanel());
 		tabbedPane.add(_("Artifact rejection"), getArtifactRejectionPanel());

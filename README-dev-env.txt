@@ -37,18 +37,6 @@ directories PLUGIN-NAME/target. To run generated JAR, execute
 
   java -jar svarog-standalone/target/svarog-standalone-*.jar
 
-ATTENTION: This method runs Svarog without any plugins.
-To run Svarog with all available plugins, you should
-
-a) create symbolic links to JAR and XML files of all plugins you want
-to run, linking from PLUGIN-NAME/target/PLUGIN-NAME.(xml|jar)
-to directory $HOME/.svarog/plugins 
-
-  OR
-
-b) create a separate directory according to ZIP creation guide (below)
-and run Svarog from that directory.
-
 
 III. IDE configuration
 ----------------------
@@ -70,7 +58,6 @@ Svarog consists of several connected Maven packages:
 * Svarog-top, which is the top-most project, which, when built, builds
 the entire Svarog with all dependencies
 * Svarog, which is the main part of Svarog
-* other separate projects, one for each plugin
 
 Most of the source code of Svarog's main part is in directory
 
@@ -87,25 +74,16 @@ defines the package, to which this class belongs:
 
   package org.signalml.app;
 
-Analogically, every Svarog plugins has its own package hierarchy,
-starting in:
-
-  plugins/PLUGIN-NAME/src/main/java
-
 
 IV. Working with translations
 -----------------------------
 
-The first step is to generate *.pot files from Svarog's code, as well as from
-the source code of all the plugins. It is done by executing
+The first step is to generate *.pot files from Svarog's source code.
+It is done by executing
 
   mvn gettext:gettext
 
-in the "svarog" directory as well as in the directory of each plugin.
-
-Next, the resulting *.pot files have to be merged into one *.pot file.
-Utility "msgmerge" can be used to accomplish this, and it is preferable
-to call it with "-s" ("--sort-output") flag.
+in the "svarog" directory.
 
 The resulting *.pot file can be used to initialize a new translation
 by the use of "msginit" command. This will create an empty *.po
@@ -158,7 +136,6 @@ VI. Creating ZIP file for github Releases
 
 ZIP package consists of:
 a) Svarog's JAR file
-b) plugins' JAR and XML files
 c) executable script run_svarog.sh
 d) an example signal wakeEEG.bin with corresponding XML file
 e) binary executables of MP5 and empi
@@ -166,7 +143,7 @@ e) binary executables of MP5 and empi
 The most recent ZIP file can be used to provide all the files except
 a) and b). Afterwards, it is necessary to:
 
-* replace Svarog's JAR file and plugins' files, if they have changed
+* replace Svarog's JAR file, if it has changed
 * replace version number in run_svarog.sh
 * make a ZIP file with the new name (check if the name of the package
   corresponds to the package's main directory)

@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
-import javax.swing.JTabbedPane;
+import com.alee.laf.tabbedpane.WebTabbedPane;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
@@ -25,6 +25,7 @@ import org.signalml.app.view.common.components.filechooser.FileChooserPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.document.OpenSignalMLDocumentWorker;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader;
@@ -32,7 +33,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.util.Util;
 
-public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChangeListener, ItemListener {
+public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyChangeListener, ItemListener {
 	protected static final Logger logger = Logger.getLogger(SignalSourceTabbedPane.class);
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
@@ -50,11 +51,26 @@ public class SignalSourceTabbedPane extends JTabbedPane implements PropertyChang
 	private Object fileTypeMethod = FileOpenSignalMethod.AUTODETECT;
 
 	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager) {
+		this(viewerElementManager, null);
+	}
+
+	public SignalSourceTabbedPane(ViewerElementManager viewerElementManager, String selectedSourceTab) {
 		this.viewerElementManager = viewerElementManager;
 		addTab(_("File"), getFileChooserPanel());
-		addTab(_("Online experiments"), getChooseExperimentPanel());
-		addTab(_("Online amplifiers"), getChooseAmplifierPanel());
-
+		int selectedIndex = 0;
+		if (ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()) {
+			if ("Online experiments".equals(selectedSourceTab)) {
+				selectedIndex = getTabCount();
+			}
+			addTab(_("Online experiments"), getChooseExperimentPanel());
+		}
+		if (ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()) {
+			if ("Online amplifiers".equals(selectedSourceTab)) {
+				selectedIndex = getTabCount();
+			}
+			addTab(_("Online amplifiers"), getChooseAmplifierPanel());
+		}
+		setSelectedIndex(selectedIndex);
 	}
 
 	/**

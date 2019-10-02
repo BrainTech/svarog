@@ -263,11 +263,6 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		tagToolTipsVisibleButton.setToolTipText(_("Show tool tips when mouse hovers over a tag"));
 		tagToolTipsVisibleButton.setSelected(plot.isTagToolTipsVisible());
 
-		final JToggleButton optimizeDisplayingButton = new JToggleButton(_("Optimize signal displaying"));
-		optimizeDisplayingButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/waiting.png"));
-		optimizeDisplayingButton.setToolTipText(_("Does not draw all of the signal samples"));
-		optimizeDisplayingButton.setSelected(plot.isOptimizeSignalDisplaying());
-
 		antialiasButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -356,16 +351,6 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		});
 
-		optimizeDisplayingButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				for (SignalPlot plot : signalView.getPlots()) {
-					plot.setOptimizeSignalDisplaying(optimizeDisplayingButton.isSelected());
-				}
-			}
-		});
-
 		buttonPanelComponents.add(pageLinesVisibleButton);
 		buttonPanelComponents.add(blockLinesVisibleButton);
 		buttonPanelComponents.add(channelLinesVisibleButton);
@@ -375,7 +360,6 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 		buttonPanelComponents.add(clampButton);
 		buttonPanelComponents.add(offscreenChannelsDrawnButton);
 		buttonPanelComponents.add(dcOffsetButton);
-		buttonPanelComponents.add(optimizeDisplayingButton);
 
 	}
 

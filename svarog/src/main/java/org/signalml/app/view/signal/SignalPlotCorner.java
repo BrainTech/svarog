@@ -4,9 +4,12 @@
 
 package org.signalml.app.view.signal;
 
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Color;
 
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 

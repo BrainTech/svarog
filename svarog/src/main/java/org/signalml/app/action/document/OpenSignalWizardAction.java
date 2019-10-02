@@ -32,17 +32,19 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 	private OpenDocumentDescriptor openDocumentDescriptor;
 
 	private SignalDocument signalDocument;
+	private final String selectedSourceTab;
 
 	/**
 	 * Constructor.
-	 * @param viewerElementManager ViewerElementManager to be used by
-	 * this action.
+	 * @param viewerElementManager ViewerElementManager to be used by this action.
+	 * @param selectedSourceTab name of the tab to be made active by default (if null, first tab will be active)
 	 */
-	public OpenSignalWizardAction(ViewerElementManager viewerElementManager) {
+	public OpenSignalWizardAction(ViewerElementManager viewerElementManager, String selectedSourceTab) {
 		super();
 		this.documentFlowIntegrator = viewerElementManager.getDocumentFlowIntegrator();
 		this.viewerElementManager = viewerElementManager;
-		setText(_("Open signal"));
+		this.selectedSourceTab = selectedSourceTab;
+		setText(_(selectedSourceTab != null ? selectedSourceTab : "Open signal"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open signal and set montage for it"));
 		setMnemonic(KeyEvent.VK_O);
@@ -53,7 +55,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 		openDocumentDescriptor = new OpenDocumentDescriptor();
 
 		OpenSignalWizardDialog openSignalWizardDialog = new OpenSignalWizardDialog(
-			viewerElementManager, viewerElementManager.getDialogParent(), true
+			viewerElementManager, selectedSourceTab
 		);
 		boolean ok = openSignalWizardDialog.showDialog(openDocumentDescriptor, true);
 		if (!ok) {

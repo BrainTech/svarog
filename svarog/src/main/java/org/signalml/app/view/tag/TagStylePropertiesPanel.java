@@ -550,7 +550,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	public JColorChooser getOutlineColorChooser() {
 		if (outlineColorChooser == null) {
-			outlineColorChooser = new TagColorChooser();
+			outlineColorChooser = new JColorChooser();
 
 			outlineColorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 				@Override
@@ -577,7 +577,7 @@ public class TagStylePropertiesPanel extends JPanel {
 	 */
 	public JColorChooser getFillColorChooser() {
 		if (fillColorChooser == null) {
-			fillColorChooser = new TagColorChooser();
+			fillColorChooser = new JColorChooser();
 
 			fillColorChooser.getSelectionModel().addChangeListener(new ChangeListener() {
 				@Override

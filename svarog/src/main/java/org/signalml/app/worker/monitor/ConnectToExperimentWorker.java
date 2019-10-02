@@ -33,9 +33,8 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 	public static final int TIMEOUT_MILIS = 500;
 	public static final int TRYOUT_COUNT = 20;
         public static final int EXPERIMENT_START_TIMEOUT_MILIS = 10000;
-
+        
 	private static Logger logger = Logger.getLogger(ConnectToExperimentWorker.class);
-
 	private ExperimentDescriptor experimentDescriptor;
 
 	private String multiplexerAddress;
@@ -136,8 +135,6 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 		StringTokenizer tokenizer = new StringTokenizer(mxAddr, ":");
 		multiplexerAddress = tokenizer.nextToken();
 		multiplexerPort = Integer.parseInt(tokenizer.nextToken());
-		boolean hasVideoSaver = response.getParams().containsKey("has_video_saver") && (Boolean) response.getParams().get("has_video_saver");
-		experimentDescriptor.setHasVideoSaver(hasVideoSaver);
 	}
 
 	protected void connectToMultiplexer() {
@@ -179,7 +176,7 @@ public class ConnectToExperimentWorker extends SwingWorkerWithBusyDialog<Void, V
 		}
 
 		if (shouldDisconnect) {
-			DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(experimentDescriptor);
+			DisconnectFromExperimentWorker worker = new DisconnectFromExperimentWorker(null, experimentDescriptor);
 			worker.execute();
 		}
 	}

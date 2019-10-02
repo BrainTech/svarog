@@ -25,7 +25,12 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 	{
 		return _("Input: Psychopy procedure");
 	}
-	
+
+	protected int showDialog()
+	{
+		return this.fileChooser.showOpenDialog(this);
+	}
+
 	@Override
 	JFileChooser createFileChooser() {
 		JFileChooser fileChooser = new JFileChooser();

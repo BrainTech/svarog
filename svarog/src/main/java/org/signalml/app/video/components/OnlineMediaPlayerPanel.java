@@ -27,7 +27,7 @@ public final class OnlineMediaPlayerPanel extends JPanel {
 	private static final double DEFAULT_TILT = 0.1;
 	private static final double DEFAULT_ZOOM = 0.1;
 
-	private final OnlineMediaPlayerComponent component;
+	private final OnlineMediaComponent component;
 	private final JToolBar toolbar;
 
 	private final JButton[] panButtons = new JButton[2];
@@ -47,7 +47,7 @@ public final class OnlineMediaPlayerPanel extends JPanel {
 	 * @param component  existing media player component, must not be used
 	 * by more than one panel
 	 */
-	public OnlineMediaPlayerPanel(OnlineMediaPlayerComponent component) {
+	public OnlineMediaPlayerPanel(OnlineMediaComponent component) {
 		super(new BorderLayout());
 		this.component = component;
 		this.toolbar = new JToolBar();

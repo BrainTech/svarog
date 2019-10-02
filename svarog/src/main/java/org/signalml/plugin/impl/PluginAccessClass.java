@@ -1,22 +1,17 @@
 package org.signalml.plugin.impl;
 
-import java.util.HashMap;
-import java.util.MissingResourceException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
-import org.signalml.plugin.export.i18n.SvarogAccessI18n;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.export.resources.SvarogAccessResources;
 import org.signalml.plugin.impl.change.SvarogAccessChangeSupportImpl;
-import org.signalml.plugin.loader.PluginHead;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
+import org.signalml.plugin.export.Plugin;
 
 /**
  * Implementation of {@link SvarogAccess} interface.
@@ -40,8 +35,6 @@ public class PluginAccessClass implements SvarogAccess {
 	private static ViewerElementManager manager = null;
 
 	private final Class _klass;
-
-	private SvarogI18n i18nAccessImpl;
 
 	private final SvarogAccessResourcesImpl resourcesAccessImpl;
 
@@ -67,28 +60,11 @@ public class PluginAccessClass implements SvarogAccess {
 	private static final SvarogAccessChangeSupportImpl changeSupport = SvarogAccessChangeSupportImpl.getInstance();
 
 	/**
-	 * The plugin map.
-	 */
-	private static HashMap<Object, PluginHead> pluginMap = new HashMap<Object, PluginHead>();
-
-	/**
 	 * Constructor. Creates child accesses.
 	 */
-	public PluginAccessClass(PluginHead head) {
-		this._klass = head.getPluginObj().getClass();
+	public PluginAccessClass(Class<? extends Plugin> klass) {
+		this._klass = klass;
 		this.resourcesAccessImpl = new SvarogAccessResourcesImpl(this._klass);
-	}
-
-	/**
-	 * Adds given plugin to {@link #pluginMap}.
-	 * @param head plugin to add
-	 */
-	public synchronized static void addPlugin(PluginHead head) {
-		if (pluginMap.containsKey(head)) {
-			throw new IllegalArgumentException(_R("Duplicate plugin auth! ({0})", head));
-		}
-		pluginMap.put(head, head);
-		logger.debug("addPlugin: " + head + " --> " + head);
 	}
 
 	/**
@@ -172,13 +148,6 @@ public class PluginAccessClass implements SvarogAccess {
 	@Override
 	public SvarogAccessConfig getConfigAccess() {
 		return configAccessImpl;
-	}
-
-	@Override
-	public synchronized SvarogAccessI18n getI18nAccess() {
-		if (this.i18nAccessImpl == null)
-			this.i18nAccessImpl = new SvarogI18n(this._klass);
-		return this.i18nAccessImpl;
 	}
 
 	@Override

@@ -82,7 +82,6 @@ public class ConfigurationDefaults {
 		config.setClamped(getBoolean("application.clamped"));
 		config.setOffscreenChannelsDrawn(getBoolean("application.offscreenChannelsDrawn"));
 		config.setTagToolTipsVisible(getBoolean("application.tagToolTipsVisible"));
-		config.setOptimizeSignalDisplay(getBoolean("application.optimizeSignalDisplay"));
 
 		config.setPageLinesVisible(getBoolean("application.pageLinesVisible"));
 		config.setBlockLinesVisible(getBoolean("application.blockLinesVisible"));
@@ -133,8 +132,6 @@ public class ConfigurationDefaults {
 		config.setMapAspectRatioUp(getInt("application.mapAspectRatioUp"));
 		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));
 		config.setReconstructionHeight(getInt("application.reconstructionHeight"));
-
-		config.setBackupFrequency(getFloat("application.signalRecording.frequency"));
 
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 		config.setOpenbciIPAddress(getString("monitor.openbciIPAddress"));

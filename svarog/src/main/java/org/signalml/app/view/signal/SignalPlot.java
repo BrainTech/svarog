@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.signal;
 
+import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 
@@ -47,6 +48,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.model.components.ChannelsPlotOptionsModel;
+import org.signalml.app.view.common.components.models.LogarithmicBoundedRangeModel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagAttributesRenderer;
 import org.signalml.app.view.tag.TagPaintMode;
@@ -76,7 +78,6 @@ import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.util.Util;
-import static java.lang.String.format;
 
 /** SignalPlot
  *
@@ -116,7 +117,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private boolean clamped;
 	private boolean offscreenChannelsDrawn;
 	private boolean tagToolTipsVisible;
-	private boolean optimizeSignalDisplaying;
 
 	private boolean pageLinesVisible;
 	private boolean blockLinesVisible;
@@ -156,7 +156,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private JLabel signalPlotSynchronizationLabel = null;
 
 	private DefaultBoundedRangeModel timeScaleRangeModel;
-	private DefaultBoundedRangeModel valueScaleRangeModel;
+	private LogarithmicBoundedRangeModel valueScaleRangeModel;
 	private DefaultBoundedRangeModel channelHeightRangeModel;
 
 	private ChannelsPlotOptionsModel channelsPlotOptionsModel;
@@ -232,7 +232,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (masterPlot == null) {
 
 			timeScaleRangeModel = new DefaultBoundedRangeModel();
-			valueScaleRangeModel = new DefaultBoundedRangeModel();
+			valueScaleRangeModel = new LogarithmicBoundedRangeModel();
 			channelHeightRangeModel = new DefaultBoundedRangeModel();
 
 			pixelPerChannel = 80;
@@ -242,7 +242,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			antialiased = config.isAntialiased();
 			clamped = config.isClamped();
 			offscreenChannelsDrawn = config.isOffscreenChannelsDrawn();
-			optimizeSignalDisplaying = config.isOptimizeSignalDisplay();
 
 			pageLinesVisible = config.isPageLinesVisible();
 			blockLinesVisible = config.isBlockLinesVisible();
@@ -267,7 +266,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			antialiased = masterPlot.isAntialiased();
 			clamped = masterPlot.isClamped();
 			offscreenChannelsDrawn = masterPlot.isOffscreenChannelsDrawn();
-			optimizeSignalDisplaying = masterPlot.isOptimizeSignalDisplaying();
 
 			pageLinesVisible = masterPlot.isPageLinesVisible();
 			blockLinesVisible = masterPlot.isBlockLinesVisible();
@@ -290,11 +288,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		if (masterPlot == null) {
 			setTagToolTipsVisible(config.isTagToolTipsVisible());
-			setOptimizeSignalDisplaying(config.isOptimizeSignalDisplay());
-
 		} else {
 			setTagToolTipsVisible(masterPlot.isTagToolTipsVisible());
-			setOptimizeSignalDisplaying(masterPlot.isOptimizeSignalDisplaying());
 		}
 
 		addMouseListener(new MouseAdapter() {
@@ -365,7 +360,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 			// update models
 			timeScaleRangeModel.setRangeProperties((int)(timeZoomFactor*1000), 0, (int)(config.getMinTimeScale()*1000), (int)(config.getMaxTimeScale()*1000), false);
-			valueScaleRangeModel.setRangeProperties(100, 0, config.getMinValueScale(), config.getMaxValueScale(), false);
+			valueScaleRangeModel.setRealRangeProperties(100, config.getMinValueScale(), config.getMaxValueScale());
 			channelHeightRangeModel.setRangeProperties(pixelPerChannel, 0, config.getMinChannelHeight(), config.getMaxChannelHeight(), false);
 
 			timeScaleRangeModel.addChangeListener(this);
@@ -1338,7 +1333,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				updateScales(timeZoomFactor, -1, -1, compensationEnabled);
 			}
 			else if (source == valueScaleRangeModel) {
-				double voltageZoomFactor = (valueScaleRangeModel.getValue()) * voltageZoomFactorRatio;
+				double voltageZoomFactor = (valueScaleRangeModel.getRealValue()) * voltageZoomFactorRatio;
 				//this.channelsPlotOptionsModel.globalScaleChanged(valueScaleRangeModel.getValue());
 				updateScales(-1, voltageZoomFactor, -1, false);
 			}
@@ -2189,7 +2184,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return timeScaleRangeModel;
 	}
 
-	public DefaultBoundedRangeModel getValueScaleRangeModel() {
+	public LogarithmicBoundedRangeModel getValueScaleRangeModel() {
 		return valueScaleRangeModel;
 	}
 
@@ -2387,13 +2382,13 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				try {
 					ignoreSliderEvents = true;
 					int rangeModelValue = (int)(voltageZoomFactor / voltageZoomFactorRatio);
-					if (rangeModelValue > valueScaleRangeModel.getMaximum()) {
-						valueScaleRangeModel.setMaximum(rangeModelValue);
+					if (rangeModelValue > valueScaleRangeModel.getRealMaximum()) {
+						valueScaleRangeModel.setRealMaximum(rangeModelValue);
 					}
-					if (rangeModelValue < valueScaleRangeModel.getMinimum()) {
-						valueScaleRangeModel.setMinimum(rangeModelValue);
+					if (rangeModelValue < valueScaleRangeModel.getRealMinimum()) {
+						valueScaleRangeModel.setRealMinimum(rangeModelValue);
 					}
-					valueScaleRangeModel.setValue(rangeModelValue);
+					valueScaleRangeModel.setRealValue(rangeModelValue);
 					//todo mati - rebuild gui in side panel
 
 				} finally {
@@ -2547,15 +2542,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 				signalPlotColumnHeader.setToolTipText(null);
 			}
 		}
-	}
-
-	public boolean isOptimizeSignalDisplaying() {
-		return optimizeSignalDisplaying;
-	}
-
-	public void setOptimizeSignalDisplaying(boolean optimizeSignalDisplaying) {
-		this.optimizeSignalDisplaying = optimizeSignalDisplaying;
-		repaint();
 	}
 
 	@Override
