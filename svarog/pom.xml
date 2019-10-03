@@ -208,7 +208,6 @@
 									  resultproperty="git-describe.result">
 									<arg value="describe" />
 									<arg value="--tags" />
-									<arg value="--first-parent" />
 								</exec>
 								<condition property="svarog.git-version"
 										   value="${git-describe.output}"
@@ -559,7 +558,7 @@
 		<dependency>
 			<groupId>org.zeromq</groupId>
 			<artifactId>jeromq</artifactId>
-			<version>0.3.5</version>
+			<version>0.5.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.getsentry.raven</groupId>

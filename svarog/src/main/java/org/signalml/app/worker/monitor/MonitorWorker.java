@@ -201,7 +201,8 @@ public class MonitorWorker extends SwingWorkerWithBusyDialog<Void, Object> {
 			style = stylesGenerator.getSmartStyleFor(tagMsg.getName(), tagLen, -1);
 			tagSet.addStyle(style);
 		}
-		int channel = -1;
+
+                int channel = -1;
 		try{
 		    channel = Integer.parseInt(tagMsg.getChannels());
 		}

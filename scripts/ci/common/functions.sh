@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-VERSION=`git describe --tags --first-parent`
+VERSION=`git describe --tags`
 
 #usage:
 #update_version_in_file 'file_path'
