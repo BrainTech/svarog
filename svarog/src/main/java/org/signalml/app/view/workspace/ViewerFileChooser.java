@@ -45,7 +45,17 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		getFileChooserPanel().setViewType(FileChooserViewType.table);
 		this.setPreferredSize(new Dimension(500, 380));
 	}
-
+        public void setSelectedFile(File file)
+        {
+            if (file!=null)
+            {
+                super.setSelectedFile(file);
+            }
+            else
+            {
+                super.setSelectedFile(new File(""));
+            }
+        }
 	public void initialize() {
 		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text (*.txt)"), "txt");
 		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("CSV (*.csv)"), "csv");
@@ -476,7 +486,7 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		execute = new Execute(),
 		usedir = new UseDirectory();
 	}
-
+        
 	protected enum OptionSet {
 		consoleSaveAsText(Operation.save, _("Choose text file to save"),
 		null, _("Save")),
@@ -592,10 +602,12 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 					chooser.addChoosableFileFilter(this.fileFilters[i]);
 
 				if (fileFilters.length > 0)
-					chooser.setFileFilter(fileFilters[0]);
-			}
+                                {
+                                    chooser.setFileFilter(fileFilters[0]);
+                                }
+                            }
 		}
-
+     
 		void setFilters(FileNameExtensionFilter ... fileFilters) {
 			this.fileFilters = fileFilters;
 		}
