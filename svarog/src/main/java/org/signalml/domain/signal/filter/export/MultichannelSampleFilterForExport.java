@@ -2,6 +2,7 @@ package org.signalml.domain.signal.filter.export;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
@@ -27,8 +28,8 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	/**
 	 * Files storing the temporary results of the filtering.
 	 */
-	private File inputFile = new File("export2.bin.tmp");
-	private File outputFile = new File("export1.bin.tmp");
+	private File inputFile = File.createTempFile("svarog_filter_", "export2.bin");
+	private File outputFile = File.createTempFile("svarog_filter_", "export1.bin");
 	private RawSignalWriter rawSignalWriter = new RawSignalWriter();
 
 	/**
