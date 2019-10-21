@@ -21,6 +21,9 @@ import org.signalml.method.mp5.MP5LocalProcessExecutor;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.File;
+import java.nio.file.Files;
+import org.signalml.method.mp5.MP5BundledProcessExecutor;
 
 /** MP5ExecutorManager
  *
@@ -37,9 +40,23 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
 	private transient EventListenerList listenerList = new EventListenerList();
 
 	public MP5ExecutorManager() {
-		defaultExecutor = MP5LocalProcessExecutor.pathExecutor();
+                MP5Executor path_executor = MP5LocalProcessExecutor.pathExecutor();
+                MP5BundledProcessExecutor bundled_executor = new MP5BundledProcessExecutor();
+                String execPath = bundled_executor.getMp5ExecutablePath();
+                File execFile = new File(execPath);
+                if (execFile.exists())
+                {
+                    defaultExecutor = bundled_executor;
+                }
+                else
+                {
+                    defaultExecutor = path_executor;
+                }
+                
 		executors = new ArrayList<MP5Executor>();
-		executors.add(defaultExecutor);
+		executors.add(path_executor);
+                executors.add(bundled_executor);
+
 	}
 
 	@Override
@@ -55,7 +72,8 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
 		Annotations.configureAliases(
 			streamer,
 			MP5ExecutorManager.class,
-			MP5LocalProcessExecutor.class
+			MP5LocalProcessExecutor.class,
+                        MP5BundledProcessExecutor.class
 			//MP5RemoteExecutor.class,
 			//MP5RemotePasswordExecutor.class
 		);
