@@ -503,6 +503,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		if (videoFrame != null) {
 			videoFrame.addListener(new VideoFrameListener());
 		}
+                
+                //
+                this.setSnapToPageMode(true);
+
 	}
 
 	private SignalPlot createSignalPlot(SignalPlot masterPlot) throws SignalMLException {
@@ -1091,6 +1095,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		JToggleButton snapToPageButton = new JToggleButton(getSnapToPageAction());
 		snapToPageButton.setHideActionText(true);
 		mainToolBar.add(snapToPageButton);
+                                
+                snapToPageButton.setSelected(true);
+
+                
 		JToggleButton displayClockTimeButton = new JToggleButton(getDisplayClockTimeAction());
 		displayClockTimeButton.setHideActionText(true);
 		mainToolBar.add(displayClockTimeButton);
@@ -1112,6 +1120,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
 		filterSwitchButton.setSelected(document.getMontage().isFiltered());
 		mainToolBar.add(filterSwitchButton);
+                
 
 	}
 
