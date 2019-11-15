@@ -350,8 +350,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	public void initialize() throws SignalMLException {
 
-		calculateParameters();
-
+                calculateParameters();
 		if (masterPlot == null) {
 
 			calculateVoltageZoomFactorRatio();
@@ -374,6 +373,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 		this.channelsPlotOptionsModel.reset(channelCount);
 		calculateParameters();
+
 	}
 
 	/**
@@ -390,7 +390,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			v = ChannelFunction.EEG.getMaxValue(); //global voltage scale is for EEG by default
 		else
 			v = this.getSourceChannelFor(index).getFunction().getMaxValue();
-		return ((1.0 / (condMaxValue(v) * 2)) * 0.95) / 100;
+		return ((1.0 / (condMaxValue(v) * 2)) * 0.44) / 100;
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class SignalPlotRowHeader extends JComponent {
 	/*
 	 * distance (in pixels) from value scale to its label
 	 */
-	private static final int LABEL_LINE_DISTANCE = 5;
+	private static final int LABEL_LINE_DISTANCE = 10;
 
 	private boolean calculated = false;
 
@@ -206,7 +206,7 @@ public class SignalPlotRowHeader extends JComponent {
 			sb.append("000...");
 		} else {
 
-			while (pixelPerRowUnit <= 5) {
+			while (pixelPerRowUnit <= 20) {
 				pixelPerRowUnit *= 10;
 				sb.append("0");
 			}
@@ -255,11 +255,26 @@ public class SignalPlotRowHeader extends JComponent {
 		g.drawLine(size.width-SCALE_HORIZONTAL_LINE_WIDTH, viewportPoint.y,
 				   size.width-SCALE_HORIZONTAL_LINE_WIDTH, viewportPoint.y + viewportSize.height);
 		int tickCnt = 1 + ((int)(((float)(viewportSize.height+1))  / pixelPerRowUnit));
-		for (i=0; i<tickCnt; i++) {
+		
+                for (i=0; i<tickCnt; i++) {
 			y = viewportPoint.y + ((int)(i*pixelPerRowUnit));
 			g.drawLine(size.width-SCALE_HORIZONTAL_LINE_WIDTH+1, y, size.width-1, y);
 		}
 		this.drawChannelsValueTicks(g, size);
+                
+                
+                for (i=0; i<tickCnt; i++) {
+                        if (i%2 == 0)
+                        {
+                            g.setColor(Color.LIGHT_GRAY);
+                        }
+                        else
+                        {
+                            g.setColor(Color.BLACK);
+                        }
+			y = viewportPoint.y + ((int)(i*pixelPerRowUnit));
+			g.fillRect(size.width-2*SCALE_HORIZONTAL_LINE_WIDTH+1, y, SCALE_HORIZONTAL_LINE_WIDTH, (int)(pixelPerRowUnit));
+		}
 
 
 
