@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en-us">
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+<title>mp5 help</title>
+<meta name="author" content="P. J. Durka">
+<meta name="description" content="mp5 is a program for matching
+      pursuit decomposition of signals">
+</head>
+<body>
+<h1><a class="mozTocH1" name="mozTocId48390"></a>Matching pursuit
+  decomposition in Svarog</h1>
+<p><strong>Mp5</strong> software for <a
+        href="http://www.scholarpedia.org/article/Matching_pursuit"><span
+          style="font-weight: bold;">m</span>atching <span
+          style="font-weight: bold;">p</span>ursuit</a> (MP)
+  decomposition of (biomedical multivariate) time series was
+  developed at the <a href="http://www.uw.edu.pl">University of
+  Warsaw</a>, <a href="www.fuw.edu.pl">Faculty of Physics</a>.
+  The algorithm is based upon the seminal paper by Mallat and Zhang <a href="#ref:Mallat1993">(Mallat1993)</a> with modifications
+  described partly by Durka et al. <a href="#ref:stochmp">(Durka2001)</a> and Kuś et al. <a href="#ref:OGD">(Kuś2013)</a>. Mp5 is designed
+  for batch processing input signals and writing results to disk
+  files called—after&nbsp;<a href="#ref:Mallat1993">(Mallat1993)</a>—<em>decomposition
+  books</em>. These books (<strong>*</strong>.b) contain
+  parameters of the functions selected for representation of the
+  analyzed signal.&nbsp; </p>
+<p>Svarog offers an interactive interface for MP decomposition,
+  allowing for:</p>
+<ol>
+  <li> simple selection of the part of the signal for MP
+    decomposition, </li>
+  <li>running mp5 decomposition according to selected parameters</li>
+  <li>visualization of the results in terms of interactive
+    time-frequency maps of signal's energy density.</li>
+</ol>
+<p>Some of the topics presented below are covered in a screencast
+  avaialble at <a href="http://braintech.pl/svarog/screencast.html">http://braintech.pl/svarog/screencast.html</a>. <em>Caveat</em>: default settings are optimized for speed rather
+  than quality of the decomposition. This may be sufficient for the
+  first try, but serious use requires some understanding of the
+  procedure. Detailed description of the algorithm is given in <a
+  href="#ref:OGD">(Kuś2013)</a>, <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a>.</p>
+<p>Contents:</p>
+<ol id="mozToc">
+  <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  
+  <li><a href="#mozTocId397954">Configuration</a></li>
+  <li><a href="#mozTocId376378">Selecting the signal epoch(s)
+    for decomposition</a></li>
+  <li><a href="#mozTocId496020">Detailed settings and structure
+    of the mp5 config file</a></li>
+  <li><a href="#mozTocId97328">Comments in the config file</a></li>
+  <li><a href="#mozTocId871710">Input settings — obligatory
+    settings</a>
+    <ol>
+      <li><a href="#mozTocId705835">nameOfDataFile</a></li>
+      <li><a href="#mozTocId7579">nameOfOutputDirectory</a></li>
+      <li><a href="#mozTocId838492">writingMode</a></li>
+      <li><a href="#mozTocId521386">numberOfChannels</a></li>
+      <li><a href="#mozTocId771944">selectedChannels</a></li>
+      <li><a href="#mozTocId194113">numberOfSamplesInEpoch</a></li>
+      <li><a href="#mozTocId858097">selectedEpochs</a></li>
+      <li><a href="#mozTocId565795">typeOfDictionary</a></li>
+      <li><a href="#mozTocId398527">energyError</a></li>
+      <li><a href="#mozTocId211562">randomSeed</a></li>
+      <li><a href="#mozTocId624855">reinitDictionary</a></li>
+      <li><a href="#mozTocId511097">maximalNumberOfIterations</a></li>
+      <li><a href="#mozTocId494213">energyPercent</a></li>
+      <li><a href="#mozTocId231667">MP</a></li>
+      <li><a href="#mozTocId980860">scaleToPeriodFactor</a></li>
+      <li><a href="#mozTocId432028">samplingFrequency</a></li>
+      <li><a href="#mozTocId348033">pointsPerMicrovolt</a></li>
+    </ol>
+  <li><a href="#mozTocId305087">Input parameters — additional
+    settings</a>
+    <ol>
+      <li><a href="#mozTocId550531">normType</a></li>
+      <li><a href="#mozTocId494957">diracInDictionary</a></li>
+      <li><a href="#mozTocId746076">gaussInDictionary</a></li>
+      <li><a href="#mozTocId923417">sinCosInDictionary</a></li>
+      <li><a href="#mozTocId695779">gaborInDictionary</a></li>
+      <li><a href="#mozTocId156769">progressBar</a></li>
+    </ol>
+  </li>
+  <li><a href="#mozTocId190035">Example configuration file</a></li>
+  <li><a href="#mozTocId999999">References</a></li>
+</ol>
+<h2><a class="mozTocH2" name="mozTocId397954"></a>Configuration</h2>
+<p>By default, Svarog looks for the file containing the mp5 binary
+  in PATH. If you installed the system from .deb packages (see <a
+        href="http://deb.braintech.pl">http://deb.braintech.pl</a>) it
+  should be already preconfigured. If that does not work, you should
+  provide the correct path in the "Preferences" dialog (<code>Edit/Preferences</code>),
+  
+  
+  tab <code>Tools</code>:</p>
+<img src="images/Svarog_choose_MP_executor.png" width="745" height="470" alt="chooseMPexecutor"> 
+
+<p>If you downloaded mp5 together with Svarog in one archive,
+  executables for different operating systems can be located under <code>mp5</code> in subfolders <code>linux</code>, <code>windows</code>, and <code>mac</code>. </p>
+<h2><a class="mozTocH2" name="mozTocId376378"></a>Selecting the
+  signal epoch(s) for decomposition</h2>
+<img src="images/Svarog_signal_selection_MP.png" width="800" height="386">
+<p>Using icons in the toolbar, mark in Svarog the part of the signal
+  that you want to decompose and select <code>Tools/MP decomposition</code> from the menu</p>
+<img title="MP_Decomposition_configuration"
+      alt="MP_Decomposition_configuration"
+      src="images/MP_Decomposition_configuration.png">
+<p><code>Signal selection</code> tab allows you to change selection or e.g. set
+  up decomposition of the whole signal page by page. Window above presents a selection of a single epoch; to decompose longer recording in smaller subsequent epochs one should mark the option &quot;whole pages only&quot; in the &quot;Whole signal&quot; tab as in the screenshot below:</p>
+<p><img src="images/whole_signal_decomp.png" width="402" height="288"></p>
+<p>Settings in
+  other tabs correspond to the parameters of decomposition that will
+  be written to the configuration file. Their meaning is explained
+  in the next chapter.</p>
+<p>After pressing <code>Ok</code> we get the window showing the progress of the
+  task</p>
+<p><img title="Svarog_MP_progress" alt="Svarog_MP_progress" width="400"
+        src="images/Svarog_MP_progress.png"></p>
+<p>Execution time depends strongly on selected settings and length
+  of the signal being decomposed. It can be quite long for
+  multichannel decompositions. If a single channel was selected (as
+  in the picture above) with default settings, and the sampling
+  frequency was not extremely high (that is, there are no more than
+  few thousand points in the selected epoch) decomposition should
+  not take more than a minute on average PC. </p>
+<p>You can move this window aside and continue working with Svarog
+  in the meantime. </p>
+<p>After the task completes, <code>Get result</code> button will
+  appear at the bottom of the window. Pressing it opens a dialog
+  where you can choose<code> Open in the viewer</code> and/or <code>Save
+  
+  
+  to disk</code>. The former option opens a new tab in Svarog and
+  diplays the timefrequency map of the signal's energy density,
+  computed from the decomposition:<br>
+</p>
+<img title="Svarog_MP_book" alt="Svarog_MP_book"
+      src="images/Svarog_MP_book_zoom_select.png"><br>
+<p>Below the map the program displays the original signal, its
+  reconstruction from all the atoms from the (just computed)
+  decomposition, and the reconstruction computed from the selected
+  atoms. You can select atoms by clicking the crosses in their
+  centers. After clicking the magnifying glass in the top left, you
+  can zoom selected area of the map.<br>
+</p>
+<p><br>
+  <br>
+</p>
+<h1><a class="mozTocH2" name="mozTocId496020"></a>Detailed settings
+  and structure of the mp5 config file</h1>
+<p>Parameters of the decomposition, entered in subsequent tabs of
+  the <code>MP Decomposition configuration</code> window, are
+  written to a configuration file, which is in turn passed by Svarog
+  to the mp5 binary. Mp5 config file consists of lines, which can be
+  divided into three groups:</p>
+<ul>
+  <li>Comments. </li>
+  <li>Obligatory settings. </li>
+  <li>Additional settings. </li>
+</ul>
+<p>Each line, which is not a comment, is treated as a setting for
+  the program. Each setting consists of its name and assigned value.
+  If any of the obligatory settings is missing, mp5 will return
+  error. If the user does not set the additional settings, mp5 sets
+  the default values. Lines with commands and comments can occur
+  within the config file in any order.</p>
+<h2><a class="mozTocH2" name="mozTocId97328"></a>Comments in the
+  config file</h2>
+<p>The user can add his own comments to the configuration file by
+  placing a # sign in front of the line. There are two type of
+  comments:</p>
+<ul>
+  <li>lines starting with # are treated as comments and will exist
+    only in the config file, but will be neglected by mp5, for
+    example:<br>
+    <code># Moly set the numberOfChannels to 5</code> </li>
+  <li>lines starting with ## are also treated as comments but they
+    will be copied into the output file (decomposition book), e.g.:<br>
+    <code>## channels selected above motor cortex decomposed with
+    very small dictionary</code> </li>
+</ul>
+<p>Although in general the results are written to the binary file,
+  the comments are saved as text and can be viewed by standard text
+  editor.</p>
+<h2><a class="mozTocH2" name="mozTocId871710"></a>Input settings —
+  obligatory settings</h2>
+<p>Signal (time series) for mp5 decomposition must be stored
+  in a binary file as a 4-byte float numbers. </p>
+<p>In case of multivariate
+  (multichannel) recordings the values should be multiplexed, that is:<br>
+  <code>s1ch1, s1ch2, …, s1chK, s2ch1, s2ch2, …, s2chK</code><br>
+  where <code>sXchY</code> is the X-th sample at channel Y, K is the
+  number of channels </p>
+<h3><a class="mozTocH3" name="mozTocId705835"></a>nameOfDataFile</h3>
+<p>Full path to the input file.</p>
+<h3><a class="mozTocH3" name="mozTocId7579"></a>nameOfOutputDirectory</h3>
+<p>The path to the output directory, where the file with results
+  should be saved. The default is the same as location of the input
+  file.</p>
+<h3><a class="mozTocH3" name="mozTocId838492"></a>writingMode</h3>
+<ul>
+  <li><code>CREATE</code> — create a new file for  writing (saving results of decomposition).</li>
+  <li><code>APPEND</code> — append the results to an already
+    existing file or create a new file if there is no file to append
+    to </li>
+</ul>
+<p>Names of the output files are generated automatically; the name
+  of the file with the data is appended with: <code>_smp.b</code> in case of a single channel mp algorithm (SMP), or <code>_mmp.b</code> in case of one of the multichannel mp algorithms (MMP1, MMP2,
+  MMP3). The decomposition book includes also the original analyzed
+  epoch.</p>
+<h3><a class="mozTocH3" name="mozTocId521386"></a>numberOfChannels</h3>
+<p>Number of channels in the input file. Positive integer, 
+  range: 1 - 65535.</p>
+<h3><a class="mozTocH3" name="mozTocId771944"></a>selectedChannels</h3>
+<p>In either of the algorithms—monochannel or multivariate—one does
+  not have to use all the channels present in the data file. For
+  example, using SMP we may decompose only few channels, and for MMP
+  we may need to neglect non-EEG channels. This option lists the
+  channels which we want to analyze. That is, to analyze all the
+  channels from a 20-channel datafile config must contain:</p>
+<pre>numberOfChannels 20
+selectedChannels 1-20</pre>
+<p>Channels are numbered starting from 1. Selection is written
+  either as comma-separated list 1,2,3 or as ranges 1-3. Both can be
+  combined in one line, e.g.:</p>
+<pre>selectedChannels 1, 3, 5, 7-11, 19</pre>
+type: positive integer, <br>
+range: 1 - 65535
+<h3><a class="mozTocH3" name="mozTocId194113"></a>numberOfSamplesInEpoch</h3>
+<p>When decomposing susequent epochs of a long signal, this option
+  determines the length of the epoch measured as number of samples.
+  Argument's value: positive integer. Range: 1 - 2147483647</p>
+<h3><a class="mozTocH3" name="mozTocId858097"></a>selectedEpochs</h3>
+<p>Chooses which epochs (of the length defined by <code>numberOfSamplesInEpoch</code>)
+  will be analysed. First epoch in the file is number 1. Written as
+  comma-separated list with ranges as in <code>selectedChannels</code>. </p>
+<h3><a class="mozTocH3" name="mozTocId565795"></a>typeOfDictionary</h3>
+<ul>
+  <li><code>OCTAVE_FIXED</code> — functions distributed in a way to
+    optimally cover the ranges of parameters reasonable for a given
+    signal in a way that the distance between any two neighboring
+    functions does not exceed the threshold given by a user <a
+          href="#ref:OGD">(Kuś2013)</a> </li>
+  <li><code>OCTAVE_STOCH</code> — distribution as in <code>OCTAVE_FIXED</code>,
+    plus a stochastic element to remove the possible bias <a
+          href="#ref:stochmp">(Durka et al. 2001)</a>. The dictionary
+    with Gabors is created according to the first parameter
+    energyError command, but in the next step a fraction of randomly
+    selected functions are removed from dictionary. The number of
+    atoms left is controlled by the second value passed to the <code> EnergyEr</code><code>ror</code> parameter.</li>
+</ul>
+<h3><a class="mozTocH3" name="mozTocId398527"></a>energyError</h3>
+<p>This parameter regulates the density of the dictionary. That is,
+  for the same energyError, and different sizes of the analyzed
+  epoch, effective sizes of the dictionary will be larger for longer
+  epochs, but accuracy of the decomposition should be equivalent
+  (except for the border effects). Changing this parameter in the
+  "Basic settings" tab automatically computes the amount of RAM
+  necessary to store the dictionary that will be prepared for
+  decomposition.</p>
+<p>The energyError parameter has two values:</p>
+<ul>
+  <li>the first one is a threshold for a distance between two
+    nearest atom in dictionary, this value should be in range (0 1) </li>
+  <li>the second is value percentage of atoms left after stochastic
+    dictionary reduction; this value is omitted by mp5, when
+    typeOfDictionary is set to OCTAVE_FIXED </li>
+</ul>
+<p>For example, the configuration of commands:</p>
+<pre><code>typeOfDictionary OCTAVE_FIXED
+energyError 0.3 30.0</code></pre>
+<p>results in generation of dictionary in which the maximal distance
+  between nearest Gabors does not exceed value 0.3.</p>
+<p>With another configuration:</p>
+<pre><code>typeOfDictionary OCTAVE_STOCH
+energyError 0.3 40.0</code></pre>
+<p>the distribution of the atoms in dictionary is performed in such
+  way that the maximal distance between nearest Gabors does not
+  exceed value 0.3. After generation of the dictionary, the number
+  of Gabors will be reduced to 40% of their initial amount
+  (determined by the threshold 0.3) by random selection.</p>
+<p><br>
+  type of the first parameter (energyError): float number<br>
+  range of the first parameter: (0.0 1.0)</p>
+<p>type of the second parameter (stochastic reduction): float number<br>
+  range of the second parameter: (0.0 100.0&gt;</p>
+<h3><a class="mozTocH3" name="mozTocId211562"></a>randomSeed</h3>
+<p>If provided, this value will be used for the seed of the random
+  generator used in creations a stochastic dictionary. Otherwise,
+  the seed will be generated from the computer's clock.</p>
+<p>For example:</p>
+<pre><code>randomSeed 23432</code></pre>
+<p>The mp5 will used this number as a seed for random generator. The <i>seed</i> is the same for any stochastic reinitialization of the
+  dictionary (see the next command: reinitDictionary).</p>
+<p>Second example:</p>
+<pre><code>randomSeed auto</code></pre>
+<p>The mp5 will used the time form the computer's clock as a seed
+  for therandom generator. The seed is different for each
+  reinitialization of the dictionary.</p>
+<p>Type: string &quot;auto&quot; or positive integer number<br>
+  range in case of integer: 0 - 2147483647</p>
+<h3><a class="mozTocH3" name="mozTocId624855"></a>reinitDictionary</h3>
+<p>When using the default stochastic (randomized) dictionary, the
+  randomization is called reinitialization of the dictionary. It can
+  be performed:</p>
+<ul>
+  <li><code>REINIT_AT_ALL</code> — at each of the analyzed epochs,
+    works only for <code>SMP</code>. </li>
+  <li><code>REINIT_IN_CHANNEL_DOMAIN</code> — exactly the same
+    dictionary will be used to decompose all epochs within a
+    channel. Before the analysis of another channel, parameters will
+    be reinitialized, i.e. randomized again. This setting can be
+    applied only in the case of separate decomposition of channels
+    using <code>SMP</code> option. </li>
+  <li><code>REINIT_IN_OFFSET_DOMAIN</code> — dictionary will be
+    reinitialized before decomposing each subsequent epoch. </li>
+  <li><code>NO_REINIT_AT_ALL</code> — the same dictionary for
+    decompositions in all channels and all epochs. </li>
+</ul>
+<h3><a class="mozTocH3" name="mozTocId511097"></a>maximalNumberOfIterations</h3>
+<p>Maximum number of iterations equals the largest allowed numbers
+  of waveforms fitted to the analyzed epoch. This command together
+  with the next <code>energyPercent</code> control the number of
+  waveforms used for the approximation of the analyzed epoch, which
+  equals the number of algorithms iteration performed before the
+  stopping criterion is fulfilled. The iterations stop either after
+  reaching this number, or after explaining the percentage of
+  signal's energy set in the <code>energyPercent</code> parameter,
+  whatever comes first. That is, if we want to force the
+  decomposition to contain exactly&nbsp;<code>maximalNumberOfIterations</code> iterations, we should set <code>energyPercent</code> to 100. It
+  does not influence the accuracy of the parameters of the waveforms
+  fitted to the signal, in the sense that the&nbsp;5 waveforms
+  fitted to the signal in 5 iterations run will be just as good as
+  the first 5 fitted in the 100 iterations run.</p>
+<p>Time of computations is proportional to the number of algoritms
+  iterations (except for the first, longer iteration), and obviously
+  with more iterations we explain larger fraction of signal's
+  energy; OTOH, too many iterations usually make no sense.
+  Unfortunately, the meaning of "too many" depends on the properties
+  of the signal and the aim of decomposition. For further
+  considerations consult e.g. <a href="#ref:Uni">(Durka2007a)</a> and <a href="#ref:Scholarpedia">(Durka2007b)</a>.</p>
+<p>Type: positive integer<br>
+  range: &lt;1 65535&gt;</p>
+<h3><a class="mozTocH3" name="mozTocId494213"></a>energyPercent</h3>
+<p>Algorithm stops after explaining <code>energyPercent </code>%
+  of the energy of the analyzed epoch, that is, when the sum of
+  energies of functions fitted to the signals reaches <code>energyPercent</code>/100
+  
+  of the signal's energy, unless <code>maximalNumberOfIterations</code> was reached first.</p>
+<p>Type: positive float<br>
+  range: (0 100.0)</p>
+<h3><a class="mozTocH3" name="mozTocId231667"></a>MP</h3>
+<p>There are significant differences between the 'classical' MP
+  computed for the univariate time series,&nbsp;and the variety of
+  possible versions of the multichannel MP. Choice of the
+  appropriate flavor of multivariate algorithm is controlled by the
+  MP variable, which can be assigned one of the following values.
+  For equations and formulae see <a href="#ref:Uni">(Durka&nbsp;2007a)</a> and <a href="#ref:OGD">(Kuś2013)</a></p>
+<ul>
+  <li><code>SMP</code> — monochannel MP (separate decomposition of
+    single channels) </li>
+  <li><code>MMP1</code> — multichannel algorithm maximizing in each
+    iteration the sum of energies explained in all channels </li>
+  <li><code>MMP2</code> — suboptimal, faster version of <code>MMP1</code> maximizing in each iteration the sum of products of the waveform
+    with all the channels. In theory may degrade in the case when
+    opposite polarities are present across channels </li>
+  <li><code>MMP3</code> — as <code>MMP1</code>, but allowing
+    different phases in each channel. </li>
+</ul>
+<h3><a class="mozTocH3" name="mozTocId980860"></a>scaleToPeriodFactor</h3>
+<p>All Gabor functions, for which the number of&nbsp;periods of the
+  sine, given by this parameter, exceeds the half-width of the
+  Gaussian,&nbsp;will be removed from the dictionary. It regulates
+  removal of non-physical cases. For example,&nbsp;1 Hz oscillation
+  which lasts 100 milliseconds mathematically represents a well
+  defined waveform. However,&nbsp;the very notion of frequency is
+  dubious in such case. Also, the actul peak-to-peak amplitude of
+  such function may significantly differ from the doubled amplitude
+  of the Gaussian envelope. See <a href="#ref:spikes">(Durka2004)</a></p>
+<p>Type: positive float<br>
+  range: (0.0 3.402823466 E + 38&gt;</p>
+<h3><a class="mozTocH3" name="mozTocId432028"></a>samplingFrequency</h3>
+<p>Floating-point positive number. Decimal dot is obligatory, that
+  is "<code>128.0</code>" and not "<code>128</code>". This parameter
+  has no influence on the decomposition -- value is copied into the
+  decomposition book file and can be later used for scaling the
+  display of results. </p>
+<h3><a class="mozTocH3" name="mozTocId348033"></a>pointsPerMicrovolt</h3>
+<p>Conversion rate from the actual values stored in the datafile to
+  physical units, for EEG microvolts [µV], for MEG femtotesla [fT].
+  This parameter has no influence on the decomposition -- value is
+  copied into the decomposition book file and can be later used for
+  scaling the display of results. </p>
+<p>Decimal dot is obligatory. For example,</p>
+<pre><code>pointsPerMicrovolt 20.0</code></pre>
+<p>in EEG file says that the stored vaules must be multiplied by 20
+  to get microvolts.</p>
+<p>Type: positive float<br>
+  range: (0.0 3.402823466 E + 38&gt;</p>
+<h2><a class="mozTocH2" name="mozTocId305087"></a>Input parameters —
+  additional settings</h2>
+<h3><a class="mozTocH3" name="mozTocId550531"></a>normType</h3>
+<p>The experimental feature of mp5 program, do not change it. The
+  default value is set to <code>L2</code>.</p>
+<h3><a class="mozTocH3" name="mozTocId494957"></a>diracInDictionary</h3>
+<p>Generate dictionary including Dirac Function. The possible
+  argument of command is <code>YES</code> or <code>NO</code> string.</p>
+<h3><a class="mozTocH3" name="mozTocId746076"></a>gaussInDictionary</h3>
+<p>Generate dictionary including Gauss Function. The possible
+  argument of command is <code>YES</code> or <code>NO</code> string.</p>
+<h3><a class="mozTocH3" name="mozTocId923417"></a>sinCosInDictionary</h3>
+<p>Generate dictionary including Harmonic function. The possible
+  argument of command is <code>YES</code> or <code>NO</code> string.</p>
+<h3><a class="mozTocH3" name="mozTocId695779"></a>gaborInDictionary</h3>
+<p>Generate dictionary including Gabor functions. The possible
+  argument of command is <code>YES</code> or <code>NO</code> string.</p>
+<h3><a class="mozTocH3" name="mozTocId156769"></a>progressBar</h3>
+<p>Plot text bar representing the progress of calculation. The
+  possible argument of command is <code>YES</code> or <code>NO</code> string.</p>
+<p>&nbsp; </p>
+<h1><a class="mozTocH1" name="mozTocId190035"></a>Example
+  configuration file</h1>
+<pre># OBLIGATORY PARAMETERS
+nameOfDataFile         		test.dat
+nameOfOutputDirectory  		./
+writingMode            		CREATE
+samplingFrequency      		128.0
+numberOfChannels       		24
+selectedChannels       		1-19
+numberOfSamplesInEpoch 		179
+selectedEpochs         		1-31
+typeOfDictionary       		OCTAVE_FIXED
+energyError            		0.3 50.0
+randomSeed             		auto
+reinitDictionary       		NO_REINIT_AT_ALL
+maximalNumberOfIterations 	100
+energyPercent             	95.0
+MP                        	SMP
+scaleToPeriodFactor       	1.0
+pointsPerMicrovolt        	1.0
+
+# ADDITIONAL PARAMETERS
+normType               		L2
+diracInDictionary       	YES
+gaussInDictionary       	YES
+sinCosInDictionary     	   	YES
+gaborInDictionary      	   	YES
+progressBar            	   	ON
+</pre>
+<hr>
+<h1><a name="mozTocId999999"></a>References</h1>
+<p><a name="ref:Mallat1993"></a>(Mallat1993) Stéphane Mallat and
+  Zhifeng Zhang<br>
+  Matching pursuit with time-frequency dictionaries. <span
+        style="font-style: italic;">IEEE Transactions on Signal
+  Processing</span> 1993, 41:3397-3415</p>
+<p><a name="ref:Uni"></a>(Durka2007a) Piotr J. Durka<br>
+  <a style="font-style:italic;" href="http://uni.durka.info">Matching
+  
+  
+  Pursuit and Unification in EEG analysis</a>, Artech House 2007,
+  ISBN 978-1-58053-304-1</p>
+<p><a name="ref:Scholarpedia"></a>(Durka2007b) Piotr J. Durka<br>
+  <a href="http://www.scholarpedia.org/article/Matching_pursuit">Matching
+  
+  
+  Pursuit</a>, Scholarpedia, p. 20910, 2007.</p>
+<p><a name="ref:OGD"></a>(Kuś2013) Rafał Kuś, Piotr T.
+  Różański and Piotr J. Durka<br>
+  Multivariate matching pursuit in optimal Gabor dictionaries:
+  theory and software for EEG/MEG via Svarog, <span
+        style="font-style: italic;">Biomedical Engineering Online</span>
+  2013, 12:94 doi:10.1186/1475-925X-14-94,
+  <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a></p>
+<p><a name="ref:stochmp"></a>(Durka et al. 2001) Piotr J. Durka, D.
+  Ircha and K. J. Blinowska<br>
+  Stochastic time-frequency dictionaries for Matching Pursuit, <span
+        style="font-style: italic;">IEEE Transactions on Signal
+  Processing</span>, vol. 49, No. 3, pp. 507-510, March 2001.</p>
+<p><a name="ref:spikes"></a>(Durka2004) Adaptive time-frequency
+  parametrization of epileptic EEG spikes P.J. Durka, Physical
+  Review E, vol. 69, 051914 (2004)</p>
+</body>
+</html>
