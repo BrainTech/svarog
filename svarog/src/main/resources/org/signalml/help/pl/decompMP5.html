@@ -2,44 +2,38 @@
 <html lang="en-us">
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-<title>mp5 help</title>
+<title>empi help --- to do empi!!!</title>
 <meta name="author" content="P. J. Durka">
-<meta name="description" content="mp5 is a program for matching
+<meta name="description" content="empi is a program for matching
       pursuit decomposition of signals">
 </head>
 <body>
-<h1><a class="mozTocH1" name="mozTocId48390"></a>Matching pursuit
-  decomposition in Svarog</h1>
-<p><strong>Mp5</strong> software for <a
-        href="http://www.scholarpedia.org/article/Matching_pursuit"><span
-          style="font-weight: bold;">m</span>atching <span
-          style="font-weight: bold;">p</span>ursuit</a> (MP)
-  decomposition of (biomedical multivariate) time series was
-  developed at the <a href="http://www.uw.edu.pl">University of
-  Warsaw</a>, <a href="www.fuw.edu.pl">Faculty of Physics</a>.
-  The algorithm is based upon the seminal paper by Mallat and Zhang <a href="#ref:Mallat1993">(Mallat1993)</a> with modifications
-  described partly by Durka et al. <a href="#ref:stochmp">(Durka2001)</a> and Kuś et al. <a href="#ref:OGD">(Kuś2013)</a>. Mp5 is designed
-  for batch processing input signals and writing results to disk
-  files called—after&nbsp;<a href="#ref:Mallat1993">(Mallat1993)</a>—<em>decomposition
-  books</em>. These books (<strong>*</strong>.b) contain
-  parameters of the functions selected for representation of the
-  analyzed signal.&nbsp; </p>
-<p>Svarog offers an interactive interface for MP decomposition,
-  allowing for:</p>
-<ol>
-  <li> simple selection of the part of the signal for MP
-    decomposition, </li>
-  <li>running mp5 decomposition according to selected parameters</li>
-  <li>visualization of the results in terms of interactive
-    time-frequency maps of signal's energy density.</li>
-</ol>
-<p>Some of the topics presented below are covered in a screencast
-  avaialble at <a href="http://braintech.pl/svarog/screencast.html">http://braintech.pl/svarog/screencast.html</a>. <em>Caveat</em>: default settings are optimized for speed rather
-  than quality of the decomposition. This may be sufficient for the
-  first try, but serious use requires some understanding of the
-  procedure. Detailed description of the algorithm is given in <a
-  href="#ref:OGD">(Kuś2013)</a>, <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a>.</p>
-<p>Contents:</p>
+<h1>Matching pursuit przez interfejs Svaroga
+</h1>
+<h3><strong>Empi</strong> to oprogramowanie do dekompozycji algorytmem <a
+        href="http://www.scholarpedia.org/article/Matching_pursuit">matching pursuit</a> (MP), 
+        zaproponowanym w 1993 przez Mallata i Zhanga <a href="#ref:Mallat1993">(Mallat and Zhang 1993)</a>. 
+        Od 1995 MP rozwijany jest na Wydziale Fizyki Uniwersytetu Warszawskiego w zastosowaniu do sygnałów biomedycznych (głównie EEG/MEG). 
+</h3>  
+</p>
+    <p>
+Dołączone do pakietów Svaroga binaria empi (dla GNU/Linux, MacOS i MS Windows) 
+pochodzą z <A HREF="https://github.com/develancer/empi">https://github.com/develancer/empi</A> 
+i zawierają m.in. optymalną konstrukcję słownika na podstawie <a href="#ref:OGD">(Kuś et al. 2013)</a>. 
+    </p>
+    <p>
+Empi zaprojektowano do działania w trybie wsadowym: na podstawie opisanych poniżej parametrów, 
+które Svarog zapisuje w tymczasowym pliku konfiguracyjnym, empi wykonuje dekompozycję wskazanych sygnałów
+i zapisuje wyniki na dysku w pliku o rozszerzeniu .b, zwanym "książką" za Mallatem i Zhangiem.
+    </p>
+    <p>
+Książki zawierają parametry struktur (funkcji Gabora), dopasowanych do wybranego fragmentu sygnału w iteracyjnej procedurze MP.
+    </p>
+    <p>
+Po zakończeniu obliczeń możemy skorzystać z wizualizacji wyników w przestrzeni czas-częstość, wybierając opcję "Uzyskaj wynik / Otwórz w przeglądarce".
+    </p>
+    
+<H2>Opis parametrów:</H2>
 <ol id="mozToc">
   <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
   
@@ -47,7 +41,7 @@
   <li><a href="#mozTocId376378">Selecting the signal epoch(s)
     for decomposition</a></li>
   <li><a href="#mozTocId496020">Detailed settings and structure
-    of the mp5 config file</a></li>
+    of the empi config file</a></li>
   <li><a href="#mozTocId97328">Comments in the config file</a></li>
   <li><a href="#mozTocId871710">Input settings — obligatory
     settings</a>
@@ -85,18 +79,14 @@
   <li><a href="#mozTocId999999">References</a></li>
 </ol>
 <h2><a class="mozTocH2" name="mozTocId397954"></a>Configuration</h2>
-<p>By default, Svarog looks for the file containing the mp5 binary
-  in PATH. If you installed the system from .deb packages (see <a
-        href="http://deb.braintech.pl">http://deb.braintech.pl</a>) it
-  should be already preconfigured. If that does not work, you should
+<p>By default, Svarog looks for the file containing the empi binary
+  in PATH. It should be already preconfigured. If that does not work, you should
   provide the correct path in the "Preferences" dialog (<code>Edit/Preferences</code>),
-  
-  
-  tab <code>Tools</code>:</p>
+ tab <code>Tools</code>:</p>
 <img src="images/Svarog_choose_MP_executor.png" width="745" height="470" alt="chooseMPexecutor"> 
 
-<p>If you downloaded mp5 together with Svarog in one archive,
-  executables for different operating systems can be located under <code>mp5</code> in subfolders <code>linux</code>, <code>windows</code>, and <code>mac</code>. </p>
+<p>If you downloaded empi together with Svarog in one archive,
+  executables for different operating systems can be located under <code>empi</code> in subfolders <code>linux</code>, <code>windows</code>, and <code>mac</code>. </p>
 <h2><a class="mozTocH2" name="mozTocId376378"></a>Selecting the
   signal epoch(s) for decomposition</h2>
 <img src="images/Svarog_signal_selection_MP.png" width="800" height="386">
@@ -147,11 +137,11 @@
   <br>
 </p>
 <h1><a class="mozTocH2" name="mozTocId496020"></a>Detailed settings
-  and structure of the mp5 config file</h1>
+  and structure of the empi config file</h1>
 <p>Parameters of the decomposition, entered in subsequent tabs of
   the <code>MP Decomposition configuration</code> window, are
   written to a configuration file, which is in turn passed by Svarog
-  to the mp5 binary. Mp5 config file consists of lines, which can be
+  to the empi binary. Empi config file consists of lines, which can be
   divided into three groups:</p>
 <ul>
   <li>Comments. </li>
@@ -160,8 +150,8 @@
 </ul>
 <p>Each line, which is not a comment, is treated as a setting for
   the program. Each setting consists of its name and assigned value.
-  If any of the obligatory settings is missing, mp5 will return
-  error. If the user does not set the additional settings, mp5 sets
+  If any of the obligatory settings is missing, empi will return
+  error. If the user does not set the additional settings, empi sets
   the default values. Lines with commands and comments can occur
   within the config file in any order.</p>
 <h2><a class="mozTocH2" name="mozTocId97328"></a>Comments in the
@@ -171,7 +161,7 @@
   comments:</p>
 <ul>
   <li>lines starting with # are treated as comments and will exist
-    only in the config file, but will be neglected by mp5, for
+    only in the config file, but will be neglected by empi, for
     example:<br>
     <code># Moly set the numberOfChannels to 5</code> </li>
   <li>lines starting with ## are also treated as comments but they
@@ -184,7 +174,7 @@
   editor.</p>
 <h2><a class="mozTocH2" name="mozTocId871710"></a>Input settings —
   obligatory settings</h2>
-<p>Signal (time series) for mp5 decomposition must be stored
+<p>Signal (time series) for empi decomposition must be stored
   in a binary file as a 4-byte float numbers. </p>
 <p>In case of multivariate
   (multichannel) recordings the values should be multiplexed, that is:<br>
@@ -263,7 +253,7 @@ range: 1 - 65535
   <li>the first one is a threshold for a distance between two
     nearest atom in dictionary, this value should be in range (0 1) </li>
   <li>the second is value percentage of atoms left after stochastic
-    dictionary reduction; this value is omitted by mp5, when
+    dictionary reduction; this value is omitted by empi, when
     typeOfDictionary is set to OCTAVE_FIXED </li>
 </ul>
 <p>For example, the configuration of commands:</p>
@@ -290,11 +280,11 @@ energyError 0.3 40.0</code></pre>
   the seed will be generated from the computer's clock.</p>
 <p>For example:</p>
 <pre><code>randomSeed 23432</code></pre>
-<p>The mp5 will used this number as a seed for random generator. The <i>seed</i> is the same for any stochastic reinitialization of the
+<p>The empi will used this number as a seed for random generator. The <i>seed</i> is the same for any stochastic reinitialization of the
   dictionary (see the next command: reinitDictionary).</p>
 <p>Second example:</p>
 <pre><code>randomSeed auto</code></pre>
-<p>The mp5 will used the time form the computer's clock as a seed
+<p>The empi will used the time form the computer's clock as a seed
   for therandom generator. The seed is different for each
   reinitialization of the dictionary.</p>
 <p>Type: string &quot;auto&quot; or positive integer number<br>
@@ -400,7 +390,7 @@ energyError 0.3 40.0</code></pre>
 <h2><a class="mozTocH2" name="mozTocId305087"></a>Input parameters —
   additional settings</h2>
 <h3><a class="mozTocH3" name="mozTocId550531"></a>normType</h3>
-<p>The experimental feature of mp5 program, do not change it. The
+<p>The experimental feature of empi program, do not change it. The
   default value is set to <code>L2</code>.</p>
 <h3><a class="mozTocH3" name="mozTocId494957"></a>diracInDictionary</h3>
 <p>Generate dictionary including Dirac Function. The possible
