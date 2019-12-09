@@ -234,6 +234,15 @@
     		<minExclusive value="0"></minExclusive>
     	</restriction>
     </simpleType>
+    
+    <simpleType name="isBackup">
+    	<annotation>
+    		<documentation>
+    			LEGACY OPTION FOR BACKWARD COMPATABILITY, DOES NOTHING
+    		</documentation>
+    	</annotation>
+    	<restriction base="boolean" />
+    </simpleType>
 
     <complexType name="rawSignalInfo">
     	<sequence minOccurs="1" maxOccurs="1">
@@ -404,6 +413,11 @@
 		    <documentation>The timestamp of the first sample in the signal.</documentation>
 		</annotation>
 		</element>
+                <element name="isBackup" type="rs:isBackup" maxOccurs="1" minOccurs="0">
+                <annotation>
+                    <documentation>LEGACY OPTION FOR BACKWARD COMPATABILITY, DOES NOTHING</documentation>
+                </annotation>
+                </element>
     	</sequence>
     </complexType>
 
@@ -418,11 +432,13 @@
     		<element name="calibrationParam" type="rs:calibrationParam" minOccurs="1" maxOccurs="unbounded"></element>
     	</sequence>
     </complexType>
+    
 
     <element name="rawSignal" type="rs:rawSignalInfo">
     	<annotation>
     		<documentation>Signal info</documentation>
     	</annotation>
     </element>
+
 
 </schema>

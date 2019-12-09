@@ -21,6 +21,8 @@ import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.net.URLDecoder;
+import java.util.Locale;
 
 /** MP5LocalProcessExecutor
  *
@@ -37,7 +39,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 	private String uid;
 
 	private String name;
-	private String mp5ExecutablePath;
+	protected String mp5ExecutablePath;
 
 	private transient MP5ConfigCreator configCreator = new MP5ConfigCreator();
 	private transient RawSignalWriter rawSignalWriter = new RawSignalWriter();
@@ -138,7 +140,7 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 
 		tracker.setMessage(_("Starting executable"));
 
-		boolean executionOk = processController.executeProcess(workingDirectory, mp5ExecutablePath, configFile, tracker);
+		boolean executionOk = processController.executeProcess(workingDirectory, getMp5ExecutablePath(), configFile, tracker);
 		if (!executionOk) {
 			return false;
 		}

@@ -29,8 +29,8 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 	/**
 	 * Files that are used to store temporary filtering results.
 	 */
-	private File temporaryFile1 = new File("exportsub1.bin.tmp");
-	private File temporaryFile2 = new File("exportsub2.bin.tmp");
+	private File temporaryFile1 = File.createTempFile("svarog_IIR_", "exportsub1.bin.tmp");
+	private File temporaryFile2 = File.createTempFile("svarog_IIR_", "exportsub2.bin.tmp");
 
 	/**
 	 * A {@link RawSignalWriter} for writing the temporary results to files.
