@@ -3,63 +3,106 @@
 <title>SVAROG</title>
 </head>
 
-<p><div style="text-align:center">
-    SVAROG</div></p>
-    <p>
-czyli <i>Signal Viewer, Analyzer and Recorder On GPL</i>, to oprogramowanie dostępne dla GNU/Linuxa, MacOS i Windows na licencji GPLv3.
+<p></p>
+    <div style="text-align:center">
+<i>Signal Viewer, Analyzer and Recorder On GPL</i> 
+    </div>
+<p>
+to oprogramowanie dostępne dla GNU/Linuxa, MacOS i Windows na licencji GPLv3.
 Tekst licencji dostępny jest na stronie <A HREF="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</A>. 
-Najnowsze wersje są dostępne na stronie <strong>SVAROG.pl</strong>. 
+Najnowsze wersje są dostępne na stronie 
     </p>
-
-
-<section>
-    <p>
-Svarog umożliwia m.in.:
-    </p>
-<ol>
-    <li>
-        definiowanie własnych montaży i filtrów częstościowych (<A HREF="editTimeDomainSampleFilterDialog.html">pomoc</A>),
-    </li>
-    <li>
-        oglądanie widma zaznaczonego fragmentu sygnału (ikonka "FFT"),
-    </li>
-    <li>
-        estymację spektrogramu (STFT), reprezentacji falkowej (skalogram), analizy składników niezależnych (ICA) 
-        i kierunkowej funkcji przejścia (DTF),
-    </li>
-    <li>
-        uśrednianie potencjałów wywołanych (EP), jak również reprezentacji czas-częstość (STFT, WT, MP) według oznaczeń (tagów),
-    </li>
-    <li>
-        manualne oznaczanie wybranych fragmentów sygnału (grafoelementy, artefakty), 
-        definiowanie własnych oznaczeń i zapis na dysku w plikach <code>*.tag</code>.
-    </li>
     
-</ol>
-</section>
+    <p>
+   <div style="text-align:center">SVAROG.PL</div>
+   </p>
+   
+   <p></p> 
+    
+    <hr>
+    
 
-<section>
+    <p>
+Svarog umożliwia między inymi:
+    </p>
+    
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/plotoptions.png" alt="plotop"> pełną kontrolę wyświetlania: 
+    <img src="../../app/icon/antialias.png" alt="help"> antialiasing, <img src="../../app/icon/pagelines.png" alt="lines"> linie itp.
+    </p>
+    
+     <p>
+    &emsp;&emsp;<img src="../../app/icon/zoom.png" alt="zoom"> powiększanie fragmentu sygnału (zoom) 
+    </p>
+ 
+    <p>
+    &emsp;&emsp;[<img src="../../app/icon/fft.png" alt="FFT">] oglądanie widma wybranego fragmentu sygnału 
+    </p>
+   
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/montage.png" alt="mtg">
+    definiowanie własnych montaży i filtrów częstościowych 
+    <A HREF="editTimeDomainSampleFilterDialog.html"><img src="../../app/icon/help.png" alt="help"></A>; 
+    włączamy je i wyłączamy za pomocą przycisków
+    <img src="../../app/icon/filter.png" alt="flt">
+    <img src="../../app/icon/filteron.png" alt="flton">
+    </p>
+     
+     
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/analyze.png" alt="tools"> estymację spektrogramu (STFT), 
+    reprezentacji falkowej (skalogram), analizy składników niezależnych (ICA) 
+        i kierunkowej funkcji przejścia (DTF),
+    </p>
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/analyze.png" alt="tools"> uśrednianie potencjałów wywołanych (EP), 
+    jak również reprezentacji czas-częstość (STFT, WT, MP) według oznaczeń (tagów)
+    </p>
+    
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/tag.png" alt="mtg"> manualne oznaczanie wybranych fragmentów sygnału (grafoelementy, artefakty), 
+        <img src="../../app/icon/palette.png" alt="pal"> definiowanie własnych oznaczeń i zapis na dysku w plikach <code>*.tag</code>
+    </p> 
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/record.png" alt="rec"> 
+    <img src="../../app/icon/stop-recording.png" alt="stop"> 
+    <img src="../../app/icon/camera.png" alt="cam"> 
+    menu "Online" jest aktywne, kiedy w systemie jest podłączony kompatybilny wzmacniacz
+    </p>
 
+    
+    <p></p>     
+    <hr>
+    
+    
+    <p>
 Moduł dekompozycji Matching Pursuit (MP) korzysta z programu empi (<code>https://github.com/develancer/empi</code>) i umożliwia:
-<ol>
+</p>
+    <ul>
     <li>
-        dekompozycję sygnału (jednego lub wielu kanałów) algorytmem MP i zapis wyników na dysku w "książce", czyli pliku *.b 
-        (<A HREF="decompMP5.html">pomoc</a>),
+        dekompozycję jednego lub wielu kanałów algorytmem MP i zapis wyników na dysku 
+        w "książce" <img src="../../app/icon/book.png" alt="book">, czyli pliku <code>*.b</code> 
+        <A HREF="decompMP5.html"><img src="../../app/icon/help.png" alt="help"></A>
     </li>
     <li>
-        interaktywne oglądanie wyników dekompozycji ("książki") w przestrzeni czas-częstość (<A HREF="viewerBookMP5.html">pomoc</a>),
+        interaktywne oglądanie wyników dekompozycji ("książki") w przestrzeni czas-częstość 
+        <A HREF="viewerBookMP5.html"><img src="../../app/icon/help.png" alt="help"></A>
     </li>
     <li>
-        rysowanie profili EEG (jak w artykule [1]) na podstawie dekompozycji MP zapisanej uprzednio na dysku w "książce" 
-        (<A HREF="profilesEEG.html">pomoc</a>).
+        rysowanie profili EEG (jak w artykule [2.]) na podstawie dekompozycji MP zapisanej uprzednio na dysku w "książce" 
+        <A HREF="profilesEEG.html"><img src="../../app/icon/help.png" alt="help"></A>
     </li>
-</ol>
+</ul>
 
 
-Dokładniejsze opisy działania tych zaawansowanych funkcji można znaleźć w dostępnych w Internecie artykułach:
+Opisy działania tych zaawansowanych funkcji można znaleźć w dostępnych w Internecie artykułach:
 
 
-<small>
+
 <ol>
     <li>
         R. Kuś, P.T. Różański and P.J. Durka: Multivariate matching pursuit in optimal Gabor dictionaries: 
@@ -77,7 +120,7 @@ Dokładniejsze opisy działania tych zaawansowanych funkcji można znaleźć w 
         <code>https://www.frontiersin.org/articles/10.3389/fnhum.2015.00258</code>
     </li>
 </ol>
-    </small>
+
 
 </section>
 <!--
