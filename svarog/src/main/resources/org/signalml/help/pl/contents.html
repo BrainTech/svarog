@@ -3,16 +3,83 @@
 <title>SVAROG</title>
 </head>
 
-<p>
-SVAROG, czyli <i>Signal Viewer, Analyzer and Recorder On GPL</i>, to oprogramowanie dostępne dla GNU/Linuxa, MacOS i Windows na licencji GPLv3.
-Tekst licencji dostępny jest na stronie <A HREF="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</A>.
-</p>
+<p><div style="text-align:center">
+    SVAROG</div></p>
+    <p>
+czyli <i>Signal Viewer, Analyzer and Recorder On GPL</i>, to oprogramowanie dostępne dla GNU/Linuxa, MacOS i Windows na licencji GPLv3.
+Tekst licencji dostępny jest na stronie <A HREF="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</A>. 
+Najnowsze wersje są dostępne na stronie <strong>SVAROG.pl</strong>. 
+    </p>
 
-<p>
-Najnowsze wersje są dostępne na stronie <A HREF="https://svarog.pl">svarog.pl</A>, 
-z dołączonym oprogramowaniem do dekompozycji Matching Pursuit. 
-</p>
 
+<section>
+    <p>
+Svarog umożliwia m.in.:
+    </p>
+<ol>
+    <li>
+        definiowanie własnych montaży i filtrów częstościowych (<A HREF="editTimeDomainSampleFilterDialog.html">pomoc</A>),
+    </li>
+    <li>
+        oglądanie widma zaznaczonego fragmentu sygnału (ikonka "FFT"),
+    </li>
+    <li>
+        estymację spektrogramu (STFT), reprezentacji falkowej (skalogram), analizy składników niezależnych (ICA) 
+        i kierunkowej funkcji przejścia (DTF),
+    </li>
+    <li>
+        uśrednianie potencjałów wywołanych (EP), jak również reprezentacji czas-częstość (STFT, WT, MP) według oznaczeń (tagów),
+    </li>
+    <li>
+        manualne oznaczanie wybranych fragmentów sygnału (grafoelementy, artefakty), 
+        definiowanie własnych oznaczeń i zapis na dysku w plikach <code>*.tag</code>.
+    </li>
+    
+</ol>
+</section>
+
+<section>
+
+Moduł dekompozycji Matching Pursuit (MP) korzysta z programu empi (<code>https://github.com/develancer/empi</code>) i umożliwia:
+<ol>
+    <li>
+        dekompozycję sygnału (jednego lub wielu kanałów) algorytmem MP i zapis wyników na dysku w "książce", czyli pliku *.b 
+        (<A HREF="decompMP5.html">pomoc</a>),
+    </li>
+    <li>
+        interaktywne oglądanie wyników dekompozycji ("książki") w przestrzeni czas-częstość (<A HREF="viewerBookMP5.html">pomoc</a>),
+    </li>
+    <li>
+        rysowanie profili EEG (jak w artykule [1]) na podstawie dekompozycji MP zapisanej uprzednio na dysku w "książce" 
+        (<A HREF="profilesEEG.html">pomoc</a>).
+    </li>
+</ol>
+
+
+Dokładniejsze opisy działania tych zaawansowanych funkcji można znaleźć w dostępnych w Internecie artykułach:
+
+
+<small>
+<ol>
+    <li>
+        R. Kuś, P.T. Różański and P.J. Durka: Multivariate matching pursuit in optimal Gabor dictionaries: 
+        theory and software with interface for EEG/MEG via Svarog. BioMedical Engineering OnLine 2013, 12:94 
+        <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-94</code>
+    </li>
+    <li>
+        Electroencephalographic profiles for differentiation of disorders of consciousness Urszula Malinowska, 
+        Camille Chatelle, Marie-Aurée Bruno, Quentin Noirhomme, Steven Laureys, Piotr J Durka BioMedical Engineering OnLine 2013, 
+        12:109 (21 October 2013)         <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-109</code>
+    </li>
+    <li>
+        Spindles in Svarog: framework and software for parametrization of EEG transients P.J. Durka, U. Malinowska, M. Zieleniewska, 
+        Ch. O'Reilly, P.T. Różański, J. Żygierewicz. Front. Hum. Neurosci., 08 May 2015
+        <code>https://www.frontiersin.org/articles/10.3389/fnhum.2015.00258</code>
+    </li>
+</ol>
+    </small>
+
+</section>
 <!--
 <p>
 Projekt zapoczątkowany w 2004 na 
