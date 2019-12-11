@@ -10,16 +10,15 @@
 <body>
 <h1>Matching pursuit przez interfejs Svaroga
 </h1>
-<h3><strong>Empi</strong> to oprogramowanie do dekompozycji algorytmem <a
-        href="http://www.scholarpedia.org/article/Matching_pursuit">matching pursuit</a> (MP), 
-        zaproponowanym w 1993 przez Mallata i Zhanga <a href="#ref:Mallat1993">(Mallat and Zhang 1993)</a>. 
-        Od 1995 MP rozwijany jest na Wydziale Fizyki Uniwersytetu Warszawskiego w zastosowaniu do sygnałów biomedycznych (głównie EEG/MEG). 
+<h3><strong>Empi</strong> to oprogramowanie do dekompozycji algorytmem <strong>matching pursuit</strong> (MP), 
+    zaproponowanym w 1993 przez  <A HREF="#ref:Mallat1993">Mallata i Zhanga</a>. 
+        Od 1995 MP rozwijany jest na Wydziale Fizyki Uniwersytetu Warszawskiego w zastosowaniu do sygnałów biomedycznych (EEG/MEG). 
 </h3>  
 </p>
     <p>
 Dołączone do pakietów Svaroga binaria empi (dla GNU/Linux, MacOS i MS Windows) 
-pochodzą z <A HREF="https://github.com/develancer/empi">https://github.com/develancer/empi</A> 
-i zawierają m.in. optymalną konstrukcję słownika na podstawie <a href="#ref:OGD">(Kuś et al. 2013)</a>. 
+pochodzą z <code>https://github.com/develancer/empi</code> 
+i zawierają m.in.  <a href="#ref:OGD">optymalną konstrukcję słownika</a>. 
     </p>
     <p>
 Empi zaprojektowano do działania w trybie wsadowym: na podstawie opisanych poniżej parametrów, 
@@ -33,7 +32,10 @@ Książki zawierają parametry struktur (funkcji Gabora), dopasowanych do wybra
 Po zakończeniu obliczeń możemy skorzystać z wizualizacji wyników w przestrzeni czas-częstość, wybierając opcję "Uzyskaj wynik / Otwórz w przeglądarce".
     </p>
     
-<H2>Opis parametrów:</H2>
+    <p><em>UWAGA</em>: domyślne (w Svarogu) ustawienia jakości dekompozycji MP nastawione są raczej na szybkość niż dokładność, 
+        dlatego przed poważnieszym zastosowaniem wskazane jest dokładniejsze zapoznanie się ze znaczeniem parametrów, np. na podstawie <a href="#ref:OGD">artykułu</a>.
+    
+<H2>Opis parametrów (ang):</H2>
 <ol id="mozToc">
   <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
   
@@ -437,23 +439,26 @@ sinCosInDictionary     	   	YES
 gaborInDictionary      	   	YES
 progressBar            	   	ON
 </pre>
+
+
+
+
+
 <hr>
+
 <h1><a name="mozTocId999999"></a>References</h1>
 <p><a name="ref:Mallat1993"></a>(Mallat1993) Stéphane Mallat and
   Zhifeng Zhang<br>
   Matching pursuit with time-frequency dictionaries. <span
         style="font-style: italic;">IEEE Transactions on Signal
   Processing</span> 1993, 41:3397-3415</p>
-<p><a name="ref:Uni"></a>(Durka2007a) Piotr J. Durka<br>
+
+<p><a name="ref:Uni">(Durka2007a)</a> Piotr J. Durka<br>
   <a style="font-style:italic;" href="http://uni.durka.info">Matching
-  
-  
   Pursuit and Unification in EEG analysis</a>, Artech House 2007,
   ISBN 978-1-58053-304-1</p>
 <p><a name="ref:Scholarpedia"></a>(Durka2007b) Piotr J. Durka<br>
   <a href="http://www.scholarpedia.org/article/Matching_pursuit">Matching
-  
-  
   Pursuit</a>, Scholarpedia, p. 20910, 2007.</p>
 <p><a name="ref:OGD"></a>(Kuś2013) Rafał Kuś, Piotr T.
   Różański and Piotr J. Durka<br>
@@ -461,14 +466,11 @@ progressBar            	   	ON
   theory and software for EEG/MEG via Svarog, <span
         style="font-style: italic;">Biomedical Engineering Online</span>
   2013, 12:94 doi:10.1186/1475-925X-14-94,
-  <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a></p>
+  <code>http://www.biomedical-engineering-online.com/content/12/1/94</code></p>
 <p><a name="ref:stochmp"></a>(Durka et al. 2001) Piotr J. Durka, D.
   Ircha and K. J. Blinowska<br>
   Stochastic time-frequency dictionaries for Matching Pursuit, <span
         style="font-style: italic;">IEEE Transactions on Signal
   Processing</span>, vol. 49, No. 3, pp. 507-510, March 2001.</p>
-<p><a name="ref:spikes"></a>(Durka2004) Adaptive time-frequency
-  parametrization of epileptic EEG spikes P.J. Durka, Physical
-  Review E, vol. 69, 051914 (2004)</p>
 </body>
 </html>
