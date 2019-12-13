@@ -2612,8 +2612,8 @@ msgid "Help contents"
 msgstr "Zawartość pomocy"
 
 #: org/signalml/app/view/common/dialogs/HelpDialog.java:122
-msgid "Help for signalml"
-msgstr "Pomoc dla signalml"
+msgid "Svarog help"
+msgstr "Pomoc Svaroga"
 
 #: org/signalml/app/view/signal/popup/ChannelOptionsPopupDialog.java:125
 msgid "Hide"
