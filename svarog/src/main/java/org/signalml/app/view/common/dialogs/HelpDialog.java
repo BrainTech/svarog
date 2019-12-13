@@ -119,7 +119,7 @@ public class HelpDialog extends AbstractDialog  {
 	@Override
 	protected void initialize() {
 
-		setTitle(_("Help for signalml"));
+		setTitle(_("Svarog help"));
 		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/help.png"));
 
 		super.initialize();
