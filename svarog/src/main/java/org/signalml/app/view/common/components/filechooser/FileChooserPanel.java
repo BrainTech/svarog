@@ -81,7 +81,7 @@ public class FileChooserPanel extends JPanel {
 		if (fileChooser == null) {
 			fileChooser = new EmbeddedFileChooser();
 			fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-			fileChooser.setFileHidingEnabled(false);
+			fileChooser.setFileHidingEnabled(true);
 			fileChooser.setMultiSelectionEnabled(false);
 			fileChooser.setAcceptAllFileFilterUsed(true);
 
