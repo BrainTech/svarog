@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.SvarogApplication;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
 import org.springframework.core.io.ClassPathResource;
@@ -34,8 +35,19 @@ public class SvarogI18n implements ISvarogI18n {
 	 */
 	public SvarogI18n(Class klass, String catalogId) {
 		log.info("loading i18n bundle " + catalogId + "for klass " + klass.getName());
-		this.i18n = I18nFactory.getI18n(klass, catalogId, Locale.getDefault(),
-										I18nFactory.READ_PROPERTIES|I18nFactory.FALLBACK);
+                String svarogLocaleString;
+                // in case configuration doesnt exists yet
+                // for example during first launch of Svarog or tests
+                try
+                {
+                    svarogLocaleString = SvarogApplication.getGeneralConfiguration().getLocale();
+                }
+                catch (NullPointerException ex)
+                {
+                    svarogLocaleString = "en";
+                }
+                Locale svarogLocale = new Locale(svarogLocaleString);
+		this.i18n = I18nFactory.getI18n(klass, catalogId, svarogLocale, I18nFactory.READ_PROPERTIES|I18nFactory.FALLBACK);
 	}
 
 	/**
@@ -47,7 +59,9 @@ public class SvarogI18n implements ISvarogI18n {
 	}
 
 	private URL _getHelpURL(String htmlName, String language) throws IOException {
-		return (new ClassPathResource("org/signalml/help/"+language+"/"+htmlName)).getURL();
+                ClassPathResource resource = new ClassPathResource("org/signalml/help/"+language+"/"+htmlName);
+                URL resourceUrl = resource.getURL();
+		return resourceUrl;
 	}
 
 	/**
@@ -59,7 +73,8 @@ public class SvarogI18n implements ISvarogI18n {
 	 */
 	public URL getHelpURL(String htmlName) {
 		try {
-			return _getHelpURL(htmlName, Locale.getDefault().getLanguage());
+                        String locale = SvarogApplication.getGeneralConfiguration().getLocale();
+			return _getHelpURL(htmlName, locale);
 		} catch (IOException ex_) {
 			log.debug("Failed to get localized help URL for " + htmlName);
 			try {
