@@ -132,8 +132,6 @@
     		<documentation>SignalML format source UID.</documentation>
     	</annotation>
     	<restriction base="string">
-    		<length value="32"></length>
-    		<pattern value="[0-9a-fA-F]{32}"></pattern>
     	</restriction>
     </simpleType>
 
