@@ -79,9 +79,9 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		initialized = true;
 
 		logger.debug("Registering static codecs");
-		register(org.signalml.codec.precompiled.EASYS.class, "precompiled");
-		register(org.signalml.codec.precompiled.EDF.class, "precompiled");
-		register(org.signalml.codec.precompiled.M4D.class, "precompiled");
+		register(org.signalml.codec.precompiled.EASYS.class);
+		register(org.signalml.codec.precompiled.EDF.class);
+		register(org.signalml.codec.precompiled.M4D.class);
 
 		File specsDir = new File(System.getProperty("user.dir"), "specs");
 
@@ -102,14 +102,14 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		try {
 			jsignalml.compiler.CompiledClass<? extends jsignalml.Source> klass
 				= loadFromFile("compiled", file);
-			this.register(klass.theClass(), "compiled");
+			this.register(klass.theClass());
 		} catch(Exception e) {
 			logger.error("Failed to compile file " + file + ": " + e);
 			OptionPane.showError(null, _R("Failed to compile file {0}: {1}", file, e));
 		}
 	}
 
-	private void register(Class<? extends jsignalml.Source> source, String message) {
+	private void register(Class<? extends jsignalml.Source> source) {
 		logger.info("Registering codec: " + source.getCanonicalName());
 
 		SignalMLCodec codec = new StaticCodec(source);
@@ -117,7 +117,7 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
 		model.setCodec(codec);
 		model.setSourceFile(new File(""));
-		model.setFormatName(codec.getFormatName() + " [" + message + "]");
+		model.setFormatName(codec.getFormatName());
 		createCodec(model);
 	}
 
