@@ -3,6 +3,7 @@ package org.signalml.app.view.document.opensignal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -63,6 +64,14 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		setMinimumSize(new Dimension(800, 600));
+                setMaximumSize(new Dimension( Integer.MAX_VALUE, Integer.MAX_VALUE));
+                //I would like to make it fullscreen, but JDialog doesnt have a maximise option
+                //So to avoid overlapping different taskbars/panels I'll make it 85% of the main screen
+                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+                int targetHeight = (int)(screenSize.height * 0.85);
+                int targetWidth = (int)(screenSize.width * 0.85);
+
+                setSize(targetWidth, targetHeight);
 	}
 
 	@Override
