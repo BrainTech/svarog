@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InvalidClassException;
 import java.nio.ByteOrder;
+import java.nio.file.Files;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -989,13 +990,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 	@Override
 	public File getTemporaryFile(String extension) throws IOException {
-		File profileDirectory = getViewerElementManager().getProfileDir().getAbsoluteFile();
-		File tempDirectory = new File(profileDirectory, "temp");
-		if (tempDirectory.exists() && !tempDirectory.isDirectory())
-			throw new IOException(_("can not create the directory for temporary files"));
-		if (!tempDirectory.exists())
-			tempDirectory.mkdir();
-		File tempFile = File.createTempFile("temp", extension, tempDirectory);
+		File tempFile = File.createTempFile("svarog_temp", extension);
 		TemporaryFile temporaryFile = new TemporaryFile(tempFile.getAbsolutePath());
 		temporaryFile.deleteOnExit();
 		return temporaryFile;
