@@ -19,6 +19,7 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.plugin.export.config.SvarogConfiguration;
 
 /**
  * A panel containing an EmbeddedFileChooser. Allows to select a given type of
@@ -100,10 +101,9 @@ public class FileChooserPanel extends JPanel {
 
 			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 			fileChooser.setPreferredSize(new Dimension(500,280));
 			fileChooser.setMinimumSize(new Dimension(500, 150));
-
+                        
 			// remove escape key binding to allow for dialog closing
 			KeyStroke escape = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
 			fileChooser.getInputMap(JFileChooser.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(escape, "none");
