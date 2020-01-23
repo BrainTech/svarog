@@ -89,6 +89,8 @@ import org.springframework.util.Log4jConfigurer;
 
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import org.signalml.app.logging.SvarogLoggingConfigurer;
 import org.signalml.app.video.VideoStreamManager;
 import org.signalml.app.worker.monitor.ObciServerCapabilities;
@@ -642,7 +644,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 			try {
 				mp5Method = (MP5Method) methodManager.registerMethod(MP5Method.class);
-				mp5Method.setTempDirectory(profileDir);
+                                Path mp5TempDir = Files.createTempDirectory("svarog_mp");
+				mp5Method.setTempDirectory(mp5TempDir.toFile());
 				mp5Method.setExecutorLocator(mp5ExecutorManager);
 				MP5MethodDescriptor mp5Descriptor = new MP5MethodDescriptor(mp5Method);
 				methodManager.setMethodData(mp5Method, mp5Descriptor);
