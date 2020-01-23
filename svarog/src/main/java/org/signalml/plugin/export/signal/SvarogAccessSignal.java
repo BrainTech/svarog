@@ -472,7 +472,7 @@ public interface SvarogAccessSignal {
 
 	/**
 	 * Creates and returns a temporary file.
-	 * The file is created in the {@code %profile-directory%/temp}.
+	 * The file is created in the default temporary folder.
 	 * When the File object is destroyed (by the Garbage Collector)
 	 * the file is removed from disk.
 	 * NOTE: it would be a good practice if you removed your temporary files
