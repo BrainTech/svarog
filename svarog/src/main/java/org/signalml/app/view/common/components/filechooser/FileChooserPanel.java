@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -19,7 +18,6 @@ import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
 
 import org.signalml.app.document.ManagedDocumentType;
-import org.signalml.plugin.export.config.SvarogConfiguration;
 
 /**
  * A panel containing an EmbeddedFileChooser. Allows to select a given type of

@@ -504,7 +504,6 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			videoFrame.addListener(new VideoFrameListener());
 		}
                 
-                //
                 this.setSnapToPageMode(true);
 
 	}
@@ -1096,7 +1095,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		snapToPageButton.setHideActionText(true);
 		mainToolBar.add(snapToPageButton);
                                 
-                snapToPageButton.setSelected(true);
+                this.setSnapToPageMode(true);
 
                 
 		JToggleButton displayClockTimeButton = new JToggleButton(getDisplayClockTimeAction());

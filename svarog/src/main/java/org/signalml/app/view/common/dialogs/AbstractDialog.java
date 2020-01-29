@@ -173,7 +173,6 @@ public abstract class AbstractDialog extends JDialog {
 	protected void initialize() {
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		setMaximumSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
