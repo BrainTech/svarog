@@ -65,6 +65,10 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 	@Override
 	public void createMontage(Montage montage) throws MontageException {
 		List<SourceChannel> referenceSourceChannels = getReferenceSourceChannels(montage);
+                if (referenceSourceChannels.isEmpty())
+                {
+                    throw new MontageException("Can't find required channels");
+                }
 
 		String token = "-1/" + Integer.toString(referenceSourceChannels.size());
 		boolean oldMajorChange = montage.isMajorChange();

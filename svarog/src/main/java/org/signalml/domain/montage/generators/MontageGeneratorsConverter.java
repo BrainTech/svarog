@@ -29,7 +29,8 @@ public class MontageGeneratorsConverter implements Converter {
 			add(new LeftEarMontageGenerator());
 			add(new RightEarMontageGenerator());
 			add(new LinkedEarsMontageGenerator());
-//                        add(new LongitudalReferenceMontageGenerator());
+                        add(new LongitudalReferenceMontageGenerator());
+                        add(new TransverseReferenceMontageGenerator());
 		}
 	};
 

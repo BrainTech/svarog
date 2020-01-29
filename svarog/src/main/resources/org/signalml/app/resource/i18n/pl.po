@@ -7157,3 +7157,20 @@ msgstr "Docelowy plik zapisu {0} już istnieje! Chcesz nadpisać?"
 #, java-format
 msgid "{0}. ({1})"
 msgstr "{0}. ({1})"
+
+
+#: org/signalml/domain/montage/generators/LongitudinalReferenceMontageGenerator.java:29
+#, java-format
+msgid "Transverse Banana"
+msgstr "Poprzeczny Banan"
+
+#: org/signalml/domain/montage/generators/TransverseReferenceMontageGenerator.java:34
+#, java-format
+msgid "Longitudinal Banana"
+msgstr "Podłóżny Banan"
+
+msgid "Cannot find at least one fitting pair of channels"
+msgstr "Nie mogę znaleźć chociażby jednej pasującej pary kanałów"
+
+msgid "Can't find required channels"
+msgstr "Nie mogę znaleźć wymaganych kanałów"

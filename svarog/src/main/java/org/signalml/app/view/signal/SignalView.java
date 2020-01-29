@@ -112,6 +112,7 @@ import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.monitor.MonitorRecordingDurationPanel;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
+import org.signalml.app.view.montage.MontageGeneratorComboBoxMainPanel;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
@@ -1119,6 +1120,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		filterSwitchButton.setSelectedIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/filteron.png"));
 		filterSwitchButton.setSelected(document.getMontage().isFiltered());
 		mainToolBar.add(filterSwitchButton);
+
+                mainToolBar.add(new MontageGeneratorComboBoxMainPanel(document));
                 
 
 	}
