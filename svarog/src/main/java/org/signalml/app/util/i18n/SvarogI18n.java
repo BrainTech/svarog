@@ -35,18 +35,7 @@ public class SvarogI18n implements ISvarogI18n {
 	 */
 	public SvarogI18n(Class klass, String catalogId) {
 		log.info("loading i18n bundle " + catalogId + "for klass " + klass.getName());
-                String svarogLocaleString;
-                // in case configuration doesnt exists yet
-                // for example during first launch of Svarog or tests
-                try
-                {
-                    svarogLocaleString = SvarogApplication.getGeneralConfiguration().getLocale();
-                }
-                catch (NullPointerException ex)
-                {
-                    svarogLocaleString = "en";
-                }
-                Locale svarogLocale = new Locale(svarogLocaleString);
+                Locale svarogLocale = Locale.getDefault();
 		this.i18n = I18nFactory.getI18n(klass, catalogId, svarogLocale, I18nFactory.READ_PROPERTIES|I18nFactory.FALLBACK);
 	}
 
@@ -73,7 +62,7 @@ public class SvarogI18n implements ISvarogI18n {
 	 */
 	public URL getHelpURL(String htmlName) {
 		try {
-                        String locale = SvarogApplication.getGeneralConfiguration().getLocale();
+                        String locale  = Locale.getDefault().getLanguage();
 			return _getHelpURL(htmlName, locale);
 		} catch (IOException ex_) {
 			log.debug("Failed to get localized help URL for " + htmlName);

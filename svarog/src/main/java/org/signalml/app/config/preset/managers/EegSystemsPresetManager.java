@@ -52,7 +52,7 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	 * to the right EEG systems
 	 */
 	protected void matchMontageGeneratorsWithEegSystems(Preset[] eegSystemsPresets, Preset[] montageGeneratorsPresets) {
-		for (Preset preset: eegSystemsPresets) {
+                for (Preset preset: eegSystemsPresets) {
 			EegSystem eegSystem = (EegSystem) preset;
 			EegSystemName eegSystemName = ((EegSystem) preset).getEegSystemName();
 

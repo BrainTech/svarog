@@ -88,6 +88,9 @@ import org.signalml.util.Util;
 public class SignalPlot extends JComponent implements PropertyChangeListener, ChangeListener, Scrollable, ExportedSignalPlot {
 
 	private static final long serialVersionUID = 1L;
+        // makes maximum default "sensible" amplitude half channel height 
+        // to look like EEG printouts on paper
+        private static final double SIGNAL_PLOT_CHANNEL_MAX_VALUE_ZOOM_GAIN = 0.44;
 
 	protected static final Logger logger = Logger.getLogger(SignalPlot.class);
 
@@ -390,7 +393,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			v = ChannelFunction.EEG.getMaxValue(); //global voltage scale is for EEG by default
 		else
 			v = this.getSourceChannelFor(index).getFunction().getMaxValue();
-		return ((1.0 / (condMaxValue(v) * 2)) * 0.44) / 100;
+		return ((1.0 / (condMaxValue(v) * 2)) * SIGNAL_PLOT_CHANNEL_MAX_VALUE_ZOOM_GAIN) / 100;
 	}
 
 	/**

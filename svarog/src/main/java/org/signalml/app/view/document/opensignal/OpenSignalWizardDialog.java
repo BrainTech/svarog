@@ -64,7 +64,6 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		setMinimumSize(new Dimension(800, 600));
-                setMaximumSize(new Dimension( Integer.MAX_VALUE, Integer.MAX_VALUE));
                 //I would like to make it fullscreen, but JDialog doesnt have a maximise option
                 //So to avoid overlapping different taskbars/panels I'll make it 85% of the main screen
                 Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

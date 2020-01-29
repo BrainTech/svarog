@@ -4,6 +4,7 @@
 package org.signalml.app;
 
 import com.alee.laf.WebLookAndFeel;
+import com.alee.managers.language.LanguageManager;
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
@@ -329,16 +330,10 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		Util.dumpDebuggingInfo();
 
-		LocaleContextHolder.setLocale(locale);
-		Locale.setDefault(locale);
-		SvarogI18n.setLocale(locale);
-
-		logger.debug("Locale set to [" + locale.toString() + "]");
-		logger.debug("Application starting");
-
 		// TODO check nested modal dialogs
 		// setupGUIExceptionHandler();
 
+                
 		try {
 			SwingUtilities.invokeAndWait(() -> {
 				WebLookAndFeel.install();
@@ -346,6 +341,14 @@ public class SvarogApplication implements java.lang.Runnable {
 		} catch (InterruptedException|InvocationTargetException ex) {
 			logger.error("Initializing L&F failed", ex);
 		}
+                
+                // Weblaf changes locale options.
+                LocaleContextHolder.setLocale(locale);
+		Locale.setDefault(locale);
+		SvarogI18n.setLocale(locale);
+
+		logger.debug("Locale set to [" + locale.toString() + "]");
+		logger.debug("Application starting");
 
 		if (!line.hasOption("nosplash")) {
 			try {
