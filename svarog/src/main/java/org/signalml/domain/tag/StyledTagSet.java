@@ -505,7 +505,14 @@ public class StyledTagSet implements Serializable, Preset {
 	public SortedSet<Tag> getTagsBetween(double start, double end) {
 		Tag startMarker = new Tag(null, start-maxTagLength, 0);
 		Tag endMarker = new Tag(null,end,Float.MAX_VALUE); // note that lengths matter, so that all tags starting at exactly end will be selected
-		return tags.subSet(startMarker, true, endMarker, true);
+		try
+                {
+                    return tags.subSet(startMarker, true, endMarker, true);
+                }
+                catch (IllegalArgumentException ex)
+                        {
+                            return new TreeSet<Tag>();
+                        }
 	}
 
 	/**
