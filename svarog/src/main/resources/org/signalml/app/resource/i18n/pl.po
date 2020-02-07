@@ -7167,7 +7167,7 @@ msgstr "Poprzeczny Banan"
 #: org/signalml/domain/montage/generators/TransverseReferenceMontageGenerator.java:34
 #, java-format
 msgid "Longitudinal Banana"
-msgstr "Podłóżny Banan"
+msgstr "Podłużny Banan"
 
 msgid "Cannot find at least one fitting pair of channels"
 msgstr "Nie mogę znaleźć chociażby jednej pasującej pary kanałów"
