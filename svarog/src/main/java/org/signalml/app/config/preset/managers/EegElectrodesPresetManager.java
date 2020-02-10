@@ -31,6 +31,7 @@ public class EegElectrodesPresetManager extends AbstractMultifileResourcesPreset
 	@Override
 	public String[] getDefaultFileNames() {
 		return new String[] {
+                        "EEG_GENERIC.xml",
 			"EEG_10_10_easy_cap.xml",
 			"EEG_10_20_easy_cap.xml",
 			"EEG_10_10_gel_cap.xml",

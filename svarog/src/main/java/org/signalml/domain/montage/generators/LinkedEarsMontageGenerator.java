@@ -43,12 +43,15 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 			  SourceChannel.LEFT_EAR_CHANNEL_NAME,
 			  SourceChannel.RIGHT_EAR_CHANNEL_NAME
 				};
-			errors.addError(_R("At least one set of ears should be available: {0}, {1} or {2}, {3}.",
-				SourceChannel.LEFT_EAR_CHANNEL_NAME,
-				SourceChannel.RIGHT_EAR_CHANNEL_NAME,
-				SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE,
-				SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE
-			));
+                        if (errors != null)
+                        {
+                            errors.addError(_R("At least one set of ears should be available: {0}, {1} or {2}, {3}.",
+                                    SourceChannel.LEFT_EAR_CHANNEL_NAME,
+                                    SourceChannel.RIGHT_EAR_CHANNEL_NAME,
+                                    SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE,
+                                    SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE
+                            ));
+                                };
 			return false;
 		}
 		return true;

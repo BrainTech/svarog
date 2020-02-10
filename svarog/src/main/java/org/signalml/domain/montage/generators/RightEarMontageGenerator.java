@@ -35,9 +35,12 @@ public class RightEarMontageGenerator extends SingleReferenceMontageGenerator {
 		SourceChannel sourceChannelAlt = sourceMontage.getSourceChannelByLabel(SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE);
 		if (sourceChannelOrig == null && sourceChannelAlt == null)
 		{
-			errors.addError(_R("One of required channels not identified: {0} or {1}",
-				SourceChannel.RIGHT_EAR_CHANNEL_NAME,
-				SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE));
+                        if (errors != null)
+                        {
+                            errors.addError(_R("One of required channels not identified: {0} or {1}",
+                                    SourceChannel.RIGHT_EAR_CHANNEL_NAME,
+                                    SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE));
+                        }
 			return false;
 		}
 		if (sourceChannelOrig == null && sourceChannelAlt != null)

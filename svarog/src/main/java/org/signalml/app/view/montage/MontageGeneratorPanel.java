@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 import org.apache.log4j.Logger;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageGeneratorListModel;
 import org.signalml.app.util.IconUtils;
@@ -302,7 +303,7 @@ public class MontageGeneratorPanel extends JPanel {
 		}
 		return generatorComboBox;
 	}
-
+        
 	/**
 	 * Gets the {@link ShowErrorsAction action} which displays the.
 	 *

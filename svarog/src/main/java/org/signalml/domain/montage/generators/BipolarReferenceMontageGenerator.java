@@ -15,6 +15,8 @@ import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+
 
 import org.springframework.validation.Errors;
 
@@ -46,6 +48,9 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 	 */
 	protected transient String[][] channelPairs;
 
+        public BipolarReferenceMontageGenerator()
+        {}
+        
 	/**
 	 * Constructor. Creates a generator for an bipolar reference montage
 	 * based on <i>refChannels</i> array
@@ -55,22 +60,22 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 	 * First element as primary channel, second as reference.
 	 */
 	public BipolarReferenceMontageGenerator(String[][] channelPairs) {
-		if (channelPairs == null || channelPairs.length == 0) {
+                setChannelPairs(channelPairs);
+	}
+        
+        public void setChannelPairs(String[][] channelPairs)
+        {
+                if (channelPairs == null || channelPairs.length == 0) {
 			throw new NullPointerException("Definition cannot be null or empty");
 		}
 		this.channelPairs = channelPairs;
-	}
+        }
 
-	/**
-	 * Creates a bipolar montage from the given montage.
-	 * @param montage the montage to be used
-	 * @throws MontageException if two channels have the same function
-	 * (in the given montage) or there is no channel with some function
-	 */
-	@Override
-	public void createMontage(Montage montage) throws MontageException {
-
-		List<SourceChannel> primaryChannels = new ArrayList<SourceChannel>();
+        /** prepares channel pairs for the createMontage **/
+        protected List<List<SourceChannel>> getPrimaryAndReferenceChannels(Montage montage) throws MontageException
+        {
+                List<List<SourceChannel>> listOfLists = new ArrayList<>();
+                List<SourceChannel> primaryChannels = new ArrayList<SourceChannel>();
 		List<SourceChannel> referenceChannels = new ArrayList<SourceChannel>();
 		for (int i = 0; i < channelPairs.length; i++) {
 			String channelName = channelPairs[i][0];
@@ -87,6 +92,28 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 			}
 			referenceChannels.add(sourceChannel);
 		}
+                listOfLists.add(primaryChannels);
+                listOfLists.add(referenceChannels);
+                return listOfLists;
+        }
+	/**
+	 * Creates a bipolar montage from the given montage.
+	 * @param montage the montage to be used
+	 * @throws MontageException if two channels have the same function
+	 * (in the given montage) or there is no channel with some function
+	 */
+	@Override
+	public void createMontage(Montage montage) throws MontageException {
+
+                List<List<SourceChannel>> allChannels = getPrimaryAndReferenceChannels(montage);
+                List<SourceChannel> primaryChannels = allChannels.get(0);
+		List<SourceChannel> referenceChannels = allChannels.get(1);
+                
+                if (primaryChannels.isEmpty())
+                {
+			throw new MontageException(_("Cannot find at least one fitting pair of channels"));
+		}
+                
 
 		String token = "-1";
 
