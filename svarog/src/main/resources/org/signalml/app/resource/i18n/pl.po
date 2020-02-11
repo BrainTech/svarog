@@ -7170,7 +7170,7 @@ msgid "Longitudinal Banana"
 msgstr "Podłużny Banan"
 
 msgid "Cannot find at least one fitting pair of channels"
-msgstr "Nie mogę znaleźć chociażby jednej pasującej pary kanałów"
+msgstr "Nie mogę znaleźć ani jednej pasującej pary kanałów"
 
 msgid "Can't find required channels"
 msgstr "Nie mogę znaleźć wymaganych kanałów"

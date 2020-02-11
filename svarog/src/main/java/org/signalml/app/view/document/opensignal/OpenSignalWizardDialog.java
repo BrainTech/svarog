@@ -38,6 +38,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.SvarogConstants;
 
 public class OpenSignalWizardDialog extends AbstractWizardDialog implements PropertyChangeListener {
+
 	protected static final Logger log = Logger.getLogger(OpenSignalWizardDialog.class);
 
 	private static final long serialVersionUID = -6697344610944631342L;
@@ -64,13 +65,13 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		setMinimumSize(new Dimension(800, 600));
-                //I would like to make it fullscreen, but JDialog doesnt have a maximise option
-                //So to avoid overlapping different taskbars/panels I'll make it 85% of the main screen
-                Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-                int targetHeight = (int)(screenSize.height * 0.85);
-                int targetWidth = (int)(screenSize.width * 0.85);
+		//I would like to make it fullscreen, but JDialog doesnt have a maximise option
+		//So to avoid overlapping different taskbars/panels I'll make it 85% of the main screen
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		int targetHeight = (int) (screenSize.height * 0.85);
+		int targetWidth = (int) (screenSize.width * 0.85);
 
-                setSize(targetWidth, targetHeight);
+		setSize(targetWidth, targetHeight);
 	}
 
 	@Override
@@ -80,7 +81,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 	@Override
 	protected boolean onStepChange(int toStep, int fromStep, Object model)
-	throws SignalMLException {
+			throws SignalMLException {
 
 		if (toStep == 1 && fromStep == 0) {
 			AbstractOpenSignalDescriptor openSignalDescriptor = getStepOnePanel().getOpenSignalDescriptor();
@@ -105,8 +106,9 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 			if (SvarogApplication.getApplicationConfiguration().isAutoAddHighpassFilter()) {
 				float samplingFrequency = openSignalDescriptor.getSignalParameters().getSamplingFrequency();
 				TimeDomainSampleFilter filter = predefinedTimeDomainSampleFilterPresetManager.getPredefinedFilter(samplingFrequency, FilterType.HIGHPASS, 1.0, 0.0);
-				if (filter != null)
+				if (filter != null) {
 					createdMontage.addSampleFilter(filter);
+				}
 			}
 
 			EegSystem selectedEegSystem = getStepOnePanel().getOtherSettingsPanel().getSelectedEegSystem();
@@ -114,9 +116,9 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 			String[] channelLabels = openSignalDescriptor.getChannelLabels();
 			for (int i = 0; i < channelLabels.length; i++) {
-				try{
-				createdMontage.setSourceChannelLabelAt(i, channelLabels[i]);
-				}catch(MontageException e){
+				try {
+					createdMontage.setSourceChannelLabelAt(i, channelLabels[i]);
+				} catch (MontageException e) {
 					Dialogs.showError(e.getMessage());
 					return false;
 				}
@@ -136,12 +138,12 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	protected JComponent createInterfaceForStep(int step) {
 
 		switch (step) {
-		case 0:
-			return getStepOnePanel();
-		case 1:
-			return getSignalMontagePanel();
-		default:
-			return new JPanel();
+			case 0:
+				return getStepOnePanel();
+			case 1:
+				return getSignalMontagePanel();
+			default:
+				return new JPanel();
 		}
 
 	}
@@ -159,7 +161,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 		}
 		return stepTwoPanel;
 	}
-	
+
 	@Override
 	public boolean supportsModelClass(Class<?> clazz) {
 		return OpenDocumentDescriptor.class.isAssignableFrom(clazz);
@@ -177,8 +179,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 
 		if (openSignalDescriptor instanceof ExperimentDescriptor) {
 			openDocumentDescriptor.setType(ManagedDocumentType.MONITOR);
-		}
-		else {
+		} else {
 			openDocumentDescriptor.setType(ManagedDocumentType.SIGNAL);
 			File file = getStepOnePanel().getSignalSourceTabbedPane().getFileChooserPanel().getSelectedFile();
 			openDocumentDescriptor.setFile(file);
@@ -208,8 +209,7 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 			worker = new ConnectToExperimentWorker(this, experimentDescriptor);
 			worker.addPropertyChangeListener(this);
 			worker.execute();
-		}
-		else {
+		} else {
 			super.onOkPressed();
 		}
 	}
@@ -236,7 +236,6 @@ public class OpenSignalWizardDialog extends AbstractWizardDialog implements Prop
 	@Override
 	protected void onDialogClose() {
 		super.onDialogClose();
-
 
 		getStepOnePanel().getSignalSourceTabbedPane().getChooseExperimentPanel().clearExperiments();
 	}

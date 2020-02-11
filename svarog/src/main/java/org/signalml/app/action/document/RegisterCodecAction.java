@@ -32,10 +32,12 @@ import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.StaticCodec;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
-/** RegisterCodecAction
+/**
+ * RegisterCodecAction
  *
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ * Sp. z o.o.
  */
 public class RegisterCodecAction extends AbstractSignalMLAction {
 
@@ -66,16 +68,18 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 		RegisterCodecDescriptor model = new RegisterCodecDescriptor();
 
 		boolean ok = registerCodecDialog.showDialog(model, true);
-		if (!ok)
+		if (!ok) {
 			return;
+		}
 
 		createCodec(model);
 	}
 
 	public void initializeAll() {
 
-		if (initialized)
+		if (initialized) {
 			return;
+		}
 		initialized = true;
 
 		logger.debug("Registering static codecs");
@@ -92,8 +96,9 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 
 		logger.debug("Registering all available codecs in spec directory");
 		File[] files = specsDir.listFiles(new XmlFileFilter());
-		for (File file : files)
+		for (File file : files) {
 			register(file);
+		}
 	}
 
 	private void register(File file) {
@@ -101,9 +106,9 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 
 		try {
 			jsignalml.compiler.CompiledClass<? extends jsignalml.Source> klass
-				= loadFromFile("compiled", file);
+					= loadFromFile("compiled", file);
 			this.register(klass.theClass());
-		} catch(Exception e) {
+		} catch (Exception e) {
 			logger.error("Failed to compile file " + file + ": " + e);
 			OptionPane.showError(null, _R("Failed to compile file {0}: {1}", file, e));
 		}
@@ -124,7 +129,6 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	private void createCodec(RegisterCodecDescriptor model) {
 
 		// try to create codec to be sure that it works
-
 		SignalMLCodec codec = model.getCodec();
 
 		CreateCodecReaderWorker worker = new CreateCodecReaderWorker(codec, pleaseWaitDialog);
@@ -207,19 +211,17 @@ public class RegisterCodecAction extends AbstractSignalMLAction {
 	}
 
 	// XXX: find a home for this function. Should it go to jsignalml?
-	public static
-		jsignalml.compiler.CompiledClass<? extends jsignalml.Source> loadFromFile(String pkg, File file)
-		throws java.io.IOException,
-			   java.lang.ClassNotFoundException,
-			   org.xml.sax.SAXException
-	{
-			jsignalml.JavaClassGen gen =
-				jsignalml.CodecParser.generateFromFile(file, "org.signalml.codec." + pkg, false);
-			String name = gen.getFullClassName();
-			CharSequence code = gen.getSourceCode();
-			jsignalml.compiler.CompiledClass<jsignalml.Source> klass =
-				jsignalml.compiler.CompiledClass.newCompiledClass(name, code);
-			logger.info("class " + name + " has been sourced");
-			return klass;
+	public static jsignalml.compiler.CompiledClass<? extends jsignalml.Source> loadFromFile(String pkg, File file)
+			throws java.io.IOException,
+			java.lang.ClassNotFoundException,
+			org.xml.sax.SAXException {
+		jsignalml.JavaClassGen gen
+				= jsignalml.CodecParser.generateFromFile(file, "org.signalml.codec." + pkg, false);
+		String name = gen.getFullClassName();
+		CharSequence code = gen.getSourceCode();
+		jsignalml.compiler.CompiledClass<jsignalml.Source> klass
+				= jsignalml.compiler.CompiledClass.newCompiledClass(name, code);
+		logger.info("class " + name + " has been sourced");
+		return klass;
 	}
 }
