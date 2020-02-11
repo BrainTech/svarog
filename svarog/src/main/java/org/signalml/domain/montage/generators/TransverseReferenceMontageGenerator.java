@@ -16,12 +16,16 @@ public class TransverseReferenceMontageGenerator extends LongitudalReferenceMont
 	{"Cz", "C4"},
 	{"C4", "T4"},
 	{"T5", "P3"},
+	{"T7", "P3"},
 	{"P3", "Pz"},
 	{"Pz", "P4"},
 	{"P4", "T6"},
+	{"P4", "T8"},
 	{"T5", "O1"},
+	{"T7", "O1"},
 	{"O1", "O2"},
-	{"O2", "T6"}
+	{"O2", "T6"},
+	{"O2", "T8"}
 	};
 
 	public TransverseReferenceMontageGenerator() {

@@ -15,7 +15,9 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 	String[][] PAIRS = {{"Fp1", "F7"},
 	{"F7", "T3"},
 	{"T3", "T5"},
+	{"T3", "T7"},
 	{"T5", "O1"},
+	{"T7", "O1"},
 	{"Fp1", "F3"},
 	{"F3", "C3"},
 	{"C3", "P3"},
@@ -29,7 +31,9 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 	{"Fp2", "F8"},
 	{"F8", "T4"},
 	{"T4", "T6"},
-	{"T6", "O2"}};
+	{"T4", "T8"},
+	{"T6", "O2"},
+	{"T8", "O2"}};
 
 	public LongitudalReferenceMontageGenerator() {
 		super();
