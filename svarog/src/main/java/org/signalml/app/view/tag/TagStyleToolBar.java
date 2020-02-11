@@ -1,7 +1,6 @@
 /* TagStyleToolBar.java created 2007-10-13
  *
  */
-
 package org.signalml.app.view.tag;
 
 import com.alee.laf.toolbar.WebToolBar;
@@ -37,10 +36,12 @@ import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
-/** TagStyleToolBar
+/**
+ * TagStyleToolBar
  *
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ * Sp. z o.o.
  */
 public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
@@ -54,8 +55,8 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 	private ButtonGroup buttonGroup;
 
 	private List<TagStyleToggleButton> buttonList;
-	private Map<TagStyle,TagStyleToggleButton> styleToButtonMap;
-	private Map<ButtonModel,TagStyle> buttonToStyleMap;
+	private Map<TagStyle, TagStyleToggleButton> styleToButtonMap;
+	private Map<ButtonModel, TagStyle> buttonToStyleMap;
 
 	private TagEraserToggleButton tagEraserToggleButton;
 
@@ -199,7 +200,7 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 		styleToButtonMap.put(style, toolButton);
 		buttonToStyleMap.put(toolButton.getModel(), style);
 
-		this.add(toolButton,getComponentCount()-3); // insert before the spacer, glue and show all button
+		this.add(toolButton, getComponentCount() - 3); // insert before the spacer, glue and show all button
 
 		resetVisibility();
 
@@ -318,9 +319,9 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 			}
 
 			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(showAllButton, new Point(0,0), ancestor);
+			Point location = SwingUtilities.convertPoint(showAllButton, new Point(0, 0), ancestor);
 			Dimension size = tagStylesPopupDialog.getSize();
-			location.translate(containerLocation.x, containerLocation.y+showAllButton.getSize().height-size.height);
+			location.translate(containerLocation.x, containerLocation.y + showAllButton.getSize().height - size.height);
 			tagStylesPopupDialog.setLocation(location);
 
 			tagStylesPopupDialog.showDialog(null);

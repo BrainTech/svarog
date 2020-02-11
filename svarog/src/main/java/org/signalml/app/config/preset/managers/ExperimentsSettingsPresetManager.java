@@ -26,11 +26,12 @@ public class ExperimentsSettingsPresetManager extends AbstractMultifileResources
 	@Override
 	public String getDirectoryName() {
 		return "eegSystems/presets/";
-}
+	}
+
 	@Override
 	public String[] getDefaultFileNames() {
-		return new String[] {
-                        "default_EEG_GENERIC.xml",
+		return new String[]{
+			"default_EEG_GENERIC.xml",
 			"default_EEG_10_10_gel_cap.xml",
 			"default_EEG_10_10_easy_cap.xml",
 			"default_EEG_10_20_easy_cap.xml",
@@ -39,8 +40,7 @@ public class ExperimentsSettingsPresetManager extends AbstractMultifileResources
 			"default_EEG_10_20_black_water_cap_SPO2.xml",
 			"default_EEG_10_20_blue_water_cap.xml",
 			"default_EEG_10_20_blue_water_cap_SPO2.xml",
-			"default_MOBI6.xml",
-		};
+			"default_MOBI6.xml",};
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class ExperimentsSettingsPresetManager extends AbstractMultifileResources
 					Amplifier.class,
 					AmplifierChannel.class,
 					SignalParameters.class
-				);
+			);
 		}
 		return streamer;
 	}

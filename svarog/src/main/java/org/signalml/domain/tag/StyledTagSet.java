@@ -1,7 +1,6 @@
 /* StyledTagSet.java created 2007-09-28
  *
  */
-
 package org.signalml.domain.tag;
 
 import java.io.Serializable;
@@ -34,15 +33,15 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 
 /**
- * This class represents a set of
- * {@link Tag tagged selections} and their {@link TagStyles styles}.
- * Two tagged selections with the same type can not intersect so this class
- * splits, merges and replaces them while adding.
+ * This class represents a set of {@link Tag tagged selections} and their
+ * {@link TagStyles styles}. Two tagged selections with the same type can not
+ * intersect so this class splits, merges and replaces them while adding.
  *
  * This class contains additional information such as a size of a page, a number
  * of blocks per page and a length of a block (in seconds).
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ * Sp. z o.o.
  */
 @XStreamAlias("tagFile")
 @XStreamConverter(StyledTagSetConverter.class)
@@ -56,7 +55,7 @@ public class StyledTagSet implements Serializable, Preset {
 	 * For getting incompatable tags
 	 */
 	private TagStylesGenerator tagStyleGenerator = null;
-	
+
 	/**
 	 * page size in seconds
 	 */
@@ -84,9 +83,9 @@ public class StyledTagSet implements Serializable, Preset {
 	protected TreeSet<Tag> tags;
 
 	/**
-	 * Maximal length of a tagged selection in <i>tags</i>.
-	 * This is just an estimate - may be 10% more than the actual length
-	 * of the longest tag in the set.
+	 * Maximal length of a tagged selection in <i>tags</i>. This is just an
+	 * estimate - may be 10% more than the actual length of the longest tag in
+	 * the set.
 	 */
 	protected double maxTagLength = 0;
 
@@ -122,16 +121,16 @@ public class StyledTagSet implements Serializable, Preset {
 	private String name;
 
 	/**
-	 * Constructor. Creates a default StyledTagSet without any tags or
-	 * styles.
+	 * Constructor. Creates a default StyledTagSet without any tags or styles.
 	 */
 	public StyledTagSet() {
 		this(null, null, SignalParameters.DEFAULT_PAGE_SIZE, SignalParameters.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
 	/**
-	 * Constructor. Creates a StyledTagSet with given size of a page and
-	 * given number of blocks per page, but without any tags or styles.
+	 * Constructor. Creates a StyledTagSet with given size of a page and given
+	 * number of blocks per page, but without any tags or styles.
+	 *
 	 * @param pageSize a size of a page in seconds
 	 * @param blocksPerPage a number of blocks per page
 	 */
@@ -140,20 +139,22 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Constructor. Creates a StyledTagSet with given styles of selections,
-	 * but without tagged selections.
-	 * Default sizes of a page and a block are used.
-	 * @param styles {@link TagStyle tag styles} to be added to the created object
+	 * Constructor. Creates a StyledTagSet with given styles of selections, but
+	 * without tagged selections. Default sizes of a page and a block are used.
+	 *
+	 * @param styles {@link TagStyle tag styles} to be added to the created
+	 * object
 	 */
 	public StyledTagSet(TagStyles styles) {
 		this(styles, null, SignalParameters.DEFAULT_PAGE_SIZE, SignalParameters.DEFAULT_BLOCKS_PER_PAGE);
 	}
 
 	/**
-	 * Constructor. Creates a StyledTagSet with given styles of selections,
-	 * size of a page and number of blocks per page, but without
-	 * tagged selections.
-	 * @param styles {@link TagStyle tag styles} to be added to the created object
+	 * Constructor. Creates a StyledTagSet with given styles of selections, size
+	 * of a page and number of blocks per page, but without tagged selections.
+	 *
+	 * @param styles {@link TagStyle tag styles} to be added to the created
+	 * object
 	 * @param pageSize a size of a page in seconds
 	 * @param blocksPerPage a number of blocks per page
 	 */
@@ -162,10 +163,11 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Constructor. Creates a StyledTagSet with given styles of selections
-	 * and given tagged selections.
-	 * Default sizes of a page and a block are used.
-	 * @param styles {@link TagStyle tag styles} to be added to the created object
+	 * Constructor. Creates a StyledTagSet with given styles of selections and
+	 * given tagged selections. Default sizes of a page and a block are used.
+	 *
+	 * @param styles {@link TagStyle tag styles} to be added to the created
+	 * object
 	 * @param tags tagged selections to be added to the created object
 	 */
 	public StyledTagSet(TagStyles styles, TreeSet<Tag> tags) {
@@ -174,6 +176,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Constructor. Creates a StyledTagSet with given parameters.
+	 *
 	 * @param {@link TagStyle tag styles} to be added to the created object
 	 * @param tags tagged selections to be added to the created object
 	 * @param pageSize a size of a page in seconds
@@ -187,7 +190,7 @@ public class StyledTagSet implements Serializable, Preset {
 			throw new SanityCheckException("Blocks per page must be > 0");   // free-style block tags disabled for now
 		}
 
-		this.styles = styles != null? styles: new TagStyles();
+		this.styles = styles != null ? styles : new TagStyles();
 		this.styles.setStyledTagSet(this);
 
 		if (tags == null) {
@@ -210,6 +213,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns a size of a page in seconds.
+	 *
 	 * @return a size of a page in seconds
 	 */
 	public float getPageSize() {
@@ -218,6 +222,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns a number of blocks per page.
+	 *
 	 * @return a number of blocks per page
 	 */
 	public int getBlocksPerPage() {
@@ -226,6 +231,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns a size of a block in seconds.
+	 *
 	 * @return a size of a block in seconds
 	 */
 	public float getBlockSize() {
@@ -234,6 +240,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the {@link Montage montage} tagged by this set.
+	 *
 	 * @return the montage tagged by this set
 	 */
 	public Montage getMontage() {
@@ -242,6 +249,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Sets the {@link Montage montage} tagged by this set.
+	 *
 	 * @param montage the montage tagged by this set
 	 */
 	public void setMontage(Montage montage) {
@@ -250,6 +258,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the list of {@link TagStyle styles} of tagged selections.
+	 *
 	 * @return the lists of all tag styles
 	 */
 	public List<TagStyle> getListOfStyles() {
@@ -259,6 +268,7 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns the object containing all tag styles contained in this
 	 * {@link StyledTagSet}.
+	 *
 	 * @return the tag styles object connected with this StylesTagSet
 	 */
 	public TagStyles getTagStyles() {
@@ -269,9 +279,10 @@ public class StyledTagSet implements Serializable, Preset {
 	 * Returns the list of {@link TagStyle styles} of
 	 * {@link Tag tagged selections} for a given
 	 * {@link SignalSelectionType type} of a selection.
+	 *
 	 * @param type the type of a selection
-	 * @return the list of styles of tagged selections for a given type of
-	 * a selection
+	 * @return the list of styles of tagged selections for a given type of a
+	 * selection
 	 */
 	public List<TagStyle> getStyles(SignalSelectionType type) {
 		return styles.getStyles(type);
@@ -280,11 +291,11 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns the list of {@link TagStyle styles} of
 	 * {@link Tag tagged selections} for a given
-	 * {@link SignalSelectionType type} of a selection, excluding markers
-	 * if needed.
+	 * {@link SignalSelectionType type} of a selection, excluding markers if
+	 * needed.
+	 *
 	 * @param type the type of a selection
-	 * @param allowMarkers false if markers should be excluded,
-	 * true otherwise
+	 * @param allowMarkers false if markers should be excluded, true otherwise
 	 * @return the list of styles
 	 */
 	public List<TagStyle> getStyles(SignalSelectionType type, boolean allowMarkers) {
@@ -293,6 +304,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the list of {@link TagStyle styles} of tagged page selections.
+	 *
 	 * @return the list of styles of tagged page selections
 	 */
 	public List<TagStyle> getPageStyles() {
@@ -301,6 +313,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the list of {@link TagStyle styles} of tagged block selections.
+	 *
 	 * @return the list of styles of tagged block selections
 	 */
 	public List<TagStyle> getBlockStyles() {
@@ -308,8 +321,8 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the list of {@link TagStyle styles} of tagged channel
-	 * selections.
+	 * Returns the list of {@link TagStyle styles} of tagged channel selections.
+	 *
 	 * @return the list of styles of tagged channel selections
 	 */
 	public List<TagStyle> getChannelStyles() {
@@ -319,6 +332,7 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns the list of {@link TagStyle styles} of tagged page selections
 	 * excluding markers.
+	 *
 	 * @return the list of styles of tagged page selections without markers
 	 */
 	public List<TagStyle> getPageStylesNoMarkers() {
@@ -328,6 +342,7 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns the list of {@link TagStyle styles} of tagged block selections
 	 * excluding markers.
+	 *
 	 * @return the list of styles of tagged block selections without markers
 	 */
 	public List<TagStyle> getBlockStylesNoMarkers() {
@@ -335,8 +350,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the list of {@link TagStyle styles} of tagged channel
-	 * selections excluding markers.
+	 * Returns the list of {@link TagStyle styles} of tagged channel selections
+	 * excluding markers.
+	 *
 	 * @return the list of styles of tagged channel selections without markers
 	 */
 	public List<TagStyle> getChannelStylesNoMarkers() {
@@ -344,18 +360,19 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link TagStyle style} of a given name
-	* with the given type.
+	 * Returns the {@link TagStyle style} of a given name with the given type.
+	 *
 	 * @param type the type of the style (page/block/channel)
-	       * @param name the name of a style
-	       * @return the style of a given name
-	       */
+	 * @param name the name of a style
+	 * @return the style of a given name
+	 */
 	public TagStyle getStyle(SignalSelectionType type, String name) {
 		return styles.getStyle(type, name);
 	}
 
 	/**
 	 * Returns the number of {@link TagStyle styles}.
+	 *
 	 * @return the number of styles
 	 */
 	public int getTagStyleCount() {
@@ -363,8 +380,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the number of {@link TagStyle styles} for a given type of
-	 * a selection.
+	 * Returns the number of {@link TagStyle styles} for a given type of a
+	 * selection.
+	 *
 	 * @param type the type of a selection
 	 * @return the number of styles for a given type of a selection
 	 */
@@ -374,6 +392,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the number of {@link TagStyle styles} for page selections.
+	 *
 	 * @return the number of styles for page selections
 	 */
 	public int getPageStyleCount() {
@@ -382,6 +401,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the number of {@link TagStyle styles} for block selections.
+	 *
 	 * @return the number of styles for block selections
 	 */
 	public int getBlockStyleCount() {
@@ -390,6 +410,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the number of {@link TagStyle styles} for channel selections.
+	 *
 	 * @return the number of styles for channel selections
 	 */
 	public int getChannelStyleCount() {
@@ -397,11 +418,12 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the style of a given index in an array of
-	 * {@link TagStyle styles} for a given type of a selection.
+	 * Returns the style of a given index in an array of {@link TagStyle styles}
+	 * for a given type of a selection.
+	 *
 	 * @param type the type of a selection
-	 * @param index the index in an array of styles for a given
-	 * type of a selection
+	 * @param index the index in an array of styles for a given type of a
+	 * selection
 	 * @return the found style
 	 */
 	public TagStyle getStyleAt(SignalSelectionType type, int index) {
@@ -409,8 +431,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link TagStyle style} of a given index in an array of
-	 * page styles.
+	 * Returns the {@link TagStyle style} of a given index in an array of page
+	 * styles.
+	 *
 	 * @param index the index in an array of page styles
 	 * @return the found style
 	 */
@@ -419,8 +442,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link TagStyle style} of a given index in an array
-	 * of block styles.
+	 * Returns the {@link TagStyle style} of a given index in an array of block
+	 * styles.
+	 *
 	 * @param index the index in an array of block styles
 	 * @return the found style
 	 */
@@ -429,8 +453,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link TagStyle style} of a given index in an array
-	 * of page styles.
+	 * Returns the {@link TagStyle style} of a given index in an array of page
+	 * styles.
+	 *
 	 * @param index the index in an array of block styles
 	 * @return the found style
 	 */
@@ -440,31 +465,33 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns an index of a {@link TagStyle styles} in an appropriate array.
+	 *
 	 * @param style the style which index will be checked
-	 * @return an index of a style in an appropriate array, -1 if style is
-	 * not in any array
+	 * @return an index of a style in an appropriate array, -1 if style is not
+	 * in any array
 	 */
 	public int indexOfStyle(TagStyle style) {
 		return styles.getIndexOf(style);
 	}
 
 	/**
-	 * Returns an index of a {@link TagStyle style} in an array of
-	 * page styles.
+	 * Returns an index of a {@link TagStyle style} in an array of page styles.
+	 *
 	 * @param style the style which index will be checked
-	 * @return an index of a style in an array of page styles, -1 if style
-	 * is not in that array
+	 * @return an index of a style in an array of page styles, -1 if style is
+	 * not in that array
 	 */
 	public int indexOfPageStyle(TagStyle style) {
 		return styles.getIndexOf(style);
 	}
 
 	/**
-	 * Returns an index of a {@link TagStyle styles} in an array of
-	 * block styles.
+	 * Returns an index of a {@link TagStyle styles} in an array of block
+	 * styles.
+	 *
 	 * @param style the style which index will be checked
-	 * @return an index of a style in an array of block styles, -1 if style
-	 * is not in that array
+	 * @return an index of a style in an array of block styles, -1 if style is
+	 * not in that array
 	 */
 	public int indexOfBlockStyle(TagStyle style) {
 		return styles.getIndexOf(style);
@@ -473,9 +500,10 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns an index of a {@link TagStyle styles} in an array of channel
 	 * styles.
+	 *
 	 * @param style the style which index will be checked
-	 * @return an index of a style in an array of channel styles, -1 if style
-	 * is not in that array
+	 * @return an index of a style in an array of channel styles, -1 if style is
+	 * not in that array
 	 */
 	public int indexOfChannelStyle(TagStyle style) {
 		return styles.getIndexOf(style);
@@ -483,6 +511,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns all {@link Tag tagged selections}.
+	 *
 	 * @return all tagged selections
 	 */
 	public SortedSet<Tag> getTags() {
@@ -490,33 +519,30 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns {@link Tag tagged selections} that may be between two
-	 * given positions.
-	 * Always remember that this method returns tags that MAY be between
-	 * these two positions. It doesn't mean they actually ARE (!!!).
-	 * You always need to verify this. The only guarantee being made is that
-	 * ALL the tags that MAY be in this region  are returned.
-	 * This set is inclusive at both ends!
+	 * Returns {@link Tag tagged selections} that may be between two given
+	 * positions. Always remember that this method returns tags that MAY be
+	 * between these two positions. It doesn't mean they actually ARE (!!!). You
+	 * always need to verify this. The only guarantee being made is that ALL the
+	 * tags that MAY be in this region are returned. This set is inclusive at
+	 * both ends!
+	 *
 	 * @param start starting position
 	 * @param end ending position
-	 * @return set of tagged selections that may be between two
-	 * given positions.
+	 * @return set of tagged selections that may be between two given positions.
 	 */
 	public SortedSet<Tag> getTagsBetween(double start, double end) {
-		Tag startMarker = new Tag(null, start-maxTagLength, 0);
-		Tag endMarker = new Tag(null,end,Float.MAX_VALUE); // note that lengths matter, so that all tags starting at exactly end will be selected
-		try
-                {
-                    return tags.subSet(startMarker, true, endMarker, true);
-                }
-                catch (IllegalArgumentException ex)
-                        {
-                            return new TreeSet<Tag>();
-                        }
+		Tag startMarker = new Tag(null, start - maxTagLength, 0);
+		Tag endMarker = new Tag(null, end, Float.MAX_VALUE); // note that lengths matter, so that all tags starting at exactly end will be selected
+		try {
+			return tags.subSet(startMarker, true, endMarker, true);
+		} catch (IllegalArgumentException ex) {
+			return new TreeSet<Tag>();
+		}
 	}
 
 	/**
 	 * Returns the number of {@link Tag tagged selections}.
+	 *
 	 * @return the number of tagged selections
 	 */
 	public int getTagCount() {
@@ -526,17 +552,16 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns the number of {@link Tag tagged selections} for a given
 	 * {@link SignalSelectionType type} of a selection
+	 *
 	 * @param type the type of a selection
 	 * @return the number of tagged selections for a given type of a selection
 	 */
 	public int getTagCount(SignalSelectionType type) {
 		if (type == SignalSelectionType.PAGE) {
 			return getPageTagCount();
-		}
-		else if (type == SignalSelectionType.BLOCK) {
+		} else if (type == SignalSelectionType.BLOCK) {
 			return getBlockTagCount();
-		}
-		else if (type == SignalSelectionType.CHANNEL) {
+		} else if (type == SignalSelectionType.CHANNEL) {
 			return getChannelTagCount();
 		} else {
 			return 0;
@@ -545,6 +570,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the number of tagged page {@link Tag selections}.
+	 *
 	 * @return the number of tagged page selections
 	 */
 	public int getPageTagCount() {
@@ -556,6 +582,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the number of tagged block {@link Tag selections}.
+	 *
 	 * @return the number of tagged block selections
 	 */
 	public int getBlockTagCount() {
@@ -567,6 +594,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the number of tagged channel {@link Tag selections}.
+	 *
 	 * @return the number of tagged channel selections
 	 */
 	public int getChannelTagCount() {
@@ -577,22 +605,20 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link Tag tagged selection} of a given index in an
-	 * array of selections for a given {@link SignalSelectionType type}
-	 * of a selection.
+	 * Returns the {@link Tag tagged selection} of a given index in an array of
+	 * selections for a given {@link SignalSelectionType type} of a selection.
+	 *
 	 * @param type the type of a selection
-	 * @param index the index in an array of selections for a given
-	 * type of a selection
+	 * @param index the index in an array of selections for a given type of a
+	 * selection
 	 * @return the found tagged selection
 	 */
 	public Tag getTagAt(SignalSelectionType type, int index) {
 		if (type == SignalSelectionType.PAGE) {
 			return getPageTagAt(index);
-		}
-		else if (type == SignalSelectionType.BLOCK) {
+		} else if (type == SignalSelectionType.BLOCK) {
 			return getBlockTagAt(index);
-		}
-		else if (type == SignalSelectionType.CHANNEL) {
+		} else if (type == SignalSelectionType.CHANNEL) {
 			return getChannelTagAt(index);
 		} else {
 			return null;
@@ -600,8 +626,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link Tag selection} of a given index in an array of
-	 * tagged page selections.
+	 * Returns the {@link Tag selection} of a given index in an array of tagged
+	 * page selections.
+	 *
 	 * @param index the index in an array of tagged page selections
 	 * @return the found tagged selection
 	 */
@@ -613,8 +640,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link Tag selection} of a given index in an array of
-	 * tagged block selections.
+	 * Returns the {@link Tag selection} of a given index in an array of tagged
+	 * block selections.
+	 *
 	 * @param index the index in an array of tagged block selections
 	 * @return the found tagged selection
 	 */
@@ -626,8 +654,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link Tag selection} of a given index in an array of
-	 * tagged channel selections.
+	 * Returns the {@link Tag selection} of a given index in an array of tagged
+	 * channel selections.
+	 *
 	 * @param index the index in an array of tagged channel selections
 	 * @return the found tagged selection
 	 */
@@ -641,19 +670,18 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Returns an index of a tagged {@link Tag selection} in an appropriate
 	 * array.
+	 *
 	 * @param tag the selection which index will be checked
-	 * @return an index of a tagged selection in an appropriate array,
-	 * -1 if tagged selection is not in any array
+	 * @return an index of a tagged selection in an appropriate array, -1 if
+	 * tagged selection is not in any array
 	 */
 	public int indexOfTag(Tag tag) {
 		SignalSelectionType type = tag.getType();
 		if (type == SignalSelectionType.PAGE) {
 			return indexOfPageTag(tag);
-		}
-		else if (type == SignalSelectionType.BLOCK) {
+		} else if (type == SignalSelectionType.BLOCK) {
 			return indexOfBlockTag(tag);
-		}
-		else if (type == SignalSelectionType.CHANNEL) {
+		} else if (type == SignalSelectionType.CHANNEL) {
 			return indexOfChannelTag(tag);
 		} else {
 			return -1;
@@ -661,8 +689,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns an index of a {@link Tag selection} in an array of tagged
-	 * page selections.
+	 * Returns an index of a {@link Tag selection} in an array of tagged page
+	 * selections.
+	 *
 	 * @param tag the selection which index will be checked
 	 * @return an index of a selections in an array of tagged page selections,
 	 * -1 if selection is not in that array
@@ -675,8 +704,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns an index of a {@link Tag selection} in an array of tagged
-	 * block selections.
+	 * Returns an index of a {@link Tag selection} in an array of tagged block
+	 * selections.
+	 *
 	 * @param tag the selection which index will be checked
 	 * @return an index of a selections in an array of tagged block selections,
 	 * -1 if selection is not in that array
@@ -689,11 +719,12 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns an index of a {@link Tag selection} in an array of tagged
-	 * channel selections.
+	 * Returns an index of a {@link Tag selection} in an array of tagged channel
+	 * selections.
+	 *
 	 * @param tag the selection which index will be checked
-	 * @return an index of a selections in an array of tagged channel selections,
-	 * -1 if selection is not in that array
+	 * @return an index of a selections in an array of tagged channel
+	 * selections, -1 if selection is not in that array
 	 */
 	public int indexOfChannelTag(Tag tag) {
 		if (channelTagsCache == null) {
@@ -703,9 +734,10 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Verifies if the length of {@link Tag selection} is a multiple of
-	 * a block size for block selections and multiple of a page size
-	 * for page selections.
+	 * Verifies if the length of {@link Tag selection} is a multiple of a block
+	 * size for block selections and multiple of a page size for page
+	 * selections.
+	 *
 	 * @return true if lengths are valid, false otherwise
 	 */
 	public boolean verifyTags() {
@@ -730,9 +762,10 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Verifies if the length of a given tagged {@link Tag selection} is
-	 * a multiple of a block size for block selection or multiple of
-	 * a page size for page selection.
+	 * Verifies if the length of a given tagged {@link Tag selection} is a
+	 * multiple of a block size for block selection or multiple of a page size
+	 * for page selection.
+	 *
 	 * @param tag the tagged selection to be verified
 	 * @return true if length is valid, false otherwise
 	 */
@@ -754,6 +787,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Adds a given {@link TagStyle style} to this set.
+	 *
 	 * @param style the tag style to be added
 	 */
 	public void addStyle(TagStyle style) {
@@ -762,6 +796,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Removes the {@link TagStyle style} of a given name.
+	 *
 	 * @param name the name of a style to be removed
 	 */
 	public void removeStyle(TagStyle style) {
@@ -770,6 +805,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Sets the {@link TagStyle style} of a given name to a new value.
+	 *
 	 * @param name the name of a style
 	 * @param style new style to be set
 	 */
@@ -778,11 +814,12 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns whether there are any {@link Tag tagged selections} of
-	 * a given style.
+	 * Returns whether there are any {@link Tag tagged selections} of a given
+	 * style.
+	 *
 	 * @param name the name of a style
-	 * @return true if there are any tagged selections of a given style,
-	 * false otherwise
+	 * @return true if there are any tagged selections of a given style, false
+	 * otherwise
 	 */
 	public boolean hasTagsWithStyle(TagStyle style) {
 		for (Tag tag : tags) {
@@ -795,9 +832,10 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Adds a {@link Tag tagged selection} to this set.
+	 *
 	 * @param tag tagged selection to be added
-	 * @throws SanityCheckException thrown if tag is not valid (invalid
-	 * length for a given type)
+	 * @throws SanityCheckException thrown if tag is not valid (invalid length
+	 * for a given type)
 	 */
 	public void addTag(Tag tag) {
 		if (!verifyTag(tag)) {
@@ -806,8 +844,9 @@ public class StyledTagSet implements Serializable, Preset {
 		}
 
 		TagStyle style = this.getStyle(tag.getStyle().getType(), tag.getStyle().getName());
-		if (style != null)
+		if (style != null) {
 			tag.setStyle(style);
+		}
 
 		tags.add(tag);
 		invalidateTagCache(tag.getStyle().getType());
@@ -816,19 +855,14 @@ public class StyledTagSet implements Serializable, Preset {
 		}
 		fireTagAdded(tag);
 	}
-	
 
-	
-	public void processIncompatableTag(Tag tag)
-	{	
+	public void processIncompatableTag(Tag tag) {
 		// all tags which are incompatable with default tag set
 		// but try to use it will fall into freeform style
 		String tagName = tag.getStyle().getName();
 		TagStyle freeform_style = styles.getStyle(SignalSelectionType.CHANNEL, tagName);
-		if (freeform_style == null)
-		{
-			if (tagStyleGenerator == null)
-			{
+		if (freeform_style == null) {
+			if (tagStyleGenerator == null) {
 				tagStyleGenerator = new TagStylesGenerator(pageSize, blocksPerPage);
 			}
 			double length = tag.getLength();
@@ -836,22 +870,21 @@ public class StyledTagSet implements Serializable, Preset {
 			freeform_style = tagStyleGenerator.generateNewStyleFor(tagName, length, channel);
 			styles.addStyle(freeform_style);
 		}
-		
+
 		tag.setStyle(freeform_style);
-		
-		
+
 	}
 
 	/**
-	 * Removes {@link Tag tagged selections} that intersect with
-	 * a given selection and are of the same type as given.
+	 * Removes {@link Tag tagged selections} that intersect with a given
+	 * selection and are of the same type as given.
+	 *
 	 * @param selection the selection to which tagged selections will be
 	 * compared
 	 */
 	public void eraseTags(SignalSelection selection) {
 
 		// erase same type tags from selection
-
 		double selStart = selection.getPosition();
 		double selEnd = selStart + selection.getLength();
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
@@ -885,15 +918,15 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Removes {@link Tag tagged selections} that intersect with a given
-	 * tagged selection and have the same type of a style. Adds the new tag.
+	 * Removes {@link Tag tagged selections} that intersect with a given tagged
+	 * selection and have the same type of a style. Adds the new tag.
+	 *
 	 * @param tag the tagged selection to which tagged selections will be
 	 * compared and which will be added
 	 */
 	public void replaceSameTypeTags(Tag tag) {
 
 		// remove conflicting tags
-
 		double selStart = tag.getPosition();
 		double selEnd = selStart + tag.getLength();
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
@@ -932,17 +965,16 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Adds a given {@link Tag selection} to the collection of tagged
-	 * selections. If any selection intersects with given and has the same
-	 * type as given it is changed:
-	 * 1) if has the same style as given it is merged with it,
-	 * 2) if has a different style it is shortened so that it won't
+	 * selections. If any selection intersects with given and has the same type
+	 * as given it is changed: 1) if has the same style as given it is merged
+	 * with it, 2) if has a different style it is shortened so that it won't
 	 * intersect with given any more.
+	 *
 	 * @param tag the tagged selection to be added
 	 */
 	public void splitAndMergeSameTypeTags(Tag tag) {
 
 		// split conflicting tags while merging same type tags
-
 		double selStart = tag.getPosition();
 		double selEnd = selStart + tag.getLength();
 		SortedSet<Tag> conflicts = getTagsBetween(selStart, selEnd);
@@ -984,12 +1016,12 @@ public class StyledTagSet implements Serializable, Preset {
 
 							if (confStart < selStart) {  // if the conflicting tag partially precedes this tag
 								addedTag = confTag.clone();
-								addedTag.setLength(selStart-confStart);
+								addedTag.setLength(selStart - confStart);
 								addedTags.add(addedTag);
 							}
 							if (confEnd > selEnd) {  // if the conflicting tag partially follows this tag
 								addedTag = confTag.clone();
-								addedTag.setParameters(selEnd,confEnd-selEnd);
+								addedTag.setParameters(selEnd, confEnd - selEnd);
 								addedTags.add(addedTag);
 							}
 
@@ -1010,7 +1042,7 @@ public class StyledTagSet implements Serializable, Preset {
 			}
 		}
 
-		tag.setParameters(newSelStart, newSelEnd-newSelStart);
+		tag.setParameters(newSelStart, newSelEnd - newSelStart);
 
 		if (calculateLength) {
 			calculateMaxTagLength();
@@ -1024,9 +1056,10 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Adds a given channel {@link Tag selection} to the collection of
-	 * tagged selections. If any channel selection intersects with given
-	 * and has the same style as given it is merged with it.
+	 * Adds a given channel {@link Tag selection} to the collection of tagged
+	 * selections. If any channel selection intersects with given and has the
+	 * same style as given it is merged with it.
+	 *
 	 * @param tag the tagged channel selection to be added
 	 */
 	public void mergeSameTypeChannelTags(Tag tag) {
@@ -1088,7 +1121,7 @@ public class StyledTagSet implements Serializable, Preset {
 			}
 		}
 
-		tag.setParameters(newSelStart, newSelEnd-newSelStart);
+		tag.setParameters(newSelStart, newSelEnd - newSelStart);
 
 		if (calculateLength) {
 			calculateMaxTagLength();
@@ -1100,6 +1133,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Removes the {@link Tag tagged selection} from this set.
+	 *
 	 * @param tag the tagged selection to be removed
 	 */
 	public void removeTag(Tag tag) {
@@ -1114,8 +1148,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Removes <i>oldTag</i> from {@link Tag tagged selections} list and
-	 * adds <i>tag</i> to it.
+	 * Removes <i>oldTag</i> from {@link Tag tagged selections} list and adds
+	 * <i>tag</i> to it.
+	 *
 	 * @param oldTag the tagged selection to be removed
 	 * @param tag the tagged selection to be added
 	 */
@@ -1140,9 +1175,9 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Verifies {@link Tag tag} and invalidates cache.
+	 *
 	 * @param tag tag that was edited
-	 * @throws SanityCheckException if tag has invalid length (for a given
-	 * type)
+	 * @throws SanityCheckException if tag has invalid length (for a given type)
 	 */
 	public void editTag(Tag tag) {
 		if (!verifyTag(tag)) {
@@ -1153,8 +1188,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the map associating {@link TagStyle tag styles} with
-	 * KeyStrokes assigned to them.
+	 * Returns the map associating {@link TagStyle tag styles} with KeyStrokes
+	 * assigned to them.
+	 *
 	 * @return the map associating tag styles with KeyStrokes assign to them.
 	 */
 	public HashMap<KeyStroke, TagStyle> getStylesByKeyStrokes() {
@@ -1163,6 +1199,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns {@link TagStyle tag style} associated with a given key.
+	 *
 	 * @param keyStroke key to which tag style is associated
 	 * @return tag style associated with a given key
 	 */
@@ -1171,8 +1208,8 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns the {@link TagSignalIdentification identification} of the
-	 * signal.
+	 * Returns the {@link TagSignalIdentification identification} of the signal.
+	 *
 	 * @return the identification of the signal
 	 */
 	public TagSignalIdentification getTagSignalIdentification() {
@@ -1180,8 +1217,8 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Sets the {@link TagSignalIdentification identification} of the
-	 * signal.
+	 * Sets the {@link TagSignalIdentification identification} of the signal.
+	 *
 	 * @param tagSignalIdentification the identification of the signal
 	 */
 	public void setTagSignalIdentification(TagSignalIdentification tagSignalIdentification) {
@@ -1190,6 +1227,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the description of this tagged set.
+	 *
 	 * @return the description of this tagged set
 	 */
 	public String getInfo() {
@@ -1198,6 +1236,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Sets the description of this tagged set.
+	 *
 	 * @param info the description of this tagged set
 	 */
 	public void setInfo(String info) {
@@ -1206,6 +1245,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Returns the description of the {@link #montage montage}.
+	 *
 	 * @return the description of the montage
 	 */
 	public String getMontageInfo() {
@@ -1214,6 +1254,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Sets the description of the {@link #montage montage}.
+	 *
 	 * @param montageInfo the description of the montage
 	 */
 	public void setMontageInfo(String montageInfo) {
@@ -1221,10 +1262,10 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Returns estimated maximal length of a {@link Tag tagged selection}
-	 * in <i>tags</i>.
-	 * Note that this is just an estimate - may be 10% more than the
-	 * actual length of the longest tag in the set.
+	 * Returns estimated maximal length of a {@link Tag tagged selection} in
+	 * <i>tags</i>. Note that this is just an estimate - may be 10% more than
+	 * the actual length of the longest tag in the set.
+	 *
 	 * @return estimated maximal length of a tagged selection in <i>tags</i>.
 	 */
 	public double getMaxTagLength() {
@@ -1233,6 +1274,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Adds a {@link TagListener TagListener} to the list of listeners.
+	 *
 	 * @param listener the TagListener to be added
 	 */
 	public void addTagListener(TagListener listener) {
@@ -1241,6 +1283,7 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Removes a {@link TagListener TagListener} from the list of listeners.
+	 *
 	 * @param listener the TagListener to be removed
 	 */
 	public void removeTagListener(TagListener listener) {
@@ -1248,8 +1291,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Adds a {@link TagStyleListener TagStyleListener} to the list
-	 * of listeners.
+	 * Adds a {@link TagStyleListener TagStyleListener} to the list of
+	 * listeners.
+	 *
 	 * @param listener the TagStyleListener to be added
 	 */
 	public void addTagStyleListener(TagStyleListener listener) {
@@ -1257,8 +1301,9 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Removes a {@link TagStyleListener TagStyleListener} from the list
-	 * of listeners.
+	 * Removes a {@link TagStyleListener TagStyleListener} from the list of
+	 * listeners.
+	 *
 	 * @param listener the TagStyleListener to be removed
 	 */
 	public void removeTagStyleListener(TagStyleListener listener) {
@@ -1268,17 +1313,18 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * {@link TagStyleListener tag style listeners} that a
 	 * {@link Tag tagged selection} of a given index has been added.
+	 *
 	 * @param tag the added tagged selection
 	 */
 	protected void fireTagAdded(Tag tag) {
 		Object[] listeners = listenerList.getListenerList();
 		TagEvent e = null;
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==TagListener.class) {
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == TagListener.class) {
 				if (e == null) {
-					e = new TagEvent(this,tag,tag.getPosition(),tag.getPosition()+tag.getLength());
+					e = new TagEvent(this, tag, tag.getPosition(), tag.getPosition() + tag.getLength());
 				}
-				((TagListener)listeners[i+1]).tagAdded(e);
+				((TagListener) listeners[i + 1]).tagAdded(e);
 			}
 		}
 	}
@@ -1286,17 +1332,18 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Fires {@link TagStyleListener tag style listeners} that a
 	 * {@link Tag tagged selection} of a given index has been removed.
+	 *
 	 * @param tag the removed tagged selection
 	 */
 	protected void fireTagRemoved(Tag tag) {
 		Object[] listeners = listenerList.getListenerList();
 		TagEvent e = null;
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==TagListener.class) {
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == TagListener.class) {
 				if (e == null) {
-					e = new TagEvent(this,tag,tag.getPosition(),tag.getPosition()+tag.getLength());
+					e = new TagEvent(this, tag, tag.getPosition(), tag.getPosition() + tag.getLength());
 				}
-				((TagListener)listeners[i+1]).tagRemoved(e);
+				((TagListener) listeners[i + 1]).tagRemoved(e);
 			}
 		}
 	}
@@ -1304,36 +1351,36 @@ public class StyledTagSet implements Serializable, Preset {
 	/**
 	 * Fires {@link TagStyleListener tag style listeners} that a
 	 * {@link Tag tagged selection} of a given index has been changed.
+	 *
 	 * @param tag the new value of the changed tagged selection
 	 * @param oldTag the old value of the changed tagged selection
 	 */
 	protected void fireTagChanged(Tag tag, Tag oldTag) {
 		Object[] listeners = listenerList.getListenerList();
 		TagEvent e = null;
-		for (int i = listeners.length-2; i>=0; i-=2) {
-			if (listeners[i]==TagListener.class) {
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == TagListener.class) {
 				if (e == null) {
 					double start;
 					double end;
 					if (oldTag != null) {
 						start = Math.min(tag.getPosition(), oldTag.getPosition());
-						end = Math.max(tag.getPosition()+tag.getLength(), oldTag.getPosition()+oldTag.getLength());
+						end = Math.max(tag.getPosition() + tag.getLength(), oldTag.getPosition() + oldTag.getLength());
 					} else {
 						start = tag.getPosition();
 						end = tag.getPosition() + tag.getLength();
 					}
-					e = new TagEvent(this,tag,start,end);
+					e = new TagEvent(this, tag, start, end);
 				}
-				((TagListener)listeners[i+1]).tagChanged(e);
+				((TagListener) listeners[i + 1]).tagChanged(e);
 			}
 		}
 	}
 
 	/**
-	 * Invalidates the cache of {@link Tag tagged selections} of a given
-	 * type.
-	 * If cache is invalidated it will need to be built again before
-	 * next usage.
+	 * Invalidates the cache of {@link Tag tagged selections} of a given type.
+	 * If cache is invalidated it will need to be built again before next usage.
+	 *
 	 * @param type the type of a selection
 	 */
 	private void invalidateTagCache(SignalSelectionType type) {
@@ -1436,12 +1483,13 @@ public class StyledTagSet implements Serializable, Preset {
 
 	/**
 	 * Copies all styles from the given {@link StyledTagSet} into this tag set.
-	 * Deletes all styles that are not defined in the given StyledTagSet
-	 * unless some tags exist in this StyledTagSet which use the mentioned
-	 * style. In that case the style is not removed.
+	 * Deletes all styles that are not defined in the given StyledTagSet unless
+	 * some tags exist in this StyledTagSet which use the mentioned style. In
+	 * that case the style is not removed.
+	 *
 	 * @param tagSet the tag set from which styles should be removed.
-	 * @return the list of tag styles names which couldn't be removed from
-	 * this tag set.
+	 * @return the list of tag styles names which couldn't be removed from this
+	 * tag set.
 	 */
 	public List<String> copyStylesFrom(StyledTagSet tagSet) {
 
@@ -1457,20 +1505,18 @@ public class StyledTagSet implements Serializable, Preset {
 		}
 
 		//for each tag check if it should be removed, updated or deleted
-		for (TagStyle style: stylesFromBoth) {
+		for (TagStyle style : stylesFromBoth) {
 			SignalSelectionType styleType = style.getType();
 			TagStyle newStyle = tagSet.getStyle(styleType, style.getName());
 			TagStyle oldStyle = this.getStyle(styleType, style.getName());
 
 			if (newStyle != null && oldStyle != null) {
 				updateStyle(oldStyle.getName(), newStyle);
-			}
-			else if (newStyle == null && oldStyle != null) {
+			} else if (newStyle == null && oldStyle != null) {
 				if (!tryToRemoveStyle(oldStyle)) {
 					stylesThatCouldNotBeDeleted.add(oldStyle.getName());
 				}
-			}
-			else if (newStyle != null && oldStyle == null) {
+			} else if (newStyle != null && oldStyle == null) {
 				addStyle(newStyle);
 			}
 		}
@@ -1489,9 +1535,10 @@ public class StyledTagSet implements Serializable, Preset {
 	}
 
 	/**
-	 * Tries to remove the given style. If a tag exists that uses this style,
-	 * it cannot be removed and false is returned. If no tag exists that uses
-	 * this style, it is removed and 'true' is returned.
+	 * Tries to remove the given style. If a tag exists that uses this style, it
+	 * cannot be removed and false is returned. If no tag exists that uses this
+	 * style, it is removed and 'true' is returned.
+	 *
 	 * @param style the style to be removed
 	 * @return true if the style was sucessfully removed, false otherwise
 	 */
@@ -1510,21 +1557,19 @@ public class StyledTagSet implements Serializable, Preset {
 		if (!doTagsWithThisStyleExist) {
 			styles.removeStyle(style);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	/**
 	 * Checks if {@link TagStyle tag styles} {@link TagStyleAttributeDefinition}
-	 * is properly referenced by each {@link TagAttributeValue} and
-	 * - in case it is not - the reference is corrected.
-	 * Explanation: each tag style contains {@link TagStyleAttributeDefinition
-	 * attributes definitions} which are referenced by each tag that uses
-	 * these definitions. But, after copying styles from some other tagSet
-	 * (which occurs when applying a preset to a tag set) those references
-	 * will be incorrect.
+	 * is properly referenced by each {@link TagAttributeValue} and - in case it
+	 * is not - the reference is corrected. Explanation: each tag style contains {@link TagStyleAttributeDefinition
+	 * attributes definitions} which are referenced by each tag that uses these
+	 * definitions. But, after copying styles from some other tagSet (which
+	 * occurs when applying a preset to a tag set) those references will be
+	 * incorrect.
 	 */
 	protected void updateTagAttributesBinding() {
 		Iterator<Tag> tagIterator = tags.iterator();
@@ -1536,15 +1581,14 @@ public class StyledTagSet implements Serializable, Preset {
 			TagStyle style = getStyle(tagType, styleName);
 			tag.setStyle(style);
 
-			for (TagAttributeValue value: tag.getAttributes().getAttributesList()) {
+			for (TagAttributeValue value : tag.getAttributes().getAttributesList()) {
 				TagStyleAttributeDefinition oldAttributeDefinition = value.getAttributeDefinition();
 				TagStyleAttributeDefinition newAttributeDefinition = style.getAttributesDefinitions().getAttributeDefinition(oldAttributeDefinition.getCode());
 
 				if (oldAttributeDefinition != null && newAttributeDefinition == null) {
 					style.getAttributesDefinitions().addAttributeDefinition(oldAttributeDefinition);
 					value.setAttributeDefinition(oldAttributeDefinition);
-				}
-				else {
+				} else {
 					value.setAttributeDefinition(newAttributeDefinition);
 				}
 			}

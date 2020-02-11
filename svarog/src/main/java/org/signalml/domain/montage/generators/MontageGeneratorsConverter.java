@@ -22,15 +22,15 @@ public class MontageGeneratorsConverter implements Converter {
 	/**
 	 * Montage generators that are added to all EEG systems by default.
 	 */
-	private static final List<IMontageGenerator> defaultMontageGenerators = new ArrayList<IMontageGenerator>()
-	{{
+	private static final List<IMontageGenerator> defaultMontageGenerators = new ArrayList<IMontageGenerator>() {
+		{
 			add(new RawMontageGenerator());
 			add(new CommonAverageMontageGenerator());
 			add(new LeftEarMontageGenerator());
 			add(new RightEarMontageGenerator());
 			add(new LinkedEarsMontageGenerator());
-                        add(new LongitudalReferenceMontageGenerator());
-                        add(new TransverseReferenceMontageGenerator());
+			add(new LongitudalReferenceMontageGenerator());
+			add(new TransverseReferenceMontageGenerator());
 		}
 	};
 
@@ -46,6 +46,7 @@ public class MontageGeneratorsConverter implements Converter {
 
 	/**
 	 * Adds the default montage generators to the list passed as an argument.
+	 *
 	 * @param montageGenerators the list to which default montage generators
 	 * will be added.
 	 */
@@ -77,6 +78,7 @@ public class MontageGeneratorsConverter implements Converter {
 
 	/**
 	 * Unmarshalls a {@link IMontageGenerator} from XML.
+	 *
 	 * @param reader the reader reading the current XML stream
 	 * @return the montage generator that has been read (null if an error
 	 * occured)
@@ -104,18 +106,18 @@ public class MontageGeneratorsConverter implements Converter {
 				}
 			} else if ("channels".equals(reader.getNodeName()) && generatorType != null) {
 				switch (generatorType) {
-				case SINGLE_REFERENCE:
-					String singleReferenceChannel = unmarshallSingleChannel(reader);
-					montageGenerator = new SingleReferenceMontageGenerator(singleReferenceChannel);
-					break;
-				case BIPOLAR_REFERENCE:
-					String[][] bipolarReferenceChannels = unmarshallPairsOfChannels(reader);
-					montageGenerator = new BipolarReferenceMontageGenerator(bipolarReferenceChannels);
-					break;
-				case AVERAGE_REFERENCE:
-					String[] averageReferenceChannels = unmarshallVectorOfChannels(reader);
-					montageGenerator = new AverageReferenceMontageGenerator(averageReferenceChannels);
-					break;
+					case SINGLE_REFERENCE:
+						String singleReferenceChannel = unmarshallSingleChannel(reader);
+						montageGenerator = new SingleReferenceMontageGenerator(singleReferenceChannel);
+						break;
+					case BIPOLAR_REFERENCE:
+						String[][] bipolarReferenceChannels = unmarshallPairsOfChannels(reader);
+						montageGenerator = new BipolarReferenceMontageGenerator(bipolarReferenceChannels);
+						break;
+					case AVERAGE_REFERENCE:
+						String[] averageReferenceChannels = unmarshallVectorOfChannels(reader);
+						montageGenerator = new AverageReferenceMontageGenerator(averageReferenceChannels);
+						break;
 				}
 				if (montageGenerator != null) {
 					montageGenerator.setName(montageGeneratorName);
@@ -129,7 +131,9 @@ public class MontageGeneratorsConverter implements Converter {
 	}
 
 	/**
-	 * Unmarshalls the single channel (used for {@link SingleReferenceMontageGenerator}.
+	 * Unmarshalls the single channel (used for
+	 * {@link SingleReferenceMontageGenerator}.
+	 *
 	 * @param reader the reader reading the current XML stream
 	 * @return the reference channel name
 	 */
@@ -145,6 +149,7 @@ public class MontageGeneratorsConverter implements Converter {
 
 	/**
 	 * Unmarshalls a vector of channel names from XML file.
+	 *
 	 * @param reader the reader reading the current XML stream
 	 * @return the vector of channels
 	 */
@@ -165,6 +170,7 @@ public class MontageGeneratorsConverter implements Converter {
 
 	/**
 	 * Unmarshalls pairs of channel labels using the XML reader.
+	 *
 	 * @param reader the reader reading the current XML stream
 	 * @return the pairs of channel labels.
 	 */
