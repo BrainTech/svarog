@@ -349,7 +349,7 @@ public class SourceMontage {
 		if (sourceChannelsByLabel == null) {
 			sourceChannelsByLabel = new HashMap<String, SourceChannel>();
 			for (SourceChannel channel : sourceChannels) {
-				sourceChannelsByLabel.put(channel.getLabel(), channel);
+				sourceChannelsByLabel.put(channel.getLabel().toUpperCase(), channel);
 			}
 		}
 		return sourceChannelsByLabel;
@@ -358,10 +358,10 @@ public class SourceMontage {
 	/**
 	 * Returns a {@link SourceChannel source channel} of a given label.
 	 * @param label a label of source channel to be found
-	 * @return the found source channel
+	 * @return the found source channel, case insensitive
 	 */
 	public SourceChannel getSourceChannelByLabel(String label) {
-		return getSourceChannelsByLabel().get(label);
+		return getSourceChannelsByLabel().get(label.toUpperCase());
 	}
 
 	/**

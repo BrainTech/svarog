@@ -91,7 +91,7 @@ public class EegSystem implements Preset {
 	 */
 	public EegElectrode getElectrode(String electrodeName) {
 		for (EegElectrode electrode: electrodes) {
-			if (electrode.getLabel().equals(electrodeName)) {
+			if (electrode.getLabel().toUpperCase().equals(electrodeName.toUpperCase())) {
 				return electrode;
 			}
 		}
