@@ -48,7 +48,7 @@ public class ImageChart extends JFreeChart {
 	}
 
 	public void setMaxFrequency(double fMax, boolean logarithmic) {
-        NumberAxis yAxis = createRangeAxis(minFrequency, fMax, logarithmic);
+		NumberAxis yAxis = createRangeAxis(minFrequency, fMax, logarithmic);
 		getXYPlot().setRangeAxis(yAxis);
 	}
 
@@ -120,17 +120,17 @@ public class ImageChart extends JFreeChart {
 	}
 
 	private static XYPlot createPlot(double tMin, double tMax, double fMin, double fMax) {
-        NumberAxis xAxis = new NumberAxis();
-        xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		NumberAxis xAxis = new NumberAxis();
+		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 		xAxis.setRange(tMin, tMax);
-        NumberAxis yAxis = createRangeAxis(fMin, fMax, false);
+		NumberAxis yAxis = createRangeAxis(fMin, fMax, false);
 
 		return new XYPlot(new DefaultXYDataset(), xAxis, yAxis, new XYBlockRenderer());
 	}
 
 	private static NumberAxis createRangeAxis(double fMin, double fMax, boolean logarithmic) {
 		final String label = "frequency [Hz]";
-        NumberAxis yAxis = logarithmic ? new LogarithmicAxis(label) : new NumberAxis(label);
+		NumberAxis yAxis = logarithmic ? new LogarithmicAxis(label) : new NumberAxis(label);
 		yAxis.setRange(fMin, fMax);
 		yAxis.setFixedDimension(50);
 		return yAxis;

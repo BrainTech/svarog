@@ -50,9 +50,9 @@ public class SignalChart extends JFreeChart {
 		}
 
 		NumberAxis xAxis = new NumberAxis("time (s)");
-        xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		xAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 		xAxis.setRange(tMin, tMax);
-        NumberAxis yAxis = new NumberAxis("value (µV)");
+		NumberAxis yAxis = new NumberAxis("value (µV)");
 		yAxis.setRange(min, max);
 		yAxis.setFixedDimension(50);
 
