@@ -1,16 +1,14 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
+import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
@@ -26,12 +24,6 @@ public class PopupActionForWavelet extends AbstractSignalMLAction {
 	private static final String TITLE = _("Wavelet Transform");
 
 	private final SvarogAccessSignal signalAccess;
-
-	private void initFX(JFXPanel fxPanel, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
-		PaneForWavelet pane = new PaneForWavelet(signalAccess, selection);
-        Scene scene = new Scene(pane.getPane(), 500, 300);
-		fxPanel.setScene(scene);
-	}
 
 	public PopupActionForWavelet(SvarogAccessSignal signalAccess) {
 		super();
@@ -56,24 +48,23 @@ public class PopupActionForWavelet extends AbstractSignalMLAction {
 			return;
 		}
 
-		JFrame frame = new JFrame(TITLE);
-		frame.setSize(800, 600);
-		final JFXPanel fxPanel = new JFXPanel();
-		frame.add(fxPanel);
-		frame.setVisible(true);
+		final int selectedChannel = Math.max(selection.getChannel(), 0);
+		final ChannelSamples samples;
+		try {
+			samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel);
+		} catch (NoActiveObjectException ex) {
+			logger.error("could not access signal selection", ex);
+			return;
+		}
 
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					initFX(fxPanel, selection);
-				} catch (NoActiveObjectException ex) {
-					logger.error("could not access signal selection", ex);
-				} catch (IOException ex) {
-					logger.error("could not initialize plugin", ex);
-				}
-			}
-		});
+		double tMin = selection.getPosition();
+		double tMax = selection.getEndPosition();
+
+		SingleSignal signal = new SimpleSingleSignal(samples);
+
+		FrameForWavelet frame = new FrameForWavelet();
+		frame.initialize(signal, tMin, tMax, signal.getSamplingFrequency() / 2);
+		frame.setVisible(true);
 	}
 
 }

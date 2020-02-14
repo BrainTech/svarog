@@ -1,9 +1,6 @@
 package pl.edu.fuw.fid.signalanalysis.waveform;
 
 import java.util.Arrays;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.chart.XYChart;
 import org.apache.commons.math.complex.Complex;
 import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
@@ -15,7 +12,7 @@ import org.signalml.math.fft.WindowType;
  */
 public class WaveformRenderer {
 
-	public static ObservableList<XYChart.Data<Number,Number>> compute(Waveform wf, double t0, WindowType windowType, Complex coeff, double samplingFrequency) {
+	public static double[][] compute(Waveform wf, double t0, WindowType windowType, Complex coeff, double samplingFrequency) {
 		double hw = wf.getHalfWidth();
 		double tStart = t0 - hw, tEnd = t0 + hw;
 		int iStart = (int) Math.round(tStart * samplingFrequency - 0.5);
@@ -42,11 +39,12 @@ public class WaveformRenderer {
 
 		final Complex norm = coeff.multiply(1.0/Math.sqrt(sumSquare * samplingFrequency));
 
-		ObservableList<XYChart.Data<Number,Number>> result = FXCollections.observableArrayList();
+		double[][] result = new double[2][length];
 		for (int i=iStart; i<=iEnd; ++i) {
 			double t = i / samplingFrequency;
 			double value = values[i-iStart].multiply(norm).getReal();
-			result.add(new XYChart.Data<Number,Number>(t, value));
+			result[0][i-iStart] = t;
+			result[1][i-iStart] = value;
 		}
 		return result;
 	}
