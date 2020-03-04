@@ -1,9 +1,6 @@
 package pl.edu.fuw.fid.signalanalysis;
 
-import java.io.File;
-import javafx.embed.swing.JFXPanel;
 import javax.swing.JMenu;
-import org.fuin.utils4j.Utils4J;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
@@ -12,21 +9,17 @@ import pl.edu.fuw.fid.signalanalysis.dtf.DtfMethodAction;
 import pl.edu.fuw.fid.signalanalysis.ica.DescribeComponentsAction;
 import pl.edu.fuw.fid.signalanalysis.ica.IcaMethodAction;
 import pl.edu.fuw.fid.signalanalysis.stft.PopupActionForSTFT;
-import pl.edu.fuw.fid.signalanalysis.wavelet.PopupActionForWavelet;
 import pl.edu.fuw.fid.signalanalysis.ica.ZeroMethodAction;
 import pl.edu.fuw.fid.signalanalysis.stft.AveragedStftDialog;
 import pl.edu.fuw.fid.signalanalysis.stft.ImageRendererForSTFT;
 import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseAction;
 import pl.edu.fuw.fid.signalanalysis.wavelet.AveragedWaveletDialog;
 import pl.edu.fuw.fid.signalanalysis.wavelet.ImageRendererForWavelet;
+import pl.edu.fuw.fid.signalanalysis.wavelet.PopupActionForWavelet;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Main class for the Signal Analysis plugin.
- * Since parts of the plugin (time-frequency transforms) require JavaFX,
- * this plugin adds JavaFX runtime (jfxrt.jar) to the classpath,
- * with a little help from Utils4J.
- * Should JavaFX cease to be required, Utils4J dependency may be removed.
  *
  * @author ptr@mimuw.edu.pl
  */
@@ -37,22 +30,8 @@ public class SignalAnalysisPlugin implements Plugin {
 	private SvarogAccessGUI guiAccess;
 	private SvarogAccessSignal signalAccess;
 
-	private void addToClasspathIfExists(String relativePath) {
-		String path = System.getProperty("java.home")+File.separator+relativePath;
-		if (new File(path).isFile()) {
-			Utils4J.addToClasspath("file:///"+path);
-		}
-	}
-
 	@Override
 	public void register(SvarogAccess access) {
-		// for java-7-oracle
-		addToClasspathIfExists("lib"+File.separator+"jfxrt.jar");
-		// for java-8-oracle
-		addToClasspathIfExists("lib"+File.separator+"ext"+File.separator+"jfxrt.jar");
-		// pre-initializing JFX
-		new JFXPanel();
-
 		guiAccess = access.getGUIAccess();
 		signalAccess = access.getSignalAccess();
 

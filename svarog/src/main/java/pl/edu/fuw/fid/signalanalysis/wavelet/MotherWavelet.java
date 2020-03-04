@@ -37,4 +37,16 @@ public abstract class MotherWavelet implements Waveform {
 		};
 	}
 
+	public static MotherWavelet get(String name, double param) {
+		if (name.equals("Morlet")) {
+			return new GaborWavelet(param);
+		}
+		if (name.equals("Shannon")) {
+			return new ShannonWavelet();
+		}
+		if (name.equals("Haar")) {
+			return new HaarWavelet();
+		}
+		return null;
+	}
 }
