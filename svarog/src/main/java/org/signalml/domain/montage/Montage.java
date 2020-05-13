@@ -23,6 +23,8 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.util.Util;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * This class represents the signal montage.
@@ -726,6 +728,25 @@ public class Montage extends SourceMontage implements Preset {
 		}
 		return result;
 	}
+        
+        public String getChannelsIndexesInReference(int index) {
+		String[] references = new String[sourceChannels.size()];
+		montageChannels.get(index).getReferences(references);
+		String result = ""; 
+		for (int i=0; i<references.length; i++) {
+			if (references[i] == null)
+				continue;
+			else {
+
+				result = result + Integer.toString(i) + ";";
+			}
+		}
+		return result.substring(0, result.length() - 1 );
+	}
+        
+        
+        
+        
 
 
 	/**
@@ -739,6 +760,11 @@ public class Montage extends SourceMontage implements Preset {
 		float[] references = new float[sourceChannels.size()];
 		montageChannels.get(index).getReferencesAsFloat(references);
 		return references;
+	}
+        
+        public String getReferenceAsFloatSerialized(int index) {
+                return StringUtils.join(ArrayUtils.toObject(getReferenceAsFloat(index)), ";");
+                
 	}
 
 	/**

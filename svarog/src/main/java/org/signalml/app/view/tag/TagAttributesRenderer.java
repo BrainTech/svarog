@@ -16,6 +16,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
  * Renderer capable of rendering tag attributes on a tag.
@@ -120,10 +121,11 @@ public class TagAttributesRenderer extends JComponent {
 			y += marginTopForMarkers;
 		}
 
-		g.setColor(Color.WHITE);
+    		g.setColor(Color.WHITE);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		for (TagAttributeValue a : tag.getAttributes().getAttributesList()) {
-			if (!a.getAttributeDefinition().isVisible()) {
+                        TagStyleAttributeDefinition attrDef = a.getAttributeDefinition();
+			if (!attrDef.isVisible()) {
 				continue;
 			}
 
