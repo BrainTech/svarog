@@ -588,11 +588,26 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private void paintTagOrTagSelection(Graphics2D g, Tag tag, int tagNumber, boolean active, boolean selected, boolean selectionOnly) {
 
 		SignalSelectionType type = tag.getType();
-		if (type == SignalSelectionType.PAGE) {
-			return;
-		} else if (tag.getChannel() != -1 && !isChannelVisible(tag.getChannel())) {
-			return;
-		}
+                int channel_number_source = tag.getChannel();
+                
+
+                    if (type == SignalSelectionType.PAGE) {
+                            return;
+                    } else
+                    {
+                          
+                        if (tag.getChannel() == Tag.CHANNEL_NULL)
+                        {
+                            return;
+                        }
+                        int[] channel_numbers_montage = this.document.getMontage().getMontageChannelsForSourceChannel(channel_number_source);
+                        for (int channel_number_montage : channel_numbers_montage)
+                        {
+                            if (tag.getChannel() != Tag.CHANNEL_NULL && !isChannelVisible(channel_number_montage)) {
+                            return;
+                        }
+                        }
+                    }
 
 		Component rendererComponent;
 		Component attributesRendererComponent;
