@@ -32,7 +32,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
 	private static Logger logger = Logger.getLogger(ChooseExperimentPanel.class);
-	
+
 	protected ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 
@@ -57,7 +57,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 	{
 		super.setTitledBorder(_("Choose experiment"));
 	}
-	
+
 	protected void createInterface() {
 		setTitledBorder();
 		chooseExperimentTableModel = getTableModel();
@@ -161,7 +161,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 			chooseExperimentTableModel.clearExperiments();
 		getLogTextField().setText("");
 	}
-	
+
 	public FindEEGExperimentsWorker getWorker(){
 		return new FindEEGExperimentsWorker();
 	}
@@ -171,11 +171,15 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 		public RefreshButtonAction() {
 			this.setText(_("Refresh"));
+			start(); // always refresh when the dialog is initialized
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			start();
+		}
 
+		private void start() {
 			synchronized (this) {
 				//only one action should be executed at once.
 				chooseExperimentTableModel.setExperiments(null);
@@ -184,7 +188,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 				executing = true;
 				setEnabled(false);
 			}
-			
+
 			worker = getWorker();
 			worker.addPropertyChangeListener(this);
 			getProgressBar().setIndeterminate(true);
