@@ -590,25 +590,23 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		SignalSelectionType type = tag.getType();
                 int channel_number_source = tag.getChannel();
                 
+                if (type == SignalSelectionType.PAGE) {
+                        return;
+                } else
+                {
 
-                    if (type == SignalSelectionType.PAGE) {
-                            return;
-                    } else
-                    {
-                          
-                        if (tag.getChannel() == Tag.CHANNEL_NULL)
+                    if (tag.getChannel() != Tag.CHANNEL_NULL)
                         {
-                            return;
+                            int[] channel_numbers_montage = this.document.getMontage().getMontageChannelsForSourceChannel(channel_number_source);
+                            for (int channel_number_montage : channel_numbers_montage)
+                            {
+                                if (!isChannelVisible(channel_number_montage)) 
+                                {
+                                    return;
+                                }
+                            }
                         }
-                        int[] channel_numbers_montage = this.document.getMontage().getMontageChannelsForSourceChannel(channel_number_source);
-                        for (int channel_number_montage : channel_numbers_montage)
-                        {
-                            if (tag.getChannel() != Tag.CHANNEL_NULL && !isChannelVisible(channel_number_montage)) {
-                            return;
-                        }
-                        }
-                    }
-
+                }
 		Component rendererComponent;
 		Component attributesRendererComponent;
 
