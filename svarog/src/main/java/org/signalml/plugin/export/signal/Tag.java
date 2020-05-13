@@ -28,7 +28,17 @@ import org.springframework.context.MessageSourceResolvable;
  */
 public class Tag extends SignalSelection implements Comparable<ExportedTag>, Cloneable, MessageSourceResolvable, PropertyProvider, ExportedTag {
 
-	//TODO (can't extend SignalSelection due to strange xstream behaviour)
+        // technical Tag attributes, which we don't want to show by default in Svarog
+        final static public String REFERENCE_AS_READABLE_ATTR = "referenceAsReadable";
+        final static public String REFERENCE_AS_FLOAT_ATTR = "referenceAsFloat";
+        final static public String CHANNEL_INDEXES_IN_REFERENCE_ATTR = "channelIndexesInReference";
+        final static public String[] TECHNICAL_ATTRIBUTE_LIST = {REFERENCE_AS_FLOAT_ATTR,
+            REFERENCE_AS_READABLE_ATTR,
+            CHANNEL_INDEXES_IN_REFERENCE_ATTR
+        };
+        
+
+//TODO (can't extend SignalSelection due to strange xstream behaviour)
 	private static final long serialVersionUID = 1L;
 
 	/**

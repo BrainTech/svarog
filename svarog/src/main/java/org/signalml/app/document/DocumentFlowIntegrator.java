@@ -1014,7 +1014,7 @@ public class DocumentFlowIntegrator {
 					logger.debug("Tag has checksum [" + checksumMethod + "] value [" + tagChecksumValue + "] signal checksum [" + parentChecksumValue + "]");
 					if (!tagChecksumValue.equalsIgnoreCase(parentChecksumValue)) {
 						logger.debug("Checksum different");
-						int res = OptionPane.showTagChecksumBad(optionPaneParent);
+ 						int res = OptionPane.showTagChecksumBad(optionPaneParent);
 						if (res != OptionPane.OK_OPTION) {
 							return null;
 						}

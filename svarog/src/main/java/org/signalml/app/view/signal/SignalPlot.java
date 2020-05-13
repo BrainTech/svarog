@@ -1950,12 +1950,23 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			selection = transformToMarkerSelection(selection);
 		}
 
-		int channel = selection.getChannel();
-		if (channel != Tag.CHANNEL_NULL) {
-			channel = signalChain.getDocumentChannelIndex(channel);
+		int channel_montage = selection.getChannel();
+                int channel_source = Tag.CHANNEL_NULL;
+		if (channel_montage != Tag.CHANNEL_NULL) {
+			channel_source = signalChain.getDocumentChannelIndex(channel_montage);
+                     
 		}
 
-		Tag tag = new Tag(style, selection.getPosition(), selection.getLength(), channel, null);
+		Tag tag = new Tag(style, selection.getPosition(), selection.getLength(), channel_source, null);
+                if (channel_montage != Tag.CHANNEL_NULL) {
+                        
+                        String referenceAsReadable = this.document.getMontage().getReferenceReadable(channel_montage);
+                        String referenceAsFloat = this.document.getMontage().getReferenceAsFloatSerialized(channel_montage);
+                        String channelIndexesInReference = this.document.getMontage().getChannelsIndexesInReference(channel_montage);
+                        tag.addAttributeToTag(Tag.REFERENCE_AS_READABLE_ATTR, referenceAsReadable);
+                        tag.addAttributeToTag(Tag.REFERENCE_AS_FLOAT_ATTR, referenceAsFloat);
+                        tag.addAttributeToTag(Tag.CHANNEL_INDEXES_IN_REFERENCE_ATTR, channelIndexesInReference);
+                }
 		logger.debug("Adding channel tag [" + tag.toString() + "]");
 		tagDocument.getTagSet().mergeSameTypeChannelTags(tag);
 		tagDocument.invalidate();
@@ -2861,7 +2872,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	public void tagChannelSelection(ExportedTagDocument tagDocument,
 			ExportedTagStyle style, ExportedSignalSelection selection, boolean selectNew) throws InvalidClassException {
 		if (tagDocument instanceof TagDocument) {
-			tagChannelSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
+    			tagChannelSelection((TagDocument) tagDocument, new TagStyle(style), new SignalSelection(selection), selectNew);
 		} else {
 			throw new InvalidClassException("only document got from SvarogAccess can be used");
 		}
