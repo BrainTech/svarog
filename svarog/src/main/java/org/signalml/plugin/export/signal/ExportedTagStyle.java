@@ -6,6 +6,7 @@ package org.signalml.plugin.export.signal;
 import java.awt.Color;
 import java.awt.Stroke;
 import javax.swing.KeyStroke;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 
 
 /**
@@ -90,5 +91,16 @@ public interface ExportedTagStyle {
 	 * @return true if the selection is a marker, false otherwise
 	 */
 	boolean isMarker();
+        
+        /**
+	 * Returns attribute definitions - colors, transparency.
+	 */
+        TagStyleAttributes getAttributesDefinitions();
+        
+        
+        /**
+	 * Returns attribute definition visibility.
+	 */
+        boolean getIsVisible();
 
 }

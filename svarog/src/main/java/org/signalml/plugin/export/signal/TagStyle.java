@@ -156,6 +156,9 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.getOutlineDash();
 		this.keyStroke = style.getKeyStroke();
 		this.marker = style.isMarker();
+                this.attributesDefinitions = style.getAttributesDefinitions();
+                this.visible = style.getIsVisible();
+
 	}
 
 	/**
@@ -415,6 +418,17 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public boolean isMarker() {
 		return marker;
 	}
+        
+        @Override
+        /**
+	 * Returns the definitions of the attributes which can be set for tags
+	 * having this style.
+	 * @return the tag style attributes definitions
+	 */
+        public TagStyleAttributes getAttributesDefinitions(){
+            return attributesDefinitions;
+        }
+
 
 	/**
 	 * Sets if the {@link Tag selection} is a marker.
@@ -529,14 +543,8 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		return true;
 	}
 
-	/**
-	 * Returns the definitions of the attributes which can be set for tags
-	 * having this style.
-	 * @return the tag style attributes definitions
-	 */
-	public TagStyleAttributes getAttributesDefinitions() {
-		return attributesDefinitions;
-	}
+
+
 
 	/**
 	 * Sets the definitions of the attributes which can be set for tags
@@ -564,5 +572,11 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public boolean isVisible() {
 		return visible;
 	}
+        
+        @Override
+        public boolean getIsVisible() {
+            return visible;
+        }
+
 
 }
