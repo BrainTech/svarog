@@ -138,7 +138,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
 		this.attributesDefinitions = style.attributesDefinitions;
-		this.visible = style.visible;
+    		this.visible = style.visible;
 	}
 
 	/**
