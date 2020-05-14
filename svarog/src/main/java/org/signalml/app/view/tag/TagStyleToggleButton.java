@@ -57,14 +57,18 @@ public class TagStyleToggleButton extends JToggleButton implements TagStyleSelec
 
 	public void reset() {
 		cachedIcon = null;
+		String toolTipText = prepareToolTipText();
 		setToolTipText(prepareToolTipText());
 		repaint();
 	}
 
 	private String prepareToolTipText() {
 		String text = tagStyle.getName();
+		if (text == null) {
+			return "";
+		}
 		String description = tagStyle.getDescription();
-		if (!description.isEmpty()) {
+		if (description != null && !description.isEmpty()) {
 			text += " (" + description + ")";
 		}
 		return text;
