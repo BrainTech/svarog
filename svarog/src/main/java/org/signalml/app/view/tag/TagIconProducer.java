@@ -1,7 +1,3 @@
-/* TagIconProducer.java created 2007-10-13
- *
- */
-
 package org.signalml.app.view.tag;
 
 import java.awt.BasicStroke;
@@ -10,6 +6,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -17,11 +14,12 @@ import java.util.Map;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 import org.signalml.plugin.export.signal.TagStyle;
 
-/** TagIconProducer
- *
+/**
+ * TagIconProducer
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -74,15 +72,9 @@ public class TagIconProducer {
 		g.setColor(tagStyle.getOutlineColor());
 		float width = Math.min(1F, tagStyle.getOutlineWidth());
 		g.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, tagStyle.getOutlineDash(), 0F));
-
 		g.drawRect(0, 0, 15, 15);
-		String letter = tagStyle.getName();
 
-		if (letter != null && letter.length() > 0) {
-			letter = letter.substring(0,1);
-		} else {
-			letter = "?";
-		}
+		String letter = getLetterForTagStyle(tagStyle);
 
 		g.setFont(labelFont);
 
@@ -95,6 +87,27 @@ public class TagIconProducer {
 			(float)(((16-labelBounds.getHeight())/2) - labelBounds.getY())
 		);
 
+	}
+
+	private String getLetterForTagStyle(TagStyle tagStyle) {
+		KeyStroke keyStroke = tagStyle.getKeyStroke();
+		if (keyStroke != null) {
+			// we cannot use keyStroke.getKeyChar because
+			// these are "key press" events instead of "key type" as they should
+			int keyCode = keyStroke.getKeyCode();
+			String label = KeyEvent.getKeyText(keyCode);
+			if (keyCode >= KeyEvent.VK_A && keyCode <= KeyEvent.VK_Z) {
+				if ((keyStroke.getModifiers() & KeyEvent.SHIFT_DOWN_MASK) == 0) {
+					label = label.toLowerCase();
+				}
+			}
+			return label;
+		}
+		String tagName = tagStyle.getName();
+		if (tagName != null && !tagName.isEmpty()) {
+			return tagName.substring(0, 1);
+		}
+		return "?";
 	}
 
 	protected Shape getMarkerShape() {
@@ -125,13 +138,7 @@ public class TagIconProducer {
 		g.setStroke(new BasicStroke(width, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10F, tagStyle.getOutlineDash(), 0F));
 
 		g.draw(shape);
-		String letter = tagStyle.getName();
-
-		if (letter != null && letter.length() > 0) {
-			letter = letter.substring(0,1);
-		} else {
-			letter = "?";
-		}
+		String letter = getLetterForTagStyle(tagStyle);
 
 		g.setFont(labelFont);
 
