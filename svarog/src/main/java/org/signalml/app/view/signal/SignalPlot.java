@@ -799,6 +799,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			startChannel++;
 		}
 		startChannel--;
+		if (startChannel < 0)
+		{
+			startChannel = 0;
+		}
 		return startChannel;
 	}
 
