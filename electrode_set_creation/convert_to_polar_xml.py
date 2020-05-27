@@ -16,8 +16,8 @@ PREFIXES = ["", "EEG "]
 
 def cartesian_to_polar(x, y, z):
     r = (x*x + y*y + z*z)**0.5
-    theta = math.atan2(y, x) * 180.0 / math.pi - 90
-    phi = math.atan2(z, (x*x + y*y)**0.5) * 180.0 / math.pi
+    theta = math.degrees(math.atan2(y, x)) - 90
+    phi = math.degrees(math.atan2(z, (x*x + y*y)**0.5))
     return r, phi, theta
                 
 def main(filename):

@@ -13,34 +13,33 @@ import org.signalml.domain.montage.SourceMontage;
 public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontageGenerator {
 
 	String[][] PAIRS = {
-		{"Fp2", "F8"},
-		{"F8", "T4"},
-		{"T4", "T6"},
-		{"T6", "O2"},
-		{"T4", "T8"},
-		{"T8", "O2"},
-			
-		{"Fp1", "F7"},
-		{"F7", "T3"},
-		{"T3", "T5"},
-		{"T5", "O1"},
-		
-		
-		{"Fp2", "F4"},
-		{"F4", "C4"},
-		{"C4", "P4"},
-		{"P4", "O2"},
-		
-		{"Fp1", "F3"},
-		{"F3", "C3"},
-		{"C3", "P3"},
-		{"P3", "O1"},
-		{"T3", "T7"},
-		{"T7", "O1"},
+	{"Fp2", "F8"},
+	{"F8", "T4"},
+	{"T4", "T6"},
+	{"T6", "O2"},
+	{"T4", "T8"},
+	{"T8", "O2"},
 
-		{"Fz", "Cz"},
-		{"Cz", "Pz"}
-		};
+	{"Fp1", "F7"},
+	{"F7", "T3"},
+	{"T3", "T5"},
+	{"T5", "O1"},
+
+	{"Fp2", "F4"},
+	{"F4", "C4"},
+	{"C4", "P4"},
+	{"P4", "O2"},
+
+	{"Fp1", "F3"},
+	{"F3", "C3"},
+	{"C3", "P3"},
+	{"P3", "O1"},
+	{"T3", "T7"},
+	{"T7", "O1"},
+
+	{"Fz", "Cz"},
+	{"Cz", "Pz"}
+	};
 
 	public LongitudalReferenceMontageGenerator() {
 		super();
@@ -81,8 +80,8 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 			String channelName = channelPairs[i][0];
 			SourceChannel sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
-					sourceChannel = montage.getSourceChannelByLabel("EEG " + channelName);
-				}
+				sourceChannel = montage.getSourceChannelByLabel("EEG " + channelName);
+			}
 			if (sourceChannel == null) {
 				continue;
 			}
@@ -90,8 +89,8 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 			channelName = channelPairs[i][1];
 			SourceChannel referenceChannel = montage.getSourceChannelByLabel(channelName);
 			if (referenceChannel == null) {
-					referenceChannel = montage.getSourceChannelByLabel("EEG " + channelName);
-				}
+				referenceChannel = montage.getSourceChannelByLabel("EEG " + channelName);
+			}
 			if (referenceChannel == null) {
 				continue;
 			}
