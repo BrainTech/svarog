@@ -23,13 +23,12 @@ public class SourceChannel implements Serializable {
 	/**
 	 * The default name of the left ear channel.
 	 */
-	public static final String LEFT_EAR_CHANNEL_NAME = "A1";
-	public static final String LEFT_EAR_CHANNEL_NAME_ALTERNATIVE = "M1";
+	public static final String[] LEFT_EAR_CHANNEL_NAMES = {"A1", "M1", "EEG A1", "EEG M1"};
 	/**
 	 * The default name of the right ear channel.
 	 */
-	public static final String RIGHT_EAR_CHANNEL_NAME = "A2";
-	public static final String RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE = "M2";
+	public static final String[] RIGHT_EAR_CHANNEL_NAMES = {"A2", "M2", "EEG A2", "EEG M2"};
+
 
 	private static final long serialVersionUID = 1L;
 
