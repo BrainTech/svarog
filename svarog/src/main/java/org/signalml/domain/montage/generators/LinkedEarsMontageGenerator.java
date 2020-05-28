@@ -20,8 +20,8 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 	public LinkedEarsMontageGenerator() {
 
 		super(new String[]{
-			SourceChannel.LEFT_EAR_CHANNEL_NAME,
-			SourceChannel.RIGHT_EAR_CHANNEL_NAME
+			SourceChannel.LEFT_EAR_CHANNEL_NAMES[0],
+			SourceChannel.RIGHT_EAR_CHANNEL_NAMES[0]
 		});
 		setName(_("Linked ears montage"));
 	}
@@ -29,28 +29,32 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 	@Override
 	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 		boolean setAvailable = super.validateSourceMontage(sourceMontage, null);
-		if (!setAvailable) {
+		
+		for (int i=0;i<SourceChannel.LEFT_EAR_CHANNEL_NAMES.length;i++){
 			this.referenceChannelsNames = new String[]{
-				SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE,
-				SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE
+				SourceChannel.LEFT_EAR_CHANNEL_NAMES[i],
+				SourceChannel.RIGHT_EAR_CHANNEL_NAMES[i]
 			};
 			setAvailable = super.validateSourceMontage(sourceMontage, null);
+			if (setAvailable){
+				return true;
+			}
+				
+			
 		}
-		if (!setAvailable) {
-			this.referenceChannelsNames = new String[]{
-				SourceChannel.LEFT_EAR_CHANNEL_NAME,
-				SourceChannel.RIGHT_EAR_CHANNEL_NAME
-			};
+		
+		if (!setAvailable){
 			if (errors != null) {
-				errors.addError(_R("At least one set of ears should be available: {0}, {1} or {2}, {3}.",
-						SourceChannel.LEFT_EAR_CHANNEL_NAME,
-						SourceChannel.RIGHT_EAR_CHANNEL_NAME,
-						SourceChannel.LEFT_EAR_CHANNEL_NAME_ALTERNATIVE,
-						SourceChannel.RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE
+				
+				for (int i=0;i<SourceChannel.LEFT_EAR_CHANNEL_NAMES.length;i++){
+					errors.addError(_R("Missing ears pair: {0}, {1} .",
+						SourceChannel.LEFT_EAR_CHANNEL_NAMES[i],
+						SourceChannel.RIGHT_EAR_CHANNEL_NAMES[i]
 				));
-			};
+				}
+			}
 			return false;
 		}
-		return true;
+		return false;
 	}
 }
