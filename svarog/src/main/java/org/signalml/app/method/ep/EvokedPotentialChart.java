@@ -93,10 +93,6 @@ public class EvokedPotentialChart extends AbstractPanel {
 
 		yAxis = new NumberAxis();
 		yAxis.setAutoRange(false);
-
-		// configure for nine labels, but round to 10
-		yTickUnit = Math.round((maxY-minY)/(8*10)) * 10.0;
-		yAxis.setTickUnit(new NumberTickUnit(yTickUnit));
 		yAxis.setRange(minY, maxY);
 
 		dataset = new DefaultXYDataset();
