@@ -183,7 +183,6 @@ msgid "Add channels names to csv file"
 msgstr "Dodaj nazwy kanałów do pliku csv"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:93
-#, fuzzy
 msgid "Add chart"
 msgstr "Dodaj wykres"
 
@@ -226,7 +225,6 @@ msgid "Add new channel style"
 msgstr "Dodaj nowy styl kanału"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:42
-#, fuzzy
 msgid "Add new chart"
 msgstr "Dodaj nowy wykres"
 
@@ -341,7 +339,6 @@ msgid "Amplitude"
 msgstr "Amplituda"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:120
-#, fuzzy
 msgid "Amplitude [µV]"
 msgstr "Amplituda [µV]"
 
@@ -391,7 +388,6 @@ msgid "Anonymous plugin classes not supported"
 msgstr "Anonimowe klasy wtyczek nie są obsługiwane"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:439
-#, fuzzy
 msgid "Antialias"
 msgstr "Wygładzanie krawędzi"
 
@@ -404,7 +400,6 @@ msgid "Append events: unchecked"
 msgstr "Dołącz zdarzenia: odznaczone"
 
 #: org/signalml/app/view/document/monitor/StartMonitorRecordingDialog.java:139
-#, fuzzy
 msgid "Append timestamps"
 msgstr "znacznik czasu"
 
@@ -486,7 +481,6 @@ msgstr ""
 "lub {2} , {3} ."
 
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseDialog.java:101
-#, fuzzy
 msgid "At least one tag style must be selected"
 msgstr "Musi zostać wybrany co najmniej jeden styl znaczników"
 
@@ -555,8 +549,8 @@ msgid "Average books"
 msgstr "Uśrednianie książek"
 
 #: org/signalml/app/method/ep/EvokedPotentialMethodDescriptor.java:37
-msgid "Average evoked potentials"
-msgstr "Uśrednione potencjały wywołane"
+msgid "ERP"
+msgstr "ERP"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodConsumer.java:34
 msgid "Average map of MP decomposition"
@@ -568,7 +562,6 @@ msgid "Averaged Short-Time Fourier Transform"
 msgstr "Uśredniona krótkoczasowa transformata Fouriera"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/AveragedWaveletDialog.java:36
-#, fuzzy
 msgid "Averaged Wavelet Transform"
 msgstr "Uśredniona transformata falkowa"
 
@@ -762,7 +755,6 @@ msgid "Book file not chosen"
 msgstr "Plik książki nie został wybrany"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:139
-#, fuzzy
 msgid "Book file not chosen, doesn't exist or unreadable"
 msgstr "Plik książki nie został wybrany, nie istnieje lub jest nieczytelny"
 
@@ -780,12 +772,10 @@ msgid "Book is empty"
 msgstr "Książka jest pusta"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterMethodDialog.java:65
-#, fuzzy
 msgid "Book reporter configuration"
 msgstr "Konfiguracja raportów z książek"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:84
-#, fuzzy
 msgid "Book reporting result"
 msgstr "Raportowanie wyników z książek"
 
@@ -820,7 +810,6 @@ msgid "CSV"
 msgstr "CSV"
 
 #: org/signalml/plugin/fftsignaltool/actions/SaveToCSV.java:51
-#, fuzzy
 msgid "CSV Files"
 msgstr "Pliki CSV"
 
@@ -1053,7 +1042,6 @@ msgid "Choose a book file"
 msgstr "Wybierz plik książki"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterBookPanel.java:173
-#, fuzzy
 msgid "Choose a book file for this signal"
 msgstr "Wybierz plik książki dla tego sygnału"
 
@@ -1084,7 +1072,6 @@ msgstr "Wybierz wzmacniacz"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:135
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:62
-#, fuzzy
 msgid "Choose an active signal first."
 msgstr "Wybierz najpierw aktywny sygnał."
 
@@ -1498,7 +1485,6 @@ msgid "Custom atom filter"
 msgstr "Niestandardowy filtr atomów"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfDialog.java:24
-#, fuzzy
 msgid "DTF results"
 msgstr "Wyniki DTF"
 
@@ -1571,7 +1557,6 @@ msgid "Deliberating"
 msgstr "Rozmyślanie"
 
 #: org/signalml/plugin/fftsignaltool/actions/SaveToCSV.java:64
-#, fuzzy
 msgid "Delimiter selection"
 msgstr "Wybór ograniczenia"
 
@@ -1580,9 +1565,8 @@ msgid "Delta waves"
 msgstr "Fale delta"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/DescribeComponentsAction.java:24
-#, fuzzy
 msgid "Describe components"
-msgstr "Opisz składniki"
+msgstr "Opisz komponenty"
 
 #: org/signalml/app/view/tag/TagStylePropertiesPanel.java:472
 #: org/signalml/app/model/montage/MontageFiltersTableModel.java:81
@@ -1967,17 +1951,14 @@ msgid "Error initializing video preview"
 msgstr "Błąd inicjalizacji podglądu wideo"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:170
-#, fuzzy
 msgid "Error processing tags"
 msgstr "Błąd przetwarzania tagów"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:148
-#, fuzzy
 msgid "Error saving image"
 msgstr "Błąd zapisu obrazu"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:167
-#, fuzzy
 msgid "Error saving tags"
 msgstr "Błąd zapisu tagów"
 
@@ -1990,7 +1971,6 @@ msgstr "Błąd!"
 #: pl/edu/fuw/fid/signalanalysis/ica/ZeroMethodAction.java:114
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:137
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodAction.java:139
-#, fuzzy
 msgid "Error: "
 msgstr "Błąd:"
 
@@ -2059,7 +2039,6 @@ msgid "Export Book..."
 msgstr "Eksportuj książkę..."
 
 #: org/signalml/plugin/fftsignaltool/actions/SaveToCSV.java:36
-#, fuzzy
 msgid "Export FFT to CSV"
 msgstr "Eksportowanie FFT do CSV"
 
@@ -2076,12 +2055,10 @@ msgid "Export book to file"
 msgstr "Eksportowanie książki do pliku"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterChartExportDialog.java:91
-#, fuzzy
 msgid "Export chart as PNG"
 msgstr "Eksportuj wykres jako PNG"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:87
-#, fuzzy
 msgid "Export diagram as PNG"
 msgstr "Eksportuj diagram jako PNG"
 
@@ -2496,7 +2473,6 @@ msgid "Frequency range [Hz]"
 msgstr "Zakres częstości [Hz]"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfFrequencyRangePanel.java:35
-#, fuzzy
 msgid "Frequency range [Hz]:"
 msgstr "Zakres częstości [Hz]:"
 
@@ -2631,10 +2607,6 @@ msgstr "Ukryj ulubione"
 msgid "Hide left panel"
 msgstr "Ukryj lewy panel"
 
-#: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:327
-msgid "Hide main toolbar"
-msgstr "Ukryj główny pasek narzędzi"
-
 #: org/signalml/app/model/montage/ElectrodeType.java:7
 msgid "High signal values"
 msgstr "Wysokie wartości sygnałów"
@@ -2682,7 +2654,6 @@ msgid "ICA method failed: "
 msgstr "Nieudana metoda ICA:"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:146
-#, fuzzy
 msgid "Image saved to file"
 msgstr "Zapisz próbki do pliku"
 
@@ -2777,7 +2748,6 @@ msgid "Installed codecs"
 msgstr "Zainstalowane kodeki"
 
 #: org/signalml/plugin/domain/montage/PluginChannelAccessHelper.java:21
-#, fuzzy
 msgid "Invalid channel %s"
 msgstr "Nieprawidłowy kanał %s"
 
@@ -3161,12 +3131,10 @@ msgid "Miscellaneous"
 msgstr "Różne"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfTabbedPane.java:167
-#, fuzzy
 msgid "Model order"
 msgstr "Kolejność bajtów"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfOrderCriteriaPanel.java:37
-#, fuzzy
 msgid "Model order selection"
 msgstr "Wybór bloku"
 
@@ -3194,7 +3162,6 @@ msgid "Montage description"
 msgstr "Opis montażu"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/ZeroMethodAction.java:106
-#, fuzzy
 msgid "Montage error."
 msgstr "Błąd montażu."
 
@@ -3289,7 +3256,6 @@ msgid "New channel style"
 msgstr "Nowy styl kanału"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:62
-#, fuzzy
 msgid "New chart properties"
 msgstr "Właściwości nowego wykresu"
 
@@ -3411,7 +3377,6 @@ msgid "No sample source"
 msgstr "Brak źródła próbki"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTTool.java:197
-#, fuzzy
 msgid "No settings"
 msgstr "Brak ustawień"
 
@@ -3421,7 +3386,6 @@ msgstr "Nie wybrano sygnału. Najpierw wybierz fragment sygnału."
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:634
 #: org/signalml/plugin/fftsignaltool/SignalFFTSettings.java:173
-#, fuzzy
 msgid "No size"
 msgstr "Brak rozmiaru"
 
@@ -3438,7 +3402,6 @@ msgid "No type for radio"
 msgstr "Brak typu dla radia"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTSettings.java:222
-#, fuzzy
 msgid "No window type"
 msgstr "Brak typu okna"
 
@@ -3452,12 +3415,10 @@ msgstr "Normalizuj próbki"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:248
 #: org/signalml/plugin/fftsignaltool/SignalFFTPlot.java:252
-#, fuzzy
 msgid "Not enough signal points"
 msgstr "Za mało punktów sygnału"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:598
-#, fuzzy
 msgid "Nothing selected"
 msgstr "Nic nie zostało zaznaczone"
 
@@ -3552,12 +3513,12 @@ msgid "Online"
 msgstr "Online"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:56
-msgid "Online amplifiers"
-msgstr "Wzmacniacze online"
+msgid "Amplifiers"
+msgstr "Wzmacniacze"
 
 #: org/signalml/app/view/document/opensignal/elements/SignalSourceTabbedPane.java:55
-msgid "Online experiments"
-msgstr "Eksperymenty online"
+msgid "Experiments"
+msgstr "Eksperymenty"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:70
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:493
@@ -3643,7 +3604,6 @@ msgid "Optimize signal displaying"
 msgstr "Zoptymalizuj wyświetlanie sygnału"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:430
-#, fuzzy
 msgid "Options"
 msgstr "Opcje"
 
@@ -3779,7 +3739,6 @@ msgid "Phase"
 msgstr "Faza"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:129
-#, fuzzy
 msgid "Phase [rad]"
 msgstr "Faza [rad]"
 
@@ -3843,7 +3802,6 @@ msgid "Plot window height"
 msgstr "Wysokość okna wykresu"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:390
-#, fuzzy
 msgid "Plot window width"
 msgstr "Szerokość okna wykresu"
 
@@ -4284,12 +4242,10 @@ msgstr ""
 "wyrównaj widok na granicy strony"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterMethodDialog.java:190
-#, fuzzy
 msgid "Restore default method configuration"
 msgstr "Przywróć domyślną konfigurację metody"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterMethodDialog.java:184
-#, fuzzy
 msgid "Restore defaults"
 msgstr "Przywróc domyślne"
 
@@ -4613,7 +4569,6 @@ msgid "Select at least one channel"
 msgstr "Wybierz co najmniej jeden kanał"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:52
-#, fuzzy
 msgid "Select at least one channel."
 msgstr "Wybierz co najmniej jeden kanał."
 
@@ -4678,7 +4633,6 @@ msgstr "Wybierz tagi"
 #: pl/edu/fuw/fid/signalanalysis/wavelet/PopupActionForWavelet.java:55
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseAction.java:166
 #: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:55
-#, fuzzy
 msgid "Select valid single-channel signal fragment."
 msgstr "Wybierz poprawny jednokanałowy fragment sygnału."
 
@@ -4745,7 +4699,6 @@ msgid "Settings"
 msgstr "Ustawienia"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/ShannonWavelet.java:25
-#, fuzzy
 msgid "Shannon"
 msgstr "Shannon"
 
@@ -4813,7 +4766,6 @@ msgid "Show favorites"
 msgstr "Pokaż ulubione"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:331
-#, fuzzy
 msgid "Show fq range [Hz]"
 msgstr "Pokaż zakres częstości [Hz]"
 
@@ -4829,11 +4781,6 @@ msgstr "Pokaż lewy panel"
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:299
 msgid "Show legend"
 msgstr "Pokaż legendę"
-
-#: org/signalml/app/action/workspace/ShowMainToolBarAction.java:30
-#: org/signalml/app/action/workspace/ShowMainToolBarAction.java:31
-msgid "Show main toolbar"
-msgstr "Pokaż główny pasek narzędzi"
 
 #: org/signalml/app/method/ep/ShowMinMaxAction.java:29
 msgid "Show min/max"
@@ -4930,12 +4877,10 @@ msgid "Signal"
 msgstr "Sygnał"
 
 #: org/signalml/plugin/fftsignaltool/FFTSignalPlugin.java:99
-#, fuzzy
 msgid "Signal FFT (for settings press right mouse button)"
 msgstr "FFT sygnału (dla ustawień naciśnij tutaj i przytrzymaj przycisk myszy)"
 
 #: org/signalml/plugin/fftsignaltool/actions/ShowSettings.java:44
-#, fuzzy
 msgid "Signal FFT Settings"
 msgstr "Ustawienia FFT sygnału"
 
@@ -5139,7 +5084,6 @@ msgid "Step response [amplitude]"
 msgstr "Odpowiedź skokowa [amplituda]"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:435
-#, fuzzy
 msgid "Sticky channel"
 msgstr "Kanał \"sticky\""
 
@@ -5301,8 +5245,8 @@ msgid "Tag based atom filter"
 msgstr "Filtr atomów oparty na znacznikach (tagach)"
 
 #: org/signalml/app/method/booktotag/BookToTagMethodDescriptor.java:26
-msgid "Tag book atoms"
-msgstr "Oznacz (taguj) atomy książki"
+msgid "Tag MP structures"
+msgstr "Oznacz struktury MP"
 
 #: org/signalml/app/view/tag/comparison/TagComparisonDialog.java:71
 msgid "Tag comparison"
@@ -5400,7 +5344,7 @@ msgstr "Tagowanie"
 #: org/signalml/app/model/workspace/WorkspaceTreeModel.java:40
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseDialog.java:40
 msgid "Tags"
-msgstr "Tagi"
+msgstr "Znaczniki"
 
 #: org/signalml/app/action/tag/SynchronizeTagsWithTriggerAction.java:94
 msgid "Tags Synchronized"
@@ -5411,7 +5355,6 @@ msgid "Tags filename:"
 msgstr "Nazwa pliku z tagami:"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:165
-#, fuzzy
 msgid "Tags saved to file"
 msgstr "Znaczniki (tagi) zapisane do pliku"
 
@@ -5702,7 +5645,6 @@ msgid "Time unit: 1"
 msgstr "Jednostka czasu: 1"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:126
-#, fuzzy
 msgid "Time width [s]"
 msgstr "Szerokość w czasie [s]"
 
@@ -5794,7 +5736,7 @@ msgstr "Ustawienia podpowiedzi narzędzi"
 #: org/signalml/app/view/preferences/ApplicationPreferencesDialog.java:291
 #: org/signalml/app/view/workspace/ViewerElementManager.java:708
 msgid "Tools"
-msgstr "Przybory"
+msgstr "Narzędzia"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/DescribeComponentsAction.java:49
 msgid "Topography of ICA components"
@@ -5821,7 +5763,6 @@ msgid "True positive rate"
 msgstr "Stosunek TP"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:52
-#, fuzzy
 msgid "Try again"
 msgstr "Spróbuj ponownie"
 
@@ -5876,7 +5817,6 @@ msgid "Use local scale"
 msgstr "Użyj skali lokalnej"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:441
-#, fuzzy
 msgid "Use splines (experimental)"
 msgstr "Użyj funkcji sklejanych (experymentalne)"
 
@@ -6021,7 +5961,6 @@ msgid "X-Axis label count should be greater than 0!"
 msgstr "Liczba etykiet osi X powinna być większa niż 0!"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:347
-#, fuzzy
 msgid "X-axis label count"
 msgstr "liczba etykiet osi X"
 
@@ -6080,9 +6019,8 @@ msgid "ZEROs channel"
 msgstr "Kanał ZER"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/ZeroMethodAction.java:39
-#, fuzzy
 msgid "Zero selected components"
-msgstr "Wyzeruj wybrane składniki"
+msgstr "Wyzeruj wybrane komponenty"
 
 #: org/signalml/app/view/preferences/SignalZoomSettingsPanel.java:105
 msgid "Zoom factor"
@@ -6129,7 +6067,6 @@ msgid "amplitude"
 msgstr "amplituda"
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetOccurences.java:55
-#, fuzzy
 msgid "amplitudes [µV]"
 msgstr "amplitudy [µV]"
 
@@ -6166,9 +6103,8 @@ msgid "auto created by SignalML version [%s] on [%s]"
 msgstr "automatycznie stworzone przez SignalML wersja [%s] na [%s]"
 
 #: pl/edu/fuw/fid/signalanalysis/waveform/AveragedBaseAction.java:47
-#, fuzzy
 msgid "averaged"
-msgstr "uśrednione"
+msgstr "uśredniona"
 
 #: org/signalml/app/document/signal/AbstractFileSignal.java:144
 #: org/signalml/app/document/AbstractFileDocument.java:106
@@ -6197,7 +6133,6 @@ msgstr "komentarz książki"
 
 #: org/signalml/plugin/bookreporter/io/BookReporterBookReader.java:46
 #: org/signalml/plugin/bookreporter/io/BookReporterBookReader.java:57
-#, fuzzy
 msgid "book is already closed"
 msgstr "książka jest już zamknięta"
 
@@ -6271,12 +6206,10 @@ msgid "comma"
 msgstr "przecinek"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfTabbedPane.java:101
-#, fuzzy
 msgid "copy model coefficients to clipboard"
 msgstr "Skopiuj współczynniki modelu do schowka"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:68
-#, fuzzy
 msgid "count (per time interval) of..."
 msgstr "liczba (na przedział czasu)..."
 
@@ -6293,7 +6226,6 @@ msgid "creating codec reader"
 msgstr "tworzenie kodeka do wczytywania"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfOrderCriteriaPanel.java:37
-#, fuzzy
 msgid "criterion value"
 msgstr "Wartość kryterium"
 
@@ -6458,7 +6390,6 @@ msgstr "częstość (Hz)"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfPlotsPanel.java:53
 #: pl/edu/fuw/fid/signalanalysis/stft/PaneForSTFT.java:90
-#, fuzzy
 msgid "frequency [Hz]"
 msgstr "częstość [Hz]"
 
@@ -6472,11 +6403,10 @@ msgstr "częstość [Hz]"
 msgid "from"
 msgstr "z"
 
-#: pl/edu/fuw/fid/signalanalysis/wavelet/PopupActionForWavelet.java:39
-#: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:39
-#, fuzzy
+#: pl/edu/fuw/fid/signalanalysis/wavelet/PopupActionForWavelet.java:31
+#: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:29
 msgid "from selection"
-msgstr "z wyboru"
+msgstr "z zaznaczenia"
 
 #: org/signalml/app/model/book/BookSegmentTreeNode.java:111
 msgid "has signal"
@@ -6487,17 +6417,14 @@ msgid "in each"
 msgstr "w każdym"
 
 #: org/signalml/plugin/bookreporter/logic/intervals/BookReporterTimeInterval.java:30
-#, fuzzy
 msgid "invalid endpoints for time interval"
 msgstr "nieprawidłowe brzegi dla przedziału czasu"
 
 #: org/signalml/plugin/fftsignaltool/SignalFFTTool.java:283
-#, fuzzy
 msgid "invalid plot"
 msgstr "nieprawidłowy wykres"
 
 #: pl/edu/fuw/fid/signalanalysis/SignalAnalysisTools.java:83
-#, fuzzy
 msgid "invalid selection"
 msgstr "nieprawidłowy wybór"
 
@@ -6603,7 +6530,6 @@ msgstr "minimalna wartość"
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:124
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:127
 #: org/signalml/plugin/bookreporter/ui/BookReporterConfigPanel.java:130
-#, fuzzy
 msgid "min/max"
 msgstr "min/maks"
 
@@ -6625,7 +6551,6 @@ msgid "missing dependencies"
 msgstr "brakujące zależności"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfOrderCriteriaPanel.java:37
-#, fuzzy
 msgid "model order"
 msgstr "rząd modelu"
 
@@ -6687,7 +6612,6 @@ msgid "no active tag document"
 msgstr "brak aktywnego dokumentu znaczników (tag)"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodComputer.java:34
-#, fuzzy
 msgid "no channels selected"
 msgstr "nie wybrano żadnych kanałów"
 
@@ -6704,12 +6628,10 @@ msgid "no profile directories stored"
 msgstr "nie zapisano żadnych katalogów profilu"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfNormRadioPanel.java:43
-#, fuzzy
 msgid "normalized"
 msgstr "znormalizowany"
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfNormRadioPanel.java:44
-#, fuzzy
 msgid "not normalized"
 msgstr "nie znormalizowany"
 
@@ -6809,12 +6731,10 @@ msgid "received message with more than two parts"
 msgstr "otrzymano wiadomość z więcej niż dwiema częściami"
 
 #: org/signalml/app/action/document/monitor/StartVideoPreviewAction.java:88
-#, fuzzy
 msgid "recording"
 msgstr "nagrywa"
 
 #: org/signalml/app/document/MonitorSignalDocument.java:467
-#, fuzzy
 msgid "recording state"
 msgstr "nagrywa"
 
@@ -6841,7 +6761,6 @@ msgid "scanning signal"
 msgstr "skanowanie sygnału"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterNewChartDialog.java:122
-#, fuzzy
 msgid "second interval"
 msgstr "drugi przedział"
 
@@ -6882,7 +6801,6 @@ msgid "signal energy"
 msgstr "energia sygnału"
 
 #: pl/edu/fuw/fid/signalanalysis/ica/IcaMethodComputer.java:38
-#, fuzzy
 msgid "signal is empty"
 msgstr "sygnał jest pusty"
 
@@ -6963,7 +6881,6 @@ msgid "tag count"
 msgstr "liczba tagów"
 
 #: org/signalml/plugin/bookreporter/ui/BookReporterResultFrame.java:156
-#, fuzzy
 msgid "tag files"
 msgstr "Plik znacznika (tag)"
 
@@ -7001,13 +6918,11 @@ msgid "time (s)"
 msgstr "czas (s)"
 
 #: org/signalml/plugin/bookreporter/method/BookReporterMethod.java:80
-#, fuzzy
 msgid "time [hours]"
 msgstr "czas [godzin]"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/PaneForWavelet.java:186
 #: pl/edu/fuw/fid/signalanalysis/stft/PaneForSTFT.java:121
-#, fuzzy
 msgid "time [s]"
 msgstr "czas [s]"
 
@@ -7052,7 +6967,6 @@ msgid "type"
 msgstr "rodzaj"
 
 #: org/signalml/plugin/io/PluginTagWriter.java:96
-#, fuzzy
 msgid "typed "
 msgstr "typed"
 
@@ -7094,7 +7008,6 @@ msgid "waiting for task"
 msgstr "czekanie na zadanie"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/AveragedWaveletDialog.java:59
-#, fuzzy
 msgid "wavelet type:"
 msgstr "rodzaj falki: "
 
@@ -7103,17 +7016,14 @@ msgid "web site info"
 msgstr "informacje o witrynie internetowej"
 
 #: pl/edu/fuw/fid/signalanalysis/wavelet/AveragedWaveletDialog.java:61
-#, fuzzy
 msgid "width parameter:"
 msgstr "parametr szerokości:"
 
 #: pl/edu/fuw/fid/signalanalysis/stft/AveragedStftDialog.java:50
-#, fuzzy
 msgid "window size:"
 msgstr "rozmiar okna:"
 
 #: pl/edu/fuw/fid/signalanalysis/stft/AveragedStftDialog.java:48
-#, fuzzy
 msgid "window type:"
 msgstr "typ okna:"
 
@@ -7174,3 +7084,42 @@ msgstr "Nie mogę znaleźć ani jednej pasującej pary kanałów"
 
 msgid "Can't find required channels"
 msgstr "Nie mogę znaleźć wymaganych kanałów"
+
+msgid "Edit filters"
+msgstr "Edytuj filtry"
+
+msgid "Toggle filtering"
+msgstr "W(y)łącz filtrowanie"
+
+msgid "Analysis"
+msgstr "Analiza"
+
+msgid "Load results"
+msgstr "Wczytaj wyniki"
+
+msgid "Configure MP executable"
+msgstr "Wybierz implementację MP"
+
+msgid "About"
+msgstr "O programie"
+
+msgid "Toggle toolbars"
+msgstr "Paski narzędzi"
+
+msgid "Main toolbar"
+msgstr "Główny"
+
+msgid "Scale toolbar"
+msgstr "Skala wyświetlania"
+
+msgid "Move signal"
+msgstr "Przesuń sygnał"
+
+msgid "Zoom signal"
+msgstr "Powiększ sygnał"
+
+msgid "Signal FFT"
+msgstr "FFT sygnału"
+
+msgid "Select signal fragments"
+msgstr "Zaznacz fragmenty"

@@ -23,7 +23,7 @@ import org.signalml.plugin.export.signal.Document;
  */
 public class BookToTagMethodDescriptor implements ApplicationMethodDescriptor {
 
-	public static final String RUN_METHOD_STRING = _("Tag book atoms");
+	public static final String RUN_METHOD_STRING = _("Tag MP structures");
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 
 	private BookToTagMethod method;

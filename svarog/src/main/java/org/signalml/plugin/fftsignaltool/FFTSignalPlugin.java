@@ -101,7 +101,7 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 
 		//creates and adds the action which shows the
 
-		guiAccess.addButtonToToolsMenu(action);
+		guiAccess.addButtonToAnalysisMenu(action);
 		
 		guiAccess.addButtonToSignalPlotPopupMenu(popupAction);
 	}

@@ -18,7 +18,6 @@ public class MainFrameConfiguration extends AbstractXMLConfiguration {
 	private int xSize;
 	private int ySize;
 
-	private boolean mainToolBarVisible;
 	private boolean leftPanelVisible;
 	private boolean bottomPanelVisible;
 	private boolean statusBarVisible;
@@ -77,14 +76,6 @@ public class MainFrameConfiguration extends AbstractXMLConfiguration {
 		vDividerLocation = dividerLocation;
 	}
 
-
-	public boolean isMainToolBarVisible() {
-		return mainToolBarVisible;
-	}
-
-	public void setMainToolBarVisible(boolean mainToolBarVisible) {
-		this.mainToolBarVisible = mainToolBarVisible;
-	}
 
 	public boolean isLeftPanelVisible() {
 		return leftPanelVisible;

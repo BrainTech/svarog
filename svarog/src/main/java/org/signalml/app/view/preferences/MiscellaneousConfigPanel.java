@@ -46,8 +46,7 @@ import org.signalml.app.util.i18n.SvarogI18n;
  * after} how many milliseconds the tool tips should appear and {@link
  * #getToolTipDismissSpinner() how long} they should be displayed,</li>
  * <li>the panel which allows to select the parameters of the "view mode":
- * <ul><li>{@link #getViewModeHidesMainToolBarCheckBox() if} the main tool
- * bar should be displayed,</li>
+ * <ul>
  * <li>{@link #getViewModeHidesLeftPanelCheckBox() if} the left panel
  * should be displayed,</li>
  * <li>{@link #getViewModeHidesBottomPanelCheckBox() if} the bottom panel
@@ -79,12 +78,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * starts
 	 */
 	private JCheckBox restoreWorkspaceCheckBox;
-
-	/**
-	 * the check-box if the main tool bar should (unchecked) be displayed in
-	 * the "view mode" (F11) or not (checked)
-	 */
-	private JCheckBox viewModeHidesMainToolBarCheckBox;
 	/**
 	 * the check-box if the left panel should (unchecked) be displayed in
 	 * the "view mode" (F11) or not (checked)
@@ -159,8 +152,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * after} how many milliseconds the tool tips should appear and {@link
 	 * #getToolTipDismissSpinner() how long} they should be displayed,</li>
 	 * <li>the panel which allows to select the parameters of the "view mode":
-	 * <ul><li>{@link #getViewModeHidesMainToolBarCheckBox() if} the main tool
-	 * bar should be displayed,</li>
+	 * <ul>
 	 * <li>{@link #getViewModeHidesLeftPanelCheckBox() if} the left panel
 	 * should be displayed,</li>
 	 * <li>{@link #getViewModeHidesBottomPanelCheckBox() if} the bottom panel
@@ -256,7 +248,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 									new EmptyBorder(3,3,3,3)
 								));
 
-		viewModePanel.add(getViewModeHidesMainToolBarCheckBox());
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			viewModePanel.add(getViewModeHidesLeftPanelCheckBox());
 			viewModePanel.add(getViewModeHidesBottomPanelCheckBox());
@@ -313,20 +304,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			restoreWorkspaceCheckBox = new JCheckBox(_("Restore the workspace when the application loads"));
 		}
 		return restoreWorkspaceCheckBox;
-	}
-
-	/**
-	 * Returns the check-box if the main tool bar should (unchecked) be
-	 * displayed in the "view mode" (F11) or not (checked).
-	 * If the check-box doesn't exist, it is created.
-	 * @return the check-box if the main tool bar should (unchecked) be
-	 * displayed in the "view mode" (F11) or not (checked)
-	 */
-	public JCheckBox getViewModeHidesMainToolBarCheckBox() {
-		if (viewModeHidesMainToolBarCheckBox == null) {
-			viewModeHidesMainToolBarCheckBox = new JCheckBox(_("Hide main toolbar"));
-		}
-		return viewModeHidesMainToolBarCheckBox;
 	}
 
 	/**
@@ -453,7 +430,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			getRestoreWorkspaceCheckBox().setSelected(applicationConfig.isRestoreWorkspace());
 		}
 
-		getViewModeHidesMainToolBarCheckBox().setSelected(applicationConfig.isViewModeHidesBottomPanel());
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			getViewModeHidesLeftPanelCheckBox().setSelected(applicationConfig.isViewModeHidesLeftPanel());
 			getViewModeHidesBottomPanelCheckBox().setSelected(applicationConfig.isViewModeHidesBottomPanel());
@@ -482,7 +458,6 @@ public class MiscellaneousConfigPanel extends JPanel {
 			applicationConfig.setRestoreWorkspace(getRestoreWorkspaceCheckBox().isSelected());
 		}
 
-		applicationConfig.setViewModeHidesMainToolBar(getViewModeHidesMainToolBarCheckBox().isSelected());
 		if (mode == SignalMLOperationMode.APPLICATION) {
 			applicationConfig.setViewModeHidesLeftPanel(getViewModeHidesLeftPanelCheckBox().isSelected());
 			applicationConfig.setViewModeHidesBottomPanel(getViewModeHidesBottomPanelCheckBox().isSelected());

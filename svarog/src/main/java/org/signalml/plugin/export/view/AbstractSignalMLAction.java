@@ -66,7 +66,7 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 	 * Sets the name of this action.
 	 * @param text the new name
 	 */
-	protected void setText(String text) {
+	protected final void setText(String text) {
 		putValue(AbstractAction.NAME, text);
 	}
 

@@ -59,7 +59,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int blocksPerPage;
 	private boolean saveFullMontageWithTag;
 
-	private boolean viewModeHidesMainToolBar;
 	private boolean viewModeHidesLeftPanel;
 	private boolean viewModeHidesBottomPanel;
 	private boolean viewModeCompactsPageTagBars;
@@ -303,14 +302,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setSaveFullMontageWithTag(boolean saveFullMontageWithTag) {
 		this.saveFullMontageWithTag = saveFullMontageWithTag;
-	}
-
-	public boolean isViewModeHidesMainToolBar() {
-		return viewModeHidesMainToolBar;
-	}
-
-	public void setViewModeHidesMainToolBar(boolean viewModeHidesMainToolBar) {
-		this.viewModeHidesMainToolBar = viewModeHidesMainToolBar;
 	}
 
 	public boolean isViewModeHidesLeftPanel() {

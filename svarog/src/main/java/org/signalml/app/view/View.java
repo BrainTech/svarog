@@ -23,9 +23,6 @@ public interface View {
 	void setViewMode(boolean viewMode);
 	boolean isViewMode();
 
-	void setMainToolBarVisible(boolean visible);
-	boolean isMainToolBarVisible();
-
 	void setStatusBarVisible(boolean visible);
 	boolean isStatusBarVisible();
 

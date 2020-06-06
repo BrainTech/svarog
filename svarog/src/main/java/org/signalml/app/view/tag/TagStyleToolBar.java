@@ -5,17 +5,11 @@ package org.signalml.app.view.tag;
 
 import com.alee.laf.toolbar.WebToolBar;
 
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,18 +17,14 @@ import java.util.Map;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
-import javax.swing.JButton;
-import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.tag.TagSelectionAction;
-import org.signalml.app.view.signal.popup.TagStylesPopupDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyleEvent;
 import org.signalml.domain.tag.TagStyleListener;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /**
  * TagStyleToolBar
@@ -60,8 +50,6 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
 	private TagEraserToggleButton tagEraserToggleButton;
 
-	private JButton showAllButton;
-	private TagStylesPopupDialog tagStylesPopupDialog = null;
 	private TagIconProducer tagIconProducer;
 
 	private TagSelectionAction tagSelectionAction;
@@ -103,11 +91,6 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 		add(tagEraserToggleButton);
 		add(Box.createVerticalStrut(3));
 
-		showAllButton = new JButton(new ShowAllAction());
-		add(Box.createVerticalStrut(5));
-		add(Box.createVerticalGlue());
-		add(showAllButton);
-
 		Collection<TagStyle> styles;
 		if (type == null) {
 			styles = tagSet.getListOfStyles();
@@ -118,7 +101,6 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 			addTagStyle(style);
 		}
 
-		addComponentListener(new ToolBarListener());
 		tagSet.addTagStyleListener(this);
 
 		if (styles.size() > 0) {
@@ -129,7 +111,6 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
 	public void close() {
 		tagSet.removeTagStyleListener(this);
-		tagStylesPopupDialog = null;
 		removeAll();
 		tagSet = null;
 	}
@@ -200,12 +181,7 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 		styleToButtonMap.put(style, toolButton);
 		buttonToStyleMap.put(toolButton.getModel(), style);
 
-		this.add(toolButton, getComponentCount() - 3); // insert before the spacer, glue and show all button
-
-		resetVisibility();
-
-		tagStylesPopupDialog = null;
-
+		this.add(toolButton);
 	}
 
 	private void removeTagStyle(TagStyle style) {
@@ -218,40 +194,8 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 			buttonToStyleMap.remove(toolButton.getModel());
 
 			this.remove(toolButton);
-
-			resetVisibility();
-
-			tagStylesPopupDialog = null;
 		}
 
-	}
-
-	private void resetVisibility() {
-		if (isDisplayable()) {
-			int minHeight = getMinimumSize().height;
-
-			Dimension size = getSize();
-			int usedHeight = minHeight;
-			int reqHeight;
-			Iterator<TagStyleToggleButton> it = buttonList.iterator();
-			TagStyleToggleButton toolButton;
-			boolean somethingHidden = false;
-			while (it.hasNext()) {
-				toolButton = it.next();
-				reqHeight = toolButton.getPreferredSize().height + 1;
-				if ((usedHeight + reqHeight) > size.height) {
-					toolButton.setVisible(false);
-					somethingHidden = true;
-					break;
-				}
-				toolButton.setVisible(true);
-				usedHeight += reqHeight;
-			}
-			showAllButton.setEnabled(somethingHidden);
-			while (it.hasNext()) {
-				it.next().setVisible(false);
-			}
-		}
 	}
 
 	@Override
@@ -268,7 +212,6 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 		if (type == null || type.equals(style.getType())) {
 			TagStyleToggleButton toolButton = styleToButtonMap.get(style);
 			if (toolButton != null) {
-				tagStylesPopupDialog = null;
 				toolButton.reset();
 			}
 			tagIconProducer.reset(style);
@@ -286,48 +229,6 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
 	@Override
 	public Dimension getMinimumSize() {
-		return new Dimension(28, tagEraserToggleButton.getSize().height + 3 + 5 + 1 + showAllButton.getSize().height);
+		return new Dimension(28, tagEraserToggleButton.getSize().height + 3);
 	}
-
-	private class ToolBarListener extends ComponentAdapter {
-
-		@Override
-		public void componentResized(ComponentEvent e) {
-			resetVisibility();
-		}
-
-	}
-
-	private class ShowAllAction extends AbstractSignalMLAction {
-
-		private static final long serialVersionUID = 1L;
-
-		public ShowAllAction() {
-			super();
-			setIconPath("org/signalml/app/icon/showallstyles.png");
-			setToolTip("action.showAllTagStylesToolTip");
-		}
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			Container ancestor = getTopLevelAncestor();
-
-			if (tagStylesPopupDialog == null) {
-				tagStylesPopupDialog = new TagStylesPopupDialog(TagStyleToolBar.this, (Window) ancestor, true);
-				tagStylesPopupDialog.initializeNow();
-			}
-
-			Point containerLocation = ancestor.getLocation();
-			Point location = SwingUtilities.convertPoint(showAllButton, new Point(0, 0), ancestor);
-			Dimension size = tagStylesPopupDialog.getSize();
-			location.translate(containerLocation.x, containerLocation.y + showAllButton.getSize().height - size.height);
-			tagStylesPopupDialog.setLocation(location);
-
-			tagStylesPopupDialog.showDialog(null);
-
-		}
-
-	}
-
 }

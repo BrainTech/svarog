@@ -1,9 +1,8 @@
-package org.signalml.app.action.montage;
+package org.signalml.app.action.signal;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
@@ -13,30 +12,27 @@ import org.signalml.app.model.montage.MontageDescriptor;
 import org.signalml.app.view.montage.SignalMontageDialog;
 
 /**
- * EditSignalMontageAction
+ * EditSignalFiltersAction (based on EditSignalMontageAction).
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author ptr@mimuw.edu.pl
  */
-public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
+public class EditSignalFiltersAction extends AbstractFocusableSignalMLAction<SignalDocumentFocusSelector> {
 
 	private static final long serialVersionUID = 1L;
 
-	protected static final Logger logger = Logger.getLogger(EditSignalMontageAction.class);
+	protected static final Logger logger = Logger.getLogger(EditSignalFiltersAction.class);
 
 	private SignalMontageDialog signalMontageDialog;
 
-	public EditSignalMontageAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+	public EditSignalFiltersAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
-		setText(_("Signal montage"));
-		setIconPath("org/signalml/app/icon/montage.png");
-		setToolTip(_("Change signal montage"));
-		setMnemonic(KeyEvent.VK_M);
+		setText(_("Edit filters"));
+		setIconPath("org/signalml/app/icon/editfilter.png");
+		setToolTip(_("Change signal filtering"));
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
-		logger.debug("Signal montage");
 
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if (signalDocument == null) {
@@ -46,7 +42,7 @@ public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<Sig
 
 		MontageDescriptor descriptor = new MontageDescriptor(signalDocument.getMontage(), signalDocument);
 
-		signalMontageDialog.getSignalMontagePanel().activateMontagePane();
+		signalMontageDialog.getSignalMontagePanel().activateFiltersPane();
 		boolean ok = signalMontageDialog.showDialog(descriptor, true);
 		if (!ok) {
 			return;

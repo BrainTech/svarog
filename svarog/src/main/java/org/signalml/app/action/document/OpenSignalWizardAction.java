@@ -44,7 +44,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 		this.documentFlowIntegrator = viewerElementManager.getDocumentFlowIntegrator();
 		this.viewerElementManager = viewerElementManager;
 		this.selectedSourceTab = selectedSourceTab;
-		setText(_(selectedSourceTab != null ? selectedSourceTab : "Open signal"));
+		setText(_(selectedSourceTab != null ? selectedSourceTab : "Open"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open signal and set montage for it"));
 		setMnemonic(KeyEvent.VK_O);

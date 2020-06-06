@@ -98,7 +98,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 	private boolean viewMode = false;
 	private boolean leftPanelVisible = true;
 	private boolean bottomPanelVisible = true;
-	private boolean mainToolBarVisible = true;
 	private boolean statusBarVisible = true;
 
 	private boolean hadRestoredTasks = false;
@@ -129,13 +128,11 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 
 		setJMenuBar(elementManager.getMenuBar());
 
-		contentPane.add(elementManager.getMainToolBar(), BorderLayout.NORTH);
-
 		contentPane.add(elementManager.getStatusBar(), BorderLayout.SOUTH);
 
 		contentPane.add(elementManager.getVerticalSplitPane(), BorderLayout.CENTER);
 
-		elementManager.configureAcceletators();
+		elementManager.configureAccelerators();
 
 		bindListeners();
 
@@ -492,9 +489,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			this.viewMode = viewMode;
 			elementManager.getViewModeAction().putValue(AbstractAction.SELECTED_KEY, viewMode);
 			ApplicationConfiguration applicationConfig = elementManager.getApplicationConfig();
-			if (applicationConfig.isViewModeHidesMainToolBar()) {
-				setMainToolBarVisible(!viewMode);
-			}
 			if (applicationConfig.isViewModeHidesLeftPanel()) {
 				setLeftPanelVisible(!viewMode);
 			}
@@ -568,20 +562,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			}
 			verticalSplitPane.setOneTouchExpandable(visible);
 			verticalSplitPane.setLocked(!visible);
-		}
-	}
-
-	@Override
-	public boolean isMainToolBarVisible() {
-		return mainToolBarVisible;
-	}
-
-	@Override
-	public void setMainToolBarVisible(boolean visible) {
-		if (this.mainToolBarVisible != visible) {
-			this.mainToolBarVisible = visible;
-			elementManager.getMainToolBar().setVisible(visible);
-			elementManager.getShowMainToolBarAction().putValue(AbstractAction.SELECTED_KEY, visible);
 		}
 	}
 
@@ -691,7 +671,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			setExtendedState(JFrame.NORMAL);
 		}
 
-		setMainToolBarVisible(config.isMainToolBarVisible());
 		setStatusBarVisible(config.isStatusBarVisible());
 
 		elementManager.getHorizontalSplitPane().setDividerLocation(config.getHDividerLocation());
@@ -713,7 +692,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			config.setYSize((int) getSize().height);
 		}
 
-		config.setMainToolBarVisible(mainToolBarVisible);
 		config.setStatusBarVisible(statusBarVisible);
 		config.setLeftPanelVisible(leftPanelVisible);
 		config.setBottomPanelVisible(bottomPanelVisible);

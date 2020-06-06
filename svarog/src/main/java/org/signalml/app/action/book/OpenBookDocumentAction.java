@@ -44,9 +44,9 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	 */
 	public OpenBookDocumentAction() {
 		super();
-		setText(_("Open book"));
+		setText(_("Load results"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip(_("Open a book document from a file"));
+		setToolTip(_("Open MP decomposition from a file"));
 		setMnemonic(KeyEvent.VK_B);
 	}
 
