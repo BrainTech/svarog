@@ -285,8 +285,8 @@ public class IterationSetupDialog extends AbstractDialog  {
 		super.validateDialog(model, errors);
 
 		boolean anyIterated = false;
-		for (int i=0; i<currentParameters.length; i++) {
-			if (currentParameters[i].isIterated()) {
+		for (ParameterIterationSettings currentParameter : currentParameters) {
+			if (currentParameter.isIterated()) {
 				anyIterated = true;
 				break;
 			}

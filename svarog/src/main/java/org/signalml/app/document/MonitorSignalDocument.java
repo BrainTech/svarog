@@ -154,8 +154,7 @@ public class MonitorSignalDocument extends AbstractSignal implements PsychopySta
 	public void setDocumentView(DocumentView documentView) {
 		super.setDocumentView(documentView);
 		if (documentView != null) {
-			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
-				SignalPlot signalPlot = i.next();
+			for (SignalPlot signalPlot : ((SignalView) documentView).getPlots()) {
 				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource);
 				try {
 					signalChain.applyMontageDefinition(this.getMontage());

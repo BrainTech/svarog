@@ -376,9 +376,9 @@ public class MarkedTimeSpacePanel extends JPanel {
 			if (markerStyles != null) {
 				String markerStyleName = markerTimeSpace.getMarkerStyleName();
 				if (markerStyleName != null) {
-					for (int i=0; i<markerStyles.length; i++) {
-						if (markerStyleName.equals(markerStyles[i].getName())) {
-							styleBox.setSelectedItem(markerStyles[i]);
+					for (TagStyle markerStyle : markerStyles) {
+						if (markerStyleName.equals(markerStyle.getName())) {
+							styleBox.setSelectedItem(markerStyle);
 							break;
 						}
 					}

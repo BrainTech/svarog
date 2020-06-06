@@ -107,8 +107,8 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 	 */
 	protected List<SourceChannel> getReferenceSourceChannels(SourceMontage sourceMontage) {
 		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
-		for (int i = 0; i < referenceChannelsNames.length; i++) {
-			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
+		for (String referenceChannelName : referenceChannelsNames) {
+			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
 			if (sourceChannel != null) {
 				sourceChannels.add(sourceChannel);
 			}
@@ -129,10 +129,10 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 
 		boolean ok = true;
 
-		for (int i = 0; i < referenceChannelsNames.length; i++) {
-			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
+		for (String referenceChannelName : referenceChannelsNames) {
+			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
 			if (sourceChannel == null) {
-				onNotFound(referenceChannelsNames[i], errors);
+				onNotFound(referenceChannelName, errors);
 				ok = false;
 			}
 		}

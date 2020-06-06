@@ -395,8 +395,8 @@ public class ChannelSpacePanel extends JPanel {
 			this.currentChannels = currentChannels;
 
 			DefaultListModel listModel = new DefaultListModel();
-			for (int i = 0; i < currentChannels.length; i++) {
-				listModel.addElement(currentChannels[i]);
+			for (String currentChannel : currentChannels) {
+				listModel.addElement(currentChannel);
 			}
 
 			JList list = getChannelList();

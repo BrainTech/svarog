@@ -51,9 +51,7 @@ public class EEGLabTagExporter {
 		str.append("#"+_("Align event latencies to data events: NaN")+"\n");
 		str.append("#"+_("Auto adjust new events sampling rate: unchecked")+"\n");
 		str.append("#type\tlatency\tduration\ttag_type\tchannel\n");
-		for (Iterator<Tag> it=tagSet.getTags().iterator(); it.hasNext();)
-		{
-			Tag tag = it.next();
+		for (Tag tag : tagSet.getTags()) {
 			str.append(tag.getStyle().getName()+"\t");
 			str.append(tag.getPosition());
 			str.append("\t");

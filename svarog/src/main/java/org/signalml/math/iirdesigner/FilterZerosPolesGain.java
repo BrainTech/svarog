@@ -134,12 +134,14 @@ class FilterZerosPolesGain {
 
 		String s;
 		s = "Zeros:\n";
-		for (int i = 0; i < zeros.length; i++)
-			s += ("     " + zeros[i].getReal() + "+" + zeros[i].getImaginary() + "j\n");
+		for (Complex zero : zeros) {
+			s += ("     " + zero.getReal() + "+" + zero.getImaginary() + "j\n");
+		}
 
 		s += "Poles:\n";
-		for (int i = 0; i < poles.length; i++)
-			s += ("     " + poles[i].getReal() + "+" + poles[i].getImaginary() + "j\n");
+		for (Complex pole : poles) {
+			s += ("     " + pole.getReal() + "+" + pole.getImaginary() + "j\n");
+		}
 
 		s += ("Gain: " + gain);
 

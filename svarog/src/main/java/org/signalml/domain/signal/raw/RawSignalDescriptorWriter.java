@@ -163,12 +163,10 @@ public class RawSignalDescriptorWriter {
 
 			Element channelLabelsEl = document.createElement(RawSignalDocumentBuilder.CHANNEL_LABELS);
 
-			for (int i=0; i<channelLabels.length; i++) {
-
+			for (String channelLabel : channelLabels) {
 				element = document.createElement(RawSignalDocumentBuilder.LABEL);
-				element.setTextContent(channelLabels[i]);
+				element.setTextContent(channelLabel);
 				channelLabelsEl.appendChild(element);
-
 			}
 
 			root.appendChild(channelLabelsEl);

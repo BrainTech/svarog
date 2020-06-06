@@ -49,12 +49,12 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 	// at least one pair exists
 	public boolean validateSourceMontage(SourceMontage sourceMontage, ValidationErrors errors) {
 
-		for (int i = 0; i < channelPairs.length; i++) {
+		for (String[] channelPair : channelPairs) {
 			int pair_ok = 0;
 			for (int j = 0; j < 2; j++) {
-				SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(channelPairs[i][j]);
+				SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(channelPair[j]);
 				if (sourceChannel == null) {
-					sourceChannel = sourceMontage.getSourceChannelByLabel("EEG " + channelPairs[i][j]);
+					sourceChannel = sourceMontage.getSourceChannelByLabel("EEG " + channelPair[j]);
 				}
 				if (sourceChannel != null) {
 					pair_ok += 1;
@@ -63,7 +63,6 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 			if (pair_ok == 2) {
 				return true;
 			}
-
 		}
 		return false;
 	}
@@ -75,8 +74,8 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 		List<List<SourceChannel>> listOfLists = new ArrayList<>();
 		List<SourceChannel> primaryChannels = new ArrayList<SourceChannel>();
 		List<SourceChannel> referenceChannels = new ArrayList<SourceChannel>();
-		for (int i = 0; i < channelPairs.length; i++) {
-			String channelName = channelPairs[i][0];
+		for (String[] channelPair : channelPairs) {
+			String channelName = channelPair[0];
 			SourceChannel sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
 				sourceChannel = montage.getSourceChannelByLabel("EEG " + channelName);
@@ -84,8 +83,7 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 			if (sourceChannel == null) {
 				continue;
 			}
-
-			channelName = channelPairs[i][1];
+			channelName = channelPair[1];
 			SourceChannel referenceChannel = montage.getSourceChannelByLabel(channelName);
 			if (referenceChannel == null) {
 				referenceChannel = montage.getSourceChannelByLabel("EEG " + channelName);
@@ -93,7 +91,6 @@ public class LongitudalReferenceMontageGenerator extends BipolarReferenceMontage
 			if (referenceChannel == null) {
 				continue;
 			}
-
 			primaryChannels.add(sourceChannel);
 			referenceChannels.add(referenceChannel);
 		}

@@ -32,9 +32,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setCalibration(float conv) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.SIGNAL_INFO) {
-				((SignalInfoV5)fields[i]).points_per_microvolt=conv;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.SIGNAL_INFO) {
+				((SignalInfoV5) field).points_per_microvolt = conv;
 				return;
 			}
 		}
@@ -45,9 +45,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setDate(String text) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.DATE_INFO) {
-				((DateInfoV5)fields[i]).date=text;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.DATE_INFO) {
+				((DateInfoV5) field).date = text;
 				return;
 			}
 		}
@@ -58,9 +58,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setDictionarySize(int size) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-				((DecompositionInfoV5)fields[i]).dictionary_size=size;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.DECOMP_INFO) {
+				((DecompositionInfoV5) field).dictionary_size = size;
 				return;
 			}
 		}
@@ -71,9 +71,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setDictionaryType(char type) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-				((DecompositionInfoV5)fields[i]).dictionary_type=(byte)type;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.DECOMP_INFO) {
+				((DecompositionInfoV5) field).dictionary_type = (byte)type;
 				return;
 			}
 		}
@@ -84,9 +84,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setEnergyPercent(float eps) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-				((DecompositionInfoV5)fields[i]).energy_percent=eps;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.DECOMP_INFO) {
+				((DecompositionInfoV5) field).energy_percent = eps;
 				return;
 			}
 		}
@@ -97,9 +97,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setMaxIterationCount(int max) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.DECOMP_INFO) {
-				((DecompositionInfoV5)fields[i]).max_number_of_iterations=max;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.DECOMP_INFO) {
+				((DecompositionInfoV5) field).max_number_of_iterations = max;
 				return;
 			}
 		}
@@ -110,9 +110,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setSamplingFrequency(float freq) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.SIGNAL_INFO) {
-				((SignalInfoV5)fields[i]).sampling_freq=freq;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.SIGNAL_INFO) {
+				((SignalInfoV5) field).sampling_freq = freq;
 				return;
 			}
 		}
@@ -123,9 +123,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setNumberOfChannels(int numberOfChannels) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.SIGNAL_INFO) {
-				((SignalInfoV5)fields[i]).number_of_chanels_in_file = numberOfChannels;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.SIGNAL_INFO) {
+				((SignalInfoV5) field).number_of_chanels_in_file = numberOfChannels;
 				return;
 			}
 		}
@@ -136,9 +136,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setTextInfo(String text) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.TEXT_INFO) {
-				((TextInfoV5)fields[i]).text=comment;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.TEXT_INFO) {
+				((TextInfoV5) field).text = comment;
 				return;
 			}
 		}
@@ -149,9 +149,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 	}
 
 	public void setWebSiteInfo(String text) {
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null && fields[i].type==FormatComponentV5.WEB_SITE_INFO) {
-				((WebSiteInfoV5)fields[i]).www=text;
+		for (FormatComponentV5 field : fields) {
+			if (field != null && field.type == FormatComponentV5.WEB_SITE_INFO) {
+				((WebSiteInfoV5) field).www = text;
 				return;
 			}
 		}
@@ -164,9 +164,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 
 	private int getFieldSize() {
 		int sum=0;
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null) {
-				sum+=2+fields[i].getSize();
+		for (FormatComponentV5 field : fields) {
+			if (field != null) {
+				sum += 2 + field.getSize();
 			}
 		}
 		return sum;
@@ -186,9 +186,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 		out.writeByte(FormatComponentV5.FILE_HEADER);
 		out.writeInt(getFieldSize());
 
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null) {
-				fields[i].Write(out);
+		for (FormatComponentV5 field : fields) {
+			if (field != null) {
+				field.Write(out);
 			}
 		}
 		out.flush();
@@ -207,9 +207,9 @@ public class BookLibraryV5Writer implements StandardBookWriter, IncrementalBookW
 
 	public void writeSegment(StandardBookSegment[] segments) throws IOException {
 		if (segments!=null) {
-			for (int i=0 ; i<segments.length ; i++) {
-				if (segments[i]!=null) {
-					((SegmentHeaderV5)segments[i]).Write(out);
+			for (StandardBookSegment segment : segments) {
+				if (segment != null) {
+					((SegmentHeaderV5) segment).Write(out);
 				}
 			}
 			out.flush();

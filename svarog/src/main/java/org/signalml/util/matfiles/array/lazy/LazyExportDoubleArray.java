@@ -44,8 +44,9 @@ public class LazyExportDoubleArray extends GenericArray<Double> {
 			double[][] sampleChunk = lazyDataProvider.getDataChunk(x, samplesToGet);
 
 			for (int j = 0; j < sampleChunk[0].length; j++)
-				for (int i = 0; i < sampleChunk.length; i++)
-					dataOutputStream.writeDouble(sampleChunk[i][j]);
+				for (double[] samples : sampleChunk) {
+					dataOutputStream.writeDouble(samples[j]);
+				}
 		}
 	}
 

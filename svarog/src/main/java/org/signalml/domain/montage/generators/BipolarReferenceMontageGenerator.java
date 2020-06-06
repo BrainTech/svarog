@@ -73,15 +73,14 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 		List<List<SourceChannel>> listOfLists = new ArrayList<>();
 		List<SourceChannel> primaryChannels = new ArrayList<SourceChannel>();
 		List<SourceChannel> referenceChannels = new ArrayList<SourceChannel>();
-		for (int i = 0; i < channelPairs.length; i++) {
-			String channelName = channelPairs[i][0];
+		for (String[] channelPair : channelPairs) {
+			String channelName = channelPair[0];
 			SourceChannel sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
 				throw new MontageException(_R("Cannot find primary channel {0}", channelName));
 			}
 			primaryChannels.add(sourceChannel);
-
-			channelName = channelPairs[i][1];
+			channelName = channelPair[1];
 			sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
 				throw new MontageException(_R("Cannot find reference channel {0}", channelName));
@@ -162,16 +161,14 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 
 		boolean ok = true;
 
-		for (int i = 0; i < channelPairs.length; i++) {
-
+		for (String[] channelPair : channelPairs) {
 			for (int j = 0; j < 2; j++) {
-				SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(channelPairs[i][j]);
+				SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(channelPair[j]);
 				if (sourceChannel == null) {
-					onNotFound(channelPairs[i][j], errors);
+					onNotFound(channelPair[j], errors);
 					ok = false;
 				}
 			}
-
 		}
 
 		return ok;

@@ -69,9 +69,11 @@ public class MP5AtomsInDictionaryPanel extends JPanel {
 	}
 
 	public boolean isAtLeastOneAtomTypeSelected() {
-		for (int i = 0; i < atomTypeCheckBoxes.length; i++)
-			if (atomTypeCheckBoxes[i].isSelected())
+		for (JCheckBox atomTypeCheckBox : atomTypeCheckBoxes) {
+			if (atomTypeCheckBox.isSelected()) {
 				return true;
+			}
+		}
 		return false;
 	}
 

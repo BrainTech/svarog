@@ -24,8 +24,9 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 		}
 
 		this.selectionStatus = new ArrayList<Boolean>();
-		for (int i = 0; i < elements.size(); i++)
+		for (TagStyleGroup element : elements) {
 			selectionStatus.add(false);
+		}
 
 		fireTableDataChanged();
 	}

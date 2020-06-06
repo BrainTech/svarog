@@ -74,8 +74,8 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 * @param scaleValue parent plot's scale value
 	 */
 	public void globalScaleChanged(double scaleValue) {
-		for (int i = 0; i < channelsOptions.length; i++) {
-			channelsOptions[i].globalScaleChanged(scaleValue);
+		for (ChannelPlotOptionsModel channelOptions : channelsOptions) {
+			channelOptions.globalScaleChanged(scaleValue);
 		}
 	}
 
@@ -113,8 +113,8 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 */
 	public int getVisibleChannelsCount() {
 		int cnt = 0;
-		for (int i = 0; i < this.channelsOptions.length; i++) {
-			if (this.channelsOptions[i].getVisible()) {
+		for (ChannelPlotOptionsModel channelOptions : this.channelsOptions) {
+			if (channelOptions.getVisible()) {
 				cnt++;
 			}
 		}

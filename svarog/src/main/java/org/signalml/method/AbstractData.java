@@ -60,8 +60,8 @@ public class AbstractData extends BaseMethodData implements Serializable {
 
 	private static Set<ChannelFunction> getKeyChannelSet() {
 		HashSet<ChannelFunction> channelSet = new HashSet<ChannelFunction>();
-		for (int i=0; i<keyChannels.length; i++) {
-			channelSet.add(keyChannels[i]);
+		for (ChannelFunction keyChannel : keyChannels) {
+			channelSet.add(keyChannel);
 		}
 		return Collections.unmodifiableSet(channelSet);
 	}

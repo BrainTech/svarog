@@ -140,8 +140,7 @@ public class EEGLabSignalWriter implements ISignalWriter {
 
 		List<AbstractArray> arrays = new ArrayList<AbstractArray>();
 
-		for (Iterator<Tag> it = allTags.iterator(); it.hasNext();) {
-			Tag tag = it.next();
+		for (Tag tag : allTags) {
 			arrays.add(new CharacterArray("type", tag.getStyle().getName()));
 			arrays.add(new DoubleArray("latency", new double[] { tag.getPosition() * samplingRate }));
 			arrays.add(new DoubleArray("duration", new double[] { tag.getLength() * samplingRate }));

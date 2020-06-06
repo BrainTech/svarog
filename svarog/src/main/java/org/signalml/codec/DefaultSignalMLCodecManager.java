@@ -175,9 +175,9 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 			clear();
 			SignalMLCodecDescriptor[] descr = config.getCodecs();
 			SignalMLCodec codec;
-			for (int i=0; i<descr.length; i++) {
-				codec = descr[i].getCodec();
-				codec.setFormatName(descr[i].getFormatName());
+			for (SignalMLCodecDescriptor descriptor : descr) {
+				codec = descriptor.getCodec();
+				codec.setFormatName(descriptor.getFormatName());
 				registerSignalMLCodecInternal(codec);
 			}
 

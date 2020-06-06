@@ -101,8 +101,8 @@ public class MP5ConfigCreator {
 		if (bookComment != null && !bookComment.isEmpty()) {
 
 			String[] lines = Util.splitTextIntoLines(bookComment, 70);
-			for (int i=0; i<lines.length; i++) {
-				formatter.format("##%s%n", lines[i]);
+			for (String line : lines) {
+				formatter.format("##%s%n", line);
 			}
 
 			formatter.format("%n");

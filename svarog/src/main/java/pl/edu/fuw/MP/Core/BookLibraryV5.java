@@ -62,9 +62,9 @@ public class BookLibraryV5 implements BookLibraryInterface {
 
 	public void setFields(FormatComponentV5 fields[]) {
 		fieldsCount=0;
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null) {
-				this.fields[fieldsCount++]=fields[i];
+		for (FormatComponentV5 field : fields) {
+			if (field != null) {
+				this.fields[fieldsCount++] = field;
 			}
 		}
 	}

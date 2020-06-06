@@ -162,8 +162,8 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 */
 	public String[] getAllFileExtensions() {
 		List<String> extensions = new ArrayList<String>();
-		for (int i = 0; i < fileFilterExtensions.length; i++) {
-			for (String ext: fileFilterExtensions[i]) {
+		for (String[] fileFilterExtension : fileFilterExtensions) {
+			for (String ext : fileFilterExtension) {
 				extensions.add(ext);
 			}
 		}
@@ -212,9 +212,9 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 			return ManagedDocumentType.MONITOR;
 		}
 		ManagedDocumentType[] all = getAll();
-		for (int i=0; i<all.length; i++) {
-			if (all[i].baseClass.isAssignableFrom(clazz)) {
-				return all[i];
+		for (ManagedDocumentType type : all) {
+			if (type.baseClass.isAssignableFrom(clazz)) {
+				return type;
 			}
 		}
 		return null;

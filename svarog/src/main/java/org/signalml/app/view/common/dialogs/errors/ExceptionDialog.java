@@ -111,8 +111,8 @@ public class ExceptionDialog extends AbstractMessageDialog  {
 		sb.append(throwable.getClass().toString());
 		sb.append("\n");
 
-		for (int i = 0; i < throwable.getStackTrace().length; i++) {
-			sb.append(throwable.getStackTrace()[i].toString());
+		for (StackTraceElement stackTrace : throwable.getStackTrace()) {
+			sb.append(stackTrace.toString());
 			sb.append("\n");
 		}
 		return sb.toString();

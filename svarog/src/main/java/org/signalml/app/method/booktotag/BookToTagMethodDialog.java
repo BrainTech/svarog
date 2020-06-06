@@ -153,8 +153,8 @@ public class BookToTagMethodDialog extends AbstractDialog  {
 			this.channels = channels;
 
 			DefaultListModel listModel = new DefaultListModel();
-			for (int i=0; i<channels.length; i++) {
-				listModel.addElement(channels[i]);
+			for (String channel : channels) {
+				listModel.addElement(channel);
 			}
 
 			JList list = getChannelList();

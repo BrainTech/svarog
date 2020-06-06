@@ -110,9 +110,9 @@ public class SignalPlotRowHeader extends JComponent {
 		calculated = false;
 
 		if (channelOptionsButtons != null) {
-			for (int i = 0; i < channelOptionsButtons.length; i++) {
-				if (channelOptionsButtons[i] != null) {
-					this.remove(channelOptionsButtons[i]);
+			for (CompactButton channelOptionsButton : channelOptionsButtons) {
+				if (channelOptionsButton != null) {
+					this.remove(channelOptionsButton);
 				}
 			}
 		}

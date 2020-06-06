@@ -168,8 +168,9 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 			for (int i = 0; i < expectedAveragedSamples.length; i++) {
 
 				double sum = 0.0;
-				for (int j = 0; j < samplesTag.length; j++)
-					sum += samplesTag[j][i];
+				for (double[] x : samplesTag) {
+					sum += x[i];
+				}
 				if (samplesTag.length > 0)
 					expectedAveragedSamples[i] = sum / samplesTag.length;
 			}

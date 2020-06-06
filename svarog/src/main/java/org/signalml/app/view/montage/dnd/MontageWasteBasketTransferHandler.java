@@ -77,15 +77,12 @@ public class MontageWasteBasketTransferHandler extends TransferHandler {
 
 		logger.debug("Testing drop for [" + transferFlavors.length + "] flavors");
 
-		for (int i=0; i<transferFlavors.length; i++) {
-
-			logger.debug("Testing drop for flavor [" + transferFlavors[i].toString() + "]");
-
-			if (transferFlavors[i].equals(montageFlavor)) {
+		for (DataFlavor transferFlavor : transferFlavors) {
+			logger.debug("Testing drop for flavor [" + transferFlavor.toString() + "]");
+			if (transferFlavor.equals(montageFlavor)) {
 				logger.debug("Accepted target");
 				return true;
 			}
-
 		}
 
 		logger.debug("Nothing interesting in this drop");

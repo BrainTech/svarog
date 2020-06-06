@@ -121,8 +121,8 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 			}
 		}
 		else {
-			for (int i=0; i<radioButtons.length; i++) {
-				radioButtons[i].setEnabled(true);
+			for (JRadioButton radioButton : radioButtons) {
+				radioButton.setEnabled(true);
 			}
 		}
 		if (document != null) {
