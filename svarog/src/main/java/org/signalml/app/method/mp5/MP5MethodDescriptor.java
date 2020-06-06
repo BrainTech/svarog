@@ -35,7 +35,7 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 	protected static final Logger logger = Logger.getLogger(MP5MethodDescriptor.class);
 
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
-	public static final String RUN_METHOD_STRING = _("MP decomposition");
+	public static final String RUN_METHOD_STRING = _("Decomposition");
 
 	private MP5Method method;
 	private MP5MethodDialog configurer;

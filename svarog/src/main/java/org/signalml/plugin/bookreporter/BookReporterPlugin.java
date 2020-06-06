@@ -10,6 +10,7 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.tool.PluginAccessHelper;
 import org.signalml.plugin.tool.PluginResourceRepository;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author piotr@develancer.pl
@@ -38,6 +39,7 @@ public class BookReporterPlugin implements Plugin {
 	private void setupGUI(SvarogAccessGUI guiAccess)
 		throws UnsupportedOperationException, PluginException {
 		guiAccess
-			.addButtonToToolsMenu(new BookReporterPluginAction(this.manager));
+			.addSubmenuToAnalysisMenu(_("Matching pursuit"))
+			.add(new BookReporterPluginAction(this.manager));
 	}
 }

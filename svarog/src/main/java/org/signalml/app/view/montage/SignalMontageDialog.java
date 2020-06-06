@@ -45,8 +45,7 @@ public class SignalMontageDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle(_("Signal montage"));
-		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
+		setTitle(_("Signal montage and filters"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		setMinimumSize(new Dimension(800, 600));

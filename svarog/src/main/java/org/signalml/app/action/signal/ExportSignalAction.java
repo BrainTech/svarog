@@ -72,7 +72,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	public ExportSignalAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
-		setText(_("Export Signal"));
+		setText(_("Export"));
 		setToolTip(_("Export signal to simple binary, ASCII or EEGLab format"));
 		setMnemonic(KeyEvent.VK_E);
 	}

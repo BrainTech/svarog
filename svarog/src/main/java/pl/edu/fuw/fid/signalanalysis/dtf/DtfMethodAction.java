@@ -27,7 +27,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 public class DtfMethodAction extends AbstractSignalMLAction {
 
 	private static final int SPECTRUM_SIZE = 100;
-	private static final String TITLE = _("Directed Transfer Function");
+	public static final String TITLE = _("Directed Transfer Function");
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;

@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.AbstractAction;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -363,43 +364,40 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	}
 
 	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToToolsMenu(javax.swing.AbstractAction)
+	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToAnalysisMenu(javax.swing.AbstractAction)
 	 */
 	@Override
-	public JMenuItem addButtonToToolsMenu(Action action) throws UnsupportedOperationException {
+	public JMenuItem addButtonToAnalysisMenu(Action action) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu toolsMenu = getViewerElementManager().getToolsMenu();
-		return toolsMenu.add(action);
+		JMenu analysisMenu = getViewerElementManager().getAnalysisMenu();
+		int itemCount = analysisMenu.getItemCount();
+		for (int i=0; i<itemCount; ++i) {
+			JMenuItem item = analysisMenu.getItem(i);
+			if (item.getText().equals(action.getValue(AbstractAction.NAME))) {
+				item.setAction(action);
+				return item;
+			}
+		}
+		return analysisMenu.add(action);
 	}
 
 	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessGUI#addSubmenuToToolsMenu(javax.swing.JMenu)
+	 * @see org.signalml.plugin.export.PluginAccessGUI#addSubmenuToAnalysisMenu(javax.swing.JMenu)
 	 */
 	@Override
-	public JMenuItem addSubmenuToToolsMenu(JMenu menu) {
+	public JMenu addSubmenuToAnalysisMenu(String label) {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu toolsMenu = getViewerElementManager().getToolsMenu();
-		return toolsMenu.add(menu);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToEditMenu(javax.swing.AbstractAction)
-	 */
-	@Override
-	public JMenuItem addButtonToEditMenu(Action action) throws UnsupportedOperationException {
-		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu editMenu = getViewerElementManager().getEditMenu();
-		return editMenu.add(action);
-	}
-
-	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessGUI#addSubmenuToEditMenu(javax.swing.JMenu)
-	 */
-	@Override
-	public JMenuItem addSubmenuToEditMenu(JMenu menu) throws UnsupportedOperationException {
-		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu editMenu = getViewerElementManager().getEditMenu();
-		return editMenu.add(menu);
+		JMenu analysisMenu = getViewerElementManager().getAnalysisMenu();
+		int itemCount = analysisMenu.getItemCount();
+		for (int i=0; i<itemCount; ++i) {
+			JMenuItem submenu = analysisMenu.getItem(i);
+			if (submenu instanceof JMenu && submenu.getText().equals(label)) {
+				return (JMenu) submenu;
+			}
+		}
+		JMenu submenu = new JMenu(label);
+		analysisMenu.add(submenu);
+		return submenu;
 	}
 
 	/**
@@ -655,30 +653,6 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 			}
 		} catch (Exception e) {
 			logger.error("Unknown error in plug-in interface during the addition of buttons for signal tools");
-			logger.error("", e);
-		}
-	}
-
-	/* (non-Javadoc)
-	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToMainToolbar(javax.swing.AbstractAction)
-	 */
-	@Override
-	public void addButtonToMainToolbar(Action action) throws UnsupportedOperationException {
-		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		actionsToMainSignalToolbar.add(action);
-	}
-
-	/**
-	 * Adds buttons to main toolbar in the signal view.
-	 * @param mainToolBar the main toolbar.
-	 */
-	public void addToMainSignalToolBar(JToolBar mainToolBar) {
-		try {
-			for (Action action : actionsToMainSignalToolbar) {
-				mainToolBar.add(action);
-			}
-		} catch (Exception e) {
-			logger.error("Unknown error in plug-in interface during the addition of buttons to main toolbar");
 			logger.error("", e);
 		}
 	}

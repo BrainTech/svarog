@@ -95,7 +95,6 @@ public class ConfigurationDefaults {
 		config.setBlocksPerPage(getInt("application.blocksPerPage"));
 		config.setSaveFullMontageWithTag(getBoolean("application.saveFullMontageWithTag"));
 
-		config.setViewModeHidesMainToolBar(getBoolean("application.viewModeHidesMainToolBar"));
 		config.setViewModeHidesLeftPanel(getBoolean("application.viewModeHidesLeftPanel"));
 		config.setViewModeHidesBottomPanel(getBoolean("application.viewModeHidesBottomPanel"));
 		config.setViewModeCompactsPageTagBars(getBoolean("application.viewModeCompactsPageTagBars"));

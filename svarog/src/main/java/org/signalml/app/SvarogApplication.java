@@ -4,7 +4,6 @@
 package org.signalml.app;
 
 import com.alee.laf.WebLookAndFeel;
-import com.alee.managers.language.LanguageManager;
 import static java.lang.String.format;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 

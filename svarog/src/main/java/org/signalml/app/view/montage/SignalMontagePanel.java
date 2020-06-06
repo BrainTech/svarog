@@ -125,6 +125,14 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 		return interfacePanel;
 	}
 
+	public void activateMontagePane() {
+		tabbedPane.setSelectedIndex(0);
+	}
+
+	public void activateFiltersPane() {
+		tabbedPane.setSelectedIndex(1);
+	}
+
 	@Override
 	protected ComplexPresetControlsPanel getPresetControlsPanel() {
 		if (presetControlsPanel == null)

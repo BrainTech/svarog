@@ -36,6 +36,9 @@ import org.signalml.util.Util;
 public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyChangeListener, ItemListener {
 	protected static final Logger logger = Logger.getLogger(SignalSourceTabbedPane.class);
 
+	public static final String TAB_AMPLIFIERS = "Amplifiers";
+	public static final String TAB_EXPERIMENTS = "Experiments";
+
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
 
 	private ViewerElementManager viewerElementManager;
@@ -59,13 +62,13 @@ public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyCha
 		addTab(_("File"), getFileChooserPanel());
 		int selectedIndex = 0;
 		if (ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()) {
-			if ("Online experiments".equals(selectedSourceTab)) {
+			if (TAB_EXPERIMENTS.equals(selectedSourceTab)) {
 				selectedIndex = getTabCount();
 			}
 			addTab(_("Online experiments"), getChooseExperimentPanel());
 		}
 		if (ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()) {
-			if ("Online amplifiers".equals(selectedSourceTab)) {
+			if (TAB_AMPLIFIERS.equals(selectedSourceTab)) {
 				selectedIndex = getTabCount();
 			}
 			addTab(_("Online amplifiers"), getChooseAmplifierPanel());

@@ -35,31 +35,28 @@ public class SignalAnalysisPlugin implements Plugin {
 		guiAccess = access.getGUIAccess();
 		signalAccess = access.getSignalAccess();
 
-		JMenu icaMenu = new JMenu(_("Independent Component Analysis"));
+		JMenu icaMenu = guiAccess.addSubmenuToAnalysisMenu(_("Independent Component Analysis"));
 		icaMenu.add(new IcaMethodAction(guiAccess, signalAccess));
 		icaMenu.add(new DescribeComponentsAction(guiAccess, signalAccess));
 		icaMenu.add(new ZeroMethodAction(guiAccess, signalAccess));
 
-		guiAccess.addSubmenuToToolsMenu(icaMenu);
-		guiAccess.addButtonToToolsMenu(new DtfMethodAction(guiAccess, signalAccess));
+		guiAccess.addButtonToAnalysisMenu(new DtfMethodAction(guiAccess, signalAccess));
 
-		JMenu stftMenu = new JMenu(_("Short-Time Fourier Transform"));
+		JMenu stftMenu = guiAccess.addSubmenuToAnalysisMenu(_("Short-Time Fourier Transform"));
 		stftMenu.add(new PopupActionForSTFT(signalAccess));
 		try {
 			stftMenu.add(new AveragedBaseAction(guiAccess, signalAccess, AveragedStftDialog.class, ImageRendererForSTFT.class));
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
-		guiAccess.addSubmenuToToolsMenu(stftMenu);
 
-		JMenu wtMenu = new JMenu(_("Wavelet Transform"));
+		JMenu wtMenu = guiAccess.addSubmenuToAnalysisMenu(_("Wavelet Transform"));
 		wtMenu.add(new PopupActionForWavelet(signalAccess));
 		try {
 			wtMenu.add(new AveragedBaseAction(guiAccess, signalAccess, AveragedWaveletDialog.class, ImageRendererForWavelet.class));
 		} catch (Exception ex) {
 			logger.error(ex);
 		}
-		guiAccess.addSubmenuToToolsMenu(wtMenu);
 	}
 
 }
