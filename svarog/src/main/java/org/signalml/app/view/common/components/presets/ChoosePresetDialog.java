@@ -1,13 +1,10 @@
 package org.signalml.app.view.common.components.presets;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -19,11 +16,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetComboBoxModel;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.util.Util;

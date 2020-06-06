@@ -3,11 +3,8 @@
  */
 package org.signalml.app.view.signal.signalselection;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,9 +16,9 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
 import org.signalml.domain.signal.space.MarkerTimeSpace;
@@ -379,9 +376,9 @@ public class MarkedTimeSpacePanel extends JPanel {
 			if (markerStyles != null) {
 				String markerStyleName = markerTimeSpace.getMarkerStyleName();
 				if (markerStyleName != null) {
-					for (int i=0; i<markerStyles.length; i++) {
-						if (markerStyleName.equals(markerStyles[i].getName())) {
-							styleBox.setSelectedItem(markerStyles[i]);
+					for (TagStyle markerStyle : markerStyles) {
+						if (markerStyleName.equals(markerStyle.getName())) {
+							styleBox.setSelectedItem(markerStyle);
 							break;
 						}
 					}

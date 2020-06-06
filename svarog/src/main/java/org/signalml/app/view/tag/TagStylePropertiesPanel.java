@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -14,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
@@ -38,8 +35,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.common.dialogs.KeyStrokeCaptureDialog;
 import org.signalml.app.view.tag.styles.attributes.TagAttributesDefinitionsEditPanel;

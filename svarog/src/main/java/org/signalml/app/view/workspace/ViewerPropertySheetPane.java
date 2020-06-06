@@ -4,10 +4,8 @@
 package org.signalml.app.view.workspace;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import org.signalml.app.model.components.PropertySheetModel;
 
 /** ViewerPropertySheetPane

@@ -4,8 +4,6 @@
 
 package org.signalml.app.action.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -13,10 +11,10 @@ import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-
 import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.signalml.app.util.ImageTransferable;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** ExportChartToClipboardAction

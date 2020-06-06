@@ -21,7 +21,6 @@ import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.JComponent;
 import javax.swing.JViewport;
 import javax.swing.Scrollable;

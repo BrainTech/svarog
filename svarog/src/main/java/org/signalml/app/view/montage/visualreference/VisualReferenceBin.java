@@ -10,7 +10,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-
 import org.signalml.util.Util;
 
 /** VisualReferenceBin
@@ -31,7 +30,7 @@ public abstract class VisualReferenceBin {
 
 	protected int maxHeight = 0;
 
-	protected LinkedHashSet<VisualReferenceSourceChannel> channels = new LinkedHashSet<VisualReferenceSourceChannel>();
+	protected LinkedHashSet<VisualReferenceSourceChannel> channels = new LinkedHashSet<>();
 	protected boolean valid = false;
 	protected boolean positioned = false;
 

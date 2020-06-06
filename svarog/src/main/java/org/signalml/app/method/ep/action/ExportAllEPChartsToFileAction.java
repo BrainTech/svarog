@@ -1,12 +1,10 @@
 package org.signalml.app.method.ep.action;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-
 import org.signalml.app.method.ep.EvokedPotentialGraphPanel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 

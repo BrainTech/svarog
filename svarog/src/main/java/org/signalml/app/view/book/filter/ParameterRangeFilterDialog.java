@@ -4,34 +4,29 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.UnlimitedSpinnerPanel;
 import org.signalml.domain.book.filter.ParameterRangeAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
-
-import org.springframework.validation.Errors;
 
 /** ParameterRangeFilterDialog
  *

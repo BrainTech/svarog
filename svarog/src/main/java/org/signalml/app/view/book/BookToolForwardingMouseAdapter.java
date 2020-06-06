@@ -7,9 +7,7 @@ package org.signalml.app.view.book;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-
 import javax.swing.SwingUtilities;
-
 import org.signalml.app.view.book.tools.BookTool;
 import org.signalml.app.view.book.tools.SelectAtomBookTool;
 

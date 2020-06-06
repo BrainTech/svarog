@@ -1,15 +1,13 @@
 package org.signalml.app.action.signal;
 
 import java.awt.Window;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.SignalPlotOptionsPopupDialog;
 

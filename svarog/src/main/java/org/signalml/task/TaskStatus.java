@@ -4,11 +4,9 @@
 package org.signalml.task;
 
 import java.io.Serializable;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.I18nMessage;
 import org.signalml.app.view.I18nMessageStringWrapper;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** An enumeration of possible task statuses.
  *

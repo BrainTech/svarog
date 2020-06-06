@@ -3,13 +3,12 @@ package org.signalml.codec;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.FloatBuffer;
-import java.nio.DoubleBuffer;
-import java.nio.BufferUnderflowException;
 import static java.lang.String.format;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import java.nio.BufferUnderflowException;
+import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class JsignalmlReader implements SignalMLCodecReader {
 	protected static final Logger log = Logger.getLogger(SignalMLCodecReader.class);

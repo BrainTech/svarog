@@ -1,8 +1,7 @@
 package org.signalml.app.view.tag.synchronize;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.PanelWithEnablingCheckbox;
 
 public class LengthThresholdPanel extends PanelWithEnablingCheckbox<LengthThresholdValuePanel>{

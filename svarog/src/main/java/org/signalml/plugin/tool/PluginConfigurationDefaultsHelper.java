@@ -2,7 +2,6 @@ package org.signalml.plugin.tool;
 
 import java.io.IOException;
 import java.util.Properties;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ConfigurationDefaultsLoader;
 import org.signalml.plugin.exception.PluginException;

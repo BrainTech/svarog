@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -17,16 +15,14 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.domain.montage.SourceChannel;
@@ -114,9 +110,9 @@ public class SignalPlotRowHeader extends JComponent {
 		calculated = false;
 
 		if (channelOptionsButtons != null) {
-			for (int i = 0; i < channelOptionsButtons.length; i++) {
-				if (channelOptionsButtons[i] != null) {
-					this.remove(channelOptionsButtons[i]);
+			for (CompactButton channelOptionsButton : channelOptionsButtons) {
+				if (channelOptionsButton != null) {
+					this.remove(channelOptionsButton);
 				}
 			}
 		}

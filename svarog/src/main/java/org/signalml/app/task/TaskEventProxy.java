@@ -5,7 +5,6 @@
 package org.signalml.app.task;
 
 import javax.swing.event.EventListenerList;
-
 import org.signalml.task.TaskEvent;
 import org.signalml.task.TaskEventListener;
 

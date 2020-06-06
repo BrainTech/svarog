@@ -5,7 +5,6 @@
 package org.signalml.domain.tag;
 
 import java.io.Serializable;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.domain.signal.SignalChecksum;
 

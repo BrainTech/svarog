@@ -4,7 +4,6 @@
 package org.signalml.app.view.workspace;
 
 import javax.swing.JTable;
-
 import org.signalml.app.model.components.PropertySheetModel;
 
 /** ViewerPropertySheet

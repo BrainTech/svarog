@@ -11,11 +11,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.KeyStroke;
-
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**
@@ -27,7 +25,7 @@ public class TagIconProducer {
 
 	private static final Font labelFont = new Font("Dialog", Font.PLAIN, 10);
 
-	private Map<TagStyle,Icon> icons = new HashMap<TagStyle,Icon>();
+	private Map<TagStyle,Icon> icons = new HashMap<>();
 
 	private Polygon markerShape;
 

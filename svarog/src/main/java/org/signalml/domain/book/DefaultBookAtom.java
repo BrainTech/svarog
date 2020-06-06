@@ -132,7 +132,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 
 	@Override
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

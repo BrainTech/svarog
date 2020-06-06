@@ -1,13 +1,10 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -18,11 +15,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.components.spinners.FloatSpinner;
 import org.signalml.app.view.common.components.spinners.IntegerSpinner;

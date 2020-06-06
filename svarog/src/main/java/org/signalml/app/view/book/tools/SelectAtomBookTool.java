@@ -7,9 +7,7 @@ package org.signalml.app.view.book.tools;
 import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-
 import javax.swing.SwingUtilities;
-
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.domain.book.SegmentReconstructionProvider;

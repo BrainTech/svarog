@@ -1,14 +1,11 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,10 +17,10 @@ import javax.swing.SwingWorker.StateValue;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.worker.monitor.FindEEGExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;

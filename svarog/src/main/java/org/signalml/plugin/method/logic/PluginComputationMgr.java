@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
-
 import org.apache.log4j.Logger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
@@ -76,11 +75,11 @@ public abstract class PluginComputationMgr<Data extends PluginMgrData, Result> {
 	protected Result doCompute() throws ComputationException,
 		PluginToolInterruptedException, PluginToolAbortException {
 
-		this.stepResults = new HashMap<IPluginComputationMgrStep, PluginComputationMgrStepResult>();
+		this.stepResults = new HashMap<>();
 
 		Collection<IPluginComputationMgrStep> steps = this.prepareStepChain();
 
-		Map<IPluginComputationMgrStep, Integer> tickMap = new HashMap<IPluginComputationMgrStep, Integer>(
+		Map<IPluginComputationMgrStep, Integer> tickMap = new HashMap<>(
 			steps.size());
 		for (IPluginComputationMgrStep step : steps) {
 			step.initialize();

@@ -3,14 +3,14 @@ package pl.edu.fuw.fid.signalanalysis.stft;
 import java.util.Arrays;
 import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.transform.FastFourierTransformer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.math.fft.WindowFunction;
 import org.signalml.math.fft.WindowType;
 import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
-import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
-import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
-import static org.signalml.app.util.i18n.SvarogI18n._;
+import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
 
 /**
  * Computes Short-Time Fourier Transform coefficients

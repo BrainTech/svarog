@@ -4,29 +4,26 @@
 
 package org.signalml.app.view.tag.comparison;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.model.tag.TagComparisonDescriptor;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.tag.TagIconProducer;
-import org.signalml.app.view.workspace.ViewerFileChooser;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
+import org.signalml.app.view.tag.TagIconProducer;
+import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.tag.TagComparisonResults;
 import org.signalml.domain.tag.TagDifferenceDetector;
 import org.signalml.exception.SanityCheckException;

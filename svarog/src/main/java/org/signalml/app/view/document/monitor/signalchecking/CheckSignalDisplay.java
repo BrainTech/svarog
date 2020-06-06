@@ -5,22 +5,20 @@
 package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.signalml.app.view.montage.visualreference.VisualReferenceBin;
 import org.signalml.app.view.montage.visualreference.VisualReferenceDisplay;
 import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
@@ -311,7 +309,7 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 	 */
 	private HashMap<String, Boolean> getValidData() {
 
-		HashMap<String, Boolean> validData = new HashMap<String, Boolean>();
+		HashMap<String, Boolean> validData = new HashMap<>();
 		Set<String> channelNames = channels.get(0).keySet();
 
 		for (String channel : channelNames) {
@@ -340,13 +338,13 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 	private HashMap<String, List<AdditionalChannelData>> getAdditionalData() {
 
 		HashMap<String, List<AdditionalChannelData>> additionalData =
-			new HashMap<String, List<AdditionalChannelData>>();
+			new HashMap<>();
 
 		Set<String> channelNames = channels.get(0).keySet();
 
 		for (String channel : channelNames) {
 
-			List<AdditionalChannelData> channelsAdditionalData = new ArrayList<AdditionalChannelData>();
+			List<AdditionalChannelData> channelsAdditionalData = new ArrayList<>();
 			for (HashMap<String, ChannelState> diagnosisResult : channels) {
 
 				AdditionalChannelData currentData = diagnosisResult.get(channel).getAdditionalChannelData();

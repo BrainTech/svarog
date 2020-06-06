@@ -5,10 +5,8 @@ package org.signalml.app.view.workspace;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.Component;
-
 import javax.swing.Icon;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
 

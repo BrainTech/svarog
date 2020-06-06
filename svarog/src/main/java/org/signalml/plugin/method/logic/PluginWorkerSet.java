@@ -15,8 +15,8 @@ public class PluginWorkerSet {
 
 	public PluginWorkerSet(ThreadFactory threadFactory) {
 		this.threadFactory = threadFactory;
-		this.workers = new LinkedList<Thread>();
-		this.startedThreads = new HashSet<Thread>();
+		this.workers = new LinkedList<>();
+		this.startedThreads = new HashSet<>();
 	}
 
 	public void startAll() {

@@ -4,7 +4,6 @@
 package org.signalml.app.view.tag;
 
 import com.alee.laf.toolbar.WebToolBar;
-
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,11 +12,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.tag.TagSelectionAction;
 import org.signalml.domain.tag.StyledTagSet;
@@ -80,10 +77,10 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
 		buttonGroup = new ButtonGroup();
 
-		buttonList = new LinkedList<TagStyleToggleButton>();
+		buttonList = new LinkedList<>();
 
-		styleToButtonMap = new HashMap<TagStyle, TagStyleToggleButton>();
-		buttonToStyleMap = new HashMap<ButtonModel, TagStyle>();
+		styleToButtonMap = new HashMap<>();
+		buttonToStyleMap = new HashMap<>();
 
 		tagEraserToggleButton = new TagEraserToggleButton();
 		tagEraserToggleButton.addActionListener(buttonClickListener);

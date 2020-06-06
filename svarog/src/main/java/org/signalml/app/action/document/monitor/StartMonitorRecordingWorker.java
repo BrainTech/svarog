@@ -1,9 +1,8 @@
 package org.signalml.app.action.document.monitor;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.awt.Container;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.MonitorSignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 

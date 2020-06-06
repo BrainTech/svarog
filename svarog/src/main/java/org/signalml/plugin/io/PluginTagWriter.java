@@ -7,10 +7,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
-
 import javax.swing.KeyStroke;
-
 import org.signalml.app.document.TagDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.exception.SanityCheckException;
@@ -22,8 +21,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class PluginTagWriter implements IPluginTagWriter {
 
@@ -43,7 +40,7 @@ public class PluginTagWriter implements IPluginTagWriter {
 			SignalMLException {
 
 		TagStyles styles = this.createStyles(tags);
-		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags,
+		TreeSet<Tag> documentTags = new TreeSet<>(this.createTags(tags,
 				styles));
 
 		float pageSize = this.config.pageSize;
@@ -99,14 +96,14 @@ public class PluginTagWriter implements IPluginTagWriter {
 
 	private Collection<Tag> createTags(Collection<PluginTagGroup> tags,
 			TagStyles tagStyles) {
-		List<Tag> l = new LinkedList<Tag>();
+		List<Tag> l = new LinkedList<>();
 		for (PluginTagGroup tagGroup : tags) {
 			TagStyle style = tagStyles.getStyle(tagGroup.name);
 			if (style == null) {
 				style = TagStyle.getDefault();
 			}
 
-			TreeSet<IPluginTagDef> sortedTags = new TreeSet<IPluginTagDef>(
+			TreeSet<IPluginTagDef> sortedTags = new TreeSet<>(
 					new PluginTagDefRangeComparator());
 			sortedTags.addAll(tagGroup.tags);
 

@@ -4,18 +4,14 @@
 
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.Window;
-import java.lang.String;
-
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.TextPanePanel;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.montage.Montage;

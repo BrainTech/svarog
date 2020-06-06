@@ -7,7 +7,6 @@ package org.signalml.domain.book;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import org.signalml.domain.book.filter.AtomFilterChain;
 
 /** FilteredBookSegment
@@ -25,9 +24,9 @@ public class FilteredBookSegment implements StandardBookSegment {
 	public FilteredBookSegment(StandardBookSegment source, AtomFilterChain filter) {
 		this.source = source;
 
-		LinkedList<StandardBookAtom> atoms = new LinkedList<StandardBookAtom>();
+		LinkedList<StandardBookAtom> atoms = new LinkedList<>();
 
-		atomIndexMap = new HashMap<StandardBookAtom, Integer>();
+		atomIndexMap = new HashMap<>();
 
 		int atomCount = source.getAtomCount();
 		StandardBookAtom atom;

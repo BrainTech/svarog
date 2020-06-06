@@ -4,13 +4,12 @@
 
 package org.signalml.domain.signal;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.filter.MultichannelSampleFilter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents the description of the

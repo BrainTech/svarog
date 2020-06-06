@@ -5,10 +5,8 @@
 package org.signalml.domain.signal;
 
 import java.beans.PropertyChangeEvent;
-import java.util.Arrays;
-
 import static java.lang.String.format;
-
+import java.util.Arrays;
 import org.apache.log4j.Logger;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 

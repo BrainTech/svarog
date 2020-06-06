@@ -1,9 +1,7 @@
 package org.signalml.app.worker.monitor;
 import java.util.ArrayList;
 import java.util.List;
-import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
-import org.signalml.app.worker.monitor.messages.AmplifierType;
 import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.zeromq.ZMQ; 

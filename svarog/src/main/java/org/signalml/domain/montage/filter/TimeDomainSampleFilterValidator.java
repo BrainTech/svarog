@@ -4,11 +4,9 @@
 
 package org.signalml.domain.montage.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.math.iirdesigner.FilterType;
 
 /**
@@ -32,7 +30,7 @@ public final class TimeDomainSampleFilterValidator {
 	/**
 	 * This errorMessages describes the problems if the filter is not valid.
 	 */
-	private List<String> errorMessages = new ArrayList<String>();
+	private List<String> errorMessages = new ArrayList<>();
 
 	/**
 	 * Creates a new validator for the given filter.

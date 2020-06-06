@@ -12,7 +12,6 @@ import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.nio.ShortBuffer;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.BaseSignalSampleSource;
 

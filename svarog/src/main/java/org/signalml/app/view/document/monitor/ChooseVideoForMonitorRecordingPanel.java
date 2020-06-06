@@ -1,13 +1,10 @@
 package org.signalml.app.view.document.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -20,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.PreviewVideoDialog;
 import org.signalml.app.video.VideoSourceSpecification;
 import org.signalml.app.video.VideoStreamManager;

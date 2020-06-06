@@ -4,11 +4,15 @@
 
 package org.signalml.app.config.workspace;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.Annotations;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.IOException;
 import java.util.LinkedList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
+import org.signalml.app.config.AbstractXMLConfiguration;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
@@ -20,14 +24,6 @@ import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import org.signalml.app.config.AbstractXMLConfiguration;
-import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 /** ApplicationWorkspace
  *
  *
@@ -38,7 +34,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 
 	protected static final Logger logger = Logger.getLogger(ApplicationWorkspace.class);
 
-	private LinkedList<WorkspaceDocument> documents = new LinkedList<WorkspaceDocument>();
+	private LinkedList<WorkspaceDocument> documents = new LinkedList<>();
 	private WorkspaceDocument activeDocument;
 
 	/**

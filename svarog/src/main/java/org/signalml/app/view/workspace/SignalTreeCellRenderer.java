@@ -1,12 +1,10 @@
 package org.signalml.app.view.workspace;
 
 import java.awt.Component;
-
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
-
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.signal.SignalPageTreeNode;
 import org.signalml.app.util.IconUtils;

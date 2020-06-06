@@ -4,10 +4,9 @@
 
 package org.signalml.app.method;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.managers.AbstractPresetManager;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MethodPresetManager
  *

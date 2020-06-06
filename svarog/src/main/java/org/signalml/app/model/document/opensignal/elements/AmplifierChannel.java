@@ -1,10 +1,9 @@
 package org.signalml.app.model.document.opensignal.elements;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * An amplifier channel description for the select ChannelsSelectTable in the

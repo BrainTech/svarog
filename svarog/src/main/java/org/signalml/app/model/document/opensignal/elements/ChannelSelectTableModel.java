@@ -4,15 +4,12 @@
 
 package org.signalml.app.model.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The table model for the ChannelSelectTable.
@@ -24,7 +21,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	/**
 	 * The channels to be shown in this table.
 	 */
-	private List<AmplifierChannel> channels = new ArrayList<AmplifierChannel>();
+	private List<AmplifierChannel> channels = new ArrayList<>();
 
 	/**
 	 * The index of the column which shows whether a channel is selected

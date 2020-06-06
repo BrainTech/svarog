@@ -1,15 +1,11 @@
 package org.signalml.app.view.signal.popup;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,8 +18,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.models.LogarithmicBoundedRangeModel;
 import org.signalml.app.view.common.components.panels.TitledSliderPanel;
 import org.signalml.app.view.signal.SignalPlot;

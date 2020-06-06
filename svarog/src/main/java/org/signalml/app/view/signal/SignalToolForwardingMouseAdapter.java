@@ -7,9 +7,7 @@ package org.signalml.app.view.signal;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
-
 import javax.swing.SwingUtilities;
-
 import org.signalml.plugin.export.signal.SignalTool;
 
 /** SignalToolForwardingMouseAdapter

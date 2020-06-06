@@ -2,7 +2,6 @@ package org.signalml.domain.signal.filter.fft;
 
 import java.util.Arrays;
 import java.util.Iterator;
-
 import org.apache.commons.math.complex.Complex;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;

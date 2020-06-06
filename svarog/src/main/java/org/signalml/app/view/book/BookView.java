@@ -4,9 +4,6 @@
 
 package org.signalml.app.view.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -31,7 +28,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -50,7 +46,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.book.BookFilterSwitchAction;
 import org.signalml.app.action.book.EditBookFilterAction;
@@ -71,6 +66,7 @@ import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.book.filter.BookFilterDialog;
 import org.signalml.app.view.book.popup.BookPlotOptionsPopupDialog;
 import org.signalml.app.view.book.popup.BookZoomPopupDialog;
@@ -151,7 +147,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 	private SelectAtomBookTool selectAtomTool;
 	private ZoomBookTool zoomBookTool;
 
-	private Map<ButtonModel,BookTool> toolMap = new HashMap<ButtonModel,BookTool>();
+	private Map<ButtonModel,BookTool> toolMap = new HashMap<>();
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private ViewerFileChooser fileChooser;

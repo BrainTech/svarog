@@ -11,7 +11,6 @@ import java.io.OutputStreamWriter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
-
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -21,9 +20,8 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.signalml.domain.montage.system.EegSystemName;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.signal.raw.RawSignalDescriptor.SourceSignalType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -165,12 +163,10 @@ public class RawSignalDescriptorWriter {
 
 			Element channelLabelsEl = document.createElement(RawSignalDocumentBuilder.CHANNEL_LABELS);
 
-			for (int i=0; i<channelLabels.length; i++) {
-
+			for (String channelLabel : channelLabels) {
 				element = document.createElement(RawSignalDocumentBuilder.LABEL);
-				element.setTextContent(channelLabels[i]);
+				element.setTextContent(channelLabel);
 				channelLabelsEl.appendChild(element);
-
 			}
 
 			root.appendChild(channelLabelsEl);

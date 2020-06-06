@@ -27,13 +27,12 @@ import java.util.zip.Checksum;
 import java.util.zip.DataFormatException;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Util provides various String to Date conversions, signal checksums, file and String MD5 sums.
@@ -320,7 +319,7 @@ public abstract class Util {
 	 */
 	public static HashMap<String,String> invertStringMap(Map<String,String> input) {
 
-		HashMap<String,String> output = new HashMap<String, String>(input.size());
+		HashMap<String,String> output = new HashMap<>(input.size());
 
 		Set<Map.Entry<String,String>> entries = input.entrySet();
 		for (Map.Entry<String, String> entry : entries) {
@@ -486,7 +485,7 @@ public abstract class Util {
 	 */
 	public static String[] splitTextIntoLines(String string, int limit) {
 
-		LinkedList<String> list = new LinkedList<String>();
+		LinkedList<String> list = new LinkedList<>();
 
 		int firstLineChar = 0;
 		int lastSpaceChar = -1;

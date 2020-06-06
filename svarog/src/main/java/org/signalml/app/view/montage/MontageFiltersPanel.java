@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -15,7 +13,6 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -31,7 +28,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
 import org.signalml.app.document.signal.SignalDocument;
@@ -39,6 +35,7 @@ import org.signalml.app.model.montage.MontageFilterEnableTableModel;
 import org.signalml.app.model.montage.MontageFiltersTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;

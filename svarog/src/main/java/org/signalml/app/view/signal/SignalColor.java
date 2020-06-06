@@ -5,7 +5,6 @@
 package org.signalml.app.view.signal;
 
 import java.awt.Color;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /** SignalColor

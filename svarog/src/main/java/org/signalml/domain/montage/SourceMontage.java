@@ -4,19 +4,17 @@
 
 package org.signalml.domain.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
@@ -25,8 +23,6 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a source montage.
@@ -57,7 +53,7 @@ public class SourceMontage {
 	/**
 	 * a list of SourceChannels in this SourceMontage
 	 */
-	protected ArrayList<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();;
+	protected ArrayList<SourceChannel> sourceChannels = new ArrayList<>();;
 
 	/**
 	 * {@link SignalTypeConfigurer configurer} for a signal type
@@ -167,7 +163,7 @@ public class SourceMontage {
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
 
-		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
+		sourceChannels = new ArrayList<>(montage.sourceChannels.size());
 
 		for (SourceChannel channel : montage.sourceChannels) {
 			SourceChannel newChannel = new SourceChannel(channel);
@@ -328,7 +324,7 @@ public class SourceMontage {
 	 * @return list of source channels with a given function
 	 */
 	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(IChannelFunction function) {
-		LinkedList<SourceChannel> list = new LinkedList<SourceChannel>();
+		LinkedList<SourceChannel> list = new LinkedList<>();
 
 		for (SourceChannel channel: sourceChannels) {
 			if (channel.getFunction() == function)
@@ -347,7 +343,7 @@ public class SourceMontage {
 	 */
 	protected HashMap<String,SourceChannel> getSourceChannelsByLabel() {
 		if (sourceChannelsByLabel == null) {
-			sourceChannelsByLabel = new HashMap<String, SourceChannel>();
+			sourceChannelsByLabel = new HashMap<>();
 			for (SourceChannel channel : sourceChannels) {
 				sourceChannelsByLabel.put(channel.getLabel().toUpperCase(), channel);
 			}

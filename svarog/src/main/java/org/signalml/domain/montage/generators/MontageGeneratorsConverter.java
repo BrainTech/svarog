@@ -7,9 +7,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.signalml.domain.montage.system.MontageGenerators;
 
 /**
  * A {@link Converter} for unmarshalling the list of {@link IMontageGenerator
@@ -57,7 +55,7 @@ public class MontageGeneratorsConverter implements Converter {
 	@Override
 	public Object unmarshal(HierarchicalStreamReader reader, UnmarshallingContext uc) {
 
-		List<IMontageGenerator> montageGenerators = new ArrayList<IMontageGenerator>();
+		List<IMontageGenerator> montageGenerators = new ArrayList<>();
 
 		addDefaultMontageGenerators(montageGenerators);
 
@@ -155,7 +153,7 @@ public class MontageGeneratorsConverter implements Converter {
 	 */
 	private String[] unmarshallVectorOfChannels(HierarchicalStreamReader reader) {
 
-		List<String> channels = new ArrayList<String>();
+		List<String> channels = new ArrayList<>();
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
 			if ("channel".equals(reader.getNodeName())) {
@@ -175,7 +173,7 @@ public class MontageGeneratorsConverter implements Converter {
 	 * @return the pairs of channel labels.
 	 */
 	private String[][] unmarshallPairsOfChannels(HierarchicalStreamReader reader) {
-		List<String[]> channels = new ArrayList<String[]>();
+		List<String[]> channels = new ArrayList<>();
 		while (reader.hasMoreChildren()) {
 			reader.moveDown();
 			if ("pair".equals(reader.getNodeName())) {

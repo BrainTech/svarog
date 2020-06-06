@@ -2,7 +2,6 @@ package org.signalml.app.method.ep.helpers.minmax;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.method.ep.model.minmax.ChannelStatistics;
 import org.signalml.method.ep.EvokedPotentialResult;
 
@@ -32,7 +31,7 @@ public class ChannelStatisticsCalculator {
 	}
 
 	protected void calculateStatistics() {
-		statistics = new ArrayList<ChannelStatistics>();
+		statistics = new ArrayList<>();
 		double[][] samples = result.getAverageSamples().get(tagGroupNumber);
 
 		for (int channelNumber = 0; channelNumber < result.getAverageSamples().get(tagGroupNumber).length; channelNumber++) {

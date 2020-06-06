@@ -3,11 +3,8 @@
  */
 package org.signalml.app.view.preferences;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -22,9 +19,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.action.signal.RemoveCodecAction;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.codec.SignalMLCodec;
 
 /**

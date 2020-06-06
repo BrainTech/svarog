@@ -3,9 +3,7 @@
  */
 package org.signalml.plugin.export.signal;
 
-import java.io.InvalidClassException;
 import java.util.List;
-
 import org.signalml.plugin.export.view.ExportedSignalView;
 
 

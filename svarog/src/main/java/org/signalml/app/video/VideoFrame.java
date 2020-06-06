@@ -3,10 +3,10 @@ package org.signalml.app.video;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JFrame;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.components.SvarogMediaComponent;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Base class for video display window in Svarog.

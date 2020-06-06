@@ -1,12 +1,9 @@
 package org.signalml.app.view.tag.synchronize;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.GridLayout;
-
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.common.components.spinners.FloatSpinner;
 

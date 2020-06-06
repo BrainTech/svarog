@@ -19,7 +19,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.view.common.components.ProgressState;
 
 /**
@@ -246,7 +245,7 @@ class ProgressStateList extends JList {
 			return;
 		}
 		Dimension size = getSize();
-		ArrayList<ProgressState> list = new ArrayList<ProgressState>();
+		ArrayList<ProgressState> list = new ArrayList<>();
 		for (int i = 0; i < getModel().getSize(); i++) {
 			list.add((ProgressState) getModel().getElementAt(i));
 		}

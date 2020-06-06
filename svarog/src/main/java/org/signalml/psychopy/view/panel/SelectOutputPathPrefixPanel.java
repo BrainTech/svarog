@@ -1,17 +1,13 @@
 package org.signalml.psychopy.view.panel;
 
-import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.psychopy.PsychopyExperiment;
-
+import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import org.signalml.app.model.components.validation.ValidationErrors;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import java.io.File;
-
 import static org.signalml.psychopy.FilePathValidator.cutXmlFileExtension;
 import static org.signalml.psychopy.FilePathValidator.isDirectory;
+import org.signalml.psychopy.PsychopyExperiment;
 
 public class SelectOutputPathPrefixPanel extends SelectFilePanel {
 

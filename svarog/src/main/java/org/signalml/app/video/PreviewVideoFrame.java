@@ -1,10 +1,10 @@
 package org.signalml.app.video;
 
-import org.signalml.app.video.components.OnlineMediaComponent;
 import javax.swing.JFrame;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.video.components.OnlineMediaComponent;
 import org.signalml.app.video.components.OnlineMediaPlayerPanel;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Simple video frame for displaying only a single RTSP stream.

@@ -3,10 +3,6 @@
  */
 package org.signalml.app.view.signal;
 
-import static java.lang.String.format;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -24,11 +20,11 @@ import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
+import static java.lang.String.format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
-
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -39,7 +35,6 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.MonitorSignalDocument;
@@ -47,6 +42,8 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.ChannelPlotOptionsModel;
 import org.signalml.app.model.components.ChannelsPlotOptionsModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.components.models.LogarithmicBoundedRangeModel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagAttributesRenderer;
@@ -193,7 +190,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private Point tempViewportLocation;
 	private Dimension tempViewportSize;
 	private Dimension tempPlotSize;
-	private ArrayList<SortedSet<Tag>> tempTagsToDrawList = new ArrayList<SortedSet<Tag>>();
+	private ArrayList<SortedSet<Tag>> tempTagsToDrawList = new ArrayList<>();
 
 	private TagPaintMode tagPaintMode;
 	private SignalColor signalColor;
@@ -621,12 +618,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			attributesRendererComponent.paint(g.create(tagBounds.x, tagBounds.y, 400, tagBounds.height));
 		} else if (type == SignalSelectionType.CHANNEL) {
 			Rectangle[] tagBoundsArr = getPixelChannelTagBounds(tag, tag.isMarker(), tempTagCnt, tagNumber, tempComparing);
-			for (int i = 0; i < tagBoundsArr.length; i++) {
-				if (tagBoundsArr[i].intersects(g.getClipBounds())) {
-					rendererComponent.setBounds(tagBoundsArr[i]);
-					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
-					attributesRendererComponent.setBounds(tagBoundsArr[i]);
-					attributesRendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, 400, tagBoundsArr[i].height));
+			for (Rectangle tagBounds : tagBoundsArr) {
+				if (tagBounds.intersects(g.getClipBounds())) {
+					rendererComponent.setBounds(tagBounds);
+					rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));
+					attributesRendererComponent.setBounds(tagBounds);
+					attributesRendererComponent.paint(g.create(tagBounds.x, tagBounds.y, 400, tagBounds.height));
 				}
 			}
 		} else {
@@ -655,10 +652,10 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));
 		} else if (type == SignalSelectionType.CHANNEL) {
 			Rectangle[] tagBoundsArr = getPixelChannelTagBounds(tagDifference, false, tempTagCnt, 2, true);
-			for (int i = 0; i < tagBoundsArr.length; i++) {
-				if (tagBoundsArr[i].intersects(g.getClipBounds())) {
-					rendererComponent.setBounds(tagBoundsArr[i]);
-					rendererComponent.paint(g.create(tagBoundsArr[i].x, tagBoundsArr[i].y, tagBoundsArr[i].width, tagBoundsArr[i].height));
+			for (Rectangle tagBounds : tagBoundsArr) {
+				if (tagBounds.intersects(g.getClipBounds())) {
+					rendererComponent.setBounds(tagBounds);
+					rendererComponent.paint(g.create(tagBounds.x, tagBounds.y, tagBounds.width, tagBounds.height));
 				}
 			}
 		} else {
@@ -1690,8 +1687,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			return getPixelBlockTagBounds(pTag.tag, pTag.tag.isMarker(), document.getTagDocuments().size(), pTag.tagPositionIndex, viewRect.getLocation(), viewRect.getSize(), getSize(), view.isComparingTags(), tempBounds).intersects(viewRect);
 		} else if (type.isChannel()) {
 			Rectangle[] bounds = getPixelChannelTagBounds(pTag.tag, pTag.tag.isMarker(), document.getTagDocuments().size(), pTag.tagPositionIndex, view.isComparingTags());
-			for (int i = 0; i < bounds.length; i++) {
-				if (viewRect.intersects(bounds[i])) {
+			for (Rectangle bound : bounds) {
+				if (viewRect.intersects(bound)) {
 					return true;
 				}
 			}
@@ -1856,9 +1853,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		} else if (type == SignalSelectionType.CHANNEL) {
 			Rectangle[] tagBounds;
 			tagBounds = getPixelChannelTagBounds(tag.tag, tag.tag.isMarker(), tagCnt, tag.tagPositionIndex, view.isComparingTags());
-			for (int i = 0; i < tagBounds.length; i++) {
-				tagBounds[i].grow(3, 3);
-				repaint(tagBounds[i]);
+			for (Rectangle tagBound : tagBounds) {
+				tagBound.grow(3, 3);
+				repaint(tagBound);
 			}
 		}
 	}
@@ -2024,7 +2021,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int tagCnt = tagDocuments.size();
 		if (list == null) {
-			list = new ArrayList<PositionedTag>();
+			list = new ArrayList<>();
 		} else {
 			list.clear();
 		}
@@ -2132,7 +2129,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (tempTagList != null) {
 			tempTagList.clear();
 		} else {
-			tempTagList = new ArrayList<PositionedTag>();
+			tempTagList = new ArrayList<>();
 		}
 		tempTagList.add(tag);
 		return getTagListToolTip(title, tempTagList);

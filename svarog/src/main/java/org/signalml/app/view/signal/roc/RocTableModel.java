@@ -4,10 +4,8 @@
 
 package org.signalml.app.view.signal.roc;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import javax.swing.table.AbstractTableModel;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.roc.RocData;
 
 /** RocTableModel

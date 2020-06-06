@@ -1,21 +1,18 @@
 package org.signalml.app.action.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.SwingWorker.StateValue;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.tag.synchronize.SynchronizeTagsWithTriggerDialog;
@@ -104,7 +101,7 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 
 	protected List<String> getChannelLabels(MultichannelSampleSource sampleSource) {
 
-		List<String> channelLabels = new ArrayList<String>();
+		List<String> channelLabels = new ArrayList<>();
 
 		for (int i = 0; i < sampleSource.getChannelCount(); i++) {
 			channelLabels.add(sampleSource.getLabel(i));

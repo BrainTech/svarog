@@ -3,15 +3,11 @@
  */
 package org.signalml.math.iirdesigner;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.math.ArrayOperations;
-import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterFrequencyResponse;
-import org.signalml.math.iirdesigner.FilterFrequencyResponseCalculator;
-import org.signalml.math.iirdesigner.FilterResponseCalculator;
-
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 /**
  * This method performs unit tests on {@link FilterResponseCalculator}.

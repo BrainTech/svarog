@@ -6,9 +6,7 @@ package org.signalml.app.worker.document;
 
 import java.io.File;
 import java.util.List;
-
 import javax.swing.SwingWorker;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.domain.book.DefaultBookBuilder;

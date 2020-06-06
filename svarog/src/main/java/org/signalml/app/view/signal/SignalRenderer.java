@@ -19,7 +19,7 @@ public class SignalRenderer {
 	private int pointCount = 0;
 	private Point.Double[] points;
 	private final GeneralPath shape = new GeneralPath(GeneralPath.WIND_EVEN_ODD, 2048);
-	private HashMap<Integer, Double> dcOffsets = new HashMap<Integer, Double>();
+	private HashMap<Integer, Double> dcOffsets = new HashMap<>();
 	private boolean online = false;
 	
 	public void setOnline(boolean value)

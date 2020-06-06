@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.common.dialogs;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -17,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,15 +25,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.util.SvarogConstants;
 import org.springframework.validation.Errors;
 
 /**

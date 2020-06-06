@@ -5,11 +5,9 @@
 package org.signalml.app.task;
 
 import java.util.List;
-
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.task.Task;

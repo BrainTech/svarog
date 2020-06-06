@@ -2,9 +2,7 @@ package org.signalml.app.method.ep.view;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
-
 import javax.swing.JPanel;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.view.tags.ArtifactTagsSelectionPanel;
 import org.signalml.app.view.common.components.panels.AbstractPanel;

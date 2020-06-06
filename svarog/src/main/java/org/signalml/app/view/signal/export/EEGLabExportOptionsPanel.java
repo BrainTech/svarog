@@ -1,15 +1,12 @@
 package org.signalml.app.view.signal.export;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 
 /**
@@ -49,7 +46,7 @@ public class EEGLabExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Export tags")), getTagExportField()));
 		components.add(new ComponentWithLabel(new JLabel(""), new JPanel()));

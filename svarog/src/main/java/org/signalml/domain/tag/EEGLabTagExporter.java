@@ -4,12 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.exception.ResolvableException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class allows to export a {@link StyledTagSet StyledTagSet} to
@@ -52,9 +51,7 @@ public class EEGLabTagExporter {
 		str.append("#"+_("Align event latencies to data events: NaN")+"\n");
 		str.append("#"+_("Auto adjust new events sampling rate: unchecked")+"\n");
 		str.append("#type\tlatency\tduration\ttag_type\tchannel\n");
-		for (Iterator<Tag> it=tagSet.getTags().iterator(); it.hasNext();)
-		{
-			Tag tag = it.next();
+		for (Tag tag : tagSet.getTags()) {
 			str.append(tag.getStyle().getName()+"\t");
 			str.append(tag.getPosition());
 			str.append("\t");

@@ -3,11 +3,9 @@
  */
 package org.signalml.method.bookaverage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.LinkedHashSet;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.WignerMapProvider;
@@ -17,7 +15,6 @@ import org.signalml.method.MethodExecutionTracker;
 import org.signalml.method.TrackableMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.BaseMethodData;
-
 import org.springframework.validation.Errors;
 
 /**

@@ -5,10 +5,9 @@
 package org.signalml.math;
 
 import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 import org.signalml.BaseTestCase;
 import static org.signalml.SignalMLAssert.assertArrayEquals;
-
-import org.junit.Test;
 
 /**
  * This method performs unit tests on {@link Convolution}.

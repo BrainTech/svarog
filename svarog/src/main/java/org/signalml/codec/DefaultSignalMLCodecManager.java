@@ -4,21 +4,18 @@
 
 package org.signalml.codec;
 
+import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.util.Util;
-
-import com.thoughtworks.xstream.XStream;
 
 
 /** DefaultSignalMLCodecManager
@@ -30,9 +27,9 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 
 	protected static final Logger logger = Logger.getLogger(DefaultSignalMLCodecManager.class);
 
-	private Vector<SignalMLCodec> codecs = new Vector<SignalMLCodec>();
-	private Map<String,SignalMLCodec> codecsByFormatName = new HashMap<String,SignalMLCodec>();
-	private Map<String,SignalMLCodec> codecsByUID = new HashMap<String,SignalMLCodec>();
+	private Vector<SignalMLCodec> codecs = new Vector<>();
+	private Map<String,SignalMLCodec> codecsByFormatName = new HashMap<>();
+	private Map<String,SignalMLCodec> codecsByUID = new HashMap<>();
 
 	private File profileDir;
 	private XStream streamer;
@@ -178,9 +175,9 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 			clear();
 			SignalMLCodecDescriptor[] descr = config.getCodecs();
 			SignalMLCodec codec;
-			for (int i=0; i<descr.length; i++) {
-				codec = descr[i].getCodec();
-				codec.setFormatName(descr[i].getFormatName());
+			for (SignalMLCodecDescriptor descriptor : descr) {
+				codec = descriptor.getCodec();
+				codec.setFormatName(descriptor.getFormatName());
 				registerSignalMLCodecInternal(codec);
 			}
 

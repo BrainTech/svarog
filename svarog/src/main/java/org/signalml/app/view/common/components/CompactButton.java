@@ -5,7 +5,6 @@
 package org.signalml.app.view.common.components;
 
 import java.awt.Insets;
-
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JButton;

@@ -13,18 +13,17 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
 import javax.swing.KeyStroke;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.signalml.domain.tag.StyledTagSet;
-import static org.junit.Assert.*;
 import org.signalml.BaseTestCase;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
-import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 
 /** StyledTagSetConverterTest
  *

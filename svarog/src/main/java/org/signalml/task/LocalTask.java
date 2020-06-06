@@ -6,9 +6,7 @@ package org.signalml.task;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.UUID;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.InputDataException;

@@ -4,13 +4,13 @@
 
 package org.signalml.app.method;
 
+import com.thoughtworks.xstream.XStream;
 import java.awt.Window;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -20,8 +20,6 @@ import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.Method;
 
-import com.thoughtworks.xstream.XStream;
-
 /** ApplicationMethodManager
  *
  *
@@ -29,9 +27,9 @@ import com.thoughtworks.xstream.XStream;
  */
 public class ApplicationMethodManager extends DefaultMethodManager {
 
-	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<Method,ApplicationMethodDescriptor>();
+	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<>();
 
-	private List<UnavailableMethodDescriptor> unavailableMethods = new LinkedList<UnavailableMethodDescriptor>();
+	private List<UnavailableMethodDescriptor> unavailableMethods = new LinkedList<>();
 	private File profileDir;
 	private XStream streamer;
 	private ViewerFileChooser fileChooser;

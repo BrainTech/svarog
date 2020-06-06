@@ -5,7 +5,6 @@
 package org.signalml.app.view.montage.visualreference;
 
 import java.util.EventObject;
-
 import org.signalml.domain.montage.MontageEvent;
 import org.signalml.domain.montage.SourceMontageEvent;
 

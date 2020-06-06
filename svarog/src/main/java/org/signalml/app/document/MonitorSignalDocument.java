@@ -1,7 +1,5 @@
 package org.signalml.app.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -10,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.document.monitor.StartVideoPreviewAction;
 import org.signalml.app.document.signal.AbstractSignal;
@@ -18,6 +15,7 @@ import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.PreviewVideoFrame;
 import org.signalml.app.video.VideoStreamManager;
 import org.signalml.app.video.VideoStreamSpecification;
@@ -156,8 +154,7 @@ public class MonitorSignalDocument extends AbstractSignal implements PsychopySta
 	public void setDocumentView(DocumentView documentView) {
 		super.setDocumentView(documentView);
 		if (documentView != null) {
-			for (Iterator<SignalPlot> i = ((SignalView) documentView).getPlots().iterator(); i.hasNext();) {
-				SignalPlot signalPlot = i.next();
+			for (SignalPlot signalPlot : ((SignalView) documentView).getPlots()) {
 				SignalProcessingChain signalChain = SignalProcessingChain.createNotBufferedFilteredChain(sampleSource);
 				try {
 					signalChain.applyMontageDefinition(this.getMontage());

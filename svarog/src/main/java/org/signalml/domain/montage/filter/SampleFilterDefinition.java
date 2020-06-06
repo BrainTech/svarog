@@ -6,9 +6,6 @@ package org.signalml.domain.montage.filter;
 
 import java.io.Serializable;
 import org.signalml.app.config.preset.Preset;
-import org.signalml.domain.montage.MontageSampleFilter;
-
-import org.springframework.context.MessageSourceResolvable;
 
 /**
  * An abstract class representing definition and specification

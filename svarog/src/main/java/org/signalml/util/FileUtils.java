@@ -1,16 +1,14 @@
 package org.signalml.util;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.nio.channels.FileChannel;
-import java.io.BufferedInputStream;
-
 import java.io.IOException;
 import java.io.InputStream;
-
+import java.io.OutputStream;
+import java.nio.channels.FileChannel;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 

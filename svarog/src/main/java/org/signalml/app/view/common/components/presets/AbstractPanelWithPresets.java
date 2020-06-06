@@ -1,7 +1,6 @@
 package org.signalml.app.view.common.components.presets;
 
 import javax.swing.JPanel;
-
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.workspace.ViewerFileChooser;

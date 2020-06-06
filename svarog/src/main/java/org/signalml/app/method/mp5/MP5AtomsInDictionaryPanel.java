@@ -1,20 +1,16 @@
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.GridLayout;
-
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.mp5.AtomsInDictionary;
 import org.signalml.method.mp5.MP5AtomType;
 import org.signalml.method.mp5.MP5Parameters;
-
-import org.springframework.validation.Errors;
 
 /**
  *
@@ -73,9 +69,11 @@ public class MP5AtomsInDictionaryPanel extends JPanel {
 	}
 
 	public boolean isAtLeastOneAtomTypeSelected() {
-		for (int i = 0; i < atomTypeCheckBoxes.length; i++)
-			if (atomTypeCheckBoxes[i].isSelected())
+		for (JCheckBox atomTypeCheckBox : atomTypeCheckBoxes) {
+			if (atomTypeCheckBox.isSelected()) {
 				return true;
+			}
+		}
 		return false;
 	}
 

@@ -4,19 +4,16 @@
 
 package org.signalml.app.model.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
-
 import javax.swing.table.AbstractTableModel;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.SourceMontageEvent;
 import org.signalml.domain.montage.SourceMontageListener;
+import org.signalml.domain.montage.system.IChannelFunction;
 
 /** SourceMontageTableModel
  *

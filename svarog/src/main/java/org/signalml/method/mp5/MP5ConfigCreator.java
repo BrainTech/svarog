@@ -18,7 +18,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 
@@ -102,8 +101,8 @@ public class MP5ConfigCreator {
 		if (bookComment != null && !bookComment.isEmpty()) {
 
 			String[] lines = Util.splitTextIntoLines(bookComment, 70);
-			for (int i=0; i<lines.length; i++) {
-				formatter.format("##%s%n", lines[i]);
+			for (String line : lines) {
+				formatter.format("##%s%n", line);
 			}
 
 			formatter.format("%n");
@@ -177,7 +176,7 @@ public class MP5ConfigCreator {
 
 	private HashSet<String> createRuntimeParameters() {
 
-		HashSet<String> set = new HashSet<String>();
+		HashSet<String> set = new HashSet<>();
 
 		set.add(NAME_OF_DATA_FILE);
 		set.add(POINTS_PER_MICROVOLT);

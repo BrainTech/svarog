@@ -3,20 +3,16 @@
  */
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.signal.signalselection.SignalSelectionPanel;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelection;
-
 import org.springframework.validation.Errors;
 
 /**

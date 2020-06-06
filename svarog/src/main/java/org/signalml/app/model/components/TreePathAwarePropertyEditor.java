@@ -5,7 +5,6 @@
 package org.signalml.app.model.components;
 
 import java.beans.PropertyEditor;
-
 import javax.swing.tree.TreePath;
 
 /** TreePathAwarePropertyEditor

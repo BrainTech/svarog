@@ -4,25 +4,22 @@
 
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.border.EmptyBorder;
-
 import org.signalml.app.method.ep.action.ExportAllEPChartsToFileAction;
 import org.signalml.app.method.ep.action.ExportAllEPSamplesToFloatFileAction;
 import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.view.workspace.ViewerPropertySheet;

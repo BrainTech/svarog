@@ -1,11 +1,9 @@
 package org.signalml.app;
 
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.domain.signal.space.AbstractTagSegmentedTest;
@@ -35,7 +33,7 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 
 		data.getParameters().setFilteringEnabled(false);
 
-		List<TagStyleGroup> group = new ArrayList<TagStyleGroup>();
+		List<TagStyleGroup> group = new ArrayList<>();
 		group.add(new TagStyleGroup(tagStyles[0].getName()));
 		data.getParameters().setAveragedTagStyles(group);
 	}
@@ -144,7 +142,7 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 
 	public void performTest() throws Exception {
 
-		List<Double> tagPositions = new ArrayList<Double>();
+		List<Double> tagPositions = new ArrayList<>();
 		for (Tag tag: data.getTagDocument().getTagSet().getTags()) {
 			if ((tag.getStyle() == averagedTagStyle || tag.getStyle() == averagedTagStyle2)
 					&& tag.getPosition() >= 0.0 &&
@@ -170,8 +168,9 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 			for (int i = 0; i < expectedAveragedSamples.length; i++) {
 
 				double sum = 0.0;
-				for (int j = 0; j < samplesTag.length; j++)
-					sum += samplesTag[j][i];
+				for (double[] x : samplesTag) {
+					sum += x[i];
+				}
 				if (samplesTag.length > 0)
 					expectedAveragedSamples[i] = sum / samplesTag.length;
 			}

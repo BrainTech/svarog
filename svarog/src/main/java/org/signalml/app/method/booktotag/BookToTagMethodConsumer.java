@@ -7,7 +7,6 @@ package org.signalml.app.method.booktotag;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ApplicationMethodManager;

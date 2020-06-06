@@ -4,13 +4,8 @@
 
 package org.signalml.app.view.workspace;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._H;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.thoughtworks.xstream.XStream;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -19,20 +14,15 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
-
 import javax.swing.Action;
-import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
-
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.RunMethodAction;
@@ -53,8 +43,8 @@ import org.signalml.app.action.signal.EditPlotOptionsAction;
 import org.signalml.app.action.signal.EditSignalFiltersAction;
 import org.signalml.app.action.signal.EditSignalParametersAction;
 import org.signalml.app.action.signal.ExportSignalAction;
-import org.signalml.app.action.signal.RecordingToolbarSwitchAction;
 import org.signalml.app.action.signal.PreciseSelectionAction;
+import org.signalml.app.action.signal.RecordingToolbarSwitchAction;
 import org.signalml.app.action.signal.ScaleToolbarSwitchAction;
 import org.signalml.app.action.signal.SettingsToolbarSwitchAction;
 import org.signalml.app.action.signal.SignalFilterSwitchAction;
@@ -70,7 +60,9 @@ import org.signalml.app.action.tag.OpenTagAction;
 import org.signalml.app.action.tag.SaveTagAction;
 import org.signalml.app.action.tag.SaveTagAsAction;
 import org.signalml.app.action.tag.SynchronizeTagsWithTriggerAction;
+import org.signalml.app.action.video.AddCameraAction;
 import org.signalml.app.action.workspace.EditPreferencesAction;
+import org.signalml.app.action.workspace.EditToolsAction;
 import org.signalml.app.action.workspace.IterateMethodAction;
 import org.signalml.app.action.workspace.ShowBottomPanelAction;
 import org.signalml.app.action.workspace.ShowLeftPanelAction;
@@ -83,8 +75,6 @@ import org.signalml.app.action.workspace.tasks.RemoveAllFinishedTasksAction;
 import org.signalml.app.action.workspace.tasks.RemoveAllTasksAction;
 import org.signalml.app.action.workspace.tasks.ResumeAllTasksAction;
 import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
-import org.signalml.app.action.video.AddCameraAction;
-import org.signalml.app.action.workspace.EditToolsAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.document.BookDocument;
@@ -107,6 +97,9 @@ import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._H;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.View;
 import org.signalml.app.view.book.AtomTableDialog;
@@ -1696,7 +1689,7 @@ public class ViewerElementManager {
 	public ArrayList<AbstractSignalMLAction> getIterateMethodActions() {
 		if (iterateMethodActions == null) {
 			Method[] methods = getMethodManager().getMethods();
-			iterateMethodActions = new ArrayList<AbstractSignalMLAction>(methods.length);
+			iterateMethodActions = new ArrayList<>(methods.length);
 			IterateMethodAction iterateMethodAction;
 			for (Method method : methods) {
 

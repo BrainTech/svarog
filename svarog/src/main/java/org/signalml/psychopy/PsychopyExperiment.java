@@ -1,14 +1,20 @@
 package org.signalml.psychopy;
 
+import java.io.File;
+import javax.swing.*;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import org.signalml.app.model.document.OpenTagDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
+import static org.signalml.app.worker.monitor.messages.MessageType.PSYCHOPY_EXPERIMENT_STARTED;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.signal.raw.RawSignalDescriptorReader;
 import org.signalml.peer.Peer;
@@ -17,14 +23,6 @@ import org.signalml.psychopy.messages.PsychopyExperimentError;
 import org.signalml.psychopy.messages.PsychopyExperimentFinished;
 import org.signalml.psychopy.messages.RunPsychopyExperiment;
 import org.signalml.util.Util;
-
-import javax.swing.*;
-import java.io.File;
-import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.app.model.document.OpenTagDescriptor;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.worker.monitor.messages.MessageType.PSYCHOPY_EXPERIMENT_STARTED;
 
 public class PsychopyExperiment {
 

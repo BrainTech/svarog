@@ -7,11 +7,9 @@ package org.signalml.app.view.montage.dnd;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.util.Arrays;
-
 import javax.swing.JComponent;
 import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.montage.SourceMontageTable;
 

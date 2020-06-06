@@ -1,8 +1,5 @@
 package org.signalml.app.view.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,14 +21,14 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
-
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.book.wignermap.WignerMapImageProvider;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;

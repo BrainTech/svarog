@@ -5,7 +5,6 @@
 package org.signalml.domain.tag;
 
 import java.util.Comparator;
-
 import org.signalml.plugin.export.signal.TagStyle;
 
 /**

@@ -3,22 +3,18 @@
  */
 package org.signalml.app.action.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
 import org.signalml.app.util.XmlFileFilter;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -28,7 +24,6 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecReader;
 import org.signalml.codec.SignalMLCodecSelector;
-import org.signalml.codec.XMLSignalMLCodec;
 import org.signalml.codec.StaticCodec;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

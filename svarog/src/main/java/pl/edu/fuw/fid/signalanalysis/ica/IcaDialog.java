@@ -6,6 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.app.view.signal.signalselection.TimeSpacePanel;
@@ -14,7 +15,6 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SignalSelection;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Setup dialog for ICA method. Allows to select time interval of the signal

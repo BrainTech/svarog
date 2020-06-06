@@ -7,7 +7,6 @@ package org.signalml.app.view.tag;
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
-
 import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStyleMenuItem

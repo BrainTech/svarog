@@ -2,7 +2,6 @@ package org.signalml.app.view.common.components.panels;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout.ParallelGroup;
@@ -36,7 +35,7 @@ public abstract class LabeledComponentsPanel extends AbstractPanel {
 	}
 
 	private List<ComponentWithLabel> getComponentsWithLabelsForColumn(int column) {
-		List<ComponentWithLabel> columnComponents = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> columnComponents = new ArrayList<>();
 
 		for (int rowNumber = 0; rowNumber < getNumberOfRows(); rowNumber++) {
 			int index = column * getNumberOfRows() + rowNumber;
@@ -47,7 +46,7 @@ public abstract class LabeledComponentsPanel extends AbstractPanel {
 	}
 
 	private List<ComponentWithLabel> getComponentsWithLabelsForRow(int rowNumber) {
-		List<ComponentWithLabel> columnComponents = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> columnComponents = new ArrayList<>();
 
 		for (int columnNumber = 0; columnNumber < getNumberOfColumns(); columnNumber++) {
 			int componentIndex = columnNumber * getNumberOfRows() + rowNumber;

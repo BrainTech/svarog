@@ -6,11 +6,9 @@ package org.signalml.domain.signal.samplesource;
 
 import java.util.List;
 import java.util.concurrent.Semaphore;
-
 import javax.swing.event.EventListenerList;
 import org.apache.log4j.Logger;
 import org.signalml.app.worker.monitor.NewSamplesData;
-
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
 import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;

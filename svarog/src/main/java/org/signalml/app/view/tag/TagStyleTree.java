@@ -3,9 +3,7 @@
  */
 package org.signalml.app.view.tag;
 
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-
 import org.signalml.app.model.tag.TagStyleTreeModel;
 import org.signalml.app.view.common.components.cellrenderers.TagTreeCellRenderer;
 import org.signalml.plugin.export.signal.TagStyle;

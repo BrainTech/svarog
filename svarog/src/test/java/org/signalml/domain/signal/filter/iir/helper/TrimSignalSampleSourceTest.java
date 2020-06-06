@@ -1,9 +1,8 @@
 package org.signalml.domain.signal.filter.iir.helper;
 
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 

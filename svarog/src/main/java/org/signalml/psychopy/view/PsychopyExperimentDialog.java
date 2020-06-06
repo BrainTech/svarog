@@ -1,17 +1,16 @@
 package org.signalml.psychopy.view;
 
+import java.awt.*;
+import javax.swing.*;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
+import static org.signalml.psychopy.FilePathValidator.fileWithPrefixExists;
 import org.signalml.psychopy.PsychopyExperiment;
 import org.signalml.psychopy.view.panel.SelectOutputPathPrefixPanel;
 import org.signalml.psychopy.view.panel.SelectPsychopyExperimentPanel;
-
-import javax.swing.*;
-import java.awt.*;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.psychopy.FilePathValidator.fileWithPrefixExists;
 
 public class PsychopyExperimentDialog extends AbstractDialog {
 

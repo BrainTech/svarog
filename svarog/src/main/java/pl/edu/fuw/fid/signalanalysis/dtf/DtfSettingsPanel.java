@@ -7,9 +7,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel for DTF method settings: selected channels

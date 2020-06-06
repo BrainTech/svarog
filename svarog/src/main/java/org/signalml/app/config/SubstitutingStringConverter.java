@@ -4,18 +4,16 @@
 
 package org.signalml.app.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.io.File;
-
-import org.signalml.app.SvarogApplication;
-import org.signalml.util.Util;
-
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import org.signalml.app.SvarogApplication;
+import org.signalml.util.Util;
 
 /** ColorConverter
  *
@@ -27,7 +25,7 @@ public class SubstitutingStringConverter implements Converter {
 	private final Map<String,String> tokens, invTokens;
 
 	public SubstitutingStringConverter() {
-		tokens = new HashMap<String,String>();
+		tokens = new HashMap<>();
 		File dir = SvarogApplication.getSharedInstance().getProfileDir();
 		if (dir != null)
 			tokens.put("profile", dir.getAbsolutePath());

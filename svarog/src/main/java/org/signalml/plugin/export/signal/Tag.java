@@ -3,15 +3,13 @@
  */
 package org.signalml.plugin.export.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.model.components.ChannelPropertyEditor;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributes;
@@ -267,7 +265,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		List<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("style"), "style", Tag.class, "getStyle", null));
 		list.add(new LabelledPropertyDescriptor(_("position"), "position", Tag.class));

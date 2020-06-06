@@ -3,19 +3,15 @@
  */
 package org.signalml.app.view.common.components.filechooser;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.File;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
-
 import org.signalml.app.document.ManagedDocumentType;
 
 /**

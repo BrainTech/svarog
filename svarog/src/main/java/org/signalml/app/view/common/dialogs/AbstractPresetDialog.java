@@ -8,14 +8,12 @@ import java.awt.BorderLayout;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.net.URL;
-
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;

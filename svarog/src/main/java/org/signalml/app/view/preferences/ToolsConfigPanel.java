@@ -4,10 +4,8 @@
 package org.signalml.app.view.preferences;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
@@ -15,8 +13,6 @@ import org.signalml.app.method.mp5.MP5ToolConfigPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5Executor;
-
-import org.springframework.validation.Errors;
 
 /**
  * The panel which allows to configure 1 tool for Svarog:

@@ -46,7 +46,7 @@ public class DescribeComponentsPanel extends JPanel {
 			}
 		}
 
-		channelDisplay = new JList<String>(componentNames);
+		channelDisplay = new JList<>(componentNames);
 		channelDisplay.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		channelDisplay.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override

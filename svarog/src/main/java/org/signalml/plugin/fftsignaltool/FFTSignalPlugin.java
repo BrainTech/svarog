@@ -4,11 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-
 import org.apache.log4j.Logger;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
@@ -65,7 +63,7 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 	 * the temporary files created by this plug-in, which should be removed
 	 * when the application is closed
 	 */
-	private ArrayList<File> temporaryFiles = new ArrayList<File>();
+	private ArrayList<File> temporaryFiles = new ArrayList<>();
 
 	/**
 	 * Registers this plug-in:

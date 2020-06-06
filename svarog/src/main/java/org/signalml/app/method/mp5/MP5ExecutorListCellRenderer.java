@@ -4,15 +4,12 @@
 
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.Font;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.mp5.MP5Executor;
 
 /** MP5ExecutorListCellRenderer

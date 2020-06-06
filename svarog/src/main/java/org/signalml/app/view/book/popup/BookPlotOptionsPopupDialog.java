@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.book.popup;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,7 +13,6 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -29,10 +26,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.components.spinners.IntegerSpinner;
@@ -50,7 +47,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	private BookView bookView;
 
-	private List<Component> buttonPanelComponents = new LinkedList<Component>();
+	private List<Component> buttonPanelComponents = new LinkedList<>();
 
 	private JPanel aspectRatioPanel;
 

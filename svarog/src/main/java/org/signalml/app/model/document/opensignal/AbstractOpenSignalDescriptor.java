@@ -1,11 +1,10 @@
 package org.signalml.app.model.document.opensignal;
 
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
-
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 public abstract class AbstractOpenSignalDescriptor {
 

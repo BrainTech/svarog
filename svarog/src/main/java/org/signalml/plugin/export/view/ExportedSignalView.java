@@ -4,7 +4,6 @@
 package org.signalml.plugin.export.view;
 
 import java.io.InvalidClassException;
-
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;

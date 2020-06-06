@@ -4,12 +4,10 @@
 
 package org.signalml.domain.tag.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.awt.Color;
 import java.io.File;
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.BaseTestCase;

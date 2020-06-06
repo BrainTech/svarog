@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.config.preset.PresetManagerEvent;
@@ -56,8 +55,8 @@ public class PluginPresetManagerFilter implements PresetManager {
 		this.delegate = delegate;
 		this.allowedPresetClassCollection = allowedPresetClassCollection;
 
-		this.filteredPresetToPositionMap = new HashMap<Preset, Integer>(this.delegate.getPresetCount());
-		this.filteredPresets = new ArrayList<Preset>();
+		this.filteredPresetToPositionMap = new HashMap<>(this.delegate.getPresetCount());
+		this.filteredPresets = new ArrayList<>();
 
 		this.needsRefreshFlag = true;
 

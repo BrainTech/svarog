@@ -4,12 +4,10 @@
 
 package org.signalml.domain.book.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
-
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** AtomFilterChainElement
  *

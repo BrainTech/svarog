@@ -7,7 +7,6 @@ package org.signalml.domain.signal.space;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
@@ -178,7 +177,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	}
 
 	protected List<TagStyle> getTagStyles(List<String> styleNames, StyledTagSet tagSet) {
-		List<TagStyle> tagStyles = new ArrayList<TagStyle>();
+		List<TagStyle> tagStyles = new ArrayList<>();
 		for (String styleName: styleNames) {
 			TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, styleName);
 			tagStyles.add(markerStyle);

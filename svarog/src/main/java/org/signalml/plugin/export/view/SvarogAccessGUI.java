@@ -9,7 +9,6 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
 import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;

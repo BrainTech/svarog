@@ -6,7 +6,6 @@ package org.signalml.app.view.common.components.cellrenderers;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;

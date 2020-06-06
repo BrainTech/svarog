@@ -38,7 +38,7 @@ public class FFTDiagnosis extends GenericAmplifierDiagnosis {
 	@Override
 	public HashMap<String, ChannelState> signalState() {
 
-		HashMap<String, ChannelState> channels = new HashMap<String, ChannelState>();
+		HashMap<String, ChannelState> channels = new HashMap<>();
 
 		for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
 			channels.put(getLabel(i), checkChannel(i));

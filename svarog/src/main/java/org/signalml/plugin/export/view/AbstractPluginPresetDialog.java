@@ -1,7 +1,6 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.Window;
-
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 

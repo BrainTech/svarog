@@ -2,7 +2,6 @@ package org.signalml.plugin.io;
 
 import java.io.IOException;
 import java.util.Collection;
-
 import org.signalml.plugin.data.tag.PluginTagGroup;
 import org.signalml.plugin.export.SignalMLException;
 

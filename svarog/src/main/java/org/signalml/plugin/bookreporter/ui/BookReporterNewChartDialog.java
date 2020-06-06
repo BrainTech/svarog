@@ -3,9 +3,9 @@ package org.signalml.plugin.bookreporter.ui;
 import java.awt.Dialog;
 import javax.swing.DefaultComboBoxModel;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.bookreporter.chart.preset.*;
 import org.signalml.plugin.bookreporter.data.BookReporterFASPThreshold;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author piotr@develancer.pl

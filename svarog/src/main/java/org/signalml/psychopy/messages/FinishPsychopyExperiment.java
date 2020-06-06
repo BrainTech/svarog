@@ -1,7 +1,7 @@
 package org.signalml.psychopy.messages;
 
-import org.signalml.app.worker.monitor.messages.*;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.signalml.app.worker.monitor.messages.*;
 
 /**
  *

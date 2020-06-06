@@ -4,9 +4,8 @@
 
 package org.signalml.util;
 
-import javax.swing.KeyStroke;
-
 import com.thoughtworks.xstream.converters.SingleValueConverter;
+import javax.swing.KeyStroke;
 
 /**
  * KeyStrokeConverter provides conversion between KeyStroke and String.

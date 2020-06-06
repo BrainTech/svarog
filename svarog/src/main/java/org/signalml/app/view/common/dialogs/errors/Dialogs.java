@@ -1,15 +1,12 @@
 package org.signalml.app.view.common.dialogs.errors;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Container;
 import java.awt.Window;
-
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
 import org.signalml.app.SvarogApplication;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class Dialogs {
 

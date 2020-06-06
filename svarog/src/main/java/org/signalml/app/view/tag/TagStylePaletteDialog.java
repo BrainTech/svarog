@@ -4,9 +4,6 @@
 
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,7 +14,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -31,13 +27,14 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.TagStylePaletteDescriptor;
 import org.signalml.app.model.tag.TagStyleTreeModel;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.common.dialogs.KeyStrokeCaptureDialog;

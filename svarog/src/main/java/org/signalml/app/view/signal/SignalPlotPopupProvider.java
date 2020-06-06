@@ -6,7 +6,6 @@ package org.signalml.app.view.signal;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
-
 import org.signalml.app.action.signal.PreciseSelectionAction;
 import org.signalml.app.action.tag.EditTagAnnotationAction;
 import org.signalml.app.action.tag.RemoveTagAction;

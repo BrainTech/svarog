@@ -1,26 +1,20 @@
 package org.signalml.app.worker.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.Container;
 import java.net.InetSocketAddress;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactRequest;
 import org.signalml.app.worker.monitor.messages.GetExperimentContactResponse;
 import org.signalml.app.worker.monitor.messages.JoinExperimentRequest;
-import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
-import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalRequest;
 import org.signalml.app.worker.monitor.messages.StartEEGSignalResponse;

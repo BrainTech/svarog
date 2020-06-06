@@ -3,15 +3,12 @@ package org.signalml.app.view.montage;
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.BorderLayout;
 import javax.swing.JTabbedPane;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.app.view.common.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.app.view.montage.visualreference.VisualReferenceEditorPanel;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.generators.IMontageGenerator;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a panel for editing the signal's montage.

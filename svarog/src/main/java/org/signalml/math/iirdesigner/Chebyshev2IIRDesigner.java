@@ -4,9 +4,8 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.apache.commons.math.complex.Complex;
 import java.util.ArrayList;
-
+import org.apache.commons.math.complex.Complex;
 import org.signalml.math.iirdesigner.math.SpecialMath;
 
 /**
@@ -43,8 +42,8 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 		double de = 1.0 / Math.sqrt(Math.pow(10, 0.1 * gstop) - 1);
 		double mu = SpecialMath.asinh(1.0 / de) / filterOrder;
 
-		ArrayList<Complex> zerosList = new ArrayList<Complex>();
-		ArrayList<Complex> polesList = new ArrayList<Complex>();
+		ArrayList<Complex> zerosList = new ArrayList<>();
+		ArrayList<Complex> polesList = new ArrayList<>();
 
 		//calculate poles and zeros
 		for (int i = 1; i < 2*filterOrder; i += 2) {
@@ -74,11 +73,13 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 
 		//calculate gain
 		Complex numerator = new Complex(1.0, 0.0);
-		for (int i = 0; i < poles.length; i++)
-			numerator = numerator.multiply(poles[i].multiply(-1.0));
+		for (Complex pole : poles) {
+			numerator = numerator.multiply(pole.multiply(-1.0));
+		}
 		Complex denominator = new Complex(1.0, 0.0);
-		for (int i = 0; i < zeros.length; i++)
-			denominator = denominator.multiply(zeros[i].multiply(-1.0));
+		for (Complex zero : zeros) {
+			denominator = denominator.multiply(zero.multiply(-1.0));
+		}
 		double gain = (numerator.divide(denominator)).getReal();
 
 		//return zeros, poles & gain

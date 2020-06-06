@@ -2,7 +2,6 @@ package org.signalml.plugin.method.logic;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.signalml.method.MethodExecutionTracker;
 
 public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationProgressPhase>
@@ -20,7 +19,7 @@ public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationPr
 		PluginCheckedThreadGroup threadGroup, MethodExecutionTracker tracker) {
 		this.threadGroup = threadGroup;
 		this.tracker = tracker;
-		this.tickerLimits = new HashMap<IPluginComputationMgrStep, Integer>();
+		this.tickerLimits = new HashMap<>();
 		this.phase = null;
 	}
 

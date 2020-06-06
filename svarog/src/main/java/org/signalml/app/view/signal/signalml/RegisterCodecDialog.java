@@ -4,31 +4,26 @@
 
 package org.signalml.app.view.signal.signalml;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
-
 import javax.swing.JComponent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
-
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.RegisterCodecDescriptor;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.app.view.common.dialogs.AbstractWizardDialog;
-import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.JsignalmlCodec;
+import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.XMLSignalMLCodec;
-import org.signalml.codec.generator.xml.XMLCodecException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-
 import org.springframework.validation.Errors;
 
 

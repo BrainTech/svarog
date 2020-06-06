@@ -4,14 +4,12 @@
 
 package org.signalml.domain.roc;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** RocDataPoint
  *
@@ -104,7 +102,7 @@ public class RocDataPoint implements PropertyProvider {
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("true positive count"), "truePositiveCount", RocDataPoint.class, "getTruePositiveCount", null));
 		list.add(new LabelledPropertyDescriptor(_("false positive count"), "falsePositiveCount", RocDataPoint.class, "getFalsePositiveCount", null));

@@ -4,9 +4,6 @@
 
 package org.signalml.app.document;
 
-import static javax.swing.JOptionPane.showOptionDialog;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.Window;
 import java.io.File;
@@ -18,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showOptionDialog;
 import javax.swing.filechooser.FileFilter;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.selector.ActionFocusManager;
@@ -27,6 +24,7 @@ import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.document.mrud.MRUDRegistry;
 import org.signalml.app.document.signal.AbstractFileSignal;
+import org.signalml.app.document.signal.AsciiSignalDocument;
 import org.signalml.app.document.signal.BaseSignalDocument;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.document.signal.RawSignalMRUDEntry;
@@ -41,6 +39,7 @@ import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.montage.MontagePresetManager;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.book.BookView;
@@ -59,7 +58,6 @@ import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
-import org.signalml.app.document.signal.AsciiSignalDocument;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
@@ -1573,7 +1571,7 @@ public class DocumentFlowIntegrator {
 
 		childDocuments = document.getDependentDocuments();
 		if (!childDocuments.isEmpty()) {
-			List<Document> toClose = new LinkedList<Document>();
+			List<Document> toClose = new LinkedList<>();
 			Iterator<Document> it = childDocuments.iterator();
 			boolean savedOk;
 			boolean dependantsOk;

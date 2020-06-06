@@ -3,13 +3,9 @@
  */
 package org.signalml.app.view.preferences;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.util.Locale;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -22,12 +18,12 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel with various options of (tooltips, "view mode", warning dialogs):

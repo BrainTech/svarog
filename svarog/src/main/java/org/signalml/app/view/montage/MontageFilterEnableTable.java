@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,7 +18,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
-
 import org.signalml.app.model.montage.MontageFilterEnableTableModel;
 import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
 import org.signalml.app.view.common.components.cellrenderers.UneditableBooleanTableCellRenderer;

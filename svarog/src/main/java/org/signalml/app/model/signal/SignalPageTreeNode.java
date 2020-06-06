@@ -4,14 +4,12 @@
 
 package org.signalml.app.model.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.springframework.context.MessageSourceResolvable;
 
 /** SignalPageTreeNode
@@ -52,7 +50,7 @@ public class SignalPageTreeNode implements PropertyProvider, MessageSourceResolv
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("page"), "page", SignalPageTreeNode.class, "getPage", null));
 		list.add(new LabelledPropertyDescriptor(_("size"), "size", SignalPageTreeNode.class, "getSize", null));

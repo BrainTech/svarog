@@ -6,7 +6,6 @@ package org.signalml.domain.tag;
 
 import java.io.IOException;
 import java.io.Writer;
-
 import org.signalml.app.model.components.WriterExportableTable;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 import org.signalml.plugin.export.signal.Tag;

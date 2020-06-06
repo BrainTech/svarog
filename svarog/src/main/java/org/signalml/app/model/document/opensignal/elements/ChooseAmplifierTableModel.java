@@ -1,10 +1,6 @@
 package org.signalml.app.model.document.opensignal.elements;
 
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import static org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel.AMPLIFIER_NAME;
-import static org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel.EXPERIMENT_HOST;
-import static org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel.EXPERIMENT_NAME;
-import static org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel.EXPERIMENT_STATUS;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class ChooseAmplifierTableModel extends ChooseExperimentTableModel{

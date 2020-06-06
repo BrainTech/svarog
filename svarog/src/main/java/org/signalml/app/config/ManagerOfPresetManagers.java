@@ -2,7 +2,6 @@ package org.signalml.app.config;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.managers.BookFilterPresetManager;
 import org.signalml.app.config.preset.managers.EegSystemsPresetManager;

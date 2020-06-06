@@ -1,20 +1,17 @@
 package org.signalml.app.view.document.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-
 import org.signalml.app.document.MonitorSignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.worker.monitor.recording.RecordingState;
 import org.signalml.plugin.export.signal.Document;

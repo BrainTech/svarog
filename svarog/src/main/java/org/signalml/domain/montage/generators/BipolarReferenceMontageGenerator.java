@@ -5,18 +5,15 @@ package org.signalml.domain.montage.generators;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.domain.montage.system.ChannelType;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.springframework.validation.Errors;
+import org.signalml.domain.montage.system.ChannelType;
 
 /**
  * This class represents the generator for a bipolar montage. In bipolar montage
@@ -74,17 +71,16 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 	 */
 	protected List<List<SourceChannel>> getPrimaryAndReferenceChannels(Montage montage) throws MontageException {
 		List<List<SourceChannel>> listOfLists = new ArrayList<>();
-		List<SourceChannel> primaryChannels = new ArrayList<SourceChannel>();
-		List<SourceChannel> referenceChannels = new ArrayList<SourceChannel>();
-		for (int i = 0; i < channelPairs.length; i++) {
-			String channelName = channelPairs[i][0];
+		List<SourceChannel> primaryChannels = new ArrayList<>();
+		List<SourceChannel> referenceChannels = new ArrayList<>();
+		for (String[] channelPair : channelPairs) {
+			String channelName = channelPair[0];
 			SourceChannel sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
 				throw new MontageException(_R("Cannot find primary channel {0}", channelName));
 			}
 			primaryChannels.add(sourceChannel);
-
-			channelName = channelPairs[i][1];
+			channelName = channelPair[1];
 			sourceChannel = montage.getSourceChannelByLabel(channelName);
 			if (sourceChannel == null) {
 				throw new MontageException(_R("Cannot find reference channel {0}", channelName));
@@ -165,16 +161,14 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 
 		boolean ok = true;
 
-		for (int i = 0; i < channelPairs.length; i++) {
-
+		for (String[] channelPair : channelPairs) {
 			for (int j = 0; j < 2; j++) {
-				SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(channelPairs[i][j]);
+				SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(channelPair[j]);
 				if (sourceChannel == null) {
-					onNotFound(channelPairs[i][j], errors);
+					onNotFound(channelPair[j], errors);
 					ok = false;
 				}
 			}
-
 		}
 
 		return ok;

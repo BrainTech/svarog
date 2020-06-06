@@ -3,6 +3,8 @@
  */
 package org.signalml.domain.tag;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamConverter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,10 +15,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import javax.swing.KeyStroke;
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
@@ -28,9 +28,6 @@ import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 
 /**
  * This class represents a set of {@link Tag tagged selections} and their
@@ -194,7 +191,7 @@ public class StyledTagSet implements Serializable, Preset {
 		this.styles.setStyledTagSet(this);
 
 		if (tags == null) {
-			this.tags = new TreeSet<Tag>();
+			this.tags = new TreeSet<>();
 		} else {
 			this.tags = tags;
 		}
@@ -536,7 +533,7 @@ public class StyledTagSet implements Serializable, Preset {
 		try {
 			return tags.subSet(startMarker, true, endMarker, true);
 		} catch (IllegalArgumentException ex) {
-			return new TreeSet<Tag>();
+			return new TreeSet<>();
 		}
 	}
 
@@ -986,7 +983,7 @@ public class StyledTagSet implements Serializable, Preset {
 		SignalSelectionType type = tag.getStyle().getType();
 		boolean calculateLength = false;
 
-		LinkedList<Tag> addedTags = new LinkedList<Tag>();
+		LinkedList<Tag> addedTags = new LinkedList<>();
 		Tag addedTag;
 
 		double newSelStart = selStart;
@@ -1408,13 +1405,13 @@ public class StyledTagSet implements Serializable, Preset {
 		ArrayList<Tag> newChannelTags = null;
 
 		if (pageTagsCache == null) {
-			newPageTags = new ArrayList<Tag>();
+			newPageTags = new ArrayList<>();
 		}
 		if (blockTagsCache == null) {
-			newBlockTags = new ArrayList<Tag>();
+			newBlockTags = new ArrayList<>();
 		}
 		if (channelTagsCache == null) {
-			newChannelTags = new ArrayList<Tag>();
+			newChannelTags = new ArrayList<>();
 		}
 
 		TagStyle style;
@@ -1493,7 +1490,7 @@ public class StyledTagSet implements Serializable, Preset {
 	 */
 	public List<String> copyStylesFrom(StyledTagSet tagSet) {
 
-		List<String> stylesThatCouldNotBeDeleted = new ArrayList<String>();
+		List<String> stylesThatCouldNotBeDeleted = new ArrayList<>();
 
 		List<TagStyle> stylesFromBoth = this.getListOfStyles();
 		Set<TagStyle> styleSetFromBoth = new HashSet<>(stylesFromBoth);

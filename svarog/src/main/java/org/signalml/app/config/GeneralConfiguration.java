@@ -3,10 +3,8 @@
  */
 package org.signalml.app.config;
 
-import org.apache.log4j.Logger;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.apache.log4j.Logger;
 
 /** GeneralConfiguration
  *

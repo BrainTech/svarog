@@ -4,12 +4,11 @@
 
 package org.signalml.domain.montage;
 
-import org.signalml.domain.montage.system.IChannelFunction;
-import java.io.Serializable;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.Serializable;
 import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.EegElectrode;
+import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * This class represents a source channel. It has a certain number, name

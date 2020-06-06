@@ -4,9 +4,9 @@
 
 package org.signalml.app.config.workspace;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.IOException;
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.ManagedDocumentType;
@@ -15,8 +15,6 @@ import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.plugin.export.SignalMLException;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** WorkspaceBook
  *

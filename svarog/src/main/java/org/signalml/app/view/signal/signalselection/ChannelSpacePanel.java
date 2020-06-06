@@ -3,12 +3,9 @@
  */
 package org.signalml.app.view.signal.signalselection;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -18,12 +15,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.space.ChannelSpace;
 import org.signalml.domain.signal.space.ChannelSpaceType;
 import org.signalml.domain.signal.space.SignalSourceLevel;
@@ -398,8 +395,8 @@ public class ChannelSpacePanel extends JPanel {
 			this.currentChannels = currentChannels;
 
 			DefaultListModel listModel = new DefaultListModel();
-			for (int i = 0; i < currentChannels.length; i++) {
-				listModel.addElement(currentChannels[i]);
+			for (String currentChannel : currentChannels) {
+				listModel.addElement(currentChannel);
 			}
 
 			JList list = getChannelList();

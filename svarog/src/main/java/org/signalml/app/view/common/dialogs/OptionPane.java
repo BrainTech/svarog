@@ -6,9 +6,7 @@ package org.signalml.app.view.common.dialogs;
 import java.awt.Component;
 import java.io.File;
 import java.util.Locale;
-
 import javax.swing.JOptionPane;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.FileBackedDocument;
@@ -16,12 +14,11 @@ import org.signalml.app.document.MutableDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.PrettyStringLocaleWrapper;
+import static org.signalml.app.util.i18n.SvarogI18n.*;
 import org.signalml.domain.montage.Montage;
 import org.signalml.method.SerializableMethod;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.SvarogConstants;
-
-import static org.signalml.app.util.i18n.SvarogI18n.*;
 
 /**
  * This class contains different static methods which show simple dialogs

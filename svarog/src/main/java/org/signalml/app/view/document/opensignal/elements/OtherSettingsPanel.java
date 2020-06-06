@@ -1,13 +1,10 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -16,7 +13,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -31,6 +27,7 @@ import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.FileTypeComboBoxModel;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.domain.montage.system.EegSystem;

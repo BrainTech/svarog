@@ -6,7 +6,6 @@ package org.signalml.app.view.common.components.cellrenderers;
 
 import java.awt.Component;
 import java.io.File;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 

@@ -4,12 +4,11 @@
 
 package org.signalml.app.document.signal;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.codec.SignalMLCodec;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * Serializable description of a file with a signal stored in it using signalML

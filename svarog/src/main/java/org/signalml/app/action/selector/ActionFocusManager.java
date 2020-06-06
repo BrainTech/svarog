@@ -6,10 +6,8 @@ package org.signalml.app.action.selector;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.PresetManagerAdapter;
 import org.signalml.app.config.preset.PresetManagerEvent;

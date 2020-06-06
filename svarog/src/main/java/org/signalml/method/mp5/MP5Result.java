@@ -4,9 +4,8 @@
 
 package org.signalml.method.mp5;
 
-import java.io.Serializable;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.Serializable;
 
 /** MP5Result
  *

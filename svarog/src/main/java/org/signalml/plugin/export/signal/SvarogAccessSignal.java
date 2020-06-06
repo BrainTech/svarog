@@ -9,7 +9,6 @@ import java.io.InvalidClassException;
 import java.nio.ByteOrder;
 import java.util.List;
 import java.util.Set;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.signal.space.SignalSourceLevel;

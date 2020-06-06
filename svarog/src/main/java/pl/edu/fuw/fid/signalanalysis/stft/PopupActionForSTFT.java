@@ -2,14 +2,14 @@ package pl.edu.fuw.fid.signalanalysis.stft;
 
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import org.signalml.plugin.export.signal.ChannelSamples;
 import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Action performed when user requests interactive Short-Time Fourier Transform

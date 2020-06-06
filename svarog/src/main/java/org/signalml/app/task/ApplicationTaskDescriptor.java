@@ -4,11 +4,9 @@
 
 package org.signalml.app.task;
 
-import java.io.Serializable;
-
-import org.signalml.task.TaskStatus;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.Serializable;
+import org.signalml.task.TaskStatus;
 
 /** ApplicationTaskDescriptor
  *

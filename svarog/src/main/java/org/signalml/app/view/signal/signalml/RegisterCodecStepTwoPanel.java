@@ -3,18 +3,15 @@
  */
 package org.signalml.app.view.signal.signalml;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.TitledComponentPanel;
 import org.signalml.codec.SignalMLCodec;
 

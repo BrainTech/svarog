@@ -4,8 +4,6 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,7 +12,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
@@ -30,10 +27,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.cellrenderers.FileListCellRenderer;
 import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.plugin.export.SignalMLException;
@@ -241,7 +238,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		DefaultListModel listModel = getClassPathListModel();
 		int cnt = listModel.size();
 
-		ArrayList<File> classPath = new ArrayList<File>(cnt);
+		ArrayList<File> classPath = new ArrayList<>(cnt);
 		for (int i=0; i<cnt; i++) {
 			classPath.add((File) listModel.getElementAt(i));
 		}

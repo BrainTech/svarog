@@ -5,16 +5,13 @@ package org.signalml.domain.montage.generators;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.generators.AbstractMontageGenerator;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.springframework.validation.Errors;
+import org.signalml.domain.montage.system.ChannelType;
 
 /**
  * This class represents a generator for an average reference montage. In the
@@ -109,9 +106,9 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 	 * @return the list of reference {@link SourceChannel SourceChannels}.
 	 */
 	protected List<SourceChannel> getReferenceSourceChannels(SourceMontage sourceMontage) {
-		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
-		for (int i = 0; i < referenceChannelsNames.length; i++) {
-			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
+		List<SourceChannel> sourceChannels = new ArrayList<>();
+		for (String referenceChannelName : referenceChannelsNames) {
+			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
 			if (sourceChannel != null) {
 				sourceChannels.add(sourceChannel);
 			}
@@ -132,10 +129,10 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 
 		boolean ok = true;
 
-		for (int i = 0; i < referenceChannelsNames.length; i++) {
-			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelsNames[i]);
+		for (String referenceChannelName : referenceChannelsNames) {
+			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
 			if (sourceChannel == null) {
-				onNotFound(referenceChannelsNames[i], errors);
+				onNotFound(referenceChannelName, errors);
 				ok = false;
 			}
 		}

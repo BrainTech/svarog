@@ -7,12 +7,10 @@ package org.signalml.domain.signal.raw;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.SingleNameSpaceContext;
 import org.signalml.domain.montage.system.EegSystemName;

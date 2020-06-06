@@ -4,8 +4,8 @@ import java.io.File;
 import org.apache.log4j.Logger;
 import org.signalml.plugin.bookreporter.BookReporterPlugin;
 import org.signalml.plugin.export.Plugin;
-import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.fftsignaltool.FFTSignalPlugin;
+import org.signalml.plugin.impl.PluginAccessClass;
 import org.signalml.plugin.tool.PluginToolCommon;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisPlugin;
 

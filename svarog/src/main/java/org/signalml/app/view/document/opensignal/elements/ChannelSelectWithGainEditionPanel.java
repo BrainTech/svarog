@@ -1,19 +1,16 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
 
 /**

@@ -2,7 +2,6 @@ package org.signalml.domain.signal.filter.export;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.filter.iir.ExportIIRSinglechannelSampleFilter;

@@ -45,7 +45,7 @@ public class DCDiagnosis extends GenericAmplifierDiagnosis {
 		}
 		electrodeType = (ElectrodeType) getParameters().get(ELECTRODE_TYPE);
 
-		HashMap<String, ChannelState> channels = new HashMap<String, ChannelState>();
+		HashMap<String, ChannelState> channels = new HashMap<>();
 
 		for (int i = 0; i < getRoundBuffer().getChannelCount(); i++) {
 			double average = getAverageForChannel(i);

@@ -2,7 +2,6 @@ package org.signalml.app.model.document.opensignal.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.worker.monitor.messages.AmplifierType;
 
 public class Amplifier {
@@ -23,11 +22,11 @@ public class Amplifier {
 		this.name = presetAmplifier.name;
 		this.samplesPerPacket = presetAmplifier.samplesPerPacket;
 
-		this.samplingFrequencies = new ArrayList<Double>();
+		this.samplingFrequencies = new ArrayList<>();
 		for (Double samplingFrequency: presetAmplifier.getSamplingFrequencies())
 			this.samplingFrequencies.add(samplingFrequency);
 
-		this.channels = new ArrayList<AmplifierChannel>();
+		this.channels = new ArrayList<>();
 		for (AmplifierChannel channel: presetAmplifier.getChannels())
 			this.channels.add(new AmplifierChannel(channel));
 
@@ -72,7 +71,7 @@ public class Amplifier {
 	}
 
 	public List<AmplifierChannel> getSelectedChannels() {
-		List<AmplifierChannel> selectedChannels = new ArrayList<AmplifierChannel>();
+		List<AmplifierChannel> selectedChannels = new ArrayList<>();
 		for (AmplifierChannel channel: this.getChannels()) {
 			if (channel.isSelected())
 				selectedChannels.add(channel);
@@ -81,7 +80,7 @@ public class Amplifier {
 	}
 
 	public String[] getSelectedChannelsLabels() {
-		List<String> channelLabels = new ArrayList<String>();
+		List<String> channelLabels = new ArrayList<>();
 		for (AmplifierChannel channel: getSelectedChannels()) {
 			channelLabels.add(channel.getLabel());
 		}

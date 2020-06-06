@@ -3,13 +3,11 @@
  */
 package org.signalml.app.action.workspace.tasks;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.task.ApplicationTaskManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;

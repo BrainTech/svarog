@@ -4,18 +4,14 @@
 
 package org.signalml.domain.montage.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-
 import org.signalml.app.config.FFTWindowTypeSettings;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.math.fft.WindowType;
-import org.signalml.util.ResolvableString;
-import org.springframework.context.MessageSourceResolvable;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class holds a representation of parameters of FFT sample filter.
@@ -72,7 +68,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	 */
 	public FFTSampleFilter(boolean initiallyPassing) {
 
-		ranges = new ArrayList<Range>();
+		ranges = new ArrayList<>();
 		if (initiallyPassing) {
 			ranges.add(new Range(0,0,1));
 		} else {
@@ -194,7 +190,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	 */
 	public void setRange(Range newRange, boolean multiply) {
 
-		ArrayList<Range> newRanges = new ArrayList<Range>();
+		ArrayList<Range> newRanges = new ArrayList<>();
 
 		Iterator<Range> it = ranges.iterator();
 		Range range;
@@ -348,7 +344,7 @@ public class FFTSampleFilter extends SampleFilterDefinition implements Preset, F
 	 */
 	public void copyFrom(FFTSampleFilter filter) {
 
-		ranges = new ArrayList<Range>();
+		ranges = new ArrayList<>();
 
 		for (Range range : filter.ranges) {
 			ranges.add(range.clone());

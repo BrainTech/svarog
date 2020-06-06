@@ -2,7 +2,6 @@ package org.signalml.plugin.io;
 
 import java.beans.PropertyChangeListener;
 import java.io.InvalidClassException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;

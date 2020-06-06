@@ -6,11 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.RealMatrix;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Several, mostly self-explanatory functions used in multiple places

@@ -4,12 +4,9 @@
 
 package org.signalml.app.method.example;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -20,9 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodConfigurer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.Method;
 import org.signalml.method.example.ExampleData;

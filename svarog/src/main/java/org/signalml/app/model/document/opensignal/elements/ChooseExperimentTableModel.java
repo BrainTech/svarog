@@ -1,14 +1,11 @@
 package org.signalml.app.model.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class ChooseExperimentTableModel extends AbstractTableModel {
 
@@ -22,7 +19,7 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 	public static final int EXPERIMENT_HOST = 3;
 
 
-	protected List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
+	protected List<ExperimentDescriptor> experiments = new ArrayList<>();
 
 	public ChooseExperimentTableModel() {
 	}

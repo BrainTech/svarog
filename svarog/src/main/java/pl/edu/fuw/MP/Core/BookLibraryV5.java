@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Vector;
-
 import org.signalml.domain.book.BookFormatException;
 import org.signalml.domain.book.StandardBookSegment;
 
@@ -58,14 +57,14 @@ public class BookLibraryV5 implements BookLibraryInterface {
 	private SegmentHeaderV5 segment=new SegmentHeaderV5(this);
 	private RandomAccessFile streamClass=null;
 	private int version=VERSION_NONE;
-	private Vector<BookLibraryV5IndexElement> index=new Vector<BookLibraryV5IndexElement>();
+	private Vector<BookLibraryV5IndexElement> index=new Vector<>();
 	private int epochDim;
 
 	public void setFields(FormatComponentV5 fields[]) {
 		fieldsCount=0;
-		for (int i=0 ; i<fields.length ; i++) {
-			if (fields[i]!=null) {
-				this.fields[fieldsCount++]=fields[i];
+		for (FormatComponentV5 field : fields) {
+			if (field != null) {
+				this.fields[fieldsCount++] = field;
 			}
 		}
 	}
@@ -198,7 +197,7 @@ public class BookLibraryV5 implements BookLibraryInterface {
 	}
 
 	private CPair[] getOffset(int segNo) {
-		Vector<CPair> v=new Vector<CPair>();
+		Vector<CPair> v=new Vector<>();
 		int len=index.size();
 
 		for (int i=0 ; i<len ; i++) {
@@ -494,7 +493,7 @@ public class BookLibraryV5 implements BookLibraryInterface {
 	}
 
 	public int getSegmentCount() {
-		HashSet<Integer> set=new HashSet<Integer>();
+		HashSet<Integer> set=new HashSet<>();
 		int len=index.size();
 
 		for (int i=0 ; i<len ; i++) {

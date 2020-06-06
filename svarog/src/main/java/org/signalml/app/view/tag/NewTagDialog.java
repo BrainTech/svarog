@@ -3,15 +3,11 @@
  */
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.io.File;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
@@ -20,6 +16,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.NewTagDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor.NewTagTypeMode;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.signal.PagingParametersPanel;

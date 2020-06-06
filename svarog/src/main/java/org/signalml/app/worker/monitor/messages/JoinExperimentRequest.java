@@ -1,7 +1,6 @@
 package org.signalml.app.worker.monitor.messages;
 
 import java.util.Date;
-
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 
 public class JoinExperimentRequest extends AbstractJoinOrLeaveExperimentRequest {

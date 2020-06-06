@@ -8,12 +8,11 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.io.InvalidClassException;
 import java.util.Calendar;
-
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.math.fft.FourierTransform;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
@@ -23,8 +22,6 @@ import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.fftsignaltool.actions.SaveToCSV;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * {@link SignalTool Signal tool} which displays the {@link SignalFFTPlot plot}

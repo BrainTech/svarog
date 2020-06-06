@@ -7,7 +7,6 @@ package org.signalml.app.view.common.components.cellrenderers;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Insets;
-
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JTable;
@@ -16,7 +15,6 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableCellRenderer;
-
 import org.signalml.task.AggregateTaskProgressInfo;
 
 /** ProgressTableCellRenderer

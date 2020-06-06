@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.JLayeredPane;
 import javax.swing.SwingUtilities;
 
@@ -31,7 +30,7 @@ public class VisualReferenceEditorMouseHandler extends MouseAdapter {
 	private boolean dragVisible = false;
 	private int prospectiveDropChannel = -1;
 
-	private ArrayList<VisualReferenceArrow> tempArrowList = new ArrayList<VisualReferenceArrow>();
+	private ArrayList<VisualReferenceArrow> tempArrowList = new ArrayList<>();
 
 	private VisualReferenceDraggedChannel draggedChannelComponent;
 

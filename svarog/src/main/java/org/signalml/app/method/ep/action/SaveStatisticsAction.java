@@ -1,16 +1,14 @@
 package org.signalml.app.method.ep.action;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-
 import org.signalml.app.method.ep.model.minmax.ChannelStatistics;
 import org.signalml.app.method.ep.model.minmax.MinMaxTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.util.Util;

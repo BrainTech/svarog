@@ -8,7 +8,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Random;
-
 import org.signalml.domain.book.BookBuilder;
 import org.signalml.domain.book.BookFormatException;
 import org.signalml.domain.book.DefaultBookAtom;

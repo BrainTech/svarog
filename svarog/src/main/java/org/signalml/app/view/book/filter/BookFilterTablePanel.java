@@ -3,15 +3,12 @@
  */
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -24,10 +21,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.domain.book.filter.AbstractAtomFilter;
@@ -36,8 +33,6 @@ import org.signalml.domain.book.filter.DelegatingAtomFilter;
 import org.signalml.domain.book.filter.ParameterRangeAtomFilter;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.exception.SanityCheckException;
-
-import org.springframework.validation.Errors;
 
 /** BookFilterListPanel
  *

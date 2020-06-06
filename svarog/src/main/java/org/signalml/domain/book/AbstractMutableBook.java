@@ -7,7 +7,6 @@ package org.signalml.domain.book;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-
 import javax.swing.event.EventListenerList;
 
 /** AbstractMutableBook

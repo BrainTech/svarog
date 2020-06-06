@@ -3,35 +3,31 @@
  */
 package org.signalml.app.view.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.text.ParseException;
-
 import javax.swing.Box;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JSpinner.DefaultEditor;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.tools.ZoomBookTool;
 import org.signalml.domain.book.StandardBookSegment;
-
 import org.springframework.validation.Errors;
 
 /**

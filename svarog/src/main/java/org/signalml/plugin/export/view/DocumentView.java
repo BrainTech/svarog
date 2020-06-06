@@ -5,9 +5,7 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.LayoutManager;
-
 import javax.swing.JPanel;
-
 import org.signalml.plugin.export.signal.Document;
 
 /**

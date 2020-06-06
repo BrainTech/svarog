@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import org.apache.log4j.Logger;
-import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.FIRST_LINE_START;
 import static org.signalml.domain.signal.ascii.AsciiSignalDescriptorReader.SEPARATOR_REGEX;
 

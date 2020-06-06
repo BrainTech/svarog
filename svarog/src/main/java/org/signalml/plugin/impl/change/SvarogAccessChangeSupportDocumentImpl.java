@@ -4,7 +4,6 @@
 package org.signalml.plugin.impl.change;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
@@ -50,13 +49,13 @@ public class SvarogAccessChangeSupportDocumentImpl extends AbstractAccess implem
 	 * {@link PluginTagListener listeners} on {@link ExportedTag tag} changes
 	 * (addition, removal, change)
 	 */
-	protected ArrayList<PluginTagListener> tagListeners = new ArrayList<PluginTagListener>();
+	protected ArrayList<PluginTagListener> tagListeners = new ArrayList<>();
 
 	/**
 	 * {@link PluginTagStyleListener listener} on {@link ExportedTagStyle
 	 * tag style} changes (addition, removal, change)
 	 */
-	protected ArrayList<PluginTagStyleListener> tagStyleListeners = new ArrayList<PluginTagStyleListener>();
+	protected ArrayList<PluginTagStyleListener> tagStyleListeners = new ArrayList<>();
 
 	protected SvarogAccessChangeSupportDocumentImpl() { }
 

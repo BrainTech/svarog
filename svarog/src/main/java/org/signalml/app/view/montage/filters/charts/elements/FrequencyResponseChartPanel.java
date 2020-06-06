@@ -3,14 +3,12 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.jfree.chart.ChartPanel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.montage.filters.charts.FrequencyRangeSelection;
 
 /**

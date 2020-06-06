@@ -3,14 +3,11 @@
  */
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -25,9 +22,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.mp5.MP5Executor;
 import org.signalml.method.mp5.MP5LocalProcessExecutor;

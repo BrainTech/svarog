@@ -15,10 +15,8 @@ import java.awt.Rectangle;
 import java.awt.font.TextLayout;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Point2D;
-
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.util.Util;

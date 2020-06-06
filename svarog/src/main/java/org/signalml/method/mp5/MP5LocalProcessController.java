@@ -12,12 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** MP5LocalProcessController
  *

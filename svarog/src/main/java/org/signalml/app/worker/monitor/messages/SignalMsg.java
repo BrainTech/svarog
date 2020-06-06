@@ -5,15 +5,14 @@
  */
 package org.signalml.app.worker.monitor.messages;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
-import org.signalml.app.worker.monitor.Impedance;
-import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
-import org.signalml.app.worker.monitor.NewSamplesData;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.util.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
+import org.signalml.app.worker.monitor.Impedance;
+import org.signalml.app.worker.monitor.NewSamplesData;
+import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 
 
 public class SignalMsg extends BaseMessage{

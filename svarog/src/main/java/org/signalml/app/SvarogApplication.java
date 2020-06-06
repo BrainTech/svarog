@@ -4,20 +4,20 @@
 package org.signalml.app;
 
 import com.alee.laf.WebLookAndFeel;
-import static java.lang.String.format;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.Annotations;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import static java.lang.String.format;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.SwingUtilities;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -44,6 +44,7 @@ import org.signalml.app.document.mrud.DefaultMRUDRegistry;
 import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.document.signal.RawSignalMRUDEntry;
 import org.signalml.app.document.signal.SignalMLMRUDEntry;
+import org.signalml.app.logging.SvarogLoggingConfigurer;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
@@ -61,10 +62,13 @@ import org.signalml.app.util.MatlabUtil;
 import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.util.logging.DebugHelpers;
+import org.signalml.app.video.VideoStreamManager;
 import org.signalml.app.view.common.dialogs.SplashScreen;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.system.ChannelFunction;
@@ -86,14 +90,6 @@ import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Log4jConfigurer;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import org.signalml.app.logging.SvarogLoggingConfigurer;
-import org.signalml.app.video.VideoStreamManager;
-import org.signalml.app.worker.monitor.ObciServerCapabilities;
 
 /**
  * The Svarog application.

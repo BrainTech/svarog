@@ -3,7 +3,6 @@ package org.signalml.domain.signal.space;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-
 import org.junit.After;
 import org.signalml.BaseTestCase;
 import org.signalml.app.document.TagDocument;

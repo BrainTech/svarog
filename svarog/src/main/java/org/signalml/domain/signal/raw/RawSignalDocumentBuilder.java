@@ -6,11 +6,9 @@ package org.signalml.domain.signal.raw;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
 import org.springframework.core.io.ClassPathResource;

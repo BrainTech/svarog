@@ -3,20 +3,18 @@
  */
 package org.signalml.app.config.preset.managers;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.math.iirdesigner.FilterType;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class holds presets a list of predefined {@link TimeDomainSampleFilter filters}

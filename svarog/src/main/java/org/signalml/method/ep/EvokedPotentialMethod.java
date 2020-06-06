@@ -4,9 +4,8 @@
 
 package org.signalml.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;

@@ -1,7 +1,6 @@
 package org.signalml.app.view.document.opensignal.elements;
 
 import java.awt.BorderLayout;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.managers.ExperimentsSettingsPresetManager;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;

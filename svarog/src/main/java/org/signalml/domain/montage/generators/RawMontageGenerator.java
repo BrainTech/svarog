@@ -4,11 +4,9 @@
 
 package org.signalml.domain.montage.generators;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import org.springframework.validation.Errors;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 

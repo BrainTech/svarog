@@ -1,13 +1,11 @@
 package org.signalml.domain.signal.filter.iir.helper;
 
 import static org.junit.Assert.assertEquals;
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.TestingSignals;
-import org.signalml.domain.signal.filter.iir.helper.GrowSignalSampleSource;
 import org.signalml.domain.signal.samplesource.ChannelSelectorSampleSource;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;

@@ -1,7 +1,6 @@
 package org.signalml.codec;
 
 import java.lang.reflect.Constructor;
-
 import org.apache.log4j.Logger;
 
 public class StaticCodec implements SignalMLCodec {

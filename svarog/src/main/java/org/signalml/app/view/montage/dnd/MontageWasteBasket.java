@@ -5,7 +5,6 @@
 package org.signalml.app.view.montage.dnd;
 
 import javax.swing.JLabel;
-
 import org.signalml.app.util.IconUtils;
 
 /**

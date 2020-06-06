@@ -3,7 +3,6 @@ package pl.edu.fuw.MP.Core;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.Vector;
-
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
 
@@ -15,7 +14,7 @@ public class BookHeader implements StandardBookSegment {
 	public float FREQUENCY;
 	public float signal_energy;
 	public float book_energy;
-	private Vector<BookAtom> atoms=new Vector<BookAtom>();
+	private Vector<BookAtom> atoms=new Vector<>();
 
 	public void addAtom(BookAtom atom) {
 		atoms.addElement(atom);
@@ -60,7 +59,7 @@ public class BookHeader implements StandardBookSegment {
 	}
 
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

@@ -1,7 +1,7 @@
 package org.signalml.app.action.video;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.event.ActionEvent;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.OnlineVideoFrameInitializer;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.workspace.ViewerElementManager;

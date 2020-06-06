@@ -5,7 +5,6 @@
 package org.signalml.app.model.book;
 
 import org.signalml.app.document.BookDocument;
-
 import org.signalml.domain.book.filter.AtomFilterChain;
 
 /** BookFilterDescriptor

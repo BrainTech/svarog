@@ -6,9 +6,7 @@ package org.signalml.app.view.signal.signalselection;
 import java.awt.BorderLayout;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.signal.export.SignalSourceLevelPanel;

@@ -1,19 +1,16 @@
 package org.signalml.app.view.tag.synchronize;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
-
 import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 import org.signalml.app.view.common.components.spinners.DoubleSpinner;
@@ -34,7 +31,7 @@ public class SynchronizeTagsWithTriggerParametersPanel extends LabeledComponents
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		ComponentWithLabel componentWithLabel = new ComponentWithLabel(new JLabel(_("Signal threshold")), getThresholdSpinner());
 		components.add(componentWithLabel);

@@ -9,9 +9,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.util.Util;
 

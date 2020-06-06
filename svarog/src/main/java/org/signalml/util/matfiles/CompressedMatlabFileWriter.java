@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.zip.DeflaterOutputStream;
-
 import org.signalml.util.matfiles.types.DataType;
 
 /**

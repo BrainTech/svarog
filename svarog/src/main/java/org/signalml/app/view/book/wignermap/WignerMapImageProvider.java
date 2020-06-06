@@ -10,7 +10,6 @@ import java.awt.image.DataBufferByte;
 import java.awt.image.IndexColorModel;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
-
 import org.apache.log4j.Logger;
 
 /** WignerMapImageProvider

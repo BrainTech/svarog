@@ -1,7 +1,6 @@
 package org.signalml.app.model.tag;
 
 import java.util.List;
-
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
 

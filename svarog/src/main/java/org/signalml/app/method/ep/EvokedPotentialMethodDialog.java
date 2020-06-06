@@ -5,14 +5,10 @@
 package org.signalml.app.method.ep;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.util.List;
-
 import javax.swing.JComponent;
 import javax.swing.JTabbedPane;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.document.TagDocument;
@@ -24,6 +20,7 @@ import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

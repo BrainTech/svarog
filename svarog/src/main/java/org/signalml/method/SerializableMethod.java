@@ -6,7 +6,6 @@ package org.signalml.method;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.signalml.plugin.export.SignalMLException;
 
 /**

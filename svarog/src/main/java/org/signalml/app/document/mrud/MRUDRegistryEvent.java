@@ -5,7 +5,6 @@
 package org.signalml.app.document.mrud;
 
 import java.util.EventObject;
-
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.plugin.export.signal.Document;

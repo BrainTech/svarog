@@ -5,9 +5,7 @@ package org.signalml.app.config;
 
 import java.awt.Dimension;
 import java.util.Properties;
-
 import javax.swing.ToolTipManager;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.signal.SignalColor;

@@ -12,8 +12,6 @@ import java.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.signalml.app.SvarogExceptionHandler;
-import org.apache.log4j.MDC;
-import org.apache.log4j.NDC;
 
 /**
  * Configures Svarog logging system, depending on the environment.

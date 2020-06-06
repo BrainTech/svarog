@@ -4,13 +4,10 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.Component;
-import java.awt.event.KeyEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
-
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.util.IconUtils;
 

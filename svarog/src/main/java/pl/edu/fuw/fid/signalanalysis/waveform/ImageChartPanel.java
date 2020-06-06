@@ -1,11 +1,11 @@
 package pl.edu.fuw.fid.signalanalysis.waveform;
 
-import pl.edu.fuw.fid.signalanalysis.NonInteractiveChartPanel;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
+import pl.edu.fuw.fid.signalanalysis.NonInteractiveChartPanel;
 
 /**
  * Chart panel for 2D time-frequency map (ImageChart).

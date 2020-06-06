@@ -1,41 +1,37 @@
 package org.signalml.app.worker.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.beans.PropertyChangeEvent;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.Dialogs.DIALOG_OPTIONS;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
+import org.signalml.app.worker.monitor.messages.IncompleteTagMsg;
+import org.signalml.app.worker.monitor.messages.MessageType;
+import org.signalml.app.worker.monitor.messages.SignalMsg;
+import org.signalml.app.worker.monitor.messages.TagMsg;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledMonitorTagSet;
 import org.signalml.domain.tag.TagStylesGenerator;
+import org.signalml.peer.Peer;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.util.FormatUtils;
-
-import org.signalml.app.worker.monitor.messages.MessageType;
-import org.signalml.app.worker.monitor.messages.SignalMsg;
-import org.signalml.app.worker.monitor.messages.IncompleteTagMsg;
-import org.signalml.app.worker.monitor.messages.TagMsg;
-import org.signalml.peer.Peer;
 import org.signalml.psychopy.PsychopyStatusListener;
+import org.signalml.util.FormatUtils;
 
 /** MonitorWorker
  *

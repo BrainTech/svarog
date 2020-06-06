@@ -3,10 +3,7 @@
  */
 package org.signalml.app.view.signal.signalselection;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JCheckBox;
@@ -16,8 +13,8 @@ import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 

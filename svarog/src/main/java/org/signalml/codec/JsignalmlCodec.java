@@ -1,8 +1,7 @@
 package org.signalml.codec;
 
-import static org.signalml.util.Util.toMD5String;
-
 import org.apache.log4j.Logger;
+import static org.signalml.util.Util.toMD5String;
 
 public class JsignalmlCodec implements SignalMLCodec {
 	protected static final Logger log = Logger.getLogger(SignalMLCodec.class);

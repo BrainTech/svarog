@@ -2,7 +2,6 @@ package org.signalml.app.model.document.opensignal.elements;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;

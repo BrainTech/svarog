@@ -3,19 +3,14 @@
  */
 package org.signalml.app.action.workspace.tasks;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TaskFocusSelector;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.task.Task;
 import org.signalml.task.TaskResult;
-
-import org.springframework.validation.Errors;
 
 /** GetTaskErrorAction
  *

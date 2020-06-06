@@ -2,13 +2,11 @@ package org.signalml.app.view.document.opensignal.elements;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
-
 import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
 
 public class ChooseExperimentTable extends JTable {

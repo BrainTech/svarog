@@ -4,7 +4,6 @@
 package org.signalml.app.method.example;
 
 import java.util.Random;
-
 import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.view.signal.roc.RocDialog;
 import org.signalml.domain.roc.RocData;

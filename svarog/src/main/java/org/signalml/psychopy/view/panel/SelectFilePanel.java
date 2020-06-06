@@ -3,16 +3,14 @@ package org.signalml.psychopy.view.panel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.util.IconUtils;
-
-import javax.swing.*;
 import java.io.File;
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public abstract class SelectFilePanel extends JPanel {
 	final static int DEFAULT_PATH_COLUMNS_NUMBER = 18;

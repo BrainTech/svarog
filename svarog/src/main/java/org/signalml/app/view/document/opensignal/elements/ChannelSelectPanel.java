@@ -1,13 +1,10 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -15,12 +12,12 @@ import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ExperimentStatus;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This class represents a panel for selecting channels which will be monitored.

@@ -1,7 +1,5 @@
 package org.signalml.app.worker.monitor.messages;
 
-import java.util.Date;
-
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 

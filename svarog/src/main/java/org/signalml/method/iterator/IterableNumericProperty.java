@@ -8,7 +8,6 @@ import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-
 import org.apache.log4j.Logger;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.InputDataException;

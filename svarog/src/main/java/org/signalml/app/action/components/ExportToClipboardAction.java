@@ -4,12 +4,10 @@
 
 package org.signalml.app.action.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
-
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.model.components.WriterExportableTable;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 
 /** ExportToClipboardAction

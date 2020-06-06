@@ -3,32 +3,29 @@
  */
 package org.signalml.app.view.document.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Panel;
 import java.awt.event.ItemEvent;
 import java.io.File;
-
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.YES_NO_OPTION;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.monitor.MonitorRecordingDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.components.filechooser.FileSelectPanel;
 import org.signalml.app.worker.monitor.ObciServerCapabilities;
 

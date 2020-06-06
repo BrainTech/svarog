@@ -4,16 +4,14 @@
 
 package org.signalml.app.action.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.AtomTableDialog;
 import org.signalml.app.view.book.BookView;
 

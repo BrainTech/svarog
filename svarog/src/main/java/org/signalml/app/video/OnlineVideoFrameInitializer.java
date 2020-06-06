@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
-import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.worker.monitor.GetAvailableVideoWorker;
 
 /**
  * Asynchronously waits for GetAvailableVideoWorker to finish querying OBCI

@@ -16,13 +16,13 @@ import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._H;
 import org.signalml.plugin.bookreporter.BookReporterPlugin;
 import org.signalml.plugin.bookreporter.data.BookReporterData;
 import org.signalml.plugin.bookreporter.data.BookReporterParameters;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPluginPresetDialog;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._H;
 import org.signalml.plugin.method.helper.PluginPresetManagerFilter;
 
 /**
@@ -236,7 +236,7 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 	}
 
 	private static Collection<Class<? extends Preset>> GetPresetClasses() {
-		Collection<Class<? extends Preset>> l = new ArrayList<Class<? extends Preset>>();
+		Collection<Class<? extends Preset>> l = new ArrayList<>();
 		l.add(BookReporterParameters.class);
 		return l;
 	}
