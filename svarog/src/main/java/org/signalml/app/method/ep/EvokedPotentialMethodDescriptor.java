@@ -31,7 +31,6 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 
 	protected static final Logger logger = Logger.getLogger(EvokedPotentialMethodDescriptor.class);
 
-	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 	public static final String RUN_METHOD_STRING = _("ERP");
 
 	private EvokedPotentialMethod method;
@@ -55,7 +54,7 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 
 	@Override
 	public String getIconPath() {
-		return ICON_PATH;
+		return null;
 	}
 
 	@Override

@@ -3,7 +3,6 @@ package org.signalml.domain.signal.export.eeglab;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;

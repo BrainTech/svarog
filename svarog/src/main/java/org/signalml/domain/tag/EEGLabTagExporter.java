@@ -3,7 +3,6 @@ package org.signalml.domain.tag;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
 import org.apache.log4j.Logger;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.exception.ResolvableException;

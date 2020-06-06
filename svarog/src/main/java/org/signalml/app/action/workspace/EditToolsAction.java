@@ -24,7 +24,7 @@ public class EditToolsAction extends AbstractSignalMLAction {
 	public EditToolsAction(ApplicationToolsDialog toolsDialog) {
 		super();
 		this.toolsDialog = toolsDialog;
-		setText(_("Configure MP executable"));
+		setText(_("Configure MP executable path"));
 	}
 
 	@Override

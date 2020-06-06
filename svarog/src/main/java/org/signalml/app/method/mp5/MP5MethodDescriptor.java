@@ -56,7 +56,7 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 
 	@Override
 	public String getIconPath() {
-		return ICON_PATH;
+		return null;
 	}
 
 	@Override

@@ -52,8 +52,6 @@ public class RunMethodAction extends AbstractSignalMLAction {
 		}
 		if (iconPath != null && !iconPath.isEmpty()) {
 			setIconPath(iconPath);
-		} else {
-			setIconPath("org/signalml/app/icon/runmethod.png");
 		}
 	}
 

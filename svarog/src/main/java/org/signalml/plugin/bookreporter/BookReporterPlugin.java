@@ -18,8 +18,6 @@ import org.signalml.plugin.tool.PluginResourceRepository;
  */
 public class BookReporterPlugin implements Plugin {
 
-	public static final String iconPath = "org/signalml/app/icon/runmethod.png"; //TODO move this elsewhere
-
 	private PluginMethodManager manager;
 
 	@Override

@@ -26,7 +26,6 @@ import org.signalml.plugin.export.signal.Document;
 public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor {
 
 	public static final String RUN_METHOD_STRING = _("Average books");
-	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
 
 	private BookAverageMethod method;
 	private BookAverageMethodConfigurer configurer;
@@ -48,9 +47,8 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 
 	@Override
 	public String getIconPath() {
-		return ICON_PATH;
+		return null;
 	}
-
 
 	@Override
 	public MethodPresetManager getPresetManager(ApplicationMethodManager methodManager, boolean existingOnly) {

@@ -32,7 +32,7 @@ public class BookAverageMethodDialog extends AbstractDialog  {
 	@Override
 	protected void initialize() {
 		setTitle(_("Configure book averaging"));
-		setIconImage(IconUtils.loadClassPathImage(BookAverageMethodDescriptor.ICON_PATH));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/runmethod.png"));
 		setResizable(false);
 		super.initialize();
 	}

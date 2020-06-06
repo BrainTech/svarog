@@ -96,7 +96,6 @@ import org.signalml.app.model.signal.SignalTreeModel;
 import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.util.IconUtils;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._H;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
@@ -808,7 +807,6 @@ public class ViewerElementManager {
 			if (mode == SignalMLOperationMode.APPLICATION) {
 
 				JMenu iterationMenu = new JMenu(_("Iterate"));
-				iterationMenu.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/iteratemethod.png"));
 				for (AbstractSignalMLAction action : getIterateMethodActions()) {
 					iterationMenu.add(action);
 				}

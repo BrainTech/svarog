@@ -61,7 +61,7 @@ public class BookToTagMethodDialog extends AbstractDialog  {
 	@Override
 	protected void initialize() {
 		setTitle(_("Configure book to tag"));
-		setIconImage(IconUtils.loadClassPathImage(BookToTagMethodDescriptor.ICON_PATH));
+		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/runmethod.png"));
 		setResizable(false);
 		super.initialize();
 	}

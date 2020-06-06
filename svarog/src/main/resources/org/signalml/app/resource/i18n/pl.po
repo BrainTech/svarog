@@ -1356,8 +1356,8 @@ msgid "Configure"
 msgstr "Skonfiguruj"
 
 #: org/signalml/app/action/workspace/EditToolsAction.java:27
-msgid "Configure MP executable"
-msgstr "Wybierz implementację MP"
+msgid "Configure MP executable path"
+msgstr "Wskaż ścieżkę do MP"
 
 #: org/signalml/app/method/bookaverage/BookAverageMethodDialog.java:34
 msgid "Configure book averaging"
@@ -1614,7 +1614,7 @@ msgstr "Dirac"
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfSettingsPanel.java:48
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfMethodAction.java:30
 msgid "Directed Transfer Function"
-msgstr "Directed Transfer Function"
+msgstr "Kierunkowa funkcja przejścia (DTF)"
 
 #: org/signalml/app/view/common/dialogs/OptionPane.java:1025
 #, java-format
