@@ -11,9 +11,9 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.VideoSourceSpecification;
 import org.signalml.app.video.VideoStreamSpecification;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel for selecting video stream from a list of available streams.

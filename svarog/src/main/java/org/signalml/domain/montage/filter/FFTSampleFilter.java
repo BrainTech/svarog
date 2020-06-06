@@ -4,18 +4,14 @@
 
 package org.signalml.domain.montage.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-
 import org.signalml.app.config.FFTWindowTypeSettings;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.math.fft.WindowType;
-import org.signalml.util.ResolvableString;
-import org.springframework.context.MessageSourceResolvable;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class holds a representation of parameters of FFT sample filter.

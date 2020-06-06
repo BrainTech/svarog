@@ -4,15 +4,14 @@
 
 package org.signalml.app.task;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.signalml.app.config.AbstractXMLConfiguration;
-import org.signalml.app.util.XMLUtils;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import org.signalml.app.config.AbstractXMLConfiguration;
+import org.signalml.app.util.XMLUtils;
 
 /** ApplicationTaskManagerDescriptor
  *

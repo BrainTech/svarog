@@ -5,7 +5,6 @@
 package org.signalml.method.booktotag;
 
 import java.util.LinkedHashSet;
-
 import org.signalml.domain.book.StandardBook;
 import org.signalml.plugin.export.method.BaseMethodData;
 

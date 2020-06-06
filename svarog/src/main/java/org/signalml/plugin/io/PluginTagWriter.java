@@ -7,10 +7,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
-
 import javax.swing.KeyStroke;
-
 import org.signalml.app.document.TagDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.exception.SanityCheckException;
@@ -22,8 +21,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class PluginTagWriter implements IPluginTagWriter {
 

@@ -5,9 +5,7 @@
 package org.signalml.app.view.common.components.cellrenderers;
 
 import java.util.Date;
-
 import javax.swing.table.DefaultTableCellRenderer;
-
 import org.signalml.util.FormatUtils;
 
 /** DateTableCellRenderer

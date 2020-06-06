@@ -5,7 +5,6 @@
 package org.signalml.util;
 
 import java.io.Serializable;
-
 import org.springframework.context.MessageSourceResolvable;
 
 @Deprecated

@@ -6,7 +6,6 @@ package org.signalml.app.view.tag.comparison;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-
 import org.signalml.domain.tag.TagComparisonResults;
 
 /** SourceChannelListModel

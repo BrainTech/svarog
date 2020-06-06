@@ -6,11 +6,9 @@ package org.signalml.exception;
 
 import java.util.LinkedList;
 import java.util.List;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 @Deprecated
 /** ResolvableException

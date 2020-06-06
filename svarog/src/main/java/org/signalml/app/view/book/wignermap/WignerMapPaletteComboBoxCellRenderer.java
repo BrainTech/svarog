@@ -5,7 +5,6 @@
 package org.signalml.app.view.book.wignermap;
 
 import java.awt.Component;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 

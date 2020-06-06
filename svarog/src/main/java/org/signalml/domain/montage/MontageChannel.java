@@ -4,15 +4,14 @@
 
 package org.signalml.domain.montage;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a channel of a {@link Montage montage}.

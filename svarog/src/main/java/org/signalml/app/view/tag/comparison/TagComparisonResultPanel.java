@@ -4,14 +4,11 @@
 package org.signalml.app.view.tag.comparison;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
@@ -22,8 +19,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.model.components.TableToTextExporter;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.tag.TagComparisonResult;

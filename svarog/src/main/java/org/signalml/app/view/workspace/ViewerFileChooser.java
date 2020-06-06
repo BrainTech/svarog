@@ -5,22 +5,19 @@ package org.signalml.app.view.workspace;
 
 import com.alee.laf.filechooser.FileChooserViewType;
 import com.alee.laf.filechooser.WebFileChooser;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.io.File;
 import java.util.Arrays;
 import java.util.regex.Pattern;
-
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooserFavorites;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.plugin.export.signal.Document;

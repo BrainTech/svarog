@@ -3,13 +3,11 @@
  */
 package org.signalml.app.action.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ApplicationConfiguration;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecSelector;

@@ -5,7 +5,6 @@
 package org.signalml.app.document;
 
 import java.util.EventListener;
-
 import org.signalml.plugin.export.signal.Document;
 
 /**

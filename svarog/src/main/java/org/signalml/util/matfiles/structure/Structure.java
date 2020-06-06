@@ -4,7 +4,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.util.matfiles.array.AbstractArray;
 import org.signalml.util.matfiles.array.elements.DimensionsArray;
 import org.signalml.util.matfiles.structure.elements.FieldNameLength;

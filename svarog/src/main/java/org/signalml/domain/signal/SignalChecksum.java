@@ -4,10 +4,9 @@
 
 package org.signalml.domain.signal;
 
-import java.io.Serializable;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import java.io.Serializable;
 
 /**
  * This class represents the checksum of the signal created using the

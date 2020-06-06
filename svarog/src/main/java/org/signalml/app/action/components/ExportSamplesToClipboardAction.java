@@ -4,17 +4,15 @@
 
 package org.signalml.app.action.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.document.ExportSamplesAction;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** ExportSamplesToClipboardAction
  *

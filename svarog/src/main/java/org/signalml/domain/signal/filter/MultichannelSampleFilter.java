@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
-
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;

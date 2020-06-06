@@ -10,7 +10,6 @@
 package pl.edu.fuw.MP.Core;
 
 import java.io.*;
-
 import org.signalml.domain.book.StandardBookSegment;
 
 public class BookLibrary implements BookLibraryInterface {

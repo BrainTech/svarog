@@ -3,7 +3,6 @@ package pl.edu.fuw.MP.Core;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import org.signalml.domain.book.IncrementalBookWriter;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.domain.book.StandardBookSegmentWriter;

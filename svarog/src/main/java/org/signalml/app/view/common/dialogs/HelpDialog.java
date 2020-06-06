@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.common.dialogs;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -12,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Stack;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JComponent;
@@ -22,12 +19,12 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import javax.swing.event.HyperlinkEvent.EventType;
+import javax.swing.event.HyperlinkListener;
 import javax.swing.text.Document;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

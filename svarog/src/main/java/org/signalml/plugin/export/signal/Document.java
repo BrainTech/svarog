@@ -6,7 +6,6 @@ package org.signalml.plugin.export.signal;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.List;
-
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.DocumentView;

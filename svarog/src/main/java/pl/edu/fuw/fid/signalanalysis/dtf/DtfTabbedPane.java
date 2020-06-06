@@ -13,10 +13,10 @@ import javax.swing.JTabbedPane;
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.RealMatrix;
 import org.jfree.data.xy.XYSeries;
-import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
-import org.signalml.domain.montage.Montage;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
+import org.signalml.domain.montage.Montage;
 
 /**
  * Tabbed display of the results from the DTF method.

@@ -4,28 +4,23 @@
 
 package org.signalml.domain.tag;
 
-import java.awt.Color;
-import java.io.File;
-import java.util.LinkedHashMap;
-import java.util.TreeSet;
-
-import javax.swing.KeyStroke;
-
-import org.apache.log4j.Logger;
-import org.signalml.exception.ResolvableException;
-import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.signalml.plugin.export.signal.Tag;
-import org.signalml.plugin.export.signal.TagStyle;
-
 import eega.util.tag.BlockTag;
 import eega.util.tag.ChannelTag;
 import eega.util.tag.PageTag;
 import eega.util.tag.TTagHDRRec;
 import eega.util.tag.TagDataSet;
 import eega.util.tag.TagException;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Color;
+import java.io.File;
+import java.util.LinkedHashMap;
+import java.util.TreeSet;
+import javax.swing.KeyStroke;
+import org.apache.log4j.Logger;
+import org.signalml.exception.ResolvableException;
+import org.signalml.plugin.export.SignalMLException;
+import org.signalml.plugin.export.signal.SignalSelectionType;
+import org.signalml.plugin.export.signal.Tag;
+import org.signalml.plugin.export.signal.TagStyle;
 
 /**
  * This class allows to create a {@link StyledTagSet StyledTagSet} from file

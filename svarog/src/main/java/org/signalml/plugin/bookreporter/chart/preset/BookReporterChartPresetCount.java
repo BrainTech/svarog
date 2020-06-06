@@ -6,10 +6,10 @@ import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.xy.XYIntervalSeries;
 import org.jfree.data.xy.XYIntervalSeriesCollection;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.bookreporter.chart.BookReporterChartData;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.export.signal.TagStyle;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author piotr@develancer.pl

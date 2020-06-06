@@ -4,10 +4,9 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.apache.commons.math.complex.Complex;
 import java.util.Arrays;
+import org.apache.commons.math.complex.Complex;
 import org.apache.log4j.Logger;
-
 import org.signalml.math.iirdesigner.math.ComplexPolynomial;
 
 /**

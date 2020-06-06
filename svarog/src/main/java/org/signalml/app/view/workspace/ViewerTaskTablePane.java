@@ -5,7 +5,6 @@
 package org.signalml.app.view.workspace;
 
 import java.awt.BorderLayout;
-
 import javax.swing.Box;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;

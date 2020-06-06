@@ -3,11 +3,10 @@
  */
 package org.signalml.math.iirdesigner;
 
-import org.signalml.math.iirdesigner.math.SpecialMath;
-
 import java.util.Arrays;
 import org.apache.log4j.Logger;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.math.iirdesigner.math.SpecialMath;
 
 /**
  * This class contains the values of the feedback and feedforward coefficients (B & A coefficients)

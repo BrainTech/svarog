@@ -4,13 +4,13 @@
 
 package org.signalml.app.method;
 
+import com.thoughtworks.xstream.XStream;
 import java.awt.Window;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -19,8 +19,6 @@ import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.Method;
-
-import com.thoughtworks.xstream.XStream;
 
 /** ApplicationMethodManager
  *

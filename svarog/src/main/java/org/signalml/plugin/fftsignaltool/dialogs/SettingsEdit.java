@@ -5,14 +5,11 @@
 package org.signalml.plugin.fftsignaltool.dialogs;
 
 import java.awt.Window;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractPopupDialog;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
-
 import org.signalml.plugin.fftsignaltool.dialogs.components.SettingsPanel;
 import org.springframework.validation.Errors;
 

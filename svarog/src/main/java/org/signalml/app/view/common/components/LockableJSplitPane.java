@@ -5,7 +5,6 @@
 package org.signalml.app.view.common.components;
 
 import java.awt.Component;
-
 import javax.swing.JSplitPane;
 
 /**

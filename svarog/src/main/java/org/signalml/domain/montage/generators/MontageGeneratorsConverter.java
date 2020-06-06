@@ -7,9 +7,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.signalml.domain.montage.system.MontageGenerators;
 
 /**
  * A {@link Converter} for unmarshalling the list of {@link IMontageGenerator

@@ -8,12 +8,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.SignalMLException;
 import pl.edu.fuw.fid.signalanalysis.LeftAlignedBoxPanel;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
 import pl.edu.fuw.fid.signalanalysis.waveform.AveragedBaseDialog;
 import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Dialog for selecting settings for averaged Wavelet Transform.

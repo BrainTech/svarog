@@ -7,7 +7,6 @@ package org.signalml.domain.book;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import org.signalml.domain.book.filter.AtomFilterChain;
 
 /** FilteredBookSegment

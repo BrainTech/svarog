@@ -4,7 +4,6 @@
 package org.signalml.plugin.impl.change;
 
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;

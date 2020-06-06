@@ -4,17 +4,15 @@
 
 package org.signalml.app.action.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.LinkedList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.signal.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;

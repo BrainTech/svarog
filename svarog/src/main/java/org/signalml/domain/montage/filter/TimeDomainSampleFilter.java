@@ -4,14 +4,12 @@
 
 package org.signalml.domain.montage.filter;
 
-import java.util.Arrays;
-
-import org.signalml.math.iirdesigner.ApproximationFunctionType;
-import org.signalml.math.iirdesigner.FilterType;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import org.signalml.app.config.preset.Preset;
+import org.signalml.math.iirdesigner.ApproximationFunctionType;
+import org.signalml.math.iirdesigner.FilterType;
 
 /**
  * This class holds a time domain representation of a

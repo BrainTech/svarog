@@ -4,16 +4,15 @@
 
 package org.signalml.app.view.montage.filters.charts;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.signalml.app.view.montage.filters.charts.elements.FFTFrequencyResponseChartPanel;
-import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
-import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JPanel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.view.montage.filters.charts.elements.FFTFrequencyResponseChartPanel;
+import org.signalml.app.view.montage.filters.charts.elements.FilterResponseChartPanelsWithGraphScaleSpinner;
+import org.signalml.app.view.montage.filters.charts.elements.ResponseChartPanel;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.FFTSampleFilter.Range;
 

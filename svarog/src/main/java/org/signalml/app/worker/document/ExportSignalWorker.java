@@ -4,17 +4,14 @@
 
 package org.signalml.app.worker.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import javax.swing.SwingWorker;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.MultichannelSampleProcessor;

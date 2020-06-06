@@ -2,7 +2,6 @@ package org.signalml.app.view.common.components.panels;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.GroupLayout.ParallelGroup;

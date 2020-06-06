@@ -5,9 +5,7 @@
 package org.signalml.app.view.tag;
 
 import java.util.Collection;
-
 import javax.swing.JMenu;
-
 import org.signalml.app.action.tag.TagSelectionAction;
 import org.signalml.app.util.IconUtils;
 import org.signalml.domain.tag.StyledTagSet;

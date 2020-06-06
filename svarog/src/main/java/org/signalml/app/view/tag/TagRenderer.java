@@ -14,9 +14,7 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.Stroke;
-
 import javax.swing.JComponent;
-
 import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagRenderer

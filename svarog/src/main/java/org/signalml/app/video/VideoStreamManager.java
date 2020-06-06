@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.CameraControlRequest;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestOKResponse;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Communicates with OBCI in order to initialize and drop streams.

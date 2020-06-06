@@ -1,10 +1,6 @@
 package org.signalml.app.view.common.components.filechooser;
 
 import com.alee.extended.filechooser.WebFileTable;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import java.io.File;
-import java.lang.reflect.*;
 import com.alee.extended.list.WebFileList;
 import com.alee.laf.filechooser.FileChooserViewType;
 import com.alee.laf.filechooser.WebFileChooser;
@@ -12,14 +8,15 @@ import com.alee.laf.filechooser.WebFileChooserPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.lang.reflect.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import org.signalml.app.SvarogApplication;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.plugin.export.config.SvarogConfiguration;
 
 class SingleClickWebFileChooserPanel extends WebFileChooserPanel {
 }

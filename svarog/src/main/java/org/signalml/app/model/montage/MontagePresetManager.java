@@ -4,6 +4,8 @@
 
 package org.signalml.app.model.montage;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.io.IOException;
 import org.signalml.app.config.preset.Preset;
@@ -12,9 +14,6 @@ import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.system.EegSystem;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MontagePresetManager
  *

@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Locale;
-
 import org.apache.log4j.Logger;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;

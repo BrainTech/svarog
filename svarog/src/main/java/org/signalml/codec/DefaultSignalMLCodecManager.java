@@ -4,21 +4,18 @@
 
 package org.signalml.codec;
 
+import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.SignalMLCodecConfiguration;
 import org.signalml.app.config.SignalMLCodecDescriptor;
 import org.signalml.util.Util;
-
-import com.thoughtworks.xstream.XStream;
 
 
 /** DefaultSignalMLCodecManager

@@ -3,28 +3,24 @@
  */
 
 package org.signalml.domain.montage;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.generators.IMontageGenerator;
-import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.util.Util;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * This class represents the signal montage.

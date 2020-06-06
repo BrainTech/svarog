@@ -1,11 +1,9 @@
 package org.signalml.app.method.ep.view.tags;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.TagStyle;
 

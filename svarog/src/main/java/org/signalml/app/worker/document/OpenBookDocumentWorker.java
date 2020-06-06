@@ -4,7 +4,6 @@
 package org.signalml.app.worker.document;
 
 import javax.swing.SwingWorker;
-
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;

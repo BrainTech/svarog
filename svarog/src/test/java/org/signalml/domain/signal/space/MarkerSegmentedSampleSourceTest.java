@@ -1,12 +1,10 @@
 package org.signalml.domain.signal.space;
 
-import static org.junit.Assert.assertEquals;
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;

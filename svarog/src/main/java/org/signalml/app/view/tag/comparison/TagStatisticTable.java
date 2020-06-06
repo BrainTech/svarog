@@ -6,11 +6,9 @@ package org.signalml.app.view.tag.comparison;
 
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.components.ExportToClipboardAction;
 import org.signalml.app.action.document.ExportToFileAction;

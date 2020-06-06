@@ -6,11 +6,9 @@ package org.signalml.method.ep;
 
 import java.io.Serializable;
 import java.util.List;
-
-import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
-import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.domain.signal.space.MarkerSegmentedSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
+import org.signalml.plugin.export.method.BaseMethodData;
 import org.springframework.validation.Errors;
 
 /** EvokedPotentialData

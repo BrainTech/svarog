@@ -8,7 +8,6 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import javax.swing.JViewport;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;

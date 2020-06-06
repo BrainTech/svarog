@@ -1,14 +1,12 @@
 package org.signalml.app.action.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.io.File;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.domain.tag.EEGLabTagExporter;
 import org.signalml.domain.tag.StyledTagSet;

@@ -4,18 +4,16 @@
 
 package org.signalml.app.config;
 
-import javax.swing.ToolTipManager;
-
-import org.signalml.app.view.book.wignermap.WignerMapPalette;
-import org.signalml.app.view.signal.SignalColor;
-import org.signalml.app.view.tag.TagPaintMode;
-import org.signalml.domain.book.WignerMapScaleType;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Iterator;
+import javax.swing.ToolTipManager;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
+import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.tag.TagPaintMode;
+import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.plugin.export.signal.Document;
 
 /**

@@ -5,9 +5,7 @@
 package org.signalml.app.view.book.tools;
 
 import java.awt.Cursor;
-
 import javax.swing.event.MouseInputAdapter;
-
 import org.signalml.app.view.book.BookView;
 
 /** BookTool

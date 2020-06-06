@@ -6,7 +6,6 @@ package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.util.HashMap;
 import java.util.List;
-
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 

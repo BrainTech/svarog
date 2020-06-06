@@ -5,9 +5,7 @@
 package org.signalml.codec;
 
 import java.io.File;
-
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.codec.generator.xml.Codec;
 import org.signalml.codec.generator.xml.XMLCodecException;

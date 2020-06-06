@@ -1,7 +1,6 @@
 package org.signalml.app.worker.monitor.messages;
 
 import java.util.List;
-
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;

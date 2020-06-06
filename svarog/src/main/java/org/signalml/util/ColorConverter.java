@@ -4,10 +4,9 @@
 
 package org.signalml.util;
 
+import com.thoughtworks.xstream.converters.SingleValueConverter;
 import java.awt.Color;
 import java.util.Formatter;
-
-import com.thoughtworks.xstream.converters.SingleValueConverter;
 
 /**
  * ColorConverter provides conversion between Color and String.

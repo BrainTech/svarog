@@ -5,7 +5,6 @@
 package org.signalml.domain.signal.samplesource;
 
 import java.util.Arrays;
-
 import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;

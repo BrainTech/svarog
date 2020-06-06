@@ -2,7 +2,6 @@ package org.signalml.util.matfiles.types;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import org.signalml.util.matfiles.elements.IMatFileElement;
 
 /**

@@ -2,7 +2,6 @@ package org.signalml.plugin.method.logic;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.signalml.method.MethodExecutionTracker;
 
 public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationProgressPhase>

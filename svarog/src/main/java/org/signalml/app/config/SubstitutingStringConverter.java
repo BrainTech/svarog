@@ -4,18 +4,16 @@
 
 package org.signalml.app.config;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.io.File;
-
-import org.signalml.app.SvarogApplication;
-import org.signalml.util.Util;
-
 import com.thoughtworks.xstream.converters.Converter;
 import com.thoughtworks.xstream.converters.MarshallingContext;
 import com.thoughtworks.xstream.converters.UnmarshallingContext;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+import org.signalml.app.SvarogApplication;
+import org.signalml.util.Util;
 
 /** ColorConverter
  *

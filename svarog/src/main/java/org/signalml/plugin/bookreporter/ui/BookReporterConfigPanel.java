@@ -15,14 +15,14 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._H;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.bookreporter.chart.preset.BookReporterChartPreset;
 import org.signalml.plugin.bookreporter.data.BookReporterParameters;
 import org.signalml.plugin.bookreporter.ui.components.BookReporterChartRow;
 import org.signalml.plugin.bookreporter.ui.components.BookReporterTitleLabel;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._H;
 
 /**
  * @author piotr@develancer.pl

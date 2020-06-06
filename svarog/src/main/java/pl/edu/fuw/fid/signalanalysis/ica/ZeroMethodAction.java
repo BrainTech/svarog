@@ -9,6 +9,7 @@ import org.apache.commons.math.linear.MatrixUtils;
 import org.apache.commons.math.linear.RealMatrix;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.signal.RawSignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.montage.MontageException;
@@ -25,7 +26,6 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.impl.PluginAccessClass;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Action triggered whenever user chooses to zero some ICA components

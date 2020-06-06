@@ -5,11 +5,9 @@ package org.signalml.app.view.workspace;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
-
 import org.signalml.app.action.document.ActivateDocumentAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.selector.ActionFocusListener;

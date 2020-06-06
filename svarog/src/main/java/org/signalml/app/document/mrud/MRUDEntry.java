@@ -3,21 +3,18 @@
  */
 package org.signalml.app.document.mrud;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.springframework.context.MessageSourceResolvable;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
 /**
  * Contains the serializable description of a file:

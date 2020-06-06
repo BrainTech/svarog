@@ -1,17 +1,15 @@
 package org.signalml.app.view.tag.styles.attributes;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.TitledBorder;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.tag.TagStylePropertiesPanel;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The panel for editing tag attributes definitions for the current tag style.

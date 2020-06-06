@@ -4,18 +4,13 @@
 
 package org.signalml.app.view.montage.visualreference;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import javax.swing.event.EventListenerList;
-
-import org.signalml.domain.montage.system.IChannelFunction;
-import org.signalml.domain.montage.system.ChannelType;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageEvent;
 import org.signalml.domain.montage.MontageException;

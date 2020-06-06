@@ -6,7 +6,6 @@ package org.signalml.app.action.tag;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TagDocumentFocusSelector;

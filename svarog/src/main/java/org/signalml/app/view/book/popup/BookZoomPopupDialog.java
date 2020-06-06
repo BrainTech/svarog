@@ -5,9 +5,7 @@
 package org.signalml.app.view.book.popup;
 
 import java.awt.Window;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.book.BookZoomSettingsPanel;
 import org.signalml.plugin.export.SignalMLException;

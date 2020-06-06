@@ -6,7 +6,6 @@ package org.signalml.plugin.export.view;
 
 import javax.swing.JTree;
 import javax.swing.tree.TreeModel;
-
 import org.signalml.app.view.I18nMessage;
 import org.springframework.context.MessageSourceResolvable;
 

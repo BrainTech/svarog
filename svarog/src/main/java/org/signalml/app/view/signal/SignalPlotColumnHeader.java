@@ -4,9 +4,6 @@
 
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,12 +22,12 @@ import java.util.Formatter;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TimeZone;
-
 import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
-
 import org.signalml.app.document.TagDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.tag.TagRenderer;
 import org.signalml.app.view.tag.comparison.TagDifferenceRenderer;
 import org.signalml.domain.tag.StyledTagSet;

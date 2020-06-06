@@ -10,7 +10,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-
 import org.signalml.util.Util;
 
 /** VisualReferenceBin

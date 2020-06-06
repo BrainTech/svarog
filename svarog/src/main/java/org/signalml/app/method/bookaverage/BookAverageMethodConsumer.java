@@ -3,12 +3,12 @@ package org.signalml.app.method.bookaverage;
 import java.awt.Window;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.Method;
 import org.signalml.method.bookaverage.BookAverageData;
 import org.signalml.method.bookaverage.BookAverageResult;
 import org.signalml.method.bookaverage.TimeFrequencyMapPresenter;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * BookAverageMethodConsumer

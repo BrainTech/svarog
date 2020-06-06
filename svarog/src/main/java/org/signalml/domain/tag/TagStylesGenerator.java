@@ -5,17 +5,13 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Stack;
 import java.util.Random;
-
+import java.util.Stack;
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.SignalSelectionType;
-import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
-import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 

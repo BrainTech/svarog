@@ -4,16 +4,13 @@
 
 package org.signalml.app.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.Icon;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.MessageSourceResolvable;
 

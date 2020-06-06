@@ -4,7 +4,6 @@
 package org.signalml.app.util;
 
 import java.io.File;
-
 import javax.swing.filechooser.FileFilter;
 
 /** DirectoryFileFilter

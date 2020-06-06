@@ -5,7 +5,6 @@
 package org.signalml.app.method.ep;
 
 import java.awt.Window;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.method.ApplicationMethodManager;

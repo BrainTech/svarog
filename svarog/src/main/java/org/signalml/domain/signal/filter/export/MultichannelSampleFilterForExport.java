@@ -2,8 +2,6 @@ package org.signalml.domain.signal.filter.export;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;

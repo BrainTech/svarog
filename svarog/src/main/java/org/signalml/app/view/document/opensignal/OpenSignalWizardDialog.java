@@ -1,20 +1,15 @@
 package org.signalml.app.view.document.opensignal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.Window;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker.StateValue;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.managers.PredefinedTimeDomainFiltersPresetManager;
@@ -23,6 +18,7 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractWizardDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.SignalMontagePanel;

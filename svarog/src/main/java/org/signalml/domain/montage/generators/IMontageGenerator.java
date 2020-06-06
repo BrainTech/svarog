@@ -6,15 +6,10 @@ package org.signalml.domain.montage.generators;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceMontage;
-
-import org.springframework.context.MessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.validation.Errors;
 
 /**
  * This interface for all montage generators allows to create and

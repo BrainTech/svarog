@@ -5,7 +5,6 @@
 package org.signalml.method.iterator;
 
 import java.util.Arrays;
-
 import org.signalml.method.MethodExecutionTracker;
 
 /** TickerOffsettingTrackerWrapper

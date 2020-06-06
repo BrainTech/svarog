@@ -5,7 +5,6 @@ package org.signalml.app.method.mp5;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;

@@ -3,16 +3,14 @@
  */
 package org.signalml.app.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.domain.book.BookFormatException;

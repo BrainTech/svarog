@@ -5,11 +5,7 @@ package org.signalml.app.action.workspace;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-
 import org.apache.log4j.Logger;
-
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import org.signalml.app.method.ApplicationIterableMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -17,6 +13,7 @@ import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.iterate.IterationSetupDescriptor;
 import org.signalml.app.method.iterate.IterationSetupDialog;
 import org.signalml.app.task.ApplicationTaskManager;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.dialogs.TaskStatusDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.method.Method;

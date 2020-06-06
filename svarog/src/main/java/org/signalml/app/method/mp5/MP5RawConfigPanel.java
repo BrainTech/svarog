@@ -3,25 +3,17 @@
  */
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.AnyChangeDocumentAdapter;
-import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.components.panels.TextPanePanel;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.method.mp5.MP5Parameters;
-
-import org.springframework.validation.Errors;
 
 /** MP5RawConfigPanel
  *

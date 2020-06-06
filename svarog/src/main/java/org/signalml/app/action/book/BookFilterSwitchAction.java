@@ -4,15 +4,13 @@
 
 package org.signalml.app.action.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.BookDocumentFocusSelector;
 import org.signalml.app.document.BookDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.filter.AtomFilterChain;
 
 /** BookFilterSwitchAction

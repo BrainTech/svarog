@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;

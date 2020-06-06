@@ -4,14 +4,11 @@
 
 package org.signalml.app.model.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegSystem;
-
-import org.signalml.util.ResolvableString;
 
 /** ReferenceGeneratorListModel
  *

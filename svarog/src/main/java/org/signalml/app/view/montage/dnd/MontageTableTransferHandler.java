@@ -9,12 +9,10 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Arrays;
-
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.montage.MontageTable;
 import org.signalml.domain.montage.Montage;

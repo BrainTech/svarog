@@ -1,5 +1,6 @@
 package org.signalml.plugin.bookreporter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.bookreporter.ui.BookReporterPluginAction;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
@@ -10,7 +11,6 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.tool.PluginAccessHelper;
 import org.signalml.plugin.tool.PluginResourceRepository;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author piotr@develancer.pl

@@ -3,9 +3,7 @@ package pl.edu.fuw.MP.Core;
 import java.io.*;
 import java.util.Enumeration;
 import java.util.Vector;
-
 import org.signalml.domain.book.StandardBookAtom;
-//import org.signalml.domain.book.StandardBookAtomWriter;
 import org.signalml.domain.book.StandardBookAtomWriter;
 
 public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {

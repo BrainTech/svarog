@@ -5,7 +5,6 @@
 package org.signalml.method.mp5;
 
 import java.io.File;
-
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
 import org.springframework.context.MessageSourceResolvable;

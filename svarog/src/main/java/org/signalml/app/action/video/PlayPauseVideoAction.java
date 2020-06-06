@@ -5,11 +5,11 @@ import javax.swing.JSlider;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.OfflineVideoFrame;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Action for video play/pause button.

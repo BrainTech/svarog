@@ -4,11 +4,9 @@
 
 package org.signalml.domain.montage.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.math.iirdesigner.FilterType;
 
 /**

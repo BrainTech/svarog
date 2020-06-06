@@ -5,7 +5,6 @@
 package org.signalml.compilation.janino;
 
 import java.io.BufferedWriter;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,15 +12,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Arrays;
-
 import org.apache.log4j.Logger;
 import org.codehaus.janino.DebuggingInformation;
 import org.codehaus.janino.JavaSourceClassLoader;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.compilation.CompilationException;
 import org.signalml.compilation.DynamicCompiler;
 import org.signalml.compilation.JavaCodeProvider;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
 
 /** JaninoDynamicCompiler
  *

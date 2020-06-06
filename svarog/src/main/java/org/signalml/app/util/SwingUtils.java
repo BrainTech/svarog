@@ -4,23 +4,19 @@
 
 package org.signalml.app.util;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
-
 import javax.swing.JButton;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeListener;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
-
 import org.springframework.core.io.ClassPathResource;
 
 /** ButtonUtils

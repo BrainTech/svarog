@@ -17,9 +17,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.VideoSourceSpecification;
 import org.signalml.app.video.VideoStreamSpecification;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel for selecting video source and stream from a list of available sources.

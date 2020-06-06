@@ -4,17 +4,9 @@
 
 package org.signalml.math.iirdesigner;
 
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.ApproximationFunctionType;
-import org.signalml.math.iirdesigner.BadFilterParametersException;
-import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterType;
-import org.signalml.math.iirdesigner.IIRDesigner;
-
-import java.lang.Math.*;
+import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 /**
  * This class performs unit tests on the {@link IIRDesigner} class.

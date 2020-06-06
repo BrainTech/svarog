@@ -1,9 +1,7 @@
 package org.signalml.app.worker.signal;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.concurrent.ExecutionException;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.signalml.app.model.tag.SlopeType;
 import org.signalml.domain.tag.StyledTagSet;

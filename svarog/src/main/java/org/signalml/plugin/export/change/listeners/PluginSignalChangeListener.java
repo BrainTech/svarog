@@ -1,7 +1,6 @@
 package org.signalml.plugin.export.change.listeners;
 
 import java.util.EventListener;
-
 import org.signalml.plugin.export.change.events.PluginSignalChangeEvent;
 
 /**

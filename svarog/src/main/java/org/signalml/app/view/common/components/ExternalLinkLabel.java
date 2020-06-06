@@ -14,10 +14,8 @@ import java.awt.font.TextAttribute;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
-
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
 
 /**

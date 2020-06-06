@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Vector;
-
 import org.signalml.domain.book.BookFormatException;
 import org.signalml.domain.book.StandardBookSegment;
 

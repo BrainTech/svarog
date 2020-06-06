@@ -6,7 +6,6 @@ package org.signalml.app.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 

@@ -5,16 +5,13 @@ package org.signalml.domain.montage.generators;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
-import org.signalml.domain.montage.generators.AbstractMontageGenerator;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.springframework.validation.Errors;
+import org.signalml.domain.montage.system.ChannelType;
 
 /**
  * This class represents a generator for an average reference montage. In the

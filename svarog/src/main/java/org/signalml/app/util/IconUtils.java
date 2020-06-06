@@ -11,16 +11,13 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.ImageIcon;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.task.TaskStatus;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** IconUtils
  *

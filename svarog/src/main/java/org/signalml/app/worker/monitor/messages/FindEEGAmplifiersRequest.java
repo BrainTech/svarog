@@ -2,7 +2,6 @@ package org.signalml.app.worker.monitor.messages;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class FindEEGAmplifiersRequest extends LongRequest {

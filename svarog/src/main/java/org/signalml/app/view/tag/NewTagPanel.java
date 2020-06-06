@@ -3,14 +3,11 @@
  */
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -20,12 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
-
 import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
-
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.plugin.export.signal.TagStyle;
 

@@ -15,9 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-
 import javax.swing.table.TableModel;
-
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
 

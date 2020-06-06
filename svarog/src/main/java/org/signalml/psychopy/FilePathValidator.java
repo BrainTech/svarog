@@ -1,7 +1,6 @@
 package org.signalml.psychopy;
 
 import java.io.File;
-import java.util.Objects;
 
 public class FilePathValidator {
 	public static boolean pathIsValid(String path) {

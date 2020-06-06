@@ -2,11 +2,9 @@ package pl.edu.fuw.MP;
 
 import java.util.Enumeration;
 import java.util.Vector;
-
 import org.signalml.domain.book.BookFormatException;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookSegment;
-
 import pl.edu.fuw.MP.Core.*;
 
 public class MPBookStore implements StandardBook {

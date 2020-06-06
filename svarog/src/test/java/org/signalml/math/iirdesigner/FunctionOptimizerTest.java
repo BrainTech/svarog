@@ -4,14 +4,12 @@
 
 package org.signalml.math.iirdesigner;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.EllipticIIRDesigner;
 import org.signalml.math.iirdesigner.EllipticIIRDesigner.KRatio;
 import org.signalml.math.iirdesigner.EllipticIIRDesigner.VRatio;
 import org.signalml.math.iirdesigner.math.FunctionOptimizer;
-
-import static org.junit.Assert.*;
 
 /**
  * This class performes unit tests on {@link FunctionOptimizer}

@@ -18,11 +18,11 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.plugin.bookreporter.data.BookReporterParameters;
 import org.signalml.plugin.export.view.FileChooser;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author piotr@develancer.pl

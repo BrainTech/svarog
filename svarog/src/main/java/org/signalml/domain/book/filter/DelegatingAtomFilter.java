@@ -4,12 +4,13 @@
 
 package org.signalml.domain.book.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.compilation.CompilationException;
 import org.signalml.compilation.DynamicCompilationContext;
 import org.signalml.compilation.DynamicCompiler;
@@ -18,9 +19,6 @@ import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * DelegatingAtomFilter

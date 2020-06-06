@@ -19,7 +19,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.stream.IntStream;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,9 +29,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
-
 import org.apache.log4j.Logger;
-
 import org.signalml.app.model.montage.ReferenceTableModel;
 import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
 import org.signalml.domain.montage.MontageChannel;

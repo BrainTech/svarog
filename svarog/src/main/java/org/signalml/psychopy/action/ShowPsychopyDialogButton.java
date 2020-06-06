@@ -1,17 +1,15 @@
 package org.signalml.psychopy.action;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.exception.SanityCheckException;
-import org.signalml.psychopy.PsychopyExperiment;
-import org.signalml.psychopy.view.PsychopyExperimentDialog;
-
 import java.awt.event.ActionEvent;
 import org.signalml.app.action.document.monitor.MonitorRecordingAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.monitor.recording.RecordingState;
+import org.signalml.exception.SanityCheckException;
+import org.signalml.psychopy.PsychopyExperiment;
+import org.signalml.psychopy.view.PsychopyExperimentDialog;
 
 public class ShowPsychopyDialogButton extends MonitorRecordingAction {
 

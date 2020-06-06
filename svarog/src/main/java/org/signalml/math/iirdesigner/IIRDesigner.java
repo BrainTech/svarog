@@ -4,8 +4,8 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 
 /**
  * This class represents a designer capable of designing digital filters, i.e. calculating

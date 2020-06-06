@@ -1,9 +1,8 @@
 package org.signalml.plugin.domain.montage;
 
 import java.util.Map;
-
-import org.signalml.plugin.exception.PluginAlgorithmDataException;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.plugin.exception.PluginAlgorithmDataException;
 
 public class PluginChannelAccessHelper {
 	public static double[] GetChannelSignal(Map<String, Integer> channels,

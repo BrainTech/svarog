@@ -2,7 +2,6 @@ package org.signalml.app.model.document.opensignal.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.worker.monitor.messages.AmplifierType;
 
 public class Amplifier {

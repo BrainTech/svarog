@@ -5,7 +5,6 @@ package org.signalml.app.model.signal;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;

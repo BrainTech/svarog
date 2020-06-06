@@ -12,6 +12,7 @@ import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.bookaverage.TimeFrequencyMapPresenter;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
@@ -22,7 +23,6 @@ import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
 import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Base class for action requesting computation of averaged time-frequency maps.

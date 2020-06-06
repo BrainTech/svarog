@@ -6,7 +6,6 @@ package org.signalml.domain.signal.space;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**

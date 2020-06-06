@@ -3,12 +3,9 @@
  */
 package org.signalml.app.view.workspace;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -17,7 +14,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ActionFocusSupport;
@@ -39,10 +35,10 @@ import org.signalml.app.action.workspace.tasks.SuspendTaskAction;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.model.components.TaskTableModel;
 import org.signalml.app.task.ApplicationTaskManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.cellrenderers.DateTableCellRenderer;
 import org.signalml.app.view.common.components.cellrenderers.ProgressTableCellRenderer;
 import org.signalml.app.view.common.components.cellrenderers.TaskStatusCellRenderer;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.task.Task;
 import org.signalml.task.TaskStatus;

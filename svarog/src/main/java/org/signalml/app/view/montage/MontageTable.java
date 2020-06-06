@@ -5,7 +5,6 @@ package org.signalml.app.view.montage;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.DropMode;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -14,7 +13,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.montage.MontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;

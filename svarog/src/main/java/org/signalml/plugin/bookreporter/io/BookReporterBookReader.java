@@ -7,11 +7,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import org.signalml.app.document.BookDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.plugin.bookreporter.data.book.BookReporterAtom;
 import org.signalml.plugin.bookreporter.exception.BookReporterBookReaderException;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author piotr@develancer.pl

@@ -1,13 +1,11 @@
 package org.signalml.app.action.document.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.VideoStreamSpecification;
 import org.signalml.app.worker.monitor.recording.RecordingState;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;

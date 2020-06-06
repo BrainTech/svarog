@@ -4,7 +4,6 @@
 package org.signalml.app.method.mp5;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 
 

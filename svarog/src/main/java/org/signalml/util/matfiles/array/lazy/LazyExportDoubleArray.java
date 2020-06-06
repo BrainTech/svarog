@@ -2,7 +2,6 @@ package org.signalml.util.matfiles.array.lazy;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import org.signalml.util.matfiles.array.GenericArray;
 import org.signalml.util.matfiles.array.elements.DimensionsArray;
 import org.signalml.util.matfiles.types.ArrayClass;

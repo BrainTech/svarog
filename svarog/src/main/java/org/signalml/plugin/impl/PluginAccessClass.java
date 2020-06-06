@@ -1,17 +1,16 @@
 package org.signalml.plugin.impl;
 
 import org.apache.log4j.Logger;
-import org.signalml.app.util.i18n.SvarogI18n;
 import org.signalml.app.view.workspace.ViewerElementManager;
+import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;
 import org.signalml.plugin.export.change.SvarogAccessChangeSupport;
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.method.SvarogAccessMethod;
+import org.signalml.plugin.export.resources.SvarogAccessResources;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import org.signalml.plugin.export.resources.SvarogAccessResources;
 import org.signalml.plugin.impl.change.SvarogAccessChangeSupportImpl;
-import org.signalml.plugin.export.Plugin;
 
 /**
  * Implementation of {@link SvarogAccess} interface.

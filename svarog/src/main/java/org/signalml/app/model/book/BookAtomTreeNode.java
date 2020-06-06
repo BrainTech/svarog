@@ -4,14 +4,12 @@
 
 package org.signalml.app.model.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.BookAtomType;
 import org.signalml.domain.book.StandardBookAtom;
 import org.springframework.context.MessageSourceResolvable;

@@ -8,9 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-
 import org.signalml.util.Util;
-
 import pl.edu.fuw.MP.WignerMap.WignerMap;
 
 /** SegmentReconstructionProvider

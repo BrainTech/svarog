@@ -1,14 +1,11 @@
 package org.signalml.domain.signal.filter.iir;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.After;
+import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.iir.AbstractIIRSinglechannelSampleFilter;
-import org.signalml.domain.signal.filter.iir.OnlineIIRSinglechannelSampleFilter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.RoundBufferMultichannelSampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;

@@ -5,10 +5,8 @@
 package org.signalml.app.view.tag;
 
 import java.awt.Dimension;
-
 import javax.swing.Icon;
 import javax.swing.JToggleButton;
-
 import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStyleToggleButton

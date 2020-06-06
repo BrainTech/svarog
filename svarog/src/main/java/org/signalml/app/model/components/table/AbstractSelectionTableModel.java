@@ -2,7 +2,6 @@ package org.signalml.app.model.components.table;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
 
 public abstract class AbstractSelectionTableModel<T extends Object> extends AbstractTableModel {

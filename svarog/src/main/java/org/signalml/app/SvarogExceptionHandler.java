@@ -2,7 +2,6 @@ package org.signalml.app;
 
 import com.getsentry.raven.Raven;
 import java.awt.Window;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 

@@ -4,20 +4,15 @@
 
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.SourceMontageDescriptor;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.plugin.export.SignalMLException;
-
-import org.springframework.validation.Errors;
 
 /** SourceMontageDialog
  *

@@ -1,11 +1,9 @@
 package org.signalml.app.view.book.wignermap;
 
 import javax.swing.Icon;
-
 import org.signalml.app.view.book.palette.GrayscaleMapPalette;
 import org.signalml.app.view.book.palette.IWignerMapPalette;
 import org.signalml.app.view.book.palette.RainbowMapPalette;
-
 import pl.edu.fuw.MP.Core.Book;
 import pl.edu.fuw.MP.WignerMap.WignerMap;
 

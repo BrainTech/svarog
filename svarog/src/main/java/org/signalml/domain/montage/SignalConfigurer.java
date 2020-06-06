@@ -13,11 +13,10 @@ import java.awt.RenderingHints;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
-
 import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.system.ChannelFunction;
+import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * This class represents the {@link SignalTypeConfigurer configurer} for

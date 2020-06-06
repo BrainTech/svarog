@@ -4,16 +4,17 @@
 
 package org.signalml.app.config.workspace;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
+import org.signalml.app.config.ZoomSignalSettings;
+import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.document.ManagedDocumentType;
@@ -29,16 +30,10 @@ import org.signalml.app.util.SnapToPageRunnable;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
-import org.signalml.codec.SignalMLCodec;
 import org.signalml.domain.montage.Montage;
+import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
-import org.signalml.app.config.ZoomSignalSettings;
-import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
-import org.signalml.domain.montage.system.EegSystem;
 
 /** WorkspaceSignal
  *

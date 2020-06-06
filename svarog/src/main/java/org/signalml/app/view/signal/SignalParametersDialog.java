@@ -3,22 +3,18 @@
  */
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.net.URL;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.preferences.SignalParametersPanel;
 import org.signalml.plugin.export.SignalMLException;
-
 import org.springframework.validation.Errors;
 
 /**

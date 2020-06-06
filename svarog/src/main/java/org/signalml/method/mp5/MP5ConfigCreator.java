@@ -18,7 +18,6 @@ import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.util.SvarogConstants;
 import org.signalml.util.Util;
 

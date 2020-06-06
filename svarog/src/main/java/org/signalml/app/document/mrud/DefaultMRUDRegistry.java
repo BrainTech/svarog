@@ -3,6 +3,7 @@
  */
 package org.signalml.app.document.mrud;
 
+import com.thoughtworks.xstream.XStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -10,14 +11,10 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
-
 import javax.swing.event.EventListenerList;
-
 import org.signalml.app.config.MRUDConfiguration;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.plugin.export.signal.Document;
-
-import com.thoughtworks.xstream.XStream;
 
 /**
  * Implementation of {@link MRUDRegistry}.

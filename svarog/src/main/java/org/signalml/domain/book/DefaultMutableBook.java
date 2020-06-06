@@ -7,9 +7,8 @@ package org.signalml.domain.book;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import org.signalml.util.Util;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+import org.signalml.util.Util;
 
 /** DefaultMutableBook
  *

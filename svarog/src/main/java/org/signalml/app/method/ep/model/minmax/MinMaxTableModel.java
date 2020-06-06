@@ -1,12 +1,9 @@
 package org.signalml.app.method.ep.model.minmax;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.List;
-
 import javax.swing.table.AbstractTableModel;
-
 import org.signalml.app.method.ep.helpers.minmax.ChannelStatisticsCalculator;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.util.FormatUtils;
 

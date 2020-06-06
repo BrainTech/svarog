@@ -10,7 +10,6 @@ import java.awt.Shape;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.apache.commons.math.linear.RealMatrix;
-
 import org.signalml.app.util.GeometryUtils;
 import org.signalml.app.view.montage.visualreference.VisualReferenceArrow;
 import org.signalml.app.view.montage.visualreference.VisualReferenceBin;

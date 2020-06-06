@@ -4,7 +4,6 @@
 package org.signalml.plugin.impl;
 
 import java.util.ArrayList;
-
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.SignalSamples;
 

@@ -7,7 +7,6 @@ package org.signalml.domain.book;
 import java.beans.PropertyChangeEvent;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
-
 import org.signalml.domain.book.filter.AtomFilterChain;
 
 /** BookFilterProcessor

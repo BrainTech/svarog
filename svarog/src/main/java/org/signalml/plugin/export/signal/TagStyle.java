@@ -4,8 +4,6 @@
 
 package org.signalml.plugin.export.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Stroke;
@@ -13,11 +11,10 @@ import java.beans.IntrospectionException;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.KeyStroke;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 import org.springframework.context.MessageSourceResolvable;

@@ -4,15 +4,12 @@
 
 package org.signalml.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
-
 import org.signalml.app.config.preset.Preset;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.springframework.validation.Errors;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MP5Parameters
  *

@@ -3,11 +3,8 @@
  */
 package org.signalml.app.action.workspace.tasks;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.TaskFocusSelector;
@@ -16,6 +13,7 @@ import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodResultConsumer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.DialogResultListener;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.method.Method;

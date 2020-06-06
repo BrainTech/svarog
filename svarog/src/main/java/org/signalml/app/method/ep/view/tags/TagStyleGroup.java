@@ -1,9 +1,8 @@
 package org.signalml.app.method.ep.view.tags;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a group of tag style names.

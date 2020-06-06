@@ -1,9 +1,8 @@
 package org.signalml.app.worker.monitor.recording;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;

@@ -1,13 +1,12 @@
 package org.signalml.app.view.document.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.AbstractTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Table for channel definitions.

@@ -5,9 +5,7 @@
 package org.signalml.app.model.components;
 
 import java.beans.PropertyEditorSupport;
-
 import javax.swing.tree.TreePath;
-
 import org.signalml.app.document.signal.SignalDocument;
 
 /** ChannelPropertyEditor

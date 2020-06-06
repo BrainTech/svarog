@@ -9,7 +9,6 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.nio.channels.Pipe.SourceChannel;
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;

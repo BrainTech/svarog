@@ -1,8 +1,8 @@
 package org.signalml.util;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import static org.junit.Assert.*;
 import static org.signalml.util.Util.hasSpecialChars;
 
 public class TestUtil_hasSpecialChars extends BaseTestCase {

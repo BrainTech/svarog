@@ -1,16 +1,14 @@
 package org.signalml.app.view.preferences;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.Window;
 import javax.swing.JComponent;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.method.mp5.MP5ExecutorManager;
 import org.signalml.app.method.mp5.MP5LocalExecutorDialog;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.mp5.MP5Executor;

@@ -4,14 +4,14 @@
 
 package org.signalml.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.Annotations;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.XMLUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.book.BookBuilder;
 import org.signalml.domain.book.BookBuilderImpl;
 import org.signalml.domain.book.BookFormatException;
@@ -43,11 +43,7 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.util.Util;
 import org.springframework.validation.Errors;
-
 import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
 
 /** MP5Method
  *

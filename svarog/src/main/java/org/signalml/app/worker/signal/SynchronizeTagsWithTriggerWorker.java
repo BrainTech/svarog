@@ -1,8 +1,7 @@
 package org.signalml.app.worker.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.signal.Tag;

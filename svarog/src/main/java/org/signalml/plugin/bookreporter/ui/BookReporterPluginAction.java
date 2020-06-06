@@ -1,9 +1,9 @@
 package org.signalml.plugin.bookreporter.ui;
 
 import java.awt.event.ActionEvent;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.bookreporter.BookReporterPlugin;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.method.PluginMethodManager;
 
 /**

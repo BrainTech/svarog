@@ -5,7 +5,6 @@ package org.signalml.app.document;
 
 import java.io.File;
 import java.util.Iterator;
-
 import org.signalml.plugin.export.signal.Document;
 
 /**

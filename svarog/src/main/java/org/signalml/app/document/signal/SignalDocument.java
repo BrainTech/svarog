@@ -4,9 +4,7 @@
 
 package org.signalml.app.document.signal;
 
-import java.io.InvalidClassException;
 import java.util.List;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.signal.SignalView;
@@ -15,7 +13,6 @@ import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.plugin.export.change.listeners.PluginSignalChangeListener;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 

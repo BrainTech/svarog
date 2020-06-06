@@ -4,19 +4,16 @@
 
 package org.signalml.app.view.signal.export;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Window;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractSignalSpaceAwarePresetDialog;
 import org.signalml.app.view.signal.signalselection.SignalSpacePanel;
 import org.signalml.domain.signal.space.SignalSpace;

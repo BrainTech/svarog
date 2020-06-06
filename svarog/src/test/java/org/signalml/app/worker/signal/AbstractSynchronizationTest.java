@@ -3,7 +3,6 @@ package org.signalml.app.worker.signal;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.BaseTestCase;
 import org.signalml.app.model.tag.SlopeType;
 import org.signalml.app.model.tag.SynchronizeTagsWithTriggerParameters;

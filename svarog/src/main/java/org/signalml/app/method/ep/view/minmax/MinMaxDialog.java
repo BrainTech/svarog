@@ -1,24 +1,21 @@
 package org.signalml.app.method.ep.view.minmax;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-
 import org.signalml.app.method.ep.action.SaveStatisticsAction;
 import org.signalml.app.method.ep.model.minmax.MinMaxTableModel;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.ep.EvokedPotentialResult;

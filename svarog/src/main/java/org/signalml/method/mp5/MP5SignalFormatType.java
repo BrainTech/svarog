@@ -5,7 +5,6 @@
 package org.signalml.method.mp5;
 
 import java.io.Serializable;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /** MP5SignalFormatType

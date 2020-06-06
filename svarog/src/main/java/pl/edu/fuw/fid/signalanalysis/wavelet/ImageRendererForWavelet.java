@@ -1,13 +1,13 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
 import org.apache.commons.math.complex.Complex;
-import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
-import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
-import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
-import pl.edu.fuw.fid.signalanalysis.SingleSignal;
-import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
-import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import pl.edu.fuw.fid.signalanalysis.AsyncStatus;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageRenderer;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageResult;
+import pl.edu.fuw.fid.signalanalysis.waveform.PreferencesWithAxes;
+import pl.edu.fuw.fid.signalanalysis.waveform.Waveform;
 
 /**
  * Computes Wavelet Transform coefficients for parameters selected by the user.

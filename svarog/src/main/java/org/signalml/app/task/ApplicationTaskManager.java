@@ -4,18 +4,15 @@
 
 package org.signalml.app.task;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.method.ApplicationMethodManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.common.dialogs.TaskStatusDialog;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.method.CleanupMethod;
 import org.signalml.method.Method;
 import org.signalml.task.DefaultTaskManager;

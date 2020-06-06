@@ -7,7 +7,6 @@ package org.signalml.domain.signal.space;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.plugin.export.signal.SignalSelection;
 

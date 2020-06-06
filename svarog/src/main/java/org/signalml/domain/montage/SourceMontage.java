@@ -4,19 +4,17 @@
 
 package org.signalml.domain.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.system.EegElectrode;
 import org.signalml.domain.montage.system.EegSystem;
@@ -25,8 +23,6 @@ import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.util.Util;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a source montage.

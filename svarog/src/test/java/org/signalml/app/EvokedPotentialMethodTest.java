@@ -1,11 +1,9 @@
 package org.signalml.app;
 
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.app.method.ep.EvokedPotentialApplicationData;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.domain.signal.space.AbstractTagSegmentedTest;

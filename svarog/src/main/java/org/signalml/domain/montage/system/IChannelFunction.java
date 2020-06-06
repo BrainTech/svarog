@@ -1,7 +1,6 @@
 package org.signalml.domain.montage.system;
 
 import java.io.Serializable;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /**

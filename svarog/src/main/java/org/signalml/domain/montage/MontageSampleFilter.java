@@ -4,13 +4,11 @@
 
 package org.signalml.domain.montage;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-
 import org.signalml.domain.montage.filter.SampleFilterDefinition;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class contains a description of a sample filter for a {@link Montage montage}.

@@ -1,9 +1,8 @@
 package org.signalml.domain.signal.space;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents the description for the

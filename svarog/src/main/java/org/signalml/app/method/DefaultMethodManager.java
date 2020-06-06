@@ -7,7 +7,6 @@ package org.signalml.app.method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.signalml.method.InitializingMethod;
 import org.signalml.method.Method;

@@ -3,12 +3,9 @@
  */
 package org.signalml.app.action;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.net.URL;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.HelpDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;

@@ -4,7 +4,6 @@
 package org.signalml.plugin.impl;
 
 import javax.swing.Icon;
-
 import org.signalml.plugin.export.signal.SignalToolButtonListener;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

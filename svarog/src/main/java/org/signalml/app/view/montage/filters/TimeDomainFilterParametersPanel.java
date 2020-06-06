@@ -3,34 +3,27 @@
  */
 package org.signalml.app.view.montage.filters;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.app.view.common.components.ResolvableComboBox;
-import org.signalml.app.view.common.components.spinners.DoubleSpinner;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
-
+import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.view.common.components.ResolvableComboBox;
+import org.signalml.app.view.common.components.spinners.DoubleSpinner;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.util.Util;
-
-import org.springframework.validation.Errors;
 
 /**
  * Panel consisting of a controls capable of editing the time domain filter parameters

@@ -7,19 +7,18 @@ package org.signalml.app.method.mp5;
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Result;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.FileUtils;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /** MP5MethodConsumer
  *

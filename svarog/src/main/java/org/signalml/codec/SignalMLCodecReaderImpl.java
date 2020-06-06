@@ -5,11 +5,10 @@
 package org.signalml.codec;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.nio.BufferUnderflowException;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
-import java.nio.BufferUnderflowException;
-
+import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.signalml.codec.generator.xml.XMLCodecException;
 

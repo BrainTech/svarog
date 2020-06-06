@@ -5,7 +5,6 @@
 package org.signalml.app.view.book.palette;
 
 import javax.swing.Icon;
-
 import org.signalml.app.view.I18nMessage;
 
 /** WigneMapPalette

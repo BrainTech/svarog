@@ -4,9 +4,7 @@
 package org.signalml.app.view.preferences;
 
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.signal.PagingParametersPanel;
 import org.signalml.app.view.signal.RequiredSignalParametersPanel;

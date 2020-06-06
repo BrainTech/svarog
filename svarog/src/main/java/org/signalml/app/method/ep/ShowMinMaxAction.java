@@ -1,13 +1,10 @@
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
-
 import org.signalml.app.method.ep.view.minmax.MinMaxDialog;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.method.ep.EvokedPotentialResult;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;

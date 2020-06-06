@@ -5,11 +5,10 @@
 package org.signalml.app.method.bookaverage;
 
 import org.signalml.app.document.BookDocument;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.domain.book.StandardBook;

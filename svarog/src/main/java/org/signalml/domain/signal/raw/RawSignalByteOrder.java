@@ -5,7 +5,6 @@
 package org.signalml.domain.signal.raw;
 
 import java.nio.ByteOrder;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /**

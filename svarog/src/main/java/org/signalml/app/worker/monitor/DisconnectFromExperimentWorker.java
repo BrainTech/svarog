@@ -1,26 +1,20 @@
 package org.signalml.app.worker.monitor;
 
 import java.awt.Container;
-import java.util.List;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.util.concurrent.ExecutionException;
-
-import javax.swing.SwingWorker;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
+import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.KillExperimentRequest;
 import org.signalml.app.worker.monitor.messages.LeaveExperimentRequest;
-import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 import org.signalml.app.worker.monitor.messages.RequestErrorResponse;
 import org.signalml.peer.Peer;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import org.signalml.app.worker.SwingWorkerWithBusyDialog;
 
 public class DisconnectFromExperimentWorker extends SwingWorkerWithBusyDialog<Void, Void> {
 

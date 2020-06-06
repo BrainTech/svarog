@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Collection;
 import org.apache.log4j.Logger;
 import org.jfree.chart.axis.NumberAxis;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.tag.TagStyles;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
@@ -23,7 +24,6 @@ import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.TagStyle;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.method.PluginAbstractMethod;
 import org.signalml.plugin.tool.PluginResourceRepository;
 

@@ -1,12 +1,10 @@
 package pl.edu.fuw.MP.Core;
 
 import java.io.DataOutputStream;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Enumeration;
 import java.util.Vector;
-
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookAtomWriter;
 import org.signalml.domain.book.StandardBookSegment;

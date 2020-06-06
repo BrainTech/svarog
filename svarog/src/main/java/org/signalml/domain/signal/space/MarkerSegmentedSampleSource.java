@@ -7,7 +7,6 @@ package org.signalml.domain.signal.space;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.signalml.app.view.signal.SampleSourceUtils;
 import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.domain.signal.MultichannelSampleProcessor;

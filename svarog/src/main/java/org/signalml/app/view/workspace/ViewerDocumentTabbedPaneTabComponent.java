@@ -1,11 +1,11 @@
 package org.signalml.app.view.workspace;
 
-import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
-import org.signalml.plugin.export.signal.Document;
+import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import org.signalml.app.document.DocumentFlowIntegrator;
+import org.signalml.plugin.export.signal.Document;
 
 /**
  * <p>Component to be used as tabComponent for the ViewerDocumentTabbedPane.

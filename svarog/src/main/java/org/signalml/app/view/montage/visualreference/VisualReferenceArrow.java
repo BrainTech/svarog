@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
-
 import org.signalml.util.Util;
 
 /** VisualReferenceArrow

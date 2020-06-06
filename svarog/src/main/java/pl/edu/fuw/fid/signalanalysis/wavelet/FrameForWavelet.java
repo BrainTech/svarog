@@ -1,7 +1,5 @@
 package pl.edu.fuw.fid.signalanalysis.wavelet;
 
-import pl.edu.fuw.fid.signalanalysis.waveform.ImageChart;
-import pl.edu.fuw.fid.signalanalysis.stft.*;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.util.Random;
@@ -9,11 +7,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.jfree.chart.ChartPanel;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
+import pl.edu.fuw.fid.signalanalysis.NonInteractiveChartPanel;
 import pl.edu.fuw.fid.signalanalysis.SingleSignal;
+import pl.edu.fuw.fid.signalanalysis.waveform.ImageChart;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageChartPanel;
 import pl.edu.fuw.fid.signalanalysis.waveform.ImageChartPanelListener;
 import pl.edu.fuw.fid.signalanalysis.waveform.SignalChart;
-import pl.edu.fuw.fid.signalanalysis.NonInteractiveChartPanel;
 import pl.edu.fuw.fid.signalanalysis.waveform.TimeFrequency;
 
 /**

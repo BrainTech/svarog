@@ -4,14 +4,12 @@
 
 package org.signalml.domain.book.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** AtomFilterChain
  *

@@ -5,7 +5,6 @@ package org.signalml.app.model.book;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;

@@ -4,9 +4,6 @@
 
 package org.signalml.app.view.common.dialogs;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -18,7 +15,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -31,7 +27,6 @@ import javax.swing.JProgressBar;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusSupport;
@@ -44,7 +39,8 @@ import org.signalml.app.action.workspace.tasks.SuspendTaskAction;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.util.IconUtils;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.method.Method;
 import org.signalml.method.SuspendableMethod;
 import org.signalml.method.TrackableMethod;

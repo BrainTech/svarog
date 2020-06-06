@@ -6,7 +6,6 @@ package org.signalml.app.model.signal;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManagerEvent;
 import org.signalml.codec.SignalMLCodecManagerListener;

@@ -4,9 +4,8 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.apache.commons.math.complex.Complex;
 import java.util.ArrayList;
-
+import org.apache.commons.math.complex.Complex;
 import org.signalml.math.iirdesigner.math.SpecialMath;
 
 /**

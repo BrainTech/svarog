@@ -1,12 +1,10 @@
 package org.signalml.domain.montage.system;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.montage.generators.IMontageGenerator;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents an EEG system (e.g. 'EEG 10_20' or 'EEG 10_10').

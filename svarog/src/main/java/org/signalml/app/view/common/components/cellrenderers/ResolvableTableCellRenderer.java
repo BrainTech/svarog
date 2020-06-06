@@ -5,10 +5,8 @@
 package org.signalml.app.view.common.components.cellrenderers;
 
 import java.awt.Component;
-
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /**

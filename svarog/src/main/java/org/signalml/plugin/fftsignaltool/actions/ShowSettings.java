@@ -1,12 +1,10 @@
 package org.signalml.plugin.fftsignaltool.actions;
 
 import java.awt.event.ActionEvent;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.fftsignaltool.SignalFFTSettings;
 import org.signalml.plugin.fftsignaltool.dialogs.SettingsEdit;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Action which shows the {@link SettingsEdit dialog} in which the

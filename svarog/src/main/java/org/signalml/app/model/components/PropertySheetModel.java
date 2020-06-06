@@ -3,8 +3,6 @@
  */
 package org.signalml.app.model.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.beans.IntrospectionException;
 import java.beans.PropertyEditor;
@@ -15,7 +13,6 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.JTree;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -23,8 +20,8 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.TreePath;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.workspace.ViewerTabbedPane;
 import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.util.FormatUtils;

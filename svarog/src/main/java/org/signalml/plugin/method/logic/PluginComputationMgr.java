@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
-
 import org.apache.log4j.Logger;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;

@@ -8,7 +8,6 @@ package org.signalml.app.worker.monitor.messages;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringTokenizer;
-import org.apache.log4j.Logger;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;

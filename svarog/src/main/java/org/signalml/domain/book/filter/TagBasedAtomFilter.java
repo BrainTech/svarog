@@ -4,13 +4,14 @@
 
 package org.signalml.domain.book.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.SortedSet;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.TagDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.exception.SanityCheckException;
@@ -18,9 +19,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.util.Util;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** TagBasedAtomFilter
  *

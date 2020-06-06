@@ -5,22 +5,20 @@
 package org.signalml.app.view.document.monitor.signalchecking;
 
 import java.awt.BasicStroke;
-import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 import org.signalml.app.view.montage.visualreference.VisualReferenceBin;
 import org.signalml.app.view.montage.visualreference.VisualReferenceDisplay;
 import org.signalml.app.view.montage.visualreference.VisualReferenceModel;

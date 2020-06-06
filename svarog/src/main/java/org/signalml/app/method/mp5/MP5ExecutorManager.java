@@ -4,26 +4,20 @@
 
 package org.signalml.app.method.mp5;
 
-import java.util.List;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.swing.event.EventListenerList;
-
-import org.signalml.app.config.AbstractXMLConfiguration;
-import org.signalml.app.util.XMLUtils;
-import org.signalml.exception.SanityCheckException;
-import org.signalml.method.mp5.MP5Executor;
-import org.signalml.method.mp5.MP5ExecutorLocator;
-import org.signalml.method.mp5.MP5LocalProcessExecutor;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
-import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.HashMap;
+import javax.swing.event.EventListenerList;
+import org.signalml.app.config.AbstractXMLConfiguration;
+import org.signalml.app.util.XMLUtils;
+import org.signalml.exception.SanityCheckException;
 import org.signalml.method.mp5.MP5BundledProcessExecutor;
+import org.signalml.method.mp5.MP5Executor;
+import org.signalml.method.mp5.MP5ExecutorLocator;
+import org.signalml.method.mp5.MP5LocalProcessExecutor;
 
 /** MP5ExecutorManager
  *

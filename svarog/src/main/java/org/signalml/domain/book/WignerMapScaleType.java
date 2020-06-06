@@ -5,7 +5,6 @@
 package org.signalml.domain.book;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.app.view.I18nMessage;
 
 /** WignerMapScaleType

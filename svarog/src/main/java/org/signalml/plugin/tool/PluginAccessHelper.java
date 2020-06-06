@@ -2,7 +2,6 @@ package org.signalml.plugin.tool;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.Plugin;
 import org.signalml.plugin.export.SvarogAccess;

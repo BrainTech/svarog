@@ -3,17 +3,15 @@
  */
 package org.signalml.app.method;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 
 /** InputSignalPanel

@@ -2,7 +2,6 @@ package org.signalml.app.method.ep.helpers.minmax;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.method.ep.model.minmax.ChannelStatistics;
 import org.signalml.method.ep.EvokedPotentialResult;
 

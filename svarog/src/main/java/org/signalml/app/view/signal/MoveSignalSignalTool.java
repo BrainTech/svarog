@@ -8,10 +8,8 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.plugin.export.signal.AbstractSignalTool;
 

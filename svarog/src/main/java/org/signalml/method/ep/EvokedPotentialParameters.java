@@ -4,21 +4,18 @@
 
 package org.signalml.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.math.iirdesigner.ApproximationFunctionType;
 import org.signalml.math.iirdesigner.FilterType;
 import org.springframework.validation.Errors;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** EvokedPotentialParameters
  *

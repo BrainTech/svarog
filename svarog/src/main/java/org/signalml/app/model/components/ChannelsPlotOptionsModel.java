@@ -2,7 +2,6 @@ package org.signalml.app.model.components;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
 

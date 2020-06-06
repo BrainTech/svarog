@@ -4,9 +4,8 @@
 
 package org.signalml.app.config;
 
-import java.awt.Dimension;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.awt.Dimension;
 
 /** ZoomSignalSettings
  *

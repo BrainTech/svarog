@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
-
 import javax.swing.BoundedRangeModel;
 import javax.swing.JViewport;
 

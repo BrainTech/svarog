@@ -4,7 +4,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.DataType;
 

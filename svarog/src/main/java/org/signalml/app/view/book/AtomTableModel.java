@@ -4,11 +4,9 @@
 
 package org.signalml.app.view.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.SegmentReconstructionProvider;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.exception.SanityCheckException;

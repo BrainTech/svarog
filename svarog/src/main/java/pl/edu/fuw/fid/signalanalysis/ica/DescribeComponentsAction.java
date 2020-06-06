@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import org.apache.commons.math.linear.RealMatrix;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Action triggered when user selects "Describe components" from ICA menu.

@@ -8,12 +8,12 @@ import javax.swing.JPanel;
 import org.signalml.app.method.bookaverage.BookAverageMethodPanel;
 import org.signalml.app.method.ep.view.tags.TagSelectionPanel;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.signalselection.ChannelSpacePanel;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Base class for dialogs allowing to select options

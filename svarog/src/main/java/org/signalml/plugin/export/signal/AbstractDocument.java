@@ -8,7 +8,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.DocumentView;
 

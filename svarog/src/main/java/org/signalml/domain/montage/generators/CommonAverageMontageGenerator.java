@@ -4,8 +4,8 @@
 
 package org.signalml.domain.montage.generators;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.system.ChannelFunction;

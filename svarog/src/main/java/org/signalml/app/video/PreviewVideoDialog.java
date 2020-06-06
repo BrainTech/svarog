@@ -7,9 +7,9 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import javax.swing.JDialog;
 import javax.swing.Timer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.components.OnlineMediaComponent;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Simple modal dialog for displaying a preview of a single RTSP stream.
