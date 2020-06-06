@@ -213,7 +213,7 @@ public class XPath {
 		if (path!=null && root!=null) {
 			PathEntry entry[]=parsePath(path);
 			if (entry!=null) {
-				ret_vec=new Vector<Node>();
+				ret_vec=new Vector<>();
 				find(root.getDocumentElement(), entry, 0, true);
 
 

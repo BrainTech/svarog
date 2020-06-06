@@ -29,8 +29,8 @@ public class PlotScrollingCoordinator implements ChangeListener {
 	public PlotScrollingCoordinator(SignalPlot masterPlot) {
 		this.masterPlot = masterPlot;
 		masterPlot.getViewport().addChangeListener(this);
-		plots = new LinkedList<SignalPlot>();
-		plotsByViewports = new HashMap<JViewport, SignalPlot>();
+		plots = new LinkedList<>();
+		plotsByViewports = new HashMap<>();
 	}
 
 	public void addPlot(SignalPlot plot) {

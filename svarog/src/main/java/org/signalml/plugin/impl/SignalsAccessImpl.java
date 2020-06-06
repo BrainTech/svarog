@@ -215,7 +215,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	private ArrayList<SignalDocument> getSignalDocuments() {
 		DocumentManager documentManager = getViewerElementManager().getDocumentManager();
 		int numberOfDocuments = documentManager.getDocumentCount();
-		ArrayList<SignalDocument> documents = new ArrayList<SignalDocument>();
+		ArrayList<SignalDocument> documents = new ArrayList<>();
 		for (int i = 0; i < numberOfDocuments; ++i) {
 			Document documentTmp = documentManager.getDocumentAt(i);
 			if (documentTmp instanceof SignalDocument) {
@@ -231,7 +231,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public SignalSamples[] getProcessedSignalSamplesForAllSignals() {
 		ArrayList<SignalDocument> documents = getSignalDocuments();
-		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<SignalSamplesImpl>();
+		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<>();
 		for (SignalDocument signalDocument : documents) {
 			SignalSamplesImpl samplesTmp;
 			try {
@@ -380,7 +380,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		if (documents == null) {
 			return null;
 		}
-		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<SignalSamplesImpl>();
+		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<>();
 		for (SignalDocument signalDocument : documents) {
 			SignalSamplesImpl samplesTmp;
 			try {
@@ -477,7 +477,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public List<ExportedTag> getTagsFromAllDocuments() {
 		ArrayList<SignalDocument> signalDocuments = getSignalDocuments();
-		List<ExportedTag> tags = new ArrayList<ExportedTag>();
+		List<ExportedTag> tags = new ArrayList<>();
 		for (SignalDocument signalDocument : signalDocuments) {
 			try {
 				List<ExportedTag> tagsTmp = getTagsFromSignalDocument(signalDocument);
@@ -520,7 +520,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		}
 		SignalDocument signalDocument = (SignalDocument) document;
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
-		List<ExportedTag> tags = new ArrayList<ExportedTag>();
+		List<ExportedTag> tags = new ArrayList<>();
 		for (TagDocument tagDocument : tagDocuments) {
 			tags.addAll(tagDocument.getSetOfTags());
 		}
@@ -597,7 +597,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private Collection<Tag> splitTag(ExportedTag tag, TagDocument tagDocument) {
 		float blockOrPageLength = 0;
-		Collection<Tag> tags = new ArrayList<Tag>();
+		Collection<Tag> tags = new ArrayList<>();
 		TagStyle style = findStyle(tagDocument, tag);
 		if (tag.getType().getName().equals(ExportedSignalSelectionType.BLOCK)) {
 			blockOrPageLength = tagDocument.getBlockSize();

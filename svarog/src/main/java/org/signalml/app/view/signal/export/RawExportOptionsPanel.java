@@ -194,7 +194,7 @@ public class RawExportOptionsPanel extends AbstractExportOptionsPanel {
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
 
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Sample type")), getSampleTypeComboBox()));
 		components.add(new ComponentWithLabel(new JLabel(_("Byte order")), getByteOrderComboBox()));

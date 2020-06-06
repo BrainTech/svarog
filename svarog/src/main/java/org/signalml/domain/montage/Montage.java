@@ -83,7 +83,7 @@ public class Montage extends SourceMontage implements Preset {
 	/**
 	 * the list of {@link MontageSampleFilter filters}
 	 */
-	private ArrayList<MontageSampleFilter> filters = new ArrayList<MontageSampleFilter>();
+	private ArrayList<MontageSampleFilter> filters = new ArrayList<>();
 
 	/**
 	 * tells whether the signal is being filtered
@@ -125,7 +125,7 @@ public class Montage extends SourceMontage implements Preset {
 		this();
 		super.copyFrom(sourceMontage);
 
-		montageChannels = new ArrayList<MontageChannel>();
+		montageChannels = new ArrayList<>();
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class Montage extends SourceMontage implements Preset {
 	public Montage(SignalDocument document) {
 		super(document);
 
-		montageChannels = new ArrayList<MontageChannel>();
+		montageChannels = new ArrayList<>();
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Montage extends SourceMontage implements Preset {
 	protected void copyFrom(Montage montage) {
 		super.copyFrom(montage);
 
-		montageChannels = new ArrayList<MontageChannel>(montage.montageChannels.size());
+		montageChannels = new ArrayList<>(montage.montageChannels.size());
 		HashMap<String, MontageChannel> map = getMontageChannelsByLabel();
 		map.clear();
 		getMontageChannelsByPrimary().clear();
@@ -174,14 +174,14 @@ public class Montage extends SourceMontage implements Preset {
 		}
 
 		if (montage.filters != null) {
-			filters = new ArrayList<MontageSampleFilter>(montage.filters.size());
+			filters = new ArrayList<>(montage.filters.size());
 			MontageSampleFilter newFilter;
 			for (MontageSampleFilter filter : montage.filters) {
 				newFilter = new MontageSampleFilter(filter, montageChannels, montage.montageChannels);
 				filters.add(newFilter);
 			}
 		} else {
-			filters = new ArrayList<MontageSampleFilter>();
+			filters = new ArrayList<>();
 		}
 		filteringEnabled = montage.filteringEnabled;
 		filtfiltEnabled = montage.filtfiltEnabled;
@@ -443,7 +443,7 @@ public class Montage extends SourceMontage implements Preset {
 	 */
 	protected HashMap<SourceChannel, LinkedList<MontageChannel>> getMontageChannelsByPrimary() {
 		if (montageChannelsByPrimary == null) {
-			montageChannelsByPrimary = new HashMap<SourceChannel, LinkedList<MontageChannel>>();
+			montageChannelsByPrimary = new HashMap<>();
 		}
 		return montageChannelsByPrimary;
 	}
@@ -459,7 +459,7 @@ public class Montage extends SourceMontage implements Preset {
 		HashMap<SourceChannel, LinkedList<MontageChannel>> map = getMontageChannelsByPrimary();
 		LinkedList<MontageChannel> list = map.get(channel);
 		if (list == null) {
-			list = new LinkedList<MontageChannel>();
+			list = new LinkedList<>();
 			map.put(channel, list);
 			for (MontageChannel montageChannel : montageChannels) {
 				if (montageChannel.getPrimaryChannel() == channel) {
@@ -490,7 +490,7 @@ public class Montage extends SourceMontage implements Preset {
 	 */
 	protected HashMap<String,MontageChannel> getMontageChannelsByLabel() {
 		if (montageChannelsByLabel == null) {
-			montageChannelsByLabel = new HashMap<String, MontageChannel>();
+			montageChannelsByLabel = new HashMap<>();
 			for (MontageChannel channel : montageChannels) {
 				montageChannelsByLabel.put(channel.getLabel(), channel);
 			}
@@ -900,7 +900,7 @@ public class Montage extends SourceMontage implements Preset {
 			it = list.iterator();
 			HashMap<String, MontageChannel> map = getMontageChannelsByLabel();
 
-			LinkedList<Integer> filterIndexList = new LinkedList<Integer>();
+			LinkedList<Integer> filterIndexList = new LinkedList<>();
 			int filterCnt = filters.size();
 			int i;
 
@@ -931,8 +931,8 @@ public class Montage extends SourceMontage implements Preset {
 		int size = montageChannels.size();
 		for (int i=0; i<size; i++) {
 			montageChannel = montageChannels.get(i);
-			LinkedList<Integer> indexList = new LinkedList<Integer>();
-			LinkedList<Integer> primaryIndexList = new LinkedList<Integer>();
+			LinkedList<Integer> indexList = new LinkedList<>();
+			LinkedList<Integer> primaryIndexList = new LinkedList<>();
 			if (montageChannel.hasReference(channel)) {
 				montageChannel.removeReference(channel);
 				indexList.add(i);
@@ -1180,7 +1180,7 @@ public class Montage extends SourceMontage implements Preset {
 			getMontageChannelsByPrimaryList(channels[i].getPrimaryChannel()).remove(channels[i]);
 		}
 
-		LinkedList<Integer> filterIndexList = new LinkedList<Integer>();
+		LinkedList<Integer> filterIndexList = new LinkedList<>();
 
 		for (int i=0; i<indices.length; i++) {
 			montageChannels.remove(channels[i]);
@@ -1243,8 +1243,8 @@ public class Montage extends SourceMontage implements Preset {
 			return 0;
 		}
 
-		LinkedList<Integer> indexList = new LinkedList<Integer>();
-		LinkedList<Integer> primaryIndexList = new LinkedList<Integer>();
+		LinkedList<Integer> indexList = new LinkedList<>();
+		LinkedList<Integer> primaryIndexList = new LinkedList<>();
 
 		MontageChannel channel;
 

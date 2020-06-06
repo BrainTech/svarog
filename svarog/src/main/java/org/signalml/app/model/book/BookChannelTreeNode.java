@@ -46,7 +46,7 @@ public class BookChannelTreeNode implements PropertyProvider, MessageSourceResol
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("channel index"), "channelIndex", BookChannelTreeNode.class, "getChannelIndex", null));
 		list.add(new LabelledPropertyDescriptor(_("label"), "label", BookChannelTreeNode.class, "getLabel", null));

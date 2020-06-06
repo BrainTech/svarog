@@ -30,7 +30,7 @@ public class DtfArrowsDisplay extends VisualReferenceDisplay {
 	private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
 	private static final Color ACTIVE_CHANNEL_COLOR = new Color(0, 198, 255);
 
-	private final LinkedList<VisualReferenceArrow> arrows = new LinkedList<VisualReferenceArrow>();
+	private final LinkedList<VisualReferenceArrow> arrows = new LinkedList<>();
 	private RealMatrix transfers; // between output channels of montage
 
 	public DtfArrowsDisplay(VisualReferenceModel model) {

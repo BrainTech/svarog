@@ -172,7 +172,7 @@ public class MRUDEntry implements MessageSourceResolvable, PropertyProvider {
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("path"), "path", MRUDEntry.class, "getPath", null));
 		list.add(new LabelledPropertyDescriptor(_("document type"), "documentType", MRUDEntry.class, "getDocumentType", null));

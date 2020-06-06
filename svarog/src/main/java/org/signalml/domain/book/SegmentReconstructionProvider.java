@@ -28,7 +28,7 @@ public class SegmentReconstructionProvider {
 
 	private double[] fullReconstruction;
 
-	private LinkedHashSet<StandardBookAtom> reconstruction = new LinkedHashSet<StandardBookAtom>();
+	private LinkedHashSet<StandardBookAtom> reconstruction = new LinkedHashSet<>();
 
 	private double[] selectiveReconstruction;
 	private boolean selectiveReconstructionDirty;
@@ -48,7 +48,7 @@ public class SegmentReconstructionProvider {
 				reconstruction.clear();
 			} else {
 
-				LinkedHashSet<StandardBookAtom> newReconstruction = new LinkedHashSet<StandardBookAtom>();
+				LinkedHashSet<StandardBookAtom> newReconstruction = new LinkedHashSet<>();
 
 				int atomCount = segment.getAtomCount();
 				StandardBookAtom atom;
@@ -193,7 +193,7 @@ public class SegmentReconstructionProvider {
 	public HashMap<StandardBookAtom, double[]> getReconstructionMap() {
 		if (reconstructionMap == null) {
 			int atomCount = getAtomCount();
-			reconstructionMap = new HashMap<StandardBookAtom, double[]>(atomCount);
+			reconstructionMap = new HashMap<>(atomCount);
 			for (int i=0; i<atomCount; i++) {
 				reconstructionMap.put(segment.getAtomAt(i), getAtomReconstructionAt(i));
 			}

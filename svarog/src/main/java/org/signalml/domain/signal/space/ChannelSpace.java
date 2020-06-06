@@ -28,7 +28,7 @@ public class ChannelSpace {
 	 * Constructor. Creates an empty (sub)set.
 	 */
 	public ChannelSpace() {
-		channels = new LinkedHashSet<Integer>();
+		channels = new LinkedHashSet<>();
 	}
 
 	/**

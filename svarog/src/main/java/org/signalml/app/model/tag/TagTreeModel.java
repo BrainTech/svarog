@@ -40,8 +40,8 @@ public class TagTreeModel extends AbstractTreeModel implements DocumentManagerLi
 	private DocumentManager documentManager;
 	private TagIconProducer iconProducer;
 
-	private HashMap<TagDocument,TagTypeTreeNode[]> tagTypeTreeNodeMap = new HashMap<TagDocument, TagTypeTreeNode[]>();
-	private HashMap<StyledTagSet, TagDocument> tagDocumentMap = new HashMap<StyledTagSet, TagDocument>();
+	private HashMap<TagDocument,TagTypeTreeNode[]> tagTypeTreeNodeMap = new HashMap<>();
+	private HashMap<StyledTagSet, TagDocument> tagDocumentMap = new HashMap<>();
 
 	public TagTreeModel() {
 		super();

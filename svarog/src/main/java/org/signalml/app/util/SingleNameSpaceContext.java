@@ -25,7 +25,7 @@ public class SingleNameSpaceContext implements NamespaceContext {
 		this.prefix = prefix;
 		this.uri = uri;
 
-		prefixes = new ArrayList<String>();
+		prefixes = new ArrayList<>();
 		prefixes.add(prefix);
 
 	}

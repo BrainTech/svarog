@@ -9,8 +9,8 @@ public abstract class AbstractSelectionTableModel<T extends Object> extends Abst
 	public static final int CHECKBOX_COLUMN_NUMBER = 0;
 	public static final int ELEMENT_NAME_COLUMN_NUMBER = 1;
 
-	protected List<Boolean> selectionStatus = new ArrayList<Boolean>();
-	protected List<T> elements = new ArrayList<T>();
+	protected List<Boolean> selectionStatus = new ArrayList<>();
+	protected List<T> elements = new ArrayList<>();
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
@@ -65,7 +65,7 @@ public abstract class AbstractSelectionTableModel<T extends Object> extends Abst
 	}
 
 	public List<T> getSelectedElements() {
-		List<T> selectedElements = new ArrayList<T>();
+		List<T> selectedElements = new ArrayList<>();
 
 		for (int i = 0; i < selectionStatus.size(); i++)
 			if (selectionStatus.get(i)) {

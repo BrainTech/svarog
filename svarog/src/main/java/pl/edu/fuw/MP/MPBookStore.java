@@ -141,7 +141,7 @@ public class MPBookStore implements StandardBook {
 	}
 
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

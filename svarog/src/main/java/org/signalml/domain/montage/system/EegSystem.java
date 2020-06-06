@@ -32,7 +32,7 @@ public class EegSystem implements Preset {
 	 * The list of {@link EegElectrode EEG electrodes} that belong to the
 	 * system.
 	 */
-	private List<EegElectrode> electrodes = new ArrayList<EegElectrode>();
+	private List<EegElectrode> electrodes = new ArrayList<>();
 
 	/**
 	 * Contains the list of {@link IMontageGenerator montage generators} defined

@@ -60,8 +60,8 @@ public class ActiveTagPopupDialog extends AbstractPopupDialog implements ActionL
 	public JComponent createInterface() {
 
 		buttonGroup = new ButtonGroup();
-		tagToButtonMap = new HashMap<TagDocument, JRadioButton>();
-		buttonToTagMap = new HashMap<ButtonModel, TagDocument>();
+		tagToButtonMap = new HashMap<>();
+		buttonToTagMap = new HashMap<>();
 
 		JPanel interfacePanel = new JPanel();
 

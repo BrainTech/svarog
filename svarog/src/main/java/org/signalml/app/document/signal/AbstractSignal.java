@@ -58,7 +58,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	/**
 	 * list of all {@link TagDocument tag documents} for this signal
 	 */
-	protected List<TagDocument> tagDocuments = new LinkedList<TagDocument>();
+	protected List<TagDocument> tagDocuments = new LinkedList<>();
 
 	/**
 	 * the length of the page in seconds
@@ -330,7 +330,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 
 	@Override
 	public List<ExportedTagDocument> getExportedTagDocuments() {
-		List<ExportedTagDocument> exportedTagDocuments = new LinkedList<ExportedTagDocument>();
+		List<ExportedTagDocument> exportedTagDocuments = new LinkedList<>();
 		List<TagDocument> tagDocuments = getTagDocuments();
 		for (TagDocument tagDocument : tagDocuments)
 			exportedTagDocuments.add(tagDocument);
@@ -340,7 +340,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("sampling frequency"), "samplingFrequency", SignalMLDocument.class));
 		list.add(new LabelledPropertyDescriptor(_("channel count"), "channelCount", SignalMLDocument.class));
@@ -359,7 +359,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	@Override
 	public ArrayList<String> getMontageChannelLabels() {
 		Montage montage = getMontage();
-		ArrayList<String> labels = new ArrayList<String>(montage.getMontageChannelCount());
+		ArrayList<String> labels = new ArrayList<>(montage.getMontageChannelCount());
 		for (int i = 0; i < montage.getMontageChannelCount(); ++i) {
 			labels.add(montage.getMontageChannelLabelAt(i));
 		}
@@ -369,7 +369,7 @@ public abstract class AbstractSignal extends AbstractDocument implements SignalD
 	@Override
 	public ArrayList<String> getSourceChannelLabels() {
 		Montage montage = getMontage();
-		ArrayList<String> labels = new ArrayList<String>(montage.getSourceChannelCount());
+		ArrayList<String> labels = new ArrayList<>(montage.getSourceChannelCount());
 		for (int i = 0; i < montage.getSourceChannelCount(); ++i) {
 			labels.add(montage.getSourceChannelLabelAt(i));
 		}

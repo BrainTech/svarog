@@ -27,9 +27,9 @@ import org.signalml.method.Method;
  */
 public class ApplicationMethodManager extends DefaultMethodManager {
 
-	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<Method,ApplicationMethodDescriptor>();
+	private Map<Method,ApplicationMethodDescriptor> methodData = new HashMap<>();
 
-	private List<UnavailableMethodDescriptor> unavailableMethods = new LinkedList<UnavailableMethodDescriptor>();
+	private List<UnavailableMethodDescriptor> unavailableMethods = new LinkedList<>();
 	private File profileDir;
 	private XStream streamer;
 	private ViewerFileChooser fileChooser;

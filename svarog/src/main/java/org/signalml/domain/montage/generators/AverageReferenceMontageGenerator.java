@@ -106,7 +106,7 @@ public class AverageReferenceMontageGenerator extends AbstractMontageGenerator {
 	 * @return the list of reference {@link SourceChannel SourceChannels}.
 	 */
 	protected List<SourceChannel> getReferenceSourceChannels(SourceMontage sourceMontage) {
-		List<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();
+		List<SourceChannel> sourceChannels = new ArrayList<>();
 		for (String referenceChannelName : referenceChannelsNames) {
 			SourceChannel sourceChannel = sourceMontage.getSourceChannelByLabel(referenceChannelName);
 			if (sourceChannel != null) {

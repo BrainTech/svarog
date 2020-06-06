@@ -28,7 +28,7 @@ public abstract class BookReporterChartData {
 
 	public BookReporterChartData(BookReporterFASPThreshold threshold, TagStyle tagStyle) {
 		this.filter = new BookReporterBookAtomFilterBase(threshold);
-		this.tags = new LinkedList<Tag>();
+		this.tags = new LinkedList<>();
 		this.tagStyle = tagStyle;
 	}
 	

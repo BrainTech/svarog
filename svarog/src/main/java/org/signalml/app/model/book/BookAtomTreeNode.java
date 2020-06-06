@@ -72,7 +72,7 @@ public class BookAtomTreeNode implements PropertyProvider, MessageSourceResolvab
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("iteration"), "iteration", BookAtomTreeNode.class, "getIteration", null));
 		list.add(new LabelledPropertyDescriptor(_("type"), "type", BookAtomTreeNode.class, "getType", null));

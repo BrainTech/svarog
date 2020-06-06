@@ -238,7 +238,7 @@ public class DelegatingFilterDialog extends AbstractFilterDialog {
 		DefaultListModel listModel = getClassPathListModel();
 		int cnt = listModel.size();
 
-		ArrayList<File> classPath = new ArrayList<File>(cnt);
+		ArrayList<File> classPath = new ArrayList<>(cnt);
 		for (int i=0; i<cnt; i++) {
 			classPath.add((File) listModel.getElementAt(i));
 		}

@@ -52,17 +52,17 @@ public class AveragedBaseAction<P> extends AbstractSignalMLAction {
 		try {
 			// This method is invoked on Swing thread
 			SignalDocument signalDocument = (SignalDocument) signalAccess.getActiveSignalDocument();
-			AveragedBaseModel<P> model = new AveragedBaseModel<P>(signalDocument);
+			AveragedBaseModel<P> model = new AveragedBaseModel<>(signalDocument);
 
 			if (dialog.showDialog(model)) {
-				final List<SingleSignal> signals = new LinkedList<SingleSignal>();
+				final List<SingleSignal> signals = new LinkedList<>();
 				final int[] channels = model.selectedChannels;
 				final SingleSignal[] samples = new SimpleSingleSignal[channels.length];
 				for (int i=0; i<channels.length; ++i) {
 					samples[i] = new SimpleSingleSignal(signalAccess.getActiveProcessedSignalSamples(channels[i]));
 				}
 
-				Set<String> tagStyleNames = new HashSet<String>();
+				Set<String> tagStyleNames = new HashSet<>();
 				for (TagStyleGroup tagStyleGroup : model.selectedTags) {
 					tagStyleNames.addAll(tagStyleGroup.getTagStyleNames());
 				}

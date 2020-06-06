@@ -16,14 +16,14 @@ public class TagSelectionTableModel extends AbstractSelectionTableModel<TagStyle
 
 	public void setStyledTagSet(StyledTagSet styledTagSet) {
 
-		elements = new ArrayList<TagStyleGroup>();
+		elements = new ArrayList<>();
 		for (TagStyle tagStyle: styledTagSet.getListOfStyles()) {
 			TagStyleGroup group = new TagStyleGroup();
 			group.addTagStyle(tagStyle.getName());
 			elements.add(group);
 		}
 
-		this.selectionStatus = new ArrayList<Boolean>();
+		this.selectionStatus = new ArrayList<>();
 		for (TagStyleGroup element : elements) {
 			selectionStatus.add(false);
 		}

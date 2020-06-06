@@ -71,7 +71,7 @@ public class ResolvableException extends SignalMLException implements MessageSou
 
 			String message = cause.getMessage();
 
-			List<String> codes = new LinkedList<String>();
+			List<String> codes = new LinkedList<>();
 			if (message != null) {
 				codes.add(cause.getMessage());
 			}

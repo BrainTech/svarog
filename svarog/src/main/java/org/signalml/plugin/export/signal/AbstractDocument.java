@@ -27,7 +27,7 @@ public abstract class AbstractDocument implements Document {
 	/**
 	 * list of documents dependent from this one
 	 */
-	protected List<Document> dependants = new LinkedList<Document>();
+	protected List<Document> dependants = new LinkedList<>();
 	/**
 	 * the view for this document
 	 */

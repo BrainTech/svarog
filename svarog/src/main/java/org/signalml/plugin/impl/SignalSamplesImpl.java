@@ -17,7 +17,7 @@ public class SignalSamplesImpl implements SignalSamples {
 	/**
 	 * the ArrayList of {@link ChannelSamplesImpl channel samples} for each channel
 	 */
-	private ArrayList<ChannelSamplesImpl> channels = new ArrayList<ChannelSamplesImpl>();
+	private ArrayList<ChannelSamplesImpl> channels = new ArrayList<>();
 
 	/**
 	 * Empty constructor.

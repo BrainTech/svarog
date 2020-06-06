@@ -22,12 +22,12 @@ public class Structure extends AbstractArray {
 	/**
 	 * This list of field names for each field.
 	 */
-	private List<String> keys = new ArrayList<String>();
+	private List<String> keys = new ArrayList<>();
 
 	/**
 	 * The list of fields. Their names are stored in the
 	 */
-	private List<AbstractArray> fields = new ArrayList<AbstractArray>();
+	private List<AbstractArray> fields = new ArrayList<>();
 
 	/**
 	 * This field represents the maximum size of a field name.

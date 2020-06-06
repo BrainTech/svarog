@@ -265,7 +265,7 @@ public class Tag extends SignalSelection implements Comparable<ExportedTag>, Clo
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		List<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("style"), "style", Tag.class, "getStyle", null));
 		list.add(new LabelledPropertyDescriptor(_("position"), "position", Tag.class));

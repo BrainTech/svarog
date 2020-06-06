@@ -29,15 +29,15 @@ public class TagStylesGenerator {
 
 	private TagStylesGenerator() {
 
-		this.tempStyles = new HashMap<String, TagStyle>();
+		this.tempStyles = new HashMap<>();
 
-		this.styles = new HashMap<String, TagStyle>();
+		this.styles = new HashMap<>();
 		Collection<TagStyle> templateStyles = this.getStylesFromDataBase();
 		for (TagStyle style : templateStyles) {
 			styles.put(style.getName(), style);
 		}
 
-		this.colors = new Stack<Color>();
+		this.colors = new Stack<>();
 
 		colors.push(Color.GRAY);
 		colors.push(Color.PINK);
@@ -74,13 +74,13 @@ public class TagStylesGenerator {
 			templateDocument = new TagDocument();
 		} catch (SignalMLException e) {
 			logger.error("Couldn't create TagDocument to read-in database styles!");
-			return new HashSet<TagStyle>();
+			return new HashSet<>();
 		}
 		try {
 			templateDocument.readDocument(r.getInputStream());
 		} catch (IOException e) {
 			logger.error("An IO error occured while trying to read-in database styles!");
-			return new HashSet<TagStyle>();
+			return new HashSet<>();
 		}
 
 		return templateDocument.getTagSet().getListOfStyles();

@@ -85,7 +85,7 @@ public abstract class AveragedBaseDialog<P> extends AbstractDialog {
 		double tMax = averagePanel.getTimeEnd();
 		double fMin = averagePanel.getFrequencyStart();
 		double fMax = averagePanel.getFrequencyEnd();
-		return new PreferencesWithAxes<P>(prefs, width, height, tMin, tMax, fMin, fMax);
+		return new PreferencesWithAxes<>(prefs, width, height, tMin, tMax, fMin, fMax);
 	}
 
 	@Override

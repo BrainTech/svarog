@@ -67,13 +67,13 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 			sampleSource = signalDocument.getSampleSource();
 		}
 
-		List<String> artifactTagStyleNames = new ArrayList<String>();
+		List<String> artifactTagStyleNames = new ArrayList<>();
 		for (TagStyleGroup styleGroup: getParameters().getArtifactTagStyles()) {
 			artifactTagStyleNames.addAll(styleGroup.getTagStyleNames());
 		}
 
-		List<MarkerSegmentedSampleSource> averagedSampleSources = new ArrayList<MarkerSegmentedSampleSource>();
-		List<MarkerSegmentedSampleSource> baselineSampleSources = new ArrayList<MarkerSegmentedSampleSource>();
+		List<MarkerSegmentedSampleSource> averagedSampleSources = new ArrayList<>();
+		List<MarkerSegmentedSampleSource> baselineSampleSources = new ArrayList<>();
 		for (TagStyleGroup tagStyleGroup: getParameters().getAveragedTagStyles()) {
 
 			List<String> styleNames = tagStyleGroup.getTagStyleNames();

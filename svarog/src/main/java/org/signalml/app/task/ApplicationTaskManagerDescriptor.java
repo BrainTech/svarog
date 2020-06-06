@@ -26,7 +26,7 @@ public class ApplicationTaskManagerDescriptor extends AbstractXMLConfiguration i
 	private ArrayList<ApplicationTaskDescriptor> tasks;
 
 	public ApplicationTaskManagerDescriptor() {
-		tasks = new ArrayList<ApplicationTaskDescriptor>();
+		tasks = new ArrayList<>();
 	}
 
 	public ApplicationTaskManagerDescriptor(ArrayList<ApplicationTaskDescriptor> tasks) {

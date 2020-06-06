@@ -27,9 +27,9 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 
 	protected static final Logger logger = Logger.getLogger(DefaultSignalMLCodecManager.class);
 
-	private Vector<SignalMLCodec> codecs = new Vector<SignalMLCodec>();
-	private Map<String,SignalMLCodec> codecsByFormatName = new HashMap<String,SignalMLCodec>();
-	private Map<String,SignalMLCodec> codecsByUID = new HashMap<String,SignalMLCodec>();
+	private Vector<SignalMLCodec> codecs = new Vector<>();
+	private Map<String,SignalMLCodec> codecsByFormatName = new HashMap<>();
+	private Map<String,SignalMLCodec> codecsByUID = new HashMap<>();
 
 	private File profileDir;
 	private XStream streamer;

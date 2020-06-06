@@ -251,10 +251,10 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	public void reinitFilterChains() {
 
 		int cnt = source.getChannelCount();
-		chains = new Vector<LinkedList<SinglechannelSampleFilterEngine>>(cnt);
+		chains = new Vector<>(cnt);
 		LinkedList<SinglechannelSampleFilterEngine> chain;
 		for (int i=0; i<cnt; i++) {
-			chain = new LinkedList<SinglechannelSampleFilterEngine>();
+			chain = new LinkedList<>();
 			chains.add(chain);
 		}
 

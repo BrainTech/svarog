@@ -51,14 +51,14 @@ public class WorkspaceSignal extends WorkspaceDocument {
 
 	private Montage montage;
 
-	private LinkedList<WorkspaceTag> tags = new LinkedList<WorkspaceTag>();
+	private LinkedList<WorkspaceTag> tags = new LinkedList<>();
 	private WorkspaceTag activeTag;
 
 	private WorkspaceTag[] comparedTags;
 
 	private WorkspaceSignalPlot masterPlot;
 
-	private LinkedList<WorkspaceSignalPlot> clones = new LinkedList<WorkspaceSignalPlot>();
+	private LinkedList<WorkspaceSignalPlot> clones = new LinkedList<>();
 	private WorkspaceSignalPlot activePlot;
 
 	private int splitPaneLocation;

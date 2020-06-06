@@ -176,7 +176,7 @@ public class MP5ConfigCreator {
 
 	private HashSet<String> createRuntimeParameters() {
 
-		HashSet<String> set = new HashSet<String>();
+		HashSet<String> set = new HashSet<>();
 
 		set.add(NAME_OF_DATA_FILE);
 		set.add(POINTS_PER_MICROVOLT);

@@ -26,7 +26,7 @@ public class SignalMLCodecReaderImpl implements SignalMLCodecReader {
 	private Class<?> delegateClass = null;
 	private SignalMLCodec codec = null;
 
-	private HashMap<String,Method> methodMap = new HashMap<String, Method>();
+	private HashMap<String,Method> methodMap = new HashMap<>();
 	private Method openMethod;
 	private Method closeMethod;
 

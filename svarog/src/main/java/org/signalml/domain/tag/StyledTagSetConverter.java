@@ -270,7 +270,7 @@ public class StyledTagSetConverter implements Converter {
 		String annotation;
 
 		TagStyles styles = new TagStyles();
-		TreeSet<Tag> tags = new TreeSet<Tag>();
+		TreeSet<Tag> tags = new TreeSet<>();
 
 		float pageSize = PagingParameterDescriptor.DEFAULT_PAGE_SIZE;
 		int blocksPerPage = PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;

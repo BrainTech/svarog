@@ -19,7 +19,7 @@ public abstract class AbstractPluginComputationMgrStepTrackerProxy<ComputationPr
 		PluginCheckedThreadGroup threadGroup, MethodExecutionTracker tracker) {
 		this.threadGroup = threadGroup;
 		this.tracker = tracker;
-		this.tickerLimits = new HashMap<IPluginComputationMgrStep, Integer>();
+		this.tickerLimits = new HashMap<>();
 		this.phase = null;
 	}
 

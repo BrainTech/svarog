@@ -42,8 +42,8 @@ class Chebyshev2IIRDesigner extends ChebyshevIIRDesigner {
 		double de = 1.0 / Math.sqrt(Math.pow(10, 0.1 * gstop) - 1);
 		double mu = SpecialMath.asinh(1.0 / de) / filterOrder;
 
-		ArrayList<Complex> zerosList = new ArrayList<Complex>();
-		ArrayList<Complex> polesList = new ArrayList<Complex>();
+		ArrayList<Complex> zerosList = new ArrayList<>();
+		ArrayList<Complex> polesList = new ArrayList<>();
 
 		//calculate poles and zeros
 		for (int i = 1; i < 2*filterOrder; i += 2) {

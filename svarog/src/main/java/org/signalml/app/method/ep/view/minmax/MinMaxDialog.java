@@ -58,7 +58,7 @@ public class MinMaxDialog extends AbstractDialog {
 		List<TagStyleGroup> tagStyleGroups = result.getData().getParameters().getAveragedTagStyles();
 
 		tabbedPane.removeAll();
-		tagStyles = new ArrayList<String>();
+		tagStyles = new ArrayList<>();
 		for (int i = 0; i < tagStyleGroups.size(); i++) {
 			TagStyleGroup group = tagStyleGroups.get(i);
 

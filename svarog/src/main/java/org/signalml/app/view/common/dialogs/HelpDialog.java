@@ -58,12 +58,12 @@ public class HelpDialog extends AbstractDialog {
 	 * the stack of URLs to that can be used to go to the previously visited
 	 * pages (as back in web browser)
 	 */
-	private Stack<URL> backURLs = new Stack<URL>();
+	private Stack<URL> backURLs = new Stack<>();
 	/**
 	 * the stack of URLs to that can be used to go to pages from which we went
 	 * back (as forward in web browser)
 	 */
-	private Stack<URL> forwardURLs = new Stack<URL>();
+	private Stack<URL> forwardURLs = new Stack<>();
 
 	/**
 	 * the URL to the page that is currently displayed

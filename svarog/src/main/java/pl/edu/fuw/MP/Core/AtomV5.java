@@ -124,7 +124,7 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 	}
 
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

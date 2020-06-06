@@ -28,9 +28,9 @@ public class AbstractData extends BaseMethodData implements Serializable {
 	 * Constructs new empy Data.
 	 */
 	public AbstractData() {
-		keyChannelMap = new HashMap<String, Integer>();
-		eegChannels = new ArrayList<Integer>();
-		channelMap = new HashMap<String, Integer>();
+		keyChannelMap = new HashMap<>();
+		eegChannels = new ArrayList<>();
+		channelMap = new HashMap<>();
 	}
 
 	private static final ChannelFunction[] keyChannels = ChannelFunction.values();
@@ -59,7 +59,7 @@ public class AbstractData extends BaseMethodData implements Serializable {
 	public static final Set<ChannelFunction> keyChannelSet = getKeyChannelSet();
 
 	private static Set<ChannelFunction> getKeyChannelSet() {
-		HashSet<ChannelFunction> channelSet = new HashSet<ChannelFunction>();
+		HashSet<ChannelFunction> channelSet = new HashSet<>();
 		for (ChannelFunction keyChannel : keyChannels) {
 			channelSet.add(keyChannel);
 		}

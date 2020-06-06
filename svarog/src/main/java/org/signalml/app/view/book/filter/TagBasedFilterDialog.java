@@ -382,7 +382,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 		int size = listModel.getSize();
 
 		JList list = getStyleList();
-		LinkedHashSet<String> styleNames = new LinkedHashSet<String>();
+		LinkedHashSet<String> styleNames = new LinkedHashSet<>();
 
 		for (int i=0; i<size; i++) {
 

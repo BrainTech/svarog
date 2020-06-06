@@ -879,7 +879,7 @@ public class MontageChannelsPanel extends JPanel {
 			int firstRow = selectionModel.getMinSelectionIndex();
 			int lastRow = selectionModel.getMaxSelectionIndex();
 
-			List<Integer> channelsToBeRemoved = new ArrayList<Integer>();
+			List<Integer> channelsToBeRemoved = new ArrayList<>();
 			// checking if it is ok to remove rows
 			for (int i = firstRow; i <= lastRow; i++) {
 				if (selectionModel.isSelectedIndex(i)) {

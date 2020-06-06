@@ -38,7 +38,7 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	 * {@link SignalChecksum checksums} with the calculated checksums
 	 * for this signal
 	 */
-	protected HashMap<String,SignalChecksum> checksums = new HashMap<String,SignalChecksum>();
+	protected HashMap<String,SignalChecksum> checksums = new HashMap<>();
 
 	/**
 	 * the {@link SignalChecksumWorker worker} responsible for calculating

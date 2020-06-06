@@ -25,7 +25,7 @@ public class SubstitutingStringConverter implements Converter {
 	private final Map<String,String> tokens, invTokens;
 
 	public SubstitutingStringConverter() {
-		tokens = new HashMap<String,String>();
+		tokens = new HashMap<>();
 		File dir = SvarogApplication.getSharedInstance().getProfileDir();
 		if (dir != null)
 			tokens.put("profile", dir.getAbsolutePath());

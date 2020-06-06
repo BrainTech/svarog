@@ -139,7 +139,7 @@ public class BookAtom implements StandardBookAtom {
 	}
 
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

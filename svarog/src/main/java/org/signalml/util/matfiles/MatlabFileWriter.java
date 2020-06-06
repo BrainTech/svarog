@@ -31,7 +31,7 @@ public class MatlabFileWriter {
 	/**
 	 * Elements that will be written to the MAT file.
 	 */
-	protected List<DataElement> dataElements = new ArrayList<DataElement>();
+	protected List<DataElement> dataElements = new ArrayList<>();
 
 	/**
 	 * Creates this writer.

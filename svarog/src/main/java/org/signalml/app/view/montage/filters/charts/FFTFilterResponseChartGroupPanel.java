@@ -50,7 +50,7 @@ public class FFTFilterResponseChartGroupPanel extends FilterResponseChartGroupPa
 	protected JPanel createChartGroupPanel() {
 		frequencyResponseChartPanel = new FFTFrequencyResponseChartPanel();
 
-		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
+		List<ResponseChartPanel> chartsList = new ArrayList<>();
 		chartsList.add(frequencyResponseChartPanel);
 
 		chartPanelWithSpinner = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, _("Maximum graph frequency [Hz]"));

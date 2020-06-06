@@ -56,7 +56,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 	private static final Dimension minimumSize = new Dimension(300,SINGLE_HYPNO_SIZE+7);
 
 	private SignalView view;
-	private HashMap<StyledTagSet, HypnogramLine[]> hypnogramMap = new HashMap<StyledTagSet, HypnogramLine[]>();
+	private HashMap<StyledTagSet, HypnogramLine[]> hypnogramMap = new HashMap<>();
 
 	private float pixelFactor;
 	private float pixelPerSecond;
@@ -387,7 +387,7 @@ public class HypnogramPlot extends JComponent implements PropertyChangeListener,
 
 	private HypnogramLine[] getHypnogramLines(TagDocument tagDocument) {
 
-		LinkedList<HypnogramLine> lines = new LinkedList<HypnogramLine>();
+		LinkedList<HypnogramLine> lines = new LinkedList<>();
 		HypnogramLine lastLine = null;
 		HypnogramLine line = null;
 

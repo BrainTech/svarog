@@ -69,7 +69,7 @@ public class BookReporterConfigPanel extends JPanel {
 	public BookReporterConfigPanel(AbstractDialog owner) {
 		super();
 		this.owner = owner;
-		this.chartRows = new ArrayList<BookReporterChartRow>();
+		this.chartRows = new ArrayList<>();
 		initialize();
 	}
 

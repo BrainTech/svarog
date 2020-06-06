@@ -14,7 +14,7 @@ import java.util.List;
 @XStreamAlias("tagStyleGroup")
 public class TagStyleGroup {
 
-	private List<String> tagStyleNames = new ArrayList<String>();
+	private List<String> tagStyleNames = new ArrayList<>();
 
 	public TagStyleGroup() {
 	}

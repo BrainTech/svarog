@@ -58,7 +58,7 @@ public class BookReporterBookReader {
 		} else if (this.nextSegment >= this.segmentCount) {
 			return null;
 		} else {
-			ArrayList<BookReporterAtom> atoms = new ArrayList<BookReporterAtom>();
+			ArrayList<BookReporterAtom> atoms = new ArrayList<>();
 			for (StandardBookSegment segment : this.bookDocument.getBook().getSegmentAt(this.nextSegment))
 			if (segment.getChannelNumber() == channel) {
 				double timeOffset = this.nextSegment * this.segmentTimeLength;

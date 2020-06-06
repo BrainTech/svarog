@@ -79,7 +79,7 @@ public class AmplifierNullDiagnosis extends GenericAmplifierDiagnosis {
 		if (!areEnoughSamples())
 			return null;
 
-		HashMap<String, ChannelState> channels = new HashMap<String, ChannelState>();
+		HashMap<String, ChannelState> channels = new HashMap<>();
 
 		for (int i = 0; i < getChannelCount(); i++)
 			channels.put(getLabel(i), new ChannelState(channelValid(i), null));

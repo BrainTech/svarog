@@ -13,7 +13,7 @@ public class TagAttributes {
 	/**
 	 * The values of tag attributes.
 	 */
-	private List<TagAttributeValue> attributes = new ArrayList<TagAttributeValue>();
+	private List<TagAttributeValue> attributes = new ArrayList<>();
 
 	/**
 	 * Adds a new attribute.

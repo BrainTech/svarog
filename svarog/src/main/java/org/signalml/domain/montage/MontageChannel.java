@@ -65,7 +65,7 @@ public class MontageChannel implements Serializable {
 	 */
 	public MontageChannel(SourceChannel primaryChannel) {
 		this.primaryChannel = primaryChannel;
-		referenceMap = new HashMap<SourceChannel, String>();
+		referenceMap = new HashMap<>();
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class MontageChannel implements Serializable {
 		this.primaryChannel = sourceChannels.get(channel.primaryChannel.getChannel());
 		this.label = channel.label;
 		Set<Entry<SourceChannel, String>> entrySet = channel.referenceMap.entrySet();
-		this.referenceMap = new HashMap<SourceChannel, String>(entrySet.size());
+		this.referenceMap = new HashMap<>(entrySet.size());
 		for (Entry<SourceChannel, String> e : entrySet) {
 			this.referenceMap.put(sourceChannels.get(e.getKey().getChannel()), e.getValue());
 		}

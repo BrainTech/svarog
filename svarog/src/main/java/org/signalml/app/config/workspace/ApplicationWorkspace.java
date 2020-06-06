@@ -34,7 +34,7 @@ public class ApplicationWorkspace extends AbstractXMLConfiguration {
 
 	protected static final Logger logger = Logger.getLogger(ApplicationWorkspace.class);
 
-	private LinkedList<WorkspaceDocument> documents = new LinkedList<WorkspaceDocument>();
+	private LinkedList<WorkspaceDocument> documents = new LinkedList<>();
 	private WorkspaceDocument activeDocument;
 
 	/**

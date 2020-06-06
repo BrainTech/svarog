@@ -204,7 +204,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		// the rules from signal or something
 
 		EnumMap<SignalCheckingMethod, HashMap<String, Object>> methodList =
-			new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
+			new EnumMap<>(SignalCheckingMethod.class);
 
 		// "amp null" diagnosis is commented out since it uses "idle" parameter
 		// which is currently not being correctly sent by any amplifier
@@ -223,7 +223,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		methodList.put(SignalCheckingMethod.DC, dcNullParameters);
 		*/
 
-		HashMap<String, Object> impedanceParameters = new HashMap<String, Object>();
+		HashMap<String, Object> impedanceParameters = new HashMap<>();
 		impedanceParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
 		methodList.put(SignalCheckingMethod.IMPEDANCE, impedanceParameters);
 
@@ -295,7 +295,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		public TimerClass(CheckSignalDisplay checkSignalDisplay, MonitorSignalDocument monitorSignalDocument, AmplifierValidationRules validationRules) {
 
 			this.checkSignalDisplay = checkSignalDisplay;
-			amplifierDiagnosis = new ArrayList<GenericAmplifierDiagnosis>();
+			amplifierDiagnosis = new ArrayList<>();
 
 			for (SignalCheckingMethod method : validationRules.getMethods().keySet())
 				amplifierDiagnosis.add(AmplifierDignosisManufacture.getAmplifierDiagnosis(method, monitorSignalDocument, validationRules.getMethods().get(method)));
@@ -309,7 +309,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			List<HashMap<String, ChannelState>> channels = new ArrayList<HashMap<String, ChannelState>>();
+			List<HashMap<String, ChannelState>> channels = new ArrayList<>();
 			for (GenericAmplifierDiagnosis diagnosis : amplifierDiagnosis)
 				channels.add(diagnosis.signalState());
 

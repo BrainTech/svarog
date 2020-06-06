@@ -89,10 +89,10 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 
 		// TODO consider making this lazy
 
-		sourceChannels = new ArrayList<VisualReferenceSourceChannel>();
-		channels = new ArrayList<VisualReferenceChannel>();
-		channelLists = new ArrayList<LinkedList<VisualReferenceChannel>>();
-		arrows = new ArrayList<VisualReferenceArrow>();
+		sourceChannels = new ArrayList<>();
+		channels = new ArrayList<>();
+		channelLists = new ArrayList<>();
+		arrows = new ArrayList<>();
 		othersBin = new VisualReferenceChessboardBin(leaveSpaceForImpedance);
 		positionedBin = new VisualReferencePositionedBin();
 
@@ -110,7 +110,7 @@ public class VisualReferenceModel implements SourceMontageListener, MontageListe
 				visualSourceChannel = new VisualReferenceSourceChannel(sourceChannel);
 
 				sourceChannels.add(visualSourceChannel);
-				channelLists.add(new LinkedList<VisualReferenceChannel>());
+				channelLists.add(new LinkedList<>());
 
 				if (
 					sourceChannel.getFunction().getName().equals(ChannelFunction.EEG.getName())

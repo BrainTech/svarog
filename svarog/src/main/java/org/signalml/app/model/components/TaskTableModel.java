@@ -40,11 +40,11 @@ public class TaskTableModel extends AbstractTableModel implements
 	private ApplicationTaskManager taskManager;
 
 	private TableRowSorter<TaskTableModel> sorter = null;
-	private Map<Task, AggregateTaskProgressInfo> taskToProgressMap = new HashMap<Task, AggregateTaskProgressInfo>();
+	private Map<Task, AggregateTaskProgressInfo> taskToProgressMap = new HashMap<>();
 
 	public TableRowSorter<TaskTableModel> getSorter() {
 		if (sorter == null) {
-			sorter = new TableRowSorter<TaskTableModel>(this);
+			sorter = new TableRowSorter<>(this);
 			sorter.setComparator(TaskTableModel.STATUS_COLUMN,
 								 new TaskStatusImportanceComparator());
 			sorter.setComparator(TaskTableModel.PROGRESS_COLUMN,

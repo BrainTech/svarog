@@ -177,7 +177,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	}
 
 	protected List<TagStyle> getTagStyles(List<String> styleNames, StyledTagSet tagSet) {
-		List<TagStyle> tagStyles = new ArrayList<TagStyle>();
+		List<TagStyle> tagStyles = new ArrayList<>();
 		for (String styleName: styleNames) {
 			TagStyle markerStyle = tagSet.getStyle(SignalSelectionType.CHANNEL, styleName);
 			tagStyles.add(markerStyle);

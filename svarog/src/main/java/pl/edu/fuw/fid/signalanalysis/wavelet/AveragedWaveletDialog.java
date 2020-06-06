@@ -78,7 +78,7 @@ public class AveragedWaveletDialog extends AveragedBaseDialog<PreferencesForWave
 	@Override
 	protected PreferencesWithAxes<PreferencesForWavelet> getPreferences() {
 		PreferencesWithAxes<PreferencesForWavelet> preferences = super.getPreferences();
-		return new PreferencesWithAxes<PreferencesForWavelet>(
+		return new PreferencesWithAxes<>(
 			preferences.prefs,
 			preferences.width,
 			preferences.height,

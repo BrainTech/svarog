@@ -1689,7 +1689,7 @@ public class ViewerElementManager {
 	public ArrayList<AbstractSignalMLAction> getIterateMethodActions() {
 		if (iterateMethodActions == null) {
 			Method[] methods = getMethodManager().getMethods();
-			iterateMethodActions = new ArrayList<AbstractSignalMLAction>(methods.length);
+			iterateMethodActions = new ArrayList<>(methods.length);
 			IterateMethodAction iterateMethodAction;
 			for (Method method : methods) {
 

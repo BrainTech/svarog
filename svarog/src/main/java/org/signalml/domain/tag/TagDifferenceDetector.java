@@ -221,13 +221,13 @@ public class TagDifferenceDetector {
 	 */
 	private void arrangeTagStyles(Collection<TagStyle> topStyles, Collection<TagStyle> bottomStyles, TagStyle[] topArr, TagStyle[] bottomArr) {
 
-		LinkedHashMap<String,TagStyle> topMap = new LinkedHashMap<String, TagStyle>();
-		LinkedHashMap<String,TagStyle> bottomMap = new LinkedHashMap<String, TagStyle>();
+		LinkedHashMap<String,TagStyle> topMap = new LinkedHashMap<>();
+		LinkedHashMap<String,TagStyle> bottomMap = new LinkedHashMap<>();
 
 		TagStyleNameComparator comparator = new TagStyleNameComparator();
 
-		LinkedList<TagStyle> matching = new LinkedList<TagStyle>();
-		LinkedList<TagStyle> assorted = new LinkedList<TagStyle>();
+		LinkedList<TagStyle> matching = new LinkedList<>();
+		LinkedList<TagStyle> assorted = new LinkedList<>();
 		int cnt = 0;
 
 		for (TagStyle style : bottomStyles) {
@@ -352,8 +352,8 @@ public class TagDifferenceDetector {
 
 		Iterator<Tag> topIterator = topTags.iterator();
 		Iterator<Tag> bottomIterator = bottomTags.iterator();
-		LinkedList<Tag> activeTopTags = new LinkedList<Tag>();
-		LinkedList<Tag> activeBottomTags = new LinkedList<Tag>();
+		LinkedList<Tag> activeTopTags = new LinkedList<>();
+		LinkedList<Tag> activeBottomTags = new LinkedList<>();
 		Iterator<Tag> it;
 		Tag tag = null;
 

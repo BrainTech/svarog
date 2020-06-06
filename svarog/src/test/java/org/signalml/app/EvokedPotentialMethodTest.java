@@ -33,7 +33,7 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 
 		data.getParameters().setFilteringEnabled(false);
 
-		List<TagStyleGroup> group = new ArrayList<TagStyleGroup>();
+		List<TagStyleGroup> group = new ArrayList<>();
 		group.add(new TagStyleGroup(tagStyles[0].getName()));
 		data.getParameters().setAveragedTagStyles(group);
 	}
@@ -142,7 +142,7 @@ public class EvokedPotentialMethodTest extends AbstractTagSegmentedTest {
 
 	public void performTest() throws Exception {
 
-		List<Double> tagPositions = new ArrayList<Double>();
+		List<Double> tagPositions = new ArrayList<>();
 		for (Tag tag: data.getTagDocument().getTagSet().getTags()) {
 			if ((tag.getStyle() == averagedTagStyle || tag.getStyle() == averagedTagStyle2)
 					&& tag.getPosition() >= 0.0 &&

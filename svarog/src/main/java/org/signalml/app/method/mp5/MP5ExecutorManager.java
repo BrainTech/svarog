@@ -47,7 +47,7 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
                     defaultExecutor = path_executor;
                 }
                 
-		executors = new ArrayList<MP5Executor>();
+		executors = new ArrayList<>();
 		executors.add(path_executor);
                 executors.add(bundled_executor);
 
@@ -78,7 +78,7 @@ public class MP5ExecutorManager extends AbstractXMLConfiguration implements MP5E
 
 	private HashMap<String, MP5Executor> getExecutorMap() {
 		if (executorMap == null) {
-			executorMap = new HashMap<String, MP5Executor>();
+			executorMap = new HashMap<>();
 			for (MP5Executor e : executors) {
 				executorMap.put(e.getUID(), e);
 			}

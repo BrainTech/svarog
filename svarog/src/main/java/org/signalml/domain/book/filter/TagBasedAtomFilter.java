@@ -44,14 +44,14 @@ public class TagBasedAtomFilter extends AbstractAtomFilter {
 	private transient TagDocument tagDocument;
 
 	public TagBasedAtomFilter() {
-		styleNames = new LinkedHashSet<String>();
+		styleNames = new LinkedHashSet<>();
 	}
 
 	public TagBasedAtomFilter(TagBasedAtomFilter filter) {
 		super(filter);
 
 		tagFilePath = filter.tagFilePath;
-		styleNames = new LinkedHashSet<String>();
+		styleNames = new LinkedHashSet<>();
 		for (String name : filter.styleNames) {
 			styleNames.add(name);
 		}

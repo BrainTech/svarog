@@ -101,7 +101,7 @@ public class SynchronizeTagsWithTriggerAction extends TagDocumentModificationAct
 
 	protected List<String> getChannelLabels(MultichannelSampleSource sampleSource) {
 
-		List<String> channelLabels = new ArrayList<String>();
+		List<String> channelLabels = new ArrayList<>();
 
 		for (int i = 0; i < sampleSource.getChannelCount(); i++) {
 			channelLabels.add(sampleSource.getLabel(i));

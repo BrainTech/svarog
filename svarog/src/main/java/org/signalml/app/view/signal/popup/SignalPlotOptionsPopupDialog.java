@@ -49,7 +49,7 @@ public class SignalPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	private SignalView signalView;
 
-	private List<Component> buttonPanelComponents = new LinkedList<Component>();
+	private List<Component> buttonPanelComponents = new LinkedList<>();
 
 	private JComboBox tagPaintModeComboBox;
 	private JComboBox signalColorComboBox;

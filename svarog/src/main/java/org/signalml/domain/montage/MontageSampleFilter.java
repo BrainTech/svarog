@@ -35,7 +35,7 @@ public class MontageSampleFilter {
 	/**
 	 * the list of channels excluded from this filter
 	 */
-	private ArrayList<MontageChannel> excludedChannels = new ArrayList<MontageChannel>();
+	private ArrayList<MontageChannel> excludedChannels = new ArrayList<>();
 
 	/**
 	 * Constructor. Creates an empty filter (without definition).

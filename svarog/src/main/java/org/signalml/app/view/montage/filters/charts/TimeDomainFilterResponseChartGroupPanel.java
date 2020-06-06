@@ -133,7 +133,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		frequencyResponseChartPanel = new TimeDomainFilterFrequencyResponseChartPanel();
 		groupDelayResponseChartPanel = new GroupDelayResponseChartPanel();
 
-		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
+		List<ResponseChartPanel> chartsList = new ArrayList<>();
 		chartsList.add(frequencyResponseChartPanel);
 		chartsList.add(groupDelayResponseChartPanel);
 
@@ -151,7 +151,7 @@ public class TimeDomainFilterResponseChartGroupPanel extends FilterResponseChart
 		impulseResponseChartPanel = new ImpulseResponseChartPanel();
 		stepResponseChartPanel = new StepResponseChartPanel();
 
-		List<ResponseChartPanel> chartsList = new ArrayList<ResponseChartPanel>();
+		List<ResponseChartPanel> chartsList = new ArrayList<>();
 		chartsList.add(impulseResponseChartPanel);
 		chartsList.add(stepResponseChartPanel);
 		FilterResponseChartPanelsWithGraphScaleSpinner chartPanel = new FilterResponseChartPanelsWithGraphScaleSpinner(chartsList, _("Maximum graph time value [s]"));

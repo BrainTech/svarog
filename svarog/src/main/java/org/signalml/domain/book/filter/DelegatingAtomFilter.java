@@ -46,7 +46,7 @@ public class DelegatingAtomFilter extends AbstractAtomFilter {
 
 	public DelegatingAtomFilter() {
 		super();
-		classPath = new ArrayList<File>();
+		classPath = new ArrayList<>();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class DelegatingAtomFilter extends AbstractAtomFilter {
 
 	public DelegatingAtomFilter(DelegatingAtomFilter filter) {
 		super(filter);
-		classPath = new ArrayList<File>(filter.classPath);
+		classPath = new ArrayList<>(filter.classPath);
 		fqClassName = filter.fqClassName;
 	}
 

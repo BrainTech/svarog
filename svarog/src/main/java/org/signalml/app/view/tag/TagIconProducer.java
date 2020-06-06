@@ -25,7 +25,7 @@ public class TagIconProducer {
 
 	private static final Font labelFont = new Font("Dialog", Font.PLAIN, 10);
 
-	private Map<TagStyle,Icon> icons = new HashMap<TagStyle,Icon>();
+	private Map<TagStyle,Icon> icons = new HashMap<>();
 
 	private Polygon markerShape;
 

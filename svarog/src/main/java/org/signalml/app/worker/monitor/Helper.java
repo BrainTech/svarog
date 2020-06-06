@@ -156,7 +156,7 @@ public class Helper {
 		
 
 	private static List<byte[]> receiveResponse() throws OpenbciCommunicationException {
-		List<byte[]> list = new ArrayList<byte[]>();
+		List<byte[]> list = new ArrayList<>();
 		byte[] response_header = socket.recv();
 		logger.debug("Got header: " + response_header);
 		byte[] response_data;

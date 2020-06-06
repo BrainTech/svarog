@@ -63,7 +63,7 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 	 * the temporary files created by this plug-in, which should be removed
 	 * when the application is closed
 	 */
-	private ArrayList<File> temporaryFiles = new ArrayList<File>();
+	private ArrayList<File> temporaryFiles = new ArrayList<>();
 
 	/**
 	 * Registers this plug-in:

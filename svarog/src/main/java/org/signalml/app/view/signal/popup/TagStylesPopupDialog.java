@@ -49,8 +49,8 @@ public class TagStylesPopupDialog extends AbstractPopupDialog implements ActionL
 	public JComponent createInterface() {
 
 		buttonGroup = new ButtonGroup();
-		styleToButtonMap = new HashMap<TagStyle, TagStyleToggleButton>();
-		buttonToStyleMap = new HashMap<ButtonModel, TagStyle>();
+		styleToButtonMap = new HashMap<>();
+		buttonToStyleMap = new HashMap<>();
 
 		JPanel interfacePanel = new JPanel();
 

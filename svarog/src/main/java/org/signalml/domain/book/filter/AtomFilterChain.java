@@ -29,13 +29,13 @@ public class AtomFilterChain implements Preset {
 	private boolean alternative;
 
 	public AtomFilterChain() {
-		chain = new ArrayList<AbstractAtomFilter>();
+		chain = new ArrayList<>();
 		filteringEnabled = true;
 		alternative = false;
 	}
 
 	public AtomFilterChain(AtomFilterChain template) {
-		chain = new ArrayList<AbstractAtomFilter>();
+		chain = new ArrayList<>();
 		Iterator<AbstractAtomFilter> it = template.chain.iterator();
 		while (it.hasNext()) {
 			chain.add(it.next().duplicate());

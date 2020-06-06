@@ -30,7 +30,7 @@ public class VisualReferenceEditorMouseHandler extends MouseAdapter {
 	private boolean dragVisible = false;
 	private int prospectiveDropChannel = -1;
 
-	private ArrayList<VisualReferenceArrow> tempArrowList = new ArrayList<VisualReferenceArrow>();
+	private ArrayList<VisualReferenceArrow> tempArrowList = new ArrayList<>();
 
 	private VisualReferenceDraggedChannel draggedChannelComponent;
 

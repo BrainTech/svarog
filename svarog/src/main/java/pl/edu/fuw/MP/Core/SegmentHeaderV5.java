@@ -17,7 +17,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 	public int offsetDimension;
 	public int channelNumber;
 	public float signal[] = null;
-	public Vector<AtomV5> atoms = new Vector<AtomV5>();
+	public Vector<AtomV5> atoms = new Vector<>();
 	public BookLibraryV5 parent = null;
 
 	public SegmentHeaderV5() {
@@ -68,7 +68,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 
 		Utils.log("ATOMS_SEGMENT_IDENTITY: " + channelNumber);
 
-		atoms = new Vector<AtomV5>();
+		atoms = new Vector<>();
 		int pos = 2;
 
 		while (pos < segmentSize) {
@@ -180,7 +180,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 	}
 
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

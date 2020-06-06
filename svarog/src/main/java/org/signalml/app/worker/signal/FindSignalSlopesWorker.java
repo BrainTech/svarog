@@ -47,7 +47,7 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 	protected Integer[] doInBackground() throws Exception {
 		showBusyDialog();
 
-		List<TriggerPush> triggerPushes = new ArrayList<TriggerPush>();
+		List<TriggerPush> triggerPushes = new ArrayList<>();
 		int sampleCount = sampleSource.getSampleCount(0);
 		int currentSample = 0;
 
@@ -112,7 +112,7 @@ public class FindSignalSlopesWorker extends SwingWorkerWithBusyDialog<Integer[],
 	}
 
 	protected List<Integer> convertTriggerPushesToSlopePositions(List<TriggerPush> triggerPushes) {
-		List<Integer> slopePositions = new ArrayList<Integer>();
+		List<Integer> slopePositions = new ArrayList<>();
 
 		for (TriggerPush triggerPush: triggerPushes) {
 			if (parameters.isLengthThresholdEnabled() && triggerPush.getLength() < lengthThreshold)

@@ -43,7 +43,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 	private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
 	private static final Color ACTIVE_CHANNEL_COLOR = new Color(0, 198, 255);
 
-	private LinkedList<VisualReferenceArrow> tempArrowsToDraw = new LinkedList<VisualReferenceArrow>();
+	private LinkedList<VisualReferenceArrow> tempArrowsToDraw = new LinkedList<>();
 	private VisualReferenceArrow prospectiveArrow;
 
 	public VisualReferenceEditor(VisualReferenceModel model) {
@@ -297,7 +297,7 @@ public class VisualReferenceEditor extends VisualReferenceDisplay {
 			list = listToFill;
 			list.clear();
 		} else {
-			list = new ArrayList<VisualReferenceArrow>();
+			list = new ArrayList<>();
 		}
 
 		Iterator<VisualReferenceArrow> arrowIt = model.arrowsIterator();

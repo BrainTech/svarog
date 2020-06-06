@@ -99,7 +99,7 @@ public abstract class AbstractFileDocument extends AbstractDocument implements F
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("backing file"), "backingFile", AbstractFileDocument.class));
 

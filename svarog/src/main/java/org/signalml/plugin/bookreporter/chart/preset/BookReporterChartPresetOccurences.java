@@ -39,7 +39,7 @@ public class BookReporterChartPresetOccurences extends BookReporterChartPreset {
 	public BookReporterChartData createEmptyData(final double signalLength, TagStyle tagStyle) {
 		return new BookReporterChartData(getThreshold(), tagStyle) {
 
-			private final LinkedList<Occurrence> occurrences = new LinkedList<Occurrence>();
+			private final LinkedList<Occurrence> occurrences = new LinkedList<>();
 
 			@Override
 			protected void include(Collection<BookReporterAtom> filteredAtoms) {

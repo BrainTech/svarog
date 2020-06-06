@@ -55,8 +55,8 @@ public class PluginPresetManagerFilter implements PresetManager {
 		this.delegate = delegate;
 		this.allowedPresetClassCollection = allowedPresetClassCollection;
 
-		this.filteredPresetToPositionMap = new HashMap<Preset, Integer>(this.delegate.getPresetCount());
-		this.filteredPresets = new ArrayList<Preset>();
+		this.filteredPresetToPositionMap = new HashMap<>(this.delegate.getPresetCount());
+		this.filteredPresets = new ArrayList<>();
 
 		this.needsRefreshFlag = true;
 

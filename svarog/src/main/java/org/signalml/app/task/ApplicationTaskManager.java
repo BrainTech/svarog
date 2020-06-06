@@ -27,9 +27,9 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 
 	protected static final Logger logger = Logger.getLogger(ApplicationTaskManager.class);
 
-	private Map<Task,ApplicationTaskWorker> workerMap = new HashMap<Task,ApplicationTaskWorker>();
-	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<Task,TaskStatusDialog>();
-	private Map<Task,TaskEventProxy> proxyMap = new HashMap<Task, TaskEventProxy>();
+	private Map<Task,ApplicationTaskWorker> workerMap = new HashMap<>();
+	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<>();
+	private Map<Task,TaskEventProxy> proxyMap = new HashMap<>();
 	private ApplicationMethodManager methodManager;
 
 	private PleaseWaitDialog pleaseWaitDialog;

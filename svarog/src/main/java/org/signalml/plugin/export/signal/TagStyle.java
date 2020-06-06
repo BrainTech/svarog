@@ -486,7 +486,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		List<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("type"), "type", TagStyle.class, "getType", null));
 		list.add(new LabelledPropertyDescriptor(_("name"), "name", TagStyle.class));

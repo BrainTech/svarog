@@ -40,7 +40,7 @@ public class PluginTagWriter implements IPluginTagWriter {
 			SignalMLException {
 
 		TagStyles styles = this.createStyles(tags);
-		TreeSet<Tag> documentTags = new TreeSet<Tag>(this.createTags(tags,
+		TreeSet<Tag> documentTags = new TreeSet<>(this.createTags(tags,
 				styles));
 
 		float pageSize = this.config.pageSize;
@@ -96,14 +96,14 @@ public class PluginTagWriter implements IPluginTagWriter {
 
 	private Collection<Tag> createTags(Collection<PluginTagGroup> tags,
 			TagStyles tagStyles) {
-		List<Tag> l = new LinkedList<Tag>();
+		List<Tag> l = new LinkedList<>();
 		for (PluginTagGroup tagGroup : tags) {
 			TagStyle style = tagStyles.getStyle(tagGroup.name);
 			if (style == null) {
 				style = TagStyle.getDefault();
 			}
 
-			TreeSet<IPluginTagDef> sortedTags = new TreeSet<IPluginTagDef>(
+			TreeSet<IPluginTagDef> sortedTags = new TreeSet<>(
 					new PluginTagDefRangeComparator());
 			sortedTags.addAll(tagGroup.tags);
 

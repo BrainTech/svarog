@@ -319,7 +319,7 @@ public abstract class Util {
 	 */
 	public static HashMap<String,String> invertStringMap(Map<String,String> input) {
 
-		HashMap<String,String> output = new HashMap<String, String>(input.size());
+		HashMap<String,String> output = new HashMap<>(input.size());
 
 		Set<Map.Entry<String,String>> entries = input.entrySet();
 		for (Map.Entry<String, String> entry : entries) {
@@ -485,7 +485,7 @@ public abstract class Util {
 	 */
 	public static String[] splitTextIntoLines(String string, int limit) {
 
-		LinkedList<String> list = new LinkedList<String>();
+		LinkedList<String> list = new LinkedList<>();
 
 		int firstLineChar = 0;
 		int lastSpaceChar = -1;

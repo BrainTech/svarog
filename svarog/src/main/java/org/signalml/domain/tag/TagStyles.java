@@ -25,15 +25,15 @@ public class TagStyles {
 	/**
 	 * list of styles of selections of signal pages
 	 */
-	private List<TagStyle> pageStyles = new ArrayList<TagStyle>();
+	private List<TagStyle> pageStyles = new ArrayList<>();
 	/**
 	 * list of styles of selections of signal blocks
 	 */
-	private List<TagStyle> blockStyles = new ArrayList<TagStyle>();
+	private List<TagStyle> blockStyles = new ArrayList<>();
 	/**
 	 * list of styles of custom selections of single channels
 	 */
-	private List<TagStyle> channelStyles = new ArrayList<TagStyle>();
+	private List<TagStyle> channelStyles = new ArrayList<>();
 	/**
 	 * list of listeners associated with the current object
 	 */
@@ -83,7 +83,7 @@ public class TagStyles {
 	 * @return all tag styles available
 	 */
 	public List<TagStyle> getAllStyles() {
-		ArrayList<TagStyle> allStyles = new ArrayList<TagStyle>();
+		ArrayList<TagStyle> allStyles = new ArrayList<>();
 		allStyles.addAll(pageStyles);
 		allStyles.addAll(blockStyles);
 		allStyles.addAll(channelStyles);
@@ -102,7 +102,7 @@ public class TagStyles {
 	 * is false
 	 */
 	public List<TagStyle> getStyles(SignalSelectionType type, boolean allowMarkers) {
-		List<TagStyle> styles = new ArrayList<TagStyle>();
+		List<TagStyle> styles = new ArrayList<>();
 
 		if (allowMarkers) {
 			styles = getStyles(type);
@@ -262,7 +262,7 @@ public class TagStyles {
 	 */
 	public HashMap<KeyStroke, TagStyle> getStylesByKeyStrokes() {
 		if (stylesByKeyStrokes == null) {
-			stylesByKeyStrokes = new HashMap<KeyStroke, TagStyle>();
+			stylesByKeyStrokes = new HashMap<>();
 			KeyStroke keyStroke;
 
 			for (TagStyle style : getAllStyles()) {
@@ -376,7 +376,7 @@ public class TagStyles {
 	 * @return the list of tag styles copies
 	 */
 	protected List<TagStyle> copyTagList(List<TagStyle> sourceList) {
-		List<TagStyle> destinationList = new ArrayList<TagStyle>();
+		List<TagStyle> destinationList = new ArrayList<>();
 		for (TagStyle style : sourceList) {
 			destinationList.add(new TagStyle(style));
 		}

@@ -65,7 +65,7 @@ public class TagStatistic implements WriterExportableTable {
 		this.totalLength = totalLength;
 
 		int i;
-		styleIndices = new HashMap<ExportedTagStyle, Integer>(tagStyles.length);
+		styleIndices = new HashMap<>(tagStyles.length);
 		for (i=0; i<tagStyles.length; i++) {
 			styleIndices.put(tagStyles[i],i);
 		}

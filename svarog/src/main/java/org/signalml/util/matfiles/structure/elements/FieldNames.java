@@ -16,7 +16,7 @@ import org.signalml.util.matfiles.types.DataType;
  */
 public class FieldNames extends DataElement {
 
-	private List<String> fieldNames = new ArrayList<String>();
+	private List<String> fieldNames = new ArrayList<>();
 	private int fieldNameMaximumSize;
 
 	public FieldNames(List<String> fieldNames, int fieldNameMaximumSize) {

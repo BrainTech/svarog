@@ -33,7 +33,7 @@ public class TagDifferenceSet {
 	 * Constructor. Creates an empty TagDifferenceSet.
 	 */
 	public TagDifferenceSet() {
-		differences = new TreeSet<TagDifference>();
+		differences = new TreeSet<>();
 	}
 
 	/**

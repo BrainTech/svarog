@@ -21,7 +21,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 	/**
 	 * The channels to be shown in this table.
 	 */
-	private List<AmplifierChannel> channels = new ArrayList<AmplifierChannel>();
+	private List<AmplifierChannel> channels = new ArrayList<>();
 
 	/**
 	 * The index of the column which shows whether a channel is selected

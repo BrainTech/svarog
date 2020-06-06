@@ -52,7 +52,7 @@ public class EvokedPotentialResultWrapper implements PropertyProvider {
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("Number of averaged segments"), "averagedCount", EvokedPotentialResultWrapper.class, "getAveragedSegmentsCount", null));
 		list.add(new LabelledPropertyDescriptor(_("Number of unusable segments"), "unusableSegments", EvokedPotentialResultWrapper.class, "getUnusableSegmentsCount", null));

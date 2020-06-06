@@ -57,7 +57,7 @@ public class BookReporterResultFrame extends javax.swing.JFrame {
 		exportDialog = new BookReporterChartExportDialog(this, true);
 		plot = new CombinedDomainXYPlot();
 		chart = new JFreeChart(plot);
-		colors = new HashMap<String, Paint>();
+		colors = new HashMap<>();
 		tags = null;
 
 		chart.setBackgroundPaint(Color.WHITE);

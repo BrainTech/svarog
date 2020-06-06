@@ -27,7 +27,7 @@ public class BookToTagData extends BaseMethodData {
 	 * Creates new instance of BookToTagData class.
 	 */
 	public BookToTagData() {
-		channels = new LinkedHashSet<Integer>();
+		channels = new LinkedHashSet<>();
 		makePageTags = true;
 		makeBlockTags = true;
 		makeChannelTags = true;

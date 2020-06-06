@@ -31,7 +31,7 @@ public class ChannelStatisticsCalculator {
 	}
 
 	protected void calculateStatistics() {
-		statistics = new ArrayList<ChannelStatistics>();
+		statistics = new ArrayList<>();
 		double[][] samples = result.getAverageSamples().get(tagGroupNumber);
 
 		for (int channelNumber = 0; channelNumber < result.getAverageSamples().get(tagGroupNumber).length; channelNumber++) {

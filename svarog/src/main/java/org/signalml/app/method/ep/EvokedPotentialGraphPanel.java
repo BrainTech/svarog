@@ -103,7 +103,7 @@ public class EvokedPotentialGraphPanel extends AbstractPanel {
 		}
 
 		for (channel=0; channel<channelCount; channel++) {
-			List<double[]> channelSamples = new ArrayList<double[]>();
+			List<double[]> channelSamples = new ArrayList<>();
 
 			for (int i = 0; i < result.getAverageSamples().size(); i++) {
 				double[][] data = result.getAverageSamples().get(i);

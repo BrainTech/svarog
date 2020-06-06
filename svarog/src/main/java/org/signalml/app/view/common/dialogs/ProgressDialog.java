@@ -245,7 +245,7 @@ class ProgressStateList extends JList {
 			return;
 		}
 		Dimension size = getSize();
-		ArrayList<ProgressState> list = new ArrayList<ProgressState>();
+		ArrayList<ProgressState> list = new ArrayList<>();
 		for (int i = 0; i < getModel().getSize(); i++) {
 			list.add((ProgressState) getModel().getElementAt(i));
 		}

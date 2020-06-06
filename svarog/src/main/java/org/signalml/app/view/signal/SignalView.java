@@ -229,7 +229,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private TagChannelSignalTool tagChannelSignalTool;
 	private ZoomSignalTool zoomSignalTool;
 
-	private Map<ButtonModel, SignalTool> toolMap = new HashMap<ButtonModel, SignalTool>();
+	private Map<ButtonModel, SignalTool> toolMap = new HashMap<>();
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private NewTagDialog newTagDialog;
@@ -360,12 +360,12 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 		tagIconProducer = new TagIconProducer();
 
-		plots = new LinkedList<SignalPlot>();
-		plotPanels = new LinkedList<SignalPlotPanel>();
-		scrollPanes = new LinkedList<SignalPlotScrollPane>();
-		columnHeaders = new LinkedList<SignalPlotColumnHeader>();
-		rowHeaders = new LinkedList<SignalPlotRowHeader>();
-		corners = new LinkedList<SignalPlotCorner>();
+		plots = new LinkedList<>();
+		plotPanels = new LinkedList<>();
+		scrollPanes = new LinkedList<>();
+		columnHeaders = new LinkedList<>();
+		rowHeaders = new LinkedList<>();
+		corners = new LinkedList<>();
 
 		plotFocusListener = new FocusListener() {
 			@Override
@@ -1103,7 +1103,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private void buildTagToolBar() {
 
-		styleToolBarMap = new HashMap<String, TagStyleToolBar>();
+		styleToolBarMap = new HashMap<>();
 
 		tagToolBar = new WebToolBar();
 		tagToolBar.setOrientation(WebToolBar.VERTICAL);
@@ -1726,7 +1726,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		SortedSet<Tag> tags1 = comparedTags[0].getTagSet().getTags();
 		SortedSet<Tag> tags2 = comparedTags[1].getTagSet().getTags();
 
-		TreeSet<TagDifference> differences = new TreeSet<TagDifference>();
+		TreeSet<TagDifference> differences = new TreeSet<>();
 
 		detector.getDifferences(tags1, tags2, SignalSelectionType.PAGE, SignalSelection.CHANNEL_NULL, differences);
 		detector.getDifferences(tags1, tags2, SignalSelectionType.BLOCK, SignalSelection.CHANNEL_NULL, differences);

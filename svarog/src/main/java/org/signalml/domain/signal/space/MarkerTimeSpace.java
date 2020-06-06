@@ -78,7 +78,7 @@ public class MarkerTimeSpace {
 	 * @param markerStyleName the name of the type (style) of a marker
 	 */
 	public void setMarkerStyleName(String markerStyleName) {
-		this.markerStyleNames = new ArrayList<String>();
+		this.markerStyleNames = new ArrayList<>();
 		this.markerStyleNames.add(markerStyleName);
 	}
 

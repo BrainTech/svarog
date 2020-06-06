@@ -77,7 +77,7 @@ public class PluginDirsPanel extends JPanel {
 	private ArrayList<File> getPluginDirs(String pluginDirsString) {
 		String[] paths;
 		paths = pluginDirsString.split(";");
-		ArrayList<File> pluginDirs = new ArrayList<File>();
+		ArrayList<File> pluginDirs = new ArrayList<>();
 		for (String path : paths) {
 			File dir;
 			if (path!=null) {

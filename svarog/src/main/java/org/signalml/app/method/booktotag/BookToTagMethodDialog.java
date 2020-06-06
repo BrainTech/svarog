@@ -237,7 +237,7 @@ public class BookToTagMethodDialog extends AbstractDialog  {
 		if (channelSet != null) {
 			channelSet.clear();
 		} else {
-			channelSet = new LinkedHashSet<Integer>();
+			channelSet = new LinkedHashSet<>();
 		}
 
 		for (int i=0; i<channels.length; i++) {

@@ -38,7 +38,7 @@ public class BookAverageData extends BaseMethodData {
 	private WignerMapScaleType scaleType;
 
 	public BookAverageData() {
-		channels = new LinkedHashSet<Integer>();
+		channels = new LinkedHashSet<>();
 	}
 
 	public StandardBook getBook() {

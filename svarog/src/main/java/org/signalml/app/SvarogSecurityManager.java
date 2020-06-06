@@ -36,7 +36,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	public static final String S_SvarogApplication = "org.signalml.app.SvarogApplication";
 
 	private HashMap<Thread,org.signalml.util.FastMutableInt> recLevel =
-		new HashMap<Thread,org.signalml.util.FastMutableInt>();
+		new HashMap<>();
 	public final boolean enforcing;
 
 	/**

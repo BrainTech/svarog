@@ -102,7 +102,7 @@ public class RocDataPoint implements PropertyProvider {
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("true positive count"), "truePositiveCount", RocDataPoint.class, "getTruePositiveCount", null));
 		list.add(new LabelledPropertyDescriptor(_("false positive count"), "falsePositiveCount", RocDataPoint.class, "getFalsePositiveCount", null));

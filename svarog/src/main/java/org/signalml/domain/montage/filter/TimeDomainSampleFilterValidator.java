@@ -30,7 +30,7 @@ public final class TimeDomainSampleFilterValidator {
 	/**
 	 * This errorMessages describes the problems if the filter is not valid.
 	 */
-	private List<String> errorMessages = new ArrayList<String>();
+	private List<String> errorMessages = new ArrayList<>();
 
 	/**
 	 * Creates a new validator for the given filter.

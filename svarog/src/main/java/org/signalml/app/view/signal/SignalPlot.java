@@ -190,7 +190,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private Point tempViewportLocation;
 	private Dimension tempViewportSize;
 	private Dimension tempPlotSize;
-	private ArrayList<SortedSet<Tag>> tempTagsToDrawList = new ArrayList<SortedSet<Tag>>();
+	private ArrayList<SortedSet<Tag>> tempTagsToDrawList = new ArrayList<>();
 
 	private TagPaintMode tagPaintMode;
 	private SignalColor signalColor;
@@ -2021,7 +2021,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		int tagCnt = tagDocuments.size();
 		if (list == null) {
-			list = new ArrayList<PositionedTag>();
+			list = new ArrayList<>();
 		} else {
 			list.clear();
 		}
@@ -2129,7 +2129,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		if (tempTagList != null) {
 			tempTagList.clear();
 		} else {
-			tempTagList = new ArrayList<PositionedTag>();
+			tempTagList = new ArrayList<>();
 		}
 		tempTagList.add(tag);
 		return getTagListToolTip(title, tempTagList);

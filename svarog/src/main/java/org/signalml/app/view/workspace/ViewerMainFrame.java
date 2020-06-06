@@ -79,7 +79,7 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 
 	/* Bootstrapping */
-	private List<MainWindowBootstrapTask> bootstrapList = new LinkedList<MainWindowBootstrapTask>();
+	private List<MainWindowBootstrapTask> bootstrapList = new LinkedList<>();
 
 	/* Configuration */
 	private MainFrameConfiguration config;
@@ -327,7 +327,7 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 		// save workspace
 		saveWorkspace();
 
-		ArrayList<ApplicationTaskDescriptor> taskList = new ArrayList<ApplicationTaskDescriptor>();
+		ArrayList<ApplicationTaskDescriptor> taskList = new ArrayList<>();
 
 		synchronized (taskManager) {
 

@@ -71,8 +71,8 @@ public class BipolarReferenceMontageGenerator extends AbstractMontageGenerator {
 	 */
 	protected List<List<SourceChannel>> getPrimaryAndReferenceChannels(Montage montage) throws MontageException {
 		List<List<SourceChannel>> listOfLists = new ArrayList<>();
-		List<SourceChannel> primaryChannels = new ArrayList<SourceChannel>();
-		List<SourceChannel> referenceChannels = new ArrayList<SourceChannel>();
+		List<SourceChannel> primaryChannels = new ArrayList<>();
+		List<SourceChannel> referenceChannels = new ArrayList<>();
 		for (String[] channelPair : channelPairs) {
 			String channelName = channelPair[0];
 			SourceChannel sourceChannel = montage.getSourceChannelByLabel(channelName);

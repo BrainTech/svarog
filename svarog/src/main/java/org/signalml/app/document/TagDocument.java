@@ -362,7 +362,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
-		List<TagStyle> markerStyles = new ArrayList<TagStyle>();
+		List<TagStyle> markerStyles = new ArrayList<>();
 
 		for (TagStyle style: getTagSet().getChannelStyles()) {
 			markerStyles.add(style);
@@ -398,7 +398,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	public Set<ExportedTagStyle> getTagStyles() {
 		StyledTagSet tagSet = getTagSet();
 		List<TagStyle> styles = tagSet.getListOfStyles();
-		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<ExportedTagStyle>();
+		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<>();
 		for (TagStyle style : styles) {
 			exportedStyles.add(style);
 		}

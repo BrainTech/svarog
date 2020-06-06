@@ -53,7 +53,7 @@ public class SourceMontage {
 	/**
 	 * a list of SourceChannels in this SourceMontage
 	 */
-	protected ArrayList<SourceChannel> sourceChannels = new ArrayList<SourceChannel>();;
+	protected ArrayList<SourceChannel> sourceChannels = new ArrayList<>();;
 
 	/**
 	 * {@link SignalTypeConfigurer configurer} for a signal type
@@ -163,7 +163,7 @@ public class SourceMontage {
 	protected void copyFrom(SourceMontage montage) {
 		setChanged(montage.changed);
 
-		sourceChannels = new ArrayList<SourceChannel>(montage.sourceChannels.size());
+		sourceChannels = new ArrayList<>(montage.sourceChannels.size());
 
 		for (SourceChannel channel : montage.sourceChannels) {
 			SourceChannel newChannel = new SourceChannel(channel);
@@ -324,7 +324,7 @@ public class SourceMontage {
 	 * @return list of source channels with a given function
 	 */
 	protected LinkedList<SourceChannel> getSourceChannelsByFunctionList(IChannelFunction function) {
-		LinkedList<SourceChannel> list = new LinkedList<SourceChannel>();
+		LinkedList<SourceChannel> list = new LinkedList<>();
 
 		for (SourceChannel channel: sourceChannels) {
 			if (channel.getFunction() == function)
@@ -343,7 +343,7 @@ public class SourceMontage {
 	 */
 	protected HashMap<String,SourceChannel> getSourceChannelsByLabel() {
 		if (sourceChannelsByLabel == null) {
-			sourceChannelsByLabel = new HashMap<String, SourceChannel>();
+			sourceChannelsByLabel = new HashMap<>();
 			for (SourceChannel channel : sourceChannels) {
 				sourceChannelsByLabel.put(channel.getLabel().toUpperCase(), channel);
 			}

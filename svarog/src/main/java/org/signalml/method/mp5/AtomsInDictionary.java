@@ -9,7 +9,7 @@ import java.util.EnumMap;
  */
 public class AtomsInDictionary implements Serializable {
 
-	private EnumMap<MP5AtomType, Boolean> atoms = new EnumMap<MP5AtomType, Boolean>(MP5AtomType.class);
+	private EnumMap<MP5AtomType, Boolean> atoms = new EnumMap<>(MP5AtomType.class);
 
 	public AtomsInDictionary() {
 		for (MP5AtomType atom: MP5AtomType.values()) {

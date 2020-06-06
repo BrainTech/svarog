@@ -278,7 +278,7 @@ public class EmbeddedFileChooserFavorites extends JPanel implements PropertyChan
 	public void lastDirectoryChanged(String dir) {
 		log.debug("lastDirectoryChanged: " + dir);
 		String[] dirs = getApplicationConfiguration().getLastDirs();
-		LinkedList<String> list = new LinkedList<String>(Arrays.asList(dirs));
+		LinkedList<String> list = new LinkedList<>(Arrays.asList(dirs));
 		list.remove(dir);
 		list.addFirst(dir);
 		if (list.size() > NUM_OF_LAST_DIRECTORIES)

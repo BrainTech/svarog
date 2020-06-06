@@ -28,11 +28,11 @@ public class EvokedPotentialResult implements Serializable {
 	 * Channel labels.
 	 */
 	private String[] labels;
-	private List<double[][]> averageSamples = new ArrayList<double[][]>();;
+	private List<double[][]> averageSamples = new ArrayList<>();;
 
-	private List<Integer> unusableSegmentsCount = new ArrayList<Integer>();
-	private List<Integer> averagedSegmentsCount = new ArrayList<Integer>();
-	private List<Integer> artifactRejectedSegmentsCount = new ArrayList<Integer>();
+	private List<Integer> unusableSegmentsCount = new ArrayList<>();
+	private List<Integer> averagedSegmentsCount = new ArrayList<>();
+	private List<Integer> artifactRejectedSegmentsCount = new ArrayList<>();
 
 	private double startTime;
 	private double segmentLength;
@@ -82,7 +82,7 @@ public class EvokedPotentialResult implements Serializable {
 	}
 
 	public void setAverageSamples(double[][] averageSamples) {
-		this.averageSamples = new ArrayList<double[][]>();
+		this.averageSamples = new ArrayList<>();
 		this.averageSamples.add(averageSamples);
 	}
 

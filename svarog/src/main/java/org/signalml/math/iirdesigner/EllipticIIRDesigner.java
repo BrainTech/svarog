@@ -133,8 +133,8 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		double v0 = capk * r / (filterOrder * val[0]);
 		double[] ellipv = SpecialMath.calculateJacobianEllipticFunctionsValues(v0, 1 - m);
 
-		ArrayList<Complex> zerosList = new ArrayList<Complex>();
-		ArrayList<Complex> polesList = new ArrayList<Complex>();
+		ArrayList<Complex> zerosList = new ArrayList<>();
+		ArrayList<Complex> polesList = new ArrayList<>();
 
 		double[] ellip;
 		for (int i = 1 - filterOrder % 2; i < filterOrder; i+=2) {

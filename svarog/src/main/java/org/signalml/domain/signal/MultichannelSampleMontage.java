@@ -388,9 +388,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 		Entry[] entries = new Entry[cnt];
 		float[][] matrix = new float[cnt][];
 		int[] sampleCounts = new int[cnt];
-		ArrayList<LinkedList<Integer>> backRefs = new ArrayList<LinkedList<Integer>>(srcCnt);
+		ArrayList<LinkedList<Integer>> backRefs = new ArrayList<>(srcCnt);
 		for (i=0; i<srcCnt; i++) {
-			backRefs.add(new LinkedList<Integer>());
+			backRefs.add(new LinkedList<>());
 		}
 		LinkedList<Integer> channelBackRefs;
 		int primaryChannel;

@@ -50,7 +50,7 @@ public class SignalPageTreeNode implements PropertyProvider, MessageSourceResolv
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("page"), "page", SignalPageTreeNode.class, "getPage", null));
 		list.add(new LabelledPropertyDescriptor(_("size"), "size", SignalPageTreeNode.class, "getSize", null));

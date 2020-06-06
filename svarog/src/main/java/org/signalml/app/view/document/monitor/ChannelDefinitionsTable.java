@@ -27,7 +27,7 @@ public class ChannelDefinitionsTable extends JTable {
 	public ChannelDefinitionsTable(boolean dialog) {
 
 		super();
-		setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<ChannelDefinition>()));
+		setModel(new ChannelDefinitionTableModel(dialog, new ArrayList<>()));
 		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		this.dialog = dialog;
 	}
@@ -96,7 +96,7 @@ public class ChannelDefinitionsTable extends JTable {
 	 */
 	public List<Integer> getChannelNumbers() {
 
-		List<Integer> numbers = new ArrayList<Integer>();
+		List<Integer> numbers = new ArrayList<>();
 
 		for (ChannelDefinition definition : getData()) {
 
@@ -113,7 +113,7 @@ public class ChannelDefinitionsTable extends JTable {
 	 */
 	public List<Float> getGainValues() {
 
-		List<Float> gain = new ArrayList<Float>();
+		List<Float> gain = new ArrayList<>();
 		for (ChannelDefinition definition : getData()) {
 
 			gain.add(definition.getGain());
@@ -128,7 +128,7 @@ public class ChannelDefinitionsTable extends JTable {
 	 */
 	public List<Float> getOffsetValues() {
 
-		List<Float> offset = new ArrayList<Float>();
+		List<Float> offset = new ArrayList<>();
 		for (ChannelDefinition definition : getData()) {
 
 			offset.add(definition.getOffset());
@@ -143,7 +143,7 @@ public class ChannelDefinitionsTable extends JTable {
 	 */
 	public List<String> getDefaultNames() {
 
-		List<String> names = new ArrayList<String>();
+		List<String> names = new ArrayList<>();
 		for (ChannelDefinition definition : getData()) {
 
 			names.add(definition.getDefaultName());

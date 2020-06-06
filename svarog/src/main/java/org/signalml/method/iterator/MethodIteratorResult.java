@@ -23,8 +23,8 @@ public class MethodIteratorResult implements Serializable {
 
 	public MethodIteratorResult(ParameterIterationSettings[] parameters) {
 		this.parameters = parameters;
-		results = new ArrayList<Object>();
-		parameterValues = new ArrayList<Object[]>();
+		results = new ArrayList<>();
+		parameterValues = new ArrayList<>();
 	}
 
 	public void add(Object result, Object[] parameterArr) {

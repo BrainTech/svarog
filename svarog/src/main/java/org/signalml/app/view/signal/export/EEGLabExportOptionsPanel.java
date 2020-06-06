@@ -46,7 +46,7 @@ public class EEGLabExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Export tags")), getTagExportField()));
 		components.add(new ComponentWithLabel(new JLabel(""), new JPanel()));

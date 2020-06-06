@@ -98,7 +98,7 @@ public class BookSegmentTreeNode implements PropertyProvider, MessageSourceResol
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("channel index"), "channelIndex", BookSegmentTreeNode.class, "getChannelIndex", null));
 		list.add(new LabelledPropertyDescriptor(_("segment index"), "segmentIndex", BookSegmentTreeNode.class, "getSegmentIndex", null));

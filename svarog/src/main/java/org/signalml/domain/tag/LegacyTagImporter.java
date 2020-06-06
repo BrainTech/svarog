@@ -74,8 +74,8 @@ public class LegacyTagImporter {
 		TagStyle style;
 		Tag tag;
 
-		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<String, TagStyle>();
-		TreeSet<Tag> tags = new TreeSet<Tag>();
+		LinkedHashMap<String,TagStyle> styles = new LinkedHashMap<>();
+		TreeSet<Tag> tags = new TreeSet<>();
 
 		int i;
 		int cnt;

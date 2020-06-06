@@ -26,9 +26,9 @@ public class BookReporterResult implements Serializable {
 	private ValueAxis timeAxis;
 	
 	public BookReporterResult(TagStyles tagStyles) {
-		this.plots = new LinkedList<XYPlot>();
+		this.plots = new LinkedList<>();
 		this.tagStyles = tagStyles;
-		this.tags = new TreeSet<Tag>();
+		this.tags = new TreeSet<>();
 		this.timeAxis = null;
 	}
 	

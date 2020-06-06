@@ -31,7 +31,7 @@ public class SynchronizeTagsWithTriggerParametersPanel extends LabeledComponents
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		ComponentWithLabel componentWithLabel = new ComponentWithLabel(new JLabel(_("Signal threshold")), getThresholdSpinner());
 		components.add(componentWithLabel);

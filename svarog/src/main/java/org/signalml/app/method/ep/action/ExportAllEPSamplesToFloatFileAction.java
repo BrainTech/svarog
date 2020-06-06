@@ -75,7 +75,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 	protected TagStyleGroup showTagStyleGroupSelection() {
 		SelectTagGroupDialog dialog = new SelectTagGroupDialog();
 		List<TagStyleGroup> averagedTagStyles = result.getData().getParameters().getAveragedTagStyles();
-		List<TagStyleGroup> selectedGroups = new ArrayList<TagStyleGroup>();
+		List<TagStyleGroup> selectedGroups = new ArrayList<>();
 		selectedGroups.addAll(averagedTagStyles);
 
 		boolean okPressed = dialog.showDialog(selectedGroups);

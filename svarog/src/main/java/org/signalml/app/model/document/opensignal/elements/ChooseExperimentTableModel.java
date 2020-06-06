@@ -19,7 +19,7 @@ public class ChooseExperimentTableModel extends AbstractTableModel {
 	public static final int EXPERIMENT_HOST = 3;
 
 
-	protected List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
+	protected List<ExperimentDescriptor> experiments = new ArrayList<>();
 
 	public ChooseExperimentTableModel() {
 	}

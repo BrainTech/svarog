@@ -309,7 +309,7 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 	 */
 	private HashMap<String, Boolean> getValidData() {
 
-		HashMap<String, Boolean> validData = new HashMap<String, Boolean>();
+		HashMap<String, Boolean> validData = new HashMap<>();
 		Set<String> channelNames = channels.get(0).keySet();
 
 		for (String channel : channelNames) {
@@ -338,13 +338,13 @@ public class CheckSignalDisplay extends VisualReferenceDisplay {
 	private HashMap<String, List<AdditionalChannelData>> getAdditionalData() {
 
 		HashMap<String, List<AdditionalChannelData>> additionalData =
-			new HashMap<String, List<AdditionalChannelData>>();
+			new HashMap<>();
 
 		Set<String> channelNames = channels.get(0).keySet();
 
 		for (String channel : channelNames) {
 
-			List<AdditionalChannelData> channelsAdditionalData = new ArrayList<AdditionalChannelData>();
+			List<AdditionalChannelData> channelsAdditionalData = new ArrayList<>();
 			for (HashMap<String, ChannelState> diagnosisResult : channels) {
 
 				AdditionalChannelData currentData = diagnosisResult.get(channel).getAdditionalChannelData();

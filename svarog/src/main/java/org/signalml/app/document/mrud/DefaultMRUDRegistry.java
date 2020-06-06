@@ -39,19 +39,19 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 	/**
 	 * the vector with all {@link MRUDEntry entries} in this registry
 	 */
-	private Vector<MRUDEntry> entries = new Vector<MRUDEntry>(100);
+	private Vector<MRUDEntry> entries = new Vector<>(100);
 
 	/**
 	 * the map associating {@link ManagedDocumentType types} of {@link Document
 	 * documents} with vectors of {@link MRUDEntry entries} for these types
 	 */
-	private Map<ManagedDocumentType,Vector<MRUDEntry>> entryVectorsByType = new HashMap<ManagedDocumentType,Vector<MRUDEntry>>(10);
+	private Map<ManagedDocumentType,Vector<MRUDEntry>> entryVectorsByType = new HashMap<>(10);
 
 	/**
 	 * the map associating files with the {@link MRUDEntry entries} in which
 	 * they are described
 	 */
-	private Map<File,MRUDEntry> entriesByFile = new HashMap<File,MRUDEntry>(100);
+	private Map<File,MRUDEntry> entriesByFile = new HashMap<>(100);
 
 	/**
 	 * the number of entries that can be stored in this registry
@@ -238,7 +238,7 @@ public class DefaultMRUDRegistry implements MRUDRegistry {
 
 		Vector<MRUDEntry> vector = entryVectorsByType.get(mrud.getDocumentType());
 		if (vector == null) {
-			vector = new Vector<MRUDEntry>(100);
+			vector = new Vector<>(100);
 			entryVectorsByType.put(mrud.getDocumentType(), vector);
 		}
 		vector.add(mrud);

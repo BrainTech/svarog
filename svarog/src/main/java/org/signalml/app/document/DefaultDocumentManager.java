@@ -35,19 +35,19 @@ public class DefaultDocumentManager implements DocumentManager {
 	/**
 	 * the vector containing all {@link Document documents} in this manager
 	 */
-	private Vector<Document> documents = new Vector<Document>(100,100);
+	private Vector<Document> documents = new Vector<>(100,100);
 
 	/**
 	 * the map associating files with the {@link Document documents} backed
 	 * with them
 	 */
-	private Map<File,Document> documentsByFile = new HashMap<File,Document>(100);
+	private Map<File,Document> documentsByFile = new HashMap<>(100);
 
 	/**
 	 * the map associating {@link ManagedDocumentType types} of {@link Document
 	 * documents} with vectors of {@link Document documents} of these types
 	 */
-	private Map<ManagedDocumentType,Vector<Document>> documentVectorsByType = new HashMap<ManagedDocumentType,Vector<Document>>(10);
+	private Map<ManagedDocumentType,Vector<Document>> documentVectorsByType = new HashMap<>(10);
 
 	/**
 	 * the list of {@link DocumentManagerListener listeners}
@@ -130,7 +130,7 @@ public class DefaultDocumentManager implements DocumentManager {
 			if (type != null) {
 				Vector<Document> vector = documentVectorsByType.get(type);
 				if (vector == null) {
-					vector = new Vector<Document>(100);
+					vector = new Vector<>(100);
 					documentVectorsByType.put(type, vector);
 				}
 				vector.add(document);
@@ -270,7 +270,7 @@ public class DefaultDocumentManager implements DocumentManager {
 	@Override
 	public Iterator<Document> iterator(ManagedDocumentType type) {
 		synchronized (this) {
-			Vector<Document> vector = documentVectorsByType.getOrDefault(type,new Vector<Document>());
+			Vector<Document> vector = documentVectorsByType.getOrDefault(type,new Vector<>());
 			return vector.iterator();
 		}
 	}

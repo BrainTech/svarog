@@ -118,53 +118,53 @@ public class SvarogAccessChangeSupportImpl extends SvarogAccessChangeSupportDocu
 	/**
 	 * {@link PluginCloseListener listeners} on close of Svarog
 	 */
-	private ArrayList<PluginCloseListener> closeListeners = new ArrayList<PluginCloseListener>();
+	private ArrayList<PluginCloseListener> closeListeners = new ArrayList<>();
 
 	/**
 	 * {@link PluginCodecListener listeners} on codec changes (addition
 	 * and removal)
 	 */
-	private ArrayList<PluginCodecListener> codecListeners = new ArrayList<PluginCodecListener>();
+	private ArrayList<PluginCodecListener> codecListeners = new ArrayList<>();
 
 	/**
 	 * {@link PluginDocumentListener listeners} on changes associated
 	 * with a {@link Document}
 	 */
-	private ArrayList<PluginDocumentListener> documentListeners = new ArrayList<PluginDocumentListener>();
+	private ArrayList<PluginDocumentListener> documentListeners = new ArrayList<>();
 
 	/**
 	 * {@link PluginTagDocumentListener listeners} on changes of
 	 * an active {@link TagDocument}
 	 */
-	private ArrayList<PluginTagDocumentListener> tagDocumentListeners = new ArrayList<PluginTagDocumentListener>();
+	private ArrayList<PluginTagDocumentListener> tagDocumentListeners = new ArrayList<>();
 
 	/**
 	 * {@link PluginTagListenerWithActive listeners} on {@link ExportedTag tag}
 	 * changes (addition, removal, change) including changes of an active tag
 	 */
-	protected ArrayList<PluginTagListenerWithActive> tagListenersWithActive = new ArrayList<PluginTagListenerWithActive>();
+	protected ArrayList<PluginTagListenerWithActive> tagListenersWithActive = new ArrayList<>();
 
 	/**
 	 * {@link PluginSignalChangeListener listeners} on signal changes.
 	 */
-	protected ArrayList<PluginSignalChangeListener> signalListeners = new ArrayList<PluginSignalChangeListener>();
+	protected ArrayList<PluginSignalChangeListener> signalListeners = new ArrayList<>();
 
 	/**
 	 * HashMap associating signal documents with {@link SvarogAccessChangeSupportDocumentImpl listeners} for them
 	 */
-	private HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnSignalDocument = new HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl>();
+	private HashMap<ExportedSignalDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnSignalDocument = new HashMap<>();
 
 	/**
 	 * HashMap associating tag documents with {@link SvarogAccessChangeSupportDocumentImpl listeners} for them
 	 */
-	private HashMap<ExportedTagDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnTagDocument = new HashMap<ExportedTagDocument, SvarogAccessChangeSupportDocumentImpl>();
+	private HashMap<ExportedTagDocument, SvarogAccessChangeSupportDocumentImpl> listenersOnTagDocument = new HashMap<>();
 
 
 
 	/**
 	 * HashMap associating signal views with tags active in them
 	 */
-	private HashMap<SignalView, Tag> activeTags = new HashMap<SignalView, Tag>();
+	private HashMap<SignalView, Tag> activeTags = new HashMap<>();
 
 	private SvarogAccessChangeSupportImpl() {
 	}

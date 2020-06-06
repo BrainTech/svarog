@@ -29,7 +29,7 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 
 	private String name;
 
-	private List<TagStyleGroup> averagedTagStyles = new ArrayList<TagStyleGroup>();
+	private List<TagStyleGroup> averagedTagStyles = new ArrayList<>();
 	private float averagingStartTime = 0.0F;
 	private float averagingTimeLength = 1.0F;
 
@@ -38,7 +38,7 @@ public class EvokedPotentialParameters implements Serializable, Preset {
 	private float baselineTimeLength = 0.2F;
 
 	private boolean filteringEnabled = true;
-	private List<TagStyleGroup> artifactTagStyles = new ArrayList<TagStyleGroup>();
+	private List<TagStyleGroup> artifactTagStyles = new ArrayList<>();
 	private TimeDomainSampleFilter timeDomainSampleFilter;
 
 	private SignalSpace wholeSignalSpace;

@@ -236,7 +236,7 @@ public class BookReporterMethodDialog extends AbstractPluginPresetDialog {
 	}
 
 	private static Collection<Class<? extends Preset>> GetPresetClasses() {
-		Collection<Class<? extends Preset>> l = new ArrayList<Class<? extends Preset>>();
+		Collection<Class<? extends Preset>> l = new ArrayList<>();
 		l.add(BookReporterParameters.class);
 		return l;
 	}

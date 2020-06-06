@@ -1571,7 +1571,7 @@ public class DocumentFlowIntegrator {
 
 		childDocuments = document.getDependentDocuments();
 		if (!childDocuments.isEmpty()) {
-			List<Document> toClose = new LinkedList<Document>();
+			List<Document> toClose = new LinkedList<>();
 			Iterator<Document> it = childDocuments.iterator();
 			boolean savedOk;
 			boolean dependantsOk;

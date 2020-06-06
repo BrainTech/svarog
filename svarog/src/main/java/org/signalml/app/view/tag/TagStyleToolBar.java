@@ -77,10 +77,10 @@ public class TagStyleToolBar extends WebToolBar implements TagStyleListener {
 
 		buttonGroup = new ButtonGroup();
 
-		buttonList = new LinkedList<TagStyleToggleButton>();
+		buttonList = new LinkedList<>();
 
-		styleToButtonMap = new HashMap<TagStyle, TagStyleToggleButton>();
-		buttonToStyleMap = new HashMap<ButtonModel, TagStyle>();
+		styleToButtonMap = new HashMap<>();
+		buttonToStyleMap = new HashMap<>();
 
 		tagEraserToggleButton = new TagEraserToggleButton();
 		tagEraserToggleButton.addActionListener(buttonClickListener);

@@ -147,7 +147,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 	private SelectAtomBookTool selectAtomTool;
 	private ZoomBookTool zoomBookTool;
 
-	private Map<ButtonModel,BookTool> toolMap = new HashMap<ButtonModel,BookTool>();
+	private Map<ButtonModel,BookTool> toolMap = new HashMap<>();
 
 	private DocumentFlowIntegrator documentFlowIntegrator;
 	private ViewerFileChooser fileChooser;

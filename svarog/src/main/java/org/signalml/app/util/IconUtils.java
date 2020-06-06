@@ -205,7 +205,7 @@ public abstract class IconUtils {
 
 		if (taskIconMap == null) {
 
-			taskIconMap = new HashMap<TaskStatus,ImageIcon>();
+			taskIconMap = new HashMap<>();
 
 			ImageIcon runningIcon = loadClassPathIcon("org/signalml/app/icon/running.png");
 			ImageIcon waitingIcon = loadClassPathIcon("org/signalml/app/icon/waiting.png");
@@ -234,7 +234,7 @@ public abstract class IconUtils {
 
 		if (largeTaskIconMap == null) {
 
-			largeTaskIconMap = new HashMap<TaskStatus,ImageIcon>();
+			largeTaskIconMap = new HashMap<>();
 
 			ImageIcon runningIcon = loadClassPathIcon("org/signalml/app/icon/runninglarge.png");
 			ImageIcon waitingIcon = loadClassPathIcon("org/signalml/app/icon/waitinglarge.png");

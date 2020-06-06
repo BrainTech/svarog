@@ -34,7 +34,7 @@ public class CsvExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	private JComboBox getSeparatorField() {
 		if (separatorField == null) {
-			separatorField = new JComboBox<String>(SEPARATORS_LABELS);
+			separatorField = new JComboBox<>(SEPARATORS_LABELS);
 		}
 		return separatorField;
 	}
@@ -71,7 +71,7 @@ public class CsvExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Separator: ")), getSeparatorField()));
 		components.add(

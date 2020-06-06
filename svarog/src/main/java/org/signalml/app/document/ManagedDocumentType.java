@@ -161,7 +161,7 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 * @return extension for the given type of document.
 	 */
 	public String[] getAllFileExtensions() {
-		List<String> extensions = new ArrayList<String>();
+		List<String> extensions = new ArrayList<>();
 		for (String[] fileFilterExtension : fileFilterExtensions) {
 			for (String ext : fileFilterExtension) {
 				extensions.add(ext);

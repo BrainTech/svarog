@@ -47,7 +47,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	private BookView bookView;
 
-	private List<Component> buttonPanelComponents = new LinkedList<Component>();
+	private List<Component> buttonPanelComponents = new LinkedList<>();
 
 	private JPanel aspectRatioPanel;
 
