@@ -11,7 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>
+       
 
             Znaczniki (potocznie tagi, od ang. <i>tags</i>) umożliwiają oznaczanie momentów wystąpienia — jak również ew. długości w czasie i odprowadzeń 
             — wydarzeń, związanych z zapisem EEG, takich jak na przykład:
@@ -68,31 +68,28 @@ Styl określa typ znacznika:
         ten znacznik był wykorzystywany do oznacznia artefaktów w sztywnych blokach, i zachowany jest dla kompatybilności z wykonywanymi wcześniej oznaczniami,
     </li>
     <li>
-        kanałowy, czyli przypisany do konkretnego odprowadzenia, oznaczający początek i koniec wystapienia zdarzenia lub struktury.
+        kanałowy, czyli przypisany do jednego lub wszystkich odprowadzeń, 
+        oznaczający początek i koniec wystapienia zdarzenia lub struktury, 
+        jak również konkretne odprowadzenie, w którym strukturę oznaczano 
+        (może być też przypisany do wszystkich kanałów).
+        Svarog zapisuje również montaż, w którym wykonywano dane oznaczenia, 
+        gdyż mogą się one odnosić np. do specyficznych odprowadzeń bipolarnych.
     </li>
 </ul>
-jak również kolor używany do wizualizacji, krótki opis oraz przypisany skrót klawiszowy, ułatwiający ręczne oznaczanie.
+Styl definiuje również kolor każdego ze znaczników, używany do wizualizacji, 
+krótki opis, oraz przypisany skrót klawiszowy, ułatwiający ręczne oznaczanie.
         
 
-Znaczniki zapisywane są w plikach *.tag w formacie xml, istnieje również stary format binarny plików *.tag, używany w ostatnich dekadach (...). 
-        
-        <br> 
-        <hr>
-        <b> Marian podsumuj proszę jak to jest aktualnie: XML vs binarny, co ma jakie rozszerzenie itp. --- ja już zapomniałem jak to ustaliliśmy :/</b>
-        <hr>
-        <br>
-        
-          Plik zawierający znaczniki musi być oczywiście ściśle związany z plikiem zawierającym opisywany sygnał 
-          (dlatego w pliku znaczników zapisywana jest nazwa i suma kontrolna pliku EEG), 
+Znaczniki zapisywane są w plikach *.tag w formacie xml.    
+          Plik zawierający znaczniki powinien być jednoznacznie powiązany jest z plikiem 
+          zawierającym opisywany sygnał (przez nazwę pliku),
           ale do jednego sygnału może być przypisanych wiele plików z oznaczeniami. 
-          
+<!-- 
           Szczegóły techniczne i opis struktury plików opisujących znaczniki znaleźć można pod adresem      
           <div align="center">
           <code>
         https://braintech.pl/software/svarog/signalml-annotations/
             </code>
-</div>
-
-        </div>
+--> 
     </body>
 </html>
