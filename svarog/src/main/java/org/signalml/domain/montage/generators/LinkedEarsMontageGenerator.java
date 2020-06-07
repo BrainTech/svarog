@@ -47,7 +47,7 @@ public class LinkedEarsMontageGenerator extends AverageReferenceMontageGenerator
 			if (errors != null) {
 				
 				for (int i=0;i<SourceChannel.LEFT_EAR_CHANNEL_NAMES.length;i++){
-					errors.addError(_R("Missing ears pair: {0}, {1} .",
+					errors.addError(_R("Missing ears pair: {0}, {1}.",
 						SourceChannel.LEFT_EAR_CHANNEL_NAMES[i],
 						SourceChannel.RIGHT_EAR_CHANNEL_NAMES[i]
 				));

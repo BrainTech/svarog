@@ -2881,7 +2881,7 @@ msgstr "Etykieta"
 
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:180
 msgid "Language"
-msgstr ""
+msgstr "Język"
 
 #: org/signalml/app/view/common/components/filechooser/EmbeddedFileChooserFavorites.java:404
 msgid "Last directories"
@@ -3037,7 +3037,7 @@ msgstr "WIELOKANAŁOWE TAGI"
 
 #: org/signalml/app/view/workspace/ViewerElementManager.java:762
 msgid "Magnify the signal"
-msgstr "Zmierz sygnał"
+msgstr "Powiększ sygnał"
 
 #: org/signalml/app/view/signal/SignalView.java:1026
 msgid "Magnify the signal (for settings press and hold the mouse button here)"
@@ -3085,7 +3085,7 @@ msgstr "Styl znacznika"
 #: org/signalml/app/view/workspace/ViewerElementManager.java:795
 #: org/signalml/plugin/bookreporter/BookReporterPlugin.java:42
 msgid "Matching pursuit"
-msgstr ""
+msgstr "Matching pursuit"
 
 #: org/signalml/plugin/fftsignaltool/dialogs/components/SettingsPanel.java:734
 msgid "Max Y axis: positive double required "
@@ -3149,8 +3149,8 @@ msgstr "Różne"
 
 #: org/signalml/domain/montage/generators/LinkedEarsMontageGenerator.java:50
 #, java-format
-msgid "Missing ears pair: {0}, {1} ."
-msgstr ""
+msgid "Missing ears pair: {0}, {1}."
+msgstr "Brakujące kanały uszne: {0}, {1}."
 
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfTabbedPane.java:167
 msgid "Model order"
@@ -4948,8 +4948,8 @@ msgid "Signal parameters"
 msgstr "Parametry sygnału"
 
 #: org/signalml/app/worker/monitor/recording/RecordingStateChecker.java:67
-msgid "Signal preceeding this error message is not lost.\n"
-msgstr ""
+msgid "Signal preceeding this error message is not lost."
+msgstr "Sygnał poprzedzający tę wiadomość nie został utracony."
 
 #: org/signalml/app/worker/monitor/recording/RecordingStateChecker.java:71
 msgid "Signal saving error"
@@ -6335,11 +6335,11 @@ msgstr "odcinki"
 
 #: org/signalml/method/mp5/MP5LocalProcessExecutor.java:180
 msgid "execute from $PATH"
-msgstr "wykonać z $PATH"
+msgstr "wykonaj z $PATH"
 
 #: org/signalml/method/mp5/MP5BundledProcessExecutor.java:14
 msgid "execute from bundled executor"
-msgstr ""
+msgstr "wykonaj z dołączoną implementacją"
 
 #: org/signalml/app/action/book/ExportBookAction.java:98
 msgid "exporting book"
@@ -6764,7 +6764,7 @@ msgstr "nagrywa"
 
 #: org/signalml/app/worker/monitor/recording/RecordingStateChecker.java:54
 msgid "recording finished with error: "
-msgstr ""
+msgstr "nagrywanie zakończyło się błędem: "
 
 #: org/signalml/app/document/MonitorSignalDocument.java:444
 msgid "recording state"
