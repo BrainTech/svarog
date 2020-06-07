@@ -824,10 +824,10 @@ public class ViewerElementManager {
 			helpMenu = new JMenu(_("Help"));
 			helpMenu.setMnemonic(KeyEvent.VK_H);
 			helpMenu.add(getHelpContentsAction());
-			helpMenu.add(createHelpContentsAction(_("Recording"), _H("artifact.html")));
-			helpMenu.add(createHelpContentsAction(_("Analysis"), _H("artifact.html")));
-			helpMenu.add(createHelpContentsAction(_("Tools"), _H("artifact.html")));
-			helpMenu.add(createHelpContentsAction(_("Tags"), _H("artifact.html")));
+			helpMenu.add(createHelpContentsAction(_("Recording"), _H("recording.html")));
+			helpMenu.add(createHelpContentsAction(_("Analysis"), _H("analysis.html")));
+			helpMenu.add(createHelpContentsAction(_("Tools"), _H("tools.html")));
+			helpMenu.add(createHelpContentsAction(_("Tags"), _H("tags.html")));
 		}
 		return helpMenu;
 	}

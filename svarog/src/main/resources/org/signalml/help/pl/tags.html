@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Znaczniki (tags)</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>
+
+            Znaczniki (potocznie tagi, od ang. <i>tags</i>) umożliwiają oznaczanie momentów wystąpienia — jak również ew. długości w czasie i odprowadzeń 
+            — wydarzeń, związanych z zapisem EEG, takich jak na przykład:
+            <ul>
+                <li>
+                    momenty wystąpienia bodźców, potrzebne do uśredniania potencjałów wywołanych, 
+                </li>
+                <li>
+                    struktury (grafoelementy), jak np. wrzeciona snu czy artefakty,
+                </li>
+                <li>
+                    stadia snu.
+                </li>
+            </ul>
+
+            Każdy z powyższych przykładów wymaga innego rodzaju znaczników:
+            <ul>
+                <li>
+                    Oznaczenia synchronizowanych z sygnałem bodźców tworzone są zwykle automatycznie w czasie rejestracji EEG w eksperymencie,
+                    dzięki synchronizacji czasu między systemem generującym bodźce (komputer wyświetlający lub kontrolujący bodźce wzrokowe 
+                    lub słuchowe czy czuciowe) a systemem rejestracji. Szczegóły tego procesu zależą od systemu, w którym 
+                    projektowano i implementowano dany eksperyment. 
+                </li>
+                <li>
+                    Oznaczanie w sygnale struktur (zwanych czasem grafoelementami) odbywa się zwykle a posteriori, 
+                    na uprzednio zarejestrowanym sygnale. Artefakty oznaczamy zwykle w celu wykluczenia oznaczonych odcinków z dalszych analiz, 
+                    więc powinny to być oznaczenia niezwiązane z konkretnym kanałem. Z kolei wybrane grafoelementy (wrzeciona snu, fale wolne itp.) 
+                    możemy oznaczać w konkretnych odprowadzeniach. Wszystkie te oznaczenia mogą być generowane automatycznie z użyciem wybranych 
+                    metod analizy sygnałów (jak np. zaimplementowane w Svarogu oznaczanie struktur wybranych z dekompozycji MP), lub ręcznie/wzrokowo 
+                    (np. przez doświadczonego elektroencefalografistę, w celu porówania z detekcją automatyczną).
+                </li>
+                <li>
+                    Stadia snu zdefiniowano (względnie) ściśle po raz pierwszy w roku 1968 
+                    (A Manual of Standardized Terminology, Techniques and Scoring System for Sleep Stages of Human Subjects: 
+                    Allan Rechtschaffen and Anthony Kales, Editors). 
+                    Uaktualnione wersje standardu publikowane są przez American Academy of Sleep Medicine w "The AASM Manual for the Scoring of Sleep
+                    and Associated Events". Jak widać z tytułu, poza samymi stadiami oznaczać można również wybrane grafoelementy, których obecność wchodzi w skład
+                    kryteriów określających wystąpienia danego stadium. Svarog oferuje predefiniowane schematy oznaczeń wedle obydwu w/w standardów.
+                </li>
+            </ul>
+        
+        
+       
+<br>
+Svarog udostępnia możliwośc samodzielnego tworzenia i modyfikowania definicji znaczników, jak również korzystania z predefiniowanych stylów. 
+Styl określa typ znacznika:
+<ul>
+    <li>
+        stronicowy, czyli przypisujący oznaczenie jednej składce sygnału, o długości zwykle 20 lub 30 sekund (definowanej we własnościach pliku, 
+        można ją ew. zmienic w momencie wczytywania pliku),
+    </li>
+    <li>
+        blokowy, czyli przypisujący oznaczenie jednego bloku sygnału (podobnie jak dla składki, definiowaneg definowanej we własnościach pliku); 
+        ten znacznik był wykorzystywany do oznacznia artefaktów w sztywnych blokach, i zachowany jest dla kompatybilności z wykonywanymi wcześniej oznaczniami,
+    </li>
+    <li>
+        kanałowy, czyli przypisany do konkretnego odprowadzenia, oznaczający początek i koniec wystapienia zdarzenia lub struktury.
+    </li>
+</ul>
+jak również kolor używany do wizualizacji, krótki opis oraz przypisany skrót klawiszowy, ułatwiający ręczne oznaczanie.
+        
+
+Znaczniki zapisywane są w plikach *.tag w formacie xml, istnieje również stary format binarny plików *.tag, używany w ostatnich dekadach (...). 
+        
+        <br> 
+        <hr>
+        <b> Marian podsumuj proszę jak to jest aktualnie: XML vs binarny, co ma jakie rozszerzenie itp. --- ja już zapomniałem jak to ustaliliśmy :/</b>
+        <hr>
+        <br>
+        
+          Plik zawierający znaczniki musi być oczywiście ściśle związany z plikiem zawierającym opisywany sygnał 
+          (dlatego w pliku znaczników zapisywana jest nazwa i suma kontrolna pliku EEG), 
+          ale do jednego sygnału może być przypisanych wiele plików z oznaczeniami. 
+          
+          Szczegóły techniczne i opis struktury plików opisujących znaczniki znaleźć można pod adresem      
+          <div align="center">
+          <code>
+        https://braintech.pl/software/svarog/signalml-annotations/
+            </code>
+</div>
+
+        </div>
+    </body>
+</html>
