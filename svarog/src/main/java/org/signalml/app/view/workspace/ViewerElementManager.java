@@ -294,7 +294,6 @@ public class ViewerElementManager {
 	private CloseTagAction closeTagAction;
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
-	private OpenTagAction importTagAction;
 	private ExportEEGLabTagAction exportEEGLabTagAction;
 
 	/**
@@ -717,15 +716,6 @@ public class ViewerElementManager {
 	 */
 	public JMenu getTagsMenu() {
 		if (tagsMenu == null) {
-
-			JMenu importSubmenu = new JMenu(_("Import"));
-			importSubmenu.setMnemonic(KeyEvent.VK_I);
-			importSubmenu.add(getImportTagAction());
-
-			JMenu exportSubmenu = new JMenu(_("Export"));
-			exportSubmenu.setMnemonic(KeyEvent.VK_E);
-			exportSubmenu.add(getExportEEGLabTagAction());
-
 			tagsMenu = new JMenu(_("Tags"));
 			tagsMenu.setMnemonic(KeyEvent.VK_T);
 
@@ -733,11 +723,8 @@ public class ViewerElementManager {
 			tagsMenu.add(getOpenTagAction());
 			tagsMenu.add(getSaveTagAction());
 			tagsMenu.add(getSaveTagAsAction());
+			tagsMenu.add(getExportEEGLabTagAction());
 			tagsMenu.add(getCloseTagAction());
-			tagsMenu.addSeparator();
-
-			tagsMenu.add(importSubmenu);
-			tagsMenu.add(exportSubmenu);
 			tagsMenu.addSeparator();
 
 			tagsMenu.add(getChooseActiveTagAction());
@@ -1468,16 +1455,6 @@ public class ViewerElementManager {
 			saveTagAsAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 		}
 		return saveTagAsAction;
-	}
-
-	public OpenTagAction getImportTagAction() {
-		if (importTagAction == null) {
-			importTagAction = new OpenTagAction(getActionFocusManager());
-			importTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			importTagAction.setFileChooser(getFileChooser());
-			importTagAction.setOptionPaneParent(getOptionPaneParent());
-		}
-		return importTagAction;
 	}
 
 	/**

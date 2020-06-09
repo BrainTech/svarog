@@ -2094,13 +2094,13 @@ msgstr "Eksportuj sygnał do prostego formatu binarnego, ASCII lub EEGLab"
 msgid "Export tags"
 msgstr "Eksportuj znaczniki (tagi)"
 
-#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:28
+#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:27
 msgid "Export tags to EEGLab events ASCII file format"
 msgstr "Eksportuj znaczniki do pliku zdarzeń EEGLab w formacie ASCII"
 
-#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:27
-msgid "Export to EEGLab..."
-msgstr "Eksportuj do EEGLab ..."
+#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:26
+msgid "Export..."
+msgstr "Eksportuj..."
 
 #: org/signalml/app/view/montage/filters/charts/elements/FFTFrequencyResponseChartPanel.java:22
 msgid "FFT coefficients"
