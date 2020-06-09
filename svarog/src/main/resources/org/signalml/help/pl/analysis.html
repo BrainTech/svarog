@@ -11,9 +11,72 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-W menu "Analiza" zgromadzono implementacje zaawansowanych metod analizy sygnałów, które dzięki 
-przyjaznemu interfejsowi programu Svarog możemy w prosty sposób zastosować do (wybranych fragmentów) sygnału:
-        
+        <dl>
+            <dt>ERP</dt><dd>potencjał wywołany (<i>Event-Related Potential</i>) to, według najprostszej poprawnej definicji, 
+                krzywa widoczna po uśrednieniu od kilku do kilkunastu tysięcy odcinków EEG zsynchronizowanych z bodźcem.
+                Dla synchronizacji konieczna jest informacja o momentach wystąpienia bodźców, 
+                zapisywana w <A HREF="tags.html">tagach</a>.
+                W tym okienku wybierzemy, które znaczniki odpowiadają bodźcom, czy chcemy odrzucać artefakty 
+                (według ew. innych znaczników), na jakim zakresie sygnału i na których odprowadzeniach chcemy dokonywać uśrednienia, 
+                oraz czy uśredniać sygnał surowy, czy przefiltrowany i z uwzględnieneim montażu.</dd>
+
+            <dt>Krótkoczasowa transformata Fouriera</dt>
+            <dd><i>Short-Time Fourier Transform</i>, STFT, 
+                to najprostsza estymata gęstości energii sygnału w przestrzeni czas-częstość.
+                Wybieramy szerokość i rodzaj okna. 
+            </dd>
+
+            <dt>Transformacja falkowa</dt>
+            <dd>
+                <i>Wavelet transform</i> to kolejna estymata gęstości energii sygnału w przestrzeni czas-częstość, 
+                w porównaniu do STFT wolna od dylematu wyboru szerokości okna, gdyż wzrost częstości uzyskujemy 
+                przez "ściskanie" falki bazowej,
+                co powoduje logarytmiczne własności w częstościach (lepsza rozdzielczość czasowa dla wyższych częstości). 
+                Dostępne są falki Morleta (z regulowanym parametrem szerokości), Shannona i Haara. 
+            </dd>
+
+            <dt>Analiza składników niezależnych (ICA)</dt>
+            <dd><i>Independent Component Analysis</i>. Umożliwia dekompozycję sygnału wielokanałowego na liniową sumę
+                składników maksymalnie niezależnych statystycznie, oraz odtwarzanie sygnału po wyzerowaniu 
+                wybranych składników (na przykład odpowiadających artefaktom).
+            </dd>
+
+            <dt>Kierunkowa funkcja przejścia (DTF)</dt>
+            <dd>
+                <i>Directed Transfer Function</i> to estymata przyczynowiści w sensie Grangera, 
+                oparta na wielozmiennym modelu autoregresyjnym (MVAR), wskazująca nie tylko 
+                zależności (korelacje) między odprowadzeniami EEG, ale też ich kierunek.
+            </dd>
+            <dt>Matching Pursuit</dt>
+            <dd>
+                rozkłada sygnał na liniową sumę funkcji, których parametry dopasowywane są do lokalnych własności sygnału. 
+                <dl>
+                    <dt>
+                        Rozkład
+                    </dt>
+                    <dd>otwiera okno <A href="decompMP5.html">dekompozycji sygnału metodą MP.</A></dd>
+                    <dt>Wczytaj wyniki</dt><dd>Wczytuje wyniki dekompozycji MP, zapisane uprzednio na dysku.</dd>
+                    <dt>Uśrednianie książek</dt><dd>Prezentuje uśrednioną estymatę gęstości energii sygnałów na podstawie uprzednio wykonanej dekompozycji MP.</dd>
+                    <dt>Oznacz struktury MP</dt><dd><b>to jakieś dziwne, pyta się tylko o kanał a potem chce jakiś tag zapisywać --- AI takes over??</b></dd>
+                    <dt>Wskaż ścieżkę do MP</dt><dd>wskazuje ścieżkę do programu realizującego dekompozycję MP (różnego dla różnych systemów operacyjnych).</dd>
+                    <dt>Profile EEG (MP)</dt><dd>Obliczanie i wizualizacja <a href="profilesEEG.html">profili EEG</a> 
+                    na podstawie uprzednio zapisanej dekompozycji sygnału (książki).</dd>
+                </dl>
+           
+            </dd>
+            <dt>Iteruj</dt>
+            <dd>
+                <b>NIE PAMIĘTAM, CO MOŻNA ITEROWAĆ...</b>
+            </dd>
+            <dt>Ustawienia FFT sygnału</dt>
+            <dd><b>to by należało przenieść do menu "Narzędzia" pod FFT</b>
+            </dd>
+            <dt></dt><dd></dd>
+
+
+        </dl>        
+
+
 
     </body>
 </html>
