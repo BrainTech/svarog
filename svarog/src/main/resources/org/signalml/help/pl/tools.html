@@ -10,18 +10,66 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-<body>
-    <!--    <div>TODO write content</div> -->
+    <body>
+        <!--    <div>TODO write content</div> -->
+        <dl>
+            <dt>&nbsp;<img src="../../app/icon/arrow.png" alt="strzałka"> Wybierz tagi</dt>
+            <dd>strzałką wybieramy wyświetlany na sygnale znacznik, który chcemy edytować/modyfikować.</dd>
+            <dt>&nbsp;<img src="../../app/icon/hand.png" alt="ręka" > Przesuń sygnał</dt>
+            <dd>po wybraniu tej opcji i kliknięciu (bez puszczania guzika myszki) na sygnale, 
+                ruch myszki przemieszcza widoczną część sygnału lewo/prawo i góra/dół 
+                (chyba, że w oknie mieści się cały wczytany sygnał).</dd>
+            <dt>&nbsp;<img src="../../app/icon/arrow.png" alt="zoom" > Powiększ sygnał</dt>
+            <dd>lupa powiększa fragment sygnału, nad którym klikniemy. Parametry (stopień powiększenia i rozmiar okna)
+                ustawiamy w opisanym poniżej oknie "Preferencje", które dostępne jest również po kliknięciu lewym guzikiem myszy 
+                na ikonkę lupy w głównym pasku narzędzi.</dd>
+            <dt>&nbsp;<img src="../../app/icon/zoom.png" alt="strzałka" > Zmierz sygnał</dt>
+            <dd>miarka pozwala na odczyt odległości między dwoma wybranymi punktami w jednostkach fizycznych,
+                według współczynnika kallibracji i częstości próbkowania wczytanych z plikiem 
+                (w przypadku EEG zwykle mikrowolty i sekundy).</dd>
+            <dt>&nbsp;<img src="../../app/icon/FFT.png" alt="strzałka" > FFT sygnału</dt>
+            <dd>po wybraniu tej opcji, dostępnej również w pasku głównym, przyciśnięcie guzika myszki nad sygnałem wyświetla widmo,
+                estymowane z użyciem szybkiej transformaty Fouriera (Fsat Fourier Transform, FFT).
+                Po kliknięciu prawym guzikiem myszy ikonki FFT w pasku głównym, uzyskujemy dostęp do ustawień estymacji (szerokość i rodzaj okna) 
+                oraz parametrów jego wyświetlania (osie, skale, wielkość okna w który mwidmo jest wyświetlane itp.).
+            </dd>
+            <dt>&nbsp;<img src="../../app/icon/channelselection.png" alt="zaznaczenie"> Zaznacz fragmenty</dt>
+            <dd>pozwala wybrać fragment sygnału (z jednego lub wszystkich odprowadzeń), 
+                który będziemy poddawać dalszej analizie jedną z funkcji z menu "Analiza".</dd>
+            <br>
+            <div align="center">
+                <small>
+                    [<i>Powyższe funkcje są dostępne również za pośrednictwem ikonek w pasku głównym (main toolbar)</i>]
+                </small>
+            </div>
+            <br>
+            <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Preferencje</dt>
+            <dd>zakładki tego okna:
+                <dl>           
+                    <dd>Oglądanie sygnału:</dd><dt>ustawia szereg parametrów, rządzących sposobem wyświetlania sygnału.</dt>
+                    <dd>Powiększanie sygnału (zoom)</dd><dt>określa powiększenie sygnnału po wybraniu lupy (zoom) oraz rozmiar okna, 
+                        w którym jest dynamicznie wyświetlany powiększony sygnał.
+                    </dt>
+                    <dd>Tagowanie</dd><dt>tutaj możemy zmienić rozmiar składki i bloku, do których odnoszą się 
+                        znaczniki stronicowe i blokowe, oraz ustalić, czy z każdym tagiem będzie zapisywany montaż 
+                        (niezależnie od tych ustawień, montaż jest zaisywany zawsze jeśi w pliku są oznaczenia 
+                        odnoszące się do pojedynczych odprowadzeń).</dt>
+                    <dd>Narzędzia</dd><dt>w tej zakładce wybieramy ścieżkę do programu realizującego dekompozycję MP
+                        (różny dla różnych systemów operacyjnych).</dt>
+                    <dd>Online</dd><dt>pozwala zmodyfikować domyślny IP i port używany w procesie rejestracji sygnału.</dt>
+                    <dd>Kodeki SignalML</dd><dt>rejestruje w systemie kodeki, pozwalające na wyświetlanie nowych formatów danych
+                        bez konieczności kompilacji Svaroga; opis idei i formatu dostępny jest pod adresem https://signalml.org lub 
+                        https://braintech.pl/software/svarog/signalml/.
+                    </dt>
+                    <dd>Różne</dd><dt>
+                        ustawienia języka interfejsu, zapisywania konfiguracji itp.
+                    </dt>
+                </dl>
+            </dd>
+        </dl>
 
-Menu "Narzędzia" obejmuje następujące pozycje, powielone częściowo w pasku głównym (main toolbar):
-<br>&nbsp;<img src="../../app/icon/arrow.png" alt="strzałka"> Wybierz tagi
-<br>&nbsp;<img src="../../app/icon/hand.png" alt="ręka" > Przesuń sygnał
-<br>&nbsp;<img src="../../app/icon/arrow.png" alt="zoom" > Powiększ sygnał
-<br>&nbsp;<img src="../../app/icon/zoom.png" alt="strzałka" > Zmierz sygnał
-<br>&nbsp;<img src="../../app/icon/FFT.png" alt="strzałka" > FFT sygnału
-<br>&nbsp;<img src="../../app/icon/channelselection.png" alt="zaznaczenie"> Zaznacz fragmenty
-<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Preferencje 
-  
-    
-</body>
+
+
+
+    </body>
 </html>
