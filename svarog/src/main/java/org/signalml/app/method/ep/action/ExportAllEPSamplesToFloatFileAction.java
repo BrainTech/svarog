@@ -35,7 +35,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 	public ExportAllEPSamplesToFloatFileAction(ViewerFileChooser fileChooser) {
 		super(fileChooser);
 		setText(_("Save samples to file"));
-		setToolTip(_("Save samples to file"));
+		setToolTip(_("Save samples to file. Binary, 32 bit float, multiplexed channels."));
 		setIconPath("org/signalml/app/icon/filesave.png");
 	}
 
