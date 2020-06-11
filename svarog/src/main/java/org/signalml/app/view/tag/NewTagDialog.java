@@ -128,8 +128,9 @@ public class NewTagDialog extends AbstractDialog  {
 		if (mode == NewTagTypeMode.EMPTY) {
 			newTagPanel.getEmptyRadio().setSelected(true);
 		}
-		else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
-			newTagPanel.getDefaultSleepRadio().setSelected(true);
+		else if (mode == NewTagTypeMode.DEFAULT_PRESET)
+		{
+			newTagPanel.getDefaultPresetsRadio().setSelected(true);
 		}
 		else if (mode == NewTagTypeMode.PRESET) {
 			newTagPanel.getPresetRadio().setSelected(true);
@@ -173,13 +174,13 @@ public class NewTagDialog extends AbstractDialog  {
 			descriptor.setMode(NewTagTypeMode.EMPTY);
 			descriptor.setFile(null);
 		}
-		else if (newTagPanel.getDefaultSleepRadio().isSelected()) {
-			descriptor.setMode(NewTagTypeMode.DEFAULT_SLEEP);
-			descriptor.setFile(null);
-		}
 		else if (newTagPanel.getPresetRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.PRESET);
 			descriptor.setTagStylesPreset((StyledTagSet) newTagPanel.getPresetComboBox().getSelectedItem());
+		}
+		else if (newTagPanel.getDefaultPresetsRadio().isSelected()){
+			descriptor.setMode(NewTagTypeMode.DEFAULT_PRESET);
+			descriptor.setDefaultPresetIndex(newTagPanel.getDefaultPresetComboBox().getSelectedIndex());
 		}
 		else if (newTagPanel.getFromFileRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.FROM_FILE);

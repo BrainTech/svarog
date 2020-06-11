@@ -75,8 +75,9 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 			if (mode == NewTagTypeMode.EMPTY) {
 				tagDocument = new TagDocument(descriptor.getPageSize(), descriptor.getBlocksPerPage());
 			}
-			else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
-				tagDocument = TagDocument.getNewSleepDefaultDocument(descriptor.getPageSize(), descriptor.getBlocksPerPage());
+			else if (mode == NewTagTypeMode.DEFAULT_PRESET)
+			{
+				tagDocument = TagDocument.getDefaultPreset(descriptor.getPageSize(), descriptor.getBlocksPerPage(), descriptor.getDefaultPresetIndex());
 			}
 			else if (mode == NewTagTypeMode.PRESET) {
 				tagDocument = new TagDocument(descriptor.getTagStylesPreset());

@@ -61,11 +61,18 @@ import org.springframework.core.io.Resource;
  */
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
+	public static String[] DEFAULT_TAG_DOCUMENTS = { "default_tags_coma_structures.xml",
+			"default_tags_sleep_AASM.xml",
+			"default_tags_sleep_RK.xml",};
+	public static String[] DEFAULT_TAG_DOCUMENTS_STYLE_NAMES = { _("Coma structures"),
+		_("Sleep AASM"),
+		_("Sleep RK"), };
+	
 	/**
 	     * Logger to save history of execution at
 	     */
 	protected static final Logger logger = Logger.getLogger(TagDocument.class);
-
+	
 	/**
 	 * Charset used to save this document. Probably shouldn't be changed.
 	 */
@@ -138,6 +145,22 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		}
 		saved = true;
 	}
+	
+
+	public static TagDocument getDefaultPreset(float pageSize, int blocksPerPage, int id) throws SignalMLException, IOException {
+
+		Resource r = new ClassPathResource("org/signalml/app/config/tag/presets/" + DEFAULT_TAG_DOCUMENTS[id]);
+
+		TagDocument templateDocument = new TagDocument();
+		templateDocument.readDocument(r.getInputStream());
+
+		TagStyles styles = templateDocument.getTagSet().getTagStyles().clone();
+		StyledTagSet tagSet = new StyledTagSet(styles, pageSize, blocksPerPage);
+
+		TagDocument tagDocument = new TagDocument(tagSet);
+		return tagDocument;
+
+	}
 
 	/**
 	 * Creates the new tag document with the {@link TagStyle styles} to mark
@@ -149,6 +172,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 * @throws IOException if the stream to the file with styles could not
 	 * be opened
 	 */
+	
 	public static TagDocument getNewSleepDefaultDocument(float pageSize, int blocksPerPage) throws SignalMLException, IOException {
 
 		Resource r = new ClassPathResource("org/signalml/domain/tag/sample/default_sleep_styles.xml");
