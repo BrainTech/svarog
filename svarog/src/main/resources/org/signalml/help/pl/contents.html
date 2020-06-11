@@ -1,140 +1,81 @@
 <html>
-<head>
-<title>SVAROG</title>
-</head>
+    <head>
+        <title>SVAROG</title>
+    </head>
 
-<p></p>
+    <p></p>
     <div style="text-align:center">
-<i>Signal Viewer, Analyzer and Recorder On GPL</i> 
-    
-<p>
-oprogramowanie dostępne dla GNU/Linuxa, MacOS i Windows na licencji GPLv3<br>
-tekst licencji dostępny jest na stronie 
-<A HREF="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</A> <br>
-najnowsze wersje są dostępne pod adresem 
-    </p>
-  <!--  <p></p>
-    -->
-    
-    <hr>
-   SVAROG.PL
-   <hr>
-   
-   </div>
-  
-   
+        <h1>Signal Viewer, Analyzer and Recorder On GPL</h1> 
+        <i>
+            oprogramowanie dostępne dla GNU/Linuxa, MacOS i Windows na licencji GPLv3. 
+            Tekst licencji dostępny na stronie 
+            <kbd>https://www.gnu.org/licenses/gpl-3.0.html</kbd>, zaś 
+            najnowsze wersje oprogramowania pod adresem 
+            <kbd>https://svarog.pl</kbd>.
+        </i>
 
-<!--
+    </div>
+
     <p>
-Svarog umożliwia między inymi:
-    </p>
--->    
-    
-    <p>
-    &emsp;&emsp;<img src="../../app/icon/plotoptions.png" alt="plotop"> pełna kontrola wyświetlania: 
-    <img src="../../app/icon/antialias.png" alt="help"> antialiasing, <img src="../../app/icon/pagelines.png" alt="lines"> linie itp.
-    </p>
-    
-     <p>
-    &emsp;&emsp;<img src="../../app/icon/zoom.png" alt="zoom"> powiększanie fragmentu sygnału (zoom) 
-    </p>
- 
-    <p>
-    &emsp;&emsp;[<img src="../../app/icon/fft.png" alt="FFT">] oglądanie widma wybranego fragmentu sygnału 
-    </p>
-   
-    <p>
-    &emsp;&emsp;<img src="../../app/icon/montage.png" alt="mtg">
+    Svarog oferuje pełną kontrolę <img src="../../app/icon/plotoptions.png" alt="plotop"> sposobu wyświetlania wielokanałowego EEG, m. in.: 
+    <img src="../../app/icon/antialias.png" alt="help"> antialiasing, <img src="../../app/icon/pagelines.png" alt="lines"> linie,
+    <img src="../../app/icon/zoom.png" alt="zoom"> powiększanie fragmentu sygnału (zoom), 
+    [<img src="../../app/icon/fft.png" alt="FFT">] oglądanie widma wybranego fragmentu sygnału,
+    <img src="../../app/icon/montage.png" alt="mtg">
     definiowanie własnych montaży i filtrów częstościowych 
-    <A HREF="editTimeDomainSampleFilterDialog.html"><img src="../../app/icon/help.png" alt="help"></A>; włączanie  
+    <A HREF="editTimeDomainSampleFilterDialog.html"><img src="../../app/icon/help.png" alt="help"></A>, włączanie  
     <img src="../../app/icon/filteron.png" alt="flton"> 
     i wyłączanie
     <img src="../../app/icon/filter.png" alt="flt">
-    filtrów
-    </p>
-     
-     
-    <p>
-    &emsp;&emsp;<img src="../../app/icon/analyze.png" alt="tools"> estymację spektrogramu (STFT), 
+    filtrów, 
+    oznaczanie wybranych fragmentów sygnału   <img src="../../app/icon/tag.png" alt="mtg">, 
+    definiowanie własnych oznaczeń   <img src="../../app/icon/palette.png" alt="pal">,
+    jak również klasyczne i najnowsze metody analizy sygnałów: 
+    uśrednianie potencjałów wywołanych (EP), estymację spektrogramu (STFT), 
     transformacji falkowej (WT), kierunkowej funkcji przejścia (DTF) i analizę składników niezależnych (ICA) 
-    </p>
-    
-    <p>
-    &emsp;&emsp;<img src="../../app/icon/analyze.png" alt="tools"> uśrednianie potencjałów wywołanych (EP), 
-    jak również reprezentacji czas-częstość (STFT, WT, MP) według oznaczeń (tagów)
-    </p>
-    
-    
-    <p>
-    &emsp;&emsp;<img src="../../app/icon/tag.png" alt="mtg"> oznaczanie wybranych fragmentów sygnału, 
-        <img src="../../app/icon/palette.png" alt="pal"> definiowanie własnych oznaczeń i zapis na dysku w plikach <code>*.tag</code>
-    </p> 
-    
-    <p>
-    &emsp;&emsp;<img src="../../app/icon/record.png" alt="rec"> 
-    <img src="../../app/icon/stop-recording.png" alt="stop"> 
-    <img src="../../app/icon/camera.png" alt="cam"> 
-    menu "Online" jest aktywne, kiedy w systemie jest skonfigurowany kompatybilny wzmacniacz 
+    — aż po rejestrację   <img src="../../app/icon/record.png" alt="rec"> 
+    <img src="../../app/icon/stop-recording.png" alt="stop"> sygnału EEG i wideo
+    <img src="../../app/icon/camera.png" alt="cam">.
     </p>
 
-    
-    <p></p>     
-    <hr>
-    
-    
     <p>
-Moduł dekompozycji Matching Pursuit (MP) korzysta z programu empi (<code>https://github.com/develancer/empi</code>) i umożliwia:
+    <img src="../../app/icon/help.png" alt="help"> Pomoc Svaroga obejmuje m.in. opis funkcji, dostępnych w kolejnych menu:
+
+    <ul style="list-style-type:none">
+        <li>
+            <a href="recording.html"><img src="../../app/icon/record.png" alt="rec"><img src="../../app/icon/stop-recording.png" alt="stop"><img src="../../app/icon/camera.png" alt="cam">
+                nagrywanie sygnału EEG i wideo</a>
+            (<i>menu aktywne, kiedy w systemie jest skonfigurowany kompatybilny sprzęt</i>). 
+        </li>
+        <li> &nbsp;</li>
+        <li>
+            <a href="tags.html">
+                <img src="../../app/icon/pagetag.png" alt="pagetag"><img src="../../app/icon/blocktag.png" alt="blocktag"><img src="../../app/icon/channeltag.png" alt="channeltag">
+                <img src="../../app/icon/activetag.png" alt="tag"><img src="../../app/icon/edittagdescription.png" alt="tag"><img src="../../app/icon/palette.png" alt="tag">
+                znaczniki (tagi)</a>,
+        </li>
+        <li> &nbsp;</li>
+        <li>
+            <a href="tools.html"><img src="../../app/icon/arrow.png" alt="strzałka"><img src="../../app/icon/hand.png" alt="ręka"><img src="../../app/icon/arrow.png" alt="zoom"><img src="../../app/icon/channelselection.png" alt="zaznaczenie">
+                narzędzia</a>
+        </li> 
+        <li> &nbsp;</li>
+        <li>
+            <a href="analysis.html">Analiza sygnału</a>: ERP, STFT, WT, ICA, DTF,  
+            <a href="decompMP5.html">MP</a>.
+        </li>
+    </ul>
+
 </p>
-    <ul>
-    <li>
-        <A HREF="decompMP5.html"><img src="../../app/icon/help.png" alt="help"></A>
-        dekompozycję jednego lub wielu kanałów algorytmem MP i zapis wyników na dysku 
-        w "książce" <img src="../../app/icon/book.png" alt="book">, czyli pliku <code>*.b</code> 
-    </li>
-    <li>
-        <A HREF="viewerBookMP5.html"><img src="../../app/icon/help.png" alt="help"></A>
-        interaktywne oglądanie wyników dekompozycji ("książki") w przestrzeni czas-częstość 
-    </li>
-    <li>
-        <A HREF="profilesEEG.html"><img src="../../app/icon/help.png" alt="help"></A>
-        rysowanie profili EEG (jak w artykule [2.&darr;]) na podstawie dekompozycji MP zapisanej uprzednio na dysku w "książce" 
-    </li>
-</ul>
 
-<p>
-Opisy działania tych zaawansowanych funkcji można znaleźć w dostępnych w Internecie artykułach:
-</p>
-
-
-<ol>
-    <li>
-        R. Kuś, P.T. Różański and P.J. Durka: Multivariate matching pursuit in optimal Gabor dictionaries: 
-        theory and software with interface for EEG/MEG via Svarog. BioMedical Engineering OnLine 2013, 12:94 
-        <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-94</code>
-    </li>
-    <li>
-        Electroencephalographic profiles for differentiation of disorders of consciousness Urszula Malinowska, 
-        Camille Chatelle, Marie-Aurée Bruno, Quentin Noirhomme, Steven Laureys, Piotr J Durka BioMedical Engineering OnLine 2013, 
-        12:109 (21 October 2013)         <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-109</code>
-    </li>
-    <li>
-        Spindles in Svarog: framework and software for parametrization of EEG transients P.J. Durka, U. Malinowska, M. Zieleniewska, 
-        Ch. O'Reilly, P.T. Różański, J. Żygierewicz. Front. Hum. Neurosci., 08 May 2015
-        <code>https://www.frontiersin.org/articles/10.3389/fnhum.2015.00258</code>
-    </li>
-</ol>
-
-
-</section>
-<!--
-<p>
-Projekt zapoczątkowany w 2004 na 
-<a href="http://www.fuw.edu.pl">Wydziale Fizyki</A> <A HREF="http://www.uw.edu.pl">Uniwersytetu Warszawskiego</A>
-jako implementacja metajęzyka SignalML, od 2012 rozwijany przez firmę <a href="https://braintech.pl">BrainTech</A>
-(za wyjątkiem pluginów do obliczania i wizualizacji spektrogramu, falek, ICA i DTF, 
-opracowanych w 2015 w ramach grantu Funduszu Inicjatyw Dydaktycznych Uniwersytetu Warszawskiego).
-</p>
--->
-
+    <!--
+    <p>
+    Projekt zapoczątkowany w 2004 na 
+    <a href="http://www.fuw.edu.pl">Wydziale Fizyki</A> <A HREF="http://www.uw.edu.pl">Uniwersytetu Warszawskiego</A>
+    jako implementacja metajęzyka SignalML, od 2012 rozwijany przez firmę <a href="https://braintech.pl">BrainTech</A>
+    (za wyjątkiem pluginów do obliczania i wizualizacji spektrogramu, falek, ICA i DTF, 
+    opracowanych w 2015 w ramach grantu Funduszu Inicjatyw Dydaktycznych Uniwersytetu Warszawskiego).
+    </p>
+    -->
 
 </html>

@@ -1,125 +1,124 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Dialog edycji filtrów w domenie czasu</title>
-</head>
-<body><div><h1>Edit time domain filter dialog</h1>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Time domain filter design and edit</title>
+    </head>
+    <body><div><h1>Edit time domain filter dialog</h1>
 
-<h2>Summary</h2>
+            <h2>Summary</h2>
 
-<p>This file describes how to create and edit time domain sample filters using
-    Edit time domain sample filter dialog.</p>
+            <p>This file describes how to create and edit time domain sample filters using
+                Edit time domain sample filter dialog.</p>
 
-<h2>Setting filters parameters</h2>
+            <h2>Setting filters parameters</h2>
 
-<p>To create or edit a filter, you need to specify the following parameters:</p>
+            <p>To create or edit a filter, you need to specify the following parameters:</p>
 
-<ul>
-    <li><b>Filter type</b> - describes what type of filter you want to design.<br/>
-	Possible values:
-	<ul>
-	    <li>low-pass</li>
-	    <li>high-pass</li>
-	    <li>band-pass</li>
-	    <li>band-stop</li>
-	</ul>
-    <li><b>Filter family</b> - is the type of approximation
-	function which will be used to design this filter.<br/>
-	Possible values:
-	<ul>
-	    <li>Butterworth</li>
-	    <li>Chebyshev I</li>
-	    <li>Chebyshev II</li>
-	    <li>Elliptic</li>
-	</ul>
-    <li><b>Passband edge frequency 1</b> - is the passband boundary frequency
-	which separates the passband from the transition band.
-    <li><b>Passband edge frequency 2</b> - if the filter is a bandpass or a bandstop
-	filter,	then there are two transition bands. In that case passband edge
-	frequency 1 separates the passband from the first transition band (and
-	its frequency is lower), and the second passband edge frequency separates
-	the passband from the second transition band.
-    <li><b>Stopband edge frequency 1</b> - is the edge frequency which is the
-	boundary between the stopband and the transition band in the filter's
-	frequency response.
-    <li><b>Stopband edge frequency 2</b> - if the filter is bandpass or bandstop,
-	then there are two transition bands. In that case stopband edge frequency 1
-	separates the stopband from the first transition band (and its frequency is
-	lower), and the second passband edge frequency separates the passband from the
-	second transition band.
-    <li><b>Passband ripple</b> - is the maximum frequency response fluctuations
-	which is allowed in the passband. For all frequencies in the passband, their
-	attenuation must be less or equal than the value set by this control.
-    <li><b>Stopband attenuation</b> - the minimum attenuation in the stopband.
-	For all frequencies in the stopband, their frequency response magnitude must be
-	attenuated at least by the value set by this control.
-</ul>
+            <ul>
+                <li><b>Filter type</b>—describes what type of filter you want to design.<br/>
+                    Possible values:
+                    <ul>
+                        <li>low-pass</li>
+                        <li>high-pass</li>
+                        <li>band-pass</li>
+                        <li>band-stop</li>
+                    </ul>
+                <li><b>Filter family</b>—type of the approximation
+                    function which will be used to design this filter.<br/>
+                    Possible values:
+                    <ul>
+                        <li>Butterworth</li>
+                        <li>Chebyshev I</li>
+                        <li>Chebyshev II</li>
+                        <li>Elliptic</li>
+                    </ul>
+                <li><b>Passband edge frequency 1</b>—the passband boundary frequency
+                    which separates the passband from the transition band.
+                <li><b>Passband edge frequency 2</b>—if the filter is a bandpass or a bandstop
+                    filter,	then there are two transition bands. In that case passband edge
+                    frequency 1 separates the passband from the first transition band (and
+                    its frequency is lower), and the second passband edge frequency separates
+                    the passband from the second transition band.
+                <li><b>Stopband edge frequency 1</b>—is the edge frequency which is the
+                    boundary between the stopband and the transition band in the filter's
+                    frequency response.
+                <li><b>Stopband edge frequency 2</b>—if the filter is bandpass or bandstop,
+                    then there are two transition bands. In that case stopband edge frequency 1
+                    separates the stopband from the first transition band (and its frequency is
+                    lower), and the second passband edge frequency separates the passband from the
+                    second transition band.
+                <li><b>Passband ripple</b>—maximum frequency response fluctuations
+                    allowed in the passband. For all frequencies in the passband, their
+                    attenuation must be less or equal than the value set by this control.
+                <li><b>Stopband attenuation</b>—minimum attenuation in the stopband.
+                    For all frequencies in the stopband, their frequency response magnitude must be
+                    attenuated at least by the value set by this control.
+            </ul>
 
-<p>The image below presents a frequency response of a Chebyshev I high-pass filter.
-The filter was designed using the following parameters:
+            <p>The image below presents a frequency response of a Chebyshev I high-pass filter.
+                The filter was designed using the following parameters:
 
-<ul>
-    <li><b>Filter type</b> = high-pass</li>
-    <li><b>Filter family</b> = Chebyshev I</li>
-    <li><b>Passband edge frequency 1</b> = 20 Hz</li>
-    <li><b>Stopband edge frequency 1</b> = 16 Hz</li>
-    <li><b>Passband ripple</b> = 3 dB</li>
-    <li><b>Stopband attenuation</b> = 40 dB</li>
-</ul>
+            <ul>
+                <li><b>Filter type</b> = high-pass</li>
+                <li><b>Filter family</b> = Chebyshev I</li>
+                <li><b>Passband edge frequency 1</b> = 20 Hz</li>
+                <li><b>Stopband edge frequency 1</b> = 16 Hz</li>
+                <li><b>Passband ripple</b> = 3 dB</li>
+                <li><b>Stopband attenuation</b> = 40 dB</li>
+            </ul>
 
-<p>Please note that the frequency response shown fulfills the requirements given.
-For example - the stopband ends at 16 Hz and all frequencies in the stopband are
-attenuated by at least 40 dB. The passband begins at 20 Hz and all frequencies in
-the passband are attenuated - at most - by 3 dB.</p>
+            <p>Please note how this frequency response fulfills given requirements; 
+                for example, the stopband ends at 16 Hz and all the frequencies in the stopband are
+                attenuated by at least 40 dB. The passband begins at 20 Hz and all frequencies in
+                the passband are attenuated—at most—by 3 dB.</p>
 
-<img src="images/highpassFilterFrequencyResponse.png" alt="High-pass Chebyshev I
-filter, passband edge frequency 1 = 16 Hz, stopband edge frequency 1 = 20 Hz,
-passband ripple = 3 dB, stopband attenuation = 40dB"/>
+            <img src="images/highpassFilterFrequencyResponse.png" alt="High-pass Chebyshev I
+                 filter, passband edge frequency 1 = 16 Hz, stopband edge frequency 1 = 20 Hz,
+                 passband ripple = 3 dB, stopband attenuation = 40dB"/>
 
-<p>An analogous frequency response graph for a band-stop filter would have two
-passbands (first: from 0 Hz to passband edge frequency 1, second: begins at passband
-edge frequency 2), one stopband (from stopband edge frequency 1 to stopband edge
-frequency 2), and two transition bands. A frequency response graph for a band-pass
-filter will have two stopbands, one passband, and two transition bands</p>
+            <p>An analogous frequency response graph for a band-stop filter would have two
+                passbands (first: from 0 Hz to passband edge frequency 1, second: begins at passband
+                edge frequency 2), one stopband (from stopband edge frequency 1 to stopband edge
+                frequency 2), and two transition bands. A frequency response graph for a band-pass
+                filter will have two stopbands, one passband, and two transition bands</p>
 
-<p><b>Important - the maximum frequency that can be set using the frequency
-controls is the Nyquist frequency which is equal to the half of the
-signal's sampling frequency.</b></p>
+            <p><b>Important: the maximum frequency that can be set using the frequency
+                    controls is the Nyquist frequency which is equal to the half of the
+                    signal's sampling frequency.</b></p>
 
-<h2>Drawing filter frequency response</h2>
+            <h2>Drawing filter frequency response</h2>
 
-<p>A filter frequency response is a graph showing the filter's output spectrum,
-    that is - how much is each frequency's magnitude attenuated in the signal
-    which passes through the filter</p>
+            <p>A filter frequency response is a graph showing the filter's output spectrum,
+                that is, how much each frequency's magnitude is attenuated in the signal
+                which passes through the filter</p>
 
-<p>To draw the frequency response of the filter designed using the controls
-    in the Filter parameters panel, press the "Draw filter frequency response"
-    button.</p>
+            <p>To draw the frequency response of the filter designed using the controls
+                in the Filter parameters panel, press the "Draw filter frequency response"
+                button.</p>
 
-<p>If the filter parameters are correct, the filter frequency response is drawn.
-    Otherwise, a dialog containing error message is shown.</p>
+            <p>If the filter parameters are correct, the filter frequency response is drawn.
+                Otherwise, a dialog containing error message is shown.</p>
 
-<h2>Error messages</h2>
+            <h2>Error messages</h2>
 
-<p>The most common error message says that the designed filter order is too big.
-    This happens, when the filter parameters are too strict. The more strict the
-    parameters are, the harder for the designer is to design a filter fulfilling
-    the specification given. For example - it is very hard for the designer to
-    design a filter having very narrow transition bands (a transition band is
-    narrow when a passband edge frequency is very close to the corresponding
-    stopband edge frequency), a very small value of ripple in the passband and
-    having all of the frequencies in the stopband strongly attenuated.</p>
+            <p>The most common error message says that the designed filter order is too big.
+                This happens, when the filter parameters are too strict. The more strict the
+                parameters are, the harder it is for the algorithm to design a filter fulfilling
+                such specifications. For example, it is very hard for the algorithm to
+                design a filter having very narrow transition bands (a transition band is
+                narrow when a passband edge frequency is very close to the corresponding
+                stopband edge frequency), a very small value of ripple in the passband and
+                having all of the frequencies in the stopband strongly attenuated.</p>
 
-<p>If such an error shows up, please make the parameters less strict.</p>
+            <p>If such an error shows up, please release the requirements by modifying the parameters.</p>
 
-<p>Another solution for that error is changing the Filter family of the filter.
-    Filters approximated using the Chebyshev approximation functions tend to have
-    smaller filter order comparing
-    to Buttorworth filters having similar filter parameters. What's more, filters
-    approximated using the Elliptic functions have smaller filter order
-    comparing to a Chebyshev filter having similar parameters.</p>
+            <p>Another solution for that error is changing the "Filter family" of the filter.
+                Filters approximated using the Chebyshev approximation functions tend to have
+                smaller filter order comparing
+                to Buttorworth filters having similar filter parameters. What's more, filters
+                approximated using the Elliptic functions have smaller filter order
+                comparing to a Chebyshev filter having similar parameters.</p>
 
-</div>
-</body>
+        </div>
+    </body>
 </html>
