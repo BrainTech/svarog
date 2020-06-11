@@ -7,7 +7,7 @@
               pursuit decomposition of signals">
     </head>
     <body>
-        <h2>Dekompozycja matching pursuit przez interfejs Svaroga</h2>
+        <h1>Dekompozycja matching pursuit przez interfejs Svaroga</h1>
 
         Matching pursuit to algorytm oferujący rozkład sygnału na liniową sumę funkcji o parametrach optymalizowanych lokalnie w iteracyjnej procedurze, 
         zaproponowany w 1993 przez Mallata i Zhanga.  Od 1995 MP rozwijany jest na Wydziale Fizyki Uniwersytetu Warszawskiego w zastosowaniu do sygnałów biomedycznych (EEG/MEG). 
@@ -19,17 +19,20 @@
             i zapisuje wyniki na dysku, w pliku o rozszerzeniu .b, zwanym "książką" <img src="../../app/icon/book.png" alt="book"> za Mallatem i Zhangiem.
             Książki zawierają parametry struktur (funkcji Gabora, Diraca i sinusów), dopasowanych do wybranego fragmentu sygnału w iteracyjnej procedurze MP.
             Po zakończeniu obliczeń możemy skorzystać z wizualizacji wyników w przestrzeni czas-częstość, wybierając opcję "Uzyskaj wynik / Otwórz w przeglądarce".
+        </p>
+        <p>
             <em>UWAGA: domyślne (w Svarogu) ustawienia jakości dekompozycji MP nastawione są raczej na szybkość niż dokładność, 
                 dlatego przed poważnieszym zastosowaniem wskazane jest zapoznanie się ze znaczeniem parametrów,
                 na przykład na podstawie cytowanych poniżej artykułów.</em>
-        <hr>
+        </p>
+        
+        <h2>Tematy pomocy (po angielsku)</h2>
 
-        <div align="center">W pomocy Svaroga znajdziemy następujące tematy związane z MP, <i>opisane w jęz. angielskim</i>:</p>
-    </div>
-    <p>
+       W pomocy Svaroga znajdziemy następujące tematy związane z MP, <i>opisane w jęz. angielskim</i>:</p>
+    
         <A HREF="parametersMP.html"><img src="../../app/icon/help.png" alt="help">
             opis parametrów</A> rządzących dekompozycją, zapisywanych 
-        w "książce" , czyli pliku <code>*.b</code>,
+        w "książce" , czyli pliku <code>*.b</code> <img src="../../app/icon/book.png" alt="book">,
     </p>
     <p> <A HREF="viewerBookMP5.html"><img src="../../app/icon/help.png" alt="help">
             interaktywna wizualizacja</A> i filtrowanie wyników dekompozycji, zapisanych uprzednio na dysku w książce, 
@@ -39,12 +42,9 @@
             profile EEG</A> (jak w artykule [5.&darr;]) tworzone na podstawie dekompozycji MP, zapisanej
         uprzednio na dysku <img src="../../app/icon/book.png" alt="book">.
     </p>
-    <hr>
-
-    <p><i>
-            Więcej na temat samego algorytmu matching pursuit, jak również jego zastosowań do EEG za pośrednictwem Svaroga, 
-            można znaleźć m.in. w</i>:
-    </p>
+    
+    
+    <h2>Literatura</h2>
 
     <ol>
         <li>

@@ -21,11 +21,11 @@
                 lub słuchowe czy czuciowe) a systemem rejestracji. Szczegóły tego procesu zależą od systemu, w którym
                 projektowano i implementowano dany eksperyment.</dd>
             <dt>
-                Występującew sygnale struktury (grafoelementy), jak np. wrzeciona snu czy artefakty:
+                Występujące w sygnale struktury (grafoelementy), jak np. wrzeciona snu czy artefakty:
             </dt>
             <dd>oznaczanie w sygnale struktur (zwanych czasem grafoelementami) odbywa się zwykle a posteriori,
                 na uprzednio zarejestrowanym sygnale. Artefakty oznaczamy zwykle w celu wykluczenia oznaczonych odcinków z dalszych analiz,
-                więc powinny to być oznaczenia niezwiązane z konkretnym kanałem. Z kolei wybrane grafoelementy (wrzeciona snu, fale wolne itp.)
+                więc mogą to być oznaczenia niezwiązane z konkretnym kanałem. Z kolei wybrane grafoelementy (wrzeciona snu, fale wolne itp.)
                 możemy oznaczać w konkretnych odprowadzeniach. Wszystkie te oznaczenia mogą być generowane automatycznie z użyciem wybranych
                 metod analizy sygnałów (jak np. zaimplementowane w Svarogu oznaczanie struktur wybranych z dekompozycji MP), lub ręcznie/wzrokowo
                 (np. przez elektroencefalografistę, w celu porówania z detekcją automatyczną).</dd>
@@ -49,9 +49,10 @@
             </dd>
             <dt>
                 <img src="../../app/icon/blocktag.png" alt="blocktag"> tag blokowy,</dt>
-            <dd>czyli przypisujący oznaczenie jednego bloku sygnału (podobnie jak dla składki, definiowaneg definowanej we własnościach pliku);
-                ten znacznik był wykorzystywany do oznacznia artefaktów w sztywnych blokach, i zachowany jest dla kompatybilności z wykonywanymi wcześniej oznaczeniami;
-                liczbę bloków na składkę określamy jak w przypadku długości składki powyżej,
+            <dd>czyli przypisujący oznaczenie jednego bloku sygnału — 
+                ten znacznik był wykorzystywany do oznacznia artefaktów w sztywnych blokach, 
+                i zachowany jest dla kompatybilności z wykonywanymi wcześniej oznaczeniami;
+                liczbę bloków na składkę określamy razem z długością składki jak opisano powyżej,
             </dd>
             <dt><img src="../../app/icon/channeltag.png" alt="channeltag"> tag kanałowy,</dt>
             <dd>czyli przypisany do jednego lub wszystkich
@@ -70,11 +71,13 @@
             <dd>Pozwala stworzyć własne definicje oznaczeń, wybrać spośród predefiniowanych stylów wbudowanych w program, 
                 lub wczytać wcześniej zapisane style z pliku.</dd>
             <dt><img src="../../app/icon/fileopen.png" alt="tag"> Otwórz tag</dt>
-            <dd>Po wczytaniu sygnału możemy wczytać plik z oznaczeniami, które będą wyświetlane na sygnale.
-                Do jednego sygnału może być przypisanych więcej niż jeden plik z oznaczeniami, 
-                np. struktury oznaczane przez różnych ekspertów lub znaczniki tworzone przez algorytm.
+            <dd>Po wczytaniu sygnału możemy wczytać plik z przypisanymi do niego oznaczeniami, 
+                które będą wyświetlane na sygnale.
+                Do jednego sygnału może być przypisany więcej niż jeden plik z oznaczeniami — 
+                na przykład struktury oznaczane przez różnych ekspertów lub znaczniki tworzone przez algorytm.
                 Po wczytaniu drugiego pliku z tagami, Svarog wyświetli na sygnale znaczniki z obu plików.
-                Ponadto, jeśli otworzymy dodatkowe okno z tym samym sygnałem, klikając biały plusik w zielonym kółku 
+                Ponadto, jeśli otworzymy dodatkowe okno z tym samym sygnałem, 
+                klikając biały plusik w zielonym kółku 
                 <img src="../../app/icon/addslaveplot.png" alt="tag">
                 w lewym górnym rogu okna z sygnałem, możemy te oznaczenia oglądać w dwóch osobnych oknach
                 wwyświetlających synchronicznie ten sam sygnał z różnymi oznaczeniami. 
@@ -89,15 +92,15 @@
             <dd>...ew. pod zmienioną nazwą.</dd>
             <dt><img src="../../app/icon/fileclose.png" alt="tag"> Zamknij tag</dt>
             <dd>Zamyka bieżący tag.</dd>
-            
+
             <!--   <hr>
                <dt> &nbsp;&nbsp;&nbsp;&nbsp; Import</dt>
                <dd>CZY TO JEST REDUNDANTNE I TA POZYCJA POWINNA ZOSTAĆ USUNIĘTA Z MENU?</dd>
             -->
-            
-            <dt> <img src="../../app/icon/eeglab.png"> Eksport do EEGLab</dt>
-            <dd>Pozwala zapisać tag w formacie czytelnym dla pakietu EEGLab.</dd>
- 
+
+            <dt> <img src="../../app/icon/eeglab.png"> Eksport do EEGLAB</dt>
+            <dd>Pozwala zapisać tag w formacie czytelnym dla pakietu EEGLAB.</dd>
+
             <dt><img src="../../app/icon/activetag.png" alt="tag"> Wybierz aktywny tag</dt>
             <dd>Ze względu na opisaną wcześniej możliwość jednoczesnego wyświetlania oznaczeń z więcej niż jednego pliku,
                 w przypadku edycji trzeba jednoznacznie określić, do którego pliku będą przy/zapisywane zmiany.
@@ -112,7 +115,9 @@
             <dt><img src="../../app/icon/palette.png" alt="tag"> Edytuj szablony stylów tagów</dt>
             <dd>Pozwala tworzyć nowe (lub modyfikować predefiniowane) style, bez konieczności
                 uprzedniego otwarcia pliku.</dd>
-            <hr>
+        </dl>
+        <hr>
+        <dl>        
             <dt><img src="../../app/icon/comparetags.png" alt="tag"> Porównaj tagi</dt>
             <dd>Otwiera okno pozwalające na wykonanie porównania statystycznego dwóch 
                 wczytanych wcześniej plików ze znacznikami oraz wybór sposobu wyświetlania więcej niż jednego zestawu oznaczeń:
