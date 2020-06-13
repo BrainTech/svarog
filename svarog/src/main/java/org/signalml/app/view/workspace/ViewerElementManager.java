@@ -797,7 +797,7 @@ public class ViewerElementManager {
 				for (AbstractSignalMLAction action : getIterateMethodActions()) {
 					iterationMenu.add(action);
 				}
-				iterationMenu.setEnabled(!getIterateMethodActions().isEmpty());
+				iterationMenu.setVisible(!getIterateMethodActions().isEmpty());
 
 				analysisMenu.add(iterationMenu);
 
