@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.OpenTagDescriptor;
@@ -17,6 +18,8 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.monitor.MonitorWorker;
+import org.signalml.domain.tag.LegacyTagImporter;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
@@ -95,12 +98,22 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 
 		OpenDocumentDescriptor tagDocumentDescriptor = new OpenDocumentDescriptor();
 		tagDocumentDescriptor.setType(ManagedDocumentType.TAG);
-		tagDocumentDescriptor.setFile(tagFile);
+		
+		//try loading legacy tag first
+		try {
+			LegacyTagImporter importer = new LegacyTagImporter();
+			//if Tags are not legacy tags and are not importable then importer will throw a SignalMLException
+			StyledTagSet tagSet = importer.importLegacyTags(tagFile, signalDocument.getSamplingFrequency());
+			TagDocument tagDocument = new TagDocument(tagSet);
+			tagDocument.setBackingFile(tagFile);
+			//override opening document descriptor with existing tag document one which we just created
+			tagDocumentDescriptor.getTagOptions().setExistingDocument(tagDocument);
+		} catch (SignalMLException ex) {
+			logger.info("Failed to import tags, not a legacy tag, loading as xml tag");
+			tagDocumentDescriptor.setFile(tagFile);
+		}
 
-		OpenTagDescriptor openTagDescriptor = new OpenTagDescriptor();
-		openTagDescriptor.setParent(signalDocument);
-		tagDocumentDescriptor.setTagOptions(openTagDescriptor);
-
+		tagDocumentDescriptor.getTagOptions().setParent(signalDocument);
 		documentFlowIntegrator.maybeOpenDocument(tagDocumentDescriptor);
 	}
 
