@@ -15,19 +15,20 @@
             <dd>po wybraniu tej opcji i kliknięciu (bez puszczania guzika myszki) na sygnale, 
                 ruch myszki przemieszcza widoczną część sygnału lewo/prawo i góra/dół 
                 (chyba, że w oknie mieści się cały wczytany sygnał).</dd>
-            <dt>&nbsp;<img src="../../app/icon/arrow.png" alt="zoom"> Powiększ sygnał</dt>
-            <dd>lupa powiększa fragment sygnału, nad którym klikniemy. Parametry (stopień powiększenia i rozmiar okna)
-                ustawiamy w opisanym poniżej oknie "Preferencje", które dostępne jest również po kliknięciu lewym guzikiem myszy 
+            <dt>&nbsp;<img src="../../app/icon/zoom.png" alt="zoom"> Powiększ sygnał</dt>
+            <dd>lupa powiększa fragment sygnału, nad którym klikniemy. Domyślne parametry (stopień powiększenia i rozmiar okna)
+                ustawiamy w opisanym poniżej oknie "Preferencje". 
+                Parametry powiększania dla bieżącego okna możemy zmienić po kliknięciu lewym guzikiem myszy 
                 na ikonkę lupy w głównym pasku narzędzi.</dd>
-            <dt>&nbsp;<img src="../../app/icon/zoom.png" alt="strzałka" > Zmierz sygnał</dt>
+            <dt>&nbsp;<img src="../../app/icon/ruler.png" alt="linijka" > Zmierz sygnał</dt>
             <dd>miarka pozwala na odczyt odległości między dwoma wybranymi punktami w jednostkach fizycznych,
-                według współczynnika kallibracji i częstości próbkowania wczytanych z plikiem 
-                (w przypadku EEG zwykle mikrowolty i sekundy).</dd>
+                według współczynnika kalibracji i częstości próbkowania wczytanych z plikiem;  
+                w przypadku EEG są to zwykle mikrowolty i sekundy.</dd>
             <dt>&nbsp;<img src="../../app/icon/FFT.png" alt="strzałka" > FFT sygnału</dt>
             <dd>po wybraniu tej opcji, dostępnej również w pasku głównym, przyciśnięcie guzika myszki nad sygnałem wyświetla widmo,
-                estymowane z użyciem szybkiej transformaty Fouriera (Fsat Fourier Transform, FFT).
+                estymowane z użyciem szybkiej transformaty Fouriera (Fast Fourier Transform, FFT).
                 Po kliknięciu prawym guzikiem myszy ikonki FFT w pasku głównym, uzyskujemy dostęp do ustawień estymacji (szerokość i rodzaj okna) 
-                oraz parametrów jego wyświetlania (osie, skale, wielkość okna w który mwidmo jest wyświetlane itp.).
+                oraz parametrów jego wyświetlania (osie, skale, wielkość okna w którym widmo jest wyświetlane itp.).
             </dd>
             <dt>&nbsp;<img src="../../app/icon/channelselection.png" alt="zaznaczenie"> Zaznacz fragmenty</dt>
             <dd>pozwala wybrać fragment sygnału (z jednego lub wszystkich odprowadzeń), 
@@ -50,13 +51,14 @@
                     <dt>Oglądanie sygnału</dt>
                     <dd>ustawia szereg parametrów, rządzących sposobem wyświetlania sygnału.</dd>
                     <dt>Powiększanie sygnału (zoom)</dt>
-                    <dd>określa powiększenie sygnału po wybraniu lupy (zoom) oraz rozmiar okna, 
-                        w którym jest dynamicznie wyświetlany powiększony sygnał.
+                    <dd>określa domyślne powiększenie sygnału po wybraniu lupy (zoom) oraz domyślny rozmiar okna, 
+                        w którym jest dynamicznie wyświetlany powiększony sygnał. Parametry powiększania dla bieżącego 
+                        okna możemy zmienić po kliknięciu lewym guzikiem myszy na ikonkę lupy w głównym pasku narzędzi.
                     </dd>
                     <dt>Tagowanie</dt>
                     <dd>tutaj możemy zmienić rozmiar składki i bloku, do których odnoszą się 
                         znaczniki stronicowe i blokowe, oraz ustalić, czy z każdym tagiem będzie zapisywany montaż 
-                        (niezależnie od tych ustawień, montaż jest zaisywany zawsze jeśi w pliku są oznaczenia 
+                        (niezależnie od tych ustawień, montaż jest zapisywany zawsze, jeśli w pliku są oznaczenia 
                         odnoszące się do pojedynczych odprowadzeń).</dd>
                     <dt>Narzędzia</dt>
                     <dd>w tej zakładce wybieramy ścieżkę do programu realizującego dekompozycję MP
