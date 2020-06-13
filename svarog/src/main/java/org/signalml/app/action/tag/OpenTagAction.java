@@ -83,6 +83,7 @@ public class OpenTagAction extends AbstractFocusableSignalMLAction<SignalDocumen
 		}
 
 		if (legTag) {
+			tagDocument.setBackingFile(file);
 			ofd.getTagOptions().setExistingDocument(tagDocument);
 		} else {
 			ofd.setFile(file);

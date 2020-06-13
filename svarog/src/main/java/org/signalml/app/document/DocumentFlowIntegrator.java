@@ -59,6 +59,7 @@ import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.domain.signal.raw.RawSignalDescriptor;
+import org.signalml.domain.tag.LegacyTagImporter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagSignalIdentification;
 import org.signalml.exception.MissingCodecException;
@@ -583,6 +584,24 @@ public class DocumentFlowIntegrator {
 		} else if (type.equals(ManagedDocumentType.TAG)) {
 			OpenTagDescriptor tagOptions = odd.getTagOptions();
 			Document activeDocument = actionFocusManager.getActiveDocument();
+			SignalDocument signalDocument = actionFocusManager.getActiveSignalDocument();
+			File tagFile = odd.getFile();
+			
+			//try loading legacy tag first
+			try {
+				LegacyTagImporter importer = new LegacyTagImporter();
+				//if Tags are not legacy tags and are not importable then importer will throw a SignalMLException
+				StyledTagSet tagSet = importer.importLegacyTags(tagFile, signalDocument.getSamplingFrequency());
+				TagDocument tagDocument = new TagDocument(tagSet);
+				tagDocument.setBackingFile(tagFile);
+				//override opening document descriptor with existing tag document one which we just created
+				odd.getTagOptions().setExistingDocument(tagDocument);
+			} catch (SignalMLException ex) {
+				logger.info("Failed to import tags, not a legacy tag, loading as xml tag");
+				//odd has already file set, if legacy tag didn't load we should just continue
+			}
+
+			odd.getTagOptions().setParent(signalDocument);
 			if (activeDocument == null || !(activeDocument instanceof SignalDocument)) {
 				OptionPane.showNoActiveSignal(optionPaneParent);
 				return null;

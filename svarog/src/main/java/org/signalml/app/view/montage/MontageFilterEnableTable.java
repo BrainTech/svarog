@@ -4,6 +4,7 @@
 
 package org.signalml.app.view.montage;
 
+import com.alee.laf.table.renderers.WebBooleanRenderer;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -20,7 +21,6 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
 import org.signalml.app.model.montage.MontageFilterEnableTableModel;
 import org.signalml.app.view.common.components.cellrenderers.CenteringTableCellRenderer;
-import org.signalml.app.view.common.components.cellrenderers.UneditableBooleanTableCellRenderer;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageSampleFilter;
 
@@ -80,7 +80,7 @@ public class MontageFilterEnableTable extends JTable {
 
 		setRowHeight(ROW_SIZE);
 
-		setDefaultRenderer(Boolean.class, new UneditableBooleanTableCellRenderer());
+		setDefaultRenderer(Boolean.class, new WebBooleanRenderer());
 
 	}
 
