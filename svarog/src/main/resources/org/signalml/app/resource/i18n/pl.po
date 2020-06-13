@@ -2094,13 +2094,13 @@ msgstr "Eksportuj sygnał do prostego formatu binarnego, ASCII lub EEGLab"
 msgid "Export tags"
 msgstr "Eksportuj znaczniki (tagi)"
 
-#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:28
+#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:27
 msgid "Export tags to EEGLab events ASCII file format"
 msgstr "Eksportuj znaczniki do pliku zdarzeń EEGLab w formacie ASCII"
 
-#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:27
-msgid "Export to EEGLab..."
-msgstr "Eksportuj do EEGLab ..."
+#: org/signalml/app/action/tag/ExportEEGLabTagAction.java:26
+msgid "Export..."
+msgstr "Eksportuj..."
 
 #: org/signalml/app/view/montage/filters/charts/elements/FFTFrequencyResponseChartPanel.java:22
 msgid "FFT coefficients"
@@ -4504,6 +4504,9 @@ msgstr "Zapisz ustawienie wstępne (preset) do pliku"
 #: org/signalml/app/method/ep/action/ExportAllEPSamplesToFloatFileAction.java:38
 msgid "Save samples to file"
 msgstr "Zapisz próbki do pliku"
+
+msgid "Save samples to file. Binary, 32 bit float, multiplexed channels."
+msgstr "Zapisz próbki do pliku. Binarny, 32 bit float, multipleksowane kanały."
 
 #: org/signalml/app/method/mp5/MP5SaveForLaterUseDialog.java:77
 msgid "Save signal for MP computation"

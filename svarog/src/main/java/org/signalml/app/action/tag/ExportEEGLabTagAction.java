@@ -15,7 +15,6 @@ import org.signalml.plugin.export.SignalMLException;
 /**
  * Export to EEGLab Action
  * @author Maciej Pawlisz, Titanis
- *
  */
 public class ExportEEGLabTagAction extends AbstractExportTagAction {
 
@@ -24,7 +23,8 @@ public class ExportEEGLabTagAction extends AbstractExportTagAction {
 	protected static final Logger logger = Logger.getLogger(ExportEEGLabTagAction.class);
 	public ExportEEGLabTagAction(TagDocumentFocusSelector tagDocumentFocusSelector) {
 		super(tagDocumentFocusSelector);
-		setText(_("Export to EEGLab..."));
+		setText(_("Export..."));
+		setIconPath("org/signalml/app/icon/eeglab.png");
 		setToolTip(_("Export tags to EEGLab events ASCII file format"));
 		setMnemonic(KeyEvent.VK_E);
 	}

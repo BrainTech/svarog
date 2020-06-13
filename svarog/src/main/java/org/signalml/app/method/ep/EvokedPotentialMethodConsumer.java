@@ -17,16 +17,17 @@ import org.signalml.plugin.export.SignalMLException;
 public class EvokedPotentialMethodConsumer implements InitializingMethodResultConsumer {
 
 	private EvokedPotentialResultDialog dialog;
+	private ApplicationMethodManager appManager;
 
 	@Override
 	public void initialize(ApplicationMethodManager manager) {
-		dialog = new EvokedPotentialResultDialog(manager.getDialogParent(), true);
-		dialog.setFileChooser(manager.getFileChooser());
+		appManager = manager;
 	}
 
 	@Override
 	public boolean consumeResult(Method method, Object methodData, Object methodResult) throws SignalMLException {
-
+		dialog = new EvokedPotentialResultDialog(appManager.getDialogParent(), false);
+		dialog.setFileChooser(appManager.getFileChooser());
 		return dialog.showDialog(methodResult, true);
 
 	}

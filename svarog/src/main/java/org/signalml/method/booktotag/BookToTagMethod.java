@@ -163,7 +163,7 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 			resultTagSet.addStyle(blockStyle);
 		}
 
-		if (data.isMakePageTags()) {
+		if (data.isMakeChannelTags()) {
 			channelStyle = new TagStyle(SignalSelectionType.CHANNEL, "C", "Channel", Color.RED, Color.RED, 1, null, null, false);
 			resultTagSet.addStyle(channelStyle);
 		}
