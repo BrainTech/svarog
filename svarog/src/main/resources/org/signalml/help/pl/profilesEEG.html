@@ -1,67 +1,68 @@
 <!doctype html>
 <html>
-<head>
-<title>EEG Profiles @ Svarog</title>
-</head>
+    <head>
+        <link rel="stylesheet" type="text/css" href="help.css">
+        <title>EEG Profiles @ Svarog</title>
+    </head>
 
-<body>
-    <h1>EEG Profiles @ Svarog</h1>
-<p>Plugin for post-processing the results of MP decomposition of EEG and creating reports 
-    describing the time evolution of selected structures, 
-    as proposed in the paper
-    <p>
-    <strong>Electroencephalographic profiles for differentiation of disorders of consciousness</strong> by 
-    U. Malinowska, C. Chatelle, M.-A. Bruno, Q. Noirhomme, S. Laureys and Piotr. Durka, <em>BioMedical Engineering OnLine</em>2013, 12:109, available at 
-    <code>http://www.biomedical-engineering-online.com/content/12/1/109</code>
-    </p>
-    
-  <p><em>Input</em>: results of MP decomposition (decomposition book, stored usually in a *.b file).</p>
-<p><em>Output</em>:
-<ol>
-<li>graphical reports of occurences of selected structures in time
-</li>
-<li>
-  tags marking occuerences of all the single structures selected for (1.)</li>
-</ol>
-<p>To run the plugin one needs to run the MP decomposition of the signal first. Depending on the signal length and desired accuracy, this may be a time-consuming task; information about the parameters of MP decomposition can be found in the help for <strong>MP decomposition</strong> module. To run this plugin one atually does not have to load the actual signal into Svarog (this may be needed to inspect the occurrences of single structures, as described in the following part about the tags), since the plugin operates solely on the decompositions books. </p>
-<p>First thing to do in the window opened via <kbd>&quot;Tools/EEG Profiles (MP)&quot;</kbd> is choosing the *.b file containing all the structures (mostly Gabor functions, i.e. sines with Gaussian envelope) fitted to the signal by the MP algorithm. </p>
-<p>The next, central panel is an interface for setting the filters on the relevant structures in terms of their amplitude (peak to peak), frequency, scale (corresponding to the time width of the structure, approx. half-width of the Gaussian), and phase. 
-Ranges of these parameters define criteria of inclusion of given structures in the report.
-There can be several structures presented in one report, and they will be organized as separate charts in horizontal subplots. New chart is added with the green "+",
-an opens a window for choosing the type of structure, type of report and the time interval.
-Predefined <strong>types of structuers</strong> with default values of parameters include:
-<ol>
-<li>sleep spindles</li>
-<li>alpha waves</li>
-<li> delta Waves</li>
-<li>beta waves</li>
-<li>SWA (Slow Wave Activity)</li>
-<li>theta waves</li>
-<li>K-complexes</li>
-</ol>
+    <body>
+        <h1>EEG Profiles @ Svarog</h1>
+        <p>Plugin for post-processing the results of MP decomposition of EEG and creating reports 
+            describing the time evolution of selected structures, 
+            as proposed in the paper
+        <p>
+            <strong>Electroencephalographic profiles for differentiation of disorders of consciousness</strong> by 
+            U. Malinowska, C. Chatelle, M.-A. Bruno, Q. Noirhomme, S. Laureys and Piotr. Durka, <em>BioMedical Engineering OnLine</em>2013, 12:109, available at 
+            <code>http://www.biomedical-engineering-online.com/content/12/1/109</code>
+        </p>
 
-To visualize the time evolution of selected structures there are three propositions:
-<ol>
-<li><strong>count (per time interval)</strong> presents the number of occurences of selected structures in each subsequent epoch of chosen length</li>
-<li><strong>time percentage occupied</strong> is a kind of report motivated by the classical criteria for sleep stages 3 and 4, defined as epochs occupied above 20% or 50% of time by slow waves. </li>
-<li><strong>single occurences</strong> will plot a vertical line in each time instant, in which relevant structure was detected</li>
-</ol>
+        <p><em>Input</em>: results of MP decomposition (decomposition book, stored usually in a *.b file).</p>
+        <p><em>Output</em>:
+        <ol>
+            <li>graphical reports of occurences of selected structures in time
+            </li>
+            <li>
+                tags marking occuerences of all the single structures selected for (1.)</li>
+        </ol>
+        <p>To run the plugin one needs to run the MP decomposition of the signal first. Depending on the signal length and desired accuracy, this may be a time-consuming task; information about the parameters of MP decomposition can be found in the help for <strong>MP decomposition</strong> module. To run this plugin one atually does not have to load the actual signal into Svarog (this may be needed to inspect the occurrences of single structures, as described in the following part about the tags), since the plugin operates solely on the decompositions books. </p>
+        <p>First thing to do in the window opened via <kbd>&quot;Tools/EEG Profiles (MP)&quot;</kbd> is choosing the *.b file containing all the structures (mostly Gabor functions, i.e. sines with Gaussian envelope) fitted to the signal by the MP algorithm. </p>
+        <p>The next, central panel is an interface for setting the filters on the relevant structures in terms of their amplitude (peak to peak), frequency, scale (corresponding to the time width of the structure, approx. half-width of the Gaussian), and phase. 
+            Ranges of these parameters define criteria of inclusion of given structures in the report.
+            There can be several structures presented in one report, and they will be organized as separate charts in horizontal subplots. New chart is added with the green "+",
+            an opens a window for choosing the type of structure, type of report and the time interval.
+            Predefined <strong>types of structuers</strong> with default values of parameters include:
+        <ol>
+            <li>sleep spindles</li>
+            <li>alpha waves</li>
+            <li> delta Waves</li>
+            <li>beta waves</li>
+            <li>SWA (Slow Wave Activity)</li>
+            <li>theta waves</li>
+            <li>K-complexes</li>
+        </ol>
 
-The first two reports rely also on the choice of the <strong>time interval</strong>; this is by default set to 20 seconds, as in the traditional sleep staging.
-<p>
-After clicking the "add chart" button, a panel with parameter ranges definig selected structures is added. Default values of these parameter ranges 
-relate to the more or less standard definitions of EEG structures established in the tradition of visual EEG analysis; for example, sleep spindles are by default defined as structures conformin to the following criteria:
-<ul>
-<li>frequency 11-15 Hz</li>
-<li>amplitude above 12 \mu V</li>
-<li> time width from 0.5 s to 2.5 s</li>
-<li>no restrictions on phase</li>
-</ul>
-Parameters defining for all these structurescan be freely adjusted for particular needs and conditions; default values have been selected from the literature with
- the best intention of retaining compatibility with the visual analysis of EEG. However, there is no golden standard
- in this area so the default values should be trated just as changeable defaults.
- 
- <p></p>Also, one can define his/her own type of structure simply by typing a new string in the field containig predefined proposition, clicking &quot;<kbd>add chart</kbd>&quot; and providing ranges of parameters.
-<p>Clicking &quot;ok&quot; starts computation of the charts presenting time evolution of selected structures. When the task is finished, &quot;get result&quot; button gets us to the window presenting the charts. We can save these results as a graphic PNG files with resolution selected in the fields at the top of the window, and/or as tags marking the occurence of each of the selected structures. To actually see the chosen structures one needs to load the signal (for computing the profiles we used only the results of MP decomposition) and then open the saved tag via &quot;<kbd>Tags / Open Tag...</kbd>&quot; .
-</body>
+        To visualize the time evolution of selected structures there are three propositions:
+        <ol>
+            <li><strong>count (per time interval)</strong> presents the number of occurences of selected structures in each subsequent epoch of chosen length</li>
+            <li><strong>time percentage occupied</strong> is a kind of report motivated by the classical criteria for sleep stages 3 and 4, defined as epochs occupied above 20% or 50% of time by slow waves. </li>
+            <li><strong>single occurences</strong> will plot a vertical line in each time instant, in which relevant structure was detected</li>
+        </ol>
+
+        The first two reports rely also on the choice of the <strong>time interval</strong>; this is by default set to 20 seconds, as in the traditional sleep staging.
+        <p>
+            After clicking the "add chart" button, a panel with parameter ranges definig selected structures is added. Default values of these parameter ranges 
+            relate to the more or less standard definitions of EEG structures established in the tradition of visual EEG analysis; for example, sleep spindles are by default defined as structures conformin to the following criteria:
+        <ul>
+            <li>frequency 11-15 Hz</li>
+            <li>amplitude above 12 \mu V</li>
+            <li> time width from 0.5 s to 2.5 s</li>
+            <li>no restrictions on phase</li>
+        </ul>
+        Parameters defining for all these structurescan be freely adjusted for particular needs and conditions; default values have been selected from the literature with
+        the best intention of retaining compatibility with the visual analysis of EEG. However, there is no golden standard
+        in this area so the default values should be trated just as changeable defaults.
+
+        <p></p>Also, one can define his/her own type of structure simply by typing a new string in the field containig predefined proposition, clicking &quot;<kbd>add chart</kbd>&quot; and providing ranges of parameters.
+        <p>Clicking &quot;ok&quot; starts computation of the charts presenting time evolution of selected structures. When the task is finished, &quot;get result&quot; button gets us to the window presenting the charts. We can save these results as a graphic PNG files with resolution selected in the fields at the top of the window, and/or as tags marking the occurence of each of the selected structures. To actually see the chosen structures one needs to load the signal (for computing the profiles we used only the results of MP decomposition) and then open the saved tag via &quot;<kbd>Tags / Open Tag...</kbd>&quot; .
+    </body>
 </html>
