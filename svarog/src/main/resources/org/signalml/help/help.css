@@ -6,3 +6,15 @@ body {
     margin-right: 15px;
     margin-left: 15px;            
 }
+
+
+
+a {
+    text-decoration: none;
+    background: yellow;
+    border-image: none;
+}
+
+a:hover{
+    background-color: red;
+}
