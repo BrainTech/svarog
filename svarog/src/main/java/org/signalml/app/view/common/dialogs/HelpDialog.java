@@ -190,6 +190,7 @@ public class HelpDialog extends AbstractDialog {
 		if (helpPane == null) {
 			helpPane = new JTextPane();
 			helpPane.setEditable(false);
+			helpPane.setContentType("text/html; charset=utf-8");
 		}
 		return helpPane;
 	}
