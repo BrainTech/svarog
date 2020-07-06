@@ -150,7 +150,7 @@ public class ChannelSelectTableModel extends AbstractTableModel {
 		case SELECTED_COLUMN:
 			return _("selected");
 		case NUMBER_COLUMN:
-			return _("number");
+			return _("channel number");
 		case LABEL_COLUMN:
 			return _("label");
 		default:

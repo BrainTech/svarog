@@ -6667,8 +6667,8 @@ msgid "not normalized"
 msgstr "nie znormalizowany"
 
 #: org/signalml/app/model/document/opensignal/elements/ChannelSelectTableModel.java:153
-msgid "number"
-msgstr "liczba"
+msgid "channel number"
+msgstr "numer kanału"
 
 #: org/signalml/plugin/bookreporter/chart/preset/BookReporterChartPresetOccurences.java:35
 msgid "occurences of<br>%s"
