@@ -216,7 +216,7 @@ public class NewTagPanel extends JPanel {
 	public JRadioButton getPresetRadio() {
 		if (presetRadio == null) {
 			presetRadio = new JRadioButton();
-			presetRadio.setText(_("Use styles from selected styles preset"));
+			presetRadio.setText(_("User created presets"));
 			presetRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(presetRadio);
 
