@@ -5866,17 +5866,13 @@ msgstr "Użyj skali lokalnej"
 msgid "Use splines (experimental)"
 msgstr "Użyj funkcji sklejanych (experymentalne)"
 
-#: org/signalml/app/view/tag/NewTagPanel.java:164
-msgid "Use standard sleep staging styles"
-msgstr "Użyj standardowych styli dla stadiów snu"
-
 #: org/signalml/app/view/tag/NewTagPanel.java:223
 msgid "Use styles from selected file"
 msgstr "Użyj stylów z wybranego pliku"
 
 #: org/signalml/app/view/tag/NewTagPanel.java:194
-msgid "Use styles from selected styles preset"
-msgstr "Użyj stylów z wybranych presetów"
+msgid "User created presets"
+msgstr "Presety użytkownka"
 
 #: org/signalml/app/method/example/ExampleMethodDialog.java:61
 msgid "Useless deliberation count"
@@ -7075,3 +7071,18 @@ msgstr "Docelowy plik zapisu {0} już istnieje! Chcesz nadpisać?"
 #, java-format
 msgid "{0}. ({1})"
 msgstr "{0}. ({1})"
+
+msgid "Default presets"
+msgstr "Domyślne presety"
+
+
+msgid "Sleep RK"
+msgstr "Sen w/g RK"
+
+
+msgid "Sleep AASM"
+msgstr "Sen w/g AASM"
+
+
+msgid "Coma structures"
+msgstr "Struktury śpiączki"

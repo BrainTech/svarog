@@ -17,18 +17,19 @@ public class NewTagDescriptor extends PagingParameterDescriptor {
 
 	public enum NewTagTypeMode {
 		EMPTY,
-		DEFAULT_SLEEP,
+		DEFAULT_PRESET,
 		PRESET,
 		FROM_FILE
 	}
 
-	private NewTagTypeMode mode = NewTagTypeMode.DEFAULT_SLEEP;
+	private NewTagTypeMode mode = NewTagTypeMode.EMPTY;
 	private File file;
 
 	/**
 	 * Styles from this {@link StyledTagSet} are used for the new tag.
 	 */
 	private StyledTagSet tagStylesPreset;
+	private int defaultStylePresetIndex;
 
 	public NewTagDescriptor() {}
 
@@ -70,5 +71,20 @@ public class NewTagDescriptor extends PagingParameterDescriptor {
 	public StyledTagSet getTagStylesPreset() {
 		return tagStylesPreset;
 	}
+	
+	
+	/**
+	 * Returns the index of default preset from which tag styles are copied
+	 * into the new tag document.
+	 * @return the StyledTagSet with styles to be copied
+	 */
+	public void setDefaultPresetIndex(int i) {
+		this.defaultStylePresetIndex = i;
+	}
+	
+	public int getDefaultPresetIndex(){
+		return this.defaultStylePresetIndex;
+	}
+	
 
 }
