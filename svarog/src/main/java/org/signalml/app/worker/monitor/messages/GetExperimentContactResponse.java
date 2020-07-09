@@ -1,8 +1,6 @@
 package org.signalml.app.worker.monitor.messages;
 
 import java.util.List;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class GetExperimentContactResponse extends LauncherMessage {

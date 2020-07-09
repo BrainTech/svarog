@@ -5,7 +5,6 @@
 package org.signalml.domain.signal.test;
 
 import java.beans.PropertyChangeListener;
-
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /** TestMultichannelSampleSource

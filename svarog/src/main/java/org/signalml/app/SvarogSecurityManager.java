@@ -8,9 +8,8 @@ import java.security.Permission;
 import java.util.HashMap;
 import java.util.PropertyPermission;
 import org.apache.log4j.Logger;
-
-import org.signalml.util.FastMutableInt;
 import org.signalml.plugin.loader.PluginLoader;
+import org.signalml.util.FastMutableInt;
 
 /**
  * Svarog security manager.
@@ -37,7 +36,7 @@ public class SvarogSecurityManager extends java.lang.SecurityManager {
 	public static final String S_SvarogApplication = "org.signalml.app.SvarogApplication";
 
 	private HashMap<Thread,org.signalml.util.FastMutableInt> recLevel =
-		new HashMap<Thread,org.signalml.util.FastMutableInt>();
+		new HashMap<>();
 	public final boolean enforcing;
 
 	/**

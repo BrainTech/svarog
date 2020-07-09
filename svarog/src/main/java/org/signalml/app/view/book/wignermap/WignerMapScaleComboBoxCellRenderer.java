@@ -5,11 +5,9 @@
 package org.signalml.app.view.book.wignermap;
 
 import java.awt.Component;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.JList;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.domain.book.WignerMapScaleType;
 

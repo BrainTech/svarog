@@ -4,18 +4,15 @@
 
 package org.signalml.app.config.workspace;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.geom.Point2D;
-
 import javax.swing.JViewport;
-
 import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.app.view.tag.TagPaintMode;
 import org.signalml.domain.montage.Montage;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** WorkspaceSignalPlot
  *

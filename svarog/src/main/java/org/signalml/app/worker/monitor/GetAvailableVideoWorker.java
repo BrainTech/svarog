@@ -1,6 +1,5 @@
 package org.signalml.app.worker.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import java.awt.Container;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.VideoSourceSpecification;
 import org.signalml.app.video.VideoStreamSpecification;
 import org.signalml.app.worker.SwingWorkerWithBusyDialog;

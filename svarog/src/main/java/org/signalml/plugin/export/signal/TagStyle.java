@@ -4,8 +4,6 @@
 
 package org.signalml.plugin.export.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Stroke;
@@ -13,11 +11,10 @@ import java.beans.IntrospectionException;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.KeyStroke;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributes;
 import org.springframework.context.MessageSourceResolvable;
@@ -138,7 +135,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.keyStroke = style.keyStroke;
 		this.marker = style.marker;
 		this.attributesDefinitions = style.attributesDefinitions;
-		this.visible = style.visible;
+    		this.visible = style.visible;
 	}
 
 	/**
@@ -156,6 +153,9 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		this.outlineDash = style.getOutlineDash();
 		this.keyStroke = style.getKeyStroke();
 		this.marker = style.isMarker();
+                this.attributesDefinitions = style.getAttributesDefinitions();
+                this.visible = style.getIsVisible();
+
 	}
 
 	/**
@@ -415,6 +415,17 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public boolean isMarker() {
 		return marker;
 	}
+        
+        @Override
+        /**
+	 * Returns the definitions of the attributes which can be set for tags
+	 * having this style.
+	 * @return the tag style attributes definitions
+	 */
+        public TagStyleAttributes getAttributesDefinitions(){
+            return attributesDefinitions;
+        }
+
 
 	/**
 	 * Sets if the {@link Tag selection} is a marker.
@@ -475,7 +486,7 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		List<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		List<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("type"), "type", TagStyle.class, "getType", null));
 		list.add(new LabelledPropertyDescriptor(_("name"), "name", TagStyle.class));
@@ -529,14 +540,8 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 		return true;
 	}
 
-	/**
-	 * Returns the definitions of the attributes which can be set for tags
-	 * having this style.
-	 * @return the tag style attributes definitions
-	 */
-	public TagStyleAttributes getAttributesDefinitions() {
-		return attributesDefinitions;
-	}
+
+
 
 	/**
 	 * Sets the definitions of the attributes which can be set for tags
@@ -564,5 +569,11 @@ public class TagStyle implements Serializable, Comparable<TagStyle>, MessageSour
 	public boolean isVisible() {
 		return visible;
 	}
+        
+        @Override
+        public boolean getIsVisible() {
+            return visible;
+        }
+
 
 }

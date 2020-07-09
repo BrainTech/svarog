@@ -2,10 +2,9 @@ package org.signalml.plugin.tool;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.export.Plugin;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class PluginContextHelper {
 

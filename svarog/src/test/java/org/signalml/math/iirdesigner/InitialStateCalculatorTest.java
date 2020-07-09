@@ -4,16 +4,15 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.BaseTestCase;
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-import static org.signalml.SignalMLAssert.assertMatrixEquals;
-import static org.signalml.SignalMLAssert.assertVectorEquals;
-
 import org.apache.commons.math.linear.Array2DRowRealMatrix;
 import org.apache.commons.math.linear.ArrayRealVector;
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.RealVector;
 import org.junit.Test;
+import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
+import static org.signalml.SignalMLAssert.assertMatrixEquals;
+import static org.signalml.SignalMLAssert.assertVectorEquals;
 
 /**
  * This class performs unit tests on {@link InitialStateCalculator}.

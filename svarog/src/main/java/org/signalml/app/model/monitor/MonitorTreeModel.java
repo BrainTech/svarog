@@ -2,14 +2,13 @@ package org.signalml.app.model.monitor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.apache.log4j.Logger;
-import org.signalml.plugin.export.signal.Document;
 import org.signalml.app.document.DocumentManager;
 import org.signalml.app.document.DocumentManagerEvent;
 import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.plugin.export.signal.Document;
 import org.signalml.plugin.export.view.AbstractTreeModel;
 
 /** MonitorTreeModel

@@ -7,9 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Vector;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 
 /** DefaultTaskManager
@@ -24,8 +22,8 @@ public class DefaultTaskManager implements TaskManager {
 	 */
 	protected static final Logger logger = Logger.getLogger(DefaultTaskManager.class);
 
-	private Vector<Task> tasks = new Vector<Task>(100,100);
-	private Map<String,Task> tasksByUID = new HashMap<String,Task>(100);
+	private Vector<Task> tasks = new Vector<>(100,100);
+	private Map<String,Task> tasksByUID = new HashMap<>(100);
 
 	private EventListenerList listenerList = new EventListenerList();
 

@@ -3,20 +3,16 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.net.URL;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageDescriptor;
-import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.plugin.export.SignalMLException;
@@ -45,8 +41,7 @@ public class SignalMontageDialog extends AbstractDialog {
 
 	@Override
 	protected void initialize() {
-		setTitle(_("Signal montage"));
-		setIconImage(IconUtils.loadClassPathImage("org/signalml/app/icon/montage.png"));
+		setTitle(_("Signal montage and filters"));
 		setPreferredSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 		super.initialize();
 		setMinimumSize(new Dimension(800, 600));

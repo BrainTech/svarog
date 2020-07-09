@@ -4,14 +4,13 @@
 
 package org.signalml.app.model.signal;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.domain.signal.ExportFormatType;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.domain.tag.StyledTagSet;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** SignalExportDescriptor
  *

@@ -4,12 +4,11 @@
 
 package org.signalml.app.method.booktotag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.booktotag.BookToTagData;
 import org.signalml.method.booktotag.BookToTagMethod;
@@ -23,8 +22,7 @@ import org.signalml.plugin.export.signal.Document;
  */
 public class BookToTagMethodDescriptor implements ApplicationMethodDescriptor {
 
-	public static final String RUN_METHOD_STRING = _("Tag book atoms");
-	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
+	public static final String RUN_METHOD_STRING = _("Tag MP structures");
 
 	private BookToTagMethod method;
 	private BookToTagMethodConfigurer configurer;
@@ -46,7 +44,7 @@ public class BookToTagMethodDescriptor implements ApplicationMethodDescriptor {
 
 	@Override
 	public String getIconPath() {
-		return ICON_PATH;
+		return null;
 	}
 
 	@Override

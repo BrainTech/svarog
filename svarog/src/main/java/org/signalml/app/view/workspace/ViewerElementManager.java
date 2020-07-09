@@ -4,36 +4,28 @@
 
 package org.signalml.app.view.workspace;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import com.thoughtworks.xstream.XStream;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
-
 import javax.swing.Action;
-import javax.swing.Box;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSplitPane;
-import javax.swing.JToolBar;
-
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
-
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.action.HelpContentsAction;
 import org.signalml.app.action.RunMethodAction;
-import org.signalml.app.action.UnavailableMethodAction;
 import org.signalml.app.action.book.ExportBookAction;
 import org.signalml.app.action.book.OpenBookDocumentAction;
 import org.signalml.app.action.components.CloseWindowAction;
@@ -45,9 +37,17 @@ import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
 import org.signalml.app.action.montage.ApplyDefaultMontageAction;
 import org.signalml.app.action.montage.EditSignalMontageAction;
 import org.signalml.app.action.selector.ActionFocusManager;
+import org.signalml.app.action.signal.BasicToolbarSwitchAction;
+import org.signalml.app.action.signal.ChangeToolAction;
+import org.signalml.app.action.signal.EditPlotOptionsAction;
+import org.signalml.app.action.signal.EditSignalFiltersAction;
 import org.signalml.app.action.signal.EditSignalParametersAction;
 import org.signalml.app.action.signal.ExportSignalAction;
 import org.signalml.app.action.signal.PreciseSelectionAction;
+import org.signalml.app.action.signal.RecordingToolbarSwitchAction;
+import org.signalml.app.action.signal.ScaleToolbarSwitchAction;
+import org.signalml.app.action.signal.SettingsToolbarSwitchAction;
+import org.signalml.app.action.signal.SignalFilterSwitchAction;
 import org.signalml.app.action.tag.ChooseActiveTagAction;
 import org.signalml.app.action.tag.CloseTagAction;
 import org.signalml.app.action.tag.CompareTagsAction;
@@ -60,11 +60,12 @@ import org.signalml.app.action.tag.OpenTagAction;
 import org.signalml.app.action.tag.SaveTagAction;
 import org.signalml.app.action.tag.SaveTagAsAction;
 import org.signalml.app.action.tag.SynchronizeTagsWithTriggerAction;
+import org.signalml.app.action.video.AddCameraAction;
 import org.signalml.app.action.workspace.EditPreferencesAction;
+import org.signalml.app.action.workspace.EditToolsAction;
 import org.signalml.app.action.workspace.IterateMethodAction;
 import org.signalml.app.action.workspace.ShowBottomPanelAction;
 import org.signalml.app.action.workspace.ShowLeftPanelAction;
-import org.signalml.app.action.workspace.ShowMainToolBarAction;
 import org.signalml.app.action.workspace.ShowStatusBarAction;
 import org.signalml.app.action.workspace.ViewModeAction;
 import org.signalml.app.action.workspace.tasks.AbortAllTasksAction;
@@ -74,7 +75,6 @@ import org.signalml.app.action.workspace.tasks.RemoveAllFinishedTasksAction;
 import org.signalml.app.action.workspace.tasks.RemoveAllTasksAction;
 import org.signalml.app.action.workspace.tasks.ResumeAllTasksAction;
 import org.signalml.app.action.workspace.tasks.SuspendAllTasksAction;
-import org.signalml.app.action.video.AddCameraAction;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.document.BookDocument;
@@ -96,7 +96,9 @@ import org.signalml.app.model.signal.SignalTreeModel;
 import org.signalml.app.model.tag.TagTreeModel;
 import org.signalml.app.model.workspace.WorkspaceTreeModel;
 import org.signalml.app.task.ApplicationTaskManager;
-import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._H;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.video.VideoFrame;
 import org.signalml.app.view.View;
 import org.signalml.app.view.book.AtomTableDialog;
@@ -107,13 +109,20 @@ import org.signalml.app.view.common.dialogs.HelpDialog;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.document.monitor.StartMonitorRecordingDialog;
 import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
+import org.signalml.app.view.document.opensignal.elements.SignalSourceTabbedPane;
 import org.signalml.app.view.montage.SignalMontageDialog;
 import org.signalml.app.view.montage.filters.EditFFTSampleFilterDialog;
 import org.signalml.app.view.montage.filters.EditTimeDomainSampleFilterDialog;
 import org.signalml.app.view.preferences.ApplicationPreferencesDialog;
+import org.signalml.app.view.preferences.ApplicationToolsDialog;
+import org.signalml.app.view.signal.MoveSignalSignalTool;
+import org.signalml.app.view.signal.RulerSignalTool;
+import org.signalml.app.view.signal.SelectChannelSignalTool;
+import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.app.view.signal.SignalParametersDialog;
 import org.signalml.app.view.signal.SignalSelectionDialog;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.signal.ZoomSignalTool;
 import org.signalml.app.view.signal.export.ExportSignalDialog;
 import org.signalml.app.view.signal.popup.ChannelOptionsPopupDialog;
 import org.signalml.app.view.signal.popup.SlavePlotSettingsPopupDialog;
@@ -127,15 +136,24 @@ import org.signalml.app.view.tag.comparison.TagComparisonDialog;
 import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.method.AbstractMethod;
 import org.signalml.method.Method;
+import org.signalml.method.bookaverage.BookAverageMethod;
+import org.signalml.method.booktotag.BookToTagMethod;
+import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.iterator.IterableMethod;
+import org.signalml.method.mp5.MP5Method;
+import org.signalml.plugin.bookreporter.method.BookReporterMethod;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.signal.SignalTool;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ViewerTreePane;
+import org.signalml.plugin.fftsignaltool.SignalFFTTool;
 import org.signalml.psychopy.view.PsychopyExperimentDialog;
 import org.signalml.util.SvarogConstants;
+import pl.edu.fuw.fid.signalanalysis.dtf.DtfMethodAction;
 
 /**
  * ViewerElementManager
@@ -189,7 +207,6 @@ public class ViewerElementManager {
 
 	private ViewerStatusBar statusBar;
 	private JMenuBar menuBar;
-	private JToolBar mainToolBar;
 
 	private LockableJSplitPane verticalSplitPane;
 	private LockableJSplitPane horizontalSplitPane;
@@ -224,6 +241,7 @@ public class ViewerElementManager {
 	private CheckSignalDialog checkSignalDialog;
 	private PleaseWaitDialog pleaseWaitDialog;
 	private ApplicationPreferencesDialog applicationPreferencesDialog;
+	private ApplicationToolsDialog applicationToolsDialog;
 	private RegisterCodecDialog registerCodecDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
@@ -266,7 +284,6 @@ public class ViewerElementManager {
 	private EditPreferencesAction editPreferencesAction;
 	private HelpContentsAction helpContentsAction;
 	private ViewModeAction viewModeAction;
-	private ShowMainToolBarAction showMainToolBarAction;
 	private ShowStatusBarAction showStatusBarAction;
 	private ShowLeftPanelAction showLeftPanelAction;
 	private ShowBottomPanelAction showBottomPanelAction;
@@ -277,7 +294,6 @@ public class ViewerElementManager {
 	private CloseTagAction closeTagAction;
 	private SaveTagAction saveTagAction;
 	private SaveTagAsAction saveTagAsAction;
-	private OpenTagAction importTagAction;
 	private ExportEEGLabTagAction exportEEGLabTagAction;
 
 	/**
@@ -354,6 +370,9 @@ public class ViewerElementManager {
 	private JMenu tagsMenu;
 
 	private JMenu toolsMenu;
+
+	private JMenu analysisMenu;
+
 	private JMenu helpMenu;
 
 	/* Other */
@@ -590,7 +609,6 @@ public class ViewerElementManager {
 			fileMenu.setMnemonic(KeyEvent.VK_F);
 
 			fileMenu.add(getOpenSignalWizardAction());
-			fileMenu.add(getOpenBookDocumentAction());
 			fileMenu.add(getCloseActiveDocumentAction());
 
 			fileMenu.addSeparator();
@@ -605,35 +623,36 @@ public class ViewerElementManager {
 		return fileMenu;
 	}
 
-	public JMenu getEditMenu() {
-		if (editMenu == null) {
-			editMenu = new JMenu(_("Edit"));
-			editMenu.setMnemonic(KeyEvent.VK_E);
-
-			editMenu.add(getPreciseSelectionAction());
-			editMenu.addSeparator();
-			editMenu.add(getEditSignalParametersAction());
-			editMenu.add(getEditSignalMontageAction());
-			editMenu.add(getApplyDefaultMontageAction());
-			editMenu.addSeparator();
-			editMenu.add(getEditPreferencesAction());
-		}
-		return editMenu;
-	}
-
 	public JMenu getViewMenu() {
 		if (viewMenu == null) {
 			viewMenu = new JMenu(_("View"));
 			viewMenu.setMnemonic(KeyEvent.VK_V);
 
-			viewMenu.add(new JCheckBoxMenuItem(getShowMainToolBarAction()));
+			JMenu toolbarMenu = new JMenu(_("Toggle toolbars"));
+			toolbarMenu.add(new JMenuItem(new BasicToolbarSwitchAction(actionFocusManager)));
+			toolbarMenu.add(new JMenuItem(new ScaleToolbarSwitchAction(actionFocusManager)));
+			toolbarMenu.add(new JMenuItem(new SettingsToolbarSwitchAction(actionFocusManager)));
+			toolbarMenu.add(new JMenuItem(new RecordingToolbarSwitchAction(actionFocusManager)));
+			viewMenu.add(toolbarMenu);
+
 			viewMenu.add(new JCheckBoxMenuItem(getShowStatusBarAction()));
 			if (mode == SignalMLOperationMode.APPLICATION) {
-				viewMenu.add(new JCheckBoxMenuItem(getShowLeftPanelAction()));
-				viewMenu.add(new JCheckBoxMenuItem(getShowBottomPanelAction()));
+					viewMenu.add(new JCheckBoxMenuItem(getShowLeftPanelAction()));
+					viewMenu.add(new JCheckBoxMenuItem(getShowBottomPanelAction()));
 			}
-			viewMenu.addSeparator();
 			viewMenu.add(new JCheckBoxMenuItem(getViewModeAction()));
+			viewMenu.addSeparator();
+
+			viewMenu.add(new JMenuItem(new EditPlotOptionsAction(actionFocusManager, true)));
+
+			viewMenu.add(new JMenuItem(getEditSignalMontageAction()));
+
+			EditSignalFiltersAction editSignalFiltersAction = new EditSignalFiltersAction(actionFocusManager);
+			editSignalFiltersAction.setSignalMontageDialog(getSignalMontageDialog());
+			viewMenu.add(new JMenuItem(editSignalFiltersAction));
+
+			SignalFilterSwitchAction signalFilterSwitchAction = new SignalFilterSwitchAction(actionFocusManager);
+			viewMenu.add(new JMenuItem(signalFilterSwitchAction));
 		}
 		return viewMenu;
 	}
@@ -645,14 +664,16 @@ public class ViewerElementManager {
 	 */
 	public JMenu getMonitorMenu() {
 		if (monitorMenu == null) {
-			monitorMenu = new JMenu(_("Online"));
+			monitorMenu = new JMenu(_("Recording"));
 			monitorMenu.setMnemonic(KeyEvent.VK_R);
-			
-			final OpenSignalWizardAction onlineExperimentsAction = new OpenSignalWizardAction(this, "Online experiments");
-			final OpenSignalWizardAction onlineAmplifiersAction = new OpenSignalWizardAction(this, "Online amplifiers");
 
-			monitorMenu.add(onlineExperimentsAction);
+			final OpenSignalWizardAction onlineAmplifiersAction =
+					new OpenSignalWizardAction(this, SignalSourceTabbedPane.TAB_AMPLIFIERS);
+			final OpenSignalWizardAction onlineExperimentsAction =
+					new OpenSignalWizardAction(this, SignalSourceTabbedPane.TAB_EXPERIMENTS);
+
 			monitorMenu.add(onlineAmplifiersAction);
+			monitorMenu.add(onlineExperimentsAction);
 			monitorMenu.addSeparator();
 			monitorMenu.add(getAddCameraAction());
 			monitorMenu.addSeparator();
@@ -695,15 +716,6 @@ public class ViewerElementManager {
 	 */
 	public JMenu getTagsMenu() {
 		if (tagsMenu == null) {
-
-			JMenu importSubmenu = new JMenu(_("Import"));
-			importSubmenu.setMnemonic(KeyEvent.VK_I);
-			importSubmenu.add(getImportTagAction());
-
-			JMenu exportSubmenu = new JMenu(_("Export"));
-			exportSubmenu.setMnemonic(KeyEvent.VK_E);
-			exportSubmenu.add(getExportEEGLabTagAction());
-
 			tagsMenu = new JMenu(_("Tags"));
 			tagsMenu.setMnemonic(KeyEvent.VK_T);
 
@@ -711,11 +723,8 @@ public class ViewerElementManager {
 			tagsMenu.add(getOpenTagAction());
 			tagsMenu.add(getSaveTagAction());
 			tagsMenu.add(getSaveTagAsAction());
+			tagsMenu.add(getExportEEGLabTagAction());
 			tagsMenu.add(getCloseTagAction());
-			tagsMenu.addSeparator();
-
-			tagsMenu.add(importSubmenu);
-			tagsMenu.add(exportSubmenu);
 			tagsMenu.addSeparator();
 
 			tagsMenu.add(getChooseActiveTagAction());
@@ -731,32 +740,70 @@ public class ViewerElementManager {
 		return tagsMenu;
 	}
 
-
 	public JMenu getToolsMenu() {
 		if (toolsMenu == null) {
 			toolsMenu = new JMenu(_("Tools"));
-			toolsMenu.setMnemonic(KeyEvent.VK_L);
+			toolsMenu.add(createChangeToolAction(_("Select tags"), SelectTagSignalTool.class, "org/signalml/app/icon/arrow.png"));
+			toolsMenu.add(createChangeToolAction(_("Move signal"), MoveSignalSignalTool.class, "org/signalml/app/icon/hand.png"));
+			toolsMenu.add(createChangeToolAction(_("Magnify the signal"), ZoomSignalTool.class, "org/signalml/app/icon/zoom.png"));
+			toolsMenu.add(createChangeToolAction(_("Measure the signal"), RulerSignalTool.class, "org/signalml/app/icon/ruler.png"));
+			toolsMenu.add(createChangeToolAction(_("Signal FFT"), SignalFFTTool.class, "org/signalml/app/icon/fft.png"));
+			toolsMenu.add(createChangeToolAction(_("Select signal fragments"), SelectChannelSignalTool.class, "org/signalml/app/icon/channelselection.png"));
 
-			for (AbstractSignalMLAction action : getRunMethodActions()) {
-				toolsMenu.add(action);
-			}
+			toolsMenu.addSeparator();
+			toolsMenu.add(getEditPreferencesAction());
+		}
+		return toolsMenu;
+	}
+
+	private Action createChangeToolAction(String label, Class<? extends SignalTool> toolClass, String iconPath) {
+		ChangeToolAction action = new ChangeToolAction(label, toolClass, actionFocusManager);
+		if (iconPath != null) {
+			action.setIconPath(iconPath);
+		}
+		return action;
+	}
+
+	public JMenu getAnalysisMenu() {
+		if (analysisMenu == null) {
+			analysisMenu = new JMenu(_("Analysis"));
+
+			addRunMethodActionToMenu(analysisMenu, EvokedPotentialMethod.class);
+
+			analysisMenu.add(new JMenu(_("Short-Time Fourier Transform")));
+
+			analysisMenu.add(new JMenu(_("Wavelet Transform")));
+
+			analysisMenu.add(new JMenu(_("Independent Component Analysis")));
+
+			analysisMenu.add(new JMenuItem(DtfMethodAction.TITLE));
+
+			JMenu mpMenu = new JMenu(_("Matching pursuit"));
+			addRunMethodActionToMenu(mpMenu, MP5Method.class);
+			mpMenu.add(getOpenBookDocumentAction());
+			addRunMethodActionToMenu(mpMenu, BookAverageMethod.class);
+			addRunMethodActionToMenu(mpMenu, BookReporterMethod.class);
+			addRunMethodActionToMenu(mpMenu, BookToTagMethod.class);
+
+			EditToolsAction configurationAction = new EditToolsAction(getApplicationToolsDialog());
+			configurationAction.setConfig(getApplicationConfig());
+			mpMenu.add(configurationAction);
+
+			analysisMenu.add(mpMenu);
 
 			if (mode == SignalMLOperationMode.APPLICATION) {
 
-				toolsMenu.addSeparator();
-
 				JMenu iterationMenu = new JMenu(_("Iterate"));
-				iterationMenu.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/iteratemethod.png"));
 				for (AbstractSignalMLAction action : getIterateMethodActions()) {
 					iterationMenu.add(action);
 				}
-				iterationMenu.setEnabled(!getIterateMethodActions().isEmpty());
+				iterationMenu.setVisible(!getIterateMethodActions().isEmpty());
 
-				toolsMenu.add(iterationMenu);
+				analysisMenu.add(iterationMenu);
 
 			}
 		}
-		return toolsMenu;
+		return analysisMenu;
 	}
 
 	public JMenu getHelpMenu() {
@@ -764,6 +811,10 @@ public class ViewerElementManager {
 			helpMenu = new JMenu(_("Help"));
 			helpMenu.setMnemonic(KeyEvent.VK_H);
 			helpMenu.add(getHelpContentsAction());
+			helpMenu.add(createHelpContentsAction(_("Recording"), _H("recording.html")));
+			helpMenu.add(createHelpContentsAction(_("Analysis"), _H("analysis.html")));
+			helpMenu.add(createHelpContentsAction(_("Tools"), _H("tools.html")));
+			helpMenu.add(createHelpContentsAction(_("Tags"), _H("tags.html")));
 		}
 		return helpMenu;
 	}
@@ -773,32 +824,14 @@ public class ViewerElementManager {
 			menuBar = new JMenuBar();
 
 			menuBar.add(getFileMenu());
-			menuBar.add(getEditMenu());
 			menuBar.add(getViewMenu());
 			menuBar.add(getMonitorMenu());
 			menuBar.add(getTagsMenu());
 			menuBar.add(getToolsMenu());
+			menuBar.add(getAnalysisMenu());
 			menuBar.add(getHelpMenu());
 		}
 		return menuBar;
-	}
-
-	public JToolBar getMainToolBar() {
-		if (mainToolBar == null) {
-			mainToolBar = new JToolBar();
-
-			mainToolBar.setFloatable(false);
-
-			mainToolBar.add(getOpenSignalWizardAction());
-			mainToolBar.add(getCloseActiveDocumentAction());
-
-			mainToolBar.add(Box.createHorizontalGlue());
-
-			if (mode == SignalMLOperationMode.APPLICATION) {
-				mainToolBar.add(getCloseWindowAction());
-			}
-		}
-		return mainToolBar;
 	}
 
 	public LockableJSplitPane getVerticalSplitPane() {
@@ -1041,6 +1074,15 @@ public class ViewerElementManager {
 		return applicationPreferencesDialog;
 	}
 
+	public ApplicationToolsDialog getApplicationToolsDialog() {
+		if (applicationToolsDialog == null) {
+			applicationToolsDialog = new ApplicationToolsDialog(mode, getDialogParent(), true);
+			applicationToolsDialog.setFileChooser(getFileChooser());
+			applicationToolsDialog.setMp5ExecutorManager(getMp5ExecutorManager());
+		}
+		return applicationToolsDialog;
+	}
+
 	public CheckSignalDialog getCheckSignalDialog() {
 		if (checkSignalDialog == null) {
 			checkSignalDialog = new CheckSignalDialog(getDialogParent(), true);
@@ -1264,10 +1306,16 @@ public class ViewerElementManager {
 
 	public HelpContentsAction getHelpContentsAction() {
 		if (helpContentsAction == null) {
-			helpContentsAction = new HelpContentsAction();
-			helpContentsAction.setHelpDialog(getHelpDialog());
+			helpContentsAction = createHelpContentsAction(_("About"), _H("contents.html"));
+			helpContentsAction.setIconPath("org/signalml/app/icon/help.png");
 		}
 		return helpContentsAction;
+	}
+
+	protected HelpContentsAction createHelpContentsAction(String text, URL url) {
+		HelpContentsAction action = new HelpContentsAction(text, url);
+		action.setHelpDialog(getHelpDialog());
+		return action;
 	}
 
 	public ViewModeAction getViewModeAction() {
@@ -1275,13 +1323,6 @@ public class ViewerElementManager {
 			viewModeAction = new ViewModeAction();
 		}
 		return viewModeAction;
-	}
-
-	public ShowMainToolBarAction getShowMainToolBarAction() {
-		if (showMainToolBarAction == null) {
-			showMainToolBarAction = new ShowMainToolBarAction();
-		}
-		return showMainToolBarAction;
 	}
 
 	public ShowStatusBarAction getShowStatusBarAction() {
@@ -1416,16 +1457,6 @@ public class ViewerElementManager {
 		return saveTagAsAction;
 	}
 
-	public OpenTagAction getImportTagAction() {
-		if (importTagAction == null) {
-			importTagAction = new OpenTagAction(getActionFocusManager());
-			importTagAction.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
-			importTagAction.setFileChooser(getFileChooser());
-			importTagAction.setOptionPaneParent(getOptionPaneParent());
-		}
-		return importTagAction;
-	}
-
 	/**
 	 * Returns an {@link Action} responsible for showing a dialog allowing
 	 * to select which tag document should be active (the one that is being
@@ -1471,7 +1502,7 @@ public class ViewerElementManager {
 	}
 
 	public EditSignalParametersAction getEditSignalParametersAction() {
-		if (editSignalMontageAction == null) {
+		if (editSignalParametersAction == null) {
 			editSignalParametersAction = new EditSignalParametersAction(getActionFocusManager());
 			editSignalParametersAction.setSignalParametersDialog(getSignalParametersDialog());
 		}
@@ -1492,7 +1523,7 @@ public class ViewerElementManager {
 		}
 		return openSignalWizardAction;
 	}
-
+	
 	public ApplyDefaultMontageAction getApplyDefaultMontageAction() {
 		if (applyDefaultMontageAction == null) {
 			applyDefaultMontageAction = new ApplyDefaultMontageAction(getActionFocusManager());
@@ -1620,36 +1651,20 @@ public class ViewerElementManager {
 		return removeAllFailedTasksAction;
 	}
 
-	public ArrayList<AbstractSignalMLAction> getRunMethodActions() {
-		if (runMethodActions == null) {
-			Method[] methods = getMethodManager().getMethods();
-			runMethodActions = new ArrayList<AbstractSignalMLAction>(methods.length);
-			RunMethodAction runMethodAction;
-			for (Method method : methods) {
-
-				runMethodAction = new RunMethodAction(method, getMethodManager());
+	public void addRunMethodActionToMenu(JMenu menu, Class<? extends AbstractMethod> methodClass) {
+		for (Method method : getMethodManager().getMethods()) {
+			if (methodClass.isInstance(method)) {
+				RunMethodAction runMethodAction = new RunMethodAction(method, getMethodManager());
 				runMethodAction.setTaskManager(getTaskManager());
-				runMethodActions.add(runMethodAction);
-
+				menu.add(runMethodAction);
 			}
-
-			int unavailableMethodCount = methodManager.getUnavailableMethodCount();
-			UnavailableMethodAction unavailableMethodAction;
-			for (int i=0; i<unavailableMethodCount; i++) {
-
-				unavailableMethodAction = new UnavailableMethodAction(methodManager.getUnavailableMethodAt(i));
-				runMethodActions.add(unavailableMethodAction);
-
-			}
-
 		}
-		return runMethodActions;
 	}
 
 	public ArrayList<AbstractSignalMLAction> getIterateMethodActions() {
 		if (iterateMethodActions == null) {
 			Method[] methods = getMethodManager().getMethods();
-			iterateMethodActions = new ArrayList<AbstractSignalMLAction>(methods.length);
+			iterateMethodActions = new ArrayList<>(methods.length);
 			IterateMethodAction iterateMethodAction;
 			for (Method method : methods) {
 
@@ -1685,7 +1700,7 @@ public class ViewerElementManager {
 			signalView.setChannelOptionsPopupDialog(getChannelOptionsPopupDialog());
 			signalView.setDocumentFlowIntegrator(getDocumentFlowIntegrator());
 			signalView.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
-			signalView.setSignalMontageDialog(getSignalMontageDialog());			
+			signalView.setSignalMontageDialog(getSignalMontageDialog());
 			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
 			signalView.setPsychopyExperimentDialog(getPsychopyExperimentDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
@@ -1736,7 +1751,7 @@ public class ViewerElementManager {
 
 	}
 
-	public void configureAcceletators() {
+	public void configureAccelerators() {
 
 		// configure accelerators
 		getCloseWindowAction().setAccelerator("ctrl X");
@@ -1745,7 +1760,6 @@ public class ViewerElementManager {
 		getOpenSignalWizardAction().setAccelerator("ctrl O");
 		getCloseActiveDocumentAction().setAccelerator("ctrl F4");
 		getOpenTagAction().setAccelerator("alt O");
-		getOpenBookDocumentAction().setAccelerator("alt B");
 		getCloseTagAction().setAccelerator("ctrl alt F4");
 		getSaveTagAction().setAccelerator("alt S");
 		getSaveTagAsAction().setAccelerator("ctrl alt shift S");

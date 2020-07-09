@@ -4,11 +4,8 @@
 
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.TagDocument;
@@ -18,6 +15,7 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.ep.EvokedPotentialMethod;
 import org.signalml.method.ep.EvokedPotentialParameters;
@@ -33,8 +31,7 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 
 	protected static final Logger logger = Logger.getLogger(EvokedPotentialMethodDescriptor.class);
 
-	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
-	public static final String RUN_METHOD_STRING = _("Average evoked potentials");
+	public static final String RUN_METHOD_STRING = _("ERP");
 
 	private EvokedPotentialMethod method;
 	private EvokedPotentialMethodConfigurer configurer;
@@ -57,7 +54,7 @@ public class EvokedPotentialMethodDescriptor implements ApplicationMethodDescrip
 
 	@Override
 	public String getIconPath() {
-		return ICON_PATH;
+		return null;
 	}
 
 	@Override

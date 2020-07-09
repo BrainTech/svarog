@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../help.css">
+        <title>Znaczniki (tags)</title>
+    </head>
+    <body>
+
+
+        <h1>Znaczniki (potocznie tagi, od ang. <i>tags</i>)</h1> to oznaczenia pozycji i 
+        rozciągłości w czasie (oraz ew. odprowadzeń), określających zwykle występowanie 
+        zdarzeń, związanych z zapisem EEG — na przykład:
+
+        <dl>
+            <dt>
+                Wystąpienia bodźców, potrzebne do uśredniania potencjałów wywołanych:
+            </dt>
+            <dd>oznaczenia synchronizowanych z sygnałem bodźców tworzone są zwykle automatycznie w czasie rejestracji EEG w eksperymencie,
+                dzięki synchronizacji czasu między systemem generującym bodźce (komputer wyświetlający lub kontrolujący bodźce wzrokowe
+                lub słuchowe czy czuciowe) a systemem rejestracji. Szczegóły tego procesu zależą od systemu, w którym
+                projektowano i implementowano dany eksperyment.</dd>
+            <dt>
+                Występujące w sygnale struktury (grafoelementy), jak np. wrzeciona snu czy artefakty:
+            </dt>
+            <dd>oznaczanie w sygnale struktur (zwanych czasem grafoelementami) odbywa się zwykle a posteriori,
+                na uprzednio zarejestrowanym sygnale. Artefakty oznaczamy zwykle w celu wykluczenia oznaczonych odcinków z dalszych analiz,
+                więc mogą to być oznaczenia niezwiązane z konkretnym kanałem. Z kolei wybrane grafoelementy (wrzeciona snu, fale wolne itp.)
+                możemy oznaczać w konkretnych odprowadzeniach. Wszystkie te oznaczenia mogą być generowane automatycznie z użyciem wybranych
+                metod analizy sygnałów (jak np. zaimplementowane w Svarogu oznaczanie struktur wybranych z dekompozycji MP), lub ręcznie/wzrokowo
+                (np. przez elektroencefalografistę, w celu porówania z detekcją automatyczną).</dd>
+            <dt>
+                Stadia snu:
+            </dt>
+            <dd>stadia snu zdefiniowano (względnie) ściśle po raz pierwszy w roku 1968
+                (<i>A Manual of Standardized Terminology, Techniques and Scoring System for Sleep Stages of Human Subjects</i>:
+                Allan Rechtschaffen and Anthony Kales, Editors).
+                Uaktualnione wersje standardu publikowane są przez American Academy of Sleep Medicine w <i>The AASM Manual for the Scoring of Sleep
+                    and Associated Events</i>. Jak widać z tytułu, poza samymi stadiami oznaczać można również wybrane grafoelementy, których obecność wchodzi w skład
+                kryteriów określających wystąpienia danego stadium. Svarog oferuje predefiniowane schematy oznaczeń wedle obydwu w/w standardów.</dd>
+        </dl>
+
+        <h2>Typy znaczników</h2>
+        <dl>
+            <dt><img src="../../app/icon/pagetag.png" alt="pagetag"> tag stronicowy,</dt>
+            <dd>czyli przypisujący oznaczenie (na przykład stadium snu) jednej składce sygnału, o długości zwykle 20 lub 30 sekund 
+                (definowanej we własnościach pliku, można ją zmienić w oknie wczytywania pliku lub w zakładce "Tagi" okna "Preferencje" 
+                z menu "Narzędzia"),
+            </dd>
+            <dt>
+                <img src="../../app/icon/blocktag.png" alt="blocktag"> tag blokowy,</dt>
+            <dd>czyli przypisujący oznaczenie jednego bloku sygnału — 
+                ten znacznik był wykorzystywany do oznacznia artefaktów w sztywnych blokach, 
+                i zachowany jest dla kompatybilności z wykonywanymi wcześniej oznaczeniami;
+                liczbę bloków na składkę określamy razem z długością składki jak opisano powyżej,
+            </dd>
+            <dt><img src="../../app/icon/channeltag.png" alt="channeltag"> tag kanałowy,</dt>
+            <dd>czyli przypisany do jednego lub wszystkich
+                odprowadzeń, oznaczający początek i koniec wystapienia zdarzenia lub struktury,
+                jak również konkretne odprowadzenie, w którym strukturę oznaczano
+                (może być też przypisany do wszystkich kanałów).
+                Svarog zapisuje również montaż, w którym wykonywano dane oznaczenia,
+                gdyż mogą się one odnosić np. do specyficznych odprowadzeń bipolarnych.
+            </dd>
+        </dl>
+
+
+        <h2>Menu</h2>
+        <dl>
+            <dt><img src="../../app/icon/filenew.png" alt="tag"> Nowy tag</dt>
+            <dd>Pozwala stworzyć własne definicje oznaczeń, wybrać spośród predefiniowanych stylów wbudowanych w program, 
+                lub wczytać wcześniej zapisane style z pliku.</dd>
+            <dt><img src="../../app/icon/fileopen.png" alt="tag"> Otwórz tag</dt>
+            <dd>Po wczytaniu sygnału możemy wczytać plik z przypisanymi do niego oznaczeniami, 
+                które będą wyświetlane na sygnale.
+                Do jednego sygnału może być przypisany więcej niż jeden plik z oznaczeniami — 
+                na przykład struktury oznaczane przez różnych ekspertów lub znaczniki tworzone przez algorytm.
+                Po wczytaniu drugiego pliku z tagami, Svarog wyświetli na sygnale znaczniki z obu plików.
+                Ponadto, jeśli otworzymy dodatkowe okno z tym samym sygnałem, 
+                klikając biały plusik w zielonym kółku 
+                <img src="../../app/icon/addslaveplot.png" alt="tag">
+                w lewym górnym rogu okna z sygnałem, możemy te oznaczenia oglądać w dwóch osobnych oknach
+                wwyświetlających synchronicznie ten sam sygnał z różnymi oznaczeniami. 
+                Guzik <img src="../../app/icon/configureslaveplot.png" alt="tag"> w drugim (podrzędnym) oknie 
+                kontroluje ustawienia synchchronizacji między oknami, montaże itp.
+                Jeśli w plikach zapisane były stadia snu, kliknięcie prawym guzikiem myszy na oknie 
+                wyświetlanego hipnogramu umożliwia synchronicznie wyświetlenie obu hipnogramów.
+            </dd>
+            <dt><img src="../../app/icon/filesave.png" alt="tag"> Zapisz znaczniki (tag)</dt>
+            <dd>Wczytane lub stworzone znaczniki można edytować, a po edycji zapisać na dysku.</dd>
+            <dt><img src="../../app/icon/filesaveas.png" alt="tag"> Zapisz tag jako ...</dt>
+            <dd>...ew. pod zmienioną nazwą.</dd>
+            <dt><img src="../../app/icon/fileclose.png" alt="tag"> Zamknij tag</dt>
+            <dd>Zamyka bieżący tag.</dd>
+
+            <!--   <hr>
+               <dt> &nbsp;&nbsp;&nbsp;&nbsp; Import</dt>
+               <dd>CZY TO JEST REDUNDANTNE I TA POZYCJA POWINNA ZOSTAĆ USUNIĘTA Z MENU?</dd>
+            -->
+
+            <dt> <img src="../../app/icon/eeglab.png"> Eksport do EEGLAB</dt>
+            <dd>Pozwala zapisać tag w formacie czytelnym dla pakietu EEGLAB.</dd>
+
+            <dt><img src="../../app/icon/activetag.png" alt="tag"> Wybierz aktywny tag</dt>
+            <dd>Ze względu na opisaną wcześniej możliwość jednoczesnego wyświetlania oznaczeń z więcej niż jednego pliku,
+                w przypadku edycji trzeba jednoznacznie określić, do którego pliku będą przy/zapisywane zmiany.
+            </dd>
+            <dt><img src="../../app/icon/edittagdescription.png" alt="tag"> Edytuj opis tagu</dt>
+            <dd>Do pliku można dodać tekstowy opis, zawiertający na przykład parametry 
+                wykorzystanego algorytmu lub datę i imię eksperta, który oznaczenia wykonał.</dd>
+            <dt><img src="../../app/icon/palette.png" alt="tag"> Style znaczników</dt>
+            <dd> Styl definiuje m.in. kolor każdego ze znaczników, używany do wizualizacji,
+                krótki opis, oraz przypisany skrót klawiszowy, ułatwiający ręczne oznaczanie.
+                Okno otwarte tą komendą pozwala na edycję styli wczytanego wcześniej, aktywnego tagu.</dd>
+            <dt><img src="../../app/icon/palette.png" alt="tag"> Edytuj szablony stylów tagów</dt>
+            <dd>Pozwala tworzyć nowe (lub modyfikować predefiniowane) style, bez konieczności
+                uprzedniego otwarcia pliku.</dd>
+        </dl>
+        <hr>
+        <dl>        
+            <dt><img src="../../app/icon/comparetags.png" alt="tag"> Porównaj tagi</dt>
+            <dd>Otwiera okno pozwalające na wykonanie porównania statystycznego dwóch 
+                wczytanych wcześniej plików ze znacznikami oraz wybór sposobu wyświetlania więcej niż jednego zestawu oznaczeń:
+                jeśli włączymy tryb porównania, Svarog oznaczy graficznie na wyświetlanym sygnale różnice między tagami 
+                tego samego typu z różnych plików.
+            </dd>
+            <dt> &nbsp;&nbsp;&nbsp;&nbsp; Synchronizuj tagi z wyzwalaczem (triggerem) </dt>
+            <dd>Pozwala na automatyczne tworzenie znaczników na podstawie odprowadzenia, 
+                w którym zapisano (razem z EEG) sygnał związany z bodźcem. 
+                Jako moment wystąpienia bodźca możemy określić (zależnie od warunków eksperymentu) na przykład odpowiednie narastanie tego sygnału. 
+                Wtedy w odpowiednich miejscach Svarog wstawi znaczniki, 
+                na podstawie których będziemy mogli na przykład uśredniać potencjały wywołane tym bodźcem.</dd>
+        </dl>
+
+        <h2>Technikalia</h2>
+
+        Znaczniki zapisywane są w plikach *.tag w formacie xml.
+        Plik zawierający znaczniki powinien być jednoznacznie powiązany jest z plikiem
+        zawierającym opisywany sygnał (przez nazwę pliku),
+        ale do jednego sygnału może być przypisanych wiele plików z oznaczeniami.
+
+        <br>
+        Pierwotna idea znaczników w SignalML opisana jest w dokumencie
+        <code>https://braintech.pl/software/svarog/signalml-annotations/</code>,
+        ale nie wszystkie możliwości są zaimplementowane w Svarogu. Zrezygnowaliśmyh na przykład
+        z zapisu sumy kontrolnej, która ulegałaby zmianie po zapisie przefiltrowanego sygnału — 
+        tag stawałby się niezgodny z nowym plikiem, zawierającym przefiltrowany sygnał EEG.
+
+
+    </body>
+</html>

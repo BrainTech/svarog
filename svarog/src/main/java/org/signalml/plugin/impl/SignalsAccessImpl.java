@@ -3,8 +3,6 @@
  */
 package org.signalml.plugin.impl;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +15,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.document.DocumentFlowIntegrator;
@@ -29,6 +26,7 @@ import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalParameters;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -78,8 +76,8 @@ import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 
 /**
- * Implementation of {@link SvarogAccessSignal} interface.
- * Contains only two fields:
+ * Implementation of {@link SvarogAccessSignal} interface. Contains only two
+ * fields:
  * <ul>
  * <li>the {@link ViewerElementManager element manager} - allows to access
  * elements of Svarog. It is used to open documents,
@@ -89,6 +87,7 @@ import org.signalml.plugin.export.view.ExportedSignalPlot;
  * {@link SignalDocument signal} and {@link TagDocument documents}, used in
  * every function where active element is needed.</li>
  * </ul>
+ *
  * @author Marcin Szumski
  */
 public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSignal {
@@ -100,7 +99,8 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	private ActionFocusManager focusManager;
 
-	private SignalsAccessImpl() { }
+	private SignalsAccessImpl() {
+	}
 
 	private static final SignalsAccessImpl _instance = new SignalsAccessImpl();
 
@@ -110,23 +110,31 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 	/**
 	 * Returns the output of signal samples.
+	 *
 	 * @return the output of signal samples
 	 * @throws NoActiveObjectException if there is no active signal plot
 	 */
 	private MultichannelSampleSource getOutput() throws NoActiveObjectException {
 		SignalPlot plot = getFocusManager().getActiveSignalPlot();
-		if (plot == null) throw new NoActiveObjectException(_("no active signal plot"));
+		if (plot == null) {
+			throw new NoActiveObjectException(_("no active signal plot"));
+		}
 		MultichannelSampleSource output = plot.getSignalOutput();
-		if (output == null) throw new RuntimeException("output of signal samples is null");
+		if (output == null) {
+			throw new RuntimeException("output of signal samples is null");
+		}
 		return output;
 	}
 
 	/**
 	 * Returns samples for the given source of samples and the given channel.
+	 *
 	 * @param source the source of samples
-	 * @param channel the number of the channel (from 0 to {@code source.getChannelCount()-1})
+	 * @param channel the number of the channel (from 0 to
+	 * {@code source.getChannelCount()-1})
 	 * @return samples for the given source of samples and the given channel
-	 * @throws IndexOutOfBoundsException if the index of a channel is out of range
+	 * @throws IndexOutOfBoundsException if the index of a channel is out of
+	 * range
 	 */
 	private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel) throws IndexOutOfBoundsException {
 		indexInBounds(source, channel);
@@ -139,13 +147,16 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 	/**
 	 * Returns samples for the given source of samples and the given channel.
+	 *
 	 * @param source the source of samples
-	 * @param channel the number of the channel (from 0 to {@code source.getChannelCount()-1})
-	 * @param signalOffset the position (in time) in the signal starting
-	 * from which samples will be returned
+	 * @param channel the number of the channel (from 0 to
+	 * {@code source.getChannelCount()-1})
+	 * @param signalOffset the position (in time) in the signal starting from
+	 * which samples will be returned
 	 * @param count the number of samples to be returned
 	 * @return samples for the given source of samples and the given channel
-	 * @throws IndexOutOfBoundsException if the index of a channel is out of range
+	 * @throws IndexOutOfBoundsException if the index of a channel is out of
+	 * range
 	 */
 	private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel, int signalOffset, int count) throws IndexOutOfBoundsException {
 		indexInBounds(source, channel);
@@ -157,13 +168,16 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	/**
 	 * Checks if the index of the channel is in range from 0 to
 	 * {@code source.getChannelCount()-1}. Throws exception if not.
+	 *
 	 * @param source the source of samples
 	 * @param channel the index of the channel
-	 * @throws IndexOutOfBoundsException if the index of a channel is out of range
+	 * @throws IndexOutOfBoundsException if the index of a channel is out of
+	 * range
 	 */
 	private void indexInBounds(MultichannelSampleSource source, int channel) throws IndexOutOfBoundsException {
-		if ((channel < 0) || (channel >= source.getChannelCount()))
-			throw new IndexOutOfBoundsException("index "+ channel + "is out of range ["+ "0, " + (source.getChannelCount()-1) + "]");
+		if ((channel < 0) || (channel >= source.getChannelCount())) {
+			throw new IndexOutOfBoundsException("index " + channel + "is out of range [" + "0, " + (source.getChannelCount() - 1) + "]");
+		}
 	}
 
 	/* (non-Javadoc)
@@ -186,7 +200,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
 		for (int i = 0; i < numberOfChannels; ++i) {
 			ChannelSamplesImpl channelSamples = getActiveProcessedSignalSamples(i);
-			if (channelSamples == null) throw new RuntimeException();
+			if (channelSamples == null) {
+				throw new RuntimeException();
+			}
 			signalSamples.addChannelSamples(channelSamples);
 		}
 		return signalSamples;
@@ -199,7 +215,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	private ArrayList<SignalDocument> getSignalDocuments() {
 		DocumentManager documentManager = getViewerElementManager().getDocumentManager();
 		int numberOfDocuments = documentManager.getDocumentCount();
-		ArrayList<SignalDocument> documents = new ArrayList<SignalDocument>();
+		ArrayList<SignalDocument> documents = new ArrayList<>();
 		for (int i = 0; i < numberOfDocuments; ++i) {
 			Document documentTmp = documentManager.getDocumentAt(i);
 			if (documentTmp instanceof SignalDocument) {
@@ -215,7 +231,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public SignalSamples[] getProcessedSignalSamplesForAllSignals() {
 		ArrayList<SignalDocument> documents = getSignalDocuments();
-		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<SignalSamplesImpl>();
+		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<>();
 		for (SignalDocument signalDocument : documents) {
 			SignalSamplesImpl samplesTmp;
 			try {
@@ -231,14 +247,19 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 	/**
 	 * Returns the source of unprocessed signal samples for the active signal.
+	 *
 	 * @return the source of unprocessed signal samples for the active signal
 	 * @throws NoActiveObjectException if there is no active signal
 	 */
 	private OriginalMultichannelSampleSource getOriginalSource() throws NoActiveObjectException {
 		SignalPlot plot = getFocusManager().getActiveSignalPlot();
-		if (plot == null) throw new NoActiveObjectException(_("no active signal plot"));
+		if (plot == null) {
+			throw new NoActiveObjectException(_("no active signal plot"));
+		}
 		OriginalMultichannelSampleSource originalSource = plot.getSignalSource();
-		if (originalSource == null) throw new RuntimeException("original source of samples is null");
+		if (originalSource == null) {
+			throw new RuntimeException("original source of samples is null");
+		}
 		return originalSource;
 	}
 
@@ -286,17 +307,20 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	/**
 	 * Returns samples for the given source of samples, the given channel and
 	 * the specified period of time.
+	 *
 	 * @param source the source of samples
 	 * @param channel the number of the channel (from 0 to {@code
 	 * source.getChannelCount()-1})
 	 * @param signalOffsetTime the position (in time in seconds) in the signal
 	 * starting from which samples will be returned
-	 * @param length the length of the part of the signal which should be returned
+	 * @param length the length of the part of the signal which should be
+	 * returned
 	 * @return samples for the given source of samples and the given channel
-	 * @throws IndexOutOfBoundsException if the index of a channel is out of range
+	 * @throws IndexOutOfBoundsException if the index of a channel is out of
+	 * range
 	 */
 	private ChannelSamplesImpl getSamplesFromSource(MultichannelSampleSource source, int channel, float signalOffsetTime, float length) throws IndexOutOfBoundsException {
-		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, (int)(signalOffsetTime*source.getSamplingFrequency()), (int)(length*source.getSamplingFrequency()));
+		ChannelSamplesImpl channelSamples = getSamplesFromSource(source, channel, (int) (signalOffsetTime * source.getSamplingFrequency()), (int) (length * source.getSamplingFrequency()));
 		return channelSamples;
 	}
 
@@ -339,7 +363,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SignalSamplesImpl signalSamples = new SignalSamplesImpl();
 		for (int i = 0; i < numberOfChannels; ++i) {
 			ChannelSamplesImpl channelSamples = getActiveRawSignalSamples(i);
-			if (channelSamples == null) throw new RuntimeException("Channel samples are null");
+			if (channelSamples == null) {
+				throw new RuntimeException("Channel samples are null");
+			}
 			signalSamples.addChannelSamples(channelSamples);
 		}
 		return signalSamples;
@@ -351,8 +377,10 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public SignalSamples[] getRawSignalSamplesForAllSignals() {
 		ArrayList<SignalDocument> documents = getSignalDocuments();
-		if (documents == null) return null;
-		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<SignalSamplesImpl>();
+		if (documents == null) {
+			return null;
+		}
+		ArrayList<SignalSamplesImpl> signalsSamples = new ArrayList<>();
 		for (SignalDocument signalDocument : documents) {
 			SignalSamplesImpl samplesTmp;
 			try {
@@ -366,18 +394,24 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	}
 
 	/**
-	 * Returns the {@link OriginalMultichannelSampleSource original source}
-	 * of samples (source of raw samples) for a given
+	 * Returns the {@link OriginalMultichannelSampleSource original source} of
+	 * samples (source of raw samples) for a given
 	 * {@link ExportedSignalDocument signal document}.
+	 *
 	 * @param document the signal document
 	 * @return the original source of samples
-	 * @throws InvalidClassException if document is not of type {@link SignalDocument}
+	 * @throws InvalidClassException if document is not of type
+	 * {@link SignalDocument}
 	 */
 	private MultichannelSampleSource getOriginalSourceFromDocument(ExportedSignalDocument document) throws InvalidClassException {
 		SignalPlot signalPlot = getSignalPlotFromDocument(document);
-		if (signalPlot == null) throw new RuntimeException(_("signal plot is null"));
+		if (signalPlot == null) {
+			throw new RuntimeException(_("signal plot is null"));
+		}
 		MultichannelSampleSource source = signalPlot.getSignalSource();
-		if (source == null) throw new RuntimeException("source of samples is null");
+		if (source == null) {
+			throw new RuntimeException("source of samples is null");
+		}
 		return source;
 	}
 
@@ -409,15 +443,15 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		return signalSamples;
 	}
 
-
-
 	/* (non-Javadoc)
 	 * @see org.signalml.plugin.export.PluginAccessSignal#getTagsFromActiveDocument()
 	 */
 	@Override
 	public Set<ExportedTag> getTagsFromActiveDocument() throws NoActiveObjectException {
 		TagDocument tagDocument = getFocusManager().getActiveTagDocument();
-		if (tagDocument == null) throw new NoActiveObjectException(_("no active tag document"));
+		if (tagDocument == null) {
+			throw new NoActiveObjectException(_("no active tag document"));
+		}
 		return new TreeSet<ExportedTag>(tagDocument.getSetOfTags());
 	}
 
@@ -427,7 +461,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public List<ExportedTag> getTagsFromAllDocumentsAssociatedWithAcitiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (signalDocument == null) throw new NoActiveObjectException(_("no active signal document"));
+		if (signalDocument == null) {
+			throw new NoActiveObjectException(_("no active signal document"));
+		}
 		try {
 			return getTagsFromSignalDocument(signalDocument);
 		} catch (InvalidClassException e) {
@@ -441,7 +477,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public List<ExportedTag> getTagsFromAllDocuments() {
 		ArrayList<SignalDocument> signalDocuments = getSignalDocuments();
-		List<ExportedTag> tags = new ArrayList<ExportedTag>();
+		List<ExportedTag> tags = new ArrayList<>();
 		for (SignalDocument signalDocument : signalDocuments) {
 			try {
 				List<ExportedTag> tagsTmp = getTagsFromSignalDocument(signalDocument);
@@ -459,12 +495,18 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTag getActiveTag() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (signalDocument ==  null) throw new NoActiveObjectException(_("no active singal document"));
+		if (signalDocument == null) {
+			throw new NoActiveObjectException(_("no active singal document"));
+		}
 		DocumentView documentView = signalDocument.getDocumentView();
-		if (!(documentView instanceof SignalView)) throw new RuntimeException("signal documetn didn't return a valid SignalView");
+		if (!(documentView instanceof SignalView)) {
+			throw new RuntimeException("signal documetn didn't return a valid SignalView");
+		}
 		SignalView signalView = (SignalView) documentView;
 		PositionedTag positionedTag = signalView.getActiveTag();
-		if (positionedTag == null) throw new NoActiveObjectException(_("no active tag"));
+		if (positionedTag == null) {
+			throw new NoActiveObjectException(_("no active tag"));
+		}
 		return positionedTag.getTag();
 	}
 
@@ -473,10 +515,12 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	@Override
 	public List<ExportedTag> getTagsFromSignalDocument(ExportedSignalDocument document) throws InvalidClassException {
-		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		if (!(document instanceof SignalDocument)) {
+			throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		}
 		SignalDocument signalDocument = (SignalDocument) document;
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
-		List<ExportedTag> tags = new ArrayList<ExportedTag>();
+		List<ExportedTag> tags = new ArrayList<>();
 		for (TagDocument tagDocument : tagDocuments) {
 			tags.addAll(tagDocument.getSetOfTags());
 		}
@@ -489,10 +533,14 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedSignalSelection getActiveSelection() throws NoActiveObjectException {
 		SignalPlot signalPlot = getFocusManager().getActiveSignalPlot();
-		if (signalPlot == null) throw new NoActiveObjectException(_("no active signal plot"));
+		if (signalPlot == null) {
+			throw new NoActiveObjectException(_("no active signal plot"));
+		}
 		SignalView signalView = signalPlot.getView();
 		ExportedSignalSelection selection = signalView.getSignalSelection();
-		if (selection == null) throw new NoActiveObjectException(_("no active signal selection"));
+		if (selection == null) {
+			throw new NoActiveObjectException(_("no active signal selection"));
+		}
 		return selection;
 	}
 
@@ -512,11 +560,12 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	/**
 	 * In the given document finds the {@link TagStyle style} that is equal to
 	 * the style of the provided {@link ExportedTag tag}.
+	 *
 	 * @param tagDocument the document in which we are looking for a style
 	 * @param tag the tag for which the actual style is to be found
 	 * @return the style that is equal to the style of the provided tag
-	 * @throws IllegalArgumentException if there is no such tag style in
-	 * the document
+	 * @throws IllegalArgumentException if there is no such tag style in the
+	 * document
 	 */
 	private TagStyle findStyle(TagDocument tagDocument, ExportedTag tag) throws IllegalArgumentException {
 		StyledTagSet tagSet = tagDocument.getTagSet();
@@ -528,7 +577,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 				break;
 			}
 		}
-		if (style == null) throw new IllegalArgumentException("tag style is not in the document");
+		if (style == null) {
+			throw new IllegalArgumentException("tag style is not in the document");
+		}
 		return style;
 	}
 
@@ -536,17 +587,17 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 * From the given {@link ExportedTag exported tag} creates a collection of
 	 * {@link Tag tags} by splitting it to separate blocks/pages (only if
 	 * exported tag has a {@link ExportedSignalSelectionType type}
-	 * {@code BLOCK} or {@code PAGE}).
-	 * If the exported tag has a type {@code CHANNEL} the collection contains
-	 * only one tag created from it
+	 * {@code BLOCK} or {@code PAGE}). If the exported tag has a type
+	 * {@code CHANNEL} the collection contains only one tag created from it
+	 *
 	 * @param tag the tag to be converted
-	 * @param tagDocument the document to which the tag will be added;
-	 * used to get styles and lengths of blocks/pages.
+	 * @param tagDocument the document to which the tag will be added; used to
+	 * get styles and lengths of blocks/pages.
 	 * @return the collection of tags
 	 */
 	private Collection<Tag> splitTag(ExportedTag tag, TagDocument tagDocument) {
 		float blockOrPageLength = 0;
-		Collection<Tag> tags = new ArrayList<Tag>();
+		Collection<Tag> tags = new ArrayList<>();
 		TagStyle style = findStyle(tagDocument, tag);
 		if (tag.getType().getName().equals(ExportedSignalSelectionType.BLOCK)) {
 			blockOrPageLength = tagDocument.getBlockSize();
@@ -559,8 +610,8 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		}
 		int startBlockOrPage = tag.getStartSegment(blockOrPageLength);
 		int endBlockOrPage = tag.getEndSegment(blockOrPageLength);
-		for (int i=startBlockOrPage; i<endBlockOrPage; i++) {
-			Tag trueTag = new Tag(style, i*blockOrPageLength, blockOrPageLength, SignalSelection.CHANNEL_NULL, tag.getAnnotation());
+		for (int i = startBlockOrPage; i < endBlockOrPage; i++) {
+			Tag trueTag = new Tag(style, i * blockOrPageLength, blockOrPageLength, SignalSelection.CHANNEL_NULL, tag.getAnnotation());
 			tags.add(trueTag);
 		}
 		return tags;
@@ -571,15 +622,20 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	@Override
 	public void addTagToDocument(ExportedTagDocument document, ExportedTag tag) throws InvalidClassException, IllegalArgumentException {
-		if (!(document instanceof TagDocument)) throw new InvalidClassException("document is not of type TagDocument => was not returned from Svarog");
+		if (!(document instanceof TagDocument)) {
+			throw new InvalidClassException("document is not of type TagDocument => was not returned from Svarog");
+		}
 		TagDocument tagDocument = (TagDocument) document;
 		StyledTagSet tagSet = tagDocument.getTagSet();
 		TagStyle style = findStyle(tagDocument, tag);
 		ExportedSignalSelectionType type = tag.getType();
-		if (!(style.getType().getName().equals(type.getName()))) throw new IllegalArgumentException("tag style is not in the document");
+		if (!(style.getType().getName().equals(type.getName()))) {
+			throw new IllegalArgumentException("tag style is not in the document");
+		}
 		Collection<Tag> tags = splitTag(tag, tagDocument);
-		for (Tag trueTag : tags)
+		for (Tag trueTag : tags) {
 			tagSet.replaceSameTypeTags(trueTag);
+		}
 		tagDocument.setSaved(false);
 	}
 
@@ -589,7 +645,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTagDocument[] getTagDocumentsFromActiveSignal() throws NoActiveObjectException {
 		SignalDocument signalDocument = getFocusManager().getActiveSignalDocument();
-		if (signalDocument == null) throw new NoActiveObjectException(_("no active signal document"));
+		if (signalDocument == null) {
+			throw new NoActiveObjectException(_("no active signal document"));
+		}
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
 		return tagDocuments.toArray(new TagDocument[tagDocuments.size()]);
 	}
@@ -600,7 +658,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public ExportedTagDocument getActiveTagDocument() throws NoActiveObjectException {
 		ExportedTagDocument exportedTagDocument = getFocusManager().getActiveTagDocument();
-		if (exportedTagDocument == null) throw new NoActiveObjectException(_("no active tag document"));
+		if (exportedTagDocument == null) {
+			throw new NoActiveObjectException(_("no active tag document"));
+		}
 		return exportedTagDocument;
 	}
 
@@ -610,7 +670,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public Document getActiveDocument() throws NoActiveObjectException {
 		Document document = getFocusManager().getActiveDocument();
-		if (document == null) throw new NoActiveObjectException(_("no active document"));
+		if (document == null) {
+			throw new NoActiveObjectException(_("no active document"));
+		}
 		return document;
 	}
 
@@ -619,12 +681,18 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	@Override
 	public void openRawSignal(File file, float samplingFrequency, int channelCount, ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, float calibration, float pageSize, int blocksPerPage)
-	throws SignalMLException, IOException {
+			throws SignalMLException, IOException {
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setMakeActive(true);
-		if (file == null) throw new NullPointerException("file can not be null");
-		if (!file.exists()) throw new IOException(_("file doesn't exist"));
-		if (!file.canRead()) throw new IOException(_("can not access file"));
+		if (file == null) {
+			throw new NullPointerException("file can not be null");
+		}
+		if (!file.exists()) {
+			throw new IOException(_("file doesn't exist"));
+		}
+		if (!file.canRead()) {
+			throw new IOException(_("can not access file"));
+		}
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.SIGNAL);
 
@@ -638,8 +706,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		descriptor.setBlocksPerPage(blocksPerPage);
 		ofd.setOpenSignalDescriptor(descriptor);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
-		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null) {
 			throw new SignalMLException(_("failed to open document"));
+		}
 	}
 
 	/* (non-Javadoc)
@@ -647,12 +716,20 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	@Override
 	public void openTagDocument(File file, ExportedSignalDocument document, boolean activeFlag)
-	throws SignalMLException, IOException {
-		if (file == null) throw new NullPointerException("file can not be null");
-		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+			throws SignalMLException, IOException {
+		if (file == null) {
+			throw new NullPointerException("file can not be null");
+		}
+		if (!(document instanceof SignalDocument)) {
+			throw new InvalidClassException("document is not of type SignalDocument = was not returned from Svarog");
+		}
 		SignalDocument signalDocument = (SignalDocument) document;
-		if (!file.exists()) throw new IOException(_("file doesn't exist"));
-		if (!file.canRead()) throw new IOException(_("can not access file"));
+		if (!file.exists()) {
+			throw new IOException(_("file doesn't exist"));
+		}
+		if (!file.canRead()) {
+			throw new IOException(_("can not access file"));
+		}
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setType(ManagedDocumentType.TAG);
 		ofd.setMakeActive(activeFlag);
@@ -683,38 +760,51 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
 		//if (documentFlowIntegrator == null) return false;
-		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null) {
 			throw new SignalMLException(_("failed to open document"));
+		}
 	}
 
 	/**
 	 * Returns a {@link SignalPlot signal plot} for a {@link SignalView view}
 	 * associated with a given document.
-	 * @param document the document with the signal. Must be of type SignalDocument
+	 *
+	 * @param document the document with the signal. Must be of type
+	 * SignalDocument
 	 * @return a plot for a view associated with a given document
 	 * @throws InvalidClassException if document is not of type SignalDocument
 	 */
 	private SignalPlot getSignalPlotFromDocument(ExportedSignalDocument document) throws InvalidClassException {
-		if (!(document instanceof SignalDocument)) throw new InvalidClassException("document is not of type SignalDocument => was not returned from Svarog");
+		if (!(document instanceof SignalDocument)) {
+			throw new InvalidClassException("document is not of type SignalDocument => was not returned from Svarog");
+		}
 		SignalDocument signalDocument = (SignalDocument) document;
 		DocumentView documentView = signalDocument.getDocumentView();
-		if (!(documentView instanceof SignalView)) throw new RuntimeException("view is not of type SignalView");
+		if (!(documentView instanceof SignalView)) {
+			throw new RuntimeException("view is not of type SignalView");
+		}
 		SignalView signalView = (SignalView) documentView;
 		SignalPlot signalPlot = signalView.getMasterPlot();
-		if (signalPlot == null) throw new RuntimeException(_("no master plot for signal view"));
+		if (signalPlot == null) {
+			throw new RuntimeException(_("no master plot for signal view"));
+		}
 		return signalPlot;
 	}
 
 	/**
 	 * Returns the output of signal samples associated with a given document.
-	 * @param document the document with the signal. Must be of type SignalDocument
+	 *
+	 * @param document the document with the signal. Must be of type
+	 * SignalDocument
 	 * @return the output of signal samples associated with a given document
 	 * @throws InvalidClassException if document is not of type SignalDocument
 	 */
 	private MultichannelSampleSource getOutputFromDocument(ExportedSignalDocument document) throws InvalidClassException {
 		SignalPlot signalPlot = getSignalPlotFromDocument(document);
 		MultichannelSampleSource output = signalPlot.getSignalOutput();
-		if (output == null) throw new RuntimeException("no output of signal samples for a signal plot");
+		if (output == null) {
+			throw new RuntimeException("no output of signal samples for a signal plot");
+		}
 		return output;
 	}
 
@@ -747,7 +837,7 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	@Override
 	public void openSignalWithCodec(File file, String codecFormatName, float pageSize, int blocksPerPage)
-	throws IOException, IllegalArgumentException, SignalMLException {
+			throws IOException, IllegalArgumentException, SignalMLException {
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
@@ -755,11 +845,19 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		SignalMLDescriptor signalMLDescriptor = (SignalMLDescriptor) ofd.getOpenSignalDescriptor();
 		SignalParameters spd = signalMLDescriptor.getSignalParameters();
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
-		if (file == null) throw new NullPointerException("file can not be null");
-		if (!file.exists()) throw new IOException(_("file doesn't exist"));
-		if (!file.canRead()) throw new IOException(_("can not access file"));
+		if (file == null) {
+			throw new NullPointerException("file can not be null");
+		}
+		if (!file.exists()) {
+			throw new IOException(_("file doesn't exist"));
+		}
+		if (!file.canRead()) {
+			throw new IOException(_("can not access file"));
+		}
 		SignalMLCodec codec = codecManager.getCodecForFormat(codecFormatName);
-		if (codec == null) throw new IllegalArgumentException(_("codec of this name doesn't exist"));
+		if (codec == null) {
+			throw new IllegalArgumentException(_("codec of this name doesn't exist"));
+		}
 
 		signalMLDescriptor.setCodec(codec);
 		if (spd.isBlocksPerPageEditable()) {
@@ -769,8 +867,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 			spd.setPageSize(pageSize);
 		}
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
-		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null) {
 			throw new SignalMLException(_("failed to open document"));
+		}
 	}
 
 	/* (non-Javadoc)
@@ -779,9 +878,15 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public void addCodec(File codecFile, String codecFormatName) throws IOException {
 		SignalMLCodecManager codecManager = getViewerElementManager().getCodecManager();
-		if (codecFile == null) throw new NullPointerException("file can not be null");
-		if (!codecFile.exists()) throw new IOException(_("file doesn't exist"));
-		if (!codecFile.canRead()) throw new IOException(_("can not access file"));
+		if (codecFile == null) {
+			throw new NullPointerException("file can not be null");
+		}
+		if (!codecFile.exists()) {
+			throw new IOException(_("file doesn't exist"));
+		}
+		if (!codecFile.canRead()) {
+			throw new IOException(_("can not access file"));
+		}
 		SignalMLCodec codec;
 		try {
 			codec = new XMLSignalMLCodec(codecFile, ConfigAccessImpl.getInstance().getProfileDirectory());
@@ -798,22 +903,31 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	@Override
 	public void openBook(File file) throws IOException, SignalMLException {
 		OpenDocumentDescriptor ofd = new OpenDocumentDescriptor();
-		if (file == null) throw new NullPointerException("file can not be null");
-		if (!file.exists()) throw new IOException(_("file doesn't exist"));
-		if (!file.canRead()) throw new IOException(_("can not access file"));
+		if (file == null) {
+			throw new NullPointerException("file can not be null");
+		}
+		if (!file.exists()) {
+			throw new IOException(_("file doesn't exist"));
+		}
+		if (!file.canRead()) {
+			throw new IOException(_("can not access file"));
+		}
 		ofd.setMakeActive(true);
 		ofd.setFile(file);
 		ofd.setType(ManagedDocumentType.BOOK);
 		DocumentFlowIntegrator documentFlowIntegrator = getViewerElementManager().getDocumentFlowIntegrator();
-		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null)
+		if (documentFlowIntegrator.maybeOpenDocument(ofd) == null) {
 			throw new SignalMLException(_("failed to open book document"));
+		}
 	}
 
 	/**
 	 * @return the focusManager
 	 */
 	private ActionFocusManager getFocusManager() {
-		if (focusManager == null) focusManager = getViewerElementManager().getActionFocusManager();
+		if (focusManager == null) {
+			focusManager = getViewerElementManager().getActionFocusManager();
+		}
 		return focusManager;
 	}
 
@@ -822,14 +936,17 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	 */
 	@Override
 	public ExportedSignalDocument getActiveSignalDocument()
-	throws NoActiveObjectException {
+			throws NoActiveObjectException {
 		Document document = getActiveDocument();
-		if (!(document instanceof ExportedSignalDocument)) throw new NoActiveObjectException(_("no active signal document"));
+		if (!(document instanceof ExportedSignalDocument)) {
+			throw new NoActiveObjectException(_("no active signal document"));
+		}
 		return (ExportedSignalDocument) document;
 	}
 
 	/**
 	 * Obtains {@link RawSignalByteOrder} for a given {@link ByteOrder}
+	 *
 	 * @param order the ByteOrder
 	 * @return the RawSignalByteOrder
 	 * @throws InvalidClassException if there is no such RawSignalByteOrder
@@ -837,7 +954,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	private RawSignalByteOrder getByteOrder(ByteOrder order) throws InvalidClassException {
 		RawSignalByteOrder[] rawByteOrders = RawSignalByteOrder.values();
 		for (RawSignalByteOrder rawByteOrder : rawByteOrders) {
-			if (rawByteOrder.getByteOrder().equals(order)) return rawByteOrder;
+			if (rawByteOrder.getByteOrder().equals(order)) {
+				return rawByteOrder;
+			}
 		}
 		throw new InvalidClassException(_("No such byte order"));
 	}
@@ -845,30 +964,32 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 	/**
 	 * Obtains {@link RawSignalSampleType} for a given
 	 * {@link ExportedRawSignalSampleType}.
+	 *
 	 * @param sampleType the {@link ExportedRawSignalSampleType}
 	 * @return the RawSignalSampleType
 	 * @throws InvalidParameterException if there is no type
 	 */
 	private RawSignalSampleType getSampleType(ExportedRawSignalSampleType sampleType) {
 		switch (sampleType) {
-		case DOUBLE:
-			return RawSignalSampleType.DOUBLE;
-		case FLOAT:
-			return RawSignalSampleType.FLOAT;
-		case INT:
-			return RawSignalSampleType.INT;
-		case SHORT:
-			return RawSignalSampleType.SHORT;
-		default:
-			throw new InvalidParameterException("such type doesn't exist");
+			case DOUBLE:
+				return RawSignalSampleType.DOUBLE;
+			case FLOAT:
+				return RawSignalSampleType.FLOAT;
+			case INT:
+				return RawSignalSampleType.INT;
+			case SHORT:
+				return RawSignalSampleType.SHORT;
+			default:
+				throw new InvalidParameterException("such type doesn't exist");
 		}
 	}
 
 	@Override
 	public void exportSignal(float position, float length, int[] channels, SignalSourceLevel level,
-							 ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalPlot plot, File file) throws InvalidClassException, SignalMLException {
-		if (!(plot instanceof SignalPlot))
+			ExportedRawSignalSampleType sampleType, ByteOrder byteOrder, ExportedSignalPlot plot, File file) throws InvalidClassException, SignalMLException {
+		if (!(plot instanceof SignalPlot)) {
 			throw new InvalidClassException("document is not of type SignalPlot => was not returned from Svarog");
+		}
 		SignalPlot masterPlot = (SignalPlot) plot;
 
 		RawSignalByteOrder rawByteOrder = getByteOrder(byteOrder);
@@ -892,7 +1013,6 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 		RawSignalSampleType rawSignalSampleType = getSampleType(sampleType);
 		descriptor.setSampleType(rawSignalSampleType);
 		descriptor.setNormalize(false);
-
 
 		SignalProcessingChain signalChain;
 		try {
@@ -934,9 +1054,9 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 			double maxTypeAbsValue = 0;
 
 			if (rawSignalSampleType == RawSignalSampleType.INT) {
-				maxTypeAbsValue = Math.min((Integer.MAX_VALUE-1), -(Integer.MIN_VALUE+1));
+				maxTypeAbsValue = Math.min((Integer.MAX_VALUE - 1), -(Integer.MIN_VALUE + 1));
 			} else {
-				maxTypeAbsValue = Math.min((Short.MAX_VALUE-1), -(Short.MIN_VALUE+1));
+				maxTypeAbsValue = Math.min((Short.MAX_VALUE - 1), -(Short.MIN_VALUE + 1));
 			}
 
 			boolean normalize = descriptor.isNormalize();
@@ -984,18 +1104,11 @@ public class SignalsAccessImpl extends AbstractAccess implements SvarogAccessSig
 			throw new SignalMLException(_("failed to export signal"), ex);
 		}
 
-
 	}
 
 	@Override
 	public File getTemporaryFile(String extension) throws IOException {
-		File profileDirectory = getViewerElementManager().getProfileDir().getAbsoluteFile();
-		File tempDirectory = new File(profileDirectory, "temp");
-		if (tempDirectory.exists() && !tempDirectory.isDirectory())
-			throw new IOException(_("can not create the directory for temporary files"));
-		if (!tempDirectory.exists())
-			tempDirectory.mkdir();
-		File tempFile = File.createTempFile("temp", extension, tempDirectory);
+		File tempFile = File.createTempFile("svarog_temp", extension);
 		TemporaryFile temporaryFile = new TemporaryFile(tempFile.getAbsolutePath());
 		temporaryFile.deleteOnExit();
 		return temporaryFile;

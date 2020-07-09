@@ -5,9 +5,7 @@
 package org.signalml.plugin.export.signal;
 
 import java.awt.Cursor;
-
 import javax.swing.event.MouseInputAdapter;
-
 import org.signalml.plugin.export.view.ExportedSignalView;
 
 /**

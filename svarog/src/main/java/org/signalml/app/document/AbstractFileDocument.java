@@ -4,16 +4,14 @@
 
 package org.signalml.app.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.AbstractDocument;
 import org.signalml.plugin.export.signal.Document;
@@ -101,7 +99,7 @@ public abstract class AbstractFileDocument extends AbstractDocument implements F
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("backing file"), "backingFile", AbstractFileDocument.class));
 

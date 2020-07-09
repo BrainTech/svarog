@@ -8,10 +8,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Point2D;
 import java.io.InvalidClassException;
-
 import javax.swing.JRootPane;
 import javax.swing.JViewport;
-
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.ExportedSignalDocument;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;

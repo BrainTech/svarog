@@ -1,12 +1,8 @@
 package org.signalml.plugin.impl;
 
 import java.io.File;
-import java.util.ArrayList;
-
 import org.signalml.plugin.export.config.SvarogAccessConfig;
 import org.signalml.plugin.export.config.SvarogConfiguration;
-import org.signalml.plugin.loader.PluginLoader;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Svarog configuration facade (for plugins).

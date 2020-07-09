@@ -3,22 +3,20 @@ package org.signalml.app.view.workspace;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 import javax.swing.tree.TreePath;
-
 import org.signalml.app.action.document.ActivateDocumentAction;
 import org.signalml.app.action.document.CloseDocumentAction;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
 import org.signalml.app.action.selector.ActionFocusSupport;
 import org.signalml.app.action.selector.SignalPageFocusSelector;
-import org.signalml.plugin.export.signal.Document;
-import org.signalml.plugin.export.view.AbstractViewerTree;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.monitor.MonitorTreeModel;
+import org.signalml.plugin.export.signal.Document;
+import org.signalml.plugin.export.view.AbstractViewerTree;
 
 /** MonitorSignalTree
  *

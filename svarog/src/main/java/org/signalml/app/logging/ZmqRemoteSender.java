@@ -44,7 +44,7 @@ public class ZmqRemoteSender {
 	 * Finalize sending messages.
 	 */
 	public void close() {
-		queue.offer(new ArrayList<String>());
+		queue.offer(new ArrayList<>());
 		try {
 			// let's give the thread a chance to send pending messages
 			thread.join(SHUTDOWN_TIMEOUT);

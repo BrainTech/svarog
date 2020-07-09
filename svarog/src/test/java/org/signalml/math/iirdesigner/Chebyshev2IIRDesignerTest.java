@@ -5,18 +5,9 @@
 package org.signalml.math.iirdesigner;
 
 import org.apache.commons.math.complex.Complex;
-
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.BadFilterParametersException;
-import org.signalml.math.iirdesigner.Chebyshev2IIRDesigner;
-import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterType;
-import org.signalml.math.iirdesigner.FilterZerosPolesGain;
-
-import java.lang.Math.*;
+import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 /**
  * This class performs unit tests on {@link Chebyshev2IIRDesigner}

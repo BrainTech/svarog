@@ -5,10 +5,8 @@
 package org.signalml.app.view.document.opensignal.elements;
 
 import java.util.List;
-
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
-
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
 import org.signalml.app.model.document.opensignal.elements.ChannelSelectTableModel;

@@ -3,7 +3,6 @@ package org.signalml.plugin.export.signal;
 import java.awt.Cursor;
 import java.awt.event.MouseWheelListener;
 import javax.swing.event.MouseInputListener;
-
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.plugin.export.view.ExportedSignalView;
 

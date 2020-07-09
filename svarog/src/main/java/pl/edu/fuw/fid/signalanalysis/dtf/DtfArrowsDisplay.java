@@ -10,7 +10,6 @@ import java.awt.Shape;
 import java.util.Iterator;
 import java.util.LinkedList;
 import org.apache.commons.math.linear.RealMatrix;
-
 import org.signalml.app.util.GeometryUtils;
 import org.signalml.app.view.montage.visualreference.VisualReferenceArrow;
 import org.signalml.app.view.montage.visualreference.VisualReferenceBin;
@@ -31,7 +30,7 @@ public class DtfArrowsDisplay extends VisualReferenceDisplay {
 	private static final Color INACTIVE_CHANNEL_COLOR = Color.LIGHT_GRAY;
 	private static final Color ACTIVE_CHANNEL_COLOR = new Color(0, 198, 255);
 
-	private final LinkedList<VisualReferenceArrow> arrows = new LinkedList<VisualReferenceArrow>();
+	private final LinkedList<VisualReferenceArrow> arrows = new LinkedList<>();
 	private RealMatrix transfers; // between output channels of montage
 
 	public DtfArrowsDisplay(VisualReferenceModel model) {

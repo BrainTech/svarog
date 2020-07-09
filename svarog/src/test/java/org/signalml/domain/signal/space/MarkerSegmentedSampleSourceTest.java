@@ -1,12 +1,10 @@
 package org.signalml.domain.signal.space;
 
-import static org.junit.Assert.assertEquals;
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.domain.signal.samplesource.DoubleArraySampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.tag.StyledTagSet;
@@ -149,7 +147,7 @@ public class MarkerSegmentedSampleSourceTest extends AbstractTagSegmentedTest {
 		tagSet.addTag(new Tag(otherTagStyle, 1.0, 1.0));
 		tagSet.addTag(new Tag(otherTagStyle, 3.0, 1.0));
 
-		List<String> artifactStyleNames = new ArrayList<String>();
+		List<String> artifactStyleNames = new ArrayList<>();
 		if (artifactTagPosition != null && artifactTagLength != null) {
 			tagSet.addTag(new Tag(artifactTagStyle, artifactTagPosition, artifactTagLength));
 			artifactStyleNames = getArtifactStyleNames();
@@ -170,26 +168,26 @@ public class MarkerSegmentedSampleSourceTest extends AbstractTagSegmentedTest {
 		tagSet.addTag(new Tag(otherTagStyle, 1.0, 1.0));
 		tagSet.addTag(new Tag(otherTagStyle, 3.0, 1.0));
 
-		List<String> markerStyleNames = new ArrayList<String>();
+		List<String> markerStyleNames = new ArrayList<>();
 		markerStyleNames.add(AVERAGED_TAG_NAME);
 		markerStyleNames.add(AVERAGED_TAG_NAME_2);
 
 		MarkerSegmentedSampleSource markerSampleSource = new MarkerSegmentedSampleSource(
-			getSampleSource(), null, null, tagSet, markerStyleNames, new ArrayList<String>(),
+			getSampleSource(), null, null, tagSet, markerStyleNames, new ArrayList<>(),
 			0.0, 1.0, null);
 
 		assertEquals(2, markerSampleSource.getSegmentCount());
 	}
 
 	protected List<String> getMarkerStyleNames() {
-		List<String> markerStyleNames = new ArrayList<String>();
+		List<String> markerStyleNames = new ArrayList<>();
 		markerStyleNames.add(AVERAGED_TAG_NAME);
 
 		return markerStyleNames;
 	}
 
 	protected List<String> getArtifactStyleNames() {
-		List<String> markerStyleNames = new ArrayList<String>();
+		List<String> markerStyleNames = new ArrayList<>();
 		markerStyleNames.add(ARTIFACT_TAG_NAME);
 
 		return markerStyleNames;

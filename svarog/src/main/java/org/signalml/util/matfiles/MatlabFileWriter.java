@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.elements.Header;
 
@@ -32,7 +31,7 @@ public class MatlabFileWriter {
 	/**
 	 * Elements that will be written to the MAT file.
 	 */
-	protected List<DataElement> dataElements = new ArrayList<DataElement>();
+	protected List<DataElement> dataElements = new ArrayList<>();
 
 	/**
 	 * Creates this writer.

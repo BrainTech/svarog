@@ -9,7 +9,6 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-
 import org.signalml.app.view.signal.SelectTagSignalTool;
 import org.signalml.plugin.export.NoActiveObjectException;
 import org.signalml.plugin.export.Plugin;
@@ -41,44 +40,27 @@ import org.signalml.plugin.impl.ToolButtonParameters;
 public interface SvarogAccessGUI {
 
 	/**
-	 * Adds a button at the end of tools menu.
+	 * Adds a button at the end of Analysis menu.
 	 * Can be accessed only during initialization phase.
+	 * If the button with a same name already exists, it will be returned instead
+	 * and attached to the given action.
 	 * @param action the {@link Action} used to create button
 	 * @return created menu item
 	 * @throws UnsupportedOperationException if the function called
 	 * not during the initialization phase.
 	 */
-	public JMenuItem addButtonToToolsMenu(Action action) throws UnsupportedOperationException;
+	public JMenuItem addButtonToAnalysisMenu(Action action) throws UnsupportedOperationException;
 
 	/**
-	 * Adds a submenu at the end of tools menu.
+	 * Adds a submenu at the end of Analysis menu.
 	 * Can be accessed only during initialization phase.
-	 * @param menu the menu that will be added as submenu
+	 * If the submenu with a same name already exists, it will be returned instead.
+	 * @param label text for the menu that will be added as submenu
 	 * @return created menu item
 	 * @throws UnsupportedOperationException if the function called
 	 * not during the initialization phase.
 	 */
-	public JMenuItem addSubmenuToToolsMenu(JMenu menu) throws UnsupportedOperationException;
-
-	/**
-	 * Adds a button at the end of edit menu.
-	 * Can be accessed only during initialization phase.
-	 * @param action the {@link Action} used to create button
-	 * @return created menu item
-	 * @throws UnsupportedOperationException if the function called
-	 * not during the initialization phase.
-	 */
-	public JMenuItem addButtonToEditMenu(Action action) throws UnsupportedOperationException;
-
-	/**
-	 * Adds a submenu at the end of tools menu.
-	 * Can be accessed only during initialization phase.
-	 * @param menu the menu that will be added as submenu
-	 * @return created menu item
-	 * @throws UnsupportedOperationException if the function called
-	 * not during in the initialization phase.
-	 */
-	public JMenuItem addSubmenuToEditMenu(JMenu menu) throws UnsupportedOperationException;
+	public JMenu addSubmenuToAnalysisMenu(String label) throws UnsupportedOperationException;
 
 	/**
 	 * Adds a button at the end of popup menu in the signal plot.
@@ -356,18 +338,6 @@ public interface SvarogAccessGUI {
 	 * @see SelectTagSignalTool
 	 */
 	public void addSignalTool(SignalTool tool, ToolButtonParameters toolButtonParameters) throws UnsupportedOperationException;
-
-	/**
-	 * Adds the button to the main toolbar (the top one).
-	 * Can be accessed only during initialization phase.
-	 * In other situations will do nothing.
-	 * @param action the action used to create a button.
-	 * @throws UnsupportedOperationException if the function called
-	 * not during the initialization phase.
-	 */
-	public void addButtonToMainToolbar(Action action) throws UnsupportedOperationException;
-
-
 
 	/**
 	 * Adds a tab to main panel. Tab should be associated with a document.

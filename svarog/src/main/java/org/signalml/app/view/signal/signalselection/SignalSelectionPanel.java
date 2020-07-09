@@ -1,23 +1,20 @@
 package org.signalml.app.view.signal.signalselection;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.BlockSelectionModelProvider;
 import org.signalml.app.model.components.ChannelSelectionModelProvider;
 import org.signalml.app.model.components.PageSelectionModelProvider;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.spinners.SpinnerNumberEditor;
 import org.signalml.domain.signal.BoundedSignalSelection;
 import org.signalml.domain.signal.space.SignalSpace;
@@ -25,8 +22,6 @@ import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.signal.SignalSelection;
 import org.signalml.plugin.export.signal.SignalSelectionType;
-
-import org.springframework.validation.Errors;
 
 /**
  * Panel which allows to select the parameters of a {@link SignalSelection

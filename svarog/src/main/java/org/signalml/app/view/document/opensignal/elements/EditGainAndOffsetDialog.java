@@ -1,7 +1,5 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.util.ArrayList;
@@ -12,12 +10,10 @@ import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
-import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
-import org.signalml.app.model.document.opensignal.elements.SignalParameters;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.document.monitor.ChannelDefinition;
 import org.signalml.app.view.document.monitor.ChannelDefinitionsTable;
@@ -94,7 +90,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
 	private void fillDialogForOpenBCIConnection(ExperimentDescriptor descriptor) {
 
 		int i = 0;
-		List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+		List<ChannelDefinition> definitions = new ArrayList<>();
 		for (AmplifierChannel channel: descriptor.getAmplifier().getSelectedChannels()) {
 			definitions.add(new ChannelDefinition(
 								i+1,
@@ -116,7 +112,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
 
 		if (descriptor.getChannelLabels() != null) {
 			setAllGainAndOffsetEditable(true);
-			List<ChannelDefinition> definitions = new ArrayList<ChannelDefinition>();
+			List<ChannelDefinition> definitions = new ArrayList<>();
 			for (int i = 0; i < descriptor.getChannelCount(); i++) {
 
 				definitions.add(new ChannelDefinition(
@@ -229,7 +225,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
 	private void setAllGainAndOffsetEditable(boolean editable) {
 
 		if (!editable) {
-			List<ChannelDefinition> list = new ArrayList<ChannelDefinition>();
+			List<ChannelDefinition> list = new ArrayList<>();
 			list.add(new ChannelDefinition(0, 0.0f, 0.0f, "0"));
 			getDefinitionsTable().setData(list);
 		}
@@ -265,7 +261,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
 
 		ChannelDefinition definition = getDefinitionsTable().getData().get(0);
 		definition.setGain(gain);
-		List<ChannelDefinition> list = new ArrayList<ChannelDefinition>();
+		List<ChannelDefinition> list = new ArrayList<>();
 		list.add(definition);
 		getDefinitionsTable().setData(list);
 		getDefinitionsTable().setAllEditable(false);
@@ -280,7 +276,7 @@ public class EditGainAndOffsetDialog extends AbstractDialog  {
 
 		ChannelDefinition definition = getDefinitionsTable().getData().get(0);
 		definition.setOffset(offset);
-		List<ChannelDefinition> list = new ArrayList<ChannelDefinition>();
+		List<ChannelDefinition> list = new ArrayList<>();
 		list.add(definition);
 		getDefinitionsTable().setData(list);
 		getDefinitionsTable().setAllEditable(false);

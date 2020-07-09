@@ -1,18 +1,15 @@
 package org.signalml.plugin.fftsignaltool.actions;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import org.apache.log4j.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
 

@@ -5,7 +5,6 @@
 package org.signalml.domain.signal.test;
 
 import static junit.framework.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.BaseTestCase;

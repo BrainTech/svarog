@@ -1,8 +1,7 @@
 package org.signalml.app.view.signal.export;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 
 /**

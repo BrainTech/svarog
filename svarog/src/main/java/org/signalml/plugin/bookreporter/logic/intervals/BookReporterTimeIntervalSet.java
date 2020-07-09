@@ -11,7 +11,7 @@ public class BookReporterTimeIntervalSet {
 	private final TreeSet<BookReporterTimeInterval> intervals; // sorted by start
 	
 	public BookReporterTimeIntervalSet() {
-		intervals = new TreeSet<BookReporterTimeInterval>();
+		intervals = new TreeSet<>();
 	}
 	
 	public boolean add(BookReporterTimeInterval interval) {

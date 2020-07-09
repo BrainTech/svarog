@@ -3,16 +3,13 @@
  */
 package org.signalml.app.view.signal.signalselection;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 
 /**

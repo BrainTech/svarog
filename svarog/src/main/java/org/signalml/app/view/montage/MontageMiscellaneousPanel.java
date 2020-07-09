@@ -3,20 +3,16 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.JPanel;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.TextPanePanel;
 import org.signalml.domain.montage.Montage;
-import org.signalml.util.Util;
 
 /** EditMontageReferencePanel
  *

@@ -4,15 +4,12 @@
 
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.signal.TagStyle;
 
 /** TagStyleListCellRenderer

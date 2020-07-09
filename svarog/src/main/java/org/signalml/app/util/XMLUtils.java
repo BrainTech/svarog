@@ -3,6 +3,12 @@
  */
 package org.signalml.app.util;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.Annotations;
+import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
+import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
+import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -11,7 +17,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import org.signalml.app.config.preset.PredefinedFiltersConfiguration;
 import org.signalml.app.config.preset.managers.BookFilterPresetManager;
 import org.signalml.app.config.preset.managers.FFTSampleFilterPresetManager;
@@ -36,13 +41,6 @@ import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.generators.RawMontageGenerator;
 import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.util.Util;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
-import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
-import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
-import com.thoughtworks.xstream.io.xml.DomDriver;
 
 /** XMLUtils
  *

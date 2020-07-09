@@ -5,11 +5,9 @@
 package org.signalml.app.view.common.components.cellrenderers;
 
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-
 import org.signalml.app.util.IconUtils;
 import org.signalml.task.TaskStatus;
 

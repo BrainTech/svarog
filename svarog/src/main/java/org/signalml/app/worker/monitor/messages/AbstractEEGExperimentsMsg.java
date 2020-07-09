@@ -5,17 +5,11 @@
  */
 package org.signalml.app.worker.monitor.messages;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.Amplifier;
 import org.signalml.app.model.document.opensignal.elements.AmplifierChannel;
@@ -37,7 +31,7 @@ public abstract class AbstractEEGExperimentsMsg extends LauncherMessage{
 		List<LinkedHashMap<String, Object>> list = getExperimentsList();
 
 		boolean errorAlreadyOcurred = false;
-		List<ExperimentDescriptor> experiments = new ArrayList<ExperimentDescriptor>();
+		List<ExperimentDescriptor> experiments = new ArrayList<>();
 		for (LinkedHashMap<String, Object> exp: list) {
 			try {
 				ExperimentDescriptor descriptor = parseSingleExperiment(exp);
@@ -67,7 +61,7 @@ public abstract class AbstractEEGExperimentsMsg extends LauncherMessage{
 	protected void readChannelsList(List<Object> listOfChannels, ExperimentDescriptor experiment) {
 		Amplifier amplifier = experiment.getAmplifier();
 
-		amplifier.setChannels(new ArrayList<AmplifierChannel>());
+		amplifier.setChannels(new ArrayList<>());
 
 		int i = 0;
 		for (Object item: listOfChannels) {
@@ -101,6 +95,6 @@ public abstract class AbstractEEGExperimentsMsg extends LauncherMessage{
 		Amplifier amplifier = experiment.getAmplifier();
 
 		List<Double> samplingFrequencies = (List<Double>) parameters.get("sampling_rates");
-		amplifier.setSamplingFrequencies(new ArrayList<Double>(samplingFrequencies));
+		amplifier.setSamplingFrequencies(new ArrayList<>(samplingFrequencies));
 	}
 }

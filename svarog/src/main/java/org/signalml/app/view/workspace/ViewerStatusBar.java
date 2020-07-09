@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.workspace;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,7 +12,6 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -27,7 +24,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;
 import org.signalml.app.action.selector.ActionFocusManager;
@@ -35,6 +31,7 @@ import org.signalml.app.action.workspace.ViewModeAction;
 import org.signalml.app.document.BookDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.BookPlot;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.components.AntialiasedLabel;

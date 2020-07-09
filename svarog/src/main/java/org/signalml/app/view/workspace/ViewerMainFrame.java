@@ -3,9 +3,6 @@
  */
 package org.signalml.app.view.workspace;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Window;
@@ -19,12 +16,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.selector.ActionFocusListener;
@@ -36,8 +31,6 @@ import org.signalml.app.config.MainFrameConfiguration;
 import org.signalml.app.config.workspace.ApplicationWorkspace;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.DocumentManager;
-import org.signalml.app.document.DocumentManagerEvent;
-import org.signalml.app.document.DocumentManagerListener;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ApplicationMethodDescriptor;
@@ -49,6 +42,8 @@ import org.signalml.app.task.ApplicationTaskManager;
 import org.signalml.app.task.ApplicationTaskManagerDescriptor;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SnapToPageRunnable;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.View;
 import org.signalml.app.view.common.components.LockableJSplitPane;
 import org.signalml.app.view.common.dialogs.OptionPane;
@@ -84,7 +79,7 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 	public static final int INITIALIZATION_STEP_COUNT = 5;
 
 	/* Bootstrapping */
-	private List<MainWindowBootstrapTask> bootstrapList = new LinkedList<MainWindowBootstrapTask>();
+	private List<MainWindowBootstrapTask> bootstrapList = new LinkedList<>();
 
 	/* Configuration */
 	private MainFrameConfiguration config;
@@ -98,7 +93,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 	private boolean viewMode = false;
 	private boolean leftPanelVisible = true;
 	private boolean bottomPanelVisible = true;
-	private boolean mainToolBarVisible = true;
 	private boolean statusBarVisible = true;
 
 	private boolean hadRestoredTasks = false;
@@ -129,13 +123,11 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 
 		setJMenuBar(elementManager.getMenuBar());
 
-		contentPane.add(elementManager.getMainToolBar(), BorderLayout.NORTH);
-
 		contentPane.add(elementManager.getStatusBar(), BorderLayout.SOUTH);
 
 		contentPane.add(elementManager.getVerticalSplitPane(), BorderLayout.CENTER);
 
-		elementManager.configureAcceletators();
+		elementManager.configureAccelerators();
 
 		bindListeners();
 
@@ -335,7 +327,7 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 		// save workspace
 		saveWorkspace();
 
-		ArrayList<ApplicationTaskDescriptor> taskList = new ArrayList<ApplicationTaskDescriptor>();
+		ArrayList<ApplicationTaskDescriptor> taskList = new ArrayList<>();
 
 		synchronized (taskManager) {
 
@@ -492,9 +484,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			this.viewMode = viewMode;
 			elementManager.getViewModeAction().putValue(AbstractAction.SELECTED_KEY, viewMode);
 			ApplicationConfiguration applicationConfig = elementManager.getApplicationConfig();
-			if (applicationConfig.isViewModeHidesMainToolBar()) {
-				setMainToolBarVisible(!viewMode);
-			}
 			if (applicationConfig.isViewModeHidesLeftPanel()) {
 				setLeftPanelVisible(!viewMode);
 			}
@@ -568,20 +557,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			}
 			verticalSplitPane.setOneTouchExpandable(visible);
 			verticalSplitPane.setLocked(!visible);
-		}
-	}
-
-	@Override
-	public boolean isMainToolBarVisible() {
-		return mainToolBarVisible;
-	}
-
-	@Override
-	public void setMainToolBarVisible(boolean visible) {
-		if (this.mainToolBarVisible != visible) {
-			this.mainToolBarVisible = visible;
-			elementManager.getMainToolBar().setVisible(visible);
-			elementManager.getShowMainToolBarAction().putValue(AbstractAction.SELECTED_KEY, visible);
 		}
 	}
 
@@ -691,7 +666,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			setExtendedState(JFrame.NORMAL);
 		}
 
-		setMainToolBarVisible(config.isMainToolBarVisible());
 		setStatusBarVisible(config.isStatusBarVisible());
 
 		elementManager.getHorizontalSplitPane().setDividerLocation(config.getHDividerLocation());
@@ -713,7 +687,6 @@ public class ViewerMainFrame extends JFrame implements View, ViewFocusSelector {
 			config.setYSize((int) getSize().height);
 		}
 
-		config.setMainToolBarVisible(mainToolBarVisible);
 		config.setStatusBarVisible(statusBarVisible);
 		config.setLeftPanelVisible(leftPanelVisible);
 		config.setBottomPanelVisible(bottomPanelVisible);

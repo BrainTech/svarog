@@ -1,7 +1,5 @@
 package org.signalml.domain.book;
 
-import org.signalml.domain.book.StandardBookWriter;
-
 import pl.edu.fuw.MP.Core.BookLibraryV5;
 import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
 import pl.edu.fuw.MP.Core.SegmentHeaderV5;

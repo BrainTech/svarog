@@ -1,7 +1,6 @@
 package org.signalml.plugin.export.signal;
 
 import java.io.File;
-
 import org.apache.log4j.Logger;
 
 /**

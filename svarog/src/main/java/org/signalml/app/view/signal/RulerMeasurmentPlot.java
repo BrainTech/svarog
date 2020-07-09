@@ -12,9 +12,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.util.GeometryUtils;
 import org.signalml.app.util.IconUtils;
 import org.signalml.util.Util;

@@ -2,7 +2,6 @@ package org.signalml.domain.signal.export.eeglab;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.export.ISignalWriter;

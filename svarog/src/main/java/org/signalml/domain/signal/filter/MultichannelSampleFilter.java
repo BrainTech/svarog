@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Vector;
 import java.util.concurrent.Semaphore;
-
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
@@ -252,10 +251,10 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	public void reinitFilterChains() {
 
 		int cnt = source.getChannelCount();
-		chains = new Vector<LinkedList<SinglechannelSampleFilterEngine>>(cnt);
+		chains = new Vector<>(cnt);
 		LinkedList<SinglechannelSampleFilterEngine> chain;
 		for (int i=0; i<cnt; i++) {
-			chain = new LinkedList<SinglechannelSampleFilterEngine>();
+			chain = new LinkedList<>();
 			chains.add(chain);
 		}
 

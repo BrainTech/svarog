@@ -3,11 +3,6 @@
  */
 package org.signalml.app.view.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.signalml.app.view.common.components.panels.AbstractPanel;
-import org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ItemEvent;
@@ -18,9 +13,11 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.view.common.components.panels.AbstractPanel;
+import org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel;
 
 /**
  * Represents a panel in the {@link OpenMonitorDialog} used to enable/disable

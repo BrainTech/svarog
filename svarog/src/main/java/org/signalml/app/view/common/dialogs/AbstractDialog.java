@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.common.dialogs;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dialog;
@@ -17,7 +15,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.net.URL;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -28,22 +25,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.common.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.util.SvarogConstants;
 import org.springframework.validation.Errors;
 
 /**
  * The abstract dialog, from which every dialog in Svarog should inherit.
- * Contains the control pane (with OK and CANCEL button).
- * Performs the operations necessary to create and close (either with OK or
- * CANCEL) this dialog, so that the children of this class must only implement:
+ * Contains the control pane (with OK and CANCEL button). Performs the
+ * operations necessary to create and close (either with OK or CANCEL) this
+ * dialog, so that the children of this class must only implement:
  * <ul>
  * <li>{@link #fillDialogFromModel(Object)}</li>
  * <li>{@link #fillModelFromDialog(Object)}</li>
@@ -53,7 +49,8 @@ import org.springframework.validation.Errors;
  * </ul>
  *
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ * Sp. z o.o.
  */
 public abstract class AbstractDialog extends JDialog {
 
@@ -71,16 +68,15 @@ public abstract class AbstractDialog extends JDialog {
 	private boolean hasParent = false;
 
 	/**
-	 * the model with data from which this dialog is filled and in which
-	 * the results of this dialog are stored
+	 * the model with data from which this dialog is filled and in which the
+	 * results of this dialog are stored
 	 */
 	protected Object currentModel;
 
 	/**
-	 * true if this dialog was closed with the OK button
-	 * (or in other way that means the success) and there were no errors
-	 * during validation and filling the model,
-	 * false otherwise.
+	 * true if this dialog was closed with the OK button (or in other way that
+	 * means the success) and there were no errors during validation and filling
+	 * the model, false otherwise.
 	 */
 	boolean closedWithOk = false;
 
@@ -140,8 +136,9 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Constructor. Sets parent window and if this dialog
-	 * blocks top-level windows.
+	 * Constructor. Sets parent window and if this dialog blocks top-level
+	 * windows.
+	 *
 	 * @param w the parent window or null if there is no parent
 	 * @param isModal true, dialog blocks top-level windows, false otherwise
 	 */
@@ -163,25 +160,22 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Initializes this dialog.
-	 * Sets the action which is called when window is being closed.
-	 * Initializes the {@link #initializeControlPane() control} and
-	 * {@link #initializeContentPane() content} pane.
-	 * If the dialog should be canceled on escape sets actions necessary to
-	 * do it.
+	 * Initializes this dialog. Sets the action which is called when window is
+	 * being closed. Initializes the {@link #initializeControlPane() control}
+	 * and {@link #initializeContentPane() content} pane. If the dialog should
+	 * be canceled on escape sets actions necessary to do it.
 	 */
 	protected void initialize() {
 
 		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-		setMaximumSize(SvarogConstants.MIN_ASSUMED_DESKTOP_SIZE);
 
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				if (isCancellable()) {
-					getCancelAction().actionPerformed(new ActionEvent(this,0,"cancel"));
+					getCancelAction().actionPerformed(new ActionEvent(this, 0, "cancel"));
 				} else {
-					getOkAction().actionPerformed(new ActionEvent(this,0,"cancel"));
+					getOkAction().actionPerformed(new ActionEvent(this, 0, "cancel"));
 				}
 			}
 		});
@@ -209,8 +203,8 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Adds a {@link #getControlPane() control pane} to the content pane
-	 * and adds the {@link #addContextHelp() context help}.
+	 * Adds a {@link #getControlPane() control pane} to the content pane and
+	 * adds the {@link #addContextHelp() context help}.
 	 */
 	protected final void initializeControlPane() {
 
@@ -224,7 +218,8 @@ public abstract class AbstractDialog extends JDialog {
 	/**
 	 * If the {@link #getContextHelpURL() context help URL} is not null the
 	 * {@link ContextHelpAction action} that shows help is created, it is added
-	 * as a button to the control pane and the key {@code F1} is associated with it.
+	 * as a button to the control pane and the key {@code F1} is associated with
+	 * it.
 	 */
 	protected void addContextHelp() {
 
@@ -245,6 +240,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Creates the action that shows help with the given URL to help.
+	 *
 	 * @param helpURL the URL to help
 	 * @return created action
 	 */
@@ -253,15 +249,16 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Creates the control pane.
-	 * Adds OK button and, if dialog can be canceled, the CANCEL button.
+	 * Creates the control pane. Adds OK button and, if dialog can be canceled,
+	 * the CANCEL button.
+	 *
 	 * @return the created pane
 	 */
 	protected JPanel createControlPane() {
 
 		JPanel controlPane = new JPanel();
 		controlPane.setLayout(new BoxLayout(controlPane, BoxLayout.X_AXIS));
-		controlPane.setBorder(new EmptyBorder(3,0,0,0));
+		controlPane.setBorder(new EmptyBorder(3, 0, 0, 0));
 		controlPane.add(Box.createHorizontalGlue());
 
 		getRootPane().setDefaultButton(getOkButton());
@@ -277,8 +274,9 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the control pane.
-	 * If it doesn't exist, {@link #createControlPane() creates is}.
+	 * Returns the control pane. If it doesn't exist,
+	 * {@link #createControlPane() creates is}.
+	 *
 	 * @return the control pane
 	 */
 	protected final JPanel getControlPane() {
@@ -289,12 +287,12 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Initializes the content pane.
-	 * Adds the {@link #getInterface() interface} to it.
+	 * Initializes the content pane. Adds the {@link #getInterface() interface}
+	 * to it.
 	 */
 	protected void initializeContentPane() {
 
-		contentPane.setBorder(new EmptyBorder(3,3,3,3));
+		contentPane.setBorder(new EmptyBorder(3, 3, 3, 3));
 
 		contentPane.add(getInterface(), BorderLayout.CENTER);
 
@@ -302,6 +300,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns if this dialog is initialized.
+	 *
 	 * @return true if this dialog is initialized, false otherwise
 	 */
 	public final boolean isInitialized() {
@@ -310,6 +309,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns if this dialog can be canceled.
+	 *
 	 * @return true if this dialog can be canceled, false otherwise
 	 */
 	public boolean isCancellable() {
@@ -318,8 +318,9 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns if this dialog can be canceled with escape button.
-	 * @return true if this dialog can be canceled with escape button,
-	 * false otherwise
+	 *
+	 * @return true if this dialog can be canceled with escape button, false
+	 * otherwise
 	 */
 	public boolean isCancelOnEscape() {
 		return true;
@@ -327,23 +328,24 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns if the control pane should be used.
-	 * @return true if the control pane should be used,
-	 * false otherwise
+	 *
+	 * @return true if the control pane should be used, false otherwise
 	 */
 	public boolean isControlPanelEquipped() {
 		return true;
 	}
 
 	/**
-	 * Creates the interface of this dialog.
-	 * Contents of this interface depends on the implementation.
+	 * Creates the interface of this dialog. Contents of this interface depends
+	 * on the implementation.
+	 *
 	 * @return the interface of this dialog
 	 */
 	protected abstract JComponent createInterface();
 
 	/**
-	 * Returns the interface of this dialog.
-	 * If it doesn't exist it is created
+	 * Returns the interface of this dialog. If it doesn't exist it is created
+	 *
 	 * @return the interface of this dialog
 	 */
 	public JComponent getInterface() {
@@ -355,6 +357,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns if the model can be of the given type.
+	 *
 	 * @param clazz the type of the model
 	 * @return true the model can be of the given type, false otherwise
 	 */
@@ -362,6 +365,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Fills the fields of this dialog from the given model.
+	 *
 	 * @param model the model from which this dialog will be filled.
 	 * @throws SignalMLException TODO when it is thrown
 	 */
@@ -369,17 +373,18 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Fills the model with the data from this dialog (user input).
+	 *
 	 * @param model the model to be filled
 	 * @throws SignalMLException TODO when it is thrown
 	 */
 	public abstract void fillModelFromDialog(Object model) throws SignalMLException;
 
 	/**
-	 * Shows this dialog.
-	 * If it is not initialized, the initialization is done.
+	 * Shows this dialog. If it is not initialized, the initialization is done.
 	 * Calls {@link #showDialog(Object)}.
-	 * @param model the model from which this dialog will be filled and
-	 * to which the results will be written
+	 *
+	 * @param model the model from which this dialog will be filled and to which
+	 * the results will be written
 	 * @param centered boolean the location of this dialog should be set
 	 * relative to the parent component
 	 * @return if the dialog was closed with OK
@@ -396,13 +401,12 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Shows this dialog.
-	 * If it is not initialized, the initialization is done.
-	 * Calls {@link #showDialog(Object)}.
-	 * The location of this dialog is set using
-	 * {@link #centerInParent(double, double)}.
-	 * @param model the model from which this dialog will be filled and
-	 * to which the results will be written
+	 * Shows this dialog. If it is not initialized, the initialization is done.
+	 * Calls {@link #showDialog(Object)}. The location of this dialog is set
+	 * using {@link #centerInParent(double, double)}.
+	 *
+	 * @param model the model from which this dialog will be filled and to which
+	 * the results will be written
 	 * @param xpos the x proportion of the parent window at which this dialog
 	 * should be located
 	 * @param ypos the y proportion of the parent window at which this dialog
@@ -420,11 +424,12 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Initializes this dialog, fills it from model and makes it visible.
-	 * @param model the model from which this dialog will be filled and
-	 * to which the results will be written
+	 *
+	 * @param model the model from which this dialog will be filled and to which
+	 * the results will be written
 	 * @return true if the dialog was closed with OK, false otherwise
-	 * @throws ClassCastException if the model is not of the type supported
-	 * by this dialog
+	 * @throws ClassCastException if the model is not of the type supported by
+	 * this dialog
 	 */
 	public boolean showDialog(Object model) {
 
@@ -471,6 +476,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Called when the dialog was canceled.
+	 *
 	 * @return true if the operation was successful, false otherwise
 	 */
 	protected boolean onCancel() {
@@ -519,6 +525,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Checks if this dialog is properly filled.
+	 *
 	 * @param model the model for this dialog
 	 * @param errors the object in which errors are stored
 	 * @throws SignalMLException TODO when it is thrown
@@ -529,6 +536,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns the URL to context help.
+	 *
 	 * @return the URL to context help
 	 */
 	protected URL getContextHelpURL() {
@@ -537,20 +545,20 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Shows the validation errors dialog with given validation errors.
+	 *
 	 * @param errors the errors to be displayed
 	 */
 	protected void showValidationErrors(ValidationErrors errors) {
-		if (errors.getSize()>1){
+		if (errors.getSize() > 1) {
 			getErrorsDialog().showDialog(errors, true);
-		}
-		else // show prettier error window when there is only 1 error
+		} else // show prettier error window when there is only 1 error
 		{
 			JOptionPane.showMessageDialog(getErrorsDialog().getParent(),
-						      errors.getElementAt(0),
-						      _("Validation error"),
-						      JOptionPane.WARNING_MESSAGE);
+					errors.getElementAt(0),
+					_("Validation error"),
+					JOptionPane.WARNING_MESSAGE);
 		}
-		
+
 	}
 
 	/**
@@ -563,8 +571,9 @@ public abstract class AbstractDialog extends JDialog {
 	/**
 	 * Sets the location of this dialog so that it is located
 	 * {@code xpos*parentWidth} from the left border of the parent window and
-	 * {@code ypos*parentHeight} from the top border of the parent window.
-	 * If there is no parent window, the whole screen is considered.
+	 * {@code ypos*parentHeight} from the top border of the parent window. If
+	 * there is no parent window, the whole screen is considered.
+	 *
 	 * @param xpos the x proportion of the parent window at which this dialog
 	 * should be located
 	 * @param ypos the y proportion of the parent window at which this dialog
@@ -584,8 +593,8 @@ public abstract class AbstractDialog extends JDialog {
 			d = tk.getScreenSize();
 		}
 
-		int x = (int)((d.width - getWidth()) * safeXpos);
-		int y = (int)((d.height - getHeight()) * safeYpos);
+		int x = (int) ((d.width - getWidth()) * safeXpos);
+		int y = (int) ((d.height - getHeight()) * safeYpos);
 
 		if (isUndecorated() && hasParent) {
 			Point parentLoc = getParent().getLocationOnScreen();
@@ -598,8 +607,9 @@ public abstract class AbstractDialog extends JDialog {
 	/**
 	 * Sets the location of this dialog so that it is located
 	 * {@code xpos*parentWidth} from the left border of the given component and
-	 * {@code ypos*parentHeight} from the top border of the given component.
-	 * If there is no parent window, the whole screen is considered.
+	 * {@code ypos*parentHeight} from the top border of the given component. If
+	 * there is no parent window, the whole screen is considered.
+	 *
 	 * @param top the component in which this dialog is to centered
 	 * @param xpos the x proportion of the given component at which this dialog
 	 * should be located
@@ -619,14 +629,14 @@ public abstract class AbstractDialog extends JDialog {
 			d = tk.getScreenSize();
 		}
 
-		int x = (int)((d.width - getWidth()) * safeXpos);
-		int y = (int)((d.height - getHeight()) * safeYpos);
+		int x = (int) ((d.width - getWidth()) * safeXpos);
+		int y = (int) ((d.height - getHeight()) * safeYpos);
 
 		Point parentLoc;
 		if (top != null) {
 			parentLoc = top.getLocationOnScreen();
 		} else {
-			parentLoc = new Point(0,0);
+			parentLoc = new Point(0, 0);
 		}
 		x += parentLoc.x;
 		y += parentLoc.y;
@@ -636,8 +646,8 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the validation errors dialog.
-	 * If it doesn't exist it is created.
+	 * Returns the validation errors dialog. If it doesn't exist it is created.
+	 *
 	 * @return the errors dialog
 	 */
 	protected synchronized ValidationErrorsDialog getErrorsDialog() {
@@ -648,8 +658,9 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the {@link HelpDialog help dialog}.
-	 * If it doesn't exist it is created.
+	 * Returns the {@link HelpDialog help dialog}. If it doesn't exist it is
+	 * created.
+	 *
 	 * @return the help dialog
 	 */
 	protected synchronized HelpDialog getHelpDialog() {
@@ -660,8 +671,8 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the {@link OkAction}.
-	 * If it doesn't exist it is created.
+	 * Returns the {@link OkAction}. If it doesn't exist it is created.
+	 *
 	 * @return the OK action
 	 */
 	protected synchronized OkAction getOkAction() {
@@ -672,8 +683,8 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the {@link CancelAction}.
-	 * If it doesn't exist it is created.
+	 * Returns the {@link CancelAction}. If it doesn't exist it is created.
+	 *
 	 * @return the CANCEL action
 	 */
 	protected synchronized CancelAction getCancelAction() {
@@ -684,8 +695,9 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the button for the {@link OkAction}.
-	 * If it doesn't exist it is created.
+	 * Returns the button for the {@link OkAction}. If it doesn't exist it is
+	 * created.
+	 *
 	 * @return the button for OK action
 	 */
 	protected synchronized JButton getOkButton() {
@@ -696,8 +708,9 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns the button for the {@link CancelAction}.
-	 * If it doesn't exist it is created.
+	 * Returns the button for the {@link CancelAction}. If it doesn't exist it
+	 * is created.
+	 *
 	 * @return the button for CANCEL action
 	 */
 	protected synchronized JButton getCancelButton() {
@@ -709,6 +722,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Returns the model for this dialog.
+	 *
 	 * @return the model for this dialog
 	 */
 	protected Object getCurrentModel() {
@@ -717,6 +731,7 @@ public abstract class AbstractDialog extends JDialog {
 
 	/**
 	 * Sets the model for this dialog.
+	 *
 	 * @param currentModel the model for this dialog
 	 */
 	protected void setCurrentModel(Object currentModel) {
@@ -724,23 +739,23 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * Returns true if this dialog was closed with the OK button
-	 * (or in other way that means the success) and there were no errors
-	 * during validation and filling the model,
-	 * false otherwise.
-	 * @return true if this dialog was closed with the OK button
-	 * (or in other way that means the success) and there were no errors
-	 * during validation and filling the model,
-	 * false otherwise.
+	 * Returns true if this dialog was closed with the OK button (or in other
+	 * way that means the success) and there were no errors during validation
+	 * and filling the model, false otherwise.
+	 *
+	 * @return true if this dialog was closed with the OK button (or in other
+	 * way that means the success) and there were no errors during validation
+	 * and filling the model, false otherwise.
 	 */
 	public boolean isClosedWithOk() {
 		return closedWithOk;
 	}
 
 	/**
-	 * Sets if this dialog was closed with the OK button
-	 * (or in other way that means the success) and there were no errors
-	 * during validation and filling the model.
+	 * Sets if this dialog was closed with the OK button (or in other way that
+	 * means the success) and there were no errors during validation and filling
+	 * the model.
+	 *
 	 * @param closedWithOk the value to set
 	 */
 	protected void setClosedWithOk(boolean closedWithOk) {
@@ -757,8 +772,9 @@ public abstract class AbstractDialog extends JDialog {
 			} catch (Throwable t) {
 				// nothing here, does not accept null
 			}
-			if (validateDialog() == false || (!acceptsNull && model == null))
+			if (validateDialog() == false || (!acceptsNull && model == null)) {
 				return;
+			}
 			currentModel = null;
 		}
 
@@ -780,12 +796,11 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * The OK action.
-	 * Contains the icon which is used to create the button.
-	 * When this action is performed the dialog is
-	 * {@link AbstractDialog#validateDialog(Object, Errors) validated},
-	 * the model is {@link AbstractDialog#fillModelFromDialog(Object) filled}
-	 * from the dialog and the dialog is set to be invisible.
+	 * The OK action. Contains the icon which is used to create the button. When
+	 * this action is performed the dialog is
+	 * {@link AbstractDialog#validateDialog(Object, Errors) validated}, the
+	 * model is {@link AbstractDialog#fillModelFromDialog(Object) filled} from
+	 * the dialog and the dialog is set to be invisible.
 	 */
 	protected class OkAction extends AbstractAction {
 
@@ -801,9 +816,9 @@ public abstract class AbstractDialog extends JDialog {
 
 		/**
 		 * Called when this action is performed.
-		 * {@link AbstractDialog#validateDialog(Object, Errors) Validates}
-		 * the dialog, {@link AbstractDialog#fillModelFromDialog(Object) fills}
-		 * the model from it and sets the dialog to be invisible.
+		 * {@link AbstractDialog#validateDialog(Object, Errors) Validates} the
+		 * dialog, {@link AbstractDialog#fillModelFromDialog(Object) fills} the
+		 * model from it and sets the dialog to be invisible.
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ev) {
@@ -813,10 +828,9 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * The CANCEL action.
-	 * Contains the icon which is used to create the button.
-	 * When this action is performed {@link AbstractDialog#closedWithOk}
-	 * is set to be false and the dialog is set to be invisible.
+	 * The CANCEL action. Contains the icon which is used to create the button.
+	 * When this action is performed {@link AbstractDialog#closedWithOk} is set
+	 * to be false and the dialog is set to be invisible.
 	 */
 	protected class CancelAction extends AbstractAction {
 
@@ -831,9 +845,9 @@ public abstract class AbstractDialog extends JDialog {
 		}
 
 		/**
-		 * Called when this action is performed.
-		 * Sets {@link AbstractDialog#closedWithOk} to false,
-		 * sets the dialog to be invisible and performs
+		 * Called when this action is performed. Sets
+		 * {@link AbstractDialog#closedWithOk} to false, sets the dialog to be
+		 * invisible and performs
 		 * {@link AbstractDialog#onDialogClose() closing operations}.
 		 */
 		@Override
@@ -855,9 +869,8 @@ public abstract class AbstractDialog extends JDialog {
 	}
 
 	/**
-	 * The action that displays the context help.
-	 * When this action is performed {@link HelpDialog help dialog}
-	 * is created.
+	 * The action that displays the context help. When this action is performed
+	 * {@link HelpDialog help dialog} is created.
 	 */
 	protected class ContextHelpAction extends AbstractAction {
 
@@ -870,18 +883,19 @@ public abstract class AbstractDialog extends JDialog {
 
 		/**
 		 * Constructor. Sets the description, icon, tooltip and the URL to help.
+		 *
 		 * @param url the address where the help is stored
 		 */
 		public ContextHelpAction(URL url) {
 			super();
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/help.png"));
-			putValue(AbstractAction.SHORT_DESCRIPTION,_("Display context help for this dialog"));
+			putValue(AbstractAction.SHORT_DESCRIPTION, _("Display context help for this dialog"));
 			contextHelpURL = url;
 		}
 
 		/**
-		 * Creates the {@link HelpDialog help dialog} with the given URL to
-		 * the help.
+		 * Creates the {@link HelpDialog help dialog} with the given URL to the
+		 * help.
 		 */
 		@Override
 		public void actionPerformed(ActionEvent ev) {

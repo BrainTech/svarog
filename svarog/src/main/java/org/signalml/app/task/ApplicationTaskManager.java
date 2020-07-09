@@ -4,18 +4,15 @@
 
 package org.signalml.app.task;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.method.ApplicationMethodManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.common.dialogs.TaskStatusDialog;
-import org.signalml.app.view.common.dialogs.errors.ExceptionDialog;
 import org.signalml.method.CleanupMethod;
 import org.signalml.method.Method;
 import org.signalml.task.DefaultTaskManager;
@@ -30,9 +27,9 @@ public class ApplicationTaskManager extends DefaultTaskManager {
 
 	protected static final Logger logger = Logger.getLogger(ApplicationTaskManager.class);
 
-	private Map<Task,ApplicationTaskWorker> workerMap = new HashMap<Task,ApplicationTaskWorker>();
-	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<Task,TaskStatusDialog>();
-	private Map<Task,TaskEventProxy> proxyMap = new HashMap<Task, TaskEventProxy>();
+	private Map<Task,ApplicationTaskWorker> workerMap = new HashMap<>();
+	private Map<Task,TaskStatusDialog> dialogMap = new HashMap<>();
+	private Map<Task,TaskEventProxy> proxyMap = new HashMap<>();
 	private ApplicationMethodManager methodManager;
 
 	private PleaseWaitDialog pleaseWaitDialog;

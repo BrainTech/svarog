@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.common.components.filechooser;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -14,15 +12,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.regex.Pattern;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel.OBCI_SERVER_RAW_EXTENSION;
 import static org.signalml.app.view.document.monitor.ChooseFilesForMonitorRecordingPanel.OBCI_SERVER_VIDEO_EXTENSION;
 

@@ -3,8 +3,6 @@
  */
 package org.signalml.app.action.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -13,7 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
@@ -23,6 +20,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.document.signal.SignalMLDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -72,7 +70,7 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 
 	public ExportSignalAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
-		setText(_("Export Signal"));
+		setText(_("Export"));
 		setToolTip(_("Export signal to simple binary, ASCII or EEGLab format"));
 		setMnemonic(KeyEvent.VK_E);
 	}

@@ -1,9 +1,7 @@
 package org.signalml.plugin.export.signal;
 
 import java.awt.event.MouseListener;
-
 import javax.swing.JToggleButton;
-
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 
 /**

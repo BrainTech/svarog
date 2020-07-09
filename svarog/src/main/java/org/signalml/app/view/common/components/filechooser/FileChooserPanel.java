@@ -1,23 +1,17 @@
 /* FileChooserPanel.java created 2011-03-11
  *
  */
-
 package org.signalml.app.view.common.components.filechooser;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.File;
-
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileFilter;
-
 import org.signalml.app.document.ManagedDocumentType;
 
 /**
@@ -40,8 +34,9 @@ public class FileChooserPanel extends JPanel {
 
 	/**
 	 * Creates a new file chooser panel.
-	 * @param managedDocumentTypes the types of documents which will be
-	 * chosen using this panel
+	 *
+	 * @param managedDocumentTypes the types of documents which will be chosen
+	 * using this panel
 	 */
 	public FileChooserPanel(ManagedDocumentType[] managedDocumentTypes) {
 		this.managedDocumentTypes = managedDocumentTypes.clone();
@@ -50,11 +45,12 @@ public class FileChooserPanel extends JPanel {
 
 	/**
 	 * Creates this file chooser panel.
-	 * @param singleManagedDocumentType the type of document which will
-	 * be chosen using this panel
+	 *
+	 * @param singleManagedDocumentType the type of document which will be
+	 * chosen using this panel
 	 */
 	public FileChooserPanel(ManagedDocumentType singleManagedDocumentType) {
-		this(new ManagedDocumentType[] {singleManagedDocumentType});
+		this(new ManagedDocumentType[]{singleManagedDocumentType});
 	}
 
 	/**
@@ -66,8 +62,8 @@ public class FileChooserPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the {@link EmbeddedFileChooser embedded file chooser}.
-	 * If it doesn't exist it is created:
+	 * Returns the {@link EmbeddedFileChooser embedded file chooser}. If it
+	 * doesn't exist it is created:
 	 * <ul>
 	 * <li>as open dialog,</li>
 	 * <li>without multi-selection and hiding files,</li>
@@ -75,13 +71,14 @@ public class FileChooserPanel extends JPanel {
 	 * getFileFilterExtensions() types} or all,</li>
 	 * <li>with the user directory as the current directory.</li>
 	 * </ul>
+	 *
 	 * @return the embedded file chooser
 	 */
 	public EmbeddedFileChooser getFileChooser() {
 		if (fileChooser == null) {
 			fileChooser = new EmbeddedFileChooser();
 			fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-			fileChooser.setFileHidingEnabled(false);
+			fileChooser.setFileHidingEnabled(true);
 			fileChooser.setMultiSelectionEnabled(false);
 			fileChooser.setAcceptAllFileFilterUsed(true);
 
@@ -90,9 +87,9 @@ public class FileChooserPanel extends JPanel {
 			FileFilter[] filters;
 			int i;
 			int e;
-			for (i=managedDocumentTypes.length-1; i>=0; i--) {
+			for (i = managedDocumentTypes.length - 1; i >= 0; i--) {
 				filters = managedDocumentTypes[i].getFileFilters();
-				for (e=filters.length-1; e>=0; e--) {
+				for (e = filters.length - 1; e >= 0; e--) {
 					fileChooser.addChoosableFileFilter(filters[e]);
 					fileChooser.setFileFilter(filters[e]);
 				}
@@ -100,8 +97,7 @@ public class FileChooserPanel extends JPanel {
 
 			fileChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-			fileChooser.setPreferredSize(new Dimension(500,280));
+			fileChooser.setPreferredSize(new Dimension(500, 280));
 			fileChooser.setMinimumSize(new Dimension(500, 150));
 
 			// remove escape key binding to allow for dialog closing
@@ -114,6 +110,7 @@ public class FileChooserPanel extends JPanel {
 
 	/**
 	 * Returns the file selected by this file chooser.
+	 *
 	 * @return the selected file
 	 */
 	public File getSelectedFile() {
@@ -122,6 +119,7 @@ public class FileChooserPanel extends JPanel {
 
 	/**
 	 * Returns the directory currently shown by this file chooser.
+	 *
 	 * @return directory shown by this file chooser
 	 */
 	public File getCurrentDirectory() {

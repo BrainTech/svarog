@@ -1,24 +1,25 @@
 package org.signalml.app.action.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
+import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.document.OpenTagDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.worker.monitor.MonitorWorker;
+import org.signalml.domain.tag.LegacyTagImporter;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.util.Util;
@@ -44,7 +45,7 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 		this.documentFlowIntegrator = viewerElementManager.getDocumentFlowIntegrator();
 		this.viewerElementManager = viewerElementManager;
 		this.selectedSourceTab = selectedSourceTab;
-		setText(_(selectedSourceTab != null ? selectedSourceTab : "Open signal"));
+		setText(_(selectedSourceTab != null ? selectedSourceTab : "Open"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
 		setToolTip(_("Open signal and set montage for it"));
 		setMnemonic(KeyEvent.VK_O);
@@ -97,12 +98,22 @@ public class OpenSignalWizardAction extends AbstractSignalMLAction implements Pr
 
 		OpenDocumentDescriptor tagDocumentDescriptor = new OpenDocumentDescriptor();
 		tagDocumentDescriptor.setType(ManagedDocumentType.TAG);
-		tagDocumentDescriptor.setFile(tagFile);
+		
+		//try loading legacy tag first
+		try {
+			LegacyTagImporter importer = new LegacyTagImporter();
+			//if Tags are not legacy tags and are not importable then importer will throw a SignalMLException
+			StyledTagSet tagSet = importer.importLegacyTags(tagFile, signalDocument.getSamplingFrequency());
+			TagDocument tagDocument = new TagDocument(tagSet);
+			tagDocument.setBackingFile(tagFile);
+			//override opening document descriptor with existing tag document one which we just created
+			tagDocumentDescriptor.getTagOptions().setExistingDocument(tagDocument);
+		} catch (SignalMLException ex) {
+			logger.info("Failed to import tags, not a legacy tag, loading as xml tag");
+			tagDocumentDescriptor.setFile(tagFile);
+		}
 
-		OpenTagDescriptor openTagDescriptor = new OpenTagDescriptor();
-		openTagDescriptor.setParent(signalDocument);
-		tagDocumentDescriptor.setTagOptions(openTagDescriptor);
-
+		tagDocumentDescriptor.getTagOptions().setParent(signalDocument);
 		documentFlowIntegrator.maybeOpenDocument(tagDocumentDescriptor);
 	}
 

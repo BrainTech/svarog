@@ -5,9 +5,7 @@
 package org.signalml.app.worker.signal;
 
 import java.util.List;
-
 import javax.swing.SwingWorker;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalChecksumProgressMonitor;
 import org.signalml.app.document.signal.SignalDocument;

@@ -1,10 +1,10 @@
 package org.signalml.plugin.method.logic;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.ComputationException;
 import org.signalml.plugin.data.logic.PluginComputationMgrStepResult;
 import org.signalml.plugin.exception.PluginToolAbortException;
 import org.signalml.plugin.exception.PluginToolInterruptedException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public abstract class AbstractPluginComputationMgrStep<Data extends PluginComputationMgrStepData<?>>
 	implements IPluginComputationMgrStep {

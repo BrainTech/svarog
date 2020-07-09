@@ -4,7 +4,6 @@
 package org.signalml.plugin.impl;
 
 import java.util.ArrayList;
-
 import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.SignalSamples;
 
@@ -18,7 +17,7 @@ public class SignalSamplesImpl implements SignalSamples {
 	/**
 	 * the ArrayList of {@link ChannelSamplesImpl channel samples} for each channel
 	 */
-	private ArrayList<ChannelSamplesImpl> channels = new ArrayList<ChannelSamplesImpl>();
+	private ArrayList<ChannelSamplesImpl> channels = new ArrayList<>();
 
 	/**
 	 * Empty constructor.

@@ -4,13 +4,10 @@
 
 package org.signalml.math.iirdesigner;
 
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
-
 import org.apache.commons.math.complex.Complex;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterZerosPolesGain;
+import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
 
 /**
  * This class performs unit tests on {@link FilterZerosPolesGain} class.

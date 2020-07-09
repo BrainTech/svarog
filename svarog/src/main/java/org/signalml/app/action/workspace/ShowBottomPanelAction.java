@@ -3,14 +3,12 @@
  */
 package org.signalml.app.action.workspace;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.ItemSelectable;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ViewFocusSelector;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.View;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 

@@ -1,22 +1,19 @@
 package org.signalml.app.view.document.opensignal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.presets.PresetableView;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.document.opensignal.elements.ChannelSelectWithGainEditionPanel;

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagFile formatVersion="1.0">
+  <paging pageSize="20.0" blocksPerPage="5"/>
+  <tagDefinitions>
+    <defGroup name="pageTags"/>
+    <defGroup name="blockTags"/>
+    <defGroup name="channelTags">
+      <tagItem name="Alfa" description="alfa" fillColor="0015ff" outlineColor="000aff" outlineWidth="1.0" outlineDash="" keyShortcut="A" marker="0" visible="1"/>
+      <tagItem name="Beta" description="beta" fillColor="ffee00" outlineColor="fffb00" outlineWidth="1.0" outlineDash="" keyShortcut="B" marker="0" visible="1"/>
+      <tagItem name="Delta" description="delta" fillColor="ff7300" outlineColor="ff7e00" outlineWidth="1.0" outlineDash="" keyShortcut="D" marker="0" visible="1"/>
+      <tagItem name="Cisza-wyladowanie" description="Cisza-wyładowanie / burst suppresion ???" fillColor="00ff00" outlineColor="00ff00" outlineWidth="1.0" outlineDash="" keyShortcut="C" marker="0" visible="1"/>
+      <tagItem name="3-fazowa fala ostra" description="Triphasic wave" fillColor="ae00ff" outlineColor="bb00ff" outlineWidth="1.0" outlineDash="" keyShortcut="3" marker="0" visible="1"/>
+      <tagItem name="Wierzchołkowa fala ostra" description="Vertex sharp wave" fillColor="ff0011" outlineColor="ff0006" outlineWidth="1.0" outlineDash="" keyShortcut="W" marker="0" visible="1"/>
+      <tagItem name="Spindle (wrzeciono)" description="coma spindle" fillColor="0099ff" outlineColor="008dff" outlineWidth="1.0" outlineDash="" keyShortcut="S" marker="0" visible="1"/>
+      <tagItem name="Kompleks K" description="K-complex (jak we śnie)" fillColor="00fffb" outlineColor="00f9ff" outlineWidth="1.0" outlineDash="" keyShortcut="K" marker="0" visible="1"/>
+      <tagItem name="IRDA" description="IRDA: Intermittent rhythmic delta activity" fillColor="ff4000" outlineColor="ff4e00" outlineWidth="1.0" outlineDash="" keyShortcut="T" marker="0" visible="1"/>
+      <tagItem name="Niskonapięciowe EEG" description="Niskonapięciowe wolne niereaktywne EEG" fillColor="8f8040" outlineColor="8f8541" outlineWidth="1.0" outlineDash="" keyShortcut="N" marker="0" visible="1"/>
+      <tagItem name="PLED" description="PLED: Periodic lateralized epilepitiform discharge" fillColor="e3b9b9" outlineColor="ff0089" outlineWidth="1.0" outlineDash="" keyShortcut="O" marker="0" visible="1"/>
+      <tagItem name="Glica/i+fala wolna?" description="iGlica+fala wolna" fillColor="0099ff" outlineColor="008dff" outlineWidth="1.0" outlineDash="" keyShortcut="G" marker="0" visible="1"/>
+      <tagItem name="Reaktywność na bodźce" description="Reaktywność na bodźce (jeśli mamy zaznaczony bodziec)" fillColor="bec6cf" outlineColor="bfc6cf" outlineWidth="1.0" outlineDash="" keyShortcut="R" marker="0" visible="1"/>
+    </defGroup>
+  </tagDefinitions>
+</tagFile>

@@ -1,13 +1,10 @@
 package org.signalml.app.view.signal.export;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.*;
-
 import javax.swing.*;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 
 /**
@@ -37,7 +34,7 @@ public class CsvExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	private JComboBox getSeparatorField() {
 		if (separatorField == null) {
-			separatorField = new JComboBox<String>(SEPARATORS_LABELS);
+			separatorField = new JComboBox<>(SEPARATORS_LABELS);
 		}
 		return separatorField;
 	}
@@ -74,7 +71,7 @@ public class CsvExportOptionsPanel extends AbstractExportOptionsPanel {
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Separator: ")), getSeparatorField()));
 		components.add(

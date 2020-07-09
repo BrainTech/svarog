@@ -4,13 +4,10 @@
 package org.signalml.plugin.export.view;
 
 import java.awt.Component;
-import java.awt.event.KeyEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
-
 import org.signalml.app.action.selector.ViewFocusSelector;
 import org.signalml.app.util.IconUtils;
 
@@ -66,7 +63,7 @@ public abstract class AbstractSignalMLAction extends AbstractAction {
 	 * Sets the name of this action.
 	 * @param text the new name
 	 */
-	protected void setText(String text) {
+	protected final void setText(String text) {
 		putValue(AbstractAction.NAME, text);
 	}
 

@@ -3,15 +3,13 @@
  */
 package org.signalml.app.action.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.DocumentFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.signal.Document;
 
 /** CloseDocumentAction

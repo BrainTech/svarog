@@ -5,7 +5,6 @@
 package org.signalml.method.iterator;
 
 import java.io.Serializable;
-
 import org.springframework.context.MessageSourceResolvable;
 
 /** ParameterIterationSettings

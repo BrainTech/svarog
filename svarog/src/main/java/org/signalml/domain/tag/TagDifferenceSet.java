@@ -7,7 +7,6 @@ package org.signalml.domain.tag;
 import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 
@@ -34,7 +33,7 @@ public class TagDifferenceSet {
 	 * Constructor. Creates an empty TagDifferenceSet.
 	 */
 	public TagDifferenceSet() {
-		differences = new TreeSet<TagDifference>();
+		differences = new TreeSet<>();
 	}
 
 	/**

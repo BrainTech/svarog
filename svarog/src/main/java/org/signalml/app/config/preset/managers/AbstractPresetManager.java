@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.swing.event.EventListenerList;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.AbstractXMLConfiguration;
 import org.signalml.app.config.preset.Preset;
@@ -31,7 +29,7 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 
 	protected static final Logger logger = Logger.getLogger(AbstractPresetManager.class);
 
-	protected ArrayList<Preset> presets = new ArrayList<Preset>();
+	protected ArrayList<Preset> presets = new ArrayList<>();
 	protected Preset defaultPreset;
 
 	protected transient HashMap<String, Integer> presetsByName;
@@ -141,7 +139,7 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 	}
 
 	private void remapNames() {
-		presetsByName = new HashMap<String, Integer>();
+		presetsByName = new HashMap<>();
 		int cnt = presets.size();
 		for (int i=0; i<cnt; i++) {
 			presetsByName.put(presets.get(i).getName(), i);

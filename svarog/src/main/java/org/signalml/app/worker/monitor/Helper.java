@@ -1,11 +1,11 @@
 package org.signalml.app.worker.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.LauncherMessage;
@@ -156,7 +156,7 @@ public class Helper {
 		
 
 	private static List<byte[]> receiveResponse() throws OpenbciCommunicationException {
-		List<byte[]> list = new ArrayList<byte[]>();
+		List<byte[]> list = new ArrayList<>();
 		byte[] response_header = socket.recv();
 		logger.debug("Got header: " + response_header);
 		byte[] response_data;

@@ -6,7 +6,6 @@ package org.signalml.app.method.ep;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
@@ -68,13 +67,13 @@ public class EvokedPotentialApplicationData extends EvokedPotentialData {
 			sampleSource = signalDocument.getSampleSource();
 		}
 
-		List<String> artifactTagStyleNames = new ArrayList<String>();
+		List<String> artifactTagStyleNames = new ArrayList<>();
 		for (TagStyleGroup styleGroup: getParameters().getArtifactTagStyles()) {
 			artifactTagStyleNames.addAll(styleGroup.getTagStyleNames());
 		}
 
-		List<MarkerSegmentedSampleSource> averagedSampleSources = new ArrayList<MarkerSegmentedSampleSource>();
-		List<MarkerSegmentedSampleSource> baselineSampleSources = new ArrayList<MarkerSegmentedSampleSource>();
+		List<MarkerSegmentedSampleSource> averagedSampleSources = new ArrayList<>();
+		List<MarkerSegmentedSampleSource> baselineSampleSources = new ArrayList<>();
 		for (TagStyleGroup tagStyleGroup: getParameters().getAveragedTagStyles()) {
 
 			List<String> styleNames = tagStyleGroup.getTagStyleNames();

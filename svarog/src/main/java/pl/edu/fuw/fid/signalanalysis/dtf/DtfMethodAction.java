@@ -6,6 +6,7 @@ import javax.swing.WindowConstants;
 import org.apache.commons.math.linear.RealMatrix;
 import org.apache.commons.math.linear.SingularMatrixException;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageMismatchException;
@@ -17,7 +18,6 @@ import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.SvarogAccessGUI;
 import pl.edu.fuw.fid.signalanalysis.SignalAnalysisTools;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Manages DTF method computation. Gathers data and presents results.
@@ -27,7 +27,7 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 public class DtfMethodAction extends AbstractSignalMLAction {
 
 	private static final int SPECTRUM_SIZE = 100;
-	private static final String TITLE = _("Directed Transfer Function");
+	public static final String TITLE = _("Directed Transfer Function");
 
 	private final SvarogAccessGUI guiAccess;
 	private final SvarogAccessSignal signalAccess;

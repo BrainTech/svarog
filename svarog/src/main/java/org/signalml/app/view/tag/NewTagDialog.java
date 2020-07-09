@@ -3,15 +3,11 @@
  */
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Window;
 import java.io.File;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.config.preset.PresetManager;
@@ -20,6 +16,7 @@ import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.tag.NewTagDescriptor;
 import org.signalml.app.model.tag.NewTagDescriptor.NewTagTypeMode;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.signal.PagingParametersPanel;
@@ -131,8 +128,9 @@ public class NewTagDialog extends AbstractDialog  {
 		if (mode == NewTagTypeMode.EMPTY) {
 			newTagPanel.getEmptyRadio().setSelected(true);
 		}
-		else if (mode == NewTagTypeMode.DEFAULT_SLEEP) {
-			newTagPanel.getDefaultSleepRadio().setSelected(true);
+		else if (mode == NewTagTypeMode.DEFAULT_PRESET)
+		{
+			newTagPanel.getDefaultPresetsRadio().setSelected(true);
 		}
 		else if (mode == NewTagTypeMode.PRESET) {
 			newTagPanel.getPresetRadio().setSelected(true);
@@ -176,13 +174,13 @@ public class NewTagDialog extends AbstractDialog  {
 			descriptor.setMode(NewTagTypeMode.EMPTY);
 			descriptor.setFile(null);
 		}
-		else if (newTagPanel.getDefaultSleepRadio().isSelected()) {
-			descriptor.setMode(NewTagTypeMode.DEFAULT_SLEEP);
-			descriptor.setFile(null);
-		}
 		else if (newTagPanel.getPresetRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.PRESET);
 			descriptor.setTagStylesPreset((StyledTagSet) newTagPanel.getPresetComboBox().getSelectedItem());
+		}
+		else if (newTagPanel.getDefaultPresetsRadio().isSelected()){
+			descriptor.setMode(NewTagTypeMode.DEFAULT_PRESET);
+			descriptor.setDefaultPresetIndex(newTagPanel.getDefaultPresetComboBox().getSelectedIndex());
 		}
 		else if (newTagPanel.getFromFileRadio().isSelected()) {
 			descriptor.setMode(NewTagTypeMode.FROM_FILE);

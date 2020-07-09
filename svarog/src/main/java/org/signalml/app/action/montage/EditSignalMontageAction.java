@@ -1,23 +1,17 @@
-/* EditSignalMontageAction.java created 2007-09-28
- *
- */
-
 package org.signalml.app.action.montage;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.MontageDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.montage.SignalMontageDialog;
 
-/** EditSignalMontageAction
- *
+/**
+ * EditSignalMontageAction
  *
  * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
  */
@@ -50,6 +44,7 @@ public class EditSignalMontageAction extends AbstractFocusableSignalMLAction<Sig
 
 		MontageDescriptor descriptor = new MontageDescriptor(signalDocument.getMontage(), signalDocument);
 
+		signalMontageDialog.getSignalMontagePanel().activateMontagePane();
 		boolean ok = signalMontageDialog.showDialog(descriptor, true);
 		if (!ok) {
 			return;

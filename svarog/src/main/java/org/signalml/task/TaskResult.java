@@ -4,7 +4,6 @@
 package org.signalml.task;
 
 import java.io.Serializable;
-
 import org.signalml.method.Method;
 
 /** This is a simple wrapper class for the result of a task. This encompases basic task information

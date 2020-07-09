@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.signalml.app.config.AbstractXMLConfiguration;
 import org.signalml.util.FileUtils;
 import org.springframework.core.io.ClassPathResource;

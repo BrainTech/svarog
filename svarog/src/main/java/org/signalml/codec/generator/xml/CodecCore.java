@@ -1,12 +1,12 @@
 package org.signalml.codec.generator.xml;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-import org.apache.log4j.Logger;
 
 public class CodecCore {
 	protected static final String  NAMESPACES_FEATURE_ID = "http://xml.org/sax/features/namespaces";

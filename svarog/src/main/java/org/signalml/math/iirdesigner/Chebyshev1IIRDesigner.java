@@ -52,8 +52,9 @@ class Chebyshev1IIRDesigner extends ChebyshevIIRDesigner {
 
 		//calculate gain
 		Complex product = new Complex(1.0, 0.0);
-		for (int i = 0; i < poles.length; i++)
-			product = product.multiply(poles[i].negate());
+		for (Complex pole : poles) {
+			product = product.multiply(pole.negate());
+		}
 		double gain = product.getReal();
 
 		if (SpecialMath.isEven(filterOrder))

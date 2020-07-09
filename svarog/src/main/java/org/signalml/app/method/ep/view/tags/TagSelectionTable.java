@@ -4,14 +4,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.domain.tag.StyledTagSet;

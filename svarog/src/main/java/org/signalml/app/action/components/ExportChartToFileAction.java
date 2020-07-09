@@ -4,18 +4,16 @@
 
 package org.signalml.app.action.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
-import org.jfree.chart.ChartUtilities;
+import org.jfree.chart.ChartUtils;
 import org.jfree.chart.JFreeChart;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
@@ -80,7 +78,7 @@ public abstract class ExportChartToFileAction extends AbstractSignalMLAction {
 			Dimension imageSize = getImageSize();
 
 			try {
-				ChartUtilities.saveChartAsPNG(file, chart, imageSize.width, imageSize.height);
+				ChartUtils.saveChartAsPNG(file, chart, imageSize.width, imageSize.height);
 			} catch (IOException ex) {
 				logger.error("Failed to save to file - i/o exception", ex);
 				Dialogs.showExceptionDialog((Window) null, ex);

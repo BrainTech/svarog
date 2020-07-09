@@ -1,7 +1,7 @@
 package org.signalml.codec;
 
-import java.nio.FloatBuffer;
 import java.nio.DoubleBuffer;
+import java.nio.FloatBuffer;
 
 public interface SignalMLCodecReader {
 	public SignalMLCodec getCodec();

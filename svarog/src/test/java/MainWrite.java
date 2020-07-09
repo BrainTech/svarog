@@ -1,5 +1,4 @@
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.domain.book.BookBuilder;
 import org.signalml.domain.book.BookBuilderImpl;

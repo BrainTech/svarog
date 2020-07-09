@@ -3,17 +3,16 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.title.TextTitle;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.VerticalAlignment;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * A {@link FrequencyResponseChartPanel} used to draw filter's frequency

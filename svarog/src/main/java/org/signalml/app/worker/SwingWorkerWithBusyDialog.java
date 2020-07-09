@@ -4,10 +4,8 @@ import java.awt.Container;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
-
 import org.signalml.app.view.common.dialogs.BusyDialog;
 import org.signalml.app.view.common.dialogs.DummyBusyDialog;
 import org.signalml.app.view.common.dialogs.IBusyDialog;

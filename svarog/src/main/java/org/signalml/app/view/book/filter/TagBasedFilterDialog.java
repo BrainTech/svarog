@@ -4,8 +4,6 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -14,9 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -26,30 +24,26 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
-
 import org.signalml.app.action.util.ListSelectAllAction;
 import org.signalml.app.action.util.ListSelectInvertAction;
 import org.signalml.app.action.util.ListSelectNoneAction;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.AnyChangeDocumentAdapter;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleListCellRenderer;
-import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.domain.book.filter.TagBasedAtomFilter;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.signalml.plugin.export.view.FileChooser;
-
-import org.springframework.validation.Errors;
 
 /** TagBasedFilterDialog
  *
@@ -388,7 +382,7 @@ public class TagBasedFilterDialog extends AbstractFilterDialog {
 		int size = listModel.getSize();
 
 		JList list = getStyleList();
-		LinkedHashSet<String> styleNames = new LinkedHashSet<String>();
+		LinkedHashSet<String> styleNames = new LinkedHashSet<>();
 
 		for (int i=0; i<size; i++) {
 

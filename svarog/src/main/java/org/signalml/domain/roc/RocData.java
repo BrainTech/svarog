@@ -4,18 +4,16 @@
 
 package org.signalml.domain.roc;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.model.components.PropertyProvider;
 import org.signalml.app.model.components.WriterExportableTable;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.method.iterator.MethodIteratorData;
 import org.signalml.method.iterator.ParameterIterationSettings;
@@ -56,20 +54,20 @@ public class RocData implements WriterExportableTable, PropertyProvider {
 		}
 
 		this.parameters = parameters;
-		this.rocDataPoints = new ArrayList<RocDataPoint>();
+		this.rocDataPoints = new ArrayList<>();
 
 	}
 
 	public RocData(IterableParameter[] parameters, RocDataPoint[] rocDataPoints) {
 
 		this(parameters);
-		this.rocDataPoints = new ArrayList<RocDataPoint>(this.rocDataPoints);
+		this.rocDataPoints = new ArrayList<>(this.rocDataPoints);
 
 	}
 
 	public static RocData createForParameterIterationSettings(ParameterIterationSettings[] parameters) {
 
-		LinkedList<IterableParameter> iteratedParameters = new LinkedList<IterableParameter>();
+		LinkedList<IterableParameter> iteratedParameters = new LinkedList<>();
 		for (ParameterIterationSettings parameter : parameters) {
 			if (parameter.isIterated()) {
 				iteratedParameters.add(parameter.getParameter());
@@ -412,7 +410,7 @@ public class RocData implements WriterExportableTable, PropertyProvider {
 	@Override
 	public List<LabelledPropertyDescriptor> getPropertyList() throws IntrospectionException {
 
-		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<LabelledPropertyDescriptor>();
+		LinkedList<LabelledPropertyDescriptor> list = new LinkedList<>();
 
 		list.add(new LabelledPropertyDescriptor(_("area under curve"), "areaUnderCurve", RocData.class, "getAreaUnderCurve", null));
 		list.add(new LabelledPropertyDescriptor(_("maximal accuracy iteration"), "maxAccuracyIteration", RocData.class, "getMaxAccuracyIteration", null));

@@ -3,8 +3,6 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Window;
@@ -12,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
@@ -28,13 +25,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.MontageTableModel;
 import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.SwingUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.montage.dnd.MontageWasteBasket;
@@ -882,7 +879,7 @@ public class MontageChannelsPanel extends JPanel {
 			int firstRow = selectionModel.getMinSelectionIndex();
 			int lastRow = selectionModel.getMaxSelectionIndex();
 
-			List<Integer> channelsToBeRemoved = new ArrayList<Integer>();
+			List<Integer> channelsToBeRemoved = new ArrayList<>();
 			// checking if it is ok to remove rows
 			for (int i = firstRow; i <= lastRow; i++) {
 				if (selectionModel.isSelectedIndex(i)) {

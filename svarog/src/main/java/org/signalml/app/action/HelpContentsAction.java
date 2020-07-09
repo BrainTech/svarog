@@ -3,12 +3,9 @@
  */
 package org.signalml.app.action;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
+import java.net.URL;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.HelpDialog;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -28,12 +25,12 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 	private HelpDialog helpDialog;
 
-	public HelpContentsAction() {
+	private final URL url;
+
+	public HelpContentsAction(String text, URL url) {
 		super();
-		setText(_("Contents..."));
-		setIconPath("org/signalml/app/icon/help.png");
-		setToolTip(_("Display help contents"));
-		setMnemonic(KeyEvent.VK_C);
+		this.url = url;
+		setText(text);
 	}
 
 	@Override
@@ -41,7 +38,7 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 
 		if (helpDialog.isVisible()) {
 			try {
-				helpDialog.setPage(null);
+				helpDialog.setPage(url);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to set help page", ex);
 				Dialogs.showExceptionDialog((Window) null, ex);
@@ -49,7 +46,7 @@ public class HelpContentsAction extends AbstractSignalMLAction {
 			}
 			helpDialog.toFront();
 		} else {
-			helpDialog.showDialog(null, true);
+			helpDialog.showDialog(url, true);
 		}
 
 	}

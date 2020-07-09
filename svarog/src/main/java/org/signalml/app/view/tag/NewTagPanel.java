@@ -3,14 +3,11 @@
  */
 package org.signalml.app.view.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -20,12 +17,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileFilter;
-
 import org.signalml.app.config.preset.managers.StyledTagSetPresetManager;
-
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.model.document.opensignal.elements.TagPresetComboBoxModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.plugin.export.signal.TagStyle;
 
@@ -36,8 +32,6 @@ import org.signalml.plugin.export.signal.TagStyle;
  * <ul>
  * <li>the {@link #getEmptyRadio() radio button} that indicates that the
  * tag document should contain no style,</li>
- * <li>the {@link #getDefaultSleepRadio() radio button} that indicates that
- * the tag document should contain the default sleep styles,</li>
  * <li>the {@link #getFromFileRadio() radio button} that indicates that the
  * tag document should contain the same styles as in the selected file</li>
  * </ul>
@@ -55,11 +49,12 @@ public class NewTagPanel extends JPanel {
 	 * should contain no {@link TagStyle style}
 	 */
 	private JRadioButton emptyRadio = null;
+	
 	/**
-	 * the radio button that indicates that the {@link TagDocument tag document}
-	 * should contain the default sleep {@link TagStyle styles}
+	 * radio button to select default tag styles
 	 */
-	private JRadioButton defaultSleepRadio = null;
+	private JRadioButton defaultPresetsRadio = null;
+
 	/**
 	 * the radio button that indicates that the {@link TagDocument tag document}
 	 * should contain the same {@link TagStyle styles} as in the selected file
@@ -75,8 +70,7 @@ public class NewTagPanel extends JPanel {
 	/**
 	 * the group of radio buttons which allows to select the {@link TagStyle
 	 * styles} that should be located in the created {@link TagDocument tag
-	 * document} ({@link #emptyRadio}, {@link #defaultSleepRadio},
-	 * {@link #fromFileRadio})
+	 * document} ({@link #emptyRadio}, {@link #fromFileRadio})
 	 */
 	private ButtonGroup radioGroup;
 	/**
@@ -88,6 +82,16 @@ public class NewTagPanel extends JPanel {
 	 * ComboBox for selecting the tag style preset to be used in the tag document.
 	 */
 	private JComboBox presetComboBox;
+	/**
+	 * ComboBox for selecting the tag style preset to be used in the tag document, using the default (non user-made) presets.
+	 */
+	private JComboBox defaultPresetsComboBox;
+	
+	/**
+	 * ComboBox for selecting the tag style preset to be used in
+	 * the tag document, from default tag presets
+	 */
+	private JComboBox defaultPresetComboBox;
 	/**
 	 * {@link PresetManager} that handles the tag styles presets.
 	 */
@@ -110,8 +114,6 @@ public class NewTagPanel extends JPanel {
 	 * <li>the {@link #getEmptyRadio() radio button} that indicates that the
 	 * {@link TagDocument tag document} should contain no {@link TagStyle
 	 * style},</li>
-	 * <li>the {@link #getDefaultSleepRadio() radio button} that indicates that
-	 * the tag document should contain the default sleep styles,</li>
 	 * <li>the {@link #getFromFileRadio() radio button} that indicates that the
 	 * tag document should contain the same styles as in the selected file</li>
 	 * </ul>
@@ -126,12 +128,14 @@ public class NewTagPanel extends JPanel {
 		radioGroup = new ButtonGroup();
 
 		add(getEmptyRadio());
-		add(getDefaultSleepRadio());
+		add(getDefaultPresetsRadioPanel());
 		add(getPresetRadioPanel());
 		add(getFromFileRadio());
 
-		getDefaultSleepRadio().setSelected(true);
+		//getEmptyRadio().setSelected(true);
 		getPresetComboBox().setEnabled(false);
+		getDefaultPresetComboBox().setEnabled(false);
+		getDefaultPresetComboBox().setSelectedIndex(0);
 
 		getFileChooser().setVisible(false);
 		add(getFileChooser());
@@ -156,22 +160,39 @@ public class NewTagPanel extends JPanel {
 	}
 
 	/**
-	 * Returns the radio button that indicates that the {@link TagDocument tag
-	 * document} should contain the default sleep {@link TagStyle styles}.
-	 * If the button doesn't exist it is created and added to the radio group.
-	 * @return the radio button that indicates that the tag document
-	 * should contain the default sleep styles
+	 * Returns the panel containing the radio button that indicated that
+	 * the tag document should use the tag styles from the defaults selection
+	 * and a ComboBox for preset selection.
+	 * @return a radio button plus ComboBox for default preset selection
 	 */
-	public JRadioButton getDefaultSleepRadio() {
-		if (defaultSleepRadio == null) {
-			defaultSleepRadio = new JRadioButton();
-			defaultSleepRadio.setText(_("Use standard sleep staging styles"));
-			defaultSleepRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
-			radioGroup.add(defaultSleepRadio);
-		}
-		return defaultSleepRadio;
+	public JPanel getDefaultPresetsRadioPanel() {
+		JPanel panel = new JPanel(new BorderLayout(5, 5));
+		panel.setBorder(new EmptyBorder(0, 0, 0, 6));
+		panel.add(getDefaultPresetsRadio(), BorderLayout.WEST);
+		panel.add(getDefaultPresetComboBox(), BorderLayout.CENTER);
+		panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		return panel;
 	}
+	
+	public JRadioButton getDefaultPresetsRadio() {
+		if (defaultPresetsRadio == null) {
+			defaultPresetsRadio = new JRadioButton();
+			defaultPresetsRadio.setText(_("Default presets"));
+			defaultPresetsRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
+			radioGroup.add(defaultPresetsRadio);
+			
+			
+			defaultPresetsRadio.addItemListener(new ItemListener() {
 
+				public void itemStateChanged(ItemEvent e) {
+					getDefaultPresetComboBox().setEnabled(e.getStateChange() == ItemEvent.SELECTED);
+				}
+
+			});
+		}
+		return defaultPresetsRadio;
+	}
+	
 	/**
 	 * Returns the panel containing the radio button that indicated that
 	 * the tag document should use the tag styles from the selected preset
@@ -195,7 +216,7 @@ public class NewTagPanel extends JPanel {
 	public JRadioButton getPresetRadio() {
 		if (presetRadio == null) {
 			presetRadio = new JRadioButton();
-			presetRadio.setText(_("Use styles from selected styles preset"));
+			presetRadio.setText(_("User created presets"));
 			presetRadio.setAlignmentX(Component.LEFT_ALIGNMENT);
 			radioGroup.add(presetRadio);
 
@@ -284,6 +305,19 @@ public class NewTagPanel extends JPanel {
 			presetComboBox.setPreferredSize(new Dimension(200, 10));
 		}
 		return presetComboBox;
+	}
+	
+	/**
+	 * Returns a ComboBox containing available default tag style presets.
+	 * @return ComboBox for tag style preset selection
+	 */
+	public JComboBox getDefaultPresetComboBox() {
+		if (defaultPresetsComboBox == null) {
+			defaultPresetsComboBox = new JComboBox(TagDocument.DEFAULT_TAG_DOCUMENTS_STYLE_NAMES);
+			defaultPresetsComboBox.setAlignmentX(Component.LEFT_ALIGNMENT);
+			defaultPresetsComboBox.setPreferredSize(new Dimension(200, 10));
+		}
+		return defaultPresetsComboBox;
 	}
 
 }

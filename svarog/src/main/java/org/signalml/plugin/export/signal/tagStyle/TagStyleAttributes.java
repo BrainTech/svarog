@@ -19,7 +19,7 @@ public class TagStyleAttributes {
 	 * Constructor.
 	 */
 	public TagStyleAttributes() {
-		attributes = new ArrayList<TagStyleAttributeDefinition>();
+		attributes = new ArrayList<>();
 	}
 
 	/**

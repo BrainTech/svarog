@@ -1,13 +1,12 @@
 package org.signalml.app.util.logging;
 
+import static java.lang.String.format;
+import java.util.HashMap;
+import java.util.Map;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Priority;
 import org.apache.log4j.spi.LoggingEvent;
-import java.util.Map;
-import java.util.HashMap;
-
-import static java.lang.String.format;
 
 /**
  * Colour-coded console appender for Log4J.

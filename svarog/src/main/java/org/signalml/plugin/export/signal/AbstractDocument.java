@@ -8,7 +8,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.DocumentView;
 
@@ -28,7 +27,7 @@ public abstract class AbstractDocument implements Document {
 	/**
 	 * list of documents dependent from this one
 	 */
-	protected List<Document> dependants = new LinkedList<Document>();
+	protected List<Document> dependants = new LinkedList<>();
 	/**
 	 * the view for this document
 	 */

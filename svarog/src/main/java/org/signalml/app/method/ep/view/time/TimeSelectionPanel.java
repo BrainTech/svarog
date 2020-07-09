@@ -1,13 +1,10 @@
 package org.signalml.app.method.ep.view.time;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.JLabel;
 import javax.swing.SpinnerNumberModel;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 import org.signalml.app.view.common.components.panels.LabeledComponentsPanel;
 import org.signalml.app.view.common.components.spinners.FloatSpinner;
@@ -43,7 +40,7 @@ public class TimeSelectionPanel extends LabeledComponentsPanel {
 
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Start time [sec]")), getStartTimeSpinner()));
 		components.add(new ComponentWithLabel(new JLabel(_("Length [sec]")), getLengthSpinner()));

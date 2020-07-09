@@ -4,6 +4,7 @@
 
 package org.signalml.app.method.mp5;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.view.signal.SignalPlot;
@@ -14,8 +15,6 @@ import org.signalml.domain.signal.space.SegmentedSampleSourceFactory;
 import org.signalml.domain.signal.space.SignalSpace;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.plugin.export.SignalMLException;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** MP5ApplicationData
  *

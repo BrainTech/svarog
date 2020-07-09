@@ -26,7 +26,7 @@ public class PredefinedFiltersConfiguration<FilterDefinition extends SampleFilte
 	 * a list containing predefined filters which can be used on
 	 * signals having the given sampling frequency
 	 */
-	private List<FilterDefinition> predefinedFilters = new ArrayList<FilterDefinition>();
+	private List<FilterDefinition> predefinedFilters = new ArrayList<>();
 	/**
 	 * a filter which can be used as a starting point when designing
 	 * a new (custom) filter

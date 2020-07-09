@@ -4,18 +4,13 @@
 
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;
-
-import org.springframework.validation.Errors;
 
 /** MP5ToolConfigDialog
  *

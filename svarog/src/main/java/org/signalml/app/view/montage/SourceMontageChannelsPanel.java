@@ -3,17 +3,14 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.model.montage.SourceMontageTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.SourceMontage;
 
 /** EditFixedMontagePanel

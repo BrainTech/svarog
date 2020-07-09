@@ -2,7 +2,6 @@ package org.signalml.app.model.components;
 
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import org.signalml.app.view.signal.SignalPlot;
 import org.signalml.domain.montage.Montage;
 
@@ -11,7 +10,6 @@ import org.signalml.domain.montage.Montage;
  *
  * @author Mateusz Kruszyński &copy; 2011 CC Titanis
  */
-
 public class ChannelsPlotOptionsModel implements ChangeListener {
 
 	/**
@@ -36,14 +34,13 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	/**
 	 * Initializes model for every channel
 	 *
-	 * @param numOfChannels
-	 *            number of channels models to be initialized
+	 * @param numOfChannels number of channels models to be initialized
 	 */
 	public void reset(int numOfChannels) {
 		channelsOptions = new ChannelPlotOptionsModel[numOfChannels];
 		for (int i = 0; i < channelsOptions.length; i++) {
-			channelsOptions[i] = new ChannelPlotOptionsModel(this, this.plot
-					.getValueScaleRangeModel().getRealValue());
+			double scale_value = this.plot.getValueScaleRangeModel().getRealValue();
+			channelsOptions[i] = new ChannelPlotOptionsModel(this, scale_value);
 		}
 	}
 
@@ -52,8 +49,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 * can be found in the oldMontage and in the previous channelOptions, it is
 	 * copied from there.
 	 *
-	 * @param numOfChannels
-	 *            number of channels models to be initialized.
+	 * @param numOfChannels number of channels models to be initialized.
 	 */
 	public void resetOnlyWhatsNecessary(Montage oldMontage, Montage newMontage) {
 
@@ -62,11 +58,12 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 		for (int i = 0; i < newChannelsOptions.length; i++) {
 			int previousIndex = oldMontage.getMontageChannelIndex(newMontage
 					.getMontageChannelLabelAt(i));
-			if (previousIndex == -1 || channelsOptions.length <= previousIndex)
+			if (previousIndex == -1 || channelsOptions.length <= previousIndex) {
 				newChannelsOptions[i] = new ChannelPlotOptionsModel(this,
 						this.plot.getValueScaleRangeModel().getRealValue());
-			else
+			} else {
 				newChannelsOptions[i] = channelsOptions[previousIndex];
+			}
 		}
 		channelsOptions = newChannelsOptions;
 	}
@@ -74,12 +71,11 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	/**
 	 * Updates child models with given scale value.
 	 *
-	 * @param scaleValue
-	 *            parent plot's scale value
+	 * @param scaleValue parent plot's scale value
 	 */
 	public void globalScaleChanged(double scaleValue) {
-		for (int i = 0; i < channelsOptions.length; i++) {
-			channelsOptions[i].globalScaleChanged(scaleValue);
+		for (ChannelPlotOptionsModel channelOptions : channelsOptions) {
+			channelOptions.globalScaleChanged(scaleValue);
 		}
 	}
 
@@ -94,8 +90,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	/**
 	 * Returns channel model for given index
 	 *
-	 * @param index
-	 *            channel's index for which the model will be returned
+	 * @param index channel's index for which the model will be returned
 	 * @returns channel options model
 	 */
 	public ChannelPlotOptionsModel getModelAt(int index) {
@@ -118,22 +113,27 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 */
 	public int getVisibleChannelsCount() {
 		int cnt = 0;
-		for (int i = 0; i < this.channelsOptions.length; i++)
-			if (this.channelsOptions[i].getVisible())
+		for (ChannelPlotOptionsModel channelOptions : this.channelsOptions) {
+			if (channelOptions.getVisible()) {
 				cnt++;
+			}
+		}
 		return cnt;
 	}
 
 	/**
 	 * Fired by parent plot's value scale model. Updates child models.
 	 *
-	 * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+	 * @see
+	 * javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
 	 */
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		Object source = e.getSource();
-		if (source == plot.getValueScaleRangeModel())
-			this.globalScaleChanged(plot.getValueScaleRangeModel().getRealValue());
+		if (source == plot.getValueScaleRangeModel()) {
+			double scale_value = plot.getValueScaleRangeModel().getRealValue();
+			this.globalScaleChanged(scale_value);
+		}
 
 	}
 
@@ -141,8 +141,7 @@ public class ChannelsPlotOptionsModel implements ChangeListener {
 	 * Returns the number of pixels for a specified channel. If this channel
 	 * uses local scale, the value calculated
 	 *
-	 * @param channel
-	 *            channel number
+	 * @param channel channel number
 	 * @return pixels per value for the given channel
 	 */
 	public double getPixelsPerValue(int channel) {

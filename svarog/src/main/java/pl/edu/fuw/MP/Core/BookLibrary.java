@@ -10,7 +10,6 @@
 package pl.edu.fuw.MP.Core;
 
 import java.io.*;
-
 import org.signalml.domain.book.StandardBookSegment;
 
 public class BookLibrary implements BookLibraryInterface {
@@ -26,15 +25,13 @@ public class BookLibrary implements BookLibraryInterface {
 
 	private void convertPhase() {
 		float df=(float)(2.0*Math.PI/head.signal_size);
-		for (int i=0 ; i<atoms.length ; i++)
-			if (atoms[i].scale!=0) {
-				float freq=df*atoms[i].frequency;
-				atoms[i].phase=Utils.HmppPhase(freq,atoms[i].position,
-											   atoms[i].phase);
-				atoms[i].truePhase=Utils.RawPhase(freq,atoms[i].position,
-												  atoms[i].phase);
-
+		for (BookAtom atom : atoms) {
+			if (atom.scale != 0) {
+				float freq = df * atom.frequency;
+				atom.phase = Utils.HmppPhase(freq, atom.position, atom.phase);
+				atom.truePhase = Utils.RawPhase(freq, atom.position, atom.phase);
 			}
+		}
 	}
 
 	public String getDate() {

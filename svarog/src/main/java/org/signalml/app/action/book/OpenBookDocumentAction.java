@@ -3,17 +3,15 @@
  */
 package org.signalml.app.action.book;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import org.apache.log4j.Logger;
-
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
@@ -44,9 +42,9 @@ public class OpenBookDocumentAction extends AbstractSignalMLAction {
 	 */
 	public OpenBookDocumentAction() {
 		super();
-		setText(_("Open book"));
+		setText(_("Load results"));
 		setIconPath("org/signalml/app/icon/fileopen.png");
-		setToolTip(_("Open a book document from a file"));
+		setToolTip(_("Open MP decomposition from a file"));
 		setMnemonic(KeyEvent.VK_B);
 	}
 

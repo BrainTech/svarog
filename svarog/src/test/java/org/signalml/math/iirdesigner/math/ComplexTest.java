@@ -5,11 +5,9 @@
 package org.signalml.math.iirdesigner.math;
 
 import org.apache.commons.math.complex.Complex;
-
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertEquals;
 
 /**
  * This class performes unit tests on {@link org.apache.commons.math.complex.Complex}.

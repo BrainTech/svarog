@@ -4,14 +4,12 @@
 
 package org.signalml.app.action.tag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.signal.SignalDocument;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.signal.SignalView;
 import org.signalml.app.view.signal.popup.CompareTagsPopupDialog;
 import org.signalml.app.view.tag.comparison.TagComparisonDialog;

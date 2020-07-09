@@ -5,13 +5,11 @@ package org.signalml.app.view.signal.roc;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumnModel;
-
 import org.signalml.app.action.components.ExportToClipboardAction;
 import org.signalml.app.action.document.ExportToFileAction;
 import org.signalml.app.model.components.TableToTextExporter;

@@ -1,7 +1,6 @@
 package org.signalml.plugin.method.helper;
 
 import java.io.File;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.plugin.data.method.PluginMethodWithWorkDirConfiguration;

@@ -4,16 +4,14 @@
 
 package org.signalml.app.document.signal;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.signal.SignalChecksumWorker;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.plugin.export.SignalMLException;
@@ -40,7 +38,7 @@ public abstract class AbstractFileSignal extends AbstractSignal implements FileB
 	 * {@link SignalChecksum checksums} with the calculated checksums
 	 * for this signal
 	 */
-	protected HashMap<String,SignalChecksum> checksums = new HashMap<String,SignalChecksum>();
+	protected HashMap<String,SignalChecksum> checksums = new HashMap<>();
 
 	/**
 	 * the {@link SignalChecksumWorker worker} responsible for calculating

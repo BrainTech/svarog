@@ -7,9 +7,8 @@ package org.signalml.domain.book;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import org.signalml.util.Util;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
+import org.signalml.util.Util;
 
 /** DefaultMutableBook
  *
@@ -42,7 +41,7 @@ public class DefaultMutableBook extends AbstractMutableBook implements MutableBo
 
 		this.samplingFrequency = samplingFrequency;
 
-		segments = new ArrayList<MutableBookSegment[]>();
+		segments = new ArrayList<>();
 		this.channelCount = channelCount;
 		this.channelLabels = new String[channelCount];
 		for (int i=0; i<channelCount; i++) {
@@ -299,7 +298,7 @@ public class DefaultMutableBook extends AbstractMutableBook implements MutableBo
 
 	@Override
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

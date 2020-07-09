@@ -3,10 +3,9 @@
  */
 package org.signalml.app.view.montage.filters.charts.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * A chart panel containing the FFT frequency response chart panel

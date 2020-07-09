@@ -4,20 +4,20 @@
 package org.signalml.app;
 
 import com.alee.laf.WebLookAndFeel;
-import static java.lang.String.format;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.Annotations;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import static java.lang.String.format;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Locale;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.SwingUtilities;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
 import org.apache.commons.cli.HelpFormatter;
@@ -44,6 +44,7 @@ import org.signalml.app.document.mrud.DefaultMRUDRegistry;
 import org.signalml.app.document.mrud.MRUDEntry;
 import org.signalml.app.document.signal.RawSignalMRUDEntry;
 import org.signalml.app.document.signal.SignalMLMRUDEntry;
+import org.signalml.app.logging.SvarogLoggingConfigurer;
 import org.signalml.app.method.ApplicationMethodDescriptor;
 import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.MethodPresetManager;
@@ -61,10 +62,13 @@ import org.signalml.app.util.MatlabUtil;
 import org.signalml.app.util.PreferenceName;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.util.logging.DebugHelpers;
+import org.signalml.app.video.VideoStreamManager;
 import org.signalml.app.view.common.dialogs.SplashScreen;
 import org.signalml.app.view.workspace.ViewerElementManager;
 import org.signalml.app.view.workspace.ViewerMainFrame;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
 import org.signalml.codec.DefaultSignalMLCodecManager;
 import org.signalml.codec.SignalMLCodecManager;
 import org.signalml.domain.montage.system.ChannelFunction;
@@ -87,21 +91,17 @@ import org.signalml.util.Util;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.Log4jConfigurer;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-import org.signalml.app.logging.SvarogLoggingConfigurer;
-import org.signalml.app.video.VideoStreamManager;
-import org.signalml.app.worker.monitor.ObciServerCapabilities;
-
 /**
  * The Svarog application.
  *
  * This is a singleton.
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ * Sp. z o.o.
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogApplication implements java.lang.Runnable {
+
 	protected static final Logger logger = Logger.getLogger(SvarogApplication.class);
 
 	private static SvarogApplication Instance = null;
@@ -130,14 +130,25 @@ public class SvarogApplication implements java.lang.Runnable {
 	private SplashScreen splashScreen = null;
 	private boolean molTest = false;
 
-	/** {@link ViewerElementManager} shared instance. */
+	/**
+	 * {@link ViewerElementManager} shared instance.
+	 */
 	private ViewerElementManager viewerElementManager;
 
-	/** This static boolean indicates whether {@link #main(String[]) static void main(String[])} was already called. */
+	/**
+	 * This static boolean indicates whether
+	 * {@link #main(String[]) static void main(String[])} was already called.
+	 */
 	private static boolean mainCalled = false;
-	/** This boolean Indicates whether {@link #run() void run()} was already called. */
+	/**
+	 * This boolean Indicates whether {@link #run() void run()} was already
+	 * called.
+	 */
 	private boolean runCalled = false;
-	/** Command line arguments (as passed to {@link #main(String[]) static void main(String[])}). */
+	/**
+	 * Command line arguments (as passed to
+	 * {@link #main(String[]) static void main(String[])}).
+	 */
 	private String[] cmdLineArgs;
 
 	/**
@@ -159,8 +170,9 @@ public class SvarogApplication implements java.lang.Runnable {
 			throw new IllegalStateException(errorMsg);
 		} else {
 			synchronized (SvarogApplication.class) {
-				if (mainCalled)
+				if (mainCalled) {
 					throw new IllegalStateException(errorMsg);
+				}
 				mainCalled = true;
 			}
 		}
@@ -192,10 +204,10 @@ public class SvarogApplication implements java.lang.Runnable {
 	 * Put all -Dproperty=value into System properties.
 	 *
 	 */
-	private static void _install_properties(String...args) {
+	private static void _install_properties(String... args) {
 		Pattern p = Pattern.compile("-D([a-zA-Z0-9_.]+?)=(.+)");
 
-		for (String arg: args)
+		for (String arg : args) {
 			if (arg.startsWith("-D")) {
 				Matcher m = p.matcher(arg);
 				if (!m.matches()) {
@@ -207,10 +219,12 @@ public class SvarogApplication implements java.lang.Runnable {
 				logger.debug(format("installing property %s=%s", name, value));
 				System.getProperties().setProperty(name, value);
 			}
+		}
 	}
 
 	/**
-	 * Creates the shared instance, starts it in a separate thread and waits for it to complete.
+	 * Creates the shared instance, starts it in a separate thread and waits for
+	 * it to complete.
 	 *
 	 * @see Thread#join()
 	 */
@@ -247,8 +261,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	@Override
 	/**
-	 * This makes some simple checks, prints some debug information to
-	 * standard error and calls {@link #_run}.
+	 * This makes some simple checks, prints some debug information to standard
+	 * error and calls {@link #_run}.
 	 */
 	public void run() {
 		final String errorMsg = "run() already called!";
@@ -257,8 +271,9 @@ public class SvarogApplication implements java.lang.Runnable {
 			throw new IllegalStateException(errorMsg);
 		} else {
 			synchronized (this) {
-				if (runCalled)
+				if (runCalled) {
 					throw new IllegalStateException(errorMsg);
+				}
 				runCalled = true;
 			}
 		}
@@ -291,9 +306,11 @@ public class SvarogApplication implements java.lang.Runnable {
 		options.addOption("m", "moltest", false, "include test method");
 		options.addOption("D", true, "define java property (allowed multiple times)");
 
-		for (String arg: args)
-			if (arg.equals("-h") || arg.equals("--help"))
+		for (String arg : args) {
+			if (arg.equals("-h") || arg.equals("--help")) {
 				_print_help_and_exit(options);
+			}
+		}
 
 		CommandLine line = null;
 		try {
@@ -303,11 +320,13 @@ public class SvarogApplication implements java.lang.Runnable {
 			System.exit(1);
 		}
 
-		if (line.hasOption("help"))
+		if (line.hasOption("help")) {
 			_print_help_and_exit(options);
+		}
 
-		if (line.hasOption("moltest"))
+		if (line.hasOption("moltest")) {
 			molTest = true;
+		}
 
 		// system properties override file configuration
 		new PropertyConfigurator().configure(System.getProperties());
@@ -327,23 +346,23 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		Util.dumpDebuggingInfo();
 
+		// TODO check nested modal dialogs
+		// setupGUIExceptionHandler();
+		try {
+			SwingUtilities.invokeAndWait(() -> {
+				WebLookAndFeel.install();
+			});
+		} catch (InterruptedException | InvocationTargetException ex) {
+			logger.error("Initializing L&F failed", ex);
+		}
+
+		// Weblaf changes locale options.
 		LocaleContextHolder.setLocale(locale);
 		Locale.setDefault(locale);
 		SvarogI18n.setLocale(locale);
 
 		logger.debug("Locale set to [" + locale.toString() + "]");
 		logger.debug("Application starting");
-
-		// TODO check nested modal dialogs
-		// setupGUIExceptionHandler();
-
-		try {
-			SwingUtilities.invokeAndWait(() -> {
-				WebLookAndFeel.install();
-			});
-		} catch (InterruptedException|InvocationTargetException ex) {
-			logger.error("Initializing L&F failed", ex);
-		}
 
 		if (!line.hasOption("nosplash")) {
 			try {
@@ -374,7 +393,7 @@ public class SvarogApplication implements java.lang.Runnable {
 					createMainFrame();
 				}
 			});
-		} catch (InterruptedException|InvocationTargetException ex) {
+		} catch (InterruptedException | InvocationTargetException ex) {
 			logger.fatal("Failed to create GUI", ex);
 			System.exit(1);
 		}
@@ -394,13 +413,13 @@ public class SvarogApplication implements java.lang.Runnable {
 					splashScreen.setVisible(false);
 					splashScreen.dispose();
 					splashScreen = null;
-				}				
+				}
 
 			}
 		});
 
 		logger.debug("SvarogApplication._run complete!");
-		
+
 	}
 
 	private static void _init_logging() {
@@ -494,25 +513,25 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		streamer = XMLUtils.getDefaultStreamer();
 		Annotations.configureAliases(streamer,
-									 ApplicationConfiguration.class,
-									 ZoomSignalSettings.class,
-									 GeneralConfiguration.class,
-									 MainFrameConfiguration.class,
-									 SignalMLCodecConfiguration.class,
-									 SignalMLCodecDescriptor.class,
-									 MRUDConfiguration.class,
-									 MRUDEntry.class,
-									 SignalMLDescriptor.class,
-									 SignalMLMRUDEntry.class,
-									 RawSignalMRUDEntry.class,
-									 RawSignalDescriptor.class,
-									 ChannelFunction.class,
-									 MethodPresetManager.class,
-									 MP5Parameters.class,
-									 MP5Data.class,
-									 MP5ApplicationData.class,
-									 EvokedPotentialParameters.class
-									);
+				ApplicationConfiguration.class,
+				ZoomSignalSettings.class,
+				GeneralConfiguration.class,
+				MainFrameConfiguration.class,
+				SignalMLCodecConfiguration.class,
+				SignalMLCodecDescriptor.class,
+				MRUDConfiguration.class,
+				MRUDEntry.class,
+				SignalMLDescriptor.class,
+				SignalMLMRUDEntry.class,
+				RawSignalMRUDEntry.class,
+				RawSignalDescriptor.class,
+				ChannelFunction.class,
+				MethodPresetManager.class,
+				MP5Parameters.class,
+				MP5Data.class,
+				MP5ApplicationData.class,
+				EvokedPotentialParameters.class
+		);
 
 		streamer.setMode(XStream.NO_REFERENCES);
 
@@ -526,13 +545,13 @@ public class SvarogApplication implements java.lang.Runnable {
 		applicationConfig.setStreamer(streamer);
 		ConfigurationDefaults.setApplicationConfigurationDefaults(applicationConfig);
 		applicationConfig.maybeReadFromPersistence(
-			"Application config not found - will use defaults",
-			"Failed to read application configuration - will use defaults");
+				"Application config not found - will use defaults",
+				"Failed to read application configuration - will use defaults");
 		applicationConfig.applySystemSettings();
 
 		String sentryDsn = applicationConfig.getSentryDsn();
 		String sentrySite = applicationConfig.getSentrySite();
-		
+
 		SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn, sentrySite);
 
 		splash(_("Initializing codecs"), true);
@@ -619,8 +638,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 				try {
 					exampleMethod = (ExampleMethod) methodManager.registerMethod(ExampleMethod.class);
-					ExampleMethodDescriptor exampleMethodDescriptor =
-						new ExampleMethodDescriptor(exampleMethod);
+					ExampleMethodDescriptor exampleMethodDescriptor
+							= new ExampleMethodDescriptor(exampleMethod);
 					methodManager.setMethodData(exampleMethod, exampleMethodDescriptor);
 				} catch (SignalMLException ex) {
 					logger.error("Failed to create example method", ex);
@@ -631,8 +650,8 @@ public class SvarogApplication implements java.lang.Runnable {
 				}
 
 			} catch (Throwable t) {
-				UnavailableMethodDescriptor descriptor =
-					new UnavailableMethodDescriptor(ExampleMethodDescriptor.RUN_METHOD_STRING, t);
+				UnavailableMethodDescriptor descriptor
+						= new UnavailableMethodDescriptor(ExampleMethodDescriptor.RUN_METHOD_STRING, t);
 				methodManager.addUnavailableMethod(descriptor);
 			}
 		}
@@ -642,7 +661,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 			try {
 				mp5Method = (MP5Method) methodManager.registerMethod(MP5Method.class);
-				mp5Method.setTempDirectory(profileDir);
+				Path mp5TempDir = Files.createTempDirectory("svarog_mp");
+				mp5Method.setTempDirectory(mp5TempDir.toFile());
 				mp5Method.setExecutorLocator(mp5ExecutorManager);
 				MP5MethodDescriptor mp5Descriptor = new MP5MethodDescriptor(mp5Method);
 				methodManager.setMethodData(mp5Method, mp5Descriptor);
@@ -655,8 +675,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 
 		} catch (Throwable t) {
-			UnavailableMethodDescriptor descriptor =
-				new UnavailableMethodDescriptor(MP5MethodDescriptor.RUN_METHOD_STRING, t);
+			UnavailableMethodDescriptor descriptor
+					= new UnavailableMethodDescriptor(MP5MethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
@@ -665,8 +685,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 			try {
 				evokedPotentialMethod = (EvokedPotentialMethod) methodManager.registerMethod(EvokedPotentialMethod.class);
-				EvokedPotentialMethodDescriptor evokedPotentialDescriptor =
-					new EvokedPotentialMethodDescriptor(evokedPotentialMethod);
+				EvokedPotentialMethodDescriptor evokedPotentialDescriptor
+						= new EvokedPotentialMethodDescriptor(evokedPotentialMethod);
 				methodManager.setMethodData(evokedPotentialMethod, evokedPotentialDescriptor);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to create evoked potential method", ex);
@@ -677,8 +697,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 
 		} catch (Throwable t) {
-			UnavailableMethodDescriptor descriptor =
-				new UnavailableMethodDescriptor(EvokedPotentialMethodDescriptor.RUN_METHOD_STRING, t);
+			UnavailableMethodDescriptor descriptor
+					= new UnavailableMethodDescriptor(EvokedPotentialMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
@@ -687,8 +707,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 			try {
 				bookAverageMethod = (BookAverageMethod) methodManager.registerMethod(BookAverageMethod.class);
-				BookAverageMethodDescriptor bookAverageDescriptor =
-					new BookAverageMethodDescriptor(bookAverageMethod);
+				BookAverageMethodDescriptor bookAverageDescriptor
+						= new BookAverageMethodDescriptor(bookAverageMethod);
 				methodManager.setMethodData(bookAverageMethod, bookAverageDescriptor);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to create book average method", ex);
@@ -699,8 +719,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 
 		} catch (Throwable t) {
-			UnavailableMethodDescriptor descriptor =
-				new UnavailableMethodDescriptor(BookAverageMethodDescriptor.RUN_METHOD_STRING, t);
+			UnavailableMethodDescriptor descriptor
+					= new UnavailableMethodDescriptor(BookAverageMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
@@ -709,8 +729,8 @@ public class SvarogApplication implements java.lang.Runnable {
 
 			try {
 				bookToTagMethod = (BookToTagMethod) methodManager.registerMethod(BookToTagMethod.class);
-				BookToTagMethodDescriptor bookToTagDescriptor =
-					new BookToTagMethodDescriptor(bookToTagMethod);
+				BookToTagMethodDescriptor bookToTagDescriptor
+						= new BookToTagMethodDescriptor(bookToTagMethod);
 				methodManager.setMethodData(bookToTagMethod, bookToTagDescriptor);
 			} catch (SignalMLException ex) {
 				logger.error("Failed to create book to tag method", ex);
@@ -721,8 +741,8 @@ public class SvarogApplication implements java.lang.Runnable {
 			}
 
 		} catch (Throwable t) {
-			UnavailableMethodDescriptor descriptor =
-				new UnavailableMethodDescriptor(BookToTagMethodDescriptor.RUN_METHOD_STRING, t);
+			UnavailableMethodDescriptor descriptor
+					= new UnavailableMethodDescriptor(BookToTagMethodDescriptor.RUN_METHOD_STRING, t);
 			methodManager.addUnavailableMethod(descriptor);
 		}
 
@@ -812,7 +832,7 @@ public class SvarogApplication implements java.lang.Runnable {
 						presetManager.writeToPersistence(null);
 					} catch (Exception ex) {
 						logger.error("Failed to write preset manager for method ["
-									 + method.getName() + "]", ex);
+								+ method.getName() + "]", ex);
 					}
 				}
 			}
@@ -844,18 +864,23 @@ public class SvarogApplication implements java.lang.Runnable {
 		return signalMLCodecManager;
 	}
 
-	/** {@link #elementManager} getter. */
+	/**
+	 * {@link #elementManager} getter.
+	 */
 	public ViewerElementManager getViewerElementManager() {
 		return viewerElementManager;
 	}
 
-	/** {@link #elementManager} setter. */
+	/**
+	 * {@link #elementManager} setter.
+	 */
 	private void setViewerElementManager(ViewerElementManager m) {
 		this.viewerElementManager = m;
 	}
 
 	/**
 	 * Returns the {@link ApplicationConfiguration} used for Svarog.
+	 *
 	 * @return the {@link ApplicationConfiguration} used.
 	 */
 	public static ApplicationConfiguration getApplicationConfiguration() {
@@ -864,6 +889,7 @@ public class SvarogApplication implements java.lang.Runnable {
 
 	/**
 	 * Returns the {@link GeneralConfiguration} used for Svarog.
+	 *
 	 * @return the {@link GeneralConfiguration} used.
 	 */
 	public static GeneralConfiguration getGeneralConfiguration() {

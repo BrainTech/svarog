@@ -1,12 +1,10 @@
 package org.signalml.plugin.tool;
 
-import java.util.List;
-
-import org.signalml.app.util.XMLUtils;
-import org.signalml.plugin.data.PluginConfig;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.Annotations;
+import java.util.List;
+import org.signalml.app.util.XMLUtils;
+import org.signalml.plugin.data.PluginConfig;
 
 public class PluginStreamCreator {
 

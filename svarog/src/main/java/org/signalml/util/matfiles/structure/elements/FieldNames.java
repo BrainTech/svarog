@@ -4,7 +4,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.util.matfiles.elements.DataElement;
 import org.signalml.util.matfiles.types.DataType;
 
@@ -17,7 +16,7 @@ import org.signalml.util.matfiles.types.DataType;
  */
 public class FieldNames extends DataElement {
 
-	private List<String> fieldNames = new ArrayList<String>();
+	private List<String> fieldNames = new ArrayList<>();
 	private int fieldNameMaximumSize;
 
 	public FieldNames(List<String> fieldNames, int fieldNameMaximumSize) {

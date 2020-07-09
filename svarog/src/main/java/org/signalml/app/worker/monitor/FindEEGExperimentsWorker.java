@@ -2,24 +2,18 @@ package org.signalml.app.worker.monitor;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.SwingWorker;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.AbstractEEGExperimentsMsg;
 import org.signalml.app.worker.monitor.messages.AmplifierType;
-import org.signalml.app.worker.monitor.messages.FindEEGAmplifiersRequest;
 import org.signalml.app.worker.monitor.messages.FindEEGExperimentsRequest;
 import org.signalml.app.worker.monitor.messages.LongRequest;
-import org.signalml.app.worker.monitor.messages.LauncherMessage;
 import org.signalml.app.worker.monitor.messages.MessageType;
 
 public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentDescriptor>> {

@@ -5,13 +5,11 @@ package org.signalml.app.view.workspace;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 import javax.swing.border.EmptyBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.ActionFocusListener;

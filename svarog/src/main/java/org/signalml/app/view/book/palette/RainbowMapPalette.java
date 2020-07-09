@@ -4,12 +4,10 @@
 
 package org.signalml.app.view.book.palette;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import javax.swing.Icon;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.util.Util;
 
 /** RainbowMapPalette

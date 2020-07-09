@@ -5,9 +5,7 @@
 package org.signalml.app.view.signal.popup;
 
 import java.awt.Window;
-
 import javax.swing.JComponent;
-
 import org.signalml.app.view.preferences.SignalZoomSettingsPanel;
 import org.signalml.app.view.signal.ZoomSignalTool;
 import org.signalml.plugin.export.SignalMLException;

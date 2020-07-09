@@ -3,11 +3,9 @@ package org.signalml.domain.signal.export.eeglab;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
@@ -50,7 +48,7 @@ public class EEGLabSignalWriter implements ISignalWriter {
 	 */
 	private SortedSet<Tag> extractTags(SignalDocument signalDocument) {
 		List<TagDocument> tagDocuments = signalDocument.getTagDocuments();
-		SortedSet<Tag> tags = new TreeSet<Tag>();
+		SortedSet<Tag> tags = new TreeSet<>();
 		for (int d = 0; d < tagDocuments.size(); d++)
 			tags.addAll(tagDocuments.get(d).getTagSet().getTags());
 		return tags;
@@ -97,8 +95,8 @@ public class EEGLabSignalWriter implements ISignalWriter {
 		eegStruct.setField("icasphere", new DoubleArray("icasphere", new Double[][] { {} }));
 		eegStruct.setField("icaact", new DoubleArray("icaact", new Double[][] { {} }));
 
-		List<String> keys = new ArrayList<String>();
-		List<AbstractArray> arrays = new ArrayList<AbstractArray>();
+		List<String> keys = new ArrayList<>();
+		List<AbstractArray> arrays = new ArrayList<>();
 
 		keys.add("labels");
 		for (int i = 0; i < channelCount; i++) {
@@ -132,17 +130,16 @@ public class EEGLabSignalWriter implements ISignalWriter {
 	private Structure getEventStruct(double samplingRate) {
 		allTags = extractTags(signalDocument);
 
-		List<String> keys = new ArrayList<String>();
+		List<String> keys = new ArrayList<>();
 		keys.add("type");
 		keys.add("latency");
 		keys.add("duration");
 		keys.add("tag_type");
 		keys.add("channel");
 
-		List<AbstractArray> arrays = new ArrayList<AbstractArray>();
+		List<AbstractArray> arrays = new ArrayList<>();
 
-		for (Iterator<Tag> it = allTags.iterator(); it.hasNext();) {
-			Tag tag = it.next();
+		for (Tag tag : allTags) {
 			arrays.add(new CharacterArray("type", tag.getStyle().getName()));
 			arrays.add(new DoubleArray("latency", new double[] { tag.getPosition() * samplingRate }));
 			arrays.add(new DoubleArray("duration", new double[] { tag.getLength() * samplingRate }));

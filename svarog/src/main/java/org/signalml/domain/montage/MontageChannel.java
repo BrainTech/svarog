@@ -4,15 +4,14 @@
 
 package org.signalml.domain.montage;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a channel of a {@link Montage montage}.
@@ -66,7 +65,7 @@ public class MontageChannel implements Serializable {
 	 */
 	public MontageChannel(SourceChannel primaryChannel) {
 		this.primaryChannel = primaryChannel;
-		referenceMap = new HashMap<SourceChannel, String>();
+		referenceMap = new HashMap<>();
 	}
 
 	/**
@@ -78,7 +77,7 @@ public class MontageChannel implements Serializable {
 		this.primaryChannel = sourceChannels.get(channel.primaryChannel.getChannel());
 		this.label = channel.label;
 		Set<Entry<SourceChannel, String>> entrySet = channel.referenceMap.entrySet();
-		this.referenceMap = new HashMap<SourceChannel, String>(entrySet.size());
+		this.referenceMap = new HashMap<>(entrySet.size());
 		for (Entry<SourceChannel, String> e : entrySet) {
 			this.referenceMap.put(sourceChannels.get(e.getKey().getChannel()), e.getValue());
 		}

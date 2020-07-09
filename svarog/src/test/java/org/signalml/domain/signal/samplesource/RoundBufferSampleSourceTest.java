@@ -4,13 +4,11 @@
 
 package org.signalml.domain.signal.samplesource;
 
-import static org.junit.Assert.*;
-
 import org.junit.After;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 
 /**
  * This class performs unit tests on {@link RoundBufferSampleSource} class.

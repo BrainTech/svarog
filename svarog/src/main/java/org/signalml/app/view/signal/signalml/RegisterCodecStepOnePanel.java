@@ -3,21 +3,18 @@
  */
 package org.signalml.app.view.signal.signalml;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.io.File;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.filechooser.EmbeddedFileChooser;
 import org.signalml.codec.SignalMLCodec;
 

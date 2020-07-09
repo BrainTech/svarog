@@ -4,12 +4,9 @@
 
 package org.signalml.app.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
@@ -19,6 +16,7 @@ import org.signalml.app.method.ApplicationSerializableMethodDescriptor;
 import org.signalml.app.method.MethodConfigurer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.method.mp5.MP5Method;
 import org.signalml.method.mp5.MP5Parameters;
@@ -35,7 +33,7 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 	protected static final Logger logger = Logger.getLogger(MP5MethodDescriptor.class);
 
 	public static final String ICON_PATH = "org/signalml/app/icon/runmethod.png";
-	public static final String RUN_METHOD_STRING = _("MP decomposition");
+	public static final String RUN_METHOD_STRING = _("Decomposition");
 
 	private MP5Method method;
 	private MP5MethodDialog configurer;
@@ -58,7 +56,7 @@ public class MP5MethodDescriptor implements ApplicationMethodDescriptor, Applica
 
 	@Override
 	public String getIconPath() {
-		return ICON_PATH;
+		return null;
 	}
 
 	@Override

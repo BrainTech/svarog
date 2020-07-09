@@ -5,7 +5,6 @@ package org.signalml.app.view.montage;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import javax.swing.DefaultCellEditor;
 import javax.swing.JPopupMenu;
 import javax.swing.JTable;
@@ -14,14 +13,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-
 import org.signalml.app.model.montage.SourceMontageTableModel;
 import org.signalml.app.view.TablePopupMenuProvider;
 import org.signalml.app.view.common.components.cellrenderers.GrayTableCellRenderer;
 import org.signalml.app.view.montage.dnd.SourceMontageTableTransferHandler;
 import org.signalml.domain.montage.SourceChannel;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * The table which allows to edit the labels and functions of

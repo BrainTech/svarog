@@ -146,7 +146,7 @@ public class ArModel {
 	}
 
 	public RealMatrix computeTransferMatrix(double freq, boolean normalize) {
-		FieldMatrix<Complex> S = new Array2DRowFieldMatrix<Complex>(ComplexField.getInstance(), C, C);
+		FieldMatrix<Complex> S = new Array2DRowFieldMatrix<>(ComplexField.getInstance(), C, C);
 		for (int s=0; s<A.length; ++s) {
 			Complex exp = new Complex(0, -2*Math.PI*s*freq/freqSampling).exp();
 			for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
@@ -180,7 +180,7 @@ public class ArModel {
 		}
 
 		FieldMatrix<Complex> Hplus = new FieldLUDecompositionImpl(S).getSolver().getInverse();
-		FieldMatrix<Complex> cV = new Array2DRowFieldMatrix<Complex>(ComplexField.getInstance(), C, C);
+		FieldMatrix<Complex> cV = new Array2DRowFieldMatrix<>(ComplexField.getInstance(), C, C);
 		for (int i=0; i<C; ++i) for (int j=0; j<C; ++j) {
 			cV.setEntry(i, j, new Complex(V.getEntry(i, j), 0));
 			Hplus.setEntry(i, j, H.getEntry(j, i).conjugate());

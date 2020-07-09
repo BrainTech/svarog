@@ -3,13 +3,11 @@
  */
 package org.signalml.method.booktotag;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
@@ -23,7 +21,6 @@ import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.plugin.export.signal.SignalSelectionType;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
-
 import org.springframework.validation.Errors;
 
 /**
@@ -166,7 +163,7 @@ public class BookToTagMethod extends AbstractMethod implements TrackableMethod {
 			resultTagSet.addStyle(blockStyle);
 		}
 
-		if (data.isMakePageTags()) {
+		if (data.isMakeChannelTags()) {
 			channelStyle = new TagStyle(SignalSelectionType.CHANNEL, "C", "Channel", Color.RED, Color.RED, 1, null, null, false);
 			resultTagSet.addStyle(channelStyle);
 		}

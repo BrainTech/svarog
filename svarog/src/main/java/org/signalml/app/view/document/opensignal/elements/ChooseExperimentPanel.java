@@ -1,14 +1,11 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,10 +17,10 @@ import javax.swing.SwingWorker.StateValue;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import org.signalml.app.model.document.opensignal.elements.ChooseExperimentTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.worker.monitor.FindEEGExperimentsWorker;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
@@ -32,7 +29,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 	public static String EXPERIMENT_SELECTED_PROPERTY = "experimentSelectedProperty";
 	private static Logger logger = Logger.getLogger(ChooseExperimentPanel.class);
-	
+
 	protected ChooseExperimentTable chooseExperimentTable;
 	private ChooseExperimentTableModel chooseExperimentTableModel;
 
@@ -57,7 +54,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 	{
 		super.setTitledBorder(_("Choose experiment"));
 	}
-	
+
 	protected void createInterface() {
 		setTitledBorder();
 		chooseExperimentTableModel = getTableModel();
@@ -161,7 +158,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 			chooseExperimentTableModel.clearExperiments();
 		getLogTextField().setText("");
 	}
-	
+
 	public FindEEGExperimentsWorker getWorker(){
 		return new FindEEGExperimentsWorker();
 	}
@@ -171,11 +168,15 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 
 		public RefreshButtonAction() {
 			this.setText(_("Refresh"));
+			start(); // always refresh when the dialog is initialized
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			start();
+		}
 
+		private void start() {
 			synchronized (this) {
 				//only one action should be executed at once.
 				chooseExperimentTableModel.setExperiments(null);
@@ -184,7 +185,7 @@ public class ChooseExperimentPanel extends AbstractPanel implements ListSelectio
 				executing = true;
 				setEnabled(false);
 			}
-			
+
 			worker = getWorker();
 			worker.addPropertyChangeListener(this);
 			getProgressBar().setIndeterminate(true);

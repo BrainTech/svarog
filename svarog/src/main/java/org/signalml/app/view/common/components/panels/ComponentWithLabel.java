@@ -1,7 +1,6 @@
 package org.signalml.app.view.common.components.panels;
 
 import java.awt.Component;
-
 import javax.swing.JLabel;
 
 public class ComponentWithLabel {

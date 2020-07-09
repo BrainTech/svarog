@@ -2,7 +2,6 @@ package org.signalml.plugin.io;
 
 import java.beans.PropertyChangeListener;
 import java.nio.DoubleBuffer;
-
 import org.apache.log4j.Logger;
 import org.signalml.codec.SignalMLCodecException;
 import org.signalml.codec.SignalMLCodecReader;

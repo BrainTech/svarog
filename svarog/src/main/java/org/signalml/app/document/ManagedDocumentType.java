@@ -4,16 +4,13 @@
 
 package org.signalml.app.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.Icon;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.signal.Document;
 import org.springframework.context.MessageSourceResolvable;
 
@@ -164,9 +161,9 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 * @return extension for the given type of document.
 	 */
 	public String[] getAllFileExtensions() {
-		List<String> extensions = new ArrayList<String>();
-		for (int i = 0; i < fileFilterExtensions.length; i++) {
-			for (String ext: fileFilterExtensions[i]) {
+		List<String> extensions = new ArrayList<>();
+		for (String[] fileFilterExtension : fileFilterExtensions) {
+			for (String ext : fileFilterExtension) {
 				extensions.add(ext);
 			}
 		}
@@ -215,9 +212,9 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 			return ManagedDocumentType.MONITOR;
 		}
 		ManagedDocumentType[] all = getAll();
-		for (int i=0; i<all.length; i++) {
-			if (all[i].baseClass.isAssignableFrom(clazz)) {
-				return all[i];
+		for (ManagedDocumentType type : all) {
+			if (type.baseClass.isAssignableFrom(clazz)) {
+				return type;
 			}
 		}
 		return null;

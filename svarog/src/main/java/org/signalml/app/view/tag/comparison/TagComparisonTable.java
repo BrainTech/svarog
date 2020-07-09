@@ -11,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
@@ -22,7 +21,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.event.TableColumnModelEvent;
 import javax.swing.table.TableModel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.components.ExportToClipboardAction;
 import org.signalml.app.action.document.ExportToFileAction;

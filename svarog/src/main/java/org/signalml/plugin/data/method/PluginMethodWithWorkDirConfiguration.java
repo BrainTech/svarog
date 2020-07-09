@@ -1,7 +1,6 @@
 package org.signalml.plugin.data.method;
 
 import java.io.Serializable;
-
 import org.signalml.app.config.preset.Preset;
 
 public abstract class PluginMethodWithWorkDirConfiguration implements Serializable, Preset {

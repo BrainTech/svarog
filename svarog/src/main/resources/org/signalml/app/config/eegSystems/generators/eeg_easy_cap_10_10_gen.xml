@@ -3,7 +3,7 @@
 	<presets>
 		<montageGenerators>
 			<eegSystemName>
-				<eegSystemSymbol>EEG EASY CAP 10_10</eegSystemSymbol>
+				<eegSystemSymbol>EEG 10-10 easy cap</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<generators>

@@ -4,8 +4,6 @@
 
 package org.signalml.app.view.document.monitor.signalchecking;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -25,11 +22,10 @@ import javax.swing.Timer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
-import org.signalml.app.model.montage.ElectrodeType;
 import org.signalml.app.model.montage.MontageDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.montage.visualreference.VisualReferenceModel;
@@ -208,7 +204,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		// the rules from signal or something
 
 		EnumMap<SignalCheckingMethod, HashMap<String, Object>> methodList =
-			new EnumMap<SignalCheckingMethod, HashMap<String, Object>>(SignalCheckingMethod.class);
+			new EnumMap<>(SignalCheckingMethod.class);
 
 		// "amp null" diagnosis is commented out since it uses "idle" parameter
 		// which is currently not being correctly sent by any amplifier
@@ -227,7 +223,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		methodList.put(SignalCheckingMethod.DC, dcNullParameters);
 		*/
 
-		HashMap<String, Object> impedanceParameters = new HashMap<String, Object>();
+		HashMap<String, Object> impedanceParameters = new HashMap<>();
 		impedanceParameters.put(GenericAmplifierDiagnosis.SAMPLES_TESTED_FACTOR, 1.0);
 		methodList.put(SignalCheckingMethod.IMPEDANCE, impedanceParameters);
 
@@ -299,7 +295,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		public TimerClass(CheckSignalDisplay checkSignalDisplay, MonitorSignalDocument monitorSignalDocument, AmplifierValidationRules validationRules) {
 
 			this.checkSignalDisplay = checkSignalDisplay;
-			amplifierDiagnosis = new ArrayList<GenericAmplifierDiagnosis>();
+			amplifierDiagnosis = new ArrayList<>();
 
 			for (SignalCheckingMethod method : validationRules.getMethods().keySet())
 				amplifierDiagnosis.add(AmplifierDignosisManufacture.getAmplifierDiagnosis(method, monitorSignalDocument, validationRules.getMethods().get(method)));
@@ -313,7 +309,7 @@ public class CheckSignalDialog extends AbstractDialog  {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			List<HashMap<String, ChannelState>> channels = new ArrayList<HashMap<String, ChannelState>>();
+			List<HashMap<String, ChannelState>> channels = new ArrayList<>();
 			for (GenericAmplifierDiagnosis diagnosis : amplifierDiagnosis)
 				channels.add(diagnosis.signalState());
 

@@ -13,12 +13,12 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeriesCollection;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.book.wignermap.WignerMapImageProvider;
 import org.signalml.app.view.book.wignermap.WignerMapPalette;
 import org.signalml.app.view.book.wignermap.WignerMapPaletteComboBoxCellRenderer;
 import org.signalml.app.view.book.wignermap.WignerMapScaleComboBoxCellRenderer;
 import org.signalml.domain.book.WignerMapScaleType;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * @author ptr@mimuw.edu.pl

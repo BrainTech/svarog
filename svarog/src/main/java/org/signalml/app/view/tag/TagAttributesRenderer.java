@@ -5,7 +5,6 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -16,6 +15,7 @@ import java.util.List;
 import javax.swing.JComponent;
 import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.tagStyle.TagAttributeValue;
+import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 
 /**
  * Renderer capable of rendering tag attributes on a tag.
@@ -120,10 +120,11 @@ public class TagAttributesRenderer extends JComponent {
 			y += marginTopForMarkers;
 		}
 
-		g.setColor(Color.WHITE);
+    		g.setColor(Color.WHITE);
 		g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 		for (TagAttributeValue a : tag.getAttributes().getAttributesList()) {
-			if (!a.getAttributeDefinition().isVisible()) {
+                        TagStyleAttributeDefinition attrDef = a.getAttributeDefinition();
+			if (!attrDef.isVisible()) {
 				continue;
 			}
 

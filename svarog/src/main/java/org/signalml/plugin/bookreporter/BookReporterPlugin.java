@@ -1,5 +1,6 @@
 package org.signalml.plugin.bookreporter;
 
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.bookreporter.ui.BookReporterPluginAction;
 import org.signalml.plugin.data.PluginConfigForMethod;
 import org.signalml.plugin.exception.PluginException;
@@ -16,8 +17,6 @@ import org.signalml.plugin.tool.PluginResourceRepository;
  * (based on kdr's NewStagerPlugin)
  */
 public class BookReporterPlugin implements Plugin {
-
-	public static final String iconPath = "org/signalml/app/icon/runmethod.png"; //TODO move this elsewhere
 
 	private PluginMethodManager manager;
 
@@ -38,6 +37,7 @@ public class BookReporterPlugin implements Plugin {
 	private void setupGUI(SvarogAccessGUI guiAccess)
 		throws UnsupportedOperationException, PluginException {
 		guiAccess
-			.addButtonToToolsMenu(new BookReporterPluginAction(this.manager));
+			.addSubmenuToAnalysisMenu(_("Matching pursuit"))
+			.add(new BookReporterPluginAction(this.manager));
 	}
 }

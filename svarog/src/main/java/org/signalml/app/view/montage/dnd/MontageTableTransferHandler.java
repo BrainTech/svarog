@@ -9,12 +9,10 @@ import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.Arrays;
-
 import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.view.montage.MontageTable;
 import org.signalml.domain.montage.Montage;
@@ -137,21 +135,18 @@ public class MontageTableTransferHandler extends TransferHandler {
 
 		logger.debug("Testing drop for [" + transferFlavors.length + "] flavors");
 
-		for (int i=0; i<transferFlavors.length; i++) {
-
-			logger.debug("Testing drop for flavor [" + transferFlavors[i].toString() + "]");
-
-			if (transferFlavors[i].equals(sourceFlavor)) {
+		for (DataFlavor transferFlavor : transferFlavors) {
+			logger.debug("Testing drop for flavor [" + transferFlavor.toString() + "]");
+			if (transferFlavor.equals(sourceFlavor)) {
 				logger.debug("Accepted source");
 				return true;
 			}
-			if (transferFlavors[i].equals(montageFlavor)) {
-				if (((MontageChannelsDataFlavor) transferFlavors[i]).isContinuous()) {
+			if (transferFlavor.equals(montageFlavor)) {
+				if (((MontageChannelsDataFlavor) transferFlavor).isContinuous()) {
 					logger.debug("Accepted target");
 					return true;
 				}
 			}
-
 		}
 
 		logger.debug("Nothing interesting in this drop");

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagFile formatVersion="1.0">
+  <paging pageSize="20.0" blocksPerPage="5"/>
+  <tagDefinitions>
+    <defGroup name="pageTags">
+      <tagItem name="REM" description="REM: Rapid Eye Movements, sawtooth waves, transient muscle activity, LAMF EEG without sleep spindes or K-complexes" fillColor="ffffff" outlineColor="ffffff" outlineWidth="1.0" outlineDash="" keyShortcut="R" marker="0" visible="1"/>
+      <tagItem name="1 N1" description="LAMF activity in the 2-7 Hz range." fillColor="ffffff" outlineColor="ffffff" outlineWidth="1.0" outlineDash="" keyShortcut="1" marker="0" visible="1"/>
+      <tagItem name="2 N2" description="N2: sleep spindles and/or K-complexes unassociated with arousals" fillColor="ffffff" outlineColor="ffffff" outlineWidth="1.0" outlineDash="" keyShortcut="2" marker="0" visible="1"/>
+      <tagItem name="3 N3" description="more than 20% of the epoch consists of Slow wave activity: 0.5--2Hz, p2p&gt;75 µV." fillColor="ffffff" outlineColor="110e0e" outlineWidth="1.0" outlineDash="" keyShortcut="3" marker="0" visible="1"/>
+      <tagItem name="M movements" description="Major body movement: movement and muscle artifact obscuring EEG for more than half an epoch to the extent that sleep stage cannot be determined." fillColor="ffffff" outlineColor="ffffff" outlineWidth="1.0" outlineDash="" keyShortcut="M" marker="0" visible="1"/>
+    </defGroup>
+    <defGroup name="blockTags">
+      <tagItem name="A" description="Atrifact (5 blocks per page, all channels)" fillColor="db5c5c" outlineColor="808080" outlineWidth="1.0" outlineDash="" keyShortcut="A" marker="0" visible="1"/>
+    </defGroup>
+    <defGroup name="channelTags">
+      <tagItem name="Sleep spindle" description="The presence of a sleep spindle should not be defined unless it is at least 0.5 sec duration, i.e. one should be able to count 6 or 7 distinct waves within the half-second period. The term should be used only to describe activity between 12 and 14 Hz. " fillColor="00ff00" outlineColor="00ff00" outlineWidth="1.0" outlineDash="" keyShortcut="S" marker="0" visible="1"/>
+      <tagItem name="L sLow Wave" description="Slow Wave Activity: waves of frequency 0.5-2 Hz and p2p amplitude &gt;75 µV, measured over frontal regions referenced to the contralateral ear or mastoid (F4-M1, F3-M2)." fillColor="0000ff" outlineColor="0000ff" outlineWidth="1.0" outlineDash="" keyShortcut="L" marker="0" visible="1"/>
+      <tagItem name="K complex" description="K complex: a well-delineated, negative, sharp wave immediately followed by a positive component standing out K complexes are defined as EEG wave forms having a well delineated negative sharp wave which is immediately folowed by a positive component. The total duration of the complex should not exceed 0.5 sec." fillColor="ffff00" outlineColor="ffff00" outlineWidth="1.0" outlineDash="" keyShortcut="K" marker="0" visible="1"/>
+      <tagItem name="Vertex sharp wave" description="Vertex sharp wave: sharply contoured waves with duration &lt;0.5 seconds, maxima over the central region  and distinguished from the background activity." fillColor="7f7f00" outlineColor="7f7f00" outlineWidth="1.0" outlineDash="" keyShortcut="V" marker="0" visible="1"/>
+      <tagItem name="T sawtooth waves " description="Sawtooth wave: pattern consisting of trains of sharply contoured or triangular, often serrated, 2-6 Hz waves maximal in amplitude over the central head regions and often, but not always, preceding a burst of rapid eye movements." fillColor="ff00ff" outlineColor="ff00ff" outlineWidth="1.0" outlineDash="" keyShortcut="T" marker="0" visible="1"/>
+      <tagItem name="P alPha" description="Alpha rhythm: pattern consisting of trains of sinusoidal 8-13 Hz activity recorded over the occipital region with eye closure and attenuating with eye opening." fillColor="c80000" outlineColor="c80000" outlineWidth="1.0" outlineDash="" keyShortcut="P" marker="0" visible="1"/>
+    </defGroup>
+  </tagDefinitions>
+</tagFile>

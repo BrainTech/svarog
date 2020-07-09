@@ -4,12 +4,11 @@
 
 package org.signalml.domain.montage;
 
-import org.signalml.domain.montage.system.IChannelFunction;
-import java.io.Serializable;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import java.io.Serializable;
 import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.system.EegElectrode;
+import org.signalml.domain.montage.system.IChannelFunction;
 
 /**
  * This class represents a source channel. It has a certain number, name
@@ -23,13 +22,12 @@ public class SourceChannel implements Serializable {
 	/**
 	 * The default name of the left ear channel.
 	 */
-	public static final String LEFT_EAR_CHANNEL_NAME = "A1";
-	public static final String LEFT_EAR_CHANNEL_NAME_ALTERNATIVE = "M1";
+	public static final String[] LEFT_EAR_CHANNEL_NAMES = {"A1", "M1", "EEG A1", "EEG M1"};
 	/**
 	 * The default name of the right ear channel.
 	 */
-	public static final String RIGHT_EAR_CHANNEL_NAME = "A2";
-	public static final String RIGHT_EAR_CHANNEL_NAME_ALTERNATIVE = "M2";
+	public static final String[] RIGHT_EAR_CHANNEL_NAMES = {"A2", "M2", "EEG A2", "EEG M2"};
+
 
 	private static final long serialVersionUID = 1L;
 

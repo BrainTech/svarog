@@ -3,17 +3,15 @@
  */
 package org.signalml.app.config;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import com.thoughtworks.xstream.converters.ConversionException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.util.XMLUtils;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import com.thoughtworks.xstream.converters.ConversionException;
 
 /**
  * AbstractXMLConfiguration

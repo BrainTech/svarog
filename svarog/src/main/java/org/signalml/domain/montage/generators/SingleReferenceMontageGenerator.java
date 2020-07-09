@@ -5,15 +5,14 @@
 package org.signalml.domain.montage.generators;
 
 import org.signalml.app.model.components.validation.ValidationErrors;
-import org.signalml.domain.montage.system.ChannelType;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.springframework.validation.Errors;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
+import org.signalml.domain.montage.system.ChannelType;
 
 /**
  * This class represents a generator for a single reference montage.

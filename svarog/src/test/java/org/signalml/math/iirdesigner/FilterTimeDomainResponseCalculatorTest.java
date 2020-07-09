@@ -4,13 +4,10 @@
 
 package org.signalml.math.iirdesigner;
 
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.FilterCoefficients;
-import org.signalml.math.iirdesigner.FilterTimeDomainResponse;
-import org.signalml.math.iirdesigner.FilterTimeDomainResponseCalculator;
-
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 
 /**
  * This class performs unit tests on {@link FilterTimeDomainResponseCalculator} class.

@@ -3,8 +3,14 @@
  */
 package org.signalml.app.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.annotations.Annotations;
+import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
+import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
+import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
+import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 import java.beans.IntrospectionException;
 import java.io.File;
 import java.io.IOException;
@@ -16,11 +22,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.LabelledPropertyDescriptor;
 import org.signalml.app.util.XMLUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.space.SignalSpaceConstraints;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagStyles;
@@ -32,15 +38,6 @@ import org.signalml.plugin.export.signal.Tag;
 import org.signalml.plugin.export.signal.TagStyle;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.Annotations;
-import com.thoughtworks.xstream.converters.reflection.FieldDictionary;
-import com.thoughtworks.xstream.converters.reflection.NativeFieldKeySorter;
-import com.thoughtworks.xstream.converters.reflection.PureJavaReflectionProvider;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-import com.thoughtworks.xstream.io.xml.XmlFriendlyReplacer;
-import com.thoughtworks.xstream.mapper.CannotResolveClassException;
 
 /**
  * The document with {@link Tag tags} and {@link TagStyle tag styles}.
@@ -64,11 +61,18 @@ import com.thoughtworks.xstream.mapper.CannotResolveClassException;
  */
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
+	public static String[] DEFAULT_TAG_DOCUMENTS = { "default_tags_coma_structures.xml",
+			"default_tags_sleep_AASM.xml",
+			"default_tags_sleep_RK.xml",};
+	public static String[] DEFAULT_TAG_DOCUMENTS_STYLE_NAMES = { _("Coma structures"),
+		_("Sleep AASM"),
+		_("Sleep RK"), };
+	
 	/**
 	     * Logger to save history of execution at
 	     */
 	protected static final Logger logger = Logger.getLogger(TagDocument.class);
-
+	
 	/**
 	 * Charset used to save this document. Probably shouldn't be changed.
 	 */
@@ -141,6 +145,22 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 		}
 		saved = true;
 	}
+	
+
+	public static TagDocument getDefaultPreset(float pageSize, int blocksPerPage, int id) throws SignalMLException, IOException {
+
+		Resource r = new ClassPathResource("org/signalml/app/config/tag/presets/" + DEFAULT_TAG_DOCUMENTS[id]);
+
+		TagDocument templateDocument = new TagDocument();
+		templateDocument.readDocument(r.getInputStream());
+
+		TagStyles styles = templateDocument.getTagSet().getTagStyles().clone();
+		StyledTagSet tagSet = new StyledTagSet(styles, pageSize, blocksPerPage);
+
+		TagDocument tagDocument = new TagDocument(tagSet);
+		return tagDocument;
+
+	}
 
 	/**
 	 * Creates the new tag document with the {@link TagStyle styles} to mark
@@ -152,6 +172,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 * @throws IOException if the stream to the file with styles could not
 	 * be opened
 	 */
+	
 	public static TagDocument getNewSleepDefaultDocument(float pageSize, int blocksPerPage) throws SignalMLException, IOException {
 
 		Resource r = new ClassPathResource("org/signalml/domain/tag/sample/default_sleep_styles.xml");
@@ -365,7 +386,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	 */
 	public void updateSignalSpaceConstraints(SignalSpaceConstraints constraints) {
 
-		List<TagStyle> markerStyles = new ArrayList<TagStyle>();
+		List<TagStyle> markerStyles = new ArrayList<>();
 
 		for (TagStyle style: getTagSet().getChannelStyles()) {
 			markerStyles.add(style);
@@ -401,7 +422,7 @@ public class TagDocument extends AbstractMutableFileDocument implements Exported
 	public Set<ExportedTagStyle> getTagStyles() {
 		StyledTagSet tagSet = getTagSet();
 		List<TagStyle> styles = tagSet.getListOfStyles();
-		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<ExportedTagStyle>();
+		Set<ExportedTagStyle> exportedStyles = new LinkedHashSet<>();
 		for (TagStyle style : styles) {
 			exportedStyles.add(style);
 		}

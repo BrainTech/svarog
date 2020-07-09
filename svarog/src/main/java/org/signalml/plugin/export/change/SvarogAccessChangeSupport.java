@@ -4,7 +4,6 @@
 package org.signalml.plugin.export.change;
 
 import org.signalml.app.document.TagDocument;
-
 import org.signalml.plugin.export.change.listeners.PluginCloseListener;
 import org.signalml.plugin.export.change.listeners.PluginCodecListener;
 import org.signalml.plugin.export.change.listeners.PluginDocumentListener;

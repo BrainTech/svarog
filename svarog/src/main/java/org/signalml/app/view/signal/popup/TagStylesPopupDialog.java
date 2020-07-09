@@ -11,13 +11,11 @@ import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.ButtonGroup;
 import javax.swing.ButtonModel;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.app.view.tag.TagStyleToggleButton;
 import org.signalml.app.view.tag.TagStyleToolBar;
@@ -51,8 +49,8 @@ public class TagStylesPopupDialog extends AbstractPopupDialog implements ActionL
 	public JComponent createInterface() {
 
 		buttonGroup = new ButtonGroup();
-		styleToButtonMap = new HashMap<TagStyle, TagStyleToggleButton>();
-		buttonToStyleMap = new HashMap<ButtonModel, TagStyle>();
+		styleToButtonMap = new HashMap<>();
+		buttonToStyleMap = new HashMap<>();
 
 		JPanel interfacePanel = new JPanel();
 

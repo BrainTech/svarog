@@ -5,7 +5,6 @@ package org.signalml.plugin.export.signal;
 
 import java.util.Set;
 import java.util.SortedSet;
-
 import org.signalml.app.document.FileBackedDocument;
 import org.signalml.app.document.MutableDocument;
 

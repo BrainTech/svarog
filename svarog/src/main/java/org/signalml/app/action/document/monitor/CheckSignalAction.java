@@ -4,19 +4,16 @@
 
 package org.signalml.app.action.document.monitor;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.MontageDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.app.view.document.monitor.signalchecking.CheckSignalDialog;
 
 /**
  * Opens a {@link CheckSignalDialog}.

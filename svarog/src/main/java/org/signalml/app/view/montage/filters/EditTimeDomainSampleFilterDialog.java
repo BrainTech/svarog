@@ -3,27 +3,24 @@
  */
 package org.signalml.app.view.montage.filters;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.net.URL;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.util.i18n.SvarogI18n;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.montage.filters.charts.TimeDomainFilterResponseChartGroupPanel;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilterValidator;

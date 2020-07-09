@@ -1,15 +1,12 @@
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.plugin.export.SignalMLException;

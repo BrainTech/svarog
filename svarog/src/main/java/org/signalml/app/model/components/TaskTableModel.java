@@ -3,16 +3,13 @@
  */
 package org.signalml.app.model.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
-
 import org.signalml.app.task.ApplicationTaskManager;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.task.AggregateTaskProgressComparator;
 import org.signalml.task.AggregateTaskProgressInfo;
 import org.signalml.task.Task;
@@ -43,11 +40,11 @@ public class TaskTableModel extends AbstractTableModel implements
 	private ApplicationTaskManager taskManager;
 
 	private TableRowSorter<TaskTableModel> sorter = null;
-	private Map<Task, AggregateTaskProgressInfo> taskToProgressMap = new HashMap<Task, AggregateTaskProgressInfo>();
+	private Map<Task, AggregateTaskProgressInfo> taskToProgressMap = new HashMap<>();
 
 	public TableRowSorter<TaskTableModel> getSorter() {
 		if (sorter == null) {
-			sorter = new TableRowSorter<TaskTableModel>(this);
+			sorter = new TableRowSorter<>(this);
 			sorter.setComparator(TaskTableModel.STATUS_COLUMN,
 								 new TaskStatusImportanceComparator());
 			sorter.setComparator(TaskTableModel.PROGRESS_COLUMN,

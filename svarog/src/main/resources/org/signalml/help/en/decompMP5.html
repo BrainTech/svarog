@@ -2,28 +2,27 @@
 <html lang="en-us">
 <head>
 <meta content="text/html; charset=UTF-8" http-equiv="content-type">
-<title>mp5 help</title>
-<meta name="author" content="P. J. Durka">
-<meta name="description" content="mp5 is a program for matching
-      pursuit decomposition of signals">
+<title>empi help</title>
 </head>
 <body>
-<h1><a class="mozTocH1" name="mozTocId48390"></a>Matching pursuit
-  decomposition in Svarog</h1>
-<p><strong>Mp5</strong> software for <a
-        href="http://www.scholarpedia.org/article/Matching_pursuit"><span
-          style="font-weight: bold;">m</span>atching <span
-          style="font-weight: bold;">p</span>ursuit</a> (MP)
-  decomposition of (biomedical multivariate) time series was
-  developed at the <a href="http://www.uw.edu.pl">University of
-  Warsaw</a>, <a href="www.fuw.edu.pl">Faculty of Physics</a>.
-  The algorithm is based upon the seminal paper by Mallat and Zhang <a href="#ref:Mallat1993">(Mallat1993)</a> with modifications
-  described partly by Durka et al. <a href="#ref:stochmp">(Durka2001)</a> and Kuś et al. <a href="#ref:OGD">(Kuś2013)</a>. Mp5 is designed
+<h1><a class="mozTocH1" name="mozTocId48390"></a>Matching pursuit decomposition in Svarog</h1>
+        
+    
+<p>Svarog offers an interface for decomposition of signals using <strong>empi</strong> software for matching pursuit (MP)
+  decomposition of (biomedical multivariate) time series.
+  The algorithm is based upon the seminal paper by Mallat and Zhang 
+  <a href="#ref:Mallat1993">(Mallat1993)</a> with modifications
+  described partly in <a href="#ref:Uni">(Durka2007)</a> 
+  and <a href="#ref:OGD">(Kuś2013)</a>. Mp5 is designed
   for batch processing input signals and writing results to disk
   files called—after&nbsp;<a href="#ref:Mallat1993">(Mallat1993)</a>—<em>decomposition
-  books</em>. These books (<strong>*</strong>.b) contain
+  books</em>. These books (*.b) contain
   parameters of the functions selected for representation of the
   analyzed signal.&nbsp; </p>
+<p>
+    Source code for the current implementation by Piotr Różański is available from <code>https://github.com/develancer/empi</code> 
+</p>
+
 <p>Svarog offers an interactive interface for MP decomposition,
   allowing for:</p>
 <ol>
@@ -33,12 +32,13 @@
   <li>visualization of the results in terms of interactive
     time-frequency maps of signal's energy density.</li>
 </ol>
-<p>Some of the topics presented below are covered in a screencast
-  avaialble at <a href="http://braintech.pl/svarog/screencast.html">http://braintech.pl/svarog/screencast.html</a>. <em>Caveat</em>: default settings are optimized for speed rather
+<p>
+    <em>Caveat</em>: default settings are optimized for speed rather
   than quality of the decomposition. This may be sufficient for the
   first try, but serious use requires some understanding of the
   procedure. Detailed description of the algorithm is given in <a
-  href="#ref:OGD">(Kuś2013)</a>, <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a>.</p>
+  href="#ref:OGD">(Kuś2013)</a>.
+</p>
 <p>Contents:</p>
 <ol id="mozToc">
   <!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
@@ -455,30 +455,23 @@ progressBar            	   	ON
         style="font-style: italic;">IEEE Transactions on Signal
   Processing</span> 1993, 41:3397-3415</p>
 <p><a name="ref:Uni"></a>(Durka2007a) Piotr J. Durka<br>
-  <a style="font-style:italic;" href="http://uni.durka.info">Matching
-  
-  
+  <a style="font-style:italic;">Matching
   Pursuit and Unification in EEG analysis</a>, Artech House 2007,
   ISBN 978-1-58053-304-1</p>
 <p><a name="ref:Scholarpedia"></a>(Durka2007b) Piotr J. Durka<br>
-  <a href="http://www.scholarpedia.org/article/Matching_pursuit">Matching
-  
-  
-  Pursuit</a>, Scholarpedia, p. 20910, 2007.</p>
+   Matching   Pursuit</a>, Scholarpedia, p. 20910, 2007.
+<code>http://www.scholarpedia.org/article/Matching_pursuit</code></p>
 <p><a name="ref:OGD"></a>(Kuś2013) Rafał Kuś, Piotr T.
   Różański and Piotr J. Durka<br>
   Multivariate matching pursuit in optimal Gabor dictionaries:
   theory and software for EEG/MEG via Svarog, <span
         style="font-style: italic;">Biomedical Engineering Online</span>
   2013, 12:94 doi:10.1186/1475-925X-14-94,
-  <a href="http://www.biomedical-engineering-online.com/content/12/1/94">http://www.biomedical-engineering-online.com/content/12/1/94</a></p>
+  <code>http://www.biomedical-engineering-online.com/content/12/1/94</code></p>
 <p><a name="ref:stochmp"></a>(Durka et al. 2001) Piotr J. Durka, D.
   Ircha and K. J. Blinowska<br>
   Stochastic time-frequency dictionaries for Matching Pursuit, <span
         style="font-style: italic;">IEEE Transactions on Signal
   Processing</span>, vol. 49, No. 3, pp. 507-510, March 2001.</p>
-<p><a name="ref:spikes"></a>(Durka2004) Adaptive time-frequency
-  parametrization of epileptic EEG spikes P.J. Durka, Physical
-  Review E, vol. 69, 051914 (2004)</p>
 </body>
 </html>

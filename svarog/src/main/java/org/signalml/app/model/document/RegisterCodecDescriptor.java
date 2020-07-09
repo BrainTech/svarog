@@ -5,7 +5,6 @@
 package org.signalml.app.model.document;
 
 import java.io.File;
-
 import org.signalml.codec.SignalMLCodec;
 
 /** RegisterCodecDescriptor

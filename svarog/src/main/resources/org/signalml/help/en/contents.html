@@ -1,22 +1,168 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SVAROG VERSION</title>
-<style type="text/css">
-.red {
-	color: #008;
-}
-</style>
+<title>SVAROG</title>
 </head>
-<body><div>
-<h1><span class="red">SVAROG</span> VERSION</h1>
-<h2><span class="red">S</span>ignal <span class="red">V</span>iewer, <span class="red">A</span>nalyzer and <span class="red">R</span>ecorder <span class="red">O</span>n <span class="red">G</span>PL </h2>
-<h3>Project started at the <A HREF="http://www.uw.edu.pl">University of Warsaw</A>,
-<a href="http://www.fuw.edu.pl">Faculty of Physics</a>. <br>
-Since 2012 developed by <a href="http://braintech.pl">BrainTech</a> Sp. z o.o. [Ltd].</h3>
 
-</div>
-<p>Svarog is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License v3 as published by the Free Software Foundation. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a> for more details.</p>
+<body>
+  
+    
+    
+<p></p>
+    <div style="text-align:center">
+<i>Signal Viewer, Analyzer and Recorder On GPL</i> 
+    
+<p>
+software for GNU/Linux, MacOS and MS Windows, based on GPLv3 license.<br>
+text of the license is available from 
+<A HREF="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</A>, <br>
+recent versions of software at:
+    </p>
+  <!--  <p></p>
+    -->
+    
+    <hr>
+   SVAROG.PL
+   <hr>
+   
+   </div>
+  
+   
+
+
+ <!--   <p>
+Svarog allows for, among others:
+    </p>
+ -->
+    
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/plotoptions.png" alt="plotop"> display control: 
+    <img src="../../app/icon/antialias.png" alt="help"> antialiasing, <img src="../../app/icon/pagelines.png" alt="lines"> lines etc.
+    </p>
+    
+     <p>
+    &emsp;&emsp;<img src="../../app/icon/zoom.png" alt="zoom"> zoom of signal epochs
+    </p>
+ 
+    <p>
+    &emsp;&emsp;[<img src="../../app/icon/fft.png" alt="FFT">] viewing spectrum of selected epoch 
+    </p>
+   
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/montage.png" alt="mtg">
+    defining montages and frequency filters 
+    <A HREF="editTimeDomainSampleFilterDialog.html"><img src="../../app/icon/help.png" alt="help"></A>; turning filters on  
+    <img src="../../app/icon/filteron.png" alt="flton"> 
+  and off
+    <img src="../../app/icon/filter.png" alt="flt">
+    </p>
+     
+     
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/analyze.png" alt="tools"> 
+    estimation of spectrogram (STFT), wavelet transform (WT), directed transfer function (DTF) and independent component analysis (ICA)
+    </p>
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/analyze.png" alt="tools"> averaging evoked potentials (EP/ERP)
+    </p>
+    
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/tag.png" alt="mtg"> tagging selected fragments
+        <img src="../../app/icon/palette.png" alt="pal"> defining one's own tags and saving tags in <code>*.tag</code> files
+    </p> 
+    
+    <p>
+    &emsp;&emsp;<img src="../../app/icon/record.png" alt="rec"> 
+    <img src="../../app/icon/stop-recording.png" alt="stop"> 
+    <img src="../../app/icon/camera.png" alt="cam"> 
+    menu "Online" is active, when drivers and compatible EEG amplifier is configured in the system
+    </p>
+
+    
+    <p></p>     
+    <hr>
+    
+    
+    <p>
+Matching Pursuit (MP) decomposition module uses empi code from  (<code>https://github.com/develancer/empi</code>) and allows for:
+</p>
+    <ul>
+    <li>
+        <A HREF="decompMP5.html"><img src="../../app/icon/help.png" alt="help"></A>
+        MP-decomposing one or more channels and saving results in a "book"
+        <img src="../../app/icon/book.png" alt="book">, i.e. <code>*.b</code> file
+    </li>
+    <li>
+        <A HREF="viewerBookMP5.html"><img src="../../app/icon/help.png" alt="help"></A>
+        interactive viewinf results of MP decomposition in the timepfrequency plane
+    </li>
+    <li>
+        <A HREF="profilesEEG.html"><img src="../../app/icon/help.png" alt="help"></A>
+        drawing EEG profiles as in [2.&darr;] based upon a decomposition previously computed and strored in a "book" <img src="../../app/icon/book.png" alt="book">
+    </li>
+</ul>
+
+<p>
+    Detailed description of some of these functions can be found in papers freely available from Internet:
+</p>
+
+
+<ol>
+    <li>
+        R. Kuś, P.T. Różański and P.J. Durka: Multivariate matching pursuit in optimal Gabor dictionaries: 
+        theory and software with interface for EEG/MEG via Svarog. BioMedical Engineering OnLine 2013, 12:94 
+        <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-94</code>
+    </li>
+    <li>
+        Electroencephalographic profiles for differentiation of disorders of consciousness Urszula Malinowska, 
+        Camille Chatelle, Marie-Aurée Bruno, Quentin Noirhomme, Steven Laureys, Piotr J Durka BioMedical Engineering OnLine 2013, 
+        12:109 (21 October 2013)         <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-109</code>
+    </li>
+    <li>
+        Spindles in Svarog: framework and software for parametrization of EEG transients P.J. Durka, U. Malinowska, M. Zieleniewska, 
+        Ch. O'Reilly, P.T. Różański, J. Żygierewicz. Front. Hum. Neurosci., 08 May 2015
+        <code>https://www.frontiersin.org/articles/10.3389/fnhum.2015.00258</code>
+    </li>
+</ol>
+
+    
+    
+    
+    
+    
 </body>
 </html>
+
+
+
+
+
+<!--
+
+SVAROG stands for <i>Signal Viewer, Analyzer and Recorder On GPL</i>, software available for GNU/Linuxa, MacOS i Windows on the GPLv3 license.
+Full text of the GPLv3 license is available from <A HREF="https://www.gnu.org/licenses/gpl-3.0.html">https://www.gnu.org/licenses/gpl-3.0.html</A>.
+</p>
+
+<p>
+Recent versions can be downloaded from <A HREF="https://svarog.pl">svarog.pl</A>, 
+bundled with the Matching Pursuit decomposition module.
+</p>
+
+
+<p>
+   
+Project started in 2004 at the 
+<a href="https://www.fuw.edu.pl/faculty-of-physics-home.html">Faculty of Physics</A>, <A HREF="http://en.uw.edu.pl">University of Warsaw</A>
+as an implementation of the SignalML language for metadescription of biomedical time series, 
+since 2012 developed by <a href="https://braintech.pl">BrainTech Ltd.</A>
+(except for STFT, wavelets, ICA and DTF plugins financed by educational grant from the University of Warsaw).
+</p>
+    
+
+<p>Svarog is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License v3
+    as published by the Free Software Foundation. This program is distributed in the hope that it will be useful, 
+    but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the GNU General Public License<a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/</a> for more details.</p>
+-->

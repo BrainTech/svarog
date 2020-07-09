@@ -6,9 +6,8 @@ package org.signalml.domain.book;
 
 import java.io.File;
 import java.io.IOException;
-
-import pl.edu.fuw.MP.MPBookStore;
 import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
+import pl.edu.fuw.MP.MPBookStore;
 
 /** BookBuilderImpl
  *

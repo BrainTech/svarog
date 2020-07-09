@@ -5,7 +5,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.Locale;
-
 import org.apache.log4j.Logger;
 import org.signalml.util.SvarogConstants;
 import org.springframework.context.MessageSourceResolvable;
@@ -19,6 +18,7 @@ import org.xnap.commons.i18n.I18nFactory;
  * @author Stanislaw Findeisen (Eisenbits)
  */
 public class SvarogI18n implements ISvarogI18n {
+
 	protected static final Logger log = Logger.getLogger(SvarogI18n.class);
 
 	private final I18n i18n;
@@ -26,7 +26,7 @@ public class SvarogI18n implements ISvarogI18n {
 	/**
 	 * List of supported language versions for Svarog.
 	 */
-	public static final String[] LANGUAGES = { "en", "pl" };
+	public static final String[] LANGUAGES = {"en", "pl"};
 
 	/**
 	 * Initializes i18n resources using classloader of klass, from catalog
@@ -34,32 +34,35 @@ public class SvarogI18n implements ISvarogI18n {
 	 */
 	public SvarogI18n(Class klass, String catalogId) {
 		log.info("loading i18n bundle " + catalogId + "for klass " + klass.getName());
-		this.i18n = I18nFactory.getI18n(klass, catalogId, Locale.getDefault(),
-										I18nFactory.READ_PROPERTIES|I18nFactory.FALLBACK);
+		Locale svarogLocale = Locale.getDefault();
+		this.i18n = I18nFactory.getI18n(klass, catalogId, svarogLocale, I18nFactory.READ_PROPERTIES | I18nFactory.FALLBACK);
 	}
 
 	/**
-	 * Call {@link SvarogI18n(Class klass, String catalogId)} with catalogId
-	 * set to the namespace of klass.
+	 * Call {@link SvarogI18n(Class klass, String catalogId)} with catalogId set
+	 * to the namespace of klass.
 	 */
 	public SvarogI18n(Class klass) {
 		this(klass, klass.getPackage().getName());
 	}
 
 	private URL _getHelpURL(String htmlName, String language) throws IOException {
-		return (new ClassPathResource("org/signalml/help/"+language+"/"+htmlName)).getURL();
+		ClassPathResource resource = new ClassPathResource("org/signalml/help/" + language + "/" + htmlName);
+		URL resourceUrl = resource.getURL();
+		return resourceUrl;
 	}
 
 	/**
-	 * Return URL to localized help file of a given name.
-	 * If a localized version is not available, return the english version.
+	 * Return URL to localized help file of a given name. If a localized version
+	 * is not available, return the english version.
 	 *
 	 * @param htmlName name of the help file e.g. "mp.html"
 	 * @return URL instance or null if not found.
 	 */
 	public URL getHelpURL(String htmlName) {
 		try {
-			return _getHelpURL(htmlName, Locale.getDefault().getLanguage());
+			String locale = Locale.getDefault().getLanguage();
+			return _getHelpURL(htmlName, locale);
 		} catch (IOException ex_) {
 			log.debug("Failed to get localized help URL for " + htmlName);
 			try {
@@ -72,11 +75,12 @@ public class SvarogI18n implements ISvarogI18n {
 	}
 
 	/**
-	 * Return URL to localized help file of a given name and section.
-	 * If a localized version is not available, return the english version.
+	 * Return URL to localized help file of a given name and section. If a
+	 * localized version is not available, return the english version.
 	 *
 	 * @param htmlName name of the help file e.g. "mp.html"
-	 * @param section name of the section (without leading #) to be added to the URL
+	 * @param section name of the section (without leading #) to be added to the
+	 * URL
 	 * @return URL instance or null if not found.
 	 */
 	public URL getHelpURL(String htmlName, String section) {
@@ -109,7 +113,7 @@ public class SvarogI18n implements ISvarogI18n {
 		return s;
 	}
 
-	public String translateR(String key, Object ... arguments) {
+	public String translateR(String key, Object... arguments) {
 		return render(translate(key), arguments);
 	}
 
@@ -135,64 +139,66 @@ public class SvarogI18n implements ISvarogI18n {
 		return defaultMessage;
 	}
 
-
 	/**
 	 * Returns the singleton instance.
+	 *
 	 * @return
 	 */
 	protected static SvarogI18n getInstance() {
 		return Instance;
 	}
 
-	private static final SvarogI18n Instance =
-		new SvarogI18n(SvarogI18n.class, SvarogConstants.I18nCatalogId);
-
-
-	/************************************************************
-	 ***********	  public static parts	  *******************
-	 ************************************************************/
+	private static final SvarogI18n Instance
+			= new SvarogI18n(SvarogI18n.class, SvarogConstants.I18nCatalogId);
 
 	/**
-	 * Translates the message for the specified key using the current Svarog locale.
+	 * **********************************************************
+	 ***********	public static parts	*******************
+	 ***********************************************************
+	 */
+	/**
+	 * Translates the message for the specified key using the current Svarog
+	 * locale.
 	 *
 	 * @param key English version of the message
-	 * @return i18n version of the message (depending on the current Svarog locale),
-	 *	   or key if not found
+	 * @return i18n version of the message (depending on the current Svarog
+	 * locale), or key if not found
 	 */
 	public static String _(String key) {
 		return getInstance().translate(key);
 	}
 
 	/**
-	 * Translates the message for the specified key using the current Svarog locale.
+	 * Translates the message for the specified key using the current Svarog
+	 * locale.
 	 *
 	 * @param key English version of the message
 	 * @param keyPlural English version of the message (plural form)
 	 * @param n tells "how many" and is used to select the correct plural form
-	 *	  (there may be more than 2)
-	 * @return i18n version of the message (depending on the current Svarog locale and n),
-	 *	   or keyPlural if not found
+	 * (there may be more than 2)
+	 * @return i18n version of the message (depending on the current Svarog
+	 * locale and n), or keyPlural if not found
 	 */
 	public static String N_(String singular, String plural, long n) {
 		return getInstance().translateN(singular, plural, n);
 	}
 
 	/**
-	 * Translates the message for the specified key using the current Svarog locale
-	 * and renders it using actual values.
+	 * Translates the message for the specified key using the current Svarog
+	 * locale and renders it using actual values.
 	 *
 	 * @param msgKey English version of the message
 	 * @param arguments actual values to place in the message
-	 * @return i18n version of the message (depending on the current Svarog locale),
-	 *	   with arguments rendered in, or key if not found
+	 * @return i18n version of the message (depending on the current Svarog
+	 * locale), with arguments rendered in, or key if not found
 	 */
 	public static String _R(String key, Object... arguments) {
 		return render(_(key), arguments);
 	}
 
 	/**
-	 * Return URL to localized help file of a given name.
-	 * If a localized version is not available, return the english version.
+	 * Return URL to localized help file of a given name. If a localized version
+	 * is not available, return the english version.
 	 *
 	 * @param htmlName name of the help file e.g. "mp.html"
 	 * @return URL instance or null if not found.
@@ -202,11 +208,12 @@ public class SvarogI18n implements ISvarogI18n {
 	}
 
 	/**
-	 * Return URL to localized help file of a given name and section.
-	 * If a localized version is not available, return the english version.
+	 * Return URL to localized help file of a given name and section. If a
+	 * localized version is not available, return the english version.
 	 *
 	 * @param htmlName name of the help file e.g. "mp.html"
-	 * @param section name of the section (without leading #) to be added to the URL
+	 * @param section name of the section (without leading #) to be added to the
+	 * URL
 	 * @return URL instance or null if not found.
 	 */
 	public static URL _H(String htmlName, String section) {
@@ -214,36 +221,37 @@ public class SvarogI18n implements ISvarogI18n {
 	}
 
 	/**
-	 * Translates the message for the specified key using the current Svarog locale
-	 * and renders it using actual values.
+	 * Translates the message for the specified key using the current Svarog
+	 * locale and renders it using actual values.
 	 *
 	 * @param key English version of the message
 	 * @param keyPlural English version of the message (plural form)
 	 * @param n tells "how many" and is used to select the correct plural form
-	 *	  (there may be more than 2)
+	 * (there may be more than 2)
 	 * @param arguments actual values to place in the message
-	 * @return i18n version of the message (depending on the current Svarog locale and n),
-	 *	   with arguments rendered in, or keyPlural if not found
+	 * @return i18n version of the message (depending on the current Svarog
+	 * locale and n), with arguments rendered in, or keyPlural if not found
 	 */
-	public static String N_R(String singular, String plural, long n, Object ... arguments) {
+	public static String N_R(String singular, String plural, long n, Object... arguments) {
 		return render(N_(singular, plural, n), arguments);
 	}
 
 	/**
-	 * Just renders the given pattern using actual values.
-	 * Pattern is used as-is (no translation!).
+	 * Just renders the given pattern using actual values. Pattern is used as-is
+	 * (no translation!).
 	 *
 	 * @param pattern message string with placeholders like {0}
 	 * @param arguments values to render into the placeholders
 	 * @return
 	 * @see java.text.MessageFormat.format
 	 */
-	public static String render(String pattern, Object ... arguments) {
+	public static String render(String pattern, Object... arguments) {
 		return MessageFormat.format(pattern, arguments);
 	}
 
 	/**
 	 * Sets the locale that will be used by this I18N module.
+	 *
 	 * @param locale the locale to be used.
 	 */
 	public static void setLocale(Locale locale) {

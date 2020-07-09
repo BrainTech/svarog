@@ -4,25 +4,20 @@
 
 package org.signalml.method.mp5;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.io.IOException;
 import java.util.Formatter;
 import java.util.UUID;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
 import org.signalml.domain.signal.raw.RawSignalSampleType;
 import org.signalml.domain.signal.raw.RawSignalWriter;
 import org.signalml.domain.signal.samplesource.MultichannelSegmentedSampleSource;
 import org.signalml.method.ComputationException;
 import org.signalml.method.MethodExecutionTracker;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import java.net.URLDecoder;
-import java.util.Locale;
 
 /** MP5LocalProcessExecutor
  *

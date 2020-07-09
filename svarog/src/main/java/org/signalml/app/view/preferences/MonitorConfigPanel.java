@@ -1,13 +1,7 @@
 package org.signalml.app.view.preferences;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -16,11 +10,10 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner.NumberEditor;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-
 import org.signalml.app.config.ApplicationConfiguration;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
-import org.signalml.app.view.common.components.spinners.FloatSpinner;
 import org.signalml.app.view.common.components.spinners.IntegerSpinner;
 
 /**

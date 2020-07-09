@@ -4,11 +4,9 @@
 
 package org.signalml.math.iirdesigner.math;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.math.SpecialMath;
-
-import static org.junit.Assert.*;
 import static org.signalml.math.iirdesigner.math.SpecialMath.*;
 
 /**

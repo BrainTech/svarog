@@ -4,8 +4,8 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.math.iirdesigner.math.SpecialMath;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.math.iirdesigner.math.SpecialMath;
 
 /**
  * This abstract class represents a designer which is capable of designing a Chebyshev filter.

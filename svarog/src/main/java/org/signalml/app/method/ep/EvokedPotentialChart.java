@@ -1,11 +1,8 @@
 package org.signalml.app.method.ep;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.util.List;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.LegendItemCollection;
@@ -13,19 +10,19 @@ import org.jfree.chart.LegendItemSource;
 import org.jfree.chart.axis.AxisLocation;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.LegendTitle;
 import org.jfree.chart.title.TextTitle;
+import org.jfree.chart.ui.HorizontalAlignment;
+import org.jfree.chart.ui.RectangleEdge;
+import org.jfree.chart.ui.RectangleInsets;
+import org.jfree.chart.ui.VerticalAlignment;
 import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.ui.HorizontalAlignment;
-import org.jfree.ui.RectangleEdge;
-import org.jfree.ui.RectangleInsets;
-import org.jfree.ui.VerticalAlignment;
 import org.signalml.app.method.ep.EvokedPotentialGraphPanel.ChartType;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.panels.AbstractPanel;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.method.ep.EvokedPotentialResult;
@@ -93,10 +90,6 @@ public class EvokedPotentialChart extends AbstractPanel {
 
 		yAxis = new NumberAxis();
 		yAxis.setAutoRange(false);
-
-		// configure for nine labels, but round to 10
-		yTickUnit = Math.round((maxY-minY)/(8*10)) * 10.0;
-		yAxis.setTickUnit(new NumberTickUnit(yTickUnit));
 		yAxis.setRange(minY, maxY);
 
 		dataset = new DefaultXYDataset();

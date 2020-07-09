@@ -22,7 +22,7 @@ public class FilterNotValidPanel extends JPanel {
 	/**
 	 * An array of labels used to show error messages.
 	 */
-	private List<JLabel> labels = new ArrayList<JLabel>();
+	private List<JLabel> labels = new ArrayList<>();
 
 	/**
 	 * Number of labels in this panel.

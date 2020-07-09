@@ -3,9 +3,7 @@ package org.signalml.app.view.common.components.panels;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBox;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 
 public abstract class PanelWithEnablingCheckbox<T extends AbstractPanel> extends AbstractPanel implements ActionListener {

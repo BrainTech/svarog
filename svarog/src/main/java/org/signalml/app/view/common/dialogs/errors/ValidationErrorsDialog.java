@@ -1,10 +1,8 @@
 package org.signalml.app.view.common.dialogs.errors;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.SignalMLException;
 
 /**

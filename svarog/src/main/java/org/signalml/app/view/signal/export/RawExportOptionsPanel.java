@@ -3,21 +3,18 @@
  */
 package org.signalml.app.view.signal.export;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.components.panels.ComponentWithLabel;
 import org.signalml.domain.signal.raw.RawSignalByteOrder;
@@ -197,7 +194,7 @@ public class RawExportOptionsPanel extends AbstractExportOptionsPanel {
 	@Override
 	protected List<ComponentWithLabel> createComponents() {
 
-		List<ComponentWithLabel> components = new ArrayList<ComponentWithLabel>();
+		List<ComponentWithLabel> components = new ArrayList<>();
 
 		components.add(new ComponentWithLabel(new JLabel(_("Sample type")), getSampleTypeComboBox()));
 		components.add(new ComponentWithLabel(new JLabel(_("Byte order")), getByteOrderComboBox()));

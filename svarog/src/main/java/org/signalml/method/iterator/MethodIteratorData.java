@@ -5,7 +5,6 @@
 package org.signalml.method.iterator;
 
 import java.io.Serializable;
-
 import org.signalml.plugin.export.method.BaseMethodData;
 
 /** MethodIteratorData

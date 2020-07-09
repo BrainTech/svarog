@@ -5,7 +5,6 @@
 package org.signalml.app.view.montage;
 
 import java.awt.Font;
-
 import org.signalml.app.view.common.components.ResolvableComboBox;
 
 

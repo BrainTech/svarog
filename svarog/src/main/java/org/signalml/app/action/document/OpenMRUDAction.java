@@ -3,17 +3,15 @@
  */
 package org.signalml.app.action.document;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.MRUDFocusSelector;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.mrud.MRUDEntry;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 

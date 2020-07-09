@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../help.css">
+        <title>Dekompozycja matching pursuit przez interfejs Svaroga</title>
+        <meta name="description" content="empi is a program for matching
+              pursuit decomposition of signals">
+    </head>
+    <body>
+        <h1>Dekompozycja matching pursuit przez interfejs Svaroga</h1>
+
+        Matching pursuit to algorytm oferujący rozkład sygnału na liniową sumę funkcji o parametrach optymalizowanych lokalnie w iteracyjnej procedurze, 
+        zaproponowany w 1993 przez Mallata i Zhanga.  Od 1995 MP rozwijany jest na Wydziale Fizyki Uniwersytetu Warszawskiego w zastosowaniu do sygnałów biomedycznych (EEG/MEG). 
+        Dołączone do Svaroga binaria empi (dla GNU/Linux, MacOS i MS Windows) 
+        pochodzą z <code>https://github.com/develancer/empi</code>.
+        <p>
+            Empi zaprojektowano do działania w trybie wsadowym: na podstawie wybranych parametrów (<A href="parametersMP.html">dokładniej opisanych tutaj</a>), 
+            empi wykonuje dekompozycję wskazanych sygnałów
+            i zapisuje wyniki na dysku, w pliku o rozszerzeniu .b, zwanym "książką" <img src="../../app/icon/book.png" alt="book"> za Mallatem i Zhangiem.
+            Książki zawierają parametry struktur (funkcji Gabora, Diraca i sinusów), dopasowanych do wybranego fragmentu sygnału w iteracyjnej procedurze MP.
+            Po zakończeniu obliczeń możemy skorzystać z wizualizacji wyników w przestrzeni czas-częstość, wybierając opcję "Uzyskaj wynik / Otwórz w przeglądarce".
+        </p>
+        <p>
+            <em>UWAGA: domyślne (w Svarogu) ustawienia jakości dekompozycji MP nastawione są raczej na szybkość niż dokładność, 
+                dlatego przed poważnieszym zastosowaniem wskazane jest zapoznanie się ze znaczeniem parametrów,
+                na przykład na podstawie cytowanych poniżej artykułów.</em>
+        </p>
+
+        <h2>Tematy pomocy (po angielsku)</h2>
+
+        W pomocy Svaroga znajdziemy następujące tematy związane z MP, <i>opisane w jęz. angielskim</i>:</p>
+
+    <A HREF="parametersMP.html"><img src="../../app/icon/help.png" alt="help">
+        opis parametrów</A> rządzących dekompozycją, zapisywanych 
+    w "książce" , czyli pliku <code>*.b</code> <img src="../../app/icon/book.png" alt="book">,
+</p>
+<p> <A HREF="viewerBookMP5.html"><img src="../../app/icon/help.png" alt="help">
+        interaktywna wizualizacja</A> i filtrowanie wyników dekompozycji, zapisanych uprzednio na dysku w książce, 
+    czyli pliku <code>*.b</code> <img src="../../app/icon/book.png" alt="book">, w przestrzeni czas-częstość,
+</p>
+<p> <A HREF="profilesEEG.html"><img src="../../app/icon/help.png" alt="help">
+        profile EEG</A> (jak w artykule [5.&darr;]) tworzone na podstawie dekompozycji MP, zapisanej
+    uprzednio na dysku <img src="../../app/icon/book.png" alt="book">.
+</p>
+
+
+<h2>Literatura</h2>
+
+<ol>
+    <li>
+        Stéphane Mallat and   Zhifeng Zhang, 
+        Matching pursuit with time-frequency dictionaries. <i>IEEE Transactions on Signal
+            Processing</i> 1993, 41:3397-3415
+    </li>
+    <li>
+        <kbd>http://www.scholarpedia.org/article/Matching_pursuit</kbd> Matching
+        Pursuit</a>, Scholarpedia, p. 20910, 2007.
+    </li>
+    <li>
+        (<i>książka</i>) Matching Pursuit and Unification in EEG analysis, Piotr Durka, Artech House 2007,
+        ISBN 978-1-58053-304-1
+    </li>
+    <li>
+        R. Kuś, P.T. Różański and P.J. Durka: Multivariate matching pursuit in optimal Gabor dictionaries: 
+        theory and software with interface for EEG/MEG via Svarog. BioMedical Engineering OnLine 2013, 12:94 
+        <kbd>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-94</kbd>
+    </li>
+    <li>
+        Electroencephalographic profiles for differentiation of disorders of consciousness Urszula Malinowska, 
+        Camille Chatelle, Marie-Aurée Bruno, Quentin Noirhomme, Steven Laureys, Piotr J Durka BioMedical Engineering OnLine 2013, 
+        12:109 (21 October 2013)         <code>https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/1475-925X-12-109</code>
+    </li>
+    <li>
+        Spindles in Svarog: framework and software for parametrization of EEG transients P.J. Durka, U. Malinowska, M. Zieleniewska, 
+        Ch. O'Reilly, P.T. Różański, J. Żygierewicz. Front. Hum. Neurosci., 08 May 2015
+        <code>https://www.frontiersin.org/articles/10.3389/fnhum.2015.00258</code>
+    </li>
+</ol>
+
+</body>
+</html>

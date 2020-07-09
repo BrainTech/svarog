@@ -1,17 +1,12 @@
 package org.signalml.app.view.document.opensignal.elements;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
+import com.alee.laf.tabbedpane.WebTabbedPane;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-
 import javax.swing.JFileChooser;
-import com.alee.laf.tabbedpane.WebTabbedPane;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
@@ -21,6 +16,8 @@ import org.signalml.app.model.document.opensignal.AbstractOpenSignalDescriptor;
 import org.signalml.app.model.document.opensignal.SignalMLDescriptor;
 import org.signalml.app.model.document.opensignal.elements.FileOpenSignalMethod;
 import org.signalml.app.model.document.opensignal.elements.SignalSource;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.common.components.filechooser.FileChooserPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerElementManager;
@@ -35,6 +32,9 @@ import org.signalml.util.Util;
 
 public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyChangeListener, ItemListener {
 	protected static final Logger logger = Logger.getLogger(SignalSourceTabbedPane.class);
+
+	public static final String TAB_AMPLIFIERS = "Amplifiers";
+	public static final String TAB_EXPERIMENTS = "Experiments";
 
 	public static final String OPEN_SIGNAL_DESCRIPTOR_PROPERTY = "openSignalDescriptorProperty";
 
@@ -59,13 +59,13 @@ public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyCha
 		addTab(_("File"), getFileChooserPanel());
 		int selectedIndex = 0;
 		if (ObciServerCapabilities.getSharedInstance().hasOnlineExperiments()) {
-			if ("Online experiments".equals(selectedSourceTab)) {
+			if (TAB_EXPERIMENTS.equals(selectedSourceTab)) {
 				selectedIndex = getTabCount();
 			}
 			addTab(_("Online experiments"), getChooseExperimentPanel());
 		}
 		if (ObciServerCapabilities.getSharedInstance().hasOnlineAmplifiers()) {
-			if ("Online amplifiers".equals(selectedSourceTab)) {
+			if (TAB_AMPLIFIERS.equals(selectedSourceTab)) {
 				selectedIndex = getTabCount();
 			}
 			addTab(_("Online amplifiers"), getChooseAmplifierPanel());

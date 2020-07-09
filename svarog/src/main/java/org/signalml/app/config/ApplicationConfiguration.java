@@ -4,18 +4,16 @@
 
 package org.signalml.app.config;
 
-import javax.swing.ToolTipManager;
-
-import org.signalml.app.view.book.wignermap.WignerMapPalette;
-import org.signalml.app.view.signal.SignalColor;
-import org.signalml.app.view.tag.TagPaintMode;
-import org.signalml.domain.book.WignerMapScaleType;
-
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.Iterator;
+import javax.swing.ToolTipManager;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.document.ManagedDocumentType;
+import org.signalml.app.view.book.wignermap.WignerMapPalette;
+import org.signalml.app.view.signal.SignalColor;
 import org.signalml.app.view.signal.SignalView;
+import org.signalml.app.view.tag.TagPaintMode;
+import org.signalml.domain.book.WignerMapScaleType;
 import org.signalml.plugin.export.signal.Document;
 
 /**
@@ -59,7 +57,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int blocksPerPage;
 	private boolean saveFullMontageWithTag;
 
-	private boolean viewModeHidesMainToolBar;
 	private boolean viewModeHidesLeftPanel;
 	private boolean viewModeHidesBottomPanel;
 	private boolean viewModeCompactsPageTagBars;
@@ -303,14 +300,6 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setSaveFullMontageWithTag(boolean saveFullMontageWithTag) {
 		this.saveFullMontageWithTag = saveFullMontageWithTag;
-	}
-
-	public boolean isViewModeHidesMainToolBar() {
-		return viewModeHidesMainToolBar;
-	}
-
-	public void setViewModeHidesMainToolBar(boolean viewModeHidesMainToolBar) {
-		this.viewModeHidesMainToolBar = viewModeHidesMainToolBar;
 	}
 
 	public boolean isViewModeHidesLeftPanel() {

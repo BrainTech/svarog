@@ -1,17 +1,15 @@
 package pl.edu.fuw.fid.signalanalysis.stft;
 
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.Scene;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.NoActiveObjectException;
+import org.signalml.plugin.export.signal.ChannelSamples;
 import org.signalml.plugin.export.signal.ExportedSignalSelection;
 import org.signalml.plugin.export.signal.SvarogAccessSignal;
 import org.signalml.plugin.export.view.AbstractSignalMLAction;
-import static org.signalml.app.util.i18n.SvarogI18n._;
+import pl.edu.fuw.fid.signalanalysis.SimpleSingleSignal;
+import pl.edu.fuw.fid.signalanalysis.SingleSignal;
 
 /**
  * Action performed when user requests interactive Short-Time Fourier Transform
@@ -23,15 +21,7 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 
 	private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(PopupActionForSTFT.class);
 
-	private static final String TITLE = _("Short-Time Fourier Transform");
-
 	private final SvarogAccessSignal signalAccess;
-
-	private void initFX(JFXPanel fxPanel, ExportedSignalSelection selection) throws IOException, NoActiveObjectException {
-		PaneForSTFT pane = new PaneForSTFT(signalAccess, selection);
-        Scene scene = new Scene(pane.getPane(), 500, 300);
-		fxPanel.setScene(scene);
-	}
 
 	public PopupActionForSTFT(SvarogAccessSignal signalAccess) {
 		super();
@@ -56,24 +46,23 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 			return;
 		}
 
-		JFrame frame = new JFrame(TITLE);
-		frame.setSize(800, 600);
-		final JFXPanel fxPanel = new JFXPanel();
-		frame.add(fxPanel);
-		frame.setVisible(true);
+		final int selectedChannel = Math.max(selection.getChannel(), 0);
+		final ChannelSamples samples;
+		try {
+			samples = signalAccess.getActiveProcessedSignalSamples(selectedChannel);
+		} catch (NoActiveObjectException ex) {
+			logger.error("could not access signal selection", ex);
+			return;
+		}
 
-		Platform.runLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					initFX(fxPanel, selection);
-				} catch (NoActiveObjectException ex) {
-					logger.error("could not access signal selection", ex);
-				} catch (IOException ex) {
-					logger.error("could not initialize plugin", ex);
-				}
-			}
-		});
+		double tMin = selection.getPosition();
+		double tMax = selection.getEndPosition();
+
+		SingleSignal signal = new SimpleSingleSignal(samples);
+
+		FrameForSTFT frame = new FrameForSTFT();
+		frame.initialize(signal, tMin, tMax, signal.getSamplingFrequency() / 2);
+		frame.setVisible(true);
 	}
 
 }

@@ -6,9 +6,7 @@ package org.signalml.app.view.signal;
 
 import java.awt.Cursor;
 import java.awt.event.MouseEvent;
-
 import javax.swing.SwingUtilities;
-
 import org.signalml.plugin.export.signal.AbstractSignalTool;
 
 /** SelectTagSignalTool

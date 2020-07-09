@@ -3,15 +3,12 @@
  */
 package org.signalml.app.view.montage;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -21,11 +18,11 @@ import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.montage.MontageGeneratorListModel;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.CompactButton;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -41,8 +38,8 @@ import org.springframework.validation.Errors;
 
 /**
  * The panel which allows to select the {@link MontageGenerator montage
- * generator} and generate a {@link Montage montage} using it.
- * The new montage is generated on the basis of the {@link #getMontage()
+ * generator} and generate a {@link Montage montage} using it. The new montage
+ * is generated on the basis of the {@link #getMontage()
  * current montage}.
  * <p>
  * This panel contains three elements:
@@ -51,23 +48,29 @@ import org.springframework.validation.Errors;
  * <li>the {@link #getReloadButton() reload button},</li>
  * <li>the {@link #getShowErrorsButton() show errors button},</li></ul>
  *
- * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe Sp. z o.o.
+ * @author Michal Dobaczewski &copy; 2007-2008 CC Otwarte Systemy Komputerowe
+ * Sp. z o.o.
  */
 public class MontageGeneratorPanel extends JPanel {
 
-	/** the default serialization constant. */
+	/**
+	 * the default serialization constant.
+	 */
 	private static final long serialVersionUID = 1L;
 
-	/** the logger. */
+	/**
+	 * the logger.
+	 */
 	protected static final Logger logger = Logger.getLogger(MontageGeneratorPanel.class);
 
-	/** the {@link Montage montage} that is edited. */
+	/**
+	 * the {@link Montage montage} that is edited.
+	 */
 	private Montage montage;
 
 	/**
 	 * the combo-box which allows to select the {@link MontageGenerator montage
-	 * genarator}.
-	 * When the generator is selected from the list it is used to {@link
+	 * genarator}. When the generator is selected from the list it is used to {@link
 	 * #tryGenerate(MontageGenerator) generate} a new {@link Montage} on the
 	 * basis of the {@link #montage old one}.
 	 */
@@ -85,14 +88,15 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 * {@link Montage montage} using a {@link #getGeneratorComboBox() selected}
 	 * {@link MontageGenerator generator},</li>
-	 * <li>when {@link #getShowErrorsAction() ShowErrorsAction} is performed,</li>
+	 * <li>when {@link #getShowErrorsAction() ShowErrorsAction} is
+	 * performed,</li>
 	 * </ul>
 	 */
 	private ValidationErrorsDialog errorsDialog;
 
 	/**
-	 * the {@link ShowErrorsAction action} which displays the.
-	 * errors dialog if the current {@link #getMontage()
+	 * the {@link ShowErrorsAction action} which displays the. errors dialog if
+	 * the current {@link #getMontage()
 	 * montage} can not be used to generate the {@link Montage montage} using a
 	 * currently {@link #getGeneratorComboBox() selected}
 	 * {@link MontageGenerator generator}
@@ -108,10 +112,14 @@ public class MontageGeneratorPanel extends JPanel {
 	 */
 	private ReloadAction reloadAction;
 
-	/** the button for {@link #getShowErrorsAction() showErrorsAction}. */
+	/**
+	 * the button for {@link #getShowErrorsAction() showErrorsAction}.
+	 */
 	private CompactButton showErrorsButton;
 
-	/** the button for {@link #getReloadAction() reloadAction}. */
+	/**
+	 * the button for {@link #getReloadAction() reloadAction}.
+	 */
 	private CompactButton reloadButton;
 
 	/**
@@ -162,8 +170,8 @@ public class MontageGeneratorPanel extends JPanel {
 		choicePanel.setLayout(new BoxLayout(choicePanel, BoxLayout.X_AXIS));
 
 		CompoundBorder border = new CompoundBorder(
-			new TitledBorder(_("Choose generator")),
-			new EmptyBorder(3,3,3,3)
+				new TitledBorder(_("Choose generator")),
+				new EmptyBorder(3, 3, 3, 3)
 		);
 		choicePanel.setBorder(border);
 
@@ -192,8 +200,7 @@ public class MontageGeneratorPanel extends JPanel {
 	/**
 	 * Sets the {@link Montage montage} that is edited.
 	 *
-	 * @param montage
-	 *            the new {@link Montage montage} that is edited
+	 * @param montage the new {@link Montage montage} that is edited
 	 */
 	public void setMontage(Montage montage) {
 		if (this.montage != montage) {
@@ -220,10 +227,10 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 *
-	 * @return the {@link ValidationErrorsDialog} with errors which is shown when:
-	 *         <ul>
-	 *         <li>the {@link #getMontage() montage} can not be used to generate
-	 *         the
+	 * @return the {@link ValidationErrorsDialog} with errors which is shown
+	 * when:
+	 * <ul>
+	 * <li>the {@link #getMontage() montage} can not be used to generate the
 	 */
 	public ValidationErrorsDialog getErrorsDialog() {
 		return errorsDialog;
@@ -234,12 +241,10 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <ul>
 	 * <li>the {@link #getMontage() montage} can not be used to generate the.
 	 *
-	 * @param errorsDialog
-	 *            the new validation errors dialog with errors which is shown
-	 *            when:
-	 *            <ul>
-	 *            <li>the {@link #getMontage() montage} can not be used to
-	 *            generate the
+	 * @param errorsDialog the new validation errors dialog with errors which is
+	 * shown when:
+	 * <ul>
+	 * <li>the {@link #getMontage() montage} can not be used to generate the
 	 */
 	public void setErrorsDialog(ValidationErrorsDialog errorsDialog) {
 		this.errorsDialog = errorsDialog;
@@ -250,7 +255,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * {@link #generatorComboBox}.
 	 *
 	 * @return the {@link MontageGeneratorListModel model} for the
-	 *         {@link #generatorComboBox}
+	 * {@link #generatorComboBox}
 	 */
 	protected MontageGeneratorListModel getMontageGeneratorListModel() {
 		if (montageGeneratorListModel == null) {
@@ -270,7 +275,7 @@ public class MontageGeneratorPanel extends JPanel {
 		if (generatorComboBox == null) {
 			generatorComboBox = new ResolvableComboBox();
 			generatorComboBox.setModel(getMontageGeneratorListModel());
-			generatorComboBox.setPreferredSize(new Dimension(300,25));
+			generatorComboBox.setPreferredSize(new Dimension(300, 25));
 
 			generatorComboBox.addActionListener(new ActionListener() {
 
@@ -323,10 +328,10 @@ public class MontageGeneratorPanel extends JPanel {
 	 * montage}).
 	 *
 	 * @return the {@link ReloadAction action} which
-	 *         {@link #tryGenerate(MontageGenerator) generates} a new
-	 *         {@link Montage} using a currently {@link #getGeneratorComboBox()
+	 * {@link #tryGenerate(MontageGenerator) generates} a new {@link Montage}
+	 * using a currently {@link #getGeneratorComboBox()
 	 *         selected} {@link MontageGenerator} (on the basis of the
-	 *         {@link #montage old montage})
+	 * {@link #montage old montage})
 	 */
 	public ReloadAction getReloadAction() {
 		if (reloadAction == null) {
@@ -361,9 +366,10 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Selects the provided {@link MontageGenerator montage generator} in the
-	 * {@link #getGeneratorComboBox() generator combo-box}.
-	 * While doing that {@link #lockComboEvents suppresses} all the events
-	 * associated with this combo-box.
+	 * {@link #getGeneratorComboBox() generator combo-box}. While doing that
+	 * {@link #lockComboEvents suppresses} all the events associated with this
+	 * combo-box.
+	 *
 	 * @param generator the {@link MontageGenerator montage generator} to be
 	 * selected
 	 */
@@ -395,6 +401,7 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <li>{@link MontageGenerator#createMontage(Montage) creates} the montage
 	 * on the basis of the current montage,</li>
 	 * </ol>
+	 *
 	 * @param generator the {@link MontageGenerator montage generator} to be
 	 * used
 	 */
@@ -406,10 +413,11 @@ public class MontageGeneratorPanel extends JPanel {
 		if (errors.hasErrors()) {
 			errorsDialog.showDialog(errors);
 
-			if (montage.getMontageGenerator() != null)
+			if (montage.getMontageGenerator() != null) {
 				montageGeneratorListModel.setSelectedItem(montage.getMontageGenerator());
-			else
+			} else {
 				montageGeneratorListModel.setSelectedItem(MontageGeneratorListModel.NO_GENERATOR);
+			}
 
 			return;
 		}
@@ -427,9 +435,7 @@ public class MontageGeneratorPanel extends JPanel {
 
 	/**
 	 * Enables or disables {@link #getShowErrorsAction() show errors} and
-	 * {@link #getReloadAction() reload} button.
-	 * If there are errors during the
-	 * {@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
+	 * {@link #getReloadAction() reload} button. If there are errors during the 	 {@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 	 * validation} of the {@link #getMontage() montage} show errors button is
 	 * enabled and reload button is disabled. If there were no errors the
 	 * situation is symmetrical.
@@ -464,12 +470,14 @@ public class MontageGeneratorPanel extends JPanel {
 	 */
 	protected class ShowErrorsAction extends AbstractAction {
 
-		/** the default serialization constant. */
+		/**
+		 * the default serialization constant.
+		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Constructor. Creates a new action and sets a label
-		 * and an icon for the button associated with this action.
+		 * Constructor. Creates a new action and sets a label and an icon for
+		 * the button associated with this action.
 		 */
 		public ShowErrorsAction() {
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/errormedium.png"));
@@ -477,8 +485,8 @@ public class MontageGeneratorPanel extends JPanel {
 		}
 
 		/**
-		 * When the action is performed shows
-		 * the errors that appeared during the {@link
+		 * When the action is performed shows the errors that appeared during
+		 * the {@link
 		 * MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 		 * validation} of the {@link MontageGeneratorPanel#getGeneratorComboBox()
 		 * selected} {@link Montage}.
@@ -513,12 +521,14 @@ public class MontageGeneratorPanel extends JPanel {
 	 */
 	protected class ReloadAction extends AbstractAction {
 
-		/** the default serialization constant. */
+		/**
+		 * the default serialization constant.
+		 */
 		private static final long serialVersionUID = 1L;
 
 		/**
-		 * Constructor. Creates a new action and sets a label
-		 * and an icon for the button associated with this action.
+		 * Constructor. Creates a new action and sets a label and an icon for
+		 * the button associated with this action.
 		 */
 		public ReloadAction() {
 			putValue(AbstractAction.SMALL_ICON, IconUtils.loadClassPathIcon("org/signalml/app/icon/reloadmedium.png"));
@@ -527,8 +537,8 @@ public class MontageGeneratorPanel extends JPanel {
 
 		/**
 		 * When the action is performed {@link
-		 * MontageGeneratorPanel#tryGenerate(MontageGenerator) generates}
-		 * a new {@link Montage} using a {@link
+		 * MontageGeneratorPanel#tryGenerate(MontageGenerator) generates} a new
+		 * {@link Montage} using a {@link
 		 * MontageGeneratorPanel#getGeneratorComboBox() selected}
 		 * {@link MontageGenerator generator}.
 		 */
@@ -557,7 +567,8 @@ public class MontageGeneratorPanel extends JPanel {
 	 * {@link MontageGeneratorPanel#getGeneratorComboBox() generatorComboBox},</li>
 	 * <li>updates the state of the
 	 * {@link MontageGeneratorPanel#getReloadAction() reload} and
-	 * {@link MontageGeneratorPanel#getShowErrorsAction() show errors} actions,</li>
+	 * {@link MontageGeneratorPanel#getShowErrorsAction() show errors}
+	 * actions,</li>
 	 * <li>{@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 	 * validates} the {@link Montage montage}.</li>
 	 * </ul>
@@ -571,7 +582,8 @@ public class MontageGeneratorPanel extends JPanel {
 		 * MontageGeneratorPanel#getGeneratorComboBox() generatorComboBox},</li>
 		 * <li>updates the state of the {@link
 		 * MontageGeneratorPanel#getReloadAction() reload} and {@link
-		 * MontageGeneratorPanel#getShowErrorsAction() show errors} actions,</li>
+		 * MontageGeneratorPanel#getShowErrorsAction() show errors}
+		 * actions,</li>
 		 * <li>{@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 		 * validates} the {@link Montage montage}.</li></ul>
 		 */
@@ -591,7 +603,8 @@ public class MontageGeneratorPanel extends JPanel {
 	 * <ul>
 	 * <li>updates the state of the
 	 * {@link MontageGeneratorPanel#getReloadAction() reload} and
-	 * {@link MontageGeneratorPanel#getShowErrorsAction() show errors} actions,</li>
+	 * {@link MontageGeneratorPanel#getShowErrorsAction() show errors}
+	 * actions,</li>
 	 * <li>{@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 	 * validates} the {@link Montage montage}.</li>
 	 * </ul>
@@ -602,7 +615,8 @@ public class MontageGeneratorPanel extends JPanel {
 		 * <ul>
 		 * <li>Updates the state of the {@link
 		 * MontageGeneratorPanel#getReloadAction() reload} and {@link
-		 * MontageGeneratorPanel#getShowErrorsAction() show errors} actions,</li>
+		 * MontageGeneratorPanel#getShowErrorsAction() show errors}
+		 * actions,</li>
 		 * <li>{@link MontageGenerator#validateSourceMontage(SourceMontage, Errors)
 		 * validates} the {@link Montage montage}.</li></ul>
 		 */

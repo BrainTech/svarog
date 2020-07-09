@@ -1,14 +1,10 @@
 package org.signalml.app.view.montage;
 
 import com.alee.laf.tabbedpane.WebTabbedPane;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.config.preset.Preset;
@@ -21,6 +17,7 @@ import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import org.signalml.app.model.montage.MontageDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.presets.AbstractPanelWithPresets;
 import org.signalml.app.view.common.components.presets.ComplexPresetControlsPanel;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
@@ -123,6 +120,14 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 		interfacePanel.add(tabbedPane);
 
 		return interfacePanel;
+	}
+
+	public void activateMontagePane() {
+		tabbedPane.setSelectedIndex(0);
+	}
+
+	public void activateFiltersPane() {
+		tabbedPane.setSelectedIndex(1);
 	}
 
 	@Override

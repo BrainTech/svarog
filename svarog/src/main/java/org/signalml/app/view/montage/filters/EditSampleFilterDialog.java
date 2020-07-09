@@ -4,10 +4,8 @@
 package org.signalml.app.view.montage.filters;
 
 import java.awt.Window;
-
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.IconUtils;
 import org.signalml.app.view.common.dialogs.AbstractPresetDialog;

@@ -1,11 +1,9 @@
 package org.signalml.domain.montage.system;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
  * This class represents a function of a channel - that is what kind of signal
@@ -115,7 +113,7 @@ public enum ChannelFunction implements IChannelFunction {
 	 * @return the list of channel functions that can be changed
 	 */
 	public static List<IChannelFunction> getMutableChannelFunctions() {
-		List<IChannelFunction> mutableChannelFunctions = new ArrayList<IChannelFunction>();
+		List<IChannelFunction> mutableChannelFunctions = new ArrayList<>();
 
 		for (IChannelFunction function: values()) {
 			if (function.isMutable())

@@ -8,7 +8,6 @@ import org.signalml.app.method.MethodIterationResultConsumer;
 import org.signalml.app.method.MethodPresetManager;
 import org.signalml.app.method.MethodResultConsumer;
 import org.signalml.method.Method;
-import org.signalml.plugin.bookreporter.BookReporterPlugin;
 import org.signalml.plugin.bookreporter.data.BookReporterData;
 import org.signalml.plugin.bookreporter.data.BookReporterParameters;
 import org.signalml.plugin.export.method.BaseMethodData;
@@ -48,7 +47,7 @@ public class BookReporterMethodDescriptor extends PluginAbstractMethodDescriptor
 
 	@Override
 	public String getIconPath() {
-		return BookReporterPlugin.iconPath;
+		return null;
 	}
 
 	@Override

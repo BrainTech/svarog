@@ -1,7 +1,6 @@
 package org.signalml.app.method.ep.view.time;
 
 import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.signalml.method.ep.EvokedPotentialParameters;
 
 /**

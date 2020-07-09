@@ -1,5 +1,7 @@
 package org.signalml.plugin.export.signal.tagStyle;
 
+import org.signalml.plugin.export.signal.Tag;
+
 /**
  * The definition of the tag style attribute. Consists of an attribute code, displayName
  * and a field indicating whether this attribute should be rendered.
@@ -72,6 +74,14 @@ public class TagStyleAttributeDefinition {
 	 * @return true if attribute should be visible, false otherwise
 	 */
 	public boolean isVisible() {
+                        for (String technical_atribute_code : Tag.TECHNICAL_ATTRIBUTE_LIST){
+                            if (code == technical_atribute_code)
+                            {
+                               return false;
+                            }
+                    
+                        }
+                
 		return visible;
 	}
 

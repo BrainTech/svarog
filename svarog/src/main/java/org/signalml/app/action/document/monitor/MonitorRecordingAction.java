@@ -6,7 +6,6 @@ package org.signalml.app.action.document.monitor;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
 import org.signalml.app.action.AbstractFocusableSignalMLAction;
 import org.signalml.app.action.selector.ActionFocusEvent;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;

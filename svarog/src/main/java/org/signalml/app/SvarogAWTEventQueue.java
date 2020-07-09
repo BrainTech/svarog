@@ -1,7 +1,6 @@
 package org.signalml.app;
 
 import java.awt.AWTEvent;
-
 import org.apache.log4j.Logger;
 
 /**

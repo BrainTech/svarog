@@ -1,18 +1,16 @@
 package org.signalml.app.method.ep.action;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.method.ep.SelectTagGroupDialog;
 import org.signalml.app.method.ep.view.tags.TagStyleGroup;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.OptionPane;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.workspace.ViewerFileChooser;
@@ -37,7 +35,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 	public ExportAllEPSamplesToFloatFileAction(ViewerFileChooser fileChooser) {
 		super(fileChooser);
 		setText(_("Save samples to file"));
-		setToolTip(_("Save samples to file"));
+		setToolTip(_("Save samples to file. Binary, 32 bit float, multiplexed channels."));
 		setIconPath("org/signalml/app/icon/filesave.png");
 	}
 
@@ -77,7 +75,7 @@ public class ExportAllEPSamplesToFloatFileAction extends AbstractSaveAction {
 	protected TagStyleGroup showTagStyleGroupSelection() {
 		SelectTagGroupDialog dialog = new SelectTagGroupDialog();
 		List<TagStyleGroup> averagedTagStyles = result.getData().getParameters().getAveragedTagStyles();
-		List<TagStyleGroup> selectedGroups = new ArrayList<TagStyleGroup>();
+		List<TagStyleGroup> selectedGroups = new ArrayList<>();
 		selectedGroups.addAll(averagedTagStyles);
 
 		boolean okPressed = dialog.showDialog(selectedGroups);

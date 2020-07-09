@@ -4,16 +4,9 @@
 
 package org.signalml.math.iirdesigner;
 
-import static org.signalml.math.iirdesigner.IIRDesignerAssert.*;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
-import java.lang.Math.*;
-
 import org.signalml.BaseTestCase;
-import org.signalml.math.iirdesigner.BadFilterParametersException;
-import org.signalml.math.iirdesigner.Chebyshev1IIRDesigner;
-import org.signalml.math.iirdesigner.ChebyshevIIRDesigner;
-import org.signalml.math.iirdesigner.FilterType;
 import org.signalml.math.iirdesigner.AbstractIIRDesigner.BandstopObjectiveFunction;
 
 /**

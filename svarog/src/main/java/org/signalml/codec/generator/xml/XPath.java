@@ -41,7 +41,6 @@
 package org.signalml.codec.generator.xml;
 
 import java.util.Vector;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -214,7 +213,7 @@ public class XPath {
 		if (path!=null && root!=null) {
 			PathEntry entry[]=parsePath(path);
 			if (entry!=null) {
-				ret_vec=new Vector<Node>();
+				ret_vec=new Vector<>();
 				find(root.getDocumentElement(), entry, 0, true);
 
 

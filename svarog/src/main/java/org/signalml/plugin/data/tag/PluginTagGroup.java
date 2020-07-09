@@ -1,7 +1,6 @@
 package org.signalml.plugin.data.tag;
 
 import java.util.Collection;
-
 import org.signalml.plugin.export.signal.ExportedSignalSelectionType;
 
 public class PluginTagGroup {

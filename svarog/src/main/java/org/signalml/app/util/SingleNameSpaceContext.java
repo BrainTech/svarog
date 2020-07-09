@@ -6,7 +6,6 @@ package org.signalml.app.util;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 
@@ -26,7 +25,7 @@ public class SingleNameSpaceContext implements NamespaceContext {
 		this.prefix = prefix;
 		this.uri = uri;
 
-		prefixes = new ArrayList<String>();
+		prefixes = new ArrayList<>();
 		prefixes.add(prefix);
 
 	}

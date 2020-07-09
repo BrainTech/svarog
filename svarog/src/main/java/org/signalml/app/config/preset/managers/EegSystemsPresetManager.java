@@ -1,8 +1,8 @@
 package org.signalml.app.config.preset.managers;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import java.io.File;
 import java.io.IOException;
-
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -10,14 +10,12 @@ import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.domain.montage.system.MontageGenerators;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-
 /**
- * This {@link PresetManager} manages the available EEG systems definitions which
- * are stored in the 'eegSystems' directory inside the profile directory.
- * It reads the EEG electrodes definitions from the 'eegSystems/electrodes'
- * and montage generators definitions from the 'eegSystems/generators' directory
- * and connects them appropriately to form EEG systems.
+ * This {@link PresetManager} manages the available EEG systems definitions
+ * which are stored in the 'eegSystems' directory inside the profile directory.
+ * It reads the EEG electrodes definitions from the 'eegSystems/electrodes' and
+ * montage generators definitions from the 'eegSystems/generators' directory and
+ * connects them appropriately to form EEG systems.
  *
  * @author Piotr Szachewicz
  */
@@ -29,8 +27,8 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	 */
 	private EegElectrodesPresetManager eegElectrodesPresetManager = new EegElectrodesPresetManager();
 	/**
-	 * The preset manager that handles the {@link IMontageGenerator montage generators}
-	 * definitions.
+	 * The preset manager that handles the
+	 * {@link IMontageGenerator montage generators} definitions.
 	 */
 	private MontageGeneratorsPresetManager montageGeneratorsPresetManager = new MontageGeneratorsPresetManager();
 
@@ -46,29 +44,31 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	/**
 	 * Matches the right {@link IMontageGenerator} with the correct EEG system
 	 * taking into account the name of the EEG system.
+	 *
 	 * @param eegSystemsPresets the list of EEG systems presets to which montage
 	 * generators should be connected
-	 * @param montageGeneratorsPresets montage generators to be connected
-	 * to the right EEG systems
+	 * @param montageGeneratorsPresets montage generators to be connected to the
+	 * right EEG systems
 	 */
 	protected void matchMontageGeneratorsWithEegSystems(Preset[] eegSystemsPresets, Preset[] montageGeneratorsPresets) {
-		for (Preset preset: eegSystemsPresets) {
+		for (Preset preset : eegSystemsPresets) {
 			EegSystem eegSystem = (EegSystem) preset;
 			EegSystemName eegSystemName = ((EegSystem) preset).getEegSystemName();
 
-			for (Preset generatorPreset: montageGeneratorsPresets) {
+			for (Preset generatorPreset : montageGeneratorsPresets) {
 				MontageGenerators montageGenerators = (MontageGenerators) generatorPreset;
 				EegSystemName generatorEegSystem = montageGenerators.getEegSystemName();
 
-				if (generatorEegSystem == null || generatorEegSystem.getSymbol() == null)
+				if (generatorEegSystem == null || generatorEegSystem.getSymbol() == null) {
 					continue;
+				}
 
 				String symbol = generatorEegSystem.getSymbol();
-				String type = generatorEegSystem.getType() == null ? null: generatorEegSystem.getType();
+				String type = generatorEegSystem.getType() == null ? null : generatorEegSystem.getType();
 
 				if (eegSystemName.getSymbol().equalsIgnoreCase(symbol)
-						&& (type == null || type.isEmpty() ||
-							type.equalsIgnoreCase(eegSystemName.getType()))) {
+						&& (type == null || type.isEmpty()
+						|| type.equalsIgnoreCase(eegSystemName.getType()))) {
 					//if type of the EEG system in the montage generator is NULL then
 					//it is not taken into account while connecting montage generators
 					//with EEG systems - this makes sense for montage generators that fit for
@@ -88,8 +88,8 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 
 	/**
 	 * Creates the 'eegSystems/electrodes' and 'eegSystems/generators'
-	 * directories in the user directory, so that the user knows
-	 * where is the place to put his electrode and generators definitions.
+	 * directories in the user directory, so that the user knows where is the
+	 * place to put his electrode and generators definitions.
 	 */
 	public void createProfileDirectoriesIfNecessary() {
 		eegElectrodesPresetManager.createProfileDirectoryIfNecessary();
@@ -107,20 +107,22 @@ public class EegSystemsPresetManager extends AbstractPresetManager {
 	}
 
 	public EegSystem getEegSystem(EegSystemName eegSystemName) {
-		for (Preset preset: presets) {
+		for (Preset preset : presets) {
 			EegSystem eegSystem = (EegSystem) preset;
-			if (eegSystem.getEegSystemName().equals(eegSystemName))
+			if (eegSystem.getEegSystemName().equals(eegSystemName)) {
 				return eegSystem;
+			}
 		}
 		return null;
 	}
 
 	@Override
 	public Preset getDefaultPreset() {
-		for (Preset preset: presets) {
+		for (Preset preset : presets) {
 			EegSystem eegSystem = (EegSystem) preset;
-			if (eegSystem.isDefault())
+			if (eegSystem.isDefault()) {
 				return eegSystem;
+			}
 		}
 		return null;
 	}

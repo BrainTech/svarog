@@ -8,11 +8,9 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.Window;
 import java.util.prefs.Preferences;
-
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import org.signalml.app.config.ApplicationConfiguration;
 
 /**

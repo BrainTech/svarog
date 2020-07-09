@@ -4,22 +4,19 @@
 
 package org.signalml.app.view.common.dialogs;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.validation.Errors;

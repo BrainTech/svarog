@@ -4,12 +4,12 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.math.iirdesigner.math.FunctionOptimizer;
-import org.signalml.math.iirdesigner.math.SpecialMath;
-import org.apache.commons.math.complex.Complex;
 import java.util.ArrayList;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
+import org.apache.commons.math.complex.Complex;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.math.iirdesigner.math.FunctionOptimizer;
+import org.signalml.math.iirdesigner.math.SpecialMath;
 
 /**
  * This class represents a designer which is capable of designing an Elliptic filter.
@@ -133,8 +133,8 @@ class EllipticIIRDesigner extends AbstractIIRDesigner {
 		double v0 = capk * r / (filterOrder * val[0]);
 		double[] ellipv = SpecialMath.calculateJacobianEllipticFunctionsValues(v0, 1 - m);
 
-		ArrayList<Complex> zerosList = new ArrayList<Complex>();
-		ArrayList<Complex> polesList = new ArrayList<Complex>();
+		ArrayList<Complex> zerosList = new ArrayList<>();
+		ArrayList<Complex> polesList = new ArrayList<>();
 
 		double[] ellip;
 		for (int i = 1 - filterOrder % 2; i < filterOrder; i+=2) {

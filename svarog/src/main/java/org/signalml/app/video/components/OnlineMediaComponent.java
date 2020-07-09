@@ -1,17 +1,15 @@
 package org.signalml.app.video.components;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.video.VideoStreamManager;
+import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.CameraControlRequest;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
-import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 
 /**

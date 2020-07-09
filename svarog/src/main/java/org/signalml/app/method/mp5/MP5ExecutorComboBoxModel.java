@@ -5,7 +5,6 @@
 package org.signalml.app.method.mp5;
 
 import javax.swing.ComboBoxModel;
-
 import org.signalml.method.mp5.MP5Executor;
 
 /** MP5ExecutorComboBoxModel

@@ -3,9 +3,6 @@
  */
 package org.signalml.plugin.fftsignaltool;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,10 +15,8 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.text.DecimalFormat;
 import java.util.Calendar;
-
 import javax.swing.JComponent;
 import javax.swing.border.LineBorder;
-
 import org.apache.log4j.Logger;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.LogAxis;
@@ -32,6 +27,8 @@ import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.math.fft.FourierTransform;
 import org.signalml.math.fft.WindowType;

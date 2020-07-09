@@ -5,7 +5,6 @@
 package org.signalml.app.worker.document;
 
 import javax.swing.SwingWorker;
-
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.codec.SignalMLCodec;
 import org.signalml.codec.SignalMLCodecReader;

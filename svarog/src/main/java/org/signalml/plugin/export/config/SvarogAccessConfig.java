@@ -2,8 +2,6 @@ package org.signalml.plugin.export.config;
 
 import java.io.File;
 
-import org.signalml.plugin.export.config.SvarogConfiguration;
-
 /**
  * Svarog configuration facade (for plugins).
  *

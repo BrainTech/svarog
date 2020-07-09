@@ -1,6 +1,8 @@
 package org.signalml.app.config.preset.managers;
 
-
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamer;
+import com.thoughtworks.xstream.annotations.Annotations;
 import org.signalml.app.config.preset.PresetManager;
 import org.signalml.app.util.XMLUtils;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -10,14 +12,11 @@ import org.signalml.domain.montage.system.EegSystem;
 import org.signalml.domain.montage.system.EegSystemName;
 import org.signalml.math.geometry.Polar3dPoint;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.XStreamer;
-import com.thoughtworks.xstream.annotations.Annotations;
-
 /**
- * This {@link PresetManager} manages the electrodes definitions of a {@link EegSystem}
- * which are handled like presets. It is capable of reading the electrodes definitions
- * from a directory and restoring default electrodes configuration from resource.
+ * This {@link PresetManager} manages the electrodes definitions of a
+ * {@link EegSystem} which are handled like presets. It is capable of reading
+ * the electrodes definitions from a directory and restoring default electrodes
+ * configuration from resource.
  *
  * @author Piotr Szachewicz
  */
@@ -30,13 +29,13 @@ public class EegElectrodesPresetManager extends AbstractMultifileResourcesPreset
 
 	@Override
 	public String[] getDefaultFileNames() {
-		return new String[] {
+		return new String[]{
+			"EEG_GENERIC.xml",
 			"EEG_10_10_easy_cap.xml",
 			"EEG_10_20_easy_cap.xml",
 			"EEG_10_10_gel_cap.xml",
 			"EEG_10_20_blue_water_cap.xml",
-			"EEG_10_20_black_water_cap.xml",
-		};
+			"EEG_10_20_black_water_cap.xml",};
 	}
 
 	@Override
@@ -54,6 +53,7 @@ public class EegElectrodesPresetManager extends AbstractMultifileResourcesPreset
 
 	/**
 	 * Creates and returns an {@link XStreamer} used by this preset manager.
+	 *
 	 * @return
 	 */
 	protected XStream createStreamer() {

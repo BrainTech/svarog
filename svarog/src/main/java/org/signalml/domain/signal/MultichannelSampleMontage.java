@@ -8,15 +8,13 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-
 import org.apache.log4j.Logger;
-import org.signalml.domain.montage.system.ChannelType;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageChannel;
 import org.signalml.domain.montage.MontageMismatchException;
+import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.montage.SourceChannel;
 import org.signalml.domain.montage.system.ChannelFunction;
-import org.signalml.domain.montage.SignalConfigurer;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.exception.SanityCheckException;
 
@@ -390,9 +388,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 		Entry[] entries = new Entry[cnt];
 		float[][] matrix = new float[cnt][];
 		int[] sampleCounts = new int[cnt];
-		ArrayList<LinkedList<Integer>> backRefs = new ArrayList<LinkedList<Integer>>(srcCnt);
+		ArrayList<LinkedList<Integer>> backRefs = new ArrayList<>(srcCnt);
 		for (i=0; i<srcCnt; i++) {
-			backRefs.add(new LinkedList<Integer>());
+			backRefs.add(new LinkedList<>());
 		}
 		LinkedList<Integer> channelBackRefs;
 		int primaryChannel;

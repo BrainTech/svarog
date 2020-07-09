@@ -1,8 +1,9 @@
 package org.signalml.plugin.method.helper;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.XStreamException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.preset.Preset;
 import org.signalml.app.method.ApplicationMethodManager;
@@ -10,9 +11,6 @@ import org.signalml.app.method.MethodPresetManager;
 import org.signalml.plugin.exception.PluginException;
 import org.signalml.plugin.method.PluginMethodManager;
 import org.signalml.plugin.tool.PluginResourceRepository;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.XStreamException;
 
 public class PluginPresetManagerHelper {
 

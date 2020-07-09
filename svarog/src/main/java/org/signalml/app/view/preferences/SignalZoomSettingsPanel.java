@@ -3,12 +3,9 @@
  */
 package org.signalml.app.view.preferences;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -16,12 +13,10 @@ import javax.swing.JRadioButton;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.config.ZoomSignalSettings;
 import org.signalml.app.model.components.validation.ValidationErrors;
-
-import org.springframework.validation.Errors;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Panel which allows to select how the zoomed signal should be displayed.

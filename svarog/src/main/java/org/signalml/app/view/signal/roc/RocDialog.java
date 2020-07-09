@@ -4,8 +4,6 @@
 
 package org.signalml.app.view.signal.roc;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.text.DecimalFormat;
-
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -25,20 +22,20 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumnModel;
-
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.AxisSpace;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.ui.RectangleInsets;
 import org.jfree.data.xy.DefaultXYDataset;
-import org.jfree.ui.RectangleInsets;
 import org.signalml.app.action.components.ExportChartToClipboardAction;
 import org.signalml.app.action.components.ExportChartToFileAction;
 import org.signalml.app.model.components.PropertySheetModel;
 import org.signalml.app.model.components.TableToTextExporter;
 import org.signalml.app.util.IconUtils;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.app.view.workspace.ViewerFileChooser;
 import org.signalml.app.view.workspace.ViewerPropertySheet;

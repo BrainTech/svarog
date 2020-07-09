@@ -3,7 +3,6 @@ package org.signalml.plugin.loader;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.CompoundBorder;
@@ -78,7 +77,7 @@ public class PluginDirsPanel extends JPanel {
 	private ArrayList<File> getPluginDirs(String pluginDirsString) {
 		String[] paths;
 		paths = pluginDirsString.split(";");
-		ArrayList<File> pluginDirs = new ArrayList<File>();
+		ArrayList<File> pluginDirs = new ArrayList<>();
 		for (String path : paths) {
 			File dir;
 			if (path!=null) {

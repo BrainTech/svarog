@@ -5,11 +5,10 @@
 package org.signalml.codec;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
+import java.nio.BufferUnderflowException;
 import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
-import java.nio.BufferUnderflowException;
-
+import java.util.HashMap;
 import org.apache.log4j.Logger;
 import org.signalml.codec.generator.xml.XMLCodecException;
 
@@ -27,7 +26,7 @@ public class SignalMLCodecReaderImpl implements SignalMLCodecReader {
 	private Class<?> delegateClass = null;
 	private SignalMLCodec codec = null;
 
-	private HashMap<String,Method> methodMap = new HashMap<String, Method>();
+	private HashMap<String,Method> methodMap = new HashMap<>();
 	private Method openMethod;
 	private Method closeMethod;
 

@@ -2,12 +2,11 @@ package org.signalml.app.model.components.validation;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.AbstractListModel;
 
 public class ValidationErrors extends AbstractListModel {
 
-	protected List<String> errorStrings = new ArrayList<String>();
+	protected List<String> errorStrings = new ArrayList<>();
 
 	public void addError(String error) {
 		errorStrings.add(error);

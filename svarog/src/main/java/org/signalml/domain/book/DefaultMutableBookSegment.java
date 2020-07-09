@@ -35,7 +35,7 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 		this.segmentNumber = segmentNumber;
 		this.segmentTime = segmentTime;
 		this.segmentLength = segmentLength;
-		atoms = new ArrayList<StandardBookAtom>();
+		atoms = new ArrayList<>();
 	}
 
 	public DefaultMutableBookSegment(StandardBookSegment segment) {
@@ -129,7 +129,7 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 
 	@Override
 	public Enumeration<String> getPropertyNames() {
-		Vector<String> names = new Vector<String>();
+		Vector<String> names = new Vector<>();
 		return names.elements();
 	}
 

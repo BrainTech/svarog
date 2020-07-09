@@ -7,7 +7,6 @@ package org.signalml.app.method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.apache.log4j.Logger;
 import org.signalml.method.InitializingMethod;
 import org.signalml.method.Method;
@@ -21,9 +20,9 @@ import org.signalml.plugin.export.SignalMLException;
 public class DefaultMethodManager implements MethodManager {
 
 	private static final Logger logger = Logger.getLogger(DefaultMethodManager.class);
-	protected ArrayList<Method> methods = new ArrayList<Method>();
-	private Map<String,Method> methodsByName = new HashMap<String,Method>();
-	private Map<String,Method> methodsByUID = new HashMap<String, Method>();
+	protected ArrayList<Method> methods = new ArrayList<>();
+	private Map<String,Method> methodsByName = new HashMap<>();
+	private Map<String,Method> methodsByUID = new HashMap<>();
 
 	@Override
 	public synchronized int getMethodCount() {

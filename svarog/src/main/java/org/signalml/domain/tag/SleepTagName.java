@@ -9,7 +9,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.signalml.plugin.export.signal.ExportedTagDocument;
 import org.signalml.plugin.export.signal.ExportedTagStyle;
 
@@ -78,8 +77,8 @@ public abstract class SleepTagName {
 
 	static {
 
-		levelMap = new HashMap<String, Integer>();
-		colorMap = new HashMap<String, Color>();
+		levelMap = new HashMap<>();
+		colorMap = new HashMap<>();
 
 		levelMap.put(RK_WAKE, RK_LEVEL_WAKE);
 		levelMap.put(RK_MT, RK_LEVEL_MT);
@@ -203,7 +202,7 @@ public abstract class SleepTagName {
 	private static boolean checkStyles(Set<ExportedTagStyle> stylesSet,
 									   String... styleNames) {
 
-		Set<String> styleNamesSet = new HashSet<String>(Arrays.asList(styleNames));
+		Set<String> styleNamesSet = new HashSet<>(Arrays.asList(styleNames));
 		for (ExportedTagStyle style : stylesSet) {
 			String styleName = style.getName();
 			if (style.getType().isPage() && styleNamesSet.contains(styleName)) {

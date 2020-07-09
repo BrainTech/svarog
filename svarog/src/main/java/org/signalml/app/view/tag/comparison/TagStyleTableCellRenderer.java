@@ -4,15 +4,12 @@
 
 package org.signalml.app.view.tag.comparison;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.tag.TagIconProducer;
 import org.signalml.plugin.export.signal.TagStyle;
 

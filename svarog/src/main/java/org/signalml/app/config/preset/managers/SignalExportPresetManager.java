@@ -4,11 +4,10 @@
 
 package org.signalml.app.config.preset.managers;
 
-import org.signalml.app.model.signal.SignalExportDescriptor;
-import org.signalml.app.util.XMLUtils;
-
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.util.XMLUtils;
 
 /** SignalExportPresetManager
  *

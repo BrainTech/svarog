@@ -40,8 +40,8 @@
 */
 package org.signalml.codec.generator.xml;
 
-import org.w3c.dom.Node;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Node;
 
 public class Codec extends CodecCore {
 	protected static final Logger log = Logger.getLogger(Codec.class);

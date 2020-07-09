@@ -4,12 +4,12 @@
 
 package org.signalml.math.iirdesigner;
 
-import org.signalml.math.iirdesigner.math.FunctionOptimizer;
-import org.apache.commons.math.complex.Complex;
 import org.apache.commons.math.analysis.UnivariateRealFunction;
+import org.apache.commons.math.complex.Complex;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.math.iirdesigner.math.FunctionOptimizer;
 
 /**
  * This is an abstract class representing a Designer capable of designing an IIR Filter.

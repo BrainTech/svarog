@@ -1,11 +1,9 @@
 package org.signalml.domain.signal.filter.export;
 
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import java.io.IOException;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
 import org.signalml.domain.signal.filter.TestingSignals;
 import org.signalml.domain.signal.filter.iir.OfflineIIRSinglechannelSampleFilter;

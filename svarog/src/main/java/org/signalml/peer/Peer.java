@@ -1,16 +1,12 @@
 package org.signalml.peer;
 
 import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
 import org.signalml.app.worker.monitor.messages.BaseMessage;
 import org.signalml.app.worker.monitor.messages.BrokerHelloMsg;
 import org.signalml.app.worker.monitor.messages.BrokerHelloResponseMsg;
-import org.signalml.app.worker.monitor.messages.LauncherMessage;
-import org.signalml.app.worker.monitor.messages.MessageType;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.zeromq.ZMQ;
 import org.zeromq.ZMQException;
 

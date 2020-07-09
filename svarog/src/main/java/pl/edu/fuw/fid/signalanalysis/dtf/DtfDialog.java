@@ -3,10 +3,10 @@ package pl.edu.fuw.fid.signalanalysis.dtf;
 import java.awt.Window;
 import java.net.URL;
 import javax.swing.JComponent;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.plugin.export.SignalMLException;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * Dialog for displaying results of DTF method, consisting of a single

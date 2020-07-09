@@ -4,8 +4,8 @@
 package org.signalml.method.example;
 
 import java.beans.IntrospectionException;
-
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.method.AbstractMethod;
 import org.signalml.method.ComputationException;
@@ -18,9 +18,6 @@ import org.signalml.method.iterator.IterableNumericProperty;
 import org.signalml.method.iterator.IterableParameter;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.BaseMethodData;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import org.springframework.validation.Errors;
 
 /**

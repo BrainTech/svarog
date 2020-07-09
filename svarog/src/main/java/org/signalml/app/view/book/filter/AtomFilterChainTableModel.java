@@ -4,10 +4,8 @@
 
 package org.signalml.app.view.book.filter;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import javax.swing.table.AbstractTableModel;
-
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.filter.AtomFilterChain;
 import org.signalml.exception.SanityCheckException;
 import org.springframework.context.MessageSourceResolvable;

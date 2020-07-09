@@ -1,12 +1,10 @@
 package org.signalml.domain.signal.filter.export;
 
-import static org.signalml.SignalMLAssert.assertArrayEquals;
-
 import java.io.File;
 import java.io.IOException;
-
 import org.junit.Test;
 import org.signalml.BaseTestCase;
+import static org.signalml.SignalMLAssert.assertArrayEquals;
 import org.signalml.app.document.signal.RawSignalDocument;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.montage.Montage;

@@ -4,17 +4,26 @@
 
 package org.signalml.domain.tag;
 
+import com.thoughtworks.xstream.converters.Converter;
+import com.thoughtworks.xstream.converters.MarshallingContext;
+import com.thoughtworks.xstream.converters.UnmarshallingContext;
+import com.thoughtworks.xstream.converters.basic.BooleanConverter;
+import com.thoughtworks.xstream.converters.basic.FloatConverter;
+import com.thoughtworks.xstream.converters.basic.IntConverter;
+import com.thoughtworks.xstream.io.HierarchicalStreamReader;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Collection;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import javax.swing.KeyStroke;
-
 import org.apache.log4j.Logger;
 import org.signalml.app.model.signal.PagingParameterDescriptor;
+import static org.signalml.app.util.i18n.SvarogI18n._;
+import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.signal.SignalChecksum;
 import org.signalml.exception.SanityCheckException;
@@ -26,19 +35,6 @@ import org.signalml.plugin.export.signal.tagStyle.TagStyleAttributeDefinition;
 import org.signalml.util.ColorConverter;
 import org.signalml.util.FloatArrayConverter;
 import org.signalml.util.KeyStrokeConverter;
-
-import static org.signalml.app.util.i18n.SvarogI18n._;
-import static org.signalml.app.util.i18n.SvarogI18n._R;
-
-import com.thoughtworks.xstream.converters.Converter;
-import com.thoughtworks.xstream.converters.MarshallingContext;
-import com.thoughtworks.xstream.converters.UnmarshallingContext;
-import com.thoughtworks.xstream.converters.basic.BooleanConverter;
-import com.thoughtworks.xstream.converters.basic.FloatConverter;
-import com.thoughtworks.xstream.converters.basic.IntConverter;
-import com.thoughtworks.xstream.io.HierarchicalStreamReader;
-import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
-import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 
 /**
  * This class is responsible for marshaling/unmarshaling {@link StyledTagSet}
@@ -274,7 +270,7 @@ public class StyledTagSetConverter implements Converter {
 		String annotation;
 
 		TagStyles styles = new TagStyles();
-		TreeSet<Tag> tags = new TreeSet<Tag>();
+		TreeSet<Tag> tags = new TreeSet<>();
 
 		float pageSize = PagingParameterDescriptor.DEFAULT_PAGE_SIZE;
 		int blocksPerPage = PagingParameterDescriptor.DEFAULT_BLOCKS_PER_PAGE;

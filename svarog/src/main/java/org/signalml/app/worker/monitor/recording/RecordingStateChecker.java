@@ -1,9 +1,8 @@
 package org.signalml.app.worker.monitor.recording;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.log4j.Logger;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.worker.monitor.Helper;
 import org.signalml.app.worker.monitor.exceptions.OpenbciCommunicationException;
@@ -65,7 +64,7 @@ class RecordingStateChecker extends Thread {
                                                    }
                                                    error_text += "\n";
                                                 }
-                                        error_text += _("Signal preceeding this error message is not lost.\n");
+                                        error_text += _("Signal preceeding this error message is not lost.") + "\n";
                                         String timeStamp = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss").format(new Date());
                                         error_text += _("Error received at ") + timeStamp;
 

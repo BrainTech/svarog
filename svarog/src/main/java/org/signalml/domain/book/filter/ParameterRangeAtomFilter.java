@@ -4,14 +4,13 @@
 
 package org.signalml.domain.book.filter;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
 import org.signalml.util.MinMaxRange;
 import org.signalml.util.MinMaxRangeFloat;
 import org.signalml.util.MinMaxRangeInteger;
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /** ParameterRangeAtomFilter
  *

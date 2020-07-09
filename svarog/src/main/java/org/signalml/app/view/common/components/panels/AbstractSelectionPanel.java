@@ -1,20 +1,17 @@
 package org.signalml.app.view.common.components.panels;
 
-import static org.signalml.app.util.i18n.SvarogI18n._;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-
 import org.signalml.app.model.components.table.AbstractSelectionTableModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 
 /**
  * This panel contains a table and select all/clear all buttons.
