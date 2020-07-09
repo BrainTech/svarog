@@ -20,6 +20,7 @@ import org.signalml.app.model.tag.NewTagDescriptor.NewTagTypeMode;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.app.view.tag.NewTagDialog;
+import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.plugin.export.SignalMLException;
 
@@ -80,7 +81,17 @@ public class NewTagAction extends AbstractFocusableSignalMLAction<SignalDocument
 				tagDocument = TagDocument.getDefaultPreset(descriptor.getPageSize(), descriptor.getBlocksPerPage(), descriptor.getDefaultPresetIndex());
 			}
 			else if (mode == NewTagTypeMode.PRESET) {
-				tagDocument = new TagDocument(descriptor.getTagStylesPreset());
+				/* TagStyle preset manager might need to get refactored,
+				* now it saves full StyledTagSets, instead of TagStyle objects
+				* but that most likely would break backward compatability
+				* with saved user tagsstyles
+				* it's not a problem if user saves a tag preset with tags which 
+				* were open in Svarog, but to prevent them from appearing
+				* during creation of new tag, we do this sanitization.
+				*/
+				StyledTagSet unsanitized = descriptor.getTagStylesPreset();
+				StyledTagSet sanitized = new StyledTagSet(unsanitized.getTagStyles().clone(), unsanitized.getPageSize(), unsanitized.getBlocksPerPage());
+				tagDocument = new TagDocument(sanitized);
 			}
 			else if (mode == NewTagTypeMode.FROM_FILE) {
 				tagDocument = TagDocument.getStylesFromFileDocument(descriptor.getFile(), descriptor.getPageSize(), descriptor.getBlocksPerPage());
