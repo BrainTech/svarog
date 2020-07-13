@@ -29,7 +29,7 @@ build_svarog_standalone:
     paths:
       - .m2/repository
   artifacts:
-    name: "svarog_standalone_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_standalone"
     paths:
       - svarog-standalone-package
     
@@ -47,7 +47,7 @@ build_svarog_win_zip:
   dependencies:
     - build_svarog_standalone
   artifacts:
-    name: "svarog_win_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_win"
     paths:
       - svarog_win
 
@@ -65,7 +65,7 @@ build_svarog_lin_zip:
   dependencies:
     - build_svarog_standalone
   artifacts:
-    name: "svarog_linux_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_linux"
     paths:
       - svarog_linux
       
@@ -79,7 +79,7 @@ build_svarog_lin_deb:
   dependencies:
     - build_svarog_lin_zip
   artifacts:
-    name: "svarog_linux_deb_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_linux_deb"
     paths:
       - svarog.deb
 
@@ -97,7 +97,7 @@ build_svarog_mac:
   dependencies:
     - build_svarog_standalone
   artifacts:
-    name: "svarog_mac_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_mac"
     paths:
       - svarog_mac.app
 
@@ -117,7 +117,7 @@ signdebs:
   dependencies:
     - build_svarog_lin_deb
   artifacts:
-    name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_signed"
     paths:
     - svarog*.deb
 
