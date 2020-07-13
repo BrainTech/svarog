@@ -6,5 +6,5 @@
             if errorlevel 1 goto sign
             goto end
             :sign
-            signtool sign /sha1 39bef11ce57cbc35300408c82a675c0ac3200483 /sm /t http://timestamp.verisign.com/scripts/timstamp.dll %1
+            signtool sign /sha1 __WINDOWS_SIGNING_CERT_SHA__ /sm /t http://timestamp.verisign.com/scripts/timstamp.dll %1
             :end 

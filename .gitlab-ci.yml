@@ -121,6 +121,7 @@ build_svarog_installer_windows:
     - sed -i "s/__VERSION__/$GITVERSION/g" "Svarog.nsi"
     - sed -i "s/__NSISVERSION__/$NSIS_VER/g" "Svarog.nsi"
     - /C/Program\ Files\ \(x86\)/NSIS/makensis.exe "Svarog.nsi"
+    - sed -i "s/__WINDOWS_SIGNING_CERT_SHA__/$WINDOWS_SIGNING_CERT_SHA/g" "sign.bat"
     - ./sign.bat Svarog_installer.exe
     - mv Svarog_installer.exe ../
 
