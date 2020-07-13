@@ -29,7 +29,7 @@ build_svarog_standalone:
     paths:
       - .m2/repository
   artifacts:
-    name: "svarog_standalone"
+    name: "svarog_standalone_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths:
       - svarog-standalone-package
     
@@ -47,7 +47,7 @@ build_svarog_win_zip:
   dependencies:
     - build_svarog_standalone
   artifacts:
-    name: "svarog_win"
+    name: "svarog_win_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths:
       - svarog_win
 
@@ -65,9 +65,23 @@ build_svarog_lin_zip:
   dependencies:
     - build_svarog_standalone
   artifacts:
-    name: "svarog_linux"
+    name: "svarog_linux_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths:
       - svarog_linux
+      
+build_svarog_lin_deb:
+  image: svarog-build-test-image:u1604
+  stage: build_installer
+  script:
+    - ./installer_builder/scripts/linux_build_deb.sh
+  tags:
+    - docker
+  dependencies:
+    - build_svarog_lin_zip
+  artifacts:
+    name: "svarog_linux_deb_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    paths:
+      - svarog.deb
 
 build_svarog_mac:
   image: svarog-build-test-image:u1604
@@ -83,7 +97,7 @@ build_svarog_mac:
   dependencies:
     - build_svarog_standalone
   artifacts:
-    name: "svarog_mac"
+    name: "svarog_mac_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
     paths:
       - svarog_mac.app
 
@@ -93,18 +107,18 @@ mvntest:
   script:
     - mvn test
     
-#signdebs:
-#  image: signdebs-image
-#  stage: sign
-#  before_script:
-#  - apt-get update -qq
-#  - apt-get install -y gnupg debsigs
-#  script: ./scripts/ci/signdebs.sh
-#  dependencies:
-#  - build
-#  artifacts:
-#    name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
-#    paths:
-#    - ./dist/*.deb
+signdebs:
+  image: signdebs-image
+  stage: sign
+  before_script:
+    - apt-get update -qq
+    - apt-get install -y gnupg debsigs
+  script: ./scripts/ci/signdebs.sh
+  dependencies:
+    - build_svarog_lin_deb
+  artifacts:
+    name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    paths:
+    - svarog*.deb
 
 

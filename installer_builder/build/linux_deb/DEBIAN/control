@@ -1,0 +1,9 @@
+Package: svarog
+Version: __VERSION__
+Section: misc
+Priority: optional
+Architecture: amd64
+Recommends: vlc
+Maintainer: MDovgialo <marian.dowgialo@braintech.pl>
+Description: Svarog EEG signal viewer
+ License: GPLv3 (https://www.gnu.org/licenses/gpl-3.0.en.html)
