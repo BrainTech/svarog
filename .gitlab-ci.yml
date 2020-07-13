@@ -101,6 +101,37 @@ build_svarog_mac:
     paths:
       - svarog_mac.app
 
+build_svarog_installer_windows:
+  except:
+    - api
+    - schedules
+    - triggers
+  stage: build_installer
+  dependencies:
+    - build_svarog_win_zip
+  script:
+    - mkdir -p dist/svarog
+    - cp -r svarog_win dist/
+    - cp installer_builder/build/svarog_exe/svarog.ico dist/svarog_win/
+    - cp installer_builder/build/svarog_exe/Svarog.nsi dist/
+    - cp installer_builder/build/svarog_exe/sign.bat dist/
+    - cd dist
+    - export GITVERSION=`git describe --tags`
+    - export NSIS_VER=`python ../installer_builder/build/svarog_exe/nsis_version.py`
+    - sed -i "s/__VERSION__/$GITVERSION/g" "Svarog.nsi"
+    - sed -i "s/__NSISVERSION__/$NSIS_VER/g" "Svarog.nsi"
+    - /C/Program\ Files\ \(x86\)/NSIS/makensis.exe "Svarog.nsi"
+    - ./sign.bat Svarog_installer.exe
+    - mv Svarog_installer.exe ../
+
+  artifacts:
+    name: "Svarog_installer_windows"
+    paths:
+    - Svarog_installer*.exe
+  tags:
+    - win10
+
+
 mvntest:
   image: svarog-build-test-image:u1604
   stage: test
@@ -117,7 +148,7 @@ signdebs:
   dependencies:
     - build_svarog_lin_deb
   artifacts:
-    name: "svarog_signed"
+    name: "svarog_linux_deb_signed"
     paths:
     - svarog*.deb
 
