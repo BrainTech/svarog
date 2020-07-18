@@ -29,9 +29,7 @@ import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.SourceMontage;
 import org.signalml.domain.montage.filter.FFTSampleFilter;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.montage.system.ChannelFunction;
 import org.signalml.domain.montage.system.EegSystem;
-import org.signalml.domain.montage.system.IChannelFunction;
 import org.signalml.plugin.export.SignalMLException;
 import org.signalml.util.Util;
 
@@ -233,7 +231,6 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 
 		if (model instanceof Montage) {
 			this.currentMontage = new Montage((Montage) model);
-			setMontageToPanels(currentMontage);
 		} else {
 			final MontageDescriptor descriptor = (MontageDescriptor) model;
 			final Montage montage = descriptor.getMontage();
@@ -255,9 +252,6 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 			filtersPanel.setCurrentSamplingFrequency(signalBound ?
 					signalDocument.getSamplingFrequency() : 128.0F);
 		}
-
-		if (signalDocument != null && !this.currentMontage.isCompatible(signalDocument))
-			this.currentMontage.adapt(signalDocument);
 
 		setMontageToPanels(this.currentMontage);
 	}
@@ -317,33 +311,24 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 
 	@Override
 	public void setPreset(Preset preset) throws SignalMLException {
-		fillPanelFromModel(preset);
+		Montage montage = (Montage) preset;
+		if (currentMontage != null) {
+			montage = montage.translateWithBestEffort(currentMontage);
+		}
+		fillPanelFromModel(montage);
 	}
 
 	@Override
 	public boolean isPresetCompatible(Preset preset) {
 		Montage montagePreset = (Montage) preset;
-		int presetChannelsCount = getNormalChannelsCount(montagePreset);
-		int thisChannelsCount = getNormalChannelsCount(getCurrentMontage());
 
-		if (presetChannelsCount != thisChannelsCount) {
-			Dialogs.showError(_("Preset is incompatible with this montage—bad channels count in the preset montage!"));
-			logger.error("Preset incompatible: current montage 'normal' channel count = " +
-						 + thisChannelsCount + " preset channel count = " + presetChannelsCount);
+		if (currentMontage != null && montagePreset.translateWithBestEffort(currentMontage) == null) {
+			Dialogs.showError(_("Preset is incompatible with this montage!"));
+			logger.error("Preset incompatible: no matching channels");
 			return false;
 		}
+
 		return true;
-	}
-
-	private int getNormalChannelsCount(Montage montage) {
-		int normalChannelsCount = 0;
-
-		for (int i = 0; i < montage.getSourceChannelCount(); i++) {
-			IChannelFunction channelFunction = montage.getSourceChannelFunctionAt(i);
-			if (channelFunction != ChannelFunction.ZERO && channelFunction != ChannelFunction.ONE)
-				normalChannelsCount++;
-		}
-		return normalChannelsCount;
 	}
 
 }
