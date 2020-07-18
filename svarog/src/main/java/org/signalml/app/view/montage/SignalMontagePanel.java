@@ -253,6 +253,9 @@ public class SignalMontagePanel extends AbstractPanelWithPresets {
 					signalDocument.getSamplingFrequency() : 128.0F);
 		}
 
+		if (signalDocument != null && !this.currentMontage.isCompatible(signalDocument))
+			this.currentMontage.adapt(signalDocument);
+
 		setMontageToPanels(this.currentMontage);
 	}
 
