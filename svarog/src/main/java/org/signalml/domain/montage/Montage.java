@@ -195,6 +195,37 @@ public class Montage extends SourceMontage implements Preset {
 	}
 
 	/**
+	 * Create a copy of this montage adapted to the given combination of source channels.
+	 * This function adapts the montage on the "best effort" basis.
+	 * Source montage is used as specified.
+	 * Output montage is restricted only to channels that can be applied to the given source montage.
+	 * If no output channel matches, null is returned.
+	 *
+	 * @param sourceMontage source montage to use
+	 * @return new Montage instance or null
+	 */
+	public Montage translateWithBestEffort(SourceMontage sourceMontage) {
+
+		Montage result = new Montage(sourceMontage);
+
+		int count = 0;
+		for (MontageChannel montageChannel : montageChannels) {
+			// adapt all montage channels to document's source montage
+			MontageChannel resultMontageChannel = montageChannel.translateUsingLabels(sourceMontage);
+			if (resultMontageChannel != null) {
+				result.addMontageChannelInternal(resultMontageChannel, count++);
+			}
+		}
+
+		if (count == 0) {
+			// no matching channels
+			return null;
+		}
+
+		return result;
+	}
+
+	/**
 	 * Checks if this montage is compatible with the object given as parameter.
 	 * Montages are compatible if:
 	 * 1. they are compatible as {@link SourceMontage source montages}

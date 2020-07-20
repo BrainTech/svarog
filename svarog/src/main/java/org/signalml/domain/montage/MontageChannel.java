@@ -366,4 +366,33 @@ public class MontageChannel implements Serializable {
 		this.excludeAllFilters = excludeAllFilters;
 	}
 
+	/**
+	 * Create a copy of this montage adapted to the given combination of source channels.
+	 * All channels are matched using labels instead of indices.
+	 * If at least one source channel is missing from the sourceMontage, null is returned instead.
+	 *
+	 * @param sourceMontage source montage to use
+	 * @return new MontageChannel instance or null
+	 */
+	public MontageChannel translateUsingLabels(SourceMontage sourceMontage) {
+		// first, find matching source channel for primary channel
+		SourceChannel resultPrimaryChannel = sourceMontage.getSourceChannelByLabel(primaryChannel.getLabel());
+		if (resultPrimaryChannel == null) {
+			return null;
+		}
+
+		MontageChannel result = new MontageChannel(resultPrimaryChannel);
+		result.setExcludeAllFilters(excludeAllFilters);
+		result.setLabel(label);
+		for (Entry<SourceChannel, String> entry : referenceMap.entrySet()) {
+			// then, find matching source channels for all the references
+			SourceChannel resultSourceChannel = sourceMontage.getSourceChannelByLabel(entry.getKey().getLabel());
+			if (resultSourceChannel == null) {
+				return null;
+			}
+			result.setReference(resultSourceChannel, entry.getValue());
+		}
+
+		return result;
+	}
 }
