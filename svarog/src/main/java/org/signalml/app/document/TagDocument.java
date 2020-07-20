@@ -61,16 +61,18 @@ import org.springframework.core.io.Resource;
  */
 public class TagDocument extends AbstractMutableFileDocument implements ExportedTagDocument {
 
-	public static String[] DEFAULT_TAG_DOCUMENTS = { "default_tags_coma_structures.xml",
-			"default_tags_sleep_AASM.xml",
-			"default_tags_sleep_RK.xml",};
-	public static String[] DEFAULT_TAG_DOCUMENTS_STYLE_NAMES = { _("Coma structures"),
+	public static String[] DEFAULT_TAG_DOCUMENTS = {
+		"default_tags_sleep_AASM.xml",
+		"default_tags_sleep_RK.xml",
+		"default_tags_coma_structures.xml",};
+	public static String[] DEFAULT_TAG_DOCUMENTS_STYLE_NAMES = {
 		_("Sleep AASM"),
-		_("Sleep RK"), };
-	
+		_("Sleep RK"),
+		_("Coma structures"),};
+
 	/**
-	     * Logger to save history of execution at
-	     */
+	 * Logger to save history of execution at
+	 */
 	protected static final Logger logger = Logger.getLogger(TagDocument.class);
 	
 	/**

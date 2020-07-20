@@ -97,9 +97,9 @@ public class FFTSignalPlugin implements Plugin, PluginCloseListener {
 		ToolButtonParameters parameters = new ToolButtonParameters(_("Signal FFT (for settings press right mouse button)"), icon, null, action);
 		guiAccess.addSignalTool(tool, parameters);
 
-		//creates and adds the action which shows the
+		// creates and adds the action which shows the FFT settings window
 
-		guiAccess.addButtonToAnalysisMenu(action);
+		guiAccess.addButtonToToolsMenu(action);
 		
 		guiAccess.addButtonToSignalPlotPopupMenu(popupAction);
 	}
