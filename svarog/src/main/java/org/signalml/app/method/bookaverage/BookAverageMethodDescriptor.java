@@ -91,7 +91,7 @@ public class BookAverageMethodDescriptor implements ApplicationMethodDescriptor 
 		int currentChannel = bookView.getCurrentChannel();
 
 		BookAverageData data = new BookAverageData();
-		data.setBook(book);
+		data.setBook(bookView.getFilter());
 		data.setPalette(bookView.getPlot().getPalette());
 		data.setScaleType(bookView.getPlot().getScaleType());
 		data.setMinSegment(0);
