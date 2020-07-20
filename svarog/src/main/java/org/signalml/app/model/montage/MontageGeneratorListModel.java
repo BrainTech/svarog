@@ -31,6 +31,10 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 	public MontageGeneratorListModel() {
 	}
 
+	public MontageGeneratorListModel(EegSystem eegSystem) {
+		this.eegSystem = eegSystem;
+	}
+
 	@Override
 	public Object getSelectedItem() {
 		return selectedItem;
