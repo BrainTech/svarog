@@ -21,6 +21,7 @@ public class SettingsToolbarSwitchAction extends AbstractFocusableSignalMLAction
 	public SettingsToolbarSwitchAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
 		setText(_("Settings"));
+		setIconPath("org/signalml/app/icon/toolbarsettings.png");
 	}
 
 	@Override

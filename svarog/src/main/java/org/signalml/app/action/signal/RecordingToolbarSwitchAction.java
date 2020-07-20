@@ -22,6 +22,7 @@ public class RecordingToolbarSwitchAction extends AbstractFocusableSignalMLActio
 	public RecordingToolbarSwitchAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
 		setText(_("Recording"));
+		setIconPath("org/signalml/app/icon/toolbarrecording.png");
 	}
 
 	@Override
