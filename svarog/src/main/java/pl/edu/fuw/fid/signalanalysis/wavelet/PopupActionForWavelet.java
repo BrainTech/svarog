@@ -25,10 +25,10 @@ public class PopupActionForWavelet extends AbstractSignalMLAction {
 
 	private final SvarogAccessSignal signalAccess;
 
-	public PopupActionForWavelet(SvarogAccessSignal signalAccess) {
+	public PopupActionForWavelet(SvarogAccessSignal signalAccess, String title) {
 		super();
 		this.signalAccess = signalAccess;
-		setText(_("from selection"));
+		setText(title);
 	}
 
 	private ExportedSignalSelection getActiveSelection() {

@@ -6439,10 +6439,18 @@ msgstr "częstość [Hz]"
 msgid "from"
 msgstr "z"
 
-#: pl/edu/fuw/fid/signalanalysis/wavelet/PopupActionForWavelet.java:31
-#: pl/edu/fuw/fid/signalanalysis/stft/PopupActionForSTFT.java:29
+#: pl/edu/fuw/fid/signalanalysis/SignalAnalysisPlugin.java:46
+#: pl/edu/fuw/fid/signalanalysis/SignalAnalysisPlugin.java:54
 msgid "from selection"
 msgstr "z zaznaczenia"
+
+#: pl/edu/fuw/fid/signalanalysis/SignalAnalysisPlugin.java:61
+msgid "Show STFT"
+msgstr "Pokaż STFT"
+
+#: pl/edu/fuw/fid/signalanalysis/SignalAnalysisPlugin.java:62
+msgid "Show WT"
+msgstr "Pokaż WT"
 
 #: org/signalml/app/model/book/BookSegmentTreeNode.java:109
 msgid "has signal"

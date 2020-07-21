@@ -23,10 +23,10 @@ public class PopupActionForSTFT extends AbstractSignalMLAction {
 
 	private final SvarogAccessSignal signalAccess;
 
-	public PopupActionForSTFT(SvarogAccessSignal signalAccess) {
+	public PopupActionForSTFT(SvarogAccessSignal signalAccess, String title) {
 		super();
 		this.signalAccess = signalAccess;
-		setText(_("from selection"));
+		setText(title);
 	}
 
 	private ExportedSignalSelection getActiveSelection() {
