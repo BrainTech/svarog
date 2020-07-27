@@ -4753,6 +4753,10 @@ msgstr "Pokaż tabelę atomów"
 msgid "Show atom tool tips"
 msgstr "Pokaż wskazówki dotyczące atomów"
 
+#: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:430
+msgid "Show atom crosshairs"
+msgstr "Pokaż krzyżyki atomów"
+
 #: org/signalml/app/view/book/popup/BookPlotOptionsPopupDialog.java:334
 msgid "Show axes"
 msgstr "Pokaż osie"

@@ -86,6 +86,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private boolean scaleVisible;
 	private boolean axesVisible;
 	private boolean atomToolTipsVisible;
+	private boolean atomCrosshairsVisible;
 
 	private int mapAspectRatioUp = 1;
 	private int mapAspectRatioDown = 1;
@@ -492,6 +493,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setAtomToolTipsVisible(boolean atomToolTipsVisible) {
 		this.atomToolTipsVisible = atomToolTipsVisible;
+	}
+
+	public boolean isAtomCrosshairsVisible() {
+		return atomCrosshairsVisible;
+	}
+
+	public void setAtomCrosshairsVisible(boolean atomCrosshairsVisible) {
+		this.atomCrosshairsVisible = atomCrosshairsVisible;
 	}
 
 	public int getMapAspectRatioUp() {
