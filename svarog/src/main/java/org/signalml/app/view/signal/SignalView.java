@@ -1044,16 +1044,16 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		basicToolBar.add(selectChannelToolButton);
 		basicToolBar.add(getSaveTagAction());
 
+		PlayPauseVideoAction playPauseAction = getPlayPauseVideoAction();
+		if (playPauseAction != null) {
+			basicToolBar.addSeparator();
+			basicToolBar.add(playPauseAction);
+			basicToolBar.add(playPauseAction.getVideoRateSlider());
+		}
+
 		if (document instanceof MonitorSignalDocument) {
 			recordingToolBar = new WebToolBar();
 			recordingToolBar.setFloatable(false);
-
-			PlayPauseVideoAction playPauseAction = getPlayPauseVideoAction();
-			if (playPauseAction != null) {
-				recordingToolBar.addSeparator();
-				recordingToolBar.add(playPauseAction);
-				recordingToolBar.add(playPauseAction.getVideoRateSlider());
-			}
 
 			recordingToolBar.add(Box.createHorizontalGlue());
 			if (ObciServerCapabilities.getSharedInstance().hasPsychopyRunner()) {
