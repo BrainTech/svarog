@@ -21,6 +21,7 @@ public class BasicToolbarSwitchAction extends AbstractFocusableSignalMLAction<Si
 	public BasicToolbarSwitchAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
 		setText(_("Main toolbar"));
+		setIconPath("org/signalml/app/icon/toolbarmain.png");
 	}
 
 	@Override

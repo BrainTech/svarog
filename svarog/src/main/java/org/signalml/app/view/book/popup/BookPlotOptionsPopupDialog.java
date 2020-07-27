@@ -6,6 +6,7 @@ package org.signalml.app.view.book.popup;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JSpinner.DefaultEditor;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
@@ -50,9 +52,12 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private List<Component> buttonPanelComponents = new LinkedList<>();
 
 	private JPanel aspectRatioPanel;
-
 	private IntegerSpinner aspectUpSpinner;
 	private IntegerSpinner aspectDownSpinner;
+
+	private JPanel frequencyRangePanel;
+	private SpinnerNumberModel minFreqModel;
+	private SpinnerNumberModel maxFreqModel;
 
 	private JToggleButton antialiasButton;
 	private JToggleButton originalSignalVisibleButton;
@@ -62,6 +67,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private JToggleButton scaleVisibleButton;
 	private JToggleButton axesVisibleButton;
 	private JToggleButton atomToolTipsVisibleButton;
+	private JToggleButton atomCrosshairsVisibleButton;
 
 	public BookPlotOptionsPopupDialog(Window w, boolean isModal) {
 		super(w, isModal);
@@ -121,17 +127,20 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		layout.setAutoCreateGaps(true);
 
 		JLabel aspectRatioLabel = new JLabel(_("Map aspect ratio"));
+		JLabel frequencyRangeLabel = new JLabel(_("Frequency range [Hz]"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
 			layout.createParallelGroup(Alignment.LEADING)
 			.addComponent(aspectRatioLabel)
+			.addComponent(frequencyRangeLabel)
 		);
 
 		hGroup.addGroup(
 			layout.createParallelGroup(Alignment.TRAILING)
 			.addComponent(getAspectRatioPanel())
+			.addComponent(getFrequencyRangePanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -139,9 +148,15 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
 
 		vGroup.addGroup(
-			layout.createParallelGroup(Alignment.BASELINE)
+			layout.createParallelGroup(Alignment.CENTER)
 			.addComponent(aspectRatioLabel)
 			.addComponent(getAspectRatioPanel())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(frequencyRangeLabel)
+			.addComponent(getFrequencyRangePanel())
 		);
 
 		layout.setVerticalGroup(vGroup);
@@ -152,7 +167,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 	public JPanel getAspectRatioPanel() {
 		if (aspectRatioPanel == null) {
-			aspectRatioPanel = new JPanel(new BorderLayout(3,3));
+			aspectRatioPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 3, 3));
 
 			aspectRatioPanel.add(getAspectUpSpinner(), BorderLayout.WEST);
 			aspectRatioPanel.add(new JLabel("/"), BorderLayout.CENTER);
@@ -197,6 +212,49 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return aspectDownSpinner;
 	}
 
+	public JPanel getFrequencyRangePanel() {
+		if (frequencyRangePanel == null) {
+			frequencyRangePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 3, 3));
+
+			int nyquistFrequency = (int) Math.floor(bookView.getDocument().getSamplingFrequency() / 2);
+			minFreqModel = new SpinnerNumberModel(
+				getPlot().getMinFrequency(),
+				0.0,
+				getPlot().getMaxFrequency(),
+				1.0
+			);
+			maxFreqModel = new SpinnerNumberModel(
+				getPlot().getMaxFrequency(),
+				getPlot().getMinFrequency(),
+				nyquistFrequency,
+				1.0
+			);
+
+			JSpinner minFreqSpinner = new JSpinner(minFreqModel);
+			JSpinner maxFreqSpinner = new JSpinner(maxFreqModel);
+			minFreqSpinner.addChangeListener((ChangeEvent e) -> {
+				maxFreqModel.setMinimum(minFreqModel.getNumber().doubleValue());
+				updateFrequencyRange();
+			});
+			maxFreqSpinner.addChangeListener((ChangeEvent e) -> {
+				minFreqModel.setMaximum(maxFreqModel.getNumber().doubleValue());
+				updateFrequencyRange();
+			});
+
+			frequencyRangePanel.add(minFreqSpinner, BorderLayout.WEST);
+			frequencyRangePanel.add(new JLabel("–"), BorderLayout.CENTER);
+			frequencyRangePanel.add(maxFreqSpinner, BorderLayout.EAST);
+		}
+		return frequencyRangePanel;
+	}
+
+	private void updateFrequencyRange() {
+		getPlot().setFrequencyRange(
+			minFreqModel.getNumber().doubleValue(),
+			maxFreqModel.getNumber().doubleValue()
+		);
+	}
+
 	protected BookPlot getPlot() {
 		return bookView == null? null : bookView.getPlot();
 	}
@@ -211,6 +269,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		buttonPanelComponents.add(getScaleVisibleButton());
 		buttonPanelComponents.add(getAxesVisibleButton());
 		buttonPanelComponents.add(getAtomToolTipsVisibleButton());
+		buttonPanelComponents.add(getAtomCrosshairsVisibleButton());
 		buttonPanelComponents.add(Box.createRigidArea(new Dimension(1,1)));
 		buttonPanelComponents.add(getAntialiasButton());
 
@@ -367,6 +426,20 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return atomToolTipsVisibleButton;
 	}
 
+	public JToggleButton getAtomCrosshairsVisibleButton() {
+		if (atomCrosshairsVisibleButton == null) {
+			atomCrosshairsVisibleButton = new JToggleButton(_("Show atom crosshairs"));
+			atomCrosshairsVisibleButton.setIcon(IconUtils.loadClassPathIcon("org/signalml/app/icon/atomcrosshairs.png"));
+			atomCrosshairsVisibleButton.setToolTipText(_("Show crosshairs for each atom"));
+			atomCrosshairsVisibleButton.setSelected(bookView.getPlot().isAtomCrosshairsVisible());
+
+			atomCrosshairsVisibleButton.addActionListener((ActionEvent e) -> {
+				getPlot().setAtomCrosshairsVisible(atomCrosshairsVisibleButton.isSelected());
+			});
+		}
+		return atomCrosshairsVisibleButton;
+	}
+
 	@Override
 	public void fillDialogFromModel(Object model) throws SignalMLException {
 		// nothing to do
@@ -425,6 +498,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		applicationConfiguration.setScaleVisible(getScaleVisibleButton().isSelected());
 		applicationConfiguration.setAxesVisible(getAxesVisibleButton().isSelected());
 		applicationConfiguration.setAtomToolTipsVisible(getAtomToolTipsVisibleButton().isSelected());
+		applicationConfiguration.setAtomCrosshairsVisible(getAtomCrosshairsVisibleButton().isSelected());
 	}
 
 }
