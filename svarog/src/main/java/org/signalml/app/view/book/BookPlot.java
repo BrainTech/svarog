@@ -853,10 +853,6 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		this.minPosition = minPosition;
 		this.maxPosition = maxPosition;
 
-		setFrequencyRange(minFrequency, maxFrequency);
-	}
-
-	public void setFrequencyRange(double minFrequency, double maxFrequency) {
 		this.minFrequency = minFrequency;
 		this.maxFrequency = maxFrequency;
 
