@@ -59,6 +59,10 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 	private SpinnerNumberModel minFreqModel;
 	private SpinnerNumberModel maxFreqModel;
 
+	private JPanel timeRangePanel;
+	private SpinnerNumberModel minTimeModel;
+	private SpinnerNumberModel maxTimeModel;
+
 	private JToggleButton antialiasButton;
 	private JToggleButton originalSignalVisibleButton;
 	private JToggleButton fullReconstructionVisibleButton;
@@ -128,6 +132,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 
 		JLabel aspectRatioLabel = new JLabel(_("Map aspect ratio"));
 		JLabel frequencyRangeLabel = new JLabel(_("Frequency range [Hz]"));
+		JLabel timeRangeLabel = new JLabel(_("Time range [s]"));
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
@@ -135,12 +140,14 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 			layout.createParallelGroup(Alignment.LEADING)
 			.addComponent(aspectRatioLabel)
 			.addComponent(frequencyRangeLabel)
+			.addComponent(timeRangeLabel)
 		);
 
 		hGroup.addGroup(
 			layout.createParallelGroup(Alignment.TRAILING)
 			.addComponent(getAspectRatioPanel())
 			.addComponent(getFrequencyRangePanel())
+			.addComponent(getTimeRangePanel())
 		);
 
 		layout.setHorizontalGroup(hGroup);
@@ -157,6 +164,12 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 			layout.createParallelGroup(Alignment.CENTER)
 			.addComponent(frequencyRangeLabel)
 			.addComponent(getFrequencyRangePanel())
+		);
+
+		vGroup.addGroup(
+			layout.createParallelGroup(Alignment.CENTER)
+			.addComponent(timeRangeLabel)
+			.addComponent(getTimeRangePanel())
 		);
 
 		layout.setVerticalGroup(vGroup);
@@ -216,7 +229,7 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		if (frequencyRangePanel == null) {
 			frequencyRangePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 3, 3));
 
-			int nyquistFrequency = (int) Math.floor(bookView.getDocument().getSamplingFrequency() / 2);
+			double nyquistFrequency = bookView.getDocument().getSamplingFrequency() / 2;
 			minFreqModel = new SpinnerNumberModel(
 				getPlot().getMinFrequency(),
 				0.0,
@@ -234,11 +247,11 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 			JSpinner maxFreqSpinner = new JSpinner(maxFreqModel);
 			minFreqSpinner.addChangeListener((ChangeEvent e) -> {
 				maxFreqModel.setMinimum(minFreqModel.getNumber().doubleValue());
-				updateFrequencyRange();
+				updateZoom();
 			});
 			maxFreqSpinner.addChangeListener((ChangeEvent e) -> {
 				minFreqModel.setMaximum(maxFreqModel.getNumber().doubleValue());
-				updateFrequencyRange();
+				updateZoom();
 			});
 
 			frequencyRangePanel.add(minFreqSpinner, BorderLayout.WEST);
@@ -248,8 +261,46 @@ public class BookPlotOptionsPopupDialog extends AbstractPopupDialog {
 		return frequencyRangePanel;
 	}
 
-	private void updateFrequencyRange() {
-		getPlot().setFrequencyRange(
+	public JPanel getTimeRangePanel() {
+		if (timeRangePanel == null) {
+			timeRangePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 3, 3));
+
+			double segmentLength = getPlot().getSegment().getSegmentTimeLength();
+			minTimeModel = new SpinnerNumberModel(
+				getPlot().getMinPosition(),
+				0.0,
+				segmentLength,
+				1.0
+			);
+			maxTimeModel = new SpinnerNumberModel(
+				getPlot().getMaxPosition(),
+				getPlot().getMinPosition(),
+				segmentLength,
+				1.0
+			);
+
+			JSpinner minTimeSpinner = new JSpinner(minTimeModel);
+			JSpinner maxTimeSpinner = new JSpinner(maxTimeModel);
+			minTimeSpinner.addChangeListener((ChangeEvent e) -> {
+				maxTimeModel.setMinimum(minTimeModel.getNumber().doubleValue());
+				updateZoom();
+			});
+			maxTimeSpinner.addChangeListener((ChangeEvent e) -> {
+				minTimeModel.setMaximum(maxTimeModel.getNumber().doubleValue());
+				updateZoom();
+			});
+
+			timeRangePanel.add(minTimeSpinner, BorderLayout.WEST);
+			timeRangePanel.add(new JLabel("–"), BorderLayout.CENTER);
+			timeRangePanel.add(maxTimeSpinner, BorderLayout.EAST);
+		}
+		return timeRangePanel;
+	}
+
+	private void updateZoom() {
+		getPlot().setZoom(
+			minTimeModel.getNumber().doubleValue(),
+			maxTimeModel.getNumber().doubleValue(),
 			minFreqModel.getNumber().doubleValue(),
 			maxFreqModel.getNumber().doubleValue()
 		);

@@ -2470,6 +2470,9 @@ msgstr "Częstość [Hz]"
 msgid "Frequency range [Hz]"
 msgstr "Zakres częstości [Hz]"
 
+msgid "Time range [s]"
+msgstr "Zakres czasu [s]"
+
 #: pl/edu/fuw/fid/signalanalysis/dtf/DtfFrequencyRangePanel.java:35
 msgid "Frequency range [Hz]:"
 msgstr "Zakres częstości [Hz]:"
