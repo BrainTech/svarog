@@ -19,8 +19,8 @@ public class CsvExportOptionsPanel extends AbstractExportOptionsPanel {
 	protected static final Logger logger = Logger
 			.getLogger(CsvExportOptionsPanel.class);
 
-	private static final String[] SEPARATORS_LABELS = new String[] {_("comma"), _("space"), _("tab")};
-	private static final String[] SEPARATORS = new String[] {",", " ", "\t"};
+	private static final String[] SEPARATORS_LABELS = new String[] {_("comma"), _("space"), _("tab"), _("semicolon")};
+	private static final String[] SEPARATORS = new String[] {",", " ", "\t", ";"};
 
 	private JComboBox<String> separatorField;
 	private JCheckBox addChannelNames;

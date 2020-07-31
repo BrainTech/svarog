@@ -7,7 +7,7 @@ stages:
 
   
   
-  
+# just zip, without JRE
 build_svarog_standalone:
   image: svarog-build-test-image:u1604
   stage: build_standalone
@@ -32,7 +32,8 @@ build_svarog_standalone:
     name: "svarog_standalone"
     paths:
       - svarog-standalone-package
-    
+
+# used for svarog-streamer, svarog-lab, includes JRE
 build_svarog_win_zip:
   image: svarog-build-test-image:u1604
   stage: build_generic_zip
@@ -50,7 +51,9 @@ build_svarog_win_zip:
     name: "svarog_win"
     paths:
       - svarog_win
+  when: manual
 
+# used for svarog-streamer, svarog-lab, includes JRE
 build_svarog_lin_zip:
   image: svarog-build-test-image:u1604
   stage: build_generic_zip
@@ -68,21 +71,28 @@ build_svarog_lin_zip:
     name: "svarog_linux"
     paths:
       - svarog_linux
-      
+  when: manual
+
+#used for standalone release, includes JRE
 build_svarog_lin_deb:
   image: svarog-build-test-image:u1604
   stage: build_installer
   script:
     - ./installer_builder/scripts/linux_build_deb.sh
+    - export GITVERSION=`git describe --tags`
+    - mv svarog.deb svarog_v$GITVERSION.deb
   tags:
     - docker
   dependencies:
     - build_svarog_lin_zip
+    
   artifacts:
     name: "svarog_linux_deb"
     paths:
-      - svarog.deb
+      - svarog*.deb
+  when: manual
 
+#used for standalone release, includes JRE
 build_svarog_mac:
   image: svarog-build-test-image:u1604
   stage: build_installer
@@ -92,6 +102,8 @@ build_svarog_mac:
     - cp -r svarog-standalone-package dist/svarog
     - ./installer_builder/scripts/mac_build.sh
     - mv dist/svarog_mac.app ./
+    - export GITVERSION=`git describe --tags`
+    - zip -r svarog_mac_v$GITVERSION.zip svarog_mac.app
   tags:
     - docker
   dependencies:
@@ -99,8 +111,10 @@ build_svarog_mac:
   artifacts:
     name: "svarog_mac"
     paths:
-      - svarog_mac.app
+      - svarog_mac*.zip
+  when: manual
 
+#used for standalone release, includes JRE
 build_svarog_installer_windows:
   except:
     - api
@@ -124,6 +138,8 @@ build_svarog_installer_windows:
     - sed -i "s/__WINDOWS_SIGNING_CERT_SHA__/$WINDOWS_SIGNING_CERT_SHA/g" "sign.bat"
     - ./sign.bat Svarog_installer.exe
     - mv Svarog_installer.exe ../
+    - cd ..
+    - mv Svarog_installer.exe Svarog_installer_v$GITVERSION.exe
 
   artifacts:
     name: "Svarog_installer_windows"
@@ -131,6 +147,7 @@ build_svarog_installer_windows:
     - Svarog_installer*.exe
   tags:
     - win10
+  when: manual
 
 
 mvntest:
@@ -138,7 +155,8 @@ mvntest:
   stage: test
   script:
     - mvn test
-    
+
+#used for standalone release, includes JRE
 signdebs:
   image: signdebs-image
   stage: sign
@@ -152,5 +170,6 @@ signdebs:
     name: "svarog_linux_deb_signed"
     paths:
     - svarog*.deb
+  when: manual
 
 

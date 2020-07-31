@@ -6886,7 +6886,12 @@ msgstr "gniazda są zamknięte"
 
 #: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:22
 msgid "space"
-msgstr "przestrzeń"
+msgstr "spacja"
+
+
+#: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:22
+msgid "semicolon"
+msgstr "średnik"
 
 #: org/signalml/domain/roc/RocDataPoint.java:114
 msgid "specifity"
