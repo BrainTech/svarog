@@ -14,7 +14,7 @@ import org.signalml.domain.signal.raw.RawSignalDescriptor;
  */
 public class AsciiSignalDescriptorReader {
 
-	public static final String SEPARATOR_REGEX = "[ \t,]+";
+	public static final String SEPARATOR_REGEX = "[ \t,;]+";
 	public static final char FIRST_LINE_START = '#';
 
 	/**
