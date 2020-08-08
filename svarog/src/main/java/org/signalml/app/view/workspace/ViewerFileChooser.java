@@ -42,17 +42,17 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		getFileChooserPanel().setViewType(FileChooserViewType.table);
 		this.setPreferredSize(new Dimension(500, 380));
 	}
-        public void setSelectedFile(File file)
-        {
-            if (file!=null)
-            {
-                super.setSelectedFile(file);
-            }
-            else
-            {
-                super.setSelectedFile(new File(""));
-            }
-        }
+
+	@Override
+	public void setSelectedFile(File file)
+	{
+		try {
+			super.setSelectedFile(file);
+		} catch (NullPointerException ex) {
+			logger.error("known bug related to file open dialog, please ignore", ex);
+		}
+	}
+
 	public void initialize() {
 		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text (*.txt)"), "txt");
 		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("CSV (*.csv)"), "csv");
