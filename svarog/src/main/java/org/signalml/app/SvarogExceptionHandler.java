@@ -77,6 +77,16 @@ public class SvarogExceptionHandler implements java.lang.Thread.UncaughtExceptio
 		}
 		displayUserMessage(t);
 	}
+	
+	public void sendException(Throwable t)
+	{
+		if (raven != null) {
+			synchronized (raven) {
+				// Raven is not guaranteed to be thread-safe
+				raven.sendException(t);
+			}
+		}
+	}
 
 	private static void displayUserMessage(Throwable t) {
 		Dialogs.showExceptionDialog((Window) null, t);

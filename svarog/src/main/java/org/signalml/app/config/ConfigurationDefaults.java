@@ -70,6 +70,10 @@ public class ConfigurationDefaults {
 		config.setRightClickPagesForward(getBoolean("application.rightClickPagesForward"));
 		config.setAutoLoadDefaultMontage(getBoolean("application.autoLoadDefaultMontage"));
 		config.setAutoAddHighpassFilter(getBoolean("application.autoAddHighpassFilter"));
+		config.setFirstRun(getBoolean("application.firstRun"));
+		config.setSendSentryTelemetry(getBoolean("application.sendSentryTelemetry"));
+		config.setSentryDsn(getString("application.sentryDsn"));
+
 		config.setAutoTryToLoadSignalWithTags(getBoolean("application.autoTryToLoadSignalWithTags"));
 		config.setPrecalculateSignalChecksums(getBoolean("application.precalculateSignalChecksums"));
 

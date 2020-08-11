@@ -12,7 +12,7 @@ build_svarog_standalone:
   image: svarog-build-test-image:u1604
   stage: build_standalone
   script:
-    - apt-get update && apt-get install -y --no-install-recommends zip unzip tar
+    - apt-get update && apt-get install -y --no-install-recommends zip unzip tar sed
     - ./scripts/ci/buildzip.sh
     - mkdir -p dist
     - mv dist/svarog-*-standalone.zip dist/svarog.zip
