@@ -6,6 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.signalml.app.SvarogApplication;
+import org.signalml.app.SvarogExceptionHandler;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 
 public class Dialogs {
@@ -121,6 +122,7 @@ public class Dialogs {
 			public void run() {
 
 				ExceptionDialog dialog = new ExceptionDialog(w);
+				SvarogExceptionHandler.getSharedInstance().sendException(t);
 				dialog.showDialog(t);
 			}
 		});
