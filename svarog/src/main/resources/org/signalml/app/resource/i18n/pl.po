@@ -2943,6 +2943,9 @@ msgstr "Liniowy"
 msgid "Linked ears montage"
 msgstr "Montaż do połączonych uszu"
 
+msgid "Cz montage"
+msgstr "Montaż do Cz"
+
 #: org/signalml/app/view/workspace/ViewerElementManager.java:922
 msgid "Lists active tasks that run in the background or on the server"
 msgstr "Wyświetla aktywne zadania działające w tle lub na serwerze"
