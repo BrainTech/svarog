@@ -26,6 +26,7 @@ public class MontageGeneratorsConverter implements Converter {
 			add(new CommonAverageMontageGenerator());
 			add(new LeftEarMontageGenerator());
 			add(new RightEarMontageGenerator());
+			add(new CzMontageGenerator());
 			add(new LinkedEarsMontageGenerator());
 			add(new LongitudalReferenceMontageGenerator());
 			add(new TransverseReferenceMontageGenerator());
