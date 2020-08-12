@@ -2709,8 +2709,8 @@ msgid "Telemetry question"
 msgstr "Pytanie o telemetrię"
 
 #: org/signalml/app/SvarogApplication.java
-msgid "Czy wyrażasz zgodę na automatyczne wysyłanie raportów o błędach?"
-msgstr "Do you agree to automatically send crash reports?"
+msgid "Do you agree to automatically send crash reports?"
+msgstr "Czy wyrażasz zgodę na automatyczne wysyłanie raportów o błędach?"
 
 #: org/signalml/app/SvarogApplication.java:557
 msgid "Initializing codecs"
