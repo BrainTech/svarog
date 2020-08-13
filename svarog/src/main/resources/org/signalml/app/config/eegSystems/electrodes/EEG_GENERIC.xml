@@ -5531,17 +5531,17 @@
 			    <eegElectrode>
 				<label>T3</label>
 				<polarPosition>
-				    <theta>-259.22357637711025</theta>
-				    <phi>-6.225805906845645</phi>
-				    <radius>1.0</radius>
+				    <theta>90.0</theta>
+				    <phi>5.99874405930483</phi>
+				    <radius>0.9999949199870968</radius>
 				</polarPosition>
 			    </eegElectrode>
 			    <eegElectrode>
 				<label>EEG T3</label>
 				<polarPosition>
-				    <theta>-259.22357637711025</theta>
-				    <phi>-6.225805906845645</phi>
-				    <radius>1.0</radius>
+				    <theta>90.0</theta>
+				    <phi>5.99874405930483</phi>
+				    <radius>0.9999949199870968</radius>
 				</polarPosition>
 			    </eegElectrode>
 			    <eegElectrode>
@@ -5561,19 +5561,19 @@
 				</polarPosition>
 			    </eegElectrode>
 			    <eegElectrode>
-				<label>T4</label>
+				<label>EEG T4</label>
 				<polarPosition>
-				    <theta>-100.01202894815383</theta>
-				    <phi>-6.268442345066317</phi>
-				    <radius>1.0</radius>
+				    <theta>-90.0</theta>
+				    <phi>5.99874405930483</phi>
+				    <radius>0.9999949199870968</radius>
 				</polarPosition>
 			    </eegElectrode>
 			    <eegElectrode>
-				<label>EEG T4</label>
+				<label>T4</label>
 				<polarPosition>
-				    <theta>-100.01202894815383</theta>
-				    <phi>-6.268442345066317</phi>
-				    <radius>1.0</radius>
+				    <theta>-90.0</theta>
+				    <phi>5.99874405930483</phi>
+				    <radius>0.9999949199870968</radius>
 				</polarPosition>
 			    </eegElectrode>
 			    <eegElectrode>
