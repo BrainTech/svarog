@@ -4,6 +4,7 @@ stages:
   - build_generic_zip
   - build_installer
   - sign
+  - deploy
 
   
   
@@ -171,5 +172,26 @@ signdebs:
     paths:
     - svarog*.deb
   when: manual
+  
+  
+deploy_braintech_pl:
+  image: deployment-image
+  stage: deploy
+  when: manual
+  before_script:
+    - apt-get update -qq -y
+    - apt-get install -y -qq sshpass openssh-client uuid-runtime
+  dependencies:
+    - build_svarog_installer_windows
+    - build_svarog_mac
+    - signdebs
+  script:
+    - export ADDRESS=$BRAINTECH_SRV
+    - export USR=$BRAINTECH_USR
+    - export PSW=$BRAINTECH_PWD
+    - ./scripts/ci/deployjar.sh
+  when: manual
+  environment: braintech_pl_production
+
 
 
