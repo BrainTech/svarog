@@ -103,7 +103,7 @@ public class ObciServerCapabilities {
 			
 					
 			ProcessBuilder pb = new ProcessBuilder();
-			pb.command("obci_tray");
+			pb.command("svarog_streamer", "--tray");
 			Map<String, String> env = pb.environment();
 			env.put("LANGUAGE", locale);
 			pb = pb.redirectErrorStream(true);
@@ -116,7 +116,7 @@ public class ObciServerCapabilities {
 					try {
 						is.read();
 					} catch (IOException ex) {
-						logger.error("couldn't read obci_tray pipe", ex);
+						logger.error("couldn't read svarog_streamer pipe", ex);
 					}
 				}
 				
@@ -125,7 +125,7 @@ public class ObciServerCapabilities {
 			threadTrayStream.start();
 		} catch (IOException ex) {
 			// it's ok if there isn't an obci_tray installed
-			logger.warn("could not start acquisition server (obci_tray)", ex);
+			logger.warn("could not start acquisition server (svarog_streamer --tray)", ex);
 		}
 		
 	}
