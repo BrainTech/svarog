@@ -50,14 +50,14 @@
 		<string>AUX_5</string>
 		<string>AUX_6</string>
 		<string>AUX_7</string>
-		<string>GSR</string>
+		<string>AUX_8</string>
 		<string>Events</string>
 	    </channelLabels>
 	    <correctlyRead>false</correctlyRead>
 	    <tryToOpenTagDocument>true</tryToOpenTagDocument>
-	    <name>Perun32 EEG 10-20 Cap</name>
+	    <name>Perun32 D EEG 10-20 Cap</name>
 	    <amplifier>
-		<name>Perun32</name>
+		<name>Perun32 D</name>
 		<samplesPerPacket>0</samplesPerPacket>
 		<samplingFrequencies>
 		    <double>500.0</double>
@@ -350,8 +350,8 @@
 		    <channel>
 			<selected>true</selected>
 			<number>32</number>
-			<label>GSR</label>
-			<originalName>GSR</originalName>
+			<label>AUX_8</label>
+			<originalName>AUX_8</originalName>
 			<calibrationGain>0.025629997</calibrationGain>
 			<calibrationOffset>-60.0</calibrationOffset>
 			<idle>0.0</idle>
