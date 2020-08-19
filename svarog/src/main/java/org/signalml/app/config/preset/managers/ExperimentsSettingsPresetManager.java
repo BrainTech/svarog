@@ -30,7 +30,10 @@ public class ExperimentsSettingsPresetManager extends AbstractMultifileResources
 	@Override
 	public String[] getDefaultFileNames() {
 		return new String[]{
-			"Perun32 EEG 10-20 Cap",
+			"Perun32 A EEG 10-20 Cap",
+			"Perun32 B EEG 10-20 Cap",
+			"Perun32 C EEG 10-20 Cap",
+			"Perun32 D EEG 10-20 Cap",
 			"TMSI EEG 10-10 gel cap",
 			"TMSI EEG 10-10 EasyCap",
 			"TMSI EEG 10-20 EasyCap",
