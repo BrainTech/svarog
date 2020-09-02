@@ -38,7 +38,7 @@
 			</channelLabels>
 			<correctlyRead>false</correctlyRead>
 			<tryToOpenTagDocument>true</tryToOpenTagDocument>
-			<name>default_MOBI6.xml</name>
+			<name>TMSI MOBI6</name>
 			<amplifier>
 				<name>Mobi6-4b2as</name>
 				<samplesPerPacket>0</samplesPerPacket>

@@ -107,6 +107,13 @@ public abstract class SelectFilePanel extends JPanel {
 	public void setPath(String path) { this.path.setText(path); }
 
 	void makePathAbsolute() {
+		// check if absolute already
+		File fileTest = new File(this.selectedPath());
+		if (fileTest.isAbsolute())
+		{
+			return;
+		}
+		
 		String home = System.getProperty("user.home");
 		if (
 				!this.selectedPath().startsWith("~")

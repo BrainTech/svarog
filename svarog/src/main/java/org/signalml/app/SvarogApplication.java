@@ -17,6 +17,7 @@ import java.util.Locale;
 import java.util.prefs.Preferences;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.GnuParser;
@@ -551,8 +552,23 @@ public class SvarogApplication implements java.lang.Runnable {
 
 		String sentryDsn = applicationConfig.getSentryDsn();
 		String sentrySite = applicationConfig.getSentrySite();
+		boolean sendSentryTelemetry = applicationConfig.getSendSentryTelemetry();
 
-		SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn, sentrySite);
+		if (applicationConfig.getFirstRun())
+		{
+			applicationConfig.setFirstRun(false);
+			int n = JOptionPane.showConfirmDialog(
+			null,
+			_("Do you agree to automatically send crash reports?"),
+			_("Telemetry question"),
+			JOptionPane.YES_NO_OPTION);
+			applicationConfig.setSendSentryTelemetry(n==0);
+		}
+		
+		if (sendSentryTelemetry)
+		{
+			SvarogLoggingConfigurer.configureSentry(Logger.getRootLogger(), sentryDsn, sentrySite);
+		}
 
 		splash(_("Initializing codecs"), true);
 

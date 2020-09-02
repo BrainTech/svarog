@@ -2,3 +2,4 @@
 *.xml	diff=html
 *.xsd	diff=html
 *.java  diff=java
+installer_builder/build/jre/** filter=lfs diff=lfs merge=lfs -text
