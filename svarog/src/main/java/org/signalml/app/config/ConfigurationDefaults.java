@@ -125,6 +125,7 @@ public class ConfigurationDefaults {
 		config.setScaleVisible(getBoolean("application.scaleVisible"));
 		config.setAxesVisible(getBoolean("application.axesVisible"));
 		config.setAtomToolTipsVisible(getBoolean("application.atomToolTipsVisible"));
+		config.setAtomCrosshairsVisible(getBoolean("application.atomCrosshairsVisible"));
 
 		config.setMapAspectRatioUp(getInt("application.mapAspectRatioUp"));
 		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));

@@ -21,6 +21,7 @@ public class ScaleToolbarSwitchAction extends AbstractFocusableSignalMLAction<Si
 	public ScaleToolbarSwitchAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
 		super(signalDocumentFocusSelector);
 		setText(_("Scale toolbar"));
+		setIconPath("org/signalml/app/icon/toolbarscale.png");
 	}
 
 	@Override

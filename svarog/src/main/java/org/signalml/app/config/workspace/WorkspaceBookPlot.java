@@ -28,6 +28,7 @@ public class WorkspaceBookPlot {
 	private boolean scaleVisible;
 	private boolean axesVisible;
 	private boolean atomToolTipsVisible;
+	private boolean atomCrosshairsVisible;
 
 	private int mapAspectRatioUp = 1;
 	private int mapAspectRatioDown = 1;
@@ -50,6 +51,7 @@ public class WorkspaceBookPlot {
 		scaleVisible = plot.isScaleVisible();
 		axesVisible = plot.isAxesVisible();
 		atomToolTipsVisible = plot.isAtomToolTipsVisible();
+		atomCrosshairsVisible = plot.isAtomCrosshairsVisible();
 
 		mapAspectRatioUp = plot.getMapAspectRatioUp();
 		mapAspectRatioDown = plot.getMapAspectRatioDown();
@@ -75,6 +77,7 @@ public class WorkspaceBookPlot {
 		plot.setScaleVisible(scaleVisible);
 		plot.setAxesVisible(axesVisible);
 		plot.setAtomToolTipsVisible(atomToolTipsVisible);
+		plot.setAtomCrosshairsVisible(atomCrosshairsVisible);
 
 		plot.setMapAspectRatioUp(mapAspectRatioUp);
 		plot.setMapAspectRatioDown(mapAspectRatioDown);

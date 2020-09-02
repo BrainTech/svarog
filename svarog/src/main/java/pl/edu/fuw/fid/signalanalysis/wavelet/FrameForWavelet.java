@@ -59,7 +59,7 @@ public class FrameForWavelet extends javax.swing.JFrame {
 		mainImagePanel = new javax.swing.JPanel();
 
 		setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-		setTitle("Short-Time Fourier Transform");
+		setTitle("Wavelet Transform");
 		setMinimumSize(new java.awt.Dimension(600, 300));
 
 		windowPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Window"));

@@ -95,6 +95,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 	private boolean scaleVisible;
 	private boolean axesVisible;
 	private boolean atomToolTipsVisible;
+	private boolean atomCrosshairsVisible;
 
 	private int mapAspectRatioUp = 2;
 	private int mapAspectRatioDown = 1;
@@ -271,6 +272,7 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		scaleVisible = config.isScaleVisible();
 		axesVisible = config.isAxesVisible();
 		atomToolTipsVisible = config.isAtomToolTipsVisible();
+		atomCrosshairsVisible = config.isAtomCrosshairsVisible();
 
 		mapAspectRatioUp = config.getMapAspectRatioUp();
 		mapAspectRatioDown = config.getMapAspectRatioDown();
@@ -747,6 +749,17 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 		}
 	}
 
+	public boolean isAtomCrosshairsVisible() {
+		return atomCrosshairsVisible;
+	}
+
+	public void setAtomCrosshairsVisible(boolean atomCrosshairsVisible) {
+		if (this.atomCrosshairsVisible != atomCrosshairsVisible) {
+			this.atomCrosshairsVisible = atomCrosshairsVisible;
+			reset();
+		}
+	}
+
 	public int getMapAspectRatioUp() {
 		return mapAspectRatioUp;
 	}
@@ -837,17 +850,17 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 
 		this.reconstructionPixelPerSample *= (maxPosition - minPosition) / (this.maxPosition - this.minPosition);
 
-		this.minFrequency = minFrequency;
-		this.maxFrequency = maxFrequency;
 		this.minPosition = minPosition;
 		this.maxPosition = maxPosition;
+
+		this.minFrequency = minFrequency;
+		this.maxFrequency = maxFrequency;
 
 		wignerMapProvider.setRange(minFrequency, maxFrequency, minPosition, maxPosition);
 		if (wignerMapProvider.isDirty()) {
 			calculated = false;
 			repaint();
 		}
-
 	}
 
 	public void destroy() {
@@ -1230,8 +1243,10 @@ public class BookPlot extends JComponent implements PropertyChangeListener {
 			atom = segment.getAtomAt(i);
 			atomPoint = getAtomLocation(atom);
 			if (atomPoint != null && markCaptureRectangle.contains(atomPoint)) {
-				g.drawLine(atomPoint.x-2, atomPoint.y, atomPoint.x+2, atomPoint.y);
-				g.drawLine(atomPoint.x, atomPoint.y-2, atomPoint.x, atomPoint.y+2);
+				if (atomCrosshairsVisible) {
+					g.drawLine(atomPoint.x-2, atomPoint.y, atomPoint.x+2, atomPoint.y);
+					g.drawLine(atomPoint.x, atomPoint.y-2, atomPoint.x, atomPoint.y+2);
+				}
 
 				if (reconstructionProvider.isAtomInSelectiveReconstruction(atom)) {
 					g.drawOval(atomPoint.x-3, atomPoint.y-3, 6, 6);

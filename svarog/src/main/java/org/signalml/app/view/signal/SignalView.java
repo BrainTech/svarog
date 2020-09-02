@@ -270,6 +270,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private SnapToPageAction snapToPageAction;
 	private SignalFilterSwitchAction signalFilterSwitchAction;
 	private JToggleButton signalFilterSwitchButton;
+	private MontageGeneratorComboBoxMainPanel montageGeneratorComboBoxMainPanel;
 
 	private PlayPauseVideoAction playPauseVideoAction;
 
@@ -1043,16 +1044,16 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		basicToolBar.add(selectChannelToolButton);
 		basicToolBar.add(getSaveTagAction());
 
+		PlayPauseVideoAction playPauseAction = getPlayPauseVideoAction();
+		if (playPauseAction != null) {
+			basicToolBar.addSeparator();
+			basicToolBar.add(playPauseAction);
+			basicToolBar.add(playPauseAction.getVideoRateSlider());
+		}
+
 		if (document instanceof MonitorSignalDocument) {
 			recordingToolBar = new WebToolBar();
 			recordingToolBar.setFloatable(false);
-
-			PlayPauseVideoAction playPauseAction = getPlayPauseVideoAction();
-			if (playPauseAction != null) {
-				recordingToolBar.addSeparator();
-				recordingToolBar.add(playPauseAction);
-				recordingToolBar.add(playPauseAction.getVideoRateSlider());
-			}
 
 			recordingToolBar.add(Box.createHorizontalGlue());
 			if (ObciServerCapabilities.getSharedInstance().hasPsychopyRunner()) {
@@ -1091,7 +1092,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		settingsToolBar.add(plotOptionsButton);
 		settingsToolBar.add(getFilterSwitchButton());
 
-		settingsToolBar.add(new MontageGeneratorComboBoxMainPanel(document));
+		settingsToolBar.add(getMontageGeneratorComboBoxMainPanel());
 
 		mainToolPanel.add(basicToolBar);
 		mainToolPanel.add(scaleToolBar);
@@ -1445,6 +1446,13 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 			signalFilterSwitchButton.setSelected(document.getMontage().isFiltered());
 		}
 		return signalFilterSwitchButton;
+	}
+
+	public MontageGeneratorComboBoxMainPanel getMontageGeneratorComboBoxMainPanel() {
+		if (montageGeneratorComboBoxMainPanel == null) {
+			montageGeneratorComboBoxMainPanel = new MontageGeneratorComboBoxMainPanel(document);
+		}
+		return montageGeneratorComboBoxMainPanel;
 	}
 
 	public boolean isDisplayClockTime() {
@@ -1870,7 +1878,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			} else if (name.equals(SignalDocument.MONTAGE_PROPERTY)) {
 
-				getFilterSwitchAction().putValue(AbstractAction.SELECTED_KEY, new Boolean(((Montage) evt.getNewValue()).isFilteringEnabled()));
+				Montage montage = (Montage) evt.getNewValue();
+				getFilterSwitchAction().putValue(AbstractAction.SELECTED_KEY, montage.isFilteringEnabled());
+				getMontageGeneratorComboBoxMainPanel().setMatchingMontageGenerator(montage.getMontageGenerator());
 
 			}
 

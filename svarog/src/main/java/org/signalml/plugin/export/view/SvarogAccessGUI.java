@@ -52,6 +52,18 @@ public interface SvarogAccessGUI {
 	public JMenuItem addButtonToAnalysisMenu(Action action) throws UnsupportedOperationException;
 
 	/**
+	 * Adds a button at the end of Tools menu.
+	 * Can be accessed only during initialization phase.
+	 * If the button with a same name already exists, it will be returned instead
+	 * and attached to the given action.
+	 * @param action the {@link Action} used to create button
+	 * @return created menu item
+	 * @throws UnsupportedOperationException if the function called
+	 * not during the initialization phase.
+	 */
+	public JMenuItem addButtonToToolsMenu(Action action) throws UnsupportedOperationException;
+
+	/**
 	 * Adds a submenu at the end of Analysis menu.
 	 * Can be accessed only during initialization phase.
 	 * If the submenu with a same name already exists, it will be returned instead.
