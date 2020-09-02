@@ -6,14 +6,20 @@ set -e
 #PSW
 #SVAROG_LOCATION
 
-cd dist
-SVAROG_PKG=`ls svarog-*-standalone.zip`
+SVAROG_PKG_WIN=`ls Svarog_installer*.exe`
+SVAROG_PKG_MAC=`ls svarog_mac*.zip` 
+SVAROG_PKG_LIN=`ls svarog*.deb`
 
 
 echo "RewriteEngine On
-RewriteRule ^svarog-latest\.zip $SVAROG_LOCATION/$SVAROG_PKG [L,R=302]" > .htaccess
+RewriteRule ^svarog-latest-win\.zip $SVAROG_LOCATION/svarog/$SVAROG_PKG_WIN [L,R=302]
+RewriteRule ^svarog-latest-lin\.zip $SVAROG_LOCATION/svarog/$SVAROG_PKG_LIN [L,R=302]
+RewriteRule ^svarog-latest-mac\.zip $SVAROG_LOCATION/svarog/$SVAROG_PKG_MAC [L,R=302]" > .htaccess
 
 sshpass -p $PSW sftp -o StrictHostKeyChecking=no $USR@$ADDRESS << EOT
-mput svarog-*-standalone.zip
+cd svarog
+mput Svarog_installer*.exe
+mput svarog_mac*.zip
+mput svarog*.deb
 put .htaccess
 EOT

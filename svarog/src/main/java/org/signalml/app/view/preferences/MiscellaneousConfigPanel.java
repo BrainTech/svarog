@@ -18,6 +18,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import static org.apache.log4j.Logger.getLogger;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -110,6 +111,8 @@ public class MiscellaneousConfigPanel extends JPanel {
 	 * text field for sentry DSN (e.g https://sentry.io/...)
 	 */
 	private JTextField sentryDsnTextField;
+	
+	private JCheckBox sentryTelemetryAgreementBox;
 
 	/**
 	 * text field for sentry installation Site
@@ -202,8 +205,8 @@ public class MiscellaneousConfigPanel extends JPanel {
 		JPanel sentrySitePanel = new JPanel();
 		sentrySitePanel.setBorder(new EmptyBorder(3,3,3,3));
 		sentrySitePanel.setLayout(new BorderLayout(10, 0));
-		sentryDsnPanel.add(new JLabel(_("Sentry DSN")), BorderLayout.WEST);
-		sentryDsnPanel.add(getSentryDsnTextField(), BorderLayout.CENTER);
+		sentryDsnPanel.add(new JLabel(_("Send error telemetry?")), BorderLayout.WEST);
+		sentryDsnPanel.add(getSentryTelemetryAgreementBox(), BorderLayout.CENTER);
 		sentrySitePanel.add(new JLabel(_("Sentry Site")), BorderLayout.WEST);
 		sentrySitePanel.add(getSentrySiteTextField(), BorderLayout.CENTER);
 		sentryPanel.add(sentryDsnPanel, BorderLayout.NORTH);
@@ -400,6 +403,17 @@ public class MiscellaneousConfigPanel extends JPanel {
 		return sentryDsnTextField;
 	}
 	
+		/**
+	 * Return the checkbox field which allows to select if user wants to 
+	 * send crash reports / telemetry bypassing OpenBCI server,
+	 * @return created checkbox
+	 */
+	protected JCheckBox getSentryTelemetryAgreementBox() {
+		if (sentryTelemetryAgreementBox == null)
+			sentryTelemetryAgreementBox = new JCheckBox();
+		return sentryTelemetryAgreementBox;
+	}
+	
 	/**
 	 * Return the text field which allows to enter Sentry instalation site
 	 * for logging crash reports
@@ -436,6 +450,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 		getToolTipInitialSpinner().setValue(applicationConfig.getToolTipInitialDelay());
 		getToolTipDismissSpinner().setValue(applicationConfig.getToolTipDismissDelay());
 		getSentryDsnTextField().setText(applicationConfig.getSentryDsn());
+		getSentryTelemetryAgreementBox().setSelected(applicationConfig.getSendSentryTelemetry());
 		getSentrySiteTextField().setText(applicationConfig.getSentrySite());
 
 
@@ -464,6 +479,7 @@ public class MiscellaneousConfigPanel extends JPanel {
 		applicationConfig.setToolTipInitialDelay((Integer) getToolTipInitialSpinner().getValue());
 		applicationConfig.setToolTipDismissDelay((Integer) getToolTipDismissSpinner().getValue());
 		applicationConfig.setSentryDsn(getSentryDsnTextField().getText());
+		applicationConfig.setSendSentryTelemetry(getSentryTelemetryAgreementBox().isSelected());
 		applicationConfig.setSentrySite(getSentrySiteTextField().getText());
 
 

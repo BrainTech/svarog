@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.stream.IntStream;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.app.view.signal.SampleSourceUtils;
@@ -26,11 +28,6 @@ public class CSVSignalWriter implements ISignalWriter {
 	 * Maximum size of buffer used to write the signal to file.
 	 */
 	private static final int BUFFER_SIZE = 1024 * 1024;
-
-	/**
-	 * Formatter used to format sample values.
-	 */
-	private final DecimalFormat formatter = new DecimalFormat("#####0.0##############");
 
 	/**
 	 * Number of channels that will be written to the file.
@@ -87,11 +84,17 @@ public class CSVSignalWriter implements ISignalWriter {
 	 * @throws IOException
 	 */
         private void writeMultiChannelSamplesChunk(FileWriter output, SignalExportDescriptor descriptor, double[][] samplesChunk, int singleChannelChunkSize) throws IOException {
+		
+		DecimalFormatSymbols otherSymbols = new DecimalFormatSymbols(Locale.getDefault(Locale.Category.FORMAT));
+		otherSymbols.setDecimalSeparator('.');
+		DecimalFormat df = new DecimalFormat("#####0.0##############", otherSymbols);
+		df.setGroupingUsed(false);
+
                 for (int sampleNumber = 0; sampleNumber < singleChannelChunkSize; sampleNumber++){
                         for (int channelNumber = 0; channelNumber < this.channelCount - 1; channelNumber++){
-                                output.write(this.formatter.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
+                                output.write(df.format(samplesChunk[channelNumber][sampleNumber]) + descriptor.getSeparator());
                         }
-                        output.write(this.formatter.format(samplesChunk[this.channelCount - 1][sampleNumber]) + "\n");
+                        output.write(df.format(samplesChunk[this.channelCount - 1][sampleNumber]) + "\n");
                 }
         }
 

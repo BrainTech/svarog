@@ -98,6 +98,7 @@ public abstract class AbstractMultifileResourcesPresetManager extends AbstractPr
 		return config;
 
 	}
+	
 
 	/**
 	 * Creates the default directory in the user's profile directory.

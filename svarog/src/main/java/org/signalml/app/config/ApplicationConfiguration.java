@@ -97,6 +97,9 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 	private int openbciPort;
 	private String sentryDsn;
 	private String sentrySite;
+	private boolean sendSentryTelemetry;
+	private boolean firstRun;
+
 
 
 	private float monitorPageSize;
@@ -604,6 +607,24 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setSentryDsn(String sentryDsn) {
 		this.sentryDsn = sentryDsn;
+	}
+	
+	public boolean getSendSentryTelemetry()
+	{
+		return this.sendSentryTelemetry;
+	}
+	public void setSendSentryTelemetry(boolean telemetryCheckbox)
+	{
+		this.sendSentryTelemetry = telemetryCheckbox;
+	}
+	
+	public boolean getFirstRun()
+	{
+		return this.firstRun;
+	}
+	public void setFirstRun(boolean v)
+	{
+		this.firstRun = v;
 	}
 	
 	public String getSentrySite() {

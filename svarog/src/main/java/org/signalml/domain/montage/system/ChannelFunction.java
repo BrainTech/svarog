@@ -27,6 +27,7 @@ public enum ChannelFunction implements IChannelFunction {
 	SAO2(_("SaO2"), false, true, "%", 100),
 	SC(_("Skin conductance"), false, true, "uS", 20), //20uS
 	SP(_("Skin potential"), false, true, "mV", 60000), //0 -60 mV
+	GSR(_("GSR"), false, true, "uV", 600000), //0 -600 mV
 	ZERO(_("ZERO"), true, false, "bit", 100),
 	ONE(_("ONE"), true, false, "bit", 100);
 

@@ -2704,6 +2704,14 @@ msgstr "Odziedziczony z dokumentu"
 msgid "Initializing"
 msgstr "Inicjowanie"
 
+#: org/signalml/app/SvarogApplication.java
+msgid "Telemetry question"
+msgstr "Pytanie o telemetrię"
+
+#: org/signalml/app/SvarogApplication.java
+msgid "Do you agree to automatically send crash reports?"
+msgstr "Czy wyrażasz zgodę na automatyczne wysyłanie raportów o błędach?"
+
 #: org/signalml/app/SvarogApplication.java:557
 msgid "Initializing codecs"
 msgstr "Inicjalizacja kodeków"
@@ -4697,6 +4705,10 @@ msgstr "Sentry DSN"
 #: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:207
 msgid "Sentry Site"
 msgstr "Sentry Site"
+
+#: org/signalml/app/view/preferences/MiscellaneousConfigPanel.java:207
+msgid "Send error telemetry?"
+msgstr "Wysyłać raporty o błędach?"
 
 #: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:76
 msgid "Separator: "
@@ -6889,7 +6901,12 @@ msgstr "gniazda są zamknięte"
 
 #: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:22
 msgid "space"
-msgstr "przestrzeń"
+msgstr "spacja"
+
+
+#: org/signalml/app/view/signal/export/CsvExportOptionsPanel.java:22
+msgid "semicolon"
+msgstr "średnik"
 
 #: org/signalml/domain/roc/RocDataPoint.java:114
 msgid "specifity"

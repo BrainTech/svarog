@@ -6,6 +6,7 @@ package org.signalml.exception;
 
 import java.util.LinkedList;
 import java.util.List;
+import org.signalml.app.SvarogExceptionHandler;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.plugin.export.SignalMLException;
 import org.springframework.context.MessageSourceResolvable;
@@ -85,8 +86,10 @@ public class ResolvableException extends SignalMLException implements MessageSou
 			codes.toArray(this.codes);
 
 			this.arguments = new String[] { cause.getClass().getName(), message != null ? message : "" };
-
+			
+			SvarogExceptionHandler.getSharedInstance().sendException(cause);
 			this.defaultMessage = message != null ? message : _("Exception occured");
+			
 
 		}
 	}
