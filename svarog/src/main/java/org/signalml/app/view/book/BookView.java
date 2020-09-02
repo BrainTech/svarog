@@ -44,6 +44,7 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.apache.log4j.Logger;
@@ -154,8 +155,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 	private AtomTableDialog atomTableDialog;
 	private BookFilterDialog bookFilterDialog;
-
-	private BookPlotOptionsPopupDialog bookOptionsPopupDialog;
 	private BookZoomPopupDialog bookZoomPopupDialog;
 
 	private FocusListener plotFocusListener;
@@ -546,15 +545,6 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		this.pleaseWaitDialog = pleaseWaitDialog;
 	}
 
-	private BookPlotOptionsPopupDialog getPlotOptionsDialog() {
-		if (bookOptionsPopupDialog == null) {
-			bookOptionsPopupDialog = new BookPlotOptionsPopupDialog((Window) getTopLevelAncestor(), true);
-			bookOptionsPopupDialog.setBookView(this);
-		}
-
-		return bookOptionsPopupDialog;
-	}
-
 	public BookZoomPopupDialog getBookZoomPopupDialog() {
 		if (bookZoomPopupDialog == null) {
 			bookZoomPopupDialog = new BookZoomPopupDialog((Window) getTopLevelAncestor(), true);
@@ -801,14 +791,18 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			BookPlotOptionsPopupDialog dialog = getPlotOptionsDialog();
+			BookPlotOptionsPopupDialog dialog = new BookPlotOptionsPopupDialog((Window) getTopLevelAncestor(), true);
+			dialog.setBookView(BookView.this);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.initializeNow();
 			Container ancestor = getTopLevelAncestor();
 			Point containerLocation = ancestor.getLocation();
 			Point location = SwingUtilities.convertPoint(bookOptionsButton, new Point(0,0), ancestor);
 			location.translate(containerLocation.x-(dialog.getSize().width-bookOptionsButton.getSize().width), containerLocation.y);
 			dialog.setLocation(location);
-			dialog.showDialog(null);
+			if (dialog.showDialog(null)) {
+				dialog.saveSettingsToApplicationConfiguration();
+			}
 		}
 
 	}
@@ -883,7 +877,7 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 				0,
 				plot.getSegment().getSegmentLength(),
 				0,
-				plot.getSegment().getSamplingFrequency()
+				plot.getSegment().getSamplingFrequency() / 2
 			);
 
 		}
@@ -898,7 +892,5 @@ public class BookView extends DocumentView implements PropertyChangeListener, Bo
 		applicationConfig.setScaleType((WignerMapScaleType) scaleComboBox.getSelectedItem());
 		applicationConfig.setReconstructionHeight(reconstructionHeightSlider.getValue());
 		applicationConfig.setPalette((WignerMapPalette) paletteComboBox.getSelectedItem());
-
-		getPlotOptionsDialog().saveSettingsToApplicationConfiguration();
 	}
 }

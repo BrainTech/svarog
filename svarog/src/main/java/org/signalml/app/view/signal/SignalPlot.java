@@ -1068,9 +1068,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			default:
 
 				if (direction > 0) {
-					return getBlockForwardSkip(viewport.getViewPosition());
+					return getPageForwardSkip(viewport.getViewPosition());
 				} else {
-					return -getBlockBackwardSkip(viewport.getViewPosition());
+					return -getPageBackwardSkip(viewport.getViewPosition());
 				}
 		}
 	}
@@ -1099,32 +1099,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 		currentPage--;
 		return (pageOffset + ((int) (currentPage * pixelPerPage))) - position.x;
-	}
-
-	@Override
-	public int getBlockForwardSkip(Point position) {
-		int currentBlock = (int) Math.floor(position.x / pixelPerBlock);
-		int blockOffset = position.x - ((int) (currentBlock * pixelPerBlock));
-		if (blockOffset > pixelPerBlock / 2) {
-			// this trick prevent innacuracies caused by rounding
-			currentBlock++;
-			blockOffset = position.x - ((int) (currentBlock * pixelPerBlock));
-		}
-		currentBlock++;
-		return (blockOffset + ((int) (currentBlock * pixelPerBlock))) - position.x;
-	}
-
-	@Override
-	public int getBlockBackwardSkip(Point position) {
-		int currentBlock = (int) Math.floor(position.x / pixelPerBlock);
-		int blockOffset = position.x - ((int) (currentBlock * pixelPerBlock));
-		if (blockOffset < pixelPerBlock / 2) {
-			// this trick prevent innacuracies caused by rounding
-			currentBlock--;
-			blockOffset = position.x - ((int) (currentBlock * pixelPerBlock));
-		}
-		currentBlock--;
-		return (blockOffset + ((int) (currentBlock * pixelPerBlock))) - position.x;
 	}
 
 	@Override

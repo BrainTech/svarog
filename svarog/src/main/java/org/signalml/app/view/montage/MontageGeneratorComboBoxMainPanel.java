@@ -11,7 +11,6 @@ import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.MontageGeneratorListModel;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
-import org.signalml.app.view.common.dialogs.errors.ValidationErrorsDialog;
 import org.signalml.domain.montage.Montage;
 import org.signalml.domain.montage.MontageException;
 import org.signalml.domain.montage.generators.IMontageGenerator;
@@ -19,9 +18,9 @@ import org.signalml.domain.montage.system.EegSystem;
 
 public class MontageGeneratorComboBoxMainPanel extends ResolvableComboBox {
 
-	private ValidationErrorsDialog errorsDialog;
 	private int previouslySelectedIndex;
 	private Montage userDefinedMontage;
+	private final MontageGeneratorListModel model;
 
 	public MontageGeneratorComboBoxMainPanel(SignalDocument document) {
 		super();
@@ -30,8 +29,7 @@ public class MontageGeneratorComboBoxMainPanel extends ResolvableComboBox {
 
 		Montage montage = document.getMontage();
 		EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
-		MontageGeneratorListModel model = new MontageGeneratorListModel();
-		model.setEegSystem(system);
+		model = new MontageGeneratorListModel(system);
 		this.setModel(model);
 		previouslySelectedIndex = getSelectedIndex();
 
@@ -74,4 +72,29 @@ public class MontageGeneratorComboBoxMainPanel extends ResolvableComboBox {
 		});
 	}
 
+	/**
+	 * Replace currently selected montage generator to match the one given.
+	 * If generator == null, "User-defined montage" will be selected.
+	 *
+	 * @param generator  generator to select or null for "user-defined montage"
+	 */
+	public void setMatchingMontageGenerator(IMontageGenerator generator) {
+		Object matching = null;
+		if (generator == null) {
+			matching = model.getElementAt(0);
+		} else {
+			for (int i=1; i<model.getSize(); ++i) {
+				IMontageGenerator item = (IMontageGenerator) model.getElementAt(i);
+				if (item.getClass() == generator.getClass()) {
+					matching = item;
+					break;
+				}
+			}
+		}
+		if (matching != null) {
+			model.setSelectedItem(matching);
+			revalidate();
+			repaint();
+		}
+	}
 }

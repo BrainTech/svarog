@@ -65,26 +65,6 @@ public interface ExportedSignalPlot {
 	int getPageBackwardSkip(Point position);
 
 	/**
-	 * Returns the number of pixels the view has to be moved right so that
-	 * the next block (then this that is now first in view) is first in
-	 * the view.
-	 * @param position the view coordinates that appear in the upper left
-	 * hand corner of the viewport
-	 * @return the number of pixels the view has to be moved right
-	 */
-	int getBlockForwardSkip(Point position);
-
-	/**
-	 * Returns the number of pixels the view has to be moved left so that
-	 * the previous block (then this that is now first in view) is first in
-	 * the view.
-	 * @param position the view coordinates that appear in the upper left
-	 * hand corner of the viewport
-	 * @return the number of pixels the view has to be moved left
-	 */
-	int getBlockBackwardSkip(Point position);
-
-	/**
 	 * Moves the view left so that the next page (then this that is now first
 	 * in view) is first in the view.
 	 */

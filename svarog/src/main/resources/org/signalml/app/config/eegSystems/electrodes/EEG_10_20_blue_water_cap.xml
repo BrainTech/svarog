@@ -3,7 +3,7 @@
 	<presets>
 		<eegSystem>
 			<eegSystemName>
-				<eegSystemSymbol>EEG 10-20 blue water cap</eegSystemSymbol>
+				<eegSystemSymbol>TMSI EEG 10-20 blue water cap</eegSystemSymbol>
 				<eegSystemType/>
 			</eegSystemName>
 			<isDefault>false</isDefault>

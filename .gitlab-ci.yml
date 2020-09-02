@@ -1,124 +1,197 @@
 stages:
   - test
-  - builddeb
+  - build_standalone
+  - build_generic_zip
+  - build_installer
   - sign
   - deploy
+
   
-
-
-build:
+  
+# just zip, without JRE
+build_svarog_standalone:
   image: svarog-build-test-image:u1604
-  stage: builddeb
+  stage: build_standalone
   script:
-    - ./scripts/ci/builddeb.sh
-  artifacts:
-    name: svarog_deb_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
-    paths: 
-    - ./dist/*.deb
-    
-buildstandalone:
-  image: svarog-build-test-image:u1604
-  stage: builddeb
-  before_script:
-    - apt-get update -y
-    - apt-get install -y zip
-  script:
+    - apt-get update && apt-get install -y --no-install-recommends zip unzip tar sed
     - ./scripts/ci/buildzip.sh
+    - mkdir -p dist
+    - mv dist/svarog-*-standalone.zip dist/svarog.zip
+    - cd dist
+    - mkdir svarog
+    - unzip svarog.zip -d svarog_temp
+    - cd svarog_temp/svarog*standalone
+    - mv * ../../svarog/
+    - cd ../../../
+    - cp -r dist/svarog ./svarog-standalone-package
+  tags:
+    - docker
+  cache:
+    paths:
+      - .m2/repository
   artifacts:
-    name: Svarog_standalone_$CI_BUILD_NAME_$CI_BUILD_REF_NAME
-    paths: 
-    - ./dist/svarog-*.zip
+    name: "svarog_standalone"
+    paths:
+      - svarog-standalone-package
+
+# used for svarog-streamer, svarog-lab, includes JRE
+build_svarog_win_zip:
+  image: svarog-build-test-image:u1604
+  stage: build_generic_zip
+  script:
+    - apt-get update && apt-get install -y --no-install-recommends zip unzip tar
+    - mkdir -p dist
+    - cp -r svarog-standalone-package dist/svarog
+    - ./installer_builder/scripts/win_build_zip.sh
+    - mv dist/svarog_win ./
+  tags:
+    - docker
+  dependencies:
+    - build_svarog_standalone
+  artifacts:
+    name: "svarog_win"
+    paths:
+      - svarog_win
+  when: manual
+
+# used for svarog-streamer, svarog-lab, includes JRE
+build_svarog_lin_zip:
+  image: svarog-build-test-image:u1604
+  stage: build_generic_zip
+  script:
+    - apt-get update && apt-get install -y --no-install-recommends zip unzip tar
+    - mkdir -p dist
+    - cp -r svarog-standalone-package dist/svarog
+    - ./installer_builder/scripts/linux_build_zip.sh
+    - mv dist/svarog_linux ./
+  tags:
+    - docker
+  dependencies:
+    - build_svarog_standalone
+  artifacts:
+    name: "svarog_linux"
+    paths:
+      - svarog_linux
+  when: manual
+
+#used for standalone release, includes JRE
+build_svarog_lin_deb:
+  image: svarog-build-test-image:u1604
+  stage: build_installer
+  script:
+    - ./installer_builder/scripts/linux_build_deb.sh
+    - export GITVERSION=`git describe --tags`
+    - mv svarog.deb svarog_v$GITVERSION.deb
+  tags:
+    - docker
+  dependencies:
+    - build_svarog_lin_zip
+    
+  artifacts:
+    name: "svarog_linux_deb"
+    paths:
+      - svarog*.deb
+  when: manual
+
+#used for standalone release, includes JRE
+build_svarog_mac:
+  image: svarog-build-test-image:u1604
+  stage: build_installer
+  script:
+    - apt-get update && apt-get install -y --no-install-recommends zip unzip tar
+    - mkdir -p dist
+    - cp -r svarog-standalone-package dist/svarog
+    - ./installer_builder/scripts/mac_build.sh
+    - mv dist/svarog_mac.app ./
+    - export GITVERSION=`git describe --tags`
+    - zip -r svarog_mac_v$GITVERSION.zip svarog_mac.app
+  tags:
+    - docker
+  dependencies:
+    - build_svarog_standalone
+  artifacts:
+    name: "svarog_mac"
+    paths:
+      - svarog_mac*.zip
+  when: manual
+
+#used for standalone release, includes JRE
+build_svarog_installer_windows:
+  except:
+    - api
+    - schedules
+    - triggers
+  stage: build_installer
+  dependencies:
+    - build_svarog_win_zip
+  script:
+    - mkdir -p dist/svarog
+    - cp -r svarog_win dist/
+    - cp installer_builder/build/svarog_exe/svarog.ico dist/svarog_win/
+    - cp installer_builder/build/svarog_exe/Svarog.nsi dist/
+    - cp installer_builder/build/svarog_exe/sign.bat dist/
+    - cd dist
+    - export GITVERSION=`git describe --tags`
+    - export NSIS_VER=`python ../installer_builder/build/svarog_exe/nsis_version.py`
+    - sed -i "s/__VERSION__/$GITVERSION/g" "Svarog.nsi"
+    - sed -i "s/__NSISVERSION__/$NSIS_VER/g" "Svarog.nsi"
+    - /C/Program\ Files\ \(x86\)/NSIS/makensis.exe "Svarog.nsi"
+    - sed -i "s/__WINDOWS_SIGNING_CERT_SHA__/$WINDOWS_SIGNING_CERT_SHA/g" "sign.bat"
+    - ./sign.bat Svarog_installer.exe
+    - mv Svarog_installer.exe ../
+    - cd ..
+    - mv Svarog_installer.exe Svarog_installer_v$GITVERSION.exe
+
+  artifacts:
+    name: "Svarog_installer_windows"
+    paths:
+    - Svarog_installer*.exe
+  tags:
+    - win10
+  when: manual
+
 
 mvntest:
   image: svarog-build-test-image:u1604
   stage: test
   script:
     - mvn test
-    
+
+#used for standalone release, includes JRE
 signdebs:
   image: signdebs-image
   stage: sign
   before_script:
-  - apt-get update -qq
-  - apt-get install -y gnupg debsigs
+    - apt-get update -qq
+    - apt-get install -y gnupg debsigs
   script: ./scripts/ci/signdebs.sh
   dependencies:
-  - build
+    - build_svarog_lin_deb
   artifacts:
-    name: "svarog_signed_{$CI_BUILD_NAME_$CI_BUILD_REF_NAME}"
+    name: "svarog_linux_deb_signed"
     paths:
-    - ./dist/*.deb
-    
-deploy_xenial_development:
+    - svarog*.deb
+  when: manual
+  
+  
+deploy_braintech_pl:
   image: deployment-image
   stage: deploy
-  only:
-    - development
-  before_script:
-    - apt-get update -qq -y
-    - apt-get install -y -qq sshpass openssh-client uuid-runtime
-  dependencies:
-    - signdebs
-  script:
-    - export DEB_SRV=$DEB_NIGHTLY_SRV
-    - export DEB_USER=$DEB_NIGHTLY_USER
-    - export SSHPASS=$DEB_NIGHTLY_PASSWD
-    - export RELEASE=xenial
-    - ./scripts/ci/deploydebs.sh
-  environment: nightly_ubuntu1604
-
-deploy_xenial_testing:
-  image: deployment-image
-  stage: deploy
-  only:
-    - /^release.*/
-  before_script:
-    - apt-get update -qq -y
-    - apt-get install -y -qq sshpass openssh-client uuid-runtime
-  dependencies:
-    - signdebs
-  script:
-    - export DEB_SRV=$DEB_TESTING_SRV
-    - export DEB_USER=$DEB_TESTING_USER
-    - export SSHPASS=$DEB_TESTING_PASSWD
-    - export RELEASE=xenial
-    - ./scripts/ci/deploydebs.sh
-  environment: testing_ubuntu1604
-
-deploy_xenial_master:
-  image: deployment-image
-  stage: deploy
-  only:
-    - master
   when: manual
   before_script:
     - apt-get update -qq -y
     - apt-get install -y -qq sshpass openssh-client uuid-runtime
   dependencies:
+    - build_svarog_installer_windows
+    - build_svarog_mac
     - signdebs
-  script:
-    - export DEB_SRV=$DEB_STABLE_SRV
-    - export DEB_USER=$DEB_STABLE_USER
-    - export SSHPASS=$DEB_STABLE_PASSWD
-    - export RELEASE=xenial
-    - ./scripts/ci/deploydebs.sh
-  environment: production_ubuntu1604
-
-deploy_standalone_braintech:
-  image: deployment-image
-  stage: deploy
-  only:
-    - master
-  before_script:
-    - apt-get update -qq -y
-    - apt-get install -y -qq sshpass openssh-client uuid-runtime
-  dependencies:
-    - buildstandalone
   script:
     - export ADDRESS=$BRAINTECH_SRV
     - export USR=$BRAINTECH_USR
     - export PSW=$BRAINTECH_PWD
     - ./scripts/ci/deployjar.sh
   when: manual
-  environment: braintech_pl_standalone_jar_production
+  environment: braintech_pl_production
+
+
 

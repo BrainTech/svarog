@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.signalml.app.SvarogExceptionHandler;
+import org.signalml.app.worker.monitor.ObciServerCapabilities;
+import org.signalml.util.SvarogConstants;
 
 /**
  * Configures Svarog logging system, depending on the environment.
@@ -43,11 +45,9 @@ public class SvarogLoggingConfigurer {
 	 * @param logger  Logger instance to be configured, usually the root logger
 	 */
 	public static void configure(Logger logger) {
-		try {
-			try (java.net.Socket socket = new java.net.Socket()) {
-				socket.connect(new InetSocketAddress(OBCI_REP_IP, OBCI_REP_PORT));
-			}
-			// obci_server appears to be running
+		// full obci server which can accept logs
+		if(ObciServerCapabilities.getSharedInstance().hasOnlineExperiments())
+		{
 			String url = "tcp://"+OBCI_REP_IP+":"+OBCI_REP_PORT;
 			ravenFactory = new ObciRavenFactory(url, SOURCE);
 			ZmqRemoteAppender appender = new ZmqRemoteAppender(url, SOURCE);
@@ -57,8 +57,6 @@ public class SvarogLoggingConfigurer {
 				appender.close();
 			}));
 			appender.startThread();
-		} catch (IOException ex) {
-			// socket connection failed, do nothing
 		}
 	}
 
@@ -80,11 +78,29 @@ public class SvarogLoggingConfigurer {
 			return;
 		}
 		try {
-			Raven raven = ravenFactory.createRavenInstance(new Dsn(dsn));
+			Dsn finalDsn = new Dsn(dsn);
+			Raven raven = ravenFactory.createRavenInstance(finalDsn);
+
+			raven.addBuilderHelper(eventBuilder -> {
+				eventBuilder.withRelease(SvarogConstants.VERSION);
+			});
+
+			raven.addBuilderHelper(eventBuilder -> {
+				eventBuilder.withTag("site", "Svarog");
+			});
+
+			raven.addBuilderHelper(eventBuilder -> {
+				eventBuilder.withTag("usersite", site);
+			});
+
 			SvarogExceptionHandler.getSharedInstance().setRaven(raven);
 			SentryAppender sentry = new SentryAppender(raven);
-			sentry.setTags("site:"+site);
+			sentry.setTags("usersite:"+site);
+			sentry.setTags("site:"+"Svarog");
+
 			sentry.setThreshold(Priority.FATAL);
+			sentry.setRelease(SvarogConstants.VERSION);
+			sentry.setName("Svarog");
 			logger.addAppender(sentry);
 			logger.info("successfully initialized logging to Sentry");
 		} catch (Exception ex) {

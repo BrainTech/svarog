@@ -2,6 +2,9 @@
 
 SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
 source "$SCRIPTPATH/common/functions.sh"
+
+sed -i "s#__SENTRY_DSN_TEMPLATE__#$OBCI_SENTRY_TEMPLATE_DSN#g" "svarog/src/main/resources/org/signalml/app/config/signalml_defaults.properties"
+
 set -e
 
 build

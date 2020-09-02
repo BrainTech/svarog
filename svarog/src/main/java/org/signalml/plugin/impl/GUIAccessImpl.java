@@ -366,17 +366,28 @@ public class GUIAccessImpl extends AbstractAccess implements SvarogAccessGUI {
 	 */
 	@Override
 	public JMenuItem addButtonToAnalysisMenu(Action action) throws UnsupportedOperationException {
+		return addButtonToMenu(getViewerElementManager().getAnalysisMenu(), action);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.signalml.plugin.export.PluginAccessGUI#addButtonToToolsMenu(javax.swing.AbstractAction)
+	 */
+	@Override
+	public JMenuItem addButtonToToolsMenu(Action action) throws UnsupportedOperationException {
+		return addButtonToMenu(getViewerElementManager().getToolsMenu(), action);
+	}
+
+	private JMenuItem addButtonToMenu(JMenu menu, Action action) throws UnsupportedOperationException {
 		if (!initializationPhase) throw new UnsupportedOperationException("operation can be performed only during initialization phase");
-		JMenu analysisMenu = getViewerElementManager().getAnalysisMenu();
-		int itemCount = analysisMenu.getItemCount();
+		int itemCount = menu.getItemCount();
 		for (int i=0; i<itemCount; ++i) {
-			JMenuItem item = analysisMenu.getItem(i);
-			if (item.getText().equals(action.getValue(AbstractAction.NAME))) {
+			JMenuItem item = menu.getItem(i);
+			if (item != null && action.getValue(AbstractAction.NAME).equals(item.getText())) {
 				item.setAction(action);
 				return item;
 			}
 		}
-		return analysisMenu.add(action);
+		return menu.add(action);
 	}
 
 	/* (non-Javadoc)

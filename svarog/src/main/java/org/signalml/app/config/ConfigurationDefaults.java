@@ -70,6 +70,10 @@ public class ConfigurationDefaults {
 		config.setRightClickPagesForward(getBoolean("application.rightClickPagesForward"));
 		config.setAutoLoadDefaultMontage(getBoolean("application.autoLoadDefaultMontage"));
 		config.setAutoAddHighpassFilter(getBoolean("application.autoAddHighpassFilter"));
+		config.setFirstRun(getBoolean("application.firstRun"));
+		config.setSendSentryTelemetry(getBoolean("application.sendSentryTelemetry"));
+		config.setSentryDsn(getString("application.sentryDsn"));
+
 		config.setAutoTryToLoadSignalWithTags(getBoolean("application.autoTryToLoadSignalWithTags"));
 		config.setPrecalculateSignalChecksums(getBoolean("application.precalculateSignalChecksums"));
 
@@ -125,6 +129,7 @@ public class ConfigurationDefaults {
 		config.setScaleVisible(getBoolean("application.scaleVisible"));
 		config.setAxesVisible(getBoolean("application.axesVisible"));
 		config.setAtomToolTipsVisible(getBoolean("application.atomToolTipsVisible"));
+		config.setAtomCrosshairsVisible(getBoolean("application.atomCrosshairsVisible"));
 
 		config.setMapAspectRatioUp(getInt("application.mapAspectRatioUp"));
 		config.setMapAspectRatioDown(getInt("application.mapAspectRatioDown"));

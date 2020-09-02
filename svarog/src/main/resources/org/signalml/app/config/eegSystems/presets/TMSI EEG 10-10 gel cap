@@ -15,7 +15,7 @@
 				<calibrationEditable>true</calibrationEditable>
 			</signalParameters>
 			<eegSystemName>
-				<eegSystemSymbol>EEG 10-10 gel cap</eegSystemSymbol>
+				<eegSystemSymbol>TMSI EEG 10-10 gel cap</eegSystemSymbol>
 				<eegSystemType></eegSystemType>
 			</eegSystemName>
 			<channelLabels>
@@ -93,7 +93,7 @@
 			</channelLabels>
 			<correctlyRead>false</correctlyRead>
 			<tryToOpenTagDocument>true</tryToOpenTagDocument>
-			<name>default_EEG_10_10_gel_cap.xml</name>
+			<name>TMSI EEG 10-10 gel cap</name>
 			<amplifier>
 				<name>SynFi_F1_F2</name>
 				<samplesPerPacket>0</samplesPerPacket>
