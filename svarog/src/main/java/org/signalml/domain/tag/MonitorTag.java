@@ -41,7 +41,7 @@ public class MonitorTag extends Tag {
 		if (isComplete()) {
 			return getPosition() + length;
 		} else {
-			return getCurrentTimestamp();
+			return this.parent.computePosition(getCurrentTimestamp());
 		}
 	}
 
@@ -50,7 +50,7 @@ public class MonitorTag extends Tag {
 		if (isComplete()) {
 			return length;
 		} else {
-			return getCurrentTimestamp() - getPosition();
+			return getCurrentTimestamp() - timestamp;
 		}
 	}
 

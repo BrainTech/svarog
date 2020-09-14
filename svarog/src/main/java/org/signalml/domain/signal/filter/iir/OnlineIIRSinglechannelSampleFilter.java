@@ -2,6 +2,7 @@ package org.signalml.domain.signal.filter.iir;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
+import org.signalml.domain.signal.filter.SamplesWithOffset;
 import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;
@@ -15,6 +16,8 @@ import org.signalml.math.iirdesigner.FilterCoefficients;
 public class OnlineIIRSinglechannelSampleFilter extends AbstractIIRSinglechannelSampleFilter {
 
 	protected static final Logger logger = Logger.getLogger(OnlineIIRSinglechannelSampleFilter.class);
+
+	private long totalSamplesCount = 0;
 
 	public OnlineIIRSinglechannelSampleFilter(SampleSource source, TimeDomainSampleFilter definition) {
 		super(source, definition);
@@ -77,7 +80,7 @@ public class OnlineIIRSinglechannelSampleFilter extends AbstractIIRSinglechannel
 			unfilteredSamplesCache[i] = 0.0;
 		}
 
-		source.getSamples(unfilteredSamplesCache,
+		totalSamplesCount = source.getSamples(unfilteredSamplesCache,
 						  source.getSampleCount() - unfilteredSamplesNeeded + zeroPaddingSize,
 						  unfilteredSamplesNeeded - zeroPaddingSize, zeroPaddingSize);
 		return unfilteredSamplesCache;
@@ -200,10 +203,12 @@ public class OnlineIIRSinglechannelSampleFilter extends AbstractIIRSinglechannel
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return for on-line signals, total number of received samples; 0 otherwise
 	 */
 	@Override
-	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public synchronized long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		filtered.getSamples(target, signalOffset, count, arrayOffset);
+		return totalSamplesCount;
 	}
 
 }

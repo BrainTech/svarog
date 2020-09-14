@@ -24,10 +24,11 @@ public class MultichannelSampleSourceMock implements MultichannelSampleSource {
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		for (int i=0; i<count; i++) {
 			target[arrayOffset+i] = Math.sin(2*Math.PI*((double) signalOffset+i)/128 + 2*Math.PI*channel/((double) channelCount));
 		}
+		return 0;
 	}
 
 	@Override

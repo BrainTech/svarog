@@ -70,15 +70,17 @@ public class FFTSinglechannelSampleFilter extends SinglechannelSampleFilterEngin
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return for on-line signals, total number of received samples; 0 otherwise
 	 */
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized (this) {
 
 			// check usability of previously filtered samples
 
 			int leftOffsetToCopy;
 			int i;
+			long result = 0;
 
 			double samplingFrequency = source.getSamplingFrequency();
 			int intSamplingFrequency = (int) Math.ceil(samplingFrequency);
@@ -122,7 +124,7 @@ public class FFTSinglechannelSampleFilter extends SinglechannelSampleFilterEngin
 				if (zeroLeftPadding > 0) {
 					Arrays.fill(cache, 0, zeroLeftPadding, 0.0);
 				}
-				source.getSamples(cache, signalOffset-leftPadding, leftPadding+count+rightPadding, zeroLeftPadding);
+				result = source.getSamples(cache, signalOffset-leftPadding, leftPadding+count+rightPadding, zeroLeftPadding);
 				if (zeroRightPadding > 0) {
 					Arrays.fill(cache, zeroLeftPadding+leftPadding+count+rightPadding, cache.length, 0.0);
 				}
@@ -144,6 +146,7 @@ public class FFTSinglechannelSampleFilter extends SinglechannelSampleFilterEngin
 				filteredIdx++;
 			}
 
+			return result;
 		}
 	}
 

@@ -33,7 +33,7 @@ public class ExportIIRSinglechannelSampleFilter extends AbstractIIRSinglechannel
 	}
 
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		if (firstRun) {
 			firstRun = false;
 			if (signalOffset != 0) {
@@ -45,11 +45,13 @@ public class ExportIIRSinglechannelSampleFilter extends AbstractIIRSinglechannel
 		}
 
 		double[] samples = new double[count];
-		source.getSamples(samples, signalOffset, count, 0);
+		long result = source.getSamples(samples, signalOffset, count, 0);
 
 		double[] filteredSamples = iirFilter.filter(samples);
 
 		System.arraycopy(filteredSamples, 0, target, 0, count);
+
+		return result;
 	}
 
 }

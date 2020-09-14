@@ -30,9 +30,9 @@ public class TrimSignalSampleSource extends SampleSourceEngine {
 	}
 
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		int realOffset = startIndex + signalOffset;
-		source.getSamples(target, realOffset, count, arrayOffset);
+		return source.getSamples(target, realOffset, count, arrayOffset) + startIndex;
 	}
 
 	@Override

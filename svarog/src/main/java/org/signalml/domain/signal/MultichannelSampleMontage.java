@@ -235,13 +235,15 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return for on-line signals, total number of received samples; 0 otherwise
 	 */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
 		int channelCnt = this.currentMontage.getSourceChannelCount();
 		int primaryChannel = montage[channel].primaryChannel;
 		int i, e;
+		long result = 0; // all source.getSamples calls should return the same value
 
 		//In case we have 'fake' primaryChannel (eg. in montage there is a channel added by 'add empty channel'
 		//we need to immitate source samples as 0
@@ -250,7 +252,7 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 		} else if (currentMontage.getSourceChannelAt(primaryChannel).getFunction() == ChannelFunction.ONE) {
 			this.fillSamplesWith((double) 1.0, target, signalOffset, count, arrayOffset);
 		} else {
-			source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
+			result = source.getSamples(primaryChannel, target, signalOffset, count, arrayOffset);
 		}
 
 		float coeff = matrixData[channel][primaryChannel];
@@ -276,8 +278,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 					this.fillSamplesWith((double) 0.0, auxSamples, signalOffset, count, 0);
 				else if (currentMontage.getSourceChannelAt(i).getFunction() == ChannelFunction.ONE)
 					this.fillSamplesWith((double) 1.0, auxSamples, signalOffset, count, 0);
-				else
-					source.getSamples(i, auxSamples, signalOffset, count, 0);
+				else {
+					result = source.getSamples(i, auxSamples, signalOffset, count, 0);
+				}
 				idx = arrayOffset;
 				if (coeff != 1) {
 					for (e=0; e<count; e++) {
@@ -293,7 +296,9 @@ public class MultichannelSampleMontage extends MultichannelSampleProcessor {
 			}
 		}
 
+		return result;
 	}
+
 	protected void fillSamplesWith(double value, double[] target, int signalOffset, int count, int arrayOffset) {
 		for (int i=arrayOffset; i<arrayOffset+count; i++)
 			target[i] = value;

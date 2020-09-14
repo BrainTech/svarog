@@ -73,7 +73,7 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset,
+	public long getSamples(int channel, double[] target, int signalOffset,
 						   int count, int arrayOffset) {
 		if (this.delegate == null) {
 			ChannelSamples samples;
@@ -82,10 +82,10 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 							  this.signalDocument, channel, signalOffset, count);
 			} catch (InvalidClassException e) {
 				logger.error("", e);
-				return;
+				return 0;
 			} catch (IndexOutOfBoundsException e) {
 				logger.error("", e);
-				return;
+				return 0;
 			}
 			System.arraycopy(samples.getSamples(), 0, target, arrayOffset,
 							 count);
@@ -93,6 +93,8 @@ public class PluginSampleSourceAdapter implements MultichannelSampleSource {
 			this.delegate.getSamples(channel, target, signalOffset, count,
 									 arrayOffset);
 		}
+
+		return 0;
 	}
 
 	@Override

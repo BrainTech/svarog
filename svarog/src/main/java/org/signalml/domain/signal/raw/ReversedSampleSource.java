@@ -11,7 +11,7 @@ public class ReversedSampleSource extends SampleSourceEngine {
 	}
 
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		int newSignalOffset = source.getSampleCount() - signalOffset - count;
 
 		double[] temporaryTarget = new double[count];
@@ -19,6 +19,8 @@ public class ReversedSampleSource extends SampleSourceEngine {
 
 		double[] reversedTempTarget = ArrayOperations.reverse(temporaryTarget);
 		System.arraycopy(reversedTempTarget, 0, target, arrayOffset, count);
+
+		return 0; // not applicable for on-line signals
 	}
 
 }

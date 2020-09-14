@@ -324,6 +324,7 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		return chain;
 
 	}
+
 	public static SignalProcessingChain createFilteredChain(OriginalMultichannelSampleSource source) {
 
 		SignalProcessingChain chain = new SignalProcessingChain(source);
@@ -766,8 +767,8 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		output.getSamples(channel, target, signalOffset, count, arrayOffset);
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+		return output.getSamples(channel, target, signalOffset, count, arrayOffset);
 	}
 
 	@Override

@@ -55,18 +55,17 @@ public class OfflineIIRSinglechannelSampleFilter extends AbstractIIRSinglechanne
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return for on-line signals, total number of received samples; 0 otherwise
 	 */
 	@Override
-	public synchronized void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public synchronized long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 		if (!isCached(signalOffset, count)) {
 			filterOffline(signalOffset, count);
 			filteredSignalOffset = signalOffset;
-			filtered.getSamples(target, 0, count, arrayOffset);
+			return filtered.getSamples(target, 0, count, arrayOffset);
 		} else {
-			filtered.getSamples(target, signalOffset - filteredSignalOffset, count, arrayOffset);
+			return filtered.getSamples(target, signalOffset - filteredSignalOffset, count, arrayOffset);
 		}
-
-
 	}
 
 	/**

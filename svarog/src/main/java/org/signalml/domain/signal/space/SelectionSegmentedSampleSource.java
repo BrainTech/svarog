@@ -191,8 +191,9 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		source.getSamples(channelIndices[channel], target, firstSample+signalOffset, count, arrayOffset);
+		return 0;
 	}
 
 	@Override

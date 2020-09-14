@@ -118,8 +118,10 @@ public class RoundBufferSampleSource {
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return total number of samples preceding the first currently available sample
+	 * (one that would be accessed with signalOffset=0)
 	 */
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 
 		double[] tmp = new double[sampleCount];
 		if (full) {
@@ -146,6 +148,8 @@ public class RoundBufferSampleSource {
 			target[arrayOffset + i] = tmp[signalOffset + i];
 		}
 
+		return 0; /* any returned value would not be accurate,
+		as RoundBufferSampleSource are created and replaced during signal acquisition */
 	}
 
 	public int getSampleCount() {

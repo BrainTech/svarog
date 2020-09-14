@@ -17,38 +17,37 @@ public class StyledMonitorTagSet extends StyledTagSet implements ActionListener 
 	private static final long serialVersionUID = 1L;
 
 	/**
+	 * Number of milliseconds between each call for old tags cleanup action.
+	 */
+	private static final int OLD_TAGS_CLEANUP_TIME_INTERVAL = 3000;
+
+	/**
 	 * The timestamp of the first visible sample on the left (the 'oldest'
 	 * visible sample).
 	 */
 	protected double firstSampleTimestamp;
-	protected float samplingFrequency;
-	protected Semaphore semaphore;
+	protected final Semaphore semaphore;
 
-	/**
-	 * Number of milliseconds between each call for old tags cleanup action.
-	 */
-	private int oldTagsCleanupTimeInterval = 3000;
 	/**
 	 * The timer calling the old tags cleanup action at a specified intervals
 	 * of time.
 	 */
-	private Timer oldTagsRemoverTimer;
+	private final Timer oldTagsRemoverTimer;
 
-	public StyledMonitorTagSet(float pageSize, int blocksPerPage, float samplingFrequency) {
+	public StyledMonitorTagSet(float pageSize, int blocksPerPage) {
 		super(pageSize, blocksPerPage);
-		this.samplingFrequency = samplingFrequency;
 		this.semaphore = new Semaphore(1);
 
-		this.oldTagsRemoverTimer = new Timer(oldTagsCleanupTimeInterval, this);
-		oldTagsRemoverTimer.setInitialDelay(oldTagsCleanupTimeInterval);
+		this.oldTagsRemoverTimer = new Timer(OLD_TAGS_CLEANUP_TIME_INTERVAL, this);
+		oldTagsRemoverTimer.setInitialDelay(OLD_TAGS_CLEANUP_TIME_INTERVAL);
 		oldTagsRemoverTimer.start();
-
 	}
 
 	public void newSample(double newestSampleTimestamp) {
 		this.firstSampleTimestamp = newestSampleTimestamp - this.getPageSize();
 	}
 
+	@Override
 	public SortedSet<Tag> getTagsBetween(double start, double end) {
 		start = (double) 0.0;
 		end = Double.MAX_VALUE;
