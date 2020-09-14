@@ -121,8 +121,9 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
+		long result;
 		if (currentMontage.getSampleFilterCount() > 0) {
 			if (filteringState == 0) {
 				try {
@@ -135,9 +136,9 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 					logger.error("", e);
 				}
 			}
-			resultSampleSource.getSamples(channel, target, signalOffset, count, arrayOffset);
+			result = resultSampleSource.getSamples(channel, target, signalOffset, count, arrayOffset);
 		} else {
-			source.getSamples(channel, target, signalOffset, count, arrayOffset);
+			result = source.getSamples(channel, target, signalOffset, count, arrayOffset);
 		}
 
 		if (signalOffset + count == this.getSampleCount(channel)) {
@@ -145,6 +146,8 @@ public class MultichannelSampleFilterForExport extends MultichannelSampleFilter 
 			inputFile.delete();
 			outputFile.delete();
 		}
+
+		return result;
 	}
 
 	@Override

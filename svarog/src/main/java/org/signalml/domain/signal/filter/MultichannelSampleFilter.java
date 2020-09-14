@@ -162,7 +162,7 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 	}
 
 	@Override
-	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public synchronized long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
 		try {
 			if (originalSource instanceof ChangeableMultichannelSampleSource)
@@ -171,15 +171,16 @@ public class MultichannelSampleFilter extends MultichannelSampleProcessor {
 
 			LinkedList<SinglechannelSampleFilterEngine> chain = chains.get(channel);
 			if (chain.isEmpty()) {
-				source.getSamples(channel, target, signalOffset, count, arrayOffset);
+				return source.getSamples(channel, target, signalOffset, count, arrayOffset);
 			} else {
 				ListIterator<SinglechannelSampleFilterEngine> it = chain.listIterator(chain.size());
 				SinglechannelSampleFilterEngine last = it.previous();
-				last.getSamples(target, signalOffset, count, arrayOffset);
+				return last.getSamples(target, signalOffset, count, arrayOffset);
 			}
 		}
 		catch (InterruptedException ex) {
 			logger.error(ex, ex);
+			return 0;
 		}
 		finally {
 			semaphore.release();

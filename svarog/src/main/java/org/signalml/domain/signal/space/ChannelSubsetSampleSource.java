@@ -73,8 +73,8 @@ public class ChannelSubsetSampleSource extends MultichannelSampleProcessor {
 	 * from which samples will be written
 	 */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		source.getSamples(channelIndices[channel], target, signalOffset, count, arrayOffset);
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+		return source.getSamples(channelIndices[channel], target, signalOffset, count, arrayOffset);
 	}
 
 	/**

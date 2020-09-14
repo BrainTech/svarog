@@ -143,13 +143,14 @@ public class RawSignalSampleSource extends BaseSignalSampleSource {
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return always 0
 	 * @throws IndexOutOfBoundsException if bad channel number is given
 	 * or samples of requested indexes are not in the signal
 	 * or the requested part of the signal doesn't fit in the
 	 * <code>target<\code> array
 	 */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized (this) {
 
 			int channelCount = getChannelCount();
@@ -187,7 +188,7 @@ public class RawSignalSampleSource extends BaseSignalSampleSource {
 					for (int i=0; i<count; i++) {
 						target[arrayOffset+i] = 0.0F;
 					}
-					return;
+					return 0;
 				}
 
 				bBuffer = ByteBuffer.wrap(byteBuffer).order(byteOrder.getByteOrder());
@@ -236,5 +237,6 @@ public class RawSignalSampleSource extends BaseSignalSampleSource {
 			}
 
 		}
+		return 0;
 	}
 }

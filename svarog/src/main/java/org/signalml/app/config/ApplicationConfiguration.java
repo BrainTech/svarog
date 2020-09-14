@@ -95,6 +95,7 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	private String openbciIPAddress;
 	private int openbciPort;
+	private boolean scrollingMode;
 	private String sentryDsn;
 	private String sentrySite;
 	private boolean sendSentryTelemetry;
@@ -599,6 +600,14 @@ public class ApplicationConfiguration extends AbstractXMLConfiguration implement
 
 	public void setOpenbciPort(int openbciPort) {
 		this.openbciPort = openbciPort;
+	}
+
+	public boolean isScrollingMode() {
+		return scrollingMode;
+	}
+
+	public void setScrollingMode(boolean scrollingMode) {
+		this.scrollingMode = scrollingMode;
 	}
 
 	public String getSentryDsn() {

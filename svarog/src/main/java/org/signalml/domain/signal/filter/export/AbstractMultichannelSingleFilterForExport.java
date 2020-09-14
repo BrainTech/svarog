@@ -49,14 +49,14 @@ public abstract class AbstractMultichannelSingleFilterForExport extends Multicha
 	protected abstract void createEngine(int channelNumber, boolean[] filterExclusionArray) throws BadFilterParametersException;
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
 		SampleSourceEngine engine = filterEngines[channel];
 
 		if (engine == null)
-			source.getSamples(channel, target, signalOffset, count, arrayOffset);
+			return source.getSamples(channel, target, signalOffset, count, arrayOffset);
 		else
-			engine.getSamples(target, signalOffset, count, arrayOffset);
+			return engine.getSamples(target, signalOffset, count, arrayOffset);
 	}
 
 	@Override

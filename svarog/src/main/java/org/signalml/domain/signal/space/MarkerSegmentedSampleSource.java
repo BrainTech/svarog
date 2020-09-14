@@ -235,10 +235,10 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 
 		if (count == 0) {
-			return;
+			return 0;
 		}
 
 		int skippedSegments = signalOffset / segmentLength;
@@ -281,6 +281,7 @@ public class MarkerSegmentedSampleSource extends MultichannelSampleProcessor imp
 
 		}
 
+		return 0;
 	}
 
 	@Override

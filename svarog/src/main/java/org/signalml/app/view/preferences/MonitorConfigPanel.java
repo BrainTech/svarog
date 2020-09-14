@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner.NumberEditor;
@@ -28,6 +29,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 	 */
 	private JTextField openbciIpAddressTextField;
 	private IntegerSpinner openbciPortSpinner;
+	private JCheckBox scrollingModeCheckBox;
 
 	/**
 	 * Default constructor.
@@ -61,7 +63,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 
 		hGroup.addGroup(layout.createParallelGroup().addComponent(openbciIpAddressLabel).addComponent(openbciPortLabel));
 
-		hGroup.addGroup(layout.createParallelGroup().addComponent(getOpenbciIpAddressTextField()).addComponent(getOpenbciPortSpinner()));
+		hGroup.addGroup(layout.createParallelGroup().addComponent(getOpenbciIpAddressTextField()).addComponent(getOpenbciPortSpinner()).addComponent(getScrollingModeCheckBox()));
 
 		layout.setHorizontalGroup(hGroup);
 
@@ -70,6 +72,8 @@ public class MonitorConfigPanel extends AbstractPanel {
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(openbciIpAddressLabel).addComponent(getOpenbciIpAddressTextField()));
 
 		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(openbciPortLabel).addComponent(getOpenbciPortSpinner()));
+
+		vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(getScrollingModeCheckBox()));
 
 		layout.setVerticalGroup(vGroup);
 
@@ -92,6 +96,13 @@ public class MonitorConfigPanel extends AbstractPanel {
 		return openbciPortSpinner;
 	}
 
+	protected JCheckBox getScrollingModeCheckBox() {
+		if (scrollingModeCheckBox == null) {
+			scrollingModeCheckBox = new JCheckBox("View in scrolling mode (change will not affect any currently open signals)");
+		}
+		return scrollingModeCheckBox;
+	}
+
 	/**
 	 * Fills all the fields of this panel from the given
 	 * {@link ApplicationConfiguration configuration} of Svarog.
@@ -102,6 +113,7 @@ public class MonitorConfigPanel extends AbstractPanel {
 	public void fillPanelFromModel(ApplicationConfiguration applicationConfig) {
 		getOpenbciIpAddressTextField().setText(applicationConfig.getOpenbciIPAddress());
 		getOpenbciPortSpinner().setValue(applicationConfig.getOpenbciPort());
+		getScrollingModeCheckBox().setSelected(applicationConfig.isScrollingMode());
 	}
 
 	/**
@@ -113,7 +125,8 @@ public class MonitorConfigPanel extends AbstractPanel {
 	 */
 	public void fillModelFromPanel(ApplicationConfiguration applicationConfig) {
 		applicationConfig.setOpenbciIPAddress(getOpenbciIpAddressTextField().getText());
-		applicationConfig.setOpenbciPort(openbciPortSpinner.getValue());
+		applicationConfig.setOpenbciPort(getOpenbciPortSpinner().getValue());
+		applicationConfig.setScrollingMode(getScrollingModeCheckBox().isSelected());
 	}
 
 	/**

@@ -92,20 +92,21 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return for on-line signals, total number of received samples; 0 otherwise
 	 */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		if (count > bufferLength) {
 			logger.warn(String.format("Unable to use buffer - buffer too small: count=%d bufferLength=%d",
 									  count, bufferLength));
 			if (this._buffer_too_small_count++ == 0)
 				logger.debug("Buffer too small here, writing traceback once", new Throwable());
-			source.getSamples(channel, target, signalOffset, count, arrayOffset);
-			return;
+			return source.getSamples(channel, target, signalOffset, count, arrayOffset);
 		}
 
 		int maxSignalOffset = signalOffset + (count - 1);
 		int bufferOffset;
+		long result = 0; // all source.getSamples calls should return the same value
 
 		if (minSample[channel] == 0 && maxSample[channel] == 0) {
 
@@ -135,7 +136,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 				missingLength = minSample[channel] - signalOffset;
 				if (boundary[channel] - missingLength >= 0) {
 					// this can be read in one bit
-					source.getSamples(channel, buffer[channel], signalOffset, missingLength, boundary[channel]-missingLength);
+					result = source.getSamples(channel, buffer[channel], signalOffset, missingLength, boundary[channel]-missingLength);
 					boundary[channel] -= missingLength;
 				} else {
 					int remainder = missingLength - boundary[channel]; // the number of floats to put at the end
@@ -144,7 +145,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 						source.getSamples(channel, buffer[channel], signalOffset+remainder, missingLength-remainder, 0);
 					}
 					boundary[channel] = bufferLength - remainder;
-					source.getSamples(channel, buffer[channel], signalOffset, remainder, boundary[channel]);
+					result = source.getSamples(channel, buffer[channel], signalOffset, remainder, boundary[channel]);
 				}
 
 				minSample[channel] = signalOffset;
@@ -165,13 +166,13 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 				missingLength = 1 + maxSignalOffset - maxSample[channel];
 				if (endBoundary + missingLength < bufferLength) {
 					// this can be read in one bit
-					source.getSamples(channel, buffer[channel], maxSample[channel], missingLength, endBoundary);
+					result = source.getSamples(channel, buffer[channel], maxSample[channel], missingLength, endBoundary);
 				} else {
 					int remainder = missingLength - (bufferLength-endBoundary);
 					if (missingLength > remainder) {
 						source.getSamples(channel, buffer[channel], maxSample[channel], missingLength-remainder, endBoundary);
 					}
-					source.getSamples(channel, buffer[channel], maxSample[channel] + (missingLength-remainder), remainder, 0);
+					result = source.getSamples(channel, buffer[channel], maxSample[channel] + (missingLength-remainder), remainder, 0);
 				}
 
 				maxSample[channel] = maxSignalOffset + 1;
@@ -193,7 +194,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 			minSample[channel] = signalOffset;
 			maxSample[channel] = maxSignalOffset+1;
 			try {
-				source.getSamples(channel, buffer[channel], signalOffset, count, 0);
+				result = source.getSamples(channel, buffer[channel], signalOffset, count, 0);
 			} catch(RuntimeException e) {
 				logger.error(format("failed to read %d samples at %d", count, signalOffset));
 				throw e;
@@ -214,6 +215,7 @@ public class MultichannelSampleBuffer extends MultichannelSampleProcessor {
 			arrCopy(buffer[channel], target, bufferOffset, arrayOffset, count);
 		}
 
+		return result;
 	}
 
 	/**

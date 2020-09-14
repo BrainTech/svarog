@@ -66,8 +66,8 @@ public class ChannelSelectorSampleSource implements SampleSource {
 	}
 
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
-		source.getSamples(channel, target, signalOffset, count, arrayOffset);
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+		return source.getSamples(channel, target, signalOffset, count, arrayOffset);
 	}
 
 	@Override

@@ -3634,6 +3634,10 @@ msgstr "Adres IP OpenBCI"
 msgid "OpenBCI port"
 msgstr "Port OpenBCI"
 
+#: org/signalml/app/view/preferences/MonitorConfigPanel.java:101
+msgid "View in scrolling mode (change will not affect any currently open signals)"
+msgstr "Wyświetlaj w trybie przewijania (zmiana nie dotyczy otwartych sygnałów)"
+
 #: org/signalml/app/view/document/monitor/ChooseFilesForMonitorRecordingPanel.java:240
 msgid "OptionPane.titleText"
 msgstr ""
