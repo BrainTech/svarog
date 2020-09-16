@@ -32,10 +32,10 @@ public class FFTFilterEngineForExport extends SinglechannelSampleFilterEngine {
 	}
 
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 
 		double[] samples = new double[count];
-		source.getSamples(samples, signalOffset, count, 0);
+		long result = source.getSamples(samples, signalOffset, count, 0);
 
 		FourierTransform fourierTransform = new FourierTransform(fftSampleFilter.getWindowType(), fftSampleFilter.getWindowParameter());
 		Complex[] samplesFFT = fourierTransform.forwardFFT(samples);
@@ -51,6 +51,7 @@ public class FFTFilterEngineForExport extends SinglechannelSampleFilterEngine {
 
 		overlapBuffer = new double[filteredSignal.length - count];
 		System.arraycopy(filteredSignal, count, overlapBuffer, 0, overlapBuffer.length);
+		return result;
 	}
 
 	@Override

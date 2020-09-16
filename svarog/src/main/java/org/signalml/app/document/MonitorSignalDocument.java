@@ -177,8 +177,7 @@ public class MonitorSignalDocument extends AbstractSignal implements PsychopySta
 		}
 
 		logger.info("Start initializing monitor data.");
-		tagSet = new StyledMonitorTagSet(descriptor.getSignalParameters().getPageSize(), 5,
-			descriptor.getSignalParameters().getSamplingFrequency());
+		tagSet = new StyledMonitorTagSet(descriptor.getSignalParameters().getPageSize(), 5);
 		if (descriptor.getTagStyles() != null) {
 			tagSet.copyStylesFrom(descriptor.getTagStyles());
 		}

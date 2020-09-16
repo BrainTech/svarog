@@ -45,7 +45,7 @@ public class AsciiSignalSampleSource extends BaseSignalSampleSource {
 	}
 
 	@Override
-	public synchronized void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public synchronized long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		int channelCount = getChannelCount();
 		if (channel < 0 || channel >= channelCount) {
 			throw new IndexOutOfBoundsException("Bad channel number [" + channel + "]");
@@ -86,6 +86,7 @@ public class AsciiSignalSampleSource extends BaseSignalSampleSource {
 			parsingErrorDialogShown = true;
 			Dialogs.showError(_("CSV file is badly formatted. Some data may not be displayed properly."));
 		}
+		return 0;
 	}
 
 }

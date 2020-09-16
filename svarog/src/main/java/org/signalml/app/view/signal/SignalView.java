@@ -1242,8 +1242,9 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		JViewport viewport = scrollPane.getViewport();
 
 		Dimension viewportSize = viewport.getExtentSize();
-		int startX = plot.timeToPixel(tag.getPosition());
-		int endX = plot.timeToPixel(tag.getPosition() + tag.getLength());
+		TagTiming tagTiming = plot.computeTagTiming(tag);
+		int startX = plot.timeToPixel(tagTiming.position);
+		int endX = plot.timeToPixel(tagTiming.position + tagTiming.length);
 
 		int optimalX = startX - (viewportSize.width - (endX - startX)) / 2;
 

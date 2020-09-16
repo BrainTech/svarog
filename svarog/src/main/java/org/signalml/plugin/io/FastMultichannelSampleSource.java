@@ -68,10 +68,10 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset,
+	public long getSamples(int channel, double[] target, int signalOffset,
 						   int count, int arrayOffset) {
 		if (count <= 0)
-			return;
+			return 0;
 
 		// XXX: check units, etc
 		DoubleBuffer buf = DoubleBuffer.wrap(target, arrayOffset, count);
@@ -81,6 +81,8 @@ public class FastMultichannelSampleSource implements MultichannelSampleSource {
 			/* nothing */
 			logger.error("", e);
 		}
+
+		return 0;
 	}
 
 	@Override

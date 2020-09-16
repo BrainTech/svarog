@@ -139,14 +139,16 @@ public class IIRMultichannelSingleFilterForExport extends AbstractMultichannelSi
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
-		super.getSamples(channel, target, signalOffset, count, arrayOffset);
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+		long result = super.getSamples(channel, target, signalOffset, count, arrayOffset);
 
 		if (signalOffset + count == this.getSampleCount(channel) && filteringDone) {
 			//after writing the last samples delete these files
 			temporaryFile1.delete();
 			temporaryFile2.delete();
 		}
+
+		return result;
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package org.signalml.domain.signal.filter.iir.helper;
 
+import org.signalml.domain.signal.filter.SamplesWithOffset;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.domain.signal.samplesource.SampleSourceEngine;
 import org.signalml.math.ArrayOperations;
@@ -85,7 +86,7 @@ public class GrowSignalSampleSource extends SampleSourceEngine {
 	 * {@link GrowSignalSampleSource#getSamples(double[], int, int, int)}
 	 * @return the samples from the left extension.
 	 */
-	protected double[] getLeftPart(int signalOffset, int count) {
+	private double[] getLeftPart(int signalOffset, int count) {
 
 		int leftBegin = signalOffset;
 		if (leftBegin > leftExtension.length)
@@ -112,7 +113,7 @@ public class GrowSignalSampleSource extends SampleSourceEngine {
 	 * {@link GrowSignalSampleSource#getSamples(double[], int, int, int)}
 	 * @return the samples from the left extension.
 	 */
-	protected double[] getCenterPart(int signalOffset, int count) {
+	private SamplesWithOffset getCenterPart(int signalOffset, int count) {
 		int centerBegin = signalOffset - leftExtension.length;
 		if (centerBegin < 0)
 			centerBegin = 0;
@@ -127,9 +128,7 @@ public class GrowSignalSampleSource extends SampleSourceEngine {
 
 		int centerSize = centerEnd - centerBegin;
 		double[] center = new double[centerSize];
-		source.getSamples(center, centerBegin, centerSize, 0);
-
-		return center;
+		return new SamplesWithOffset(center, source.getSamples(center, centerBegin, centerSize, 0));
 	}
 
 	/**
@@ -143,7 +142,7 @@ public class GrowSignalSampleSource extends SampleSourceEngine {
 	 * {@link GrowSignalSampleSource#getSamples(double[], int, int, int)}
 	 * @return the samples from the left extension.
 	 */
-	protected double[] getRightPart(int signalOffset, int count) {
+	private double[] getRightPart(int signalOffset, int count) {
 		int rightBegin = signalOffset - leftExtension.length - source.getSampleCount();
 		if (rightBegin < 0)
 			rightBegin = 0;
@@ -160,15 +159,17 @@ public class GrowSignalSampleSource extends SampleSourceEngine {
 	}
 
 	@Override
-	public void getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(double[] target, int signalOffset, int count, int arrayOffset) {
 
 		double[] left = getLeftPart(signalOffset, count);
-		double[] center = getCenterPart(signalOffset, count);
+		SamplesWithOffset centerPart = getCenterPart(signalOffset, count);
+		double[] center = centerPart.samples;
 		double[] right = getRightPart(signalOffset, count);
 
 		System.arraycopy(left, 0, target, 0, left.length);
 		System.arraycopy(center, 0, target, left.length, center.length);
 		System.arraycopy(right, 0, target, left.length+center.length, right.length);
-	}
 
+		return centerPart.offset;
+	}
 }

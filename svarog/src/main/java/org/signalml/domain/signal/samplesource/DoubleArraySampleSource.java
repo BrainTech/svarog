@@ -64,10 +64,11 @@ public class DoubleArraySampleSource extends AbstractMultichannelSampleSource im
 	}
 
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		for (int i=0; i<count; i++) {
 			target[arrayOffset+i] = samples[channel][signalOffset+i];
 		}
+		return 0;
 	}
 	//TODO shouldn't we check if index is not out of bound?
 

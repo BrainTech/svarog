@@ -138,6 +138,7 @@ public class ConfigurationDefaults {
 		config.setMonitorPageSize(getFloat("monitor.pageSize"));
 		config.setOpenbciIPAddress(getString("monitor.openbciIPAddress"));
 		config.setOpenbciPort(getInt("monitor.openbciPort"));
+		config.setScrollingMode(getBoolean("monitor.scrollingMode"));
 	}
 
 	public static void setZoomSignalSettingsDefaults(ZoomSignalSettings settings) {

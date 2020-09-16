@@ -58,6 +58,7 @@ import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.raw.RawSignalSampleSource;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 import org.signalml.domain.signal.samplesource.OriginalMultichannelSampleSource;
+import org.signalml.domain.tag.MonitorTag;
 import org.signalml.domain.tag.StyledTagSet;
 import org.signalml.domain.tag.TagDifference;
 import org.signalml.domain.tag.TagDifferenceSet;
@@ -179,6 +180,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	private int horizontalPixelLead;
 	private int verticalPixelLead;
 
+	/** used for static (non-scrolling) rendering of on-line signal tags */
+	private final StaticRenderingHelper staticRendering;
+
 	private boolean compensationEnabled = true;
 	private boolean ignoreSliderEvents = false;
 
@@ -214,8 +218,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		setBackground(Color.WHITE);
 		setFocusable(true);
 
-		if (document.getSampleSource() instanceof RawSignalSampleSource) {
-			double timestamp = ((RawSignalSampleSource) document.getSampleSource()).getFirstSampleTimestamp();
+		OriginalMultichannelSampleSource sampleSource = document.getSampleSource();
+		if (sampleSource instanceof RawSignalSampleSource) {
+			double timestamp = ((RawSignalSampleSource) sampleSource).getFirstSampleTimestamp();
 			firstSampleTimestamp = Math.round(timestamp);
 		} else {
 			firstSampleTimestamp = 0;
@@ -328,8 +333,15 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 		});
 		if (document instanceof MonitorSignalDocument) {
+			if (!config.isScrollingMode()) {
+				staticRendering = new StaticRenderingHelper(sampleSource.getChannelCount(), sampleSource.getSampleCount(0), sampleSource.getSamplingFrequency());
+			} else {
+				staticRendering = null;
+			}
 			//for online signals renderrer should know that it's online
 			renderer.setOnline(true);
+		} else {
+			staticRendering = null;
 		}
 
 	}
@@ -832,6 +844,16 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		int clipEndX = clip.x + clip.width - 1;
 		int clipEndY = clip.y + clip.height - 1;
 
+		if (staticRendering != null) try {
+			// pre-fetching data and updating rendering state
+			// to avoid mismatch between signal and tags
+			staticRendering.fetchSamples(signalChain);
+		} catch (RuntimeException ex) {
+			logger.error("failed to read samples in static rendering mode", ex);
+			setVisible(false);
+			throw ex;
+		}
+
 		prepareToPaintTags();
 
 		PositionedTag tagSelection = view.getTagSelection(this);
@@ -918,10 +940,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 
 		visibleCount = 0;
-		channel = startChannel;
-		while (visibleCount < maxNumberOfChannels && channel < channelCount) {
+		for (channel=startChannel; visibleCount < maxNumberOfChannels && channel < channelCount; ++channel) {
 			if (!isChannelVisible(channel)) {
-				channel++;
 				continue;
 			}
 			visibleCount++;
@@ -938,8 +958,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			}
 
 			try {
-
-				signalChain.getSamples(channel, samples, firstSample, length, 0);
+				if (staticRendering != null) {
+					int samplesMargin = (int) (10 / timeZoomFactor); // 10 pixels
+					staticRendering.getSamples(samplesMargin, channel, samples, firstSample, length);
+				} else {
+					signalChain.getSamples(channel, samples, firstSample, length, 0);
+				}
 			} catch (RuntimeException ex) {
 				logger.error(format("failed to read %d samples starting at %d, till %d, channel %d",
 						length, firstSample, lastSample, sampleCount[channel]));
@@ -954,8 +978,6 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					channelLevel[channel], timeZoomFactor, pixelPerValueForChannel,
 					clamped ? clampLimit : null, dcOffsetRemoved
 			);
-
-			channel++;
 		}
 
 		if (signalXOR) {
@@ -1472,14 +1494,23 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		return channel + numberOfInvisibleChannels;
 	}
 
+	TagTiming computeTagTiming(SignalSelection tag) {
+		if (staticRendering != null && (tag instanceof MonitorTag)) {
+			return staticRendering.computeTagTiming((MonitorTag) tag);
+		} else {
+			return new TagTiming(tag.getPosition(), tag.getLength());
+		}
+	}
+
 	public Rectangle getPixelSelectionBounds(SignalSelection selection, Rectangle useRect) {
 
-		double position = selection.getPosition();
-		double length = selection.getLength();
+		TagTiming timing = computeTagTiming(selection);
+		final double position = timing.position;
+		final double length = timing.length;
 		SignalSelectionType type = selection.getType();
 
-		int selLeft = (int) Math.floor(selection.getPosition() * pixelPerSecond);
-		int selRight = (int) Math.ceil(selection.getLength() * pixelPerSecond);
+		int selLeft = (int) Math.floor(position * pixelPerSecond);
+		int selRight = (int) Math.ceil((position + length) * pixelPerSecond);
 		int selTop;
 		int selBottom;
 
@@ -1528,7 +1559,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		Rectangle rect = getTagSelectionRectangle(tag, marker, tagCnt, useRect);
 
 		if (rect.x > 0 && blockLinesVisible && pixelPerBlock > 4) {
-			int linePosition = (int) ((int) ((tag.getPosition() / blockSize)) * pixelPerBlock);
+			int linePosition = (int) ((int) ((computeTagTiming(tag).position / blockSize)) * pixelPerBlock);
 			if (linePosition == rect.x) {
 				rect.x++; // block tags are drawn only inside the block
 			}
@@ -1577,6 +1608,9 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			rect = useRect;
 		}
 
+		TagTiming timing = computeTagTiming(tag);
+		double position = timing.position;
+		double length = timing.length;
 		if (marker) {
 
 			int rWidth = pixelPerChannel / (3 * tagCnt); // 1/3 of the height for this tag
@@ -1585,12 +1619,12 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 			} else if (rWidth < 5) {
 				rWidth = 5;
 			}
-			rect.x = (int) (tag.getPosition() * pixelPerSecond) - rWidth / 2;
+			rect.x = (int) (position * pixelPerSecond) - rWidth / 2;
 			rect.width = rWidth;
 
 		} else {
-			rect.x = (int) (tag.getPosition() * pixelPerSecond);
-			rect.width = (int) (tag.getLength() * pixelPerSecond);
+			rect.x = (int) (position * pixelPerSecond);
+			rect.width = (int) (length * pixelPerSecond);
 		}
 
 		return rect;
@@ -1797,7 +1831,7 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 	 */
 	protected SignalSelection transformToMarkerSelection(SignalSelection selection) {
 
-		double startPosition = selection.getPosition();
+		double startPosition = computeTagTiming(selection).position;
 		int sampleAtPoint = (int) (startPosition * samplingFrequency);
 		float newStartPosition = sampleAtPoint / samplingFrequency;
 
@@ -2039,8 +2073,11 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					continue;
 				}
 
+				TagTiming timing = computeTagTiming(tag);
+				double position = timing.position;
+				double length = timing.length;
 				if (tag.getStyle().getType() == SignalSelectionType.BLOCK) {
-					if (time >= tag.getPosition() && time < (tag.getPosition() + tag.getLength())) {
+					if (time >= position && time < position + length) {
 						tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tagCnt, cnt, viewportPoint, viewportSize, plotSize, comparing, tempBounds);
 						if (tagBounds.contains(point)) {
 							list.add(new PositionedTag(tag, tagIndex));
@@ -2048,14 +2085,14 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 					}
 				} else if (tag.getStyle().getType() == SignalSelectionType.CHANNEL) {
 					if (tag.getChannel() == channel) {
-						if (tag.isMarker() || (time >= tag.getPosition() && time < tag.getEndPosition())) {
+						if (tag.isMarker() || (time >= position && time < position + length)) {
 							tagBounds = getPixelChannelTagBoundsInChannel(tag, tag.isMarker(), tagCnt, cnt, viewChannel, comparing, tempBounds);
 							if (tagBounds.contains(point)) {
 								list.add(new PositionedTag(tag, tagIndex));
 							}
 						}
 					} else if (tag.getChannel() == Tag.CHANNEL_NULL) {
-						if (tag.isMarker() || (time >= tag.getPosition() && time < (tag.getPosition() + tag.getLength()))) {
+						if (tag.isMarker() || (time >= position && time < position + length)) {
 							tagBounds = getPixelBlockTagBounds(tag, tag.isMarker(), tagCnt, cnt, viewportPoint, viewportSize, plotSize, comparing, tempBounds);
 							if (tagBounds.contains(point)) {
 								list.add(new PositionedTag(tag, tagIndex));

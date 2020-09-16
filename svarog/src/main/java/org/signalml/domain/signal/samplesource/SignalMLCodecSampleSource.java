@@ -361,13 +361,14 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @returns always 0
 	 * @throws IndexOutOfBoundsException if channel of given index doesn't
 	 * exist
 	 * or some of the requested samples are not in the signal
 	 * or created result doesn't fit in the <code>target</code> array
 	 */
 	@Override
-	public void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
+	public long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset) {
 		synchronized (this) {
 			if (channel < 0 || channel >= channelCount) {
 				throw new IndexOutOfBoundsException("Bad channel number [" + channel + "]");
@@ -405,6 +406,8 @@ public class SignalMLCodecSampleSource extends AbstractMultichannelSampleSource 
 				}
 			}
 		}
+
+		return 0;
 	}
 
 	@Override

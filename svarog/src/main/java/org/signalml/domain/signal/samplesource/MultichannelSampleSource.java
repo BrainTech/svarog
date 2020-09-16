@@ -66,8 +66,9 @@ public interface MultichannelSampleSource {
 	 * @param count the number of samples to be returned
 	 * @param arrayOffset the offset in <code>target</code> array starting
 	 * from which samples will be written
+	 * @return for on-line signals, total number of received samples; 0 otherwise
 	 */
-	void getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset);
+	long getSamples(int channel, double[] target, int signalOffset, int count, int arrayOffset);
 
 	/**
 	 * Returns the label of a channel of a given index
