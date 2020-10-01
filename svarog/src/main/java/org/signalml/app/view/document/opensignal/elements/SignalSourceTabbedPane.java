@@ -171,16 +171,11 @@ public class SignalSourceTabbedPane extends WebTabbedPane implements PropertyCha
 		String extension = Util.getFileExtension(file, false);
 
 		if ("edf".equalsIgnoreCase(extension) || "d".equals(extension)){
-			String formatName = null;
-			if (extension.equalsIgnoreCase("edf")) {
-				formatName = "EDF";
-			}
-			else if (extension.equalsIgnoreCase("d")) {
-				formatName = "EASYS";
-			}
+			
 
 			SignalMLCodecManager codecManager = viewerElementManager.getCodecManager();
-			SignalMLCodec codec = codecManager.getCodecForFormat(formatName);
+			SignalMLCodec codec = codecManager.getCodecForFilename(file.toString());
+
 
 			if (codec == null) {
 				openSignalDescriptor = null;
