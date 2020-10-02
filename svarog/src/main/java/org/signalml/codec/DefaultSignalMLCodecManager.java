@@ -56,6 +56,19 @@ public class DefaultSignalMLCodecManager implements SignalMLCodecManager {
 			return codecsByFormatName.get(formatName);
 		}
 	}
+	
+	@Override
+	public SignalMLCodec getCodecForFilename(String filename) {
+		String extension = Util.getFileExtension(new File(filename), false);
+		String formatName = null;
+			if (extension.equalsIgnoreCase("edf")) {
+				formatName = "EDF";
+			}
+			else if (extension.equalsIgnoreCase("d")) {
+				formatName = "EASYS";
+			}
+		return getCodecForFormat(formatName);
+	}
 
 	@Override
 	public SignalMLCodec getCodecByUID(String uid) {
