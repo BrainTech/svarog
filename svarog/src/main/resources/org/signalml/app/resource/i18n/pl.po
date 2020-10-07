@@ -761,8 +761,8 @@ msgid "Book file parent directory doesn't exist or not writable"
 msgstr "Katalog nadrzędny pliku książki nie istnieje lub nie można go zapisać"
 
 #: org/signalml/app/document/ManagedDocumentType.java:54
-msgid "Book files (*.b)"
-msgstr "Książki (*.b)"
+msgid "Book files (*.b, *.db)"
+msgstr "Książki (*.b, *.db)"
 
 #: org/signalml/method/booktotag/BookToTagMethod.java:138
 msgid "Book is empty"

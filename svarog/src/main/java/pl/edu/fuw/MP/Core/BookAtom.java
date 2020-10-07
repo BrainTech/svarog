@@ -114,8 +114,8 @@ public class BookAtom implements StandardBookAtom {
 		return amplitude;
 	}
 
-	public int getNaturalFrequency() {
-		return (int)this.frequency;
+	public float getNaturalFrequency() {
+		return this.frequency;
 	}
 
 	public float getFrequency() {
@@ -130,8 +130,8 @@ public class BookAtom implements StandardBookAtom {
 		return this.phase;
 	}
 
-	public int getPosition() {
-		return (int)this.position;
+	public float getPosition() {
+		return this.position;
 	}
 
 	public Object getProperty(String name) throws IllegalArgumentException {
@@ -143,8 +143,8 @@ public class BookAtom implements StandardBookAtom {
 		return names.elements();
 	}
 
-	public int getScale() {
-		return (int)this.scale;
+	public float getScale() {
+		return this.scale;
 	}
 
 	public int getType() {

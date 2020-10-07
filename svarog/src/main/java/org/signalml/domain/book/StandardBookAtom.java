@@ -59,7 +59,7 @@ public interface StandardBookAtom {
 	 *
 	 *
 	 */
-	int getPosition();
+	float getPosition();
 
 	/** Position in seconds relative to the beginning of decomposed signal.
 	 *
@@ -71,7 +71,7 @@ public interface StandardBookAtom {
 	 *
 	 *
 	 */
-	int getScale();
+	float getScale();
 
 	/** Scale in seconds.
 	 *
@@ -84,7 +84,7 @@ public interface StandardBookAtom {
 	 *
 	 *
 	 */
-	int getNaturalFrequency();
+	float getNaturalFrequency();
 
 	/**
 	 * The frequency which was read from the book file

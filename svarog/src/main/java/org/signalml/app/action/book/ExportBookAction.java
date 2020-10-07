@@ -74,7 +74,7 @@ public class ExportBookAction extends AbstractFocusableSignalMLAction<BookDocume
 			}
 			String ext = Util.getFileExtension(file,false);
 			if (ext == null) {
-				file = new File(file.getAbsolutePath() + ".b");
+				file = new File(file.getAbsolutePath() + ".db");
 			}
 
 			hasFile = true;

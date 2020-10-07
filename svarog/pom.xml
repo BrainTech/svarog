@@ -385,6 +385,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.15.1</version>
+		</dependency>
+		<dependency>
 			<groupId>org.xnap.commons</groupId>
 			<artifactId>gettext-commons</artifactId>
 			<version>0.9.6</version>
@@ -524,7 +529,6 @@
 			<artifactId>jtransforms</artifactId>
 			<version>2.3</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>

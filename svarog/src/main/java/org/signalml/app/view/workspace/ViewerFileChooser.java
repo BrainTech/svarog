@@ -60,7 +60,8 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		FileNameExtensionFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab (*.set)"), "set");
 		FileNameExtensionFilter matlab = new FileNameExtensionFilter(_("MATLAB (*.mat)"), "mat");
 		FileNameExtensionFilter xml = new FileNameExtensionFilter(_("XML (*.xml)"), "xml");
-		FileNameExtensionFilter book = new FileNameExtensionFilter(_("Books (*.b)"), "b");
+		FileNameExtensionFilter bookOpen = new FileNameExtensionFilter(_("Books (*.b, *.db)"), "b", "db");
+		FileNameExtensionFilter bookSave = new FileNameExtensionFilter(_("Books (*.db)"), "db");
 		FileNameExtensionFilter png = new FileNameExtensionFilter(_("PNG (*.png)"), "png");
 		FileNameExtensionFilter config = new FileNameExtensionFilter(_("Config (*.cfg)"), "cfg");
 		FileNameExtensionFilter exe = new FileNameExtensionFilter(_("Executable (*.exe)"), "exe");
@@ -87,16 +88,16 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		OptionSet.exportCSVSignal.setFilters(csv);
 		OptionSet.exportEEGLabSignal.setFilters(eeglabDataset);
 		OptionSet.exportMatlabSignal.setFilters(matlab);
-		OptionSet.exportBook.setFilters(book);
-		OptionSet.openBook.setFilters(book);
+		OptionSet.exportBook.setFilters(bookSave);
+		OptionSet.openBook.setFilters(bookOpen);
 		OptionSet.savePreset.setFilters(xml);
 		OptionSet.loadPreset.setFilters(xml);
 
 		if (Pattern.matches(".*[Ww]indows.*", System.getProperty("os.name")))
 			OptionSet.executablePreset.setFilters(exe);
 
-		OptionSet.bookFilePreset.setFilters(book);
-		OptionSet.bookSavePreset.setFilters(book);
+		OptionSet.bookFilePreset.setFilters(bookOpen);
+		OptionSet.bookSavePreset.setFilters(bookSave);
 
 		OptionSet.jarFilePreset.setFilters(jar);
 		OptionSet.codeFilePreset.setFilters(jar_class);
