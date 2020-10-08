@@ -51,8 +51,8 @@ public enum ManagedDocumentType implements MessageSourceResolvable {
 	 */
 	BOOK(_("Book"),
 	BookDocument.class,
-	_("Book files (*.b)"),
-	new String[] { "b" },
+	_("Book files (*.b, *.db)"),
+	new String[] { "b", "db" },
 	"org/signalml/app/icon/book.png"
 		),
 

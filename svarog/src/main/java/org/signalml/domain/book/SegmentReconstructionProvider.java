@@ -130,7 +130,7 @@ public class SegmentReconstructionProvider {
 
 					ptr = atomReconstructions[kk];
 					if (atom.getType() == StandardBookAtom.DIRACDELTA_IDENTITY) {
-						itmp=atom.getPosition();
+						itmp = Math.round(atom.getPosition());
 						if (atom.getAmplitude()<0f) {
 							ptr[itmp] = -(double) atom.getModulus();
 						} else {
@@ -151,7 +151,7 @@ public class SegmentReconstructionProvider {
 						double freq = Math.PI * 2 * atom.getNaturalFrequency() / atom.getBaseLength(), phase = atom.getPhase() - freq * atom.getPosition();
 						int start = 0, stop = DimBase - 1;
 
-						WignerMap.MakeExpTable(Exp, Math.PI / Util.sqr(atom.getScale()), atom.getPosition(), start, stop);
+						WignerMap.MakeExpTable(Exp, Math.PI / Util.sqr(atom.getScale()), Math.round(atom.getPosition()), start, stop);
 
 						WignerMap.makeCosTable(Cos, start, stop, freq, phase);
 

@@ -9,8 +9,9 @@ import java.util.List;
 import javax.swing.SwingWorker;
 import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
-import org.signalml.domain.book.DefaultBookBuilder;
 import org.signalml.domain.book.IncrementalBookWriter;
+import org.signalml.domain.book.SQLiteBook;
+import org.signalml.domain.book.SQLiteBookBuilder;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookSegment;
 
@@ -37,23 +38,25 @@ public class ExportBookWorker extends SwingWorker<Void,Integer> {
 	@Override
 	protected Void doInBackground() throws Exception {
 
-		DefaultBookBuilder bookBuilder = DefaultBookBuilder.getInstance();
+		final int segmentCount = book.getSegmentCount();
+		if (book instanceof SQLiteBook) {
+			publish(0);
+			((SQLiteBook) book).createCopy(bookFile);
+			publish(segmentCount);
+		} else {
+			SQLiteBookBuilder bookBuilder = new SQLiteBookBuilder();
 
-		IncrementalBookWriter incrementalBookWriter = bookBuilder.writeBookIncremental(book, bookFile);
-		int segmentCount = book.getSegmentCount();
-		StandardBookSegment[] segments;
-		for (int i=0; i<segmentCount; i++) {
-			segments = book.getSegmentAt(i);
-			incrementalBookWriter.writeSegment(segments);
-			publish(new Integer(i+1));
+			IncrementalBookWriter incrementalBookWriter = bookBuilder.writeBookIncremental(book, bookFile);
+			for (int i=0; i<segmentCount; i++) {
+				StandardBookSegment[] segments = book.getSegmentAt(i);
+				incrementalBookWriter.writeSegment(segments);
+				publish(i+1);
+			}
+			incrementalBookWriter.close();
 		}
 
-		incrementalBookWriter.close();
-
 		return null;
-
 	}
-
 
 	public PleaseWaitDialog getPleaseWaitDialog() {
 		synchronized (pleaseWaitDialog) {

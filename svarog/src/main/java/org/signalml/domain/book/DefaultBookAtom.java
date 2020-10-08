@@ -20,16 +20,16 @@ public class DefaultBookAtom implements StandardBookAtom {
 	private int type;
 	private int iteration;
 	private float modulus;
-	private int frequency;
-	private int position;
-	private int scale;
+	private float frequency;
+	private float position;
+	private float scale;
 	private float amplitude;
 	private float phase;
 
 	protected DefaultBookAtom() {
 	}
 
-	public DefaultBookAtom(float samplingFrequency, int baseLength, int type, int iteration, float modulus, int frequency, int position, int scale, float amplitude, float phase) {
+	public DefaultBookAtom(float samplingFrequency, int baseLength, int type, int iteration, float modulus, float frequency, float position, float scale, float amplitude, float phase) {
 		this.samplingFrequency = samplingFrequency;
 		this.baseLength = baseLength;
 		this.type = type;
@@ -76,7 +76,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 	}
 
 	@Override
-	public int getNaturalFrequency() {
+	public float getNaturalFrequency() {
 		return frequency;
 	}
 
@@ -101,7 +101,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 	}
 
 	@Override
-	public int getPosition() {
+	public float getPosition() {
 		return position;
 	}
 
@@ -111,7 +111,7 @@ public class DefaultBookAtom implements StandardBookAtom {
 	}
 
 	@Override
-	public int getScale() {
+	public float getScale() {
 		return scale;
 	}
 

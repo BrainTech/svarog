@@ -14,11 +14,15 @@ import org.signalml.app.method.ApplicationMethodManager;
 import org.signalml.app.method.InitializingMethodResultConsumer;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
+import org.signalml.domain.book.BookBuilder;
+import org.signalml.domain.book.BookFormatException;
+import org.signalml.domain.book.DefaultBookBuilder;
+import org.signalml.domain.book.SQLiteBookBuilder;
+import org.signalml.domain.book.StandardBook;
 import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Data;
 import org.signalml.method.mp5.MP5Result;
 import org.signalml.plugin.export.SignalMLException;
-import org.signalml.util.FileUtils;
 
 /** MP5MethodConsumer
  *
@@ -79,9 +83,12 @@ public class MP5MethodConsumer implements InitializingMethodResultConsumer {
 		if (descriptor.isSaveToFile()) {
 
 			try {
-				FileUtils.copyFile(new File(bookFilePath), descriptor.getBookFile());
-			} catch (IOException ex) {
-				logger.error("Failed to copy file [" + bookFilePath + " to " + descriptor.getBookFile() + "] - i/o exception", ex);
+				BookBuilder tempBuilder = DefaultBookBuilder.getInstance();
+				StandardBook book = tempBuilder.readBook(new File(bookFilePath));
+				BookBuilder sqliteBuilder = new SQLiteBookBuilder();
+				sqliteBuilder.writeBookComplete(book, descriptor.getBookFile());
+			} catch (IOException|BookFormatException ex) {
+				logger.error("Failed to export file [" + bookFilePath + " to " + descriptor.getBookFile() + "]", ex);
 				throw new SignalMLException(ex);
 			}
 

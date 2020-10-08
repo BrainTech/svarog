@@ -99,8 +99,8 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 		return this.amplitude;
 	}
 
-	public int getNaturalFrequency() {
-		return (int)(this.frequency * getBaseLength() / 2.0);
+	public float getNaturalFrequency() {
+		return this.frequency * getBaseLength() / 2.0f;
 	}
 
 	public float getFrequency() {
@@ -115,8 +115,8 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 		return this.phase;
 	}
 
-	public int getPosition() {
-		return (int)this.position;
+	public float getPosition() {
+		return this.position;
 	}
 
 	public Object getProperty(String name) throws IllegalArgumentException {
@@ -128,8 +128,8 @@ public class AtomV5 implements StandardBookAtom, StandardBookAtomWriter {
 		return names.elements();
 	}
 
-	public int getScale() {
-		return (int)this.scale;
+	public float getScale() {
+		return this.scale;
 	}
 
 	public int getType() {
