@@ -2069,6 +2069,10 @@ msgstr "Format eksportu"
 msgid "Export format options"
 msgstr "Opcje formatu eksportu"
 
+#: org/signalml/app/view/signal/export/ExportFormatPanel.java:102
+msgid "EDF+ is a format with 16-bit precision. To avoid precision loss, choose 24-bit BDF+ or RAW signal."
+msgstr "EDF+ to format o 16-bitowej precyzji. Aby uniknąć utraty dokładności, wybierz 24-bitowy format BDF+ lub surowy sygnał (RAW)."
+
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:513
 msgid "Export legacy tag"
 msgstr "Eksportuj starsze znaczniki"

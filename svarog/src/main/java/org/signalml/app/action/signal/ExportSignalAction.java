@@ -184,6 +184,12 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EEGLab
 					   && !"set".equals(extension)) {
 					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "set");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.EDF
+					   && !"edf".equals(extension)) {
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "edf");
+				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.BDF
+					   && !"bdf".equals(extension)) {
+					fileSuggestion = Util.changeOrAddFileExtension(originalFile, "bdf");
 				} else if (signalExportDescriptor.getFormatType() == ExportFormatType.MATLAB
 						   && !"mat".equals(extension)) {
 						fileSuggestion = Util.changeOrAddFileExtension(originalFile, "mat");
@@ -201,6 +207,8 @@ public class ExportSignalAction extends AbstractFocusableSignalMLAction<SignalDo
 			case RAW: file = fileChooser.chooseExportSignalFile(optionPaneParent, fileSuggestion); break;
 			case EEGLab: file = fileChooser.chooseExportEEGLabSignalFile(optionPaneParent, fileSuggestion); break;
 			case CSV: file = fileChooser.chooseExportCSVSignalFile(optionPaneParent, fileSuggestion); break;
+			case EDF: file = fileChooser.chooseExportEDFSignalFile(optionPaneParent, fileSuggestion); break;
+			case BDF: file = fileChooser.chooseExportBDFSignalFile(optionPaneParent, fileSuggestion); break;
 			case MATLAB: file = fileChooser.chooseExportMatlabSignalFile(optionPaneParent, fileSuggestion); break;
 			}
 

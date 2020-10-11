@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.signal.export.ISignalWriter;
 import org.signalml.domain.signal.export.csv.CSVSignalWriter;
+import org.signalml.domain.signal.export.edf.BDFSignalWriter;
+import org.signalml.domain.signal.export.edf.EDFSignalWriter;
 import org.signalml.domain.signal.export.eeglab.EEGLabSignalWriter;
 import org.signalml.domain.signal.export.eeglab.MatlabSignalWriter;
 import org.signalml.domain.signal.raw.RawSignalWriter;
@@ -12,6 +14,8 @@ public enum ExportFormatType {
 
 	RAW(_("RAW"), "bin", RawSignalWriter.class),
 	CSV(_("CSV"), "csv", CSVSignalWriter.class),
+	EDF(_("EDF+"), "edf", EDFSignalWriter.class),
+	BDF(_("BDF+"), "bdf", BDFSignalWriter.class),
 	MATLAB(_("MATLAB"), "mat", MatlabSignalWriter.class),
 	EEGLab(_("EEGLab"), "set", EEGLabSignalWriter.class);
 

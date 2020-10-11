@@ -56,6 +56,8 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 	public void initialize() {
 		FileNameExtensionFilter text = new FileNameExtensionFilter(_("Text (*.txt)"), "txt");
 		FileNameExtensionFilter csv = new FileNameExtensionFilter(_("CSV (*.csv)"), "csv");
+		FileNameExtensionFilter edf = new FileNameExtensionFilter(_("EDF+ (*.edf)"), "edf");
+		FileNameExtensionFilter bdf = new FileNameExtensionFilter(_("EDF+ (*.bdf)"), "bdf");
 		FileNameExtensionFilter binary = new FileNameExtensionFilter(_("Binary (*.bin)"), "bin");
 		FileNameExtensionFilter eeglabDataset = new FileNameExtensionFilter(_("EEGLab (*.set)"), "set");
 		FileNameExtensionFilter matlab = new FileNameExtensionFilter(_("MATLAB (*.mat)"), "mat");
@@ -86,6 +88,8 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		OptionSet.readXMLManifest.setFilters(xml);
 		OptionSet.exportSignal.setFilters(binary);
 		OptionSet.exportCSVSignal.setFilters(csv);
+		OptionSet.exportEDFSignal.setFilters(edf);
+		OptionSet.exportBDFSignal.setFilters(bdf);
 		OptionSet.exportEEGLabSignal.setFilters(eeglabDataset);
 		OptionSet.exportMatlabSignal.setFilters(matlab);
 		OptionSet.exportBook.setFilters(bookSave);
@@ -217,6 +221,14 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 
 	public synchronized File chooseExportCSVSignalFile(Component parent, File fileSuggestion) {
 		return chooseFile(parent, OptionSet.exportCSVSignal, fileSuggestion);
+	}
+
+	public synchronized File chooseExportEDFSignalFile(Component parent, File fileSuggestion) {
+		return chooseFile(parent, OptionSet.exportEDFSignal, fileSuggestion);
+	}
+
+	public synchronized File chooseExportBDFSignalFile(Component parent, File fileSuggestion) {
+		return chooseFile(parent, OptionSet.exportBDFSignal, fileSuggestion);
 	}
 
 	public synchronized File chooseExportEEGLabSignalFile(Component parent, File fileSuggestion) {
@@ -528,9 +540,10 @@ public class ViewerFileChooser extends WebFileChooser implements org.signalml.pl
 		artifactProjectPreset(Operation.usedir, "filechooser.artifactProjectPreset.title",
 				      null, _("Choose"),
 				      false, false, FILES_ONLY),
-		exportSignal(Operation.save, _("Choose file to save to"),
-			     null, _("Export")),
-                exportCSVSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
+		exportSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
+		exportCSVSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
+		exportEDFSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
+		exportBDFSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportEEGLabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportMatlabSignal(Operation.save, _("Choose file to save to"), null, _("Export")),
 		exportBook(Operation.save, _("Export book"),
