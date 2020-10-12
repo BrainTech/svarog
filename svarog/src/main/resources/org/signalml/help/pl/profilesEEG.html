@@ -16,7 +16,7 @@
             <code>http://www.biomedical-engineering-online.com/content/12/1/109</code>
         </p>
 
-        <p><em>Input</em>: results of MP decomposition (decomposition book, stored usually in a *.b file).</p>
+        <p><em>Input</em>: results of MP decomposition (decomposition book, stored usually in a *.db file).</p>
         <p><em>Output</em>:
         <ol>
             <li>graphical reports of occurences of selected structures in time
@@ -25,7 +25,7 @@
                 tags marking occuerences of all the single structures selected for (1.)</li>
         </ol>
         <p>To run the plugin one needs to run the MP decomposition of the signal first. Depending on the signal length and desired accuracy, this may be a time-consuming task; information about the parameters of MP decomposition can be found in the help for <strong>MP decomposition</strong> module. To run this plugin one atually does not have to load the actual signal into Svarog (this may be needed to inspect the occurrences of single structures, as described in the following part about the tags), since the plugin operates solely on the decompositions books. </p>
-        <p>First thing to do in the window opened via <kbd>&quot;Tools/EEG Profiles (MP)&quot;</kbd> is choosing the *.b file containing all the structures (mostly Gabor functions, i.e. sines with Gaussian envelope) fitted to the signal by the MP algorithm. </p>
+        <p>First thing to do in the window opened via <kbd>&quot;Tools/EEG Profiles (MP)&quot;</kbd> is choosing the *.db file containing all the structures (mostly Gabor functions, i.e. sines with Gaussian envelope) fitted to the signal by the MP algorithm. </p>
         <p>The next, central panel is an interface for setting the filters on the relevant structures in terms of their amplitude (peak to peak), frequency, scale (corresponding to the time width of the structure, approx. half-width of the Gaussian), and phase. 
             Ranges of these parameters define criteria of inclusion of given structures in the report.
             There can be several structures presented in one report, and they will be organized as separate charts in horizontal subplots. New chart is added with the green "+",
