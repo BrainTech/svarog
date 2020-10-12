@@ -25,7 +25,7 @@ public class MP5ExpertConfigPanel extends JPanel {
 	private AbstractDialog owner;
 
 	private TextPanePanel additionalConfigTextPane;
-	private TextPanePanel bookCommentPanel;
+//	private TextPanePanel bookCommentPanel;
 	private MP5ExecutorPanel executorPanel;
 
 	public MP5ExpertConfigPanel(MP5ExecutorManager executorManager, AbstractDialog owner) {
@@ -41,28 +41,14 @@ public class MP5ExpertConfigPanel extends JPanel {
 
 		JPanel additionalConfigPanel = new JPanel(new BorderLayout(3,3));
 		additionalConfigPanel.setBorder(new TitledBorder(_("Additional config (will be appended to config file as is)")));
-
-//		CompactButton additionalConfigHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ADDITIONAL_CONFIG);
-
-//		JPanel additionalConfigHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-//		additionalConfigHelpPanel.add(additionalConfigHelpButton);
-
 		additionalConfigPanel.add(getAdditionalConfigTextPane(), BorderLayout.CENTER);
-//		additionalConfigPanel.add(additionalConfigHelpPanel, BorderLayout.SOUTH);
 
-		JPanel bottomPanel = new JPanel(new BorderLayout(3,3));
-		bottomPanel.setBorder(new TitledBorder(_("Book comment")));
+//		JPanel bottomPanel = new JPanel(new BorderLayout(3,3));
+//		bottomPanel.setBorder(new TitledBorder(_("Book comment")));
+//		bottomPanel.add(getBookCommentPanel(), BorderLayout.CENTER);
 
-//		CompactButton bookCommentHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_BOOK_COMMENT);
-
-//		JPanel bookHelpPanel = new JPanel(new FlowLayout(FlowLayout.TRAILING));
-//		bookHelpPanel.add(bookCommentHelpButton);
-
-		bottomPanel.add(getBookCommentPanel(), BorderLayout.CENTER);
-//		bottomPanel.add(bookHelpPanel, BorderLayout.SOUTH);
-
-		add(additionalConfigPanel, BorderLayout.NORTH);
-		add(bottomPanel, BorderLayout.CENTER);
+		add(additionalConfigPanel, BorderLayout.CENTER);
+//		add(bottomPanel, BorderLayout.CENTER);
 		add(getExecutorPanel(), BorderLayout.SOUTH);
 
 	}
@@ -75,13 +61,13 @@ public class MP5ExpertConfigPanel extends JPanel {
 		return additionalConfigTextPane;
 	}
 
-	public TextPanePanel getBookCommentPanel() {
-		if (bookCommentPanel == null) {
-			bookCommentPanel = new TextPanePanel(null);
-			bookCommentPanel.setPreferredSize(new Dimension(200,80));
-		}
-		return bookCommentPanel;
-	}
+//	public TextPanePanel getBookCommentPanel() {
+//		if (bookCommentPanel == null) {
+//			bookCommentPanel = new TextPanePanel(null);
+//			bookCommentPanel.setPreferredSize(new Dimension(200,80));
+//		}
+//		return bookCommentPanel;
+//	}
 
 	public MP5ExecutorPanel getExecutorPanel() {
 		if (executorPanel == null) {
@@ -93,14 +79,14 @@ public class MP5ExpertConfigPanel extends JPanel {
 	public void fillPanelFromParameters(MP5Parameters parameters) {
 
 		getAdditionalConfigTextPane().getTextPane().setText(parameters.getCustomConfigText());
-		getBookCommentPanel().getTextPane().setText(parameters.getBookComment());
+//		getBookCommentPanel().getTextPane().setText(parameters.getBookComment());
 
 	}
 
 	public void fillParametersFromPanel(MP5Parameters parameters) {
 
 		parameters.setCustomConfigText(getAdditionalConfigTextPane().getTextPane().getText().trim());
-		parameters.setBookComment(getBookCommentPanel().getTextPane().getText());
+//		parameters.setBookComment(getBookCommentPanel().getTextPane().getText());
 
 	}
 

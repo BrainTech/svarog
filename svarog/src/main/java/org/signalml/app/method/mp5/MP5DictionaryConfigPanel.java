@@ -20,7 +20,6 @@ public class MP5DictionaryConfigPanel extends JPanel {
 	private AbstractDialog owner;
 
 	private MP5DictionaryDensityConfigPanel dictionaryDensityConfigPanel;
-	private MP5AdvancedDecompositionConfigPanel advancedDecompositionConfigPanel;
 	private MP5AtomsInDictionaryPanel outputConfigPanel;
 
 	public MP5DictionaryConfigPanel(AbstractDialog owner) {
@@ -33,8 +32,7 @@ public class MP5DictionaryConfigPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 
-		add(getDictionaryDensityConfigPanel(), BorderLayout.NORTH);
-		add(getAdvancedDecompositionConfigPanel(), BorderLayout.CENTER);
+		add(getDictionaryDensityConfigPanel(), BorderLayout.CENTER);
 		add(getOutputConfigPanel(), BorderLayout.SOUTH);
 
 	}
@@ -44,13 +42,6 @@ public class MP5DictionaryConfigPanel extends JPanel {
 			dictionaryDensityConfigPanel = new MP5DictionaryDensityConfigPanel(owner);
 		}
 		return dictionaryDensityConfigPanel;
-	}
-
-	public MP5AdvancedDecompositionConfigPanel getAdvancedDecompositionConfigPanel() {
-		if (advancedDecompositionConfigPanel == null) {
-			advancedDecompositionConfigPanel = new MP5AdvancedDecompositionConfigPanel(owner);
-		}
-		return advancedDecompositionConfigPanel;
 	}
 
 	public MP5AtomsInDictionaryPanel getOutputConfigPanel() {
@@ -63,7 +54,6 @@ public class MP5DictionaryConfigPanel extends JPanel {
 	public void fillPanelFromParameters(MP5Parameters parameters) {
 
 		getDictionaryDensityConfigPanel().fillPanelFromParameters(parameters);
-		getAdvancedDecompositionConfigPanel().fillPanelFromParameters(parameters);
 		getOutputConfigPanel().fillPanelFromParameters(parameters);
 
 	}
@@ -71,7 +61,6 @@ public class MP5DictionaryConfigPanel extends JPanel {
 	public void fillParametersFromPanel(MP5Parameters parameters) {
 
 		getDictionaryDensityConfigPanel().fillParametersFromPanel(parameters);
-		getAdvancedDecompositionConfigPanel().fillParametersFromPanel(parameters);
 		getOutputConfigPanel().fillParametersFromPanel(parameters);
 
 	}
@@ -79,7 +68,6 @@ public class MP5DictionaryConfigPanel extends JPanel {
 	public void validatePanel(ValidationErrors errors) {
 
 		getDictionaryDensityConfigPanel().validatePanel(errors);
-		getAdvancedDecompositionConfigPanel().validatePanel(errors);
 		getOutputConfigPanel().validatePanel(errors);
 
 		// comment panel is ok

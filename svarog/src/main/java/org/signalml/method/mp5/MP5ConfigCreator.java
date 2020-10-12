@@ -109,13 +109,7 @@ public class MP5ConfigCreator {
 
 		}
 
-		formatter.format("%s %s%n", TYPE_OF_DICTIONARY, parameters.getDictionaryType().toString());
-		formatter.format("%s %f %f%n", ENERGY_ERROR, parameters.getEnergyError(), parameters.getEnergyErrorPercentage());
-		formatter.format("%s %s%n", REINIT_DICTIONARY, parameters.getDictionaryReinitType().toString());
-		formatter.format("%s %f%n", SCALE_TO_PERIOD_FACTOR, parameters.getScaleToPeriodFactor());
-
-		formatter.format("%n");
-
+		formatter.format("%s %f%n", ENERGY_ERROR, parameters.getEnergyError());
 		formatter.format("%s %d%n", MAX_NUMBER_OF_ITERATIONS, parameters.getMaxIterationCount());
 		formatter.format("%s %.6f%n", ENERGY_PERCENT, parameters.getEnergyPercent());
 		formatter.format("%n");

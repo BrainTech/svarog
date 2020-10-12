@@ -47,11 +47,7 @@ public class MP5Parameters implements Serializable, Preset {
 	private SignalSpace signalSpace = new SignalSpace();
 
 	// dictionary parameters
-	private MP5DictionaryType dictionaryType = MP5DictionaryType.OCTAVE_FIXED;
-	private MP5DictionaryReinitType dictionaryReinitType = MP5DictionaryReinitType.NO_REINIT_AT_ALL;
-	private float scaleToPeriodFactor = 1F;
 	private float energyError = 0.1F;
-	private float energyErrorPercentage = 90.0F;
 
 	// decomposition parameters
 	private MP5Algorithm algorithm = MP5Algorithm.SMP;
@@ -86,14 +82,8 @@ public class MP5Parameters implements Serializable, Preset {
 	}
 
 	public void validate(Errors errors) {
-		if (scaleToPeriodFactor < MIN_SCALE_TO_PERIOD_FACTOR || scaleToPeriodFactor > MAX_SCALE_TO_PERIOD_FACTOR) {
-			errors.rejectValue("scaleToPeriodFactor", "error.mp5.badScaleToPeriodFactor", _("Bad scale to period factor"));
-		}
 		if (!(energyError > MIN_ENERGY_ERROR && energyError < MAX_ENERGY_ERROR)) {
 			errors.rejectValue("energyError", "error.mp5.badEnergyError", _("Bad energy error"));
-		}
-		if (!(energyErrorPercentage > MIN_ENERGY_ERROR_PERCENTAGE && energyErrorPercentage < MAX_ENERGY_ERROR_PERCENTAGE)) {
-			errors.rejectValue("energyErrorPercentage", "error.mp5.badEnergyError", _("Bad energy error percentage"));
 		}
 		if (maxIterationCount < MIN_ITERATION_COUNT || maxIterationCount > MAX_ITERATION_COUNT) {
 			errors.rejectValue("maxIterationCount", "error.mp5.badMaxIterationCount", _("Bad max iteration count"));
@@ -103,44 +93,12 @@ public class MP5Parameters implements Serializable, Preset {
 		}
 	}
 
-	public MP5DictionaryType getDictionaryType() {
-		return dictionaryType;
-	}
-
-	public void setDictionaryType(MP5DictionaryType dictionaryType) {
-		this.dictionaryType = dictionaryType;
-	}
-
 	public float getEnergyError() {
 		return energyError;
 	}
 
 	public void setEnergyError(float energyError) {
 		this.energyError = energyError;
-	}
-
-	public float getEnergyErrorPercentage() {
-		return energyErrorPercentage;
-	}
-
-	public void setEnergyErrorPercentage(float energyErrorPercentage) {
-		this.energyErrorPercentage = energyErrorPercentage;
-	}
-
-	public MP5DictionaryReinitType getDictionaryReinitType() {
-		return dictionaryReinitType;
-	}
-
-	public void setDictionaryReinitType(MP5DictionaryReinitType dictionaryReinitType) {
-		this.dictionaryReinitType = dictionaryReinitType;
-	}
-
-	public float getScaleToPeriodFactor() {
-		return scaleToPeriodFactor;
-	}
-
-	public void setScaleToPeriodFactor(float scaleToPeriodFactor) {
-		this.scaleToPeriodFactor = scaleToPeriodFactor;
 	}
 
 	public int getMaxIterationCount() {
