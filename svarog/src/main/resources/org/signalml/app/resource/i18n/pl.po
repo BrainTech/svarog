@@ -3970,8 +3970,8 @@ msgstr "Przetwarzanie znaczników"
 
 #: org/signalml/method/mp5/MP5Method.java:145
 #, java-format
-msgid "Processing segment {0}"
-msgstr "Przetwarzanie segmentu {0}"
+msgid "Processing data"
+msgstr "Przetwarzanie danych"
 
 #: org/signalml/app/model/components/TaskTableModel.java:99
 msgid "Progress"

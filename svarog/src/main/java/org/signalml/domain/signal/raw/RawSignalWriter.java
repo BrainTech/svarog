@@ -36,8 +36,17 @@ public class RawSignalWriter implements ISignalWriter {
 	 */
 	private int maximumBufferSize = 8192;
 
+	/**
+	 * whether to writeSignal() calls should append to the file (true), or rewrite (false)
+	 */
+	private boolean append = false;
+
 	public void setMaximumBufferSize(int maximumBufferSize) {
 		this.maximumBufferSize = maximumBufferSize;
+	}
+
+	public void setAppendMode(boolean append) {
+		this.append = append;
 	}
 
 	/**
@@ -59,22 +68,9 @@ public class RawSignalWriter implements ISignalWriter {
 	 * to file
 	 */
 	public void writeSignal(File signalFile, MultichannelSampleSource sampleSource, SignalExportDescriptor descriptor, int firstSample, int sampleCount, SignalWriterMonitor monitor) throws IOException {
-
-		OutputStream os = null;
-
-		try {
-			os = new BufferedOutputStream(new FileOutputStream(signalFile));
+		try (OutputStream os = new BufferedOutputStream(new FileOutputStream(signalFile, append))) {
 			writeSignal(os, sampleSource, descriptor, firstSample, sampleCount, monitor);
-		} finally {
-			if (os != null) {
-				try {
-					os.close();
-				} catch (IOException ex) {
-					// ignore
-				}
-			}
 		}
-
 	}
 
 	/**

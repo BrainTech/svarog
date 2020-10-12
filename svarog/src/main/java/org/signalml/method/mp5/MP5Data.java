@@ -32,9 +32,6 @@ public class MP5Data extends BaseMethodData implements Serializable {
 	private String executorUID;
 	private String bookFilePath;
 
-	private boolean suspended;
-	private int completedSegments;
-
 	private SignalProcessingChainDescriptor chainDescriptor;
 	private SegmentedSampleSourceDescriptor sourceDescriptor;
 
@@ -80,22 +77,6 @@ public class MP5Data extends BaseMethodData implements Serializable {
 
 	public void setSampleSource(MultichannelSegmentedSampleSource sampleSource) {
 		this.sampleSource = sampleSource;
-	}
-
-	public boolean isSuspended() {
-		return suspended;
-	}
-
-	public void setSuspended(boolean suspended) {
-		this.suspended = suspended;
-	}
-
-	public int getCompletedSegments() {
-		return completedSegments;
-	}
-
-	public void setCompletedSegments(int completedSegments) {
-		this.completedSegments = completedSegments;
 	}
 
 	public SignalProcessingChainDescriptor getChainDescriptor() {
