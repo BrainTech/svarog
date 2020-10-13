@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../help.css">
+        <meta charset="UTF-8">
+        <title>"Tools" menu</title>       
+    </head>
+    <body>
+        <h1>"Tools" menu</h1>
+        <dl>
+            <dt>&nbsp;<img src="../../app/icon/arrow.png" alt="strzałka"> Select tags</dt>
+            <!--
+            <dd>strzałką wybieramy wyświetlany na sygnale znacznik, który chcemy edytować/modyfikować.</dd>
+            -->
+            <dt>&nbsp;<img src="../../app/icon/hand.png" alt="ręka"> Move signal</dt>
+            <!--
+            <dd>po wybraniu tej opcji i kliknięciu (bez puszczania guzika myszki) na sygnale, 
+                ruch myszki przemieszcza widoczną część sygnału lewo/prawo i góra/dół 
+                (chyba, że w oknie mieści się cały wczytany sygnał).</dd>
+            -->
+            <dt>&nbsp;<img src="../../app/icon/zoom.png" alt="zoom"> Magnify the signal</dt>
+            <!--
+            <dd>lupa powiększa fragment sygnału, nad którym klikniemy. Domyślne parametry (stopień powiększenia i rozmiar okna)
+                ustawiamy w opisanym poniżej oknie "Preferencje". 
+                Parametry powiększania dla bieżącego okna możemy zmienić po kliknięciu lewym guzikiem myszy 
+                na ikonkę lupy w głównym pasku narzędzi.</dd>
+            -->
+            <dt>&nbsp;<img src="../../app/icon/ruler.png" alt="linijka" > Measure signal</dt>
+            <!--
+            <dd>miarka pozwala na odczyt odległości między dwoma wybranymi punktami w jednostkach fizycznych,
+                według współczynnika kalibracji i częstości próbkowania wczytanych z plikiem;  
+                w przypadku EEG są to zwykle mikrowolty i sekundy.</dd>
+            -->
+            <dt>&nbsp;<img src="../../app/icon/fft.png" alt="strzałka" > Signal FFT</dt>
+            <!--
+            <dd>po wybraniu tej opcji, dostępnej również w pasku głównym, przyciśnięcie guzika myszki nad sygnałem wyświetla widmo,
+                estymowane z użyciem szybkiej transformaty Fouriera (Fast Fourier Transform, FFT).
+                Po kliknięciu prawym guzikiem myszy ikonki FFT w pasku głównym, uzyskujemy dostęp do ustawień estymacji (szerokość i rodzaj okna) 
+                oraz parametrów jego wyświetlania (osie, skale, wielkość okna w którym widmo jest wyświetlane itp.).
+            </dd>
+            -->
+            <dt>&nbsp;<img src="../../app/icon/channelselection.png" alt="zaznaczenie"> Select signal fragments</dt>
+            <!--
+            <dd>pozwala wybrać fragment sygnału (z jednego lub wszystkich odprowadzeń), 
+                który będziemy poddawać dalszej analizie jedną z funkcji z menu "Analiza".</dd>
+            -->
+            <div align="right">
+                <small>
+                    <i>The above functions are also avalable via icons in the main toolbar.</i>
+                </small>
+            </div>
+        </dl>
+        <hr>
+        <dl>
+            <dt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Preferences
+
+            </dt>
+            <dd>
+                <small><i>— choosing this option opens a window with the following tabs for setting parameters for</i>:</small>
+                <dl>           
+                    <dt>Signal viewing</dt>
+                    <!--
+                    <dd>ustawia szereg parametrów, rządzących sposobem wyświetlania sygnału.</dd>
+                    -->
+                    <dt>Signal zooming</dt>
+                    <!--
+                    <dd>określa domyślne powiększenie sygnału po wybraniu lupy (zoom) oraz domyślny rozmiar okna, 
+                        w którym jest dynamicznie wyświetlany powiększony sygnał. Parametry powiększania dla bieżącego 
+                        okna możemy zmienić po kliknięciu lewym guzikiem myszy na ikonkę lupy w głównym pasku narzędzi.
+                    </dd>
+                    -->
+                    <dt>Tagging</dt>
+                    <!--
+                    <dd>tutaj możemy zmienić rozmiar składki i bloku, do których odnoszą się 
+                        znaczniki stronicowe i blokowe, oraz ustalić, czy z każdym tagiem będzie zapisywany montaż 
+                        (niezależnie od tych ustawień, montaż jest zapisywany zawsze, jeśli w pliku są oznaczenia 
+                        odnoszące się do pojedynczych odprowadzeń).</dd>
+                    -->
+                    <dt>Tools</dt>
+                    <!--
+                    <dd>w tej zakładce wybieramy ścieżkę do programu realizującego dekompozycję MP
+                        (różnego dla różnych systemów operacyjnych).</dd>
+                    -->
+                    <dt>Online</dt>
+                    <!--
+                    <dd>pozwala zmodyfikować domyślny IP i port używany w procesie rejestracji sygnału.</dd>
+                    -->
+                    <dt>SignalML Codecs</dt>
+                    <!--
+                    <dd>rejestruje w systemie kodeki, pozwalające na wyświetlanie nowych formatów danych
+                        bez konieczności kompilacji Svaroga; opis idei i formatu dostępny jest pod adresem https://signalml.org lub 
+                        https://braintech.pl/software/svarog/signalml/.
+                    </dd>
+                    -->
+                    <dt>Miscellaneous</dt>
+                    <!--
+                    <dd>
+                        ustawienia języka interfejsu (zmiana widoczna po ponownym uruchomieniu Svaroga), zapisywania konfiguracji itp.
+                    </dd>
+                    -->
+                </dl>
+            </dd>
+
+        </dl>
+
+
+
+    </body>
+</html>

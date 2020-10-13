@@ -117,12 +117,24 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 		MRUDEntry mrud = descriptor.getDocument();
 
 		OriginalMultichannelSampleSource source = null;
-
+		// THIS CODE seems to run only on workspace recovery,
+		// when there are MP related tasks on the task list.
 		if (mrud instanceof SignalMLMRUDEntry) {
 
 			SignalMLMRUDEntry smlEntry = (SignalMLMRUDEntry) mrud;
-			String codecUID = smlEntry.getDescriptor().getCodecUID();
-			SignalMLCodec codec = SvarogApplication.getSharedInstance().getSignalMLCodecManager().getCodecByUID(codecUID);
+			SignalMLDescriptor smlEntryDescriptor = smlEntry.getDescriptor();
+			String codecUID = smlEntryDescriptor.getCodecUID();
+			SignalMLCodec codec;
+			if (codecUID == null)
+			{
+				//restoring non RAW format MP decomposition on start
+				codec = SvarogApplication.getSharedInstance().getSignalMLCodecManager().getCodecForFilename(smlEntry.getFileName());
+
+			}
+			else
+			{
+				codec = SvarogApplication.getSharedInstance().getSignalMLCodecManager().getCodecByUID(codecUID);
+			}
 			if (codec == null) {
 				logger.warn("Mrud codec not found for uid [" + codecUID + "]");
 				throw new MissingCodecException("error.mrudMissingCodecException");
@@ -132,18 +144,6 @@ public class SignalProcessingChain extends AbstractMultichannelSampleSource impl
 			reader.open(smlEntry.getPath());
 
 			source = new SignalMLCodecSampleSource(reader);
-
-			SignalParameters signalParameters = smlEntry.getDescriptor().getSignalParameters();
-			if (source.isCalibrationCapable()) {
-				source.setCalibrationGain(signalParameters.getCalibrationGain());
-			}
-			if (!source.isSamplingFrequencyCapable()) {
-				source.setSamplingFrequency(signalParameters.getSamplingFrequency());
-			}
-			if (!source.isChannelCountCapable()) {
-				source.setChannelCount(signalParameters.getChannelCount());
-			}
-
 		}
 		else if (mrud instanceof RawSignalMRUDEntry) {
 

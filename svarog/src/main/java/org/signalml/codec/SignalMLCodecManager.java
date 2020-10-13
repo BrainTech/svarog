@@ -18,6 +18,7 @@ public interface SignalMLCodecManager {
 	int getCodecCount();
 	SignalMLCodec getCodecAt(int index);
 	SignalMLCodec getCodecForFormat(String formatName);
+	SignalMLCodec getCodecForFilename(String formatName);
 	SignalMLCodec getCodecByUID(String uid);
 	int getIndexOfCodec(SignalMLCodec codec);
 

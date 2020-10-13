@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="../help.css">
+        <meta charset="UTF-8">
+        <title>"Analysis" menu</title>
+    </head>
+    <body>
+        <h1>"Analysis" menu</h1>
+        <dl>
+            <dt>ERP</dt><dd> (<i>Event-Related Potential</i>) 
+                opens a window allowing to plot average EEG responses synchronized to repetitive stimuli. For this purpose 
+                we need an exact information about the instants of stimuli presentation. This information is recorded in 
+                <A HREF="tags.html">tags</a>. In this window we choose tags corresponding to the stimuli of interest,
+                range of the signal (time and derivations), filtering, montage and ev. artifacts rejection (if there are tags
+                marking artifacts).</dd>
+
+            <dt>Short-Time Fourier Transform</dt>
+            <dd><i>STFT</i> is the basic approximation of signal's energy density in the time-frequency plane. 
+                Depends on the type and width of the window (selectable).
+            </dd>
+
+            <dt>Wavelet transform</dt>
+            <dd>
+                <i>WT</i> is another time-frequency estimate of the signal's energy density, based on products with the mother wavelet, 
+                scaled (which implies change of central frequency) and translated.
+                In Svarog we can use Morlet, Shannon and Haar wavelets. 
+            </dd>
+
+            <dt>Independent Component Analysis</dt>
+            <dd><i>ICA</i> provides decomposition of mutivariate (multichannel) signal into components as independent as possible. 
+
+            </dd>
+
+            <dt>Directed Transfer Function</dt>
+            <dd>
+                <i>DTF</i> is an estimate of the Granger causality in multivariate time series, based upon multivariate AR model (MVAR).
+            </dd>
+            <dt>Matching Pursuit</dt>
+            <dd>
+                decomposes a signal into linear sum of functions fitted to the local signal structures
+                <dl>
+                    <dt>
+                        Decomposition
+                    </dt>
+                    <dd>opens a  <A href="decompMP5.html">MP decomposition window</A>.</dd>
+                    <dt>Load results</dt><dd> Loads previously stored results of MP decomposition.</dd>
+                    <dt>Average books</dt><dd>Allows to average time-frequency estimates of signals energy density, using previously stored MP decomposition results.</dd>
+                    <!-- <dt>Oznacz struktury MP</dt><dd><b>to jakieś dziwne, pyta się tylko o kanał a potem chce jakiś tag zapisywać --- AI takes over??</b></dd>
+                    -->
+                    <dt>Configure MP executable path</dt><dd>MP decomposition is performed by a separate command line program, bundled with the Svarog distribution.
+                        This executable is different for each OS, and its path has to be manually chosen before the first decomposition.
+                    </dd>
+                    <dt>EEG profiles (MP)</dt><dd>Computing and visualisation of the <a href="profilesEEG.html">EEG profiles</a> 
+                        based upon previously stored results of MP decomposition.</dd>
+                </dl>
+            </dd>      
+        </dl>        
+    </body>
+</html>
