@@ -76,6 +76,35 @@ InstallDir "$PROGRAMFILES\Svarog"
 
 ######################################################################
 
+Section -SecUninstallPrevious
+
+    Call UninstallPrevious
+
+SectionEnd
+
+
+Function UninstallPrevious
+
+    ; Check for uninstaller.
+    ReadRegStr $R0 HKLM "${UNINSTALL_PATH}" "UninstallString"
+    DetailPrint "Uninstaller path $R0"
+    ${If} $R0 == ""
+        Goto Done
+    ${EndIf}
+
+    DetailPrint "Removing previous installation."
+
+    MessageBox MB_YESNO "Uninstall previous version?" IDYES true IDNO false
+    true:
+      ExecWait '"$R0" /S _?=$INSTDIR'
+      Goto Done
+    false:
+      Abort
+    ; Run the uninstaller silently.
+    Done:
+
+FunctionEnd
+
 Section -MainProgram
 ${INSTALL_TYPE}
 SetOverwrite ifnewer
