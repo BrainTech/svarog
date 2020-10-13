@@ -782,8 +782,8 @@ msgid "Books"
 msgstr "Książki"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:63
-msgid "Books (*.b)"
-msgstr "Książki (*.b)"
+msgid "Books (*.db)"
+msgstr "Książki (*.db)"
 
 #: org/signalml/app/view/common/components/filechooser/FileSelectPanel.java:133
 #: org/signalml/psychopy/view/panel/SelectFilePanel.java:88
@@ -3970,8 +3970,8 @@ msgstr "Przetwarzanie znaczników"
 
 #: org/signalml/method/mp5/MP5Method.java:145
 #, java-format
-msgid "Processing segment {0}"
-msgstr "Przetwarzanie segmentu {0}"
+msgid "Processing data"
+msgstr "Przetwarzanie danych"
 
 #: org/signalml/app/model/components/TaskTableModel.java:99
 msgid "Progress"

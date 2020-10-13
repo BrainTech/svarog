@@ -21,11 +21,9 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
@@ -71,7 +69,6 @@ import org.signalml.method.Method;
 import org.signalml.method.mp5.MP5Algorithm;
 import org.signalml.method.mp5.MP5ConfigCreator;
 import org.signalml.method.mp5.MP5Data;
-import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;
 import org.signalml.method.mp5.MP5RuntimeParameters;
 import org.signalml.method.mp5.MP5WritingModeType;
@@ -213,17 +210,6 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		});
 
-		final JSpinner energyErrorPercentageSpinner = getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorPercentageSpinner();
-		final JComboBox dictionaryTypeComboBox = getDictionaryConfigPanel().getAdvancedDecompositionConfigPanel().getDictionaryTypeComboBox();
-		dictionaryTypeComboBox.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					energyErrorPercentageSpinner.setEnabled(e.getItem() == MP5DictionaryType.OCTAVE_STOCH);
-				}
-			}
-		});
-
 		ChangeListener changeListener = new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -240,10 +226,7 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 		};
 
 		getDictionaryConfigPanel().getDictionaryDensityConfigPanel().getEnergyErrorSpinner().addChangeListener(changeListener);
-		energyErrorPercentageSpinner.addChangeListener(changeListener);
 		getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().addItemListener(itemListener);
-		getDictionaryConfigPanel().getAdvancedDecompositionConfigPanel().getDictionaryTypeComboBox().addItemListener(itemListener);
-		dictionaryTypeComboBox.addItemListener(itemListener);
 
 		return interfacePanel;
 
@@ -518,18 +501,13 @@ public class MP5MethodDialog extends AbstractSignalSpaceAwarePresetDialog implem
 
 		MP5DictionaryConfigPanel panel = getDictionaryConfigPanel();
 		MP5DictionaryDensityConfigPanel densityConfigPanel = panel.getDictionaryDensityConfigPanel();
-		MP5AdvancedDecompositionConfigPanel advancedPanel = panel.getAdvancedDecompositionConfigPanel();
 		double eps2 = ((Number) densityConfigPanel.getEnergyErrorSpinner().getValue()).doubleValue();
 		double eps = Math.sqrt(eps2);
 		double a = (1 + eps*Math.sqrt((2.0-eps2)*(eps2*eps2-2.0*eps2+2.0))) / ((1.0-eps2)*(1.0-eps2));
-		double percentageChosen = ((Number) densityConfigPanel.getEnergyErrorPercentageSpinner().getValue()).doubleValue();
 
 		// R = 0.5pi * N * ln(N)/ln(a) / ln(1-eps2)
 		double approxAtomCount = Math.ceil(0.5 * Math.PI * currentPageLength
 			* Math.log(currentPageLength)/Math.log(a) / Math.abs(Math.log(1.0-eps2)) );
-		if (advancedPanel.getDictionaryTypeComboBox().getSelectedItem() == MP5DictionaryType.OCTAVE_STOCH) {
-			approxAtomCount *= (percentageChosen / 100.0F);
-		}
 
 		MP5Algorithm algorithm = (MP5Algorithm) getDecompositionConfigPanel().getAlgorithmConfigPanel().getAlgorithmComboBox().getSelectedItem();
 		int k;
