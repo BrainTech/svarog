@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rs:rawSignal xmlns:rs="http://signalml.org/rawsignal">
+  <rs:exportFileName>input.bin</rs:exportFileName>
+  <rs:sourceFileName>input.bin</rs:sourceFileName>
+  <rs:sourceFileFormat>
+    <rs:rawSignalInfo/>
+  </rs:sourceFileFormat>
+  <rs:samplingFrequency>512.0</rs:samplingFrequency>
+  <rs:channelCount>5</rs:channelCount>
+  <rs:sampleCount>5120</rs:sampleCount>
+  <rs:sampleType>FLOAT</rs:sampleType>
+  <rs:byteOrder>LITTLE_ENDIAN</rs:byteOrder>
+  <rs:pageSize>10.0</rs:pageSize>
+  <rs:blocksPerPage>1</rs:blocksPerPage>
+  <rs:channelLabels>
+    <rs:label>G1</rs:label>
+    <rs:label>G2</rs:label>
+    <rs:label>G3</rs:label>
+    <rs:label>G4</rs:label>
+    <rs:label>G5</rs:label>
+  </rs:channelLabels>
+  <rs:calibrationGain>
+    <rs:calibrationParam>1.0</rs:calibrationParam>
+    <rs:calibrationParam>1.0</rs:calibrationParam>
+    <rs:calibrationParam>1.0</rs:calibrationParam>
+    <rs:calibrationParam>1.0</rs:calibrationParam>
+    <rs:calibrationParam>1.0</rs:calibrationParam>
+  </rs:calibrationGain>
+  <rs:calibrationOffset>
+    <rs:calibrationParam>0.0</rs:calibrationParam>
+    <rs:calibrationParam>0.0</rs:calibrationParam>
+    <rs:calibrationParam>0.0</rs:calibrationParam>
+    <rs:calibrationParam>0.0</rs:calibrationParam>
+    <rs:calibrationParam>0.0</rs:calibrationParam>
+  </rs:calibrationOffset>
+</rs:rawSignal>
