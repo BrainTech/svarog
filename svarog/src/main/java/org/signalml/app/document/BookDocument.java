@@ -13,10 +13,10 @@ import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
 import org.signalml.app.view.book.BookView;
 import org.signalml.app.view.common.dialogs.OptionPane;
-import org.signalml.domain.book.BookBuilder;
+import org.signalml.domain.book.BookReader;
 import org.signalml.domain.book.BookFormatException;
-import org.signalml.domain.book.DefaultBookBuilder;
-import org.signalml.domain.book.SQLiteBookBuilder;
+import org.signalml.domain.book.DefaultBookReader;
+import org.signalml.domain.book.SQLiteBookReader;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookAtom;
 import org.signalml.domain.book.StandardBookSegment;
@@ -121,15 +121,15 @@ public class BookDocument extends AbstractFileDocument {
 			throw new SignalMLException("error.noBackingFile");
 		}
 
-		BookBuilder bookBuilder;
+		BookReader bookReader;
 		if (backingFile.getAbsolutePath().endsWith(".db")) {
-			bookBuilder = new SQLiteBookBuilder();
+			bookReader = new SQLiteBookReader();
 		} else {
-			bookBuilder = DefaultBookBuilder.getInstance();
+			bookReader = DefaultBookReader.getInstance();
 		}
 
 		try {
-			StandardBook readBook = bookBuilder.readBook(backingFile);
+			StandardBook readBook = bookReader.readBook(backingFile);
 			this.book = readBook;
 		} catch (BookFormatException ex) {
 			throw new SignalMLException(ex);
