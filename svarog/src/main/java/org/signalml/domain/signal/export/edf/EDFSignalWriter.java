@@ -1,13 +1,13 @@
 package org.signalml.domain.signal.export.edf;
 
-import org.signalml.domain.signal.export.edf.writer.EDFException;
-import org.signalml.domain.signal.export.edf.writer.EDFwriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import org.signalml.app.model.signal.SignalExportDescriptor;
 import org.signalml.domain.signal.SignalWriterMonitor;
 import org.signalml.domain.signal.export.ISignalWriter;
+import org.signalml.domain.signal.export.edf.writer.EDFException;
+import org.signalml.domain.signal.export.edf.writer.EDFwriter;
 import org.signalml.domain.signal.samplesource.MultichannelSampleSource;
 
 /**

@@ -2,7 +2,6 @@ package org.signalml.domain.signal.filter.iir;
 
 import org.apache.log4j.Logger;
 import org.signalml.domain.montage.filter.TimeDomainSampleFilter;
-import org.signalml.domain.signal.filter.SamplesWithOffset;
 import org.signalml.domain.signal.samplesource.RoundBufferSampleSource;
 import org.signalml.domain.signal.samplesource.SampleSource;
 import org.signalml.math.iirdesigner.FilterCoefficients;

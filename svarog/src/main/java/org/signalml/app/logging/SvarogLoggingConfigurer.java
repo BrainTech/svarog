@@ -5,8 +5,6 @@ import com.getsentry.raven.Raven;
 import com.getsentry.raven.RavenFactory;
 import com.getsentry.raven.dsn.Dsn;
 import com.getsentry.raven.log4j.SentryAppender;
-import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import org.apache.log4j.Logger;
