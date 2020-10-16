@@ -1301,9 +1301,13 @@ msgstr "Montaż \"common average\""
 msgid "Common signal files"
 msgstr "Popularne formaty sygnałów"
 
-#: org/signalml/app/model/montage/MontageGeneratorListModel.java:22
+#: org/signalml/app/view/montage/MontageGeneratorComboBoxMainPanel.java:33
 msgid "Common user defined"
 msgstr "Definiowane przez użytkownika"
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:200
+msgid "(choose a pre-defined preset to reset montage)"
+msgstr "(wybierz generator aby zresetować montaż)"
 
 #: org/signalml/app/view/signal/SignalPlotColumnHeader.java:672
 msgid "Compact mode"

@@ -9,6 +9,7 @@ import org.signalml.app.config.ManagerOfPresetManagers;
 import org.signalml.app.config.preset.managers.EegSystemsPresetManager;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.montage.MontageGeneratorListModel;
+import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.app.view.common.dialogs.errors.Dialogs;
 import org.signalml.domain.montage.Montage;
@@ -29,7 +30,7 @@ public class MontageGeneratorComboBoxMainPanel extends ResolvableComboBox {
 
 		Montage montage = document.getMontage();
 		EegSystem system = (EegSystem) eegSystemsPresetManager.getPresetByName(montage.getEegSystemFullName());
-		model = new MontageGeneratorListModel(system);
+		model = new MontageGeneratorListModel(_("Common user defined"), system);
 		this.setModel(model);
 		previouslySelectedIndex = getSelectedIndex();
 
