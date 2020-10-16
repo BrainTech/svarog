@@ -81,10 +81,16 @@ public class ZeroMethodAction extends AbstractSignalMLAction {
 
 				// open generated data in a new tab
 				int channelCount = ica.getRowDimension();
+				String[] channelLabels = new String[channelCount];
+				for (int index=0; index<channelCount; ++index) {
+					channelLabels[index] = icaDocument.getSourceMontage().getMontageChannelLabelAt(index);
+				}
 				RawSignalDescriptor newDescriptor = new RawSignalDescriptor();
 				newDescriptor.setBlocksPerPage(icaDocument.getBlocksPerPage());
 				newDescriptor.setByteOrder(RawSignalByteOrder.BIG_ENDIAN);
 				newDescriptor.setChannelCount(channelCount);
+				newDescriptor.setChannelLabels(channelLabels);
+				newDescriptor.setPageSize(icaDocument.getPageSize());
 				newDescriptor.setSampleCount(ica.getColumnDimension());
 				newDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 				newDescriptor.setSamplingFrequency(icaDocument.getSamplingFrequency());
@@ -96,6 +102,8 @@ public class ZeroMethodAction extends AbstractSignalMLAction {
 
 				RawSignalDocument newDocument = new RawSignalDocument(newDescriptor);
 				newDocument.setBackingFile(newFile);
+				newDocument.setBlocksPerPage(newDescriptor.getBlocksPerPage());
+				newDocument.setPageSize(newDescriptor.getPageSize());
 				newDocument.openDocument();
 
 				DocumentFlowIntegrator dfi = PluginAccessClass.getManager().getDocumentFlowIntegrator();
