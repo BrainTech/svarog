@@ -13,7 +13,6 @@ import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.TagDocument;
 import org.signalml.app.document.signal.SignalDocument;
 import org.signalml.app.model.document.OpenDocumentDescriptor;
-import org.signalml.app.model.document.OpenTagDescriptor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.document.opensignal.OpenSignalWizardDialog;
 import org.signalml.app.view.workspace.ViewerElementManager;

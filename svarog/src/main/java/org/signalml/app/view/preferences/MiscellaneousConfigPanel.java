@@ -18,7 +18,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import static org.apache.log4j.Logger.getLogger;
 import org.signalml.SignalMLOperationMode;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.config.ApplicationConfiguration;

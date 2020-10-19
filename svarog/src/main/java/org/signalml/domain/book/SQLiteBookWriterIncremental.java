@@ -16,7 +16,7 @@ import java.sql.Statement;
  *
  * @author ptr@mimuw.edu.pl
  */
-public class SQLiteBookBuilderIncremental implements IncrementalBookWriter {
+public class SQLiteBookWriterIncremental implements IncrementalBookWriter {
 
 	private final int channelCount;
 	private final double samplingFrequency;
@@ -24,7 +24,7 @@ public class SQLiteBookBuilderIncremental implements IncrementalBookWriter {
 
 	private int totalSegmentsWritten = 0;
 
-	public SQLiteBookBuilderIncremental(File file, int channelCount, double samplingFrequency) throws SQLException {
+	public SQLiteBookWriterIncremental(File file, int channelCount, double samplingFrequency) throws SQLException {
 		try {
 			Class.forName("org.sqlite.JDBC");
 		} catch (ClassNotFoundException ex) {

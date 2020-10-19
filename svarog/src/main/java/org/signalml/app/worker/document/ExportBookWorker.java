@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.view.common.dialogs.PleaseWaitDialog;
 import org.signalml.domain.book.IncrementalBookWriter;
 import org.signalml.domain.book.SQLiteBook;
-import org.signalml.domain.book.SQLiteBookBuilder;
+import org.signalml.domain.book.SQLiteBookWriter;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.domain.book.StandardBookSegment;
 
@@ -44,9 +44,9 @@ public class ExportBookWorker extends SwingWorker<Void,Integer> {
 			((SQLiteBook) book).createCopy(bookFile);
 			publish(segmentCount);
 		} else {
-			SQLiteBookBuilder bookBuilder = new SQLiteBookBuilder();
+			SQLiteBookWriter bookWriter = new SQLiteBookWriter();
 
-			IncrementalBookWriter incrementalBookWriter = bookBuilder.writeBookIncremental(book, bookFile);
+			IncrementalBookWriter incrementalBookWriter = bookWriter.writeBookIncremental(book, bookFile);
 			for (int i=0; i<segmentCount; i++) {
 				StandardBookSegment[] segments = book.getSegmentAt(i);
 				incrementalBookWriter.writeSegment(segments);
