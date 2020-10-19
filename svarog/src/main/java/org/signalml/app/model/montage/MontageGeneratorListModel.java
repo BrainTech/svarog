@@ -6,7 +6,6 @@ package org.signalml.app.model.montage;
 
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.domain.montage.generators.IMontageGenerator;
 import org.signalml.domain.montage.system.EegSystem;
 
@@ -19,19 +18,25 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String NO_GENERATOR = _("Common user defined");
+	private final String emptyGeneratorCaption;
 
-	private Object selectedItem = NO_GENERATOR;
+	private Object selectedItem;
+
 	/**
 	 * The currently selected {@link EegSystem} for which the list of
 	 * {@link IMontageGenerator MontageGenerators} is shown.
 	 */
 	private EegSystem eegSystem;
 
-	public MontageGeneratorListModel() {
+	/**
+	 * @param defaultGeneratorCaption caption for "no generator" first item
+	 */
+	public MontageGeneratorListModel(String defaultGeneratorCaption) {
+		this(defaultGeneratorCaption, null);
 	}
 
-	public MontageGeneratorListModel(EegSystem eegSystem) {
+	public MontageGeneratorListModel(String emptyGeneratorCaption, EegSystem eegSystem) {
+		this.selectedItem = this.emptyGeneratorCaption = emptyGeneratorCaption;
 		this.eegSystem = eegSystem;
 	}
 
@@ -56,7 +61,7 @@ public class MontageGeneratorListModel extends AbstractListModel implements Comb
 	@Override
 	public Object getElementAt(int index) {
 		if (index == 0) {
-			return NO_GENERATOR;
+			return emptyGeneratorCaption;
 		}
 		return eegSystem.getMontageGeneratorAt(index-1);
 	}
