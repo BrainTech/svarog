@@ -206,7 +206,8 @@ public class Montage extends SourceMontage implements Preset {
 	 */
 	public Montage translateWithBestEffort(SourceMontage sourceMontage) {
 
-		Montage result = new Montage(sourceMontage);
+		Montage result = new Montage(this);
+		result.removeMontageChannels(0, result.getMontageChannelCount());
 
 		int count = 0;
 		for (MontageChannel montageChannel : montageChannels) {
