@@ -46,17 +46,20 @@ public class MP5AtomsInDictionaryPanel extends JPanel {
 		for (int i = 0; i < numberOfAtomTypes; i++) {
 			MP5AtomType type = MP5AtomType.values()[i];
 			atomTypeCheckBoxes[i] = new JCheckBox(type.getName());
+			atomTypeCheckBoxes[i].setSelected(type == MP5AtomType.GAUSS || type == MP5AtomType.GABOR);
+			atomTypeCheckBoxes[i].setEnabled(false);
 			add(atomTypeCheckBoxes[i]);
 		}
 
 	}
 
 	public void fillPanelFromParameters(MP5Parameters parameters) {
-		AtomsInDictionary dictionary = parameters.getAtomsInDictionary();
-		for (int i = 0; i < atomTypeCheckBoxes.length; i++) {
-			MP5AtomType atomType = MP5AtomType.values()[i];
-			atomTypeCheckBoxes[i].setSelected(dictionary.isAtomIncluded(atomType));
-		}
+		// the current (0.5.0) version of empi does not allow for selecting dictionary atoms
+//		AtomsInDictionary dictionary = parameters.getAtomsInDictionary();
+//		for (int i = 0; i < atomTypeCheckBoxes.length; i++) {
+//			MP5AtomType atomType = MP5AtomType.values()[i];
+//			atomTypeCheckBoxes[i].setSelected(dictionary.isAtomIncluded(atomType));
+//		}
 	}
 
 	public void fillParametersFromPanel(MP5Parameters parameters) {

@@ -98,8 +98,17 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				// transfer matrix from raw signal to ICA components
 				if (montage == null) {
 					montage = new Montage(new SourceMontage(signalDocument));
+				} else {
+					montage = montage.clone();
 				}
 				RealMatrix outputFromRaw = SignalAnalysisTools.extractMatrixFromMontage(montage, outputChannels);
+
+				// prepare montage with only selected signals
+				for (int i=montage.getMontageChannelCount()-1; i>=0; --i) {
+					if (!isIndexInArray(i, outputChannels)) {
+						montage.removeMontageChannel(i);
+					}
+				}
 
 				File newFile = SignalAnalysisTools.createRawTemporaryFileFromData(signalAccess, ica);
 
@@ -110,6 +119,7 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 				newDescriptor.setByteOrder(RawSignalByteOrder.BIG_ENDIAN);
 				newDescriptor.setChannelLabels(SignalAnalysisTools.generateIcaComponentNames(channelCount));
 				newDescriptor.setChannelCount(channelCount);
+				newDescriptor.setPageSize(signalDocument.getPageSize());
 				newDescriptor.setSampleCount(ica.getColumnDimension());
 				newDescriptor.setSampleType(RawSignalSampleType.DOUBLE);
 				newDescriptor.setSamplingFrequency(signalDocument.getSamplingFrequency());
@@ -121,6 +131,8 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 
 				IcaSignalDocument newDocument = new IcaSignalDocument(newDescriptor, icaFromOutput, outputFromRaw, montage);
 				newDocument.setBackingFile(newFile);
+				newDocument.setBlocksPerPage(newDescriptor.getBlocksPerPage());
+				newDocument.setPageSize(newDescriptor.getPageSize());
 				newDocument.openDocument();
 
 				DocumentFlowIntegrator dfi = PluginAccessClass.getManager().getDocumentFlowIntegrator();
@@ -140,4 +152,12 @@ public class IcaMethodAction extends AbstractSignalMLAction {
 		}
 	}
 
+	private static boolean isIndexInArray(int index, int[] array) {
+		for (int i : array) {
+			if (i == index) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

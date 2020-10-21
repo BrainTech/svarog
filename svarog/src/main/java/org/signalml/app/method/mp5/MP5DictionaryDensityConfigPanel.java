@@ -18,7 +18,6 @@ import javax.swing.border.TitledBorder;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.dialogs.AbstractDialog;
-import org.signalml.method.mp5.MP5DictionaryType;
 import org.signalml.method.mp5.MP5Parameters;
 
 /** MP5DictionaryDensityConfigPanel
@@ -32,7 +31,6 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	private AbstractDialog owner;
 
 	private JSpinner energyErrorSpinner;
-	private JSpinner energyErrorPercentageSpinner;
 	private JTextField atomCountTextField;
 	private JTextField ramUsageTextField;
 
@@ -57,25 +55,18 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 		layout.setAutoCreateGaps(true);
 
 		JLabel energyErrorLabel = new JLabel(_("Energy error"));
-		JLabel energyErrorPercentageLabel = new JLabel(_("Energy error percentage chosen [%]"));
 		JLabel atomCountLabel = new JLabel(_("Atoms in dictionary"));
 		JLabel ramUsageLabel = new JLabel(_("Approximate RAM usage"));
 
 		Component glue1 = Box.createHorizontalGlue();
 		Component glue2 = Box.createHorizontalGlue();
 		Component glue3 = Box.createHorizontalGlue();
-		Component glue4 = Box.createHorizontalGlue();
-
-//		CompactButton energyErrorHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ENERGY_ERROR);
-//		CompactButton atomCountHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_ATOM_COUNT);
-//		CompactButton ramUsageHelpButton = SwingUtils.createFieldHelpButton(owner, MP5MethodDialog.HELP_RAM_USAGE);
 
 		GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
 
 		hGroup.addGroup(
 			layout.createParallelGroup()
 			.addComponent(energyErrorLabel)
-			.addComponent(energyErrorPercentageLabel)
 			.addComponent(atomCountLabel)
 			.addComponent(ramUsageLabel)
 		);
@@ -85,24 +76,14 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(glue1)
 			.addComponent(glue2)
 			.addComponent(glue3)
-			.addComponent(glue4)
 		);
 
 		hGroup.addGroup(
 			layout.createParallelGroup()
 			.addComponent(getEnergyErrorSpinner())
-			.addComponent(getEnergyErrorPercentageSpinner())
 			.addComponent(getAtomCountTextField())
 			.addComponent(getRamUsageTextField())
 		);
-
-//		hGroup.addGroup(
-//			layout.createParallelGroup()
-//			.addComponent(energyErrorHelpButton)
-//			.addComponent(energyErrorHelpButton)
-//			.addComponent(atomCountHelpButton)
-//			.addComponent(ramUsageHelpButton)
-//		);
 
 		layout.setHorizontalGroup(hGroup);
 
@@ -113,31 +94,20 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			.addComponent(energyErrorLabel)
 			.addComponent(glue1)
 			.addComponent(getEnergyErrorSpinner())
-//			.addComponent(energyErrorHelpButton)
-		);
-
-		vGroup.addGroup(
-			layout.createParallelGroup(Alignment.CENTER)
-			.addComponent(energyErrorPercentageLabel)
-			.addComponent(glue2)
-			.addComponent(getEnergyErrorPercentageSpinner())
-//			.addComponent(energyErrorHelpButton)
 		);
 
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.CENTER)
 			.addComponent(atomCountLabel)
-			.addComponent(glue3)
+			.addComponent(glue2)
 			.addComponent(getAtomCountTextField())
-//			.addComponent(atomCountHelpButton)
 		);
 
 		vGroup.addGroup(
 			layout.createParallelGroup(Alignment.CENTER)
 			.addComponent(ramUsageLabel)
-			.addComponent(glue4)
+			.addComponent(glue3)
 			.addComponent(getRamUsageTextField())
-//			.addComponent(ramUsageHelpButton)
 		);
 
 		layout.setVerticalGroup(vGroup);
@@ -160,24 +130,6 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 			energyErrorSpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
 		}
 		return energyErrorSpinner;
-	}
-
-	@SuppressWarnings("cast")
-	public JSpinner getEnergyErrorPercentageSpinner() {
-		if (energyErrorPercentageSpinner == null) {
-			energyErrorPercentageSpinner = new JSpinner(
-				new SpinnerNumberModel(
-					((double) MP5Parameters.MIN_ENERGY_ERROR_PERCENTAGE),
-					((double) MP5Parameters.MIN_ENERGY_ERROR_PERCENTAGE),
-					((double) MP5Parameters.MAX_ENERGY_ERROR_PERCENTAGE),
-					0.1d
-				)
-			);
-			energyErrorPercentageSpinner.setPreferredSize(MP5MethodDialog.FIELD_SIZE);
-			energyErrorPercentageSpinner.setMaximumSize(MP5MethodDialog.FIELD_SIZE);
-			energyErrorPercentageSpinner.setMinimumSize(MP5MethodDialog.FIELD_SIZE);
-		}
-		return energyErrorPercentageSpinner;
 	}
 
 	public JTextField getAtomCountTextField() {
@@ -207,15 +159,12 @@ public class MP5DictionaryDensityConfigPanel extends JPanel {
 	public void fillPanelFromParameters(MP5Parameters parameters) {
 
 		getEnergyErrorSpinner().setValue(new Double(parameters.getEnergyError()));
-		getEnergyErrorPercentageSpinner().setValue(new Double(parameters.getEnergyErrorPercentage()));
-		getEnergyErrorPercentageSpinner().setEnabled(parameters.getDictionaryType() == MP5DictionaryType.OCTAVE_STOCH);
 
 	}
 
 	public void fillParametersFromPanel(MP5Parameters parameters) {
 
 		parameters.setEnergyError(((Number) getEnergyErrorSpinner().getValue()).floatValue());
-		parameters.setEnergyErrorPercentage(((Number) getEnergyErrorPercentageSpinner().getValue()).floatValue());
 
 	}
 

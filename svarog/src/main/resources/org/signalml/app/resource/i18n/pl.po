@@ -761,8 +761,8 @@ msgid "Book file parent directory doesn't exist or not writable"
 msgstr "Katalog nadrzędny pliku książki nie istnieje lub nie można go zapisać"
 
 #: org/signalml/app/document/ManagedDocumentType.java:54
-msgid "Book files (*.b)"
-msgstr "Książki (*.b)"
+msgid "Book files (*.b, *.db)"
+msgstr "Książki (*.b, *.db)"
 
 #: org/signalml/method/booktotag/BookToTagMethod.java:138
 msgid "Book is empty"
@@ -782,8 +782,8 @@ msgid "Books"
 msgstr "Książki"
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:63
-msgid "Books (*.b)"
-msgstr "Książki (*.b)"
+msgid "Books (*.db)"
+msgstr "Książki (*.db)"
 
 #: org/signalml/app/view/common/components/filechooser/FileSelectPanel.java:133
 #: org/signalml/psychopy/view/panel/SelectFilePanel.java:88
@@ -1301,9 +1301,13 @@ msgstr "Montaż \"common average\""
 msgid "Common signal files"
 msgstr "Popularne formaty sygnałów"
 
-#: org/signalml/app/model/montage/MontageGeneratorListModel.java:22
+#: org/signalml/app/view/montage/MontageGeneratorComboBoxMainPanel.java:33
 msgid "Common user defined"
 msgstr "Definiowane przez użytkownika"
+
+#: org/signalml/app/view/montage/MontageGeneratorPanel.java:200
+msgid "(choose a pre-defined preset to reset montage)"
+msgstr "(wybierz generator aby zresetować montaż)"
 
 #: org/signalml/app/view/signal/SignalPlotColumnHeader.java:672
 msgid "Compact mode"
@@ -2068,6 +2072,10 @@ msgstr "Format eksportu"
 #: org/signalml/app/view/signal/export/ExportFormatPanel.java:54
 msgid "Export format options"
 msgstr "Opcje formatu eksportu"
+
+#: org/signalml/app/view/signal/export/ExportFormatPanel.java:102
+msgid "EDF+ is a format with 16-bit precision. To avoid precision loss, choose 24-bit BDF+ or RAW signal."
+msgstr "EDF+ to format o 16-bitowej precyzji. Aby uniknąć utraty dokładności, wybierz 24-bitowy format BDF+ lub surowy sygnał (RAW)."
 
 #: org/signalml/app/view/workspace/ViewerFileChooser.java:513
 msgid "Export legacy tag"
@@ -3966,8 +3974,8 @@ msgstr "Przetwarzanie znaczników"
 
 #: org/signalml/method/mp5/MP5Method.java:145
 #, java-format
-msgid "Processing segment {0}"
-msgstr "Przetwarzanie segmentu {0}"
+msgid "Processing data"
+msgstr "Przetwarzanie danych"
 
 #: org/signalml/app/model/components/TaskTableModel.java:99
 msgid "Progress"

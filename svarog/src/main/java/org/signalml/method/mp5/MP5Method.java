@@ -12,17 +12,6 @@ import org.apache.log4j.Logger;
 import org.signalml.app.util.XMLUtils;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.app.util.i18n.SvarogI18n._R;
-import org.signalml.domain.book.BookBuilder;
-import org.signalml.domain.book.BookBuilderImpl;
-import org.signalml.domain.book.BookFormatException;
-import org.signalml.domain.book.DefaultBookBuilder;
-import org.signalml.domain.book.IncrementalBookWriter;
-import org.signalml.domain.book.StandardBook;
-import org.signalml.domain.book.StandardBookAtomWriterImpl;
-import org.signalml.domain.book.StandardBookSegment;
-import org.signalml.domain.book.StandardBookSegmentWriter;
-import org.signalml.domain.book.StandardBookSegmentWriterImpl;
-import org.signalml.domain.book.StandardBookWriter;
 import org.signalml.domain.signal.MultichannelSampleProcessor;
 import org.signalml.domain.signal.SignalProcessingChain;
 import org.signalml.domain.signal.SignalProcessingChainDescriptor;
@@ -43,7 +32,6 @@ import org.signalml.plugin.export.SignalMLException;
 import org.signalml.plugin.export.method.BaseMethodData;
 import org.signalml.util.Util;
 import org.springframework.validation.Errors;
-import pl.edu.fuw.MP.Core.BookLibraryV5Writer;
 
 /** MP5Method
  *
@@ -110,15 +98,9 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		int totalSegmentCount = sampleSource.getSegmentCount();
 
-		int segment = 0;
-		if (isDataSuspended(data)) {
-			segment = data.getCompletedSegments();
-			data.setSuspended(false);
-		}
-
 		synchronized (tracker) {
 			tracker.setTickerLimits(new int[] { totalSegmentCount, 1, 1, 1, 1 });
-			tracker.setTickers(new int[] { segment, 0, 0, 0, 0 });
+			tracker.setTickers(new int[] { 0, 0, 0, 0, 0 });
 		}
 
 		MP5Executor executor = executorLocator.findExecutor(data.getExecutorUID());
@@ -131,127 +113,26 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 		logger.debug("Using MP executor [" + executor + "]");
 
-		File segmentBookFile;
-		boolean segmentOk;
-
 		prepareFiltering(sampleSource);
 
-		while (segment < totalSegmentCount) {
-
-			if (testAbortSuspend(tracker,data,segment)) {
-				return null;
-			}
-
-			tracker.setMessage(_R("Processing segment {0}", (segment+1)));
-
-			segmentBookFile = new File(workingDirectory, "result_" + Integer.toString(segment) + ".b");
-
-			segmentOk = executor.execute(data, segment, segmentBookFile, tracker);
-			if (!segmentOk) {
-				testAbortSuspend(tracker,data,segment);
-				return null;
-			}
-
-			segment++;
-			tracker.setTickers(new int[] { segment, 0, 0, 0 });
-
+		if (testAbort(tracker)) {
+			return null;
 		}
 
-		tracker.setMessage(_("Collecting results"));
+		tracker.setMessage(_R("Processing data"));
 
-
-		//
-		// Collect partial books from mp5 native code into one
-		//
-
-		File collectedBookFile = new File(workingDirectory, "collected.b");
+		File collectedBookFile = new File(workingDirectory, "collected.db");
 		if (collectedBookFile.exists()) {
 			collectedBookFile.delete();
 		}
 
-		File bookFile;
-		int i;
-
-		BookBuilder builder = new BookBuilderImpl();
-		StandardBookWriter book = builder.createBook();
-
-		book.setDate(Util.now("yy/MM/dd"));
-
-		IncrementalBookWriter bookWriter = null;
-
-		BookBuilder bookBuilder = DefaultBookBuilder.getInstance();
-		StandardBook partialBook = null;
-		StandardBookSegment[] segments;
-
-		for (i=0; i<totalSegmentCount; i++) {
-
-			bookFile = new File(workingDirectory, "result_" + i + ".b");
-			if (!bookFile.exists()) {
-				throw new ComputationException("Missing partial result file [" + bookFile.getAbsolutePath() + "]");
-			}
-
-			try {
-				partialBook = bookBuilder.readBook(bookFile);
-			} catch (IOException ex) {
-				logger.error("Failed to read partial book [" + bookFile.getAbsolutePath() + "] - i/o exception", ex);
-				throw new ComputationException(ex);
-			} catch (BookFormatException ex) {
-				logger.error("Failed to read partial book [" + bookFile.getAbsolutePath() + "]", ex);
-				throw new ComputationException(ex);
-			}
-
-			segments = partialBook.getSegmentAt(0); //each partial book contains only one segment
-
-			book.setCalibration(partialBook.getCalibration());
-			book.setEnergyPercent(partialBook.getEnergyPercent());
-			book.setSamplingFrequency(partialBook.getSamplingFrequency());
-
-			int numberOfChannels = segments.length;
-			((BookLibraryV5Writer) book).setNumberOfChannels(numberOfChannels);
-
-			if (bookWriter == null) {
-				try {
-					bookWriter = builder.writeBookIncremental(book, collectedBookFile.getAbsolutePath());
-				} catch (IOException ex) {
-					logger.error("Failed to write book [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
-					throw new ComputationException(ex);
-				}
-			}
-
-			StandardBookSegmentWriter seg = new StandardBookSegmentWriterImpl(book);
-
-			for (int channel = 0; channel < numberOfChannels; channel++) {
-				seg.setChannelNumber(segments[channel].getChannelNumber());
-				seg.setSegmentNumber(i+1);
-				seg.setSegmentLength(segments[channel].getSegmentLength());
-				seg.clearAtoms();
-
-				for (int j = 0; j < segments[channel].getAtomCount(); j++) {
-					StandardBookAtomWriterImpl bookAtomWriter = new StandardBookAtomWriterImpl(segments[channel].getAtomAt(j));
-					seg.addAtom(bookAtomWriter);
-					seg.setSignalSamples(segments[channel].getSignalSamples());
-				}
-
-				try {
-					bookWriter.writeSegment(seg);
-				} catch (IOException ex) {
-					logger.error("Failed to write segment to [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
-					throw new ComputationException(ex);
-				}
-			}
-
-			logger.debug("Writing book done");
-
+		boolean ok = executor.execute(data, collectedBookFile, tracker);
+		if (!ok) {
+			testAbort(tracker);
+			return null;
 		}
 
-		if (bookWriter != null) {
-			try {
-				bookWriter.close();
-			} catch (IOException ex) {
-				logger.error("Failed to close file [" + collectedBookFile.getAbsolutePath() + "] - i/o exception", ex);
-				throw new ComputationException(ex);
-			}
-		}
+		tracker.setMessage(_("Collecting results"));
 
 		MP5Result result = new MP5Result();
 		result.setBookFilePath(collectedBookFile.getAbsolutePath());
@@ -276,16 +157,10 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		}
 	}
 
-	private boolean testAbortSuspend(MethodExecutionTracker tracker, MP5Data data, int segment) {
+	private boolean testAbort(MethodExecutionTracker tracker) {
 
 		if (tracker.isRequestingAbort()) {
 			logger.debug("Terminating execution");
-			return true;
-		}
-		if (tracker.isRequestingSuspend()) {
-			logger.debug("Suspending execution");
-			data.setCompletedSegments(segment);
-			data.setSuspended(true);
 			return true;
 		}
 
@@ -386,7 +261,7 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 
 	@Override
 	public boolean isDataSuspended(Object data) {
-		return ((MP5Data) data).isSuspended();
+		return false;
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import javax.swing.border.TitledBorder;
 import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.model.signal.SignalExportDescriptor;
+import org.signalml.app.util.IconUtils;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.view.common.components.ResolvableComboBox;
 import org.signalml.domain.signal.ExportFormatType;
@@ -37,6 +38,8 @@ public class ExportFormatPanel extends JPanel {
 	private RawExportOptionsPanel rawOptionsPanel;
 
 	private CsvExportOptionsPanel csvOptionsPanel;
+
+	private JPanel edfOptionsPanel;
 
 	private EEGLabExportOptionsPanel eegLabOptionsPanel;
 
@@ -94,6 +97,18 @@ public class ExportFormatPanel extends JPanel {
 		return csvOptionsPanel;
 	}
 
+	public JPanel getEdfOptionsPanel() {
+		if (edfOptionsPanel == null) {
+			edfOptionsPanel = new JPanel();
+			edfOptionsPanel.add(new JLabel(
+				_("EDF+ is a format with 16-bit precision. To avoid precision loss, choose 24-bit BDF+ or RAW signal."),
+				IconUtils.getWarningIcon(),
+				JLabel.LEFT)
+			);
+		}
+		return edfOptionsPanel;
+	}
+
 	public EEGLabExportOptionsPanel getEEGLabOptionsPanel() {
 		if (eegLabOptionsPanel == null) {
 			eegLabOptionsPanel = new EEGLabExportOptionsPanel();
@@ -106,6 +121,8 @@ public class ExportFormatPanel extends JPanel {
 			optionsPanel = new JPanel(new CardLayout());
 			optionsPanel.add(getRawOptionsPanel(), ExportFormatType.RAW.toString());
 			optionsPanel.add(getCsvOptionsPanel(), ExportFormatType.CSV.toString());
+			optionsPanel.add(getEdfOptionsPanel(), ExportFormatType.EDF.toString());
+			optionsPanel.add(new JPanel(), ExportFormatType.BDF.toString());
 			optionsPanel.add(getEEGLabOptionsPanel(), ExportFormatType.EEGLab.toString());
 			optionsPanel.add(new JPanel(), ExportFormatType.MATLAB.toString());
 		}

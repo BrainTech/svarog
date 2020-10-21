@@ -29,7 +29,7 @@ public class ExtensionBasedDocumentDetector implements DocumentDetector {
 	 * Detects the {@link ManagedDocumentType type} of a {@link Document
 	 * document} stored in the given file, based on the extension of the file:
 	 * <ul>
-	 * <li>{@code *.b} - {@link ManagedDocumentType#BOOK book} file,</li>
+	 * <li>{@code *.b} or {@code *.db} - {@link ManagedDocumentType#BOOK book} file,</li>
 	 * <li>{@code *.xml} or {@code *.tag} - {@link ManagedDocumentType#TAG tag}
 	 * file,</li>
 	 * <li>any other extension of no extension -
@@ -43,7 +43,7 @@ public class ExtensionBasedDocumentDetector implements DocumentDetector {
 			// assume signal for extension-less files
 			return ManagedDocumentType.SIGNAL;
 		}
-		if (ext.equalsIgnoreCase("B")) {
+		if (ext.equalsIgnoreCase("B") || ext.equalsIgnoreCase("DB")) {
 			return ManagedDocumentType.BOOK;
 		}
 		if (ext.equalsIgnoreCase("XML") || ext.equalsIgnoreCase("TAG")) {

@@ -66,18 +66,21 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 	}
 
 	@Override
-	public boolean execute(MP5Data data, int segment, File resultFile, MethodExecutionTracker tracker) throws ComputationException {
+	public boolean execute(MP5Data data, File resultFile, MethodExecutionTracker tracker) throws ComputationException {
 
 		File workingDirectory = data.getWorkingDirectory();
 
 		MP5Parameters parameters = data.getParameters();
 		MultichannelSegmentedSampleSource sampleSource = data.getSampleSource();
+		final int totalSegmentCount = sampleSource.getSegmentCount();
 
 		File configFile = new File(workingDirectory, "mp5.cfg");
 		File signalFile = new File(workingDirectory, "signal.bin");
 
 		MP5RuntimeParameters runtimeParameters = new MP5RuntimeParameters();
 
+		runtimeParameters.setMinOffset(1);
+		runtimeParameters.setMaxOffset(totalSegmentCount);
 		runtimeParameters.setChannelCount(sampleSource.getChannelCount());
 		runtimeParameters.setSegementSize(sampleSource.getSegmentLengthInSamples());
 		runtimeParameters.setChosenChannels(null);
@@ -115,7 +118,10 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 
 		// write data file
 		try {
-			rawSignalWriter.writeSignal(signalFile, sampleSource, signalExportDescriptor, segment, null);
+			for (int segment=0; segment<totalSegmentCount; ++segment) {
+				rawSignalWriter.setAppendMode(segment > 0);
+				rawSignalWriter.writeSignal(signalFile, sampleSource, signalExportDescriptor, segment, null);
+			}
 		} catch (IOException ex) {
 			logger.error("Failed to create data file", ex);
 			throw new ComputationException(ex);
@@ -124,9 +130,9 @@ public class MP5LocalProcessExecutor implements MP5Executor {
 		// delete results in the way
 		File generatedBookFile;
 		if (parameters.getAlgorithm() == MP5Algorithm.SMP) {
-			generatedBookFile = new File(workingDirectory, "signal_smp.b");
+			generatedBookFile = new File(workingDirectory, "signal_smp.db");
 		} else {
-			generatedBookFile = new File(workingDirectory, "signal_mmp.b");
+			generatedBookFile = new File(workingDirectory, "signal_mmp.db");
 		}
 
 		if (generatedBookFile.exists()) {

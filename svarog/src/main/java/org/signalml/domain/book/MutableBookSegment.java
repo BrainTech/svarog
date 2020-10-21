@@ -23,7 +23,7 @@ public interface MutableBookSegment extends StandardBookSegment {
 	 * @param phase
 	 *
 	 */
-	StandardBookAtom createAtom(int type, int iteration, float modulus, float amplitude, int position, int scale, int frequency, float phase);
+	StandardBookAtom createAtom(int type, int iteration, float modulus, float amplitude, float position, float scale, float frequency, float phase);
 
 	/** Add atom to segment (at the end).
 	 *

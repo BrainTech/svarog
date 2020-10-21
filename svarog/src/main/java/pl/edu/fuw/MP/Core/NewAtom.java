@@ -8,7 +8,7 @@ import org.signalml.domain.book.StandardBookAtom;
 public class NewAtom implements StandardBookAtom {
 	public float scale;
 	public float frequency;
-	public int   position;
+	public float position;
 	public float modulus;
 	public float amplitude;
 	public float phase;
@@ -55,8 +55,8 @@ public class NewAtom implements StandardBookAtom {
 		return this.amplitude;
 	}
 
-	public int getNaturalFrequency() {
-		return (int)this.frequency;
+	public float getNaturalFrequency() {
+		return this.frequency;
 	}
 
 	public float getFrequency() {
@@ -71,8 +71,8 @@ public class NewAtom implements StandardBookAtom {
 		return this.phase;
 	}
 
-	public int getPosition() {
-		return (int)this.position;
+	public float getPosition() {
+		return this.position;
 	}
 
 	public Object getProperty(String name) throws IllegalArgumentException {
@@ -84,8 +84,8 @@ public class NewAtom implements StandardBookAtom {
 		return names.elements();
 	}
 
-	public int getScale() {
-		return (int)this.scale;
+	public float getScale() {
+		return this.scale;
 	}
 
 	public int getType() {

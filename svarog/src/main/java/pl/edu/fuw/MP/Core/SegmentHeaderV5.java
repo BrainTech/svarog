@@ -193,7 +193,7 @@ public class SegmentHeaderV5 extends FormatComponentV5 implements StandardBookSe
 	}
 
 	public float getSegmentTime() {
-		return offsetNumber / parent.getSamplingFreq();
+		return (offsetNumber-1) * offsetDimension / parent.getSamplingFreq();
 	}
 
 	public float getSignalEnergy() {

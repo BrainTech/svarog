@@ -19,7 +19,7 @@ import org.apache.log4j.Logger;
 import org.signalml.app.model.components.validation.ValidationErrors;
 import org.signalml.app.util.IconUtils;
 import static org.signalml.app.util.i18n.SvarogI18n._;
-import org.signalml.domain.book.DefaultBookBuilder;
+import org.signalml.domain.book.DefaultBookReader;
 import org.signalml.domain.book.StandardBook;
 import org.signalml.plugin.bookreporter.data.BookReporterParameters;
 import org.signalml.plugin.export.view.FileChooser;
@@ -143,7 +143,7 @@ public class BookReporterBookPanel extends JPanel {
 	private void updateBookChannels() {
 		int channelCount = 1;
 		if (bookFile != null) {
-			DefaultBookBuilder bookBuilder = DefaultBookBuilder.getInstance();
+			DefaultBookReader bookBuilder = DefaultBookReader.getInstance();
 			try {
 				StandardBook book = bookBuilder.readBook(bookFile);
 				channelCount = book.getChannelCount();

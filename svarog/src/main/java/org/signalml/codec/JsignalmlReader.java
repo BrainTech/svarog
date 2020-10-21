@@ -153,7 +153,7 @@ public class JsignalmlReader implements SignalMLCodecReader {
 			return this.source.get_set().getChannel(chn).getSample(offset);
 		} catch(RuntimeException e) {
 			log.info(format("%d / %d: %s", offset, chn, e));
-			throw e;
+			return 0.0f; // dirty hack for random errors from JSignalML (EDF) near the end of file
 		}
 	}
 

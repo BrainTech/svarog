@@ -27,10 +27,8 @@ public class MP5LocalProcessController {
 	protected static final Logger logger = Logger.getLogger(MP5LocalProcessController.class);
 
 	private static final String ERROR = "ERROR";
-	private static final Pattern TESTED_MESSAGE_PATTERN = Pattern.compile("^TESTED\\s*([0-9]+)$$");
 	private static final Pattern ATOM_MESSAGE_PATTERN = Pattern.compile("^ATOM\\s*([0-9]+)\\s*([0-9]+)\\s*([0-9.]+)\\s*([0-9.]+)$");
 	private static final Pattern CHANNEL_MESSAGE_PATTERN = Pattern.compile("^CHANNEL\\s*([0-9]+)$");
-	private static final Pattern OFFSET_MESSAGE_PATTERN = Pattern.compile("^OFFSET\\s*([0-9]+)$");
 	private static final Pattern START_MESSAGE_PATTERN = Pattern.compile("^START\\s*([0-9]+)\\s*([0-9]+)\\s*(-?[0-9]+)\\s*(-?[0-9.]+)$");
 	private static final Pattern END_MESSAGE_PATTERN = Pattern.compile("^END$");
 
@@ -39,7 +37,6 @@ public class MP5LocalProcessController {
 		ProcessBuilder pb = new ProcessBuilder();
 		pb.command(
 			mp5ExecutablePath,
-			"-x",
 			configFile.getAbsolutePath()
 		);
 		pb.directory(workingDirectory);
@@ -152,15 +149,6 @@ public class MP5LocalProcessController {
 
 		Matcher matcher;
 
-		matcher = TESTED_MESSAGE_PATTERN.matcher(line);
-		if (matcher.matches()) {
-
-			int done = Integer.parseInt(matcher.group(1));
-			tracker.setTicker(3, done);
-
-			return true;
-		}
-
 		matcher = ATOM_MESSAGE_PATTERN.matcher(line);
 		if (matcher.matches()) {
 
@@ -178,12 +166,6 @@ public class MP5LocalProcessController {
 
 		}
 
-		matcher = OFFSET_MESSAGE_PATTERN.matcher(line);
-		if (matcher.matches()) {
-			// do nothing
-			return true;
-		}
-
 		matcher = CHANNEL_MESSAGE_PATTERN.matcher(line);
 		if (matcher.matches()) {
 			int channel = Integer.parseInt(matcher.group(1));
@@ -194,13 +176,13 @@ public class MP5LocalProcessController {
 		matcher = START_MESSAGE_PATTERN.matcher(line);
 		if (matcher.matches()) {
 
+			int segmentNumber = Integer.parseInt(matcher.group(1)) - 1;
 			int channelCount = Integer.parseInt(matcher.group(2));
 
 			synchronized (tracker) {
 				int[] limits = tracker.getTickerLimits();
 				tracker.setTickerLimits(new int[] { limits[0], channelCount, 100 * 100, 1 });
-				int[] tickers = tracker.getTickers();
-				tracker.setTickers(new int[] { tickers[0], 0, 0, 0 });
+				tracker.setTickers(new int[] { segmentNumber, 0, 0, 0 });
 			}
 
 			return true;

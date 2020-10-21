@@ -18,6 +18,6 @@ public interface MP5Executor extends MessageSourceResolvable {
 
 	String getUID();
 
-	boolean execute(MP5Data data, int segment, File resultFile, MethodExecutionTracker tracker) throws ComputationException;
+	boolean execute(MP5Data data, File resultFile, MethodExecutionTracker tracker) throws ComputationException;
 
 }

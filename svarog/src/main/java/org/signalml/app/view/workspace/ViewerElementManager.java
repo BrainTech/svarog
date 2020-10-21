@@ -598,13 +598,6 @@ public class ViewerElementManager {
 
 	public JMenu getFileMenu() {
 		if (fileMenu == null) {
-			/*
-			 * export book doesn't work - so its commented out for now.
-			 * (it exports books, but they cannot be read afterwards
-			 * - the export is incorrect)
-			 */
-			//exportSubmenu.add(getExportBookAction());
-
 			fileMenu = new JMenu(_("File"));
 			fileMenu.setMnemonic(KeyEvent.VK_F);
 
@@ -781,6 +774,7 @@ public class ViewerElementManager {
 			JMenu mpMenu = new JMenu(_("Matching pursuit"));
 			addRunMethodActionToMenu(mpMenu, MP5Method.class);
 			mpMenu.add(getOpenBookDocumentAction());
+			mpMenu.add(getExportBookAction());
 			addRunMethodActionToMenu(mpMenu, BookAverageMethod.class);
 			addRunMethodActionToMenu(mpMenu, BookReporterMethod.class);
 			addRunMethodActionToMenu(mpMenu, BookToTagMethod.class);

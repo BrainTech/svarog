@@ -73,7 +73,7 @@ public class DefaultMutableBookSegment implements MutableBookSegment {
 	}
 
 	@Override
-	public StandardBookAtom createAtom(int type, int iteration, float modulus, float amplitude, int position, int scale, int frequency, float phase) {
+	public StandardBookAtom createAtom(int type, int iteration, float modulus, float amplitude, float position, float scale, float frequency, float phase) {
 		return new DefaultBookAtom(samplingFrequency,segmentLength,type,iteration,modulus,frequency,position,scale,amplitude,phase);
 	}
 

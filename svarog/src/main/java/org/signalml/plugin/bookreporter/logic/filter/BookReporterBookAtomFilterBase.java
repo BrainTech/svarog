@@ -1,7 +1,7 @@
 package org.signalml.plugin.bookreporter.logic.filter;
 
-import com.google.common.collect.Lists;
 import java.util.AbstractCollection;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -49,7 +49,7 @@ public class BookReporterBookAtomFilterBase implements IBookReporterBookAtomFilt
 	public Collection<BookReporterAtom> filter(BookReporterAtom atoms[]) {
 		if (this.atoms != atoms || this.result == null) {
 			this.atoms = atoms;
-			this.result = Lists.newArrayList(this.filterWhen(atoms,
+			this.result = new ArrayList<>(this.filterWhen(atoms,
 					this.selector));
 		}
 		return this.result;
