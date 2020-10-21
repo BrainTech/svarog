@@ -125,7 +125,16 @@ public abstract class AbstractPresetManager extends AbstractXMLConfiguration imp
 	@Override
 	public Preset readFromFile(File file) throws IOException {
 		logger.debug("Reading preset from file [" + file.getAbsolutePath() +"]");
-		Object obj = XMLUtils.newObjectFromFile(file, streamer);
+		Object obj;
+		try
+		{	
+			obj = XMLUtils.newObjectFromFile(file, streamer);
+			
+		}
+		catch (Exception ex)
+		{
+			throw new IOException("Can't read preset from file [" + file.getAbsolutePath() +"]");
+		}
 		if (!getPresetClass().isInstance(obj)) {
 			throw new IOException("error.badPresetClass");
 		}

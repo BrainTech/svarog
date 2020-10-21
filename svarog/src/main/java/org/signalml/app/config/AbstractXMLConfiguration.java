@@ -41,7 +41,12 @@ public abstract class AbstractXMLConfiguration {
 	public void readFromXML(File f, XStream streamer) throws IOException {
 		logger.debug("Reading [" + getClass().getSimpleName() + "] from file ["
 				+ f.getAbsolutePath() + "]");
-		XMLUtils.objectFromFile(this, f, streamer);
+		try{	
+			XMLUtils.objectFromFile(this, f, streamer);
+		} catch (Exception ex) {
+				logger.error(ex, ex);
+				throw new IOException();
+			}
 	}
 
 	private File getUsableFile(File file) {
@@ -82,7 +87,8 @@ public abstract class AbstractXMLConfiguration {
 			readFromMultipleFiles(files);
 		} else {
 			readFromXML(usableFile, getStreamer());
-		}
+		}		
+		
 	}
 
 	/**

@@ -270,7 +270,13 @@ public class MP5Method extends AbstractMethod implements TrackableMethod, Serial
 		MP5Data data = (MP5Data) dataObj;
 
 		logger.debug("Reading from file [" + file.getAbsolutePath() +"]");
-		XMLUtils.objectFromFile(data, file, getStreamer());
+		try{
+			
+			XMLUtils.objectFromFile(data, file, getStreamer());
+		} catch (Exception ex) {
+			logger.error(ex, ex);
+			throw new IOException();
+		}
 
 		SignalProcessingChainDescriptor chainDescriptor = data.getChainDescriptor();
 		if (chainDescriptor == null) {

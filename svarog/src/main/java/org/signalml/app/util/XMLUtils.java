@@ -158,7 +158,13 @@ public abstract class XMLUtils {
 
 		try {
 			streamer.fromXML(inputStream,o);
-		} finally {
+		
+		}
+		catch(Exception ex)
+		{
+			throw new IOException("Incompatable xml file");
+		}
+		finally {
 			inputStream.close();
 		}
 
