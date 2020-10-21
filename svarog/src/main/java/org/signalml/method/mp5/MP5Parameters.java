@@ -19,7 +19,7 @@ import org.springframework.validation.Errors;
 @XStreamAlias("mp5parameters")
 public class MP5Parameters implements Serializable, Preset {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 
 	public static final float MIN_SCALE_TO_PERIOD_FACTOR = 0F;
 	public static final float MAX_SCALE_TO_PERIOD_FACTOR = 20000F;
