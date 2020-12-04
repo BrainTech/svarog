@@ -16,6 +16,7 @@ build_svarog_standalone:
     - apt-get update && apt-get install -y --no-install-recommends zip unzip tar sed
     - ./scripts/ci/buildzip.sh
     - mkdir -p dist
+    - cp dist/svarog-*-standalone.zip ./
     - mv dist/svarog-*-standalone.zip dist/svarog.zip
     - cd dist
     - mkdir svarog
@@ -33,6 +34,7 @@ build_svarog_standalone:
     name: "svarog_standalone"
     paths:
       - svarog-standalone-package
+      - svarog-*-standalone.zip
 
 # used for svarog-streamer, svarog-lab, includes JRE
 build_svarog_win_zip:
@@ -185,6 +187,7 @@ deploy_braintech_pl:
     - build_svarog_installer_windows
     - build_svarog_mac
     - signdebs
+    - build_svarog_standalone
   script:
     - export ADDRESS=$BRAINTECH_SRV
     - export USR=$BRAINTECH_USR
