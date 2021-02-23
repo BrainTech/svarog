@@ -111,7 +111,7 @@ class StaticRenderingHelper {
 	{
 		
 		return (pageSampleCount-indexInCycle+signalOffset) % pageSampleCount;
-	}
+	}	
 	
 	/**
 	 * Copy the properly shifted samples from the internal buffer

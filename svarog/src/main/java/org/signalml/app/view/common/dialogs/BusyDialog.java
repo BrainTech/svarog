@@ -89,6 +89,8 @@ public class BusyDialog extends JDialog implements IBusyDialog {
 
 	public void setCancellable(boolean cancellable) {
 		getCancelButton().setVisible(cancellable);
+		pack();
+
 	}
 
 }
