@@ -33,7 +33,7 @@ public class BusyDialog extends JDialog implements IBusyDialog {
 		setLocationRelativeTo(parentContainer);
 		setModal(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setResizable(false);
+		this.setResizable(true);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
