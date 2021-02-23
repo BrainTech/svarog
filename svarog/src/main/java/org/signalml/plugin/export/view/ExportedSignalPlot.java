@@ -108,6 +108,9 @@ public interface ExportedSignalPlot {
 	 */
 	int toBlockSpace(Point p);
 
+	/** returns sample number, accounting to static rendering **/
+	public int pixelToSample(int pixel);
+	
 	/**
 	 * Returns the point in time which is represented by a given point in the
 	 * view.
