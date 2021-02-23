@@ -237,10 +237,8 @@ public class SignalFFTPlot extends JComponent {
 		lastFFTRecalculationTime = Calendar.getInstance();
 
 		error = null;
-
 		double timeZoomFactor = plot.getTimeZoomFactor();
-		int firstSample = (int) Math.floor((focusPoint.x / timeZoomFactor)
-										   - windowWidth / 2);
+		int firstSample = plot.pixelToSample(focusPoint.x) - windowWidth / 2;
 		if (firstSample < 0) {
 			error = _("Not enough signal points");
 		}
@@ -404,6 +402,15 @@ public class SignalFFTPlot extends JComponent {
 			normalYAxis.setTickLabelsVisible(powerAxisLabelsVisible);
 			if (fftSettings.isAutoScaleYAxis())
 				min = 0;
+			if (min==max & min != 0)
+			{
+				max = min * 1.05;
+			}
+			if (min==max & min == 0)
+			{
+				max = 1;
+			}
+			
 			normalYAxis.setRange(min, max);
 			powerSpectrumPlot.setRangeAxis(normalYAxis);
 		}

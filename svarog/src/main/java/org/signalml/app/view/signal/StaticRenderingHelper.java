@@ -107,6 +107,12 @@ class StaticRenderingHelper {
 		cycleNumber = totalSampleCount / pageSampleCount;
 	}
 
+	public int visibleSampleNumberToRealSampleNumber(int signalOffset)
+	{
+		
+		return (pageSampleCount-indexInCycle+signalOffset) % pageSampleCount;
+	}
+	
 	/**
 	 * Copy the properly shifted samples from the internal buffer
 	 * (as fetched in the last call to fetchSamples) to the given array.

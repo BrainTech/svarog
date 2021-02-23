@@ -1433,7 +1433,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public float toTimeSpace(Point p) {
-		return Math.max(0, Math.min(maxTime, (float) ((p.x) / pixelPerSecond)));
+		float time = Math.max(0, Math.min(maxTime, (float) ((p.x) / pixelPerSecond)));
+		return time;
 	}
 
 	@Override
@@ -1450,7 +1451,8 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 
 	@Override
 	public int timeToPixel(double time) {
-		return (int) Math.round((time) * pixelPerSecond);
+		int pixel = (int) Math.round((time) * pixelPerSecond);
+		return pixel;
 	}
 
 	@Override
@@ -2295,6 +2297,18 @@ public class SignalPlot extends JComponent implements PropertyChangeListener, Ch
 		}
 	}
 
+	public int pixelToSample(int pixel)
+	{
+		double timeZoomFactor = getTimeZoomFactor();
+		int sample = (int) Math.floor((pixel / timeZoomFactor));
+		if (staticRendering != null)
+		{
+			sample = staticRendering.visibleSampleNumberToRealSampleNumber(sample);
+		}
+		return sample;
+		
+	}
+	
 	public void setVerticalValueLead(float verticalValueLead) {
 		if (this.verticalValueLead != verticalValueLead) {
 			if (masterPlot != null) {
