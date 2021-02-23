@@ -28,7 +28,7 @@ public class BusyDialog extends JDialog implements IBusyDialog {
 
 	public BusyDialog(Container parentContainer) {
 		super();
-		setPreferredSize(new Dimension(280, 90));
+		setPreferredSize(new Dimension(280, 120));
 		this.setLayout(new BorderLayout());
 		setLocationRelativeTo(parentContainer);
 		setModal(true);
