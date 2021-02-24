@@ -139,6 +139,7 @@ build_svarog_installer_windows:
     - sed -i "s/__NSISVERSION__/$NSIS_VER/g" "Svarog.nsi"
     - /C/Program\ Files\ \(x86\)/NSIS/makensis.exe "Svarog.nsi"
     - sed -i "s/__WINDOWS_SIGNING_CERT_SHA__/$WINDOWS_SIGNING_CERT_SHA/g" "sign.bat"
+    - powershell -command "$dcs = (Get-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections\").DefaultConnectionSettings; $dcs[8] = 09; Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections\" -Name DefaultConnectionSettings -Value $dcs"
     - ./sign.bat Svarog_installer.exe
     - mv Svarog_installer.exe ../
     - cd ..
