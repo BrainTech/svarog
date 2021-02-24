@@ -28,12 +28,12 @@ public class BusyDialog extends JDialog implements IBusyDialog {
 
 	public BusyDialog(Container parentContainer) {
 		super();
-		setPreferredSize(new Dimension(280, 90));
+		setPreferredSize(new Dimension(280, 120));
 		this.setLayout(new BorderLayout());
 		setLocationRelativeTo(parentContainer);
 		setModal(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		this.setResizable(false);
+		this.setResizable(true);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(new Insets(10, 10, 10, 10)));
@@ -89,6 +89,8 @@ public class BusyDialog extends JDialog implements IBusyDialog {
 
 	public void setCancellable(boolean cancellable) {
 		getCancelButton().setVisible(cancellable);
+		pack();
+
 	}
 
 }
