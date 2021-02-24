@@ -6,5 +6,5 @@ signtool verify /pa %1 2>nul
 if errorlevel 1 goto sign
 goto end
 :sign
-signtool sign /sha1 __WINDOWS_SIGNING_CERT_SHA__ /sm /t  http://timestamp.globalsign.com/scripts/timestamp.dll %1
+signtool sign /sha1 __WINDOWS_SIGNING_CERT_SHA__ /sm /t http://timestamp.comodoca.com/authenticode %1
 :end
