@@ -1,5 +1,4 @@
 @echo off
-	    powershell -command "$dcs = (Get-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections\").DefaultConnectionSettings; $dcs[8] = 09; Set-ItemProperty -Path \"HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings\\Connections\" -Name DefaultConnectionSettings -Value $dcs"
             echo.
             echo File: %1
             call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\Tools\vsvars32.bat" > nul
