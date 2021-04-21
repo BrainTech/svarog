@@ -119,9 +119,15 @@ public class SelectionSegmentedSampleSource extends MultichannelSampleProcessor 
 		if (selectionType.isChannel()
 				|| (selectionType.isPage() && !signalSpace.isWholeSignalCompletePagesOnly())) {
 
-			segmentCount = 1;
-			segmentLength = (int)(selection.getLength() * samplingFrequency);
-
+			segmentLength = (int)(pageSize * samplingFrequency);
+			segmentCount = (int)(selection.getLength() * samplingFrequency) / segmentLength;
+			
+			if (segmentCount == 0)
+			{
+				segmentCount = 1;
+				segmentLength = (int)(selection.getLength() * samplingFrequency);
+			}
+			
 		} else {
 
 			float segmentSize;
