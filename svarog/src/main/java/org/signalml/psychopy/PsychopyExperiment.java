@@ -3,6 +3,7 @@ package org.signalml.psychopy;
 import java.io.File;
 import javax.swing.*;
 import org.signalml.app.SvarogApplication;
+import org.signalml.app.action.document.monitor.StopMonitorRecordingAction;
 import org.signalml.app.document.DocumentFlowIntegrator;
 import org.signalml.app.document.ManagedDocumentType;
 import org.signalml.app.document.MonitorSignalDocument;
@@ -62,9 +63,9 @@ public class PsychopyExperiment {
 		if (msg.getType() == MessageType.PSYCHOPY_EXPERIMENT_FINISHED) {
 			String[] createdFiles = ((PsychopyExperimentFinished) msg).createdFiles;
 			String rawSignalFile = getRawSignalFilePath(createdFiles);
-
+			document.stopMonitorRecording();
 			showFinishedDialog(createdFiles);
-			maybeOpenDocument(rawSignalFile);
+	//		maybeOpenDocument(rawSignalFile);
 		} else if (msg.getType() == MessageType.PSYCHOPY_EXPERIMENT_ERROR) {
 			showErrorDialog(((PsychopyExperimentError) msg).details);
 		}

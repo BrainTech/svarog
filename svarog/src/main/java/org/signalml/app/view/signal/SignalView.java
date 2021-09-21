@@ -145,8 +145,8 @@ import org.signalml.plugin.export.view.ExportedPositionedTag;
 import org.signalml.plugin.export.view.ExportedSignalPlot;
 import org.signalml.plugin.export.view.ExportedSignalView;
 import org.signalml.plugin.impl.PluginAccessClass;
-import org.signalml.psychopy.action.ShowPsychopyDialogButton;
-import org.signalml.psychopy.view.PsychopyExperimentDialog;
+import org.signalml.psychopy.action.StartMonitorRecordingPsychopyAction;
+import org.signalml.psychopy.action.StartMonitorRecordingPsychopyDialog;
 import org.signalml.util.Util;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
@@ -235,8 +235,8 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 	private NewTagDialog newTagDialog;
 	private ViewerFileChooser fileChooser;
 	private SignalSelectionDialog signalSelectionDialog;
-	private PsychopyExperimentDialog psychopyExperimentDialog;
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
+	private StartMonitorRecordingPsychopyDialog startMonitorRecordingPsychopyDialog;
 	private SignalParametersDialog signalParametersDialog;
 	private SignalMontageDialog signalMontageDialog;
 	private EditTagAnnotationDialog editTagAnnotationDialog;
@@ -245,10 +245,10 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 	private SaveTagAction saveTagAction;
 
-	private ShowPsychopyDialogButton showPsychopyDialogButtonAction;
 	/**
 	 * An {@link Action} responsible for starting a monitor recording.
 	 */
+	private StartMonitorRecordingPsychopyAction startMonitorRecordingPsychopAction;
 	private StartMonitorRecordingAction startMonitorRecordingAction;
 
 	/**
@@ -1057,7 +1057,7 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 
 			recordingToolBar.add(Box.createHorizontalGlue());
 			if (ObciServerCapabilities.getSharedInstance().hasPsychopyRunner()) {
-				recordingToolBar.add(getShowPsychopyDialogButtonAction());
+				recordingToolBar.add(getStartMonitorRecordingPsychopyAction());
 			}
 			recordingToolBar.add(getStartMonitorRecordingAction());
 			recordingToolBar.add(getStopMonitorRecordingAction());
@@ -1344,12 +1344,21 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		return playPauseVideoAction;
 	}
 
-	public ShowPsychopyDialogButton getShowPsychopyDialogButtonAction() {
-		if (showPsychopyDialogButtonAction == null) {
-			showPsychopyDialogButtonAction = new ShowPsychopyDialogButton(getActionFocusManager());
-			showPsychopyDialogButtonAction.setSelectPsychopyExperimentDialog(psychopyExperimentDialog);
+	
+	/**
+	 * Returns an {@link Action} responsible for starting a new monitor
+	 * recording (it shows a dialog which allows to select recording target
+	 * files and starts the recording) with Psychopy experiment.
+	 *
+	 * @return an {@link Action} responsible for starting a new monitor
+	 * recording with psychopy experiment.
+	 */
+	public StartMonitorRecordingPsychopyAction getStartMonitorRecordingPsychopyAction() {
+		if (startMonitorRecordingPsychopAction == null) {
+			startMonitorRecordingPsychopAction = new StartMonitorRecordingPsychopyAction(getActionFocusManager());
+			startMonitorRecordingPsychopAction.setStartMonitorRecordingDialog(startMonitorRecordingPsychopyDialog);
 		}
-		return showPsychopyDialogButtonAction;
+		return startMonitorRecordingPsychopAction;
 	}
 
 	/**
@@ -1552,22 +1561,19 @@ public class SignalView extends DocumentView implements PropertyChangeListener, 
 		this.signalSelectionDialog = signalSelectionDialog;
 	}
 
-	public PsychopyExperimentDialog getPsychopyExperimentDialog() {
-		return psychopyExperimentDialog;
-	}
 
 	public StartMonitorRecordingDialog getStartMonitorRecordingDialog() {
 		return startMonitorRecordingDialog;
 	}
 
-	public void setPsychopyExperimentDialog(PsychopyExperimentDialog psychopyExperimentDialog) {
-		this.psychopyExperimentDialog = psychopyExperimentDialog;
-		this.getShowPsychopyDialogButtonAction().setSelectPsychopyExperimentDialog(psychopyExperimentDialog);
-	}
-
 	public void setStartMonitorRecordingDialog(StartMonitorRecordingDialog startMonitorRecordingDialog) {
 		this.startMonitorRecordingDialog = startMonitorRecordingDialog;
 		getStartMonitorRecordingAction().setStartMonitorRecordingDialog(startMonitorRecordingDialog);
+	}
+	
+	public void setStartMonitorRecordingPsychopyDialog(StartMonitorRecordingPsychopyDialog startMonitorRecordingPsychopyDialog) {
+		this.startMonitorRecordingPsychopyDialog = startMonitorRecordingPsychopyDialog;
+		getStartMonitorRecordingPsychopyAction().setStartMonitorRecordingDialog(startMonitorRecordingPsychopyDialog);
 	}
 
 	public SignalParametersDialog getSignalParametersDialog() {

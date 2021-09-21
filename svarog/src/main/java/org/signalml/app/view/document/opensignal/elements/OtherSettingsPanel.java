@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.apache.commons.io.FilenameUtils;
 import org.signalml.app.SvarogApplication;
 import org.signalml.app.action.document.RegisterCodecAction;
 import org.signalml.app.config.ApplicationConfiguration;
@@ -227,7 +229,7 @@ public class OtherSettingsPanel extends AbstractPanel {
 	public JCheckBox getTryToOpenVideoCheckbox() {
 		if (tryToOpenVideoCheckbox == null) {
 			tryToOpenVideoCheckbox = new JCheckBox();
-			tryToOpenVideoCheckbox.setSelected(false);
+			tryToOpenVideoCheckbox.setSelected(true);
 		}
 		return tryToOpenVideoCheckbox;
 	}
@@ -367,9 +369,24 @@ public class OtherSettingsPanel extends AbstractPanel {
 		if (descriptor instanceof RawSignalDescriptor) {
 			RawSignalDescriptor rawSignalDescriptor = (RawSignalDescriptor) descriptor;
 			String videoFileName = getVideoFilePathField().getText();
-			if (videoFileName.isEmpty() || !getTryToOpenVideoCheckbox().isSelected()) {
+			
+			if (getVideoFilePathField().getText().isEmpty() || !getTryToOpenVideoCheckbox().isSelected()) {
 				videoFileName = null;
 			}
+			
+			if (getVideoFilePathField().getText().isEmpty() & getTryToOpenVideoCheckbox().isSelected()) {
+				String rawSignalFilePath = rawSignalDescriptor.getSourceFileName();
+				
+				String baseRawPath = FilenameUtils.getFullPath(rawSignalFilePath) + FilenameUtils.getBaseName(FilenameUtils.getBaseName(rawSignalFilePath)); // in case of .obci.raw
+				File f = new File(baseRawPath + ".mkv");
+				if(f.exists() && !f.isDirectory()) { 
+					videoFileName = FilenameUtils.getBaseName(baseRawPath) + ".mkv";
+				}
+				
+			}
+			
+
+			
 			rawSignalDescriptor.setVideoFileName(videoFileName);
 		}
 	}

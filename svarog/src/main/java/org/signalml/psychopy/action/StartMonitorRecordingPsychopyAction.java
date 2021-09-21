@@ -1,41 +1,41 @@
+
 package org.signalml.psychopy.action;
 
 import java.awt.event.ActionEvent;
-import org.signalml.app.action.document.monitor.MonitorRecordingAction;
+import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;
 import org.signalml.app.action.selector.SignalDocumentFocusSelector;
 import org.signalml.app.document.MonitorSignalDocument;
 import org.signalml.app.document.signal.SignalDocument;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import org.signalml.app.worker.monitor.recording.RecordingState;
 import org.signalml.exception.SanityCheckException;
 import org.signalml.psychopy.PsychopyExperiment;
-import org.signalml.psychopy.view.PsychopyExperimentDialog;
 
-public class ShowPsychopyDialogButton extends MonitorRecordingAction {
-
-	private PsychopyExperimentDialog dialog;
-
-	public ShowPsychopyDialogButton(SignalDocumentFocusSelector actionFocusSelector) {
-		super(actionFocusSelector);
+public class StartMonitorRecordingPsychopyAction extends StartMonitorRecordingAction{
+	
+	public StartMonitorRecordingPsychopyAction(SignalDocumentFocusSelector signalDocumentFocusSelector) {
+		super(signalDocumentFocusSelector);
+		setText(_("Start recording"));
+		setIconPath("org/signalml/app/icon/record.png");
+		setToolTip(_("Run Psychopy experiment and record signal and tags from this monitor to a file."));
 		setIconPath("org/signalml/psychopy/icon/psychopy.png");
 	}
-
+	
 	@Override
-	public void actionPerformed(ActionEvent event) {
+	protected void additionalWork()
+	{
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 		if ((signalDocument != null) && (signalDocument instanceof MonitorSignalDocument)) {
 			MonitorSignalDocument monitorSignalDocument = (MonitorSignalDocument) signalDocument;
 			PsychopyExperiment psychopyExperiment = monitorSignalDocument.getPsychopyExperiment();
-			boolean closedWithOk = dialog.showDialog(psychopyExperiment, true);
-			if (closedWithOk) {
-				psychopyExperiment.run();
-			}
+			ExperimentDescriptor experimentDescriptor = monitorSignalDocument.getExperimentDescriptor();
+			psychopyExperiment.experimentPath = experimentDescriptor.experimentPath;
+			psychopyExperiment.outputPathPrefix = experimentDescriptor.outputPathPrefix;
+			psychopyExperiment.run();
 		}
 	}
 
-	public void setSelectPsychopyExperimentDialog(PsychopyExperimentDialog psychopyExperimentDialog) {
-		this.dialog = psychopyExperimentDialog;
-	}
 
 	private void updateToolTip(SignalDocument signalDocument) {
 		boolean experimentIsOnline = !isSignalDocumentOfflineSignalDocument(signalDocument);
@@ -56,6 +56,7 @@ public class ShowPsychopyDialogButton extends MonitorRecordingAction {
 
 	@Override
 	public void setEnabledAsNeeded() {
+		super.setEnabledAsNeeded();
 		SignalDocument signalDocument = getActionFocusSelector().getActiveSignalDocument();
 
 		boolean enabled = false;
@@ -65,4 +66,5 @@ public class ShowPsychopyDialogButton extends MonitorRecordingAction {
 		}
 		setEnabled(enabled);
 	}
+	
 }
