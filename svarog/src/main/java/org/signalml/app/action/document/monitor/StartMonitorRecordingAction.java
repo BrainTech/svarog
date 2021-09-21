@@ -66,7 +66,13 @@ public class StartMonitorRecordingAction extends MonitorRecordingAction {
 
 			
                         StartMonitorRecordingWorker saving_worker = new StartMonitorRecordingWorker(null, monitorSignalDocument);
-                        saving_worker.execute();		}
+                        saving_worker.execute();
+			additionalWork();
+		}
+	}
+	
+	protected void additionalWork()
+	{
 	}
 
 	/**

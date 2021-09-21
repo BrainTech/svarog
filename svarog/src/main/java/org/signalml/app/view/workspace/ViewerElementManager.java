@@ -151,7 +151,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
-import org.signalml.psychopy.view.PsychopyExperimentDialog;
+import org.signalml.psychopy2.action.StartMonitorRecordingPsychopyDialog;
 import org.signalml.util.SvarogConstants;
 import pl.edu.fuw.fid.signalanalysis.dtf.DtfMethodAction;
 
@@ -267,12 +267,12 @@ public class ViewerElementManager {
 	 */
 	private EditTimeDomainSampleFilterDialog editTimeDomainSampleFilterDialog;
 
-	private PsychopyExperimentDialog psychopyExperimentDialog;
 	/**
 	 * A dialog shown when the user wants to start a recording of a monitor
 	 * signal. Recording target files can be set using this dialog.
 	 */
 	private StartMonitorRecordingDialog startMonitorRecordingDialog;
+	private StartMonitorRecordingPsychopyDialog startMonitorRecordingPsychopyDialog;
 
 	private MP5LocalExecutorDialog mp5LocalExecutorDialog;
 	private AtomTableDialog atomTableDialog;
@@ -1231,12 +1231,6 @@ public class ViewerElementManager {
 		return editTimeDomainSampleFilterDialog;
 	}
 
-	public PsychopyExperimentDialog getPsychopyExperimentDialog() {
-		if (psychopyExperimentDialog == null) {
-			psychopyExperimentDialog = new PsychopyExperimentDialog(getDialogParent(), true);
-		}
-		return psychopyExperimentDialog;
-	}
 
 	/**
 	 * Returns a {@link StartMonitorRecordingDialog} used by this
@@ -1248,6 +1242,13 @@ public class ViewerElementManager {
 			startMonitorRecordingDialog = new StartMonitorRecordingDialog(getDialogParent(), true);
 		}
 		return startMonitorRecordingDialog;
+	}
+	
+	public StartMonitorRecordingPsychopyDialog getStartMonitorRecordingPsychopyDialog() {
+		if (startMonitorRecordingPsychopyDialog == null) {
+			startMonitorRecordingPsychopyDialog = new StartMonitorRecordingPsychopyDialog(getDialogParent(), true);
+		}
+		return startMonitorRecordingPsychopyDialog;
 	}
 
 	public MP5LocalExecutorDialog getMp5LocalExecutorDialog() {
@@ -1696,7 +1697,7 @@ public class ViewerElementManager {
 			signalView.setMontagePresetManager(managerOfPresetsManagers.getMontagePresetManager());
 			signalView.setSignalMontageDialog(getSignalMontageDialog());
 			signalView.setStartMonitorRecordingDialog(getStartMonitorRecordingDialog());
-			signalView.setPsychopyExperimentDialog(getPsychopyExperimentDialog());
+			signalView.setStartMonitorRecordingPsychopyDialog(getStartMonitorRecordingPsychopyDialog());
 			signalView.setSignalParametersDialog(getSignalParametersDialog());
 			signalView.setSignalSelectionDialog(getSignalSelectionDialog());
 			signalView.setTagStylePaletteDialog(getTagStylePaletteDialog());

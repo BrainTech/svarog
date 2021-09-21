@@ -46,6 +46,11 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 		setTitle(_("Start recording"));
 		super.initialize();
 	}
+	
+	protected void addAdditionalPanel(JPanel panel)
+	{
+		
+	}
 
 	/**
 	 * Creates the interface of this dialog.
@@ -56,6 +61,7 @@ public class StartMonitorRecordingDialog extends AbstractDialog {
 	protected JComponent createInterface() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		addAdditionalPanel(panel);
 		panel.add(getChooseFilesForMonitorRecordingPanel());
 		if (ObciServerCapabilities.getSharedInstance().hasVideoSaving()) {
 			panel.add(getChooseVideoForMonitorRecordingPanel());

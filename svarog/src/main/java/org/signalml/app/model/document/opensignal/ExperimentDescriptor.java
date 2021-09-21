@@ -37,7 +37,10 @@ public class ExperimentDescriptor extends AbstractOpenSignalDescriptor implement
 	private String peerId;
 
 	private String recommendedScenario;
-
+	
+	public String experimentPath;
+	public String outputPathPrefix;
+	
 	/**
 	 * This value holds information whether Svarog has connected to this experiment or not.
 	 */

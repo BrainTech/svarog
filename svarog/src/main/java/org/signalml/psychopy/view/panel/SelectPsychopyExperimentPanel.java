@@ -3,6 +3,7 @@ package org.signalml.psychopy.view.panel;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.signalml.app.model.components.validation.ValidationErrors;
+import org.signalml.app.model.document.opensignal.ExperimentDescriptor;
 import static org.signalml.app.util.i18n.SvarogI18n._;
 import static org.signalml.psychopy.FilePathValidator.isFile;
 import static org.signalml.psychopy.FilePathValidator.pathIsValid;
@@ -61,14 +62,14 @@ public class SelectPsychopyExperimentPanel extends SelectFilePanel{
 
 	@Override
 	public void fillPanelFromModel(Object model) {
-		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
-		setPath(psychopyExperiment.experimentPath);
+		ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) model;
+		setPath(experimentDescriptor.experimentPath);
 	}
 
 	@Override
 	public void fillModelFromPanel(Object model) {
-		PsychopyExperiment psychopyExperiment = (PsychopyExperiment) model;
-		psychopyExperiment.experimentPath = selectedPath();
+		ExperimentDescriptor experimentDescriptor = (ExperimentDescriptor) model;
+		experimentDescriptor.experimentPath = selectedPath();
 	}
 
 }
