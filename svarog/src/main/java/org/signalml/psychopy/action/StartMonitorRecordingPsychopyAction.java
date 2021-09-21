@@ -1,5 +1,5 @@
 
-package org.signalml.psychopy2.action;
+package org.signalml.psychopy.action;
 
 import java.awt.event.ActionEvent;
 import org.signalml.app.action.document.monitor.StartMonitorRecordingAction;

@@ -1,4 +1,4 @@
-package org.signalml.psychopy2.action;
+package org.signalml.psychopy.action;
 
 import java.awt.Window;
 import javax.swing.JPanel;

@@ -151,7 +151,7 @@ import org.signalml.plugin.export.view.AbstractSignalMLAction;
 import org.signalml.plugin.export.view.DocumentView;
 import org.signalml.plugin.export.view.ViewerTreePane;
 import org.signalml.plugin.fftsignaltool.SignalFFTTool;
-import org.signalml.psychopy2.action.StartMonitorRecordingPsychopyDialog;
+import org.signalml.psychopy.action.StartMonitorRecordingPsychopyDialog;
 import org.signalml.util.SvarogConstants;
 import pl.edu.fuw.fid.signalanalysis.dtf.DtfMethodAction;
 
