@@ -26,8 +26,7 @@ public class FindEEGExperimentsWorker extends SwingWorker<Void, List<ExperimentD
 	private String openbciIpAddress;
 	private int openbciPort;
 	
-	//OBCI assumes that long requests will be finished in 10 seconds
-	private int PULL_TIMEOUT = 10;
+	private int PULL_TIMEOUT = 70; // maximum time to wait for obci answer
 	private int BLUETOOTH_PULL_TIMEOUT = 60 * 5;  //~30s required for one tmsi device.
 	
 	public FindEEGExperimentsWorker() {
